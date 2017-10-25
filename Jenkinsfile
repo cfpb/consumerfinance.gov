@@ -7,7 +7,13 @@ node {
                     "PATH+NODE=${nodeHome}/bin",
                 ]
                 withEnv(customEnv) {
-                    sh './run_travis.sh frontend'
+                    sh '''
+					echo $PATH
+					which node
+					which npm
+					which gulp
+					# ./run_travis.sh frontend
+					'''
                 }
             },
             'Back-end tests': {
@@ -19,7 +25,7 @@ node {
                     "PATH+NODE=${nodeHome}/bin",
                 ]
                 withEnv(customEnv) {
-                    sh './run_travis.sh acceptance'
+                    // sh './run_travis.sh acceptance'
                 }
             }
         )
