@@ -7,7 +7,7 @@ node {
             steps {
                 // Abort any still-running stages if one fails
                 failFast true
-                parallel(
+                parallel {
                     'Front-end tests': {
                         def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                         env.PATH = '${node}/bin:${env.PATH}'
