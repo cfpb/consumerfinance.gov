@@ -8,10 +8,6 @@ node {
                 ]
                 withEnv(customEnv) {
                     sh '''
-					echo $PATH
-					which node
-					which npm
-					which gulp
 					./run_travis.sh frontend
 					'''
                 }
@@ -25,7 +21,9 @@ node {
                     "PATH+NODE=${nodeHome}/bin",
                 ]
                 withEnv(customEnv) {
-                    sh './run_travis.sh acceptance'
+                    sh '''
+					./run_travis.sh acceptance
+					'''
                 }
             }
         )
