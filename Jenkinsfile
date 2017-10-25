@@ -19,7 +19,7 @@ node {
                         steps {
                             sh './run_travis.sh backend'
                         }
-                    },
+                    }
                     stage('Acceptance tests') {
                         def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                         env.PATH = '${node}/bin:${env.PATH}'
