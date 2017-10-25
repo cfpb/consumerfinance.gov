@@ -7,21 +7,15 @@ node {
                 stage('Front-end tests') {
                     def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                     env.PATH = '${node}/bin:${env.PATH}'
-                    steps {
-                        sh './run_travis.sh frontend'
-                    }
+                    sh './run_travis.sh frontend'
                 }
                 stage('Back-end tests') {
-                    steps {
-                        sh './run_travis.sh backend'
-                    }
+                    sh './run_travis.sh backend'
                 }
                 stage('Acceptance tests') {
                     def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                     env.PATH = '${node}/bin:${env.PATH}'
-                    steps {
-                        sh './run_travis.sh acceptance'
-                    }
+                    sh './run_travis.sh acceptance'
                 }
             }
         }
