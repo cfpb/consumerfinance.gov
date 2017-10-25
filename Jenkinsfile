@@ -10,8 +10,6 @@ pipeline {
     stages {
         stage('Unit Testing') {
             steps {
-                // Abort any still-running stages if one fails
-                failFast true
                 parallel(
                     'Front-end tests': {
                         def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
