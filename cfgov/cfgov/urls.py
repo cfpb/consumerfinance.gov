@@ -77,11 +77,13 @@ urlpatterns = [
         include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
 
     url(r'^owning-a-home/mortgage-closing/',
-        include(oah.urls_for_prefix('mortgage-closing'))),
+        TemplateView.as_view(
+        template_name='owning-a-home/mortgage-closing/index.html'),
+        name='mortgage-closing'),
     url(r'^owning-a-home/mortgage-estimate/',
         TemplateView.as_view(
         template_name='owning-a-home/mortgage-estimate/index.html'),
-        name='morgage-estimate'),
+        name='mortgage-estimate'),
 
     url(r'^owning-a-home/process/',
         include(oah.urls_for_prefix('process/prepare/'))),
