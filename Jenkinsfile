@@ -4,17 +4,18 @@ pipeline {
         timeout(time: 1, unit: 'HOURS') 
         timestamps()
     }
-    tools {
-        jenkins.plugins.nodejs.tools.NodeJSInstallation 'Node 8x Current'
-    }
     triggers {
         pollSCM('* * * * *')
     }
     stages {
         stage('Unit Testing') {
             steps {
+                // Abort any still-running stages if one fails
+                failFast true
                 parallel {
                     stage('Front-end tests') {
+                        def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                        env.PATH = "${node}/bin:${env.PATH}"
                         steps {
                             sh './run_travis.sh frontend'
                         },
@@ -25,6 +26,8 @@ pipeline {
                         }
                     }
                     stage('Acceptance tests') {
+                        def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                        env.PATH = "${node}/bin:${env.PATH}"
                         steps {
                             sh './run_travis.sh acceptance'
                         }
