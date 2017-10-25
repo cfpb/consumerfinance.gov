@@ -18,7 +18,7 @@ pipeline {
                         env.PATH = "${node}/bin:${env.PATH}"
                         steps {
                             sh './run_travis.sh frontend'
-                        },
+                        }
                     }
                     stage('Back-end tests") {
                         steps {
