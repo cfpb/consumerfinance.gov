@@ -1,7 +1,4 @@
 node {
-    triggers {
-        pollSCM('* * * * *')
-    }
     stages {
         stage('Unit Testing') {
             steps {
