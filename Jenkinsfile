@@ -2,6 +2,10 @@ pipeline {
     agent any
     options {
         timeout(time: 1, unit: 'HOURS') 
+        timestamps()
+    }
+    tools {
+        nodejs 'Node 8x Current'
     }
     triggers {
         pollSCM('* * * * *')
@@ -9,7 +13,6 @@ pipeline {
     stages {
         stage('Unit Testing') {
             steps {
-                tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                 parallel(
                     "Front-End Tests": {
                         sh './run_travis.sh frontend'
