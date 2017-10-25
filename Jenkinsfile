@@ -1,7 +1,7 @@
 node {
     stage('Unit Testing') {
         parallel(
-            Front-end tests': {
+            'Front-end tests': {
                 def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                 env.PATH = '${node}/bin:${env.PATH}'
                 sh './run_travis.sh frontend'
