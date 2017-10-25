@@ -25,7 +25,7 @@ node {
                     "PATH+NODE=${nodeHome}/bin",
                 ]
                 withEnv(customEnv) {
-                    // sh './run_travis.sh acceptance'
+                    sh './run_travis.sh acceptance'
                 }
             }
         )
