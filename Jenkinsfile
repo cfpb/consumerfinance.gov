@@ -12,7 +12,7 @@ node {
 					which node
 					which npm
 					which gulp
-					# ./run_travis.sh frontend
+					./run_travis.sh frontend
 					'''
                 }
             },

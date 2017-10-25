@@ -9,7 +9,7 @@ if [ -z $RUNTEST ]; then
 fi
 
 # Install frontend dependencies
-frontend() {
+install_frontend() {
     export CXX=clang++
 
     if [[ "$(node -v)" != 'v8.'* ]]; then
@@ -28,7 +28,7 @@ frontend() {
 }
 
 # Install backend dependencies
-backend() {
+install_backend() {
     # Use .venv as the virtualenv path if not already defined.
     VIRTUALENV_PATH=".venv"
 
@@ -48,20 +48,16 @@ backend() {
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
-    frontend
-    source $HOME/.nvm/nvm.sh
-    nvm use 8.0.0
+    install_frontend
     gulp "test" --travis
 elif [ "$RUNTEST" == "backend" ]; then
-    backend
+    install_backend
     flake8
     tox -e fast
     tox -e missing-migrations
 elif [ "$RUNTEST" == "acceptance" ]; then
-    frontend
-    backend
-    source $HOME/.nvm/nvm.sh
-    nvm use 8.0.0
+    install_frontend
+    install_backend
     export DISPLAY=:99.0
     sh -e /etc/init.d/xvfb start &
     sleep 3
