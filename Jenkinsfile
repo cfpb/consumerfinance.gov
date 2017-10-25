@@ -4,9 +4,6 @@ pipeline {
         timeout(time: 1, unit: 'HOURS') 
         timestamps()
     }
-    tools {
-        'jenkins.plugins.nodejs.tools.NodeJSInstallation' 'Node 8x Current'
-    }
     triggers {
         pollSCM('* * * * *')
     }
@@ -15,13 +12,25 @@ pipeline {
             steps {
                 parallel(
                     "Front-End Tests": {
-                        sh './run_travis.sh frontend'
+                        sh '''
+                        echo $PATH
+                        export PATH=/var/lib/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_8x_Current/bin:/var/lib/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_8x_Current/node_modules:$PATH
+                        echo $PATH
+                        node --version
+                        ./run_travis.sh frontend
+                        '''
                     },
                     "Back-End Tests": {
                         sh './run_travis.sh backend'
                     },
                     "Acceptance Tests": {
-                        sh './run_travis.sh acceptance'
+                        sh '''
+                        echo $PATH
+                        export PATH=/var/lib/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_8x_Current/bin:/var/lib/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_8x_Current/node_modules:$PATH
+                        echo $PATH
+                        node --version
+                        ./run_travis.sh acceptance
+                        '''
                     }
                 )
             }
