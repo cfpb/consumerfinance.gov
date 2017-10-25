@@ -20,7 +20,7 @@ pipeline {
                             sh './run_travis.sh frontend'
                         }
                     }
-                    stage('Back-end tests") {
+                    stage('Back-end tests') {
                         steps {
                             sh './run_travis.sh backend'
                         }
