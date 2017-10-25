@@ -14,6 +14,8 @@
     .hero {
         background: #ccdfdf;
         padding: 0;
+        border-top: 1px solid #CFCFCD;
+        border-bottom: 1px solid #CFCFCD;
 
         p {
             text-transform: none;
@@ -79,6 +81,30 @@
                 .grid_push( 8 );
                 .grid_column( 4 );
             }
+        } );
+    }
+
+    .hero__mortage-closing {
+
+        .respond-to-max( 660px, {
+            .hero_img {
+                background-image:url('../img/form-resources_mortgage-closing-hero-small.png');
+                background-size: 320px 170px;
+            }
+        } );
+
+        .respond-to-min( 661px, {
+            .hero_wrapper {
+                background-image:url('../img/form-resources_mortgage-closing-hero-medium.png');
+                background-size: 400px 260px;
+            }
+        } );
+
+        .respond-to-min( 992px, {
+            .hero_wrapper {
+                background-image:url('../img/form-resources_mortgage-closing-hero-large.png');
+                background-size: 730px 372px;
+              }
         } );
     }
 
