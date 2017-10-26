@@ -41,4 +41,4 @@ services:
                 - mysql
                 - elasticsearch                
         working_dir: /src/cfgov-refresh
-        env_file: .env
+        env_file: .python_env
