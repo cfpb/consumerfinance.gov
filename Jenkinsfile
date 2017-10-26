@@ -30,7 +30,7 @@ node {
 					which node
 					which npm
 					which gulp
-					./run_travis.sh acceptance'
+					./run_travis.sh acceptance
 					'''
                 }
             }
