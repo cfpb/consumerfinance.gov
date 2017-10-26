@@ -20,9 +20,6 @@ install_frontend() {
 
     npm install -g gulp-cli
 
-    # Added to fix an issue with gulp not being accessible in run_travis.sh
-    echo 'PATH=/home/travis/.nvm/versions/node/v8.0.0/lib/node_modules/gulp-cli/bin/gulp.js:$PATH' >> ~/.bash_profile
-
     chmod +x ./frontend.sh
     ./frontend.sh test
 }
