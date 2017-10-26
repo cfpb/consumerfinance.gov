@@ -8,20 +8,23 @@ const jsdom = require( 'jsdom' );
 
 const atomicHelpers = require( BASE_JS_PATH + 'modules/util/atomic-helpers' );
 
-describe( 'atomic-helpers', () => {
+const HTML_SNIPPET = '<div class="container">' +
+                     '<div class="o-expandable"></div></div>';
 
-  const HTML_SNIPPET = '<div class="container">' +
-                       '<div class="o-expandable"></div></div>';
-  const initdom = jsdom.jsdom( HTML_SNIPPET );
-  const document = initdom.defaultView.document;
+describe( 'atomic-helpers', () => {
+  let document;
 
   let containerDom;
   let expandableDom;
 
   before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
     containerDom = document.querySelector( '.container' );
     expandableDom = document.querySelector( '.o-expandable' );
   } );
+
+  after( () => this.jsdom() );
 
   describe( '.checkDom()', () => {
     it( 'should throw an error if element DOM not found', () => {

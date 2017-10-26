@@ -6,15 +6,18 @@ const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
+
+const HTML_SNIPPET = ``;
 
 describe( 'FilterableListControls', () => {
-  jsdom();
-
   before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
     const FilterableListControls =
-     require( BASE_JS_PATH + 'organisms/FilterableListControls' );
+    require( BASE_JS_PATH + 'organisms/FilterableListControls' );
   } );
+
+  after( () => this.jsdom() );
 
   // TODO: Implement tests.
 } );

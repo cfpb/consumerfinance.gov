@@ -2,63 +2,72 @@
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const sinon = require( 'sinon' );
 let BreakpointHandler;
 let args;
 const BASE_LOC = '../../../cfgov/unprocessed/js/';
 const standardType = require( BASE_LOC + 'modules/util/standard-type' );
 
-beforeEach( () => {
-  args = {
-    enter:      standardType.noopFunct,
-    leave:      standardType.noopFunct,
-    breakpoint: 600
-  };
-
-  BreakpointHandler = require( BASE_LOC + 'modules/BreakpointHandler' );
-} );
-
 describe( 'BreakpointHandler', () => {
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )( ``, {
+      beforeParse( win ) {
+        const resizeEvent = win.document.createEvent( 'Event' );
+        resizeEvent.initEvent( 'resize', true, true );
 
-  jsdom( {
-    created: function( error, win ) {
-      if ( error ) {
-        console.log( error ); // eslint-disable-line  no-console
+        win.resizeTo = function( width, height ) {
+          this.innerWidth = this.outerWidth = width;
+          this.innerHeight = this.outerHeight = height;
+          win.dispatchEvent( resizeEvent );
+        };
+
+        win.useMock = function() {
+          const mockwin = {
+            addEventListener: win.addEventListener,
+            document:         { documentElement: {}},
+            innerWidth:       win.innerWidth,
+            innerHeight:      win.innerHeight,
+            resizeTo:         win.resizeTo
+          };
+
+          mockwin.document.documentElement.clientWidth =
+          win.document.documentElement.clientWidth;
+
+          mockwin.document.body = win.document.body;
+
+          mockwin.restore = function() {
+            global.window = win;
+            global.document = win.document;
+          };
+
+          global.window = mockwin;
+          global.document = mockwin.document;
+        };
       }
+    } );
+    document = window.document;
 
-      const resizeEvent = win.document.createEvent( 'Event' );
-      resizeEvent.initEvent( 'resize', true, true );
+    // Simulate window resize event
+    const resizeEvent = document.createEvent('Event');
+    resizeEvent.initEvent('resize', true, true);
 
-      win.resizeTo = function( width, height ) {
-        this.innerWidth = this.outerWidth = width;
-        this.innerHeight = this.outerHeight = height;
-        win.dispatchEvent( resizeEvent );
-      };
+    global.window.resizeTo = (width, height) => {
+      global.window.innerWidth = width || global.window.innerWidth;
+      global.window.innerHeight = width || global.window.innerHeight;
+      global.window.dispatchEvent(resizeEvent);
+    };
+  } );
 
-      win.useMock = function() {
-        const mockwin = {
-          addEventListener: win.addEventListener,
-          document:         { documentElement: {}},
-          innerWidth:       win.innerWidth,
-          innerHeight:      win.innerHeight,
-          resizeTo:         win.resizeTo
-        };
+  after( () => this.jsdom() );
 
-        mockwin.document.documentElement.clientWidth =
-        win.document.documentElement.clientWidth;
+  beforeEach( () => {
+    args = {
+      enter:      standardType.noopFunct,
+      leave:      standardType.noopFunct,
+      breakpoint: 600
+    };
 
-        mockwin.document.body = win.document.body;
-
-        mockwin.restore = function() {
-          global.window = win;
-          global.document = win.document;
-        };
-
-        global.window = mockwin;
-        global.document = mockwin.document;
-      };
-    }
+    BreakpointHandler = require( BASE_LOC + 'modules/BreakpointHandler' );
   } );
 
   it( 'should throw an error if passed incomplete arguments', () => {

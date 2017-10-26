@@ -6,7 +6,6 @@ const simpleTableRowLinks =
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const sinon = require( 'sinon' );
 let sandbox;
 let tableDom;
@@ -38,9 +37,14 @@ function triggerClickEvent( target ) {
   target.dispatchEvent( event );
 }
 
-
 describe( 'o-table-row-links', () => {
-  jsdom();
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
+  } );
+
+  after( () => this.jsdom() );
+
   beforeEach( () => {
     let windowLocation;
     sandbox = sinon.sandbox.create();

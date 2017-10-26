@@ -4,7 +4,6 @@ const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const sinon = require( 'sinon' );
 const ClearableInput = require( BASE_JS_PATH + 'modules/ClearableInput' );
 let sandbox;
@@ -31,7 +30,7 @@ const HTML_SNIPPET =
    </div>`;
 
 function triggerEvent( target, eventType, eventOption ) {
-  var event = document.createEvent( 'Event' );
+  const event = document.createEvent( 'Event' );
   if ( eventType === 'keyup' ) {
     event.keyCode = eventOption || '';
   }
@@ -39,9 +38,13 @@ function triggerEvent( target, eventType, eventOption ) {
   target.dispatchEvent( event );
 }
 
-
 describe( 'ClearableInput', () => {
-  jsdom();
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
+  } );
+
+  after( () => this.jsdom() );
 
   beforeEach( () => {
     sandbox = sinon.sandbox.create();

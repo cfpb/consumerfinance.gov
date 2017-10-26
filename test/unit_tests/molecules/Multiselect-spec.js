@@ -2,7 +2,6 @@
 
 var chai = require( 'chai' );
 var expect = chai.expect;
-var jsdom = require( 'mocha-jsdom' );
 var sinon = require( 'sinon' );
 
 var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
@@ -11,13 +10,13 @@ var multiselect;
 var selectDom;
 var multiselectDom;
 var sandbox;
-var HTML_SNIPPET =
-    '<select name="test-select" id="test-select" multiple>' +
-      '<option value="Debt collection">Debt collection</option>' +
-      '<option value="consumers-responses">Consumer&#39;s Responses</option>' +
-      '<option value="Mortgage disclosure">Mortgage disclosure</option>' +
-      '<optgroup label="All other topics">' +
-    '</select>';
+const HTML_SNIPPET =
+  '<select name="test-select" id="test-select" multiple>' +
+    '<option value="Debt collection">Debt collection</option>' +
+    '<option value="consumers-responses">Consumer&#39;s Responses</option>' +
+    '<option value="Mortgage disclosure">Mortgage disclosure</option>' +
+    '<optgroup label="All other topics">' +
+  '</select>';
 
 function keyPress( target, key ) {
   var event = target.createEvent( 'Event' );
@@ -27,8 +26,12 @@ function keyPress( target, key ) {
 }
 
 describe( 'Multiselect', function() {
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
+  } );
 
-  jsdom();
+  after( () => this.jsdom() );
 
   beforeEach( function() {
     sandbox = sinon.sandbox.create();

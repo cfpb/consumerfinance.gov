@@ -4,7 +4,6 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const getBreakpointState =
   require( BASE_JS_PATH + 'modules/util/breakpoint-state.js' ).get;
 const breakpointConfig =
@@ -13,13 +12,17 @@ const breakpointConfig =
 let breakpointState;
 let configKeys;
 
-beforeEach( () => {
-  configKeys = Object.keys( breakpointConfig );
-} );
-
 describe( 'getBreakpointState', () => {
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )();
+    document = window.document;
+  } );
 
-  jsdom();
+  after( () => this.jsdom() );
+
+  beforeEach( () => {
+    configKeys = Object.keys( breakpointConfig );
+  } );
 
   it( 'should return an object with properties from config file', () => {
     const breakpointStatekeys =

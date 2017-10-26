@@ -2,7 +2,6 @@
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const sinon = require( 'sinon' );
 
 const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
@@ -50,14 +49,16 @@ function requestAnimationFrame( callback ) {
 }
 
 describe( 'Footer', () => {
-  jsdom();
-
   before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
     sandbox = sinon.sandbox.create();
 
     global.NodeList = window.NodeList;
     global.Node = window.Node;
   } );
+
+  after( () => this.jsdom() );
 
   beforeEach( () => {
     bodyDom = document.body;

@@ -5,7 +5,6 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const chai = require( 'chai' );
 const sinon = require( 'sinon' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 
 describe( 'Event States', () => {
   let expandedState;
@@ -14,12 +13,14 @@ describe( 'Event States', () => {
   let divClosed;
   let openMenu;
 
-  jsdom();
-
   before( () => {
+    this.jsdom = require( 'jsdom-global' )();
+    document = window.document;
     expandedState = require( BASE_JS_PATH + 'modules/util/expanded-state.js' );
     sandbox = sinon.sandbox.create();
   } );
+
+  after( () => this.jsdom() );
 
   beforeEach( () => {
     const mockedContent = '<div class="div-expanded" aria-expanded="true" />' +

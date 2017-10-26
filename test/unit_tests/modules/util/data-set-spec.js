@@ -5,7 +5,6 @@ const dataSet = require( BASE_JS_PATH + 'modules/util/data-set' ).dataSet;
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const sinon = require( 'sinon' );
 let sandbox;
 let baseDom;
@@ -30,7 +29,12 @@ const datasetLookup = {
 };
 
 describe( 'data-set', () => {
-  jsdom();
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
+  } );
+
+  after( () => this.jsdom() );
 
   beforeEach( () => {
     sandbox = sinon.sandbox.create();

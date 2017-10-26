@@ -6,24 +6,28 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'jsdom' );
 
 const MoveTransition =
   require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
+
+const HTML_SNIPPET = '<div class="content-1"></div>';
 
 describe( 'MoveTransition', () => {
 
   let transition;
 
   // DOM-related settings.
-  let initdom;
   let document;
-  const HTML_SNIPPET = '<div class="content-1"></div>';
   let contentDom;
 
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
+  } );
+
+  after( () => this.jsdom() );
+
   beforeEach( () => {
-    initdom = jsdom.jsdom( HTML_SNIPPET );
-    document = initdom.defaultView.document;
     contentDom = document.querySelector( '.content-1' );
     transition = new MoveTransition( contentDom );
     transition.init();

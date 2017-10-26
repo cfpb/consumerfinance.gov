@@ -3,17 +3,19 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const jsLoader = require( BASE_JS_PATH + 'modules/util/js-loader' );
 
 describe( 'loadScript method', () => {
-  jsdom( {
-    features: {
-      FetchExternalResources:   [ 'script' ],
-      ProcessExternalResources: [ 'script' ],
-      MutationEvents:           '2.0'
-    }
+  before( () => {
+    // Settings object passed to jsdom is for loading external resources.
+    this.jsdom = require( 'jsdom-global' )( ``, {
+      runScripts: 'dangerously',
+      resources: 'usable'
+    } );
+    document = window.document;
   } );
+
+  after( () => this.jsdom() );
 
   it( 'should invoke the callback method when the script loads', () => {
     // eslint-disable-next-line no-unused-vars
