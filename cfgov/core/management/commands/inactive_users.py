@@ -83,8 +83,8 @@ class Command(BaseCommand):
                     self.send_user_deactivation_email(user, period)
 
                 # Deactivate and notify inactive users
-                self.stdout.write('Deactivating and emailing {} users who have '
-                                  'been inactive for {} days'.format(
+                self.stdout.write('Deactivating and emailing {} users who '
+                                  'have been inactive for {} days'.format(
                                       len(inactive_users),
                                       period))
 
