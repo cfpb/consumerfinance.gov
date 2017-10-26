@@ -30,6 +30,7 @@ services:
             MYSQL_NAME: v1
             MYSQL_USER: v1
             MYSQL_PW: v1
+            ES_HOST: elasticsearch
         volumes:
                 - ./:/src/cfgov-refresh
                 - ./develop-apps:/src/develop-apps
