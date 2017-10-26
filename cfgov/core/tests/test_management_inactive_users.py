@@ -101,6 +101,7 @@ class InactiveUsersTestCase(TestCase):
         self.assertNotIn("user_4", self.get_stdout())
         self.assertNotIn("user_5", self.get_stdout())
         self.assertNotIn("user_6", self.get_stdout())
+        self.assertIn("No users are inactive", self.get_stdout())
 
     @override_settings(EMAIL_SUBJECT_PREFIX='[Prefix]')
     def test_sends_email(self):

@@ -64,29 +64,29 @@ class Command(BaseCommand):
         )
 
         if len(inactive_users) == 0:
-            return
+            self.stdout.write('No users are inactive {}+ days'.format(period))
+        else:
+            # List inactive users and then deactivate them
+            self.stdout.write('Users inactive for {}+ days:\n'.format(period))
+            self.stdout.write(self.format_inactive_users(inactive_users))
 
-        # List inactive users and then deactivate them
-        self.stdout.write('Users inactive for {}+ days:\n'.format(period))
-        self.stdout.write(self.format_inactive_users(inactive_users))
+            # Notify specified emails (e.g. system admins)
+            if len(emails) > 0:
+                self.stdout.write('Sending inactive user list to '
+                                  '{}\n'.format(','.join(emails)))
+                self.send_email(emails, period, inactive_users)
 
-        # Notify specified emails (e.g. system admins)
-        if len(emails) > 0:
-            self.stdout.write('Sending inactive user list to '
-                              '{}\n'.format(','.join(emails)))
-            self.send_email(emails, period, inactive_users)
+            # Deactivate inactive users
+            if deactivate_users_flag_set:
+                for user in inactive_users:
+                    self.deactivate_user(user)
+                    self.send_user_deactivation_email(user, period)
 
-        # Deactivate inactive users
-        if deactivate_users_flag_set:
-            for user in inactive_users:
-                self.deactivate_user(user)
-                self.send_user_deactivation_email(user, period)
-
-            # Deactivate and notify inactive users
-            self.stdout.write('Deactivating and emailing {} users who have '
-                              'been inactive for {} days'.format(
-                                  len(inactive_users),
-                                  period))
+                # Deactivate and notify inactive users
+                self.stdout.write('Deactivating and emailing {} users who have '
+                                  'been inactive for {} days'.format(
+                                      len(inactive_users),
+                                      period))
 
         if warn_users_flag_set:
             warn_date = timezone.now() - timedelta(days=warn_period)
