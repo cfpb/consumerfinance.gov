@@ -8,6 +8,10 @@ node {
                 ]
                 withEnv(customEnv) {
                     sh '''
+					echo $PATH
+					which node
+					which npm
+					which gulp
 					./run_travis.sh frontend
 					'''
                 }
@@ -22,7 +26,11 @@ node {
                 ]
                 withEnv(customEnv) {
                     sh '''
-					./run_travis.sh acceptance
+					echo $PATH
+					which node
+					which npm
+					which gulp
+					./run_travis.sh acceptance'
 					'''
                 }
             }
