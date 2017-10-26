@@ -165,7 +165,7 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
     this.chart.highchart.chart.mapZoom( zoomLevel );
   }
   if ( state.zoomTarget ) {
-    let centroid = utils.stateCentroids[state.zoomTarget];
+    const centroid = utils.stateCentroids[state.zoomTarget];
     this.chart.highchart.chart.mapZoom();
     utils.setZoomLevel( 10 );
     zoomLevel = utils.getZoomLevel( 5 );
