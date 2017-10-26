@@ -9,12 +9,6 @@ from unipath import Path
 
 from ..util import admin_emails
 
-try:
-    import MySQLdb
-except ImportError:
-    import pymysql
-    pymysql.install_as_MySQLdb()
-
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
@@ -183,32 +177,6 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
 DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
-
-if 'collectstatic' in sys.argv:
-    COLLECTSTATIC = True
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'v1',
-        }
-    }
-else:
-    COLLECTSTATIC = False
-    MYSQL_ENGINE = 'django.db.backends.mysql'
-
-    # Database
-    # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-    DATABASES = {
-        'default': {
-            'ENGINE': MYSQL_ENGINE,
-            'NAME': os.environ.get('MYSQL_NAME', 'v1'),
-            'USER': os.environ.get('MYSQL_USER', 'v1'),
-            'PASSWORD': os.environ.get('MYSQL_PW', 'v1'),
-            'HOST': os.environ.get('MYSQL_HOST', 'localhost.'),  # empty string == localhost
-            'PORT': os.environ.get('MYSQL_PORT', '3306'),  # empty string == default
-        },
-    }
 
 
 # Internationalization
