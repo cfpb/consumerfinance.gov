@@ -11,74 +11,6 @@
     border-bottom: 1px solid @gray-40;
     font-size: 0.875em;
 
-    // TODO: Refactor to use flyout menu behavior and not include an expandable,
-    //       so that these style overrides aren't necessary.
-    .o-expandable {
-        transition: padding 0.2s ease-out;
-    }
-
-    .o-expandable__expanded {
-        padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
-        padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
-    }
-
-    .o-expandable_content {
-        border-bottom: none;
-        background: transparent;
-    }
-
-    .o-expandable_content-animated {
-        // Don't want the extra bottom padding for this use.
-        padding-bottom: 0;
-        // Increase padding left to line up with text in heading above.
-        // Magic number derived from 1em block (roughly the width of the icon)
-        // at 18px, the font size of the heading, plus 4.5px for the
-        // standard inline word space (~ 0.25em) between the icon and the text.
-        padding-left: unit( 22.5px / @base-font-size-px, em );
-    }
-
-    .o-expandable_target {
-        // Taken from .a-btn__secondary.
-        background-color: @btn__secondary-bg;
-        color: @btn__secondary-text;
-        width: 100%;
-        // Restore standard btn padding, which is removed by .expandable_target.
-        padding:
-            unit( @btn-v-padding / @btn-font-size, em )
-            unit( 14px / @btn-font-size, em );
-        border-top: none;
-        margin-top: @grid_gutter-width / 2;
-
-        .respond-to-min(@bp-sm-min, {
-            .a-btn__link();
-            width: auto;
-            padding: @grid_gutter-width / 2;
-            margin: 0;
-            position: absolute;
-            top: 1px;
-            right: 0;
-            .u-link__colors( @black, @dark-gray );
-            .u-link__no-border();
-            text-transform: lowercase;
-        });
-
-        .respond-to-max( @bp-xs-max, {
-            // Prevent double-shrinkage.
-            font-size: 1em;
-        } );
-
-        .respond-to-min( @bp-sm-min, {
-            // Adjust to match increasing side margins.
-            right: @grid_gutter-width / 2;
-        } );
-
-        .respond-to-min( @bp-med-min, {
-            // At this width, the wrapper gains `position: relative`,
-            // so the button position has to be adjusted accordingly.
-            top: unit( -12px / @base-font-size-px, em );
-        } );
-    }
-
     .respond-to-min(@bp-sm-min, {
         font-size: 1em;
     });
@@ -97,24 +29,14 @@
     }
 
     &_desc {
+        margin-top: @grid_gutter-width / 2;
         margin-bottom: 0;
-        padding: 0;
+        padding:
+            unit( @btn-v-padding / @btn-font-size, em )
+            unit( 14px / @btn-font-size, em );
         background: @gold-20;
     }
 }
-
-.no-js {
-    .m-global-banner_btn {
-        display: none;
-    }
-}
-
-// Hide button on print.
-.respond-to-print( {
-    .m-global-banner_btn {
-        display: none;
-    }
-} );
 
 /* topdoc
     name: EOF
