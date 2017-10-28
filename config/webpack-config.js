@@ -54,10 +54,10 @@ const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
     mangle: true,
     output: {
       comments: false,
-      beautify: false,
+      beautify: false
     }
   }
-} )
+} );
 
 const modernConf = {
   cache: true,
