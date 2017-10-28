@@ -31,9 +31,11 @@
     &_desc {
         margin-top: @grid_gutter-width / 2;
         margin-bottom: 0;
-        padding:
-            unit( @btn-v-padding / @btn-font-size, em )
-            unit( 14px / @btn-font-size, em );
+        // Increase padding left to line up with text in heading above.
+        // Magic number derived from 1em block (roughly the width of the icon)
+        // at 18px, the font size of the heading, plus 4.5px for the
+        // standard inline word space (~ 0.25em) between the icon and the text.
+        padding-left: unit( 22.5px / @base-font-size-px, em );
         background: @gold-20;
     }
 }
