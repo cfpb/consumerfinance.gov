@@ -1,5 +1,3 @@
-/* eslint no-unused-vars: "off" */
-
 'use strict';
 
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
@@ -97,7 +95,8 @@ describe( 'MoveTransition', () => {
       function checkMoveLeftOutOfRange() {
         return transition.moveLeft( 4 );
       }
-      expect( checkMoveLeftOutOfRange ).to.throw( 'MoveTransition: moveLeft count is out of range!' );
+      expect( checkMoveLeftOutOfRange )
+        .to.throw( 'MoveTransition: moveLeft count is out of range!' );
     } );
   } );
 } );

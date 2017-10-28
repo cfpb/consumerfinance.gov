@@ -15,7 +15,6 @@ describe( 'Event States', () => {
 
   before( () => {
     this.jsdom = require( 'jsdom-global' )();
-    document = window.document;
     expandedState = require( BASE_JS_PATH + 'modules/util/expanded-state.js' );
     sandbox = sinon.sandbox.create();
   } );

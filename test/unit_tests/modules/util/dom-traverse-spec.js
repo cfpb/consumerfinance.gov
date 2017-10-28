@@ -9,7 +9,6 @@ const domTraverse = require( BASE_JS_PATH + 'modules/util/dom-traverse' );
 describe( 'Dom Traverse', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )();
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

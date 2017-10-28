@@ -7,14 +7,13 @@ const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 const chai = require( 'chai' );
 const expect = chai.expect;
 
-const HTML_SNIPPET = ``;
+const HTML_SNIPPET = '';
 
 describe( 'FilterableListControls', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
     const FilterableListControls =
-    require( BASE_JS_PATH + 'organisms/FilterableListControls' );
+      require( BASE_JS_PATH + 'organisms/FilterableListControls' );
   } );
 
   after( () => this.jsdom() );

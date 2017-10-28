@@ -9,18 +9,18 @@ let sandbox;
 const behavior = require( BASE_JS_PATH + 'modules/util/behavior' );
 
 const HTML_SNIPPET =
-  '<a href="#main" id="skip-nav">Skip to main content</a>' +
-  '<a class="o-mega-menu_content-link o-mega-menu_content-1-link"' +
-      'data-js-hook="behavior_flyout-menu_trigger">' +
-        'Consumer Tools' +
-  '</a>' +
-  '<a class="o-mega-menu_content-link o-mega-menu_content-1-link"' +
-      'data-js-hook="behavior_flyout-menu_trigger">' +
-        'Educational Resources' +
-  '</a>' +
-  '<div data-js-hook="behavior_flyout-menu">' +
-      '<div data-js-hook="behavior_flyout-menu_content"></div>' +
-  '</div>';
+  `<a href="#main" id="skip-nav">Skip to main content</a>
+   <a class="o-mega-menu_content-link o-mega-menu_content-1-link"
+      data-js-hook="behavior_flyout-menu_trigger">
+        Consumer Tools
+  </a>
+  <a class="o-mega-menu_content-link o-mega-menu_content-1-link"
+     data-js-hook="behavior_flyout-menu_trigger">
+        Educational Resources
+  </a>
+  <div data-js-hook="behavior_flyout-menu">
+      <div data-js-hook="behavior_flyout-menu_content"></div>
+  </div>`;
 
 function triggerEvent( target, eventType, eventOption ) {
   const event = document.createEvent( 'Event' );
@@ -38,7 +38,6 @@ describe( 'behavior', function() {
 
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

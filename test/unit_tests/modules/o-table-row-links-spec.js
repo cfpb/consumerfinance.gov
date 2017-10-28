@@ -40,7 +40,6 @@ function triggerClickEvent( target ) {
 describe( 'o-table-row-links', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

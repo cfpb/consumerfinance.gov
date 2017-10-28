@@ -11,7 +11,6 @@ const domManipulators = require(
 describe( 'Dom Manipulators create', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )();
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

@@ -10,7 +10,7 @@ const standardType = require( BASE_LOC + 'modules/util/standard-type' );
 
 describe( 'BreakpointHandler', () => {
   before( () => {
-    this.jsdom = require( 'jsdom-global' )( ``, {
+    this.jsdom = require( 'jsdom-global' )( '', {
       beforeParse( win ) {
         const resizeEvent = win.document.createEvent( 'Event' );
         resizeEvent.initEvent( 'resize', true, true );
@@ -45,16 +45,15 @@ describe( 'BreakpointHandler', () => {
         };
       }
     } );
-    document = window.document;
 
     // Simulate window resize event
-    const resizeEvent = document.createEvent('Event');
-    resizeEvent.initEvent('resize', true, true);
+    const resizeEvent = document.createEvent( 'Event' );
+    resizeEvent.initEvent( 'resize', true, true );
 
-    global.window.resizeTo = (width, height) => {
+    global.window.resizeTo = ( width, height ) => {
       global.window.innerWidth = width || global.window.innerWidth;
-      global.window.innerHeight = width || global.window.innerHeight;
-      global.window.dispatchEvent(resizeEvent);
+      global.window.innerHeight = height || global.window.innerHeight;
+      global.window.dispatchEvent( resizeEvent );
     };
   } );
 

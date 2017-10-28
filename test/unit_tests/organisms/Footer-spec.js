@@ -20,7 +20,7 @@ const HTML_SNIPPET =
   '</a>';
 
 function triggerClick( target ) {
-  var clickEvent = new window.MouseEvent( 'click', {
+  const clickEvent = new window.MouseEvent( 'click', {
     bubbles: true,
     cancelable: true,
     view: window
@@ -35,9 +35,9 @@ function scrollTo( xCoord, yCoord ) {
 }
 
 function requestAnimationFrame( callback ) {
-  var currTime = new Date().getTime();
-  var timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) );
-  var id = window.setTimeout(
+  const currTime = new Date().getTime();
+  const timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) );
+  const id = window.setTimeout(
     function() {
       callback( currTime + timeToCall );
     }, timeToCall
@@ -51,7 +51,6 @@ function requestAnimationFrame( callback ) {
 describe( 'Footer', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
     sandbox = sinon.sandbox.create();
 
     global.NodeList = window.NodeList;

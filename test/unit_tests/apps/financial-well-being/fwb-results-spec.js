@@ -119,7 +119,6 @@ function initFwbResults( ) {
 describe( 'fwb-results', () => {
   beforeEach( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
     sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     window.dataLayer = [];
@@ -137,7 +136,7 @@ describe( 'fwb-results', () => {
 
   afterEach( () => {
     sandbox.restore();
-    this.jsdom()
+    this.jsdom();
   } );
 
   it( 'initialize the expandables on page load', () => {

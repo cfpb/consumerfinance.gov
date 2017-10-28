@@ -81,7 +81,6 @@ function triggerClickEvent( target ) {
 describe( 'ratings-form', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

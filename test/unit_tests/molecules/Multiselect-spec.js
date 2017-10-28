@@ -28,7 +28,6 @@ function keyPress( target, key ) {
 describe( 'Multiselect', function() {
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

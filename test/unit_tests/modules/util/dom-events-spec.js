@@ -10,7 +10,6 @@ let clicked;
 describe( 'Dom Events bindEvent', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )();
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

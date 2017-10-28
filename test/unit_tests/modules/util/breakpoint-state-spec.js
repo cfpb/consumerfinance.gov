@@ -15,7 +15,6 @@ let configKeys;
 describe( 'getBreakpointState', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )();
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

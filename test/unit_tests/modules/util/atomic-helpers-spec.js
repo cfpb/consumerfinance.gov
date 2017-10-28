@@ -12,14 +12,11 @@ const HTML_SNIPPET = '<div class="container">' +
                      '<div class="o-expandable"></div></div>';
 
 describe( 'atomic-helpers', () => {
-  let document;
-
   let containerDom;
   let expandableDom;
 
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
     containerDom = document.querySelector( '.container' );
     expandableDom = document.querySelector( '.o-expandable' );
   } );

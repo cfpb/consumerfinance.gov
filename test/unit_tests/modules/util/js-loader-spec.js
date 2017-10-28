@@ -8,11 +8,10 @@ const jsLoader = require( BASE_JS_PATH + 'modules/util/js-loader' );
 describe( 'loadScript method', () => {
   before( () => {
     // Settings object passed to jsdom is for loading external resources.
-    this.jsdom = require( 'jsdom-global' )( ``, {
+    this.jsdom = require( 'jsdom-global' )( '', {
       runScripts: 'dangerously',
       resources: 'usable'
     } );
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

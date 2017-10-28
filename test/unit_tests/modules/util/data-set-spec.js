@@ -5,8 +5,7 @@ const dataSet = require( BASE_JS_PATH + 'modules/util/data-set' ).dataSet;
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const sinon = require( 'sinon' );
-let sandbox;
+
 let baseDom;
 
 const HTML_SNIPPET =
@@ -21,7 +20,6 @@ const HTML_SNIPPET =
 describe( 'data-set', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
     baseDom = document.querySelector( 'div' );
   } );
 
@@ -40,10 +38,11 @@ describe( 'data-set', () => {
 
   describe( 'dataset attribute is NOT supported', () => {
     it( 'should have the correct keys and values when using utility', () => {
-      // Removes dataset from jsdom.
-      document = {};
+
+      // Removes dataset from jsdom by setting dataset to undefined.
+      document = {}; // eslint-disable-line no-native-reassign
       document.documentElement = {};
-      document.documentElement.dataset = undefined;
+      document.documentElement.dataset = undefined; // eslint-disable-line no-undefined
 
       const dataset = dataSet( baseDom );
       expect( dataset.testValueA ).to.equal( 'testValueA' );

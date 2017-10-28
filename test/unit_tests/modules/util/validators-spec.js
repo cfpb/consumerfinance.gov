@@ -11,7 +11,6 @@ let returnedObject;
 describe( 'Validators', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )();
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

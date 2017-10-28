@@ -41,7 +41,6 @@ function triggerEvent( target, eventType, eventOption ) {
 describe( 'ClearableInput', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
   } );
 
   after( () => this.jsdom() );

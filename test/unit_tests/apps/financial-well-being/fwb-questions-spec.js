@@ -156,7 +156,6 @@ function fillOutForm() {
 describe( 'fwb-questions', () => {
   before( () => {
     this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
   } );
 
   after( () => this.jsdom() );
