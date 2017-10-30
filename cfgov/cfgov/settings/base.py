@@ -382,12 +382,6 @@ SHEER_SITES = {
     'owning-a-home':
         Path(os.environ.get('OAH_SHEER_PATH') or
              Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
-    'fin-ed-resources':
-        Path(os.environ.get('FIN_ED_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
-    'know-before-you-owe':
-        Path(os.environ.get('KBYO_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
 }
 
 # The base URL for the API that we use to access layers and the regulation.
