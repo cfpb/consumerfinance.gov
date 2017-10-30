@@ -13,13 +13,10 @@ services:
         volumes:
             - "/var/lib/mysql"
     elasticsearch:
-        image: elasticsearch:2.3
+        build: docker/elasticsearch
         ports:
             - "9200:9200"
             - "9300:9300"
-        volumes:
-            - ./docker:/apps
-        entrypoint: /apps/docker-entrypoint-es-plugins.sh
     python:
         build: .
         ports:
