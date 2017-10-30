@@ -116,25 +116,28 @@ urlpatterns = [
                       'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
-    url(r'^practitioner-resources/economically-vulnerable/$', TemplateView.as_view(
-        template_name='empowerment/index.html'),
-        name='empowerment'),
+    url(r'^practitioner-resources/economically-vulnerable/$',
+        TemplateView.as_view(
+            template_name='empowerment/index.html'),
+            name='empowerment'),
     url(r'^fair-lending/$', TemplateView.as_view(
         template_name='fair-lending/index.html'),
         name='fair-lending'),
-        
+
     url(r'^practitioner-resources/students/$', TemplateView.as_view(
         template_name='students/index.html'),
         name='students'),
-    url(r'^practitioner-resources/students/knowbeforeyouowe/$', TemplateView.as_view(
-        template_name='students/knowbeforeyouowe/index.html'),
-        name='students-knowbeforeyouowe'),
-    url(r'^practitioner-resources/students/helping-borrowers-find-ways-to-stay-afloat/$',
+    url(r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(
-            template_name='students/helping-borrowers-find-'
-                      'ways-to-stay-afloat/index.html'),
-            name='students-helping-borrowers'),
-            
+            template_name='students/knowbeforeyouowe/index.html'),
+            name='students-knowbeforeyouowe'),
+    url(r'^practitioner-resources/students/'
+         'helping-borrowers-find-ways-to-stay-afloat/$',
+            TemplateView.as_view(
+                template_name='students/helping-borrowers-find-'
+                              'ways-to-stay-afloat/index.html'),
+                name='students-helping-borrowers'),
+
     url(r'^practitioner-resources/servicemembers/$', TemplateView.as_view(
         template_name='service-members/index.html'),
         name='servicemembers'),
@@ -151,16 +154,17 @@ urlpatterns = [
         TemplateView.as_view(
         template_name='service-members/planning/index.html'),
         name='servicemembers-planning'),
-    url(r'^practitioner-resources/servicemembers/planning/creativesavingsstrategies/$',
-        TemplateView.as_view(
-        template_name='service-members/planning/'
-                      'creativesavingsstrategies/index.html'),
-        name='servicemembers-planning'),
+    url(r'^practitioner-resources/servicemembers/planning/'
+         'creativesavingsstrategies/$',
+            TemplateView.as_view(
+                template_name='service-members/planning/'
+                              'creativesavingsstrategies/index.html'),
+                name='servicemembers-planning'),
     url(r'^practitioner-resources/servicemembers/protecting/$',
         TemplateView.as_view(
         template_name='service-members/protecting/index.html'),
         name='servicemembers-protecting'),
-        
+
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
@@ -345,19 +349,19 @@ urlpatterns = [
     url(r'^retirement/(?P<path>.*)$', RedirectView.as_view(
             url='/consumer-tools/retirement/%(path)s',
             permanent=True)),
-            
+
     # empowerment redirects
-    url(r'^empowerment/$',RedirectView.as_view(
+    url(r'^empowerment/$', RedirectView.as_view(
             url='/practitioner-resources/economically-vulnerable/',
             permanent=True)),
-            
+
     # students redirects
     url(r'^students/(?P<path>.*)$', RedirectView.as_view(
             url='/practitioner-resources/students/%(path)s',
             permanent=True)),
-            
+
     # servicemembers redirects
-    url(r'^servicemembers/on-demand-forums-and-tools/$',RedirectView.as_view(
+    url(r'^servicemembers/on-demand-forums-and-tools/$', RedirectView.as_view(
             url='/practitioner-resources/servicemembers/webinars/',
             permanent=True)),
     url(r'^servicemembers/(?P<path>.*)$', RedirectView.as_view(
