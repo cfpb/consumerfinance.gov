@@ -2,14 +2,17 @@
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const domEvents = require( BASE_JS_PATH + 'modules/util/dom-events' );
 let input;
 let clicked;
 
 describe( 'Dom Events bindEvent', () => {
-  jsdom();
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )();
+  } );
+
+  after( () => this.jsdom() );
 
   beforeEach( () => {
     input = document.createElement( 'input' );
