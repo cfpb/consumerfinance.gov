@@ -1,4 +1,2 @@
-for d in /src/cfgov-refresh/develop-apps/*/ ; do
-    export PYTHONPATH=$d:$PYTHONPATH
-done
+source /etc/profile.d/extend-environment.sh
 python /src/cfgov-refresh/cfgov/manage.py runserver 0.0.0.0:8000
