@@ -5,7 +5,6 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const chai = require( 'chai' );
 const sinon = require( 'sinon' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 
 describe( 'web-storage-proxy', () => {
   let webStorageProxy;
@@ -15,9 +14,8 @@ describe( 'web-storage-proxy', () => {
   let removeItem;
   let setStorage;
 
-  jsdom();
-
   before( () => {
+    this.jsdom = require( 'jsdom-global' )();
     webStorageProxy =
       require( BASE_JS_PATH + 'modules/util/web-storage-proxy.js' );
     setItem = webStorageProxy.setItem;
@@ -26,6 +24,8 @@ describe( 'web-storage-proxy', () => {
     setStorage = webStorageProxy.setStorage;
     sandbox = sinon.sandbox.create();
   } );
+
+  after( () => this.jsdom() );
 
   beforeEach( () => {
     // Storage Mock
