@@ -226,7 +226,6 @@ function stylesOAH() {
     .pipe( gulpAutoprefixer( {
       browsers: environment.getSupportedBrowserList( 'css' )
     } ) )
-    .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( {
       compatibility: 'ie9',
       inline: [ 'none' ]
