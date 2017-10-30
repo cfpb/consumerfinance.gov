@@ -3,43 +3,17 @@
    Global banner in the header.
    ========================================================================== */
 .m-global-banner {
-    padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
-    position: relative;
-    z-index: 10;
-    margin-bottom: 0;
-    background: @gold-20;
-    border-bottom: 1px solid @gray-40;
-    font-size: 0.875em;
+    // Override notification box styling to align notification in header.
+    .m-notification {
+        border: none;
+        padding: 0;
 
-    .respond-to-min(@bp-sm-min, {
-        font-size: 1em;
-    });
-
-    &_head {
-        .h4();
-        margin-bottom: 0;
-
-        .o-expandable__expanded & {
-            margin-bottom: unit( 5px / @base-font-size-px, em );
+        &_icon {
+          left: 0;
+          top: 0;
         }
     }
-
-    &_icon {
-        color: @gold;
-    }
-
-    &_desc {
-        margin-top: @grid_gutter-width / 2;
-        margin-bottom: 0;
-        // Increase padding left to line up with text in heading above.
-        // Magic number derived from 1em block (roughly the width of the icon)
-        // at 18px, the font size of the heading, plus 4.5px for the
-        // standard inline word space (~ 0.25em) between the icon and the text.
-        padding-left: unit( 22.5px / @base-font-size-px, em );
-        background: @gold-20;
-    }
 }
-
 /* topdoc
     name: EOF
     eof: true
