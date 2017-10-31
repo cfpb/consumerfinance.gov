@@ -525,10 +525,13 @@ FLAGS = {
         'site': 'beta.consumerfinance.gov',
     },
 
-    # When enabled, Display a "techical issues" banner on /complaintdatabase
+    # When enabled, include a recruitment code comment in the base template.
+    'CFPB_RECRUITING': {},
+
+    # When enabled, display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
 
-    # When enabled, use wagtail for /company-signup/ (instead of selfregistration app)
+    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
     'WAGTAIL_COMPANY_SIGNUP': {},
 
     # IA changes to mega menu for user testing
