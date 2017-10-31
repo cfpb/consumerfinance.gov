@@ -19,13 +19,23 @@ class Command(BaseCommand):
             '--period',
             type=int,
             default=90,
-            help='Number of days that defines inactivity, disables user'
+            help='Number of days that defines inactivity'
         )
         parser.add_argument(
             '--warn-after',
             type=int,
             default=60,
             help='The number of days prompting an inactivity warning email'
+        )
+        parser.add_argument(
+            '--deactivate-users',
+            action='store_true',
+            help='A flag to deactivate users over inactivity threshold'
+        )
+        parser.add_argument(
+            '--warn-users',
+            action='store_true',
+            help='A flag to email inactivity warnings to users'
         )
         parser.add_argument(
             '--emails',
@@ -39,53 +49,65 @@ class Command(BaseCommand):
         emails = options['emails']
         warn_period = options['warn_after']
 
-        last_possible_date = timezone.now() - timedelta(days=period)
-        warn_date = timezone.now() - timedelta(days=warn_period)
+        # Notification flags
+        deactivate_users_flag_set = options['deactivate_users']
+        warn_users_flag_set = options['warn_users']
 
         User = get_user_model()
+
+        last_possible_date = timezone.now() - timedelta(days=period)
+
         inactive_users = User.objects.filter(
             Q(last_login__lt=last_possible_date) | Q(last_login__isnull=True),
             is_active=True,
             date_joined__lt=last_possible_date
         )
-        warn_users = User.objects.filter(
-            Q(last_login__lt=warn_date) | Q(last_login__isnull=True),
-            last_login__gt=last_possible_date,
-            is_active=True,
-            date_joined__lt=warn_date
-        )
 
-        if len(inactive_users) == 0 and len(warn_users) == 0:
-            return
+        if len(inactive_users) == 0:
+            self.stdout.write('No users are inactive {}+ days'.format(period))
+        else:
+            # List inactive users and then deactivate them
+            self.stdout.write('Users inactive for {}+ days:\n'.format(period))
+            self.stdout.write(self.format_inactive_users(inactive_users))
 
-        # List inactive users and then deactivate them
-        self.stdout.write('Users inactive for {}+ days:\n'.format(period))
-        self.stdout.write(self.format_inactive_users(inactive_users))
+            # Notify specified emails (e.g. system admins)
+            if len(emails) > 0:
+                self.stdout.write('Sending inactive user list to '
+                                  '{}\n'.format(','.join(emails)))
+                self.send_email(emails, period, inactive_users)
 
-        # Notify specified emails (e.g. system admins)
-        if len(emails) > 0:
-            self.stdout.write('Sending inactive user list to '
-                              '{}\n'.format(','.join(emails)))
-            self.send_email(emails, period, inactive_users)
+            # Deactivate inactive users
+            if deactivate_users_flag_set:
+                for user in inactive_users:
+                    self.deactivate_user(user)
+                    self.send_user_deactivation_email(user, period)
 
-        # Deactivate and notify inactive users
-        self.stdout.write('Deactivating and emailing {} users who have been '
-                          'inactive for {} days'.format(
-                              len(inactive_users),
-                              period))
+                # Deactivate and notify inactive users
+                self.stdout.write('Deactivating and emailing {} users who '
+                                  'have been inactive for {} days'.format(
+                                      len(inactive_users),
+                                      period))
 
-        for user in inactive_users:
-            self.deactivate_user(user)
-            self.send_user_deactivation_email(user, period)
+        if warn_users_flag_set:
+            warn_date = timezone.now() - timedelta(days=warn_period)
+            warn_users = User.objects.filter(
+                Q(last_login__lt=warn_date) | Q(last_login__isnull=True),
+                last_login__gt=last_possible_date,
+                is_active=True,
+                date_joined__lt=warn_date
+            )
 
-        # Notify users approaching deactivation
-        self.stdout.write('Emailing {} users who have been '
-                          'inactive for {} days'.format(
-                              len(warn_users),
-                              warn_period))
+            if len(warn_users) == 0:
+                return
 
-        for user in warn_users:
-            self.send_user_warning_email(user, warn_period, period)
+            # Notify users approaching deactivation
+            self.stdout.write('Emailing {} users who have been '
+                              'inactive for {} days'.format(
+                                  len(warn_users),
+                                  warn_period))
+
+            for user in warn_users:
+                self.send_user_warning_email(user, warn_period, period)
 
     def format_inactive_users(self, inactive_users):
         """Formats the list of inactive users for text email"""

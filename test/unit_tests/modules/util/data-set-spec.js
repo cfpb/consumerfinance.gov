@@ -5,46 +5,51 @@ const dataSet = require( BASE_JS_PATH + 'modules/util/data-set' ).dataSet;
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
-const sinon = require( 'sinon' );
-let sandbox;
+
 let baseDom;
 
 const HTML_SNIPPET =
-  '<div data-test-value-a="testValueA"' +
-        'data-test-value-B="testValueB"' +
-        'data-testValue-C="testValueC"' +
-        'data-test-ValuE-D="testValueD"' +
-        'data-TEST-value-E="testValueE" >' +
-    'testValue' +
-  '</div>';
-
-// JSdom hasn't implmented Element.dataset so I used Chrome to determine
-// the correct values : http://jsfiddle.net/0j9u66h0/13/.
-const datasetLookup = {
-  testValueA: 'testValueA',
-  testValueB: 'testValueB',
-  testvalueC: 'testValueC',
-  testValueD: 'testValueD',
-  testValueE: 'testValueE'
-};
+  `<div data-test-value-a="testValueA"
+        data-test-value-B="testValueB"
+        data-testValue-C="testValueC"
+        data-test-ValuE-D="testValueD"
+        data-TEST-value-E="testValueE">
+    testValue
+  </div>`;
 
 describe( 'data-set', () => {
-  jsdom();
-
-  beforeEach( () => {
-    sandbox = sinon.sandbox.create();
-    document.body.innerHTML = HTML_SNIPPET;
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
     baseDom = document.querySelector( 'div' );
   } );
 
-  afterEach( () => {
-    sandbox.restore();
+  after( () => this.jsdom() );
+
+  describe( 'dataset attribute is supported', () => {
+    it( 'should have the correct keys and values when using utility', () => {
+      const dataset = dataSet( baseDom );
+      expect( dataset.testValueA ).to.equal( 'testValueA' );
+      expect( dataset.testValueB ).to.equal( 'testValueB' );
+      expect( dataset.testvalueC ).to.equal( 'testValueC' );
+      expect( dataset.testValueD ).to.equal( 'testValueD' );
+      expect( dataset.testValueE ).to.equal( 'testValueE' );
+    } );
   } );
 
-  it( 'should have the correct keys and values when using utility', () => {
-    const dataset = dataSet( baseDom );
-    expect( JSON.stringify( dataset ) ===
-      JSON.stringify( datasetLookup ) ).to.equal( true );
+  describe( 'dataset attribute is NOT supported', () => {
+    it( 'should have the correct keys and values when using utility', () => {
+
+      // Removes dataset from jsdom by setting dataset to undefined.
+      document = {}; // eslint-disable-line no-native-reassign
+      document.documentElement = {};
+      document.documentElement.dataset = undefined; // eslint-disable-line no-undefined
+
+      const dataset = dataSet( baseDom );
+      expect( dataset.testValueA ).to.equal( 'testValueA' );
+      expect( dataset.testValueB ).to.equal( 'testValueB' );
+      expect( dataset.testvalueC ).to.equal( 'testValueC' );
+      expect( dataset.testValueD ).to.equal( 'testValueD' );
+      expect( dataset.testValueE ).to.equal( 'testValueE' );
+    } );
   } );
 } );

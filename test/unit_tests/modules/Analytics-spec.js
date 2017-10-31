@@ -4,7 +4,6 @@ const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const sinon = require( 'sinon' );
 let sandbox;
 let Analytics;
@@ -13,12 +12,13 @@ let getDataLayerOptions;
 let UNDEFINED;
 
 describe( 'Analytics', () => {
-  jsdom();
-
   before( () => {
+    this.jsdom = require( 'jsdom-global' )();
     Analytics = require( BASE_JS_PATH + 'modules/Analytics' );
     getDataLayerOptions = Analytics.getDataLayerOptions;
   } );
+
+  after( () => this.jsdom() );
 
   beforeEach( () => {
     sandbox = sinon.sandbox.create();

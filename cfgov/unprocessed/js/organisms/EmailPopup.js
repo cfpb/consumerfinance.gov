@@ -1,6 +1,5 @@
 'use strict';
 
-var helpers = require( '../modules/util/email-popup-helpers' );
 var FormSubmit = require( './FormSubmit.js' );
 var validators = require( '../modules/util/validators' );
 var emailHelpers = require( '../modules/util/email-popup-helpers' );
@@ -27,7 +26,7 @@ function EmailPopup( el ) {
    */
   function hidePopup() {
     _baseElement.classList.remove( VISIBLE_CLASS );
-    helpers.recordEmailPopupClosure();
+    emailHelpers.recordEmailPopupClosure();
   }
 
   /**
@@ -35,9 +34,9 @@ function EmailPopup( el ) {
    * @returns {boolean} true.
    */
   function showPopup() {
-    if ( helpers.showEmailPopup() ) {
+    if ( emailHelpers.showEmailPopup() ) {
       _baseElement.classList.add( VISIBLE_CLASS );
-      helpers.recordEmailPopupView();
+      emailHelpers.recordEmailPopupView();
     }
 
     return true;
