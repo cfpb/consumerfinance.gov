@@ -1,0 +1,4 @@
+# This is NOT a shell script, just a list of KEY=value pairs
+# see https://docs.docker.com/compose/compose-file/#env_file
+# Example:
+# CFGOV_PROD_DB_LOCATION=http://hostname/db_dumps/production_django/latest/production_django.sql.gz
