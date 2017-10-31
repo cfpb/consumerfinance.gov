@@ -14,6 +14,7 @@ You may also wish to fork the repository on GitHub and clone the resultant perso
 There are two ways to install cfgov-refresh:
 
 - [Stand-alone installation](#stand-alone-installation)
+- [Docker-compose installation](#docker-compose-installation)
 - [Vagrant-box installation](#vagrant-box-installation)
 
 !!! danger
@@ -199,6 +200,20 @@ Want to know more about what the setup scripts are doing?
 Get any errors? [See our troubleshooting tips.](#troubleshooting)
 
 **Continue following the [usage instructions](usage).**
+
+## Docker-compose installation
+
+### Tools we use for developing with Docker
+
+- **Docker**: You may not need to interact directly with Docker: but you should know that it's a client/server application for managing "containers" (a way of running software in an isolated environment) and "images" (a snapshot of all of the files neccessary to run a container).
+- **Docker Compose**: Compose allows you to configure and run a collection of connected containers (like a web application and it's database) 
+- **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X, we'll use Docker Machine to start the Docker server in a virtual linux environment (using Virtualbox)
+
+### 1. Set up 
+
+If you are on a machine with native docker support (Linux or Windows), please follow the instructions provided by your OS vendor or Docker.com to get set up, and install docker-compose.
+
+On a mac, you will need 
 
 
 ## Vagrant-box installation
