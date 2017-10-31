@@ -708,7 +708,7 @@ class Expandable(BaseExpandable):
 class ExpandableGroup(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
-    is_accordion = blocks.BooleanBlock(required=False)    
+    is_accordion = blocks.BooleanBlock(required=False)
     has_rule = blocks.BooleanBlock(
         default=False,
         required=False,
