@@ -33,7 +33,7 @@ class GithubAlert(object):
         issues = self.repo().iter_issues(state='all')
         return next((issue for issue in issues if issue.title == title), None)
 
-    def post(self, title, body):
+    def post(self, title, body, labels=['Maintenance and Response', 'alert']):
         # Truncate the title if needed, max is 256 chars
         title = title[:256]
         issue = self.matching_issue(title)
@@ -47,9 +47,6 @@ class GithubAlert(object):
             issue = self.repo().create_issue(
                 title=title,
                 body=body,
-                labels=[
-                    'Maintenance and Response',
-                    'alert'
-                ],
+                labels=labels,
             )
         return issue

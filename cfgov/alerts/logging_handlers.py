@@ -21,7 +21,12 @@ class CFGovErrorHandler(logging.Handler):
         body = self.format_body(record)
 
         github_api = GithubAlert(credentials={})
-        github_api.post(title=title, body=body)
+        github_api.post(title=title,
+                        body=body,
+                        labels=[
+                            'logging',
+                            'Maintenance and Response'
+                        ])
 
     def format_title(self, record):
         return record.getMessage()
