@@ -828,11 +828,11 @@ class AnswerModelTestCase(TestCase):
 
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
     def test_category_page_context_no_es(self, mock_es_query):
+        blank_facets = {'answers': {},
+                        'audiences': {},
+                        'subcategories': {}}
         mock_return_value = mock.Mock()
-        mock_return_value.facet_map = json.dumps(
-            {'answers': {},
-             'audiences': {},
-             'subcategories': {}})
+        mock_return_value.facet_map = json.dumps(blank_facets)
         mock_es_query.return_value = [mock_return_value]
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
@@ -840,9 +840,7 @@ class AnswerModelTestCase(TestCase):
         mock_request.site = mock_site
         cat_page = self.create_category_page(ask_category=self.category)
         test_context = cat_page.get_context(mock_request)
-        self.assertEqual(
-            test_context['facet_map'],
-            mock_return_value.facet_map)
+        self.assertEqual(test_context['facets'], blank_facets)
 
     def test_category_page_get_english_template(self):
         mock_site = mock.Mock()

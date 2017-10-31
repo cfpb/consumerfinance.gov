@@ -4,13 +4,16 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const domManipulators = require(
   BASE_JS_PATH + 'modules/util/dom-manipulators'
 );
 
 describe( 'Dom Manipulators create', () => {
-  jsdom();
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )();
+  } );
+
+  after( () => this.jsdom() );
 
   before( () => {
     const heading = domManipulators.create( 'h1', {

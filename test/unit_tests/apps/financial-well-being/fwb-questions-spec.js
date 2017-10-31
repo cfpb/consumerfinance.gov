@@ -3,7 +3,6 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const sinon = require( 'sinon' );
 let fwbQuestions;
 let sandbox;
@@ -135,27 +134,36 @@ const HTML_SNIPPET =
 function triggerClickEvent( target ) {
   const event = document.createEvent( 'Event' );
   event.initEvent( 'click', true, true );
-  return target.dispatchEvent( event );
-}
 
-function initFwbQuestions() {
-  fwbQuestions = require(
-    BASE_JS_PATH + 'apps/financial-well-being/fwb-questions'
-  );
-  fwbQuestions.init();
+  if ( target.id === submitBtnDom.id ) {
+    // Prevent submission of the form if the submit button is clicked.
+    const form = document.querySelector( '#quiz-form' );
+    form.addEventListener( 'submit', evt => {
+      evt.preventDefault();
+    } );
+  }
+
+  return target.dispatchEvent( event );
 }
 
 function fillOutForm() {
   const radioButtons = document.querySelectorAll( '[type="radio"]' );
-  [].forEach.call( radioButtons, function( radioElement ) {
+  [].forEach.call( radioButtons, radioElement => {
     triggerClickEvent( radioElement );
   } );
 }
 
 describe( 'fwb-questions', () => {
-  jsdom();
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+  } );
+
+  after( () => this.jsdom() );
 
   beforeEach( () => {
+    fwbQuestions = require(
+      BASE_JS_PATH + 'apps/financial-well-being/fwb-questions'
+    );
     sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     window.dataLayer = [];
@@ -169,7 +177,7 @@ describe( 'fwb-questions', () => {
   } );
 
   it( 'submit button should have the correct state on initialization.', () => {
-    initFwbQuestions();
+    fwbQuestions.init();
     expect( submitBtnDom.disabled )
     .to.equal( true );
 
@@ -178,37 +186,34 @@ describe( 'fwb-questions', () => {
   } );
 
   it( 'submit button shouldn’t submit the form ' +
-      'unless all the questions are completed.',
-    () => {
-      initFwbQuestions();
-      const formSubmissionStatus = triggerClickEvent( submitBtnDom );
-      expect( submitBtnDom.disabled ).to.equal( true );
-      expect( formSubmissionStatus ).to.equal( false );
-    } );
+      'unless all the questions are completed.', () => {
+    fwbQuestions.init();
+    const formSubmissionStatus = triggerClickEvent( submitBtnDom );
+    expect( submitBtnDom.disabled ).to.equal( true );
+    expect( formSubmissionStatus ).to.equal( false );
+  } );
 
   it( 'submit button should submit the form ' +
-      'if all the questions are completed before page load.',
-    () => {
-      fillOutForm();
-      initFwbQuestions();
-      const formSubmissionStatus = triggerClickEvent( submitBtnDom );
-      expect( submitBtnDom.disabled ).to.equal( false );
-      expect( formSubmissionStatus ).to.equal( true );
-    } );
+       'if all the questions are completed before page load.', () => {
+    fillOutForm();
+    fwbQuestions.init();
+    const formSubmissionStatus = triggerClickEvent( submitBtnDom );
+    expect( submitBtnDom.disabled ).to.equal( false );
+    expect( formSubmissionStatus ).to.equal( true );
+  } );
 
   it( 'submit button should submit the form ' +
-       'if all the questions are completed after page load.',
-    () => {
-      initFwbQuestions();
-      fillOutForm();
-      const formSubmissionStatus = triggerClickEvent( submitBtnDom );
-      expect( submitBtnDom.disabled ).to.equal( false );
-      expect( formSubmissionStatus ).to.equal( true );
-    } );
+       'if all the questions are completed after page load.', () => {
+    fwbQuestions.init();
+    fillOutForm();
+    const formSubmissionStatus = triggerClickEvent( submitBtnDom );
+    expect( submitBtnDom.disabled ).to.equal( false );
+    expect( formSubmissionStatus ).to.equal( true );
+  } );
 
   it( 'should send the correct analytics ' +
-       'when a radio button is clicked', () => {
-    initFwbQuestions();
+      'when a radio button is clicked', () => {
+    fwbQuestions.init();
     triggerClickEvent( radioButtonsDom[0] );
     expect( window.dataLayer[0] ).to.deep.equal( dataLayerEventRadio );
   } );
@@ -216,7 +221,7 @@ describe( 'fwb-questions', () => {
   it( 'should send the correct analytics ' +
        'when the submit button is clicked', () => {
     fillOutForm();
-    initFwbQuestions();
+    fwbQuestions.init();
     triggerClickEvent( submitBtnDom );
     expect( window.dataLayer[0] ).to.deep.equal( dataLayerEventSubmit );
   } );

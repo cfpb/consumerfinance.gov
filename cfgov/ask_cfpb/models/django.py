@@ -161,14 +161,15 @@ class Category(models.Model):
             (str(answer.pk),
              {'question': answer.question,
               'url': '/ask-cfpb/slug-en-{}'.format(answer.pk)}
-             ) for answer in answers if answer.english_page])
+             ) for answer in answers
+            if answer.answer_pages.filter(language='en', redirect_to=None)])
         subcat_data = {}
         for subcat in subcats:
             key = str(subcat.id)
             subcat_data[key] = [
                 str(answer.pk) for answer
                 in subcat.answer_set.all()
-                if answer.english_page]
+                if answer.answer_pages.filter(language='en', redirect_to=None)]
         container['subcategories'].update(subcat_data)
         audience_map = {audience: {'all': [], 'name': audience.name}
                         for audience in audiences}

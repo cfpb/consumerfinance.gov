@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
@@ -76,9 +77,13 @@ urlpatterns = [
         include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
 
     url(r'^owning-a-home/mortgage-closing/',
-        include(oah.urls_for_prefix('mortgage-closing'))),
+        TemplateView.as_view(
+        template_name='owning-a-home/mortgage-closing/index.html'),
+        name='mortgage-closing'),
     url(r'^owning-a-home/mortgage-estimate/',
-        include(oah.urls_for_prefix('mortgage-estimate'))),
+        TemplateView.as_view(
+        template_name='owning-a-home/mortgage-estimate/index.html'),
+        name='mortgage-estimate'),
 
     url(r'^owning-a-home/process/',
         include(oah.urls_for_prefix('process/prepare/'))),
@@ -467,7 +472,9 @@ if settings.ALLOW_ADMIN_URL:
 
 if 'selfregistration' in settings.INSTALLED_APPS:
     from selfregistration.views import CompanySignup
-    pattern = url(r'^company-signup/', CompanySignup.as_view())
+    pattern = flagged_url('WAGTAIL_COMPANY_SIGNUP', r'^company-signup/',
+                          CompanySignup.as_view(), state=False,
+                          fallback=lambda req: ServeView.as_view()(req, req.path)) # noqa
     urlpatterns.append(pattern)
 
 if settings.DEBUG:
@@ -514,6 +521,7 @@ def handle_error(code, request):
 
         return HttpResponse("This request could not be processed, "
                             "HTTP Error %s." % str(code), status=code)
+
 
 handler404 = partial(handle_error, 404)
 handler500 = partial(handle_error, 500)

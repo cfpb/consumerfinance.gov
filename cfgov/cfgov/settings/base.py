@@ -382,12 +382,6 @@ SHEER_SITES = {
     'owning-a-home':
         Path(os.environ.get('OAH_SHEER_PATH') or
              Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
-    'fin-ed-resources':
-        Path(os.environ.get('FIN_ED_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
-    'know-before-you-owe':
-        Path(os.environ.get('KBYO_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
 }
 
 # The base URL for the API that we use to access layers and the regulation.
@@ -534,6 +528,9 @@ FLAGS = {
     # When enabled, Display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
 
+    # When enabled, use wagtail for /company-signup/ (instead of selfregistration app)
+    'WAGTAIL_COMPANY_SIGNUP': {},
+
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
@@ -557,6 +554,8 @@ FLAGS = {
     # Intended for use with path conditions.
     'AB_TESTING': {},
 
+    # When enabled, should display the email popup.
+    'EMAIL_POPUP': {},
 
     # The next version of eRegulations
     'EREGS20': {
@@ -571,6 +570,9 @@ FLAGS = {
 
     # The release of the consumer Financial Well Being Scale app
     'FWB_RELEASE': {},
+
+    # The release of new Whistleblowers content/pages
+    'WHISTLEBLOWER_RELEASE': {},
 }
 
 
