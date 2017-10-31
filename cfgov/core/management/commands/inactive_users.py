@@ -170,3 +170,4 @@ class Command(BaseCommand):
     def deactivate_user(self, user):
         """Deactivate the specified user account"""
         user.is_active = False
+        user.save()
