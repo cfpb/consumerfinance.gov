@@ -15,13 +15,9 @@
 
    value.link_blobs:  A list composed of Wagtail Streamfield blocks.
 
-   value.lines_between_items:   Boolean for whether items should have
-                                horizontal rules separating them.
-
 
    ========================================================================== #}
 
 {% from 'organisms/info-unit-group.html' import info_unit_group with context %}
 
-{{ info_unit_group( blocks=value.link_blobs, columns=2, heading=value.heading,
-    lines_between_items=value.lines_between_items) }}
+{{ info_unit_group( blocks=value.link_blobs, columns=2, heading=value.heading) }}

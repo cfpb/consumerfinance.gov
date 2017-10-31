@@ -164,22 +164,6 @@ class ImageText5050Group(blocks.StructBlock):
                                          required=False)),
     ])
 
-    has_top_border = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        label="Has top rule line",
-        help_text=('Check this to add a horizontal rule line to top of '
-                   'image text group.')
-    )
-
-    lines_between_items = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        label='Show rule lines between items',
-        help_text=('Check this to show horizontal rule lines between image '
-                   'text units.')
-    )
-
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
@@ -195,13 +179,6 @@ class ImageText2575Group(blocks.StructBlock):
         help_text=('Check this to link all images and headings to the URL of '
                    'the first link in their unit\'s list, if there is a link.')
     )
-    has_top_border = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        label="Has top rule line",
-        help_text=('Check this to add a horizontal rule line to top of '
-                   'image text group.')
-    )
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
@@ -211,27 +188,6 @@ class ImageText2575Group(blocks.StructBlock):
 
 class LinkBlobGroup(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    has_top_border = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        label="Has top rule line",
-        help_text=('Check this to add a horizontal rule line to top of '
-                   'link blob group.')
-    )
-    has_bottom_border = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        label="Has bottom rule line",
-        help_text=('Check this to add a horizontal rule line to bottom of '
-                   'link blob group.')
-    )
-    lines_between_items = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        label='Show rule lines between items',
-        help_text=('Check this to show horizontal rule lines between link '
-                   'blob rows.')
-    )
     link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
 
 
@@ -625,12 +581,6 @@ class ModelTable(ModelBlock):
         required=False,
         help_text='Message to display if there is no table data.'
     )
-    has_top_border = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        label="Has top rule line",
-        help_text='Add a horizontal rule line to top of table block.'
-    )
 
     def render(self, value, context=None):
         rows = [self.field_headers]
@@ -758,9 +708,14 @@ class Expandable(BaseExpandable):
 class ExpandableGroup(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
-
-    is_accordion = blocks.BooleanBlock(required=False)
-    has_rule = blocks.BooleanBlock(required=False)
+    is_accordion = blocks.BooleanBlock(required=False)    
+    has_rule = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has top rule line",
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'expandable group.')
+    )
 
     expandables = blocks.ListBlock(Expandable())
 
@@ -958,6 +913,13 @@ class MortgageChartBlock(blocks.StructBlock):
     note = blocks.CharBlock(
         required=False,
         help_text='Text for "Note" section of footnotes.')
+    has_top_border = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has top rule line",
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'chart block.')
+    )
 
     class Meta:
         label = 'Mortgage Chart Block'
@@ -988,7 +950,7 @@ class SnippetList(blocks.StructBlock):
         required=False,
         label="Has top rule line",
         help_text=('Check this to add a horizontal rule line to top of '
-                   'chart block.')
+                   'snippet list.')
     )
     image = atoms.ImageBasic(required=False)
     actions_column_width = blocks.ChoiceBlock(
