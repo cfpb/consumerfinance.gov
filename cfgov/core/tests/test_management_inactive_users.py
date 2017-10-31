@@ -22,6 +22,7 @@ class InactiveUsersTestCase(TestCase):
         days_91 = timezone.now() - timedelta(days=91)
         days_90 = timezone.now() - timedelta(days=90)
         days_89 = timezone.now() - timedelta(days=89)
+        days_61 = timezone.now() - timedelta(days=61)
 
         # This user is clearly inactive at 91 days
         self.user_1 = User.objects.create(username='user_1',
@@ -45,6 +46,11 @@ class InactiveUsersTestCase(TestCase):
 
         # This user has never logged in, joined today.
         self.user_5 = User.objects.create(username='user_5')
+
+        # This user last logged on 61 days ago, will be warned.
+        self.user_6 = User.objects.create(username='user_6',
+                                          last_login=days_61,
+                                          date_joined=days_91)
 
         self.stdout = StringIO()
 
@@ -74,6 +80,7 @@ class InactiveUsersTestCase(TestCase):
         self.assertIn("user_4", self.get_stdout())
         self.assertNotIn("üser_3", self.get_stdout())
         self.assertNotIn("user_5", self.get_stdout())
+        self.assertNotIn("user_6", self.get_stdout())
 
     def test_get_inactive_users_87_days(self):
         """ Test that four users are listed for a custom 87 day period """
@@ -83,6 +90,7 @@ class InactiveUsersTestCase(TestCase):
         self.assertIn("üser_3", self.get_stdout())
         self.assertIn("user_4", self.get_stdout())
         self.assertNotIn("user_5", self.get_stdout())
+        self.assertNotIn("user_6", self.get_stdout())
 
     def test_get_inactive_users_92_days(self):
         """ Test that no users are listed for a custom 92 day period """
@@ -92,6 +100,8 @@ class InactiveUsersTestCase(TestCase):
         self.assertNotIn("üser_3", self.get_stdout())
         self.assertNotIn("user_4", self.get_stdout())
         self.assertNotIn("user_5", self.get_stdout())
+        self.assertNotIn("user_6", self.get_stdout())
+        self.assertIn("No users are inactive", self.get_stdout())
 
     @override_settings(EMAIL_SUBJECT_PREFIX='[Prefix]')
     def test_sends_email(self):
@@ -100,8 +110,8 @@ class InactiveUsersTestCase(TestCase):
         call_command('inactive_users',
                      emails=['test@example.com'],
                      stdout=self.stdout)
-        # Outbox will have one system-owner email and four user emails
-        self.assertEqual(len(mail.outbox), 5)
+        # Outbox will have one system-owner email
+        self.assertEqual(len(mail.outbox), 1)
 
         # Test the first (summary) email for inactive users only
         email = mail.outbox[0]
@@ -117,3 +127,42 @@ class InactiveUsersTestCase(TestCase):
         self.assertNotIn("üser_3", message)
         self.assertNotIn("user_5", message)
         self.assertIn("test@example.com", self.get_stdout())
+
+        mail.outbox = []
+
+    @override_settings(EMAIL_SUBJECT_PREFIX='[Prefix]')
+    def test_sends_email_when_warning(self):
+        """ Test that mail.EmailMessage is called with the appropriate
+        list of users """
+
+        mail.outbox = []
+        call_command('inactive_users',
+                     '--warn-users',
+                     stdout=self.stdout)
+        # Outbox will have two user emails
+        self.assertEqual(len(mail.outbox), 2)
+
+    @override_settings(EMAIL_SUBJECT_PREFIX='[Prefix]')
+    def test_sends_email_when_deactivating(self):
+        """ Test that mail.EmailMessage is called with the appropriate
+        list of users """
+
+        mail.outbox = []
+        call_command('inactive_users',
+                     '--deactivate-users',
+                     stdout=self.stdout)
+        # Outbox will have three inactive user emails
+        self.assertEqual(len(mail.outbox), 3)
+
+    @override_settings(EMAIL_SUBJECT_PREFIX='[Prefix]')
+    def test_sends_email_when_deactivating_and_warning(self):
+        """ Test that mail.EmailMessage is called with the appropriate
+        list of users """
+
+        mail.outbox = []
+        call_command('inactive_users',
+                     '--deactivate-users',
+                     '--warn-users',
+                     stdout=self.stdout)
+        # Outbox will have five user emails
+        self.assertEqual(len(mail.outbox), 5)
