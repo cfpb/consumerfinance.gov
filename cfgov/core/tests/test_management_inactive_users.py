@@ -177,12 +177,12 @@ class InactiveUsersTestCase(TestCase):
         # May need to re-fetch users
         # inactive_users = User.objects.all()
         User = get_user_model()
-        self.assertEqual(User.objects.get(username="user_1").is_active, False)
-        self.assertEqual(User.objects.get(username="user_2").is_active, False)
-        self.assertEqual(User.objects.get(username="üser_3").is_active, True)
-        self.assertEqual(User.objects.get(username="user_4").is_active, False)
-        self.assertEqual(User.objects.get(username="user_5").is_active, True)
-        self.assertEqual(User.objects.get(username="user_6").is_active, True)
+        self.assertFalse(User.objects.get(username="user_1").is_active)
+        self.assertFalse(User.objects.get(username="user_2").is_active)
+        self.assertTrue(User.objects.get(username="üser_3").is_active)
+        self.assertFalse(User.objects.get(username="user_4").is_active)
+        self.assertTrue(User.objects.get(username="user_5").is_active)
+        self.assertTrue(User.objects.get(username="user_6").is_active)
 
     def test_users_properly_deactivated_when_deactivating_and_warning(self):
         """ Test that mail.EmailMessage is called with the appropriate
@@ -196,10 +196,9 @@ class InactiveUsersTestCase(TestCase):
 
         # Test that users were actually deactivated
         User = get_user_model()
-        self.assertEqual(User.objects.get(username="user_1").is_active, False)
-        self.assertEqual(User.objects.get(username="user_2").is_active, False)
-        self.assertEqual(User.objects.get(username="üser_3").is_active, True)
-        self.assertEqual(User.objects.get(username="user_4").is_active, False)
-        self.assertEqual(User.objects.get(username="user_5").is_active, True)
-        self.assertEqual(User.objects.get(username="user_6").is_active, True)
-
+        self.assertFalse(User.objects.get(username="user_1").is_active)
+        self.assertFalse(User.objects.get(username="user_2").is_active)
+        self.assertTrue(User.objects.get(username="üser_3").is_active)
+        self.assertFalse(User.objects.get(username="user_4").is_active)
+        self.assertTrue(User.objects.get(username="user_5").is_active)
+        self.assertTrue(User.objects.get(username="user_6").is_active)
