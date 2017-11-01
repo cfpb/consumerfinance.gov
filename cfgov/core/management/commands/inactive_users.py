@@ -144,10 +144,6 @@ class Command(BaseCommand):
             "Your Wagtail account has not been accessed for more than " + \
             "{} days. In accordance with information security policies, " + \
             "your account will be deactivated after {} days of inactivity." + \
-            "\n\nIf you require access to Wagtail in the future and would " + \
-            "like your account to be reactivated, please contact " + \
-            "Design & Development at designdev@cfpb.gov and indicate your " + \
-            "business reason for needing access reinstated.\n\n" + \
             "Thank you,\nWagtail system owners"
         user.email_user(subject, msg.format(warn_period, period))
 
@@ -170,3 +166,4 @@ class Command(BaseCommand):
     def deactivate_user(self, user):
         """Deactivate the specified user account"""
         user.is_active = False
+        user.save()
