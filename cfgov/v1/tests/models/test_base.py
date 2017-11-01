@@ -323,7 +323,19 @@ class TestCFGOVPageMediaProperty(TestCase):
             True
         )
 
-        self.assertEqual(
-            page.media['organisms'],
-            ['email-signup.js']
+        self.assertEqual(page.media['organisms'], ['email-signup.js'])
+
+    def test_doesnt_pull_in_media_for_nonexistent_child_blocks(self):
+        page = BrowsePage()
+        page.content = blocks.StreamValue(
+            page.content.stream_block,
+            [
+                {
+                    'type': 'full_width_text',
+                    'value': [],
+                },
+            ],
+            True
         )
+
+        self.assertFalse(page.media['organisms'])
