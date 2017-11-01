@@ -260,14 +260,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {% endmacro %}
 
 {% if page and page.media %}
-   {% for type, jsfiles in page.media.iteritems() %}
+    {% compress js %}
+    <script>
+    {% for type, jsfiles in page.media.iteritems() %}
        {% for js in jsfiles %}
-           {% set js_source = component_ondemand_js(js) | trim %}
-           {% if js_source | length > 0 %}
-           <script src="{{ static('js/routes/on-demand/' + js) }}"></script>
+           {% set compononet_js_source = component_ondemand_js(js) | trim %}
+           {% if compononet_js_source | length > 0 %}
+                {{ compononet_js_source }}
            {% endif %}
        {% endfor %}
     {% endfor %}
+    </script>
+    {% endcompress %}
 {% endif %}
 
 {# TODO: Remove the below block when all pages
