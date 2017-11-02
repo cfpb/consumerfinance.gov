@@ -4,7 +4,6 @@
 
 'use strict';
 
-const BannerFooterPlugin = require( 'banner-footer-webpack-plugin' );
 const path = require( 'path' );
 const environment = require( '../config/environment' );
 const paths = environment.paths;
@@ -72,9 +71,7 @@ const modernConf = {
     new webpack.optimize.CommonsChunkPlugin( {
       name: COMMON_BUNDLE_NAME
     } ),
-    COMMON_UGLIFY_CONFIG,
-    // Wrap JS in raw Jinja tags so included JS won't get parsed by Jinja.
-    new BannerFooterPlugin( '{% raw %}', '{% endraw %}', { raw: true } )
+    COMMON_UGLIFY_CONFIG
   ]
 };
 
