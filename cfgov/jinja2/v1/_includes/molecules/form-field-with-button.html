@@ -27,9 +27,9 @@
 
 <div class="m-form-field-with-button" data-qa-hook="formfield-with-button">
     {% set form_id = ('form_' ~ range(1, 100) | random) %}
-    <div class="form-group">
-        <label for="{{ form_id }}">
-            <b>{{ value.label }}</b>
+    <div class="m-form-field">
+        <label class="a-label a-label__heading" for="{{ form_id }}">
+            {{ value.label }}
             {# TODO: Update required param name to is_required
                      to make clear it's a boolean. #}
             {{ _('(required)') if value.required else '' }}
@@ -39,7 +39,7 @@
                type="{{ value.type }}"
                placeholder="{{ value.placeholder }}"
                name="{{ field or '' }}"
-               class="m-form-field-with-button_field a-text-input"
+               class="a-text-input a-text-input__full"
                {{ 'required' if value.required else '' }}>
     </div>
     {{ parse_links(value.info) | safe }}
