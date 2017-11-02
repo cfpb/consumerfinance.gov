@@ -121,9 +121,7 @@ class AnswerModelTestCase(TestCase):
         kwargs.setdefault('depth', self.english_parent_page.depth + 1)
         kwargs.setdefault('slug', 'category-mortgages')
         kwargs.setdefault('title', 'Mortgages')
-        page = mommy.prepare(AnswerCategoryPage, **kwargs)
-        page.save()
-        return page
+        return AnswerCategoryPage(**kwargs)
 
     def create_audience_page(self, **kwargs):
         kwargs.setdefault(
@@ -131,9 +129,7 @@ class AnswerModelTestCase(TestCase):
         kwargs.setdefault('depth', self.english_parent_page.depth + 1)
         kwargs.setdefault('slug', 'audience-students')
         kwargs.setdefault('title', 'Students')
-        page = mommy.prepare(AnswerAudiencePage, **kwargs)
-        page.save()
-        return page
+        return AnswerAudiencePage.objects.create(**kwargs)
 
     def setUp(self):
         from v1.models import HomePage
