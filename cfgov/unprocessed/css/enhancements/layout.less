@@ -5,42 +5,6 @@
 }
 
 /* topdoc
-  name: Block
-  family: cf-layout
-    - name: Padded-left modifier
-      markup: |
-        Main content...
-        <div class="block block__padded-left block__border-left">
-            Content block with left margin, padding, and border.
-        </div>
-      codenotes:
-        - .block.block__padded-left
-    - name: Padded-right modifier
-      markup: |
-        <div class="block block__padded-right block__border-right">
-            Content block with right margin, padding, and border.
-        </div>
-        Content...
-      codenotes:
-        - .block.block__padded-right
-  tags:
-    - cf-layout
-*/
-.respond-to-min(@bp-med-min, {
-    .block {
-        &__padded-left {
-            padding-left: unit(@grid_gutter-width / @base-font-size-px, em);
-            margin-left: unit(@grid_gutter-width / @base-font-size-px, em);
-        }
-
-        &__padded-right {
-            padding-right: unit(@grid_gutter-width / @base-font-size-px, em);
-            margin-right: unit(@grid_gutter-width / @base-font-size-px, em);
-        }
-    }
-});
-
-/* topdoc
   name: Half top padding
   family: cf-layout
   patterns:

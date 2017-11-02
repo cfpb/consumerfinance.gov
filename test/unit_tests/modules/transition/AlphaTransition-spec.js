@@ -6,27 +6,31 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'jsdom' );
 
 const AlphaTransition =
   require( BASE_JS_PATH + 'modules/transition/AlphaTransition' );
+
+const HTML_SNIPPET = '<div class="content-1"></div>';
 
 describe( 'AlphaTransition', () => {
   let transition;
 
   // DOM-related settings.
-  let initdom;
   let document;
-  const HTML_SNIPPET = '<div class="content-1"></div>';
   let contentDom;
 
-  beforeEach( () => {
-    initdom = jsdom.jsdom( HTML_SNIPPET );
-    document = initdom.defaultView.document;
+  before( () => {
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
     contentDom = document.querySelector( '.content-1' );
+  } );
+
+  beforeEach( () => {
     transition = new AlphaTransition( contentDom );
     transition.init();
   } );
+
+  after( () => this.jsdom() );
 
   describe( '.fadeIn()', () => {
     it( 'should return instance of AlphaTransition', () => {

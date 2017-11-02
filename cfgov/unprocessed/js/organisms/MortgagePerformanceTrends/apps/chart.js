@@ -199,6 +199,10 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
 
 MortgagePerformanceLineChart.prototype.renderChartTitle = function( prevState, state ) {
   var geoName = state.geo.name;
+  // Append the U.S. state if it's a county
+  if ( state.geo.type === 'county' ) {
+    geoName = `${ geoName }, ${ utils.getCountyState( state.geo.id ) }`;
+  }
   var includeComparison = state.includeComparison;
   if ( geoName ) {
     utils.showEl( this.$chartTitle );

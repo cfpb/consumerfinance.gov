@@ -4,12 +4,22 @@ const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'jsdom' );
 const sinon = require( 'sinon' );
 
 const FlyoutMenu = require( BASE_JS_PATH + 'modules/behavior/FlyoutMenu' );
 const MoveTransition =
   require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
+
+const HTML_SNIPPET =
+  `<div data-js-hook="behavior_flyout-menu">
+    <button data-js-hook="behavior_flyout-menu_trigger"
+            aria-pressed="false"
+            aria-expanded="false"></button>
+    <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
+      <button data-js-hook="behavior_flyout-menu_alt-trigger"
+              aria-expanded="false"></button>
+    </div>
+  </div>`;
 
 describe( 'FlyoutMenu', () => {
 
@@ -24,19 +34,7 @@ describe( 'FlyoutMenu', () => {
   let collapseEndSpy;
 
   // DOM-related settings.
-  let initdom;
-  let window;
   let document;
-  const HTML_SNIPPET =
-    `<div data-js-hook="behavior_flyout-menu">
-      <button data-js-hook="behavior_flyout-menu_trigger"
-              aria-pressed="false"
-              aria-expanded="false"></button>
-      <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
-        <button data-js-hook="behavior_flyout-menu_alt-trigger"
-                aria-expanded="false"></button>
-      </div>
-    </div>`;
   const SEL_PREFIX = '[data-js-hook=behavior_flyout-menu';
 
   let containerDom;
@@ -45,10 +43,8 @@ describe( 'FlyoutMenu', () => {
   let altTriggerDom;
 
   beforeEach( () => {
-    initdom = jsdom.jsdom( HTML_SNIPPET );
-    window = initdom.defaultView;
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
     document = window.document;
-
     containerDom = document.querySelector( SEL_PREFIX + ']' );
     triggerDom =
       document.querySelector( SEL_PREFIX + '_trigger]' );
@@ -60,6 +56,8 @@ describe( 'FlyoutMenu', () => {
 
     flyoutMenu = new FlyoutMenu( containerDom );
   } );
+
+  afterEach( () => this.jsdom() );
 
   describe( '.init()', () => {
     it( 'should have public static methods', () => {

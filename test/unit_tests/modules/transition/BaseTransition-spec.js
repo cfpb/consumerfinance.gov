@@ -4,31 +4,32 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'jsdom' );
 
 const BaseTransition =
   require( BASE_JS_PATH + 'modules/transition/BaseTransition' );
+
+const HTML_SNIPPET = '<div class="content-1"></div>' +
+                     '<div class="content-2"></div>';
 
 describe( 'BaseTransition', () => {
 
   let transition;
 
   // DOM-related settings.
-  let initdom;
   let document;
-  const HTML_SNIPPET = '<div class="content-1"></div>' +
-                     '<div class="content-2"></div>';
   let contentDom;
   let content2Dom;
 
   beforeEach( () => {
-    initdom = jsdom.jsdom( HTML_SNIPPET );
-    document = initdom.defaultView.document;
+    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+    document = window.document;
     contentDom = document.querySelector( '.content-1' );
     content2Dom = document.querySelector( '.content-2' );
     transition =
       new BaseTransition( contentDom, { BASE_CLASS: 'u-test-transition' } );
   } );
+
+  afterEach( () => this.jsdom() );
 
   describe( '.init()', () => {
     it( 'should have public static methods', () => {
