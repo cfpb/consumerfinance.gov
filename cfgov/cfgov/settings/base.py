@@ -171,6 +171,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 # Admin Url Access
@@ -212,6 +213,12 @@ STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
 MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
+
+
+#Enabling compression for use in base.html
+COMPRESS_ENABLED = True
+
+COMPRESS_JS_FILTERS = []
 
 # List of finder classes that know how to find static files in
 # various locations.
