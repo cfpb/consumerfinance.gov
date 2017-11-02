@@ -136,6 +136,19 @@ describe( 'Mortgage Performance utilities', () => {
     expect( date ).to.equal( 'cheeseburger' );
   } );
 
+  it( 'should parse counties\' states', () => {
+    let state = utils.getCountyState( '01234' );
+    expect( state ).to.equal( 'AL' );
+    state = utils.getCountyState( '23502' );
+    expect( state ).to.equal( 'ME' );
+    state = utils.getCountyState( '30000' );
+    expect( state ).to.equal( 'MT' );
+    state = utils.getCountyState( '51412' );
+    expect( state ).to.equal( 'VA' );
+    state = utils.getCountyState( 'not a fips' );
+    expect( state ).to.be.undefined;
+  } );
+
   it( 'check if a FIPS is a non-metro area', () => {
     let location = utils.isNonMetro( '87364' );
     expect( location ).to.be.false;
