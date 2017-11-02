@@ -53,7 +53,7 @@ class TestMetaImage(TestCase):
 
     def test_template_meta_image_no_images(self):
         """Template meta tags should fallback to standard social networks."""
-        page = mommy.prepare(LearnPage, social_sharing_image=None)
+        page = LearnPage(social_sharing_image=None)
         response = page.serve(page.dummy_request())
         response.render()
 
@@ -79,7 +79,7 @@ class TestMetaImage(TestCase):
         """Template meta tags should use an absolute image URL."""
         image_file = get_test_image_file(filename='foo.png')
         image = mommy.make(CFGOVImage, file=image_file)
-        page = mommy.prepare(LearnPage, social_sharing_image=image)
+        page = LearnPage(social_sharing_image=image)
         response = page.serve(page.dummy_request())
         response.render()
 
