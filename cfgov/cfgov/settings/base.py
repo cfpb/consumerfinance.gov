@@ -218,8 +218,6 @@ MEDIA_URL = '/f/'
 #Enabling compression for use in base.html
 COMPRESS_ENABLED = True
 
-COMPRESS_ROOT = MEDIA_ROOT
-
 COMPRESS_JS_FILTERS = []
 
 # List of finder classes that know how to find static files in
