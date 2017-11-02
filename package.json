@@ -19,7 +19,6 @@
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",
-    "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "browser-sync": "2.18.13",
     "cf-atomic-component": "1.5.1",
     "cf-buttons": "4.5.1",
