@@ -141,9 +141,12 @@ class Command(BaseCommand):
         subject = "{prefix}Wagtail account inactivity".format(
             prefix=settings.EMAIL_SUBJECT_PREFIX)
         msg = "Hello,\n\n" + \
-            "Your Wagtail account has not been accessed for more than " + \
-            "{} days. In accordance with information security policies, " + \
-            "your account will be deactivated after {} days of inactivity." + \
+            "Your consumerfinance.gov Wagtail account has not been accessed " + \
+            "for more than {} days. In accordance with information security " + \
+            "policies, if you take no action, your account will be " + \
+            "deactivated after 90 days of inactivity.\n\n" + \
+            "To keep your account active, please log in at " + \
+            "http://content.consumerfinance.gov/admin/\n\n" + \
             "Thank you,\nWagtail system owners"
         user.email_user(subject, msg.format(warn_period, period))
 
