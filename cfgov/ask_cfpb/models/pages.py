@@ -178,7 +178,18 @@ class AnswerLandingPage(LandingPage):
         return 'ask-cfpb/landing-page.html'
 
 
-class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
+class SecondaryNavigationJSMixin(object):
+    """A page mixin that adds navigation JS for English pages."""
+    @property
+    def page_js(self):
+        js = super(SecondaryNavigationJSMixin, self).page_js
+        if self.language == 'en':
+            js += ['secondary-navigation.js']
+        return js
+
+
+class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
+                         CFGOVPage):
     """
     A routable page type for Ask CFPB category pages and their subcategories.
     """
@@ -213,11 +224,6 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
             return 'ask-cfpb/category-page-spanish.html'
 
         return 'ask-cfpb/category-page.html'
-
-    def add_page_js(self, js):
-        if self.language == 'en':
-            super(AnswerCategoryPage, self).add_page_js(js)
-            js['template'] += ['secondary-navigation.js']
 
     def get_context(self, request, *args, **kwargs):
         context = super(
@@ -316,7 +322,7 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
             request, self.get_template(request), context)
 
 
-class AnswerResultsPage(CFGOVPage):
+class AnswerResultsPage(SecondaryNavigationJSMixin, CFGOVPage):
 
     objects = CFGOVPageManager()
     answers = []
@@ -332,11 +338,6 @@ class AnswerResultsPage(CFGOVPage):
         ObjectList(content_panels, heading='Content'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
-
-    def add_page_js(self, js):
-        if self.language == 'en':
-            super(AnswerResultsPage, self).add_page_js(js)
-            js['template'] += ['secondary-navigation.js']
 
     def get_context(self, request, **kwargs):
 
@@ -368,7 +369,7 @@ class AnswerResultsPage(CFGOVPage):
             return 'ask-cfpb/answer-search-spanish-results.html'
 
 
-class AnswerAudiencePage(CFGOVPage):
+class AnswerAudiencePage(SecondaryNavigationJSMixin, CFGOVPage):
     from ask_cfpb.models import Audience
 
     objects = CFGOVPageManager()
@@ -389,11 +390,6 @@ class AnswerAudiencePage(CFGOVPage):
         ObjectList(content_panels, heading='Content'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
-
-    def add_page_js(self, js):
-        if self.language == 'en':
-            super(AnswerAudiencePage, self).add_page_js(js)
-            js['template'] += ['secondary-navigation.js']
 
     def get_context(self, request, *args, **kwargs):
         from ask_cfpb.models import Answer

@@ -301,14 +301,14 @@ class TestFeedbackModel(TestCase):
 
 class TestCFGOVPageMediaProperty(TestCase):
     """Tests how the page.media property pulls in child block JS."""
-    def setUp(self):
-        self.expected_keys = (
-            'template', 'organisms', 'molecules', 'atoms', 'other',
-        )
-        self.empty_dict = {k: [] for k in self.expected_keys}
-
     def test_empty_page_has_no_media(self):
-        return self.assertEqual(CFGOVPage().media, self.empty_dict)
+        return self.assertEqual(CFGOVPage().media, [])
+
+    def test_empty_page_has_no_page_js(self):
+        return self.assertEqual(CFGOVPage().page_js, [])
+
+    def test_empty_page_has_no_streamfield_js(self):
+        return self.assertEqual(CFGOVPage().streamfield_js, [])
 
     def test_page_pulls_in_child_block_media(self):
         page = CFGOVPage()
@@ -323,7 +323,7 @@ class TestCFGOVPageMediaProperty(TestCase):
             True
         )
 
-        self.assertEqual(page.media['organisms'], ['email-signup.js'])
+        self.assertEqual(page.media, ['email-signup.js'])
 
     def test_doesnt_pull_in_media_for_nonexistent_child_blocks(self):
         page = BrowsePage()
@@ -338,4 +338,6 @@ class TestCFGOVPageMediaProperty(TestCase):
             True
         )
 
-        self.assertFalse(page.media['organisms'])
+        # The page media should only include the default BrowsePae media, and
+        # shouldn't add any additional files because of the FullWithText.
+        self.assertEqual(page.media, ['secondary-navigation.js'])

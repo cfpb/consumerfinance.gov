@@ -262,13 +262,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {% if page and page.media %}
     {% compress js %}
     <script>
-    {% for type, jsfiles in page.media.iteritems() %}
-       {% for js in jsfiles %}
-           {% set compononet_js_source = component_ondemand_js(js) | trim %}
-           {% if compononet_js_source | length > 0 %}
-                {{ compononet_js_source }}
-           {% endif %}
-       {% endfor %}
+    {% for js in page.media %}
+       {% set compononet_js_source = component_ondemand_js(js) | trim %}
+       {% if compononet_js_source | length > 0 %}
+            {{ compononet_js_source }}
+       {% endif %}
     {% endfor %}
     </script>
     {% endcompress %}
