@@ -9,6 +9,7 @@
 
 const browserSync = require( 'browser-sync' );
 const gulp = require( 'gulp' );
+const gulpChanged = require( 'gulp-changed' );
 const gulpConcat = require( 'gulp-concat' );
 const gulpModernizr = require( 'gulp-modernizr' );
 const gulpRename = require( 'gulp-rename' );
@@ -31,6 +32,7 @@ const configLegacy = require( '../config.js' ).legacy;
  */
 function _processScript( config, src, dest ) {
   return gulp.src( paths.unprocessed + src )
+    .pipe( gulpChanged( paths.processed + dest ) )
     .pipe( webpackStream( config, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + dest ) )
@@ -118,6 +120,10 @@ function scriptsSpanish() {
  */
 function scriptsNonResponsive() {
   return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
+    .pipe( gulpChanged(
+      paths.processed + '/js/atomic/',
+      { extension: '.nonresponsive.js' }
+    ) )
     .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
@@ -136,6 +142,10 @@ function scriptsNonResponsive() {
 function scriptsNemo() {
   return gulp.src( configLegacy.scripts )
     .pipe( gulpConcat( 'scripts.js' ) )
+    .pipe( gulpChanged(
+      configLegacy.dest + '/nemo/_/js',
+      { extension: '.min.js' }
+    ) )
     .on( 'error', handleErrors )
     .pipe( gulpUglify() )
     .pipe( gulpRename( 'scripts.min.js' ) )
@@ -151,6 +161,7 @@ function scriptsNemo() {
  */
 function scriptsEs5Shim() {
   return gulp.src( paths.unprocessed + '/js/shims/es5-shim.js' )
+    .pipe( gulpChanged( paths.processed + '/js/' ) )
     .pipe( webpackStream( {
       entry: paths.unprocessed + '/js/shims/es5-shim.js',
       output: {
