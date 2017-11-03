@@ -107,6 +107,8 @@ class InactiveUsersTestCase(TestCase):
     def test_sends_email(self):
         """ Test that mail.EmailMessage is called with the appropriate
         list of users """
+
+        mail.outbox = []
         call_command('inactive_users',
                      emails=['test@example.com'],
                      stdout=self.stdout)
@@ -128,9 +130,6 @@ class InactiveUsersTestCase(TestCase):
         self.assertNotIn("user_5", message)
         self.assertIn("test@example.com", self.get_stdout())
 
-        mail.outbox = []
-
-    @override_settings(EMAIL_SUBJECT_PREFIX='[Prefix]')
     def test_sends_email_when_warning(self):
         """ Test that mail.EmailMessage is called with the appropriate
         list of users """
@@ -142,7 +141,6 @@ class InactiveUsersTestCase(TestCase):
         # Outbox will have two user emails
         self.assertEqual(len(mail.outbox), 2)
 
-    @override_settings(EMAIL_SUBJECT_PREFIX='[Prefix]')
     def test_sends_email_when_deactivating(self):
         """ Test that mail.EmailMessage is called with the appropriate
         list of users """
@@ -154,7 +152,6 @@ class InactiveUsersTestCase(TestCase):
         # Outbox will have three inactive user emails
         self.assertEqual(len(mail.outbox), 3)
 
-    @override_settings(EMAIL_SUBJECT_PREFIX='[Prefix]')
     def test_sends_email_when_deactivating_and_warning(self):
         """ Test that mail.EmailMessage is called with the appropriate
         list of users """
@@ -166,3 +163,42 @@ class InactiveUsersTestCase(TestCase):
                      stdout=self.stdout)
         # Outbox will have five user emails
         self.assertEqual(len(mail.outbox), 5)
+
+    def test_users_properly_deactivated(self):
+        """ Test that mail.EmailMessage is called with the appropriate
+        list of users """
+
+        mail.outbox = []
+        call_command('inactive_users',
+                     '--deactivate-users',
+                     stdout=self.stdout)
+
+        # Test that users were actually deactivated
+        # May need to re-fetch users
+        # inactive_users = User.objects.all()
+        User = get_user_model()
+        self.assertFalse(User.objects.get(username="user_1").is_active)
+        self.assertFalse(User.objects.get(username="user_2").is_active)
+        self.assertTrue(User.objects.get(username="üser_3").is_active)
+        self.assertFalse(User.objects.get(username="user_4").is_active)
+        self.assertTrue(User.objects.get(username="user_5").is_active)
+        self.assertTrue(User.objects.get(username="user_6").is_active)
+
+    def test_users_properly_deactivated_when_deactivating_and_warning(self):
+        """ Test that mail.EmailMessage is called with the appropriate
+        list of users """
+
+        mail.outbox = []
+        call_command('inactive_users',
+                     '--deactivate-users',
+                     '--warn-users',
+                     stdout=self.stdout)
+
+        # Test that users were actually deactivated
+        User = get_user_model()
+        self.assertFalse(User.objects.get(username="user_1").is_active)
+        self.assertFalse(User.objects.get(username="user_2").is_active)
+        self.assertTrue(User.objects.get(username="üser_3").is_active)
+        self.assertFalse(User.objects.get(username="user_4").is_active)
+        self.assertTrue(User.objects.get(username="user_5").is_active)
+        self.assertTrue(User.objects.get(username="user_6").is_active)
