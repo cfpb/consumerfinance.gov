@@ -1,7 +1,8 @@
 'use strict';
 
 const fs = require( 'fs' );
-const paths = require( '../config/environment' ).paths;
+const environment = require( '../config/environment' );
+const paths = environment.paths;
 const globAll = require( 'glob-all' );
 
 module.exports = {
@@ -39,7 +40,7 @@ module.exports = {
   test: {
     src:   paths.unprocessed + '/js/**/*.js',
     tests: paths.test,
-    reporter: process.env.CONTINUOUS_INTEGRATION // eslint-disable-line no-process-env
+    reporter: environment.CONTINUOUS_INTEGRATION
   },
   clean: {
     dest: paths.processed
