@@ -1,5 +1,4 @@
 import csv
-from collections import OrderedDict
 from cStringIO import StringIO
 from urllib import urlencode
 
@@ -333,39 +332,26 @@ class CFGOVPage(Page):
         return parent
 
     # To be overriden if page type requires JS files every time
-    # 'template' is used as the key for front-end consistency
-    def add_page_js(self, js):
-        js['template'] = []
+    @property
+    def page_js(self):
+        return []
 
-    # Gets the JS from the Streamfield data
-    def _add_streamfield_js(self, js):
+    @property
+    def streamfield_js(self):
+        js = []
+
         block_cls_names = get_page_blocks(self)
         for block_cls_name in block_cls_names:
             block_cls = import_string(block_cls_name)
-            self._assign_js(block_cls, js)
+            if hasattr(block_cls, 'Media') and hasattr(block_cls.Media, 'js'):
+                js.extend(block_cls.Media.js)
 
-    # Assign the Media js to the dictionary appropriately
-    def _assign_js(self, obj, js):
-        if hasattr(obj, 'Media') and hasattr(obj.Media, 'js'):
-            for key in js.keys():
-                if obj.__module__.endswith(key):
-                    js[key] += obj.Media.js
-            if not [key for key in js.keys()
-                    if obj.__module__.endswith(key)]:
-                js['other'] += obj.Media.js
+        return js
 
-    # Returns all the JS files specific to this page and it's current
-    # Streamfield's blocks
+    # Returns the JS files required by this page and its StreamField blocks.
     @property
     def media(self):
-        js = OrderedDict()
-        for key in ['template', 'organisms', 'molecules', 'atoms', 'other']:
-            js.update({key: []})
-        self.add_page_js(js)
-        self._add_streamfield_js(js)
-        for key, js_files in js.iteritems():
-            js[key] = OrderedDict.fromkeys(js_files).keys()
-        return js
+        return sorted(set(self.page_js + self.streamfield_js))
 
     # Returns an image for the page's meta Open Graph tag
     @property
