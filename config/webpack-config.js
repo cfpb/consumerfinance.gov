@@ -48,7 +48,7 @@ const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
   parallel: true,
   uglifyOptions: {
     ie8: false,
-    ecma: 6,
+    ecma: 5,
     warnings: false,
     mangle: true,
     output: {
