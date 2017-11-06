@@ -58,13 +58,21 @@ const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
   }
 } );
 
-const modernConf = {
-  cache: true,
-  context: path.join( __dirname, '/../', paths.unprocessed, JS_ROUTES_PATH ),
-  entry: scriptsManifest.getDirectoryMap( paths.unprocessed + JS_ROUTES_PATH ),
+
+const COMMON_CONF = {
   module: COMMON_MODULE_CONFIG,
   output: {
-    path: path.join( __dirname, 'js' ),
+    filename: '[name]'
+  },
+  plugins: [
+    COMMON_UGLIFY_CONFIG
+  ]
+};
+
+const modernConf = {
+  cache: true,
+  module: COMMON_MODULE_CONFIG,
+  output: {
     filename: '[name]'
   },
   plugins: [
@@ -75,17 +83,10 @@ const modernConf = {
   ]
 };
 
-const ieConf = {
-  entry: paths.unprocessed + '/js/ie/common.ie.js',
-  module: COMMON_MODULE_CONFIG,
-  output: {
-    filename: 'common.ie.js'
-  },
-  plugins: [ COMMON_UGLIFY_CONFIG ]
-};
+// const externalConf = COMMON_CONF;
+// externalConf.output.filename = 'external-site.js';
 
 const externalConf = {
-  entry: paths.unprocessed + JS_ROUTES_PATH + '/external-site/index.js',
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: 'external-site.js'
@@ -94,32 +95,19 @@ const externalConf = {
 };
 
 const onDemandConf = {
-  context: path.join( __dirname, '/../', paths.unprocessed,
-                      JS_ROUTES_PATH + '/on-demand' ),
-  entry:   scriptsManifest.getDirectoryMap( paths.unprocessed +
-                                            JS_ROUTES_PATH + '/on-demand' ),
   module: COMMON_MODULE_CONFIG,
   output: {
-    path:     path.join( __dirname, 'js' ),
     filename: '[name]'
   },
   plugins: [ COMMON_UGLIFY_CONFIG ]
 };
 
+
 const onDemandHeaderRawConf = {
-  context: path.join( __dirname, '/../', paths.unprocessed,
-                      JS_ROUTES_PATH + '/on-demand' ),
-  entry:  './header.js',
-  module: COMMON_MODULE_CONFIG,
-  output: {
-    path:     path.join( __dirname, 'js' ),
-    filename: '[name]'
-  }
+  module: COMMON_MODULE_CONFIG
 };
 
 const spanishConf = {
-  entry: paths.unprocessed +
-         JS_ROUTES_PATH + '/es/obtener-respuestas/single.js',
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: 'spanish.js'
@@ -129,15 +117,15 @@ const spanishConf = {
 
 const owningAHomeConf = {
   cache: true,
-  context: path.join( __dirname, '/../',
-    paths.unprocessed, OAH_COMMON_BUNDLE_ROUTE
-  ),
-  entry: scriptsManifest.getDirectoryMap(
-    paths.unprocessed + OAH_COMMON_BUNDLE_ROUTE
-  ),
+  // context: path.join( __dirname, '/../',
+  //   paths.unprocessed, OAH_COMMON_BUNDLE_ROUTE
+  // ),
+  // entry: scriptsManifest.getDirectoryMap(
+  //   paths.unprocessed + OAH_COMMON_BUNDLE_ROUTE
+  // ),
   module: COMMON_MODULE_CONFIG,
   output: {
-    path: path.join( __dirname, 'js' ),
+    //path: path.join( __dirname, 'js' ),
     filename: '[name]',
     jsonpFunction: 'OAH'
   },
@@ -149,10 +137,9 @@ const owningAHomeConf = {
 };
 
 module.exports = {
+  commonConf:            COMMON_CONF,
   onDemandHeaderRawConf: onDemandHeaderRawConf,
-  onDemandConf:          onDemandConf,
   owningAHomeConf:       owningAHomeConf,
-  ieConf:                ieConf,
   modernConf:            modernConf,
   externalConf:          externalConf,
   spanishConf:           spanishConf

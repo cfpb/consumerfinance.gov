@@ -16,6 +16,7 @@ const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
 const handleErrors = require( '../utils/handle-errors' );
+const named = require( 'vinyl-named' );
 const paths = require( '../../config/environment' ).paths;
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
@@ -31,8 +32,11 @@ const configLegacy = require( '../config.js' ).legacy;
  * @returns {PassThrough} A source stream.
  */
 function _processScript( config, src, dest ) {
-  return gulp.src( paths.unprocessed + src )
+   return gulp.src( paths.unprocessed + src )
     .pipe( gulpChanged( paths.processed + dest ) )
+    .pipe( named( function( file ) {
+      return file.relative;
+    } ) )
     .pipe( webpackStream( config, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + dest ) )
@@ -71,7 +75,7 @@ function scriptsPolyfill() {
  */
 function scriptsModern() {
   return _processScript( webpackConfig.modernConf,
-                         '/js/routes/common.js', '/js/routes/' );
+                         '/js/routes/**/*.js', '/js/routes/' );
 }
 
 /**
@@ -79,7 +83,7 @@ function scriptsModern() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsIE() {
-  return _processScript( webpackConfig.ieConf,
+  return _processScript( webpackConfig.commonConf,
                          '/js/ie/common.ie.js', '/js/ie/' );
 }
 
@@ -99,7 +103,7 @@ function scriptsExternal() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsOnDemand() {
-  return _processScript( webpackConfig.onDemandConf,
+  return _processScript( webpackConfig.commonConf,
                          '/js/routes/on-demand/*.js', '/js/atomic/' );
 }
 
@@ -128,7 +132,6 @@ function scriptsNonResponsive() {
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
-    .pipe( gulpUglify() )
     .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -183,7 +186,7 @@ function scriptsEs5Shim() {
  */
 function scriptsOAH() {
   return _processScript( webpackConfig.owningAHomeConf,
-                         '/js/routes/apps/owning-a-home/common.js',
+                         '/js/routes/owning-a-home/**/*.js',
                          '/js/owning-a-home/' );
 }
 
