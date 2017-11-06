@@ -96,17 +96,6 @@ function scriptsExternal() {
                          '/js/routes/external-site/index.js', '/js/' );
 }
 
-/**
- * Bundle atomic component scripts.
- * Provides a means to bundle JS for specific atomic components,
- * which then can be carried over to other projects.
- * @returns {PassThrough} A source stream.
- */
-function scriptsOnDemand() {
-  return _processScript( webpackConfig.commonConf,
-                         '/js/routes/on-demand/*.js', '/js/atomic/' );
-}
-
  /**
   * Bundle base js for Spanish Ask CFPB pages.
   * @returns {PassThrough} A source stream.
@@ -125,14 +114,14 @@ function scriptsSpanish() {
 function scriptsNonResponsive() {
   return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
     .pipe( gulpChanged(
-      paths.processed + '/js/atomic/',
+      paths.processed + '/js/routes/on-demand/',
       { extension: '.nonresponsive.js' }
     ) )
     .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
-    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
+    .pipe( gulp.dest( paths.processed + '/js/routes/on-demand/' ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );
@@ -196,10 +185,8 @@ gulp.task( 'scripts:oah', scriptsOAH );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
-gulp.task( 'scripts:ondemand:base', scriptsOnDemand );
 gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
 gulp.task( 'scripts:ondemand', [
-  'scripts:ondemand:base',
   'scripts:ondemand:nonresponsive'
 ] );
 gulp.task( 'scripts:nemo', scriptsNemo );

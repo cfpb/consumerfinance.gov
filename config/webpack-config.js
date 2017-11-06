@@ -83,49 +83,28 @@ const modernConf = {
   ]
 };
 
-// const externalConf = COMMON_CONF;
-// externalConf.output.filename = 'external-site.js';
+// const modernConf = COMMON_CONF;
+// modernConf.cache = true;
+// modernConf.plugins.push(
+//   new webpack.optimize.CommonsChunkPlugin( {
+//     name: COMMON_BUNDLE_NAME
+//   } )
+// )
 
-const externalConf = {
-  module: COMMON_MODULE_CONFIG,
-  output: {
-    filename: 'external-site.js'
-  },
-  plugins: [ COMMON_UGLIFY_CONFIG ]
-};
-
-const onDemandConf = {
-  module: COMMON_MODULE_CONFIG,
-  output: {
-    filename: '[name]'
-  },
-  plugins: [ COMMON_UGLIFY_CONFIG ]
-};
-
+const externalConf = COMMON_CONF;
+externalConf.output.filename = 'external-site.js';
 
 const onDemandHeaderRawConf = {
   module: COMMON_MODULE_CONFIG
 };
 
-const spanishConf = {
-  module: COMMON_MODULE_CONFIG,
-  output: {
-    filename: 'spanish.js'
-  },
-  plugins: [ COMMON_UGLIFY_CONFIG ]
-};
+const spanishConf = COMMON_CONF;
+spanishConf.output.filename = 'spanish.js';
 
 const owningAHomeConf = {
   cache: true,
-  // context: path.join( __dirname, '/../',
-  //   paths.unprocessed, OAH_COMMON_BUNDLE_ROUTE
-  // ),
-  // entry: scriptsManifest.getDirectoryMap(
-  //   paths.unprocessed + OAH_COMMON_BUNDLE_ROUTE
-  // ),
   module: COMMON_MODULE_CONFIG,
   output: {
-    //path: path.join( __dirname, 'js' ),
     filename: '[name]',
     jsonpFunction: 'OAH'
   },
