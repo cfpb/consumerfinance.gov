@@ -28,7 +28,7 @@ const STATS = {
   // Add errors
   errors: true,
   // Add timing information
-  timings: true,
+  timings: true
 };
 
 // Commmon webpack 'module' option used in each configuration.

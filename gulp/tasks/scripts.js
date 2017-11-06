@@ -32,7 +32,7 @@ const configLegacy = require( '../config.js' ).legacy;
  */
 function _processScript( config, src, dest ) {
   if ( gulpUtil.env.stats ) {
-    config = Object.assign( config, { stats: WEBPACK_CONFIG.STATS } )
+    config = Object.assign( config, { stats: WEBPACK_CONFIG.STATS } );
   }
 
   return gulp.src( paths.unprocessed + src )
