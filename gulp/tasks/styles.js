@@ -100,7 +100,10 @@ function stylesIE8() {
  */
 function stylesOnDemand() {
   return gulp.src( configStyles.cwd + '/on-demand/*.less' )
-    .pipe( gulpChanged( configStyles.dest, { extension: '.nonresponsive.css' } ) )
+    .pipe( gulpChanged(
+      configStyles.dest,
+      { extension: '.nonresponsive.css' }
+    ) )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
