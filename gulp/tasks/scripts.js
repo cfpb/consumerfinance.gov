@@ -106,6 +106,32 @@ function scriptsSpanish() {
 }
 
 /**
+ * Bundle atomic header component scripts.
+ * Provides a means to bundle JS for specific atomic components,
+ * which then can be carried over to other projects.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsOnDemandHeader() {
+  return _processScript( webpackConfig.commonConf,
+                         '/js/routes/on-demand/header.js',
+                         '/js/atomic/'
+  );
+}
+
+/**
+ * Bundle atomic header component scripts.
+ * Provides a means to bundle JS for specific atomic components,
+ * which then can be carried over to other projects.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsOnDemandFooter() {
+  return _processScript( webpackConfig.commonConf,
+                         '/js/routes/on-demand/footer.js',
+                         '/js/atomic/'
+  );
+}
+
+/**
  * Bundle atomic component scripts for non-responsive pages.
  * Provides a means to bundle JS for specific atomic components,
  * which then can be carried over to other projects.
@@ -114,14 +140,14 @@ function scriptsSpanish() {
 function scriptsNonResponsive() {
   return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
     .pipe( gulpChanged(
-      paths.processed + '/js/routes/on-demand/',
+      paths.processed + '/js/atomic',
       { extension: '.nonresponsive.js' }
     ) )
     .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
-    .pipe( gulp.dest( paths.processed + '/js/routes/on-demand/' ) )
+    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );
@@ -180,8 +206,12 @@ gulp.task( 'scripts:oah', scriptsOAH );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
+gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
+gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
 gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
 gulp.task( 'scripts:ondemand', [
+  'scripts:ondemand:header',
+  'scripts:ondemand:footer',
   'scripts:ondemand:nonresponsive'
 ] );
 gulp.task( 'scripts:nemo', scriptsNemo );
