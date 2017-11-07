@@ -223,6 +223,8 @@ MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state )
   }
   if ( !loc ) {
     loc = `${ state.geo.type } view`;
+  } else if ( state.geo.type === 'county' ) {
+    loc = `${ loc }, ${ utils.getCountyState( state.geo.id ) }`;
   }
   this.$mapTitleLocation.innerText = loc;
   this.$mapTitleDate.innerText = utils.getDate( state.date );

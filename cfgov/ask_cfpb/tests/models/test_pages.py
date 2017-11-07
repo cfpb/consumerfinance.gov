@@ -121,9 +121,7 @@ class AnswerModelTestCase(TestCase):
         kwargs.setdefault('depth', self.english_parent_page.depth + 1)
         kwargs.setdefault('slug', 'category-mortgages')
         kwargs.setdefault('title', 'Mortgages')
-        page = mommy.prepare(AnswerCategoryPage, **kwargs)
-        page.save()
-        return page
+        return AnswerCategoryPage(**kwargs)
 
     def create_audience_page(self, **kwargs):
         kwargs.setdefault(
@@ -131,9 +129,7 @@ class AnswerModelTestCase(TestCase):
         kwargs.setdefault('depth', self.english_parent_page.depth + 1)
         kwargs.setdefault('slug', 'audience-students')
         kwargs.setdefault('title', 'Students')
-        page = mommy.prepare(AnswerAudiencePage, **kwargs)
-        page.save()
-        return page
+        return AnswerAudiencePage.objects.create(**kwargs)
 
     def setUp(self):
         from v1.models import HomePage
@@ -466,20 +462,12 @@ class AnswerModelTestCase(TestCase):
 
     def test_audience_page_add_js(self):
         test_page = self.create_audience_page(language='en')
-        test_js = {'template': []}
-        test_page.add_page_js(test_js)
-        self.assertTrue(
-            'secondary-navigation.js'
-            in test_page.media['template'])
+        self.assertEqual(test_page.page_js, ['secondary-navigation.js'])
 
     def test_audience_page_add_js_wrong_language(self):
-        """add_page_js should only work on English Audience pages"""
+        """page_js should only be added on English Audience pages"""
         test_page = self.create_audience_page(language='es')
-        test_js = {'template': []}
-        test_page.add_page_js(test_js)
-        self.assertFalse(
-            'secondary-navigation.js'
-            in test_page.media['template'])
+        self.assertFalse(test_page.page_js)
 
     def test_spanish_template_used(self):
         spanish_answer = self.prepare_answer(
@@ -904,9 +892,7 @@ class AnswerModelTestCase(TestCase):
 
     def test_category_page_add_js_function(self):
         cat_page = self.create_category_page(ask_category=self.category)
-        js = {}
-        cat_page.add_page_js(js)
-        self.assertEqual(js, {'template': [u'secondary-navigation.js']})
+        self.assertEqual(cat_page.page_js, ['secondary-navigation.js'])
 
     def test_answer_language_page_exists(self):
         self.assertEqual(self.answer5678.english_page, self.page2)

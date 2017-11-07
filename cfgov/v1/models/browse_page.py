@@ -76,9 +76,11 @@ class BrowsePage(CFGOVPage):
 
     objects = PageManager()
 
-    def add_page_js(self, js):
-        super(BrowsePage, self).add_page_js(js)
-        js['template'] += ['secondary-navigation.js']
+    @property
+    def page_js(self):
+        return (
+            super(BrowsePage, self).page_js + ['secondary-navigation.js']
+        )
 
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)

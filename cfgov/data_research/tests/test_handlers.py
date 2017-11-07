@@ -194,7 +194,8 @@ class TestConferenceRegistrationHandler(TestCase):
         mock_govdelivery = self.patched_govdelivery.return_value
         mock_govdelivery.set_subscriber_topics.assert_called_with(
             email_address='em@il.com',
-            topic_codes=['code']
+            topic_codes=['code'],
+            send_notifications=True,
         )
 
     def test_subscribe_returns_true_for_success(self):

@@ -6,6 +6,7 @@ const expect = chai.expect;
 const sinon = require( 'sinon' );
 let fwbQuestions;
 let sandbox;
+let formDom;
 let submitBtnDom;
 let radioButtonsDom;
 const dataLayerEventRadio = {
@@ -135,14 +136,6 @@ function triggerClickEvent( target ) {
   const event = document.createEvent( 'Event' );
   event.initEvent( 'click', true, true );
 
-  if ( target.id === submitBtnDom.id ) {
-    // Prevent submission of the form if the submit button is clicked.
-    const form = document.querySelector( '#quiz-form' );
-    form.addEventListener( 'submit', evt => {
-      evt.preventDefault();
-    } );
-  }
-
   return target.dispatchEvent( event );
 }
 
@@ -168,8 +161,15 @@ describe( 'fwb-questions', () => {
     document.body.innerHTML = HTML_SNIPPET;
     window.dataLayer = [];
     window.tagManagerIsLoaded = true;
+    formDom = document.querySelector( '#quiz-form' );
     submitBtnDom = document.querySelector( '#submit-quiz' );
     radioButtonsDom = document.querySelectorAll( '[type="radio"]' );
+    // JSDOM does not support form submission at this time
+    // and will throw an error. Prevent the form from submitting,
+    // even when the submit button is triggered.
+    formDom.addEventListener( 'submit', evt => {
+      evt.preventDefault();
+    } );
   } );
 
   afterEach( () => {
@@ -194,7 +194,7 @@ describe( 'fwb-questions', () => {
   } );
 
   it( 'submit button should submit the form ' +
-       'if all the questions are completed before page load.', () => {
+      'if all the questions are completed before page load.', () => {
     fillOutForm();
     fwbQuestions.init();
     const formSubmissionStatus = triggerClickEvent( submitBtnDom );
@@ -203,7 +203,7 @@ describe( 'fwb-questions', () => {
   } );
 
   it( 'submit button should submit the form ' +
-       'if all the questions are completed after page load.', () => {
+      'if all the questions are completed after page load.', () => {
     fwbQuestions.init();
     fillOutForm();
     const formSubmissionStatus = triggerClickEvent( submitBtnDom );
@@ -219,7 +219,7 @@ describe( 'fwb-questions', () => {
   } );
 
   it( 'should send the correct analytics ' +
-       'when the submit button is clicked', () => {
+      'when the submit button is clicked', () => {
     fillOutForm();
     fwbQuestions.init();
     triggerClickEvent( submitBtnDom );
