@@ -115,12 +115,21 @@ def ask_search(request, language='en', as_json=False):
     if not qstring:
         raise Http404
     sqs = sqs.filter(content=clean_query)
+    suggestion = sqs.spelling_suggestion(qstring)
 
     if as_json:
-        results = [{'question': result.autocomplete,
+        results = {
+            'query': qstring,
+            'suggestion': suggestion,
+            'results': [
+                {
+                    'question': result.autocomplete,
                     'url': result.url,
-                    'text': result.text}
-                   for result in sqs]
+                    'text': result.text
+                }
+                for result in sqs
+            ]
+        }
         json_results = json.dumps(results)
         return HttpResponse(json_results, content_type='application/json')
     else:
@@ -129,6 +138,7 @@ def ask_search(request, language='en', as_json=False):
             language=language,
             slug=_map['slug'])
         page.query = clean_query
+        page.suggestion = suggestion
         page.answers = []
 
         for result in sqs:
