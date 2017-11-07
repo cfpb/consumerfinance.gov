@@ -46,7 +46,7 @@ chartActionCreators.fetchMetroStates = metroState => dispatch =>
   } );
 
 /**
- * fetchNonMetroStates - Creates async action to fetch list of valid metro states.
+ * fetchNonMetroStates - Creates async action to fetch list of valid non-metro states.
  *
  * @param {String} nonMetroState Two-letter U.S. state abbreviation.
  *
@@ -74,7 +74,7 @@ chartActionCreators.fetchNonMetroStates = nonMetroState => dispatch =>
   } );
 
 /**
- * fetchCountyStates - Creates async action to fetch list of valid metro states.
+ * fetchCountyStates - Creates async action to fetch list of valid counties in states.
  *
  * @param {String} countyState Two-letter U.S. state abbreviation.
  *

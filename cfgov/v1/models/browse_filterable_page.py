@@ -51,9 +51,12 @@ class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin,
 
     objects = PageManager()
 
-    def add_page_js(self, js):
-        super(BrowseFilterablePage, self).add_page_js(js)
-        js['template'] += ['secondary-navigation.js']
+    @property
+    def page_js(self):
+        return (
+            super(BrowseFilterablePage, self).page_js
+            + ['secondary-navigation.js']
+        )
 
 
 class EventArchivePage(BrowseFilterablePage):

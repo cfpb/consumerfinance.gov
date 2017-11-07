@@ -61,7 +61,7 @@
 {%- if value.image.upload %}
     {%- set img = image(value.image.upload, 'original') %}
     {% if link_image_and_heading %}
-        <a href="{{ value.links[0].url }}">
+        <a href="{{ parse_links( value.links[0].url ) | safe }}">
     {% endif %}
         {%- if value.image.alt %}
             <img class="m-info-unit_image
@@ -85,7 +85,8 @@
 
     {%- if value.heading %}
         {% if link_image_and_heading %}
-            <a class="m-info-unit_heading-link" href="{{ value.links[0].url }}">
+            <a class="m-info-unit_heading-link"
+               href="{{ parse_links( value.links[0].url ) | safe }}">
         {%- endif %}
                 <{{ value.heading.level -}}
                     {%- if value.heading.icon -%}
