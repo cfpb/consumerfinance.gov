@@ -85,25 +85,7 @@ clean_and_install() {
 # Run tasks to build the project for distribution.
 build() {
   echo 'Building project…'
-
-  if [ cfgov/static_built/css/main.css -ot cfgov/unprocessed/css/ ]; then
-    echo 'Built CSS is out of date. Rebuilding.'
-    gulp clean:css
-    gulp styles
-  else
-    echo 'CSS is up to date and does not need to be rebuilt.'
-  fi
-
-  if [ cfgov/static_built/js/routes/common.js -ot cfgov/unprocessed/js/routes/common.js ]; then
-    echo 'Built JavaScript is out of date. Rebuilding.'
-    gulp clean:js
-    gulp scripts
-  else
-    echo 'JavaScript is up to date and does not need to be rebuilt.'
-  fi
-
-  # gulp clean
-  # gulp build
+  gulp build
 
   if [ "$cli_flag" = "production" ]; then
     echo 'Running additional build steps for on-demand and Nemo assets.'
