@@ -243,32 +243,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {% block javascript scoped %}
 <!--[if gt IE 8]><!-->
 {# Include site-wide JavaScript. #}
-<script>
-    {% include '/js/routes/common.js' %}
-</script>
+<script src="{{ static('js/routes/common.js') }}"></script>
 
-{# Include template and page-specific JavaScript. #}
-{% macro page_template_js() %}
-    {# Check and include template-level JavaScript. #}
-    {% include '/js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
-
-    {# TODO: Remove Else conditional when this is fully moved to wagtail. #}
-    {# Check and include page-level JavaScript. #}
-    {% if page and page.media %}
-        {% for type, jsfiles in page.media.iteritems() %}
-            {% for js in jsfiles %}
-                {% include '/js/routes/on-demand/' + js ignore missing %}
-            {% endfor %}
-        {% endfor %}
-    {% else %}
-        {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
-    {% endif %}
+{# Check and include template-level JavaScript. #}
+{% macro template_js() %}
+    {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
 {% endmacro %}
-{% set js_source = page_template_js() | trim %}
+{% set js_source = template_js() | trim %}
 {% if js_source | length > 0 %}
-<script>
-    {{ js_source }}
-</script>
+<script src="{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}"></script>
+{% endif %}
+
+{# Check and include component-level JavaScript. #}
+{% macro component_ondemand_js(js) %}
+    {% include 'js/routes/on-demand/' + js ignore missing %}
+{% endmacro %}
+
+{% if page and page.media %}
+    {% compress js %}
+    <script>
+    {% for js in page.media %}
+       {% set compononet_js_source = component_ondemand_js(js) | trim %}
+       {% if compononet_js_source | length > 0 %}
+            {{ compononet_js_source }}
+       {% endif %}
+    {% endfor %}
+    </script>
+    {% endcompress %}
+{% endif %}
+
+{# TODO: Remove the below block when all pages
+         using this template are moved to Wagtail. #}
+{# Check and include page-level JavaScript. #}
+{% macro page_js() %}
+    {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+{% endmacro %}
+{% set js_source = page_js() | trim %}
+{% if js_source | length > 0 %}
+<script src="{{ static('js/routes/' + request.path[1:] + 'index.js') }}"></script>
 {% endif %}
 <!--<![endif]-->
 
