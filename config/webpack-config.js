@@ -4,17 +4,12 @@
 
 'use strict';
 
-const path = require( 'path' );
 const environment = require( '../config/environment' );
-const paths = environment.paths;
-const scriptsManifest = require( '../gulp/utils/scripts-manifest' );
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
 
-// Constants.
-const JS_ROUTES_PATH = '/js/routes';
-const OAH_COMMON_BUNDLE_ROUTE = '/js/routes/owning-a-home/';
+// Constants
 const COMMON_BUNDLE_NAME = 'common.js';
 
 // Commmon webpack 'module' option used in each configuration.

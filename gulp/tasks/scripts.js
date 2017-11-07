@@ -32,7 +32,7 @@ const configLegacy = require( '../config.js' ).legacy;
  * @returns {PassThrough} A source stream.
  */
 function _processScript( config, src, dest ) {
-   return gulp.src( paths.unprocessed + src )
+  return gulp.src( paths.unprocessed + src )
     .pipe( gulpChanged( paths.processed + dest ) )
     .pipe( named( function( file ) {
       return file.relative;
@@ -154,12 +154,7 @@ function scriptsNemo() {
 function scriptsEs5Shim() {
   return gulp.src( paths.unprocessed + '/js/shims/es5-shim.js' )
     .pipe( gulpChanged( paths.processed + '/js/' ) )
-    .pipe( webpackStream( {
-      entry: paths.unprocessed + '/js/shims/es5-shim.js',
-      output: {
-        filename: 'es5-shim.js'
-      }
-    }, webpack ) )
+    .pipe( webpackStream( {}, webpack ) )
     .pipe( gulpUglify() )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + '/js/' ) )
