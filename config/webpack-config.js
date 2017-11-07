@@ -59,10 +59,25 @@ const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
 } );
 
 
-const COMMON_CONF = {
+const COMMON_CHUNK_CONFIG = new webpack.optimize.CommonsChunkPlugin( {
+  name: COMMON_BUNDLE_NAME
+} );
+
+
+const commonConf = {
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: '[name]'
+  },
+  plugins: [
+    COMMON_UGLIFY_CONFIG
+  ]
+};
+
+const externalConf = {
+  module: COMMON_MODULE_CONFIG,
+  output: {
+    filename: 'external-site.js'
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
@@ -76,30 +91,14 @@ const modernConf = {
     filename: '[name]'
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin( {
-      name: COMMON_BUNDLE_NAME
-    } ),
+    COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
   ]
 };
 
-// const modernConf = COMMON_CONF;
-// modernConf.cache = true;
-// modernConf.plugins.push(
-//   new webpack.optimize.CommonsChunkPlugin( {
-//     name: COMMON_BUNDLE_NAME
-//   } )
-// )
-
-const externalConf = COMMON_CONF;
-externalConf.output.filename = 'external-site.js';
-
 const onDemandHeaderRawConf = {
   module: COMMON_MODULE_CONFIG
 };
-
-const spanishConf = COMMON_CONF;
-spanishConf.output.filename = 'spanish.js';
 
 const owningAHomeConf = {
   cache: true,
@@ -109,17 +108,26 @@ const owningAHomeConf = {
     jsonpFunction: 'OAH'
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin( {
-      name: COMMON_BUNDLE_NAME
-    } ),
-    COMMON_UGLIFY_CONFIG ]
+    COMMON_CHUNK_CONFIG,
+    COMMON_UGLIFY_CONFIG
+  ]
+};
+
+const spanishConf = {
+  module: COMMON_MODULE_CONFIG,
+  output: {
+    filename: 'spanish.js'
+  },
+  plugins: [
+    COMMON_UGLIFY_CONFIG
+  ]
 };
 
 module.exports = {
-  commonConf:            COMMON_CONF,
+  commonConf:            commonConf,
+  externalConf:          externalConf,
+  modernConf:            modernConf,
   onDemandHeaderRawConf: onDemandHeaderRawConf,
   owningAHomeConf:       owningAHomeConf,
-  modernConf:            modernConf,
-  externalConf:          externalConf,
   spanishConf:           spanishConf
 };
