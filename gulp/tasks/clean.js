@@ -5,22 +5,15 @@ const del = require( 'del' );
 const gulp = require( 'gulp' );
 
 
-/**
- * Cleans out built CSS files
- */
-function cleanCSS() {
+gulp.task( 'clean:css', () => {
+  // Clean CSS out of /cfgov/static_built/css/
   del( configClean.css + '/**/*' );
-}
+} );
 
-/**
- * Cleans out built JavaScript files
- */
-function cleanJS() {
+gulp.task( 'clean:js', () => {
+  // Clean JavaScript out of /cfgov/static_built/js/
   del( configClean.js + '/**/*' );
-}
-
-gulp.task( 'clean:css', cleanCSS );
-gulp.task( 'clean:js', cleanJS );
+} );
 
 gulp.task( 'clean', () => {
   // Clean everything out of /cfgov/static_built/
