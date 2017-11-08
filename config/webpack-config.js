@@ -119,10 +119,10 @@ const spanishConf = {
 };
 
 module.exports = {
-  commonConf:            commonConf,
-  externalConf:          externalConf,
-  modernConf:            modernConf,
-  onDemandHeaderRawConf: onDemandHeaderRawConf,
-  owningAHomeConf:       owningAHomeConf,
-  spanishConf:           spanishConf
+  commonConf,
+  externalConf,
+  modernConf,
+  onDemandHeaderRawConf,
+  owningAHomeConf,
+  spanishConf
 };
