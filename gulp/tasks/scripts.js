@@ -178,15 +178,10 @@ function scriptsNemo() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsEs5Shim() {
-  return gulp.src( paths.unprocessed + '/js/shims/es5-shim.js' )
-    .pipe( gulpChanged( paths.processed + '/js/' ) )
-    .pipe( webpackStream( {}, webpack ) )
-    .pipe( gulpUglify() )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.processed + '/js/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _processScript( webpackConfig.commonConf,
+                         '/js/shims/es5-shim.js',
+                         '/js/'
+  );
 }
 
 /**
