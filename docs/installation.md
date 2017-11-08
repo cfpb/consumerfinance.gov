@@ -354,11 +354,13 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    Finally, it creates a new checksum for future comparisons.
 1. **Run tasks to build the project for distribution** (`build`)
 
-   Finally, the script executes `gulp clean` to wipe out any lingering
-   `dist` files, then runs `gulp build` to rebuild everything.
+   Finally, the script runs `gulp build` to rebuild the front-end assets.
+   It no longer cleans first, because the gulp-changed plugin prevents
+   rebuilding assets that haven't changed since the last build.
 
-   If this is the production environment, it also triggers
-   `gulp scripts:ondemand`, which isn't part of a standard `gulp build`.
+   If this is the production environment, it also triggers style and script
+   builds for `ondemand` and `nemo`, which aren't part of a standard
+   `gulp build`.
 
 ### 2. `backend.sh`
 
