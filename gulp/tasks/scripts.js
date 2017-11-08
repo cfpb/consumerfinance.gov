@@ -14,10 +14,11 @@ const gulpModernizr = require( 'gulp-modernizr' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
+const gulpUtil = require( 'gulp-util' );
 const handleErrors = require( '../utils/handle-errors' );
 const paths = require( '../../config/environment' ).paths;
 const webpack = require( 'webpack' );
-const webpackConfig = require( '../../config/webpack-config.js' );
+const WEBPACK_CONFIG = require( '../../config/webpack-config.js' );
 const webpackStream = require( 'webpack-stream' );
 const configLegacy = require( '../config.js' ).legacy;
 
@@ -30,6 +31,10 @@ const configLegacy = require( '../config.js' ).legacy;
  * @returns {PassThrough} A source stream.
  */
 function _processScript( config, src, dest ) {
+  if ( gulpUtil.env.stats ) {
+    config = Object.assign( config, { stats: WEBPACK_CONFIG.STATS } );
+  }
+
   return gulp.src( paths.unprocessed + src )
     .pipe( webpackStream( config, webpack ) )
     .on( 'error', handleErrors )
@@ -68,7 +73,7 @@ function scriptsPolyfill() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsModern() {
-  return _processScript( webpackConfig.modernConf,
+  return _processScript( WEBPACK_CONFIG.MODERN,
                          '/js/routes/common.js', '/js/routes/' );
 }
 
@@ -77,7 +82,7 @@ function scriptsModern() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsIE() {
-  return _processScript( webpackConfig.ieConf,
+  return _processScript( WEBPACK_CONFIG.IE,
                          '/js/ie/common.ie.js', '/js/ie/' );
 }
 
@@ -86,7 +91,7 @@ function scriptsIE() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsExternal() {
-  return _processScript( webpackConfig.externalConf,
+  return _processScript( WEBPACK_CONFIG.EXTERNAL,
                          '/js/routes/external-site/index.js', '/js/' );
 }
 
@@ -97,7 +102,7 @@ function scriptsExternal() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsOnDemand() {
-  return _processScript( webpackConfig.onDemandConf,
+  return _processScript( WEBPACK_CONFIG.ON_DEMAND,
                          '/js/routes/on-demand/*.js', '/js/atomic/' );
 }
 
@@ -106,7 +111,7 @@ function scriptsOnDemand() {
   * @returns {PassThrough} A source stream.
   */
 function scriptsSpanish() {
-  return _processScript( webpackConfig.spanishConf,
+  return _processScript( WEBPACK_CONFIG.SPANISH,
                          '/js/routes/es/obtener-respuestas/single.js', '/js/' );
 }
 
@@ -118,7 +123,7 @@ function scriptsSpanish() {
  */
 function scriptsNonResponsive() {
   return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
-    .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
+    .pipe( webpackStream( WEBPACK_CONFIG.ON_DEMAND_HEADER_RAW, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
@@ -171,7 +176,7 @@ function scriptsEs5Shim() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsOAH() {
-  return _processScript( webpackConfig.owningAHomeConf,
+  return _processScript( WEBPACK_CONFIG.OWNING_A_HOME,
                          '/js/routes/apps/owning-a-home/common.js',
                          '/js/owning-a-home/' );
 }
