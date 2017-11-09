@@ -20,9 +20,6 @@ $( document ).ready( function() {
 
     // Report specific js for sticky nav
     $(window).scroll( stickyNav );
-
-    // Init cShowHide plugin
-    $( '.show-hide' ).cShowHide();
 });
 
 
