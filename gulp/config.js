@@ -43,6 +43,8 @@ module.exports = {
     reporter: environment.CONTINUOUS_INTEGRATION
   },
   clean: {
+    css: paths.processed + '/css',
+    js: paths.processed + '/js',
     dest: paths.processed
   },
   scripts: {

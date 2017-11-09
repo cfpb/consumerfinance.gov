@@ -69,6 +69,7 @@
     "timelinejs": "2.35.6",
     "uglifyjs-webpack-plugin": "1.0.1",
     "ustream-embedapi": "1.0.0",
+    "vinyl-named": "1.1.0",
     "webpack": "3.8.1",
     "webpack-stream": "4.0.0",
     "xdr": "0.5.3"
