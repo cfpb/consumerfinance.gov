@@ -22,9 +22,16 @@ class FilterableListMixin(object):
         context['filter_data'] = self.process_form(request, form)
         return context
 
-    def base_query(self):
-        return AbstractFilterPage.objects.live().filter(
+    def base_query(self, site):
+        return AbstractFilterPage.objects.live().in_site(site).filter(
             CFGOVPage.objects.child_of_q(self))
+
+    def process_form(self, request, form):
+        filter_data = {}
+        if form.is_valid():
+            paginator = Paginator(form.get_page_set(),
+                                  self.per_page_limit())
+            page = request.GET.get('page')
 
     def process_form(self, request, form):
         filter_data = {}

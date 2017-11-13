@@ -91,8 +91,7 @@ class FilterableListForm(forms.Form):
         self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
 
-        pages = self.base_query.live()
-        page_ids = pages.values_list('id', flat=True)
+        page_ids = self.base_query.live().values_list('id', flat=True)
 
         clean_categories(selected_categories=self.data.get('categories'))
         self.set_topics(page_ids)
