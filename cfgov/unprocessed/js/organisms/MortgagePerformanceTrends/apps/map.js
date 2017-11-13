@@ -165,7 +165,7 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
     this.chart.highchart.chart.mapZoom( zoomLevel );
   }
   if ( state.zoomTarget ) {
-    let centroid = utils.stateCentroids[state.zoomTarget];
+    const centroid = utils.stateCentroids[state.zoomTarget];
     this.chart.highchart.chart.mapZoom();
     utils.setZoomLevel( 10 );
     zoomLevel = utils.getZoomLevel( 5 );
@@ -223,6 +223,8 @@ MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state )
   }
   if ( !loc ) {
     loc = `${ state.geo.type } view`;
+  } else if ( state.geo.type === 'county' ) {
+    loc = `${ loc }, ${ utils.getCountyState( state.geo.id ) }`;
   }
   this.$mapTitleLocation.innerText = loc;
   this.$mapTitleDate.innerText = utils.getDate( state.date );

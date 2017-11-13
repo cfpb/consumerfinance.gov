@@ -11,6 +11,7 @@
 const envvars = {
 
   /* eslint-disable no-process-env */
+  CONTINUOUS_INTEGRATION:  process.env.CONTINUOUS_INTEGRATION,
   DJANGO_STAGING_HOSTNAME: process.env.DJANGO_STAGING_HOSTNAME,
   TEST_HTTP_HOST:          process.env.TEST_HTTP_HOST,
   TEST_HTTP_PORT:          process.env.DJANGO_HTTP_PORT,

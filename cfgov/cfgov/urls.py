@@ -77,11 +77,13 @@ urlpatterns = [
         include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
 
     url(r'^owning-a-home/mortgage-closing/',
-        include(oah.urls_for_prefix('mortgage-closing'))),
+        TemplateView.as_view(
+        template_name='owning-a-home/mortgage-closing/index.html'),
+        name='mortgage-closing'),
     url(r'^owning-a-home/mortgage-estimate/',
         TemplateView.as_view(
         template_name='owning-a-home/mortgage-estimate/index.html'),
-        name='morgage-estimate'),
+        name='mortgage-estimate'),
 
     url(r'^owning-a-home/process/',
         include(oah.urls_for_prefix('process/prepare/'))),
@@ -114,48 +116,55 @@ urlpatterns = [
                       'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
-    url(r'^empowerment/$', TemplateView.as_view(
-        template_name='empowerment/index.html'),
-        name='empowerment'),
+    url(r'^practitioner-resources/economically-vulnerable/$',
+        TemplateView.as_view(
+            template_name='empowerment/index.html'),
+            name='empowerment'),
     url(r'^fair-lending/$', TemplateView.as_view(
         template_name='fair-lending/index.html'),
         name='fair-lending'),
-    url(r'^students/$', TemplateView.as_view(
+
+    url(r'^practitioner-resources/students/$', TemplateView.as_view(
         template_name='students/index.html'),
         name='students'),
-    url(r'^students/knowbeforeyouowe/$', TemplateView.as_view(
-        template_name='students/knowbeforeyouowe/index.html'),
-        name='students-knowbeforeyouowe'),
-    url(r'^students/helping-borrowers-find-ways-to-stay-afloat/$',
+    url(r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(
-            template_name='students/helping-borrowers-find-'
-                      'ways-to-stay-afloat/index.html'),
-            name='students-helping-borrowers'),
-    url(r'^servicemembers/$', TemplateView.as_view(
+            template_name='students/knowbeforeyouowe/index.html'),
+            name='students-knowbeforeyouowe'),
+    url(r'^practitioner-resources/students/'
+         'helping-borrowers-find-ways-to-stay-afloat/$',
+            TemplateView.as_view(
+                template_name='students/helping-borrowers-find-'
+                              'ways-to-stay-afloat/index.html'),
+                name='students-helping-borrowers'),
+
+    url(r'^practitioner-resources/servicemembers/$', TemplateView.as_view(
         template_name='service-members/index.html'),
         name='servicemembers'),
-    url(r'^servicemembers/on-demand-forums-and-tools/$',
+    url(r'^practitioner-resources/servicemembers/webinars/$',
         TemplateView.as_view(
         template_name='service-members/on-demand-forums-and-tools'
                       '/index.html'),
         name='servicemembers'),
-    url(r'^servicemembers/additionalresources/$',
+    url(r'^practitioner-resources/servicemembers/additionalresources/$',
         TemplateView.as_view(
         template_name='service-members/additionalresources/index.html'),
         name='servicemembers'),
-    url(r'^servicemembers/planning/$',
+    url(r'^practitioner-resources/servicemembers/planning/$',
         TemplateView.as_view(
         template_name='service-members/planning/index.html'),
         name='servicemembers-planning'),
-    url(r'^servicemembers/planning/creativesavingsstrategies/$',
-        TemplateView.as_view(
-        template_name='service-members/planning/'
-                      'creativesavingsstrategies/index.html'),
-        name='servicemembers-planning'),
-    url(r'^servicemembers/protecting/$',
+    url(r'^practitioner-resources/servicemembers/planning/'
+         'creativesavingsstrategies/$',
+            TemplateView.as_view(
+                template_name='service-members/planning/'
+                              'creativesavingsstrategies/index.html'),
+                name='servicemembers-planning'),
+    url(r'^practitioner-resources/servicemembers/protecting/$',
         TemplateView.as_view(
         template_name='service-members/protecting/index.html'),
         name='servicemembers-protecting'),
+
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
@@ -341,6 +350,24 @@ urlpatterns = [
             url='/consumer-tools/retirement/%(path)s',
             permanent=True)),
 
+    # empowerment redirects
+    url(r'^empowerment/$', RedirectView.as_view(
+            url='/practitioner-resources/economically-vulnerable/',
+            permanent=True)),
+
+    # students redirects
+    url(r'^students/(?P<path>.*)$', RedirectView.as_view(
+            url='/practitioner-resources/students/%(path)s',
+            permanent=True)),
+
+    # servicemembers redirects
+    url(r'^servicemembers/on-demand-forums-and-tools/$', RedirectView.as_view(
+            url='/practitioner-resources/servicemembers/webinars/',
+            permanent=True)),
+    url(r'^servicemembers/(?P<path>.*)$', RedirectView.as_view(
+            url='/practitioner-resources/servicemembers/%(path)s',
+            permanent=True)),
+
     # ask-cfpb
     url(r'^askcfpb/$',
         RedirectView.as_view(
@@ -476,12 +503,6 @@ if 'selfregistration' in settings.INSTALLED_APPS:
     urlpatterns.append(pattern)
 
 if settings.DEBUG:
-    urlpatterns.append(
-        url(r'^test-fixture/$',
-            SheerTemplateView.as_view(
-                template_name='test-fixture/index.html'),
-            name='test-fixture')
-    )
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
 

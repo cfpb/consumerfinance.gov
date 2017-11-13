@@ -85,22 +85,12 @@
 .input-contains-label {
     position: relative;
 
-    input[type="text"],
-    input[type="search"],
-    input[type="email"],
-    input[type="url"],
-    input[type="tel"],
-    input[type="number"] {
+    .a-text-input {
         box-sizing: border-box;
         width: 100%;
     }
 
-    &_before ~ input[type="text"],
-    &_before ~ input[type="search"],
-    &_before ~ input[type="email"],
-    &_before ~ input[type="url"],
-    &_before ~ input[type="tel"],
-    &_before ~ input[type="number"] {
+    &_before ~ .a-text-input {
         padding-left: unit( 30px / @btn-font-size, em );
 
         &.input__super {
@@ -108,12 +98,7 @@
         }
     }
 
-    &_after ~ input[type="text"],
-    &_after ~ input[type="search"],
-    &_after ~ input[type="email"],
-    &_after ~ input[type="url"],
-    &_after ~ input[type="tel"],
-    &_after ~ input[type="number"] {
+    &_after ~ .a-text-input {
         padding-right: unit( 30px / @btn-font-size, em );
 
         &.input__super {
@@ -180,12 +165,7 @@
                 content: 'Clear';
             }
 
-            & ~ input[type="text"],
-            & ~ input[type="search"],
-            & ~ input[type="email"],
-            & ~ input[type="url"],
-            & ~ input[type="tel"],
-            & ~ input[type="number"] {
+            & ~ .a-text-input {
                 padding-right: unit( 65px / @btn-font-size, em );
 
                 &.input__super {

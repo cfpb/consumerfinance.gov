@@ -171,6 +171,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 # Admin Url Access
@@ -212,6 +213,12 @@ STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
 MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
+
+
+#Enabling compression for use in base.html
+COMPRESS_ENABLED = True
+
+COMPRESS_JS_FILTERS = []
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -382,12 +389,6 @@ SHEER_SITES = {
     'owning-a-home':
         Path(os.environ.get('OAH_SHEER_PATH') or
              Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
-    'fin-ed-resources':
-        Path(os.environ.get('FIN_ED_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
-    'know-before-you-owe':
-        Path(os.environ.get('KBYO_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
 }
 
 # The base URL for the API that we use to access layers and the regulation.
@@ -531,10 +532,13 @@ FLAGS = {
         'site': 'beta.consumerfinance.gov',
     },
 
-    # When enabled, Display a "techical issues" banner on /complaintdatabase
+    # When enabled, include a recruitment code comment in the base template.
+    'CFPB_RECRUITING': {},
+
+    # When enabled, display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
 
-    # When enabled, use wagtail for /company-signup/ (instead of selfregistration app)
+    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
     'WAGTAIL_COMPANY_SIGNUP': {},
 
     # IA changes to mega menu for user testing
@@ -576,6 +580,9 @@ FLAGS = {
 
     # The release of the consumer Financial Well Being Scale app
     'FWB_RELEASE': {},
+
+    # The release of new Whistleblowers content/pages
+    'WHISTLEBLOWER_RELEASE': {},
 }
 
 
