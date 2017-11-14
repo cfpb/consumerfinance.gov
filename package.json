@@ -69,6 +69,7 @@
     "timelinejs": "2.35.6",
     "uglifyjs-webpack-plugin": "1.0.1",
     "ustream-embedapi": "1.0.0",
+    "vinyl-named": "1.1.0",
     "webpack": "3.8.1",
     "webpack-stream": "4.0.0",
     "xdr": "0.5.3"
@@ -77,7 +78,6 @@
     "chai": "4.1.2",
     "chai-as-promised": "7.1.1",
     "cucumber": "3.0.6",
-    "gulp-changed": "3.1.0",
     "jasmine-reporters": "2.2.1",
     "jasmine-spec-reporter": "4.2.1",
     "jsdoc": "3.4.3",
@@ -92,7 +92,6 @@
     "selenium-webdriver": "3.5.0",
     "sinon": "4.0.2",
     "snyk": "1.25.0",
-    "vinyl-named": "1.1.0",
     "wcag": "0.3.0"
   },
   "browser": {
