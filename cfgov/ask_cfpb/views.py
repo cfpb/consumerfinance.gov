@@ -114,8 +114,8 @@ def ask_search(request, language='en', as_json=False):
     qstring = clean_query.query_string.strip()
     if not qstring:
         raise Http404
-    sqs = sqs.filter(content=clean_query)
     suggestion = sqs.spelling_suggestion(qstring)
+    sqs = sqs.filter(content=clean_query)
 
     if as_json:
         results = {
