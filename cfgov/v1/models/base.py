@@ -156,22 +156,6 @@ class CFGOVPage(Page):
         ]
         specific_categories = block.value['specific_categories']
 
-        def get_appropriate_categories(specific_categories, page_type):
-            """ An array of categories is provided from whatever
-            is selected in the admin, however they each correspond to
-            a page type, e.g. newsroom or blog. This function returns
-            only the categories that belong to the page type in question
-            """
-
-            # Convert the provided categories to their slugs
-            category_slugs = ref.related_posts_category_lookup(
-                specific_categories
-            )
-            # Look up the available categories for the page type in question
-            options = [c[0] for c in ref.choices_for_page_type(page_type)]
-
-            return [c for c in category_slugs if c in options]
-
         for slug, block_name, title in search_types:
             get_related_posts = block.value.get(
                 'relate_{}'.format(block_name), None
@@ -192,7 +176,7 @@ class CFGOVPage(Page):
                 else:
                     # Filter by provided categories for newsroom & blog
                     if specific_categories:
-                        categories = get_appropriate_categories(
+                        categories = ref.get_appropriate_categories(
                             specific_categories=specific_categories,
                             page_type=slug
                         )
