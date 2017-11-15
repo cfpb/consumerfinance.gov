@@ -15,6 +15,9 @@ then
 	echo "See the runserver output in whatever terminal you ran docker-compose up in."
 	echo "Or, try 'docker-compose logs python'"
 	echo https://docs.docker.com/compose/reference/logs/
+	echo
+	echo "is this an 'attach.sh' session? you probably want:"
+	echo "cfgov/manage.py runserver 0.0.0.0:8000"
 	exit
 fi
 
