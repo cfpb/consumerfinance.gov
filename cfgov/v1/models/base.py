@@ -148,52 +148,61 @@ class CFGOVPage(Page):
 
     def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage
-        related = {}
-        search_types = [
-            ('blog', block.value.get('relate_posts')),
-            ('newsroom', block.value.get('relate_newsroom')),
-            ('events', block.value.get('relate_events')),
-        ]
+
+        def match_all_topic_tags(queryset, tags):
+            for tag in tags:
+                queryset = queryset.filter(tags__name=tag)
+            return queryset
+
+        related_types = []
+        related_items = {}
+        if block.value.get('relate_posts'):
+            related_types.append('blog')
+        if block.value.get('relate_newsroom'):
+            related_types.append('newsroom')
+        if block.value.get('relate_events'):
+            related_types.append('events')
+        if not related_types:
+            return related_items
+
+        tags = self.tags.names()
+        and_filtering = block.value['and_filtering']
         specific_categories = block.value['specific_categories']
+        limit = int(block.value['limit'])
+        queryset = AbstractFilterPage.objects.live().exclude(
+            id=self.id).order_by('-date_published').distinct()
 
-        for slug, should_get_related_posts in search_types:
-            if should_get_related_posts:
-                # Initialize Q query with a filter on this page's tags
-                query = models.Q(('tags__name__in', self.tags.names()))
+        for parent in related_types:  # blog, newsroom or events
+            # Include children of this slug that match at least 1 tag
+            children = Page.objects.child_of_q(Page.objects.get(slug=parent))
+            filters = children & Q(('tags__name__in', tags))
 
-                # Get the children of the page
-                # e.g. all blog pages, newsroom pages, or events pages
-                parent = Page.objects.get(slug=slug)
-                query &= Page.objects.child_of_q(parent)
+            if parent == 'events':
+                # Include archived events matches
+                archive = Page.objects.get(slug='archive-past-events')
+                children = Page.objects.child_of_q(archive)
+                filters |= children & Q(('tags__name__in', tags))
 
-                if slug == 'events':
-                    # We want to include archived events if dealing with events
-                    archive = Page.objects.get(slug='archive-past-events')
-                    query |= Page.objects.child_of_q(archive)
-                else:
-                    # Filter by provided categories for newsroom & blog
-                    if specific_categories:
-                        categories = ref.get_appropriate_categories(
-                            specific_categories=specific_categories,
-                            page_type=slug
-                        )
-                        if categories:
-                            query &= Q(('categories__name__in', categories))
+            if specific_categories:
+                # Filter by any additional categories specified
+                categories = ref.get_appropriate_categories(
+                    specific_categories=specific_categories,
+                    page_type=parent
+                )
+                if categories:
+                    filters &= Q(('categories__name__in', categories))
 
-                final_query = AbstractFilterPage.objects.live().filter(
-                    query).distinct().exclude(
-                    id=self.id).order_by('-date_published')
-                # Apply similar logic as snippets.py's filter_by_tags method
-                # to enable AND filtering
-                if block.value['and_filtering']:
-                    for tag in self.tags.names():
-                        final_query = final_query.filter(tags__name=tag)
-                related[slug.title()] = final_query[:block.value['limit']]
+            related_queryset = queryset.filter(filters)
 
-        # Return a dictionary of lists of each type when there's at least one
-        # hit for that type.
-        return {search_type: queryset for search_type, queryset in
-                related.items() if queryset}
+            if and_filtering:
+                # By default, we need to match at least one tag
+                # If specified in the admin, change this to match ALL tags
+                related_queryset = match_all_topic_tags(related_queryset, tags)
+
+            related_items[parent.title()] = related_queryset[:limit]
+
+        # Return items in the dictionary that have non-empty querysets
+        return {key: value for key, value in related_items.items() if value}
 
     def related_metadata_tags(self):
         # Set the tags to correct data format
