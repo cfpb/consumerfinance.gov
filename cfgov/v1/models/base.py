@@ -149,73 +149,70 @@ class CFGOVPage(Page):
     def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage
         related = {}
-        query = models.Q(('tags__name__in', self.tags.names()))
         search_types = [
-            ('blog', 'posts', 'Blog', query),
-            ('newsroom', 'newsroom', 'Newsroom', query),
-            ('events', 'events', 'Events', query),
+            ('blog', 'posts', 'Blog'),
+            ('newsroom', 'newsroom', 'Newsroom'),
+            ('events', 'events', 'Events'),
         ]
+        specific_categories = block.value['specific_categories']
 
-        def fetch_children_by_specific_category(block, parent_slug):
+        def get_appropriate_categories(specific_categories, page_type):
+            """ An array of categories is provided from whatever
+            is selected in the admin, however they each correspond to
+            a page type, e.g. newsroom or blog. This function returns
+            only the categories that belong to the page type in question
             """
-            This used to be a Page.objects.get, which would throw
-            an exception if the requested parent wasn't found. As of
-            Django 1.6, you can now do Page.objects.filter().first();
-            the advantage here is that you can check for None right
-            away and not have to rely on catching exceptions, which
-            in any case didn't do anything useful other than to print
-            an error message. Instead, we just return an empty query
-            which has no effect on the final result.
-            """
-            parent = Page.objects.filter(slug=parent_slug).first()
-            if parent:
-                child_query = Page.objects.child_of_q(parent)
-                if 'specific_categories' in block.value:
-                    child_query &= specific_categories_query(
-                        block, parent_slug)
-            else:
-                child_query = Q()
-            return child_query
 
-        def specific_categories_query(block, parent_slug):
-            specific_categories = ref.related_posts_category_lookup(
-                block.value['specific_categories']
+            # Convert the provided categories to their slugs
+            category_slugs = ref.related_posts_category_lookup(
+                specific_categories
             )
-            choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
-            categories = [c for c in specific_categories if c in choices]
-            if categories:
-                return Q(('categories__name__in', categories))
-            else:
-                return Q()
+            # Look up the available categories for the page type in question
+            options = [c[0] for c in ref.choices_for_page_type(page_type)]
 
-        for parent_slug, search_type, search_type_name, search_query in \
-                search_types:
-            search_query &= fetch_children_by_specific_category(
-                block, parent_slug)
-            if parent_slug == 'events':
-                search_query |= fetch_children_by_specific_category(
-                    block, 'archive-past-events') & query
-            relate = block.value.get('relate_{}'.format(search_type), None)
-            if relate:
-                type_query = (
-                    AbstractFilterPage.objects.live().filter(
-                        search_query
-                    ).distinct().exclude(id=self.id).order_by(
-                        '-date_published'
-                    )
-                )
+            return [c for c in category_slugs if c in options]
+
+        for slug, block_name, title in search_types:
+            get_related_posts = block.value.get(
+                'relate_{}'.format(block_name), None
+            )
+            if get_related_posts:
+                # Initialize Q query with a filter on this page's tags
+                query = models.Q(('tags__name__in', self.tags.names()))
+
+                # Get the children of the page
+                # e.g. all blog pages, newsroom pages, or events pages
+                parent = Page.objects.get(slug=slug)
+                query &= Page.objects.child_of_q(parent)
+
+                if slug == 'events':
+                    # We want to include archived events if dealing with events
+                    archive = Page.objects.get(slug='archive-past-events')
+                    query |= Page.objects.child_of_q(archive)
+                else:
+                    # Filter by provided categories for newsroom & blog
+                    if specific_categories:
+                        categories = get_appropriate_categories(
+                            specific_categories=specific_categories,
+                            page_type=slug
+                        )
+                        if categories:
+                            query &= Q(('categories__name__in', categories))
+
+                final_query = AbstractFilterPage.objects.live().filter(
+                    query).distinct().exclude(
+                    id=self.id).order_by('-date_published')
                 # Apply similar logic as snippets.py's filter_by_tags method
                 # to enable AND filtering
                 if block.value['and_filtering']:
                     for tag in self.tags.names():
-                        type_query = type_query.filter(tags__name=tag)
-                related[search_type_name] = type_query[:block.value['limit']]
+                        final_query = final_query.filter(tags__name=tag)
+                related[title] = final_query[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
-
 
     def related_metadata_tags(self):
         # Set the tags to correct data format
