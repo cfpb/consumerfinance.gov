@@ -1,28 +1,32 @@
 # Spanish translations for cfgov-refresh
-
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-08-30 20:30-0400\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-09 17:22-0500\n"
 "Language: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ask_cfpb/models/pages.py:590
+#: ask_cfpb/models/pages.py:603 ask_cfpb/tests/models/test_pages.py:712
 msgid "redirected but not live"
 msgstr ""
 
-#: ask_cfpb/models/pages.py:592
+#: ask_cfpb/models/pages.py:605 ask_cfpb/tests/models/test_pages.py:715
 msgid "redirected"
 msgstr ""
 
-#: cfgov/settings/base.py:187
+#: ask_cfpb/tests/models/test_pages.py:718
+msgid "live"
+msgstr ""
+
+#: cfgov/settings/base.py:189
 msgid "English"
 msgstr ""
 
-#: cfgov/settings/base.py:188
+#: cfgov/settings/base.py:190
 msgid "Spanish"
 msgstr ""
 
@@ -36,9 +40,13 @@ msgid ""
 "valid signature"
 msgstr ""
 
-#: jinja2/v1/_includes/molecules/form-field-with-button.html:33
+#: jinja2/v1/_includes/molecules/form-field-with-button.html:35
 msgid "(required)"
 msgstr "(se requiere)"
+
+#: jinja2/v1/_includes/molecules/related-posts.html:121
+msgid "View more"
+msgstr "Ver más"
 
 #: legacy/templates/common/forgot_password.html:24
 msgid "Email"
@@ -131,20 +139,21 @@ msgstr ""
 #: legacy/templates/front/base_nonresponsive.html:25
 #: legacy/templates/front/base_nonresponsive.html:26
 #: legacy/templates/front/base_nonresponsive.html:28
-#: legacy/templates/front/base_update.html:23
-#: legacy/templates/front/base_update.html:24
-#: legacy/templates/front/base_update.html:25
-#: legacy/templates/front/base_update.html:27
+#: legacy/templates/front/base_update.html:28
+#: legacy/templates/front/base_update.html:29
+#: legacy/templates/front/base_update.html:30
+#: legacy/templates/front/base_update.html:32
+#: legacy/templates/front/base_update.html:33
 msgid "en-US"
 msgstr ""
 
 #: legacy/templates/front/base_nonresponsive.html:34
-#: legacy/templates/front/base_update.html:46
+#: legacy/templates/front/base_update.html:52
 msgid "Consumer Financial Protection Bureau"
 msgstr ""
 
-#: legacy/templates/front/base_nonresponsive.html:109
-#: legacy/templates/front/base_update.html:162
+#: legacy/templates/front/base_nonresponsive.html:112
+#: legacy/templates/front/base_update.html:168
 msgid "en"
 msgstr ""
 
@@ -205,23 +214,23 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
-#: v1/models/base.py:40
+#: v1/models/base.py:38
 msgid "Author"
 msgstr ""
 
-#: v1/models/base.py:41
+#: v1/models/base.py:39
 msgid "Authors"
 msgstr ""
 
-#: v1/models/base.py:48
+#: v1/models/base.py:46
 msgid "Tag"
 msgstr ""
 
-#: v1/models/base.py:49
+#: v1/models/base.py:47
 msgid "Tags"
 msgstr ""
 
-#: v1/models/base.py:411
+#: v1/models/base.py:378
 msgid "password"
 msgstr ""
 
