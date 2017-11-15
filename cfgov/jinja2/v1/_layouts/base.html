@@ -263,9 +263,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {% compress js %}
     <script>
     {% for js in page.media %}
-       {% set compononet_js_source = component_ondemand_js(js) | trim %}
-       {% if compononet_js_source | length > 0 %}
-            {{ compononet_js_source }}
+       {% set component_js_source = component_ondemand_js(js) | trim %}
+       {% if component_js_source | length > 0 %}
+            {{ component_js_source }}
        {% endif %}
     {% endfor %}
     </script>
