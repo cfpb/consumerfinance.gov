@@ -209,11 +209,62 @@ Get any errors? [See our troubleshooting tips.](#troubleshooting)
 - **Docker Compose**: Compose allows you to configure and run a collection of connected containers (like a web application and it's database) 
 - **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X, we'll use Docker Machine to start the Docker server in a virtual linux environment (using Virtualbox)
 
-### 1. Set up 
+### 1. Setup your Docker environment 
 
-If you are on a machine with native docker support (Linux or Windows), please follow the instructions provided by your OS vendor or Docker.com to get set up, and install docker-compose.
+If you have never installed Docker before, follow the instructions [here](https://docs.docker.com/engine/installation/) or from your operating system vendor. If you are on a mac and are unable to install the official "Docker for Mac" package, the quickstart instructions below might help.
 
-On a mac, you will need 
+If you are on a machine that is already set up to run Linux docker containers, please install [Docker Compose](https://docs.docker.com/compose/install/). If `docker-compose ps` runs without error, you can can go to step 2. 
+
+#### Mac + Homebrew + Virtualbox quickstart
+
+**Starting assumptions**: You already have homebrew and virtualbox installed. You can run `brew search docker` without error.
+
+1. Install Docker, Docker Machine, and Docker Compose: `brew install docker docker-compose docker-machine`
+2. `source mac-virtualbox-init.sh`
+ 
+At this point, `docker-compose ps` should run without error. 
+
+### 2.  Run the site
+
+The following assumes you have checked out cfgov-refresh, and have an open terminal, in the cfgov-refresh directory.
+
+Our docker-compose.yml configuration expects there to be a .python_env file. You can create a blank one quickly with:
+
+`touch .python_env`
+
+However, you could save some time and effort later (if you have access to the CFPB network), by configuring a URL for database dumps. The complete .python_env file will look like this:
+
+```
+CFGOV_PROD_DB_LOCATION=https://(rest of the URL)
+```
+
+You can get that URL at [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
+
+From here you should be able to simply run:
+
+`docker-compose up`
+
+This will download and/or build images, and then start the containers, as described in the docker-compose.yml file. This will take a few minutes, or longer if you are on a slow internet connection.
+
+When it's all done, you should be able to load http://localhost:8000 in your browser, and see a database error.
+
+### 3.  Get a database
+
+In a seperate terminal window or tab, run `eval $(docker-machine env)`. This will produce no output, but configures that terminal session so that docker-compose and docker will work.
+
+Run `./shell.sh`. This opens a bash shell inside your Python container.
+
+If you followed the suggestion above about setting CFGOV_PROD_DB_LOCATION in .python_env, you should be able to run:
+
+`./refresh-data.sh`
+
+Otherwise, [the standalone instructions](https://cfpb.github.io/cfgov-refresh/installation/#load-a-database-dump) should be enough to get you started.
+
+Once you have a database loaded, you should have a functioning copy of site working at http://localhost:8000
+
+### 4. Next Steps
+
+Coming soon
 
 
 ## Vagrant-box installation
