@@ -15,10 +15,7 @@ There are two ways to install cfgov-refresh:
 
 - [Stand-alone installation](#stand-alone-installation)
 - [Docker-compose installation](#docker-compose-installation)
-- [Vagrant-box installation](#vagrant-box-installation)
 
-!!! danger
-    The instruction for Vagrant are not currently working.
 
 ## Stand-alone installation
 
@@ -269,71 +266,6 @@ Once you have a database loaded, you should have a functioning copy of site work
 ### 4. Next Steps
 
 Coming soon
-
-
-## Vagrant-box installation
-
-!!! danger
-	These instructions are not currently working, but we'd like to get them working soon. [PRs welcome](contributing).
-
-### 1. Environment variables setup
-
-The project uses a number of environment variables.
-The `setup.sh` script will create a `.env` file for you
-from the `.env_SAMPLE` file found in the repository,
-if you don't already have one.
-
-Inside the `.env` file you can customize the project environment configuration.
-
-If you would like to manually copy the environment settings,
-copy the `.env_SAMPLE` file and un-comment each variable after
-adding your own values.
-```bash
-cp -a .env_SAMPLE .env && open -t .env
-```
-
-Then load the environment variables with:
-```bash
-. ./.env
-```
-
-### 2. Fetch extra playbooks
-
-The project pulls together various open source and closed source plays. The plays are
-managed through ansible-galaxy, a core module for this exact purpose. To download all
-the dependencies, use this command:
-
-```bash
-ansible-galaxy install -r ansible/requirements.yml
-```
-
-### 3. Launch Vagrant virtual environment
-
-The project uses Vagrant to create the simulated virtual environment allowing the developer
-to work on a production-like environment while maintaining development work on the
-local machine. To create this virtual environment, you need to execute the following command.
-
-```bash
-vagrant up
-```
-
-!!! note
-    Please be patient the first time you run this step.
-
-### 4. Front-end Tools
-
-In order to run the application, we must generate the front-end assets.
-After running the following commands, visit http://localhost:8001 to see the site running.
-You can also place the first two export commands into your `.bashrc` to simplify things later.
-
-```bash
-export CFGOV_HOME=path/to/cfgov-refresh
-export PATH=$PATH:$CFGOV_HOME/bin
-cfgov init
-cfgov assets
-cfgov start django
-```
-
 
 ## Optional steps
 
