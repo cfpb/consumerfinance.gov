@@ -265,7 +265,43 @@ Once you have a database loaded, you should have a functioning copy of site work
 
 ### 4. Next Steps
 
-Coming soon
+#### Interacting with Docker Machine
+
+If you used 'mac-virtualbox-init.sh', then we used Docker Machine to create a virtualbox VM, running the docker server. Here are some useful docker machine commands:
+
+- Start and stop the VM with  `docker-machine start` and `docker-machine stop`
+- get the current machine IP with `docker-machine ip`
+- if for some reason you want to start over, `docker-machine rm default`, and `source mac-virtualbox-init.sh`
+
+You'll need to run this command in any new terminal window or tab:
+
+`eval $(docker-machine env)`
+
+It may be helpful to run `docker-machine env` by itself, so you understand what's happening. Those variables are what allows docker-compose and the docker command line tool, running natively on your mac, to connect to the Docker server running inside virtualbox.
+
+If you use autoenv (described in the stand-alone intructions) or something similar, you might consider adding `eval $(docker-machine env)` to your .env file. You could also achieve the same results (and start the VM if it's not running yet) with `source mac-virtualbox-init.sh`
+
+Any further Docker documentation will assume you are either in a shell where you have already run `eval $(docker-machine env)`, or you are in an environment where that's not neccessary.
+
+#### How do I...
+
+##### Run manage.py commands like migrate, shell, and dbshell, and shell scripts like refresh-data.sh
+
+run `./shell.sh` to open up a shell *inside* the Python container. From there, commands like `cfgov/manage.py migrate` should run as expected.
+
+The same goes for scripts like `./refresh-data.sh` -- they will work as expected once you're inside the container.
+
+##### Use PDB
+
+Run `./attach.sh` to connect to the TTY session where `manage.py runserver` is running. If the app is paused at a PDB prompt, this is where you can access it.
+
+##### Handle updates to Python requirements
+
+If Compose is running, stop it with CTRL-C. Run:
+
+`docker-compose build python`
+
+This will update your Python image. The next time you run `docker-compose up`, the new requirements will be in place.
 
 ## Optional steps
 
@@ -306,14 +342,7 @@ To apply any unapplied migrations to a database created from a dump, run:
 python cfgov/manage.py migrate
 ```
 
-### Install dependencies for working with the GovDelivery API
-
-Install the following GovDelivery dependencies into your virtual environment:
-
-```bash
-pip install git+git://github.com/dpford/flask-govdelivery
-pip install git+git://github.com/rosskarchner/govdelivery
-```
+### Set variables for working with the GovDelivery API
 
 Uncomment and set the GovDelivery environment variables in your `.env` file.
 
