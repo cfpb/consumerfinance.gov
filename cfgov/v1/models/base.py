@@ -216,6 +216,29 @@ class CFGOVPage(Page):
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
 
+
+    def related_metadata_tags(self):
+        # Set the tags to correct data format
+        tags = {'links': []}
+        id, filter_page = self.get_filter_data()
+        relative_url = filter_page.relative_url(filter_page.get_site())
+        for tag in self.specific.tags.all():
+            tag_link = {'text': tag.name, 'url': ''}
+            if id is not None and filter_page is not None:
+                param = '?filter' + str(id) + '_topics=' + tag.slug
+                tag_link['url'] = relative_url + param
+            tags['links'].append(tag_link)
+        return tags
+
+    def get_filter_data(self):
+        for ancestor in self.get_ancestors().reverse().specific():
+            if ancestor.specific_class.__name__ in ['BrowseFilterablePage',
+                                                    'SublandingFilterablePage',
+                                                    'EventArchivePage',
+                                                    'NewsroomLandingPage']:
+                return ancestor.form_id(), ancestor
+        return None, None
+
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
         home_page_children = request.site.root_page.get_children()
