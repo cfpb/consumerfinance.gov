@@ -150,13 +150,13 @@ class CFGOVPage(Page):
         from v1.models.learn_page import AbstractFilterPage
         related = {}
         search_types = [
-            ('blog', 'posts', 'Blog'),
-            ('newsroom', 'newsroom', 'Newsroom'),
-            ('events', 'events', 'Events'),
+            ('blog', 'posts'),
+            ('newsroom', 'newsroom'),
+            ('events', 'events'),
         ]
         specific_categories = block.value['specific_categories']
 
-        for slug, block_name, title in search_types:
+        for slug, block_name in search_types:
             get_related_posts = block.value.get(
                 'relate_{}'.format(block_name), None
             )
@@ -191,7 +191,7 @@ class CFGOVPage(Page):
                 if block.value['and_filtering']:
                     for tag in self.tags.names():
                         final_query = final_query.filter(tags__name=tag)
-                related[title] = final_query[:block.value['limit']]
+                related[slug.title()] = final_query[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
