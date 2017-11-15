@@ -150,17 +150,14 @@ class CFGOVPage(Page):
         from v1.models.learn_page import AbstractFilterPage
         related = {}
         search_types = [
-            ('blog', 'posts'),
-            ('newsroom', 'newsroom'),
-            ('events', 'events'),
+            ('blog', block.value.get('relate_posts')),
+            ('newsroom', block.value.get('relate_newsroom')),
+            ('events', block.value.get('relate_events')),
         ]
         specific_categories = block.value['specific_categories']
 
-        for slug, block_name in search_types:
-            get_related_posts = block.value.get(
-                'relate_{}'.format(block_name), None
-            )
-            if get_related_posts:
+        for slug, should_get_related_posts in search_types:
+            if should_get_related_posts:
                 # Initialize Q query with a filter on this page's tags
                 query = models.Q(('tags__name__in', self.tags.names()))
 
