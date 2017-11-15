@@ -209,6 +209,10 @@ Get any errors? [See our troubleshooting tips.](#troubleshooting)
 - **Docker Compose**: Compose allows you to configure and run a collection of connected containers (like a web application and it's database) 
 - **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X, we'll use Docker Machine to start the Docker server in a virtual linux environment (using Virtualbox)
 
+#### Frontend note
+
+We have not *yet* brought the front end build process into Docker, so you will still need to follow the "stand alone" guidence for [front-end dependencies](https://cfpb.github.io/cfgov-refresh/installation/#front-end-dependencies) and run `./frontend.sh` to build static assets.
+
 ### 1. Setup your Docker environment 
 
 If you have never installed Docker before, follow the instructions [here](https://docs.docker.com/engine/installation/) or from your operating system vendor. If you are on a mac and are unable to install the official "Docker for Mac" package, the quickstart instructions below might help.
