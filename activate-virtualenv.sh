@@ -6,8 +6,7 @@
 
 # Confirm that variable VENV_NAME is already set to the name of the virtualenv
 if [ -z $VENV_NAME ]; then
-  echo "Error: Environment variable VENV_NAME must be set before continuing."
-  return
+  export VENV_NAME="cfgov-refresh"
 fi
 
 echo 'Activating virtualenv, if not already activated...'
