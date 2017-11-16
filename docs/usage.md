@@ -238,3 +238,6 @@ For example, if your app is called 'foobar', in a repo called foobar-project, yo
 ```python
 import foobar
 ```
+#### runserver has crashed! How do I start it again
+
+In a seperate terminal window or tab, `docker-compose up python` should restart it. 
