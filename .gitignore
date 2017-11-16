@@ -92,6 +92,8 @@ cfgov/f/
 /documents/
 original_images/
 collectstatic/*
+develop-apps/*
+static.in/*/
 
 # Ansible #
 #################

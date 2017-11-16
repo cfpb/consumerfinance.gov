@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -315,11 +314,67 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
+        'ENGINE': 'search.backends.CFGOVElasticsearch2SearchEngine',
         'URL': SHEER_ELASTICSEARCH_SERVER,
-        'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX', SHEER_ELASTICSEARCH_INDEX+'_haystack'),
-    },
+        'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX',
+                                     SHEER_ELASTICSEARCH_INDEX+'_haystack'),
+        'INCLUDE_SPELLING': True,
+    }
 }
+ELASTICSEARCH_INDEX_SETTINGS = {
+    'settings': {
+        'analysis': {
+            'analyzer': {
+                'ngram_analyzer': {
+                    'type': 'custom',
+                    'tokenizer': 'lowercase',
+                    'filter': ['haystack_ngram']
+                },
+                'edgengram_analyzer': {
+                    'type': 'custom',
+                    'tokenizer': 'lowercase',
+                    'filter': ['haystack_edgengram']
+                },
+                'synonym' : {
+                    'tokenizer' : 'whitespace',
+                    'filter' : ['synonym']
+                }
+            },
+            'tokenizer': {
+                'haystack_ngram_tokenizer': {
+                    'type': 'nGram',
+                    'min_gram': 3,
+                    'max_gram': 15,
+                },
+                'haystack_edgengram_tokenizer': {
+                    'type': 'edgeNGram',
+                    'min_gram': 3,
+                    'max_gram': 15,
+                    'side': 'front'
+                }
+            },
+            'filter': {
+                'haystack_ngram': {
+                    'type': 'nGram',
+                    'min_gram': 3,
+                    'max_gram': 15
+                },
+                'haystack_edgengram': {
+                    'type': 'edgeNGram',
+                    'min_gram': 3,
+                    'max_gram': 15
+                },
+                'synonym': {
+                    'type': 'synonym',
+                    'synonyms': [
+                        # 'auto,car,vehicle',
+                    ],
+                }
+            }
+        }
+    }
+}
+ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
 
 # S3 Configuration
 AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # ===========================================================================
 # Script for setting and announcing the cli_flag variable.

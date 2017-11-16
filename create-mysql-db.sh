@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # ==========================================================================
 # Setup script for MySQL database instantiation—used to create the database.
@@ -22,7 +22,7 @@ then
   Q3="FLUSH PRIVILEGES;"
   SQL="${Q1}${Q2}${Q3}"
 
-  $MYSQL -uroot -e "$SQL"
+  $MYSQL -uroot --password="$MYSQL_ROOT_PW" -e "$SQL"
   echo "Database $MYSQL_NAME and user $MYSQL_USER created with a blank password"
 else
   Q1="CREATE DATABASE IF NOT EXISTS $1;"
@@ -37,6 +37,7 @@ else
     exit $E_BADARGS
   fi
 
-  $MYSQL -uroot -e "$SQL"
+  env
+  $MYSQL -uroot --password="$MYSQL_ROOT_PW" -e "$SQL"
   ok "Database $1 and user $MYSQL_USER created with a password $MYSQL_PW"
 fi
