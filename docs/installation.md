@@ -265,26 +265,6 @@ Once you have a database loaded, you should have a functioning copy of site work
 
 ### 4. Next Steps
 
-#### Interacting with Docker Machine
-
-If you used 'mac-virtualbox-init.sh', then we used Docker Machine to create a virtualbox VM, running the docker server. Here are some useful docker machine commands:
-
-- Start and stop the VM with  `docker-machine start` and `docker-machine stop`
-- get the current machine IP with `docker-machine ip`
-- if for some reason you want to start over, `docker-machine rm default`, and `source mac-virtualbox-init.sh`
-
-You'll need to run this command in any new terminal window or tab:
-
-`eval $(docker-machine env)`
-
-It may be helpful to run `docker-machine env` by itself, so you understand what's happening. Those variables are what allows docker-compose and the docker command line tool, running natively on your mac, to connect to the Docker server running inside virtualbox.
-
-If you use autoenv (described in the stand-alone intructions) or something similar, you might consider adding `eval $(docker-machine env)` to your .env file. You could also achieve the same results (and start the VM if it's not running yet) with `source mac-virtualbox-init.sh`
-
-Any further Docker documentation will assume you are either in a shell where you have already run `eval $(docker-machine env)`, or you are in an environment where that's not neccessary.
-
-#### How do I...
-
 See the Docker section of the [usage](../usage/) page.
 
 ## Optional steps
