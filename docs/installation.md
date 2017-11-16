@@ -15,10 +15,7 @@ There are two ways to install cfgov-refresh:
 
 - [Stand-alone installation](#stand-alone-installation)
 - [Docker-compose installation](#docker-compose-installation)
-- [Vagrant-box installation](#vagrant-box-installation)
 
-!!! danger
-    The instruction for Vagrant are not currently working.
 
 ## Stand-alone installation
 
@@ -209,76 +206,66 @@ Get any errors? [See our troubleshooting tips.](#troubleshooting)
 - **Docker Compose**: Compose allows you to configure and run a collection of connected containers (like a web application and it's database) 
 - **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X, we'll use Docker Machine to start the Docker server in a virtual linux environment (using Virtualbox)
 
-### 1. Set up 
+#### Frontend note
 
-If you are on a machine with native docker support (Linux or Windows), please follow the instructions provided by your OS vendor or Docker.com to get set up, and install docker-compose.
+We have not *yet* brought the front end build process into Docker, so you will still need to follow the "stand alone" guidence for [front-end dependencies](https://cfpb.github.io/cfgov-refresh/installation/#front-end-dependencies) and run `./frontend.sh` to build static assets.
 
-On a mac, you will need 
+### 1. Setup your Docker environment 
 
+If you have never installed Docker before, follow the instructions [here](https://docs.docker.com/engine/installation/) or from your operating system vendor. If you are on a mac and are unable to install the official "Docker for Mac" package, the quickstart instructions below might help.
 
-## Vagrant-box installation
+If you are on a machine that is already set up to run Linux docker containers, please install [Docker Compose](https://docs.docker.com/compose/install/). If `docker-compose ps` runs without error, you can can go to step 2. 
 
-!!! danger
-	These instructions are not currently working, but we'd like to get them working soon. [PRs welcome](contributing).
+#### Mac + Homebrew + Virtualbox quickstart
 
-### 1. Environment variables setup
+**Starting assumptions**: You already have homebrew and virtualbox installed. You can run `brew search docker` without error.
 
-The project uses a number of environment variables.
-The `setup.sh` script will create a `.env` file for you
-from the `.env_SAMPLE` file found in the repository,
-if you don't already have one.
+1. Install Docker, Docker Machine, and Docker Compose: `brew install docker docker-compose docker-machine`
+2. `source mac-virtualbox-init.sh`
+ 
+At this point, `docker-compose ps` should run without error. 
 
-Inside the `.env` file you can customize the project environment configuration.
+### 2.  Run the site
 
-If you would like to manually copy the environment settings,
-copy the `.env_SAMPLE` file and un-comment each variable after
-adding your own values.
-```bash
-cp -a .env_SAMPLE .env && open -t .env
+The following assumes you have checked out cfgov-refresh, and have an open terminal, in the cfgov-refresh directory.
+
+Our docker-compose.yml configuration expects there to be a .python_env file. You can create a blank one quickly with:
+
+`touch .python_env`
+
+However, you could save some time and effort later (if you have access to the CFPB network), by configuring a URL for database dumps. The complete .python_env file will look like this:
+
+```
+CFGOV_PROD_DB_LOCATION=https://(rest of the URL)
 ```
 
-Then load the environment variables with:
-```bash
-. ./.env
-```
+You can get that URL at [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
 
-### 2. Fetch extra playbooks
+From here you should be able to simply run:
 
-The project pulls together various open source and closed source plays. The plays are
-managed through ansible-galaxy, a core module for this exact purpose. To download all
-the dependencies, use this command:
+`docker-compose up`
 
-```bash
-ansible-galaxy install -r ansible/requirements.yml
-```
+This will download and/or build images, and then start the containers, as described in the docker-compose.yml file. This will take a few minutes, or longer if you are on a slow internet connection.
 
-### 3. Launch Vagrant virtual environment
+When it's all done, you should be able to load http://localhost:8000 in your browser, and see a database error.
 
-The project uses Vagrant to create the simulated virtual environment allowing the developer
-to work on a production-like environment while maintaining development work on the
-local machine. To create this virtual environment, you need to execute the following command.
+### 3.  Get a database
 
-```bash
-vagrant up
-```
+In a seperate terminal window or tab, run `eval $(docker-machine env)`. This will produce no output, but configures that terminal session so that docker-compose and docker will work.
 
-!!! note
-    Please be patient the first time you run this step.
+Run `./shell.sh`. This opens a bash shell inside your Python container.
 
-### 4. Front-end Tools
+If you followed the suggestion above about setting CFGOV_PROD_DB_LOCATION in .python_env, you should be able to run:
 
-In order to run the application, we must generate the front-end assets.
-After running the following commands, visit http://localhost:8001 to see the site running.
-You can also place the first two export commands into your `.bashrc` to simplify things later.
+`./refresh-data.sh`
 
-```bash
-export CFGOV_HOME=path/to/cfgov-refresh
-export PATH=$PATH:$CFGOV_HOME/bin
-cfgov init
-cfgov assets
-cfgov start django
-```
+Otherwise, [the standalone instructions](https://cfpb.github.io/cfgov-refresh/installation/#load-a-database-dump) should be enough to get you started.
 
+Once you have a database loaded, you should have a functioning copy of site working at http://localhost:8000
+
+### 4. Next Steps
+
+See the Docker section of the [usage](../usage/) page.
 
 ## Optional steps
 
@@ -319,14 +306,7 @@ To apply any unapplied migrations to a database created from a dump, run:
 python cfgov/manage.py migrate
 ```
 
-### Install dependencies for working with the GovDelivery API
-
-Install the following GovDelivery dependencies into your virtual environment:
-
-```bash
-pip install git+git://github.com/dpford/flask-govdelivery
-pip install git+git://github.com/rosskarchner/govdelivery
-```
+### Set variables for working with the GovDelivery API
 
 Uncomment and set the GovDelivery environment variables in your `.env` file.
 
