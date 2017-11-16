@@ -212,7 +212,7 @@ Your shell environment variables (and the variables in your .env file, if you ar
 
 .python_env is *not* a shell script, like your .env file, ~/.bash_profile, etc. See the [Docker Compose docs](https://docs.docker.com/compose/compose-file/#env_file)
 
-#### Get familiar with Docker Compose, and our configurtion
+#### Get familiar with Docker Compose, and our configuration
 
 docker-compose.yml contains a sort of "recipe" for running the site. Each entry in the Compose file describes a component of our application stack (MySQL, Elasticsearch, and Python), and either points to a public image on Dockerhub, or to a Dockerfile in cfgov-refresh. You can learn a lot more about Compose files in [the docs](https://docs.docker.com/compose/compose-file/)
 
@@ -224,3 +224,17 @@ Similarly, a Dockerfile contains instructions for transforming some base image, 
 That's why you need to run `docker-compose build` after any changes to /requirements/
 
 There are other compose subcommands you might be interested in. Consider [learning about](https://docs.docker.com/compose/reference/overview/) `build`, `restarts`, `logs`, `ps`, `top`, and the `-d` option for `up`.
+
+#### Develop satellite apps
+
+Check out any apps you are developing into the develop-apps directory. These will automatically be added to the [PYTHONPATH](https://docs.python.org/2/using/cmdline.html#envvar-PYTHONPATH), and apps contained within will be importable from Python running in the container.
+
+For example, if your app is called 'foobar', in a repo called foobar-project, you could clone foobar-project in to develop apps:
+
+`git clone https://github.com/myorg/foobar-project`
+
+... which will create a directory at develop-apps/foobar-project. Assuming 'foobar' is at the top-level of 'foobar-project', you should be able to import it from your python code:
+
+```python
+import foobar
+```
