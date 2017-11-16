@@ -285,23 +285,7 @@ Any further Docker documentation will assume you are either in a shell where you
 
 #### How do I...
 
-##### Run manage.py commands like migrate, shell, and dbshell, and shell scripts like refresh-data.sh
-
-run `./shell.sh` to open up a shell *inside* the Python container. From there, commands like `cfgov/manage.py migrate` should run as expected.
-
-The same goes for scripts like `./refresh-data.sh` -- they will work as expected once you're inside the container.
-
-##### Use PDB
-
-Run `./attach.sh` to connect to the TTY session where `manage.py runserver` is running. If the app is paused at a PDB prompt, this is where you can access it.
-
-##### Handle updates to Python requirements
-
-If Compose is running, stop it with CTRL-C. Run:
-
-`docker-compose build python`
-
-This will update your Python image. The next time you run `docker-compose up`, the new requirements will be in place.
+See the Docker section of the [usage](../usage/) page.
 
 ## Optional steps
 
