@@ -366,8 +366,9 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                 },
                 'synonym': {
                     'type': 'synonym',
+                    # 'synonyms_path' : 'analysis/synonym.txt'
                     'synonyms': [
-                        # 'auto,car,vehicle',
+                        'auto,car,vehicle',
                     ],
                 }
             }
@@ -586,6 +587,9 @@ FLAGS = {
     'BETA_NOTICE': {
         'site': 'beta.consumerfinance.gov',
     },
+
+	# Ask CFPB search results improvements
+	'BETTER_ASK_SEARCH': {},
 
     # When enabled, include a recruitment code comment in the base template.
     'CFPB_RECRUITING': {},
