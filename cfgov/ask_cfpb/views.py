@@ -112,14 +112,18 @@ def ask_search(request, language='en', as_json=False):
     sqs = _map['query']
     clean_query = Clean(request.GET.get('q', ''))
     qstring = clean_query.query_string.strip()
-    if not qstring:
-        raise Http404
     suggestion = sqs.spelling_suggestion(qstring)
-    sqs = sqs.filter(content=clean_query)
+    query_sqs = sqs.filter(content=clean_query)
+
+    # If we have no results from our query, let's try to suggestion
+    if query_sqs.count() == 0:
+        query_sqs = sqs.filter(content=suggestion)
+        qstring, suggestion = suggestion, qstring
 
     if as_json:
         results = {
-            'query': qstring,
+            'query': clean_query,
+            'result_query': qstring,
             'suggestion': suggestion,
             'results': [
                 {
@@ -127,7 +131,7 @@ def ask_search(request, language='en', as_json=False):
                     'url': result.url,
                     'text': result.text
                 }
-                for result in sqs
+                for result in query_sqs
             ]
         }
         json_results = json.dumps(results)
@@ -138,10 +142,11 @@ def ask_search(request, language='en', as_json=False):
             language=language,
             slug=_map['slug'])
         page.query = clean_query
+        page.result_query = qstring
         page.suggestion = suggestion
         page.answers = []
 
-        for result in sqs:
+        for result in query_sqs:
             page.answers.append((result.url, result.autocomplete, result.text))
         return page.serve(request)
 

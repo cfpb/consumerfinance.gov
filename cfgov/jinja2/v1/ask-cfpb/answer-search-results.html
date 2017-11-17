@@ -38,7 +38,7 @@
                 {% else %}
                 <h3 class="results-header">
                     Showing {{ results.start_index() }}-{{ results.end_index() }} of {{ paginator.count }} results 
-                    for <a href="/ask-cfpb/search?q={{ page.query }}">{{ page.query }}</a>
+                    for <a href="/ask-cfpb/search?q={{ page.result_query }}">{{ page.result_query }}</a>
                 </h3>
                 {% endif %}
 
