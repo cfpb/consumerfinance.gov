@@ -2,22 +2,23 @@
 
 ## Clone the repository
 
-Using the console, navigate to the root directory in which your projects live and clone this project's repository:
+Using the console, navigate to the root directory in which your projects 
+live and clone this project's repository:
 
 ```bash
 git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 ```
 
-You may also wish to fork the repository on GitHub and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
+You may also wish to fork the repository on GitHub and clone the resultant 
+personal fork. This is advised if you are going to be doing development on 
+`cfgov-refresh` and contributing to the project.
 
 There are two ways to install cfgov-refresh:
 
 - [Stand-alone installation](#stand-alone-installation)
-- [Vagrant-box installation](#vagrant-box-installation)
+- [Docker-compose installation](#docker-compose-installation)
 
-!!! danger
-    The instruction for Vagrant are not currently working.
 
 ## Stand-alone installation
 
@@ -145,7 +146,7 @@ npm install -g gulp
 ```
 
 !!! note
-    This project requires Node.js v5.5 or higher, and npm v3 or higher.
+    This project requires Node.js v8 or higher, and npm v5 or higher.
 
 
 #### Set up your environment
@@ -200,70 +201,93 @@ Get any errors? [See our troubleshooting tips.](#troubleshooting)
 
 **Continue following the [usage instructions](usage).**
 
+## Docker-compose installation
 
-## Vagrant-box installation
+### Tools we use for developing with Docker
 
-!!! danger
-	These instructions are not currently working, but we'd like to get them working soon. [PRs welcome](contributing).
+- **Docker**: You may not need to interact directly with Docker: but you 
+  should know that it's a client/server application for managing "containers"
+  (a way of running software in an isolated environment) and "images" (a 
+  snapshot of all of the files neccessary to run a container).
+- **Docker Compose**: Compose allows you to configure and run a collection of 
+  connected containers (like a web application and it's database) 
+- **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X, 
+  we'll use Docker Machine to start the Docker server in a virtual linux 
+  environment (using Virtualbox)
 
-### 1. Environment variables setup
+### 1. Setup your Docker environment 
 
-The project uses a number of environment variables.
-The `setup.sh` script will create a `.env` file for you
-from the `.env_SAMPLE` file found in the repository,
-if you don't already have one.
+If you have never installed Docker before, follow the instructions 
+[here](https://docs.docker.com/engine/installation/) or from your operating 
+system vendor. If you are on a mac and are unable to install the official 
+"Docker for Mac" package, the quickstart instructions below might help.
 
-Inside the `.env` file you can customize the project environment configuration.
+If you are on a machine that is already set up to run Linux docker containers, 
+please install [Docker Compose](https://docs.docker.com/compose/install/). 
+If `docker-compose ps` runs without error, you can can go to step 2. 
 
-If you would like to manually copy the environment settings,
-copy the `.env_SAMPLE` file and un-comment each variable after
-adding your own values.
-```bash
-cp -a .env_SAMPLE .env && open -t .env
+#### Mac + Homebrew + Virtualbox quickstart
+
+**Starting assumptions**: You already have homebrew and virtualbox installed. 
+You can run `brew search docker` without error.
+
+Install Docker, Docker Machine, and Docker Compose: 
+`brew install docker docker-compose docker-machine`
+ 
+At this point, `docker-compose ps` should run without error. 
+
+### 2. Setup your frontend environment
+
+Refer to the [front-end dependencies](#front-end-dependencies) described above 
+in the [standalone installation instructions](#stand-alone-installation).
+
+### 3. Run setup
+
+`./setup.sh docker`
+
+This will install and build the frontend and set up the docker environment.
+
+### 4. Run the for the first time
+
+`./runserver.sh docker`
+
+This will download and/or build images, and then start the containers, as 
+described in the docker-compose.yml file. This will take a few minutes, or 
+longer if you are on a slow internet connection.
+
+When it's all done, you should be able to load http://localhost:8000 in your 
+browser, and see a database error.
+
+### 3. Setup the database
+
+Run `./shell.sh`. This opens a bash shell inside your Python container.
+
+You can either [load initial data](#load-initial-data-into-database) per the 
+instructions below, or load a database dump.
+
+You could save some time and effort later (if you have access to the CFPB 
+network), by configuring a URL for database dumps in the `.python_env` file.
+
+```
+CFGOV_PROD_DB_LOCATION=https://(rest of the URL)
 ```
 
-Then load the environment variables with:
-```bash
-. ./.env
-```
+You can get that URL at 
+[GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
 
-### 2. Fetch extra playbooks
+With `CFGOV_PROD_DB_LOCATION` in `.python_env` you should be able to run:
 
-The project pulls together various open source and closed source plays. The plays are
-managed through ansible-galaxy, a core module for this exact purpose. To download all
-the dependencies, use this command:
+`./refresh-data.sh`
 
-```bash
-ansible-galaxy install -r ansible/requirements.yml
-```
+Otherwise, [the instructions to load a database dump](#load-a-database-dump)
+below should be enough to get you started.
 
-### 3. Launch Vagrant virtual environment
+Once you have a database loaded, you should have a functioning copy of site 
+working at [http://localhost:8000](http://localhost:8000)
 
-The project uses Vagrant to create the simulated virtual environment allowing the developer
-to work on a production-like environment while maintaining development work on the
-local machine. To create this virtual environment, you need to execute the following command.
+### 4. Next Steps
 
-```bash
-vagrant up
-```
-
-!!! note
-    Please be patient the first time you run this step.
-
-### 4. Front-end Tools
-
-In order to run the application, we must generate the front-end assets.
-After running the following commands, visit http://localhost:8001 to see the site running.
-You can also place the first two export commands into your `.bashrc` to simplify things later.
-
-```bash
-export CFGOV_HOME=path/to/cfgov-refresh
-export PATH=$PATH:$CFGOV_HOME/bin
-cfgov init
-cfgov assets
-cfgov start django
-```
-
+See the Docker section of the [usage](usage) page to continue after that.
 
 ## Optional steps
 
@@ -277,8 +301,13 @@ migrations are applied to the database, and then does the following:
 `WAGTAIL_ADMIN_PW` environment variable, if set.
 - If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
 with a slug of `cfgov`.
-- Updates the default Wagtail site to use the port defined by the `DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is set to 80.
-- If it doesn't already exist, creates a new [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and `DJANGO_HTTP_PORT` environment variables.
+- Updates the default Wagtail site to use the port defined by the 
+`DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is 
+set to 80.
+- If it doesn't already exist, creates a new 
+[wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with 
+a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and 
+`DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump
 
@@ -288,7 +317,8 @@ as extensive as you'd probably like it to be.
 You can get a database dump by:
 
 1. Going to [GHE]/CFGOV/platform/wiki/Database-downloads
-1. Selecting one of the extractions and downloading the `production_django.sql.gz` file
+1. Selecting one of the extractions and downloading the 
+   `production_django.sql.gz` file
 1. Unzip it
 1. Run:
 
@@ -296,7 +326,9 @@ You can get a database dump by:
 ./refresh-data.sh /path/to/dump.sql
 ```
 
-The `refresh-data.sh` script will apply the same changes as the `initial-data.sh` script described above (including setting up the `admin` superuser), but will not apply migrations.
+The `refresh-data.sh` script will apply the same changes as the 
+`initial-data.sh` script described above (including setting up the `admin` 
+superuser), but will not apply migrations.
 
 To apply any unapplied migrations to a database created from a dump, run:
 
@@ -304,14 +336,7 @@ To apply any unapplied migrations to a database created from a dump, run:
 python cfgov/manage.py migrate
 ```
 
-### Install dependencies for working with the GovDelivery API
-
-Install the following GovDelivery dependencies into your virtual environment:
-
-```bash
-pip install git+git://github.com/dpford/flask-govdelivery
-pip install git+git://github.com/rosskarchner/govdelivery
-```
+### Set variables for working with the GovDelivery API
 
 Uncomment and set the GovDelivery environment variables in your `.env` file.
 
@@ -333,23 +358,39 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    that can trigger different options for different environments.
    Since you ran it with no arguments, it will set up the dev environment.
 
-   It will then set some env vars for the Node and Bower dependency directories.
-1. **Clean project dependencies** (`clean`)
+   It then creates a checksum for `package-lock.json` (if it exists) and
+   `package.json`.
+   This will be used later to determine if dependencies need to be installed.
 
-   The script will now empty out all installed dependencies,
-   so the new installation can start fresh.
-1. **Install project dependencies** (`install`)
+   It will then set some env vars for the Node dependency directories.
+1. **Clean and install project dependencies** (`clean_and_install`)
 
-   Node and Bower dependencies are installed.
+   The script will now compare the checksums to see if it needs to install
+   dependencies, or if they are already up-to-date.
+
+   If the checksums do not match, the script will empty out all installed
+   dependencies (`clean`) so the new installation can start fresh,
+   then install the latest requested dependencies (`install`).
+
    The `devDependencies` from `package.json` are not installed
    if the environment is production, and if it's the dev or test environment,
    it checks to see if Protractor is globally installed.
+
+   Finally, it creates a new checksum for future comparisons.
 1. **Run tasks to build the project for distribution** (`build`)
 
-   Finally, the script executes `gulp clean` to wipe out any lingering
-   `dist` files, then runs `gulp build` to rebuild everything.
+   Finally, the script runs `gulp build` to rebuild the front-end assets.
+   It no longer cleans first, because the gulp-changed plugin prevents
+   rebuilding assets that haven't changed since the last build.
+
+   If this is the production environment, it also triggers style and script
+   builds for `ondemand` and `nemo`, which aren't part of a standard
+   `gulp build`.
 
 ### 2. `backend.sh`
+
+!!! note
+    `backend.sh` is not used for our Docker setup.
 
 1. **Confirm environment** (`init`)
 

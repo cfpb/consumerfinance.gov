@@ -83,7 +83,8 @@ class GovDeliverySubscribeTest(TestCase):
         self.check_post(post, response_check, ajax=ajax)
         gd.set_subscriber_topics.assert_called_with(
             post['email'],
-            [post['code']]
+            [post['code']],
+            send_notifications=True
         )
 
         if include_answers:

@@ -121,40 +121,21 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 1. Log into [http://saucelabs.com/account](http://saucelabs.com/account).
 
-2. [Download Sauce Connect](https://wiki.saucelabs.com/display/DOCS/Basic+Sauce+Connect+Proxy+Setup#BasicSauceConnectProxySetup-SettingUpSauceConnect)
-
-3. Open a new Terminal window or tab and navigate to the downloaded SauceConnect folder.
-    If you place the folder in your Application's folder this might look like:
-
-    ```
-    cd /Users/<YOUR MAC OSX USERNAME>/Applications/SauceConnect
-    ```
-
-4. Copy step 3 from the the SauceLabs
-   [Basic Setup instructions](https://wiki.saucelabs.com/display/DOCS/Basic+Sauce+Connect+Proxy+Setup#BasicSauceConnectProxySetup-SettingUpSauceConnect)
-   and run that in your Terminal window.
-   Once you see `Sauce Connect is up` in the Terminal,
-   that means the tunnel has successfully been established
-
-    > The Terminal command should already have your Sauce username and access key filled in.
-      If it doesn't, make sure you're logged in.
-
-5. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
+2. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
    and `SAUCE_SELENIUM_URL` values in your `.env` file.
    The access key can be found on the Sauce Labs
    [user settings page](https://saucelabs.com/beta/user-settings).
 
-6. Reload the settings with `cd .. && cd cfgov-refresh`. Type `y` if prompted.
+3. Reload the settings with `source .env`.
 
-7. Run the tests with `gulp test:acceptance --sauce`.
+4. Run the tests with `gulp test:acceptance --sauce`.
 
-8. Monitor progress of the tests
+5. Monitor progress of the tests
    on the [Sauce Labs dashboard](https://saucelabs.com/dashboard) Automated Tests tab.
 
 !!! Note
     If you get the error `Error: ENOTFOUND getaddrinfo ENOTFOUND`
     while running a test, it likely means that Sauce Connect is not running.
-    See step 4 above.
 
 ## Manual test configuration
 
@@ -163,7 +144,7 @@ A number of command-line arguments can be set to test particular configurations:
  - `--suite`: Choose a particular suite or suites to run.
    For example, `gulp test:acceptance --suite=content` or `gulp test:acceptance --suite=content,functional`.
  - `--specs`: Choose a particular spec or specs to run.
-   For example, `gulp test:acceptance --specs=contact-us.js`, `gulp test:acceptance --specs=contact-us.js,about-us.js`, or `gulp test:acceptance --specs=foo*.js`. If `--suite` is specified, this argument will be ignored. If neither `--suite` nor `--specs` are specified, all specs will be run.
+   For example, `gulp test:acceptance --specs=header.feature`, `gulp test:acceptance --specs=header.feature,pagination.feature`, or `gulp test:acceptance --specs=filterable*.feature`. If `--suite` is specified, this argument will be ignored. If neither `--suite` nor `--specs` are specified, all specs will be run.
  - `--windowSize`: Set the window size in pixels in `w,h` format.
    For example, `gulp test:acceptance --windowSize=900,400`.
  - `--browserName`: Set the browser to run.

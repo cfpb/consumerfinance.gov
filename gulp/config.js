@@ -1,7 +1,8 @@
 'use strict';
 
 const fs = require( 'fs' );
-const paths = require( '../config/environment' ).paths;
+const environment = require( '../config/environment' );
+const paths = environment.paths;
 const globAll = require( 'glob-all' );
 
 module.exports = {
@@ -39,9 +40,11 @@ module.exports = {
   test: {
     src:   paths.unprocessed + '/js/**/*.js',
     tests: paths.test,
-    reporter: process.env.CONTINUOUS_INTEGRATION // eslint-disable-line no-process-env
+    reporter: environment.CONTINUOUS_INTEGRATION
   },
   clean: {
+    css: paths.processed + '/css',
+    js: paths.processed + '/js',
     dest: paths.processed
   },
   scripts: {
@@ -116,7 +119,7 @@ module.exports = {
     vendorJs: {
       src: [
         paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js',
-        paths.unprocessed + '/js/know-before-you-owe/kbyo-timeline.json'
+        paths.unprocessed + '/js/apps/know-before-you-owe/kbyo-timeline.json'
       ],
       dest: paths.processed + '/js/'
     }

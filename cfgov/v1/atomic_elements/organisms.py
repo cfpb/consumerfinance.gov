@@ -339,9 +339,6 @@ class Table(blocks.StructBlock):
         template = '_includes/organisms/table.html'
         label = ' '
 
-    class Media:
-        js = ['table.js']
-
 
 class BureauStructurePosition(blocks.StructBlock):
     office_name = blocks.CharBlock()
@@ -464,6 +461,9 @@ class AtomicTableBlock(TableBlock):
         icon = 'table'
         template = '_includes/organisms/table.html'
         label = 'TableBlock'
+
+    class Media:
+        js = ['table.js']
 
 
 class ModelBlock(blocks.StructBlock):

@@ -77,7 +77,8 @@ class ConferenceRegistrationHandler(Handler):
 
             subscription_response = gd.set_subscriber_topics(
                 email_address=email,
-                topic_codes=[code]
+                topic_codes=[code],
+                send_notifications=True,
             )
 
             subscription_response.raise_for_status()

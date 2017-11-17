@@ -85,22 +85,12 @@
 .input-contains-label {
     position: relative;
 
-    input[type="text"],
-    input[type="search"],
-    input[type="email"],
-    input[type="url"],
-    input[type="tel"],
-    input[type="number"] {
+    .a-text-input {
         box-sizing: border-box;
         width: 100%;
     }
 
-    &_before ~ input[type="text"],
-    &_before ~ input[type="search"],
-    &_before ~ input[type="email"],
-    &_before ~ input[type="url"],
-    &_before ~ input[type="tel"],
-    &_before ~ input[type="number"] {
+    &_before ~ .a-text-input {
         padding-left: unit( 30px / @btn-font-size, em );
 
         &.input__super {
@@ -108,12 +98,7 @@
         }
     }
 
-    &_after ~ input[type="text"],
-    &_after ~ input[type="search"],
-    &_after ~ input[type="email"],
-    &_after ~ input[type="url"],
-    &_after ~ input[type="tel"],
-    &_after ~ input[type="number"] {
+    &_after ~ .a-text-input {
         padding-right: unit( 30px / @btn-font-size, em );
 
         &.input__super {
@@ -180,12 +165,7 @@
                 content: 'Clear';
             }
 
-            & ~ input[type="text"],
-            & ~ input[type="search"],
-            & ~ input[type="email"],
-            & ~ input[type="url"],
-            & ~ input[type="tel"],
-            & ~ input[type="number"] {
+            & ~ .a-text-input {
                 padding-right: unit( 65px / @btn-font-size, em );
 
                 &.input__super {
@@ -315,84 +295,59 @@ input {
 @radio-button-diameter: 18px;
 
 .o-scale {
-    .u-clearfix();
-    padding-bottom: unit( 30px / @base-font-size-px, em );
-    position: relative;
 
-    &:before {
-        .respond-to-min( @bp-sm-min, {
-            border-top: 1px solid @gray-40;
-            position: absolute;
-            right: -@grid_gutter-width;
-            bottom: 0;
-            left: -@grid_gutter-width;
-            content: '';
-            z-index: 0;
-        } );
+    .m-form-field + .m-form-field {
+        margin-top: 0;
     }
 
-    &:last-of-type {
-        padding-bottom: 0;
-
-        &:before {
-            border-top: none;
-        }
-    }
-
-    .m-form-field__radio {
-        .respond-to-min( @bp-sm-min, {
+    .respond-to-min( @bp-sm-min, {
+        .m-form-field__radio {
             width: percentage( 1 / @scale-point-count );
-            padding: 0;
-            margin-bottom: 0;
+
             float: left;
             position: relative;
-        } );
 
-        &:before {
-            .respond-to-min( @bp-sm-min, {
-              border-top: 1px solid @gray-80;
-              border-left: none;
-              position: absolute;
-              top: ( @radio-button-diameter / 2 );
-              right: 0;
-              left: 0;
-              content: '';
-              z-index: 0;
-            } );
+            &:not(:last-child):before {
+                border-top: 1px solid @gray-80;
+
+                position: absolute;
+                top: ( @radio-button-diameter / 2 );
+                right: 0;
+                left: 0;
+
+                content: '';
+            }
         }
 
-        &:last-of-type:before {
-            border-top: none;
-        }
-    }
-
-    .a-label:before,
-    .a-label {
-        .respond-to-min( @bp-sm-min, {
+        .a-label,
+        .a-label:before, {
             display: block;
-        } );
-    }
+        }
 
-    .a-label:before {
-        .respond-to-min( @bp-sm-min, {
+        .a-label:before {
             margin-bottom: unit( 3px / @base-font-size-px, em );
-        } );
-    }
 
-    .a-label {
-        .respond-to-min( @bp-sm-min, {
             position: relative;
-            z-index: 10;
-        } );
-    }
+            z-index: 1;
+        }
+    } );
 
-    &_header {
-        .h4();
+    .respond-to-min( @bp-xl-min, {
+        .o-scale_answer-prefix {
+            box-sizing: border-box;
+            padding-right: unit( 15px / @base-font-size-px, em );
+            width: percentage( 1 / ( @scale-point-count + 1 ) );
 
-        margin-top: unit( 30px / @base-font-size-px, em );
-    }
+            float: left;
+        }
+
+        .o-scale_answer-options {
+            width: percentage( @scale-point-count / ( @scale-point-count + 1 ) );
+
+            float: left;
+        }
+    } );
 }
-
 
 /* topdoc
   name: EOF

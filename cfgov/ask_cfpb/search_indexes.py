@@ -1,4 +1,5 @@
 from haystack import indexes
+from search import fields
 
 from ask_cfpb.models import (
     Category, EnglishAnswerProxy, SpanishAnswerProxy)
@@ -6,7 +7,7 @@ from ask_cfpb.models import (
 
 
 class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(
+    text = fields.CharFieldWithSynonyms(
         document=True,
         use_template=True,
         boost=10.0)
@@ -24,6 +25,7 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
         null=True,
         model_attr='last_edited',
         boost=2.0)
+    suggestions = indexes.FacetCharField()
 
     def prepare_tags(self, obj):
         return obj.tags
@@ -32,6 +34,11 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
         data = super(AnswerBaseIndex, self).prepare(obj)
         if obj.question.lower().startswith('what is'):
             data['boost'] = 2.0
+        return data
+
+    def prepare(self, obj):
+        data = super(AnswerBaseIndex, self).prepare(obj)
+        data['suggestions'] = data['text']
         return data
 
     def get_model(self):
@@ -44,7 +51,7 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(
+    text = fields.CharFieldWithSynonyms(
         document=True,
         use_template=True,
         boost=10.0)
@@ -62,6 +69,7 @@ class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
         null=True,
         model_attr='last_edited_es',
         boost=2.0)
+    suggestions = indexes.FacetCharField()
 
     def prepare_tags(self, obj):
         return obj.tags_es
@@ -70,6 +78,11 @@ class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
         data = super(SpanishBaseIndex, self).prepare(obj)
         if obj.question.lower().startswith('what is'):
             data['boost'] = 2.0
+        return data
+
+    def prepare(self, obj):
+        data = super(SpanishBaseIndex, self).prepare(obj)
+        data['suggestions'] = data['text']
         return data
 
     def get_model(self):

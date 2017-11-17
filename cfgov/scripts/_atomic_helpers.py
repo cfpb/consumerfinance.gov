@@ -20,6 +20,7 @@ contact_phone = {
             {
                 "tty": "",
                 "number": "5151234567",
+                "extension": "1234",
                 "vanity": ""
             }
         ],

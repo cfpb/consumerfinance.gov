@@ -1,6 +1,8 @@
 'use strict';
 
-
+/**
+ * Initialize the ratings form for Owning a Home.
+ */
 function init() {
   const ratingsForm = document.querySelector( '.oah-ratings-form' );
   const ratingsInputs = ratingsForm.querySelectorAll( '.rating-inputs input' );
@@ -9,13 +11,17 @@ function init() {
   const feedBackLinkHref = feedBackLinkElement.getAttribute( 'href' );
   const ratingsMsgElement = ratingsForm.querySelector( '.rating-message' );
 
-  function _onChange( e ) {
+  /**
+   * Handle a change of the rating inputs.
+   * @param {Event} event - The onChange event object.
+   */
+  function _onChange( event ) {
     ratingsMsgElement.classList.add( 'visible' );
 
     if ( feedBackLinkHref ) {
       feedBackLinkElement.setAttribute(
         'href',
-        feedBackLinkHref + '?is_helpful=' + e.target.value
+        feedBackLinkHref + '?is_helpful=' + event.target.value
       );
     }
 

@@ -236,7 +236,6 @@ const config = {
   cucumberOpts: {
     'require':   'cucumber/step_definitions/*.js',
     'tags':      [ '~@mobile', '~@skip' ],
-    'format':    'pretty',
     'profile':   false,
     'no-source': true
   },
