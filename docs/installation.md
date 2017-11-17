@@ -2,14 +2,17 @@
 
 ## Clone the repository
 
-Using the console, navigate to the root directory in which your projects live and clone this project's repository:
+Using the console, navigate to the root directory in which your projects 
+live and clone this project's repository:
 
 ```bash
 git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 ```
 
-You may also wish to fork the repository on GitHub and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
+You may also wish to fork the repository on GitHub and clone the resultant 
+personal fork. This is advised if you are going to be doing development on 
+`cfgov-refresh` and contributing to the project.
 
 There are two ways to install cfgov-refresh:
 
@@ -143,7 +146,7 @@ npm install -g gulp
 ```
 
 !!! note
-    This project requires Node.js v5.5 or higher, and npm v3 or higher.
+    This project requires Node.js v8 or higher, and npm v5 or higher.
 
 
 #### Set up your environment
@@ -202,70 +205,89 @@ Get any errors? [See our troubleshooting tips.](#troubleshooting)
 
 ### Tools we use for developing with Docker
 
-- **Docker**: You may not need to interact directly with Docker: but you should know that it's a client/server application for managing "containers" (a way of running software in an isolated environment) and "images" (a snapshot of all of the files neccessary to run a container).
-- **Docker Compose**: Compose allows you to configure and run a collection of connected containers (like a web application and it's database) 
-- **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X, we'll use Docker Machine to start the Docker server in a virtual linux environment (using Virtualbox)
-
-#### Frontend note
-
-We have not *yet* brought the front end build process into Docker, so you will still need to follow the "stand alone" guidence for [front-end dependencies](https://cfpb.github.io/cfgov-refresh/installation/#front-end-dependencies) and run `./frontend.sh` to build static assets.
+- **Docker**: You may not need to interact directly with Docker: but you 
+  should know that it's a client/server application for managing "containers"
+  (a way of running software in an isolated environment) and "images" (a 
+  snapshot of all of the files neccessary to run a container).
+- **Docker Compose**: Compose allows you to configure and run a collection of 
+  connected containers (like a web application and it's database) 
+- **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X, 
+  we'll use Docker Machine to start the Docker server in a virtual linux 
+  environment (using Virtualbox)
 
 ### 1. Setup your Docker environment 
 
-If you have never installed Docker before, follow the instructions [here](https://docs.docker.com/engine/installation/) or from your operating system vendor. If you are on a mac and are unable to install the official "Docker for Mac" package, the quickstart instructions below might help.
+If you have never installed Docker before, follow the instructions 
+[here](https://docs.docker.com/engine/installation/) or from your operating 
+system vendor. If you are on a mac and are unable to install the official 
+"Docker for Mac" package, the quickstart instructions below might help.
 
-If you are on a machine that is already set up to run Linux docker containers, please install [Docker Compose](https://docs.docker.com/compose/install/). If `docker-compose ps` runs without error, you can can go to step 2. 
+If you are on a machine that is already set up to run Linux docker containers, 
+please install [Docker Compose](https://docs.docker.com/compose/install/). 
+If `docker-compose ps` runs without error, you can can go to step 2. 
 
 #### Mac + Homebrew + Virtualbox quickstart
 
-**Starting assumptions**: You already have homebrew and virtualbox installed. You can run `brew search docker` without error.
+**Starting assumptions**: You already have homebrew and virtualbox installed. 
+You can run `brew search docker` without error.
 
-1. Install Docker, Docker Machine, and Docker Compose: `brew install docker docker-compose docker-machine`
-2. `source mac-virtualbox-init.sh`
+Install Docker, Docker Machine, and Docker Compose: 
+`brew install docker docker-compose docker-machine`
  
 At this point, `docker-compose ps` should run without error. 
 
-### 2.  Run the site
+### 2. Setup your frontend environment
 
-The following assumes you have checked out cfgov-refresh, and have an open terminal, in the cfgov-refresh directory.
+Refer to the [front-end dependencies](#front-end-dependencies) described above 
+in the [standalone installation instructions](#stand-alone-installation).
 
-Our docker-compose.yml configuration expects there to be a .python_env file. You can create a blank one quickly with:
+### 3. Run setup
 
-`touch .python_env`
+`./setup.sh docker`
 
-However, you could save some time and effort later (if you have access to the CFPB network), by configuring a URL for database dumps. The complete .python_env file will look like this:
+This will install and build the frontend and set up the docker environment.
+
+### 4. Run the for the first time
+
+`./runserver.sh docker`
+
+This will download and/or build images, and then start the containers, as 
+described in the docker-compose.yml file. This will take a few minutes, or 
+longer if you are on a slow internet connection.
+
+When it's all done, you should be able to load http://localhost:8000 in your 
+browser, and see a database error.
+
+### 3. Setup the database
+
+Run `./shell.sh`. This opens a bash shell inside your Python container.
+
+You can either [load initial data](#load-initial-data-into-database) per the 
+instructions below, or load a database dump.
+
+You could save some time and effort later (if you have access to the CFPB 
+network), by configuring a URL for database dumps in the `.python_env` file.
 
 ```
 CFGOV_PROD_DB_LOCATION=https://(rest of the URL)
 ```
 
-You can get that URL at [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
+You can get that URL at 
+[GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
 
-From here you should be able to simply run:
-
-`docker-compose up`
-
-This will download and/or build images, and then start the containers, as described in the docker-compose.yml file. This will take a few minutes, or longer if you are on a slow internet connection.
-
-When it's all done, you should be able to load http://localhost:8000 in your browser, and see a database error.
-
-### 3.  Get a database
-
-In a seperate terminal window or tab, run `eval $(docker-machine env)`. This will produce no output, but configures that terminal session so that docker-compose and docker will work.
-
-Run `./shell.sh`. This opens a bash shell inside your Python container.
-
-If you followed the suggestion above about setting CFGOV_PROD_DB_LOCATION in .python_env, you should be able to run:
+With `CFGOV_PROD_DB_LOCATION` in `.python_env` you should be able to run:
 
 `./refresh-data.sh`
 
-Otherwise, [the standalone instructions](https://cfpb.github.io/cfgov-refresh/installation/#load-a-database-dump) should be enough to get you started.
+Otherwise, [the instructions to load a database dump](#load-a-database-dump)
+below should be enough to get you started.
 
-Once you have a database loaded, you should have a functioning copy of site working at http://localhost:8000
+Once you have a database loaded, you should have a functioning copy of site 
+working at [http://localhost:8000](http://localhost:8000)
 
 ### 4. Next Steps
 
-See the Docker section of the [usage](usage) page.
+See the Docker section of the [usage](usage) page to continue after that.
 
 ## Optional steps
 
@@ -279,8 +301,13 @@ migrations are applied to the database, and then does the following:
 `WAGTAIL_ADMIN_PW` environment variable, if set.
 - If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
 with a slug of `cfgov`.
-- Updates the default Wagtail site to use the port defined by the `DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is set to 80.
-- If it doesn't already exist, creates a new [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and `DJANGO_HTTP_PORT` environment variables.
+- Updates the default Wagtail site to use the port defined by the 
+`DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is 
+set to 80.
+- If it doesn't already exist, creates a new 
+[wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with 
+a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and 
+`DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump
 
@@ -290,7 +317,8 @@ as extensive as you'd probably like it to be.
 You can get a database dump by:
 
 1. Going to [GHE]/CFGOV/platform/wiki/Database-downloads
-1. Selecting one of the extractions and downloading the `production_django.sql.gz` file
+1. Selecting one of the extractions and downloading the 
+   `production_django.sql.gz` file
 1. Unzip it
 1. Run:
 
@@ -298,7 +326,9 @@ You can get a database dump by:
 ./refresh-data.sh /path/to/dump.sql
 ```
 
-The `refresh-data.sh` script will apply the same changes as the `initial-data.sh` script described above (including setting up the `admin` superuser), but will not apply migrations.
+The `refresh-data.sh` script will apply the same changes as the 
+`initial-data.sh` script described above (including setting up the `admin` 
+superuser), but will not apply migrations.
 
 To apply any unapplied migrations to a database created from a dump, run:
 
@@ -358,6 +388,9 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    `gulp build`.
 
 ### 2. `backend.sh`
+
+!!! note
+    `backend.sh` is not used for our Docker setup.
 
 1. **Confirm environment** (`init`)
 
