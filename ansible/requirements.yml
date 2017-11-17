@@ -1,22 +1,27 @@
-- src: https://github.com/vickumar1981/ansible-role-mysql.git
-  version: origin/version_fix
+- src: https://github.com/geerlingguy/ansible-role-mysql.git 
+  version: 68fad51
   name: vickumar1981.mysql
 
-- src: geerlingguy.git
+- src: https://github.com/geerlingguy/ansible-role-git.git
+  version: 5988cc6
+  name: geerlingguy.git
 
-- src: geerlingguy.firewall
+- src: https://github.com/geerlingguy/ansible-role-firewall.git
+  version: eb66a45
+  name: geerlingguy.firewall
 
-- src: xcezx.httpd
+- src: https://github.com/smbambling/ansible-role-apache.git
+  version: a221268
+  name: smbambling.apache
 
-- src: https://github.com/vickumar1981/ansible-role-nodejs.git
-  version: origin/version_fix
+- src: https://github.com/geerlingguy/ansible-role-nodejs.git
+  version: 885d12b
   name: vickumar1981.nodejs
 
 - src: https://github.com/Ken24/ansible-role-python.git
-  version: master
+  version: 1b54429 
   name: Ken24.python
 
 - src: https://github.com/vccabral/ansible-role-elasticsearch.git
-  version: master
+  version: e9343ca
   name: vccabral.elasticsearch
-

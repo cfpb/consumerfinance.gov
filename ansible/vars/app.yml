@@ -12,3 +12,23 @@ npm_packages:
   - gulp
   - less
   - protractor
+
+slc6_repos:
+  slc6-devtoolset:
+    description: Scientific Linux CERN 6 (SLC6) - Devtoolset addons
+    baseurl: http://linuxsoft.cern.ch/cern/devtoolset/slc6X/$basearch/yum/devtoolset/
+  slc6-devtoolset-source:
+    description: Scientific Linux CERN 6 (SLC6) - Devtoolset addons - source RPMs
+    baseurl: http://linuxsoft.cern.ch/cern/devtoolset/slc6X/$basearch/yum/devtoolset-source/
+  slc6-devtoolset-debug:
+    description: Scientific Linux CERN 6 (SLC6) - Devtoolset addons - debug RPMs
+    baseurl: http://linuxsoft.cern.ch/cern/devtoolset/slc6X/$basearch/yum/devtoolset-debug/
+  slc6-devtoolset-testing:
+    description: Scientific Linux CERN 6 (SLC6) - Devtoolset addons
+    baseurl: http://linuxsoft.cern.ch/cern/devtoolset/slc6X/testing/$basearch/yum/devtoolset-testing/
+  slc6-devtoolset-testing-source:
+    description: Scientific Linux CERN 6 (SLC6) - Devtoolset addons - source RPMs
+    baseurl: http://linuxsoft.cern.ch/cern/devtoolset/slc6X/testing/$basearch/yum/devtoolset-testing-source/
+  slc6-devtoolset-testing-debug:
+    description: Scientific Linux CERN 6 (SLC6) - Devtoolset addons - debug RPMs
+    baseurl: http://linuxsoft.cern.ch/cern/devtoolset/slc6X/testing/$basearch/yum/devtoolset-testing-debug/

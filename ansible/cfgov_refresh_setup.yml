@@ -1,4 +1,5 @@
 ---
+# vi: set ft=ansible :
 - hosts: db
   sudo: yes
   sudo_user: root
@@ -13,6 +14,20 @@
   sudo: yes
   sudo_user: root
   gather_facts: true
+  pre_tasks:
+    - name: Install the EPEL package
+      yum:
+        name: epel-release
+        state: present
+        update_cache: yes
+
+    - name: yum 
+      yum:
+        name: '*'
+        state: latest
+        update_cache: yes
+        disablerepo: epel
+
   vars_files:
     - vars/app.yml
   roles:
@@ -21,7 +36,7 @@
     - { role: geerlingguy.git }
     - { role: Ken24.python }
     - { role: geerlingguy.firewall }
-    - { role: xcezx.httpd }
+    - { role: smbambling.apache }
     - { role: vickumar1981.nodejs }
   tasks:
     - name: Install python dependencies
@@ -40,13 +55,15 @@
         - "libxslt-devel"
         - "libxml2-devel"
 
-    - name: Import CERN's GPG key
-      shell: "rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/x86_64/RPM-GPG-KEYs/RPM-GPG-KEY-cern"
-      sudo: yes
-
-    - name: Save slc6-devtoolset.repo repository information
-      shell: "wget -O /etc/yum.repos.d/slc6-devtoolset.repo http://linuxsoft.cern.ch/cern/devtoolset/slc6-devtoolset.repo"
-      sudo: yes
+    - name: Add the SLC Repos
+      yum_repository:
+        name: "{{ item.key }}"
+        description: "{{ item.value.description }}"
+        file: scl6-devtoolset.repo
+        baseurl: "{{ item.value.baseurl }}"
+        gpgkey: http://linuxsoft.cern.ch/cern/slc6X/x86_64/RPM-GPG-KEY-cern
+        gpgcheck: yes
+      with_dict: "{{ slc6_repos }}"
 
     - name: Install devtoolset-2
       yum:

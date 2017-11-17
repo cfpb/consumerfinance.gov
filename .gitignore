@@ -97,7 +97,7 @@ static.in/*/
 
 # Ansible #
 #################
-ansible/roles/*
+ansible/galaxy_roles/*
 
 # Unit test / coverage reports
 #################
