@@ -9,9 +9,25 @@
 # Set script to exit on any errors.
 set -e
 
-./frontend.sh $1
-./backend.sh $1
+standalone() {
+    ./frontend.sh $1
+    ./backend.sh $1
 
-if [[ ! -z "$CFGOV_SPEAK_TO_ME" ]]; then
-  say "Set up has finished."
+    if [[ ! -z "$CFGOV_SPEAK_TO_ME" ]]; then
+        say "Set up has finished."
+    fi
+}
+
+dockerized() {
+    ./frontend.sh $2
+
+    touch .python_env
+    source mac-virtualbox-init.sh
+}
+
+# Execute requested (or all) functions.
+if [ "$1" == "docker" ]; then
+    dockerized
+else
+    standalone
 fi

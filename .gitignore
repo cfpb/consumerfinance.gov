@@ -59,7 +59,7 @@ src/vendor
 *.swp
 
 # Python #
-#################
+##########
 *.pyc
 __pycache__/
 *.eggs/
@@ -76,13 +76,13 @@ vendor/
 .floo*
 
 # Documentation #
-##########
+#################
 docs/scripts
 docs/*/slick.html
 docs/*/pdfreactor-fonts.html
 
 # Django #
-#################
+##########
 *.egg-info
 .installed.cfg
 /static/
@@ -96,11 +96,11 @@ develop-apps/*
 static.in/*/
 
 # Ansible #
-#################
+###########
 ansible/roles/*
 
-# Unit test / coverage reports
-#################
+# Unit test / coverage reports #
+################################
 test/unit_test_coverage/
 test/perf_test_results/
 test/screenshot.png
@@ -112,6 +112,10 @@ nosetests.xml
 coverage.xml
 .snyk
 
-# IDE Specifc
-############
+# IDE Specifc #
+###############
 *.idea
+
+# Docker local development #
+############################
+.python_env
