@@ -12,6 +12,8 @@ from wagtail.wagtailcore.models import Site
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
+from flags.state import flag_enabled
+
 from ask_cfpb.models import (
     Answer,
     AnswerPage,
@@ -116,7 +118,7 @@ def ask_search(request, language='en', as_json=False):
     query_sqs = sqs.filter(content=clean_query)
 
     # If we have no results from our query, let's try to suggestion
-    if query_sqs.count() == 0:
+    if query_sqs.count() == 0 and flag_enabled('ASK_SEARCH_TYPOS', request):
         query_sqs = sqs.filter(content=suggestion)
         qstring, suggestion = suggestion, qstring
 

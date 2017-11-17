@@ -581,15 +581,17 @@ CSP_CONNECT_SRC = ("'self'",
 # conditions or an empty dict. If the conditions dict is empty the flag will
 # only be enabled if database conditions are added.
 FLAGS = {
+	# Ask CFPB search spelling correction support
+    # When enabled, spelling suggestions will appear in Ask CFPB search and
+    # will be used when the given search term provides no results.
+	'ASK_SEARCH_TYPOS': {},
+
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
     'BETA_NOTICE': {
         'site': 'beta.consumerfinance.gov',
     },
-
-	# Ask CFPB search results improvements
-	'BETTER_ASK_SEARCH': {},
 
     # When enabled, include a recruitment code comment in the base template.
     'CFPB_RECRUITING': {},
