@@ -115,3 +115,7 @@ coverage.xml
 # IDE Specifc
 ############
 *.idea
+
+# Docker local development #
+############################
+.python_env
