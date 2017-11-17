@@ -17,4 +17,8 @@ if [ $? -ne 0 ]; then
     fi
 fi
 
-docker-compose exec python bash
+if [ -z "$*" ]; then
+    docker-compose exec python bash
+else
+    docker-compose exec python bash -c "$*"
+fi
