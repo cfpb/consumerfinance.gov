@@ -265,7 +265,7 @@ Once you have a database loaded, you should have a functioning copy of site work
 
 ### 4. Next Steps
 
-See the Docker section of the [usage](../usage/) page.
+See the Docker section of the [usage](usage) page.
 
 ## Optional steps
 
