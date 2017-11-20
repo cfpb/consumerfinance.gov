@@ -43,7 +43,7 @@
                 {% endif %}
 
                 {% if page.suggestion %}
-                <p>Search instead for <a href="/ask-cfpb/search?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
+                <p>Search instead for <a href="/ask-cfpb/search?q={{ page.suggestion }}&correct=0">{{ page.suggestion }}</a></p>
                 {% endif %}
             {% else %}
                 {% if tag %}
