@@ -1,12 +1,12 @@
 'use strict';
 
+const browserList = require( '../../config/browserList-config' );
 const browserSync = require( 'browser-sync' );
 const config = require( '../config' );
 const configPkg = config.pkg;
 const configBanner = config.banner;
 const configStyles = config.styles;
 const configLegacy = config.legacy;
-const environment = require( '../../config/environment' );
 const gulp = require( 'gulp' );
 const gulpAutoprefixer = require( 'gulp-autoprefixer' );
 const gulpChanged = require( 'gulp-changed' );
@@ -30,7 +30,7 @@ function stylesModern() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList( 'css' )
+      browsers: browserList.last2
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
@@ -50,7 +50,7 @@ function stylesIE9() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: [ 'ie 9' ]
+      browsers: browserList.onlyIE9
     } ) )
     .pipe( gulpRename( {
       suffix:  '.ie9',
@@ -77,7 +77,7 @@ function stylesIE8() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: [ 'ie 8' ]
+      browsers: browserList.onlyIE8
     } ) )
     .pipe( mqr( {
       width: '75em'
@@ -107,7 +107,7 @@ function stylesOnDemand() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList( 'css' )
+      browsers: browserList.last2IE8up
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulp.dest( configStyles.dest ) )
@@ -139,7 +139,7 @@ function stylesFeatureFlags() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList( 'css' )
+      browsers: browserList.last2IE8up
     } ) )
     .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) )
     .pipe( browserSync.reload( {
@@ -162,7 +162,7 @@ function stylesKnowledgebaseSpanishProd() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList( 'css' )
+      browsers: browserList.last2IE9up
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( {
@@ -189,7 +189,7 @@ function stylesKnowledgebaseSpanishIE() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList( 'css' )
+      browsers: browserList.onlyIE8
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( {
@@ -215,7 +215,7 @@ function stylesNemoProd() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList( 'css' )
+      browsers: browserList.last2IE9up
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( {
@@ -241,7 +241,7 @@ function stylesNemoIE() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList( 'css' )
+      browsers: browserList.onlyIE8
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( {
@@ -268,7 +268,7 @@ function stylesOAH() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList( 'css' )
+      browsers: browserList.last2IE8up
     } ) )
     .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( {
