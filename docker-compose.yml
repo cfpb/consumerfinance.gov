@@ -17,8 +17,16 @@ services:
         ports:
             - "9200:9200"
             - "9300:9300"
+    gulp:
+        build:
+            context: .
+            dockerfile: Dockerfile-gulp
+        volumes:
+                - ./:/src/cfgov-refresh
     python:
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile-python
         ports:
             - "8000:8000"
         environment:
