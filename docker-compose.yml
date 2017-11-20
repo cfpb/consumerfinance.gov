@@ -13,7 +13,9 @@ services:
         volumes:
             - "/var/lib/mysql"
     elasticsearch:
-        build: docker/elasticsearch
+        build: 
+            context: ./
+            dockerfile: ./docker/elasticsearch/Dockerfile
         ports:
             - "9200:9200"
             - "9300:9300"

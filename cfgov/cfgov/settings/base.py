@@ -335,10 +335,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'tokenizer': 'lowercase',
                     'filter': ['haystack_edgengram']
                 },
-                'synonym' : {
+                'synonym_en' : {
                     'tokenizer' : 'whitespace',
-                    'filter' : ['synonym']
-                }
+                    'filter' : ['synonyms_en']
+                },
+                'synonym_es' : {
+                    'tokenizer' : 'whitespace',
+                    'filter' : ['synonyms_es']
+                },
             },
             'tokenizer': {
                 'haystack_ngram_tokenizer': {
@@ -351,7 +355,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15,
                     'side': 'front'
-                }
+                },
             },
             'filter': {
                 'haystack_ngram': {
@@ -364,13 +368,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15
                 },
-                'synonym': {
+                'synonyms_en': {
                     'type': 'synonym',
-                    # 'synonyms_path' : 'analysis/synonym.txt'
-                    'synonyms': [
-                        'auto,car,vehicle',
-                    ],
-                }
+                    'synonyms_path' : 'analysis/synonyms_en.txt'
+                },
+                'synonyms_es': {
+                    'type': 'synonym',
+                    'synonyms_path' : 'analysis/synonyms_es.txt'
+                },
             }
         }
     }

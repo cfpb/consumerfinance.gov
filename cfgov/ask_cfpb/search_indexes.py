@@ -52,6 +52,7 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
 
 class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
     text = fields.CharFieldWithSynonyms(
+        language='es',
         document=True,
         use_template=True,
         boost=10.0)
