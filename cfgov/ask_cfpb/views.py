@@ -114,11 +114,15 @@ def ask_search(request, language='en', as_json=False):
     sqs = _map['query']
     clean_query = Clean(request.GET.get('q', ''))
     qstring = clean_query.query_string.strip()
-    suggestion = sqs.spelling_suggestion(qstring)
     query_sqs = sqs.filter(content=clean_query)
 
-    # If we have no results from our query, let's try to suggestion
-    if query_sqs.count() == 0 and flag_enabled('ASK_SEARCH_TYPOS', request):
+    # If we have no results from our query, let's try to suggest a better one
+    suggestion = sqs.spelling_suggestion(qstring)
+    if suggestion == qstring:
+        suggestion = None
+    elif (query_sqs.count() == 0 and
+            request.GET.get('correct', '1') == '1' and
+            flag_enabled('ASK_SEARCH_TYPOS', request=request)):
         query_sqs = sqs.filter(content=suggestion)
         qstring, suggestion = suggestion, qstring
 
