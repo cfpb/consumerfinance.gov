@@ -1,32 +1,32 @@
 'use strict';
 
 // See CONTRIBUTING.md for a list of browsers included in 'last 2 versions'
-const last2 = [
+const LAST_2 = [
   'last 2 versions'
 ];
 
-const onlyIE9 = [
+const ONLY_IE_9 = [
   'Explorer 9'
 ];
 
-const onlyIE8 = [
+const ONLY_IE_8 = [
   'Explorer 8'
 ];
 
-const last2IE9up = [
+const LAST_2_IE_9_UP = [
   'last 2 versions',
   'Explorer >= 9'
 ];
 
-const last2IE8up = [
+const LAST_2_IE_8_UP = [
   'last 2 versions',
   'Explorer >= 8'
 ];
 
 module.exports = {
-  last2,
-  onlyIE9,
-  onlyIE8,
-  last2IE9up,
-  last2IE8up
+  LAST_2,
+  ONLY_IE_9,
+  ONLY_IE_8,
+  LAST_2_IE_9_UP,
+  LAST_2_IE_8_UP
 };
