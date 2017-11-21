@@ -31,7 +31,7 @@ function stylesModern() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulpPostcss( [
-        autoprefixer( { browsers: BROWSER_LIST.LAST_2 } )
+      autoprefixer( { browsers: BROWSER_LIST.LAST_2 } )
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
@@ -51,7 +51,7 @@ function stylesIE9() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-        autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_9 } )
+      autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_9 } )
     ] ) )
     .pipe( gulpRename( {
       suffix:  '.ie9',
@@ -78,10 +78,10 @@ function stylesIE8() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-        postcssUnmq( {
-            width: '75em'
-        } ),
-        autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8 } )
+      postcssUnmq( {
+        width: '75em'
+      } ),
+      autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8 } )
     ] ) )
     .pipe( gulpCleanCss( { compatibility: 'ie8' } ) )
     .pipe( gulpRename( {
@@ -107,14 +107,14 @@ function stylesOnDemand() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-        autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+      autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( gulpPostcss( [
-        postcssUnmq( {
-            width: '75em'
-        } )
+      postcssUnmq( {
+        width: '75em'
+      } )
     ] ) )
     .pipe( gulpCleanCss( { compatibility: 'ie8' } ) )
     .pipe( gulpRename( {
@@ -140,7 +140,7 @@ function stylesFeatureFlags() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-        autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+      autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
     ] ) )
     .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) )
     .pipe( browserSync.reload( {
@@ -163,7 +163,7 @@ function stylesKnowledgebaseSpanishProd() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-        autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_9_UP } )
+      autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_9_UP } )
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( {
@@ -190,7 +190,7 @@ function stylesKnowledgebaseSpanishIE() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-        autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8 } )
+      autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8 } )
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( {
@@ -216,7 +216,7 @@ function stylesNemoProd() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-        autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_9_UP } )
+      autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_9_UP } )
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( {
@@ -242,7 +242,7 @@ function stylesNemoIE() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-        autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8 } )
+      autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8 } )
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( {
@@ -269,7 +269,7 @@ function stylesOAH() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-        autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+      autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
     ] ) )
     .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( {
