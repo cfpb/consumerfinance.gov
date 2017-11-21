@@ -586,7 +586,7 @@ CSP_CONNECT_SRC = ("'self'",
 # conditions or an empty dict. If the conditions dict is empty the flag will
 # only be enabled if database conditions are added.
 FLAGS = {
-	# Ask CFPB search spelling correction support
+    # Ask CFPB search spelling correction support
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results.
 	'ASK_SEARCH_TYPOS': {},
