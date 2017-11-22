@@ -34,11 +34,11 @@
         {% if results %}
             {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
                 {% if tag %}
-                <h3 class="results-header">Showing results for ‘{{ tag }}’</h3>
+                <h3 class="results-header">Showing results for “{{ tag }}”</h3>
                 {% else %}
                 <h3 class="results-header">
                     Showing {{ results.start_index() }}-{{ results.end_index() }} of {{ paginator.count }} results 
-                    for <a href="/ask-cfpb/search?q={{ page.result_query }}">{{ page.result_query }}</a>
+                    for “{{ page.result_query }}”
                 </h3>
                 {% endif %}
 
@@ -78,9 +78,9 @@
                         block__flush-top">
             <div class="no-results-message">
                 {% if tag %}
-                <h3 class="results-header">No results found for ‘{{ tag }}’</h3>
+                <h3 class="results-header">No results found for “{{ tag }}”</h3>
                 {% else %}
-                <h3 class="results-header">No results found for ‘{{ page.query }}’</h3>
+                <h3 class="results-header">No results found for “{{ page.query }}”</h3>
                 {% endif %}
 
                 {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
