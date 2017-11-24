@@ -13,22 +13,21 @@
 
    form:     Django form that carries the fields that are to be rendered.
 
-   index:    A unique number given to render the form and its fields with.
 
    ========================================================================== #}
 {% from 'organisms/expandable.html' import expandable with context %}
 
-{% macro _filter_selectable(type, index, label_text, id, name, value, required=None, group=None) %}
+{% macro _filter_selectable(type, label_text, id, name, value, required=None, group=None) %}
     <li class="m-form-field m-form-field__checkbox">
         <input class="{{ 'a-checkbox' if type == 'checkbox' else 'a-radio' }}"
                type="{{ type }}"
                value="{{ value }}"
-               id="filter{{ index }}_{{ id }}"
-               name="filter{{ index }}_{{ name }}"
+               id="filter_{{ id }}"
+               name="filter_{{ name }}"
                {{ 'data-required=' ~ required if required else ''  }}
                {{ 'data-group=' ~ group if group else ''  }}
-               {{ 'checked' if is_filter_selected('filter' ~ index ~ '_' ~ name, value) else '' }}>
-        <label class="a-label"  for="filter{{ index }}_{{ id }}">
+               {{ 'checked' if is_filter_selected('filter_' ~ name, value) else '' }}>
+        <label class="a-label"  for="filter_{{ id }}">
             {{ label_text if label_text else value }}
         </label>
     </li>
@@ -41,9 +40,9 @@
     </option>
 {% endmacro %}
 
-{% macro _render_filter_fields(controls, form, index) -%}
+{% macro _render_filter_fields(controls, form) -%}
     {% if controls.title %}
-        {% set field_id = 'filter' ~ index ~ '_title' %}
+        {% set field_id = 'filter_title' %}
         <div class="content-l_col
                     content-l_col-1">
             <div class="o-form_group">
@@ -68,7 +67,7 @@
                     </legend>
                     <ul class="m-list m-list__unstyled">
                     {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
-                        {{ _filter_selectable('checkbox', index, category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
+                        {{ _filter_selectable('checkbox', category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
                     {% endfor %}
                     </ul>
                 </fieldset>
@@ -80,7 +79,7 @@
                     content-l_col-2-3">
             <div class="content-l">
                 {% if controls.topics %}
-                    {% set field_id = 'filter' ~ index ~ '_topics' %}
+                    {% set field_id = 'filter_topics' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
@@ -95,7 +94,7 @@
                     </div>
                 {% endif %}
                 {% if controls.authors %}
-                    {% set field_id = 'filter' ~ index ~ '_authors' %}
+                    {% set field_id = 'filter_authors' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
@@ -122,22 +121,22 @@
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="{{ 'filter' ~ index ~ '_from_date' }}">
+                                                   for="{{ 'filter_from_date' }}">
                                                 From:
                                             </label>
                                             {{ form.render_with_id(form.from_date,
-                                               'filter' ~ index ~ '_from_date') }}
+                                               'filter_from_date') }}
                                         </div>
                                     </div>
                                     <div class="content-l_col
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="{{ 'filter' ~ index ~ '_to_date' }}">
+                                                   for="{{ 'filter_to_date' }}">
                                                 To:
                                             </label>
                                             {{ form.render_with_id(form.to_date,
-                                               'filter' ~ index ~ '_to_date') }}
+                                               'filter_to_date') }}
                                         </div>
                                     </div>
                                 </div>
@@ -150,7 +149,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro _filters_form(controls, form, index) %}
+{% macro _filters_form(controls, form) %}
     <form
         {% if 'filterable-list' in controls.form_type %}
             method="get"
@@ -160,10 +159,9 @@
             action="pdf/">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         {% endif %}
-        <input type="hidden" name="form-id" id="form-id" value="{{ index }}">
 
         <div class="content-l">
-            {{ _render_filter_fields(controls, form, index) }}
+            {{ _render_filter_fields(controls, form) }}
             <div class="content-l_col
                         content-l_col-1
                         m-btn-group">
@@ -183,16 +181,16 @@
 {% from 'molecules/notification.html' import render as notification with context %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 
-{% macro render(controls, index) %}
+{% macro render(controls) %}
     <div class="o-filterable-list-controls"
-         id="o-filterable-list-controls-{{ index | string }}">
+         id="o-filterable-list-controls">
         {% set form = filter_data.forms.pop(0) %}
         {% set posts = filter_data.page_sets.pop(0) %}
-        {% set has_active_filters = page.has_active_filters(request, index) %}
+        {% set has_active_filters = request.GET %}
         {% if has_active_filters %}
             {% do controls.update({'is_expanded':true}) %}
         {% endif %}
-        {% set form_markup = _filters_form(controls, form, index) %}
+        {% set form_markup = _filters_form(controls, form) %}
         {% call() expandable(controls) %}
             {{ form_markup | safe }}
         {% endcall %}
@@ -210,7 +208,7 @@
         {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
             {% set count = posts.paginator.count %}
-            {% if has_active_filters == false %}
+            {% if not has_active_filters %}
                 {{ notification('success', false, count ~ ' filtered results') }}
             {% elif count == 0 %}
                 {{ notification('warning', true,
@@ -222,7 +220,7 @@
         {% endif %}
         {% if controls.categories.page_type == 'activity-log' %}
             {% import 'activity-log/_activity-list.html' as activity_list with context %}
-            {{ activity_list.render(posts, index) }}
+            {{ activity_list.render(posts) }}
         {% elif controls.output_5050 %}
             <div class="o-info-unit-group u-mb30" data-qa-hook="image-text-50-50">
                 <div class="content-l">
@@ -266,13 +264,13 @@
             </div>
         {% else %}
             {% for post in posts %}
-                {{ post_preview.render(post, controls, form_id=index) }}
+                {{ post_preview.render(post, controls) }}
             {% endfor %}
         {% endif %}
         <div class="block block__flush-top block__flush-bottom block__padded-top">
             {% import 'molecules/pagination.html' as pagination with context %}
-            {% set fragment_id = 'o-filterable-list-controls-' + index | string %}
-            {{ pagination.render( posts.paginator.num_pages, posts.number, fragment_id, index ) }}
+            {% set fragment_id = 'o-filterable-list-controls' %}
+            {{ pagination.render( posts.paginator.num_pages, posts.number, fragment_id) }}
         </div>
     </div>
 {% endmacro %}

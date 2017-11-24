@@ -15,11 +15,11 @@
             <div class="block
                         block__flush-top">
                 {% import 'organisms/filterable-list-controls.html' as flc with context %}
-                {{ flc.render(block.value, loop.index0) }}
+                {{ flc.render(block.value) }}
             </div>
         {% else %}
             {% import 'templates/render_block.html' as render_block with context %}
-            {{ render_block.render(block, loop.index) }}
+            {{ render_block.render(block) }}
         {% endif %}
     {% endfor %}
 
