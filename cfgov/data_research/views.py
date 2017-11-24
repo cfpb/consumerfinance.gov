@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+
 import datetime
 
 from rest_framework.renderers import JSONRenderer
@@ -6,10 +7,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from data_research.models import (
-    County, CountyMortgageData,
-    MetroArea, MSAMortgageData, NonMSAMortgageData,
-    State, StateMortgageData,
-    MortgageMetaData, NationalMortgageData)
+    County, CountyMortgageData, MetroArea, MortgageMetaData, MSAMortgageData,
+    NationalMortgageData, NonMSAMortgageData, State, StateMortgageData
+)
+
 
 DAYS_LATE_RANGE = ['30-89', '90']
 

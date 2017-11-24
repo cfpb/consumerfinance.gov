@@ -1,24 +1,22 @@
 from __future__ import unicode_literals
 
 import datetime
-from dateutil import parser
-from cStringIO import StringIO
 import logging
+from cStringIO import StringIO
 
 import unicodecsv
+from dateutil import parser
 
 from core.utils import format_file_size
 from data_research.models import (
-    County, CountyMortgageData,
-    MetroArea, MSAMortgageData,
-    NonMSAMortgageData,
-    MortgageMetaData,
-    NationalMortgageData,
-    State, StateMortgageData,
+    County, CountyMortgageData, MetroArea, MortgageMetaData, MSAMortgageData,
+    NationalMortgageData, NonMSAMortgageData, State, StateMortgageData
 )
-from data_research.mortgage_utilities.s3_utils import (
-    bake_csv_to_s3, MORTGAGE_SUB_BUCKET, S3_MORTGAGE_DOWNLOADS_BASE)
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+from data_research.mortgage_utilities.s3_utils import (
+    MORTGAGE_SUB_BUCKET, S3_MORTGAGE_DOWNLOADS_BASE, bake_csv_to_s3
+)
+
 
 NATION_QUERYSET = NationalMortgageData.objects.all()
 STATES_TO_IGNORE = ['72']  # Excluding Puerto Rico from project launch

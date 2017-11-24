@@ -1,26 +1,17 @@
 from __future__ import unicode_literals
 
-import mock
-
 from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import TestCase
 
+import mock
+
 from ask_cfpb.wagtail_hooks import (
-    Answer,
-    AnswerModelAdmin,
-    Audience,
-    AnswerModelAdminSaveUserEditView,
-    AudienceModelAdmin,
-    NextStep,
-    NextStepModelAdmin,
-    SubCategory,
-    SubCategoryModelAdmin,
-    Category,
-    CategoryModelAdmin,
-    editor_js,
-    editor_css,
-    whitelister_element_rules)
+    Answer, AnswerModelAdmin, AnswerModelAdminSaveUserEditView, Audience,
+    AudienceModelAdmin, Category, CategoryModelAdmin, NextStep,
+    NextStepModelAdmin, SubCategory, SubCategoryModelAdmin, editor_css,
+    editor_js, whitelister_element_rules
+)
 
 
 class TestAskHooks(TestCase):

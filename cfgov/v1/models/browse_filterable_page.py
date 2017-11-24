@@ -1,9 +1,10 @@
 import itertools
 
 from django.db import models
-from wagtail.wagtailadmin.edit_handlers import (FieldPanel, ObjectList,
-                                                StreamFieldPanel,
-                                                TabbedInterface)
+
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+)
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 

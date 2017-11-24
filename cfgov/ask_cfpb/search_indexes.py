@@ -1,8 +1,9 @@
 from haystack import indexes
+
+from ask_cfpb.models import Category, EnglishAnswerProxy, SpanishAnswerProxy
 from search import fields
 
-from ask_cfpb.models import (
-    Category, EnglishAnswerProxy, SpanishAnswerProxy)
+
 # AnswerTagProxy,
 
 

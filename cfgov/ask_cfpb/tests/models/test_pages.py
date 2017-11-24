@@ -1,33 +1,36 @@
 from __future__ import unicode_literals
+
 import datetime
 import HTMLParser
-
 import json
-import mock
-from mock import mock_open, patch
-from model_mommy import mommy
 import unittest
-
-from bs4 import BeautifulSoup as bs
 
 from django.apps import apps
 from django.core.urlresolvers import reverse
-from django.http import HttpRequest, HttpResponse, Http404
+from django.http import Http404, HttpRequest, HttpResponse
 from django.template.defaultfilters import slugify
 from django.test import TestCase
-from django.utils import html
-from django.utils import timezone
+from django.utils import html, timezone
 from django.utils.translation import ugettext as _
 
-from v1.models import CFGOVImage
-from v1.util.migrations import get_or_create_page, get_free_path
+import mock
+from bs4 import BeautifulSoup as bs
+from mock import mock_open, patch
+from model_mommy import mommy
+
 from ask_cfpb.models.django import (
-    Answer, Audience, Category, generate_short_slug, NextStep,
-    SubCategory, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
+    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Audience, Category,
+    NextStep, SubCategory, generate_short_slug
+)
 from ask_cfpb.models.pages import (
-    AnswerPage, AnswerCategoryPage, AnswerAudiencePage)
+    AnswerAudiencePage, AnswerCategoryPage, AnswerPage
+)
 from ask_cfpb.scripts.export_ask_data import (
-    assemble_output, clean_and_strip, export_questions)
+    assemble_output, clean_and_strip, export_questions
+)
+from v1.models import CFGOVImage
+from v1.util.migrations import get_free_path, get_or_create_page
+
 
 html_parser = HTMLParser.HTMLParser()
 now = timezone.now()

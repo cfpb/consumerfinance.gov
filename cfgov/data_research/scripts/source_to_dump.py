@@ -1,20 +1,21 @@
 from __future__ import unicode_literals
 
 import datetime
-from dateutil import parser
 import logging
 import sys
 
 import unicodecsv
+from dateutil import parser
 
-from data_research.models import MortgageDataConstant, County
-from data_research.mortgage_utilities.s3_utils import (
-    read_in_s3_csv, S3_SOURCE_BUCKET, S3_SOURCE_FILE)
+from data_research.models import County, MortgageDataConstant
 from data_research.mortgage_utilities.fips_meta import validate_fips
+from data_research.mortgage_utilities.s3_utils import (
+    S3_SOURCE_BUCKET, S3_SOURCE_FILE, read_in_s3_csv
+)
 from data_research.mortgage_utilities.sql_utils import (
-    assemble_insertions,
-    DROP_AND_CREATE_STRING,
-    UNLOCK_STRING)
+    DROP_AND_CREATE_STRING, UNLOCK_STRING, assemble_insertions
+)
+
 
 DEFAULT_DUMP_SLUG = '/tmp/mp_countydata'
 

@@ -1,14 +1,14 @@
 import random
 
-from BeautifulSoup import BeautifulSoup
 from django.core.paginator import Page
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.template import Context, Template
 from django.test import TestCase
-from mock import patch
 
 from agreements import models
+from BeautifulSoup import BeautifulSoup
+from mock import patch
 
 
 def agreement_factory(**kwargs):

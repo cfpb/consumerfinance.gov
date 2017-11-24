@@ -10,6 +10,7 @@ if [ "$RUNTEST" == "frontend" ]; then
     bash <(curl -s https://codecov.io/bash) -F frontend
 elif [ "$RUNTEST" == "backend" ]; then
     flake8
+    isort --check-only --diff --recursive cfgov
     tox -e fast
     tox -e missing-migrations
     bash <(curl -s https://codecov.io/bash) -F backend
