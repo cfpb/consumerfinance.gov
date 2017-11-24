@@ -148,73 +148,83 @@ class CFGOVPage(Page):
 
     def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage
-        related = {}
-        query = models.Q(('tags__name__in', self.tags.names()))
-        search_types = [
-            ('blog', 'posts', 'Blog', query),
-            ('newsroom', 'newsroom', 'Newsroom', query),
-            ('events', 'events', 'Events', query),
-        ]
 
-        def fetch_children_by_specific_category(block, parent_slug):
-            """
-            This used to be a Page.objects.get, which would throw
-            an exception if the requested parent wasn't found. As of
-            Django 1.6, you can now do Page.objects.filter().first();
-            the advantage here is that you can check for None right
-            away and not have to rely on catching exceptions, which
-            in any case didn't do anything useful other than to print
-            an error message. Instead, we just return an empty query
-            which has no effect on the final result.
-            """
-            parent = Page.objects.filter(slug=parent_slug).first()
-            if parent:
-                child_query = Page.objects.child_of_q(parent)
-                if 'specific_categories' in block.value:
-                    child_query &= specific_categories_query(
-                        block, parent_slug)
-            else:
-                child_query = Q()
-            return child_query
+        def match_all_topic_tags(queryset, tags):
+            for tag in tags:
+                queryset = queryset.filter(tags__name=tag)
+            return queryset
 
-        def specific_categories_query(block, parent_slug):
-            specific_categories = ref.related_posts_category_lookup(
-                block.value['specific_categories']
-            )
-            choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
-            categories = [c for c in specific_categories if c in choices]
-            if categories:
-                return Q(('categories__name__in', categories))
-            else:
-                return Q()
+        related_types = []
+        related_items = {}
+        if block.value.get('relate_posts'):
+            related_types.append('blog')
+        if block.value.get('relate_newsroom'):
+            related_types.append('newsroom')
+        if block.value.get('relate_events'):
+            related_types.append('events')
+        if not related_types:
+            return related_items
 
-        for parent_slug, search_type, search_type_name, search_query in \
-                search_types:
-            search_query &= fetch_children_by_specific_category(
-                block, parent_slug)
-            if parent_slug == 'events':
-                search_query |= fetch_children_by_specific_category(
-                    block, 'archive-past-events') & query
-            relate = block.value.get('relate_{}'.format(search_type), None)
-            if relate:
-                type_query = (
-                    AbstractFilterPage.objects.live().filter(
-                        search_query
-                    ).distinct().exclude(id=self.id).order_by(
-                        '-date_published'
-                    )
+        tags = self.tags.names()
+        and_filtering = block.value['and_filtering']
+        specific_categories = block.value['specific_categories']
+        limit = int(block.value['limit'])
+        queryset = AbstractFilterPage.objects.live().exclude(
+            id=self.id).order_by('-date_published').distinct()
+
+        for parent in related_types:  # blog, newsroom or events
+            # Include children of this slug that match at least 1 tag
+            children = Page.objects.child_of_q(Page.objects.get(slug=parent))
+            filters = children & Q(('tags__name__in', tags))
+
+            if parent == 'events':
+                # Include archived events matches
+                archive = Page.objects.get(slug='archive-past-events')
+                children = Page.objects.child_of_q(archive)
+                filters |= children & Q(('tags__name__in', tags))
+
+            if specific_categories:
+                # Filter by any additional categories specified
+                categories = ref.get_appropriate_categories(
+                    specific_categories=specific_categories,
+                    page_type=parent
                 )
-                # Apply similar logic as snippets.py's filter_by_tags method
-                # to enable AND filtering
-                if block.value['and_filtering']:
-                    for tag in self.tags.names():
-                        type_query = type_query.filter(tags__name=tag)
-                related[search_type_name] = type_query[:block.value['limit']]
+                if categories:
+                    filters &= Q(('categories__name__in', categories))
 
-        # Return a dictionary of lists of each type when there's at least one
-        # hit for that type.
-        return {search_type: queryset for search_type, queryset in
-                related.items() if queryset}
+            related_queryset = queryset.filter(filters)
+
+            if and_filtering:
+                # By default, we need to match at least one tag
+                # If specified in the admin, change this to match ALL tags
+                related_queryset = match_all_topic_tags(related_queryset, tags)
+
+            related_items[parent.title()] = related_queryset[:limit]
+
+        # Return items in the dictionary that have non-empty querysets
+        return {key: value for key, value in related_items.items() if value}
+
+    def related_metadata_tags(self):
+        # Set the tags to correct data format
+        tags = {'links': []}
+        id, filter_page = self.get_filter_data()
+        relative_url = filter_page.relative_url(filter_page.get_site())
+        for tag in self.specific.tags.all():
+            tag_link = {'text': tag.name, 'url': ''}
+            if id is not None and filter_page is not None:
+                param = '?filter' + str(id) + '_topics=' + tag.slug
+                tag_link['url'] = relative_url + param
+            tags['links'].append(tag_link)
+        return tags
+
+    def get_filter_data(self):
+        for ancestor in self.get_ancestors().reverse().specific():
+            if ancestor.specific_class.__name__ in ['BrowseFilterablePage',
+                                                    'SublandingFilterablePage',
+                                                    'EventArchivePage',
+                                                    'NewsroomLandingPage']:
+                return ancestor.form_id(), ancestor
+        return None, None
 
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
