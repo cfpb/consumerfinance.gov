@@ -14,7 +14,6 @@ from jinja2 import Environment
 import jinja2.runtime
 from jinja2.runtime import Context
 
-from .query import QueryFinder, more_like_this, get_document, when
 from .filters import selected_filters_for_field, is_filter_selected
 from .templates import get_date_string, get_date_obj
 from .middleware import get_request
@@ -86,8 +85,6 @@ class SheerlikeEnvironment(Environment):
 
 
 def environment(**options):
-    queryfinder = QueryFinder()
-
     options.setdefault('extensions', []).append('jinja2.ext.do')
 
     site_slug = options.get('site_slug')
@@ -98,12 +95,8 @@ def environment(**options):
         'static': staticfiles_storage.url,
         'url_for': functools.partial(url_for, site_slug=site_slug),
         'url': reverse,
-        'queries': queryfinder,
-        'more_like_this': more_like_this,
-        'get_document': get_document,
         'selected_filters_for_field': selected_filters_for_field,
         'is_filter_selected': is_filter_selected,
-        'when': when,
         'flag_enabled': flag_enabled,
         'flag_disabled': flag_disabled,
         'global_include': global_render_template,
