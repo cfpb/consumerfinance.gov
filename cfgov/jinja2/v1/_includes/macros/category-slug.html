@@ -18,7 +18,7 @@
                        Remember to leverage vars.path instead of
                        using the literal string '/about-us/blog/'.
                        Path is used to create the filtered URL:
-                       {{ href }}?filter_category={{ category }}
+                       {{ href }}?category={{ category }}
 
    classes (optional): Space separated list of class names.
 
@@ -36,9 +36,9 @@
     {% if href %}
         {# TODO: Remove use_blog_category parameter when this element becomes atomic. #}
         {% if use_blog_category %}
-            {% set href = href + '?filter_blog_category=' + category | urlencode | replace('%20', '+') %}
+            {% set href = href + '?blog_category=' + category | urlencode | replace('%20', '+') %}
         {% else %}
-            {% set href = href + '?filter_categories=' + category | urlencode | replace('%20', '+') %}
+            {% set href = href + '?categories=' + category | urlencode | replace('%20', '+') %}
         {% endif %}
     {% endif %}
 

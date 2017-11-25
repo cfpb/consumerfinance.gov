@@ -17,7 +17,7 @@
                   tags are used on a blog article then path should be
                   '/about-us/blog/'. Remember to leverage vars.path instead of
                   using the literal string '/about-us/blog/'. Path is used to
-                  create the filtered URL: {{ path }}?filter_tags={{ tag }}.
+                  create the filtered URL: {{ path }}?tags={{ tag }}.
 
    hide_heading:  The optional boolean flag to hide the tags_heading element.
                   Adds class 'tags__hide-heading' if true value passed.
@@ -49,7 +49,7 @@
         {% else %}
             {% for tag in tags %}
                 <li class="tags_tag">
-                    {% set url_arg = 'filter_tags=' if is_sheer else 'selected_facets=audience_exact:' if path == '/askcfpb/search/' else 'filter_topics=' %}
+                    {% set url_arg = 'tags=' if is_sheer else 'selected_facets=audience_exact:' if path == '/askcfpb/search/' else 'topics=' %}
                     <a class="tags_link" href="{{ path }}?{{ url_arg }}{{ tag }}">
                         <span class="tags_bullet" aria-hidden="true">&bull;</span>
                         {{ tag }}

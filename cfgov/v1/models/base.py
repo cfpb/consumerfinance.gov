@@ -140,7 +140,7 @@ class CFGOVPage(Page):
     def generate_view_more_url(self, request):
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
         tags = []
-        tags = urlencode([('filter_topics', tag) for tag in self.tags.slugs()])
+        tags = urlencode([('topics', tag) for tag in self.tags.slugs()])
         return (get_protected_url({'request': request}, activity_log)
                 + '?' + tags)
 
@@ -210,7 +210,7 @@ class CFGOVPage(Page):
         for tag in self.specific.tags.all():
             tag_link = {'text': tag.name, 'url': ''}
             if filter_page:
-                param = '?filter_topics=' + tag.slug
+                param = '?topics=' + tag.slug
                 tag_link['url'] = relative_url + param
             tags['links'].append(tag_link)
         return tags

@@ -16,12 +16,12 @@ class TestFilterableListMixin(TestCase):
         assert isinstance(self.mixin.per_page_limit(), int)
 
     def test_get_form_specific_filter_data_returns_GET_data(self):
-        request_string = '/?filter_title=test'
+        request_string = '/?title=test'
         data = self.mixin.get_form_specific_filter_data(self.factory.get(request_string).GET)
         assert data[0]['title'] == 'test'
 
     def test_get_form_specific_filter_data_returns_GET_data_as_list_for_multiple_values(self):
-        request_string = '/?filter_categories=test1&filter_categories=test2'
+        request_string = '/?categories=test1&categories=test2'
         data = self.mixin.get_form_specific_filter_data(self.factory.get(request_string).GET)
         assert data[0]['categories'] == ['test1', 'test2']
 

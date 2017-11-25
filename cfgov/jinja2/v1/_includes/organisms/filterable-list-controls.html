@@ -23,10 +23,10 @@
                type="{{ type }}"
                value="{{ value }}"
                id="filter_{{ id }}"
-               name="filter_{{ name }}"
+               name="{{ name }}"
                {{ 'data-required=' ~ required if required else ''  }}
                {{ 'data-group=' ~ group if group else ''  }}
-               {{ 'checked' if is_filter_selected('filter_' ~ name, value) else '' }}>
+               {{ 'checked' if is_filter_selected(name, value) else '' }}>
         <label class="a-label"  for="filter_{{ id }}">
             {{ label_text if label_text else value }}
         </label>
@@ -42,7 +42,7 @@
 
 {% macro _render_filter_fields(controls, form) -%}
     {% if controls.title %}
-        {% set field_id = 'filter_title' %}
+        {% set field_id = 'title' %}
         <div class="content-l_col
                     content-l_col-1">
             <div class="o-form_group">
@@ -79,7 +79,7 @@
                     content-l_col-2-3">
             <div class="content-l">
                 {% if controls.topics %}
-                    {% set field_id = 'filter_topics' %}
+                    {% set field_id = 'topics' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
@@ -94,7 +94,7 @@
                     </div>
                 {% endif %}
                 {% if controls.authors %}
-                    {% set field_id = 'filter_authors' %}
+                    {% set field_id = 'authors' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
@@ -121,22 +121,22 @@
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="{{ 'filter_from_date' }}">
+                                                   for="{{ 'from_date' }}">
                                                 From:
                                             </label>
                                             {{ form.render_with_id(form.from_date,
-                                               'filter_from_date') }}
+                                               'from_date') }}
                                         </div>
                                     </div>
                                     <div class="content-l_col
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="{{ 'filter_to_date' }}">
+                                                   for="{{ 'to_date' }}">
                                                 To:
                                             </label>
                                             {{ form.render_with_id(form.to_date,
-                                               'filter_to_date') }}
+                                               'to_date') }}
                                         </div>
                                     </div>
                                 </div>

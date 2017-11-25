@@ -63,11 +63,10 @@ class FilterableListMixin(object):
         filters_data = []
         data = {}
         for field in FilterableListForm.declared_fields:
-            request_field_name = 'filter_' + field
             if field in ['categories', 'topics', 'authors']:
-                data[field] = request_dict.getlist(request_field_name, [])
+                data[field] = request_dict.getlist(field, [])
             else:
-                data[field] = request_dict.get(request_field_name, '')
+                data[field] = request_dict.get(field, '')
             filters_data.append(data)
         return filters_data
 

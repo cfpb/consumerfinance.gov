@@ -159,15 +159,15 @@
             <div class="o-post-preview_byline-group">
             {% for author in post.get_authors() %}
                 {% if loop.index == 1  %}
-                    By <a href="{{ page_url }}?filter_authors={{ author.slug }}">
+                    By <a href="{{ page_url }}?authors={{ author.slug }}">
                        {{ author.name }}
                        </a>
                 {% elif loop.last == true %}
-                    and <a href="{{ page_url }}?filter_authors={{ author.slug }}">
+                    and <a href="{{ page_url }}?authors={{ author.slug }}">
                         {{ author.name }}
                         </a>
                 {% else %}
-                    , <a href="{{ page_url }}?filter_authors={{ author.slug }}">
+                    , <a href="{{ page_url }}?authors={{ author.slug }}">
                       {{ author.name }}
                       </a>
                 {% endif %}
