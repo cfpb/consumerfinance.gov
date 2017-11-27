@@ -10,12 +10,11 @@ from .mysql_mixin import *
 # log to disk when running in mod_wsgi, otherwise to console
 if sys.argv and sys.argv[0] == 'mod_wsgi':
     default_loggers = ['syslog']
+    # Every so often, these files temporarily do not exist on the server
+    # If so, set device to None and don't add syslog in LOGGING
+    syslog_device = next(l for l in ['/dev/log', '/var/run/syslog'] if exists(l), default=None)
 else:
     default_loggers = ['console', 'syslog']
-
-
-# This allows the syslog stuff to work on OS X
-syslog_device = next(l for l in ['/dev/log', '/var/run/syslog'] if exists(l))
 
 # Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
 #
@@ -45,11 +44,6 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'alerts.logging_handlers.CFGovErrorHandler',
         },
-        'syslog': {
-            'address': syslog_device,
-            'class': 'logging.handlers.SysLogHandler',
-            'formatter': 'tagged'
-        },
     },
     'loggers': {
         'django.request': {
@@ -73,6 +67,14 @@ LOGGING = {
         }
     }
 }
+
+# Only add syslog to LOGGING if not syslog_device exists
+if syslog_device is not None:
+    LOGGING['handlers']['syslog'] = {
+            'address': syslog_device,
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'tagged'
+    }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')
