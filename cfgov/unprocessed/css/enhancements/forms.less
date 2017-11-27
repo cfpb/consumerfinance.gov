@@ -1,149 +1,4 @@
-// TODO: Remove after Capital Framework v4 is merged in.
-
-.a-label {
-    display: inline-block;
-}
-
-.a-label__heading {
-    .heading-4();
-
-    display: block;
-
-    // Overwrites heading-5 margin.
-    margin-bottom: 10px;
-}
-
-
-@input-border__focused: @pacific;
-@input-bg__disabled: @gray-5;
-
-.m-form-field {
-    .a-text-input {
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    .a-label + .a-text-input {
-        margin-top: unit( 5px / @base-font-size-px, em );
-    }
-
-    &__checkbox,
-    &__radio {
-        .a-label {
-            vertical-align: middle;
-            cursor: pointer;
-
-            &:before {
-                display: inline-block;
-
-                border: 1px solid @input-border;
-                height: unit( 18px / @base-font-size-px, em );
-                width: unit( 18px / @base-font-size-px, em );
-                margin-right: 10px;
-
-                background-color: @input-bg;
-                content: '';
-                vertical-align: top;
-
-                .lt-ie9 & {
-                    display: none !important;
-                }
-            }
-
-            &:hover:before {
-                border-color: @input-border__focused;
-            }
-        }
-
-        .a-checkbox,
-        .a-radio {
-            .u-visually-hidden();
-
-            .lt-ie9 & {
-                height: unit( 20px / @base-font-size-px, em );
-                width: unit( 20px / @base-font-size-px, em );
-                border: 0;
-                float: left;
-                margin: 1em;
-                position: static;
-                width: auto;
-                clear: both;
-            }
-
-            &:disabled + .a-label {
-                cursor: not-allowed;
-
-                &:before {
-                    border-color: @input-border;
-                    background: @input-bg__disabled;
-                }
-            }
-        }
-    }
-
-    &__checkbox {
-        .a-label {
-            &:before {
-                font-family: 'CFPB Minicons';
-                text-align: center;
-                line-height: unit( 18px / @base-font-size-px, em );
-            }
-        }
-
-        .a-checkbox {
-            &:focus + .a-label:before,
-            &:hover + .a-label:before {
-                border-color: @input-border__focused;
-                outline: 1px solid @input-border__focused;
-            }
-
-            &:checked + .a-label:before {
-                content: @cf-icon-approved;
-            }
-        }
-    }
-}
-
-.o-form {
-    &_group {
-        margin-bottom: unit( 30px / @base-font-size-px, em );
-    }
-
-    &_fieldset {
-        // Overwrite Normalize.
-        border: none;
-        margin: 0;
-        padding: 0;
-
-        .m-field + .m-field {
-            margin-top: unit( 10px / @base-font-size-px, em );
-        }
-    }
-}
-
-.o-form_fieldset .a-text-input {
-  box-sizing: border-box;
-  width: 100%;
-}
-
-
-/* topdoc
-  name: Set form elements to base webfont
-  family: cf-core
-  tags:
-    - cf-core
-*/
-
-input[type="text"],
-input[type="search"],
-input[type="email"],
-input[type="url"],
-input[type="tel"],
-input[type="number"],
-textarea,
-select[multiple] {
-    .u-webfont-regular();
-}
+// TODO: Move to the DM & CF
 
 /* topdoc
   name: Icon inside input
@@ -230,22 +85,12 @@ select[multiple] {
 .input-contains-label {
     position: relative;
 
-    input[type="text"],
-    input[type="search"],
-    input[type="email"],
-    input[type="url"],
-    input[type="tel"],
-    input[type="number"] {
+    .a-text-input {
         box-sizing: border-box;
         width: 100%;
     }
 
-    &_before ~ input[type="text"],
-    &_before ~ input[type="search"],
-    &_before ~ input[type="email"],
-    &_before ~ input[type="url"],
-    &_before ~ input[type="tel"],
-    &_before ~ input[type="number"] {
+    &_before ~ .a-text-input {
         padding-left: unit( 30px / @btn-font-size, em );
 
         &.input__super {
@@ -253,12 +98,7 @@ select[multiple] {
         }
     }
 
-    &_after ~ input[type="text"],
-    &_after ~ input[type="search"],
-    &_after ~ input[type="email"],
-    &_after ~ input[type="url"],
-    &_after ~ input[type="tel"],
-    &_after ~ input[type="number"] {
+    &_after ~ .a-text-input {
         padding-right: unit( 30px / @btn-font-size, em );
 
         &.input__super {
@@ -325,12 +165,7 @@ select[multiple] {
                 content: 'Clear';
             }
 
-            & ~ input[type="text"],
-            & ~ input[type="search"],
-            & ~ input[type="email"],
-            & ~ input[type="url"],
-            & ~ input[type="tel"],
-            & ~ input[type="number"] {
+            & ~ .a-text-input {
                 padding-right: unit( 65px / @btn-font-size, em );
 
                 &.input__super {
@@ -341,15 +176,8 @@ select[multiple] {
     }
 }
 
-/* topdoc
-  name: Sets default styling for multi-selects
- */
 
-select[multiple] {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 5px;
-}
+// TODO: Move to the DM and update existing o-form__input-w-btn in CF
 
 /* topdoc
   name: Match the input to button
@@ -376,22 +204,7 @@ input {
     }
 }
 
-/* topdoc
-  name: Ensure form legends wrap in IE
-  family: cf-form
-  notes:
-    - "Legends do not wrap in IE. Different styles are
-      required to ensure wrapping in different versions."
-  tags:
-    - cf-form
-*/
-
-legend {
-  box-sizing: border-box; /* IE9-11 & Edge 12-13 */
-  display: table; /* IE8-11 */
-  max-width: 100%; /* Patch for IE9-11 & Edge 12-13 */
-  white-space: normal; /* IE8-11 */
-}
+// TODO: Move to the DM and update existing o-form__input-w-btn in CF
 
 /* topdoc
   name: Input with button bar
@@ -471,6 +284,9 @@ legend {
 }
 
 
+
+// TODO: Move to the DM & CF
+
 /* ==========================================================================
    Scale questions
    ========================================================================== */
@@ -479,84 +295,59 @@ legend {
 @radio-button-diameter: 18px;
 
 .o-scale {
-    .u-clearfix();
-    padding-bottom: unit( 30px / @base-font-size-px, em );
-    position: relative;
 
-    &:before {
-        .respond-to-min( @bp-sm-min, {
-            border-top: 1px solid @gray-40;
-            position: absolute;
-            right: -@grid_gutter-width;
-            bottom: 0;
-            left: -@grid_gutter-width;
-            content: '';
-            z-index: 0;
-        } );
+    .m-form-field + .m-form-field {
+        margin-top: 0;
     }
 
-    &:last-of-type {
-        padding-bottom: 0;
-
-        &:before {
-            border-top: none;
-        }
-    }
-
-    .m-form-field__radio {
-        .respond-to-min( @bp-sm-min, {
+    .respond-to-min( @bp-sm-min, {
+        .m-form-field__radio {
             width: percentage( 1 / @scale-point-count );
-            padding: 0;
-            margin-bottom: 0;
+
             float: left;
             position: relative;
-        } );
 
-        &:before {
-            .respond-to-min( @bp-sm-min, {
-              border-top: 1px solid @gray-80;
-              border-left: none;
-              position: absolute;
-              top: ( @radio-button-diameter / 2 );
-              right: 0;
-              left: 0;
-              content: '';
-              z-index: 0;
-            } );
+            &:not(:last-child):before {
+                border-top: 1px solid @gray-80;
+
+                position: absolute;
+                top: ( @radio-button-diameter / 2 );
+                right: 0;
+                left: 0;
+
+                content: '';
+            }
         }
 
-        &:last-of-type:before {
-            border-top: none;
-        }
-    }
-
-    .a-label:before,
-    .a-label {
-        .respond-to-min( @bp-sm-min, {
+        .a-label,
+        .a-label:before, {
             display: block;
-        } );
-    }
+        }
 
-    .a-label:before {
-        .respond-to-min( @bp-sm-min, {
+        .a-label:before {
             margin-bottom: unit( 3px / @base-font-size-px, em );
-        } );
-    }
 
-    .a-label {
-        .respond-to-min( @bp-sm-min, {
             position: relative;
-            z-index: 10;
-        } );
-    }
+            z-index: 1;
+        }
+    } );
 
-    &_header {
-        .h4();
+    .respond-to-min( @bp-xl-min, {
+        .o-scale_answer-prefix {
+            box-sizing: border-box;
+            padding-right: unit( 15px / @base-font-size-px, em );
+            width: percentage( 1 / ( @scale-point-count + 1 ) );
 
-        margin-top: unit( 30px / @base-font-size-px, em );
-    }
+            float: left;
+        }
+
+        .o-scale_answer-options {
+            width: percentage( @scale-point-count / ( @scale-point-count + 1 ) );
+
+            float: left;
+        }
+    } );
 }
-
 
 /* topdoc
   name: EOF

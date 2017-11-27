@@ -1,6 +1,5 @@
 'use strict';
 
-const browserSync = require( 'browser-sync' );
 const configImages = require( '../config' ).images;
 const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
@@ -21,8 +20,5 @@ gulp.task( 'images', () => {
       imageminSvgo()
     ] ) )
     .on( 'error', handleErrors )
-    .pipe( gulp.dest( configImages.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configImages.dest ) );
 } );

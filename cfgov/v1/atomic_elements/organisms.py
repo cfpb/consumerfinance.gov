@@ -116,8 +116,22 @@ class InfoUnitGroup(blocks.StructBlock):
         return cleaned
 
     class Meta:
-        icon = 'image'
+        icon = 'list-ul'
         template = '_includes/organisms/info-unit-group-2.html'
+
+
+class InfoUnitGroup2575Only(InfoUnitGroup):
+    format = blocks.ChoiceBlock(
+        choices=[
+            ('25-75', '25/75'),
+        ],
+        default='25-75',
+        label='Format',
+        help_text='25/75 is the only allowed format for this page type.',
+    )
+
+    class Meta:
+        label = 'Info unit group'
 
 
 class ImageText5050Group(blocks.StructBlock):
@@ -325,9 +339,6 @@ class Table(blocks.StructBlock):
         template = '_includes/organisms/table.html'
         label = ' '
 
-    class Media:
-        js = ['table.js']
-
 
 class BureauStructurePosition(blocks.StructBlock):
     office_name = blocks.CharBlock()
@@ -450,6 +461,9 @@ class AtomicTableBlock(TableBlock):
         icon = 'table'
         template = '_includes/organisms/table.html'
         label = 'TableBlock'
+
+    class Media:
+        js = ['table.js']
 
 
 class ModelBlock(blocks.StructBlock):
@@ -783,6 +797,9 @@ class VideoPlayer(blocks.StructBlock):
         icon = 'media'
         template = '_includes/organisms/video-player.html'
 
+    class Media:
+        js = ['video-player.js']
+
 
 class HTMLBlock(blocks.StructBlock):
     html_url = blocks.RegexBlock(
@@ -849,6 +866,9 @@ class ChartBlock(blocks.StructBlock):
         required=False,
         help_text='Text to display as a footnote. For example, '
                   '"Data from the last six months are not final."')
+    y_axis_label = blocks.CharBlock(
+        required=False,
+        help_text='Custom y-axis label')
 
     class Meta:
         label = 'Chart Block'
@@ -860,6 +880,7 @@ class ChartBlock(blocks.StructBlock):
 
 
 class MortgageChartBlock(blocks.StructBlock):
+    content_block = blocks.RichTextBlock()
     title = blocks.CharBlock(required=True, classname="title")
     description = blocks.CharBlock(
         required=False,
@@ -872,6 +893,7 @@ class MortgageChartBlock(blocks.StructBlock):
         label = 'Mortgage Chart Block'
         icon = 'image'
         template = '_includes/organisms/mortgage-chart.html'
+        classname = 'block__flush-top'
 
     class Media:
         js = ['mortgage-performance-trends.js']
@@ -892,6 +914,21 @@ class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic(required=False)
+    actions_column_width = blocks.ChoiceBlock(
+        label='Width of "Actions" column',
+        required=False,
+        help_text='Choose the width in % that you wish to set '
+                  'the Actions column in a snippet list.',
+        choices=[
+            ('70', '70%'),
+            ('66', '66%'),
+            ('60', '60%'),
+            ('50', '50%'),
+            ('40', '40%'),
+            ('33', '33%'),
+            ('30', '30%'),
+        ],
+    )
 
     snippet_type = blocks.ChoiceBlock(
         choices=[

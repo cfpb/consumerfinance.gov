@@ -4,16 +4,12 @@
 
 'use strict';
 
-const BannerFooterPlugin = require( 'banner-footer-webpack-plugin' );
-const path = require( 'path' );
-const environment = require( '../config/environment' );
-const paths = environment.paths;
-const scriptsManifest = require( '../gulp/utils/scripts-manifest' );
+const BROWSER_LIST = require( '../config/browser-list-config' );
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
-// Constants.
-const JS_ROUTES_PATH = '/js/routes';
+
+// Constants
 const COMMON_BUNDLE_NAME = 'common.js';
 
 // Commmon webpack 'module' option used in each configuration.
@@ -26,7 +22,7 @@ const COMMON_MODULE_CONFIG = {
       options: {
         presets: [ [ 'env', {
           targets: {
-            browsers: environment.getSupportedBrowserList( 'js' )
+            browsers: BROWSER_LIST.LAST_2_IE_9_UP
           },
           debug: true
         } ] ]
@@ -34,108 +30,99 @@ const COMMON_MODULE_CONFIG = {
     } ],
     exclude: {
       test: /node_modules/,
-      // The below regex will capture all node modules that start with `cf`.
-      exclude: /node_modules\/cf(.+)/
+      // The below regex will capture all node modules that start with `cf`
+      // or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/.
+      exclude: /node_modules\/(?:cf.+|atomic-component)/
     }
   } ]
 };
 
-const modernConf = {
-  cache: true,
-  context: path.join( __dirname, '/../', paths.unprocessed, JS_ROUTES_PATH ),
-  entry: scriptsManifest.getDirectoryMap( paths.unprocessed + JS_ROUTES_PATH ),
+ // Set warnings to true to show linter-style warnings.
+ // Set mangle to false and beautify to true to debug the output code.
+const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
+  parallel: true,
+  uglifyOptions: {
+    ie8: false,
+    ecma: 5,
+    warnings: false,
+    mangle: true,
+    output: {
+      comments: false,
+      beautify: false
+    }
+  }
+} );
+
+
+const COMMON_CHUNK_CONFIG = new webpack.optimize.CommonsChunkPlugin( {
+  name: COMMON_BUNDLE_NAME
+} );
+
+
+const commonConf = {
   module: COMMON_MODULE_CONFIG,
   output: {
-    path: path.join( __dirname, 'js' ),
     filename: '[name]'
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin( {
-      name: COMMON_BUNDLE_NAME
-    } ),
-    // Change `warnings` flag to true to view linter-style warnings at runtime.
-    new UglifyWebpackPlugin( {
-      compress: { warnings: false }
-    } ),
-    // Wrap JS in raw Jinja tags so included JS won't get parsed by Jinja.
-    new BannerFooterPlugin( '{% raw %}', '{% endraw %}', { raw: true } )
-  ]
-};
-
-const ieConf = {
-  entry: paths.unprocessed + '/js/ie/common.ie.js',
-  module: COMMON_MODULE_CONFIG,
-  output: {
-    filename: 'common.ie.js'
-  },
-  plugins: [
-    new UglifyWebpackPlugin( {
-      compress: { warnings: false }
-    } )
+    COMMON_UGLIFY_CONFIG
   ]
 };
 
 const externalConf = {
-  entry: paths.unprocessed + JS_ROUTES_PATH + '/external-site/index.js',
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: 'external-site.js'
   },
   plugins: [
-    new UglifyWebpackPlugin( {
-      compress: { warnings: false }
-    } )
+    COMMON_UGLIFY_CONFIG
   ]
 };
 
-const onDemandConf = {
-  context: path.join( __dirname, '/../', paths.unprocessed,
-                      JS_ROUTES_PATH + '/on-demand' ),
-  entry:   scriptsManifest.getDirectoryMap( paths.unprocessed +
-                                            JS_ROUTES_PATH + '/on-demand' ),
+const modernConf = {
+  cache: true,
   module: COMMON_MODULE_CONFIG,
   output: {
-    path:     path.join( __dirname, 'js' ),
     filename: '[name]'
   },
   plugins: [
-    // Change warnings flag to true to view linter-style warnings at runtime.
-    new UglifyWebpackPlugin( {
-      compress: { warnings: false }
-    } )
+    COMMON_CHUNK_CONFIG,
+    COMMON_UGLIFY_CONFIG
   ]
 };
 
 const onDemandHeaderRawConf = {
-  context: path.join( __dirname, '/../', paths.unprocessed,
-                      JS_ROUTES_PATH + '/on-demand' ),
-  entry:   './header.js',
+  module: COMMON_MODULE_CONFIG
+};
+
+const owningAHomeConf = {
+  cache: true,
   module: COMMON_MODULE_CONFIG,
   output: {
-    path:     path.join( __dirname, 'js' ),
-    filename: '[name]'
-  }
+    filename: '[name]',
+    jsonpFunction: 'OAH'
+  },
+  plugins: [
+    COMMON_CHUNK_CONFIG,
+    COMMON_UGLIFY_CONFIG
+  ]
 };
 
 const spanishConf = {
-  entry: paths.unprocessed +
-         JS_ROUTES_PATH + '/es/obtener-respuestas/single.js',
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: 'spanish.js'
   },
   plugins: [
-    new UglifyWebpackPlugin( {
-      compress: { warnings: false }
-    } )
+    COMMON_UGLIFY_CONFIG
   ]
 };
 
 module.exports = {
-  onDemandHeaderRawConf: onDemandHeaderRawConf,
-  onDemandConf:          onDemandConf,
-  ieConf:                ieConf,
-  modernConf:            modernConf,
-  externalConf:          externalConf,
-  spanishConf:           spanishConf
+  commonConf,
+  externalConf,
+  modernConf,
+  onDemandHeaderRawConf,
+  owningAHomeConf,
+  spanishConf
 };

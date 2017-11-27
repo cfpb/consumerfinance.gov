@@ -4,14 +4,15 @@
 {% set default_classes = 'block__bg-branded block__flush-top block__flush-bottom' %}
 {% set default_position = 'full' %}
 
-{% macro render( position=default_position, label=default_label, additional_classes=default_classes ) %}
+{% macro render( position=default_position, label=default_label, additional_classes=default_classes, q='' ) %}
 
 {% set search_opts = {
     'label': label,
     'position': position,
     'action': '/ask-cfpb/search',
     'additional_classes': additional_classes,
-    'autocomplete': 'true'
+    'autocomplete': 'true',
+    'q': q,
   } %}
 {{ search_bar.render( search_opts ) }}
 

@@ -1,0 +1,3 @@
+-r base.txt
+-r mysql.txt
+newrelic==2.96.0.80

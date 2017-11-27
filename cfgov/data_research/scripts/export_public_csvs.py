@@ -21,6 +21,7 @@ from data_research.mortgage_utilities.s3_utils import (
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
 NATION_QUERYSET = NationalMortgageData.objects.all()
+STATES_TO_IGNORE = ['72']  # Excluding Puerto Rico from project launch
 
 
 NATION_STARTER = {
@@ -151,7 +152,8 @@ def export_downloadable_csv(geo_type, late_value):
             'queryset': StateMortgageData.objects.all(),
             'headings': ['RegionType', 'Name', 'FIPSCode'],
             'fips_list': sorted(
-                [state.fips for state in State.objects.all()])
+                [state.fips for state in State.objects.exclude(
+                    fips__in=STATES_TO_IGNORE)])
         },
     }
     slug = "{}Mortgages{}DaysLate-thru-{}".format(

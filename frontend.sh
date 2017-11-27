@@ -14,7 +14,6 @@ init() {
   # Set cli_flag variable.
   source cli-flag.sh 'Front end' $1
 
-  NODE_DIR=node_modules
   if [ -f "package-lock.json" ]; then
     DEP_CHECKSUM=$(cat package-lock.json package.json | shasum -a 256)
   else
@@ -25,6 +24,7 @@ init() {
     printf "\033[1;31mPlease install Node 8.x: 'nvm install 8'\033[0m\n"
   fi
 
+  NODE_DIR=node_modules
   echo "npm components directory: $NODE_DIR"
 }
 
@@ -85,11 +85,14 @@ clean_and_install() {
 # Run tasks to build the project for distribution.
 build() {
   echo 'Building project…'
-  gulp clean
   gulp build
 
   if [ "$cli_flag" = "production" ]; then
+    echo 'Running additional build steps for on-demand and Nemo assets.'
     gulp scripts:ondemand
+    gulp styles:ondemand
+    gulp scripts:nemo
+    gulp styles:nemo
   fi
 }
 

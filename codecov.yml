@@ -11,9 +11,11 @@ coverage:
       frontend:
         threshold: 0.02%
         flags: frontend
+        if_not_found: success  # no commit found? still set a success
       backend:
         threshold: 0.02%
         flags: backend
+        if_not_found: success  # no commit found? still set a success
     patch:
       default:
         target: 100%

@@ -1,7 +1,5 @@
 import csv
-from collections import OrderedDict
 from cStringIO import StringIO
-from itertools import chain
 from urllib import urlencode
 
 from django.contrib.auth.models import User
@@ -9,8 +7,8 @@ from django.db import models
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.response import TemplateResponse
-from django.utils import timezone
-from django.utils import translation
+from django.utils import timezone, translation
+from django.utils.module_loading import import_string
 from django.utils.translation import ugettext_lazy as _
 
 from modelcluster.fields import ParentalKey
@@ -20,12 +18,12 @@ from wagtail.wagtailadmin.edit_handlers import (FieldPanel, InlinePanel,
                                                 MultiFieldPanel, ObjectList,
                                                 StreamFieldPanel,
                                                 TabbedInterface)
-from wagtail.wagtailcore import blocks, hooks
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import (Orderable, Page, PageManager,
                                         PageQuerySet)
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtailinventory.helpers import get_page_blocks
 
 from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms
@@ -152,73 +150,83 @@ class CFGOVPage(Page):
 
     def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage
-        related = {}
-        query = models.Q(('tags__name__in', self.tags.names()))
-        search_types = [
-            ('blog', 'posts', 'Blog', query),
-            ('newsroom', 'newsroom', 'Newsroom', query),
-            ('events', 'events', 'Events', query),
-        ]
 
-        def fetch_children_by_specific_category(block, parent_slug):
-            """
-            This used to be a Page.objects.get, which would throw
-            an exception if the requested parent wasn't found. As of
-            Django 1.6, you can now do Page.objects.filter().first();
-            the advantage here is that you can check for None right
-            away and not have to rely on catching exceptions, which
-            in any case didn't do anything useful other than to print
-            an error message. Instead, we just return an empty query
-            which has no effect on the final result.
-            """
-            parent = Page.objects.filter(slug=parent_slug).first()
-            if parent:
-                child_query = Page.objects.child_of_q(parent)
-                if 'specific_categories' in block.value:
-                    child_query &= specific_categories_query(
-                        block, parent_slug)
-            else:
-                child_query = Q()
-            return child_query
+        def match_all_topic_tags(queryset, tags):
+            for tag in tags:
+                queryset = queryset.filter(tags__name=tag)
+            return queryset
 
-        def specific_categories_query(block, parent_slug):
-            specific_categories = ref.related_posts_category_lookup(
-                block.value['specific_categories']
-            )
-            choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
-            categories = [c for c in specific_categories if c in choices]
-            if categories:
-                return Q(('categories__name__in', categories))
-            else:
-                return Q()
+        related_types = []
+        related_items = {}
+        if block.value.get('relate_posts'):
+            related_types.append('blog')
+        if block.value.get('relate_newsroom'):
+            related_types.append('newsroom')
+        if block.value.get('relate_events'):
+            related_types.append('events')
+        if not related_types:
+            return related_items
 
-        for parent_slug, search_type, search_type_name, search_query in \
-                search_types:
-            search_query &= fetch_children_by_specific_category(
-                block, parent_slug)
-            if parent_slug == 'events':
-                search_query |= fetch_children_by_specific_category(
-                    block, 'archive-past-events') & query
-            relate = block.value.get('relate_{}'.format(search_type), None)
-            if relate:
-                type_query = (
-                    AbstractFilterPage.objects.live().filter(
-                        search_query
-                    ).distinct().exclude(id=self.id).order_by(
-                        '-date_published'
-                    )
+        tags = self.tags.names()
+        and_filtering = block.value['and_filtering']
+        specific_categories = block.value['specific_categories']
+        limit = int(block.value['limit'])
+        queryset = AbstractFilterPage.objects.live().exclude(
+            id=self.id).order_by('-date_published').distinct()
+
+        for parent in related_types:  # blog, newsroom or events
+            # Include children of this slug that match at least 1 tag
+            children = Page.objects.child_of_q(Page.objects.get(slug=parent))
+            filters = children & Q(('tags__name__in', tags))
+
+            if parent == 'events':
+                # Include archived events matches
+                archive = Page.objects.get(slug='archive-past-events')
+                children = Page.objects.child_of_q(archive)
+                filters |= children & Q(('tags__name__in', tags))
+
+            if specific_categories:
+                # Filter by any additional categories specified
+                categories = ref.get_appropriate_categories(
+                    specific_categories=specific_categories,
+                    page_type=parent
                 )
-                # Apply similar logic as snippets.py's filter_by_tags method
-                # to enable AND filtering
-                if block.value['and_filtering']:
-                    for tag in self.tags.names():
-                        type_query = type_query.filter(tags__name=tag)
-                related[search_type_name] = type_query[:block.value['limit']]
+                if categories:
+                    filters &= Q(('categories__name__in', categories))
 
-        # Return a dictionary of lists of each type when there's at least one
-        # hit for that type.
-        return {search_type: queryset for search_type, queryset in
-                related.items() if queryset}
+            related_queryset = queryset.filter(filters)
+
+            if and_filtering:
+                # By default, we need to match at least one tag
+                # If specified in the admin, change this to match ALL tags
+                related_queryset = match_all_topic_tags(related_queryset, tags)
+
+            related_items[parent.title()] = related_queryset[:limit]
+
+        # Return items in the dictionary that have non-empty querysets
+        return {key: value for key, value in related_items.items() if value}
+
+    def related_metadata_tags(self):
+        # Set the tags to correct data format
+        tags = {'links': []}
+        id, filter_page = self.get_filter_data()
+        relative_url = filter_page.relative_url(filter_page.get_site())
+        for tag in self.specific.tags.all():
+            tag_link = {'text': tag.name, 'url': ''}
+            if id is not None and filter_page is not None:
+                param = '?filter' + str(id) + '_topics=' + tag.slug
+                tag_link['url'] = relative_url + param
+            tags['links'].append(tag_link)
+        return tags
+
+    def get_filter_data(self):
+        for ancestor in self.get_ancestors().reverse().specific():
+            if ancestor.specific_class.__name__ in ['BrowseFilterablePage',
+                                                    'SublandingFilterablePage',
+                                                    'EventArchivePage',
+                                                    'NewsroomLandingPage']:
+                return ancestor.form_id(), ancestor
+        return None, None
 
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
@@ -341,56 +349,26 @@ class CFGOVPage(Page):
         return parent
 
     # To be overriden if page type requires JS files every time
-    # 'template' is used as the key for front-end consistency
-    def add_page_js(self, js):
-        js['template'] = []
+    @property
+    def page_js(self):
+        return []
 
-    # Retrieves the stream values on a page from it's Streamfield
-    def _get_streamfield_blocks(self):
-        lst = [value for key, value in vars(self).iteritems()
-               if type(value) is StreamValue]
-        return list(chain(*lst))
+    @property
+    def streamfield_js(self):
+        js = []
 
-    # Gets the JS from the Streamfield data
-    def _add_streamfield_js(self, js):
-        # Create a dict with keys ordered organisms, molecules, then atoms
-        for child in self._get_streamfield_blocks():
-            self._add_block_js(child.block, js)
+        block_cls_names = get_page_blocks(self)
+        for block_cls_name in block_cls_names:
+            block_cls = import_string(block_cls_name)
+            if hasattr(block_cls, 'Media') and hasattr(block_cls.Media, 'js'):
+                js.extend(block_cls.Media.js)
 
-    # Recursively search the blocks and classes for declared Media.js
-    def _add_block_js(self, block, js):
-        self._assign_js(block, js)
-        if (
-            issubclass(type(block), blocks.StructBlock) or
-            issubclass(type(block), blocks.StreamBlock)
-        ):
-            for child in block.child_blocks.values():
-                self._add_block_js(child, js)
-        elif issubclass(type(block), blocks.ListBlock):
-            self._add_block_js(block.child_block, js)
+        return js
 
-    # Assign the Media js to the dictionary appropriately
-    def _assign_js(self, obj, js):
-        if hasattr(obj, 'Media') and hasattr(obj.Media, 'js'):
-            for key in js.keys():
-                if obj.__module__.endswith(key):
-                    js[key] += obj.Media.js
-            if not [key for key in js.keys()
-                    if obj.__module__.endswith(key)]:
-                js['other'] += obj.Media.js
-
-    # Returns all the JS files specific to this page and it's current
-    # Streamfield's blocks
+    # Returns the JS files required by this page and its StreamField blocks.
     @property
     def media(self):
-        js = OrderedDict()
-        for key in ['template', 'organisms', 'molecules', 'atoms', 'other']:
-            js.update({key: []})
-        self.add_page_js(js)
-        self._add_streamfield_js(js)
-        for key, js_files in js.iteritems():
-            js[key] = OrderedDict.fromkeys(js_files).keys()
-        return js
+        return sorted(set(self.page_js + self.streamfield_js))
 
     # Returns an image for the page's meta Open Graph tag
     @property

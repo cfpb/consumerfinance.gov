@@ -66,7 +66,8 @@ def editor_css():
         'css/general-enhancements.css',
         'css/table-block.css',
         'css/bureau-structure.css',
-        'css/heading-blocks.css',
+        'css/heading-block.css',
+        'css/info-unit-group.css',
     ]
     css_includes = format_html_join(
         '\n',

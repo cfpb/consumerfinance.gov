@@ -29,7 +29,8 @@ var ERROR_MESSAGES = {
   FORM: {
     SUBMISSION: {
       ERROR: 'There was an error in your submission. Please try again later.',
-      ERROR_ES: 'Había un error en su presentación. Por favor, inténtelo más tarde.',
+      ERROR_ES: 'Había un error en su presentación. ' +
+        'Por favor, inténtelo más tarde.',
       SUCCESS: 'Your submission was successfully received.',
       SUCCESS_ES: 'Su presentación fue recibido con éxito.'
     }

@@ -11,7 +11,6 @@ from ..atomic_elements import organisms
 class BlogPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
-        ('info_unit_group', organisms.InfoUnitGroup()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('feedback', v1_blocks.Feedback()),
         ('email_signup', organisms.EmailSignUp()),

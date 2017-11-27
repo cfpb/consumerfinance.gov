@@ -3,7 +3,9 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const Store = require( BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/stores/chart.js' );
+const Store = require(
+  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/stores/chart.js'
+);
 let store;
 
 describe( 'Mortgage Performance line chart store', () => {
@@ -120,6 +122,14 @@ describe( 'Mortgage Performance line chart store', () => {
     expect( store.getState().isLoadingCounties ).to.be.true;
   } );
 
+  it( 'should properly reduce loading u.s. states', () => {
+    const action = {
+      type: 'REQUEST_STATES'
+    };
+    store.dispatch( action );
+    expect( store.getState().isLoadingStates ).to.be.true;
+  } );
+
   it( 'should properly reduce metros', () => {
     const action = {
       type: 'SET_METROS',
@@ -135,7 +145,8 @@ describe( 'Mortgage Performance line chart store', () => {
       nonMetros: { 67890: 'Boston, MA' }
     };
     store.dispatch( action );
-    expect( store.getState().nonMetros ).to.deep.equal( { 67890: 'Boston, MA' } );
+    expect( store.getState().nonMetros )
+      .to.deep.equal( { 67890: 'Boston, MA' } );
   } );
 
   it( 'should properly reduce counties', () => {
@@ -144,7 +155,32 @@ describe( 'Mortgage Performance line chart store', () => {
       counties: { 12345: 'Acme County' }
     };
     store.dispatch( action );
-    expect( store.getState().counties ).to.deep.equal( { 12345: 'Acme County' } );
+    expect( store.getState().counties )
+      .to.deep.equal( { 12345: 'Acme County' } );
+  } );
+
+  it( 'should properly reduce u.s. states', () => {
+    let action = {
+      type: 'SET_STATES',
+      states: { AL: 'Alabama' }
+    };
+    store.dispatch( action );
+    expect( store.getState().states )
+      .to.deep.equal( { AL: 'Alabama' } );
+    action = {
+      type: 'FETCH_STATES',
+      states: { CA: 'California' }
+    };
+    store.dispatch( action );
+    expect( store.getState().states )
+      .to.deep.equal( { AL: 'Alabama' } );
+    action = {
+      type: 'SET_STATES',
+      states: { CA: 'California' }
+    };
+    store.dispatch( action );
+    expect( store.getState().states )
+      .to.deep.equal( { CA: 'California' } );
   } );
 
   it( 'should properly reduce national comparison', () => {

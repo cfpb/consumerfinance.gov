@@ -4,7 +4,6 @@ const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const jsdom = require( 'mocha-jsdom' );
 const sinon = require( 'sinon' );
 let sandbox;
 let Analytics;
@@ -13,12 +12,13 @@ let getDataLayerOptions;
 let UNDEFINED;
 
 describe( 'Analytics', () => {
-  jsdom();
-
   before( () => {
+    this.jsdom = require( 'jsdom-global' )();
     Analytics = require( BASE_JS_PATH + 'modules/Analytics' );
     getDataLayerOptions = Analytics.getDataLayerOptions;
   } );
+
+  after( () => this.jsdom() );
 
   beforeEach( () => {
     sandbox = sinon.sandbox.create();
@@ -33,7 +33,7 @@ describe( 'Analytics', () => {
     window.dataLayer = [];
     window.dataLayer.push = push;
 
-    delete window.google_tag_manager;
+    delete window.google_tag_manager; // eslint-disable-line  camelcase
     Analytics.tagManagerIsLoaded = false;
 
     dataLayerOptions = {
@@ -53,7 +53,7 @@ describe( 'Analytics', () => {
   describe( '.init()', () => {
     it( 'should have a proper state after initialization', () => {
       expect( Analytics.tagManagerIsLoaded === false ).to.be.true;
-      window.google_tag_manager = {};
+      window.google_tag_manager = {}; // eslint-disable-line  camelcase
       Analytics.init();
       expect( Analytics.tagManagerIsLoaded === true ).to.be.true;
     } );
@@ -62,7 +62,7 @@ describe( 'Analytics', () => {
       const mockGTMObject = { testing: true };
       Analytics.init();
       expect( Analytics.tagManagerIsLoaded === false ).to.be.true;
-      window.google_tag_manager = mockGTMObject;
+      window.google_tag_manager = mockGTMObject; // eslint-disable-line  camelcase
       expect( Analytics.tagManagerIsLoaded === true ).to.be.true;
       expect( window.google_tag_manager ).to.deep.equal( mockGTMObject );
     } );
@@ -76,7 +76,7 @@ describe( 'Analytics', () => {
         action: action,
         label:  label
       } );
-      window.google_tag_manager = {};
+      window.google_tag_manager = {}; // eslint-disable-line  camelcase
       Analytics.init();
       Analytics.sendEvent( getDataLayerOptions( action, label ) );
       expect( window.dataLayer.length === 1 ).to.be.true;
@@ -99,7 +99,7 @@ describe( 'Analytics', () => {
       const action = 'inbox:clicked';
       const label = 'text:null';
       const callback = sinon.stub();
-      window.google_tag_manager = {};
+      window.google_tag_manager = {}; // eslint-disable-line  camelcase
       Analytics.sendEvent( getDataLayerOptions( action, label, '', callback ) );
       expect( callback.called ).to.be.true;
     } );
@@ -119,7 +119,7 @@ describe( 'Analytics', () => {
           label:  'text:label_2'
         } )
       );
-      window.google_tag_manager = {};
+      window.google_tag_manager = {}; // eslint-disable-line  camelcase
       Analytics.init();
       Analytics.sendEvents( [ options1, options2 ] );
       expect( window.dataLayer.length === 2 ).to.be.true;
@@ -139,7 +139,7 @@ describe( 'Analytics', () => {
             label:  'text:label_2'
           } )
         );
-        window.google_tag_manager = {};
+        window.google_tag_manager = {}; // eslint-disable-line  camelcase
         Analytics.init();
         Analytics.sendEvents( options1, options2 );
         expect( window.dataLayer.length === 0 ).to.be.true;

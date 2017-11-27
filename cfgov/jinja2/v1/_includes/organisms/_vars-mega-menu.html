@@ -59,21 +59,49 @@
 
 {% set consumer_tools_content = {
     'link': {
-        'text': 'Take action together',
-        'url':  '/arbitration-rule/',
+        'text': 'Get your financial well-being score',
+        'url':  '/consumer-tools/financial-well-being/',
     },
     'image': {
         'src': 'img/fmc-consumer-tools-540x300.png',
         'alt': '',
     },
-    'body': 'Learn how our new arbitration rule will make sure that groups ' +
-            'of people can take companies to court.',
+    'body': 'Answer ten questions and see your financial well-being score, ' +
+            'along with national averages.',
+} %}
+
+{% set resources_content = {
+    'link': {
+        'text': 'Explore financial well-being survey results',
+        'url':  '/data-research/research-reports/financial-well-being-america/',
+    },
+    'image': {
+        'src': 'img/fmc-resources-540x300.png',
+        'alt': '',
+    },
+    'body': 'See national survey results on financial well-being and how it ' +
+            'relates to other factors in a person’s financial life.',
+} %}
+
+{% set data_research_content = {
+    'link': {
+        'text': 'Help advance financial well-being',
+        'url':  '/data-research/financial-well-being-survey-data/',
+    },
+    'image': {
+        'src': 'img/fmc-data-research-540x300.png',
+        'alt': '',
+    },
+    'body': 'Explore our national survey data and think about ways to empower ' +
+            'families to achieve higher financial well-being.',
 } %}
 
 {% set media_items = [
-  ( 'About Us', featured_menu_content.render( about_us_content ) ),
-  ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) ),
   ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) ),
+  ( 'Practitioner Resources', featured_menu_content.render( resources_content ) ),
+  ( 'Data & Research', featured_menu_content.render( data_research_content ) ),
+  ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) ),
+  ( 'About Us', featured_menu_content.render( about_us_content ) ),
 ] %}
 
 
@@ -135,18 +163,18 @@
 {% set practitioner_resources_group_one = {
     'title': 'Populations Served',
     'nav_items': [
-        {'text': 'Financial Education for Adults', 'url': '/adult-financial-education/'},
-        {'text': 'Financial Education for Youth', 'url': '/practitioner-resources/youth-financial-education/'}
+        {'text': 'Adult Financial Education', 'url': '/practitioner-resources/adult-financial-education/'},
+        {'text': 'Economically Vulnerable Consumers', 'url': '/practitioner-resources/economically-vulnerable/'},
+        {'text': 'Older Adults & Their Families', 'url': '/practitioner-resources/resources-for-older-adults/'}
     ]
 } %}
 {% set practitioner_resources_group_two = {
     'title': 'Populations Served',
     'hide_title': 'true',
     'nav_items': [
-        {'text': 'Economically Vulnerable Consumers', 'url': '/empowerment/'},
-        {'text': 'Older Adults & Their Families', 'url': '/practitioner-resources/resources-for-older-adults/'},
-        {'text': 'Servicemembers & Veterans', 'url': '/servicemembers/'},
-        {'text': 'Students', 'url': '/students/'},
+        {'text': 'Servicemembers & Veterans', 'url': '/practitioner-resources/servicemembers/'},
+        {'text': 'Students & Student Loan Borrowers', 'url': '/practitioner-resources/students/'},
+        {'text': 'Youth Financial Education', 'url': '/practitioner-resources/youth-financial-education/'}
     ]
 } %}
 {% set practitioner_resources_group_three = {
@@ -174,25 +202,52 @@
 
 {# Data & Research menu items #}
 
-{% set data_research_group_one = {
-    'nav_items': [
-        {'text': 'Research & Reports', 'url': '/data-research/research-reports/'},
-        {'text': 'CFPB Research Conference', 'url': '/data-research/cfpb-research-conference/'},
-    ]
-} %}
-{% set data_research_group_two = {
-    'nav_items': [
-        {'text': 'Consumer Complaint Database', 'url': '/data-research/consumer-complaints/'},
-        {'text': 'Mortgage Database (HMDA)', 'url': '/data-research/mortgage-data-hmda/'},
-    ]
-} %}
-{% set data_research_group_three = {
-    'nav_items': [
-        {'text': 'Consumer Credit Trends', 'url': '/data-research/consumer-credit-trends/'},
-        {'text': 'Credit Card Surveys & Agreements', 'url': '/data-research/credit-card-data/'},
-        {'text': 'CFPB Researchers', 'url': '/data-research/cfpb-researchers/'},
-    ]
-} %}
+{% if flag_disabled('MORTGAGE_PERFORMANCE_RELEASE', request) %}
+  {% set data_research_group_one = {
+      'nav_items': [
+          {'text': 'Research & Reports', 'url': '/data-research/research-reports/'},
+          {'text': 'CFPB Research Conference', 'url': '/data-research/cfpb-research-conference/'},
+          {'text': 'CFPB Researchers', 'url': '/data-research/cfpb-researchers/'},
+      ]
+  } %}
+  {% set data_research_group_two = {
+      'nav_items': [
+          {'text': 'Consumer Complaint Database', 'url': '/data-research/consumer-complaints/'},
+          {'text': 'Mortgage Database (HMDA)', 'url': '/data-research/mortgage-data-hmda/'},
+      ]
+  } %}
+  {% set data_research_group_three = {
+      'nav_items': [
+          {'text': 'Consumer Credit Trends', 'url': '/data-research/consumer-credit-trends/'},
+          {'text': 'Credit Card Surveys & Agreements', 'url': '/data-research/credit-card-data/'},
+          {'text': 'Financial Well-Being Survey', 'url': '/data-research/financial-well-being-survey-data/'},
+      ]
+  } %}
+{% endif %}
+
+{% if flag_enabled('MORTGAGE_PERFORMANCE_RELEASE', request) %}
+  {% set data_research_group_one = {
+      'nav_items': [
+          {'text': 'Research & Reports', 'url': '/data-research/research-reports/'},
+          {'text': 'Consumer Complaint Database', 'url': '/data-research/consumer-complaints/'},
+          {'text': 'Mortgage Database (HMDA)', 'url': '/data-research/mortgage-data-hmda/'},
+      ]
+  } %}
+  {% set data_research_group_two = {
+      'nav_items': [
+          {'text': 'Consumer Credit Trends', 'url': '/data-research/consumer-credit-trends/'},
+          {'text': 'Mortgage Performance Trends', 'url': '/data-research/mortgage-performance-trends/'},
+          {'text': 'Financial Well-Being Survey', 'url': '/data-research/financial-well-being-survey-data/'},
+      ]
+  } %}
+  {% set data_research_group_three = {
+      'nav_items': [
+          {'text': 'Credit Card Surveys & Agreements', 'url': '/data-research/credit-card-data/'},
+          {'text': 'CFPB Research Conference', 'url': '/data-research/cfpb-research-conference/'},
+          {'text': 'CFPB Researchers', 'url': '/data-research/cfpb-researchers/'},
+      ]
+  } %}
+{% endif %}
 
 {% set data_research = {
     'text': 'Data & Research',
@@ -203,7 +258,6 @@
         data_research_group_three,
     ],
 } %}
-
 
 {# Policy & Compliance menu items #}
 

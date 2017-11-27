@@ -40,7 +40,7 @@ function _traverseDirectory( dir, list, baseDir ) {
  * @returns {boolean} true if the source is hidden, otherwise false.
  */
 function _isHidden( path ) {
-  return ( /(^|\/)\.[^\/\.]/g ).test( path );
+  return ( /(^|\/)\.[^/.]/g ).test( path );
 }
 
 /**

@@ -20,6 +20,7 @@ contact_phone = {
             {
                 "tty": "",
                 "number": "5151234567",
+                "extension": "1234",
                 "vanity": ""
             }
         ],
@@ -320,6 +321,15 @@ snippet_list_show_thumbnails_true = {
         "heading": "Test Snippet List",
         "snippet_type": "v1.models.snippets.Resource",
         "show_thumbnails": True,
+    }
+}
+
+snippet_list_actions_column_width_40 = {
+    "type": "snippet_list",
+    "value": {
+        "heading": "Test Snippet List",
+        "snippet_type": "v1.models.snippets.Resource",
+        "actions_column_width": "40",
     }
 }
 

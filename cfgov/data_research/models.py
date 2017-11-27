@@ -1,11 +1,14 @@
 from __future__ import unicode_literals
 
 from dateutil import parser
+import logging
 
 from django.db import models
 from jsonfield import JSONField
 
 from v1.models import BrowsePage, PageManager
+
+logger = logging.getLogger(__name__)
 
 
 # Used for registering users for a conference
@@ -27,9 +30,14 @@ class MortgageDataConstant(models.Model):
     name = models.CharField(max_length=255)
     slug = models.CharField(max_length=255,
                             blank=True,
-                            help_text="CAMELCASE VARIABLE NAME FOR JS")
+                            help_text="OPTIONAL SLUG")
     value = models.IntegerField(null=True, blank=True)
-    string_value = models.TextField(blank=True)
+    date_value = models.DateField(
+        null=True,
+        blank=True,
+        help_text=(
+            "CHOOSE THE LAST MONTH OF DATA TO DISPLAY "
+            "(AND SELECT THE FIRST DAY OF THAT MONTH)"))
     note = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
 
@@ -94,7 +102,12 @@ class State(models.Model):
          threshold_year) = MortgageDataConstant.get_thresholds()
         records = self.nonmsamortgagedata_set.filter(
             date__year=threshold_year)
-        annual_sum = sum(record.total for record in records)
+        if not self.non_msa_counties:
+            self.non_msa_valid = False
+            self.save()
+            return
+        annual_sum = sum(
+            record.total for record in records if record.total)
         monthly_average = annual_sum * 1.0 / records.count()
         if monthly_average >= threshold_count:
             self.non_msa_valid = True
@@ -208,6 +221,10 @@ class MortgageBase(models.Model):
             for field in count_fields:
                 setattr(self, field, count_fields[field])
             self.save()
+        elif type(self) == NonMSAMortgageData:
+            for field in count_fields:
+                setattr(self, field, count_fields[field])
+            self.save()
 
     def time_series(self, days_late):
         if days_late == '30-89':
@@ -303,6 +320,7 @@ class NationalMortgageData(MortgageBase):
                 count_fields[field] += getattr(state, field)
         for field in count_fields:
             setattr(self, field, count_fields[field])
+        self.save()
 
 
 class MortgagePerformancePage(BrowsePage):
@@ -325,21 +343,32 @@ class MortgagePerformancePage(BrowsePage):
         meta['from_month_formatted'] = from_date.strftime("%B&nbsp;%Y")
         meta['pub_date_formatted'] = meta.get(
             'download_files')[meta['thru_month']]['pub_date']
-        meta['archive_dates'] = sorted([
-            date for date in meta['download_files'].keys()[1:]], reverse=True)
+        download_dates = sorted(meta['download_files'].keys(), reverse=True)
+        meta['archive_dates'] = download_dates[1:]
         return meta
 
     def get_context(self, request, *args, **kwargs):
         context = super(MortgagePerformancePage, self).get_context(
             request, *args, **kwargs)
         context.update(self.get_mortgage_meta())
-        if '30-89' in request.url:
+        if '30-89' in self.url:
             context.update({'delinquency': 'percent_30_60',
                             'time_frame': '30-89'})
-        elif '90' in request.url:
+        elif '90' in self.url:
             context.update({'delinquency': 'percent_90',
                             'time_frame': '90'})
         return context
 
     class Media:
         css = ['secondary-navigation.css']
+
+
+def validate_counties():
+    for each in County.objects.all():
+        each.validate()
+    total = County.objects.count()
+    valid = County.objects.filter(valid=True).count()
+    if total != 0:
+        logger.info(
+            "{} counties of {} were found to be valid -- {}%)".format(
+                valid, total, round((valid * 100.0 / total), 1)))

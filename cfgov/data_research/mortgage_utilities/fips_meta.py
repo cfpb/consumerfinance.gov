@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-import json
 import logging
 
 from django.conf import settings
@@ -10,8 +9,9 @@ PROJECT_ROOT = settings.PROJECT_ROOT
 FIPS_DATA_PATH = (
     "{}/data_research/data".format(PROJECT_ROOT))
 
-# We have minimal data for territories, so we exclude all but Puerto Rico (72)
-NON_STATES = {'MP': '69', 'AS': '60', 'VI': '78', 'GU': '66'}  # , 'PR': '72'}
+# We have minimal data for smaller territories, so we exclude them.
+# For project launch, we also excluded Puerto Rico (72) as out of scope.
+NON_STATES = {'MP': '69', 'AS': '60', 'VI': '78', 'GU': '66', 'PR': '72'}
 
 # Census no longer uses these FIPS codes, but they show up in the NMDB data.
 # For more details on stale FIPS and FIPS for territories, see
@@ -28,17 +28,35 @@ STALE_FIPS = [
     '51560',  # Clifton Forge County, VA, DELETED 2001-07-01
     '51780',  # South Boston City, VA, DELETED 1995-06-30
 ]
-# These codes refer to small U.S. territories that don't meet our threshold.
+
+# These codes refer to small U.S. territories that don't meet our threshold
 TERRITORIES_TO_IGNORE = [
     '60010',
     '66010',
+    '69100',
     '69110',
     '69120',
     '78010',
     '78020',
     '78030',
 ]
-IGNORE_FIPS = STALE_FIPS + TERRITORIES_TO_IGNORE
+
+PUERTO_RICO_COUNTIES = [
+    '72071', '72027', '72073', '72029', '72103', '72105', '72085', '72129',
+    '72109', '72031', '72033', '72035', '72037', '72097', '72095', '72139',
+    '72091', '72045', '72041', '72093', '72153', '72099', '72023', '72025',
+    '72079', '72075', '72077', '72047', '72043', '72125', '72123', '72049',
+    '72121', '72069', '72067', '72065', '72063', '72061', '72059', '72053',
+    '72051', '72057', '72055', '72054', '72083', '72101', '72107', '72081',
+    '72087', '72089', '72149', '72039', '72019', '72017', '72013', '72007',
+    '72133', '72131', '72135', '72137', '72009', '72001', '72003', '72005',
+    '72151', '72127', '72117', '72115', '72145', '72015', '72147', '72141',
+    '72011', '72143', '72113', '72111', '72119', '72021',
+]
+
+# Puerto Rico was initially out of scope.
+# To add it to the data set, remove PUERTO_RICO_COUNTIES from IGNORE_FIPS
+IGNORE_FIPS = STALE_FIPS + TERRITORIES_TO_IGNORE + PUERTO_RICO_COUNTIES
 
 SOURCE_HEADINGS = [  # last changed 2017-07-31
     'date',
@@ -66,13 +84,37 @@ class FipsMeta(object):
         self.all_fips = []  # All valid county, MSA and state FIPS
         self.dates = []  # All the sampling dates we're displaying; will grow
         self.short_dates = []  # Shortened date versions for output labels
-        self.starting_year = None  # next 3 values will reflect db constants
+        self.starting_date = None  # next 3 values will reflect db constants
         self.threshold_date = None
         self.threshold_count = None
         self.created = 0  # final 2 can serve as a global counters
         self.updated = 0
 
 FIPS = FipsMeta()
+
+
+def validate_fips(raw_fips, keep_outdated=False):
+    """
+    Fix anomalies in county FIPS codes, handling illegal lengths,
+    truncated codes that have lost their initial zeroes and a county changed
+    names and FIPS codes.
+    """
+    FIPS_SWAP = {
+        '46113': '46102',  # Change Shannon County, SD, to Oglala Lakota
+        # '12025': '12086'  # Dade/Miami-Dade is handled by merge_the_dades
+    }
+    if len(raw_fips) not in [4, 5]:
+        return None
+    if raw_fips in FIPS_SWAP:
+        return FIPS_SWAP[raw_fips]
+    if len(raw_fips) == 4:
+        new_fips = "0{}".format(raw_fips)
+    else:
+        new_fips = raw_fips
+    if keep_outdated is False and new_fips in IGNORE_FIPS:
+        return None
+    else:
+        return new_fips
 
 
 def assemble_msa_mapping(msa_data):
@@ -105,7 +147,9 @@ def load_county_mappings():
     """Add lists of counties and non-MSA counties to state_fips attribute."""
     from data_research.models import MortgageMetaData
     msa_meta = MortgageMetaData.objects.get(name='state_msa_meta').json_value
-    for each in FIPS.state_fips:
+    live_fips = [fips for fips in FIPS.state_fips
+                 if fips not in NON_STATES.values()]
+    for each in live_fips:
         _attr = FIPS.state_fips[each]
         abbr = _attr['abbr']
         _attr['counties'] = (
@@ -135,32 +179,20 @@ def load_fips_lists():
 
 
 def load_constants():
-    """Get data thresholds from database, or fall back to starting defaults."""
+    """Get data thresholds."""
     from data_research.models import MortgageDataConstant, MortgageMetaData
-    threshold_defaults = {
-        'starting_year': 2008,
-        'threshold_count': 1000,
-        'threshold_year': 2016,
-    }
-    for name in threshold_defaults:
-        try:
-            value = MortgageDataConstant.objects.get(
-                name=name).value
-        except MortgageDataConstant.DoesNotExist:
-            value = threshold_defaults[name]
-        setattr(FIPS, name, value)
-    try:
-        dates_obj = MortgageMetaData.objects.get(name='sampling_dates')
-        dates = dates_obj.json_value
-    except MortgageMetaData.DoesNotExist:
-        with open("{}/sampling_dates.json".format(FIPS_DATA_PATH), 'rb') as f:
-            dates = json.loads(f.read())
+    FIPS.starting_date = MortgageDataConstant.objects.get(
+        name='starting_date').date_value
+    for threshold in ['threshold_count', 'threshold_year']:
+        value = MortgageDataConstant.objects.get(name=threshold).value
+        setattr(FIPS, threshold, value)
+    dates = MortgageMetaData.objects.get(name='sampling_dates').json_value
     FIPS.dates = ['{}'.format(date) for date in dates]
     FIPS.short_dates = [date[:-3] for date in FIPS.dates]
 
 
 def load_fips_meta(counties=True):
-    """
+    """`
     Load FIPS mappings, starting with base CSV files.
 
     County CSV headings are:

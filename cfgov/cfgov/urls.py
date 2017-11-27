@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
@@ -76,9 +77,13 @@ urlpatterns = [
         include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
 
     url(r'^owning-a-home/mortgage-closing/',
-        include(oah.urls_for_prefix('mortgage-closing'))),
+        TemplateView.as_view(
+        template_name='owning-a-home/mortgage-closing/index.html'),
+        name='mortgage-closing'),
     url(r'^owning-a-home/mortgage-estimate/',
-        include(oah.urls_for_prefix('mortgage-estimate'))),
+        TemplateView.as_view(
+        template_name='owning-a-home/mortgage-estimate/index.html'),
+        name='mortgage-estimate'),
 
     url(r'^owning-a-home/process/',
         include(oah.urls_for_prefix('process/prepare/'))),
@@ -93,47 +98,73 @@ urlpatterns = [
     url(r'^owning-a-home/process/sources/',
         include(oah.urls_for_prefix('process/sources/'))),
 
-    # the redirect is an unfortunate workaround, could be resolved by
-    # using static('path/to/asset') in the source template
-    url(r'^know-before-you-owe/static/(?P<path>.*)$',
-        RedirectView.as_view(
-            url='/static/know-before-you-owe/static/%(path)s',
-            permanent=True)),
-    url(r'^know-before-you-owe/',
-        include(SheerSite('know-before-you-owe').urls)),
-    url(r'^adult-financial-education/$', TemplateView.as_view(
-        template_name='/adult-financial-education/index.html')),
+    url(r'^know-before-you-owe/$',
+        TemplateView.as_view(
+        template_name='know-before-you-owe/index.html'),
+        name='know-before-you-owe'),
+    url(r'^know-before-you-owe/timeline/$',
+        TemplateView.as_view(
+        template_name='know-before-you-owe/timeline/index.html'),
+        name='kbyo-timeline'),
+    url(r'^know-before-you-owe/compare/$',
+        TemplateView.as_view(
+        template_name='know-before-you-owe/compare/index.html'),
+        name='kbyo-compare'),
     url(r'^fin-ed/privacy-act-statement/$',
         TemplateView.as_view(
         template_name='/adult-financial-education/'
                       'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
-    url(r'^empowerment/$', TemplateView.as_view(
-        template_name='empowerment/index.html'),
-        name='empowerment'),
+    url(r'^practitioner-resources/economically-vulnerable/$',
+        TemplateView.as_view(
+            template_name='empowerment/index.html'),
+            name='empowerment'),
     url(r'^fair-lending/$', TemplateView.as_view(
         template_name='fair-lending/index.html'),
         name='fair-lending'),
-    url(r'^students/$', TemplateView.as_view(
+
+    url(r'^practitioner-resources/students/$', TemplateView.as_view(
         template_name='students/index.html'),
         name='students'),
-    url(r'^students/knowbeforeyouowe/$', TemplateView.as_view(
-        template_name='students/knowbeforeyouowe/index.html'),
-        name='students-knowbeforeyouowe'),
-    url(r'^students/helping-borrowers-find-ways-to-stay-afloat/$',
+    url(r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(
-            template_name='students/helping-borrowers-find-'
-                      'ways-to-stay-afloat/index.html'),
-            name='students-helping-borrowers'),
-    url(r'^servicemembers/$', TemplateView.as_view(
+            template_name='students/knowbeforeyouowe/index.html'),
+            name='students-knowbeforeyouowe'),
+    url(r'^practitioner-resources/students/'
+         'helping-borrowers-find-ways-to-stay-afloat/$',
+            TemplateView.as_view(
+                template_name='students/helping-borrowers-find-'
+                              'ways-to-stay-afloat/index.html'),
+                name='students-helping-borrowers'),
+
+    url(r'^practitioner-resources/servicemembers/$', TemplateView.as_view(
         template_name='service-members/index.html'),
         name='servicemembers'),
-    url(r'^servicemembers/on-demand-forums-and-tools/$',
+    url(r'^practitioner-resources/servicemembers/webinars/$',
         TemplateView.as_view(
         template_name='service-members/on-demand-forums-and-tools'
                       '/index.html'),
         name='servicemembers'),
+    url(r'^practitioner-resources/servicemembers/additionalresources/$',
+        TemplateView.as_view(
+        template_name='service-members/additionalresources/index.html'),
+        name='servicemembers'),
+    url(r'^practitioner-resources/servicemembers/planning/$',
+        TemplateView.as_view(
+        template_name='service-members/planning/index.html'),
+        name='servicemembers-planning'),
+    url(r'^practitioner-resources/servicemembers/planning/'
+         'creativesavingsstrategies/$',
+            TemplateView.as_view(
+                template_name='service-members/planning/'
+                              'creativesavingsstrategies/index.html'),
+                name='servicemembers-planning'),
+    url(r'^practitioner-resources/servicemembers/protecting/$',
+        TemplateView.as_view(
+        template_name='service-members/protecting/index.html'),
+        name='servicemembers-protecting'),
+
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
@@ -319,6 +350,24 @@ urlpatterns = [
             url='/consumer-tools/retirement/%(path)s',
             permanent=True)),
 
+    # empowerment redirects
+    url(r'^empowerment/$', RedirectView.as_view(
+            url='/practitioner-resources/economically-vulnerable/',
+            permanent=True)),
+
+    # students redirects
+    url(r'^students/(?P<path>.*)$', RedirectView.as_view(
+            url='/practitioner-resources/students/%(path)s',
+            permanent=True)),
+
+    # servicemembers redirects
+    url(r'^servicemembers/on-demand-forums-and-tools/$', RedirectView.as_view(
+            url='/practitioner-resources/servicemembers/webinars/',
+            permanent=True)),
+    url(r'^servicemembers/(?P<path>.*)$', RedirectView.as_view(
+            url='/practitioner-resources/servicemembers/%(path)s',
+            permanent=True)),
+
     # ask-cfpb
     url(r'^askcfpb/$',
         RedirectView.as_view(
@@ -335,19 +384,19 @@ urlpatterns = [
     url(r'^askcfpb/search/',
         redirect_ask_search,
         name='redirect-ask-search'),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
         ask_search,
         name='ask-search-es'),
     url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
         ask_search,
         name='ask-search-es-json'),
-    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$',
         view_answer,
         name='ask-english-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/$',
         view_answer,
         name='ask-spanish-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/$',
         print_answer,
         name='ask-spanish-print-answer'),
     url(r'^(?i)ask-cfpb/search/$',
@@ -448,16 +497,12 @@ if settings.ALLOW_ADMIN_URL:
 
 if 'selfregistration' in settings.INSTALLED_APPS:
     from selfregistration.views import CompanySignup
-    pattern = url(r'^company-signup/', CompanySignup.as_view())
+    pattern = flagged_url('WAGTAIL_COMPANY_SIGNUP', r'^company-signup/',
+                          CompanySignup.as_view(), state=False,
+                          fallback=lambda req: ServeView.as_view()(req, req.path)) # noqa
     urlpatterns.append(pattern)
 
 if settings.DEBUG:
-    urlpatterns.append(
-        url(r'^test-fixture/$',
-            SheerTemplateView.as_view(
-                template_name='test-fixture/index.html'),
-            name='test-fixture')
-    )
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
 
@@ -495,6 +540,7 @@ def handle_error(code, request):
 
         return HttpResponse("This request could not be processed, "
                             "HTTP Error %s." % str(code), status=code)
+
 
 handler404 = partial(handle_error, 404)
 handler500 = partial(handle_error, 500)

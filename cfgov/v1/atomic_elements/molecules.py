@@ -213,6 +213,9 @@ class FeaturedContent(blocks.StructBlock):
         label = 'Featured Content'
         classname = 'block__flush'
 
+    class Media:
+        js = ['video-player.js']
+
 
 class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
@@ -254,8 +257,22 @@ class ContactPhone(blocks.StructBlock):
     phones = blocks.ListBlock(
         blocks.StructBlock([
             ('number', blocks.CharBlock(max_length=15)),
-            ('vanity', blocks.CharBlock(max_length=15, required=False)),
-            ('tty', blocks.CharBlock(max_length=15, required=False)),
+            ('extension', blocks.CharBlock(max_length=4, required=False)),
+            ('vanity', blocks.CharBlock(
+                max_length=15,
+                required=False,
+                help_text='A phoneword version of the above number'
+            )),
+            ('tty', blocks.CharBlock(
+                max_length=15,
+                required=False,
+                label="TTY"
+            )),
+            ('tty_ext', blocks.CharBlock(
+                max_length=4,
+                required=False,
+                label="TTY Extension"
+            )),
         ]))
 
     class Meta:

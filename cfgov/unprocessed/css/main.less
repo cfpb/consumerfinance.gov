@@ -1,6 +1,6 @@
 /* ==========================================================================
    cfgov-refresh
-   Master Less File.
+   Master Less file
    ========================================================================== */
 
 
@@ -21,7 +21,13 @@
 @import (less) 'cf-tables.less';
 
 // Icon font path
-@cf-icon-path:                  '../fonts';
+@cf-icon-path: '../fonts';
+
+// Webfont variables
+// This is the path for self-hosted fonts.
+@cf-fonts-path: '/static/fonts';
+// Whether or not to override the local path and retrieve fonts from fonts.net.
+@use-font-cdn: false;
 
 // Enhancements that are on a migration path to being added to CF.
 // CF Core
@@ -32,21 +38,19 @@
 // CF Typography
 @import (less) "enhancements/typography.less";
 
-// CF Grid
-@import (less) "enhancements/grid.less";
-
 // CF Layout
 @import (less) "enhancements/layout.less";
 
 // CF Forms
 @import (less) "enhancements/forms.less";
 
-
 // CF Tables
 @import (less) "enhancements/tables.less";
 
+// CF Notifications
+@import (less) "enhancements/notifications.less";
+
 // CF ???
-@import (less) "enhancements/code.less";
 @import (less) "enhancements/print.less";
 
 
@@ -83,7 +87,6 @@
 
 @import (less) "molecules/autocomplete.less";
 @import (less) "molecules/big-checkbox.less";
-@import (less) "molecules/big-radio-buttons.less";
 @import (less) "molecules/call-to-action.less";
 @import (less) "molecules/card.less";
 @import (less) "molecules/featured-menu-content.less";
@@ -108,6 +111,7 @@
    ========================================================================== */
 @import (less) "organisms/bureau-structure.less";
 @import (less) "organisms/chart.less";
+@import (less) "organisms/email-popup.less";
 @import (less) "organisms/email-signup.less";
 @import (less) "organisms/expandable.less";
 @import (less) "organisms/expandable-group.less";
@@ -132,6 +136,7 @@
 @import (less) "organisms/sidebar-content.less";
 @import (less) "organisms/snippet-list.less";
 @import (less) "organisms/well.less";
+
 
 /* Template pieces
    ========================================================================== */

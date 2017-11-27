@@ -1,8 +1,8 @@
-version: "2"
+version: "3.3"
 
 services:
     mysql:
-        image: mysql:5.7
+        image: vsamov/mysql-5.1.73
         ports:
             - "3306:3306"
         environment:
@@ -10,11 +10,34 @@ services:
             MYSQL_DATABASE: v1
             MYSQL_USER: v1
             MYSQL_PASSWORD: v1
+        volumes:
+            - "/var/lib/mysql"
     elasticsearch:
-        image: elasticsearch:2.3
+        build: docker/elasticsearch
         ports:
             - "9200:9200"
             - "9300:9300"
+    python:
+        build: .
+        ports:
+            - "8000:8000"
+        environment:
+            MYSQL_ROOT_PW: root
+            MYSQL_HOST: mysql
+            MYSQL_NAME: v1
+            MYSQL_USER: v1
+            MYSQL_PW: v1
+            ES_HOST: elasticsearch
         volumes:
-            - ./docker:/apps
-        entrypoint: /apps/docker-entrypoint-es-plugins.sh
+                - ./:/src/cfgov-refresh
+                - ./develop-apps:/src/develop-apps
+        entrypoint: 
+                - sh
+                - /src/cfgov-refresh/cfgov/entrypoint.sh
+        depends_on:
+                - mysql
+                - elasticsearch                
+        working_dir: /src/cfgov-refresh
+        env_file: .python_env
+        stdin_open: true
+        tty: true

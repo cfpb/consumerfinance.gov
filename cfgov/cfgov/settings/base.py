@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -171,6 +170,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 # Admin Url Access
@@ -212,6 +212,12 @@ STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
 MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
+
+
+#Enabling compression for use in base.html
+COMPRESS_ENABLED = True
+
+COMPRESS_JS_FILTERS = []
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -308,11 +314,67 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
+        'ENGINE': 'search.backends.CFGOVElasticsearch2SearchEngine',
         'URL': SHEER_ELASTICSEARCH_SERVER,
-        'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX', SHEER_ELASTICSEARCH_INDEX+'_haystack'),
-    },
+        'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX',
+                                     SHEER_ELASTICSEARCH_INDEX+'_haystack'),
+        'INCLUDE_SPELLING': True,
+    }
 }
+ELASTICSEARCH_INDEX_SETTINGS = {
+    'settings': {
+        'analysis': {
+            'analyzer': {
+                'ngram_analyzer': {
+                    'type': 'custom',
+                    'tokenizer': 'lowercase',
+                    'filter': ['haystack_ngram']
+                },
+                'edgengram_analyzer': {
+                    'type': 'custom',
+                    'tokenizer': 'lowercase',
+                    'filter': ['haystack_edgengram']
+                },
+                'synonym' : {
+                    'tokenizer' : 'whitespace',
+                    'filter' : ['synonym']
+                }
+            },
+            'tokenizer': {
+                'haystack_ngram_tokenizer': {
+                    'type': 'nGram',
+                    'min_gram': 3,
+                    'max_gram': 15,
+                },
+                'haystack_edgengram_tokenizer': {
+                    'type': 'edgeNGram',
+                    'min_gram': 3,
+                    'max_gram': 15,
+                    'side': 'front'
+                }
+            },
+            'filter': {
+                'haystack_ngram': {
+                    'type': 'nGram',
+                    'min_gram': 3,
+                    'max_gram': 15
+                },
+                'haystack_edgengram': {
+                    'type': 'edgeNGram',
+                    'min_gram': 3,
+                    'max_gram': 15
+                },
+                'synonym': {
+                    'type': 'synonym',
+                    'synonyms': [
+                        # 'auto,car,vehicle',
+                    ],
+                }
+            }
+        }
+    }
+}
+ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
 
 # S3 Configuration
 AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
@@ -382,12 +444,6 @@ SHEER_SITES = {
     'owning-a-home':
         Path(os.environ.get('OAH_SHEER_PATH') or
              Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
-    'fin-ed-resources':
-        Path(os.environ.get('FIN_ED_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
-    'know-before-you-owe':
-        Path(os.environ.get('KBYO_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
 }
 
 # The base URL for the API that we use to access layers and the regulation.
@@ -459,7 +515,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   'trk.cetrk.com',
                   'universal.iperceptions.com',
                   'sample.crazyegg.com',
-                  'about:'
+                  'about:',
+                  'connect.facebook.net'
                   )
 
 # These specify valid sources of CSS code
@@ -492,7 +549,8 @@ CSP_IMG_SRC = (
     'api.mapbox.com',
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
-    'data:')
+    'data:',
+    'www.facebook.com')
 
 # These specify what URL's we allow to appear in frames/iframes
 CSP_FRAME_SRC = (
@@ -502,7 +560,9 @@ CSP_FRAME_SRC = (
     'optimize.google.com',
     'www.youtube.com',
     '*.doubleclick.net',
-    'universal.iperceptions.com')
+    'universal.iperceptions.com',
+    'www.facebook.com',
+    'staticxx.facebook.com')
 
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = ("'self'", "data:", "fast.fonts.net", "fonts.google.com", "fonts.gstatic.com")
@@ -527,8 +587,14 @@ FLAGS = {
         'site': 'beta.consumerfinance.gov',
     },
 
-    # When enabled, Display a "techical issues" banner on /complaintdatabase
+    # When enabled, include a recruitment code comment in the base template.
+    'CFPB_RECRUITING': {},
+
+    # When enabled, display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
+
+    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
+    'WAGTAIL_COMPANY_SIGNUP': {},
 
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
@@ -545,11 +611,16 @@ FLAGS = {
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},
 
+    # To be enabled when mortgage-performance data visualizations go live
+    'MORTGAGE_PERFORMANCE_RELEASE': {},
+
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     'AB_TESTING': {},
 
+    # When enabled, should display the email popup.
+    'EMAIL_POPUP': {},
 
     # The next version of eRegulations
     'EREGS20': {
@@ -567,6 +638,9 @@ FLAGS = {
 
     # Menu draft state
     'DRAFT_MENU': {},
+
+    # The release of new Whistleblowers content/pages
+    'WHISTLEBLOWER_RELEASE': {},
 }
 
 

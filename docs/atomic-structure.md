@@ -7,9 +7,10 @@ It's important to note that our front-end atomic architecture is still evolving.
 
 Our components are broken down into templates, organisms, molecules, and atoms.
 We opted not to use the page component, although it exists in atomic design.
-Our components are composed of HTML, CSS, and JavaScript (JS).
+Our components are composed of HTML, CSS, and JS (JavaScript).
 If a component doesn’t have user interactions or require styling,
 then it won’t have an associated JS and/or CSS file.
+
 We compose our atomic components as follows:
 
 ### Atoms
@@ -30,6 +31,7 @@ Prefixed with “a-” in CSS, JavaScript, and HTML files.
     .respond-to-max( @bp-sm-max, {
         height: 100%;
         width: 100%;
+ …
 ```
 
 
@@ -206,7 +208,7 @@ README.MD
 
 There was considerable discussion on how we should create JS components.
 The components aren't constructed to be used on SPAs (Single Page Applications).
-They are built to be rendered on the sever and then enhanced via JavaScript
+They are built to be rendered on the server and then enhanced via JavaScript
 on the client. The basic interface for the components is as follows:
 
 ```javascript

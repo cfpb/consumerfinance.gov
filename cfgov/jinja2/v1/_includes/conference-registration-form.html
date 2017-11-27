@@ -87,10 +87,10 @@
                 {% endfor %}
 
                 {{ big_checkbox.render({
-                    "legend": 'Which sessions will you be attending? ',
-                    "fields": checkbox_fields,
+                    'legend': 'Which sessions will you be attending? ',
+                    'fields': checkbox_fields,
                     'value':  request.POST.getlist('form_sessions', []),
-                    "size" :  '1'
+                    'size':   '1'
                 }, options={
                     'id':       'sessions',
                     'required': true,
