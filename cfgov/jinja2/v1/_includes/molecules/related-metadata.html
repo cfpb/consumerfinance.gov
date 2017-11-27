@@ -158,5 +158,5 @@
    ========================================================================== #}
 
 {% macro _topics(list) %}
-    {{ _list( related_metadata_tags(page), true ) }}
+    {{ _list( page.related_metadata_tags(), true ) }}
 {% endmacro %}
