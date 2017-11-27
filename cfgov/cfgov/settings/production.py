@@ -6,15 +6,18 @@ from os.path import exists
 from .base import *
 from .mysql_mixin import *
 
+default_loggers = []
 
-# log to disk when running in mod_wsgi, otherwise to console
-if sys.argv and sys.argv[0] == 'mod_wsgi':
-    default_loggers = ['syslog']
-    # Every so often, these files temporarily do not exist on the server
-    # If so, set device to None and don't add syslog in LOGGING
-    syslog_device = next((l for l in ['/dev/log', '/var/run/syslog'] if exists(l)), default=None)
-else:
-    default_loggers = ['console', 'syslog']
+# Is there a syslog device available? 
+# selects first of these locations that exist, or None
+syslog_device = next((l for l in ['/dev/log', '/var/run/syslog'] if exists(l)), None)
+
+if syslog_device:
+    default_loggers.append('syslog')
+                           
+# if not running in mod_wsgi, add console logger
+if not (sys.argv and sys.argv[0] == 'mod_wsgi'):
+    default_loggers.append('console')
 
 # Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
 #
@@ -68,8 +71,8 @@ LOGGING = {
     }
 }
 
-# Only add syslog to LOGGING if not syslog_device exists
-if syslog_device is not None:
+# Only add syslog to LOGGING if it's in default_loggers
+if 'syslog' in default_loggers:
     LOGGING['handlers']['syslog'] = {
             'address': syslog_device,
             'class': 'logging.handlers.SysLogHandler',
