@@ -487,11 +487,6 @@ if settings.ALLOW_ADMIN_URL:
     if 'selfregistration' in settings.INSTALLED_APPS:
         patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
 
-    if 'csp.middleware.CSPMiddleware' in settings.MIDDLEWARE_CLASSES:
-        # allow browsers to push CSP error reports back to the server
-        patterns.append(url(r'^csp-report/',
-                            'core.views.csp_violation_report'))
-
     urlpatterns = patterns + urlpatterns
 
 
