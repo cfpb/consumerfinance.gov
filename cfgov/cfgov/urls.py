@@ -11,6 +11,7 @@ from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
+from wagtail.contrib.wagtailsitemaps.views import sitemap
 
 from flags.urls import flagged_url
 
@@ -42,7 +43,8 @@ from v1.views.documents import DocumentServeView
 oah = SheerSite('owning-a-home')
 
 urlpatterns = [
-
+    url('^sitemap\.xml$', sitemap),
+    
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
