@@ -12,7 +12,7 @@ if sys.argv and sys.argv[0] == 'mod_wsgi':
     default_loggers = ['syslog']
     # Every so often, these files temporarily do not exist on the server
     # If so, set device to None and don't add syslog in LOGGING
-    syslog_device = next(l for l in ['/dev/log', '/var/run/syslog'] if exists(l), default=None)
+    syslog_device = next((l for l in ['/dev/log', '/var/run/syslog'] if exists(l)), default=None)
 else:
     default_loggers = ['console', 'syslog']
 
