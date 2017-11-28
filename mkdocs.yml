@@ -16,8 +16,6 @@ pages:
     - Translation: translation.md
 - Front-end guidelines:
     - Atomic structure and design: atomic-structure.md
-    - Notes on adapting atomic design: notes-on-atomic-design.md
-    - Notes on frameworks: notes-on-frameworks.md
 - Testing: testing.md
 - Development tips: development-tips.md
 
