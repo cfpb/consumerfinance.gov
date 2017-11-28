@@ -123,13 +123,9 @@ MIDDLEWARE_CLASSES = (
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
 
-if ('CSP_ENFORCE' in os.environ or 'CSP_REPORT' in os.environ):
+if ('CSP_ENFORCE' in os.environ):
     MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
-if 'CSP_REPORT' in os.environ:
-    CSP_REPORT_ONLY = True
-
-CSP_REPORT_URI = '/csp-report/'
 
 ROOT_URLCONF = 'cfgov.urls'
 
