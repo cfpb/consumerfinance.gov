@@ -2,7 +2,7 @@
 
 ## Clone the repository
 
-Using the console, navigate to the root directory in which your projects 
+Using the console, navigate to the root directory in which your projects
 live and clone this project's repository:
 
 ```bash
@@ -10,8 +10,8 @@ git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 ```
 
-You may also wish to fork the repository on GitHub and clone the resultant 
-personal fork. This is advised if you are going to be doing development on 
+You may also wish to fork the repository on GitHub and clone the resultant
+personal fork. This is advised if you are going to be doing development on
 `cfgov-refresh` and contributing to the project.
 
 There are two ways to install cfgov-refresh:
@@ -148,6 +148,21 @@ npm install -g gulp
 !!! note
     This project requires Node.js v8 or higher, and npm v5 or higher.
 
+#### Webfonts
+
+The site uses a proprietary licensed font, Avenir.
+If you want to pull this from a content delivery network (CDN),
+you can set the
+[`@use-font-cdn`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/css/main.less#L30)
+to `true` and rebuild the assets with `gulp build`.
+If you want to install self-hosted fonts locally, you can place the font files
+in `/static.in/cfgov-fonts/fonts/` and restart the local web server.
+If you are a CFPB employee, you can perform this step with:
+
+```
+cd /static.in/ && git clone https://[GHE]/CFGOV/cfgov-fonts/
+```
+Where `[GHE]` is our GitHub Enterprise URL.
 
 #### Set up your environment
 
@@ -205,40 +220,40 @@ Get any errors? [See our troubleshooting tips.](#troubleshooting)
 
 ### Tools we use for developing with Docker
 
-- **Docker**: You may not need to interact directly with Docker: but you 
+- **Docker**: You may not need to interact directly with Docker: but you
   should know that it's a client/server application for managing "containers"
-  (a way of running software in an isolated environment) and "images" (a 
+  (a way of running software in an isolated environment) and "images" (a
   snapshot of all of the files neccessary to run a container).
-- **Docker Compose**: Compose allows you to configure and run a collection of 
-  connected containers (like a web application and it's database) 
-- **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X, 
-  we'll use Docker Machine to start the Docker server in a virtual linux 
+- **Docker Compose**: Compose allows you to configure and run a collection of
+  connected containers (like a web application and it's database)
+- **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X,
+  we'll use Docker Machine to start the Docker server in a virtual linux
   environment (using Virtualbox)
 
-### 1. Setup your Docker environment 
+### 1. Setup your Docker environment
 
-If you have never installed Docker before, follow the instructions 
-[here](https://docs.docker.com/engine/installation/) or from your operating 
-system vendor. If you are on a mac and are unable to install the official 
+If you have never installed Docker before, follow the instructions
+[here](https://docs.docker.com/engine/installation/) or from your operating
+system vendor. If you are on a mac and are unable to install the official
 "Docker for Mac" package, the quickstart instructions below might help.
 
-If you are on a machine that is already set up to run Linux docker containers, 
-please install [Docker Compose](https://docs.docker.com/compose/install/). 
-If `docker-compose ps` runs without error, you can can go to step 2. 
+If you are on a machine that is already set up to run Linux docker containers,
+please install [Docker Compose](https://docs.docker.com/compose/install/).
+If `docker-compose ps` runs without error, you can can go to step 2.
 
 #### Mac + Homebrew + Virtualbox quickstart
 
-**Starting assumptions**: You already have homebrew and virtualbox installed. 
+**Starting assumptions**: You already have homebrew and virtualbox installed.
 You can run `brew search docker` without error.
 
-Install Docker, Docker Machine, and Docker Compose: 
+Install Docker, Docker Machine, and Docker Compose:
 `brew install docker docker-compose docker-machine`
- 
-At this point, `docker-compose ps` should run without error. 
+
+At this point, `docker-compose ps` should run without error.
 
 ### 2. Setup your frontend environment
 
-Refer to the [front-end dependencies](#front-end-dependencies) described above 
+Refer to the [front-end dependencies](#front-end-dependencies) described above
 in the [standalone installation instructions](#stand-alone-installation).
 
 ### 3. Run setup
@@ -251,28 +266,28 @@ This will install and build the frontend and set up the docker environment.
 
 `./runserver.sh docker`
 
-This will download and/or build images, and then start the containers, as 
-described in the docker-compose.yml file. This will take a few minutes, or 
+This will download and/or build images, and then start the containers, as
+described in the docker-compose.yml file. This will take a few minutes, or
 longer if you are on a slow internet connection.
 
-When it's all done, you should be able to load http://localhost:8000 in your 
+When it's all done, you should be able to load http://localhost:8000 in your
 browser, and see a database error.
 
 ### 3. Setup the database
 
 Run `./shell.sh`. This opens a bash shell inside your Python container.
 
-You can either [load initial data](#load-initial-data-into-database) per the 
+You can either [load initial data](#load-initial-data-into-database) per the
 instructions below, or load a database dump.
 
-You could save some time and effort later (if you have access to the CFPB 
+You could save some time and effort later (if you have access to the CFPB
 network), by configuring a URL for database dumps in the `.python_env` file.
 
 ```
 CFGOV_PROD_DB_LOCATION=https://(rest of the URL)
 ```
 
-You can get that URL at 
+You can get that URL at
 [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
 
 With `CFGOV_PROD_DB_LOCATION` in `.python_env` you should be able to run:
@@ -282,7 +297,7 @@ With `CFGOV_PROD_DB_LOCATION` in `.python_env` you should be able to run:
 Otherwise, [the instructions to load a database dump](#load-a-database-dump)
 below should be enough to get you started.
 
-Once you have a database loaded, you should have a functioning copy of site 
+Once you have a database loaded, you should have a functioning copy of site
 working at [http://localhost:8000](http://localhost:8000)
 
 ### 4. Next Steps
@@ -301,12 +316,12 @@ migrations are applied to the database, and then does the following:
 `WAGTAIL_ADMIN_PW` environment variable, if set.
 - If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
 with a slug of `cfgov`.
-- Updates the default Wagtail site to use the port defined by the 
-`DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is 
+- Updates the default Wagtail site to use the port defined by the
+`DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is
 set to 80.
-- If it doesn't already exist, creates a new 
-[wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with 
-a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and 
+- If it doesn't already exist, creates a new
+[wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
+a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and
 `DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump
@@ -317,7 +332,7 @@ as extensive as you'd probably like it to be.
 You can get a database dump by:
 
 1. Going to [GHE]/CFGOV/platform/wiki/Database-downloads
-1. Selecting one of the extractions and downloading the 
+1. Selecting one of the extractions and downloading the
    `production_django.sql.gz` file
 1. Unzip it
 1. Run:
@@ -326,8 +341,8 @@ You can get a database dump by:
 ./refresh-data.sh /path/to/dump.sql
 ```
 
-The `refresh-data.sh` script will apply the same changes as the 
-`initial-data.sh` script described above (including setting up the `admin` 
+The `refresh-data.sh` script will apply the same changes as the
+`initial-data.sh` script described above (including setting up the `admin`
 superuser), but will not apply migrations.
 
 To apply any unapplied migrations to a database created from a dump, run:
