@@ -481,9 +481,7 @@ if settings.ALLOW_ADMIN_URL:
 
     ]
 
-
     urlpatterns = patterns + urlpatterns
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
