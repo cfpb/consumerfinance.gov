@@ -27,21 +27,7 @@
 
 {% import 'molecules/featured-menu-content.html' as featured_menu_content %}
 
-
 {# Featured Menu Content #}
-
-{% set about_us_content = {
-    'link': {
-        'text': 'The CFPB: Working for you',
-        'url':  '/about-us/the-bureau/',
-    },
-    'image': {
-        'src': 'img/fmc-about-us-540x300.jpg',
-        'alt': '',
-    },
-    'body': 'This short video covers what the CFPB is ' +
-            'and how we are working for American consumers.',
-} %}
 
 {% set poly_com_content = {
     'link': {
@@ -101,7 +87,7 @@
   ( 'Practitioner Resources', featured_menu_content.render( resources_content ) ),
   ( 'Data & Research', featured_menu_content.render( data_research_content ) ),
   ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) ),
-  ( 'About Us', featured_menu_content.render( about_us_content ) ),
+  ( 'About Us', '' ),
 ] %}
 
 
