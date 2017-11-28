@@ -72,7 +72,7 @@
 
 {% macro _activity_snippet(activity_type, tags, quantity, include_date_flag=false) %}
     {% import 'macros/category-icon.html' as category_icon %}
-    {% set feed = get_latest_activities(activity_type, request.site.hostname) %}
+    {% set feed = get_latest_activities(activity_type) %}
     {% if feed %}
       {% set header = activity_type.title() %}
       {% set icon = category_icon.render(activity_type) %}
