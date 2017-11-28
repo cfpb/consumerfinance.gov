@@ -142,7 +142,7 @@ atomicHelpers.instantiateAll( '.o-expandable', Expandable );
 
 ### Templates
 
-Prefixed with “t-” in CSS, JavaScript, and HTML.
+Prefixed with “t-” in CSS, JavaScript, and HTML. [View all available templates](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/jinja2/v1) that can be extended or reused to create pages.
 
 #### CSS
 ```css
@@ -155,9 +155,7 @@ Prefixed with “t-” in CSS, JavaScript, and HTML.
 
 ### Folder Structure
 
-Atomic code is currently separated and named based on asset type.
-This may be viewed as a mistake, in which case the code should begin
-to be migrated to a modular folder structure based on the component.
+Our atomic components are separated and named based on asset type. HTML, CSS, and JavaScript for each component are in separate directories.
 
 #### Current Structure
 
@@ -192,24 +190,9 @@ cfgov-refresh/test/unit_tests/molecules/
 cfgov-refresh/test/unit_tests/organisms/
 ```
 
-#### Proposed Folder Structure
-
-```
-cfgov-refresh/cfgov/front-end/molecules/Expandable
-
-Expandable.html
-Expandable.css
-Expandable.js
-Expandable-unit-test.js
-README.MD
-```
-
 ### JavaScript Architecture
 
-There was considerable discussion on how we should create JS components.
-The components aren't constructed to be used on SPAs (Single Page Applications).
-They are built to be rendered on the server and then enhanced via JavaScript
-on the client. The basic interface for the components is as follows:
+JavaScript components are built to be rendered on the server and then enhanced via JavaScript on the client. The basic interface for the components is as follows:
 
 ```javascript
 function AtomicComponent( domElement ) {
@@ -227,7 +210,6 @@ function AtomicComponent( domElement ) {
 }
 ```
 
-We aren't testing for interface adherence but we probably should.
 We generally favor composition over inheritance.
 You can get more information by reading the following:
 
@@ -236,17 +218,17 @@ You can get more information by reading the following:
 [A Simple Challenge to Classical Inheritance Fans](https://medium.com/javascript-scene/a-simple-challenge-to-classical-inheritance-fans-e78c2cf5eead#.mtrvhcjiw)
 [Composition over Inheritance (Youtube)](https://www.youtube.com/watch?v=wfMtDGfHWpA)
 
-#### Code and Related Pull Requests
+#### JavaScript component examples
 
 [View Unit Test](https://github.com/cfpb/cfgov-refresh/pull/916)
 [Expandable example 1](http://jsfiddle.net/0j9u66h0/9/)
 [Expandable example 2](https://jsfiddle.net/cpsyLy3L/2/)
 
-## Component Build Pipeline
+## Component build pipeline
 
 #### Gulp
 
-Gulp is used as a task automation tool.
+Gulp is used as a task automation tool. Tasks include compiling CSS, creating a standard webpack workflow for bundling scripts, minifying code, linting, image optimizing, running unit tests, and [more](https://github.com/cfpb/cfgov-refresh/tree/master/gulp).
 
 #### Webpack
 
@@ -259,12 +241,11 @@ An explanation for the usage of each bundle is contained in scripts.js.
 
 Routes are used to serve JavaScript bundles to the browser based
 on the requested URL or Wagtail page Media property.
-This happens via code contained in base.html.
+This happens via code contained in [base.html](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html#L236-L285).
 
 #### Base.html
 
-This file serves as the base document for serving up assets and content.
-It's currently very complicated, obtrusive, and needs to be refactored.
+This file serves as the base HTML template for serving up assets and content. [View base.html on Github](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html).
 
 #### Wagtail Page Media Property
 
@@ -274,10 +255,11 @@ When a page is requested via the browser, code contained in base.html will
 loop all atomic components for the requested page and render
 the appropriate atomic JavaScript bundles.
 
-#### Questions and Concerns
+Here is an example of the media property on a component from the [Email signup organism](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/atomic_elements/organisms.py#L223-L224):
 
-- How do we support Single Page Applications and be functional when JavaScript is disabled?
-- How do we ensure creation of performant atomic components?
-- Is the codebase lacking uniformity?
-- CSS bloat when multiple components are on the same page but from different Django apps.
-- Ensuring simplicity over complexity.
+```
+class Media:
+    js = ['email-signup.js']
+``` 
+
+This will load the `email-signup.js` script on any page that includes the Email Signup organism in its template.
