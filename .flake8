@@ -29,7 +29,7 @@ exclude =
     # Generated migration files will throw errors. We need to find a way
     # to exclude django-generated migrations while including
     # manually-written migrations.
-    */migrations/*.py
+    */migrations/*.py,
 
     # Our settings files might need to conform to different readability
     # standards
