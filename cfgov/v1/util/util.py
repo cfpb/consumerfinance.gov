@@ -75,7 +75,7 @@ def get_secondary_nav_items(request, current_page):
     else:
         pages = filter(
             lambda p: instanceOfBrowseOrFilterablePages(p.specific),
-            page.get_appropriate_siblings(request.site.hostname)
+            page.get_appropriate_siblings()
         )
 
     nav_items = []

@@ -88,7 +88,6 @@ class FilterableListForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        self.hostname = kwargs.pop('hostname')
         self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
 

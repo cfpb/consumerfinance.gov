@@ -234,22 +234,12 @@ class CFGOVPage(Page):
                 return [ancestor for ancestor in ancestors[i + 1:]]
         return []
 
-    def get_appropriate_descendants(self, hostname, inclusive=True):
+    def get_appropriate_descendants(self, inclusive=True):
         return CFGOVPage.objects.live().descendant_of(
             self, inclusive)
 
-    def get_appropriate_siblings(self, hostname, inclusive=True):
+    def get_appropriate_siblings(self, inclusive=True):
         return CFGOVPage.objects.live().sibling_of(self, inclusive)
-
-    def get_next_appropriate_siblings(self, hostname, inclusive=False):
-        return self.get_appropriate_siblings(
-            hostname=hostname, inclusive=inclusive).filter(
-            path__gte=self.path).order_by('path')
-
-    def get_prev_appropriate_siblings(self, hostname, inclusive=False):
-        return self.get_appropriate_siblings(
-            hostname=hostname, inclusive=inclusive).filter(
-            path__lte=self.path).order_by('-path')
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
