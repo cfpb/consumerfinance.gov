@@ -181,7 +181,7 @@
 
             {% if post.tags.exists() %}
                 {%- import 'tags.html' as tags %}
-                {{ tags.render(related_metadata_tags(post), page_url, true, false, form_id, is_wagtail=True) }}
+                {{ tags.render(post.related_metadata_tags(), page_url, true, false, form_id, is_wagtail=True) }}
             {% endif %}
 
             {% if post.secondary_link_url and post.secondary_link_text %}

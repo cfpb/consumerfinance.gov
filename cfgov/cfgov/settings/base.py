@@ -86,7 +86,6 @@ OPTIONAL_APPS = [
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
     {'import': 'agreements', 'apps': ('agreements', 'haystack',)},
-    {'import': 'selfregistration', 'apps': ('selfregistration',)},
     {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
@@ -124,13 +123,9 @@ MIDDLEWARE_CLASSES = (
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
 
-if ('CSP_ENFORCE' in os.environ or 'CSP_REPORT' in os.environ):
+if ('CSP_ENFORCE' in os.environ):
     MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
-if 'CSP_REPORT' in os.environ:
-    CSP_REPORT_ONLY = True
-
-CSP_REPORT_URI = '/csp-report/'
 
 ROOT_URLCONF = 'cfgov.urls'
 
@@ -603,9 +598,6 @@ FLAGS = {
 
     # When enabled, display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
-
-    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
-    'WAGTAIL_COMPANY_SIGNUP': {},
 
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic

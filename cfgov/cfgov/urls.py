@@ -10,7 +10,6 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
-from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
@@ -260,8 +259,6 @@ urlpatterns = [
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
         include_if_app_enabled('agreements', 'agreements.urls')),
-    url(r'^selfregs/',
-        include_if_app_enabled('selfregistration', 'selfregistration.urls')),
     url(r'^hud-api-replace/', include_if_app_enabled(
         'hud_api_replace',
         'hud_api_replace.urls',
@@ -484,23 +481,7 @@ if settings.ALLOW_ADMIN_URL:
 
     ]
 
-    if 'selfregistration' in settings.INSTALLED_APPS:
-        patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
-
-    if 'csp.middleware.CSPMiddleware' in settings.MIDDLEWARE_CLASSES:
-        # allow browsers to push CSP error reports back to the server
-        patterns.append(url(r'^csp-report/',
-                            'core.views.csp_violation_report'))
-
     urlpatterns = patterns + urlpatterns
-
-
-if 'selfregistration' in settings.INSTALLED_APPS:
-    from selfregistration.views import CompanySignup
-    pattern = flagged_url('WAGTAIL_COMPANY_SIGNUP', r'^company-signup/',
-                          CompanySignup.as_view(), state=False,
-                          fallback=lambda req: ServeView.as_view()(req, req.path)) # noqa
-    urlpatterns.append(pattern)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

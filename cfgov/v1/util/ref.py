@@ -141,6 +141,20 @@ supported_languagues = [
 ]
 
 
+def get_appropriate_categories(specific_categories, page_type):
+    """ An array of specific categories is provided from whatever
+    is selected in the admin for related posts, however they each
+    correspond to a page type, e.g. newsroom or blog. This function returns
+    only the categories that belong to the page type in question
+    """
+    # Convert the provided categories to their slugs
+    category_slugs = related_posts_category_lookup(specific_categories)
+    # Look up the available categories for the page type in question
+    options = [c[0] for c in choices_for_page_type(page_type)]
+
+    return [c for c in category_slugs if c in options]
+
+
 def related_posts_category_lookup(related_categories):
     related = []
     for category in related_categories:
