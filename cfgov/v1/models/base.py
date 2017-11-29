@@ -358,6 +358,10 @@ class CFGOVPage(Page):
     def meta_image(self):
         return self.social_sharing_image
 
+    @property
+    def post_preview_cache_key(self):
+        return 'post_preview_{}'.format(self.id)
+
 
 class CFGOVPageCategory(Orderable):
     page = ParentalKey(CFGOVPage, related_name='categories')
