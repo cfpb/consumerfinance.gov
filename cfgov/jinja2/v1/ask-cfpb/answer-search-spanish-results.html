@@ -15,10 +15,11 @@
                         <h1>
                             {{ page.result_query }}
                         </h1>
+                        {% if page.suggestion and flag_enabled('ASK_SEARCH_TYPOS', request) %}
+                        <h2>Mostrando resultados para “{{ page.result_query }}”</h2>
+                        <p>Buscar en vez para <a href="/ask-cfpb/search?q={{ page.query }}&correct=0">{{ page.query }}</a></p>
+                        {% endif %}
                     </header><!-- .header -->
-                    {% if page.suggestion and flag_enabled('ASK_SEARCH_TYPOS', request) %}
-                        <p>Search instead for <a href="/ask-cfpb/search?q={{ page.suggestion }}&correct=0">{{ page.suggestion }}</a></p>
-                    {% endif %}
 
                     {% if paginator.num_pages > 1 %}
                     <nav class="pagination">
@@ -67,10 +68,10 @@
                 <div class="primary span8">
                     <header class="header">
                         <h2>No pudimos encontrar resultados para<br>"<em>{{ page.result_query }}</em>"</h2>
-                    </header><!-- .header -->
-                    {% if page.suggestion and flag_enabled('ASK_SEARCH_TYPOS', request) %}
+                        {% if page.suggestion and flag_enabled('ASK_SEARCH_TYPOS', request) %}
                         <p>Search instead for <a href="/ask-cfpb/search?q={{ page.suggestion }}&correct=0">{{ page.suggestion }}</a></p>
-                    {% endif %}
+                        {% endif %}
+                    </header><!-- .header -->
 
                     <p>Siempre estamos agregando respuestas, así que regrese pronto o llame al <a href="tel:+18554112372" class="phone">(855) 411-2372</a> para hacer una pregunta por teléfono.</p>
                     <ul class="unstyled">
