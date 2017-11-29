@@ -128,7 +128,7 @@ def ask_search(request, language='en', as_json=False):
 
     if as_json:
         results = {
-            'query': clean_query,
+            'query': clean_query.query_string.strip(),
             'result_query': qstring,
             'suggestion': suggestion,
             'results': [
