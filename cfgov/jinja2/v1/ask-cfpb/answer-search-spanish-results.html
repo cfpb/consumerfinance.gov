@@ -16,7 +16,7 @@
                             {{ page.result_query }}
                         </h1>
                         {% if page.suggestion and flag_enabled('ASK_SEARCH_TYPOS', request) %}
-                        <h2>Mostrando resultados para “{{ page.result_query }}”</h2>
+                        <h3>Mostrando resultados para “{{ page.result_query }}”</h3>
                         <p>Buscar en vez para <a href="/ask-cfpb/search?q={{ page.query }}&correct=0">{{ page.query }}</a></p>
                         {% endif %}
                     </header><!-- .header -->
