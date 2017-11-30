@@ -8,10 +8,13 @@
 */
 
 const browserSync = require( 'browser-sync' );
+const config = require( '../config.js' );
+const configLegacy = config.legacy;
+const configScripts = config.scripts;
 const gulp = require( 'gulp' );
-const gulpChanged = require( 'gulp-changed' );
 const gulpConcat = require( 'gulp-concat' );
 const gulpModernizr = require( 'gulp-modernizr' );
+const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
@@ -21,23 +24,32 @@ const paths = require( '../../config/environment' ).paths;
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
 const webpackStream = require( 'webpack-stream' );
-const configLegacy = require( '../config.js' ).legacy;
+
+const NEWER_EXTRAS = [
+  configScripts.src,
+  paths.modules,
+  './config/**/*.js',
+  './gulp/**/*.js'
+];
 
 /**
  * Standardize webpack workflow for handling script
  * configuration, source, and destination settings.
- * @param {Object} config - Settings for webpack.
+ * @param {Object} localWebpackConfig - Settings for Webpack.
  * @param {string} src - Source URL in the unprocessed assets directory.
  * @param {string} dest - Destination URL in the processed assets directory.
  * @returns {PassThrough} A source stream.
  */
-function _processScript( config, src, dest ) {
+function _processScript( localWebpackConfig, src, dest ) {
   return gulp.src( paths.unprocessed + src )
-    .pipe( gulpChanged( paths.processed + dest ) )
+    .pipe( gulpNewer( {
+      dest:  paths.processed + dest,
+      extra: NEWER_EXTRAS
+    } ) )
     .pipe( named( function( file ) {
       return file.relative;
     } ) )
-    .pipe( webpackStream( config, webpack ) )
+    .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + dest ) )
     .pipe( browserSync.reload( {
@@ -51,6 +63,10 @@ function _processScript( config, src, dest ) {
  */
 function scriptsPolyfill() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
+    .pipe( gulpNewer( {
+      dest:  paths.processed + '/js/modernizr.min.js',
+      extra: NEWER_EXTRAS
+    } ) )
     .pipe( gulpModernizr( {
       tests:   [ 'csspointerevents', 'classlist', 'es5' ],
       options: [ 'setClasses', 'html5printshiv' ]
@@ -139,10 +155,10 @@ function scriptsOnDemandFooter() {
  */
 function scriptsNonResponsive() {
   return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
-    .pipe( gulpChanged(
-      paths.processed + '/js/atomic',
-      { extension: '.nonresponsive.js' }
-    ) )
+    .pipe( gulpNewer( {
+      dest:  paths.processed + '/js/atomic/header.nonresponsive.js',
+      extra: NEWER_EXTRAS
+    } ) )
     .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
@@ -159,11 +175,11 @@ function scriptsNonResponsive() {
  */
 function scriptsNemo() {
   return gulp.src( configLegacy.scripts )
+    .pipe( gulpNewer( {
+      dest:  configLegacy.dest + '/nemo/_/js/scripts.min.js',
+      extra: NEWER_EXTRAS
+    } ) )
     .pipe( gulpConcat( 'scripts.js' ) )
-    .pipe( gulpChanged(
-      configLegacy.dest + '/nemo/_/js',
-      { extension: '.min.js' }
-    ) )
     .on( 'error', handleErrors )
     .pipe( gulpUglify() )
     .pipe( gulpRename( 'scripts.min.js' ) )
