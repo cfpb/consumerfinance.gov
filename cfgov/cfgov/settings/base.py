@@ -511,7 +511,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   'universal.iperceptions.com',
                   'sample.crazyegg.com',
                   'about:',
-                  'connect.facebook.net'
+                  'connect.facebook.net',
+                  'www.federalregister.gov',
                   )
 
 # These specify valid sources of CSS code
