@@ -27,14 +27,14 @@
 
 {% macro render(value) %}
 
-{% set ancestor = page.get_filter_data() %}
+{% set form_id, ancestor = page.get_filter_data() %}
 {% set page_url = get_protected_url(ancestor) %}
 {% set published_date = value.date %}
 {% set has_authors = page.authors.exists() %}
 
 <div class="o-item-introduction">
     {% if page.categories.count() > 0 and value.show_category %}
-        {{ category_slug.render(page.categories.first().name, page_url) }}
+        {{ category_slug.render(page.categories.first().name, page_url, index=form_id) }}
     {% endif %}
     <h1>{{ value.heading | safe }}</h1>
 
@@ -49,7 +49,7 @@
             <span class="byline">
             {%- for author in page.get_authors() -%}
                 {{- 'By ' if loop.index == 1 else ' and ' }}
-                <a href="{{ page_url }}?authors={{ author.slug }}">
+                <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
                     {{ author.name }}
                 </a>
             {%- endfor -%}
