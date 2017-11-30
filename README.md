@@ -78,3 +78,4 @@ which is the front-end pattern library used in this project.
 
 This project uses the [Capital Framework](https://github.com/cfpb/capital-framework)
 for its user interface and layout components.
+
