@@ -206,22 +206,22 @@
    Creates a mega menu primary navigation menu.
 
    ========================================================================== #}
-{% macro mega_menu( top_level_item ) %}
+{% macro mega_menu( menu_items ) %}
 
 <nav class="{{ base_class }}
-            u-hidden"
-     data-js-hook="behavior_flyout-menu"
-     aria-label="main navigation"
-     role="navigation">
-    <button class="{{ base_class ~ '_trigger' }}"
-            data-js-hook="behavior_flyout-menu_trigger"
-            aria-pressed="false">
-        <span class="u-visually-hidden">Menu</span>
-    </button>
-    {# Create a root menu at depth one.
-       This is the 1st level of a 3-level menu. #}
-    {{ _nav_level( 1, top_level_item ) }}
-    <button class="{{ base_class ~ '_tab-trigger' }}" aria-hidden="true"></button>
+           u-hidden"
+    data-js-hook="behavior_flyout-menu"
+    aria-label="main navigation"
+    role="navigation">
+   <button class="{{ base_class ~ '_trigger' }}"
+           data-js-hook="behavior_flyout-menu_trigger"
+           aria-pressed="false">
+       <span class="u-visually-hidden">Menu</span>
+   </button>
+   {# Create a root menu at depth one.
+      This is the 1st level of a 3-level menu. #}
+   {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]} ) }}
+   <button class="{{ base_class ~ '_tab-trigger' }}" aria-hidden="true"></button>
 </nav>
 
 {% endmacro %}

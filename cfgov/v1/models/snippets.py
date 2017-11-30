@@ -248,32 +248,37 @@ class MenuItem(models.Model):
     def __str__(self):
         return self.link_text
 
-    def filter_blocks(self, show_draft):
+    def get_content(self, show_draft):
+        """
+        Filter menu item column blocks by state
+        and structure content as nav_groups, featured_content,
+        and footer for display in template.
+        """
         self.nav_groups = []
         for i in range(1, 5):
-            col = getattr(self, 'column_' + str(i))
-            block = self.get_block_by_state(col, show_draft)
+            column_blocks = getattr(self, 'column_' + str(i))
+            block = self.filter_blocks_by_state(column_blocks,
+                                                show_draft)
             if block and block.block_type == 'nav_group':
                 self.nav_groups.append(block)
             elif block and block.block_type == "featured_content":
                 self.featured_content = block
-        self.footer = self.get_block_by_state(
+        self.footer = self.filter_blocks_by_state(
             self.nav_footer, show_draft)
         return self
 
-    @classmethod
-    def get_items(cls, show_draft):
-        return [item.filter_blocks(show_draft)
-                for item in cls.objects.all().order_by('order')]
-
     @staticmethod
-    def get_block_by_state(blocks, show_draft):
-        block_to_display = None
-        for i, block in enumerate(blocks):
-            is_draft = block.value.get('draft', '')
+    def filter_blocks_by_state(blocks, show_draft):
+        """
+        Return a single item from group of blocks
+        based on its state.
+        """
+        block = None
+        for i, item in enumerate(blocks):
+            is_draft = item.value.get('draft', '')
             is_last = i == len(blocks) - 1
             if (not show_draft and not is_draft) or \
                (show_draft and is_draft) or \
-               (show_draft and is_last and block_to_display is None):
-                    block_to_display = block
-        return block_to_display
+               (show_draft and is_last and block is None):
+                    block = item
+        return block
