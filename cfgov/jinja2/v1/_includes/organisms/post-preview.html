@@ -50,9 +50,6 @@
    controls.post_date_description: A string of the post publication description.
    controls.categories:            An array with the categories for the post.
 
-   form_id:                        A unique ID for a form filter URL.
-                                   Defaults to 0.
-
    url: A string with the path for the homepage of the pagetype
                               `/about-us/blog/`, `/about-us/newsroom/`
 
@@ -62,7 +59,7 @@
 
 {% import 'macros/time.html' as time %}
 
-{% macro render(post, controls, form_id=0, url='', post_date_description='') %}
+{% macro render(post, controls, url='', post_date_description='') %}
     {% set date_desc = controls.post_date_description or post_date_description or 'Published' %}
     {% set cat_controls = controls.categories %}
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
@@ -82,15 +79,13 @@
             {% if show_categories %}
                 {% import 'macros/category-slug.html' as category_slug %}
                 {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
-                    {{ category_slug.render('blog', page_url, '',
-                                            false, form_id) }}
+                    {{ category_slug.render('blog', page_url, '', false) }}
                 {% else %}
                     {% for cat in post.categories.all() %}
                         {% if loop.index > 1 %}
                             |
                         {% endif %}
-                        {{ category_slug.render(cat.name, page_url, '',
-                                                false, form_id) }}
+                        {{ category_slug.render(cat.name, page_url, '', false) }}
                     {% endfor %}
                 {% endif %}
             {% endif %}
@@ -164,15 +159,15 @@
             <div class="o-post-preview_byline-group">
             {% for author in post.get_authors() %}
                 {% if loop.index == 1  %}
-                    By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                    By <a href="{{ page_url }}?authors={{ author.slug }}">
                        {{ author.name }}
                        </a>
                 {% elif loop.last == true %}
-                    and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                    and <a href="{{ page_url }}?authors={{ author.slug }}">
                         {{ author.name }}
                         </a>
                 {% else %}
-                    , <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                    , <a href="{{ page_url }}?authors={{ author.slug }}">
                       {{ author.name }}
                       </a>
                 {% endif %}
@@ -181,7 +176,7 @@
 
             {% if post.tags.exists() %}
                 {%- import 'tags.html' as tags %}
-                {{ tags.render(post.related_metadata_tags(), page_url, true, false, form_id, is_wagtail=True) }}
+                {{ tags.render(post.related_metadata_tags(), page_url, true, false, is_wagtail=True) }}
             {% endif %}
 
             {% if post.secondary_link_url and post.secondary_link_text %}

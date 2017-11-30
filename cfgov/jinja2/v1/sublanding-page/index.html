@@ -8,7 +8,7 @@
 {% block hero -%}
     {% for block in page.header -%}
         {% import 'templates/render_block.html' as render_block with context %}
-        {{ render_block.render(block, loop.index) }}
+        {{ render_block.render(block) }}
     {%- endfor %}
 {% endblock %}
 
@@ -30,27 +30,27 @@
                 {{ featured_content.render(block.value) }}
             </div>
         {% elif block.block_type == 'feedback' %}
-            {{- form_block.render(block, 'content', loop.index0) -}}
+            {{- form_block.render(block, 'content') -}}
         {% elif 'post_preview_snapshot' in block.block_type %}
             <div class="block
                         {{ block.block.meta.classname if block.block.meta.classname else '' }}">
                 {% set limit = block.value.limit | int %}
                 {% set posts = page.get_browsefilterable_posts(limit) %}
                 {% for post in posts %}
-                    {{ post_preview.render(post=post[1], controls=none, form_id=post[0], url=get_protected_url(post[1].parent()), post_date_description=block.value.post_date_description) }}
+                    {{ post_preview.render(post, controls=none, url=get_protected_url(post.parent()), post_date_description=block.value.post_date_description) }}
                 {% endfor %}
              </div>
         {% elif 'filter_controls' in block.block_type %}
             <div class="block block__flush-top">
                 {% import 'organisms/filterable-list-controls.html' as flc with context %}
-                {{ flc.render(block.value, loop.index0) }}
+                {{ flc.render(block.value) }}
             </div>
         {% elif 'text_introduction' not in block.block_type %}
             {% import 'templates/render_block.html' as render_block with context %}
-            {{ render_block.render(block, loop.index) }}
+            {{ render_block.render(block) }}
         {% elif not page.sidebar_breakout %}
             {% import 'templates/render_block.html' as render_block with context %}
-            {{ render_block.render(block, loop.index) }}
+            {{ render_block.render(block) }}
         {% endif %}
     {%- endfor %}
 
