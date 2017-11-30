@@ -620,15 +620,6 @@ FLAGS = {
         'boolean': DEPLOY_ENVIRONMENT == 'build',
     },
 
-    # Add sortable tables to Wagtail
-    # When enabled, the sortable tables option will be added to the Wagtail Admin
-    # The template will render for the front-end, but the sortable code is missing
-    # and the table will not be sortable until cf-tables from CF 4.x is implemented
-    'SORTABLE_TABLES': {},
-
-    # The release of the consumer Financial Well Being Scale app
-    'FWB_RELEASE': {},
-
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
 }
