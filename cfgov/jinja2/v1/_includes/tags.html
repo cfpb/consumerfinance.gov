@@ -34,14 +34,12 @@
     <span class="{{'u-visually-hidden' if hide_heading else 'tags_heading' }}">Topics:</span>
     <ul class="tags_list">
         {% if is_wagtail %}
-            {% for tag in tags.links %}
+            {% for tag in tags.links if tag.url %}
             <li class="tags_tag">
-                {% if tag.url %}
-                    <a href="{{ tag.url }}" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        {{ tag.text }}
-                    </a>
-                {% endif %}
+                <a href="{{ tag.url }}" class="tags_link">
+                    <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                    {{ tag.text }}
+                </a>
             </li>
             {% endfor %}
         {% else %}
