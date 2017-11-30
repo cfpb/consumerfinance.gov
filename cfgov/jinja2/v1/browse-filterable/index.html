@@ -19,19 +19,19 @@
                 {{ featured_content.render(block.value) }}
             </div>
         {% else %}
-            {{ render_block.render(block) }}
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {% endfor %}
     {% for block in page.content %}
         {% if 'filter_controls' in block.block_type %}
             <div class="block
                         block__flush-top">
-                {{ flc.render(block.value) }}
+                {{ flc.render(block.value, loop.index0) }}
             </div>
         {% elif block.block_type == 'feedback' %}
-            {{- form_block.render(block, 'content') -}}
+            {{- form_block.render(block, 'content', loop.index0) -}}
         {% else %}
-            {{ render_block.render(block) }}
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {% endfor %}
     {% if page.sidefoot %}
