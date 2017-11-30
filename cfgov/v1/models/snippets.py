@@ -248,37 +248,26 @@ class MenuItem(models.Model):
     def __str__(self):
         return self.link_text
 
-    def get_content(self, show_draft):
+    def get_content(self, draft):
         """
-        Filter menu item column blocks by state
-        and structure content as nav_groups, featured_content,
-        and footer for display in template.
+        Filter menu item column content by by draft/live state
+        and structure it for display in menu template.
         """
-        self.nav_groups = []
-        for i in range(1, 5):
-            column_blocks = getattr(self, 'column_' + str(i))
-            block = self.filter_blocks_by_state(column_blocks,
-                                                show_draft)
-            if block and block.block_type == 'nav_group':
-                self.nav_groups.append(block)
-            elif block and block.block_type == "featured_content":
-                self.featured_content = block
-        self.footer = self.filter_blocks_by_state(
-            self.nav_footer, show_draft)
+        cols = [getattr(self, 'column_' + str(i)) for i in range(1, 5)]
+        self.nav_groups = filter(None, [self.get_active_block(col, draft)
+                                        for col in cols])
+        if self.nav_groups[-1].block_type == "featured_content":
+            self.featured_content = self.nav_groups.pop()
+        self.footer = self.get_active_block(self.nav_footer, draft)
         return self
 
     @staticmethod
-    def filter_blocks_by_state(blocks, show_draft):
+    def get_active_block(blocks, draft):
         """
-        Return a single item from group of blocks
-        based on its state.
+        Returns first block whose state matches draft
+        parameter. If draft parameter is true, will
+        return last live block if there are no draft blocks.
         """
-        block = None
-        for i, item in enumerate(blocks):
-            is_draft = item.value.get('draft', '')
-            is_last = i == len(blocks) - 1
-            if (not show_draft and not is_draft) or \
-               (show_draft and is_draft) or \
-               (show_draft and is_last and block is None):
-                    block = item
-        return block
+        return next((block for i, block in enumerate(blocks) if
+                    block.value.get('draft', '') == draft or
+                    (draft and i == len(blocks) - 1)), None)
