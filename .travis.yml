@@ -1,5 +1,5 @@
 language: python
-sudo: required
+sudo: false
 dist: trusty
 
 python:
@@ -26,7 +26,6 @@ env:
   matrix:
     - RUNTEST=frontend
     - RUNTEST=backend
-    - RUNTEST=acceptance
 
 branches:
   only:

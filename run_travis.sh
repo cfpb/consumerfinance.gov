@@ -18,8 +18,6 @@ elif [ "$RUNTEST" == "acceptance" ]; then
     source $HOME/.nvm/nvm.sh
     nvm use 8.0.0
     export DISPLAY=:99.0
-    sudo chown root /opt/google/chrome/chrome-sandbox
-    sudo chmod 4755 /opt/google/chrome/chrome-sandbox
     sh -e /etc/init.d/xvfb start &
     sleep 3
     export HEADLESS_CHROME_BINARY=/usr/bin/google-chrome-beta
