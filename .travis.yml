@@ -1,12 +1,12 @@
 language: python
-sudo: false
+sudo: required
 dist: trusty
 
 python:
   - "2.7"
 
 addons:
-  chrome: beta
+  chrome: stable
 
 cache:
   pip: true
@@ -29,7 +29,7 @@ env:
     - RUNTEST=acceptance
 
 branches:
-  only: 
+  only:
     - master
 
 script:
