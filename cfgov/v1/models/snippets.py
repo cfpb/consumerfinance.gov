@@ -256,8 +256,8 @@ class MenuItem(models.Model):
         cols = [getattr(self, 'column_' + str(i)) for i in range(1, 5)]
         self.nav_groups = filter(None, [self.get_active_block(col, draft)
                                         for col in cols])
-        if self.nav_groups[-1].block_type == "featured_content":
-            self.featured_content = self.nav_groups.pop()
+        self.featured_content = self.nav_groups.pop() if len(self.nav_groups) \
+            and self.nav_groups[-1].block_type == "featured_content" else None
         self.footer = self.get_active_block(self.nav_footer, draft)
         return self
 
