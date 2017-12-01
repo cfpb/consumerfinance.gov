@@ -8,7 +8,7 @@ from model_mommy import mommy
 from django.apps import apps
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.http import HttpRequest, Http404, QueryDict
-import django.test
+from django.test import TestCase, override_settings
 from django.utils import timezone
 from wagtail.wagtailcore.models import Site
 from wagtailsharing.models import SharingSite
@@ -21,7 +21,7 @@ from v1.util.migrations import get_or_create_page, get_free_path
 now = timezone.now()
 
 
-class AnswerPagePreviewCase(django.test.TestCase):
+class AnswerPagePreviewCase(TestCase):
 
     def setUp(self):
         from v1.models import HomePage
@@ -91,7 +91,7 @@ class AnswerPagePreviewCase(django.test.TestCase):
                 self.test_answer.pk)
 
 
-class AnswerViewTestCase(django.test.TestCase):
+class AnswerViewTestCase(TestCase):
 
     def setUp(self):
         from v1.models import HomePage
@@ -166,8 +166,8 @@ class AnswerViewTestCase(django.test.TestCase):
         self.assertTrue(mock_filter.called_with(language='en', q='payday'))
         self.assertEqual(response.status_code, 404)
 
-    @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
-    def test_en_search(self, mock_filter):
+    @mock.patch('ask_cfpb.views.SearchQuerySet')
+    def test_en_search(self, mock_sqs):
         from v1.util.migrations import get_or_create_page
         mock_page = get_or_create_page(
             apps,
@@ -177,22 +177,68 @@ class AnswerViewTestCase(django.test.TestCase):
             'ask-cfpb-search-results',
             self.ROOT_PAGE,
             language='en')
+
         mock_return = mock.Mock()
         mock_return.url = 'mockcfpb.gov'
         mock_return.autocomplete = 'A mock question'
         mock_return.text = 'Mock answer text.'
+
         mock_queryset = mock.Mock()
         mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_queryset.count.return_value = 1
-        mock_filter.return_value = mock_queryset
+
+        mock_sqs_instance = mock_sqs.return_value.models.return_value
+        mock_sqs_instance.filter.return_value = mock_queryset
+        mock_sqs_instance.spelling_suggestion.return_value = 'payday'
+
         response = self.client.get(reverse(
             'ask-search-en'), {'q': 'payday'})
-        self.assertEqual(mock_filter.call_count, 1)
-        self.assertTrue(mock_filter.called_with(language='en', q='payday'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response.context_data['page'],
             mock_page)
+        self.assertEqual(
+            response.context_data['page'].suggestion,
+            None)
+        self.assertEqual(mock_sqs_instance.filter.call_count, 1)
+        self.assertTrue(mock_sqs_instance.filter.called_with(
+            language='en', q='payday'))
+
+    @override_settings(FLAGS={'ASK_SEARCH_TYPOS': {'boolean': True}})
+    @mock.patch('ask_cfpb.views.SearchQuerySet')
+    def test_en_search_suggestion(self, mock_sqs):
+        from v1.util.migrations import get_or_create_page
+        mock_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerResultsPage',
+            'Mock results page',
+            'ask-cfpb-search-results',
+            self.ROOT_PAGE,
+            language='en')
+
+        mock_return = mock.Mock()
+        mock_return.url = 'mockcfpb.gov'
+        mock_return.autocomplete = 'A mock question'
+        mock_return.text = 'Mock answer text.'
+
+        mock_queryset = mock.Mock()
+        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
+        mock_queryset.count.return_value = 0
+
+        mock_sqs_instance = mock_sqs.return_value.models.return_value
+        mock_sqs_instance.filter.return_value = mock_queryset
+        mock_sqs_instance.spelling_suggestion.return_value = 'payday'
+
+        response = self.client.get(reverse(
+            'ask-search-en'), {'q': 'paydya'})
+        self.assertEqual(response.status_code, 200)
+        response_page = response.context_data['page']
+
+        self.assertEqual(response_page, mock_page)
+        self.assertEqual(response_page.suggestion, 'paydya')
+        self.assertEqual(response_page.result_query, 'payday')
+        self.assertEqual(response_page.query, 'paydya')
 
     @mock.patch('ask_cfpb.views.redirect_ask_search')
     def test_ask_search_encounters_facets(self, mock_redirect):
@@ -329,7 +375,7 @@ class AnswerViewTestCase(django.test.TestCase):
             ['question', 'url'])
 
 
-class RedirectAskSearchTestCase(django.test.TestCase):
+class RedirectAskSearchTestCase(TestCase):
 
     def test_redirect_search_no_facets(self):
         request = HttpRequest()

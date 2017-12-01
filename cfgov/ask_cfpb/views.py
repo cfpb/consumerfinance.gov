@@ -113,7 +113,8 @@ def ask_search(request, language='en', as_json=False):
     _map = language_map[language]
     sqs = _map['query']
     clean_query = Clean(request.GET.get('q', ''))
-    qstring = clean_query.query_string.strip()
+    clean_qstring = clean_query.query_string.strip()
+    qstring = clean_qstring
     query_sqs = sqs.filter(content=clean_query)
 
     # If we have no results from our query, let's try to suggest a better one
@@ -128,7 +129,7 @@ def ask_search(request, language='en', as_json=False):
 
     if as_json:
         results = {
-            'query': clean_query.query_string.strip(),
+            'query': clean_qstring,
             'result_query': qstring,
             'suggestion': suggestion,
             'results': [
@@ -147,7 +148,7 @@ def ask_search(request, language='en', as_json=False):
             AnswerResultsPage,
             language=language,
             slug=_map['slug'])
-        page.query = clean_query
+        page.query = clean_qstring
         page.result_query = qstring
         page.suggestion = suggestion
         page.answers = []
