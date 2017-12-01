@@ -3,13 +3,14 @@
 // Required modules.
 var Analytics = require( '../modules/Analytics' );
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var ERROR_MESSAGES = require( '../config/error-messages-config' );
 var Expandable = require( '../organisms/Expandable' );
 var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
 var Multiselect = require( '../molecules/Multiselect' );
 var Notification = require( '../molecules/Notification' );
 var standardType = require( '../modules/util/standard-type' );
 var validators = require( '../modules/util/validators' );
+
+import { DEFAULT as DEFAULT_MESSAGE } from '../config/error-messages-config';
 
 /**
  * FilterableListControls
@@ -162,7 +163,7 @@ function FilterableListControls( element ) {
       msg += validation.label + ' ' + validation.msg + '</br>';
     } );
 
-    return msg || ERROR_MESSAGES.DEFAULT;
+    return msg || DEFAULT_MESSAGE;
   }
 
   /**

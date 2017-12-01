@@ -91,10 +91,12 @@
     "protractor": "5.1.2",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "protractor-cucumber-framework": "4.0.9",
+    "rollup": "0.52.0",
     "selenium-webdriver": "3.5.0",
     "sinon": "4.0.2",
     "snyk": "1.25.0",
-    "wcag": "0.3.0"
+    "wcag": "0.3.0",
+    "webpack-rollup-loader": "0.5.0"
   },
   "browser": {
     "es5-sham": "./node_modules/es5-shim/es5-sham.min.js"

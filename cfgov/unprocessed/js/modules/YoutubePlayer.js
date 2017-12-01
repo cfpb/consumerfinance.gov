@@ -6,7 +6,7 @@
 'use strict';
 
 var _noopFunct = require( './util/standard-type' ).noopFunct;
-var VideoPlayer = require( './VideoPlayer' );
+import VideoPlayer from './VideoPlayer';
 var YoutubePlayer;
 
 var CLASSES = Object.freeze( {
