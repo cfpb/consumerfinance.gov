@@ -140,9 +140,7 @@ class CFGOVPage(Page):
     def generate_view_more_url(self, request):
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
         tags = []
-        index = activity_log.form_id()
-        tags = urlencode([('filter%s_topics' % index, tag)
-                          for tag in self.tags.slugs()])
+        tags = urlencode([('topics', tag) for tag in self.tags.slugs()])
         return (get_protected_url({'request': request}, activity_log)
                 + '?' + tags)
 
@@ -207,12 +205,13 @@ class CFGOVPage(Page):
     def related_metadata_tags(self):
         # Set the tags to correct data format
         tags = {'links': []}
-        id, filter_page = self.get_filter_data()
+        filter_page = self.get_filter_data()
+        relative_url = filter_page.relative_url(filter_page.get_site())
         for tag in self.specific.tags.all():
             tag_link = {'text': tag.name, 'url': ''}
-            if id is not None and filter_page is not None:
+            if filter_page:
                 relative_url = filter_page.relative_url(filter_page.get_site())
-                param = '?filter' + str(id) + '_topics=' + tag.slug
+                param = '?topics=' + tag.slug
                 tag_link['url'] = relative_url + param
             tags['links'].append(tag_link)
         return tags
@@ -223,8 +222,8 @@ class CFGOVPage(Page):
                                                     'SublandingFilterablePage',
                                                     'EventArchivePage',
                                                     'NewsroomLandingPage']:
-                return ancestor.form_id(), ancestor
-        return None, None
+                return ancestor
+        return None
 
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()

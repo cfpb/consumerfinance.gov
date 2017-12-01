@@ -61,53 +61,17 @@ class FilterableListMixin(object):
     # came from.
     def get_form_specific_filter_data(self, request_dict):
         filters_data = []
-        for i in self.get_filter_ids():
-            data = {}
-            for field in FilterableListForm.declared_fields:
-                request_field_name = 'filter' + str(i) + '_' + field
-                if field in ['categories', 'topics', 'authors']:
-                    data[field] = request_dict.getlist(request_field_name, [])
-                else:
-                    data[field] = request_dict.get(request_field_name, '')
+        data = {}
+        for field in FilterableListForm.declared_fields:
+            if field in ['categories', 'topics', 'authors']:
+                data[field] = request_dict.getlist(field, [])
+            else:
+                data[field] = request_dict.get(field, '')
             filters_data.append(data)
         return filters_data
 
-    # Find every form existing on the page and assign a dictionary with its
-    # number as the key.
-    def get_filter_ids(self):
-        keys = []
-        for i, block in enumerate(self.content):
-            try:
-                if 'filter_controls' in block.block_type:
-                    keys.append(i)
-            except TypeError as e:
-                raise e
-        return keys
-
-    def has_active_filters(self, request, index):
-        active_filters = False
-        forms_data = self.get_form_specific_filter_data(
-            request_dict=request.GET)
-        filter_ids = self.get_filter_ids()
-        if forms_data and index in filter_ids:
-            try:
-                for value in forms_data[filter_ids.index(index)].values():
-                    if value:
-                        active_filters = True
-            except TypeError as e:
-                raise e
-
-        return active_filters
-
     def per_page_limit(self):
         return 10
-
-    def form_id(self):
-        form_ids = self.get_filter_ids()
-        if form_ids:
-            return form_ids[0]
-        else:
-            return 0
 
     def serve(self, request, *args, **kwargs):
         """ Modify response header to set a shorter TTL in Akamai """
