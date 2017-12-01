@@ -18,23 +18,7 @@ const gulpPostcss = require( 'gulp-postcss' );
 const gulpRename = require( 'gulp-rename' );
 const gulpSourcemaps = require( 'gulp-sourcemaps' );
 const handleErrors = require( '../utils/handle-errors' );
-const paths = require( '../../config/environment' ).paths;
 const postcssUnmq = require( 'postcss-unmq' );
-
-const NEWER_EXTRAS = [
-  configStyles.cwd + '/**/*.less',
-  paths.modules,
-  './config/**/*.js',
-  './gulp/**/*.js'
-];
-const NEWER_EXTRAS_KB_ES = [
-  configLegacy.cwd + '/knowledgebase/**/*.css',
-  configLegacy.cwd + '/knowledgebase/**/*.less'
-];
-const NEWER_EXTRAS_NEMO = [
-  configLegacy.cwd + '/nemo/**/*.css',
-  configLegacy.cwd + '/nemo/**/*.less'
-];
 
 /**
  * Process modern CSS.
@@ -44,7 +28,7 @@ function stylesModern() {
   return gulp.src( configStyles.cwd + configStyles.src )
     .pipe( gulpNewer( {
       dest:  configStyles.dest + '/main.css',
-      extra: NEWER_EXTRAS
+      extra: configStyles.otherBuildTriggerFiles
     } ) )
     .pipe( gulpSourcemaps.init() )
     .pipe( gulpLess( configStyles.settings ) )
@@ -68,7 +52,7 @@ function stylesIE9() {
   return gulp.src( configStyles.cwd + configStyles.src )
     .pipe( gulpNewer( {
       dest:  configStyles.dest + '/main.ie9.css',
-      extra: NEWER_EXTRAS
+      extra: configStyles.otherBuildTriggerFiles
     } ) )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
@@ -98,7 +82,7 @@ function stylesIE8() {
   return gulp.src( configStyles.cwd + configStyles.src )
     .pipe( gulpNewer( {
       dest:  configStyles.dest + '/main.ie8.css',
-      extra: NEWER_EXTRAS
+      extra: configStyles.otherBuildTriggerFiles
     } ) )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
@@ -129,7 +113,7 @@ function stylesOnDemand() {
       dest:  configStyles.dest,
       // ext option required because this subtask uses multiple source files
       ext:   '.nonresponsive.css',
-      extra: NEWER_EXTRAS
+      extra: configStyles.otherBuildTriggerFiles
     } ) )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
@@ -164,7 +148,7 @@ function stylesFeatureFlags() {
       dest:  configStyles.dest + '/feature-flags',
       // ext option required because this subtask uses multiple source files
       ext:   '.css',
-      extra: NEWER_EXTRAS
+      extra: configStyles.otherBuildTriggerFiles
     } ) )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
@@ -187,7 +171,8 @@ function stylesKnowledgebaseSpanishProd() {
     '/knowledgebase/less/es-ask-styles.less' )
     .pipe( gulpNewer( {
       dest:  configStyles.dest + '/knowledgebase/es-ask-styles.min.css',
-      extra: NEWER_EXTRAS.concat( NEWER_EXTRAS_KB_ES )
+      extra: configStyles.otherBuildTriggerFiles
+             .concat( configStyles.otherBuildTriggerFilesKBSpanish )
     } ) )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
@@ -214,7 +199,8 @@ function stylesKnowledgebaseSpanishIE() {
     '/knowledgebase/less/es-ask-styles-ie.less' )
     .pipe( gulpNewer( {
       dest:  configLegacy.dest + '/knowledgebase/es-ask-styles-ie.min.css',
-      extra: NEWER_EXTRAS.concat( NEWER_EXTRAS_KB_ES )
+      extra: configStyles.otherBuildTriggerFiles
+             .concat( configStyles.otherBuildTriggerFilesKBSpanish )
     } ) )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
@@ -240,7 +226,8 @@ function stylesNemoProd() {
   return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles.less' )
     .pipe( gulpNewer( {
       dest:  configLegacy.dest + '/nemo/_/c/es-styles.min.css',
-      extra: NEWER_EXTRAS.concat( NEWER_EXTRAS_NEMO )
+      extra: configStyles.otherBuildTriggerFiles
+             .concat( configStyles.otherBuildTriggerFilesNemo )
     } ) )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
@@ -266,7 +253,8 @@ function stylesNemoIE() {
   return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles-ie.less' )
     .pipe( gulpNewer( {
       dest:  configLegacy.dest + '/nemo/_/c/es-styles-ie.min.css',
-      extra: NEWER_EXTRAS.concat( NEWER_EXTRAS_NEMO )
+      extra: configStyles.otherBuildTriggerFiles
+             .concat( configStyles.otherBuildTriggerFilesNemo )
     } ) )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
@@ -292,7 +280,7 @@ function stylesOAH() {
   return gulp.src( configStyles.cwd + '/apps/owning-a-home/main.less' )
     .pipe( gulpNewer( {
       dest:  configLegacy.dest + '/oah/main.css',
-      extra: NEWER_EXTRAS
+      extra: configStyles.otherBuildTriggerFiles
     } ) )
     .pipe( gulpSourcemaps.init() )
     .pipe( gulpLess( configStyles.settings ) )

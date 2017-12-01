@@ -25,13 +25,6 @@ const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
 const webpackStream = require( 'webpack-stream' );
 
-const NEWER_EXTRAS = [
-  configScripts.src,
-  paths.modules,
-  './config/**/*.js',
-  './gulp/**/*.js'
-];
-
 /**
  * Standardize webpack workflow for handling script
  * configuration, source, and destination settings.
@@ -44,7 +37,7 @@ function _processScript( localWebpackConfig, src, dest ) {
   return gulp.src( paths.unprocessed + src )
     .pipe( gulpNewer( {
       dest:  paths.processed + dest,
-      extra: NEWER_EXTRAS
+      extra: configScripts.otherBuildTriggerFiles
     } ) )
     .pipe( named( function( file ) {
       return file.relative;
@@ -65,7 +58,7 @@ function scriptsPolyfill() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
     .pipe( gulpNewer( {
       dest:  paths.processed + '/js/modernizr.min.js',
-      extra: NEWER_EXTRAS
+      extra: configScripts.otherBuildTriggerFiles
     } ) )
     .pipe( gulpModernizr( {
       tests:   [ 'csspointerevents', 'classlist', 'es5' ],
@@ -157,7 +150,7 @@ function scriptsNonResponsive() {
   return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
     .pipe( gulpNewer( {
       dest:  paths.processed + '/js/atomic/header.nonresponsive.js',
-      extra: NEWER_EXTRAS
+      extra: configScripts.otherBuildTriggerFiles
     } ) )
     .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
     .on( 'error', handleErrors )
@@ -177,7 +170,7 @@ function scriptsNemo() {
   return gulp.src( configLegacy.scripts )
     .pipe( gulpNewer( {
       dest:  configLegacy.dest + '/nemo/_/js/scripts.min.js',
-      extra: NEWER_EXTRAS
+      extra: configScripts.otherBuildTriggerFiles
     } ) )
     .pipe( gulpConcat( 'scripts.js' ) )
     .on( 'error', handleErrors )
