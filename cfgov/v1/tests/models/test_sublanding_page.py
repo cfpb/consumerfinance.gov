@@ -16,7 +16,6 @@ class SublandingPageTestCase(TestCase):
     """
     def setUp(self):
         self.request = mock.MagicMock()
-        self.request.site.hostname = 'localhost:8000'
         self.limit = 10
         self.sublanding_page = SublandingPage(title='title')
 
@@ -60,7 +59,7 @@ class SublandingPageTestCase(TestCase):
         retrieval should be consistent with the order in which they were saved.
         """
 
-        descendants = self.sublanding_page.get_appropriate_descendants(self.request.site.hostname)
+        descendants = self.sublanding_page.get_appropriate_descendants()
         self.assertEqual(descendants[0].title, self.sublanding_page.title)
         self.assertEqual(descendants[1].title, self.post1.title)
         self.assertEqual(descendants[2].title, self.child1_of_post1.title)
@@ -73,7 +72,7 @@ class SublandingPageTestCase(TestCase):
         The posts should be retrieved in reverse chronological order, and if
         the limit exceeds the total number of posts, all should be retrieved.
         """
-        browsefilterable_posts = self.sublanding_page.get_browsefilterable_posts(self.request, self.limit)
+        browsefilterable_posts = self.sublanding_page.get_browsefilterable_posts(self.limit)
         self.assertEqual(len(browsefilterable_posts), 3)
         # the first number in the tuple represents the order of the
         # filter_controls form in the post's content field, so we test
@@ -89,6 +88,6 @@ class SublandingPageTestCase(TestCase):
         specified number of posts, and that the most recent post comes first.
         """
         self.limit = 1
-        browsefilterable_posts = self.sublanding_page.get_browsefilterable_posts(self.request, self.limit)
+        browsefilterable_posts = self.sublanding_page.get_browsefilterable_posts(self.limit)
         self.assertEqual(1, len(browsefilterable_posts))
         self.assertEqual(('0', self.child1_of_post2), browsefilterable_posts[0])

@@ -49,6 +49,11 @@
 
     .respond-to-max( @bp-xs-max, {
         overflow: hidden;
+
+        .m-list, .m-list__links {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
     } );
 }
 
@@ -65,6 +70,7 @@
         .respond-to-max( @bp-xs-max, {
             margin-bottom: @margin;
             background: @white;
+
 
             &:after {
                 content: '';
@@ -177,8 +183,12 @@
 
 .o-bureau-structure_nav-item {
     margin-bottom: @margin;
-    background-color: inherit;
+    background-color: #fff;
     color: @pacific;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid @node-border-color;
+    border-bottom: 1px solid @node-border-color;
 
     .respond-to-max( @bp-xs-max, {
         display: inline-block;

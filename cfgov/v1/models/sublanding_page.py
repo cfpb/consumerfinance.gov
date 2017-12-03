@@ -84,10 +84,9 @@ class SublandingPage(CFGOVPage):
 
     objects = PageManager()
 
-    def get_browsefilterable_posts(self, request, limit):
-        hostname = request.site.hostname
+    def get_browsefilterable_posts(self, limit):
         filter_pages = [p.specific
-                        for p in self.get_appropriate_descendants(hostname)
+                        for p in self.get_appropriate_descendants()
                         if 'FilterablePage' in p.specific_class.__name__
                         and 'archive' not in p.title.lower()]
         posts_tuple_list = []
@@ -98,7 +97,7 @@ class SublandingPage(CFGOVPage):
 
             logger.info('Filtering by parent {}'.format(page))
             form_id = str(page.form_id())
-            form = FilterableListForm(hostname=hostname, base_query=base_query)
+            form = FilterableListForm(base_query=base_query)
             for post in form.get_page_set():
                 posts_tuple_list.append((form_id, post))
         return sorted(posts_tuple_list,

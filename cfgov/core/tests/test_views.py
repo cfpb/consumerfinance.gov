@@ -333,29 +333,3 @@ class TestExternalURLNoticeView(TestCase):
         request = self.factory.post('/')
         with self.assertRaises(Http404):
             view(request)
-
-
-class TestCSPReportView(TestCase):
-    def test_valid_report(self):
-        report = """{
-  "csp-report": {
-    "document-uri": "http://example.com/signup.html",
-    "referrer": "",
-    "blocked-uri": "http://example.com/css/style.css",
-    "violated-directive": "style-src cdn.example.com",
-    "original-policy": "default-src 'none'; style-src cdn.example.com; report-uri /_/csp-reports"
-  }
-}"""  # noqa: E501
-        response = self.client.post('/csp-report/', report,
-                                    content_type="application/json")
-        self.assertEquals(response.status_code, 200)
-
-    def test_invalid_report(self):
-        report = """{"contents": "just some JSON" }"""  # noqa: E501
-        response = self.client.post('/csp-report/', report,
-                                    content_type="application/json")
-        self.assertEquals(response.status_code, 400)
-
-    def test_invalid_method(self):
-        response = self.client.get('/csp-report/')
-        self.assertEquals(response.status_code, 405)
