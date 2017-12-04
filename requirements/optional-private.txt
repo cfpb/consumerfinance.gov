@@ -2,5 +2,4 @@
 # configure git with:
 # git config --global url.https://<private hostname>/.insteadOf https://private.repo/
 
-git+https://private.repo/CFPB/django-college-cost-comparison.git@v1.4.0#egg=comparisontool
 git+https://private.repo/eregs/ip.git@1.1.2#egg=eregsip
