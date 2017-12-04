@@ -602,6 +602,9 @@ FLAGS = {
     # When enabled, display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
 
+    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
+    'WAGTAIL_COMPANY_SIGNUP': {},
+
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
@@ -635,6 +638,9 @@ FLAGS = {
 
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
+
+    # Search.gov API-based site-search
+    'SEARCH_DOTGOV_API': {},
 
     # The release of the new Financial Coaching pages
     'FINANCIAL_COACHING': {},
