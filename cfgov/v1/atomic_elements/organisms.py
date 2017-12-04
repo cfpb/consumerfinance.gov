@@ -188,6 +188,8 @@ class ImageText2575Group(blocks.StructBlock):
 
 class LinkBlobGroup(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
+    has_top_border = blocks.BooleanBlock(required=False)
+    has_bottom_border = blocks.BooleanBlock(required=False)
     link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
 
 
