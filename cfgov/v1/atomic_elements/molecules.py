@@ -64,7 +64,7 @@ class ImageText2575(blocks.StructBlock):
     image = atoms.ImageBasic()
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
     has_rule = blocks.BooleanBlock(required=False)
-    
+
     class Meta:
         icon = 'image'
         template = '_includes/molecules/image-text-25-75.html'
