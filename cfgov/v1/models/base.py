@@ -51,6 +51,7 @@ class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
         return PageQuerySet(self.model).order_by('path')
 
+
 CFGOVPageManager = BaseCFGOVPageManager.from_queryset(PageQuerySet)
 
 
@@ -149,11 +150,6 @@ class CFGOVPage(Page):
     def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage
 
-        def match_all_topic_tags(queryset, tags):
-            for tag in tags:
-                queryset = queryset.filter(tags__name=tag)
-            return queryset
-
         related_types = []
         related_items = {}
         if block.value.get('relate_posts'):
@@ -197,7 +193,7 @@ class CFGOVPage(Page):
             if and_filtering:
                 # By default, we need to match at least one tag
                 # If specified in the admin, change this to match ALL tags
-                related_queryset = match_all_topic_tags(related_queryset, tags)
+                related_queryset = related_queryset.filter(tags__name__in=tags)
 
             related_items[parent.title()] = related_queryset[:limit]
 
