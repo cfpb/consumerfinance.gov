@@ -4,7 +4,7 @@
 
 'use strict';
 
-const browserList = require( '../config/browserList-config' );
+const BROWSER_LIST = require( '../config/browser-list-config' );
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
@@ -22,7 +22,7 @@ const COMMON_MODULE_CONFIG = {
       options: {
         presets: [ [ 'env', {
           targets: {
-            browsers: browserList.last2IE9up
+            browsers: BROWSER_LIST.LAST_2_IE_9_UP
           },
           debug: true
         } ] ]
