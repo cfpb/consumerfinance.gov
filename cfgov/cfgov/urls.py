@@ -43,8 +43,6 @@ from v1.views.documents import DocumentServeView
 oah = SheerSite('owning-a-home')
 
 urlpatterns = [
-    url('^sitemap\.xml$', sitemap),
-    
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
@@ -433,6 +431,8 @@ urlpatterns = [
                 r'^(?i)consumer-tools/financial-well-being/',
                 include('wellbeing.urls')
     ),
+
+    url('^sitemap\.xml$', sitemap),
 ]
 
 if settings.ALLOW_ADMIN_URL:
