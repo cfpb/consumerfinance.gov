@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -61,6 +60,7 @@ INSTALLED_APPS = (
     'watchman',
     'haystack',
     'ask_cfpb',
+    'agreements',
     'overextends',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -86,8 +86,6 @@ OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
-    {'import': 'agreements', 'apps': ('agreements', 'haystack',)},
-    {'import': 'selfregistration', 'apps': ('selfregistration',)},
     {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
@@ -125,13 +123,9 @@ MIDDLEWARE_CLASSES = (
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
 
-if ('CSP_ENFORCE' in os.environ or 'CSP_REPORT' in os.environ):
+if ('CSP_ENFORCE' in os.environ):
     MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
-if 'CSP_REPORT' in os.environ:
-    CSP_REPORT_ONLY = True
-
-CSP_REPORT_URI = '/csp-report/'
 
 ROOT_URLCONF = 'cfgov.urls'
 
@@ -315,11 +309,67 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
+        'ENGINE': 'search.backends.CFGOVElasticsearch2SearchEngine',
         'URL': SHEER_ELASTICSEARCH_SERVER,
-        'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX', SHEER_ELASTICSEARCH_INDEX+'_haystack'),
-    },
+        'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX',
+                                     SHEER_ELASTICSEARCH_INDEX+'_haystack'),
+        'INCLUDE_SPELLING': True,
+    }
 }
+ELASTICSEARCH_INDEX_SETTINGS = {
+    'settings': {
+        'analysis': {
+            'analyzer': {
+                'ngram_analyzer': {
+                    'type': 'custom',
+                    'tokenizer': 'lowercase',
+                    'filter': ['haystack_ngram']
+                },
+                'edgengram_analyzer': {
+                    'type': 'custom',
+                    'tokenizer': 'lowercase',
+                    'filter': ['haystack_edgengram']
+                },
+                'synonym' : {
+                    'tokenizer' : 'whitespace',
+                    'filter' : ['synonym']
+                }
+            },
+            'tokenizer': {
+                'haystack_ngram_tokenizer': {
+                    'type': 'nGram',
+                    'min_gram': 3,
+                    'max_gram': 15,
+                },
+                'haystack_edgengram_tokenizer': {
+                    'type': 'edgeNGram',
+                    'min_gram': 3,
+                    'max_gram': 15,
+                    'side': 'front'
+                }
+            },
+            'filter': {
+                'haystack_ngram': {
+                    'type': 'nGram',
+                    'min_gram': 3,
+                    'max_gram': 15
+                },
+                'haystack_edgengram': {
+                    'type': 'edgeNGram',
+                    'min_gram': 3,
+                    'max_gram': 15
+                },
+                'synonym': {
+                    'type': 'synonym',
+                    'synonyms': [
+                        # 'auto,car,vehicle',
+                    ],
+                }
+            }
+        }
+    }
+}
+ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
 
 # S3 Configuration
 AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
@@ -461,7 +511,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   'universal.iperceptions.com',
                   'sample.crazyegg.com',
                   'about:',
-                  'connect.facebook.net'
+                  'connect.facebook.net',
+                  'www.federalregister.gov',
                   )
 
 # These specify valid sources of CSS code
@@ -538,9 +589,6 @@ FLAGS = {
     # When enabled, display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
 
-    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
-    'WAGTAIL_COMPANY_SIGNUP': {},
-
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
@@ -571,15 +619,6 @@ FLAGS = {
     'EREGS20': {
         'boolean': DEPLOY_ENVIRONMENT == 'build',
     },
-
-    # Add sortable tables to Wagtail
-    # When enabled, the sortable tables option will be added to the Wagtail Admin
-    # The template will render for the front-end, but the sortable code is missing
-    # and the table will not be sortable until cf-tables from CF 4.x is implemented
-    'SORTABLE_TABLES': {},
-
-    # The release of the consumer Financial Well Being Scale app
-    'FWB_RELEASE': {},
 
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},

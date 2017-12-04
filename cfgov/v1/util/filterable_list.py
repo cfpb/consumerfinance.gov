@@ -20,7 +20,7 @@ class FilterableListMixin(object):
         context['filter_data'] = filter_data
         return context
 
-    def base_query(self, hostname):
+    def base_query(self):
         return AbstractFilterPage.objects.live().filter(
             CFGOVPage.objects.child_of_q(self))
 
@@ -49,13 +49,11 @@ class FilterableListMixin(object):
         return filter_data
 
     def get_forms(self, request):
-        hostname = request.site.hostname
         for form_data in self.get_form_specific_filter_data(
                 request_dict=request.GET):
             yield FilterableListForm(
                 form_data,
-                hostname=hostname,
-                base_query=self.base_query(hostname)
+                base_query=self.base_query()
             )
 
     # Transform each GET parameter key from unique ID for the form in the

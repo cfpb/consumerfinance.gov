@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # ==========================================================================
 # Setup script used to drop MySQL database.
@@ -20,7 +20,7 @@ then
   Q1="drop database $MYSQL_NAME;"
   SQL="${Q1}"
 
-  $MYSQL -uroot -e "$SQL"
+  $MYSQL -uroot --password="$MYSQL_ROOT_PW" -e "$SQL"
   echo "Database $MYSQL_NAME dropped."
 else
   Q1="drop database $1;"
@@ -32,6 +32,6 @@ else
     exit $E_BADARGS
   fi
 
-  $MYSQL -uroot -e "$SQL"
+  $MYSQL -uroot --password="$MYSQL_ROOT_PW" -e "$SQL"
   ok "Database $1 dropped."
 fi
