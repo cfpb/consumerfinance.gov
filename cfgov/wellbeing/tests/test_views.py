@@ -1,8 +1,7 @@
 from django.core.urlresolvers import reverse
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 
-@override_settings(FLAGS={'FWB_RELEASE': {'boolean': True}})
 class TestTemplatesAsViews(TestCase):
     def test_home_template(self):
         response = self.client.get(reverse('fwb_home'))
@@ -13,7 +12,6 @@ class TestTemplatesAsViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-@override_settings(FLAGS={'FWB_RELEASE': {'boolean': True}})
 class TestResultsView(TestCase):
     def test_results_view_get(self):
         response = self.client.get(reverse('fwb_results'))
