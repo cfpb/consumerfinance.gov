@@ -13,26 +13,6 @@ class SearchDotGovTestCase(TestCase):
     @mock.patch('search.dotgov.requests.get')
     def test_search_query(self, mock_get):
         mock_get.return_value.ok = True
-        mock_get.return_value.json.return_value = {
-            'query': 'query',
-            'web': {
-                'total': 1,
-                'next_offset': None,
-                'spelling_correction': None,
-                'results': [
-
-                ],
-            },
-            'text_best_bets': [
-                {
-                    'id': 12345,
-                    'title': 'Test Text Best Bet',
-                    'url': 'http://best/bet',
-                    'description': 'This is a best bet that is text',
-                },
-            ],
-        }
-
         search('query')
         mock_get.return_value.json.assert_called()
 
