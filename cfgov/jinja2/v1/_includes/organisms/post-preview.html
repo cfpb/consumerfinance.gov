@@ -63,6 +63,7 @@
 {% import 'macros/time.html' as time %}
 
 {% macro render(post, controls, form_id=0, url='', post_date_description='') %}
+    {% cache post.post_preview_cache_key %}
     {% set date_desc = controls.post_date_description or post_date_description or 'Published' %}
     {% set cat_controls = controls.categories %}
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
@@ -191,4 +192,5 @@
             {% endif %}
         </div>
     </article>
+    {% endcache %}
 {% endmacro %}
