@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import logging
 
 from django.conf import settings
@@ -17,7 +18,7 @@ def search(query, limit=20, offset=0,
         raise ValueError('limit has to be between 1-50')
 
     if 0 > offset or offset > 999:
-        raise ValueError('limit has to be between 1-50')
+        raise ValueError('offset has to be between 0-999')
 
     if sort_by not in ('relevance', 'date'):
         raise ValueError('sort_by must be one of relevance or date')
