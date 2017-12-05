@@ -59,6 +59,7 @@ CACHES = {
 # Optionally enable cache for post_preview
 if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
     CACHES['post_preview'] = {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/post_preview_cache',
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'post_preview_cache',
+        'TIMEOUT': None,
     }

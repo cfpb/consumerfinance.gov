@@ -106,7 +106,8 @@ CACHES = {
         },
     },
     'post_preview': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/post_preview_cache',
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'post_preview_cache',
+        'TIMEOUT': None,
     }
 }
