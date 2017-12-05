@@ -43,10 +43,18 @@ module.exports = {
     reporter: environment.CONTINUOUS_INTEGRATION
   },
   clean: {
+    css: paths.processed + '/css',
+    js: paths.processed + '/js',
     dest: paths.processed
   },
   scripts: {
-    src: paths.unprocessed + '/js/**/*.js'
+    src: paths.unprocessed + '/js/**/*.js',
+    otherBuildTriggerFiles: [
+      paths.unprocessed + '/js/**/*.js',
+      paths.modules,
+      './config/**/*.js',
+      './gulp/**/*.js'
+    ]
   },
   styles: {
     cwd:      paths.unprocessed + '/css',
@@ -54,13 +62,26 @@ module.exports = {
     dest:     paths.processed + '/css',
     settings: {
       paths:  globAll.sync( [
-        paths.lib,
         paths.modules + '/cf-*/src',
         paths.modules + '/cfpb-chart-builder/src/**',
         paths.modules + '/highcharts/css'
       ] ),
       compress: true
-    }
+    },
+    otherBuildTriggerFiles: [
+      paths.unprocessed + '/css/**/*.less',
+      paths.modules,
+      './config/**/*.js',
+      './gulp/**/*.js'
+    ],
+    otherBuildTriggerFilesKBSpanish: [
+      paths.legacy + '/knowledgebase/**/*.css',
+      paths.legacy + '/knowledgebase/**/*.less'
+    ],
+    otherBuildTriggerFilesNemo: [
+      paths.legacy + '/nemo/**/*.css',
+      paths.legacy + '/nemo/**/*.less'
+    ]
   },
   legacy: {
     cwd: paths.legacy,

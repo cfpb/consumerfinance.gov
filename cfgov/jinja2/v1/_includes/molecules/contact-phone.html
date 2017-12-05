@@ -37,12 +37,17 @@
     <span class="h5">{{ label }}</span>
     {% for phone in value.phones %}
     <p>
-        <b>{{ format_phone(phone.number) }}</b>
+        <b>
+            {{ format_phone(phone.number) }}
+            {{ 'Ext. ' ~ phone.extension if phone.extension else '' }}
+        </b>
         {% if phone.vanity %}
+        <br>
         <span>{{ format_phone(phone.vanity) }}</span>
         {% endif %}
         {% if phone.tty %}
-        <span>TTY/TDD: {{ format_phone(phone.tty) }}<span>
+        <br>
+        <span>TTY/TDD: {{ format_phone(phone.tty) }}{{ ' Ext. ' ~ phone.tty_ext if phone.tty_ext else '' }}<span>
         {% endif %}
     </p>
     {% endfor %}

@@ -27,7 +27,7 @@
 
 {% macro render(value) %}
 
-{% set form_id, ancestor = get_filter_data(page) %}
+{% set form_id, ancestor = page.get_filter_data() %}
 {% set page_url = get_protected_url(ancestor) %}
 {% set published_date = value.date %}
 {% set has_authors = page.authors.exists() %}

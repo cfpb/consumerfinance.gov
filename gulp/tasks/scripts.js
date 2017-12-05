@@ -8,30 +8,41 @@
 */
 
 const browserSync = require( 'browser-sync' );
+const config = require( '../config.js' );
+const configLegacy = config.legacy;
+const configScripts = config.scripts;
 const gulp = require( 'gulp' );
 const gulpConcat = require( 'gulp-concat' );
 const gulpModernizr = require( 'gulp-modernizr' );
+const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
 const handleErrors = require( '../utils/handle-errors' );
+const named = require( 'vinyl-named' );
 const paths = require( '../../config/environment' ).paths;
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
 const webpackStream = require( 'webpack-stream' );
-const configLegacy = require( '../config.js' ).legacy;
 
 /**
  * Standardize webpack workflow for handling script
  * configuration, source, and destination settings.
- * @param {Object} config - Settings for webpack.
+ * @param {Object} localWebpackConfig - Settings for Webpack.
  * @param {string} src - Source URL in the unprocessed assets directory.
  * @param {string} dest - Destination URL in the processed assets directory.
  * @returns {PassThrough} A source stream.
  */
-function _processScript( config, src, dest ) {
+function _processScript( localWebpackConfig, src, dest ) {
   return gulp.src( paths.unprocessed + src )
-    .pipe( webpackStream( config, webpack ) )
+    .pipe( gulpNewer( {
+      dest:  paths.processed + dest,
+      extra: configScripts.otherBuildTriggerFiles
+    } ) )
+    .pipe( named( function( file ) {
+      return file.relative;
+    } ) )
+    .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + dest ) )
     .pipe( browserSync.reload( {
@@ -45,6 +56,10 @@ function _processScript( config, src, dest ) {
  */
 function scriptsPolyfill() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
+    .pipe( gulpNewer( {
+      dest:  paths.processed + '/js/modernizr.min.js',
+      extra: configScripts.otherBuildTriggerFiles
+    } ) )
     .pipe( gulpModernizr( {
       tests:   [ 'csspointerevents', 'classlist', 'es5' ],
       options: [ 'setClasses', 'html5printshiv' ]
@@ -69,7 +84,7 @@ function scriptsPolyfill() {
  */
 function scriptsModern() {
   return _processScript( webpackConfig.modernConf,
-                         '/js/routes/common.js', '/js/routes/' );
+                         '/js/routes/**/*.js', '/js/routes/' );
 }
 
 /**
@@ -77,7 +92,7 @@ function scriptsModern() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsIE() {
-  return _processScript( webpackConfig.ieConf,
+  return _processScript( webpackConfig.commonConf,
                          '/js/ie/common.ie.js', '/js/ie/' );
 }
 
@@ -90,17 +105,6 @@ function scriptsExternal() {
                          '/js/routes/external-site/index.js', '/js/' );
 }
 
-/**
- * Bundle atomic component scripts.
- * Provides a means to bundle JS for specific atomic components,
- * which then can be carried over to other projects.
- * @returns {PassThrough} A source stream.
- */
-function scriptsOnDemand() {
-  return _processScript( webpackConfig.onDemandConf,
-                         '/js/routes/on-demand/*.js', '/js/atomic/' );
-}
-
  /**
   * Bundle base js for Spanish Ask CFPB pages.
   * @returns {PassThrough} A source stream.
@@ -111,6 +115,32 @@ function scriptsSpanish() {
 }
 
 /**
+ * Bundle atomic header component scripts.
+ * Provides a means to bundle JS for specific atomic components,
+ * which then can be carried over to other projects.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsOnDemandHeader() {
+  return _processScript( webpackConfig.commonConf,
+                         '/js/routes/on-demand/header.js',
+                         '/js/atomic/'
+  );
+}
+
+/**
+ * Bundle atomic header component scripts.
+ * Provides a means to bundle JS for specific atomic components,
+ * which then can be carried over to other projects.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsOnDemandFooter() {
+  return _processScript( webpackConfig.commonConf,
+                         '/js/routes/on-demand/footer.js',
+                         '/js/atomic/'
+  );
+}
+
+/**
  * Bundle atomic component scripts for non-responsive pages.
  * Provides a means to bundle JS for specific atomic components,
  * which then can be carried over to other projects.
@@ -118,11 +148,14 @@ function scriptsSpanish() {
  */
 function scriptsNonResponsive() {
   return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
+    .pipe( gulpNewer( {
+      dest:  paths.processed + '/js/atomic/header.nonresponsive.js',
+      extra: configScripts.otherBuildTriggerFiles
+    } ) )
     .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
-    .pipe( gulpUglify() )
     .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -135,6 +168,10 @@ function scriptsNonResponsive() {
  */
 function scriptsNemo() {
   return gulp.src( configLegacy.scripts )
+    .pipe( gulpNewer( {
+      dest:  configLegacy.dest + '/nemo/_/js/scripts.min.js',
+      extra: configScripts.otherBuildTriggerFiles
+    } ) )
     .pipe( gulpConcat( 'scripts.js' ) )
     .on( 'error', handleErrors )
     .pipe( gulpUglify() )
@@ -150,19 +187,10 @@ function scriptsNemo() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsEs5Shim() {
-  return gulp.src( paths.unprocessed + '/js/shims/es5-shim.js' )
-    .pipe( webpackStream( {
-      entry: paths.unprocessed + '/js/shims/es5-shim.js',
-      output: {
-        filename: 'es5-shim.js'
-      }
-    }, webpack ) )
-    .pipe( gulpUglify() )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.processed + '/js/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _processScript( webpackConfig.commonConf,
+                         '/js/shims/es5-shim.js',
+                         '/js/'
+  );
 }
 
 /**
@@ -172,7 +200,7 @@ function scriptsEs5Shim() {
  */
 function scriptsOAH() {
   return _processScript( webpackConfig.owningAHomeConf,
-                         '/js/routes/apps/owning-a-home/common.js',
+                         '/js/routes/owning-a-home/**/*.js',
                          '/js/owning-a-home/' );
 }
 
@@ -182,10 +210,12 @@ gulp.task( 'scripts:oah', scriptsOAH );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
-gulp.task( 'scripts:ondemand:base', scriptsOnDemand );
+gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
+gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
 gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
 gulp.task( 'scripts:ondemand', [
-  'scripts:ondemand:base',
+  'scripts:ondemand:header',
+  'scripts:ondemand:footer',
   'scripts:ondemand:nonresponsive'
 ] );
 gulp.task( 'scripts:nemo', scriptsNemo );

@@ -263,9 +263,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {% compress js %}
     <script>
     {% for js in page.media %}
-       {% set compononet_js_source = component_ondemand_js(js) | trim %}
-       {% if compononet_js_source | length > 0 %}
-            {{ compononet_js_source }}
+       {% set component_js_source = component_ondemand_js(js) | trim %}
+       {% if component_js_source | length > 0 %}
+            {{ component_js_source }}
        {% endif %}
     {% endfor %}
     </script>
@@ -296,6 +296,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 
 {% endblock javascript %}
+
+<!--[if gt IE 8]><!-->
+<link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
+<!--<![endif]-->
 
 </body>
 

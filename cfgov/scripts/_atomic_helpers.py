@@ -20,6 +20,7 @@ contact_phone = {
             {
                 "tty": "",
                 "number": "5151234567",
+                "extension": "1234",
                 "vanity": ""
             }
         ],
@@ -448,5 +449,15 @@ chart_block = {
         'description': u'Description',
         'last_updated_projected_data': u'2016-04-01',
         'note': 'Data not final',
+    }
+}
+
+filter_controls = {
+    'type': u'filter_controls',
+    'value': {
+        'form_type': u'filterable-list',
+        'categories': {
+            'page_type': '',
+        },
     }
 }

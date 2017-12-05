@@ -4,8 +4,7 @@ import logging
 import requests
 from django.conf import settings
 from django.contrib import messages
-from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
-                         JsonResponse)
+from django.http import (Http404, JsonResponse)
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -47,7 +46,10 @@ def govdelivery_subscribe(request):
     codes = request.POST.getlist('code')
     gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
     try:
-        subscription_response = gd.set_subscriber_topics(email_address, codes)
+        subscription_response = gd.set_subscriber_topics(
+            email_address,
+            codes,
+            send_notifications=True)
         if subscription_response.status_code != 200:
             return failing_response
     except Exception:
@@ -131,24 +133,6 @@ def submit_comment(data):
                              })
 
     return response
-
-
-@csrf_exempt
-@require_http_methods(['POST'])
-def csp_violation_report(request):
-    try:
-        csp_dict = json.loads(request.body)['csp-report']
-    # bare except is non-ideal, but if parsing fails for any reason
-    # we need to abort
-    except:
-        logger.error('could not parse CSP report: ' + request.body)
-        return HttpResponseBadRequest()
-
-    message_template = ('{blocked-uri} blocked on {document-uri}, '
-                        'violated {violated-directive}')
-    message = message_template.format(**csp_dict)
-    logger.error(message)
-    return HttpResponse()
 
 
 class ExternalURLNoticeView(FormMixin, TemplateView):
