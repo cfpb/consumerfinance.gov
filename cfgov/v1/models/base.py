@@ -208,10 +208,10 @@ class CFGOVPage(Page):
         # Set the tags to correct data format
         tags = {'links': []}
         id, filter_page = self.get_filter_data()
-        relative_url = filter_page.relative_url(filter_page.get_site())
         for tag in self.specific.tags.all():
             tag_link = {'text': tag.name, 'url': ''}
             if id is not None and filter_page is not None:
+                relative_url = filter_page.relative_url(filter_page.get_site())
                 param = '?filter' + str(id) + '_topics=' + tag.slug
                 tag_link['url'] = relative_url + param
             tags['links'].append(tag_link)

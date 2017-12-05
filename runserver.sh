@@ -32,6 +32,7 @@ standalone() {
 }
 
 dockerized() {
+    source mac-virtualbox-init.sh
     docker-compose up
 }
 

@@ -25,6 +25,7 @@ from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorView, HousingCounselorPDFView
 )
+
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
@@ -258,7 +259,7 @@ urlpatterns = [
         include_if_app_enabled(
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
-        include_if_app_enabled('agreements', 'agreements.urls')),
+        include('agreements.urls')),
     url(r'^hud-api-replace/', include_if_app_enabled(
         'hud_api_replace',
         'hud_api_replace.urls',
@@ -424,9 +425,9 @@ urlpatterns = [
 
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
 
-    flagged_url('FWB_RELEASE',
-                r'^(?i)consumer-tools/financial-well-being/',
-                include('wellbeing.urls')
+    url(
+        r'^(?i)consumer-tools/financial-well-being/',
+        include('wellbeing.urls')
     ),
 ]
 
@@ -460,6 +461,7 @@ if settings.ALLOW_ADMIN_URL:
             change_password,
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
+
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([
