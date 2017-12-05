@@ -184,9 +184,8 @@
 {% macro render(controls) %}
     <div class="o-filterable-list-controls"
          id="o-filterable-list-controls">
-        {% set form = filter_data.forms.pop(0) %}
-        {% set posts = filter_data.page_sets.pop(0) %}
-        {% set has_active_filters = request.GET %}
+        {% set form = filter_data.form %}
+        {% set posts = filter_data.page_set %}
         {% if has_active_filters %}
             {% do controls.update({'is_expanded':true}) %}
         {% endif %}
