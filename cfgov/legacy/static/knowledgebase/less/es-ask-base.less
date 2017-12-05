@@ -15,9 +15,35 @@
    form to margin 0 and giving the container padding?
    ========================================================================== */
 
+
+/* Changes to make ES look like English Ask */
+
+h1 {
+  margin-bottom: 1.25em;
+}
+
+h3 {
+  text-transform: none;
+  
+}
+
+@media @respond-to-medium-screens {
+  h1 {
+    margin-bottom: 0.85em;
+  }
+}
+
+@media @respond-to-large-screens {
+  h1 {
+    margin-bottom: 0.85em;
+  }
+}
+
+/* End changes to make ES look like English Ask */
+
 .ac-search {
     margin-top: -1.625em; /* 26/16 */
-    margin-bottom: 1.625em; /* 26/16 */
+    margin-bottom: 1.875em; /* 30/16 */
     padding-top: 1.25em; /* 20/16 */
     padding-bottom: 1.25em; /* 20/16 */
     background: #e7e7e6;
@@ -31,7 +57,7 @@
 
     .ac-search {
         margin-top: -1.625em; /* 26/16 */
-        margin-bottom: 1.625em; /* 26/16 */
+        margin-bottom: 1.875em; /* 26/16 */
     }
 
 }
@@ -40,7 +66,7 @@
 
     .ac-search {
         margin-top: -2em; /* 32/16 */
-        margin-bottom: 2em; /* 32/16 */
+        margin-bottom: 1.875em; /* 30/16 */
         padding-top: 2em;
         padding-bottom: 2em;
     }
