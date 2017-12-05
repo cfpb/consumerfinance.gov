@@ -22,7 +22,7 @@ def search(query, limit=20, offset=0,
     if sort_by not in ('relevance', 'date'):
         raise ValueError('sort_by must be one of relevance or date')
 
-    search_url = 'https://search.usa.gov/api/v2/search'
+    search_url = 'https://search.usa.gov/api/v2/search/i14y'
     search_params = {
         'query': query,
         'affiliate': SEARCH_DOT_GOV_AFFILIATE,
