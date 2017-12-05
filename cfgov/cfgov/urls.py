@@ -10,8 +10,8 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
-from wagtailsharing.views import ServeView
 from wagtail.contrib.wagtailsitemaps.views import sitemap
+
 
 from flags.urls import flagged_url
 
@@ -27,6 +27,7 @@ from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorView, HousingCounselorPDFView
 )
+
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
@@ -259,9 +260,7 @@ urlpatterns = [
         include_if_app_enabled(
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
-        include_if_app_enabled('agreements', 'agreements.urls')),
-    url(r'^selfregs/',
-        include_if_app_enabled('selfregistration', 'selfregistration.urls')),
+        include('agreements.urls')),
     url(r'^hud-api-replace/', include_if_app_enabled(
         'hud_api_replace',
         'hud_api_replace.urls',
@@ -427,9 +426,9 @@ urlpatterns = [
 
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
 
-    flagged_url('FWB_RELEASE',
-                r'^(?i)consumer-tools/financial-well-being/',
-                include('wellbeing.urls')
+    url(
+        r'^(?i)consumer-tools/financial-well-being/',
+        include('wellbeing.urls')
     ),
 
     url('^sitemap\.xml$', sitemap),
@@ -466,6 +465,7 @@ if settings.ALLOW_ADMIN_URL:
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
 
+
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([
             url(r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',  # noqa: E501
@@ -486,23 +486,7 @@ if settings.ALLOW_ADMIN_URL:
 
     ]
 
-    if 'selfregistration' in settings.INSTALLED_APPS:
-        patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
-
-    if 'csp.middleware.CSPMiddleware' in settings.MIDDLEWARE_CLASSES:
-        # allow browsers to push CSP error reports back to the server
-        patterns.append(url(r'^csp-report/',
-                            'core.views.csp_violation_report'))
-
     urlpatterns = patterns + urlpatterns
-
-
-if 'selfregistration' in settings.INSTALLED_APPS:
-    from selfregistration.views import CompanySignup
-    pattern = flagged_url('WAGTAIL_COMPANY_SIGNUP', r'^company-signup/',
-                          CompanySignup.as_view(), state=False,
-                          fallback=lambda req: ServeView.as_view()(req, req.path)) # noqa
-    urlpatterns.append(pattern)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

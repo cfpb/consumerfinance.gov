@@ -63,7 +63,7 @@ class ActivityLogPage(SublandingFilterablePage):
         )))
 
     @classmethod
-    def base_query(cls, hostname):
+    def base_query(cls):
         """
         Recent updates pages should only show content from certain categories.
         """
