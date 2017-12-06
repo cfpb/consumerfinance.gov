@@ -1,5 +1,5 @@
 from .base import *
-from .mysql_mixin import *
+from .database_mixin import *
 
 from unipath import DIRS
 

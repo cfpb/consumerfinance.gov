@@ -104,6 +104,12 @@ if DEPLOY_ENVIRONMENT == 'build':
         {'import': 'eregs_core', 'apps': ('eregs_core',)},
     ]
 
+
+if 'ALL_POSTGRES' in os.environ:
+    POSTGRES_APPS = INSTALLED_APPS
+else:
+    POSTGRES_APPS = []
+
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
