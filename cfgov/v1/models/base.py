@@ -150,8 +150,9 @@ class CFGOVPage(Page):
         from v1.models.learn_page import AbstractFilterPage
 
         def match_all_topic_tags(queryset, tags):
+            """The narrowest search: match every given tag"""
             for tag in tags:
-                queryset = queryset.filter(tags__name=tag)
+                queryset = queryset.filter(tags=tag)
             return queryset
 
         related_types = []
@@ -165,7 +166,7 @@ class CFGOVPage(Page):
         if not related_types:
             return related_items
 
-        tags = self.tags.names()
+        tags = self.tags.all()
         and_filtering = block.value['and_filtering']
         specific_categories = block.value['specific_categories']
         limit = int(block.value['limit'])
@@ -175,13 +176,13 @@ class CFGOVPage(Page):
         for parent in related_types:  # blog, newsroom or events
             # Include children of this slug that match at least 1 tag
             children = Page.objects.child_of_q(Page.objects.get(slug=parent))
-            filters = children & Q(('tags__name__in', tags))
+            filters = children & Q(('tags__in', tags))
 
             if parent == 'events':
                 # Include archived events matches
                 archive = Page.objects.get(slug='archive-past-events')
                 children = Page.objects.child_of_q(archive)
-                filters |= children & Q(('tags__name__in', tags))
+                filters |= children & Q(('tags__in', tags))
 
             if specific_categories:
                 # Filter by any additional categories specified
@@ -197,6 +198,8 @@ class CFGOVPage(Page):
             if and_filtering:
                 # By default, we need to match at least one tag
                 # If specified in the admin, change this to match ALL tags
+                # we force an evaluation before heading down the taggithole
+                related_queryset.count()
                 related_queryset = match_all_topic_tags(related_queryset, tags)
 
             related_items[parent.title()] = related_queryset[:limit]
