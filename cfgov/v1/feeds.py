@@ -21,7 +21,7 @@ class FilterableFeed(Feed):
         return "%s | Consumer Financial Protection Bureau" % self.page.title
 
     def items(self):
-        posts = self.context['filter_data']['page_sets'].pop(0)
+        posts = self.context['filter_data']['page_set']
         return posts
 
     def item_link(self, item):
