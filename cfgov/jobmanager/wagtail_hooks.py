@@ -29,9 +29,6 @@ class JobCategoryForm(ModelForm):
     class Meta:
         fields = '__all__'
         model = JobCategory
-        widgets = {
-            'blurb': TinyMCE(attrs={'cols': 80, 'rows': 15}),
-        }
 
 
 class JobCategoryModelFormMixin(object):
