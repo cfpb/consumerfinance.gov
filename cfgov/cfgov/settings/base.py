@@ -105,10 +105,7 @@ if DEPLOY_ENVIRONMENT == 'build':
     ]
 
 
-if 'ALL_POSTGRES' in os.environ:
-    POSTGRES_APPS = INSTALLED_APPS
-else:
-    POSTGRES_APPS = []
+POSTGRES_APPS = []
 
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
