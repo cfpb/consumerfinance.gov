@@ -6,4 +6,4 @@ Disallow: /external-site
 Disallow: /*?success
 Disallow: *form-id=*
 
-sitemap: http://www.consumerfinance.gov/activity-log/feed/
+sitemap: http://www.consumerfinance.gov/sitemap.xml
