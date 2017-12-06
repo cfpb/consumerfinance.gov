@@ -622,6 +622,9 @@ FLAGS = {
 
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
+
+    # The release of the new Financial Coaching pages
+    'FINANCIAL_COACHING': {},
 }
 
 
