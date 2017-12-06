@@ -2,8 +2,8 @@ import os
 import dj_database_url
 
 DATABASES = {}
-if 'MYSQL_DATABASE_URL' in os.environ:
-    DATABASES['default'] = dj_database_url.config(env='MYSQL_DATABASE_URL')
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config()
 else:
     DATABASES['default'] =  {
         'ENGINE': 'django.db.backends.mysql',
@@ -24,8 +24,4 @@ if 'STORAGE_ENGINE' in os.environ:
         DATABASES[db_label]['OPTIONS'] = db_options
 
 if 'PG_DATABASE_URL' in os.environ:
-    database = dj_database_url.config('PG_DATABASE_URL')
-    if 'ALL_POSTGRES' in os.environ:
-        DATABASES['default'] = database
-    else:
-        DATABASES['postgres'] = dj_database_url.config('PG_DATABASE_URL')
+    DATABASES['postgres'] = dj_database_url.config('PG_DATABASE_URL')
