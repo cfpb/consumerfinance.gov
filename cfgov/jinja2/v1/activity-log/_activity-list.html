@@ -1,6 +1,6 @@
 {% import 'macros/category-slug.html' as category_slug %}
 
-{% macro render(posts, form_id=0) %}
+{% macro render(posts) %}
     {% set page_url = get_protected_url(page) %}
     <table class="u-w100pct" data-qa-hook="filter-results">
         <tbody>
@@ -20,18 +20,15 @@
             <tr>
                 <td class="u-w20pct">
                     {% if is_blog(post) %}
-                        {{ category_slug.render('blog',
-                                page_url, '', false, form_id) }}
+                        {{ category_slug.render('blog', page_url, '', false) }}
                     {% elif is_report(post) %}
-                        {{ category_slug.render('report',
-                                page_url, '', false, form_id) }}
+                        {{ category_slug.render('report', page_url, '', false) }}
                     {% else %}
                         {% for cat in post.categories.all() %}
                             {% if loop.index > 1 %}
                                 |
                             {% endif %}
-                            {{ category_slug.render(cat.name,
-                                    page_url, '', false, form_id) }}
+                            {{ category_slug.render(cat.name, page_url, '', false) }}
                         {% endfor %}
                     {% endif %}
                 </td>
