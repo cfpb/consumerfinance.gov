@@ -432,6 +432,11 @@ urlpatterns = [
     ),
 
     url('^sitemap\.xml$', sitemap),
+
+    flagged_url('TDP_RELEASE',
+                r'^tdp/',
+                include_if_app_enabled('teachers_digital_platform',
+                                       'teachers_digital_platform.urls')),
 ]
 
 if settings.ALLOW_ADMIN_URL:
