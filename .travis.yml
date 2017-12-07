@@ -34,4 +34,4 @@ branches:
 
 script:
   - ./run_travis.sh
-  - docker run --privileged --net="host" -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io --budget /sitespeed.io/budget.json http://127.0.0.1:8009/web/
+  - docker run --privileged --net="host" -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io --budget.configPath perfbudget.json http://127.0.0.1:8009/web/
