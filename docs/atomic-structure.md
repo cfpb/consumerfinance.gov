@@ -153,11 +153,11 @@ Prefixed with “t-” in CSS, JavaScript, and HTML. [View all available templat
     …
 ```
 
-### Folder Structure
+### Folder structure
 
 Our atomic components are separated and named based on asset type. HTML, CSS, and JavaScript for each component are in separate directories.
 
-#### Current Structure
+#### Current structure
 
 #### HTML
 ```
@@ -190,7 +190,7 @@ cfgov-refresh/test/unit_tests/molecules/
 cfgov-refresh/test/unit_tests/organisms/
 ```
 
-### JavaScript Architecture
+### JavaScript architecture
 
 JavaScript components are built to be rendered on the server and then enhanced via JavaScript on the client. The basic interface for the components is as follows:
 
@@ -218,11 +218,6 @@ You can get more information by reading the following:
 [A Simple Challenge to Classical Inheritance Fans](https://medium.com/javascript-scene/a-simple-challenge-to-classical-inheritance-fans-e78c2cf5eead#.mtrvhcjiw)
 [Composition over Inheritance (Youtube)](https://www.youtube.com/watch?v=wfMtDGfHWpA)
 
-#### JavaScript component examples
-
-[View Unit Test](https://github.com/cfpb/cfgov-refresh/pull/916)
-[Expandable example 1](http://jsfiddle.net/0j9u66h0/9/)
-[Expandable example 2](https://jsfiddle.net/cpsyLy3L/2/)
 
 ## Component build pipeline
 
@@ -241,13 +236,9 @@ An explanation for the usage of each bundle is contained in scripts.js.
 
 Routes are used to serve JavaScript bundles to the browser based
 on the requested URL or Wagtail page Media property.
-This happens via code contained in [base.html](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html#L236-L285).
+This happens via code contained in [base.html](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html#L236-L285). This file serves as the base HTML template for serving up assets and content. [View base.html on Github](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html).
 
-#### Base.html
-
-This file serves as the base HTML template for serving up assets and content. [View base.html on Github](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html).
-
-#### Wagtail Page Media Property
+#### Wagtail page media property
 
 Each atomic component has a media property that list the JavaScript files
 that should be rendered via base.html.
