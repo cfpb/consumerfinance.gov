@@ -7,7 +7,7 @@ from wagtail.wagtailcore.blocks import StreamValue
 
 from v1.models import (BlogPage, BrowsePage, BrowseFilterablePage,
                        SublandingFilterablePage)
-from v1.models.snippets import ReusableText
+from v1.models.snippets import ReusableText, MenuItem
 from v1.tests.wagtail_pages.helpers import publish_page, publish_changes
 
 from scripts import _atomic_helpers as atomic
@@ -109,6 +109,38 @@ def add_reusable_text_snippet(slug, cls):
     publish_page(page)
 
 
+def add_menu_item_snippet():
+    nav_group_block = {
+        'type': 'nav_group',
+        'value': {
+                'hide_group_title': False,
+                'draft': False,
+                'group_title': 'Menu Section Title',
+                'nav_items': [
+                    {
+                        'link': {
+                            'state': 'both',
+                            'link_text': 'One',
+                            'external_link': '#',
+                            'nav_groups': []
+                        }
+                    }
+                ]
+        }
+    }
+    for i in range(1, 6):
+        menu_item = MenuItem(
+            link_text='Menu Item {}'.format(i),
+            external_link='#',
+        )
+        menu_item.column_1 = StreamValue(
+            menu_item.column_1.stream_block,
+            [nav_group_block],
+            True,
+        )
+        menu_item.save()
+
+
 def run():
     add_filterable_page(
         slug='sfp',
@@ -126,6 +158,7 @@ def run():
         slug='rts',
         cls=BrowsePage,
     )
+    add_menu_item_snippet()
     user = User.objects.filter(username='admin')
     if user:
         user.first().delete()

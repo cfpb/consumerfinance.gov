@@ -24,10 +24,10 @@ defineSupportCode( function( { Then, When, Before } ) {
       triggerBtn:     element( by.css( TRIGGER_BTN ) ),
       contentWrapper: element( by.css( CONTENT_WRAPPER ) ),
       eyebrow:        element( by.css( EYEBROW ) ),
-      triggerPolyCom: element.all( by.css( TRIGGER_1_SEL ) ).get( 3 ),
-      triggerAboutUs: element.all( by.css( TRIGGER_1_SEL ) ).get( 4 ),
-      contentPolyCom: element.all( by.css( CONTENT_2_SEL ) ).get( 3 ),
-      contentAboutUs: element.all( by.css( CONTENT_2_SEL ) ).get( 4 )
+      triggerFourthMenuItem: element.all( by.css( TRIGGER_1_SEL ) ).get( 3 ),
+      triggerFifthMenuItem: element.all( by.css( TRIGGER_1_SEL ) ).get( 4 ),
+      contentFourthMenuItem: element.all( by.css( CONTENT_2_SEL ) ).get( 3 ),
+      contentFifthMenuItem: element.all( by.css( CONTENT_2_SEL ) ).get( 4 )
     };
   } );
 
@@ -35,7 +35,7 @@ defineSupportCode( function( { Then, When, Before } ) {
     function( ) {
       browser
       .actions()
-      .mouseMove( _dom.triggerPolyCom )
+      .mouseMove( _dom.triggerFourthMenuItem )
       .perform();
 
       // The menu has a built-in delay before it expands.
@@ -44,7 +44,7 @@ defineSupportCode( function( { Then, When, Before } ) {
 
       return browser
              .actions()
-             .mouseMove( _dom.triggerAboutUs )
+             .mouseMove( _dom.triggerFifthMenuItem )
              .perform();
     }
   );
@@ -52,7 +52,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   Then( 'the mega-menu organism shouldn\'t show content',
     function( ) {
 
-      return expect( _dom.contentAboutUs.isDisplayed() )
+      return expect( _dom.contentFifthMenuItem.isDisplayed() )
              .to.eventually
              .equal( false );
     }
@@ -63,10 +63,10 @@ defineSupportCode( function( { Then, When, Before } ) {
 
       return browser
              .actions()
-             .mouseMove( _dom.triggerPolyCom )
+             .mouseMove( _dom.triggerFourthMenuItem )
              .perform()
              .then( () =>
-                expect( _dom.contentPolyCom.isDisplayed() )
+                expect( _dom.contentFourthMenuItem.isDisplayed() )
                 .to.eventually
                 .equal( false )
              );
@@ -78,14 +78,14 @@ defineSupportCode( function( { Then, When, Before } ) {
 
       return browser
              .actions( )
-             .mouseMove( _dom.triggerPolyCom )
+             .mouseMove( _dom.triggerFourthMenuItem )
              .perform()
              .then( () =>
 
                 // Wait for delay to show menu
                 browser.sleep( 500 )
                 .then( ( ) =>
-                  expect( _dom.contentPolyCom.isDisplayed() )
+                  expect( _dom.contentFourthMenuItem.isDisplayed() )
                   .to.eventually
                   .equal( true )
                 )
@@ -96,13 +96,13 @@ defineSupportCode( function( { Then, When, Before } ) {
   Then( 'should only show second link content', function( ) {
 
     return browser.wait(
-             EC.not( EC.elementToBeClickable( _dom.contentPolyCom ) ) )
+             EC.not( EC.elementToBeClickable( _dom.contentFourthMenuItem ) ) )
              .then( () => {
-               expect( _dom.contentPolyCom.isDisplayed() )
+               expect( _dom.contentFourthMenuItem.isDisplayed() )
                .to.eventually
                .equal( false );
 
-               return expect( _dom.contentAboutUs.isDisplayed() )
+               return expect( _dom.contentFifthMenuItem.isDisplayed() )
                       .to.eventually
                       .equal( true );
              } );
@@ -122,7 +122,7 @@ defineSupportCode( function( { Then, When, Before } ) {
            } );
   } );
 
-  Then( 'the mega-menu organism should show the PolyCom menu when clicked',
+  Then( 'the mega-menu organism should show the FourthMenuItem menu when clicked',
     function() {
       browser
       .driver
@@ -132,12 +132,12 @@ defineSupportCode( function( { Then, When, Before } ) {
 
       browser.sleep( 500 );
 
-      return browser.driver.actions().click( _dom.triggerPolyCom ).perform()
+      return browser.driver.actions().click( _dom.triggerFourthMenuItem ).perform()
              .then( () => {
-               expect( _dom.contentPolyCom.isDisplayed() )
+               expect( _dom.contentFourthMenuItem.isDisplayed() )
                .to.eventually
                .equal( true );
-               expect( _dom.contentAboutUs.isDisplayed() )
+               expect( _dom.contentFifthMenuItem.isDisplayed() )
                .to.eventually
                .equal( false );
              } );
