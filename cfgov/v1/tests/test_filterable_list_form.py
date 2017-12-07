@@ -12,9 +12,8 @@ from v1.util.categories import clean_categories
 class TestFilterableListForm(TestCase):
 
     def setUpFilterableForm(self, data=None):
-        hostname = Site.objects.get(is_default_site=True).hostname
         base_query = AbstractFilterPage.objects.live()
-        form = FilterableListForm(hostname=hostname, base_query=base_query)
+        form = FilterableListForm(base_query=base_query)
         form.is_bound = True
         form.cleaned_data = data
         return form
