@@ -284,7 +284,7 @@ You could save some time and effort later (if you have access to the CFPB
 network), by configuring a URL for database dumps in the `.python_env` file.
 
 ```
-CFGOV_PROD_DB_LOCATION=https://(rest of the URL)
+export CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ```
 
 You can get that URL at
