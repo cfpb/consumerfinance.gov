@@ -60,12 +60,14 @@ INSTALLED_APPS = (
     'watchman',
     'haystack',
     'ask_cfpb',
+    'agreements',
     'overextends',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "django.contrib.sitemaps",
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'storages',
@@ -85,7 +87,6 @@ OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
-    {'import': 'agreements', 'apps': ('agreements', 'haystack',)},
     {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
@@ -511,7 +512,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   'universal.iperceptions.com',
                   'sample.crazyegg.com',
                   'about:',
-                  'connect.facebook.net'
+                  'connect.facebook.net',
+                  'www.federalregister.gov',
                   )
 
 # These specify valid sources of CSS code
@@ -619,17 +621,11 @@ FLAGS = {
         'boolean': DEPLOY_ENVIRONMENT == 'build',
     },
 
-    # Add sortable tables to Wagtail
-    # When enabled, the sortable tables option will be added to the Wagtail Admin
-    # The template will render for the front-end, but the sortable code is missing
-    # and the table will not be sortable until cf-tables from CF 4.x is implemented
-    'SORTABLE_TABLES': {},
-
-    # The release of the consumer Financial Well Being Scale app
-    'FWB_RELEASE': {},
-
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
+
+    # The release of the new Financial Coaching pages
+    'FINANCIAL_COACHING': {},
 }
 
 
