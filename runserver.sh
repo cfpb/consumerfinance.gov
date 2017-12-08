@@ -36,8 +36,17 @@ dockerized() {
     docker-compose up
 }
 
+check_if_docker_installed() {
+    if [ -x "$(command -v docker)" ]; then
+        echo "Docker is installed."
+    else
+        echo "Docker not installed. See installation.md for installing docker."
+    fi
+}
+
 # Execute requested (or all) functions.
 if [ "$1" == "docker" ]; then
+    check_if_docker_installed
     dockerized
 else
     standalone
