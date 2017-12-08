@@ -173,7 +173,7 @@ Tests are organized into suites under the `test/browser_tests/cucumber/features`
 # Performance testing
 
 To audit if the site complies with performance best practices and guidelines,
-run `gulp test:perf`.
+run `gulp audit:perf`.
 
 The audit will run against
 [Google's PageSpeed Insights](https://github.com/addyosmani/psi).
@@ -217,7 +217,7 @@ Run the acceptance tests with an `--a11y` flag (i.e. `gulp test:acceptance --a11
 to check every webpage for WCAG and Section 508 compliancy using Protractor's
 [accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
 
-If you'd like to audit a specific page, use `gulp test:a11y`:
+If you'd like to audit a specific page, use `gulp audit:a11y`:
 
   1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
      Get a free [AChecker API ID](http://achecker.ca/register.php) for the value.
