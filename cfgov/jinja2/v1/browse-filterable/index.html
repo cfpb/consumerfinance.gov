@@ -26,7 +26,7 @@
         {% if 'filter_controls' in block.block_type %}
             <div class="block
                         block__flush-top">
-                {{ flc.render(block.value, loop.index0) }}
+                {{ flc.render(block.value) }}
             </div>
         {% elif block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
