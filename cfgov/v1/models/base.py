@@ -140,19 +140,21 @@ class CFGOVPage(Page):
     def generate_view_more_url(self, request):
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
         tags = []
-        index = activity_log.form_id()
-        tags = urlencode([('filter%s_topics' % index, tag)
-                          for tag in self.tags.slugs()])
+        tags = urlencode([('topics', tag) for tag in self.tags.slugs()])
         return (get_protected_url({'request': request}, activity_log)
                 + '?' + tags)
 
     def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage
 
-        def match_all_topic_tags(queryset, tags):
-            for tag in tags:
-                queryset = queryset.filter(tags__name=tag)
-            return queryset
+        def tag_set(related_page):
+            return set([tag.pk for tag in related_page.tags.all()])
+
+        def match_all_topic_tags(queryset, page_tags):
+            """Return pages that share every one of the current page's tags."""
+            current_tag_set = set([tag.pk for tag in page_tags])
+            return [page for page in queryset
+                    if current_tag_set.issubset(tag_set(page))]
 
         related_types = []
         related_items = {}
@@ -165,7 +167,7 @@ class CFGOVPage(Page):
         if not related_types:
             return related_items
 
-        tags = self.tags.names()
+        tags = self.tags.all()
         and_filtering = block.value['and_filtering']
         specific_categories = block.value['specific_categories']
         limit = int(block.value['limit'])
@@ -175,13 +177,13 @@ class CFGOVPage(Page):
         for parent in related_types:  # blog, newsroom or events
             # Include children of this slug that match at least 1 tag
             children = Page.objects.child_of_q(Page.objects.get(slug=parent))
-            filters = children & Q(('tags__name__in', tags))
+            filters = children & Q(('tags__in', tags))
 
             if parent == 'events':
                 # Include archived events matches
                 archive = Page.objects.get(slug='archive-past-events')
                 children = Page.objects.child_of_q(archive)
-                filters |= children & Q(('tags__name__in', tags))
+                filters |= children & Q(('tags__in', tags))
 
             if specific_categories:
                 # Filter by any additional categories specified
@@ -207,12 +209,12 @@ class CFGOVPage(Page):
     def related_metadata_tags(self):
         # Set the tags to correct data format
         tags = {'links': []}
-        id, filter_page = self.get_filter_data()
+        filter_page = self.get_filter_data()
         for tag in self.specific.tags.all():
             tag_link = {'text': tag.name, 'url': ''}
-            if id is not None and filter_page is not None:
+            if filter_page:
                 relative_url = filter_page.relative_url(filter_page.get_site())
-                param = '?filter' + str(id) + '_topics=' + tag.slug
+                param = '?topics=' + tag.slug
                 tag_link['url'] = relative_url + param
             tags['links'].append(tag_link)
         return tags
@@ -223,8 +225,8 @@ class CFGOVPage(Page):
                                                     'SublandingFilterablePage',
                                                     'EventArchivePage',
                                                     'NewsroomLandingPage']:
-                return ancestor.form_id(), ancestor
-        return None, None
+                return ancestor
+        return None
 
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
@@ -357,6 +359,10 @@ class CFGOVPage(Page):
     @property
     def meta_image(self):
         return self.social_sharing_image
+
+    @property
+    def post_preview_cache_key(self):
+        return 'post_preview_{}'.format(self.id)
 
 
 class CFGOVPageCategory(Orderable):
