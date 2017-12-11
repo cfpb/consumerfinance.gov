@@ -160,7 +160,7 @@ in `/static.in/cfgov-fonts/fonts/` and restart the local web server.
 If you are a CFPB employee, you can perform this step with:
 
 ```
-cd /static.in/ && git clone https://[GHE]/CFGOV/cfgov-fonts/
+cd static.in/ && git clone https://[GHE]/CFGOV/cfgov-fonts/
 ```
 Where `[GHE]` is our GitHub Enterprise URL.
 
