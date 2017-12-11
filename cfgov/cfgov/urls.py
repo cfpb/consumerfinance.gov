@@ -408,8 +408,8 @@ urlpatterns = [
     url(r'^es/$', TemplateView.as_view(
                  template_name='/es/index.html')),
 
-    url(r'^es/hogar/$', TemplateView.as_view(
-                 template_name='es/hogar/index.html')),
+    url(r'^es/comprar-casa/$', TemplateView.as_view(
+                 template_name='es/comprar-casa/index.html')),
 
     url(r'^es/nuestra-historia/$', TemplateView.as_view(
                  template_name='es/nuestra-historia/index.html')),
