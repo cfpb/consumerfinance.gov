@@ -1,5 +1,0 @@
-# These dependencies live on a private git server. If you have the address,
-# configure git with:
-# git config --global url.https://<private hostname>/.insteadOf https://private.repo/
-
-git+https://private.repo/eregs/ip.git@1.1.2#egg=eregsip
