@@ -156,7 +156,7 @@ you can set the
 [`@use-font-cdn`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/css/main.less#L30)
 to `true` and rebuild the assets with `gulp build`.
 If you want to install self-hosted fonts locally, you can place the font files
-in `/static.in/cfgov-fonts/fonts/` and restart the local web server.
+in `static.in/cfgov-fonts/fonts/` and restart the local web server.
 If you are a CFPB employee, you can perform this step with:
 
 ```
