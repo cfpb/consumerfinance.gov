@@ -10,6 +10,8 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
+from wagtail.contrib.wagtailsitemaps.views import sitemap
+
 
 from flags.urls import flagged_url
 
@@ -42,7 +44,6 @@ from v1.views.documents import DocumentServeView
 oah = SheerSite('owning-a-home')
 
 urlpatterns = [
-
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
@@ -116,10 +117,6 @@ urlpatterns = [
                       'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
-    url(r'^practitioner-resources/economically-vulnerable/$',
-        TemplateView.as_view(
-            template_name='empowerment/index.html'),
-            name='empowerment'),
     url(r'^fair-lending/$', TemplateView.as_view(
         template_name='fair-lending/index.html'),
         name='fair-lending'),
@@ -429,6 +426,8 @@ urlpatterns = [
         r'^(?i)consumer-tools/financial-well-being/',
         include('wellbeing.urls')
     ),
+
+    url('^sitemap\.xml$', sitemap),
 ]
 
 if settings.ALLOW_ADMIN_URL:
