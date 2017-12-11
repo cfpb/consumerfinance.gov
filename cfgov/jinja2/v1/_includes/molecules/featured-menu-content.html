@@ -19,11 +19,7 @@
 
    value.body:          Body text.
 
-   value.image:         A tuple of image info, containing:
-
-   value.image.src:     A string for the image source URI.
-
-   value.image.alt:     A string for the image alt text.
+   value.image_src:     A string for the image source URI.
 
    ========================================================================== #}
 
@@ -31,8 +27,8 @@
 <aside class="m-featured-menu-content">
     <p class="h4">
         <a href="{{ value.link.url }}">
-            <img src="{{ static(value.image.src) }}"
-                 alt="{{ value.image.alt }}"
+            <img src="{{ static(value.image_src) }}"
+                 alt=""
                  height="150"
                  width="270">
             {{ value.link.text }}
