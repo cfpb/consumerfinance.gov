@@ -11,7 +11,9 @@
                            alt=""
                            height="150"
                            width="270">
-                      The CFPB: Working for you
+                      <span class="m-featured-menu-content_text">
+                          The CFPB: Working for you
+                      </span>
                   </a>
               </p>
               <p>
@@ -26,6 +28,7 @@
             p.h4
               a
                 img
+                span.m-featured-menu-content_text
             p
   tags:
     - cfgov-molecules
@@ -35,6 +38,10 @@
     .grid_column( 4 );
 
     padding: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+    &_text {
+        display: block;
+    }
 
     .respond-to-max( @bp-med-max, {
         display: none;
