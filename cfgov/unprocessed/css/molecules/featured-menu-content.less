@@ -5,17 +5,17 @@
     - name: Default example
       markup: |
           <aside class="m-featured-menu-content">
-              <p class="h4">
+              <div class="h4">
                   <a href="#">
                       <img src="../img/fmc-image-540x300.jpg"
                            alt=""
                            height="150"
                            width="270">
-                      <span class="m-featured-menu-content_text">
+                      <p>
                           The CFPB: Working for you
-                      </span>
+                      </p>
                   </a>
-              </p>
+              </div>
               <p>
                   Short description.
               </p>
@@ -25,10 +25,10 @@
           Structural cheat sheet:
           -----------------------
           .m-featured-menu-content
-            p.h4
+            div.h4
               a
                 img
-                span.m-featured-menu-content_text
+                p
             p
   tags:
     - cfgov-molecules
@@ -38,10 +38,6 @@
     .grid_column( 4 );
 
     padding: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-
-    &_text {
-        display: block;
-    }
 
     .respond-to-max( @bp-med-max, {
         display: none;
