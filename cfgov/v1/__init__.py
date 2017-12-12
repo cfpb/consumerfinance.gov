@@ -12,6 +12,7 @@ from compressor.contrib.jinja2ext import CompressorExtension
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.cache import caches
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.utils.module_loading import import_string
@@ -26,6 +27,8 @@ from core.utils import signed_redirect, unsigned_redirect
 from flags.template_functions import flag_disabled, flag_enabled
 from processors.processors_common import fix_link
 from sheerlike import environment as sheerlike_environment
+
+from v1.fragment_cache_extension import FragmentCacheExtension
 from v1.routing import get_protected_url
 from v1.util.util import get_unique_id
 
@@ -56,6 +59,7 @@ def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
     options['extensions'].append('jinja2.ext.loopcontrols')
     options['extensions'].append('jinja2.ext.i18n')
+    options['extensions'].append(FragmentCacheExtension)
     env = sheerlike_environment(**options)
     env.autoescape = True
     env.install_gettext_translations(JinjaTranslations())
@@ -90,6 +94,7 @@ def environment(**options):
         'pluralize': pluralize,
         'slugify': slugify,
     })
+    env.fragment_cache = caches['post_preview']
     return env
 
 
