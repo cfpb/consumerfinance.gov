@@ -95,8 +95,8 @@
     <form id="quiz-form" action="{{ url('fwb_results') }}" method="POST">
         <div class="block">
             <h2>Part 1: How well does this statement describe you or your situation?</h2>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_1">
+            <div class="o-well">
+                <fieldset class="o-form_fieldset o-scale" id="question_1">
                     <h3 class="a-legend">
                         I could handle a major unexpected expense
                     </h3>
@@ -169,9 +169,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_2">
+                <fieldset class="o-form_fieldset o-scale" id="question_2">
                     <h3 class="a-legend">
                         I am securing my financial future
                     </h3>
@@ -244,9 +242,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_3">
+                <fieldset class="o-form_fieldset o-scale" id="question_3">
                     <h3 class="a-legend">
                         Because of my money situation, I feel like I will never have the things I want in life
                     </h3>
@@ -319,9 +315,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_4">
+                <fieldset class="o-form_fieldset o-scale" id="question_4">
                     <h3 class="a-legend">
                         I can enjoy life because of the way I’m managing my money
                     </h3>
@@ -394,9 +388,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_5">
+                <fieldset class="o-form_fieldset o-scale" id="question_5">
                     <h3 class="a-legend">
                         I am just getting by financially
                     </h3>
@@ -469,9 +461,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_6">
+                <fieldset class="o-form_fieldset o-scale" id="question_6">
                     <h3 class="a-legend">
                         I am concerned that the money I have or will save won’t last
                     </h3>
@@ -548,8 +538,8 @@
         </div>
         <div class="block">
             <h2>Part 2: How often does this statement apply to you?</h2>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_7">
+            <div class="o-well">
+                <fieldset class="o-form_fieldset o-scale" id="question_7">
                     <h3 class="a-legend">
                         Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month
                     </h3>
@@ -622,9 +612,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_8">
+                <fieldset class="o-form_fieldset o-scale" id="question_8">
                     <h3 class="a-legend">
                         I have money left over at the end of the month
                     </h3>
@@ -696,9 +684,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_9">
+                <fieldset class="o-form_fieldset o-scale" id="question_9">
                     <h3 class="a-legend">
                         I am behind with my finances
                     </h3>
@@ -771,9 +757,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="o-well o-well__flush o-well__stacked o-scale">
-                <fieldset class="o-form_fieldset" id="question_10">
+                <fieldset class="o-form_fieldset o-scale" id="question_10">
                     <h3 class="a-legend">
                         My finances control my life
                     </h3>
@@ -850,82 +834,86 @@
         </div>
         <div class="block u-mb30">
             <h2>About you</h2>
-            <div class="o-well o-well__flush">
-                <fieldset class="o-form_fieldset" id="age">
-                    <h3 class="a-legend">
-                        Select your age group. This changes the scoring calculation.
-                    </h3>
-                    <ul class="m-list m-list__unstyled content-l">
-                        <li class="content-l_col content-l_col-1-2">
-                            <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-                                <input class="a-radio"
-                                       type="radio"
-                                       name="age"
-                                       id="age-18-61"
-                                       value="18-61"
-                                       data-gtm-action="Questionnaire Radio Button Clicked"
-                                       data-gtm-label="Select your age group: 18-61"
-                                       data-gtm-category="Financial Well-Being Tool Interaction">
-                                <label class="a-label" for="age-18-61">
-                                    18–61
-                                </label>
-                            </div>
-                        </li>
-                        <li class="content-l_col content-l_col-1-2">
-                            <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-                                <input class="a-radio"
-                                       type="radio"
-                                       name="age"
-                                       id="age-62-plus"
-                                       value="62-plus"
-                                       data-gtm-action="Questionnaire Radio Button Clicked"
-                                       data-gtm-label="Select your age group: 62+"
-                                       data-gtm-category="Financial Well-Being Tool Interaction">
-                                <label class="a-label" for="age-62-plus">
-                                    62+
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                </fieldset>
-                <fieldset class="o-form_fieldset" id="method">
-                    <h3 class="a-legend">
-                        Select how you completed the questionnaire. This changes the scoring calculation.
-                    </h3>
-                    <ul class="m-list m-list__unstyled content-l">
-                        <li class="content-l_col content-l_col-1-2">
-                            <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-                                <input class="a-radio"
-                                       type="radio"
-                                       name="method"
-                                       id="read-self"
-                                       value="read-self"
-                                       data-gtm-action="Questionnaire Radio Button Clicked"
-                                       data-gtm-label="Select how you completed the questionnaire: I read and answered the questions myself"
-                                       data-gtm-category="Financial Well-Being Tool Interaction"
-                                       checked>
-                                <label class="a-label" for="read-self">
-                                    I read and answered the questions myself
-                                </label>
-                            </div>
-                        </li>
-                        <li class="content-l_col content-l_col-1-2">
-                            <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-                                <input class="a-radio"
-                                       type="radio"
-                                       name="method"
-                                       id="read-to-me"
-                                       value="read-to-me"
-                                       data-gtm-action="Questionnaire Radio Button Clicked"
-                                       data-gtm-label="Select how you completed the questionnaire: I read the questions to someone else and recorded their answers"
-                                       data-gtm-category="Financial Well-Being Tool Interaction">
-                                <label class="a-label" for="read-to-me">
-                                    I read the questions to someone else and recorded their answers
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                </fieldset>
+            <div class="o-well">
+                <div class="o-form_group">
+                    <fieldset class="o-form_fieldset" id="age">
+                        <h3 class="a-legend">
+                            Select your age group. This changes the scoring calculation.
+                        </h3>
+                        <ul class="m-list m-list__unstyled content-l">
+                            <li class="content-l_col content-l_col-1-2">
+                                <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                                    <input class="a-radio"
+                                           type="radio"
+                                           name="age"
+                                           id="age-18-61"
+                                           value="18-61"
+                                           data-gtm-action="Questionnaire Radio Button Clicked"
+                                           data-gtm-label="Select your age group: 18-61"
+                                           data-gtm-category="Financial Well-Being Tool Interaction">
+                                    <label class="a-label" for="age-18-61">
+                                        18–61
+                                    </label>
+                                </div>
+                            </li>
+                            <li class="content-l_col content-l_col-1-2">
+                                <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                                    <input class="a-radio"
+                                           type="radio"
+                                           name="age"
+                                           id="age-62-plus"
+                                           value="62-plus"
+                                           data-gtm-action="Questionnaire Radio Button Clicked"
+                                           data-gtm-label="Select your age group: 62+"
+                                           data-gtm-category="Financial Well-Being Tool Interaction">
+                                    <label class="a-label" for="age-62-plus">
+                                        62+
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+                <div>
+                    <fieldset class="o-form_fieldset" id="method">
+                        <h3 class="a-legend">
+                            Select how you completed the questionnaire. This changes the scoring calculation.
+                        </h3>
+                        <ul class="m-list m-list__unstyled content-l">
+                            <li class="content-l_col content-l_col-1-2">
+                                <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                                    <input class="a-radio"
+                                           type="radio"
+                                           name="method"
+                                           id="read-self"
+                                           value="read-self"
+                                           data-gtm-action="Questionnaire Radio Button Clicked"
+                                           data-gtm-label="Select how you completed the questionnaire: I read and answered the questions myself"
+                                           data-gtm-category="Financial Well-Being Tool Interaction"
+                                           checked>
+                                    <label class="a-label" for="read-self">
+                                        I read and answered the questions myself
+                                    </label>
+                                </div>
+                            </li>
+                            <li class="content-l_col content-l_col-1-2">
+                                <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                                    <input class="a-radio"
+                                           type="radio"
+                                           name="method"
+                                           id="read-to-me"
+                                           value="read-to-me"
+                                           data-gtm-action="Questionnaire Radio Button Clicked"
+                                           data-gtm-label="Select how you completed the questionnaire: I read the questions to someone else and recorded their answers"
+                                           data-gtm-category="Financial Well-Being Tool Interaction">
+                                    <label class="a-label" for="read-to-me">
+                                        I read the questions to someone else and recorded their answers
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
             </div>
         </div>
 
