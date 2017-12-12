@@ -2,7 +2,6 @@
    Utility to capture a screenshot of the current browser window.
    ========================================================================== */
 
-
 const fs = require( 'fs' );
 
 const _screenShotDirectory = 'test/';

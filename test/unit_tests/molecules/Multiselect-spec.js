@@ -80,9 +80,11 @@ describe( 'Multiselect', function() {
 
       expect( selectDom.length ).to.equal( 1 );
       expect( multiselectDom.length ).to.equal( 0 );
-      sinon.assert.calledOnce( console.log ); // eslint-disable-line  no-console
+      // eslint-disable-next-line no-console
+      sinon.assert.calledOnce( console.log );
       sinon.assert.calledWithExactly(
-        console.log, '\'Foo\'\' is not a valid value' // eslint-disable-line  no-console
+        // eslint-disable-next-line no-console
+        console.log, '\'Foo\'\' is not a valid value'
       );
     } );
   } );

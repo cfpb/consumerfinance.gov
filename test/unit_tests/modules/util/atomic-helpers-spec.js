@@ -2,6 +2,7 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
+// eslint-disable-next-line no-unused-vars This is used in dependent classes.
 const jsdom = require( 'jsdom' );
 
 const atomicHelpers = require( BASE_JS_PATH + 'modules/util/atomic-helpers' );
