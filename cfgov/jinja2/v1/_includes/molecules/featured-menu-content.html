@@ -1,18 +1,15 @@
 {# ==========================================================================
 
-   featured_menu_content.render()
+   Featured Menu Content
 
    ==========================================================================
 
    Description:
 
-   Create a featured content molecule. See
+   Create a featured menu content molecule. See
    [GHE]/flapjack/Modules-V1/wiki/Featured-Menu-Content
 
    value:               Object defined from a StreamField block.
-
-   value.is_horizontal: Boolean on whether in a horizontal layout or not.
-                        Default to false.
 
    value.link:          A tuple of link info, containing:
 
@@ -22,34 +19,23 @@
 
    value.body:          Body text.
 
-   value.image:         A tuple of image info, containing:
-
-   value.image.src:     A string for the image source URI.
-
-   value.image.alt:     A string for the image alt text.
+   value.image_src:     A string for the image source URI.
 
    ========================================================================== #}
 
 {% macro render( value ) %}
-<aside class="m-featured-menu-content
-              {{ 'm-featured-menu-content__horizontal'
-                 if value.is_horizontal == true else '' }}">
-    <div class="m-featured-menu-content_text">
-        <p class="h4">
-            <a href="{{ value.link.url }}">
-                  {{ value.link.text }}
-            </a>
-        </p>
-        <p>
-            {{ value.body }}
-        </p>
-    </div>
-    <a href="{{ value.link.url }}"
-       class="m-featured-menu-content_img">
-        <img src="{{ static(value.image.src) }}"
-             alt="{{ value.image.alt }}"
+<aside class="m-featured-menu-content">
+    <a class="m-featured-menu-content_link" href="{{ value.link.url }}">
+        <img src="{{ static(value.image_src) }}"
+             alt=""
              height="150"
              width="270">
+        <div>
+          {{ value.link.text }}
+        </div>
     </a>
+    <p>
+        {{ value.body }}
+    </p>
 </aside>
 {% endmacro %}
