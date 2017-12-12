@@ -69,7 +69,8 @@ const Analytics = {
     if ( Analytics.tagManagerIsLoaded ) {
       window.dataLayer.push( dataLayerOptions );
     } else if ( callback && typeof callback === 'function' ) {
-      callback(); // eslint-disable-line callback-return, inline-comments, max-len
+      // eslint-disable-next-line callback-return
+      callback();
     }
   },
 
