@@ -52,13 +52,16 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
 
     _contentDom.classList.remove( 'u-hidden' );
 
-    const clearBtnSel = '.' + BASE_CLASS + ' .input-contains-label_after__clear';
+    const clearBtnSel =
+      '.' + BASE_CLASS + ' .input-contains-label_after__clear';
     const inputContainsLabelSel =
       '.' + BASE_CLASS + '_content-form .input-contains-label';
-    const searchBtnSel = '.' + BASE_CLASS + ' .o-form__input-w-btn_btn-container button';
+    const searchBtnSel =
+      '.' + BASE_CLASS + ' .o-form__input-w-btn_btn-container button';
 
     _clearBtnDom = _contentDom.querySelector( clearBtnSel );
-    const inputContainsLabel = _contentDom.querySelector( inputContainsLabelSel );
+    const inputContainsLabel =
+      _contentDom.querySelector( inputContainsLabelSel );
     _searchInputDom = inputContainsLabel.querySelector( 'input' );
     _searchBtnDom = _contentDom.querySelector( searchBtnSel );
 
@@ -134,7 +137,8 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     /* TODO: Remove when Android 4.0-4.4 support is dropped.
        Hack to fix reflow issues on legacy Android devices. */
     _contentDom.style.display = 'none';
-    _contentDom.offsetHeight; // eslint-disable-line no-unused-expressions, no-inline-comments, max-len
+    // eslint-disable-next-line no-unused-expressions
+    _contentDom.offsetHeight;
     _contentDom.style.display = '';
 
     _contentDom.classList.remove( 'u-invisible' );

@@ -69,7 +69,8 @@ function scrollTo( to, opts ) {
   function scroll( timestamp ) {
     startTime = startTime || timestamp;
     const elapsed = timestamp - startTime;
-    const next = _easeInOutQuad( elapsed, startPosition, distance, duration );
+    const next =
+      _easeInOutQuad( elapsed, startPosition, distance, duration );
     window.scroll( 0, next );
     if ( elapsed < duration ) {
       _requestAnimationFrame( scroll );
