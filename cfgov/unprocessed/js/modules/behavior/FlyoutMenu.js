@@ -37,8 +37,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
 
   // Verify that the expected dom attributes are present.
   const _dom = behavior.checkBehaviorDom( element, BASE_CLASS );
-  const _triggerDom = behavior.checkBehaviorDom( element, BASE_CLASS + '_trigger' );
-  const _contentDom = behavior.checkBehaviorDom( element, BASE_CLASS + '_content' );
+  const _triggerDom =
+    behavior.checkBehaviorDom( element, BASE_CLASS + '_trigger' );
+  const _contentDom =
+    behavior.checkBehaviorDom( element, BASE_CLASS + '_content' );
 
   let _altTriggerDom = _dom.querySelector( SEL_PREFIX + '_alt-trigger]' );
 
@@ -90,9 +92,12 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _triggerDom.setAttribute( 'data-gtm_ignore', 'true' );
     }
 
-    const handleTriggerClickedBinded = fnBind( _handleTriggerClicked, this );
-    const handleTriggerOverBinded = fnBind( _handleTriggerOver, this );
-    const handleTriggerOutBinded = fnBind( _handleTriggerOut, this );
+    const handleTriggerClickedBinded =
+      fnBind( _handleTriggerClicked, this );
+    const handleTriggerOverBinded =
+      fnBind( _handleTriggerOver, this );
+    const handleTriggerOutBinded =
+      fnBind( _handleTriggerOut, this );
 
     // Set initial aria attributes to false.
     _setAriaAttr( 'expanded', _triggerDom, 'false' );
@@ -260,7 +265,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         { target: this, type: 'collapseBegin' } );
       if ( _collapseTransitionMethod ) {
         const hasTransition = _collapseTransition &&
-                            _collapseTransition.isAnimated();
+                              _collapseTransition.isAnimated();
         if ( hasTransition ) {
           _collapseTransition
             .addEventListener( BaseTransition.END_EVENT, _collapseEndBinded );
