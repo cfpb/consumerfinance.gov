@@ -296,6 +296,12 @@ input {
 
 .o-scale {
 
+    + .o-scale {
+        padding-top: unit( 30px / @base-font-size-px, em );
+        border-top: 1px solid @gray-40;
+        margin-top: unit( 30px / @base-font-size-px, em );
+    }
+
     .m-form-field + .m-form-field {
         margin-top: 0;
     }
@@ -332,17 +338,23 @@ input {
         }
     } );
 
+    .respond-to-max( @bp-lg-max, {
+        .o-scale_answer-prefix {
+            margin-bottom: unit( 15px / @base-font-size-px, em );
+        }
+    } );
+
     .respond-to-min( @bp-xl-min, {
         .o-scale_answer-prefix {
             box-sizing: border-box;
             padding-right: unit( 15px / @base-font-size-px, em );
-            width: percentage( 1 / ( @scale-point-count + 1 ) );
+            width: 20%;
 
             float: left;
         }
 
         .o-scale_answer-options {
-            width: percentage( @scale-point-count / ( @scale-point-count + 1 ) );
+            width: 80%;
 
             float: left;
         }
