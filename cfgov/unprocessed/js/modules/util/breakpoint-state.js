@@ -2,7 +2,6 @@
    Get Breakpoint State
    ========================================================================== */
 
-
 const _breakpointsConfig = require( '../../config/breakpoints-config' );
 const _getViewportDimensions = require( './get-viewport-dimensions' )
   .getViewportDimensions;
@@ -29,7 +28,8 @@ function get( width ) {
   let breakpointKey;
   width = width || _getViewportDimensions().width;
 
-  for ( const rangeKey in _breakpointsConfig ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
+  // eslint-disable-next-line guard-for-in
+  for ( const rangeKey in _breakpointsConfig ) {
     breakpointKey = 'is' + rangeKey.charAt( 0 ).toUpperCase() +
                     rangeKey.slice( 1 );
     breakpointState[breakpointKey] =

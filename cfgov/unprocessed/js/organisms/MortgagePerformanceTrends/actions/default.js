@@ -58,9 +58,7 @@ const defaultActionCreators = () => {
 
     /**
      * updateNational - Action dispatched when the national comparison is toggled
-     *
      * @param {Boolean} includeComparison Include national comparison?
-     *
      * @returns {Object} Action to include the national data in chart
      */
     updateNational: includeComparison => {

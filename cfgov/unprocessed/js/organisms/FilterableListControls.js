@@ -215,7 +215,7 @@ function FilterableListControls( element ) {
 
     if ( shouldValidate && isInGroup ) {
       const name = field.getAttribute( 'data-group' ) ||
-                 field.getAttribute( 'name' );
+                   field.getAttribute( 'name' );
       const isRequired = field.getAttribute( 'data-required' ) !== null;
       const groupExists = _fieldGroups.indexOf( name ) > -1;
       if ( groupExists || isRequired === false ) {
@@ -246,8 +246,8 @@ function FilterableListControls( element ) {
     fields.forEach( function loopFields( field ) {
       let fieldIsValid = true;
       const type = field.getAttribute( 'data-type' ) ||
-                 field.getAttribute( 'type' ) ||
-                 field.tagName.toLowerCase();
+                   field.getAttribute( 'type' ) ||
+                   field.tagName.toLowerCase();
       const isGroupField = _defaults.groupFieldTypes.indexOf( type ) > -1;
 
       if ( shouldValidateField( field, type, isGroupField ) === false ) return;
@@ -278,18 +278,18 @@ function FilterableListControls( element ) {
   function _validateField( field, type, isInGroup ) {
     let fieldset;
     const validation = {
-      field:      field,
+      field:  field,
       // TODO: Change layout of field groups to use fieldset.
-      label:      _getLabelText( field, '', false || isInGroup ),
-      msg:        '',
-      status:     null
+      label:  _getLabelText( field, '', false || isInGroup ),
+      msg:    '',
+      status: null
     };
 
     if ( isInGroup ) {
       const groupName = field.getAttribute( 'data-group' ) ||
-                      field.getAttribute( 'name' );
+                        field.getAttribute( 'name' );
       const groupSelector = '[name=' + groupName + ']:checked,' +
-                          '[data-group=' + groupName + ']:checked';
+                            '[data-group=' + groupName + ']:checked';
       fieldset = _form.querySelectorAll( groupSelector ) || [];
     }
 

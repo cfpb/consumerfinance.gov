@@ -28,7 +28,8 @@ function _easeInOutQuad( currentTime, startPosition, distance, duration ) {
   } else {
     updatedTime--;
     // eslint-disable-next-line no-mixed-operators
-    distanceDelta = -distance / 2 * ( updatedTime * ( updatedTime - 2 ) - 1 );
+    distanceDelta =
+      -distance / 2 * ( updatedTime * ( updatedTime - 2 ) - 1 );
   }
   return distanceDelta + startPosition;
 }
@@ -87,9 +88,8 @@ function scrollTo( to, opts ) {
  * scrolls it into view.
  * @param {HTMLNode} elem The DOM element to check for
  * @param {Object} opts Optional parameters, including:
- *    offset: Distance from top of screen of element
- * when scroll is complete
- *    callback: function called when scroll is complete
+ *  offset: Distance from top of screen of element when scroll is complete.
+ *  callback: function called when scroll is complete.
  *
  */
 function scrollIntoView( elem, opts ) {
@@ -97,7 +97,9 @@ function scrollIntoView( elem, opts ) {
   opts = assign( defaults, opts );
   if ( !elementInView( elem, true ) ) {
     const elementTop = elem.getBoundingClientRect().top;
-    const to = Math.max( window.pageYOffset + elementTop - opts.offset, 0 );
+    const to = Math.max(
+      window.pageYOffset + elementTop - opts.offset, 0
+    );
     scrollTo( to, opts );
   } else if ( opts.callback && typeof opts.callback === 'function' ) {
     opts.callback();
