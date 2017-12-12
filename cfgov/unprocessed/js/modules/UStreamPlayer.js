@@ -1,4 +1,6 @@
+// TODO: Remove VideoPlayer module.
 const VideoPlayer = require( './VideoPlayer' );
+
 let UStreamPlayer;
 
 const CLASSES = Object.freeze( {

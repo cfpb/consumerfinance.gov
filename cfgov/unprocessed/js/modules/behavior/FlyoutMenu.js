@@ -163,8 +163,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function _handleTriggerOver() {
     if ( !_touchTriggered && !_suspended ) {
-      this.dispatchEvent( 'triggerOver',
-        { target: this, type: 'triggerOver' } );
+      this.dispatchEvent(
+        'triggerOver',
+        { target: this, type: 'triggerOver' }
+      );
     }
     _touchTriggered = false;
   }
@@ -224,7 +226,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _setAriaAttr( 'pressed', _triggerDom, true );
       if ( _expandTransitionMethod ) {
         const hasTransition = _expandTransition &&
-                            _expandTransition.isAnimated();
+                              _expandTransition.isAnimated();
         if ( hasTransition ) {
           _expandTransition
             .addEventListener( BaseTransition.END_EVENT, _expandEndBinded );
