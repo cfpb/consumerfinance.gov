@@ -25,17 +25,15 @@
 
 {% macro render( value ) %}
 <aside class="m-featured-menu-content">
-    <div class="h4">
-        <a href="{{ value.link.url }}">
+    <p>
+        <a class="h4" href="{{ value.link.url }}">
             <img src="{{ static(value.image_src) }}"
                  alt=""
                  height="150"
                  width="270">
-            <p>
-                {{ value.link.text }}
-            </p>
+            {{ value.link.text }}
         </a>
-    </div>
+    </p>
     <p>
         {{ value.body }}
     </p>
