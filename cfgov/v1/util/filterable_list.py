@@ -33,13 +33,6 @@ class FilterableListMixin(object):
                                   self.per_page_limit())
             page = request.GET.get('page')
 
-    def process_form(self, request, form):
-        filter_data = {}
-        if form.is_valid():
-            paginator = Paginator(form.get_page_set(),
-                                  self.per_page_limit())
-            page = request.GET.get('page')
-
             # Get the page number in the request and get the page from the
             # paginator to serve.
             try:
