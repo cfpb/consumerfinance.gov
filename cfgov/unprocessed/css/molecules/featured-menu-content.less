@@ -5,15 +5,15 @@
     - name: Default example
       markup: |
           <aside class="m-featured-menu-content">
-              <p>
-                  <a class="h4" href="#">
-                      <img src="../img/fmc-image-540x300.jpg"
-                           alt=""
-                           height="150"
-                           width="270">
+              <a class="m-featured-menu-content_link" href="#">
+                  <img src="../img/fmc-image-540x300.jpg"
+                       alt=""
+                       height="150"
+                       width="270">
+                  <div>
                       The CFPB: Working for you
-                  </a>
-              </p>
+                  </div>
+              </a>
               <p>
                   Short description.
               </p>
@@ -23,9 +23,9 @@
           Structural cheat sheet:
           -----------------------
           .m-featured-menu-content
-            p
-              a.h4
-                img
+            a.m-featured-menu-content_link
+              img
+              div
             p
   tags:
     - cfgov-molecules
@@ -35,6 +35,11 @@
     .grid_column( 4 );
 
     padding: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+    &_link {
+        .h4();
+        display: block;
+    }
 
     .respond-to-max( @bp-med-max, {
         display: none;
