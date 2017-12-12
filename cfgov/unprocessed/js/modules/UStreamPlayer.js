@@ -1,4 +1,4 @@
-// TODO: Remove VideoPlayer module.
+// TODO: Remove UStreamPlayer module.
 const VideoPlayer = require( './VideoPlayer' );
 
 let UStreamPlayer;
