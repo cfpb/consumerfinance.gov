@@ -1,5 +1,3 @@
-'use strict';
-
 const richTextEditor = require(
   '../../shared_objects/wagtail-admin-rich-text-editor.js'
 );
@@ -15,12 +13,10 @@ defineSupportCode( function( { Then, When, After, setDefaultTimeout } ) {
 
   After( function() {
 
-    /*
-    browser.manage().logs().get( 'browser' )
-    .then( function( browserLog ) {
-      console.log( browserLog );
-    } );
-    */
+    /* browser.manage().logs().get( 'browser' )
+       .then( function( browserLog ) {
+       console.log( browserLog );
+       } ); */
 
   } );
 

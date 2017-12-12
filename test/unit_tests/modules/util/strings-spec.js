@@ -1,5 +1,3 @@
-'use strict';
-
 const chai = require( 'chai' );
 const expect = chai.expect;
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';

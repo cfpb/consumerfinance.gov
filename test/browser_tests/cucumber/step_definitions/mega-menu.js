@@ -1,5 +1,3 @@
-'use strict';
-
 const { defineSupportCode } = require( 'cucumber' );
 const chai = require( 'chai' );
 const expect = chai.expect;
@@ -34,18 +32,18 @@ defineSupportCode( function( { Then, When, Before } ) {
   When( 'mouse moves from one link to another after a delay',
     function( ) {
       browser
-      .actions()
-      .mouseMove( _dom.triggerPolyCom )
-      .perform();
+        .actions()
+        .mouseMove( _dom.triggerPolyCom )
+        .perform();
 
-      // The menu has a built-in delay before it expands.
-      // This waits for that delay.
+      /* The menu has a built-in delay before it expands.
+         This waits for that delay. */
       browser.sleep( 500 );
 
       return browser
-             .actions()
-             .mouseMove( _dom.triggerAboutUs )
-             .perform();
+        .actions()
+        .mouseMove( _dom.triggerAboutUs )
+        .perform();
     }
   );
 
@@ -53,8 +51,8 @@ defineSupportCode( function( { Then, When, Before } ) {
     function( ) {
 
       return expect( _dom.contentAboutUs.isDisplayed() )
-             .to.eventually
-             .equal( false );
+        .to.eventually
+        .equal( false );
     }
   );
 
@@ -62,14 +60,14 @@ defineSupportCode( function( { Then, When, Before } ) {
     function( ) {
 
       return browser
-             .actions()
-             .mouseMove( _dom.triggerPolyCom )
-             .perform()
-             .then( () =>
-                expect( _dom.contentPolyCom.isDisplayed() )
-                .to.eventually
-                .equal( false )
-             );
+        .actions()
+        .mouseMove( _dom.triggerPolyCom )
+        .perform()
+        .then( () =>
+          expect( _dom.contentPolyCom.isDisplayed() )
+            .to.eventually
+            .equal( false )
+        );
     }
   );
 
@@ -77,75 +75,75 @@ defineSupportCode( function( { Then, When, Before } ) {
     function( ) {
 
       return browser
-             .actions( )
-             .mouseMove( _dom.triggerPolyCom )
-             .perform()
-             .then( () =>
+        .actions( )
+        .mouseMove( _dom.triggerPolyCom )
+        .perform()
+        .then( () =>
 
-                // Wait for delay to show menu
-                browser.sleep( 500 )
-                .then( ( ) =>
-                  expect( _dom.contentPolyCom.isDisplayed() )
-                  .to.eventually
-                  .equal( true )
-                )
-            );
+          // Wait for delay to show menu
+          browser.sleep( 500 )
+            .then( ( ) =>
+              expect( _dom.contentPolyCom.isDisplayed() )
+                .to.eventually
+                .equal( true )
+            )
+        );
     }
   );
 
   Then( 'should only show second link content', function( ) {
 
     return browser.wait(
-             EC.not( EC.elementToBeClickable( _dom.contentPolyCom ) ) )
-             .then( () => {
-               expect( _dom.contentPolyCom.isDisplayed() )
-               .to.eventually
-               .equal( false );
+      EC.not( EC.elementToBeClickable( _dom.contentPolyCom ) ) )
+      .then( () => {
+        expect( _dom.contentPolyCom.isDisplayed() )
+          .to.eventually
+          .equal( false );
 
-               return expect( _dom.contentAboutUs.isDisplayed() )
-                      .to.eventually
-                      .equal( true );
-             } );
+        return expect( _dom.contentAboutUs.isDisplayed() )
+          .to.eventually
+          .equal( true );
+      } );
   } );
 
   Then( 'the mega-menu organism should show menu when clicked', function( ) {
 
     return browser
-           .driver
-           .actions( )
-           .click( _dom.triggerBtn )
-           .perform()
-           .then( () => {
-             expect( _dom.contentWrapper.isDisplayed() )
-             .to.eventually
-             .equal( true );
-           } );
+      .driver
+      .actions( )
+      .click( _dom.triggerBtn )
+      .perform()
+      .then( () => {
+        expect( _dom.contentWrapper.isDisplayed() )
+          .to.eventually
+          .equal( true );
+      } );
   } );
 
   Then( 'the mega-menu organism should show the PolyCom menu when clicked',
     function() {
       browser
-      .driver
-      .actions( )
-      .click( _dom.triggerBtn )
-      .perform( );
+        .driver
+        .actions( )
+        .click( _dom.triggerBtn )
+        .perform( );
 
       browser.sleep( 500 );
 
       return browser.driver.actions().click( _dom.triggerPolyCom ).perform()
-             .then( () => {
-               expect( _dom.contentPolyCom.isDisplayed() )
-               .to.eventually
-               .equal( true );
-               expect( _dom.contentAboutUs.isDisplayed() )
-               .to.eventually
-               .equal( false );
-             } );
+        .then( () => {
+          expect( _dom.contentPolyCom.isDisplayed() )
+            .to.eventually
+            .equal( true );
+          expect( _dom.contentAboutUs.isDisplayed() )
+            .to.eventually
+            .equal( false );
+        } );
     }
   );
 
-  // This test is failing right now, but should pass
-  // when we fix keyboard tabbing on mobile
+  /* This test is failing right now, but should pass
+     when we fix keyboard tabbing on mobile */
   Then( 'the mega-menu organism should not shift menus when tabbing',
     function() {
       browser.driver.actions().click( _dom.triggerBtn ).perform();
@@ -155,8 +153,8 @@ defineSupportCode( function( { Then, When, Before } ) {
       browser.driver.actions().sendKeys( protractor.Key.TAB ).perform();
 
       return expect( _dom.eyebrow.isDisplayed() )
-             .to.eventually
-             .equal( false );
+        .to.eventually
+        .equal( false );
     }
   );
 

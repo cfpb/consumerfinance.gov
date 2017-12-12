@@ -1,5 +1,3 @@
-'use strict';
-
 const BasePage = require( '../../page_objects/base-page.js' );
 const basePage = new BasePage();
 

@@ -1,16 +1,13 @@
 /* ==========================================================================
    Javascript Type Checkers
-
    Various utility functions to check Javascript types and primitives.
    Copied from:
    https://github.com/angular/angular.js/blob/master/src/Angular.js.
-
    Copyright (c) 2010-2015 Google, Inc. http://angularjs.org
    ========================================================================== */
 
-'use strict';
 
-var _toString = Object.prototype.toString;
+const _toString = Object.prototype.toString;
 
 /**
  * @name isUndefined
@@ -122,7 +119,7 @@ function isDate( value ) {
  * @param {*} value Reference to check.
  * @returns {boolean} True if `value` is an `Array`.
  */
-var isArray = Array.isArray || function isArray( value ) {
+const isArray = Array.isArray || function isArray( value ) {
   return _toString.call( value ) === '[object Array]';
 };
 

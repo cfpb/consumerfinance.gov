@@ -3,19 +3,18 @@
    Extends Video Player Class.
    ========================================================================== */
 
-'use strict';
 
-var _noopFunct = require( './util/standard-type' ).noopFunct;
-var VideoPlayer = require( './VideoPlayer' );
-var YoutubePlayer;
+const _noopFunct = require( './util/standard-type' ).noopFunct;
+const VideoPlayer = require( './VideoPlayer' );
+let YoutubePlayer;
 
-var CLASSES = Object.freeze( {
+const CLASSES = Object.freeze( {
   VIDEO_PLAYER_SELECTOR: '.video-player__youtube',
   IFRAME_CLASS_NAME:     'video-player_iframe__youtube',
   IMAGE_LOADED_STATE:    'video-player_image-loaded'
 } );
 
-var API = {
+const API = {
 
   constructor: YoutubePlayer,
 
@@ -47,7 +46,7 @@ var API = {
    * Adding Youtube player API callback listeners.
    */
   init: function( ) {
-    var youtubeEvents = this.playerOptions.events;
+    const youtubeEvents = this.playerOptions.events;
     youtubeEvents.onReady = this.onPlayerReady.bind( this );
     youtubeEvents.onStateChange = this.onPlayerStateChange.bind( this );
     this.videoId = this.baseElement &&
@@ -63,8 +62,8 @@ var API = {
    *   the Google APIs have not been loaded on the window object.
    */
   initPlayer: function( ) {
-    var YouTubePlayer = window.YT;
-    var player;
+    const YouTubePlayer = window.YT;
+    let player;
     if ( YouTubePlayer && YouTubePlayer.Player ) {
       YouTubePlayer.setConfig( this.YOUTUBE_API_CONFIG );
       player = new YouTubePlayer.Player( this.iFrameProperties.id
@@ -84,9 +83,9 @@ var API = {
    * https://developers.google.com/youtube/v3/getting-started#fields
    */
   loadImage: function( ) {
-    var defaultImage;
-    var maxResImage;
-    var maxResImageSrc;
+    let defaultImage;
+    let maxResImage;
+    let maxResImageSrc;
 
     if ( this.videoId ) {
       defaultImage = this.childElements.image;
@@ -110,7 +109,7 @@ var API = {
     }
   },
 
-   /**
+  /**
    * Callback function called when Youtube player API
    * is loaded and events have been initialized.
    * @param {object} event - Youtube event data.

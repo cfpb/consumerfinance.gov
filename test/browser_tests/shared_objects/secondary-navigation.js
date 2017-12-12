@@ -1,8 +1,6 @@
-'use strict';
+const _secondaryNav = element( by.css( '.o-secondary-navigation' ) );
 
-var _secondaryNav = element( by.css( '.o-secondary-navigation' ) );
-
-var secondaryNav = {
+const secondaryNav = {
 
   secondaryNav: _secondaryNav,
 

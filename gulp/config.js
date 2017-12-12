@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require( 'fs' );
 const environment = require( '../config/environment' );
 const paths = environment.paths;

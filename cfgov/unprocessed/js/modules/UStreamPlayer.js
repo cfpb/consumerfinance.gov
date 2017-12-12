@@ -1,14 +1,12 @@
-'use strict';
+const VideoPlayer = require( './VideoPlayer' );
+let UStreamPlayer;
 
-var VideoPlayer = require( './VideoPlayer' );
-var UStreamPlayer;
-
-var CLASSES = Object.freeze( {
+const CLASSES = Object.freeze( {
   VIDEO_PLAYER_SELECTOR: '.video-player__youtube',
   IFRAME_CLASS_NAME:     'video-player_iframe__youtube'
 } );
 
-var API = {
+const API = {
 
   SCRIPT_API: '/static/js/ustream-embedapi.min.js',
 
@@ -22,7 +20,7 @@ var API = {
    * Handle initializing of UStream player and embed API script if necessary.
    */
   initPlayer: function( ) {
-    var UstreamPlayer = window.UstreamEmbed;
+    const UstreamPlayer = window.UstreamEmbed;
     if ( UstreamPlayer ) {
       this.player = new UstreamPlayer( this.iFrameProperties.id );
       this.initPlayerEvents();

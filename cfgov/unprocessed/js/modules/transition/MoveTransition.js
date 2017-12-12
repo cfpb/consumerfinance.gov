@@ -1,12 +1,10 @@
-'use strict';
-
 // Required modules.
-var EventObserver = require( '../../modules/util/EventObserver' );
-var BaseTransition = require( './BaseTransition' );
-var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
+const EventObserver = require( '../../modules/util/EventObserver' );
+const BaseTransition = require( './BaseTransition' );
+const fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 
 // Exported constants.
-var CLASSES = {
+const CLASSES = {
   BASE_CLASS:     'u-move-transition',
   MOVE_TO_ORIGIN: 'u-move-to-origin',
   MOVE_LEFT:      'u-move-left',
@@ -28,16 +26,16 @@ var CLASSES = {
  */
 function MoveTransition( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
-  var _baseTransition = new BaseTransition( element, CLASSES );
+  const _baseTransition = new BaseTransition( element, CLASSES );
 
   /**
    * @returns {MoveTransition} An instance.
    */
   function init() {
     _baseTransition.init();
-    var _transitionCompleteBinded = fnBind( _transitionComplete, this );
+    const _transitionCompleteBinded = fnBind( _transitionComplete, this );
     _baseTransition.addEventListener( BaseTransition.END_EVENT,
-                                      _transitionCompleteBinded );
+      _transitionCompleteBinded );
     return this;
   }
 
@@ -66,7 +64,7 @@ function MoveTransition( element ) { // eslint-disable-line max-statements, no-i
    */
   function moveLeft( count ) {
     count = count || 1;
-    var moveClasses = [
+    const moveClasses = [
       CLASSES.MOVE_LEFT,
       CLASSES.MOVE_LEFT_2X,
       CLASSES.MOVE_LEFT_3X
@@ -102,7 +100,7 @@ function MoveTransition( element ) { // eslint-disable-line max-statements, no-i
   }
 
   // Attach public events.
-  var eventObserver = new EventObserver();
+  const eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;
   this.removeEventListener = eventObserver.removeEventListener;

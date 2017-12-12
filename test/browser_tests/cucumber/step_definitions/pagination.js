@@ -1,5 +1,3 @@
-'use strict';
-
 const pagination = require( '../../shared_objects/pagination.js' );
 const { defineSupportCode } = require( 'cucumber' );
 const chai = require( 'chai' );
@@ -28,8 +26,8 @@ defineSupportCode( function( { Then, When } ) {
     function( urlComponent ) {
 
       return expect( browser.getCurrentUrl() )
-             .to.eventually
-             .contain( urlComponent );
+        .to.eventually
+        .contain( urlComponent );
     }
   );
 

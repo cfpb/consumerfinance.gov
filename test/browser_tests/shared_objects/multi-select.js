@@ -1,12 +1,10 @@
-'use strict';
-
-var _multiSelect = element.all( by.css( '.cf-multi-select' ) ).first();
+const _multiSelect = element.all( by.css( '.cf-multi-select' ) ).first();
 
 function _getMultiSelectElement( selector ) {
   return _multiSelect.element( by.css( selector ) );
 }
 
-var elements = {
+const elements = {
 
   base:     _multiSelect,
 
@@ -36,9 +34,9 @@ class MultiSelect {
     function _focus( ) {
 
       return browser.executeScript(
-               'arguments[0].focus()',
-               this
-            );
+        'arguments[0].focus()',
+        this
+      );
     }
 
     element.focus = _focus.bind( element );
@@ -48,10 +46,10 @@ class MultiSelect {
     const tagsSelected = this._selectedTags.length;
 
     return this.getDisplayedTagElements()
-           .count()
-           .then( selectedTagsCount =>
-             tagsSelected !== 0 || selectedTagsCount !== 0
-           );
+      .count()
+      .then( selectedTagsCount =>
+        tagsSelected !== 0 || selectedTagsCount !== 0
+      );
   }
 
   clearTags( ) {
@@ -60,36 +58,36 @@ class MultiSelect {
     return this.selectedTags;
   }
 
-  dropdownHasValue( value ) {
+  dropDownHasValue( value ) {
     const selector = `li[data-option="${ value }"].filter-match`;
     const choicesWithValue = element.all( by.css( selector ) );
 
     return choicesWithValue
-           .count()
-           .then( selectedTagsCount => selectedTagsCount > 0 );
+      .count()
+      .then( selectedTagsCount => selectedTagsCount > 0 );
   }
 
   getChoiceElements( ) {
 
     return element.all(
-             by.css( '.cf-multi-select_choices label' )
-           );
+      by.css( '.cf-multi-select_choices label' )
+    );
   }
 
   getChoiceElementsCount( ) {
 
     return element.all(
-             by.css( '.cf-multi-select_choices label' )
-           ).count();
+      by.css( '.cf-multi-select_choices label' )
+    ).count();
   }
 
   getDropDownCount( ) {
 
     return element.all( by.css( '.cf-multi-select .filter-match' ) )
-           .count();
+      .count();
   }
 
-  getDrodownLabelElements( ) {
+  getDropDownLabelElements( ) {
 
     return browser.element.all(
       by.css( '.cf-multi-select_options li .cf-multi-select_label' )

@@ -1,6 +1,5 @@
 /* ==========================================================================
    Dom Behaviors
-
    Behaviors are functionality that can be shared between different pieces
    of markup. They are not strictly atomic, though they likely are used
    on atomic components. An example of shared behavior may be a menu that
@@ -11,24 +10,20 @@
    Behaviors are added through the `data-js-hook` attribute on the HTML
    and have a prefix of `behavior_`
    (both those designators are set in modules/util/standard-type.js).
-
    For example, `modules/behaviors/FlyoutMenu.js` defines the behavior of
    expanding and collapsing an expandable menu. At a minimum, three things
    need to be defined: (A) The containing scope of the menu, (B) the trigger
    to activate the menu, and (C) the content to show/hide when the trigger
    is clicked. So the markup looks something like:
-
    <div data-js-hook="behavior_flyout-menu">
-     <button data-js-hook="behavior_flyout-menu_trigger">
-     <div data-js-hook="behavior_flyout-menu_content">
-
+   <button data-js-hook="behavior_flyout-menu_trigger">
+   <div data-js-hook="behavior_flyout-menu_content">
    ========================================================================== */
 
-'use strict';
 
 // Required modules.
-var standardType = require( './standard-type' );
-var dataHook = require( '../../modules/util/data-hook' );
+const standardType = require( './standard-type' );
+const dataHook = require( '../../modules/util/data-hook' );
 
 
 /**
@@ -40,12 +35,12 @@ var dataHook = require( '../../modules/util/data-hook' );
  */
 function _findElements( behaviorSelector, baseElement ) {
   baseElement = baseElement || document;
-  var behaviorElements = [];
+  let behaviorElements = [];
 
   try {
     behaviorElements = baseElement.querySelectorAll( behaviorSelector );
   } catch ( error ) {
-    var msg = behaviorSelector + ' not found in DOM!';
+    const msg = behaviorSelector + ' not found in DOM!';
     throw new Error( msg );
   }
 
@@ -67,7 +62,7 @@ function _findElements( behaviorSelector, baseElement ) {
  * @returns {HTMLNodeList} if it exists in the dom, null otherwise.
  */
 function attach( behaviorElement, event, eventHandler, baseElement ) {
-  var behaviorElements = [];
+  let behaviorElements = [];
 
   if ( behaviorElement instanceof NodeList === true ) {
     behaviorElements = behaviorElement;
@@ -77,7 +72,7 @@ function attach( behaviorElement, event, eventHandler, baseElement ) {
     behaviorElements = _findElements( behaviorElement, baseElement );
   }
 
-  for ( var i = 0, len = behaviorElements.length; i < len; i++ ) {
+  for ( let i = 0, len = behaviorElements.length; i < len; i++ ) {
     behaviorElements[i].addEventListener( event, eventHandler, false );
   }
 
@@ -96,22 +91,22 @@ function attach( behaviorElement, event, eventHandler, baseElement ) {
  */
 function checkBehaviorDom( element, behaviorDataAttr ) {
   // Check that the behavior is found on the passed DOM node.
-  var dom;
+  let dom;
 
   if ( dataHook.contains( element, behaviorDataAttr ) ) {
     dom = element;
     return dom;
   }
 
-  // If the passed DOM node isn't null,
-  // query the node to see if it's in the children.
+  /* If the passed DOM node isn't null,
+     query the node to see if it's in the children. */
   if ( element ) {
-    var selector = '[' + standardType.JS_HOOK + '=' + behaviorDataAttr + ']';
+    const selector = '[' + standardType.JS_HOOK + '=' + behaviorDataAttr + ']';
     dom = element.querySelector( selector );
   }
 
   if ( !dom ) {
-    var msg = behaviorDataAttr + ' behavior not found on passed DOM node!';
+    const msg = behaviorDataAttr + ' behavior not found on passed DOM node!';
     throw new Error( msg );
   }
 

@@ -1,5 +1,5 @@
 /* eslint no-extra-semi: "off" */
-'use strict';
+
 
 const Analytics = require( '../../modules/Analytics' );
 const Expandable = require( '../../organisms/Expandable' );

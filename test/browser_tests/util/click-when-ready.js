@@ -1,12 +1,10 @@
-'use strict';
-
 const EC = protractor.ExpectedConditions;
 
 function _clickElement( element ) {
 
   return browser
-         .wait( EC.elementToBeClickable( element ) )
-         .then( element.click );
+    .wait( EC.elementToBeClickable( element ) )
+    .then( element.click );
 }
 
 function clickWhenReady( elements ) {
@@ -23,7 +21,7 @@ function clickWhenReady( elements ) {
 
     promise.then( _clickElement.bind( null, element ) )
 
-  , Promise.resolve( ) );
+    , Promise.resolve( ) );
 
 }
 

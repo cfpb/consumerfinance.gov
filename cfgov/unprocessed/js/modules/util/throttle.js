@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @name throttle
  * @kind function
@@ -14,11 +12,11 @@
  * @returns {*} Result of function invocation.
  */
 function throttle( func, wait, options ) {
-  var context;
-  var args;
-  var result;
-  var timeout = null;
-  var previous = 0;
+  let context;
+  let args;
+  let result;
+  let timeout = null;
+  let previous = 0;
   if ( !options ) options = {};
 
   /**
@@ -33,9 +31,9 @@ function throttle( func, wait, options ) {
   }
 
   return function() {
-    var now = Date.now();
+    const now = Date.now();
     if ( !previous && options.leading === !1 ) previous = now;
-    var remaining = wait - ( now - previous );
+    const remaining = wait - ( now - previous );
     context = this;
     args = arguments;
     if ( remaining <= 0 || remaining > wait ) {

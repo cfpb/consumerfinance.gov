@@ -1,5 +1,3 @@
-'use strict';
-
 const WagtailAdminPagesPage = require(
   '../../page_objects/wagtail-admin-pages-page.js'
 );
