@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Fail if any command fails.
-set -e
+set -ex
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
