@@ -9,7 +9,7 @@ var _noopFunct = require( './util/standard-type' ).noopFunct;
 var _jsLoader = require( './util/js-loader' );
 var _dataSet = require( './util/data-set' ).dataSet;
 
-var DOM_INVALID = require( '../config/error-messages-config' ).DOM.INVALID;
+import { DOM } from '../config/error-messages-config';
 
 var CLASSES = Object.freeze( {
   VIDEO_PLAYER_SELECTOR:     '.video-player',
@@ -148,7 +148,7 @@ function _createElement( tagName, properties ) {
 */
 function _ensureElement( domElement, msg ) {
   if ( domElement instanceof HTMLElement === false ) {
-    msg = msg || DOM_INVALID;
+    msg = msg || DOM.INVALID;
     throw new Error( msg );
   }
 
@@ -294,4 +294,4 @@ var API = {
 _assign( VideoPlayer.prototype, API );
 
 // Expose public methods.
-module.exports = VideoPlayer;
+export default VideoPlayer;

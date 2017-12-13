@@ -7,7 +7,7 @@
 'use strict';
 
 // Required Modules
-var ERROR_MESSAGES = require( '../../config/error-messages-config' );
+import * as ERROR_MESSAGES from '../../config/error-messages-config';
 var typeCheckers = require( '../../modules/util/type-checkers' );
 
 // TODO: Update all the validators to return both passed and failed states

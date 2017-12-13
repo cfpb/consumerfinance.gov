@@ -4,10 +4,11 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var scroll = require( '../modules/util/scroll' );
 var AlphaTransition = require( '../modules/transition/AlphaTransition' );
 var BaseTransition = require( '../modules/transition/BaseTransition' );
-var ERROR_MESSAGES = require( '../config/error-messages-config' );
-var FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
 var Notification = require( '../molecules/Notification' );
 var EventObserver = require( '../modules/util/EventObserver' );
+
+import { FORM } from '../config/error-messages-config';
+var FORM_MESSAGES = FORM.SUBMISSION;
 
 /**
  * FormSubmit

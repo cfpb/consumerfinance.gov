@@ -42,4 +42,4 @@ function loadScript( url, callback ) {
 }
 
 // Expose public methods.
-module.exports = { loadScript: loadScript };
+export default loadScript;

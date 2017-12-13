@@ -4,9 +4,11 @@
 
 'use strict';
 
-var COMMENT_ERRORS = require( '../../config/error-messages-config' ).COMMENT || {};
-var OPTION_ERRORS = require( '../../config/error-messages-config' ).OPTION || {};
+import { COMMENT, OPTION } from '../../config/error-messages-config';
 var FormSubmit = require( '../../organisms/FormSubmit.js' );
+
+var COMMENT_ERRORS = COMMENT || {};
+var OPTION_ERRORS = OPTION || {};
 var BASE_CLASS = 'o-feedback';
 var requiredKey = 'REQUIRED';
 var UNDEFINED;
