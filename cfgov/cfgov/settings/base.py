@@ -94,7 +94,6 @@ OPTIONAL_APPS = [
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
     {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
-    {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
