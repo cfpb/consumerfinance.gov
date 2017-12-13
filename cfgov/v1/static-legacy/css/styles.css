@@ -1949,11 +1949,6 @@ aside#reginfo .reg_meta_item {
 	border-bottom: none;
 }
 
-.report .show-hide-content {
-	background: #f7f6f3;
-	padding: 1em;
-}
-
 /* TABS */
 .report .tabset {
 	margin: 0 0 1em;
@@ -2256,10 +2251,6 @@ aside#reginfo .reg_meta_item {
 	font-weight: normal;
 }
 
-.report .show-hide-content .show-hide-content table {
-	margin:0 -1em;
-}
-
 .report table {
 	border:none;
 	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
@@ -2318,10 +2309,6 @@ aside#reginfo .reg_meta_item {
 
 .report table + .figcaption {
 	margin-top:1em;
-}
-
-.report .show-hide-content .figcaption {
-	margin-right:-1em;
 }
 
 .report thead th {
