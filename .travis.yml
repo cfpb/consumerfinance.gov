@@ -1,9 +1,12 @@
 language: python
-sudo: false
+sudo: required
 dist: trusty
 
 python:
   - "2.7"
+
+services:
+  - docker
 
 addons:
   chrome: beta
@@ -32,5 +35,13 @@ branches:
   only:
     - master
 
+before_script:
+  - python -m SimpleHTTPServer 8009 &
+  - sleep 3
+
 script:
   - ./run_travis.sh
+  - docker run --privileged --net="host" -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io --budget.configPath perfbudget.json http://127.0.0.1:8009/web/
+
+after_script:
+  - kill `ps aux | grep "python -m SimpleHTTPServer" | grep -v grep | awk '{print $2}'`
