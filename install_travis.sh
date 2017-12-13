@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -ex
-
 # Install frontend dependencies
 frontend() {
     export CXX=clang++
