@@ -2,7 +2,6 @@
 
 # Install frontend dependencies
 frontend() {
-    export CXX=clang++
 
     npm install -g gulp-cli
 
