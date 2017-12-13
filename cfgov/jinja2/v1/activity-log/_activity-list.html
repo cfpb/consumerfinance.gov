@@ -16,6 +16,7 @@
                 </th>
             </tr>
         {%- for post in posts %}
+            {% cache post.activity_list_cache_key %}
             {% set post_url = get_protected_url(post) %}
             <tr>
                 <td class="u-w20pct">
@@ -44,6 +45,7 @@
                     {{ time.render(post.date_published, {'date':true}) }}
                 </td>
             </tr>
+            {% endcache %}
         {%- endfor %}
         </tbody>
     </table>

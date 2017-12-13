@@ -41,7 +41,9 @@ def user_save_callback(sender, **kwargs):
 
 
 def invalidate_post_preview(sender, **kwargs):
+    """ Invalidates all places that a preview of this post appears """
     instance = kwargs['instance']
     caches['post_preview'].delete(instance.post_preview_cache_key)
+    caches['post_preview'].delete(instance.activity_list_cache_key)
 
 page_published.connect(invalidate_post_preview)
