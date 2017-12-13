@@ -18,10 +18,8 @@ function clickWhenReady( elements ) {
   }
 
   return elements.reduce( ( promise, element ) =>
-    promise.then(
-      _clickElement.bind( null, element ) ),
-      Promise.resolve()
-    );
+    promise.then( _clickElement.bind( null, element ) ), Promise.resolve()
+  );
 }
 
 module.exports = clickWhenReady;
