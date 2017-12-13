@@ -93,7 +93,7 @@ function selectPageLink( linkTitle ) {
   const cfgovLink = element( by.css( linkSelector ) );
 
   return cfgovLink.click()
-    .then( function( ) {
+    .then( function() {
 
       return setSelectedLink( linkSelector );
     } );

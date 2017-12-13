@@ -5,24 +5,17 @@ function _getMultiSelectElement( selector ) {
 }
 
 const elements = {
-
   base:     _multiSelect,
-
   choices:  _getMultiSelectElement( '.cf-multi-select_choices' ),
-
   header:   _getMultiSelectElement( '.cf-multi-select_header' ),
-
   search:   _getMultiSelectElement( '.cf-multi-select_search' ),
-
   fieldSet: _getMultiSelectElement( '.cf-multi-select_fieldset' ),
-
   options:  _getMultiSelectElement( '.cf-multi-select_options' )
-
 };
 
 class MultiSelect {
 
-  constructor( ) {
+  constructor() {
     this.elements = elements;
     this._selectedTags = [];
 
@@ -31,8 +24,7 @@ class MultiSelect {
 
   addFocusToElement( element ) {
 
-    function _focus( ) {
-
+    function _focus() {
       return browser.executeScript(
         'arguments[0].focus()',
         this
@@ -42,7 +34,7 @@ class MultiSelect {
     element.focus = _focus.bind( element );
   }
 
-  areTagSelected( ) {
+  areTagSelected() {
     const tagsSelected = this._selectedTags.length;
 
     return this.getDisplayedTagElements()
@@ -52,7 +44,7 @@ class MultiSelect {
       );
   }
 
-  clearTags( ) {
+  clearTags() {
     this.selectedTags = [];
 
     return this.selectedTags;
@@ -67,43 +59,31 @@ class MultiSelect {
       .then( selectedTagsCount => selectedTagsCount > 0 );
   }
 
-  getChoiceElements( ) {
-
-    return element.all(
-      by.css( '.cf-multi-select_choices label' )
-    );
+  getChoiceElements() {
+    return element.all( by.css( '.cf-multi-select_choices label' ) );
   }
 
-  getChoiceElementsCount( ) {
-
-    return element.all(
-      by.css( '.cf-multi-select_choices label' )
-    ).count();
+  getChoiceElementsCount() {
+    return element.all( by.css( '.cf-multi-select_choices label' ) ).count();
   }
 
-  getDropDownCount( ) {
-
-    return element.all( by.css( '.cf-multi-select .filter-match' ) )
-      .count();
+  getDropDownCount() {
+    return element.all( by.css( '.cf-multi-select .filter-match' ) ).count();
   }
 
-  getDropDownLabelElements( ) {
-
+  getDropDownLabelElements() {
     return browser.element.all(
       by.css( '.cf-multi-select_options li .cf-multi-select_label' )
     );
   }
 
-  getDisplayedTagElements( ) {
-
+  getDisplayedTagElements() {
     return element.all( by.css( '.cf-multi-select_choices li' ) );
   }
 
-  isRendered( ) {
-
+  isRendered() {
     return this.elements.base.isDisplayed();
   }
-
 }
 
 module.exports = MultiSelect;

@@ -57,14 +57,14 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   When( 'I click on the mega-menu',
-    function( ) {
+    function() {
 
       return _dom.megaMenu.click();
     }
   );
 
   When( 'I click on the mega-menu trigger',
-    function( ) {
+    function() {
 
       return _dom.megaMenuTrigger.click();
     }

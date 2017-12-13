@@ -185,7 +185,7 @@ function _createSauceTunnel( ) {
       }
 
       if ( sauceTunnel.proc ) {
-        sauceTunnel.proc.on( 'exit', function( ) {
+        sauceTunnel.proc.on( 'exit', function() {
           reject( sauceTunnelParam );
         } );
       }

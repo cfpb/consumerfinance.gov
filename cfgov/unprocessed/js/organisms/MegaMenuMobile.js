@@ -108,8 +108,11 @@ function MegaMenuMobile( menus ) {
       // Root menu is closing.
       if ( menu.isExpanded() ) {
         level = _activeMenu.getData().level;
-        menu.setCollapseTransition( transition,
-          transition.moveLeft, [ level + 1 ] );
+        menu.setCollapseTransition(
+          transition,
+          transition.moveLeft,
+          [ level + 1 ]
+        );
       }
     } else {
       // Submenu clicked.
@@ -117,8 +120,11 @@ function MegaMenuMobile( menus ) {
       let siblingMenu;
       for ( let i = 0, len = siblings.length; i < len; i++ ) {
         siblingMenu = siblings[i].data;
-        siblingMenu
-          .setExpandTransition( transition, transition.moveLeft, [ level ] );
+        siblingMenu.setExpandTransition(
+          transition,
+          transition.moveLeft,
+          [ level ]
+        );
 
         /* If on the 2nd level menu, set the back button to moveToOrigin,
            otherwise we're on the 3rd level menu, so moveLeft is needed. */

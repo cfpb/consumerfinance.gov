@@ -45,7 +45,7 @@ const API = {
   /**
    * Adding Youtube player API callback listeners.
    */
-  init: function( ) {
+  init: function() {
     const youtubeEvents = this.playerOptions.events;
     youtubeEvents.onReady = this.onPlayerReady.bind( this );
     youtubeEvents.onStateChange = this.onPlayerStateChange.bind( this );
@@ -61,7 +61,7 @@ const API = {
    *   YouTube player instance from the Google APIs or undefined if
    *   the Google APIs have not been loaded on the window object.
    */
-  initPlayer: function( ) {
+  initPlayer: function() {
     const YouTubePlayer = window.YT;
     let player;
     if ( YouTubePlayer && YouTubePlayer.Player ) {
@@ -82,7 +82,7 @@ const API = {
    * TODO: Replace this method by calling the Youtube data API.
    * https://developers.google.com/youtube/v3/getting-started#fields
    */
-  loadImage: function( ) {
+  loadImage: function() {
     let defaultImage;
     let maxResImage;
     let maxResImageSrc;
@@ -132,7 +132,7 @@ const API = {
   /**
    * Action function used to play the Youtube video.
    */
-  play: function( ) {
+  play: function() {
     this._super.play.call( this );
     if ( this.state.isPlayerInitialized && this.player ) {
       this.player.seekTo( 0 );
@@ -145,7 +145,7 @@ const API = {
   /**
    * Action function used to play the Youtube video.
    */
-  stop: function( ) {
+  stop: function() {
     this._super.stop.call( this );
     if ( this.state.isPlayerInitialized && this.player ) {
       this.player.stopVideo();

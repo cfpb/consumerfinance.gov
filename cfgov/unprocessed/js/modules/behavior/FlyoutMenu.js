@@ -181,8 +181,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function _handleTriggerOut() {
     if ( !_suspended ) {
-      this.dispatchEvent( 'triggerOut',
-        { target: this, type: 'triggerOut' } );
+      this.dispatchEvent(
+        'triggerOut',
+        { target: this, type: 'triggerOut' }
+      );
     }
   }
 
@@ -193,8 +195,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function _handleTriggerClicked( event ) {
     if ( !_suspended ) {
-      this.dispatchEvent( 'triggerClick',
-        { target: this, type: 'triggerClick' } );
+      this.dispatchEvent(
+        'triggerClick',
+        { target: this, type: 'triggerClick' }
+      );
       event.preventDefault();
       if ( _isExpanded ) {
         this.collapse();
@@ -226,18 +230,24 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     if ( !_isExpanded && !_isAnimating ) {
       _isAnimating = true;
       _deferFunct = standardType.noopFunct;
-      this.dispatchEvent( 'expandBegin',
-        { target: this, type: 'expandBegin' } );
+      this.dispatchEvent(
+        'expandBegin',
+        { target: this, type: 'expandBegin' }
+      );
       _setAriaAttr( 'pressed', _triggerDom, true );
       if ( _expandTransitionMethod ) {
         const hasTransition = _expandTransition &&
                               _expandTransition.isAnimated();
         if ( hasTransition ) {
-          _expandTransition
-            .addEventListener( BaseTransition.END_EVENT, _expandEndBinded );
+          _expandTransition.addEventListener(
+            BaseTransition.END_EVENT,
+            _expandEndBinded
+          );
         }
-        _expandTransitionMethod
-          .apply( _expandTransition, _expandTransitionMethodArgs );
+        _expandTransitionMethod.apply(
+          _expandTransition,
+          _expandTransitionMethodArgs
+        );
         if ( !hasTransition ) {
           _expandEndBinded();
         }
@@ -267,11 +277,15 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         const hasTransition = _collapseTransition &&
                               _collapseTransition.isAnimated();
         if ( hasTransition ) {
-          _collapseTransition
-            .addEventListener( BaseTransition.END_EVENT, _collapseEndBinded );
+          _collapseTransition.addEventListener(
+            BaseTransition.END_EVENT,
+            _collapseEndBinded
+          );
         }
-        _collapseTransitionMethod
-          .apply( _collapseTransition, _collapseTransitionMethodArgs );
+        _collapseTransitionMethod.apply(
+          _collapseTransition,
+          _collapseTransitionMethodArgs
+        );
         if ( !hasTransition ) {
           _collapseEndBinded();
         }
@@ -305,8 +319,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     _isAnimating = false;
     _isExpanded = true;
     if ( _expandTransition ) {
-      _expandTransition
-        .removeEventListener( BaseTransition.END_EVENT, _expandEndBinded );
+      _expandTransition.removeEventListener(
+        BaseTransition.END_EVENT,
+        _expandEndBinded
+      );
     }
     this.dispatchEvent( 'expandEnd', { target: this, type: 'expandEnd' } );
     if ( _altTriggerDom ) {
@@ -324,8 +340,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   function _collapseEnd() {
     _isAnimating = false;
     if ( _collapseTransition ) {
-      _collapseTransition
-        .removeEventListener( BaseTransition.END_EVENT, _collapseEndBinded );
+      _collapseTransition.removeEventListener(
+        BaseTransition.END_EVENT,
+        _collapseEndBinded
+      );
     }
     this.dispatchEvent( 'collapseEnd', { target: this, type: 'collapseEnd' } );
   }

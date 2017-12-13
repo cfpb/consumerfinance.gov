@@ -49,7 +49,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   When( 'I click off the search molecule',
-    function( ) {
+    function() {
 
 
       return _dom.trigger.click()
@@ -58,14 +58,14 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   When( 'I focus on the search molecule trigger',
-    function( ) {
+    function() {
 
       return _dom.trigger.sendKeys( protractor.Key.SPACE );
     }
   );
 
   When( 'I perform tab actions on the search molecule',
-    function( ) {
+    function() {
       let activeElement = browser.driver.switchTo().activeElement();
       activeElement.sendKeys( protractor.Key.TAB );
       activeElement = browser.driver.switchTo().activeElement();
@@ -84,7 +84,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   Then( 'it should focus the search input field',
-    function( ) {
+    function() {
       const activeElement = browser
         .driver
         .switchTo()
@@ -139,7 +139,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   Then( 'I should navigate to search portal',
-    function( ) {
+    function() {
 
       return browser.wait( EC.visibilityOf( _dom.searchBtn ) )
         .then( () => {
@@ -169,7 +169,7 @@ defineSupportCode( function( { Then, When, Before } ) {
 
   Then( 'should have suggested search terms',
 
-    function( ) {
+    function() {
 
       return expect( _dom.suggest.isDisplayed() )
         .to.eventually

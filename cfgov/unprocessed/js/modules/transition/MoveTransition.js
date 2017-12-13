@@ -35,8 +35,10 @@ function MoveTransition( element ) {
   function init() {
     _baseTransition.init();
     const _transitionCompleteBinded = fnBind( _transitionComplete, this );
-    _baseTransition.addEventListener( BaseTransition.END_EVENT,
-      _transitionCompleteBinded );
+    _baseTransition.addEventListener(
+      BaseTransition.END_EVENT,
+      _transitionCompleteBinded
+    );
     return this;
   }
 

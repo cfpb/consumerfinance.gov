@@ -32,7 +32,7 @@ defineSupportCode( function( { Then, When, Before } ) {
     }
   );
 
-  When( 'I hit the escape button on the search input', function( ) {
+  When( 'I hit the escape button on the search input', function() {
 
     return multiSelect.elements.search.sendKeys( protractor.Key.ESCAPE );
   } );
@@ -48,7 +48,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   When( 'I click on the first choices element',
-    function( ) {
+    function() {
 
       return multiSelect.getChoiceElements()
         .first()
@@ -57,7 +57,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   When( /I click on the first option in the dropdown(?:\s)?(?:again)?/,
-    function( ) {
+    function() {
 
       return multiSelect.getDropDownLabelElements()
         .first()
@@ -65,14 +65,14 @@ defineSupportCode( function( { Then, When, Before } ) {
     }
   );
 
-  Then( 'the multi-select should be rendered', function( ) {
+  Then( 'the multi-select should be rendered', function() {
 
     return expect( multiSelect.isRendered() )
       .to.eventually
       .equal( true );
   } );
 
-  Then( 'no tags should be selected', function( ) {
+  Then( 'no tags should be selected', function() {
 
     return expect( multiSelect.areTagSelected() )
       .to.eventually
@@ -134,7 +134,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   Then( 'the first option should be highlighted',
-    function( ) {
+    function() {
       function _getfirstElementText() {
 
         return multiSelect.getDropDownLabelElements()
@@ -161,7 +161,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   Then( 'the choices element should contain the first option',
-    function( ) {
+    function() {
       const getChoicesInfo = [
         multiSelect.getDropDownLabelElements().first().getText(),
         multiSelect.getChoiceElements().first().getText(),

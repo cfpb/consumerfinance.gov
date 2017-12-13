@@ -14,15 +14,14 @@ function clickWhenReady( elements ) {
   }
 
   if ( Array.isArray( elements ) === false ) {
-    return Promise.resolve( );
+    return Promise.resolve();
   }
 
   return elements.reduce( ( promise, element ) =>
-
-    promise.then( _clickElement.bind( null, element ) )
-
-    , Promise.resolve( ) );
-
+    promise.then(
+      _clickElement.bind( null, element ) ),
+      Promise.resolve()
+    );
 }
 
 module.exports = clickWhenReady;

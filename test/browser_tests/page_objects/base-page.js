@@ -8,7 +8,7 @@ class BasePage {
       } );
   }
 
-  static dismissAlert( ) {
+  static dismissAlert() {
     function _accepAlert( alert ) {
       if ( alert ) {
         return alert.accept();
@@ -17,7 +17,7 @@ class BasePage {
       return Promise.resolve();
     }
 
-    function _noOp( ) { } // eslint-disable-line no-empty-function
+    function _noOp(){} // eslint-disable-line no-empty-function
 
     return browser
       .switchTo()

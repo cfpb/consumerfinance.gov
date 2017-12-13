@@ -21,7 +21,7 @@ const API = {
   /**
    * Handle initializing of UStream player and embed API script if necessary.
    */
-  initPlayer: function( ) {
+  initPlayer: function() {
     const UstreamPlayer = window.UstreamEmbed;
     if ( UstreamPlayer ) {
       this.player = new UstreamPlayer( this.iFrameProperties.id );
@@ -50,7 +50,7 @@ const API = {
    * Action function used to play the Ustream video.
    * @returns {UStreamPlayer} An instance.
    */
-  play: function( ) {
+  play: function() {
     // TODO: Remove this code when the Ustream https issue is resolved.
     window.location = 'https://www.ustream.tv/channel/cfpblive';
     return this;
@@ -59,7 +59,7 @@ const API = {
   /**
    * Action function used to stop the Ustream video.
    */
-  stop: function( ) {
+  stop: function() {
     this._super.stop.call( this );
     if ( this.state.isPlayerInitialized ) {
       this.player.callMethod( 'stop' );

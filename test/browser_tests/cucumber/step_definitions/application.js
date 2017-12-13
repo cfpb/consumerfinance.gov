@@ -12,12 +12,12 @@ defineSupportCode( function( { Then, When } ) {
     } );
   } );
 
-  When( /I navigate back*/, function( ) {
+  When( /I navigate back*/, function() {
 
     return browser.navigate().back();
   } );
 
-  When( /I click away*/, function( ) {
+  When( /I click away*/, function() {
 
     return element( by.css( 'body' ) ).click( );
   } );

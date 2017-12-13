@@ -30,7 +30,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   } );
 
   When( 'mouse moves from one link to another after a delay',
-    function( ) {
+    function() {
       browser
         .actions()
         .mouseMove( _dom.triggerPolyCom )
@@ -48,7 +48,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   Then( 'the mega-menu organism shouldn\'t show content',
-    function( ) {
+    function() {
 
       return expect( _dom.contentAboutUs.isDisplayed() )
         .to.eventually
@@ -57,7 +57,7 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   Then( 'the mega-menu organism shouldn\'t show the first link immediately',
-    function( ) {
+    function() {
 
       return browser
         .actions()
@@ -72,14 +72,13 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   Then( /the mega-menu organism should show the first link after a delay/,
-    function( ) {
+    function() {
 
       return browser
         .actions( )
         .mouseMove( _dom.triggerPolyCom )
         .perform()
         .then( () =>
-
           // Wait for delay to show menu
           browser.sleep( 500 )
             .then( ( ) =>
@@ -91,7 +90,7 @@ defineSupportCode( function( { Then, When, Before } ) {
     }
   );
 
-  Then( 'should only show second link content', function( ) {
+  Then( 'should only show second link content', function() {
 
     return browser.wait(
       EC.not( EC.elementToBeClickable( _dom.contentPolyCom ) ) )
@@ -106,7 +105,7 @@ defineSupportCode( function( { Then, When, Before } ) {
       } );
   } );
 
-  Then( 'the mega-menu organism should show menu when clicked', function( ) {
+  Then( 'the mega-menu organism should show menu when clicked', function() {
 
     return browser
       .driver

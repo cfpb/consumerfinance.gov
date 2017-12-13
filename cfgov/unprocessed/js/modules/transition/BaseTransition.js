@@ -16,7 +16,8 @@ const fnBind = require( '../../modules/util/fn-bind' ).fnBind;
  *   The classes to apply to this transition.
  * @returns {BaseTransition} An instance.
  */
-function BaseTransition( element, classes ) { // eslint-disable-line max-statements, no-inline-comments, max-len
+// eslint-disable-next-line max-statements
+function BaseTransition( element, classes ) {
   const _classes = classes;
   let _dom;
 
@@ -95,8 +96,10 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
     _dom.style.mozTransitionDuration = '0';
     _dom.style.oTransitionDuration = '0';
     _dom.style.transitionDuration = '0';
-    _dom.removeEventListener( _transitionEndEvent,
-      _transitionCompleteBinded );
+    _dom.removeEventListener(
+      _transitionEndEvent,
+      _transitionCompleteBinded
+    );
     _transitionCompleteBinded();
     _dom.style.webkitTransitionDuration = '';
     _dom.style.mozTransitionDuration = '';
@@ -112,8 +115,10 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
     _isAnimating = true;
     // If transition is not supported, call handler directly (IE9/OperaMini).
     if ( _transitionEndEvent ) {
-      _dom.addEventListener( _transitionEndEvent,
-        _transitionCompleteBinded );
+      _dom.addEventListener(
+        _transitionEndEvent,
+        _transitionCompleteBinded
+      );
       this.dispatchEvent( BaseTransition.BEGIN_EVENT, { target: this } );
     } else {
       this.dispatchEvent( BaseTransition.BEGIN_EVENT, { target: this } );
