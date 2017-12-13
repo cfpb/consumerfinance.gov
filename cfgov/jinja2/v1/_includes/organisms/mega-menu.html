@@ -51,6 +51,7 @@
     {% for nav_group in nav_groups %}
     {% set group = nav_group.value %}
     <div class="{{ _classes( nav_depth, '-list' ) }}">
+        
         {% if group.group_title %} 
         <h3 class="h5 
                   {{ base_class ~ '_group-heading' }} 
@@ -71,6 +72,7 @@
             {%- endfor %}
         </ul>
     </div>
+    
     {% endfor %}
 </div>
 

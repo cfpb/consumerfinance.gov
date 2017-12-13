@@ -31,7 +31,11 @@
    ========================================================================== #}
 
 {% macro render( value ) %}
-{% set featured_image = image(value.image.upload, 'width-270') %}
+{% if value.image and value.image.uplad %}
+    {% set featured_image = image(value.image.upload, 'width-270') %}
+{% else %}
+    {% set featured_image = value.image %}
+{% endif %}
 
 <aside class="m-featured-menu-content
               {{ 'm-featured-menu-content__horizontal'

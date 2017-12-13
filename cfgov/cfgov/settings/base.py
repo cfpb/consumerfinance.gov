@@ -619,6 +619,9 @@ FLAGS = {
     'EREGS20': {
         'boolean': DEPLOY_ENVIRONMENT == 'build',
     },
+    
+    # Wagtail menu
+    'WAGTAIL_MENU': {},
 
     # Menu draft state
     'DRAFT_MENU': {},

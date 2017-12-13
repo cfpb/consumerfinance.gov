@@ -81,9 +81,14 @@
             </a>
 
             {% block primary_nav %}
-                {% set menu_items = get_menu_items(request) %}
                 {% from 'organisms/mega-menu.html' import mega_menu with context %}
-                {{ mega_menu(menu_items) }}
+                {% if flag_enabled('WAGTAIL_MENU', request) %}
+                    {{ mega_menu(get_menu_items(request)) }}
+                {% else %}
+                    {% import '_vars-mega-menu.html' as vars with context %}
+                    {{ mega_menu(vars.menu_items) }}
+                {% endif %}
+                
             {% endblock primary_nav %}
         </div>
 
