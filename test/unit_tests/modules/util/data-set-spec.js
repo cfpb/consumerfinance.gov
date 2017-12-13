@@ -1,5 +1,3 @@
-'use strict';
-
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const dataSet = require( BASE_JS_PATH + 'modules/util/data-set' ).dataSet;
 
@@ -40,7 +38,7 @@ describe( 'data-set', () => {
     it( 'should have the correct keys and values when using utility', () => {
 
       // Removes dataset from jsdom by setting dataset to undefined.
-      document = {}; // eslint-disable-line no-native-reassign
+      document = {}; // eslint-disable-line no-global-assign
       document.documentElement = {};
       document.documentElement.dataset = undefined; // eslint-disable-line no-undefined
 

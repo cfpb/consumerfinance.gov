@@ -2,7 +2,6 @@
    Quality Assurance Element
    ========================================================================== */
 
-'use strict';
 
 /**
  * Retrieves QA Protractor ElementFinder when provided
@@ -14,7 +13,7 @@
  * - Protractor ElementFinder or ElementFinder array.
  */
 function get( selector, getAllFlag ) {
-  var domQuery = getAllFlag ? element.all : element;
+  const domQuery = getAllFlag ? element.all : element;
 
   return domQuery( by.css( '[data-qa-hook="' + selector + '"]' ) );
 }

@@ -42,7 +42,7 @@
     "gulp-changed": "3.1.0",
     "gulp-clean-css": "3.9.0",
     "gulp-concat": "2.6.1",
-    "gulp-eslint": "3.0.1",
+    "gulp-eslint": "4.0.0",
     "gulp-header": "1.8.9",
     "gulp-imagemin": "3.4.0",
     "gulp-istanbul": "1.1.2",

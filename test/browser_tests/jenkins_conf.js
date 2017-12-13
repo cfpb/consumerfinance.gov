@@ -1,5 +1,3 @@
-'use strict';
-
 const environmentTest = require( './environmentTest' );
 const envvars = require( '../../config/environment' ).envvars;
 const JasmineReporters = require( 'jasmine-reporters' );
@@ -27,13 +25,13 @@ exports.config = {
       new JasmineSpecReporter( { displayStacktrace: true } )
     );
 
-    var newFolder = 'reports/';
+    const newFolder = 'reports/';
 
     mkdirp( newFolder, function( err ) {
       if ( err ) {
         console.error( err );
       } else {
-        var jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter( {
+        const jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter( {
           consolidateAll: true,
           savePath:       newFolder,
           filePrefix:     'test-results'

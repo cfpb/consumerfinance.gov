@@ -1,5 +1,3 @@
-'use strict';
-
 const configImages = require( '../config' ).images;
 const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );

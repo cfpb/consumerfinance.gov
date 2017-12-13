@@ -1,5 +1,3 @@
-'use strict';
-
 const BasePage = require( './base-page.js' );
 const USERS = require( '../util/wagtail-admin-users.js' );
 
@@ -26,7 +24,7 @@ class WagtailLoginPage extends BasePage {
   }
 
   login( USER = USERS.ADMIN ) {
-    var _this = this;
+    const _this = this;
 
     function _login( url ) {
       if ( url.indexOf( '/login' ) > -1 ) {
@@ -39,8 +37,8 @@ class WagtailLoginPage extends BasePage {
     }
 
     return this.gotoURL()
-           .then( browser.getCurrentUrl )
-           .then( _login );
+      .then( browser.getCurrentUrl )
+      .then( _login );
   }
 
 }

@@ -1,25 +1,22 @@
-'use strict';
+const util = require( '../../util/index.js' );
+const shouldShouldnt = util.shouldShouldnt;
 
-
-var util = require( '../../util/index.js' );
-var shouldShouldnt = util.shouldShouldnt;
-
-var { defineSupportCode } = require( 'cucumber' );
-var { expect } = require( 'chai' );
+const { defineSupportCode } = require( 'cucumber' );
+const { expect } = require( 'chai' );
 
 
 defineSupportCode( function( { When, Then } ) {
 
   When( 'there exists a reusable text snippet on this page',
     function() {
-      var rts = element( by.css( '.m-reusable-text-snippet' ) );
+      const rts = element( by.css( '.m-reusable-text-snippet' ) );
       return expect( rts.isPresent() ).to.eventually.equal( true );
     }
   );
 
   Then( /the snippet output (should|shouldn't) include a slug-style header/,
     function( includeHeader ) {
-      var rts;
+      let rts;
 
       if ( shouldShouldnt( includeHeader ) ) {
         rts = element.all( by.css( '.m-reusable-text-snippet' ) ).first();
@@ -28,7 +25,7 @@ defineSupportCode( function( { When, Then } ) {
       }
 
       return expect( rts.element( by.css( '.m-slug-header' ) ).isPresent() )
-             .to.eventually.equal( shouldShouldnt( includeHeader ) );
+        .to.eventually.equal( shouldShouldnt( includeHeader ) );
     }
   );
 

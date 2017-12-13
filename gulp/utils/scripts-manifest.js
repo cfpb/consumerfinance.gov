@@ -3,7 +3,6 @@
    for consumption by a script loader.
    ========================================================================== */
 
-'use strict';
 
 const fs = require( 'fs' );
 
@@ -53,7 +52,7 @@ function _isHidden( path ) {
 function getDirectoryMap( dir ) {
   let cache = _sourcePathCache[dir];
   if ( !_sourcePathCache[dir] ) {
-    var directoryMap = _traverseDirectory( dir, {} );
+    const directoryMap = _traverseDirectory( dir, {} );
     _sourcePathCache[dir] = directoryMap;
     cache = directoryMap;
   }

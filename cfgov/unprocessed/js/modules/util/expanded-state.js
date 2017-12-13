@@ -2,9 +2,8 @@
    Expanded State Utils
    ========================================================================== */
 
-'use strict';
 
-var navTimeOut;
+let navTimeOut;
 
 /**
  * @param {HTMLNode} elem Element to test.
@@ -23,9 +22,9 @@ function isThisExpanded( elem ) {
  *   equals "true".
  */
 function isOneExpanded( elems ) {
-  var oneExpanded = false;
+  let oneExpanded = false;
 
-  for ( var i = 0, len = elems.length; i < len; i++ ) {
+  for ( let i = 0, len = elems.length; i < len; i++ ) {
     if ( isThisExpanded( elems[i] ) ) {
       oneExpanded = true;
     }
@@ -56,7 +55,7 @@ function toggleExpandedState( elems, state, cb, delay ) {
   delay = delay || 300;
   state = state || !isOneExpanded( elems );
 
-  for ( var i = 0, len = elems.length; i < len; i++ ) {
+  for ( let i = 0, len = elems.length; i < len; i++ ) {
     elems[i].setAttribute( 'aria-expanded', state );
   }
 

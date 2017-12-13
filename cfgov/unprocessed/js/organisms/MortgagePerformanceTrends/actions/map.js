@@ -1,5 +1,3 @@
-'use strict';
-
 const utils = require( '../utils' );
 const defaultActionCreators = require( './default' );
 
@@ -13,7 +11,7 @@ const mapActionCreators = defaultActionCreators();
  * @returns {Object} zoom chart action
  */
 mapActionCreators.zoomChart = stateAbbr => {
-  var action = {
+  const action = {
     type: 'ZOOM_CHART',
     target: stateAbbr
   };
@@ -30,7 +28,7 @@ mapActionCreators.zoomChart = stateAbbr => {
  * @returns {Object} update chart action
  */
 mapActionCreators.updateChart = ( geoId, geoName, geoType ) => {
-  var action = {
+  const action = {
     type: 'UPDATE_CHART',
     geo: {
       id: geoId,
@@ -59,7 +57,7 @@ mapActionCreators.fetchMetros = ( metroState, shouldZoom ) => dispatch => {
   dispatch( mapActionCreators.requestMetros( metroState ) );
   return utils.getMetroData( data => {
     // Alphabetical order
-    let newMetros = data[metroState].metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    let newMetros = data[metroState].metros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
     newMetros = newMetros.filter( metro => metro.valid );
     if ( !newMetros.length ) {
       newMetros = [ {
@@ -87,7 +85,7 @@ mapActionCreators.fetchCounties = ( countyState, shouldZoom ) => dispatch => {
   dispatch( mapActionCreators.requestCounties( countyState ) );
   return utils.getCountyData( data => {
     // Alphabetical order
-    var newCounties = data[countyState].counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    let newCounties = data[countyState].counties.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
     newCounties = newCounties.filter( county => county.valid );
     dispatch( mapActionCreators.setCounties( newCounties ) );
     if ( newCounties.length && shouldZoom ) {

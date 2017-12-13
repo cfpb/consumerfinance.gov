@@ -1,6 +1,3 @@
-'use strict';
-
-
 /**
  * Converts (should|shouldn't) to Boolean.
  * @param {string} value - The string value to convert.

@@ -1,5 +1,3 @@
-'use strict';
-
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const chai = require( 'chai' );
 const expect = chai.expect;
@@ -142,10 +140,10 @@ describe( 'fwb-results', () => {
   it( 'initialize the expandables on page load', () => {
     initFwbResults();
     expect( expandableTarget.getAttribute( 'aria-pressed' ) )
-    .to.equal( 'false' );
+      .to.equal( 'false' );
 
     expect( expandableContent.getAttribute( 'aria-expanded' ) )
-    .to.equal( 'false' );
+      .to.equal( 'false' );
   } );
 
   it( 'should submit the correct analytics when a toggle button is clicked',

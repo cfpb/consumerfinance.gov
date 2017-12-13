@@ -1,5 +1,3 @@
-'use strict';
-
 const configLint = require( '../config' ).lint;
 const gulp = require( 'gulp' );
 const gulpEslint = require( 'gulp-eslint' );

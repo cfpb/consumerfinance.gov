@@ -1,5 +1,3 @@
-'use strict';
-
 const EC = protractor.ExpectedConditions;
 
 const buttons = {
@@ -27,20 +25,20 @@ const textArea = element( by.css( textAreaSelector ) );
 
 function clickButton( buttonName ) {
   const normalizedButtonName = buttonName
-                             .replace( /\s/g, '' );
+    .replace( /\s/g, '' );
   const btn = element( by.css( buttons[normalizedButtonName] ) );
 
   return browser
-         .wait( EC.visibilityOf( btn ) )
-         .then( btn.click );
+    .wait( EC.visibilityOf( btn ) )
+    .then( btn.click );
 }
 
 function insertText( text ) {
 
   return browser.wait( EC.elementToBeClickable( textArea ) )
-         .then( function() {
-           return textArea.sendKeys( text );
-         } );
+    .then( function() {
+      return textArea.sendKeys( text );
+    } );
 }
 
 function clearText( ) {
