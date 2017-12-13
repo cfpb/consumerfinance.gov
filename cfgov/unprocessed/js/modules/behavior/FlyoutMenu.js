@@ -271,8 +271,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _deferFunct = standardType.noopFunct;
       _isAnimating = true;
       _isExpanded = false;
-      this.dispatchEvent( 'collapseBegin',
-        { target: this, type: 'collapseBegin' } );
+      this.dispatchEvent(
+        'collapseBegin',
+        { target: this, type: 'collapseBegin' }
+      );
       if ( _collapseTransitionMethod ) {
         const hasTransition = _collapseTransition &&
                               _collapseTransition.isAnimated();
