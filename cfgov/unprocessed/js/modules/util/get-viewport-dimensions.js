@@ -2,18 +2,18 @@
    Get Viewport Dimensions
    ========================================================================== */
 
-'use strict';
 
 /**
  * @returns {object} An object literal with the viewport
  *   width and height as properties.
  */
 function getViewportDimensions() {
-  // TODO: Check what browsers this is necessary for and
-  // check whether it is still applicable.
-  var viewportEl = window;
-  var propPrefix = 'inner';
-  var modernBrowser = 'innerWidth' in window;
+
+  /* TODO: Check what browsers this is necessary for and
+     check whether it is still applicable. */
+  let viewportEl = window;
+  let propPrefix = 'inner';
+  const modernBrowser = 'innerWidth' in window;
   if ( !modernBrowser ) {
     viewportEl = document.documentElement || document.body;
     propPrefix = 'client';

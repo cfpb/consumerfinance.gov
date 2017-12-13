@@ -1,11 +1,10 @@
-'use strict';
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var throttle = require( '../modules/util/throttle' ).throttle;
-var ajaxRequest = require( '../modules/util/ajax-request' ).ajaxRequest;
-var bindEvent = require( '../modules/util/dom-events' ).bindEvent;
-var standardType = require( '../modules/util/standard-type' );
-var assign = require( '../modules/util/assign' ).assign;
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const throttle = require( '../modules/util/throttle' ).throttle;
+const ajaxRequest = require( '../modules/util/ajax-request' ).ajaxRequest;
+const bindEvent = require( '../modules/util/dom-events' ).bindEvent;
+const standardType = require( '../modules/util/standard-type' );
+const assign = require( '../modules/util/assign' ).assign;
 
 /**
  * Autocomplete
@@ -23,30 +22,30 @@ var assign = require( '../modules/util/assign' ).assign;
 function Autocomplete( element, opts ) {
 
   // Class constants
-  var BASE_CLASS = 'm-autocomplete';
-  var HIDDEN_CLASS = 'u-hidden';
-  var AUTOCOMPLETE_CLASS = 'm-autocomplete_results';
-  var SELECTED_CLASS = 'm-autocomplete_selected';
+  const BASE_CLASS = 'm-autocomplete';
+  const HIDDEN_CLASS = 'u-hidden';
+  const AUTOCOMPLETE_CLASS = 'm-autocomplete_results';
+  const SELECTED_CLASS = 'm-autocomplete_selected';
 
   // Key constants
-  var ENTER = 13;
-  var UP = 38;
-  var DOWN = 40;
-  var ESCAPE = 27;
+  const ENTER = 13;
+  const UP = 38;
+  const DOWN = 40;
+  const ESCAPE = 27;
 
   // Internal variables
-  var _autocomplete;
-  var _data = [];
-  var _suggestions;
-  var _isVisible;
-  var _selection;
+  let _autocomplete;
+  let _data = [];
+  let _suggestions;
+  let _isVisible;
+  let _selection;
 
   // Autocomplete elements
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _input = _dom.querySelector( 'input' );
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _input = _dom.querySelector( 'input' );
 
   // Settings
-  var _settings = {
+  const _settings = {
     minChars: 2,
     delay: 300,
     url: '',
@@ -55,7 +54,7 @@ function Autocomplete( element, opts ) {
       return selected;
     },
     renderItem: function( item ) {
-      var li = document.createElement( 'li' );
+      const li = document.createElement( 'li' );
       li.setAttribute( 'data-val', item );
       li.innerText = item;
       return li;
@@ -72,9 +71,9 @@ function Autocomplete( element, opts ) {
   };
 
   // Search variables
-  var _xhr;
-  var _searchTerm = '';
-  var _throttleFetch = throttle( function() {
+  let _xhr;
+  let _searchTerm = '';
+  const _throttleFetch = throttle( function() {
     _fetchSuggestions();
   }, _settings.delay );
 
@@ -104,7 +103,7 @@ function Autocomplete( element, opts ) {
    * @returns {HTMLNode} <ul> element for autocomplete suggestions.
    */
   function _addContainer() {
-    var ul = document.createElement( 'ul' );
+    const ul = document.createElement( 'ul' );
     ul.className = AUTOCOMPLETE_CLASS + ' ' + HIDDEN_CLASS;
     document.body.appendChild( ul );
     return ul;
@@ -115,7 +114,7 @@ function Autocomplete( element, opts ) {
    * relative to _input element.
    */
   function _positionContainer() {
-    var inputCoords = _input.getBoundingClientRect();
+    const inputCoords = _input.getBoundingClientRect();
     _autocomplete.style.left = Math.round( inputCoords.left +
       window.pageXOffset ) + 'px';
     _autocomplete.style.top = Math.round( inputCoords.bottom +
@@ -144,14 +143,14 @@ function Autocomplete( element, opts ) {
       },
       blur: function() {
         setTimeout( function() {
-          var active = document.activeElement;
+          const active = document.activeElement;
           if ( active !== _autocomplete && !_autocomplete.contains( active ) ) {
             _hide();
           }
         }, 1 );
       },
       keydown: function( event ) {
-        var key = event.keyCode;
+        const key = event.keyCode;
         if ( _isVisible ) {
           if ( key === UP ) {
             _prev( event );
@@ -188,7 +187,7 @@ function Autocomplete( element, opts ) {
   function _updateSuggestions() {
     _reset();
     _data.forEach( function( item, index ) {
-      var suggestion = _settings.renderItem( item );
+      const suggestion = _settings.renderItem( item );
       suggestion.setAttribute( 'data-id', index );
       _suggestions.push( suggestion );
       _autocomplete.appendChild( suggestion );
@@ -205,8 +204,8 @@ function Autocomplete( element, opts ) {
    * uses it to update current selection.
    */
   function _next() {
-    var length = _suggestions.length - 1;
-    var index = _selection >= length ? 0 : _selection + 1;
+    const length = _suggestions.length - 1;
+    const index = _selection >= length ? 0 : _selection + 1;
     _updateSelection( index );
   }
 
@@ -215,7 +214,7 @@ function Autocomplete( element, opts ) {
    * uses it to update current selection.
    */
   function _prev() {
-    var index = _selection > 0 ? _selection - 1 : _suggestions.length - 1;
+    const index = _selection > 0 ? _selection - 1 : _suggestions.length - 1;
     _updateSelection( index );
   }
 
@@ -230,7 +229,7 @@ function Autocomplete( element, opts ) {
       _suggestions[_selection].classList.remove( SELECTED_CLASS );
     }
     _selection = index;
-    var item = _suggestions[index];
+    const item = _suggestions[index];
 
     _input.value = item.getAttribute( 'data-val' );
     item.classList.add( SELECTED_CLASS );
@@ -242,7 +241,7 @@ function Autocomplete( element, opts ) {
    * selection is visible.
    */
   function _scrollSelectionIntoView() {
-    var _target = _suggestions[_selection];
+    const _target = _suggestions[_selection];
     _autocomplete.scrollTop = _target.offsetTop -
       _autocomplete.clientHeight + _target.clientHeight;
   }

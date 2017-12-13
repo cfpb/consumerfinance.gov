@@ -1,5 +1,3 @@
-'use strict';
-
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
@@ -52,7 +50,7 @@ describe( 'BaseTransition', () => {
 
   describe( '.setElement()', () => {
     it( 'should move classes from old element to new element', () => {
-      var className = 'u-test-transition';
+      const className = 'u-test-transition';
       expect( contentDom.classList.contains( className ) ).to.be.false;
       transition.init();
       expect( contentDom.classList.contains( className ) ).to.be.true;
@@ -64,9 +62,10 @@ describe( 'BaseTransition', () => {
 
   describe( '.halt()', () => {
     xit( 'should immediately fire transition end event', () => {
-      // TODO: To test halt() the transition needs to be started and
-      //       then halt() needs to be called before the transition
-      //       duration has completed.
+
+      /* TODO: To test halt() the transition needs to be started and
+         then halt() needs to be called before the transition
+         duration has completed. */
     } );
   } );
 

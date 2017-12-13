@@ -1,6 +1,5 @@
 /* eslint max-len: "off" */
 
-'use strict';
 
 const fullWidthTextMenu = require( './wagtail-admin-full-width-text-menu.js' );
 const toggleSelector = '.toggle .stream-menu-inner';
@@ -8,8 +7,8 @@ const toggleBtn = element.all( by.css( toggleSelector ) );
 
 const contentSelector = '#content-prependmenu .stream-menu-inner';
 const _content = element
-               .all( by.css( contentSelector ) )
-               .first();
+  .all( by.css( contentSelector ) )
+  .first();
 const EC = protractor.ExpectedConditions;
 
 const menuItems = {
@@ -35,9 +34,9 @@ function selectItem( componentName ) {
   function _getMenuItem( fullWidthTextMenuIsActive ) {
     let menuComponentItem;
     const normalizedComponentName = componentName
-                                  .replace( /\s/g, '' )
-                                  .concat( 'Btn' )
-                                  .toLowerCase();
+      .replace( /\s/g, '' )
+      .concat( 'Btn' )
+      .toLowerCase();
     let activeMenuItems = menuItems;
 
     if ( fullWidthTextMenuIsActive === true ) {
@@ -58,20 +57,20 @@ function selectItem( componentName ) {
     function _scrollIntoView() {
 
       return browser.executeScript(
-               'arguments[0].scrollIntoView()',
-                menuItem
-             );
+        'arguments[0].scrollIntoView()',
+        menuItem
+      );
     }
 
     return browser
-           .wait( EC.elementToBeClickable( menuItem ) )
-           .then( _scrollIntoView )
-           .then( menuItem.click );
+      .wait( EC.elementToBeClickable( menuItem ) )
+      .then( _scrollIntoView )
+      .then( menuItem.click );
   }
 
   return fullWidthTextMenu.isActive()
-         .then( _getMenuItem )
-         .then( _clickMenuItem );
+    .then( _getMenuItem )
+    .then( _clickMenuItem );
 }
 
 function open() {

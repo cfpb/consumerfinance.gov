@@ -1,5 +1,3 @@
-'use strict';
-
 // TODO: Move this into cfgov-refresh's utils to encourage reuse
 class Store {
   constructor( mid = [] ) {
@@ -12,9 +10,9 @@ class Store {
 }
 
 Store.prototype._combineMiddlewares = function() {
-  var self = this;
-  var dispatch = this.dispatch;
-  var middlewareAPI = {
+  const self = this;
+  let dispatch = this.dispatch;
+  const middlewareAPI = {
     getState: this.getState.bind( this ),
     dispatch: function( action ) {
       return dispatch.call( self, action );
@@ -22,7 +20,7 @@ Store.prototype._combineMiddlewares = function() {
   };
 
   // Inject store "proxy" into all middleware
-  var chain = this.middlewares.map( function( middleware ) {
+  const chain = this.middlewares.map( function( middleware ) {
     return middleware( middlewareAPI );
   } );
 
