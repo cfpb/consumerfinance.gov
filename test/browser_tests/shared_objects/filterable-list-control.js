@@ -1,5 +1,3 @@
-'use strict';
-
 const _oFilterableListControls =
   element( by.css( '.o-filterable-list-controls' ) );
 

@@ -1,5 +1,3 @@
-'use strict';
-
 const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
@@ -111,9 +109,10 @@ describe( 'FlyoutMenu', () => {
     } );
 
     it( 'should dispatch events when called by trigger click', () => {
-      // TODO: Ideally this would use `new MouseEvent`,
-      //       but how do we import MouseEvent (or Event) into Mocha.
-      //       Please investigate.
+
+      /* TODO: Ideally this would use `new MouseEvent`,
+         but how do we import MouseEvent (or Event) into Mocha.
+         Please investigate. */
       const mouseEvent = document.createEvent( 'MouseEvents' );
       mouseEvent.initEvent( 'mouseover', true, true );
       triggerDom.dispatchEvent( mouseEvent );
@@ -121,8 +120,9 @@ describe( 'FlyoutMenu', () => {
     } );
 
     xit( 'should dispatch events when called by alt trigger click', () => {
-      // TODO: alt trigger doesn't dispatch mouseover events,
-      //       but it probably should to match the trigger API.
+
+      /* TODO: alt trigger doesn't dispatch mouseover events,
+         but it probably should to match the trigger API. */
       const mouseEvent = document.createEvent( 'MouseEvents' );
       mouseEvent.initEvent( 'mouseover', true, true );
       altTriggerDom.dispatchEvent( mouseEvent );
@@ -144,7 +144,7 @@ describe( 'FlyoutMenu', () => {
     afterEach( () => {
       // Check expected event broadcasts.
       expect( expandBeginSpy.callCount ).to.equal( 1 );
-      var args = expandBeginSpy.getCall( 0 ).args[0];
+      let args = expandBeginSpy.getCall( 0 ).args[0];
       expect( args.target ).to.equal( flyoutMenu );
       expect( args.type ).to.equal( 'expandBegin' );
 
@@ -193,7 +193,7 @@ describe( 'FlyoutMenu', () => {
     afterEach( () => {
       // Check expected event broadcasts.
       expect( collapseBeginSpy.callCount ).to.equal( 1 );
-      var args = collapseBeginSpy.getCall( 0 ).args[0];
+      let args = collapseBeginSpy.getCall( 0 ).args[0];
       expect( args.target ).to.equal( flyoutMenu );
       expect( args.type ).to.equal( 'collapseBegin' );
 
@@ -348,7 +348,7 @@ describe( 'FlyoutMenu', () => {
   describe( '.setData()', () => {
     it( 'should return the instance when set', () => {
       flyoutMenu.init();
-      var inst = flyoutMenu.setData( 'test-data' );
+      const inst = flyoutMenu.setData( 'test-data' );
       expect( inst instanceof FlyoutMenu ).to.be.true;
     } );
   } );

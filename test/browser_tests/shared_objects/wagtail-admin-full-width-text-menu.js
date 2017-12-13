@@ -1,6 +1,5 @@
 /* eslint max-len: "off" */
 
-'use strict';
 
 const fullWidthTextSelector = 'input[value=\'full_width_text\']' +
                             ' + .sequence-controls' +
@@ -16,8 +15,8 @@ function isActive( ) {
 
 function getMenuItems() {
   const _fullWidthText = element
-                         .all( by.css( fullWidthTextSelector ) )
-                         .first();
+    .all( by.css( fullWidthTextSelector ) )
+    .first();
 
   function _getFullWidthTextElement( selector ) {
 

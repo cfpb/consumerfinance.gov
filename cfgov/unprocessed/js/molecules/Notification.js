@@ -1,5 +1,3 @@
-'use strict';
-
 // Required modules.
 const atomicHelpers = require( '../modules/util/atomic-helpers' );
 const standardType = require( '../modules/util/standard-type' );

@@ -1,5 +1,3 @@
-'use strict';
-
 const chai = require( 'chai' );
 const chaiAsPromised = require( 'chai-as-promised' );
 const { defineSupportCode } = require( 'cucumber' );
@@ -51,24 +49,24 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   When( 'I click off the search molecule',
-    function( ) {
+    function() {
 
 
       return _dom.trigger.click()
-             .then( _nonLinkDom.click );
+        .then( _nonLinkDom.click );
     }
   );
 
   When( 'I focus on the search molecule trigger',
-    function( ) {
+    function() {
 
       return _dom.trigger.sendKeys( protractor.Key.SPACE );
     }
   );
 
   When( 'I perform tab actions on the search molecule',
-    function( ) {
-      var activeElement = browser.driver.switchTo().activeElement();
+    function() {
+      let activeElement = browser.driver.switchTo().activeElement();
       activeElement.sendKeys( protractor.Key.TAB );
       activeElement = browser.driver.switchTo().activeElement();
 
@@ -80,25 +78,25 @@ defineSupportCode( function( { Then, When, Before } ) {
     function( haveLabel ) {
 
       return expect( _dom.clearBtn.isDisplayed() )
-             .to.eventually
-             .equal( shouldShouldnt( haveLabel ) );
+        .to.eventually
+        .equal( shouldShouldnt( haveLabel ) );
     }
   );
 
   Then( 'it should focus the search input field',
-    function( ) {
-      var activeElement = browser
-                          .driver
-                          .switchTo()
-                          .activeElement()
-                          .getAttribute( 'id' );
+    function() {
+      const activeElement = browser
+        .driver
+        .switchTo()
+        .activeElement()
+        .getAttribute( 'id' );
 
       return activeElement
-            .then( attributeId =>
-              expect( _dom.input.getAttribute( 'id' ) )
-              .to.eventually
-              .equal( attributeId )
-            );
+        .then( attributeId =>
+          expect( _dom.input.getAttribute( 'id' ) )
+            .to.eventually
+            .equal( attributeId )
+        );
     }
   );
 
@@ -113,11 +111,11 @@ defineSupportCode( function( { Then, When, Before } ) {
       }
 
       return browser.wait( expectedCondition )
-             .then( () =>
-               expect( _dom.trigger.isDisplayed() )
-               .to.eventually
-               .equal( shouldShouldnt( haveTrigger ) )
-             );
+        .then( () =>
+          expect( _dom.trigger.isDisplayed() )
+            .to.eventually
+            .equal( shouldShouldnt( haveTrigger ) )
+        );
     }
   );
 
@@ -132,29 +130,29 @@ defineSupportCode( function( { Then, When, Before } ) {
       }
 
       return browser.wait( expectedCondition )
-             .then( () =>
-                expect( _dom.content.isDisplayed() )
-                .to.eventually
-                .equal( shouldShouldnt( haveInput ) )
-              );
+        .then( () =>
+          expect( _dom.content.isDisplayed() )
+            .to.eventually
+            .equal( shouldShouldnt( haveInput ) )
+        );
     }
   );
 
   Then( 'I should navigate to search portal',
-    function( ) {
+    function() {
 
       return browser.wait( EC.visibilityOf( _dom.searchBtn ) )
-             .then( () => {
-               const portalUrl =
+        .then( () => {
+          const portalUrl =
                  'https://search.consumerfinance.gov/' +
                  'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
 
-               _dom.searchBtn.click();
+          _dom.searchBtn.click();
 
-               return expect( browser.getCurrentUrl() )
-                      .to.eventually
-                      .equal( portalUrl );
-             } );
+          return expect( browser.getCurrentUrl() )
+            .to.eventually
+            .equal( portalUrl );
+        } );
     }
   );
 
@@ -163,19 +161,19 @@ defineSupportCode( function( { Then, When, Before } ) {
     function( haveTerms ) {
 
       return expect( _dom.suggest.isDisplayed() )
-             .to.eventually
-             .equal( shouldShouldnt( haveTerms ) );
+        .to.eventually
+        .equal( shouldShouldnt( haveTerms ) );
     }
   );
 
 
   Then( 'should have suggested search terms',
 
-    function( ) {
+    function() {
 
       return expect( _dom.suggest.isDisplayed() )
-             .to.eventually
-             .equal( true );
+        .to.eventually
+        .equal( true );
     }
   );
 

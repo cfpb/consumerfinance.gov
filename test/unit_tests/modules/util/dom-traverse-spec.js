@@ -1,5 +1,3 @@
-'use strict';
-
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
@@ -34,7 +32,7 @@ describe( 'Dom Traverse', () => {
     } );
 
     it( 'should return null if the elem doesn’t exist', () => {
-      var query = document.querySelector( '.div-4' );
+      const query = document.querySelector( '.div-4' );
 
       expect( query ).to.equal( null );
     } );

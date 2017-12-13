@@ -1,19 +1,17 @@
-'use strict';
-
 /**
-* Initiates an ajax request when passed a type, url,
-* and an optional opts object.
-*
-* @param {string} type request type (GET, POST)
-* @param {string} url request url
-* @param {Object} opts object containing optional
-* request parameters, including data, headers,
-* and success, fail, and done callbacks
-* @returns {Object} xhr
-*/
+ * Initiates an ajax request when passed a type, url,
+ * and an optional opts object.
+ *
+ * @param {string} type request type (GET, POST)
+ * @param {string} url request url
+ * @param {Object} opts object containing optional
+ * request parameters, including data, headers,
+ * and success, fail, and done callbacks
+ * @returns {Object} xhr
+ */
 function ajaxRequest( type, url, opts ) {
-  var DONE_CODE = 4;
-  var SUCCESS_CODES = {
+  const DONE_CODE = 4;
+  const SUCCESS_CODES = {
     200: 'ok',
     201: 'created',
     202: 'accepted',
@@ -22,7 +20,7 @@ function ajaxRequest( type, url, opts ) {
     205: 'reset content',
     206: 'partial content'
   };
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open( type, url );
   if ( opts.headers ) {
     opts.headers.forEach( function( header ) {

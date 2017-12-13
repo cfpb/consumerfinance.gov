@@ -1,5 +1,3 @@
-'use strict';
-
 const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 const simpleTableRowLinks =
   require( BASE_JS_PATH + 'modules/o-table-row-links' );
@@ -32,7 +30,7 @@ const HTML_SNIPPET =
   '</table>';
 
 function triggerClickEvent( target ) {
-  var event = document.createEvent( 'Event' );
+  const event = document.createEvent( 'Event' );
   event.initEvent( 'click', true, true );
   target.dispatchEvent( event );
 }
