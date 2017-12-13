@@ -17,6 +17,14 @@
 }
 
 .o-well__home {
+    max-width: @grid_wrapper-width;
+
+    .respond-to-min( @bp-xl-min, {
+        margin: 0 auto;
+        padding-right: unit( 45px / @base-font-size-px, em );
+        padding-left: unit( 45px / @base-font-size-px, em );
+    } );
+
     .respond-to-min( 1100px, {
         .content-l {
             .equal-height_container;

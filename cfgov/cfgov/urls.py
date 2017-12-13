@@ -117,10 +117,6 @@ urlpatterns = [
                       'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
-    url(r'^practitioner-resources/economically-vulnerable/$',
-        TemplateView.as_view(
-            template_name='empowerment/index.html'),
-            name='empowerment'),
     url(r'^fair-lending/$', TemplateView.as_view(
         template_name='fair-lending/index.html'),
         name='fair-lending'),
@@ -412,8 +408,8 @@ urlpatterns = [
     url(r'^es/$', TemplateView.as_view(
                  template_name='/es/index.html')),
 
-    url(r'^es/hogar/$', TemplateView.as_view(
-                 template_name='es/hogar/index.html')),
+    url(r'^es/comprar-casa/$', TemplateView.as_view(
+                 template_name='es/comprar-casa/index.html')),
 
     url(r'^es/nuestra-historia/$', TemplateView.as_view(
                  template_name='es/nuestra-historia/index.html')),
