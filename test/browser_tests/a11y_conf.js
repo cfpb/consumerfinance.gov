@@ -1,6 +1,4 @@
-'use strict';
-
-var config = require( './conf' ).config;
+const config = require( './conf' ).config;
 
 config.plugins = [ {
   'axe':     true,

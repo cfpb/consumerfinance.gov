@@ -1,9 +1,7 @@
-'use strict';
-
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var Expandable = require( '../organisms/Expandable' );
-var standardType = require( '../modules/util/standard-type' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const Expandable = require( '../organisms/Expandable' );
+const standardType = require( '../modules/util/standard-type' );
 
 /**
  * SecondaryNavigation
@@ -15,9 +13,9 @@ var standardType = require( '../modules/util/standard-type' );
  *   The DOM element within which to search for the organism.
  */
 function SecondaryNavigation( element ) {
-  var BASE_CLASS = 'o-secondary-navigation';
+  const BASE_CLASS = 'o-secondary-navigation';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   /**
    * @returns {SecondaryNavigation|undefined} An instance,
@@ -28,7 +26,7 @@ function SecondaryNavigation( element ) {
       return standardType.UNDEFINED;
     }
 
-    var expandable = new Expandable( _dom );
+    const expandable = new Expandable( _dom );
     expandable.init();
 
     return this;

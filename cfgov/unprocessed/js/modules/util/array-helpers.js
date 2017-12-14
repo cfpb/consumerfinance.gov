@@ -1,10 +1,8 @@
 /* ==========================================================================
    Arrays
-
    Utilities for checking arrays.
    ========================================================================== */
 
-'use strict';
 
 /**
  * Searches an array for the first object with the matching key:value pair
@@ -14,7 +12,7 @@
  * @returns {number}        Returns the index of a match, else -1
  */
 function indexOfObject( array, key, val ) {
-  var match = -1;
+  let match = -1;
 
   if ( !array.length > 0 ) {
     return match;

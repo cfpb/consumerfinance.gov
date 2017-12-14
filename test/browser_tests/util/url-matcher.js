@@ -2,7 +2,6 @@
    URL matcher
    ========================================================================== */
 
-'use strict';
 
 /**
  * Returns absolute URL.
@@ -28,17 +27,17 @@ function _getAbsoluteUrl( url ) {
  */
 function toEqualUrl( util, customEqualityTesters ) {
 
- /**
-  * Custom Jasmine matcher to compare URLs.
-  *
-  * @param {string|array} actual - A string or array of URLs.
-  * @param {string|array} expected - A string or array of URLs.
-  *
-  * @returns {object} - Jasmine result object.
-  */
+  /**
+   * Custom Jasmine matcher to compare URLs.
+   *
+   * @param {string|array} actual - A string or array of URLs.
+   * @param {string|array} expected - A string or array of URLs.
+   *
+   * @returns {object} - Jasmine result object.
+   */
   function compare( actual, expected ) {
-    var message;
-    var result = {};
+    let message;
+    const result = {};
 
     if ( Array.isArray( expected ) ) {
       expected = expected.map( function( url ) {

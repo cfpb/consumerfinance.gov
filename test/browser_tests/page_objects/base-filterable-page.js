@@ -1,5 +1,3 @@
-'use strict';
-
 const BasePage = require( './base-page.js' );
 
 class BaseFilterablePage extends BasePage {
@@ -14,7 +12,7 @@ class BaseFilterablePage extends BasePage {
 
   getResultsCount() {
     return this.results.count()
-           .then( count => count.toString() );
+      .then( count => count.toString() );
   }
 
   getResultText( resultPosition = 'first' ) {

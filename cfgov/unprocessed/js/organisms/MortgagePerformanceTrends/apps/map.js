@@ -1,5 +1,3 @@
-'use strict';
-
 const ccb = require( 'cfpb-chart-builder' );
 const actions = require( '../actions/map' );
 const Store = require( '../stores/map' );
@@ -62,7 +60,7 @@ MortgagePerformanceMap.prototype.eventListeners = function() {
 };
 
 MortgagePerformanceMap.prototype.onClick = function( event ) {
-  var change = new Event( 'change' );
+  const change = new Event( 'change' );
   this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).checked = false;
   this.$form.dispatchEvent( change );
   event.preventDefault();
@@ -156,9 +154,10 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
     this.chart.highchart.chart.get( prevId ).select( false );
   }
   if ( prevState.date === state.date && prevType === currType && currId ) {
-    // Highcharts zooming is unreliable and difficult to customize :(
-    // http://api.highcharts.com/highmaps/Chart.mapZoom
-    // If it's a state or non-metro, zoom in more than other location types
+
+    /* Highcharts zooming is unreliable and difficult to customize :(
+       http://api.highcharts.com/highmaps/Chart.mapZoom
+       If it's a state or non-metro, zoom in more than other location types */
     zoomLevel = currType === 'state' || utils.isNonMetro( currId ) ? 5 : 10;
     this.chart.highchart.chart.get( currId ).select( true );
     this.chart.highchart.chart.get( currId ).zoomTo();
@@ -195,16 +194,16 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
 };
 
 MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) {
-  var geoType = state.geo.type;
+  let geoType = state.geo.type;
   if ( state.isLoadingCounties ) {
     geoType = 'county';
   }
   if ( state.isLoadingMetros ) {
     geoType = 'metro';
   }
-  var geo = this.$container.querySelector( `#mp-map-${ geoType }-container` );
-  var containers = this.$container.querySelectorAll( '.mp-map-select-container' );
-  for ( var i = 0; i < containers.length; ++i ) {
+  const geo = this.$container.querySelector( `#mp-map-${ geoType }-container` );
+  const containers = this.$container.querySelectorAll( '.mp-map-select-container' );
+  for ( let i = 0; i < containers.length; ++i ) {
     utils.hideEl( containers[i] );
   }
   if ( geoType === 'county' || geoType === 'metro' ) {
@@ -242,7 +241,7 @@ MortgagePerformanceMap.prototype.renderCounties = function( prevState, state ) {
   if ( this.$county.value && !prevState.isLoadingCounties ) {
     return;
   }
-  state.counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+  state.counties.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
   const fragment = document.createDocumentFragment();
   option = utils.addOption( {
     document,
@@ -275,7 +274,7 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
     return;
   }
   // Alphabetize mero names
-  state.metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+  state.metros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
   // Pull out any non-metros and put them at the end.
   state.metros = state.metros.filter( metro => {
     if ( utils.isNonMetro( metro.fips ) ) {
@@ -340,8 +339,8 @@ MortgagePerformanceMap.prototype.renderYears = function() {
 
 MortgagePerformanceMap.prototype.renderTooltip = function() {
   return ( point, meta ) => {
-    var percent;
-    var nationalPercent = Math.round( meta.national_average * 1000 ) / 10;
+    let percent;
+    const nationalPercent = Math.round( meta.national_average * 1000 ) / 10;
     if ( point.value === null ) {
       return "<div class='m-mp-map-tooltip'>Insufficient data for this area</div>";
     }

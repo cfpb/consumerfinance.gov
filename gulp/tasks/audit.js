@@ -1,5 +1,3 @@
-'use strict';
-
 const envvars = require( '../../config/environment' ).envvars;
 const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
@@ -52,10 +50,10 @@ function _getWCAGParams() {
  */
 function testPerf() {
   _createPSITunnel()
-  .then( _runPSI )
-  .catch( err => {
-    gulpUtil.log( err );
-  } );
+    .then( _runPSI )
+    .catch( err => {
+      gulpUtil.log( err );
+    } );
 }
 
 /**
@@ -82,9 +80,9 @@ function _createPSITunnel() {
    */
   function _createLocalTunnel( reachable ) {
     if ( !reachable ) {
-      return Promise.reject( url +
+      return Promise.reject( new Error( url +
         ' is not reachable. Is your local server running?'
-      );
+      ) );
     }
 
     return new Promise( ( resolve, reject ) => {
@@ -92,7 +90,7 @@ function _createPSITunnel() {
     } );
   }
 
-   /**
+  /**
    * Local tunnel callback function
    * @param {Function} resolve Promise fulfillment callback.
    * @param {Function} reject Promise rejection callback.
@@ -116,7 +114,7 @@ function _createPSITunnel() {
 
   // Check if server is reachable.
   return isReachable( url )
-         .then( _createLocalTunnel );
+    .then( _createLocalTunnel );
 }
 
 /**
@@ -141,15 +139,15 @@ function _parsePath( urlPath ) {
 function _runPSI( params ) {
   gulpUtil.log( 'PSI tests checking URL: http://' + params.url );
   psi.output( params.url, params.options )
-  .then( () => {
-    gulpUtil.log( 'PSI tests done!' );
-    params.tunnel.close();
-  } )
-  .catch( err => {
-    gulpUtil.log( err.message );
-    params.tunnel.close();
-    process.exit( 1 );
-  } );
+    .then( () => {
+      gulpUtil.log( 'PSI tests done!' );
+      params.tunnel.close();
+    } )
+    .catch( err => {
+      gulpUtil.log( err.message );
+      params.tunnel.close();
+      process.exit( 1 );
+    } );
 }
 
 gulp.task( 'audit:a11y', testA11y );

@@ -1,5 +1,3 @@
-'use strict';
-
 const WagtailAdminPagesPage = require(
   '../../page_objects/wagtail-admin-pages-page.js'
 );
@@ -23,12 +21,12 @@ defineSupportCode( function( { Then, When } ) {
     }
   );
 
-  When( /I publish the page/, function( ) {
+  When( /I publish the page/, function() {
 
     return wagtailAdminPagesPage.publish();
   } );
 
-  When( /I unpublish the page/, function( ) {
+  When( /I unpublish the page/, function() {
 
     return wagtailAdminPagesPage.unpublish();
   } );

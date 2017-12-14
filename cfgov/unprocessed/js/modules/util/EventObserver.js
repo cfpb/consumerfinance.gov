@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * EventObserver
  * @class
@@ -11,7 +9,7 @@
 function EventObserver() {
 
   // The events registered on this instance.
-  var _events = {};
+  const _events = {};
 
   /**
    * Register an event listener.
@@ -41,7 +39,7 @@ function EventObserver() {
       return this;
     }
 
-    var index = _events[event].indexOf( callback );
+    const index = _events[event].indexOf( callback );
     if ( index !== -1 ) {
       _events[event].splice( index, 1 );
     }
@@ -62,8 +60,8 @@ function EventObserver() {
 
     options = options || {};
 
-    var evts = _events[event];
-    for ( var i = 0, len = evts.length; i < len; i++ ) {
+    const evts = _events[event];
+    for ( let i = 0, len = evts.length; i < len; i++ ) {
       evts[i].call( this, options );
     }
 

@@ -1,13 +1,11 @@
-'use strict';
-
-var _searchFilter =
+const _searchFilter =
   element( by.css( '.o-filterable-list-controls .o-expandable' ) );
 
 function _getFilterElement( selector ) {
   return _searchFilter.element( by.css( selector ) );
 }
 
-var filter = {
+const filter = {
   searchFilter: _searchFilter,
 
   searchFilterBtn: _getFilterElement( '.o-expandable_target' ),

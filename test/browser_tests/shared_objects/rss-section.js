@@ -1,10 +1,8 @@
-'use strict';
+const _getQAelement = require( '../util/qa-element' ).get;
 
-var _getQAelement = require( '../util/qa-element' ).get;
+const _rssSubscribeSection = _getQAelement( 'rss-subscribe-section' );
 
-var _rssSubscribeSection = _getQAelement( 'rss-subscribe-section' );
-
-var rssSubscribeSection = {
+const rssSubscribeSection = {
   rssSubscribeSection: _rssSubscribeSection,
 
   rssSubscribeDescription: _getQAelement( 'rss-subscribe-desc' ),
