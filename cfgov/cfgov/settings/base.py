@@ -81,6 +81,7 @@ INSTALLED_APPS = (
     'tinymce',
     'jobmanager',
     'wellbeing',
+    'search',
 )
 
 OPTIONAL_APPS = [
@@ -601,6 +602,9 @@ FLAGS = {
     # When enabled, display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
 
+    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
+    'WAGTAIL_COMPANY_SIGNUP': {},
+
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
@@ -635,6 +639,9 @@ FLAGS = {
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
 
+    # Search.gov API-based site-search
+    'SEARCH_DOTGOV_API': {},
+
     # The release of the new Financial Coaching pages
     'FINANCIAL_COACHING': {},
 
@@ -661,3 +668,7 @@ NTP_TIME_SERVER = 'north-america.pool.ntp.org'
 # If server's clock drifts from NTP by more than specified offset
 # (in seconds), check_clock_drift will fail
 MAX_ALLOWED_TIME_OFFSET = 5
+
+# Search.gov values
+SEARCH_DOT_GOV_AFFILIATE = os.environ.get('SEARCH_DOT_GOV_AFFILIATE')
+SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')

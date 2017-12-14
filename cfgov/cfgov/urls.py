@@ -48,9 +48,6 @@ urlpatterns = [
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
 
-    # TODO: Enable search route when search is available.
-    # url(r'^search/$', 'search.views.search', name='search'),
-
     url(r'^home/(?P<path>.*)$',
         RedirectView.as_view(url='/%(path)s', permanent=True)),
 
@@ -428,6 +425,10 @@ urlpatterns = [
     ),
 
     url('^sitemap\.xml$', sitemap),
+
+    flagged_url('SEARCH_DOTGOV_API',
+                r'^search/',
+                include('search.urls')),
 
     flagged_url('TDP_RELEASE',
                 r'^tdp/',
