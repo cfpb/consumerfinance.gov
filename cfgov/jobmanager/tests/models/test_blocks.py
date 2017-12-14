@@ -90,12 +90,12 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         self.assertHtmlRegexpMatches(html, (
             '<li class="m-list_item">'
             '<a class="m-list_link" href=".*">Assistant</a>'
-            '<p class="a-date">Closing<span class="datetime">'
+            '<p>Closing<span class="datetime">'
             '.*Apr. 21, 2099.*</span></p>'
             '</li>'
             '<li class="m-list_item">'
             '<a class="m-list_link" href=".*">Manager</a>'
-            '<p class="a-date">Closing<span class="datetime">.'
+            '<p>Closing<span class="datetime">.'
             '*Aug. 5, 2099.*</span></p>'
             '</li>'
         ))
