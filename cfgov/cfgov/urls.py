@@ -10,6 +10,8 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
+from wagtail.contrib.wagtailsitemaps.views import sitemap
+
 
 from flags.urls import flagged_url
 
@@ -25,6 +27,7 @@ from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorView, HousingCounselorPDFView
 )
+
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
@@ -41,7 +44,6 @@ from v1.views.documents import DocumentServeView
 oah = SheerSite('owning-a-home')
 
 urlpatterns = [
-
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
@@ -115,10 +117,6 @@ urlpatterns = [
                       'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
-    url(r'^practitioner-resources/economically-vulnerable/$',
-        TemplateView.as_view(
-            template_name='empowerment/index.html'),
-            name='empowerment'),
     url(r'^fair-lending/$', TemplateView.as_view(
         template_name='fair-lending/index.html'),
         name='fair-lending'),
@@ -258,7 +256,7 @@ urlpatterns = [
         include_if_app_enabled(
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
-        include_if_app_enabled('agreements', 'agreements.urls')),
+        include('agreements.urls')),
     url(r'^hud-api-replace/', include_if_app_enabled(
         'hud_api_replace',
         'hud_api_replace.urls',
@@ -410,8 +408,8 @@ urlpatterns = [
     url(r'^es/$', TemplateView.as_view(
                  template_name='/es/index.html')),
 
-    url(r'^es/hogar/$', TemplateView.as_view(
-                 template_name='es/hogar/index.html')),
+    url(r'^es/comprar-casa/$', TemplateView.as_view(
+                 template_name='es/comprar-casa/index.html')),
 
     url(r'^es/nuestra-historia/$', TemplateView.as_view(
                  template_name='es/nuestra-historia/index.html')),
@@ -424,10 +422,12 @@ urlpatterns = [
 
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
 
-    flagged_url('FWB_RELEASE',
-                r'^(?i)consumer-tools/financial-well-being/',
-                include('wellbeing.urls')
+    url(
+        r'^(?i)consumer-tools/financial-well-being/',
+        include('wellbeing.urls')
     ),
+
+    url('^sitemap\.xml$', sitemap),
 ]
 
 if settings.ALLOW_ADMIN_URL:
@@ -460,6 +460,7 @@ if settings.ALLOW_ADMIN_URL:
             change_password,
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
+
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([

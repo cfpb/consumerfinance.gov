@@ -1,5 +1,3 @@
-'use strict';
-
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
@@ -86,14 +84,14 @@ describe( 'Event States', () => {
 
   describe( 'set expanded state - open state', () => {
     it( 'should close all open divs', () => {
-      for ( var i = 0, len = openMenu.length; i < len; i++ ) {
+      for ( let i = 0, len = openMenu.length; i < len; i++ ) {
         expandedState.toggleExpandedState( openMenu[i], 'false' );
         expect( expandedState.isOneExpanded( openMenu[i] ) ).to.be.false;
       }
     } );
 
     it( 'should fire a callback after toggling', done => {
-      for ( var i = 0, len = openMenu.length; i < len; i++ ) {
+      for ( let i = 0, len = openMenu.length; i < len; i++ ) {
         expandedState.toggleExpandedState( openMenu[i], null, () => { // eslint-disable-line no-loop-func, no-inline-comments, max-len
           expect( expandedState.isThisExpanded( divClosed ) ).to.be.true;
           done();

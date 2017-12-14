@@ -3,13 +3,12 @@
    Scripts for `/the-bureau/bureau-structure/`.
    ========================================================================== */
 
-'use strict';
 
-var BreakpointHandler = require( '../modules/BreakpointHandler' );
-var Expandable = require( '../organisms/Expandable' );
-var BS;
+const BreakpointHandler = require( '../modules/BreakpointHandler' );
+const Expandable = require( '../organisms/Expandable' );
+let BS;
 
-var BureauStructure = BS = {
+const BureauStructure = BS = {
 
   elements: {},
 
@@ -46,7 +45,7 @@ var BureauStructure = BS = {
    */
   destroy: function destroy() {
     BS.elements.branch.removeAttribute( 'style' );
-    for ( var i = BS.slideCount - 1; i >= 0; i-- ) {
+    for ( let i = BS.slideCount - 1; i >= 0; i-- ) {
       BS.elements.branches[i].removeAttribute( 'style' );
     }
     BS.removeEventListeners();
@@ -56,7 +55,7 @@ var BureauStructure = BS = {
    * Sets the cached elements.
    */
   setElements: function setElements() {
-    var elements = BS.elements;
+    const elements = BS.elements;
     elements.base = document.querySelector( '.o-bureau-structure_chart' );
     elements.branch =
       BS.elements.base.querySelector( '.o-bureau-structure_branches' );
@@ -68,16 +67,16 @@ var BureauStructure = BS = {
    * Returns proper vendor prefix name
    * @param {string} style - css style.
    * @returns {object} vendor prefixes.
-  */
+   */
   getVendorPrefix: function getVendorPrefix( style ) {
-    var vendors = [ 'webkit', 'Moz', 'ms', 'O' ];
-    var element = document.body;
-    var existingPrefix = BS.vendorPrefixes[style] ||
+    const vendors = [ 'webkit', 'Moz', 'ms', 'O' ];
+    const element = document.body;
+    const existingPrefix = BS.vendorPrefixes[style] ||
                          element.style[style.toLowerCase()];
 
     if ( existingPrefix ) return existingPrefix;
 
-    for ( var i = 0; i < vendors.length; i++ ) {
+    for ( let i = 0; i < vendors.length; i++ ) {
       if ( typeof element.style[vendors[i] + style] != 'undefined' ) {
         BS.vendorPrefixes[style] = vendors[i] + style;
         break;
@@ -92,9 +91,9 @@ var BureauStructure = BS = {
    */
   initializeExpandables: function initializeExpandables() {
     // Initialize the Expandable.
-    var expandablesDom = document.querySelectorAll( '.o-expandable' );
-    var expandable;
-    for ( var i = 0, len = expandablesDom.length; i < len; i++ ) {
+    const expandablesDom = document.querySelectorAll( '.o-expandable' );
+    let expandable;
+    for ( let i = 0, len = expandablesDom.length; i < len; i++ ) {
       expandable = new Expandable( expandablesDom[i] );
       // Ensure Expandable isn't coming from cloned DOM nodes.
       expandable.destroy();
@@ -112,7 +111,7 @@ var BureauStructure = BS = {
    * Expandables instances.
    */
   destroyExpandables: function destroyExpandables() {
-    for ( var i = 0, len = BS.expandables.length; i < len; i++ ) {
+    for ( let i = 0, len = BS.expandables.length; i < len; i++ ) {
       BS.expandables[i].removeEventListener( 'expandEnd',
         BS.eventListeners.heightChange );
       BS.expandables[i].removeEventListener( 'collapseEnd',
@@ -143,7 +142,7 @@ var BureauStructure = BS = {
   setSliderWidth: function setSliderWidth() {
     BS.elements.branch.style.width =
       BS.getSliderWidth() * BS.slideCount + 'px';
-    for ( var i = BS.slideCount - 1; i >= 0; i-- ) {
+    for ( let i = BS.slideCount - 1; i >= 0; i-- ) {
       BS.elements.branches[i].style.width = BS.getSliderWidth() + 'px';
     }
   },
@@ -160,13 +159,13 @@ var BureauStructure = BS = {
    * @param {number} slideIndex - zero based index of the slide.
    */
   moveSlide: function moveSlide( slideIndex ) {
-    var branches = BS.elements.branches;
-    var sign = slideIndex > BS.slideIndex ? '-' : '';
-    var index = Array.prototype.indexOf.call( branches, branches[slideIndex] );
-    var transForm = 'translate(' + sign + 100 * index + '%, 0)';
-    var prefixedTransitionDuration = BS.getVendorPrefix( 'TransitionDuration' );
-    var prefixedTransform = BS.getVendorPrefix( 'Transform' );
-    var nextSlideStyle = branches[slideIndex].style;
+    const branches = BS.elements.branches;
+    const sign = slideIndex > BS.slideIndex ? '-' : '';
+    const index = Array.prototype.indexOf.call( branches, branches[slideIndex] );
+    const transForm = 'translate(' + sign + 100 * index + '%, 0)';
+    const prefixedTransitionDuration = BS.getVendorPrefix( 'TransitionDuration' );
+    const prefixedTransform = BS.getVendorPrefix( 'Transform' );
+    const nextSlideStyle = branches[slideIndex].style;
 
     if ( slideIndex > BS.slideIndex ) {
       nextSlideStyle[prefixedTransitionDuration] = '0s';
@@ -233,7 +232,7 @@ var BureauStructure = BS = {
      * @param {Object} event - Browser click event.
      */
     navClick: function navClick( event ) {
-      var slideIndex = event.target.getAttribute( 'data-show-slide-index' );
+      const slideIndex = event.target.getAttribute( 'data-show-slide-index' );
       if ( slideIndex ) {
         BS.moveSlide( slideIndex );
       }

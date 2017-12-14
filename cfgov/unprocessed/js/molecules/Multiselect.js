@@ -1,14 +1,12 @@
-'use strict';
-
 // Required modules.
-var arrayHelpers = require( '../modules/util/array-helpers' );
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var bindEvent = require( '../modules/util/dom-events' ).bindEvent;
-var domCreate = require( '../modules/util/dom-manipulators' ).create;
-var queryOne = require( '../modules/util/dom-traverse' ).queryOne;
-var standardType = require( '../modules/util/standard-type' );
-var strings = require( '../modules/util/strings' );
-var EventObserver = require( '../modules/util/EventObserver' );
+const arrayHelpers = require( '../modules/util/array-helpers' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const bindEvent = require( '../modules/util/dom-events' ).bindEvent;
+const domCreate = require( '../modules/util/dom-manipulators' ).create;
+const queryOne = require( '../modules/util/dom-traverse' ).queryOne;
+const standardType = require( '../modules/util/standard-type' );
+const strings = require( '../modules/util/strings' );
+const EventObserver = require( '../modules/util/EventObserver' );
 
 /**
  * Multiselect
@@ -22,51 +20,51 @@ var EventObserver = require( '../modules/util/EventObserver' );
  */
 function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  var BASE_CLASS = 'cf-multi-select';
-  var LIST_CLASS = 'm-list';
-  var CHECKBOX_INPUT_CLASS = 'cf-input';
-  var TEXT_INPUT_CLASS = 'a-text-input';
+  const BASE_CLASS = 'cf-multi-select';
+  const LIST_CLASS = 'm-list';
+  const CHECKBOX_INPUT_CLASS = 'cf-input';
+  const TEXT_INPUT_CLASS = 'a-text-input';
 
-  // TODO: As the multiselect is developed further
-  //       explore whether it should use an updated
-  //       class name or data-* attribute in the
-  //       markup so that it doesn't apply globally by default.
+  /* TODO: As the multiselect is developed further
+     explore whether it should use an updated
+     class name or data-* attribute in the
+     markup so that it doesn't apply globally by default. */
   element.classList.add( BASE_CLASS );
 
   // Constants for direction.
-  var DIR_PREV = 'prev';
-  var DIR_NEXT = 'next';
+  const DIR_PREV = 'prev';
+  const DIR_NEXT = 'next';
 
   // Constants for key binding.
-  var KEY_RETURN = 13;
-  var KEY_ESCAPE = 27;
-  var KEY_UP = 38;
-  var KEY_DOWN = 40;
-  var KEY_TAB = 9;
+  const KEY_RETURN = 13;
+  const KEY_ESCAPE = 27;
+  const KEY_UP = 38;
+  const KEY_DOWN = 40;
+  const KEY_TAB = 9;
 
   // Search settings.
-  var MIN_CHARS = 3;
-  var MAX_SELECTIONS = 5;
+  const MIN_CHARS = 3;
+  const MAX_SELECTIONS = 5;
 
   // Internal vars.
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _index = -1;
-  var _isBlurSkipped = false;
-  var _selectionsCount = 0;
-  var _name;
-  var _options;
-  var _optionsData;
-  var _filteredData;
-  var _placeholder;
+  let _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  let _index = -1;
+  let _isBlurSkipped = false;
+  let _selectionsCount = 0;
+  let _name;
+  let _options;
+  let _optionsData;
+  let _filteredData;
+  let _placeholder;
 
   // Markup elems, conver this to templating engine in the future.
-  var _containerDom;
-  var _selectionsDom;
-  var _headerDom;
-  var _searchDom;
-  var _fieldsetDom;
-  var _optionsDom;
-  var _instance;
+  let _containerDom;
+  let _selectionsDom;
+  let _headerDom;
+  let _searchDom;
+  let _fieldsetDom;
+  let _optionsDom;
+  let _instance;
 
   /**
    * Set up and create the multi-select.
@@ -85,14 +83,15 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _filteredData = _optionsData = _sanitizeOptions( _options );
 
     if ( _optionsData.length > 0 ) {
-      var newDom = _populateMarkup();
+      const newDom = _populateMarkup();
 
-      // Removes <select> element,
-      // and re-assign DOM reference.
+      /* Removes <select> element,
+         and re-assign DOM reference. */
       _dom.parentNode.removeChild( _dom );
       _dom = newDom;
-      // We need to set init flag again since we've created a new <div>
-      // to replace the <select> element.
+
+      /* We need to set init flag again since we've created a new <div>
+         to replace the <select> element. */
       atomicHelpers.setInitFlag( _dom );
 
       _bindEvents();
@@ -134,10 +133,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * @returns {Array}      An array of option objects.
    */
   function _sanitizeOptions( list ) {
-    var item;
-    var cleaned = [];
+    let item;
+    const cleaned = [];
 
-    for ( var i = 0, len = list.length; i < len; i++ ) {
+    for ( let i = 0, len = list.length; i < len; i++ ) {
       item = list[i];
 
       // If the value isn't valid kill the script and prompt the developer.
@@ -204,7 +203,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     } );
 
     _optionsData.forEach( function( option ) {
-      var _optionsItemDom = domCreate( 'li', {
+      const _optionsItemDom = domCreate( 'li', {
         'data-option': option.value
       } );
 
@@ -229,7 +228,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       _optionsDom.appendChild( _optionsItemDom );
 
       if ( option.checked ) {
-        var selectionsItemDom = domCreate( 'li', {
+        const selectionsItemDom = domCreate( 'li', {
           'data-option': option.value
         } );
 
@@ -258,7 +257,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    *                           current focus.
    */
   function _highlight( direction ) {
-    var count = _filteredData.length;
+    const count = _filteredData.length;
 
     if ( direction === DIR_NEXT && _index < count - 1 ) {
       _index += 1;
@@ -267,9 +266,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     }
 
     if ( _index > -1 ) {
-      var value = _filteredData[_index].value;
-      var item = _optionsDom.querySelector( '[data-option="' + value + '"]' );
-      var input = item.querySelector( 'input' );
+      const value = _filteredData[_index].value;
+      const item = _optionsDom.querySelector( '[data-option="' + value + '"]' );
+      const input = item.querySelector( 'input' );
 
       _isBlurSkipped = true;
       input.focus();
@@ -284,19 +283,19 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * @param   {string} value The value of the option the user has chosen.
    */
   function _updateSelections( value ) {
-    var optionIndex =
+    const optionIndex =
       arrayHelpers.indexOfObject( _optionsData, 'value', value );
-    var option = _optionsData[optionIndex] || _optionsData[_index];
+    const option = _optionsData[optionIndex] || _optionsData[_index];
 
     if ( option ) {
-      var _selectionsItemDom;
+      let _selectionsItemDom;
 
       if ( option.checked ) {
         if ( _optionsDom.classList.contains( 'max-selections' ) ) {
           _optionsDom.classList.remove( 'max-selections' );
         }
 
-        var dataOptionSel = '[data-option="' + option.value + '"]';
+        const dataOptionSel = '[data-option="' + option.value + '"]';
         _selectionsItemDom = _selectionsDom.querySelector( dataOptionSel );
 
         if ( _selectionsItemDom ) {
@@ -367,7 +366,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   function _resetFilter() {
     _optionsDom.classList.remove( 'filtered', 'no-results' );
 
-    for ( var i = 0, len = _optionsDom.children.length; i < len; i++ ) {
+    for ( let i = 0, len = _optionsDom.children.length; i < len; i++ ) {
       _optionsDom.children[i].classList.remove( 'filter-match' );
     }
 
@@ -379,7 +378,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function _filterResults() {
     _optionsDom.classList.add( 'filtered' );
-    var _optionsItemDom;
+    let _optionsItemDom;
 
     if ( _filteredData.length > 0 ) {
       _filteredData.forEach( function( option ) {
@@ -406,7 +405,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * Binds events to the search input, option list, and checkboxes.
    */
   function _bindEvents() {
-    var inputs = _optionsDom.querySelectorAll( 'input' );
+    const inputs = _optionsDom.querySelectorAll( 'input' );
 
     bindEvent( _searchDom, {
       input: function() {
@@ -427,7 +426,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         }
       },
       keydown: function( event ) {
-        var key = event.keyCode;
+        const key = event.keyCode;
 
         if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'true' &&
              key !== KEY_TAB ) {
@@ -455,8 +454,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         _isBlurSkipped = true;
       },
       keydown: function( event ) {
-        var key = event.keyCode;
-        var checked = event.target.checked;
+        const key = event.keyCode;
+        const checked = event.target.checked;
 
         if ( key === KEY_RETURN ) {
           event.preventDefault();
@@ -480,7 +479,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       }
     } );
 
-    for ( var i = 0, len = inputs.length; i < len; i++ ) {
+    for ( let i = 0, len = inputs.length; i < len; i++ ) {
       bindEvent( inputs[i], {
         change: _changeHandler
       } );
@@ -501,7 +500,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   this.expand = expand;
   this.collapse = collapse;
 
-  var eventObserver = new EventObserver();
+  const eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
   this.removeEventListener = eventObserver.removeEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;

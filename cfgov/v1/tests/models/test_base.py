@@ -19,6 +19,11 @@ class TestCFGOVPage(TestCase):
         self.factory = RequestFactory()
         self.request = self.factory.get('/')
 
+    def test_post_preview_cache_key_contains_page_id(self):
+        save_new_page(self.page)
+        key = self.page.post_preview_cache_key
+        self.assertIn(str(self.page.id), key)
+
     @mock.patch('__builtin__.super')
     @mock.patch('v1.models.base.hooks')
     def test_get_context_calls_get_context(self, mock_hooks, mock_super):

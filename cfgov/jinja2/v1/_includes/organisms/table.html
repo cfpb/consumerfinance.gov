@@ -61,7 +61,7 @@
                     {% set width_class = ' class="' + value.column_widths[loop.index0] + '"' %}
                 {% endif %}
             <th scope="col"{{ width_class | default }}>
-                {% if flag_enabled('SORTABLE_TABLES', true) and value.is_sortable and value.sortable_types[loop.index0] != '' %}
+                {% if value.is_sortable and value.sortable_types[loop.index0] != '' %}
                     {% set data_sort = ' data-sort_type="' + value.sortable_types[loop.index0] + '"' %}
                     <button class="sortable"{{ data_sort }}>
                         {{ _render_cell(cell) | striptags }}

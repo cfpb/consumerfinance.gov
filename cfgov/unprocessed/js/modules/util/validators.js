@@ -1,17 +1,15 @@
 /* ==========================================================================
    Validators
-
    Various utility functions to check if a field contains a valid value
    ========================================================================== */
 
-'use strict';
 
 // Required Modules
-var ERROR_MESSAGES = require( '../../config/error-messages-config' );
-var typeCheckers = require( '../../modules/util/type-checkers' );
+const ERROR_MESSAGES = require( '../../config/error-messages-config' );
+const typeCheckers = require( '../../modules/util/type-checkers' );
 
-// TODO: Update all the validators to return both passed and failed states
-// instead of returning an empty object if the value passed
+/* TODO: Update all the validators to return both passed and failed states
+   instead of returning an empty object if the value passed */
 
 /**
  * date Determines if a field contains a valid date.
@@ -22,8 +20,8 @@ var typeCheckers = require( '../../modules/util/type-checkers' );
  *   otherwise an object with msg and type properties if it failed.
  */
 function date( field, currentStatus ) {
-  var status = currentStatus || {};
-  var dateRegex =
+  const status = currentStatus || {};
+  const dateRegex =
     /^\d{2}$|^\d{4}$|^\d{2}\/(?:\d{4}|\d{2})$|^\d{2}\/\d{2}\/\d{4}$/;
   if ( field.value && dateRegex.test( field.value ) === false ) {
     status.msg = status.msg || '';
@@ -43,18 +41,18 @@ function date( field, currentStatus ) {
  *   otherwise an object with msg and type properties if it failed.
  */
 function email( field, currentStatus, options ) {
-  var status = currentStatus || {};
-  var opts = options || {};
-  var regex =
+  const status = currentStatus || {};
+  const opts = options || {};
+  const regex =
     '^[a-z0-9\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+(?:\\.[a-z0-9' +
     '\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]' +
     '(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$';
-  var emailRegex = new RegExp( regex, 'i' );
-  var emptyValidation = empty( field );
-  var isFilled = typeof emptyValidation.required === 'undefined' ?
-                 true : emptyValidation.required;
-  var state;
-  var key;
+  const emailRegex = new RegExp( regex, 'i' );
+  const emptyValidation = empty( field );
+  const isFilled = typeof emptyValidation.required === 'undefined' ?
+    true : emptyValidation.required;
+  let state;
+  let key;
 
   if ( !isFilled ) {
     // TODO: Create a language checker instead of doing this inline like this
@@ -83,10 +81,10 @@ function email( field, currentStatus, options ) {
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
- // TODO: Rename this so it's clearer it's checking a required attribute
+// TODO: Rename this so it's clearer it's checking a required attribute
 function empty( field, currentStatus ) {
-  var status = currentStatus || {};
-  var isRequired = field.getAttribute( 'required' ) !== null;
+  const status = currentStatus || {};
+  const isRequired = field.getAttribute( 'required' ) !== null;
   if ( isRequired && typeCheckers.isEmpty( field.value ) ) {
     status.msg = status.msg || '';
     status.msg += ERROR_MESSAGES.FIELD.REQUIRED;
@@ -106,7 +104,7 @@ function empty( field, currentStatus ) {
  *   otherwise an object with msg and type properties if it failed.
  */
 function checkbox( field, currentStatus, fieldset ) {
-  var status = currentStatus || {};
+  const status = currentStatus || {};
   return _checkableInput( field, status, fieldset, 'checkbox' );
 }
 
@@ -120,7 +118,7 @@ function checkbox( field, currentStatus, fieldset ) {
  *   otherwise an object with msg and type properties if it failed.
  */
 function radio( field, currentStatus, fieldset ) {
-  var status = currentStatus || {};
+  const status = currentStatus || {};
   return _checkableInput( field, status, fieldset, 'radio' );
 }
 
@@ -137,9 +135,9 @@ function radio( field, currentStatus, fieldset ) {
  *   otherwise an object with msg and type properties if it failed.
  */
 function _checkableInput( field, currentStatus, fieldset, type ) {
-  var statusMsg = currentStatus.msg || '';
-  var required = parseInt( field.getAttribute( 'data-required' ) || 0, 10 );
-  var groupFieldsLength = fieldset.length;
+  let statusMsg = currentStatus.msg || '';
+  const required = parseInt( field.getAttribute( 'data-required' ) || 0, 10 );
+  const groupFieldsLength = fieldset.length;
 
   if ( groupFieldsLength < required ) {
     statusMsg += ERROR_MESSAGES.CHECKBOX.REQUIRED.replace( '%s', required );

@@ -1,13 +1,12 @@
-'use strict';
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var scroll = require( '../modules/util/scroll' );
-var AlphaTransition = require( '../modules/transition/AlphaTransition' );
-var BaseTransition = require( '../modules/transition/BaseTransition' );
-var ERROR_MESSAGES = require( '../config/error-messages-config' );
-var FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
-var Notification = require( '../molecules/Notification' );
-var EventObserver = require( '../modules/util/EventObserver' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const scroll = require( '../modules/util/scroll' );
+const AlphaTransition = require( '../modules/transition/AlphaTransition' );
+const BaseTransition = require( '../modules/transition/BaseTransition' );
+const ERROR_MESSAGES = require( '../config/error-messages-config' );
+const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
+const Notification = require( '../molecules/Notification' );
+const EventObserver = require( '../modules/util/EventObserver' );
 
 /**
  * FormSubmit
@@ -25,14 +24,14 @@ var EventObserver = require( '../modules/util/EventObserver' );
  */
 function FormSubmit( element, baseClass, opts ) {
   opts = opts || {};
-  var UNDEFINED;
-  var _baseElement = atomicHelpers.checkDom( element, baseClass );
-  var _formElement = _baseElement.querySelector( 'form' );
-  var _notificationElement = _baseElement.querySelector( '.m-notification' );
-  var _notification = new Notification( _baseElement );
-  var _cachedFields;
-  var eventObserver = new EventObserver();
-  var self = this;
+  let UNDEFINED;
+  const _baseElement = atomicHelpers.checkDom( element, baseClass );
+  const _formElement = _baseElement.querySelector( 'form' );
+  const _notificationElement = _baseElement.querySelector( '.m-notification' );
+  const _notification = new Notification( _baseElement );
+  let _cachedFields;
+  const eventObserver = new EventObserver();
+  const self = this;
   this.addEventListener = eventObserver.addEventListener;
   this.removeEventListener = eventObserver.removeEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;
@@ -57,7 +56,7 @@ function FormSubmit( element, baseClass, opts ) {
    */
   function _onSubmit( event ) {
     event.preventDefault();
-    var errors = _validateForm();
+    const errors = _validateForm();
 
     _baseElement.classList.add( 'form-submitted' );
 
@@ -96,8 +95,8 @@ function FormSubmit( element, baseClass, opts ) {
    * @param {formData} form data object with field name/value pairs
    */
   function _submitForm() {
-    var DONE_CODE = 4;
-    var SUCCESS_CODES = {
+    const DONE_CODE = 4;
+    const SUCCESS_CODES = {
       200: 'ok',
       201: 'created',
       202: 'accepted',
@@ -106,19 +105,19 @@ function FormSubmit( element, baseClass, opts ) {
       205: 'reset content',
       206: 'partial content'
     };
-    var message = '';
-    var heading = '';
-    var state = 'ERROR';
-    var xhr = new XMLHttpRequest();
+    let message = '';
+    let heading = '';
+    let state = 'ERROR';
+    const xhr = new XMLHttpRequest();
     xhr.open( 'POST', _formElement.action );
     xhr.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
     xhr.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' );
     xhr.onreadystatechange = function() {
       if ( xhr.readyState === DONE_CODE ) {
         if ( xhr.status in SUCCESS_CODES ) {
-          var result;
+          let result;
           try {
-            var response = JSON.parse( xhr.responseText );
+            const response = JSON.parse( xhr.responseText );
             result = response.result;
             message = response.message || '';
             heading = response.header || '';
@@ -133,9 +132,9 @@ function FormSubmit( element, baseClass, opts ) {
           }
           _replaceFormWithNotification( heading + ' ' + message );
         } else {
-          var key = opts.language === 'es' ? state + '_ES' : state;
+          const key = opts.language === 'es' ? state + '_ES' : state;
           _displayNotification( _notification[state],
-                                message || FORM_MESSAGES[key] );
+            message || FORM_MESSAGES[key] );
         }
         if ( state === 'SUCCESS' ) {
           self.dispatchEvent( 'success', { target: this, form: _formElement } );
@@ -150,7 +149,7 @@ function FormSubmit( element, baseClass, opts ) {
    *  Replaces form with notification on success.
    */
   function _replaceFormWithNotification( message ) {
-    var transition = new AlphaTransition( _baseElement ).init();
+    const transition = new AlphaTransition( _baseElement ).init();
     scroll.scrollIntoView( _formElement, { offset: 100, callback: fadeOutForm } );
 
     function fadeOutForm() {
@@ -175,11 +174,11 @@ function FormSubmit( element, baseClass, opts ) {
    *   Checkboxes and radio fields are stored in array.
    */
   function _cacheFields() {
-    var nonInputTypes = [ 'file', 'reset', 'submit', 'button' ];
-    var cachedFields = {};
-    var fields = ( _formElement || {} ).elements;
-    for ( var f = 0; f < fields.length; f++ ) {
-      var field = fields[f];
+    const nonInputTypes = [ 'file', 'reset', 'submit', 'button' ];
+    const cachedFields = {};
+    const fields = ( _formElement || {} ).elements;
+    for ( let f = 0; f < fields.length; f++ ) {
+      const field = fields[f];
       if ( field.name && !field.disabled && nonInputTypes.indexOf( field.type ) === -1 ) {
         if ( field.type === 'radio' || field.type === 'checkbox' ) {
           cachedFields[field.name] = cachedFields[field.name] || [];
@@ -208,19 +207,19 @@ function FormSubmit( element, baseClass, opts ) {
    * Example: param1=value1&param2=value2
    */
   function _serializeFormData() {
-    var data = [];
+    const data = [];
     Object.keys( _cachedFields ).forEach( function( fieldName ) {
-      var field = _cachedFields[fieldName];
+      const field = _cachedFields[fieldName];
       if ( field.type === 'select-multiple' && field.options ) {
-        var options = field.options;
-        for ( var i = 0; i < options.length; i++ ) {
-          var option = options[i];
+        const options = field.options;
+        for ( let i = 0; i < options.length; i++ ) {
+          const option = options[i];
           if ( option.selected ) {
             data.push( _serializeField( fieldName, option.value ) );
           }
         }
       } else if ( Array.isArray( field ) ) {
-        for ( var f = 0; f < field.length; f++ ) {
+        for ( let f = 0; f < field.length; f++ ) {
           if ( field[f].checked ) {
             data.push( _serializeField( fieldName, field[f].value ) );
           }

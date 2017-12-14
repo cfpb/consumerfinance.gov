@@ -1,26 +1,33 @@
 #!/bin/bash
 
-# if docker ps succeeds, docker environment is already sane and
-# we don't need to mess with docker-machine
+# Check if docker is installed.
+if [ -x "$(command -v docker)" ]; then
+  echo "Docker is installed."
+else
+  echo "Docker not installed. See installation.md for installing docker."
+fi
+
+# If docker ps succeeds, docker environment is already sane and
+# we don't need to mess with docker-machine.
 docker ps 2>/dev/null
 if [ $? -eq 0 ]; then
   echo "You've already got a working docker setup!"
 else
-   echo "Maybe we just need to start your default docker machine..."
-   MACHINE_IP=$(docker-machine ip)
-    if [ -z "$MACHINE_IP" ]; then
-      echo "No default docker machine found, creating one with virtualbox..."
-      docker-machine create default --driver virtualbox\
-        --virtualbox-cpu-count "2"\
-        --virtualbox-memory "3072" 
-      vboxmanage controlvm default natpf1 "http,tcp,,8000,,8000"
-      vboxmanage controlvm default natpf1 "https,tcp,,8443,,8443"
-    fi
-    # harmless if the machine is already up:
-    echo "Starting your machine..."
-    docker-machine start
-    echo "You've got a working docker machine, yay!"
-    eval $(docker-machine env)
+  echo "Maybe we just need to start your default docker machine..."
+  MACHINE_IP=$(docker-machine ip)
+  if [ -z "$MACHINE_IP" ]; then
+    echo "No default docker machine found, creating one with virtualbox..."
+    docker-machine create default --driver virtualbox\
+      --virtualbox-cpu-count "2"\
+      --virtualbox-memory "3072"
+    vboxmanage controlvm default natpf1 "http,tcp,,8000,,8000"
+    vboxmanage controlvm default natpf1 "https,tcp,,8443,,8443"
+  fi
+  # Harmless if the machine is already up:
+  echo "Starting your machine..."
+  docker-machine start
+  echo "You've got a working docker machine, yay!"
+  eval $(docker-machine env)
 fi
 
 cat <<END

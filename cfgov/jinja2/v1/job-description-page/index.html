@@ -7,6 +7,12 @@
 {%- endblock %}
 
 {% block content_main %}
+{% set regional_cities = {
+    'Midwest region': 'Chicago, IL; Detroit, MI; Minneapolis, MN; St. Louis, MO; Cincinnati, OH; Cleveland, OH; Columbus, OH; Indianapolis, IN; Milwaukee, WI',
+    'Northeast region': 'New York City, NY; Philadelphia, PA; Boston, MA; Pittsburgh, PA; Providence, RI; Hartford, CT; Buffalo, NY; Rochester, NY; Bridgeport, CT; Worcester, MA',
+    'Southeast region': 'Houston, TX; San Antonio, TX; Dallas, TX; Jacksonville, FL; Austin, TX; Memphis, TN; Baltimore, MD; Charlotte, NC; Atlanta, GA; Virginia Beach, VA; Raleigh, NC',
+    'West region': 'Los Angeles, CA; San Francisco, CA; Phoenix, AZ; San Bernardino, CA; Seattle, WA; San Diego, CA; Denver, CO; Portland, OR; Sacramento, CA; Las Vegas, NV'
+} %}
 
 {% import 'molecules/social-media.html' as social_media with context %}
     <section class="block
@@ -24,6 +30,14 @@
             </dd>
             <dt>Region:</dt>
             <dd>{{ page.region }}</dd>
+            
+            {% if page.region and page.region.name in ["Midwest region", "Northeast region", "Southeast region", "West region" ]%}
+            <dt class="u-hidden">Location:</dt>
+            <dd class="u-hidden">
+                {{ regional_cities[page.region.name] }}
+            </dd>
+            {% endif %}
+            
             <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
             <dd>
                 {% if page.grades.exists() %}

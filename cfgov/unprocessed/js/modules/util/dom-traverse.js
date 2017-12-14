@@ -1,6 +1,4 @@
-'use strict';
-
-var typeCheckers = require( './type-checkers' );
+const typeCheckers = require( './type-checkers' );
 
 /**
  * Queries for the first match unless an HTMLNode is passed
@@ -22,14 +20,15 @@ function queryOne( expr, con ) {
  * @returns {Array} List of sibling nodes.
  */
 function getSiblings( elem, selector ) {
-  var siblings = [];
-  var sibling;
-  var parent = elem.parentNode;
-  var possibleSiblings = parent.querySelectorAll( selector );
-  for ( var i = 0, len = possibleSiblings.length; i < len; i++ ) {
+  const siblings = [];
+  let sibling;
+  const parent = elem.parentNode;
+  const possibleSiblings = parent.querySelectorAll( selector );
+  for ( let i = 0, len = possibleSiblings.length; i < len; i++ ) {
     sibling = possibleSiblings[i];
-    // Check that sibling is not the original element,
-    // and that it shares the same parent.
+
+    /* Check that sibling is not the original element,
+       and that it shares the same parent. */
     if ( sibling !== elem &&
          sibling.parentNode === parent ) {
       siblings[siblings.length] = sibling;
@@ -47,8 +46,8 @@ function getSiblings( elem, selector ) {
  *   if exlude was not found.
  */
 function not( elems, exclude ) {
-  var elemsArr = Array.prototype.slice.call( elems );
-  var index = elemsArr.indexOf( exclude );
+  const elemsArr = Array.prototype.slice.call( elems );
+  const index = elemsArr.indexOf( exclude );
 
   if ( index > -1 ) {
     elemsArr.splice( index, 1 );
@@ -67,8 +66,8 @@ function not( elems, exclude ) {
 function closest( elem, selector ) {
   elem = elem.parentNode;
 
-  var matchesSelector = _getMatchesMethod( elem );
-  var match;
+  const matchesSelector = _getMatchesMethod( elem );
+  let match;
 
   while ( elem ) {
     if ( matchesSelector.bind( elem )( selector ) ) {

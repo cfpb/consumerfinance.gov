@@ -1,5 +1,3 @@
-'use strict';
-
 function Footer( url ) {
   this.get = function() {
     browser.get( url || '/' );

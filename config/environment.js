@@ -3,7 +3,6 @@
    Used by JavaScript gulp build process and JavaScript test configuration.
    ========================================================================== */
 
-'use strict';
 
 /**
  * Environment variable mappings in JavaScript from the project root .env file.
@@ -32,7 +31,6 @@ const paths = {
   unprocessed: './cfgov/unprocessed',
   processed:   './cfgov/static_built',
   legacy:      './cfgov/legacy/static',
-  lib:         './vendor',
   modules:     './node_modules',
   test:        './test'
 };

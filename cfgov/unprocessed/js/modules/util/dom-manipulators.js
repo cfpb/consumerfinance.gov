@@ -1,6 +1,4 @@
-'use strict';
-
-var queryOne = require( './dom-traverse' ).queryOne;
+const queryOne = require( './dom-traverse' ).queryOne;
 
 /**
  * Shortcut for creating new dom elements
@@ -9,12 +7,12 @@ var queryOne = require( './dom-traverse' ).queryOne;
  * @returns {HTMLNode}       The created elem
  */
 function create( tag, options ) {
-  var elem = document.createElement( tag );
+  const elem = document.createElement( tag );
 
-  for ( var i in options ) {
+  for ( const i in options ) {
     if ( options.hasOwnProperty( i ) ) {
-      var val = options[i];
-      var ref;
+      const val = options[i];
+      let ref;
 
       if ( i === 'inside' ) {
         ref = queryOne( val );

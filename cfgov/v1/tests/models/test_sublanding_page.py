@@ -74,12 +74,9 @@ class SublandingPageTestCase(TestCase):
         """
         browsefilterable_posts = self.sublanding_page.get_browsefilterable_posts(self.limit)
         self.assertEqual(len(browsefilterable_posts), 3)
-        # the first number in the tuple represents the order of the
-        # filter_controls form in the post's content field, so we test
-        # situations in which that order varies
-        self.assertEqual(('1', self.child1_of_post1), browsefilterable_posts[2])
-        self.assertEqual(('1', self.child2_of_post1), browsefilterable_posts[1])
-        self.assertEqual(('0', self.child1_of_post2), browsefilterable_posts[0])
+        self.assertEqual(self.child1_of_post1, browsefilterable_posts[2])
+        self.assertEqual(self.child2_of_post1, browsefilterable_posts[1])
+        self.assertEqual(self.child1_of_post2, browsefilterable_posts[0])
 
     def test_get_browsefilterable_posts_with_limit(self):
         """
@@ -90,4 +87,4 @@ class SublandingPageTestCase(TestCase):
         self.limit = 1
         browsefilterable_posts = self.sublanding_page.get_browsefilterable_posts(self.limit)
         self.assertEqual(1, len(browsefilterable_posts))
-        self.assertEqual(('0', self.child1_of_post2), browsefilterable_posts[0])
+        self.assertEqual(self.child1_of_post2, browsefilterable_posts[0])

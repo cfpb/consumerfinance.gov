@@ -1,9 +1,7 @@
-'use strict';
-
-var filterableListControl = require(
+const filterableListControl = require(
   '../../shared_objects/filterable-list-control.js'
 );
-var { defineSupportCode } = require( 'cucumber' );
+const { defineSupportCode } = require( 'cucumber' );
 
 defineSupportCode( function( { When } ) {
   When( /I (.*) the filterable list control/, function( action ) {

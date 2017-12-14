@@ -1,5 +1,3 @@
-'use strict';
-
 const FilterableBasePage = require( './base-filterable-page.js' );
 
 class SublandingFilterablePage extends FilterableBasePage {
