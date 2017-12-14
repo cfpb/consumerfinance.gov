@@ -36,7 +36,7 @@
             </dd>
             <dt>Region:</dt>
             <dd>{{ page.region }}</dd>
-            {% if page.region and page.region.abbreviation in ["MW", "NE", "SE", "WE" ]%}
+            {% if page.region and page.region.abbreviation in ["MW", "NE", "SE", "WE" ] %}
             {% set locations = regional_cities[page.region.abbreviation] %}
             <dt class="u-hidden">Location:</dt>
             <dd class="u-hidden">{% for location in locations %}{{ location[0] + ', ' + location[1] + '; ' if not loop.last else ''}}{% endfor %}</dd>
@@ -227,13 +227,13 @@
             "unitText": "YEAR"
         }
     },
-    "description": "{{page.description}}",
+    "description": "{{ page.description }}",
     "hiringOrganization" : {
       "@type" : "Organization",
       "name" : "Consumer Financial Protection Bureau",
       "sameAs" : "https://www.consumerfinance.gov"
     },
-    "title": "{{page.title}}",
+    "title": "{{ page.title }}",
     "validThrough": "{{ dt.format_datetime(page.close_date) if page.close_date else '' }}",
     "datePosted": "{{ dt.format_datetime(page.open_date) if page.close_date else '' }}",
     "jobLocation" : {
