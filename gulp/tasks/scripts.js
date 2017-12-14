@@ -94,7 +94,7 @@ function scriptsModern() {
 function scriptsIE() {
   return _processScript(
     webpackConfig.commonConf,
-    '/js/ie/common.ie.js',
+    '/js/ie/common.ie9.js',
     '/js/ie/'
   );
 }
