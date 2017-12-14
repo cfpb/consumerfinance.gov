@@ -97,6 +97,7 @@ OPTIONAL_APPS = [
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
+    {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
 ]
 
 if DEPLOY_ENVIRONMENT == 'build':
@@ -636,6 +637,9 @@ FLAGS = {
 
     # The release of the new Financial Coaching pages
     'FINANCIAL_COACHING': {},
+
+    # Teacher's Digital Platform
+    'TDP_RELEASE': {},
 }
 
 
