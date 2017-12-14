@@ -1,6 +1,3 @@
-'use strict';
-
-
 const EC = protractor.ExpectedConditions;
 
 const elements = {
@@ -24,18 +21,18 @@ function enterSearchText( text ) {
   const searchInput = element( by.css( elements.searchInput ) );
 
   return browser.wait( EC.visibilityOf( searchInput ) )
-         .then( function() {
-           searchInput.sendKeys( text );
-         } );
+    .then( function() {
+      searchInput.sendKeys( text );
+    } );
 }
 
 function getLinkAttributes( linkSelector ) {
   function _getLinkAttributes( _linkSelector ) {
-    var linkElement = document.querySelector( _linkSelector );
-    var attributes;
+    const linkElement = document.querySelector( _linkSelector );
+    let attributes;
 
     if ( linkElement ) {
-      var linkAttributes = linkElement.attributes;
+      const linkAttributes = linkElement.attributes;
       attributes = {
         dataUrl:       linkAttributes['data-title'].value,
         editUrl:       linkAttributes['data-id'].value,
@@ -80,15 +77,15 @@ function getLinkHTML( linkAttributes, linkType = selectedLink.type ) {
 function setSelectedLink( linkSelector ) {
 
   return getLinkAttributes( linkSelector )
-         .then( function( attributes ) {
+    .then( function( attributes ) {
 
-           return setSelectedLinkProperty( 'attributes', attributes );
-         } )
-         .then( getLinkHTML )
-         .then( function( HTML ) {
+      return setSelectedLinkProperty( 'attributes', attributes );
+    } )
+    .then( getLinkHTML )
+    .then( function( HTML ) {
 
-           return setSelectedLinkProperty( 'HTML', HTML );
-         } );
+      return setSelectedLinkProperty( 'HTML', HTML );
+    } );
 }
 
 function selectPageLink( linkTitle ) {
@@ -96,10 +93,10 @@ function selectPageLink( linkTitle ) {
   const cfgovLink = element( by.css( linkSelector ) );
 
   return cfgovLink.click()
-         .then( function( ) {
+    .then( function() {
 
-           return setSelectedLink( linkSelector );
-         } );
+      return setSelectedLink( linkSelector );
+    } );
 }
 
 function setSelectedLinkProperty( property, value ) {

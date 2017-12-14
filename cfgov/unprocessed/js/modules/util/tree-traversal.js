@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Perform a backtrack up a Tree to the root.
  * Given this Tree and starting at (C):
@@ -18,7 +16,7 @@
  */
 function backtrack( node, callback ) {
   callback.call( this, node );
-  var parent = node.parent;
+  const parent = node.parent;
   if ( parent ) {
     backtrack.apply( this, [ parent, callback ] );
   }
@@ -41,9 +39,9 @@ function backtrack( node, callback ) {
  *   `this` will be the treeTranserval module within the callback.
  */
 function bfs( node, callback ) {
-  var queue = [ node ];
-  var currNode;
-  var children;
+  let queue = [ node ];
+  let currNode;
+  let children;
   while ( queue.length > 0 ) {
     currNode = queue.shift();
     children = currNode.children;
@@ -72,8 +70,8 @@ function bfs( node, callback ) {
  */
 function dfs( node, callback ) {
   callback.call( this, node );
-  var children = node.children;
-  for ( var i = 0, len = children.length; i < len; i++ ) {
+  const children = node.children;
+  for ( let i = 0, len = children.length; i < len; i++ ) {
     dfs.apply( this, [ children[i], callback ] );
   }
 }

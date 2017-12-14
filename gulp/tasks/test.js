@@ -1,5 +1,3 @@
-'use strict';
-
 const configTest = require( '../config' ).test;
 const envvars = require( '../../config/environment' ).envvars;
 const fsHelper = require( '../utils/fs-helper' );
@@ -18,8 +16,8 @@ const SauceConnectTunnel = require( 'sauce-connect-tunnel' );
 function testUnitScripts( cb ) {
   const params = minimist( process.argv.slice( 3 ) ) || {};
 
-  // If --specs=path/to/js/spec flag is added on the command-line,
-  // pass the value to mocha to test individual unit test files.
+  /* If --specs=path/to/js/spec flag is added on the command-line,
+     pass the value to mocha to test individual unit test files. */
   const specs = params.specs;
   let src = configTest.tests + '/unit_tests/';
 
@@ -44,10 +42,9 @@ function testUnitScripts( cb ) {
         } ) )
 
         /* TODO: we want this but it breaks because we don't have good coverage
-        .pipe( gulpIstanbul.enforceThresholds( {
-          thresholds: { global: 90 }
-        } ) )
-        */
+           .pipe( gulpIstanbul.enforceThresholds( {
+           thresholds: { global: 90 }
+           } ) ) */
         .on( 'end', cb );
     } );
 }
@@ -73,13 +70,13 @@ function testAcceptanceBrowser() {
   } );
 
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
-  .once( 'close', function( code ) {
-    if ( code ) {
-      gulpUtil.log( 'Tox tests exited with code ' + code );
-      process.exit( 1 );
-    }
-    gulpUtil.log( 'Tox tests done!' );
-  } );
+    .once( 'close', function( code ) {
+      if ( code ) {
+        gulpUtil.log( 'Tox tests exited with code ' + code );
+        process.exit( 1 );
+      }
+      gulpUtil.log( 'Tox tests done!' );
+    } );
 }
 
 /**
@@ -115,8 +112,8 @@ function _getProtractorParams( suite ) {
   let UNDEFINED;
   const commandLineParams = minimist( process.argv.slice( 2 ) );
   const configFile = commandLineParams.a11y ?
-                     'test/browser_tests/a11y_conf.js' :
-                     'test/browser_tests/conf.js';
+    'test/browser_tests/a11y_conf.js' :
+    'test/browser_tests/conf.js';
 
   if ( typeof suite === 'function' ) {
     suite = UNDEFINED;
@@ -128,8 +125,8 @@ function _getProtractorParams( suite ) {
   // If --sauce=false flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'sauce' );
 
-  // If --specs=path/to/js flag is added on the command-line,
-  // pass the value to protractor to override the default specs to run.
+  /* If --specs=path/to/js flag is added on the command-line,
+     pass the value to protractor to override the default specs to run. */
   params = _addCommandLineFlag( params, commandLineParams, 'specs' );
 
   // If --windowSize=w,h flag is added on the command-line.
@@ -147,8 +144,8 @@ function _getProtractorParams( suite ) {
   // If --tags=@tagName flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'tags' );
 
-  // If the --suite=suite1,suite2 flag is added on the command-line
-  // or, if not, if a suite is passed as part of the gulp task definition.
+  /* If the --suite=suite1,suite2 flag is added on the command-line
+     or, if not, if a suite is passed as part of the gulp task definition. */
   const suiteParam = { suite: commandLineParams.suite || suite };
   params = _addCommandLineFlag( params, suiteParam, 'suite' );
 
@@ -169,13 +166,13 @@ function _createSauceTunnel( ) {
     gulpUtil.colors.enabled = true;
     gulpUtil.log( gulpUtil.colors.red( ERROR_MSG ) );
 
-    return Promise.reject();
+    return Promise.reject( new Error( ERROR_MSG ) );
   }
 
   return new Promise( ( resolve, reject ) => {
     const sauceTunnel = new SauceConnectTunnel( SAUCE_USERNAME,
-                                                SAUCE_ACCESS_KEY,
-                                                SAUCE_TUNNEL_ID );
+      SAUCE_ACCESS_KEY,
+      SAUCE_TUNNEL_ID );
     const sauceTunnelParam = { sauceTunnel: sauceTunnel };
 
     sauceTunnel.on( 'verbose:debug', debugMsg => {
@@ -188,7 +185,7 @@ function _createSauceTunnel( ) {
       }
 
       if ( sauceTunnel.proc ) {
-        sauceTunnel.proc.on( 'exit', function( ) {
+        sauceTunnel.proc.on( 'exit', function() {
           reject( sauceTunnelParam );
         } );
       }
@@ -262,13 +259,13 @@ function spawnProtractor( ) {
 
   if ( gulpUtil.env.sauce === 'true' ) {
     _createSauceTunnel()
-    .then( _runProtractor )
-    .then( _handleSuccess )
-    .catch( _handleErrors );
+      .then( _runProtractor )
+      .then( _handleSuccess )
+      .catch( _handleErrors );
   } else {
     _runProtractor()
-    .then( _handleSuccess )
-    .catch( _handleErrors );
+      .then( _handleSuccess )
+      .catch( _handleErrors );
   }
 }
 

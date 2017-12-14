@@ -1,23 +1,20 @@
-'use strict';
-
-
-var BrowseFilterablePage = require(
+const BrowseFilterablePage = require(
   '../../page_objects/browse-filterable-page.js'
 );
-var SublandingFilterablePage = require(
+const SublandingFilterablePage = require(
   '../../page_objects/sublanding-filterable-page.js'
 );
-var { defineSupportCode } = require( 'cucumber' );
-var { expect } = require( 'chai' );
+const { defineSupportCode } = require( 'cucumber' );
+const { expect } = require( 'chai' );
 
-var browseFilterablePage = new BrowseFilterablePage();
-var sublandingFilterablePage = new SublandingFilterablePage();
-var filterablePages = {
+const browseFilterablePage = new BrowseFilterablePage();
+const sublandingFilterablePage = new SublandingFilterablePage();
+const filterablePages = {
   browse:     browseFilterablePage,
   sublanding: sublandingFilterablePage
 };
-var selectedFilterablePage;
-var UNDEFINED;
+let selectedFilterablePage;
+let UNDEFINED;
 
 
 defineSupportCode( function( { Then, When, After } ) {
@@ -43,18 +40,18 @@ defineSupportCode( function( { Then, When, After } ) {
     function( pagePosition, pageName ) {
 
       return selectedFilterablePage.getResultText( pagePosition )
-             .then( function( resultText ) {
-               expect( resultText ).to.contain( pageName );
-             } );
+        .then( function( resultText ) {
+          expect( resultText ).to.contain( pageName );
+        } );
     }
   );
 
   Then( /I should see (.*) page results/, function( numPageResults ) {
 
     return selectedFilterablePage.getResultsCount()
-           .then( function( resultsCount ) {
-             expect( resultsCount ).to.equal( numPageResults );
-           } );
+      .then( function( resultsCount ) {
+        expect( resultsCount ).to.equal( numPageResults );
+      } );
   } );
 
 } );

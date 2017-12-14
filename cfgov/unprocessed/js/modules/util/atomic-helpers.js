@@ -9,10 +9,9 @@
    - Atom
    ========================================================================= */
 
-'use strict';
 
-var dataHook = require( './data-hook' );
-var standardType = require( './standard-type' );
+const dataHook = require( './data-hook' );
+const standardType = require( './standard-type' );
 
 /**
  * @constant
@@ -23,7 +22,7 @@ var standardType = require( './standard-type' );
  * component won't get initialized a second time after it
  * has already been initialized.
  */
-var INIT_FLAG = standardType.STATE_PREFIX + 'atomic_init';
+const INIT_FLAG = standardType.STATE_PREFIX + 'atomic_init';
 
 /**
  * Check that a particular element passed into the constructor of
@@ -37,7 +36,7 @@ var INIT_FLAG = standardType.STATE_PREFIX + 'atomic_init';
  */
 function checkDom( element, baseClass ) {
   _verifyElementExists( element, baseClass );
-  var dom = _verifyClassExists( element, baseClass );
+  const dom = _verifyClassExists( element, baseClass );
 
   return dom;
 }
@@ -51,7 +50,7 @@ function checkDom( element, baseClass ) {
  */
 function _verifyElementExists( element, baseClass ) {
   if ( !element || !element.classList ) {
-    var msg = element + ' is not valid. ' +
+    const msg = element + ' is not valid. ' +
               'Check that element is a DOM node with class "' +
               baseClass + '"';
     throw new Error( msg );
@@ -68,10 +67,10 @@ function _verifyElementExists( element, baseClass ) {
  * @throws {Error} If baseClass was not found on the element.
  */
 function _verifyClassExists( element, baseClass ) {
-  var dom = element.classList.contains( baseClass ) ?
-            element : element.querySelector( '.' + baseClass );
+  const dom = element.classList.contains( baseClass ) ?
+    element : element.querySelector( '.' + baseClass );
   if ( !dom ) {
-    var msg = baseClass + ' not found on or in passed DOM node.';
+    const msg = baseClass + ' not found on or in passed DOM node.';
     throw new Error( msg );
   }
 
@@ -120,10 +119,10 @@ function destroyInitFlag( element ) {
  * @returns {Array} List of instances that were instantiated.
  */
 function instantiateAll( selector, Constructor ) {
-  var all = document.querySelectorAll( selector );
-  var inst;
-  var insts = [];
-  for ( var i = 0, len = all.length; i < len; i++ ) {
+  const all = document.querySelectorAll( selector );
+  let inst;
+  const insts = [];
+  for ( let i = 0, len = all.length; i < len; i++ ) {
     inst = new Constructor( all[i] );
     inst.init();
     insts.push( inst );
