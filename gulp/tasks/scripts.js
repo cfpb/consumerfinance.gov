@@ -194,13 +194,13 @@ function scriptsNemo() {
 }
 
 /**
- * Bundle Es5 shim scripts.
+ * Bundle ES5 shim scripts.
  * @returns {PassThrough} A source stream.
  */
-function scriptsEs5Shim() {
+function scriptsES5Shim() {
   return _processScript(
     webpackConfig.commonConf,
-    '/js/shims/es5-shim.js',
+    '/js/shims/es5-shim-sham.js',
     '/js/'
   );
 }
@@ -233,7 +233,7 @@ gulp.task( 'scripts:ondemand', [
   'scripts:ondemand:nonresponsive'
 ] );
 gulp.task( 'scripts:nemo', scriptsNemo );
-gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
+gulp.task( 'scripts:es5-shim', scriptsES5Shim );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
