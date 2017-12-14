@@ -5,6 +5,7 @@ from django.utils import timezone
 from wagtail.wagtailcore import blocks
 
 from v1.atomic_elements import organisms
+from v1.util.util import extended_strftime
 
 
 class OpenJobListingsMixin(object):
@@ -13,11 +14,9 @@ class OpenJobListingsMixin(object):
 
         # Hide any jobs that have not been published.
         qs = qs.filter(live=True)
-
         if value.get('hide_closed'):
             today = timezone.now().date()
             qs = qs.filter(open_date__lte=today, close_date__gte=today)
-
         return qs
 
 
@@ -77,4 +76,4 @@ class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
         return ', '.join(sorted(g.grade.grade for g in value.all()))
 
     def make_close_date_value(self, instance, value):
-        return value.strftime('%b %d, %Y').upper()
+        return extended_strftime(value, '%_m %_d, %Y')

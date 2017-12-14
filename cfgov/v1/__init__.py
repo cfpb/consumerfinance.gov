@@ -27,7 +27,7 @@ from flags.template_functions import flag_disabled, flag_enabled
 from processors.processors_common import fix_link
 from sheerlike import environment as sheerlike_environment
 from v1.routing import get_protected_url
-from v1.util.util import get_unique_id
+from v1.util.util import get_unique_id, extended_strftime
 
 
 default_app_config = 'v1.apps.V1AppConfig'
@@ -46,6 +46,11 @@ def strip_accents(value):
     nfkd_form = unicodedata.normalize('NFKD', unicode(value))
     only_ascii = nfkd_form.encode('ASCII', 'ignore')
     return only_ascii
+
+
+def date_formatter(dt, text_format=False):
+    format = '%_m %_d, %Y' if text_format else '%b %d, %Y'
+    return extended_strftime(dt, format)
 
 
 def environment(**options):
@@ -89,6 +94,7 @@ def environment(**options):
         'localtime': template_localtime,
         'pluralize': pluralize,
         'slugify': slugify,
+        'dateformatter': date_formatter
     })
     return env
 

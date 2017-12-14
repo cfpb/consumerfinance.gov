@@ -31,9 +31,9 @@
             <a class="m-list_link"
                href="{{ get_protected_url(job) }}">{{ job.title }}</a>
             <p class="a-date">
-                CLOSING
+                Closing
                 {% import 'macros/time.html' as time %}
-                {{ time.render(job.close_date, {'date': true}) }}
+                {{ time.render(job.close_date, {'date': true}, text_format=True) }}
             </p>
         </li>
         {% endfor %}

@@ -19,7 +19,7 @@
             <dt>Expiration Date:</dt>
             <dd>
                 {% if page.close_date %}
-                    {{ time.render(page.close_date, {'date':true}) }}
+                    {{ time.render(page.close_date, {'date': true}, text_format=True) }}
                 {% endif %}
             </dd>
             <dt>Region:</dt>
