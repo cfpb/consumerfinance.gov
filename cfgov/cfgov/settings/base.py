@@ -331,10 +331,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'tokenizer': 'lowercase',
                     'filter': ['haystack_edgengram']
                 },
-                'synonym' : {
+                'synonym_en' : {
                     'tokenizer' : 'whitespace',
-                    'filter' : ['synonym']
-                }
+                    'filter' : ['synonyms_en']
+                },
+                'synonym_es' : {
+                    'tokenizer' : 'whitespace',
+                    'filter' : ['synonyms_es']
+                },
             },
             'tokenizer': {
                 'haystack_ngram_tokenizer': {
@@ -347,7 +351,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15,
                     'side': 'front'
-                }
+                },
             },
             'filter': {
                 'haystack_ngram': {
@@ -360,12 +364,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15
                 },
-                'synonym': {
+                'synonyms_en': {
                     'type': 'synonym',
-                    'synonyms': [
-                        # 'auto,car,vehicle',
-                    ],
-                }
+                    'synonyms_path' : 'analysis/synonyms_en.txt'
+                },
+                'synonyms_es': {
+                    'type': 'synonym',
+                    'synonyms_path' : 'analysis/synonyms_es.txt'
+                },
             }
         }
     }
@@ -577,6 +583,11 @@ CSP_CONNECT_SRC = ("'self'",
 # conditions or an empty dict. If the conditions dict is empty the flag will
 # only be enabled if database conditions are added.
 FLAGS = {
+    # Ask CFPB search spelling correction support
+    # When enabled, spelling suggestions will appear in Ask CFPB search and
+    # will be used when the given search term provides no results.
+	'ASK_SEARCH_TYPOS': {},
+
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."

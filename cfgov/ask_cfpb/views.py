@@ -12,6 +12,8 @@ from wagtail.wagtailcore.models import Site
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
+from flags.state import flag_enabled
+
 from ask_cfpb.models import (
     Answer,
     AnswerPage,
@@ -111,15 +113,24 @@ def ask_search(request, language='en', as_json=False):
     _map = language_map[language]
     sqs = _map['query']
     clean_query = Clean(request.GET.get('q', ''))
-    qstring = clean_query.query_string.strip()
-    if not qstring:
-        raise Http404
+    clean_qstring = clean_query.query_string.strip()
+    qstring = clean_qstring
+    query_sqs = sqs.filter(content=clean_query)
+
+    # If we have no results from our query, let's try to suggest a better one
     suggestion = sqs.spelling_suggestion(qstring)
-    sqs = sqs.filter(content=clean_query)
+    if suggestion == qstring:
+        suggestion = None
+    elif (query_sqs.count() == 0 and
+            request.GET.get('correct', '1') == '1' and
+            flag_enabled('ASK_SEARCH_TYPOS', request=request)):
+        query_sqs = sqs.filter(content=suggestion)
+        qstring, suggestion = suggestion, qstring
 
     if as_json:
         results = {
-            'query': qstring,
+            'query': clean_qstring,
+            'result_query': qstring,
             'suggestion': suggestion,
             'results': [
                 {
@@ -127,7 +138,7 @@ def ask_search(request, language='en', as_json=False):
                     'url': result.url,
                     'text': result.text
                 }
-                for result in sqs
+                for result in query_sqs
             ]
         }
         json_results = json.dumps(results)
@@ -137,11 +148,12 @@ def ask_search(request, language='en', as_json=False):
             AnswerResultsPage,
             language=language,
             slug=_map['slug'])
-        page.query = clean_query
+        page.query = clean_qstring
+        page.result_query = qstring
         page.suggestion = suggestion
         page.answers = []
 
-        for result in sqs:
+        for result in query_sqs:
             page.answers.append((result.url, result.autocomplete, result.text))
         return page.serve(request)
 
