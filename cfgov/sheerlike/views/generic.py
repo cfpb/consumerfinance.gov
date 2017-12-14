@@ -1,9 +1,6 @@
 from django.http import Http404
 from django.template import TemplateDoesNotExist
 from django.views.generic.base import TemplateView
-from elasticsearch import TransportError
-
-from sheerlike.query import get_document
 
 
 class SheerTemplateView(TemplateView):
@@ -27,25 +24,6 @@ class SheerTemplateView(TemplateView):
             templates.append(self.default_template)
 
         return templates
-
-    def get_context_data(self, **kwargs):
-        context = super(
-            SheerTemplateView,
-            self).get_context_data(
-            **self.kwargs)
-        if 'doc_id' in kwargs:
-            doc_id = kwargs.pop('doc_id')
-            self.doc_id = doc_id
-            try:
-                document = get_document(doctype=self.doc_type,
-                                        docid=doc_id)
-                context[self.local_name] = document
-
-                return context
-            except TransportError:
-                pass
-
-        return context
 
     def render_to_response(self, context, **response_kwargs):
         response = super(
