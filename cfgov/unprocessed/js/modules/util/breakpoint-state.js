@@ -2,11 +2,9 @@
    Get Breakpoint State
    ========================================================================== */
 
-'use strict';
-
-var _breakpointsConfig = require( '../../config/breakpoints-config' );
-var _getViewportDimensions = require( './get-viewport-dimensions' )
-                             .getViewportDimensions;
+const _breakpointsConfig = require( '../../config/breakpoints-config' );
+const _getViewportDimensions = require( './get-viewport-dimensions' )
+  .getViewportDimensions;
 
 /**
  * @param {Object} breakpointRange - Object containing breakpoint constants.
@@ -14,8 +12,8 @@ var _getViewportDimensions = require( './get-viewport-dimensions' )
  * @returns {boolean} Whether the passed width is within a breakpoint range.
  */
 function _inBreakpointRange( breakpointRange, width ) {
-  var min = breakpointRange.min || 0;
-  var max = breakpointRange.max || Number.POSITIVE_INFINITY;
+  const min = breakpointRange.min || 0;
+  const max = breakpointRange.max || Number.POSITIVE_INFINITY;
 
   return min <= width && width <= max;
 }
@@ -26,11 +24,12 @@ function _inBreakpointRange( breakpointRange, width ) {
  *   isBpXS, isBpSM, isBpMED, isBpLG, isBpXL properties.
  */
 function get( width ) {
-  var breakpointState = {};
-  var breakpointKey;
+  const breakpointState = {};
+  let breakpointKey;
   width = width || _getViewportDimensions().width;
 
-  for ( var rangeKey in _breakpointsConfig ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
+  // eslint-disable-next-line guard-for-in
+  for ( const rangeKey in _breakpointsConfig ) {
     breakpointKey = 'is' + rangeKey.charAt( 0 ).toUpperCase() +
                     rangeKey.slice( 1 );
     breakpointState[breakpointKey] =
@@ -45,8 +44,8 @@ function get( width ) {
  * @returns {boolean} True if in the desktop view, otherwise false.
  */
 function isInDesktop() {
-  var response = false;
-  var currentBreakpoint = get();
+  let response = false;
+  const currentBreakpoint = get();
   if ( currentBreakpoint.isBpMED ||
        currentBreakpoint.isBpLG ||
        currentBreakpoint.isBpXL ) {

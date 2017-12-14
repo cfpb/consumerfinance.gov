@@ -1,5 +1,3 @@
-'use strict';
-
 const utils = require( '../utils' );
 
 const defaultActionCreators = () => {
@@ -33,18 +31,18 @@ const defaultActionCreators = () => {
       type: 'CLEAR_GEO'
     } ),
 
-   /**
-    * updateChart - Action dispatched to redraw the chart/map
-    *
-    * @param {String} geoId   ID of location
-    * @param {String} geoName Name of location
-    * @param {String} geoType Type of location (state, metro, county)
-    * @param {Boolean} includeComparison Include national comparison?
-    *
-    * @returns {Object} Action to update chart
-    */
+    /**
+     * updateChart - Action dispatched to redraw the chart/map
+     *
+     * @param {String} geoId   ID of location
+     * @param {String} geoName Name of location
+     * @param {String} geoType Type of location (state, metro, county)
+     * @param {Boolean} includeComparison Include national comparison?
+     *
+     * @returns {Object} Action to update chart
+     */
     updateChart: ( geoId, geoName, geoType, includeComparison ) => {
-      var action = {
+      const action = {
         type: 'UPDATE_CHART',
         geo: {
           id: geoId,
@@ -58,15 +56,13 @@ const defaultActionCreators = () => {
       return action;
     },
 
-  /**
-   * updateNational - Action dispatched when the national comparison is toggled
-   *
-   * @param {Boolean} includeComparison Include national comparison?
-   *
-   * @returns {Object} Action to include the national data in chart
-   */
+    /**
+     * updateNational - Action dispatched when the national comparison is toggled
+     * @param {Boolean} includeComparison Include national comparison?
+     * @returns {Object} Action to include the national data in chart
+     */
     updateNational: includeComparison => {
-      var action = {
+      const action = {
         type: 'UPDATE_CHART',
         includeComparison
       };
@@ -134,7 +130,7 @@ const defaultActionCreators = () => {
           }
         } );
         // Alphabetical order
-        nonMetros = nonMetros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+        nonMetros = nonMetros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
         dispatch( actions.setNonMetros( nonMetros ) );
         dispatch( actions.setGeo( nonMetros[currStateIndex].fips, nonMetros[currStateIndex].name, 'non-metro' ) );
         dispatch( actions.updateChart( nonMetros[currStateIndex].fips, nonMetros[currStateIndex].name, 'non-metro', includeComparison ) );

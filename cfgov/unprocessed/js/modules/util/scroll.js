@@ -1,7 +1,6 @@
-'use strict';
-var assign = require( './assign' ).assign;
+const assign = require( './assign' ).assign;
 
-var _requestAnimationFrame = window.requestAnimationFrame ||
+const _requestAnimationFrame = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
     function( callback ) {
@@ -29,7 +28,8 @@ function _easeInOutQuad( currentTime, startPosition, distance, duration ) {
   } else {
     updatedTime--;
     // eslint-disable-next-line no-mixed-operators
-    distanceDelta = -distance / 2 * ( updatedTime * ( updatedTime - 2 ) - 1 );
+    distanceDelta =
+      -distance / 2 * ( updatedTime * ( updatedTime - 2 ) - 1 );
   }
   return distanceDelta + startPosition;
 }
@@ -41,7 +41,7 @@ function _easeInOutQuad( currentTime, startPosition, distance, duration ) {
  *
  */
 function _calculateDuration( distance ) {
-  var duration = Math.abs( distance ) / 2;
+  const duration = Math.abs( distance ) / 2;
   return Math.min( Math.max( duration, 200 ), 1000 ) || 500;
 }
 
@@ -49,16 +49,16 @@ function _calculateDuration( distance ) {
  * Animated scroll to a location in page.
  * @param {Number} to The y-coordinate to scroll to
  * @param {Object} opts Optional parameters, including:
- * 		duration: Duration of the scroll animation
- * 		callback: To be called when scroll is complete
+ *    duration: Duration of the scroll animation
+ *    callback: To be called when scroll is complete
  *
  */
 function scrollTo( to, opts ) {
   opts = opts && typeof opts === 'object' ? opts : {};
-  var startPosition = window.pageYOffset;
-  var distance = to - startPosition;
-  var duration = opts.duration || _calculateDuration( distance );
-  var startTime;
+  const startPosition = window.pageYOffset;
+  const distance = to - startPosition;
+  const duration = opts.duration || _calculateDuration( distance );
+  let startTime;
 
   /**
    * Scroll the window for the duration
@@ -68,8 +68,9 @@ function scrollTo( to, opts ) {
    */
   function scroll( timestamp ) {
     startTime = startTime || timestamp;
-    var elapsed = timestamp - startTime;
-    var next = _easeInOutQuad( elapsed, startPosition, distance, duration );
+    const elapsed = timestamp - startTime;
+    const next =
+      _easeInOutQuad( elapsed, startPosition, distance, duration );
     window.scroll( 0, next );
     if ( elapsed < duration ) {
       _requestAnimationFrame( scroll );
@@ -88,17 +89,18 @@ function scrollTo( to, opts ) {
  * scrolls it into view.
  * @param {HTMLNode} elem The DOM element to check for
  * @param {Object} opts Optional parameters, including:
- * 	  offset: Distance from top of screen of element
-        when scroll is complete
- *    callback: function called when scroll is complete
+ *  offset: Distance from top of screen of element when scroll is complete.
+ *  callback: function called when scroll is complete.
  *
  */
 function scrollIntoView( elem, opts ) {
-  var defaults = { offset: 15 };
+  const defaults = { offset: 15 };
   opts = assign( defaults, opts );
   if ( !elementInView( elem, true ) ) {
-    var elementTop = elem.getBoundingClientRect().top;
-    var to = Math.max( window.pageYOffset + elementTop - opts.offset, 0 );
+    const elementTop = elem.getBoundingClientRect().top;
+    const to = Math.max(
+      window.pageYOffset + elementTop - opts.offset, 0
+    );
     scrollTo( to, opts );
   } else if ( opts.callback && typeof opts.callback === 'function' ) {
     opts.callback();
@@ -112,12 +114,12 @@ function scrollIntoView( elem, opts ) {
  * @returns {Boolean} Whether the element is in the viewport.
  */
 function elementInView( elem, strict ) {
-  var windowHeight = window.innerHeight;
-  var windowTop = window.pageYOffset;
-  var windowBottom = windowTop + windowHeight;
-  var elementHeight = elem.offsetHeight;
-  var elementTop = elem.getBoundingClientRect().top + windowTop;
-  var elementBottom = elementTop + elementHeight;
+  const windowHeight = window.innerHeight;
+  const windowTop = window.pageYOffset;
+  const windowBottom = windowTop + windowHeight;
+  const elementHeight = elem.offsetHeight;
+  const elementTop = elem.getBoundingClientRect().top + windowTop;
+  const elementBottom = elementTop + elementHeight;
 
   if ( strict ) {
     return elementTop >= windowTop && elementBottom <= windowBottom;
@@ -133,4 +135,3 @@ module.exports = {
 };
 
 window.scrollToElement = scrollTo;
-

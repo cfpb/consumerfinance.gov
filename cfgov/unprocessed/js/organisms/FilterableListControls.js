@@ -1,15 +1,13 @@
-'use strict';
-
 // Required modules.
-var Analytics = require( '../modules/Analytics' );
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var ERROR_MESSAGES = require( '../config/error-messages-config' );
-var Expandable = require( '../organisms/Expandable' );
-var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
-var Multiselect = require( '../molecules/Multiselect' );
-var Notification = require( '../molecules/Notification' );
-var standardType = require( '../modules/util/standard-type' );
-var validators = require( '../modules/util/validators' );
+const Analytics = require( '../modules/Analytics' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const ERROR_MESSAGES = require( '../config/error-messages-config' );
+const Expandable = require( '../organisms/Expandable' );
+const getClosestElement = require( '../modules/util/dom-traverse' ).closest;
+const Multiselect = require( '../molecules/Multiselect' );
+const Notification = require( '../molecules/Notification' );
+const standardType = require( '../modules/util/standard-type' );
+const validators = require( '../modules/util/validators' );
 
 /**
  * FilterableListControls
@@ -22,14 +20,14 @@ var validators = require( '../modules/util/validators' );
  * @returns {FilterableListControls} An instance.
  */
 function FilterableListControls( element ) {
-  var BASE_CLASS = 'o-filterable-list-controls';
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _expandable;
-  var _form = _dom.querySelector( 'form' );
-  var _notification;
-  var _fieldGroups;
+  const BASE_CLASS = 'o-filterable-list-controls';
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  let _expandable;
+  const _form = _dom.querySelector( 'form' );
+  let _notification;
+  let _fieldGroups;
 
-  var _defaults = {
+  const _defaults = {
     ignoreFieldTypes: [
       'hidden',
       'button',
@@ -52,16 +50,16 @@ function FilterableListControls( element ) {
       return standardType.UNDEFINED;
     }
 
-    // instantiate multiselects before their containing expandable
-    // so height of any 'selected choice' buttons is included when
-    // expandable height is calculated initially
-    var multiSelects = atomicHelpers.instantiateAll(
+    /* instantiate multiselects before their containing expandable
+       so height of any 'selected choice' buttons is included when
+       expandable height is calculated initially */
+    const multiSelects = atomicHelpers.instantiateAll(
       'select[multiple]',
       Multiselect
     );
 
-    // TODO: FilterableListControls should use expandable
-    //       behavior (FlyoutMenu), not an expandable directly.
+    /* TODO: FilterableListControls should use expandable
+       behavior (FlyoutMenu), not an expandable directly. */
     _expandable = new Expandable( _dom );
     _expandable.init();
 
@@ -89,11 +87,11 @@ function FilterableListControls( element ) {
    * Initialize FilterableListControls events.
    */
   function _initEvents() {
-    var labelDom = _dom.querySelector( '.o-expandable_label' );
-    var label;
-    var getDataLayerOptions = Analytics.getDataLayerOptions;
-    var dataLayerArray = [];
-    var cachedFields = {};
+    const labelDom = _dom.querySelector( '.o-expandable_label' );
+    let label;
+    const getDataLayerOptions = Analytics.getDataLayerOptions;
+    let dataLayerArray = [];
+    const cachedFields = {};
 
     if ( labelDom ) {
       label = labelDom.textContent.trim();
@@ -108,8 +106,8 @@ function FilterableListControls( element ) {
     } );
 
     _form.addEventListener( 'change', function sendEvent( event ) {
-      var action;
-      var field = event.target;
+      let action;
+      const field = event.target;
 
       if ( !field ) {
         return;
@@ -124,7 +122,7 @@ function FilterableListControls( element ) {
         dataLayerArray.push( cachedFields[key] );
       } );
       dataLayerArray.push( getDataLayerOptions( 'Filter:submit', label,
-                           '', _formSubmitted ) );
+        '', _formSubmitted ) );
       Analytics.sendEvents( dataLayerArray );
       dataLayerArray = [];
     } );
@@ -141,11 +139,11 @@ function FilterableListControls( element ) {
    * Handle form sumbmission and showing error notification.
    */
   function _formSubmitted( ) {
-    var validatedFields = _validateFields( [].slice.call( _form.elements ) );
+    const validatedFields = _validateFields( [].slice.call( _form.elements ) );
 
     if ( validatedFields.invalid.length > 0 ) {
       _setNotification( _notification.ERROR,
-                        _buildErrorMessage( validatedFields.invalid ) );
+        _buildErrorMessage( validatedFields.invalid ) );
     } else {
       _form.submit();
     }
@@ -157,7 +155,7 @@ function FilterableListControls( element ) {
    * @returns {string} A text to use for the error notification.
    */
   function _buildErrorMessage( fields ) {
-    var msg = '';
+    let msg = '';
     fields.forEach( function( validation ) {
       msg += validation.label + ' ' + validation.msg + '</br>';
     } );
@@ -173,8 +171,8 @@ function FilterableListControls( element ) {
    * @returns {string} The label of the field.
    */
   function _getLabelText( field, selector, isInGroup ) {
-    var labelText = '';
-    var labelDom;
+    let labelText = '';
+    let labelDom;
 
     if ( isInGroup && !selector ) {
       labelDom = getClosestElement( field, 'fieldset' );
@@ -211,15 +209,15 @@ function FilterableListControls( element ) {
    * @returns {boolean} True if the field should be validated, false otherwise.
    */
   function shouldValidateField( field, type, isInGroup ) {
-    var isDisabled = field.getAttribute( 'disabled' ) !== null;
-    var isIgnoreType = _defaults.ignoreFieldTypes.indexOf( type ) > -1;
-    var shouldValidate = isDisabled === false && isIgnoreType === false;
+    const isDisabled = field.getAttribute( 'disabled' ) !== null;
+    const isIgnoreType = _defaults.ignoreFieldTypes.indexOf( type ) > -1;
+    let shouldValidate = isDisabled === false && isIgnoreType === false;
 
     if ( shouldValidate && isInGroup ) {
-      var name = field.getAttribute( 'data-group' ) ||
-                 field.getAttribute( 'name' );
-      var isRequired = field.getAttribute( 'data-required' ) !== null;
-      var groupExists = _fieldGroups.indexOf( name ) > -1;
+      const name = field.getAttribute( 'data-group' ) ||
+                   field.getAttribute( 'name' );
+      const isRequired = field.getAttribute( 'data-required' ) !== null;
+      const groupExists = _fieldGroups.indexOf( name ) > -1;
       if ( groupExists || isRequired === false ) {
         shouldValidate = false;
       } else {
@@ -237,26 +235,26 @@ function FilterableListControls( element ) {
    *   The tested list of fields broken into valid and invalid blocks.
    */
   function _validateFields( fields ) {
-    var validatedFields = {
+    const validatedFields = {
       invalid: [],
       valid:   []
     };
-    var validatedField;
+    let validatedField;
 
     _fieldGroups = [];
 
     fields.forEach( function loopFields( field ) {
-      var fieldIsValid = true;
-      var type = field.getAttribute( 'data-type' ) ||
-                 field.getAttribute( 'type' ) ||
-                 field.tagName.toLowerCase();
-      var isGroupField = _defaults.groupFieldTypes.indexOf( type ) > -1;
+      let fieldIsValid = true;
+      const type = field.getAttribute( 'data-type' ) ||
+                   field.getAttribute( 'type' ) ||
+                   field.tagName.toLowerCase();
+      const isGroupField = _defaults.groupFieldTypes.indexOf( type ) > -1;
 
       if ( shouldValidateField( field, type, isGroupField ) === false ) return;
 
       validatedField = _validateField( field, type, isGroupField );
 
-      for ( var prop in validatedField.status ) {
+      for ( const prop in validatedField.status ) {
         if ( validatedField.status[prop] === false ) fieldIsValid = false;
       }
 
@@ -278,20 +276,20 @@ function FilterableListControls( element ) {
    * @returns {Object} An object with a status and message properties.
    */
   function _validateField( field, type, isInGroup ) {
-    var fieldset;
-    var validation = {
-      field:      field,
+    let fieldset;
+    const validation = {
+      field:  field,
       // TODO: Change layout of field groups to use fieldset.
-      label:      _getLabelText( field, '', false || isInGroup ),
-      msg:        '',
-      status:     null
+      label:  _getLabelText( field, '', false || isInGroup ),
+      msg:    '',
+      status: null
     };
 
     if ( isInGroup ) {
-      var groupName = field.getAttribute( 'data-group' ) ||
-                      field.getAttribute( 'name' );
-      var groupSelector = '[name=' + groupName + ']:checked,' +
-                          '[data-group=' + groupName + ']:checked';
+      const groupName = field.getAttribute( 'data-group' ) ||
+                        field.getAttribute( 'name' );
+      const groupSelector = '[name=' + groupName + ']:checked,' +
+                            '[data-group=' + groupName + ']:checked';
       fieldset = _form.querySelectorAll( groupSelector ) || [];
     }
 

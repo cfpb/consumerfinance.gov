@@ -1,6 +1,5 @@
 /* eslint no-unused-vars: "off" */
 
-'use strict';
 
 const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 

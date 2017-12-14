@@ -1,9 +1,7 @@
-'use strict';
-
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var footerButton = require( '../modules/footer-button' );
-var standardType = require( '../modules/util/standard-type' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const footerButton = require( '../modules/footer-button' );
+const standardType = require( '../modules/util/standard-type' );
 
 /**
  * Footer
@@ -17,9 +15,9 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function Footer( element ) {
 
-  var BASE_CLASS = 'o-footer';
+  const BASE_CLASS = 'o-footer';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   /**
    * @returns {Footer|undefined} An instance,

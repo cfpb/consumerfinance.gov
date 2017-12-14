@@ -1,17 +1,16 @@
 /* ==========================================================================
-    Base Video Player Class
+   Base Video Player Class
    ========================================================================== */
 
-'use strict';
 
-var _assign = require( './util/assign' ).assign;
-var _noopFunct = require( './util/standard-type' ).noopFunct;
-var _jsLoader = require( './util/js-loader' );
-var _dataSet = require( './util/data-set' ).dataSet;
+const _assign = require( './util/assign' ).assign;
+const _noopFunct = require( './util/standard-type' ).noopFunct;
+const _jsLoader = require( './util/js-loader' );
+const _dataSet = require( './util/data-set' ).dataSet;
 
-var DOM_INVALID = require( '../config/error-messages-config' ).DOM.INVALID;
+const DOM_INVALID = require( '../config/error-messages-config' ).DOM.INVALID;
 
-var CLASSES = Object.freeze( {
+const CLASSES = Object.freeze( {
   VIDEO_PLAYER_SELECTOR:     '.video-player',
   VIDEO_PLAYING_STATE:       'video-playing',
   IMAGE_SELECTOR:            '.video-player_image',
@@ -23,11 +22,11 @@ var CLASSES = Object.freeze( {
 
 
 // Private properties.
-var _isIframeLoaded = false;
-var _isIframeLoading = false;
-var _isVideoPlaying = false;
-var _isVideoStopped = true;
-var _this;
+let _isIframeLoaded = false;
+let _isIframeLoading = false;
+let _isVideoPlaying = false;
+let _isVideoStopped = true;
+let _this;
 
 /**
  * VideoPlayer
@@ -52,16 +51,16 @@ function VideoPlayer( element, options ) {
 // Static Methods
 
 /**
-* Function used to extend Base Video Player class.
-* @param {object} attributes - attributes assigned to a prototype.
-* @returns {VideoPlayer} A class.
-*/
+ * Function used to extend Base Video Player class.
+ * @param {object} attributes - attributes assigned to a prototype.
+ * @returns {VideoPlayer} A class.
+ */
 VideoPlayer.extend = function extend( attributes ) {
 
   /**
-  * Function used to create child Video Player class.
-  * @returns {VideoPlayer} An instance.
-  */
+   * Function used to create child Video Player class.
+   * @returns {VideoPlayer} An instance.
+   */
   function child() {
     this._super = VideoPlayer.prototype;
     return VideoPlayer.apply( this, arguments );
@@ -74,18 +73,18 @@ VideoPlayer.extend = function extend( attributes ) {
 };
 
 /**
-* Static method used to initialize class.
-* @param {string} selector - attributes assigned to a prototype.
-* @returns {VideoPlayer} An instance.
-*/
+ * Static method used to initialize class.
+ * @param {string} selector - attributes assigned to a prototype.
+ * @returns {VideoPlayer} An instance.
+ */
 VideoPlayer.init = function init( selector ) {
   selector = selector ||
   '[class*="=' + CLASSES.VIDEO_PLAYER_SELECTOR + '"]:' +
   'not([class*="' + CLASSES.VIDEO_PLAYER_SELECTOR + '"__"])';
 
   // There should only be one video player on the page.
-  var videoPlayer;
-  var videoPlayerElement = document.querySelector( selector );
+  let videoPlayer;
+  const videoPlayerElement = document.querySelector( selector );
   if ( videoPlayerElement ) {
     videoPlayer = new this( videoPlayerElement );
   }
@@ -96,13 +95,13 @@ VideoPlayer.init = function init( selector ) {
 // Private Methods.
 
 /**
-* Function used to attach the video iframe.
-* @throws Will throw an error if no iframe element is found.
-* @returns {HTMLNode} A dom element.
-*/
+ * Function used to attach the video iframe.
+ * @throws Will throw an error if no iframe element is found.
+ * @returns {HTMLNode} A dom element.
+ */
 function _attachIFrame() {
-  var iFrameElement = _this.childElements.iFrame;
-  var iFrameContainerElement = _this.childElements.iFrameContainer;
+  let iFrameElement = _this.childElements.iFrame;
+  const iFrameContainerElement = _this.childElements.iFrameContainer;
 
   if ( _isIframeLoaded === false && _isIframeLoading === false &&
     iFrameElement === null ) {
@@ -121,15 +120,15 @@ function _attachIFrame() {
 }
 
 /**
-* Function used to create a dom element.
-* @param {string} tagName - name of the type of dom element to create.
-* @param {obect} properties - attributes used to assign to the element.
-* @returns {HTMLNode} A dom element.
-*/
+ * Function used to create a dom element.
+ * @param {string} tagName - name of the type of dom element to create.
+ * @param {obect} properties - attributes used to assign to the element.
+ * @returns {HTMLNode} A dom element.
+ */
 function _createElement( tagName, properties ) {
-  var createdElement = document.createElement( tagName );
-  var property;
-  var hasOwnProperty = Object.hasOwnProperty.bind( properties );
+  const createdElement = document.createElement( tagName );
+  let property;
+  const hasOwnProperty = Object.hasOwnProperty.bind( properties );
 
   for ( property in properties || {} ) {
     if ( hasOwnProperty( property ) ) {
@@ -141,11 +140,11 @@ function _createElement( tagName, properties ) {
 }
 
 /**
-* Function used to create a dom element.
-* @param {HTMLNode} domElement - dom selector
-* @param {string} msg - used for Error display.
-* @returns {HTMLNode} A dom element.
-*/
+ * Function used to create a dom element.
+ * @param {HTMLNode} domElement - dom selector
+ * @param {string} msg - used for Error display.
+ * @returns {HTMLNode} A dom element.
+ */
 function _ensureElement( domElement, msg ) {
   if ( domElement instanceof HTMLElement === false ) {
     msg = msg || DOM_INVALID;
@@ -156,21 +155,21 @@ function _ensureElement( domElement, msg ) {
 }
 
 /**
-* Function used to initialize events.
-*/
+ * Function used to initialize events.
+ */
 function _initEvents() {
-  var playAction = _onAction.bind( _this, 'play' );
-  var stopAction = _onAction.bind( _this, 'stop' );
+  const playAction = _onAction.bind( _this, 'play' );
+  const stopAction = _onAction.bind( _this, 'stop' );
 
   _this.childElements.playBtn.addEventListener( 'click', playAction );
   _this.childElements.closeBtn.addEventListener( 'click', stopAction );
 }
 
 /**
-* Function used to handle video player actions.
-* @param {string} actionType - name of instance method.
-* @param {Event} event - dom event.
-*/
+ * Function used to handle video player actions.
+ * @param {string} actionType - name of instance method.
+ * @param {Event} event - dom event.
+ */
 function _onAction( actionType, event ) {
   event.preventDefault();
   event.stopPropagation();
@@ -178,14 +177,14 @@ function _onAction( actionType, event ) {
 }
 
 /**
-* Function used to set cached child elements.
-* @param {object} elements - object with child element names.
-* @returns {HTMLNode} An array of dom elements.
-*/
+ * Function used to set cached child elements.
+ * @param {object} elements - object with child element names.
+ * @returns {HTMLNode} An array of dom elements.
+ */
 function _setChildElements( elements ) {
-  var elementName;
-  var hasOwnProperty = Object.hasOwnProperty.bind( _this.childElements );
-  var querySelector = _this.baseElement.querySelector
+  let elementName;
+  const hasOwnProperty = Object.hasOwnProperty.bind( _this.childElements );
+  const querySelector = _this.baseElement.querySelector
     .bind( _this.baseElement );
 
   for ( elementName in elements ) {
@@ -200,7 +199,7 @@ function _setChildElements( elements ) {
 
 // Public methods.
 
-var API = {
+const API = {
 
   baseElement: null,
 
@@ -213,23 +212,23 @@ var API = {
   },
 
   /**
-  * Function used to set cached child elements.
-  */
+   * Function used to set cached child elements.
+   */
   destroy: function destroy() {
     this.childElements.playBtn.removeEventListener( 'click', this.play );
     this.childElements.closeBtn.removeEventListener( 'click', this.stop );
   },
 
   /**
-  * Function used to embed a script.
-  * @param {string} script - url of script to load.
-  * @param {function} callback - function called when script is loaded.
-  */
+   * Function used to embed a script.
+   * @param {string} script - url of script to load.
+   * @param {function} callback - function called when script is loaded.
+   */
   embedScript: function embedScript( script, callback ) {
 
     /**
-    * Function called when script is loaded.
-    */
+     * Function called when script is loaded.
+     */
     function onScriptLoad() { _this.state.isScriptLoading = false; }
     this.state.isScriptLoading = true;
     _jsLoader.loadScript( script || this.SCRIPT_API, callback || onScriptLoad );
@@ -272,8 +271,8 @@ var API = {
   },
 
   /**
-  * Function used to play the video player.
-  */
+   * Function used to play the video player.
+   */
   play: function play( ) {
     if ( _isIframeLoaded === false ) {
       _attachIFrame();
@@ -283,8 +282,8 @@ var API = {
   },
 
   /**
-  * Function used to stop the video player.
-  */
+   * Function used to stop the video player.
+   */
   stop: function stop( ) {
     this.baseElement.classList.remove( CLASSES.VIDEO_PLAYING_STATE );
     this.state.setIsVideoStopped( true );

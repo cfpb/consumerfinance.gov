@@ -1,5 +1,3 @@
-'use strict';
-
 const browserSync = require( 'browser-sync' );
 const envvars = require( '../../config/environment' ).envvars;
 const gulp = require( 'gulp' );
