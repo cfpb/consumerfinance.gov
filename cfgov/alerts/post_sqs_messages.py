@@ -87,13 +87,20 @@ def process_sqs_message(message, github_alert, mattermost_alert):
         title=title,
         body=body
     )
+
     if mattermost_alert:
-        mattermost_alert.post(
-            text='Alert: {}. Github issue at {}'.format(
+        try:
+            mattermost_alert.post(text='Alert: {}. Github issue at {}'.format(
                 body,
                 issue.html_url
-            )
-        )
+            ))
+        except Exception:
+            # Mattermost failures should be considered non-fatal, as the alert
+            # has already been logged to GitHub. Failure here would mean that
+            # the alert wouldn't get popped off of the SQS queue, which would
+            # result in multiple repeated postings of the same alert to GH for
+            # as long as MM is down.
+            logger.exception('Failed to post message to Mattermost.')
 
 
 if __name__ == '__main__':
