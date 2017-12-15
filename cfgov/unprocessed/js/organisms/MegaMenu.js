@@ -170,8 +170,8 @@ function MegaMenu( element ) {
    */
   function _resizeHandler() {
 
-    // If in IE, don't support mobile responsive view.
-    // lt-ie10 class is added by modernizr.
+    /* If in Internet Explorer 9-, don't support mobile responsive view.
+       lt-ie10 class is added by modernizr. */
     const htmlEl = document.body.parentElement;
     let onlyDesktop = false;
     if ( htmlEl.classList.contains( 'lt-ie10' ) ) {
