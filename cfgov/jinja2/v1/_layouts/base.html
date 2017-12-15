@@ -167,33 +167,23 @@
     <script src="{{ static('js/modernizr.min.js') }}"></script>
 
     {#
-      ECMAScript 5 (ES5) shim/sham is used for BlackBerry 7.
-      Internet Explorer 8 (IE8) does not support ES5 features,
-      but we turn JavaScript off for the most part in IE8.
-      Internet Explorer 9 (IE9) does not support strict mode,
-      but otherwise supports ES5 features. Therefore, we can
-      ignore this script for all IE browsers.
+      Turn off JS for browsers that don't support es5 features (e.g. IE8)
+      by reversing no-js/js class change made by modernizr.
     #}
-    <!--[if !IE]><!-->
     <script>
-    //<![CDATA[
-        if ( window.Modernizr && window.Modernizr.es5 === false ) {
-            var script = document.createElement( 'script' );
-            script.type = 'text/javascript';
-            script.src = '{{ static('js/es5-shim-sham.js') }}';
-            document.getElementsByTagName( 'head' )[0].appendChild( script );
+        var modernizr = window.Modernizr;
+        if ( !( typeof modernizr !== 'undefined' &&
+             modernizr.es5array &&
+             modernizr.es5date &&
+             modernizr.es5function &&
+             modernizr.es5object &&
+             modernizr.es5string &&
+             modernizr.es5syntax &&
+             modernizr.es5undefined ) ) {
+          var docElement = document.documentElement;
+          docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
         }
-    //]]>
     </script>
-    <!--<![endif]-->
-
-    <!--[if lt IE 9]>
-    {# If in IE8 reverse no-js/js class change made by modernizr. #}
-    <script>
-        var docElement = document.documentElement;
-        docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-    </script>
-    <![endif]-->
 
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
 </head>

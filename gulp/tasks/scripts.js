@@ -194,18 +194,6 @@ function scriptsNemo() {
 }
 
 /**
- * Bundle ES5 shim scripts.
- * @returns {PassThrough} A source stream.
- */
-function scriptsES5Shim() {
-  return _processScript(
-    webpackConfig.commonConf,
-    '/js/shims/es5-shim-sham.js',
-    '/js/'
-  );
-}
-
-/**
  * Bundle scripts in /js/routes/apps/owning-a-home/
  * and factor out common modules into common.js.
  * @returns {PassThrough} A source stream.
@@ -233,7 +221,6 @@ gulp.task( 'scripts:ondemand', [
   'scripts:ondemand:nonresponsive'
 ] );
 gulp.task( 'scripts:nemo', scriptsNemo );
-gulp.task( 'scripts:es5-shim', scriptsES5Shim );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
@@ -242,6 +229,5 @@ gulp.task( 'scripts', [
   'scripts:ie',
   'scripts:external',
   'scripts:nemo',
-  'scripts:es5-shim',
   'scripts:spanish'
 ] );
