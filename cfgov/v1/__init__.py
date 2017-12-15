@@ -94,11 +94,11 @@ def environment(**options):
     })
 
     env.filters.update({
+        'dateformatter': date_formatter,
         'linebreaksbr': linebreaksbr,
         'localtime': template_localtime,
         'pluralize': pluralize,
         'slugify': slugify,
-        'dateformatter': date_formatter
     })
     env.fragment_cache = caches['post_preview']
     return env

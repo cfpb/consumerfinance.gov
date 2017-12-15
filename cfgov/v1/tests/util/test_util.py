@@ -1,10 +1,10 @@
+from datetime import date
 import json
 
 import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
 from wagtail.wagtailcore.models import PageRevision
-from datetime import date
 
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages import helpers
@@ -40,5 +40,3 @@ class TestExtendedStrftime(TestCase):
         test_date=date(2018, 9, 5)
         formatted_date = util.extended_strftime(test_date, '%b %d, %Y')
         self.assertEqual(formatted_date, 'Sep 05, 2018')
-
-            
