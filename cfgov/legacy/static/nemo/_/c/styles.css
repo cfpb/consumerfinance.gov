@@ -161,9 +161,6 @@ body {
 .no-js .split {
 	width: auto;
 }
-.no-js .logo__no-js {
-	margin-top: 0.5em;
-}
 .no-js .lang {
 	top: 2.5em;
 }
@@ -384,15 +381,6 @@ tr.alt {
 		margin-top: 0.5em;
 	}
 
-	.logo__js {
-		display: none;
-	}
-	.js .logo__js {
-		display: block;
-	}
-	.js .logo__no-js {
-		display: none;
-	}
 
 #header > div {
 	width: 976px;
