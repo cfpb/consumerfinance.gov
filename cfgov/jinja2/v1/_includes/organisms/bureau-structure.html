@@ -322,7 +322,8 @@
     <p>
         Last updated:
         {# Displays the date in the format: MMM. DD, YYYY #}
-        {{'{dt:%b}. {dt.day}, {dt.year}'.format(dt = value.last_updated_date)}}
+        {% import 'macros/time.html' as time %}
+        {{ time.render_date_no_markup(value.last_updated_date) }}
     </p>
     {% endif %}
     <div class="o-bureau-structure_chart">

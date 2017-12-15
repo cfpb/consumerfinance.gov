@@ -2,6 +2,7 @@
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
 {% import 'macros/util/format/datetime.html' as dt %}
+{% import 'macros/time.html' as time %}
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -38,7 +39,10 @@
                 block__flush-top
                 block__sub">
         {% if last_edited %}
-        <time datetime='{{ last_edited }}' pubdate class="answer-edited-date">updated {{ dt.format_date(last_edited) }}</time>
+        <time datetime='{{ last_edited }}' pubdate class="answer-edited-date">
+          {# Displays the date in the format: MMM. DD, YYYY #}
+          updated {{ time.render_date_no_markup(last_edited) }}
+        </time>
         {% endif %}
 
         <h2>{{ page.question | striptags }}</h2>
@@ -97,7 +101,6 @@
 
     </div>
     {{ ask_search_bar.render( 'left' ) }}
-
 
 {% endblock %}
 
