@@ -166,6 +166,15 @@ function MegaMenu( element ) {
    * suspends or resumes the mobile or desktop menu behaviors.
    */
   function _resizeHandler() {
+
+    /* If in Internet Explorer 9-, don't support mobile responsive view.
+       lt-ie10 class is added by modernizr. */
+    const htmlEl = document.body.parentElement;
+    let onlyDesktop = false;
+    if ( htmlEl.classList.contains( 'lt-ie10' ) ) {
+      onlyDesktop = true;
+    }
+
     if ( breakpointState.isInDesktop() ) {
       _mobileNav.suspend();
       _desktopNav.resume();
