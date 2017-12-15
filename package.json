@@ -61,7 +61,7 @@
     "imagemin-gifsicle": "5.2.0",
     "imagemin-jpegtran": "5.0.2",
     "imagemin-optipng": "5.2.1",
-    "imagemin-svgo": "6.0.0",
+    "imagemin-svgo": "5.2.2",
     "is-reachable": "2.3.3",
     "lightbox2": "2.9.0",
     "localtunnel": "1.8.3",
