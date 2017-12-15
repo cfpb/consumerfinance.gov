@@ -128,11 +128,11 @@
         .optimize-loading { opacity: 0 !important; }
     </style>
     <script>
-        (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
-        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
-        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
-        })(window,document.documentElement,'optimize-loading','dataLayer',5000,
-        {'GTM-KHB8MB':true});
+      (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+      h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+      (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+      })(window,document.documentElement,'optimize-loading','dataLayer',5000,
+      {'GTM-KHB8MB':true});
     </script>
     {# end Google Optimize page-hiding snippet #}
 
@@ -143,13 +143,13 @@
       the Google Tag Manager tag (code included below).
     #}
     <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', 'UA-54439736-1', 'auto');
-        ga('require', 'GTM-KHB8MB');
+      ga('create', 'UA-54439736-1', 'auto');
+      ga('require', 'GTM-KHB8MB');
     </script>
     {# end Google Analytics/Optimize snippet #}
     {% endif %}
@@ -172,18 +172,19 @@
       by reversing no-js/js CSS class change made by modernizr.
     #}
     <script>
-        var modernizr = window.Modernizr;
-        if ( !( typeof modernizr !== 'undefined' &&
-             modernizr.es5array &&
-             modernizr.es5date &&
-             modernizr.es5function &&
-             modernizr.es5object &&
-             modernizr.es5string &&
-             modernizr.es5syntax &&
-             modernizr.es5undefined ) ) {
-          var docElement = document.documentElement;
-          docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-        }
+      var modernizr = window.Modernizr;
+      if ( !( typeof modernizr !== 'undefined' &&
+           modernizr.es5array &&
+           modernizr.es5date &&
+           modernizr.es5function &&
+           modernizr.es5object &&
+           modernizr.json &&
+           modernizr.es5string &&
+           modernizr.es5syntax &&
+           modernizr.es5undefined ) ) {
+        var docElement = document.documentElement;
+        docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
+      }
     </script>
 
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
@@ -244,48 +245,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 #}
 
 {% block javascript scoped %}
-<!--[if gt IE 8]><!-->
-{# Include site-wide JavaScript. #}
-<script src="{{ static('js/routes/common.js') }}"></script>
 
-{# Check and include template-level JavaScript. #}
-{% macro template_js() %}
-    {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
-{% endmacro %}
-{% set js_source = template_js() | trim %}
-{% if js_source | length > 0 %}
-<script src="{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}"></script>
-{% endif %}
+{#
+  Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
+  available. Check for that CSS class here and act accordingly.
+#}
+<script>
+  if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
 
-{# Check and include component-level JavaScript. #}
-{% macro component_ondemand_js(js) %}
-    {% include 'js/routes/on-demand/' + js ignore missing %}
-{% endmacro %}
+    {# Include site-wide JavaScript. #}
+    var script = document.createElement( 'script' );
+      script.type = 'text/javascript';
+      script.src = '{{ static('js/routes/common.js') }}';
+      document.getElementsByTagName( 'head' )[0].appendChild( script );
 
-{% if page and page.media %}
-    {% compress js %}
-    <script>
-    {% for js in page.media %}
-       {% set component_js_source = component_ondemand_js(js) | trim %}
-       {% if component_js_source | length > 0 %}
-            {{ component_js_source }}
-       {% endif %}
-    {% endfor %}
-    </script>
-    {% endcompress %}
-{% endif %}
+    {# Check and include template-level JavaScript. #}
+    {% macro template_js() %}
+       {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
+    {% endmacro %}
+    {% set js_source = template_js() | trim %}
+    {% if js_source | length > 0 %}
+      script = document.createElement( 'script' );
+      script.type = 'text/javascript';
+      script.src = '{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}';
+      document.getElementsByTagName( 'head' )[0].appendChild( script );
+    {% endif %}
 
-{# TODO: Remove the below block when all pages
-         using this template are moved to Wagtail. #}
-{# Check and include page-level JavaScript. #}
-{% macro page_js() %}
-    {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
-{% endmacro %}
-{% set js_source = page_js() | trim %}
-{% if js_source | length > 0 %}
-<script src="{{ static('js/routes/' + request.path[1:] + 'index.js') }}"></script>
-{% endif %}
-<!--<![endif]-->
+    {# Check and include component-level JavaScript. #}
+    {% if page and page.media %}
+       {% for js in page.media %}
+         script = document.createElement( 'script' );
+         script.type = 'text/javascript';
+         script.src = '{{ static('js/routes/on-demand/' + js) }}';
+         document.getElementsByTagName( 'head' )[0].appendChild( script );
+       {% endfor %}
+    {% endif %}
+
+    {# TODO: Remove the below block when all pages
+            using this template are moved to Wagtail. #}
+    {# Check and include page-level JavaScript. #}
+    {% macro page_js() %}
+       {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+    {% endmacro %}
+    {% set js_source = page_js() | trim %}
+    {% if js_source | length > 0 %}
+      script = document.createElement( 'script' );
+      script.type = 'text/javascript';
+      script.src = '{{ static('js/routes/' + request.path[1:] + 'index.js') }}';
+      document.getElementsByTagName( 'head' )[0].appendChild( script );
+    {% endif %}
+
+  }
+</script>
 
 <script>
 //<![CDATA[
