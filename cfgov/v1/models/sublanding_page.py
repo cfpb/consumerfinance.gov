@@ -95,7 +95,7 @@ class SublandingPage(CFGOVPage):
                 CFGOVPage.objects.child_of_q(page)
             )
 
-            logger.info('Filtering by parent {}'.format(page))
+            logger.debug('Filtering by parent {}'.format(page))
             form = FilterableListForm(base_query=base_query)
             for post in form.get_page_set():
                 posts_list.append(post)

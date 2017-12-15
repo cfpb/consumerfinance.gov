@@ -23,5 +23,5 @@ def clean_categories(selected_categories):
                 unicorn = 'Research Report'
             for category in subcategories_dict[unicorn.title()]:
                 selected_categories.append(category[0].lower())
-    logger.info('Filtering by categories {}'.format(selected_categories))
+    logger.debug('Filtering by categories {}'.format(selected_categories))
     return selected_categories
