@@ -2,18 +2,17 @@
    Scripts for Email Signup organism.
    ========================================================================== */
 
-'use strict';
 
-var FormSubmit = require( '../../organisms/FormSubmit.js' );
-var validators = require( '../../modules/util/validators' );
+const FormSubmit = require( '../../organisms/FormSubmit.js' );
+const validators = require( '../../modules/util/validators' );
 
-var BASE_CLASS = 'o-email-signup';
-var language = document.body.querySelector( '.content' ).lang;
-var emailSignUps = document.body.querySelectorAll( '.' + BASE_CLASS )
-var emailSignUpsLength = emailSignUps.length;
-var formSubmit;
+const BASE_CLASS = 'o-email-signup';
+const language = document.body.querySelector( '.content' ).lang;
+const emailSignUps = document.body.querySelectorAll( '.' + BASE_CLASS );
+const emailSignUpsLength = emailSignUps.length;
+let formSubmit;
 
-function emailValidation ( fields ) {
+function emailValidation( fields ) {
   return validators.email(
     fields.email,
     '',
@@ -21,7 +20,7 @@ function emailValidation ( fields ) {
   ).msg;
 }
 
-for ( var i = 0; i < emailSignUpsLength; i++ ) {
+for ( let i = 0; i < emailSignUpsLength; i++ ) {
   formSubmit = new FormSubmit(
     emailSignUps[i],
     BASE_CLASS,
