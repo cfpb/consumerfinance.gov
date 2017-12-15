@@ -2,7 +2,6 @@
    Common application-wide scripts that are used across the whole site.
    ========================================================================== */
 
-
 // Global modules.
 require( '../modules/focus-target' ).init();
 
