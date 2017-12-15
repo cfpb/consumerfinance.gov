@@ -1,31 +1,31 @@
 require( '../on-demand/ask-autocomplete' );
-var Analytics = require( '../../modules/Analytics' );
+const Analytics = require( '../../modules/Analytics' );
 
-var Expandable = require( '../../organisms/Expandable' );
-var getBreakpointState = require( '../../modules/util/breakpoint-state' ).get;
+const Expandable = require( '../../organisms/Expandable' );
+const getBreakpointState = require( '../../modules/util/breakpoint-state' ).get;
 
-var readMoreContainer = document.querySelector( '.o-expandable__read-more' );
+const readMoreContainer = document.querySelector( '.o-expandable__read-more' );
 if ( readMoreContainer && getBreakpointState().isBpXS ) {
-  var readMoreExpandable = new Expandable( readMoreContainer ).init();
-  readMoreExpandable.addEventListener( 'expandEnd', function () {
+  const readMoreExpandable = new Expandable( readMoreContainer ).init();
+  readMoreExpandable.addEventListener( 'expandEnd', function() {
     readMoreExpandable.destroy();
     readMoreContainer.querySelector( '.o-expandable_content' ).style.height = '';
   } );
 }
 
-var analyticsData = document.querySelector( '.analytics-data' );
+const analyticsData = document.querySelector( '.analytics-data' );
 if ( analyticsData ) {
-  var answerID = analyticsData.getAttribute( 'data-answer-id' );
-  var categorySlug = analyticsData.getAttribute( 'data-category-slug' );
-  var categoryName = analyticsData.getAttribute( 'data-category-name' );
+  const answerID = analyticsData.getAttribute( 'data-answer-id' );
+  const categorySlug = analyticsData.getAttribute( 'data-category-slug' );
+  const categoryName = analyticsData.getAttribute( 'data-category-name' );
 
   function sendEvent() {
-    var eventData = Analytics.getDataLayerOptions( '/askcfpb/' + answerID + '/',
+    const eventData = Analytics.getDataLayerOptions( '/askcfpb/' + answerID + '/',
       document.title, 'Virtual Pageview' );
     eventData.category = categoryName;
     Analytics.sendEvent( eventData );
   }
-  
+
   if ( Analytics.tagManagerIsLoaded ) {
     sendEvent();
   } else {
