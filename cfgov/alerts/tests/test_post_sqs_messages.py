@@ -43,3 +43,13 @@ class TestPostSQSMessages(TestCase):
             text=('Alert: Test Job # 1234 - Failed. '
                   'Github issue at https://github.com/foo/bar/issues/42')
         )
+
+    @patch('alerts.mattermost_alert.MattermostAlert.post',
+           side_effect=Exception)
+    @patch('alerts.github_alert.GithubAlert.post')
+    def test_mattermost_failure_ignored(self, gh, mm):
+        process_sqs_message(
+            {'Body': 'Test Job #1234 - Failed'},
+            GithubAlert({}),
+            MattermostAlert({})
+        )
