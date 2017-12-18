@@ -48,9 +48,6 @@ urlpatterns = [
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
 
-    # TODO: Enable search route when search is available.
-    # url(r'^search/$', 'search.views.search', name='search'),
-
     url(r'^home/(?P<path>.*)$',
         RedirectView.as_view(url='/%(path)s', permanent=True)),
 
@@ -117,10 +114,6 @@ urlpatterns = [
                       'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
-    url(r'^practitioner-resources/economically-vulnerable/$',
-        TemplateView.as_view(
-            template_name='empowerment/index.html'),
-            name='empowerment'),
     url(r'^fair-lending/$', TemplateView.as_view(
         template_name='fair-lending/index.html'),
         name='fair-lending'),
@@ -412,8 +405,8 @@ urlpatterns = [
     url(r'^es/$', TemplateView.as_view(
                  template_name='/es/index.html')),
 
-    url(r'^es/hogar/$', TemplateView.as_view(
-                 template_name='es/hogar/index.html')),
+    url(r'^es/comprar-casa/$', TemplateView.as_view(
+                 template_name='es/comprar-casa/index.html')),
 
     url(r'^es/nuestra-historia/$', TemplateView.as_view(
                  template_name='es/nuestra-historia/index.html')),
@@ -432,6 +425,15 @@ urlpatterns = [
     ),
 
     url('^sitemap\.xml$', sitemap),
+
+    flagged_url('SEARCH_DOTGOV_API',
+                r'^search/',
+                include('search.urls')),
+
+    flagged_url('TDP_RELEASE',
+                r'^tdp/',
+                include_if_app_enabled('teachers_digital_platform',
+                                       'teachers_digital_platform.urls')),
 ]
 
 if settings.ALLOW_ADMIN_URL:

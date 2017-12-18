@@ -1,5 +1,3 @@
-'use strict';
-
 // See CONTRIBUTING.md for a list of browsers included in 'last 2 versions'
 const LAST_2 = [
   'last 2 versions'

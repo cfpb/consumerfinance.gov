@@ -1,11 +1,8 @@
-'use strict';
-
 /* scripts task
    ---------------
    Bundle javascripty things!
    This task is set up to generate multiple separate bundles,
-   from different sources, and to use watch when run from the default task.
-*/
+   from different sources, and to use watch when run from the default task. */
 
 const browserSync = require( 'browser-sync' );
 const config = require( '../config.js' );
@@ -83,8 +80,11 @@ function scriptsPolyfill() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsModern() {
-  return _processScript( webpackConfig.modernConf,
-                         '/js/routes/**/*.js', '/js/routes/' );
+  return _processScript(
+    webpackConfig.modernConf,
+    '/js/routes/**/*.js',
+    '/js/routes/'
+  );
 }
 
 /**
@@ -92,8 +92,11 @@ function scriptsModern() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsIE() {
-  return _processScript( webpackConfig.commonConf,
-                         '/js/ie/common.ie.js', '/js/ie/' );
+  return _processScript(
+    webpackConfig.commonConf,
+    '/js/ie/common.ie.js',
+    '/js/ie/'
+  );
 }
 
 /**
@@ -101,17 +104,23 @@ function scriptsIE() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsExternal() {
-  return _processScript( webpackConfig.externalConf,
-                         '/js/routes/external-site/index.js', '/js/' );
+  return _processScript(
+    webpackConfig.externalConf,
+    '/js/routes/external-site/index.js',
+    '/js/'
+  );
 }
 
- /**
-  * Bundle base js for Spanish Ask CFPB pages.
-  * @returns {PassThrough} A source stream.
-  */
+/**
+ * Bundle base js for Spanish Ask CFPB pages.
+ * @returns {PassThrough} A source stream.
+ */
 function scriptsSpanish() {
-  return _processScript( webpackConfig.spanishConf,
-                         '/js/routes/es/obtener-respuestas/single.js', '/js/' );
+  return _processScript(
+    webpackConfig.spanishConf,
+    '/js/routes/es/obtener-respuestas/single.js',
+    '/js/'
+  );
 }
 
 /**
@@ -121,9 +130,10 @@ function scriptsSpanish() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsOnDemandHeader() {
-  return _processScript( webpackConfig.commonConf,
-                         '/js/routes/on-demand/header.js',
-                         '/js/atomic/'
+  return _processScript(
+    webpackConfig.commonConf,
+    '/js/routes/on-demand/header.js',
+    '/js/atomic/'
   );
 }
 
@@ -134,9 +144,10 @@ function scriptsOnDemandHeader() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsOnDemandFooter() {
-  return _processScript( webpackConfig.commonConf,
-                         '/js/routes/on-demand/footer.js',
-                         '/js/atomic/'
+  return _processScript(
+    webpackConfig.commonConf,
+    '/js/routes/on-demand/footer.js',
+    '/js/atomic/'
   );
 }
 
@@ -187,9 +198,10 @@ function scriptsNemo() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsEs5Shim() {
-  return _processScript( webpackConfig.commonConf,
-                         '/js/shims/es5-shim.js',
-                         '/js/'
+  return _processScript(
+    webpackConfig.commonConf,
+    '/js/shims/es5-shim.js',
+    '/js/'
   );
 }
 
@@ -199,9 +211,11 @@ function scriptsEs5Shim() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsOAH() {
-  return _processScript( webpackConfig.owningAHomeConf,
-                         '/js/routes/owning-a-home/**/*.js',
-                         '/js/owning-a-home/' );
+  return _processScript(
+    webpackConfig.owningAHomeConf,
+    '/js/routes/owning-a-home/**/*.js',
+    '/js/owning-a-home/'
+  );
 }
 
 gulp.task( 'scripts:polyfill', scriptsPolyfill );

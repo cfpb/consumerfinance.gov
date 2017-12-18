@@ -1,7 +1,5 @@
-'use strict';
-
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
 
 /**
  * ClearableInput
@@ -14,13 +12,13 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
  * @returns {Object} A ClearableInput instance.
  */
 function ClearableInput( element ) {
-  var BASE_CLASS = 'input-contains-label';
+  const BASE_CLASS = 'input-contains-label';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _inputDom = _dom.querySelector( 'input' );
-  var _clearBtnDom = _dom.querySelector( '.' + BASE_CLASS + '_after__clear' );
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _inputDom = _dom.querySelector( 'input' );
+  const _clearBtnDom = _dom.querySelector( '.' + BASE_CLASS + '_after__clear' );
 
-  var _isClearShowing = true;
+  let _isClearShowing = true;
 
   /**
    * @returns {Object} The ClearableInput instance.

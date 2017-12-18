@@ -2,7 +2,6 @@
    ES 5 Shim/Sham, added for BB7.
    ========================================================================== */
 
-'use strict';
 
 if ( window.Modernizr && window.Modernizr.es5 === false ) {
   // Global modules.
