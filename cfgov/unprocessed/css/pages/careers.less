@@ -1,13 +1,13 @@
 
 .m-jobs-list .m-list__links {
-    .respond-to-min(@bp-sm-min, {
+    .respond-to-min( @bp-sm-min, {
         .m-list_item + .m-list_item {
-            margin-top: unit( (@grid_gutter-width / 2) / @base-font-size-px, em)
+            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         }
-    });
+    } );
     
     .m-list_link-subtext {
-       .u-link__colors(@black);
+       .u-link__colors( @black );
        display: block;
        font-family: 'AvenirNextLTW01-Regular',Arial,sans-serif;
        margin-top: 2px;
@@ -16,7 +16,7 @@
 
 .pay-grade-link {
     margin-top: 5px;
-    .respond-to-min(@bp-sm-min, {
+    .respond-to-min( @bp-sm-min, {
         margin: 0 0 0 5px;
-    });
+    } );
 }
