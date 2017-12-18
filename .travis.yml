@@ -5,8 +5,6 @@ dist: trusty
 python:
   - "2.7"
 
-addons:
-  chrome: beta
 
 cache:
   pip: true
@@ -16,21 +14,39 @@ cache:
 install:
   - ./install_travis.sh
 
-env:
-  global:
-    - TOXENV=py27
-    - DJANGO_SETTINGS_MODULE=cfgov.settings.test
-    - DJANGO_STAGING_HOSTNAME=content.localhost
-    - COVERALLS_PARALLEL=true
-
-  matrix:
-    - RUNTEST=frontend
-    - RUNTEST=backend
-    - RUNTEST=acceptance
-
 branches:
   only:
     - master
 
 script:
   - ./run_travis.sh
+
+env:
+  global:
+    - TOXENV=py27
+    - DJANGO_SETTINGS_MODULE=cfgov.settings.test
+    - DJANGO_STAGING_HOSTNAME=content.localhost
+    - COVERALLS_PARALLEL=true
+ 
+jobs:
+  include:
+  - stage: run tests
+    env: RUNTEST=frontend
+  - env: RUNTEST=backend
+  - env: RUNTEST=acceptance
+    addons:
+      chrome: beta
+  - stage: build documentation
+    script: 
+      - pip install virtualenv virtualenvwrapper
+      - source activate-virtualenv.sh
+      - pip install -r requirements/manual.txt
+      - mkdocs build
+  - stage: deploy documentation
+    deploy:
+      provider: pages
+      local_dir: site
+      skip-cleanup: true
+      github_token: $GITHUB_TOKEN
+      on:
+        branch: master
