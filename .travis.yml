@@ -37,7 +37,6 @@ jobs:
   - env: RUNTEST=backend
   - env: RUNTEST=acceptance
   - stage: build documentation
-    env: BUILDING_DOCS=1
     script: 
       - pip install virtualenv virtualenvwrapper
       - source activate-virtualenv.sh
