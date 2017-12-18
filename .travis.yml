@@ -37,12 +37,14 @@ jobs:
   - env: RUNTEST=backend
   - env: RUNTEST=acceptance
   - stage: build documentation
+    env: BUILDING_DOCS=1
     script: 
       - pip install virtualenv virtualenvwrapper
       - source activate-virtualenv.sh
       - pip install -r requirements/manual.txt
       - mkdocs build
-  - deploy:
+  - stage: deploy documentation
+    deploy:
       provider: pages
       local_dir: site
       skip-cleanup: true
