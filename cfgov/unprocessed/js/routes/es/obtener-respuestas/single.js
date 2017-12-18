@@ -1,26 +1,36 @@
 require( '../../on-demand/feedback-form' );
 require( '../../on-demand/ask-autocomplete' );
-var Analytics = require( '../../../modules/Analytics' );
+const Analytics = require( '../../../modules/Analytics' );
 
-var analyticsData = document.querySelector( '.analytics-data' );
-if ( analyticsData ) {
-  var answerID = analyticsData.getAttribute( 'data-answer-id' );
-  var categorySlug = analyticsData.getAttribute( 'data-category-slug' );
-  var categoryName = analyticsData.getAttribute( 'data-category-name' );
+const analyticsDataEl = document.querySelector( '.analytics-data' );
 
-  function sendEvent() {
-    var eventData = Analytics.getDataLayerOptions( 
-      '/es/obtener-respuestas/c/'+ categorySlug + '/' + answerID + '/',
-      document.title, 
-      'Virtual Pageview' );
-    eventData.category = categoryName;
-    Analytics.sendEvent( eventData );
-  }
-  
+/**
+ * Send an event to Google Analytics.
+ * @param  {string} categorySlug The URL slug.
+ * @param  {string} categoryName The category name.
+ * @param  {string} answerID The answer ID in the URL.
+ */
+function sendEvent( categorySlug, categoryName, answerID ) {
+  const eventData = Analytics.getDataLayerOptions(
+    '/es/obtener-respuestas/c/' + categorySlug + '/' + answerID + '/',
+    document.title,
+    'Virtual Pageview'
+  );
+  eventData.category = categoryName;
+  Analytics.sendEvent( eventData );
+}
+
+if ( analyticsDataEl ) {
+  const answerID = analyticsDataEl.getAttribute( 'data-answer-id' );
+  const categorySlug = analyticsDataEl.getAttribute( 'data-category-slug' );
+  const categoryName = analyticsDataEl.getAttribute( 'data-category-name' );
+
   if ( Analytics.tagManagerIsLoaded ) {
-    sendEvent();
+    sendEvent( categorySlug, categoryName, answerID );
   } else {
-    Analytics.addEventListener( 'gtmLoaded', sendEvent );
+    Analytics.addEventListener(
+      'gtmLoaded',
+      () => sendEvent( categorySlug, categoryName, answerID )
+    );
   }
-  
 }

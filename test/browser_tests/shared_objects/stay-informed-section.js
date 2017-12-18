@@ -1,10 +1,8 @@
-'use strict';
+const _stayInformedSection = element( by.css( '.o-email-signup' ) );
 
-var _stayInformedSection = element( by.css( '.o-email-signup' ) );
+const _emailSubscribeForm = _stayInformedSection.element( by.css( 'form' ) );
 
-var _emailSubscribeForm = _stayInformedSection.element( by.css( 'form' ) );
-
-var stayInformedSection = {
+const stayInformedSection = {
 
   stayInformedSection: _stayInformedSection,
 

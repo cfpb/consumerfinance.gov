@@ -2,11 +2,9 @@
    Utility to capture a screenshot of the current browser window.
    ========================================================================== */
 
-'use strict';
+const fs = require( 'fs' );
 
-var fs = require( 'fs' );
-
-var _screenShotDirectory = 'test/';
+const _screenShotDirectory = 'test/';
 
 /**
  * Write a screenshot string to a file.
@@ -14,7 +12,7 @@ var _screenShotDirectory = 'test/';
  * @param {string} data - A base64-encoded string to write to a file.
  */
 function _writeScreenShot( filename, data ) {
-  var stream = fs.createWriteStream( _screenShotDirectory + filename );
+  const stream = fs.createWriteStream( _screenShotDirectory + filename );
 
   stream.write( new Buffer( data, 'base64' ) );
   stream.end();

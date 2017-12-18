@@ -1,5 +1,3 @@
-'use strict';
-
 const gulp = require( 'gulp' );
 const gulpUtil = require( 'gulp-util' );
 const paths = require( '../../config/environment' ).paths;

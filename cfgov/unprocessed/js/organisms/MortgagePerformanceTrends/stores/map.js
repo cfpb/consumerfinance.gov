@@ -1,5 +1,3 @@
-'use strict';
-
 const Store = require( './store' );
 
 const updateGeo = ( geo, action ) => {
@@ -119,8 +117,9 @@ class MapStore extends Store {
     this.state.date = date;
     this.state = this.reduce( this.state, {} );
   }
+
   reduce( state, action ) {
-    var newState = {
+    const newState = {
       geo: updateGeo( state.geo, action ),
       date: updateDate( state.date, action ),
       isLoadingMetros: isLoadingMetros( action ),
