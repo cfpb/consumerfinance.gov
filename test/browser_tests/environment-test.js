@@ -1,5 +1,3 @@
-'use strict';
-
 const envvars = require( '../../config/environment' ).envvars;
 const specsRoot = 'cucumber/features/';
 
@@ -19,8 +17,8 @@ module.exports = {
     ]
   },
 
-  // The default window width and height.
-  // Can be overridden with the --windowSize=w,h command-line flag.
+  /* The default window width and height.
+     Can be overridden with the --windowSize=w,h command-line flag. */
   WINDOW_SIZES: {
     DESKTOP: {
       WIDTH:  1200,

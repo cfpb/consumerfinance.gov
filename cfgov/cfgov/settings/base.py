@@ -60,12 +60,14 @@ INSTALLED_APPS = (
     'watchman',
     'haystack',
     'ask_cfpb',
+    'agreements',
     'overextends',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "django.contrib.sitemaps",
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'storages',
@@ -79,25 +81,24 @@ INSTALLED_APPS = (
     'tinymce',
     'jobmanager',
     'wellbeing',
+    'search',
 )
 
 OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
-    {'import': 'agreements', 'apps': ('agreements', 'haystack',)},
-    {'import': 'selfregistration', 'apps': ('selfregistration',)},
     {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
      'complaintdatabase', 'complaint_common',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
-    {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
-    {'import': 'eregsip', 'apps': ('eregsip',)},
+    {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
+    {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
 ]
 
 if DEPLOY_ENVIRONMENT == 'build':
@@ -124,13 +125,9 @@ MIDDLEWARE_CLASSES = (
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
 
-if ('CSP_ENFORCE' in os.environ or 'CSP_REPORT' in os.environ):
+if ('CSP_ENFORCE' in os.environ):
     MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
-if 'CSP_REPORT' in os.environ:
-    CSP_REPORT_ONLY = True
-
-CSP_REPORT_URI = '/csp-report/'
 
 ROOT_URLCONF = 'cfgov.urls'
 
@@ -335,10 +332,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'tokenizer': 'lowercase',
                     'filter': ['haystack_edgengram']
                 },
-                'synonym' : {
+                'synonym_en' : {
                     'tokenizer' : 'whitespace',
-                    'filter' : ['synonym']
-                }
+                    'filter' : ['synonyms_en']
+                },
+                'synonym_es' : {
+                    'tokenizer' : 'whitespace',
+                    'filter' : ['synonyms_es']
+                },
             },
             'tokenizer': {
                 'haystack_ngram_tokenizer': {
@@ -351,7 +352,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15,
                     'side': 'front'
-                }
+                },
             },
             'filter': {
                 'haystack_ngram': {
@@ -364,12 +365,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15
                 },
-                'synonym': {
+                'synonyms_en': {
                     'type': 'synonym',
-                    'synonyms': [
-                        # 'auto,car,vehicle',
-                    ],
-                }
+                    'synonyms_path' : 'analysis/synonyms_en.txt'
+                },
+                'synonyms_es': {
+                    'type': 'synonym',
+                    'synonyms_path' : 'analysis/synonyms_es.txt'
+                },
             }
         }
     }
@@ -516,7 +519,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   'universal.iperceptions.com',
                   'sample.crazyegg.com',
                   'about:',
-                  'connect.facebook.net'
+                  'connect.facebook.net',
+                  'www.federalregister.gov',
                   )
 
 # These specify valid sources of CSS code
@@ -580,6 +584,11 @@ CSP_CONNECT_SRC = ("'self'",
 # conditions or an empty dict. If the conditions dict is empty the flag will
 # only be enabled if database conditions are added.
 FLAGS = {
+    # Ask CFPB search spelling correction support
+    # When enabled, spelling suggestions will appear in Ask CFPB search and
+    # will be used when the given search term provides no results.
+	'ASK_SEARCH_TYPOS': {},
+
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
@@ -627,17 +636,17 @@ FLAGS = {
         'boolean': DEPLOY_ENVIRONMENT == 'build',
     },
 
-    # Add sortable tables to Wagtail
-    # When enabled, the sortable tables option will be added to the Wagtail Admin
-    # The template will render for the front-end, but the sortable code is missing
-    # and the table will not be sortable until cf-tables from CF 4.x is implemented
-    'SORTABLE_TABLES': {},
-
-    # The release of the consumer Financial Well Being Scale app
-    'FWB_RELEASE': {},
-
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
+
+    # Search.gov API-based site-search
+    'SEARCH_DOTGOV_API': {},
+
+    # The release of the new Financial Coaching pages
+    'FINANCIAL_COACHING': {},
+
+    # Teacher's Digital Platform
+    'TDP_RELEASE': {},
 }
 
 
@@ -659,3 +668,7 @@ NTP_TIME_SERVER = 'north-america.pool.ntp.org'
 # If server's clock drifts from NTP by more than specified offset
 # (in seconds), check_clock_drift will fail
 MAX_ALLOWED_TIME_OFFSET = 5
+
+# Search.gov values
+SEARCH_DOT_GOV_AFFILIATE = os.environ.get('SEARCH_DOT_GOV_AFFILIATE')
+SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')

@@ -27,31 +27,14 @@
 
 {% import 'molecules/featured-menu-content.html' as featured_menu_content %}
 
-
 {# Featured Menu Content #}
-
-{% set about_us_content = {
-    'link': {
-        'text': 'The CFPB: Working for you',
-        'url':  '/about-us/the-bureau/',
-    },
-    'image': {
-        'src': 'img/fmc-about-us-540x300.jpg',
-        'alt': '',
-    },
-    'body': 'This short video covers what the CFPB is ' +
-            'and how we are working for American consumers.',
-} %}
 
 {% set poly_com_content = {
     'link': {
         'text': 'Resources to help you comply',
         'url':  '/policy-compliance/guidance/implementation-guidance/',
     },
-    'image': {
-        'src': 'img/fmc-poly-com-540x300.jpg',
-        'alt': '',
-    },
+    'image_src': 'img/fmc-poly-com-540x300.jpg',
     'body': 'The TILA-RESPA integrated disclosure rule ' +
             'replaces four disclosure forms with two new ones. ' +
             'We have resources to help you comply.',
@@ -62,10 +45,7 @@
         'text': 'Get your financial well-being score',
         'url':  '/consumer-tools/financial-well-being/',
     },
-    'image': {
-        'src': 'img/fmc-consumer-tools-540x300.png',
-        'alt': '',
-    },
+    'image_src': 'img/fmc-consumer-tools-540x300.png',
     'body': 'Answer ten questions and see your financial well-being score, ' +
             'along with national averages.',
 } %}
@@ -75,10 +55,7 @@
         'text': 'Explore financial well-being survey results',
         'url':  '/data-research/research-reports/financial-well-being-america/',
     },
-    'image': {
-        'src': 'img/fmc-resources-540x300.png',
-        'alt': '',
-    },
+    'image_src': 'img/fmc-resources-540x300.png',
     'body': 'See national survey results on financial well-being and how it ' +
             'relates to other factors in a person’s financial life.',
 } %}
@@ -88,10 +65,7 @@
         'text': 'Help advance financial well-being',
         'url':  '/data-research/financial-well-being-survey-data/',
     },
-    'image': {
-        'src': 'img/fmc-data-research-540x300.png',
-        'alt': '',
-    },
+    'image_src': 'img/fmc-data-research-540x300.png',
     'body': 'Explore our national survey data and think about ways to empower ' +
             'families to achieve higher financial well-being.',
 } %}
@@ -101,7 +75,7 @@
   ( 'Practitioner Resources', featured_menu_content.render( resources_content ) ),
   ( 'Data & Research', featured_menu_content.render( data_research_content ) ),
   ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) ),
-  ( 'About Us', featured_menu_content.render( about_us_content ) ),
+  ( 'About Us', '' ),
 ] %}
 
 
@@ -185,6 +159,18 @@
         {'text': 'Your Money, Your Goals', 'url': '/practitioner-resources/your-money-your-goals/'},
     ]
 } %}
+
+{% if flag_enabled('FINANCIAL_COACHING', request) %}
+    {% set practitioner_resources_group_three = {
+        'title': 'Programs',
+        'nav_items': [
+            {'text': 'Financial Coaching', 'url': '/practitioner-resources/financial-coaching/'},
+            {'text': 'Resources for Libraries', 'url': '/practitioner-resources/library-resources/'},
+            {'text': 'Resources for Tax Preparers', 'url': '/practitioner-resources/resources-for-tax-preparers/'},
+            {'text': 'Your Money, Your Goals', 'url': '/practitioner-resources/your-money-your-goals/'},
+        ]
+    } %}
+{% endif %}
 
 {% set practitioner_resources = {
     'text': 'Practitioner Resources',

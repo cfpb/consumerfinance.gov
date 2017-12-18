@@ -2,7 +2,6 @@
    Dynamic Nonblocking script loader.
    ========================================================================== */
 
-'use strict';
 
 /**
  * Dynamically attach and load a script tag in the head of the page.
@@ -10,7 +9,7 @@
  * @param {Function} callback (Optional) a function to call when done.
  */
 function loadScript( url, callback ) {
-  var script = document.createElement( 'script' );
+  const script = document.createElement( 'script' );
   script.type = 'text/javascript';
 
   // Handle Internet Explorer

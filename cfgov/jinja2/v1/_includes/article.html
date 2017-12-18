@@ -20,7 +20,7 @@
                        '/about-us/blog/'.  Remember to leverage vars.path
                        instead of using the literal string '/about-us/blog/'.
                        Path is used to create the filtered URL:
-                       {{ path }}?filter_tags={{ tag }}
+                       {{ path }}?tags={{ tag }}
 
    ========================================================================== #}
 
@@ -71,7 +71,7 @@
     </div>
     {% if page.tags.all() | length %}
         <footer>
-            {{ tags.render( related_metadata_tags(page), '', is_wagtail=True) }}
+            {{ tags.render( page.related_metadata_tags(), '', is_wagtail=True) }}
         </footer>
     {% endif %}
 </article>

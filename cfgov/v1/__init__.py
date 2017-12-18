@@ -12,6 +12,7 @@ from compressor.contrib.jinja2ext import CompressorExtension
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.cache import caches
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.utils.module_loading import import_string
@@ -26,8 +27,11 @@ from core.utils import signed_redirect, unsigned_redirect
 from flags.template_functions import flag_disabled, flag_enabled
 from processors.processors_common import fix_link
 from sheerlike import environment as sheerlike_environment
+
+from v1.fragment_cache_extension import FragmentCacheExtension
 from v1.routing import get_protected_url
 from v1.util.util import get_unique_id
+
 
 default_app_config = 'v1.apps.V1AppConfig'
 
@@ -55,6 +59,7 @@ def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
     options['extensions'].append('jinja2.ext.loopcontrols')
     options['extensions'].append('jinja2.ext.i18n')
+    options['extensions'].append(FragmentCacheExtension)
     env = sheerlike_environment(**options)
     env.autoescape = True
     env.install_gettext_translations(JinjaTranslations())
@@ -73,8 +78,6 @@ def environment(**options):
         'is_blog': ref.is_blog,
         'is_report': ref.is_report,
         'parse_links': parse_links,
-        'related_metadata_tags': related_metadata_tags,
-        'get_filter_data': get_filter_data,
         'cfgovpage_objects': CFGOVPage.objects,
         'signed_redirect': signed_redirect,
         'unsigned_redirect': unsigned_redirect,
@@ -91,6 +94,7 @@ def environment(**options):
         'pluralize': pluralize,
         'slugify': slugify,
     })
+    env.fragment_cache = caches['post_preview']
     return env
 
 
@@ -211,32 +215,6 @@ def render_stream_child(context, stream_child):
     unescaped = HTMLParser.HTMLParser().unescape(html)
     # Return the rendered template as safe html
     return Markup(unescaped)
-
-
-@contextfunction
-def related_metadata_tags(context, page):
-    # Set the tags to correct data format
-    tags = {'links': []}
-    # From an ancestor, get the form ids then use the first id since the
-    # filterable list on the page will probably have the first id on the page.
-    id, filter_page = get_filter_data(page)
-    for tag in page.specific.tags.all():
-        tag_link = {'text': tag.name, 'url': ''}
-        if id is not None and filter_page is not None:
-            param = '?filter' + str(id) + '_topics=' + tag.slug
-            tag_link['url'] = get_protected_url(context, filter_page) + param
-        tags['links'].append(tag_link)
-    return tags
-
-
-def get_filter_data(page):
-    for ancestor in page.get_ancestors().reverse().specific():
-        if ancestor.specific_class.__name__ in ['BrowseFilterablePage',
-                                                'SublandingFilterablePage',
-                                                'EventArchivePage',
-                                                'NewsroomLandingPage']:
-            return ancestor.form_id(), ancestor
-    return None, None
 
 
 def get_snippets(snippet_type):

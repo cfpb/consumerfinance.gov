@@ -1,14 +1,13 @@
-'use strict';
+const envvars = require( '../../config/environment' ).envvars;
+const tunnelIdentifier = envvars.SAUCE_TUNNEL;
 
-var envvars = require( '../../config/environment' ).envvars;
-var tunnelIdentifier = envvars.SAUCE_TUNNEL;
+const defaultSuites = {
 
-var defaultSuites = {
-  // Set default browser suites to test.
-  // These values are passed to the `multiCapabilities` property
-  // of the protractor config object.
-  // See https://docs.saucelabs.com/reference/platforms-configurator/
-  // for configuration values for version and platform.
+  /* Set default browser suites to test.
+     These values are passed to the `multiCapabilities` property
+     of the protractor config object.
+     See https://docs.saucelabs.com/reference/platforms-configurator/
+     for configuration values for version and platform. */
 
   // Essential browsers for running locally.
   essential: [

@@ -1,6 +1,9 @@
 from datetime import timedelta
 
+from django.core.cache import caches
 from django.utils import timezone
+
+from wagtail.wagtailcore.signals import page_published
 
 
 def new_phi(user, expiration_days=90, locked_days=1):
@@ -35,3 +38,10 @@ def user_save_callback(sender, **kwargs):
         current_password_history = user.passwordhistoryitem_set.latest()
         if user.password != current_password_history.encrypted_password:
             new_phi(user)
+
+
+def invalidate_post_preview(sender, **kwargs):
+    instance = kwargs['instance']
+    caches['post_preview'].delete(instance.post_preview_cache_key)
+
+page_published.connect(invalidate_post_preview)

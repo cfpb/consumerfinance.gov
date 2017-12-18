@@ -1,14 +1,14 @@
-'use strict';
+// TODO: Remove UStreamPlayer module.
+const VideoPlayer = require( './VideoPlayer' );
 
-var VideoPlayer = require( './VideoPlayer' );
-var UStreamPlayer;
+let UStreamPlayer;
 
-var CLASSES = Object.freeze( {
+const CLASSES = Object.freeze( {
   VIDEO_PLAYER_SELECTOR: '.video-player__youtube',
   IFRAME_CLASS_NAME:     'video-player_iframe__youtube'
 } );
 
-var API = {
+const API = {
 
   SCRIPT_API: '/static/js/ustream-embedapi.min.js',
 
@@ -21,8 +21,8 @@ var API = {
   /**
    * Handle initializing of UStream player and embed API script if necessary.
    */
-  initPlayer: function( ) {
-    var UstreamPlayer = window.UstreamEmbed;
+  initPlayer: function() {
+    const UstreamPlayer = window.UstreamEmbed;
     if ( UstreamPlayer ) {
       this.player = new UstreamPlayer( this.iFrameProperties.id );
       this.initPlayerEvents();
@@ -50,7 +50,7 @@ var API = {
    * Action function used to play the Ustream video.
    * @returns {UStreamPlayer} An instance.
    */
-  play: function( ) {
+  play: function() {
     // TODO: Remove this code when the Ustream https issue is resolved.
     window.location = 'https://www.ustream.tv/channel/cfpblive';
     return this;
@@ -59,7 +59,7 @@ var API = {
   /**
    * Action function used to stop the Ustream video.
    */
-  stop: function( ) {
+  stop: function() {
     this._super.stop.call( this );
     if ( this.state.isPlayerInitialized ) {
       this.player.callMethod( 'stop' );

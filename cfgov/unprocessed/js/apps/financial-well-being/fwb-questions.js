@@ -1,5 +1,3 @@
-'use strict';
-
 const Analytics = require( '../../modules/Analytics' );
 
 /**

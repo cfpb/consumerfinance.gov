@@ -1,5 +1,3 @@
-'use strict';
-
 const richTextEditor = require(
   '../../shared_objects/wagtail-admin-rich-text-editor.js'
 );
@@ -15,12 +13,10 @@ defineSupportCode( function( { Then, When, After, setDefaultTimeout } ) {
 
   After( function() {
 
-    /*
-    browser.manage().logs().get( 'browser' )
-    .then( function( browserLog ) {
-      console.log( browserLog );
-    } );
-    */
+    /* browser.manage().logs().get( 'browser' )
+       .then( function( browserLog ) {
+       console.log( browserLog );
+       } ); */
 
   } );
 
@@ -36,12 +32,12 @@ defineSupportCode( function( { Then, When, After, setDefaultTimeout } ) {
     return richTextEditor.insertText( text );
   } );
 
-  When( /I select the text in the rich text editor/, function( ) {
+  When( /I select the text in the rich text editor/, function() {
 
     return richTextEditor.selectText();
   } );
 
-  When( /I clear the rich text editor/, function( ) {
+  When( /I clear the rich text editor/, function() {
 
 
     return richTextEditor.clearText();
@@ -81,7 +77,7 @@ defineSupportCode( function( { Then, When, After, setDefaultTimeout } ) {
     } );
   } );
 
-  Then( /the inserted link should have the correct format/, function( ) {
+  Then( /the inserted link should have the correct format/, function() {
 
     return richTextEditor.getTextAreaValue().then( function( textAreaValue ) {
 

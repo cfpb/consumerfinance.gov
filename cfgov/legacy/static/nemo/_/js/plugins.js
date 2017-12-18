@@ -29,7 +29,7 @@
      * 
      */
 
-    $.fn.cfpbVideoReplace = function( ) {
+    $.fn.cfpbVideoReplace = function() {
 
         return this.each(function() {
 
@@ -284,7 +284,7 @@
                 // Update the data-state attribute with the current state.
                 // We can use this as a hook for things like capturing custom
                 // events in google analytics to see if the user opened/closed it.
-                $content.each(function( ){
+                $content.each(function(){
                     var $self = $( this );
                     if ( $self.attr( 'data-state') === 'open' ) {
                         $self.attr( 'data-state', 'closed' );

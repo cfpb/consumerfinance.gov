@@ -2,9 +2,8 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-'use strict';
 
-const environment = require( '../config/environment' );
+const BROWSER_LIST = require( '../config/browser-list-config' );
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
@@ -12,8 +11,8 @@ const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
 
-// Commmon webpack 'module' option used in each configuration.
-// Runs code through Babel and uses global supported browser list.
+/* Commmon webpack 'module' option used in each configuration.
+   Runs code through Babel and uses global supported browser list. */
 const COMMON_MODULE_CONFIG = {
   loaders: [ {
     test: /\.js$/,
@@ -22,7 +21,7 @@ const COMMON_MODULE_CONFIG = {
       options: {
         presets: [ [ 'env', {
           targets: {
-            browsers: environment.getSupportedBrowserList( 'js' )
+            browsers: BROWSER_LIST.LAST_2_IE_9_UP
           },
           debug: true
         } ] ]
@@ -30,15 +29,16 @@ const COMMON_MODULE_CONFIG = {
     } ],
     exclude: {
       test: /node_modules/,
-      // The below regex will capture all node modules that start with `cf`
-      // or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/.
+
+      /* The below regex will capture all node modules that start with `cf`
+         or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/. */
       exclude: /node_modules\/(?:cf.+|atomic-component)/
     }
   } ]
 };
 
- // Set warnings to true to show linter-style warnings.
- // Set mangle to false and beautify to true to debug the output code.
+/* Set warnings to true to show linter-style warnings.
+   Set mangle to false and beautify to true to debug the output code. */
 const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
   parallel: true,
   uglifyOptions: {

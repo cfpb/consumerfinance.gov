@@ -1,5 +1,3 @@
-'use strict';
-
 const { defineSupportCode } = require( 'cucumber' );
 const { shouldShouldnt, toCamelCase } = require( '../../util/index.js' );
 const chai = require( 'chai' );
@@ -9,8 +7,8 @@ const chaiAsPromised = require( 'chai-as-promised' );
 const BASE_SEL = '.o-header';
 const LOGO_SEL = BASE_SEL + '_logo-img';
 
-// Overlay is technically outside of the header,
-// but makes organizational sense to include here.
+/* Overlay is technically outside of the header,
+   but makes organizational sense to include here. */
 const OVERLAY_SEL = '.a-overlay';
 const MEGA_MENU_SEL = BASE_SEL + ' .o-mega-menu';
 const MEGA_MENU_TRIGGER_SEL = BASE_SEL + ' .o-mega-menu_trigger';
@@ -37,8 +35,8 @@ defineSupportCode( function( { Then, When, Before } ) {
       megaMenu:            element( by.css( MEGA_MENU_SEL ) ),
       megaMenuTrigger:     element( by.css( MEGA_MENU_TRIGGER_SEL ) ),
       megaMenuContent:     element
-                             .all( by.css( MEGA_MENU_CONTENT_SEL ) )
-                             .first(),
+        .all( by.css( MEGA_MENU_CONTENT_SEL ) )
+        .first(),
       globalSearch:        element( by.css( GLOBAL_SEARCH_SEL ) ),
       globalSearchTrigger: element( by.css( GLOBAL_SEARCH_TRIGGER_SEL ) ),
       globalSearchContent: element( by.css( GLOBAL_SEARCH_CONTENT_SEL ) ),
@@ -53,20 +51,20 @@ defineSupportCode( function( { Then, When, Before } ) {
     function( dispayElement, element ) {
 
       return expect( _dom[toCamelCase( element )].isDisplayed() )
-             .to.eventually
-             .equal( shouldShouldnt( dispayElement ) );
+        .to.eventually
+        .equal( shouldShouldnt( dispayElement ) );
     }
   );
 
   When( 'I click on the mega-menu',
-    function( ) {
+    function() {
 
       return _dom.megaMenu.click();
     }
   );
 
   When( 'I click on the mega-menu trigger',
-    function( ) {
+    function() {
 
       return _dom.megaMenuTrigger.click();
     }
@@ -81,8 +79,8 @@ defineSupportCode( function( { Then, When, Before } ) {
     browser.sleep( 500 );
 
     return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
-           .to.eventually
-           .equal( shouldShouldnt( dispayElement ).toString() );
+      .to.eventually
+      .equal( shouldShouldnt( dispayElement ).toString() );
   } );
 
   Then( /the mega-menu search form (shouldn't|should)/,
@@ -91,8 +89,8 @@ defineSupportCode( function( { Then, When, Before } ) {
       browser.sleep( 500 );
 
       return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
-             .to.eventually
-             .equal( shouldShouldnt( displayElement ).toString() );
+        .to.eventually
+        .equal( shouldShouldnt( displayElement ).toString() );
     }
   );
 

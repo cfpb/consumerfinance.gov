@@ -1,5 +1,3 @@
-'use strict';
-
 const USERS = {
   ADMIN: {
     USERNAME: 'admin',

@@ -1,5 +1,3 @@
-'use strict';
-
 const chai = require( 'chai' );
 const expect = chai.expect;
 const fs = require( 'fs' );
@@ -30,7 +28,7 @@ defineSupportCode( ( { When, Given } ) => {
 
             const isFailure = transpileRegex.test( contents );
             if ( isFailure ) {
-              reject( directoryMapKeys[i] + ' contains const or ()=>' );
+              reject( new Error( directoryMapKeys[i] + ' contains const or ()=>' ) );
             } else if ( i === directoryMapLength - 1 ) {
               // All files searched.
               resolve();
@@ -38,7 +36,6 @@ defineSupportCode( ( { When, Given } ) => {
           }
         );
       }
-
 
     } );
   } );

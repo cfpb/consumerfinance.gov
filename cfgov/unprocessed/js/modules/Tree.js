@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Tree
  * @class
@@ -18,8 +16,8 @@
  */
 function Tree() {
 
-  var _root = null;
-  var _levelCache = {};
+  let _root = null;
+  const _levelCache = {};
 
   /**
    * @param {Object} data - Data to attach to the root node.
@@ -38,10 +36,10 @@ function Tree() {
    * @returns {TreeNode} The newly instantiated and added node.
    */
   function add( data, parent ) {
-    var child = new TreeNode( this, data, parent );
+    const child = new TreeNode( this, data, parent );
 
     // Save node at each level as a flat array.
-    var level = child.level;
+    const level = child.level;
     if ( _levelCache[level] ) {
       _levelCache[level].push( child );
     } else {
@@ -78,15 +76,14 @@ function Tree() {
    * @returns {Array} A list of all nodes at a particular tree level.
    */
   function getAllAtLevel( level ) {
-    var levelCache = _levelCache[level];
+    let levelCache = _levelCache[level];
     if ( !levelCache ) levelCache = [];
     return levelCache;
   }
 
-  // TODO: Implement remove method.
-  // function remove( child, parent ) {
-  //
-  // }
+  /* TODO: Implement remove method.
+     function remove( child, parent ) {
+     } */
 
   this.add = add;
   this.init = init;

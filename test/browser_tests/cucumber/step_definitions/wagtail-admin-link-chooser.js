@@ -1,10 +1,8 @@
-'use strict';
-
-var pageChooser = require(
+const pageChooser = require(
   '../../shared_objects/wagtail-admin-link-chooser.js'
 );
 
-var { defineSupportCode } = require( 'cucumber' );
+const { defineSupportCode } = require( 'cucumber' );
 
 defineSupportCode( function( { When } ) {
 

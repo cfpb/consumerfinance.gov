@@ -20,41 +20,8 @@ $( document ).ready( function() {
 
     // Report specific js for sticky nav
     $(window).scroll( stickyNav );
-
-    // Init cShowHide plugin
-    $( '.show-hide' ).cShowHide();
 });
 
-
-$.fn.cShowHide = function cShowHide() {
-
-    this.filter( '.default-hidden' ).find( '.show-hide-content' ).hide();
-
-    this.find( '.show-hide-link' ).click( function( e ) {
-
-        e.preventDefault();
-        var $clicked_show_hide_a = $( this );
-
-        // The entire SHow/Hide DOM object:
-        var $show_hide = $( this ).parent( '.show-hide' );
-
-        var $show_hide_content = $show_hide.find( '> .show-hide-content' );
-
-        var textshow = escape($( this ).attr( 'data-textshow' ));
-
-        var texthide = escape($( this ).attr( 'data-texthide' ));
-
-        if ( $show_hide.hasClass( 'default-hidden' ) ) {
-            $show_hide.removeClass( 'default-hidden' );
-            $show_hide_content.slideDown( 500 );
-            $clicked_show_hide_a.find( 'span' ).html( texthide );
-        } else {
-            $show_hide.addClass( 'default-hidden' );
-            $show_hide_content.slideUp( 500 );
-            $clicked_show_hide_a.find( 'span' ).html( textshow );
-        }
-    });
-};
 
 function stickyNav() {
   $( '.report header h2' ).each( function() {

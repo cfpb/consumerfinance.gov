@@ -1,3 +1,0 @@
-# Ignore 3rd-party polyfills.
-cfgov/unprocessed/js/modules/polyfill/**/*.js
-cfgov/unprocessed/js/routes/**/*.js

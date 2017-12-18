@@ -6,16 +6,18 @@ from os.path import exists
 from .base import *
 from .mysql_mixin import *
 
+default_loggers = []
 
-# log to disk when running in mod_wsgi, otherwise to console
-if sys.argv and sys.argv[0] == 'mod_wsgi':
-    default_loggers = ['syslog']
-else:
-    default_loggers = ['console', 'syslog']
+# Is there a syslog device available? 
+# selects first of these locations that exist, or None
+syslog_device = next((l for l in ['/dev/log', '/var/run/syslog'] if exists(l)), None)
 
-
-# This allows the syslog stuff to work on OS X
-syslog_device = next(l for l in ['/dev/log', '/var/run/syslog'] if exists(l))
+if syslog_device:
+    default_loggers.append('syslog')
+                           
+# if not running in mod_wsgi, add console logger
+if not (sys.argv and sys.argv[0] == 'mod_wsgi'):
+    default_loggers.append('console')
 
 # Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
 #
@@ -45,11 +47,6 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'alerts.logging_handlers.CFGovErrorHandler',
         },
-        'syslog': {
-            'address': syslog_device,
-            'class': 'logging.handlers.SysLogHandler',
-            'formatter': 'tagged'
-        },
     },
     'loggers': {
         'django.request': {
@@ -74,14 +71,21 @@ LOGGING = {
     }
 }
 
+# Only add syslog to LOGGING if it's in default_loggers
+if 'syslog' in default_loggers:
+    LOGGING['handlers']['syslog'] = {
+            'address': syslog_device,
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'tagged'
+    }
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-# Define caches necessary for eRegs.
 CACHES = {
-    'default' : {
+    'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/eregs_cache',
     },
@@ -93,12 +97,17 @@ CACHES = {
             'MAX_ENTRIES': 10000,
         },
     },
-    'api_cache':{
+    'api_cache': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'api_cache_memory',
         'TIMEOUT': 3600,
         'OPTIONS': {
             'MAX_ENTRIES': 1000,
         },
+    },
+    'post_preview': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'post_preview_cache',
+        'TIMEOUT': None,
     }
 }

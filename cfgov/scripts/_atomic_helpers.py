@@ -451,3 +451,13 @@ chart_block = {
         'note': 'Data not final',
     }
 }
+
+filter_controls = {
+    'type': u'filter_controls',
+    'value': {
+        'form_type': u'filterable-list',
+        'categories': {
+            'page_type': '',
+        },
+    }
+}

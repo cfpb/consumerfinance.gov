@@ -1,5 +1,3 @@
-'use strict';
-
 const WagtailLogin = require(
   '../../page_objects/wagtail-admin-login-page.js'
 );
