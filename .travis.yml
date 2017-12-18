@@ -36,7 +36,7 @@ jobs:
   - env: RUNTEST=acceptance
     addons:
       chrome: beta
-  - stage: build documentation
+  - stage: Update documentation
     script: 
       - pip install virtualenv virtualenvwrapper
       - source activate-virtualenv.sh
