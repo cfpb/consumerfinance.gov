@@ -42,7 +42,6 @@ jobs:
       - source activate-virtualenv.sh
       - pip install -r requirements/manual.txt
       - mkdocs build
-  - stage: deploy documentation
     deploy:
       provider: pages
       local_dir: site
