@@ -15,7 +15,6 @@ defineSupportCode( function( { Then, When, Before } ) {
     multiSelect = new MultiSelect();
   } );
 
-  @skip
   When( /I (.*) on the multi-select search input/,
     function( searchInputAction ) {
 
