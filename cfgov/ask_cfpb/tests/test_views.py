@@ -204,6 +204,31 @@ class AnswerViewTestCase(TestCase):
         self.assertTrue(mock_sqs_instance.filter.called_with(
             language='en', q='payday'))
 
+    @mock.patch('ask_cfpb.views.SearchQuerySet')
+    def test_en_search_no_term(self, mock_sqs):
+        from v1.util.migrations import get_or_create_page
+        mock_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerResultsPage',
+            'Mock results page',
+            'ask-cfpb-search-results',
+            self.ROOT_PAGE,
+            language='en')
+
+        response = self.client.get(reverse(
+            'ask-search-en'), {'q': ''})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.context_data['page'],
+            mock_page)
+        self.assertEqual(
+            response.context_data['page'].query,
+            '')
+        self.assertEqual(
+            response.context_data['page'].result_query,
+            '')
+
     @override_settings(FLAGS={'ASK_SEARCH_TYPOS': {'boolean': True}})
     @mock.patch('ask_cfpb.views.SearchQuerySet')
     def test_en_search_suggestion(self, mock_sqs):
