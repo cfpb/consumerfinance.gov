@@ -1,14 +1,15 @@
-from __future__ import unicode_literals, print_function
+from __future__ import print_function, unicode_literals
 
 import sys
+
+from django import VERSION
+from django.core.management import call_command
+
 
 try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-
-from django import VERSION
-from django.core.management import call_command
 
 
 # Django 1.10+ includes makemigrations --check, making this unnecessary

@@ -1,4 +1,5 @@
 from django.test import TestCase, override_settings
+
 from mock import call, patch
 
 from sheerlike.external_links import process_external_links

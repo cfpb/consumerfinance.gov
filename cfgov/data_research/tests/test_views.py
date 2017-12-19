@@ -5,15 +5,15 @@ import json
 import unittest
 
 import django
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.core.urlresolvers import NoReverseMatch, reverse
+
 from model_mommy import mommy
 
-from data_research.views import validate_year_month
 from data_research.models import (
-    County, CountyMortgageData,
-    MetroArea, MSAMortgageData, NonMSAMortgageData,
-    NationalMortgageData,
-    State, StateMortgageData)
+    County, CountyMortgageData, MetroArea, MSAMortgageData,
+    NationalMortgageData, NonMSAMortgageData, State, StateMortgageData
+)
+from data_research.views import validate_year_month
 
 
 class YearMonthValidatorTests(unittest.TestCase):

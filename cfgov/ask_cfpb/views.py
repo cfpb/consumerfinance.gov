@@ -1,25 +1,25 @@
 from __future__ import unicode_literals
+
 import json
 from urlparse import urljoin
 
-from bs4 import BeautifulSoup as bs
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.defaultfilters import slugify
-from haystack.query import SearchQuerySet
 from haystack.inputs import Clean
+from haystack.query import SearchQuerySet
+
 from wagtail.wagtailcore.models import Site
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
+from bs4 import BeautifulSoup as bs
 from flags.state import flag_enabled
 
 from ask_cfpb.models import (
-    Answer,
-    AnswerPage,
-    AnswerResultsPage,
-    EnglishAnswerProxy,
-    SpanishAnswerProxy)
+    Answer, AnswerPage, AnswerResultsPage, EnglishAnswerProxy,
+    SpanishAnswerProxy
+)
 
 
 def annotate_links(answer_text):
@@ -161,7 +161,9 @@ def ask_search(request, language='en', as_json=False):
         results_page.answers = []
 
         for result in query_sqs:
-            results_page.answers.append((result.url, result.autocomplete, result.text))
+            results_page.answers.append(
+                (result.url, result.autocomplete, result.text)
+            )
         return results_page.serve(request)
 
 

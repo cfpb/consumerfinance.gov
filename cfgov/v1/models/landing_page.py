@@ -1,14 +1,12 @@
 from wagtail.wagtailadmin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface
+    ObjectList, StreamFieldPanel, TabbedInterface
 )
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 
-from .. import blocks as v1_blocks
-from ..atomic_elements import molecules, organisms
-from .base import CFGOVPage
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.models.base import CFGOVPage
 
 
 class LandingPage(CFGOVPage):

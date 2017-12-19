@@ -6,6 +6,7 @@ import sys
 from collections import OrderedDict
 
 from django.conf import settings
+
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 from unipath import Path

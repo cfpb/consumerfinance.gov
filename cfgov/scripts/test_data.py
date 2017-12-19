@@ -1,16 +1,17 @@
 from django.contrib.auth.models import User
 from django.utils.timezone import datetime, timedelta
 
-from jobmanager.models.pages import JobListingPage
-from jobmanager.models.django import JobCategory, JobRegion
 from wagtail.wagtailcore.blocks import StreamValue
 
-from v1.models import (BlogPage, BrowsePage, BrowseFilterablePage,
-                       SublandingFilterablePage)
-from v1.models.snippets import ReusableText
-from v1.tests.wagtail_pages.helpers import publish_page, publish_changes
-
 from scripts import _atomic_helpers as atomic
+
+from jobmanager.models.django import JobCategory, JobRegion
+from jobmanager.models.pages import JobListingPage
+from v1.models import (
+    BlogPage, BrowseFilterablePage, BrowsePage, SublandingFilterablePage
+)
+from v1.models.snippets import ReusableText
+from v1.tests.wagtail_pages.helpers import publish_changes, publish_page
 
 
 def add_children(parent, num, slug):

@@ -1,12 +1,11 @@
 import logging
+from urlparse import urlsplit
 
-from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.conf.urls import url
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.utils.html import escape, format_html_join
-
-from urlparse import urlsplit
 
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks

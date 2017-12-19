@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from model_mommy import mommy
 
 from v1.atomic_elements.atoms import ImageBasic

@@ -1,21 +1,23 @@
 import json
 import logging
 
-import requests
 from django.conf import settings
 from django.contrib import messages
-from django.http import (Http404, JsonResponse)
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
+
+import requests
 from govdelivery.api import GovDelivery
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.forms import ExternalURLForm
 from core.utils import extract_answers_from_request
+
 
 logger = logging.getLogger(__name__)
 

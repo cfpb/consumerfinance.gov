@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from v1.models.akamai_backend import AkamaiBackend
 
+
 class TestAkamaiBackend(TestCase):
     def test_no_credentials_raises(self):
         credentials = {

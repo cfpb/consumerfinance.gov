@@ -1,7 +1,5 @@
 from wagtail.wagtailadmin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface
+    ObjectList, StreamFieldPanel, TabbedInterface
 )
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField

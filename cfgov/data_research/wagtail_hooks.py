@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 
 from wagtail.contrib.modeladmin.options import (
-    ModelAdmin, ModelAdminGroup, modeladmin_register)
+    ModelAdmin, ModelAdminGroup, modeladmin_register
+)
 
 from data_research.models import MortgageDataConstant, MortgageMetaData
 

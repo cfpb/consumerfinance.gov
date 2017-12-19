@@ -1,17 +1,17 @@
-import mock
 import unittest
 
 from django.test import TestCase
-from model_mommy import mommy
+
 from wagtail.wagtailcore.models import Page
 
+import mock
+from model_mommy import mommy
+from scripts import _atomic_helpers as atomic
+
 from data_research.management.commands.conference_export import (
-    Command,
-    ConferenceExporter,
-    get_registration_form_from_page
+    Command, ConferenceExporter, get_registration_form_from_page
 )
 from data_research.models import ConferenceRegistration
-from scripts import _atomic_helpers as atomic
 from v1.models import BrowsePage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
