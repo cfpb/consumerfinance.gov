@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 
-import mock
-
 import django
 
-from data_research.mortgage_utilities.fips_meta import load_constants
+import mock
+
 from data_research.models import MortgageDataConstant
+from data_research.mortgage_utilities.fips_meta import load_constants
 
 
 class LoadConstantsTest(django.test.TestCase):

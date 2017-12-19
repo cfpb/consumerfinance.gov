@@ -4,7 +4,7 @@ from datetime import datetime
 
 from django.core.management.base import BaseCommand
 
-from .util import upload_to_s3, update_agreement, update_issuer, clear_tables
+from .util import clear_tables, update_agreement, update_issuer, upload_to_s3
 
 
 class Command(BaseCommand):

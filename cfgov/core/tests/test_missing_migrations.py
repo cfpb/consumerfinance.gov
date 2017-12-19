@@ -1,9 +1,9 @@
 from cStringIO import StringIO
+
 from django.test import TestCase
 
 from core.scripts.missing_migrations import (
-    is_django_110_plus,
-    check_missing_migrations
+    check_missing_migrations, is_django_110_plus
 )
 
 

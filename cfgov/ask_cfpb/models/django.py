@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from collections import OrderedDict, Counter
 import HTMLParser
 import json
+from collections import Counter, OrderedDict
 
 from django import forms
 from django.apps import apps
@@ -13,16 +13,17 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils import html
 from django.utils.functional import cached_property
+
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel,
-    MultiFieldPanel,
-    FieldRowPanel)
+    FieldPanel, FieldRowPanel, MultiFieldPanel
+)
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from v1.util.migrations import get_or_create_page
+
 
 html_parser = HTMLParser.HTMLParser()
 

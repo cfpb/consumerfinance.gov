@@ -3,10 +3,11 @@ from __future__ import absolute_import, unicode_literals
 import csv
 import itertools
 import logging
-import requests
 import time
 
 from django.conf import settings
+
+import requests
 
 
 logger = logging.getLogger(__name__)

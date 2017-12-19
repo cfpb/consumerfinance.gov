@@ -1,6 +1,6 @@
-import mock
-
 from django.test import TestCase, override_settings
+
+import mock
 
 from transition_utilities.conditional_urls import include_if_app_enabled
 

@@ -1,12 +1,13 @@
 import json
 import re
+from urllib import urlencode
 
 from django.core.urlresolvers import reverse
 from django.http import Http404, QueryDict
 from django.test import RequestFactory, TestCase
+
 from mock import Mock, call, patch
 from requests_toolbelt.multipart.encoder import MultipartEncoder
-from urllib import urlencode
 
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment,

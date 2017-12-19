@@ -1,17 +1,14 @@
 from __future__ import unicode_literals
 
 import json
-import mock
-from cStringIO import StringIO
 import unittest
+from cStringIO import StringIO
 
+import mock
 import unicodecsv
 
 from data_research.mortgage_utilities.s3_utils import (
-    bake_csv_to_s3,
-    bake_json_to_s3,
-    read_in_s3_csv,
-    read_in_s3_json
+    bake_csv_to_s3, bake_json_to_s3, read_in_s3_csv, read_in_s3_json
 )
 
 

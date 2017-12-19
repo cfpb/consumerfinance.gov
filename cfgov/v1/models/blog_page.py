@@ -3,9 +3,10 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 
-from . import AbstractFilterPage, CFGOVPageManager
-from .. import blocks as v1_blocks
-from ..atomic_elements import organisms
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import organisms
+from v1.models.base import CFGOVPageManager
+from v1.models.learn_page import AbstractFilterPage
 
 
 class BlogPage(AbstractFilterPage):

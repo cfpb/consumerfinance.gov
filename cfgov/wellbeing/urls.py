@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 
 from wellbeing.views import ResultsView
 
+
 urlpatterns = [
     url(
         r'^$',
