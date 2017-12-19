@@ -1,13 +1,17 @@
 from django.core.cache import caches
 from django.test import Client, TestCase
-from mock import patch
 
 from wagtail.wagtailcore.blocks import StreamValue
 
+from mock import patch
 from scripts import _atomic_helpers as atomic
+
 from v1.models.blog_page import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
-from v1.tests.wagtail_pages.helpers import publish_changes, publish_page, save_new_page
+from v1.tests.wagtail_pages.helpers import (
+    publish_changes, publish_page, save_new_page
+)
+
 
 django_client = Client()
 cache = caches['post_preview']

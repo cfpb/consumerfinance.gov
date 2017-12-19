@@ -1,12 +1,15 @@
 from collections import Counter
+
 from django import forms
 from django.db.models import Q
 from django.forms import widgets
+
 from taggit.models import Tag
 
-from .models.base import Feedback
-from v1.util.categories import clean_categories
 from v1.util import ERROR_MESSAGES, ref
+from v1.util.categories import clean_categories
+
+from .models.base import Feedback
 
 
 class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):

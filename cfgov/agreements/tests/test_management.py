@@ -1,13 +1,12 @@
 import os.path
 from cStringIO import StringIO
 
-import mock
-
 from django.core import management
 from django.test import TestCase
 
-from agreements.models import Agreement, Issuer
+import mock
 from agreements.management.commands import util
+from agreements.models import Agreement, Issuer
 
 
 sample_dir = os.path.dirname(__file__) + '/sample_credit_agreements'

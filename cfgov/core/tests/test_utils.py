@@ -3,7 +3,8 @@ import unittest
 from django.test import TestCase
 
 from core.utils import (
-    NoMigrations, extract_answers_from_request, format_file_size)
+    NoMigrations, extract_answers_from_request, format_file_size
+)
 
 
 class FakeRequest(object):

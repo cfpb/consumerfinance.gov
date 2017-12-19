@@ -13,10 +13,11 @@ pages:
 - Back-end guidelines:
     - Wagtail and Django migrations: wagtail-migrations.md
     - Wagtail Pages vs Django views: django-to-wagtail.md
+    - Testing: testing-be.md
     - Translation: translation.md
 - Front-end guidelines:
     - Atomic structure and design: atomic-structure.md
-- Testing: testing.md
+    - Testing: testing-fe.md
 - Development tips: development-tips.md
 
 theme: mkDOCter
