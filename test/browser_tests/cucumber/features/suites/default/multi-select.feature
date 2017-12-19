@@ -12,7 +12,6 @@ Feature: MultiSelect Tags
     But no tags should be selected
     And the multi-select dropdown shouldn't be visible
 
-  @skip
   Scenario: Search input click
     When I click on the multi-select search input
     Then the multi-select dropdown should be visible
@@ -45,6 +44,7 @@ Feature: MultiSelect Tags
     And the multi-select dropdown length should be 0
     And the options field shouldn't contain the class "filtered"
 
+  @skip
   Scenario: Typing in search input, highlighting the first item
     When I click on the multi-select search input
     And I hit the down arrow on the multi-select
