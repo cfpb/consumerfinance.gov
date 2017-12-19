@@ -1,3 +1,7 @@
+
+const _assign = require( './assign' ).assign;
+
+
 /**
  * Stores/retrieves email signup data in localStorage
  */
@@ -102,8 +106,7 @@ function showOnScroll( elToShow, opts ) {
     }
   };
 
-  opts = Object.assign( defaults, opts || {} );
-
+  opts = _assign( defaults, opts || {} );
 
   function _getScrollTargetPosition() {
     const elHeight = elToShow.offsetHeight;

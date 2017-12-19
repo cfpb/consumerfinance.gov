@@ -1,5 +1,3 @@
-import logging
-
 from wagtail.wagtailadmin.edit_handlers import (
     ObjectList,
     StreamFieldPanel,
@@ -16,8 +14,6 @@ from v1.atomic_elements import molecules, organisms
 from v1.forms import FilterableListForm
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
-
-logger = logging.getLogger(__name__)
 
 
 class SublandingPage(CFGOVPage):
@@ -95,7 +91,6 @@ class SublandingPage(CFGOVPage):
                 CFGOVPage.objects.child_of_q(page)
             )
 
-            logger.info('Filtering by parent {}'.format(page))
             form = FilterableListForm(base_query=base_query)
             for post in form.get_page_set():
                 posts_list.append(post)
