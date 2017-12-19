@@ -14,13 +14,19 @@ init() {
   # Set cli_flag variable.
   source cli-flag.sh 'Front end' $1
 
+  if [ -z "$USE_DOCKER" ]; then
+    CLI_PREFIX=""
+  else
+    CLI_PREFIX="docker-compose run gulp "
+  fi
+
   if [ -f "package-lock.json" ]; then
     DEP_CHECKSUM=$(cat package-lock.json package.json | shasum -a 256)
   else
     DEP_CHECKSUM=$(cat package.json | shasum -a 256)
   fi
 
-  if [[ "$(node -v)" != 'v8.'* ]]; then
+  if [[ "$($CLI_PRFIX node -v)" != 'v8.'* ]]; then
     printf "\033[1;31mPlease install Node 8.x: 'nvm install 8'\033[0m\n"
   fi
 
@@ -47,7 +53,7 @@ install() {
   if [ "$cli_flag" = "development" ] ||
      [ "$cli_flag" = "test" ]; then
 
-    npm install -d --loglevel warn
+    $CLI_PREFIX npm install -d --loglevel warn
 
     # Protractor = JavaScript acceptance testing framework.
     echo 'Installing Protractor dependencies locally…'
@@ -55,10 +61,10 @@ install() {
     # directly from a GitHub.com URL which enforces rate-limiting. This can
     # cause installation failures when running automated testing. Currently
     # we don't rely on Gecko for testing.
-    ./$NODE_DIR/protractor/bin/webdriver-manager update --gecko false
+    $CLI_PREFIX ./$NODE_DIR/protractor/bin/webdriver-manager update --gecko false
 
   else
-    npm install --production --loglevel warn --no-optional
+    $CLI_PREFIX npm install --production --loglevel warn --no-optional
   fi
 }
 
@@ -85,25 +91,25 @@ clean_and_install() {
 # Run tasks to build the project for distribution.
 build() {
   echo 'Building project…'
-  gulp build
+  $CLI_PREFIX gulp build
 
   if [ "$cli_flag" = "production" ]; then
     echo 'Running additional build steps for on-demand and Nemo assets.'
-    gulp scripts:ondemand
-    gulp styles:ondemand
-    gulp scripts:nemo
-    gulp styles:nemo
+    $CLI_PREFIX gulp scripts:ondemand
+    $CLI_PREFIX gulp styles:ondemand
+    $CLI_PREFIX gulp scripts:nemo
+    $CLI_PREFIX gulp styles:nemo
   fi
 }
 
 # Execute requested (or all) functions.
 if [ "$1" == "init" ]; then
   init ""
-  clean_and_install
+  #clean_and_install
 elif [ "$1" == "build" ]; then
   build
 else
   init "$1"
-  clean_and_install
-  build
+  #clean_and_install
+  #build
 fi

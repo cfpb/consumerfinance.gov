@@ -22,6 +22,8 @@ else
       --virtualbox-memory "3072"
     vboxmanage controlvm default natpf1 "http,tcp,,8000,,8000"
     vboxmanage controlvm default natpf1 "https,tcp,,8443,,8443"
+    vboxmanage controlvm default natpf1 "gulpwatch1,tcp,,3000,,3000"
+    vboxmanage controlvm default natpf1 "gulpwatch2,tcp,,3001,,3001"
   fi
   # Harmless if the machine is already up:
   echo "Starting your machine..."

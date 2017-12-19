@@ -19,10 +19,11 @@ standalone() {
 }
 
 dockerized() {
-    ./frontend.sh $2
+    source mac-virtualbox-init.sh
+
+    ./frontend.sh docker $2
 
     touch .python_env
-    source mac-virtualbox-init.sh
 }
 
 # Execute requested (or all) functions.
