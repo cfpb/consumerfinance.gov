@@ -21,7 +21,12 @@ body {
     }
 }
 
+.full-bleed.content {
+    margin-top: 0em;
+}
+
 .es-ask__results-section {
+
     margin-top: 30px;
 
     h1 {
@@ -118,11 +123,12 @@ body {
     li {
         margin-bottom: 0.5em;
     }
-    
+
     .pagination a {
         border: none;
     }
-}
+
+ }
 
 /* End changes to make ES look like English Ask */
 
@@ -151,17 +157,40 @@ body {
     margin-top: 1.625em; /* 26/16 */
 }
 
+
+
 @media @respond-to-medium-screens {
 
+    .full-bleed.content {
+        margin-top: -2em;
+    }
+
+    .es-ask__results-section {
+        margin-top: 30px;
+    }
+
     .ac-search {
+        margin-top: 0em; 
+        margin-bottom: 1.625em; /* 26/16 */
     }
 
 }
 
 @media @respond-to-large-screens {
 
-    .ac-search {
+    .full-bleed.content {
+        margin-top: -2em;
+    }
 
+    .es-ask__results-section {
+        margin-top: 0em;
+    }
+
+    .ac-search {
+        margin-top: 0em;
+        margin-bottom: unit( 30px / 16px, em );
+        padding-top: 2em;
+        padding-bottom: 2em;
     }
 
 }
