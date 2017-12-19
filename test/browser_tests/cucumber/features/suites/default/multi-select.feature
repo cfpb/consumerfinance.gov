@@ -27,6 +27,7 @@ Feature: MultiSelect Tags
     Then the multi-select dropdown shouldn't be visible
     And the multi-select dropdown length should be 0
 
+  @skip
   Scenario: Typing in search input, returning matched results
     When I enter "tag0" in the search input
     Then the multi-select dropdown should display "tag0"
