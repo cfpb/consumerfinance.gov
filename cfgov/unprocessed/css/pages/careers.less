@@ -8,15 +8,15 @@
     
     .m-list_link-subtext {
        .u-link__colors( @black );
+       .u-webfont-regular();
        display: block;
-       font-family: 'AvenirNextLTW01-Regular',Arial,sans-serif;
-       margin-top: 2px;
+       margin-top: unit( 2px / @base-font-size-px, em );
     }
 }
 
 .pay-grade-link {
     margin-top: 5px;
     .respond-to-min( @bp-sm-min, {
-        margin: 0 0 0 5px;
+        margin: 0 0 0 unit( 5px / @base-font-size-px, em );
     } );
 }
