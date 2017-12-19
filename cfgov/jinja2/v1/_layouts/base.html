@@ -253,7 +253,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   available. Check for that CSS class here and act accordingly.
 #}
 <script>
-    function loadScript(t,e){var n=document.createElement('script');n.type='text/javascript',n.onload=function(){return e?e():null},n.src=t,document.getElementsByTagName('head')[0].appendChild(n)}
+    function loadScript(t){var n=document.createElement('script');n.type='text/javascript',n.src=t,document.getElementsByTagName('head')[0].appendChild(n)}
 
     if (document.body.parentElement.className.indexOf('no-js')===-1){
       {# Include site-wide JavaScript. #}
