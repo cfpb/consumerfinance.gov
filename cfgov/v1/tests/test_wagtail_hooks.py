@@ -1,8 +1,9 @@
-import mock
-
 from django.test import TestCase
-from wagtail.wagtailcore.models import Site
+
 from wagtail.tests.testapp.models import SimplePage
+from wagtail.wagtailcore.models import Site
+
+import mock
 
 from v1.wagtail_hooks import (
     RelativePageLinkHandler, check_permissions, form_module_handlers

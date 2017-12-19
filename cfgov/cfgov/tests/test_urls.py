@@ -7,6 +7,7 @@ from django.test import TestCase, override_settings
 
 from cfgov import urls
 
+
 # Whitelist is a list of *strings* that match the beginning of a regex string.
 # For example, ''^admin' will match any urlpattern regex that starts with
 # '^admin'.

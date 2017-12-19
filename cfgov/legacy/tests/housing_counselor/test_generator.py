@@ -4,7 +4,6 @@ import json
 import os
 import shutil
 import tempfile
-
 from unittest import TestCase
 
 from legacy.housing_counselor.generator import (

@@ -1,5 +1,6 @@
 from .test_nomigrations import *
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

@@ -1,9 +1,9 @@
 from __future__ import absolute_import, unicode_literals
 
-import responses
-
-from requests.exceptions import HTTPError
 from unittest import TestCase
+
+import responses
+from requests.exceptions import HTTPError
 
 from legacy.housing_counselor.fetcher import (
     HUD_COUNSELORS_URL, HUD_LANGUAGES_URL, HUD_SERVICES_URL,

@@ -1,9 +1,10 @@
-from scripts import _atomic_helpers as atomic
-
 from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
+
 from wagtail.wagtailcore.blocks import StreamValue
 from wagtail.wagtailimages.tests.utils import get_test_image_file
+
+from scripts import _atomic_helpers as atomic
 
 from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock
 from v1.models.browse_page import BrowsePage
@@ -13,6 +14,7 @@ from v1.models.learn_page import LearnPage
 from v1.models.snippets import Contact, Resource
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page
+
 
 django_client = Client()
 

@@ -2,10 +2,7 @@ from django.test import TestCase
 
 import mock
 
-from search.dotgov import (
-    search,
-    typeahead,
-)
+from search.dotgov import search, typeahead
 
 
 class SearchDotGovTestCase(TestCase):

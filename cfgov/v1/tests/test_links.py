@@ -2,6 +2,7 @@ from django.http import HttpRequest
 from django.template import engines
 from django.template.response import TemplateResponse
 from django.test import TestCase
+
 from wagtail.wagtailcore.models import Site
 
 from v1 import get_protected_url, parse_links
