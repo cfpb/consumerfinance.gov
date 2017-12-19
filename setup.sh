@@ -21,7 +21,11 @@ standalone() {
 dockerized() {
     source mac-virtualbox-init.sh
 
-    ./frontend.sh docker $2
+    docker-compose build
+
+    touch .USE_DOCKER
+
+    ./frontend.sh $2
 
     touch .python_env
 }

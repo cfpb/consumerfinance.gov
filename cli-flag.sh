@@ -37,6 +37,6 @@ elif [ "$cli_flag" = "production" ]; then
 fi
 
 export cli_flag=$cli_flag
-if [ -f ".USE_DOCKER" ]; then
+if [ -f ".USE_DOCKER" ] && [ ! -f "/.dockerenv" ]; then
   export USE_DOCKER=1
 fi

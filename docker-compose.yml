@@ -30,7 +30,7 @@ services:
         ports:
             - "3000:3000"
             - "3001:3001"
-        entrypoint: ['gulp','watch']
+        command: ['gulp','watch']
         volumes:
                 - ./:/src/cfgov-refresh
     python:
