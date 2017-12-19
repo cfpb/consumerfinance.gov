@@ -1,5 +1,4 @@
 import itertools
-
 from unittest import TestCase
 
 from v1.util.ref import categories, get_appropriate_categories
@@ -35,4 +34,3 @@ class TestGetAppropriateCategories(TestCase):
     def test_should_return_all_matches(self):
         result = get_appropriate_categories(['Op-Ed', 'Testimony', 'Speech', 'Press Release'], 'newsroom')
         self.assertEqual(len(result), 4)
-

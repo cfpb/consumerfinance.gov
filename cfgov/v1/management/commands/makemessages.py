@@ -12,6 +12,7 @@ import re
 from django import VERSION
 from django.core.management.commands import makemessages
 
+
 if VERSION[:2] < (1, 11):
     from django.utils.translation import trans_real
 else:

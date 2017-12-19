@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
 
 import argparse
-import boto3
 import logging
+
+import boto3
 
 from alerts.github_alert import GithubAlert
 from alerts.mattermost_alert import MattermostAlert
+
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler())

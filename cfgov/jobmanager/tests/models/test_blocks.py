@@ -2,16 +2,18 @@ from datetime import date
 
 from django.test import TestCase
 from django.utils import timezone
+
+from wagtail.wagtailcore.models import Page, Site
+
 from mock import Mock
 from model_mommy import mommy
-from wagtail.wagtailcore.models import Page, Site
+from scripts._atomic_helpers import job_listing_list
 
 from cfgov.test import HtmlMixin
 from jobmanager.models.blocks import JobListingList, JobListingTable
 from jobmanager.models.django import Grade, JobCategory, JobRegion
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel
-from scripts._atomic_helpers import job_listing_list
 from v1.models import SublandingPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data

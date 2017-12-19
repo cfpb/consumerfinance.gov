@@ -181,25 +181,6 @@ The audit will run against
 
 # Unit testing
 
-## Django and Python unit tests
-
-To run the the full suite of Python 2.7 unit tests using Tox, cd to the project
-root, make sure the `TOXENV` variable is set in your `.env` file and then run:
-
-```
-tox
-```
-
-If you haven't changed any installed packages and you don't need to test all migrations, you can run a much faster Python code test using:
-```
-tox -e fast
-```
-
-To see Python code coverage information, run
-```
-./show_coverage.sh
-```
-
 ## JavaScript unit tests
 
 JavaScript module unit tests are run with `gulp test:unit`.
