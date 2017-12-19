@@ -10,6 +10,7 @@ from v1.forms import FeedbackForm, ReferredFeedbackForm, SuggestionFeedbackForm
 
 from .. import Handler
 
+
 FEEDBACK_TYPES = {
     'helpful': FeedbackForm,
     'referred': ReferredFeedbackForm,

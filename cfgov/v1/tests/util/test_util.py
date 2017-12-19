@@ -1,10 +1,12 @@
 from datetime import date
 import json
 
-import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
+
 from wagtail.wagtailcore.models import PageRevision
+
+import mock
 
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages import helpers

@@ -1,26 +1,25 @@
 # Python 2 only
 from __future__ import absolute_import
 
+import functools
 import os
 import os.path
-import functools
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.template import loader, RequestContext
+from django.template import RequestContext, loader
 from django.utils.html import mark_safe
 
-from jinja2 import Environment
 import jinja2.runtime
+from flags.template_functions import flag_disabled, flag_enabled
+from jinja2 import Environment
 from jinja2.runtime import Context
 
-from .query import QueryFinder, more_like_this, get_document, when
-from .filters import selected_filters_for_field, is_filter_selected
-from .templates import get_date_string, get_date_obj
+from .filters import is_filter_selected, selected_filters_for_field
 from .middleware import get_request
+from .query import QueryFinder, get_document, more_like_this, when
+from .templates import get_date_obj, get_date_string
 
-
-from flags.template_functions import flag_enabled, flag_disabled
 
 default_app_config = 'sheerlike.apps.SheerlikeConfig'
 

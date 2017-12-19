@@ -1,13 +1,13 @@
 from __future__ import unicode_literals
 
 import datetime
-
 import HTMLParser
+
 from django.utils import html
 
+from knowledgebase.models import Question
 from paying_for_college.csvkit import csvkit
 
-from knowledgebase.models import Question
 
 html_parser = HTMLParser.HTMLParser()
 

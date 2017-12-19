@@ -8,6 +8,7 @@ from unipath import Path
 
 from ..util import admin_emails
 
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
@@ -94,7 +95,7 @@ OPTIONAL_APPS = [
      'complaintdatabase', 'complaint_common',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
-    {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
+    {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
@@ -119,7 +120,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'v1.middleware.StagingMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
@@ -492,9 +492,6 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         },
     }
 
-
-# Staging site
-STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
 
 # CSP Whitelists
 

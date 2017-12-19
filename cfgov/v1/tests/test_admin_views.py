@@ -1,7 +1,7 @@
+from django.contrib.auth.models import Group, Permission, User
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
-from django.contrib.auth.models import User, Permission, Group
-from django.contrib.contenttypes.models import ContentType
 
 import mock
 

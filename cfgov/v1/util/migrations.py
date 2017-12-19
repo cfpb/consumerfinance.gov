@@ -2,8 +2,10 @@ import json
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
-from treebeard.mp_tree import MP_Node
+
 from wagtail.wagtailcore.blocks import StreamValue
+
+from treebeard.mp_tree import MP_Node
 
 
 def get_page(page_cls, slug):
