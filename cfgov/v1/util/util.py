@@ -168,3 +168,18 @@ def get_streamfields(page):
         if isinstance(value, StreamValue):
             blocks_dict.update({key: value})
     return blocks_dict
+
+
+def extended_strftime(dt, format):
+    """
+    Extend strftime with additional patterns:
+    _m for custom month abbreviations,
+    _d for day values without leading zeros.
+    """
+    _MONTH_ABBREVIATIONS = [None, 'Jan.', 'Feb.', 'Mar.', 'Apr.',
+                            'May', 'Jun.', 'Jul.', 'Aug.',
+                            'Sept.', 'Oct.', 'Nov.', 'Dec.']
+
+    format = format.replace('%_d', dt.strftime('%d').lstrip('0'))
+    format = format.replace('%_m', _MONTH_ABBREVIATIONS[dt.month])
+    return dt.strftime(format)
