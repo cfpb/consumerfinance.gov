@@ -2,7 +2,6 @@
 const atomicHelpers = require( '../modules/util/atomic-helpers' );
 const breakpointState = require( '../modules/util/breakpoint-state' );
 const EventObserver = require( '../modules/util/EventObserver' );
-const fnBind = require( '../modules/util/fn-bind' ).fnBind;
 const standardType = require( '../modules/util/standard-type' );
 
 /**
@@ -41,8 +40,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
   // TODO: Replace function of _that with Function.prototype.bind.
   const _that = this;
-  const _collapseBinded = fnBind( collapse, this );
-  const _expandBinded = fnBind( expand, this );
+  const _collapseBinded = collapse.bind( this );
+  const _expandBinded = expand.bind( this );
 
   /* Reference to MutationObserver for watching DOM changes within the content.
      No-op Function for MutationObserver.disconnect() is set in case destroy()

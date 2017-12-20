@@ -15,6 +15,7 @@ pages:
     - Wagtail Pages vs Django views: django-to-wagtail.md
     - Testing: testing-be.md
     - Translation: translation.md
+    - Caching: caching.md
 - Front-end guidelines:
     - Atomic structure and design: atomic-structure.md
     - Testing: testing-fe.md

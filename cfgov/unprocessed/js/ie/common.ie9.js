@@ -1,3 +1,7 @@
+/* ==========================================================================
+   Common application-wide scripts for Internet Explorer 9
+   ========================================================================== */
+
 /* classList.js: Cross-browser full element.classList implementation.
    2014-07-23
    By Eli Grey, http://eligrey.com
@@ -223,7 +227,5 @@ if ( 'document' in self ) {
 
       testElement = null;
     } )();
-
   }
-
 }

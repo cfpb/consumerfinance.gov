@@ -4,7 +4,6 @@ const breakpointState = require( '../modules/util/breakpoint-state' );
 const ClearableInput = require( '../modules/ClearableInput' );
 const EventObserver = require( '../modules/util/EventObserver' );
 const FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
-const fnBind = require( '../modules/util/fn-bind' ).fnBind;
 const MoveTransition = require( '../modules/transition/MoveTransition' );
 const standardType = require( '../modules/util/standard-type' );
 
@@ -68,7 +67,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     // Initialize new clearable input behavior on the input-contains-label.
     const clearableInput = new ClearableInput( inputContainsLabel );
     clearableInput.init();
-    const handleExpandBeginBinded = fnBind( _handleExpandBegin, this );
+    const handleExpandBeginBinded = _handleExpandBegin.bind( this );
     _flyoutMenu.addEventListener( 'expandBegin', handleExpandBeginBinded );
     _flyoutMenu.addEventListener( 'collapseBegin', _handleCollapseBegin );
     _flyoutMenu.addEventListener( 'collapseEnd', _handleCollapseEnd );
