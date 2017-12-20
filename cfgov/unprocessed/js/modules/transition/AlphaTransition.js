@@ -1,7 +1,6 @@
 // Required modules.
 const EventObserver = require( '../../modules/util/EventObserver' );
 const BaseTransition = require( './BaseTransition' );
-const fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 
 // Exported constants.
 const CLASSES = {
@@ -29,7 +28,7 @@ function AlphaTransition( element ) {
    */
   function init() {
     _baseTransition.init();
-    const _transitionCompleteBinded = fnBind( _transitionComplete, this );
+    const _transitionCompleteBinded = _transitionComplete.bind( this );
     _baseTransition.addEventListener( BaseTransition.END_EVENT,
       _transitionCompleteBinded );
     return this;
