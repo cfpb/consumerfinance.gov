@@ -5,7 +5,6 @@ set -x
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
-    source $HOME/.nvm/nvm.sh
     gulp "test" --travis
     bash <(curl -s https://codecov.io/bash) -F frontend
 elif [ "$RUNTEST" == "backend" ]; then
@@ -15,8 +14,6 @@ elif [ "$RUNTEST" == "backend" ]; then
     tox -e missing-migrations
     bash <(curl -s https://codecov.io/bash) -F backend
 elif [ "$RUNTEST" == "acceptance" ]; then
-    source $HOME/.nvm/nvm.sh
-    export DISPLAY=:99.0
-    sleep 3
+    google-chrome-stable --headless --disable-gpu http://localhost &
     gulp test:acceptance
 fi
