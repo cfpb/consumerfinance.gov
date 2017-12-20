@@ -253,13 +253,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   available. Check for that CSS class here and act accordingly.
 #}
 <script>
-    function loadScript(t){var n=document.createElement('script');n.type='text/javascript',n.src=t,document.getElementsByTagName('head')[0].appendChild(n)}
-
-    if (document.body.parentElement.className.indexOf('no-js')===-1){
-      {# Include site-wide JavaScript. #}
-        loadScript('{{ static('js/routes/common.js') }}');
-
-      {# Check and include template-level JavaScript. #}
+    {# Minified dynamic JavaScript loader that injects a script tag in the head
+       of the page. It also provides a callback parameter. #}
+    function loadScript(t,e){var n=document.createElement('script');n.type='text/javascript',n.onload=function(){return e?e():null},n.src=t,document.getElementsByTagName('head')[0].appendChild(n)}
+    {# Check and include template-level JavaScript. #}
+    function loadScriptTemplate(){
       {% macro template_js() %}
          {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
       {% endmacro %}
@@ -267,16 +265,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       {% if js_source | length > 0 %}
         loadScript('{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}');
       {% endif %}
-
-      {# Check and include component-level JavaScript. #}
+    }
+    {# Check and include component-level JavaScript. #}
+    function loadScriptComponent(){
       {% if page and page.media %}
          {% for js in page.media %}
            loadScript('{{ static('js/routes/on-demand/' + js) }}');
          {% endfor %}
       {% endif %}
-
-      {# TODO: Remove the below block when all pages
-              using this template are moved to Wagtail. #}
+    }
+    {# TODO: Remove the below block when all pages
+             using this template are moved to Wagtail. #}
+    function loadScriptPage(){
       {# Check and include page-level JavaScript. #}
       {% macro page_js() %}
          {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
@@ -285,6 +285,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       {% if js_source | length > 0 %}
         loadScript('{{ static('js/routes/' + request.path[1:] + 'index.js') }}');
       {% endif %}
+    }
+
+    if (document.body.parentElement.className.indexOf('no-js')===-1){
+      {# Include site-wide JavaScript. #}
+      loadScript('{{ static('js/routes/common.js') }}', function(){
+        loadScriptTemplate();loadScriptComponent();loadScriptPage();
+      });
     }
 </script>
 
