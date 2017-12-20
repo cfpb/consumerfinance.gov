@@ -9,20 +9,16 @@ let multiSelect;
 
 chai.use( chaiAsPromised );
 
-defineSupportCode( function( { Then, When, Before, setDefaultTimeout } ) {
+defineSupportCode( function( { Then, When, Before } ) {
 
   Before( function() {
     multiSelect = new MultiSelect();
-    setDefaultTimeout( 60 * 1000 );
   } );
 
   When( /I (.*) on the multi-select search input/,
-    function( searchInputAction ) {
-
-      return browser.wait( EC.visibilityOf( multiSelect.elements.search ) )
-        .then( () => {
-          multiSelect.elements.search[searchInputAction]();
-        } );
+    async function( searchInputAction ) {
+      await browser.wait( EC.visibilityOf( multiSelect.elements.search ) );
+      await multiSelect.elements.search[searchInputAction]();
     }
   );
 
