@@ -4,7 +4,6 @@ const breakpointState = require( '../modules/util/breakpoint-state' );
 const dataHook = require( '../modules/util/data-hook' );
 const EventObserver = require( '../modules/util/EventObserver' );
 const FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
-const fnBind = require( '../modules/util/fn-bind' ).fnBind;
 const MegaMenuDesktop = require( '../organisms/MegaMenuDesktop' );
 const MegaMenuMobile = require( '../organisms/MegaMenuMobile' );
 const MoveTransition = require( '../modules/transition/MoveTransition' );
@@ -70,10 +69,14 @@ function MegaMenu( element ) {
     // Initialize screen-size specific behaviors.
     _desktopNav = new MegaMenuDesktop( _menus ).init();
     _mobileNav = new MegaMenuMobile( _menus ).init();
-    _mobileNav.addEventListener( 'rootExpandBegin',
-      fnBind( _handleRootExpandBegin, this ) );
-    _mobileNav.addEventListener( 'rootCollapseEnd',
-      fnBind( _handleRootCollapseEnd, this ) );
+    _mobileNav.addEventListener(
+      'rootExpandBegin',
+      _handleRootExpandBegin.bind( this )
+    );
+    _mobileNav.addEventListener(
+      'rootCollapseEnd',
+      _handleRootCollapseEnd.bind( this )
+    );
 
     window.addEventListener( 'resize', _resizeHandler );
     // Pipe window resize handler into orientation change on supported devices.
@@ -175,7 +178,7 @@ function MegaMenu( element ) {
       onlyDesktop = true;
     }
 
-    if ( breakpointState.isInDesktop() ) {
+    if ( breakpointState.isInDesktop() || onlyDesktop ) {
       _mobileNav.suspend();
       _desktopNav.resume();
     } else {
