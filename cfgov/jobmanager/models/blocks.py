@@ -2,7 +2,6 @@ from __future__ import absolute_import
 
 from django.template.loader import render_to_string
 from django.utils import timezone
-
 from wagtail.wagtailcore import blocks
 
 from v1.atomic_elements import organisms
@@ -15,9 +14,11 @@ class OpenJobListingsMixin(object):
 
         # Hide any jobs that have not been published.
         qs = qs.filter(live=True)
+
         if value.get('hide_closed'):
             today = timezone.now().date()
             qs = qs.filter(open_date__lte=today, close_date__gte=today)
+
         return qs
 
 
