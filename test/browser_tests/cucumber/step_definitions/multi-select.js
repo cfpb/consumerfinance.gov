@@ -9,10 +9,11 @@ let multiSelect;
 
 chai.use( chaiAsPromised );
 
-defineSupportCode( function( { Then, When, Before } ) {
+defineSupportCode( function( { Then, When, Before, setDefaultTimeout } ) {
 
   Before( function() {
     multiSelect = new MultiSelect();
+    setDefaultTimeout( 60 * 1000 );
   } );
 
   When( /I (.*) on the multi-select search input/,
