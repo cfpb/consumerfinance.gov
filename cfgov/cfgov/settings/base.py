@@ -639,6 +639,11 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
+
+    # For Wagtail pages that need to expose their latest drafts on beta
+    'EXPOSE_DRAFT_ON_BETA': {
+        'site': 'beta.consumerfinance.gov',
+    },
 }
 
 
