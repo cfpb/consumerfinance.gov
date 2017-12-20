@@ -94,7 +94,7 @@ function scriptsModern() {
 function scriptsIE() {
   return _processScript(
     webpackConfig.commonConf,
-    '/js/ie/common.ie.js',
+    '/js/ie/common.ie9.js',
     '/js/ie/'
   );
 }
@@ -194,18 +194,6 @@ function scriptsNemo() {
 }
 
 /**
- * Bundle Es5 shim scripts.
- * @returns {PassThrough} A source stream.
- */
-function scriptsEs5Shim() {
-  return _processScript(
-    webpackConfig.commonConf,
-    '/js/shims/es5-shim.js',
-    '/js/'
-  );
-}
-
-/**
  * Bundle scripts in /js/routes/apps/owning-a-home/
  * and factor out common modules into common.js.
  * @returns {PassThrough} A source stream.
@@ -233,7 +221,6 @@ gulp.task( 'scripts:ondemand', [
   'scripts:ondemand:nonresponsive'
 ] );
 gulp.task( 'scripts:nemo', scriptsNemo );
-gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
@@ -242,6 +229,5 @@ gulp.task( 'scripts', [
   'scripts:ie',
   'scripts:external',
   'scripts:nemo',
-  'scripts:es5-shim',
   'scripts:spanish'
 ] );
