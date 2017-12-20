@@ -17,8 +17,6 @@ elif [ "$RUNTEST" == "backend" ]; then
 elif [ "$RUNTEST" == "acceptance" ]; then
     source $HOME/.nvm/nvm.sh
     export DISPLAY=:99.0
-    sh -e /etc/init.d/xvfb start &
     sleep 3
-    export HEADLESS_CHROME_BINARY=/usr/bin/google-chrome-beta
     gulp test:acceptance
 fi
