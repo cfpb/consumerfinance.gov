@@ -10,6 +10,7 @@
 set -e
 
 standalone() {
+    rm -rf .USE_DOCKER
     ./frontend.sh $1
     ./backend.sh $1
 
