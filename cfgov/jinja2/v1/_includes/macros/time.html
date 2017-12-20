@@ -19,7 +19,7 @@
 
 {% macro render(datetime,
                 show_value_for={'date':true, 'time':true, 'timezone':true},
-                text_format=False) %}
+                text_format) %}
 <span class="datetime">
     {% if show_value_for.date == true  %}
     <time class="datetime_date" datetime="{{ dt.format_datetime(datetime) }}">
