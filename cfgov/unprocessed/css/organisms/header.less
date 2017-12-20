@@ -31,11 +31,17 @@
                 <div class="m-global-header-cta"></div>
                 <div class="m-global-search"></div>
                 <a class="o-header_logo" href="/">
-                    <img class="header_logo"
-                         src="{{ static('img/logo.png')}}"
-                         alt="Consumer Financial Protection Bureau"
-                         width="237"
-                         height="50">
+                    <img class="o-header_logo-img"
+                         src="{{ static('img/logo_50h.png') }}"
+                         srcset="{{ static('img/logo_34h.png') }} 161w,
+                                 {{ static('img/logo_34h@2x.png') }} 322w,
+                                 {{ static('img/logo_34h@3x.png') }} 483w,
+                                 {{ static('img/logo_34h@4x.png') }} 644w,
+                                 {{ static('img/logo_50h.png') }} 237w,
+                                 {{ static('img/logo_50h@2x.png') }} 474w"
+                         sizes="(max-width: 900px) 161px,
+                                237px"
+                         alt="Consumer Financial Protection Bureau">
                 </a>
             </div>
             [o-mega-menu]
@@ -137,8 +143,11 @@
         // Tablet/mobile sizes.
         .respond-to-max( @bp-sm-max, {
             .js & {
-                // Offset logo by width of mega menu trigger + 10px gap.
-                margin-left: @mobile_trigger_ht__px + ( @grid_gutter-width / 2 );
+                // Offset logo by width of mega menu trigger + 15px gap.
+                // The margin-left starts inside the 15px padding of the page
+                // already, so a value that matches the width of the trigger
+                // will give it the desired spacing to the right of the trigger.
+                margin-left: @mobile_trigger_ht__px;
             }
         } );
 
