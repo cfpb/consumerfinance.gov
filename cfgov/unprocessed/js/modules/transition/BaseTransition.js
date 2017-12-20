@@ -1,6 +1,5 @@
 // Required modules.
 const EventObserver = require( '../../modules/util/EventObserver' );
-const fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 
 /**
  * BaseTransition
@@ -32,8 +31,8 @@ function BaseTransition( element, classes ) {
    * @returns {BaseTransition} An instance.
    */
   function init() {
-    _transitionCompleteBinded = fnBind( _transitionComplete, this );
-    _addEventListenerBinded = fnBind( _addEventListener, this );
+    _transitionCompleteBinded = _transitionComplete.bind( this );
+    _addEventListenerBinded = _addEventListener.bind( this );
     setElement( element );
 
     return this;
