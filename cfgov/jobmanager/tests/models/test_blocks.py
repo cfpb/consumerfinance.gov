@@ -2,16 +2,18 @@ from datetime import date
 
 from django.test import TestCase
 from django.utils import timezone
+
+from wagtail.wagtailcore.models import Page, Site
+
 from mock import Mock
 from model_mommy import mommy
-from wagtail.wagtailcore.models import Page, Site
+from scripts._atomic_helpers import job_listing_list
 
 from cfgov.test import HtmlMixin
 from jobmanager.models.blocks import JobListingList, JobListingTable
 from jobmanager.models.django import Grade, JobCategory, JobRegion
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel
-from scripts._atomic_helpers import job_listing_list
 from v1.models import SublandingPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
@@ -66,7 +68,7 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         )
 
         self.assertHtmlRegexpMatches(html, (
-            '<ul class="m-list m-list__unstyled">.*</ul>'
+            '<ul class="m-list m-list__unstyled m-list__links">.*</ul>'
         ))
 
     def test_html_formatting(self):
@@ -89,14 +91,16 @@ class JobListingListTestCase(HtmlMixin, TestCase):
 
         self.assertHtmlRegexpMatches(html, (
             '<li class="m-list_item">'
-            '<a class="m-list_link" href=".*">Assistant</a>'
-            '<p class="a-date">CLOSING<span class="datetime">'
-            '.*APR 21, 2099.*</span></p>'
+            '<a class="m-list_link" href=".*">Assistant'+
+            '<span class="m-list_link-subtext">CLOSING<span class="datetime">' + 
+            '.*APR 21, 2099.*</span></span>'
+            '</a>'
             '</li>'
             '<li class="m-list_item">'
-            '<a class="m-list_link" href=".*">Manager</a>'
-            '<p class="a-date">CLOSING<span class="datetime">.'
-            '*AUG 05, 2099.*</span></p>'
+            '<a class="m-list_link" href=".*">Manager'+
+            '<span class="m-list_link-subtext">CLOSING<span class="datetime">' + 
+            '.*AUG 05, 2099.*</span></span>'
+            '</a>'
             '</li>'
         ))
 

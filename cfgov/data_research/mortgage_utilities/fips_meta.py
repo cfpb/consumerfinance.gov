@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 import logging
 
 from django.conf import settings
+
 import unicodecsv
+
 
 PROJECT_ROOT = settings.PROJECT_ROOT
 FIPS_DATA_PATH = (

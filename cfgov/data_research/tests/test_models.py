@@ -1,20 +1,17 @@
 from __future__ import unicode_literals
+
 import datetime
 import unittest
-
-from model_mommy import mommy
 
 import django
 from django.http import HttpRequest
 
+from model_mommy import mommy
+
 from data_research.models import (
-    County, CountyMortgageData,
-    MortgageDataConstant,
-    MortgageBase, MortgageMetaData,
-    MortgagePerformancePage,
-    MetroArea, MSAMortgageData, NonMSAMortgageData,
-    NationalMortgageData,
-    State, StateMortgageData
+    County, CountyMortgageData, MetroArea, MortgageBase, MortgageDataConstant,
+    MortgageMetaData, MortgagePerformancePage, MSAMortgageData,
+    NationalMortgageData, NonMSAMortgageData, State, StateMortgageData
 )
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 

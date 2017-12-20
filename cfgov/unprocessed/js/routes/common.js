@@ -5,8 +5,9 @@
 // Global modules.
 require( '../modules/focus-target' ).init();
 
-/* GLOBAL ATOMIC ELEMENTS.
-   Organisms. */
+// GLOBAL ATOMIC ELEMENTS.
+
+// Organisms.
 const Header = require( '../organisms/Header.js' );
 const header = new Header( document.body );
 // Initialize header by passing it reference to global overlay atom.

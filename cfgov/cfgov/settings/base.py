@@ -8,6 +8,7 @@ from unipath import Path
 
 from ..util import admin_emails
 
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
@@ -119,7 +120,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'v1.middleware.StagingMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
@@ -210,11 +210,6 @@ MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
 
-
-#Enabling compression for use in base.html
-COMPRESS_ENABLED = True
-
-COMPRESS_JS_FILTERS = []
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -492,9 +487,6 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         },
     }
 
-
-# Staging site
-STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
 
 # CSP Whitelists
 

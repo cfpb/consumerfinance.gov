@@ -1,25 +1,25 @@
 from __future__ import unicode_literals
+
 import json
 from urlparse import urljoin
 
-from bs4 import BeautifulSoup as bs
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.defaultfilters import slugify
-from haystack.query import SearchQuerySet
 from haystack.inputs import Clean
+from haystack.query import SearchQuerySet
+
 from wagtail.wagtailcore.models import Site
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
+from bs4 import BeautifulSoup as bs
 from flags.state import flag_enabled
 
 from ask_cfpb.models import (
-    Answer,
-    AnswerPage,
-    AnswerResultsPage,
-    EnglishAnswerProxy,
-    SpanishAnswerProxy)
+    Answer, AnswerPage, AnswerResultsPage, EnglishAnswerProxy,
+    SpanishAnswerProxy
+)
 
 
 def annotate_links(answer_text):
@@ -116,6 +116,17 @@ def ask_search(request, language='en', as_json=False):
     clean_qstring = clean_query.query_string.strip()
     qstring = clean_qstring
     query_sqs = sqs.filter(content=clean_query)
+    results_page = get_object_or_404(
+        AnswerResultsPage,
+        language=language,
+        slug=_map['slug']
+    )
+
+    # If there's no query string, don't search
+    if not qstring:
+        results_page.query = ''
+        results_page.result_query = ''
+        return results_page.serve(request)
 
     # If we have no results from our query, let's try to suggest a better one
     suggestion = sqs.spelling_suggestion(qstring)
@@ -144,18 +155,16 @@ def ask_search(request, language='en', as_json=False):
         json_results = json.dumps(results)
         return HttpResponse(json_results, content_type='application/json')
     else:
-        page = get_object_or_404(
-            AnswerResultsPage,
-            language=language,
-            slug=_map['slug'])
-        page.query = clean_qstring
-        page.result_query = qstring
-        page.suggestion = suggestion
-        page.answers = []
+        results_page.query = clean_qstring
+        results_page.result_query = qstring
+        results_page.suggestion = suggestion
+        results_page.answers = []
 
         for result in query_sqs:
-            page.answers.append((result.url, result.autocomplete, result.text))
-        return page.serve(request)
+            results_page.answers.append(
+                (result.url, result.autocomplete, result.text)
+            )
+        return results_page.serve(request)
 
 
 def ask_autocomplete(request, language='en'):

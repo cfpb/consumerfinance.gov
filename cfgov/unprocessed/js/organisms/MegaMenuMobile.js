@@ -1,6 +1,5 @@
 // Required modules.
 const EventObserver = require( '../modules/util/EventObserver' );
-const fnBind = require( '../modules/util/fn-bind' ).fnBind;
 const MoveTransition = require( '../modules/transition/MoveTransition' );
 const treeTraversal = require( '../modules/util/tree-traversal' );
 
@@ -19,11 +18,11 @@ function MegaMenuMobile( menus ) {
   const _bodyDom = document.body;
 
   // Binded functions.
-  const _handleTriggerClickBinded = fnBind( _handleTriggerClick, this );
-  const _handleExpandBeginBinded = fnBind( _handleExpandBegin, this );
-  const _handleCollapseBeginBinded = fnBind( _handleCollapseBegin, this );
-  const _handleCollapseEndBinded = fnBind( _handleCollapseEnd, this );
-  const _suspendBinded = fnBind( suspend, this );
+  const _handleTriggerClickBinded = _handleTriggerClick.bind( this );
+  const _handleExpandBeginBinded = _handleExpandBegin.bind( this );
+  const _handleCollapseBeginBinded = _handleCollapseBegin.bind( this );
+  const _handleCollapseEndBinded = _handleCollapseEnd.bind( this );
+  const _suspendBinded = suspend.bind( this );
 
   // Tree model.
   const _menus = menus;

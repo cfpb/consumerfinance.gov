@@ -1,11 +1,13 @@
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.six import string_types
-from wagtail.wagtailimages.image_operations import (DoNothingOperation,
-                                                    MinMaxOperation,
-                                                    WidthHeightOperation)
-from wagtail.wagtailimages.models import (AbstractImage, AbstractRendition,
-                                          Filter, Image)
+
+from wagtail.wagtailimages.image_operations import (
+    DoNothingOperation, MinMaxOperation, WidthHeightOperation
+)
+from wagtail.wagtailimages.models import (
+    AbstractImage, AbstractRendition, Filter, Image
+)
 
 
 class CFGOVImage(AbstractImage):

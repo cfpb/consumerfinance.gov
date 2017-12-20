@@ -1,22 +1,25 @@
 from __future__ import unicode_literals
 
 import json
-import mock
-
-from model_mommy import mommy
 
 from django.apps import apps
-from django.core.urlresolvers import reverse, NoReverseMatch
-from django.http import HttpRequest, Http404, QueryDict
+from django.core.urlresolvers import NoReverseMatch, reverse
+from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
 from django.utils import timezone
+
 from wagtail.wagtailcore.models import Site
 from wagtailsharing.models import SharingSite
 
+import mock
+from model_mommy import mommy
+
 from ask_cfpb.models import (
-    AnswerResultsPage, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
-from ask_cfpb.views import annotate_links, redirect_ask_search, ask_search
-from v1.util.migrations import get_or_create_page, get_free_path
+    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerResultsPage
+)
+from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
+from v1.util.migrations import get_free_path, get_or_create_page
+
 
 now = timezone.now()
 
@@ -203,6 +206,31 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(mock_sqs_instance.filter.call_count, 1)
         self.assertTrue(mock_sqs_instance.filter.called_with(
             language='en', q='payday'))
+
+    @mock.patch('ask_cfpb.views.SearchQuerySet')
+    def test_en_search_no_term(self, mock_sqs):
+        from v1.util.migrations import get_or_create_page
+        mock_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerResultsPage',
+            'Mock results page',
+            'ask-cfpb-search-results',
+            self.ROOT_PAGE,
+            language='en')
+
+        response = self.client.get(reverse(
+            'ask-search-en'), {'q': ''})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.context_data['page'],
+            mock_page)
+        self.assertEqual(
+            response.context_data['page'].query,
+            '')
+        self.assertEqual(
+            response.context_data['page'].result_query,
+            '')
 
     @override_settings(FLAGS={'ASK_SEARCH_TYPOS': {'boolean': True}})
     @mock.patch('ask_cfpb.views.SearchQuerySet')

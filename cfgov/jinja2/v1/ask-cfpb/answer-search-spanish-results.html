@@ -64,7 +64,8 @@
 
                 <div class="share s-hide-on-small" data-set="share"></div><!-- .share -->
 
-            {% else %}
+            {% elif not results and page.query %}
+
                 <div class="primary span8">
                     <header class="header">
                         <h3>No pudimos encontrar resultados para "<em>{{ page.result_query }}</em>"</h3>
@@ -79,6 +80,13 @@
                         <li><a href="/obtener-respustas">Obtener respuestas</a></li>
                     </ul>
                 </div>
+
+            {% else %}
+
+                <div class="primary span8">
+                    <h4 class="ac-search-prompt">Escriba un término de búsqueda en el cuadro de texto.</h4>
+                </div> 
+
             {% endif %}
 
         </section><!-- .content -->

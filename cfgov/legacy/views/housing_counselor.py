@@ -1,6 +1,5 @@
 import os
 import re
-import requests
 import sys
 
 from django.conf import settings
@@ -8,6 +7,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils.functional import cached_property
 from django.views.generic import TemplateView, View
+
+import requests
 
 from legacy.forms import HousingCounselorForm
 from v1.s3utils import https_s3_url_prefix

@@ -5,9 +5,6 @@
    Copyright (c) 2014 Alexey Maslennikov
    ========================================================================== */
 
-
-const fnBind = require( './fn-bind' ).fnBind;
-
 /**
  * @param {object} object - JavaScript object.
  * @returns {boolean} True if object is plain Javascript object.
@@ -29,7 +26,7 @@ function assign( destination ) {
   let hasOwnProp;
   for ( let i = 1; i < arguments.length; i++ ) {
     const source = arguments[i] || {};
-    hasOwnProp = fnBind( Object.hasOwnProperty, source );
+    hasOwnProp = Object.hasOwnProperty.bind( source );
     for ( const key in source ) {
       if ( hasOwnProp( key ) ) {
         const value = source[key];

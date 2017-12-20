@@ -4,7 +4,9 @@ import logging
 
 from data_research.models import County, MetroArea, MortgageMetaData, State
 from data_research.mortgage_utilities.fips_meta import (
-    FIPS, load_fips_meta, NON_STATES)
+    FIPS, NON_STATES, load_fips_meta
+)
+
 
 logger = logging.getLogger(__name__)
 

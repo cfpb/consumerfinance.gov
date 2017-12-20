@@ -3,7 +3,6 @@ const BaseTransition = require( '../../modules/transition/BaseTransition' );
 const behavior = require( '../../modules/util/behavior' );
 const breakpointState = require( '../../modules/util/breakpoint-state' );
 const EventObserver = require( '../../modules/util/EventObserver' );
-const fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 const standardType = require( '../../modules/util/standard-type' );
 
 /**
@@ -56,10 +55,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   let _collapseTransitionMethodArgs = [];
 
   // Binded events.
-  const _collapseBinded = fnBind( collapse, this );
+  const _collapseBinded = collapse.bind( this );
   // Needed to add and remove events to transitions.
-  const _collapseEndBinded = fnBind( _collapseEnd, this );
-  const _expandEndBinded = fnBind( _expandEnd, this );
+  const _collapseEndBinded = _collapseEnd.bind( this );
+  const _expandEndBinded = _expandEnd.bind( this );
 
   /* If this menu appears in a data source,
      this can be used to store the source.
@@ -92,12 +91,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _triggerDom.setAttribute( 'data-gtm_ignore', 'true' );
     }
 
-    const handleTriggerClickedBinded =
-      fnBind( _handleTriggerClicked, this );
-    const handleTriggerOverBinded =
-      fnBind( _handleTriggerOver, this );
-    const handleTriggerOutBinded =
-      fnBind( _handleTriggerOut, this );
+    const handleTriggerClickedBinded = _handleTriggerClicked.bind( this );
+    const handleTriggerOverBinded = _handleTriggerOver.bind( this );
+    const handleTriggerOutBinded = _handleTriggerOut.bind( this );
 
     // Set initial aria attributes to false.
     _setAriaAttr( 'expanded', _triggerDom, 'false' );
