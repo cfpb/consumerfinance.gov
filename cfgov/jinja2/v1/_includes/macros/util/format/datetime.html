@@ -45,7 +45,7 @@
 
    ========================================================================== #}
 
-{% macro format_date(datetime, text_format) %}
+{% macro format_date(datetime, text_format=False) %}
     {% if text_format %}
         {{- date_formatter(datetime, text_format) -}}
     {% else %}
