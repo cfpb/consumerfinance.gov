@@ -24,6 +24,8 @@ refresh_data(){
 	./create-mysql-db.sh
 	echo 'Importing refresh db'
 	mysql v1 --user='root' --password="$MYSQL_ROOT_PW" < $refresh_dump_name
+	echo 'Running migrations'
+    ./cfgov/manage.py migrate --noinput
 	echo 'Setting up initial data'
 	./cfgov/manage.py runscript initial_data
 }
