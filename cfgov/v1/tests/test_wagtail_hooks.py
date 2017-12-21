@@ -170,24 +170,19 @@ class TestRelativePageLinkHandler(TestCase):
 class TestServeLatestDraftPage(TestCase):
     def setUp(self):
         self.default_site = Site.objects.get(is_default_site=True)
-        self.page = SimplePage(title='Test', slug='test-page', content='test')
+        self.page = SimplePage(title='live', slug='test', content='test')
         self.default_site.root_page.add_child(instance=self.page)
-        self.request = mock.Mock()
+        self.page.title = 'draft'
+        self.page.save_revision()
 
     @override_settings(SERVE_LATEST_DRAFT_PAGES=[])
-    def test_not_serving_draft(self):
-        with mock.patch.object(self.page, 'get_latest_revision_as_page') \
-                as mock_get_latest_revision_as_page:
-            serve_latest_draft_page(self.page, self.request, [], {})
-        mock_get_latest_revision_as_page.assert_not_called()
+    def test_not_serving_draft_serves_published_revision(self):
+        response = self.client.get('/test/')
+        self.assertContains(response, 'live')
+        self.assertIsNone(response.get('Serving-Wagtail-Draft'))
 
-    def test_serving_draft(self):
+    def test_serving_draft_serves_latest_revision_and_adds_header(self):
         with override_settings(SERVE_LATEST_DRAFT_PAGES=[self.page.pk]):
-            with mock.patch.object(self.page, 'get_latest_revision_as_page') \
-                    as mock_get_latest_revision_as_page:
-                mock_revision = mock_get_latest_revision_as_page.return_value
-                mock_revision.serve.return_value = {}
-                resp = serve_latest_draft_page(self.page, self.request, [], {})
-        mock_get_latest_revision_as_page.assert_called_once()
-        self.assertIn('Serving-Wagtail-Draft', resp)
-        self.assertEqual(resp['Serving-Wagtail-Draft'], '1')
+            response = self.client.get('/test/')
+            self.assertContains(response, 'draft')
+            self.assertEqual(response['Serving-Wagtail-Draft'], '1')
