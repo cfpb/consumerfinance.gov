@@ -57,8 +57,14 @@ function scriptsPolyfill() {
       dest:  paths.processed + '/js/modernizr.min.js',
       extra: configScripts.otherBuildTriggerFiles
     } ) )
+
+    /* csspointerevents is used by select menu in Capital Framework.
+       es5 is used for ECMAScript 5 feature detection to change js CSS to no-js.
+       setClasses sets detection checks as feat/no-feat CSS in html element.
+       html5printshiv enables use of HTML5 sectioning elements in IE8
+       See https://github.com/aFarkas/html5shiv */
     .pipe( gulpModernizr( {
-      tests:   [ 'csspointerevents', 'classlist', 'es5' ],
+      tests:   [ 'csspointerevents', 'es5' ],
       options: [ 'setClasses', 'html5printshiv' ]
     } ) )
     .pipe( gulpUglify( {
