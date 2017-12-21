@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.wagtailcore.models import Site
@@ -6,7 +6,8 @@ from wagtail.wagtailcore.models import Site
 import mock
 
 from v1.wagtail_hooks import (
-    RelativePageLinkHandler, check_permissions, form_module_handlers
+    RelativePageLinkHandler, check_permissions, form_module_handlers,
+    serve_latest_draft_page
 )
 
 
@@ -164,3 +165,29 @@ class TestRelativePageLinkHandler(TestCase):
             is_default_site=False
         )
         self.check_page_renders_as_relative_link()
+
+
+class TestServeLatestDraftPage(TestCase):
+    def setUp(self):
+        self.default_site = Site.objects.get(is_default_site=True)
+        self.page = SimplePage(title='Test', slug='test-page', content='test')
+        self.default_site.root_page.add_child(instance=self.page)
+        self.request = mock.Mock()
+
+    @override_settings(SERVE_LATEST_DRAFT_PAGES=[])
+    def test_not_serving_draft(self):
+        with mock.patch.object(self.page, 'get_latest_revision_as_page') \
+                as mock_get_latest_revision_as_page:
+            serve_latest_draft_page(self.page, self.request, [], {})
+        mock_get_latest_revision_as_page.assert_not_called()
+
+    def test_serving_draft(self):
+        with override_settings(SERVE_LATEST_DRAFT_PAGES=[self.page.pk]):
+            with mock.patch.object(self.page, 'get_latest_revision_as_page') \
+                    as mock_get_latest_revision_as_page:
+                mock_revision = mock_get_latest_revision_as_page.return_value
+                mock_revision.serve.return_value = {}
+                resp = serve_latest_draft_page(self.page, self.request, [], {})
+        mock_get_latest_revision_as_page.assert_called_once()
+        self.assertIn('Serving-Wagtail-Draft', resp)
+        self.assertEqual(resp['Serving-Wagtail-Draft'], '1')
