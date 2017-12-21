@@ -7,7 +7,6 @@ import mock
 
 from v1.wagtail_hooks import (
     RelativePageLinkHandler, check_permissions, form_module_handlers,
-    serve_latest_draft_page
 )
 
 
