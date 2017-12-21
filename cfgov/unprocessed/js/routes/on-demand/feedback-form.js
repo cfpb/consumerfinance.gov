@@ -3,8 +3,8 @@
    ========================================================================== */
 
 
-const COMMENT_ERRORS = require( '../../config/error-messages-config' ).COMMENT || {};
-const OPTION_ERRORS = require( '../../config/error-messages-config' ).OPTION || {};
+const COMMENT_ERRORS = require( '../../config/error-messages-config' ).COMMENT;
+const OPTION_ERRORS = require( '../../config/error-messages-config' ).OPTION;
 const FormSubmit = require( '../../organisms/FormSubmit.js' );
 const BASE_CLASS = 'o-feedback';
 let requiredKey = 'REQUIRED';
