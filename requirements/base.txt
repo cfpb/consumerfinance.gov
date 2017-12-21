@@ -13,6 +13,7 @@ django-braces==1.0.0
 django-compressor==2.0
 django-extensions==1.5.5
 django-haystack==2.6.0
+django-htmlmin==0.10.0
 django-localflavor==1.1
 django-mysql==2.1.0
 django-overextends==0.4.1

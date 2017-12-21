@@ -120,7 +120,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'core.middleware.DownstreamCacheControlMiddleware'
+    'core.middleware.DownstreamCacheControlMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
 )
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
