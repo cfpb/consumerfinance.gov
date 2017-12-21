@@ -3,18 +3,16 @@
                wrapper__match-content"
         role="banner">
     <a href="/">
-        <img class="header_logo u-js-only"
-             src="{{ static('img/logo_sm-exec.svg')}}"
-             onerror="this.onerror=null;this.src='{{ static('img/logo_sm-exec.png')}}';"
-             alt="Consumer Financial Protection Bureau"
-             width="237"
-             height="50">
-        <noscript>
-            <img class="header_logo logo__no-js"
-                 src="{{ static('img/logo_sm-exec.png')}}"
-                 alt="Consumer Financial Protection Bureau"
-                 width="237"
-                 height="50">
-        </noscript>
+        <img class="o-header_logo-img"
+             src="{{ static('img/logo_237x50.png') }}"
+             srcset="{{ static('img/logo_161x34.png') }} 161w,
+                     {{ static('img/logo_161x34@2x.png') }} 322w,
+                     {{ static('img/logo_161x34@3x.png') }} 483w,
+                     {{ static('img/logo_161x34@4x.png') }} 644w,
+                     {{ static('img/logo_237x50.png') }} 237w,
+                     {{ static('img/logo_237x50@2x.png') }} 474w"
+             sizes="(max-width: 900px) 161px,
+                    237px"
+             alt="Consumer Financial Protection Bureau">
     </a>
 </header>
