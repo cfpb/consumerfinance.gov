@@ -6,7 +6,7 @@ from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 from scripts import _atomic_helpers as atomic
 
-from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock
+from v1.atomic_elements.organisms import InfoUnitGroup, SnippetList, TableBlock
 from v1.models.browse_page import BrowsePage
 from v1.models.images import CFGOVImage
 from v1.models.landing_page import LandingPage
@@ -399,6 +399,12 @@ class OrganismsTestCase(TestCase):
 
         response = self.client.get('/assets-width/')
         self.assertContains(response, 'u-w40pct"')
+
+    def test_snippet_list_has_snippet_types(self):
+        """Ensure that the SnippetList block has snippet type choices."""
+        form = SnippetList().render_form({})
+        self.assertIn('option value="v1.models.snippets.', form)
+
 
 class TestInfoUnitGroup(TestCase):
     def setUp(self):

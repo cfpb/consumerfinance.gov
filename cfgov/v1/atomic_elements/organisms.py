@@ -909,6 +909,24 @@ class MortgageMapBlock(MortgageChartBlock):
         js = ['mortgage-performance-trends.js']
 
 
+def get_snippet_type_choices():
+    return [
+        (
+            m.__module__ + '.' + m.__name__,
+            m._meta.verbose_name_plural.capitalize()
+        ) for m in get_snippet_models()
+    ]
+
+
+def get_snippet_field_choices():
+    return [
+        (
+            m._meta.verbose_name_plural.capitalize(),
+            getattr(m, 'snippet_list_field_choices', [])
+        ) for m in get_snippet_models()
+    ]
+
+
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
@@ -930,12 +948,7 @@ class SnippetList(blocks.StructBlock):
     )
 
     snippet_type = blocks.ChoiceBlock(
-        choices=[
-            (
-                m.__module__ + '.' + m.__name__,
-                m._meta.verbose_name_plural.capitalize()
-            ) for m in get_snippet_models()
-        ],
+        choices=get_snippet_type_choices,
         required=True
     )
     show_thumbnails = blocks.BooleanBlock(
@@ -948,12 +961,7 @@ class SnippetList(blocks.StructBlock):
             help_text='E.g., "Download" or "Order free prints"'
         )),
         ('snippet_field', blocks.ChoiceBlock(
-            choices=[
-                (
-                    m._meta.verbose_name_plural.capitalize(),
-                    getattr(m, 'snippet_list_field_choices', [])
-                ) for m in get_snippet_models()
-            ],
+            choices=get_snippet_field_choices,
             help_text='Corresponds to the available fields for the selected '
                       'snippet type.'
         )),
