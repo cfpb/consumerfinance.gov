@@ -1,6 +1,12 @@
 from jinja2.ext import Extension
 
 from v1.models import CFGOVRendition
+from v1.util.util import extended_strftime
+
+
+def date_formatter(dt, text_format=False):
+    format = '%_m %_d, %Y' if text_format else '%b %d, %Y'
+    return extended_strftime(dt, format)
 
 
 def image_alt_value(image):
@@ -30,14 +36,16 @@ def image_alt_value(image):
     return ''
 
 
-class V1ImagesExtension(Extension):
+class V1FiltersExtension(Extension):
     def __init__(self, environment):
-        super(V1ImagesExtension, self).__init__(environment)
+        super(V1FiltersExtension, self).__init__(environment)
 
         self.environment.globals.update({
             'image_alt_value': image_alt_value,
+            'date_formatter': date_formatter,
+
         })
 
 
 # Nicer import names
-images = V1ImagesExtension
+filters = V1FiltersExtension
