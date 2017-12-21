@@ -46,13 +46,13 @@ function stylesModern() {
 }
 
 /**
- * Process legacy CSS for IE9 only.
+ * Process legacy CSS for IE9 and below.
  * @returns {PassThrough} A source stream.
  */
-function stylesIE9() {
+function stylesIE() {
   return gulp.src( configStyles.cwd + configStyles.src )
     .pipe( gulpNewer( {
-      dest:  configStyles.dest + '/main.ie9.css',
+      dest:  configStyles.dest + '/main.ie.css',
       extra: configStyles.otherBuildTriggerFiles
     } ) )
     .pipe( gulpLess( configStyles.settings ) )
@@ -61,46 +61,14 @@ function stylesIE9() {
       postcssUnmq( {
         width: '75em'
       } ),
-      autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_9 } )
+      autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8_9 } )
     ] ) )
     .pipe( gulpRename( {
-      suffix:  '.ie9',
+      suffix:  '.ie',
       extname: '.css'
     } ) )
     .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
-    .pipe( gulpCleanCss( {
-      compatibility: 'ie9',
-      inline: [ 'none' ]
-    } ) )
-    .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
-}
-
-/**
- * Process legacy CSS for 8 only.
- * @returns {PassThrough} A source stream.
- */
-function stylesIE8() {
-  return gulp.src( configStyles.cwd + configStyles.src )
-    .pipe( gulpNewer( {
-      dest:  configStyles.dest + '/main.ie8.css',
-      extra: configStyles.otherBuildTriggerFiles
-    } ) )
-    .pipe( gulpLess( configStyles.settings ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpPostcss( [
-      postcssUnmq( {
-        width: '75em'
-      } ),
-      autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8 } )
-    ] ) )
-    .pipe( gulpCleanCss( { compatibility: 'ie8' } ) )
-    .pipe( gulpRename( {
-      suffix:  '.ie8',
-      extname: '.css'
-    } ) )
+    .pipe( gulpCleanCss( { compatibility: 'ie8', inline: false } ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -165,7 +133,6 @@ function stylesFeatureFlags() {
     } ) );
 }
 
-
 /**
  * Process AskCFPB CSS.
  * @returns {PassThrough} A source stream.
@@ -198,7 +165,7 @@ function stylesKnowledgebaseSpanishProd() {
  * Process AskCFPB IE CSS.
  * @returns {PassThrough} A source stream.
  */
-function stylesKnowledgebaseSpanishIE() {
+function stylesKnowledgebaseSpanishIE8() {
   return gulp.src( configLegacy.cwd +
     '/knowledgebase/less/es-ask-styles-ie.less' )
     .pipe( gulpNewer( {
@@ -250,10 +217,10 @@ function stylesNemoProd() {
 }
 
 /**
- * Process Nemo IE CSS.
+ * Process Nemo IE8 CSS.
  * @returns {PassThrough} A source stream.
  */
-function stylesNemoIE() {
+function stylesNemoIE8() {
   return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles-ie.less' )
     .pipe( gulpNewer( {
       dest:  configLegacy.dest + '/nemo/_/c/es-styles-ie.min.css',
@@ -322,29 +289,23 @@ function stylesApps() {
 }
 
 gulp.task( 'styles:modern', stylesModern );
-gulp.task( 'styles:stylesIE8', stylesIE8 );
-gulp.task( 'styles:stylesIE9', stylesIE9 );
+gulp.task( 'styles:ie', stylesIE );
 gulp.task( 'styles:apps', stylesApps );
 gulp.task( 'styles:ondemand', stylesOnDemand );
 gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:knowledgebaseSpanishProd', stylesKnowledgebaseSpanishProd );
-gulp.task( 'styles:knowledgebaseSpanishIE', stylesKnowledgebaseSpanishIE );
+gulp.task( 'styles:knowledgebaseSpanishIE8', stylesKnowledgebaseSpanishIE8 );
 gulp.task( 'styles:nemoProd', stylesNemoProd );
-gulp.task( 'styles:nemoIE', stylesNemoIE );
-
-gulp.task( 'styles:ie', [
-  'styles:stylesIE8',
-  'styles:stylesIE9'
-] );
+gulp.task( 'styles:nemoIE8', stylesNemoIE8 );
 
 gulp.task( 'styles:knowledgebaseSpanish', [
   'styles:knowledgebaseSpanishProd',
-  'styles:knowledgebaseSpanishIE'
+  'styles:knowledgebaseSpanishIE8'
 ] );
 
 gulp.task( 'styles:nemo', [
   'styles:nemoProd',
-  'styles:nemoIE'
+  'styles:nemoIE8'
 ] );
 
 gulp.task( 'styles', [
