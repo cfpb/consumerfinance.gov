@@ -15,7 +15,7 @@
 if ( 'document' in self ) {
 
 // Full polyfill for browsers with no classList support
-  if ( !( 'classList' in document.createElement( '_' ) ) ) {
+  if ( 'classList' in document.createElement( '_' ) === false ) {
 
     ( function( view ) {
 
@@ -78,11 +78,10 @@ if ( 'document' in self ) {
           classListProto = ClassList[protoProp] = [],
           classListGetter = function() {
             return new ClassList( this );
-          }
-;
+          };
 
-/* Most DOMException implementations don't allow calling DOMException's toString()
-   on non-DOMExceptions. Error's toString() is sufficient here. */
+      /* Most DOMException implementations don't allow calling DOMException's toString()
+      on non-DOMExceptions. Error's toString() is sufficient here. */
       DOMEx[protoProp] = Error[protoProp];
       classListProto.item = function( i ) {
         return this[i] || null;
