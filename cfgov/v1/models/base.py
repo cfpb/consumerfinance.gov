@@ -118,7 +118,8 @@ class CFGOVPage(Page, FlaggablePageMixin):
         FieldPanel('authors', 'Authors'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'language'),
-        MultiFieldPanel(FlaggablePageMixin.flag_panels, 'Feature flag'),
+        MultiFieldPanel(FlaggablePageMixin.flag_panels,
+                        'Feature flagged drafts'),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
