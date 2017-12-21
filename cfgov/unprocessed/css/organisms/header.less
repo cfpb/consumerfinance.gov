@@ -31,19 +31,17 @@
                 <div class="m-global-header-cta"></div>
                 <div class="m-global-search"></div>
                 <a class="o-header_logo" href="/">
-                    <img class="header_logo u-js-only"
-                         src="{{ static('img/logo_sm-exec.svg')}}"
-                         onerror="this.onerror=null;this.src='{{ static('img/logo_sm-exec.png')}}';"
-                         alt="Consumer Financial Protection Bureau"
-                         width="237"
-                         height="50">
-                    <noscript>
-                        <img class="header_logo logo__no-js"
-                             src="{{ static('img/logo_sm-exec.png')}}"
-                             alt="Consumer Financial Protection Bureau"
-                             width="237"
-                             height="50">
-                    </noscript>
+                    <img class="o-header_logo-img"
+                         src="{{ static('img/logo_237x50.png') }}"
+                         srcset="{{ static('img/logo_161x34.png') }} 161w,
+                                 {{ static('img/logo_161x34@2x.png') }} 322w,
+                                 {{ static('img/logo_161x34@3x.png') }} 483w,
+                                 {{ static('img/logo_161x34@4x.png') }} 644w,
+                                 {{ static('img/logo_237x50.png') }} 237w,
+                                 {{ static('img/logo_237x50@2x.png') }} 474w"
+                         sizes="(max-width: 900px) 161px,
+                                237px"
+                         alt="Consumer Financial Protection Bureau">
                 </a>
             </div>
             [o-mega-menu]
@@ -59,11 +57,6 @@
               .o-header_logo
             .o-mega-menu
       notes:
-        - "The `onerror` attribute allows for the usage of an SVG logo for
-           browsers that support SVG, with a fallback to PNG for browsers that
-           don't."
-        - "The `noscript` element displays the PNG fallback in the event that
-           JavaScript is not available."
         - "The path in the `src` attribute has been adjusted for these docs."
   tags:
     - cfgov-organisms
@@ -150,8 +143,11 @@
         // Tablet/mobile sizes.
         .respond-to-max( @bp-sm-max, {
             .js & {
-                // Offset logo by width of mega menu trigger + 10px gap.
-                margin-left: @mobile_trigger_ht__px + ( @grid_gutter-width / 2 );
+                // Offset logo by width of mega menu trigger + 15px gap.
+                // The margin-left starts inside the 15px padding of the page
+                // already, so a value that matches the width of the trigger
+                // will give it the desired spacing to the right of the trigger.
+                margin-left: @mobile_trigger_ht__px;
             }
         } );
 
@@ -172,25 +168,7 @@
                 width: 237px;
             } );
         }
-
-        noscript .o-header_logo-img {
-            display: none;
-        }
     }
-}
-
-// Display logo if JavaScript is turned off.
-.no-js noscript .o-header_logo-img {
-    display: block;
-    // TODO: Check that these settings can't be covered by `.o-header_logo-img`.
-    //       To test, turn off JavaScript. The logo PNG should look the same as the SVG.
-    margin-bottom: 10px;
-    margin-top: 0;
-    padding-top: 10px;
-
-    .respond-to-max( @bp-sm-max, {
-        padding-left: 10px;
-    } );
 }
 
 // Move logo on print.
