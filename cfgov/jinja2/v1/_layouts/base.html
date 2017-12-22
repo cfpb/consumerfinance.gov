@@ -162,9 +162,12 @@
     })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
     {# end Google Tag Manager #}
 
-    {# Customized Modernizr build that includes html5shiv.
-       Built via gulp-modernizer in `scripts.js` task. #}
-    <script src="{{ static('js/modernizr.min.js') }}"></script>
+    {# Customized Modernizr build that includes html5printshiv.
+       Built via gulp-modernizer in `scripts.js` task.
+       TODO: Determine if modernizr is actually needed! #}
+    <script>
+        {% include '/js/modernizr.min.js' %}
+    </script>
 
     {#
       Turn off JavaScript for browsers that don't support ECMAScript 5 features
