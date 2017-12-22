@@ -174,12 +174,13 @@ class TestServeLatestDraftPage(TestCase):
         self.page.title = 'draft'
         self.page.save_revision()
 
-    @override_settings(SERVE_LATEST_DRAFT_PAGES=[])
+    @override_settings(FLAGS={})
     def test_not_serving_draft_serves_published_revision(self):
         response = self.client.get('/test/')
         self.assertContains(response, 'live')
         self.assertIsNone(response.get('Serving-Wagtail-Draft'))
 
+    @override_settings(FLAGS={'SERVE_AS_DRAFT': {'path matches': '^/test/$'}})
     def test_serving_draft_serves_latest_revision_and_adds_header(self):
         with override_settings(SERVE_LATEST_DRAFT_PAGES=[self.page.pk]):
             response = self.client.get('/test/')

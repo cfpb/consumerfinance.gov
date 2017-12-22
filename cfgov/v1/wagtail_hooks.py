@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.utils.html import escape, format_html_join
 
+from flags.state import flag_enabled
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
@@ -196,7 +197,7 @@ def register_flag_admin_urls():
 
 @hooks.register('before_serve_page')
 def serve_latest_draft_page(page, request, args, kwargs):
-    if page.pk in settings.SERVE_LATEST_DRAFT_PAGES:
+    if flag_enabled('SERVE_AS_DRAFT', request=request):
         latest_draft = page.get_latest_revision_as_page()
         response = latest_draft.serve(request, *args, **kwargs)
         response['Serving-Wagtail-Draft'] = '1'
