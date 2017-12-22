@@ -639,6 +639,9 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
+
+    # Serve some pages with their draft content.
+    'SERVE_AS_DRAFT': {},
 }
 
 
@@ -664,9 +667,3 @@ MAX_ALLOWED_TIME_OFFSET = 5
 # Search.gov values
 SEARCH_DOT_GOV_AFFILIATE = os.environ.get('SEARCH_DOT_GOV_AFFILIATE')
 SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
-
-# We want the ability to serve the latest drafts of some pages on beta.
-# This value is read by v1.wagtail_hooks.
-SERVE_LATEST_DRAFT_PAGES = []
-if DEPLOY_ENVIRONMENT == 'beta':
-    SERVE_LATEST_DRAFT_PAGES = [1288]
