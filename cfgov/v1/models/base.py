@@ -22,6 +22,7 @@ from wagtail.wagtailcore.models import (
 )
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+from flags.models import FlaggablePageMixin
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
@@ -53,10 +54,11 @@ class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
         return PageQuerySet(self.model).order_by('path')
 
+
 CFGOVPageManager = BaseCFGOVPageManager.from_queryset(PageQuerySet)
 
 
-class CFGOVPage(Page):
+class CFGOVPage(Page, FlaggablePageMixin):
     authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
                                      verbose_name='Authors',
                                      help_text='A comma separated list of '
@@ -116,6 +118,8 @@ class CFGOVPage(Page):
         FieldPanel('authors', 'Authors'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'language'),
+        MultiFieldPanel(FlaggablePageMixin.flag_panels,
+                        'Feature flagged drafts'),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
@@ -251,6 +255,9 @@ class CFGOVPage(Page):
             hook(self, request, context, *args, **kwargs)
         return context
 
+    def route(self, request, path_components):
+        return self.route_flaggable(request, path_components)
+
     def serve(self, request, *args, **kwargs):
         """
         If request is ajax, then return the ajax request handler response, else
@@ -262,7 +269,7 @@ class CFGOVPage(Page):
         # Force the page's language on the request
         translation.activate(self.language)
         request.LANGUAGE_CODE = translation.get_language()
-        return super(CFGOVPage, self).serve(request, *args, **kwargs)
+        return self.serve_flaggable(request, *args, **kwargs)
 
     def _return_bad_post_response(self, request):
         if request.is_ajax():

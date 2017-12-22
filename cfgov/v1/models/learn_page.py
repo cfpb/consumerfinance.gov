@@ -66,6 +66,7 @@ class AbstractFilterPage(CFGOVPage):
             FieldPanel('comments_close_by'),
         ], 'Relevant Dates', classname='collapsible'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
+        MultiFieldPanel(CFGOVPage.flag_panels, 'Feature flagged drafts'),
     ]
 
     # This page class cannot be created.
