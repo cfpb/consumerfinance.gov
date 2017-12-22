@@ -52,7 +52,7 @@ class PlaceholderJSMixin(object):
     only created if they don't already exist.
     """
     PLACEHOLDER_FILES = (
-        'static_built/js/routes/common.js',
+        'static_built/js/modernizr.min.js',
     )
 
     PLACEHOLDER_STRING = (
