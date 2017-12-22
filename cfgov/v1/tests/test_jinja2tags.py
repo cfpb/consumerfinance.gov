@@ -5,7 +5,7 @@ from django.test import TestCase
 from model_mommy import mommy
 
 from v1.atomic_elements.atoms import ImageBasic
-from v1.jinja2tags import image_alt_value, date_formatter
+from v1.jinja2tags import date_formatter, image_alt_value
 from v1.models import CFGOVImage, CFGOVRendition
 
 
