@@ -33,8 +33,6 @@ jobs:
   - stage: run tests
     env: RUNTEST=frontend
   - env: RUNTEST=backend
-    addons:
-      chrome: beta
   - stage: Update documentation
     script:
       - pip install virtualenv virtualenvwrapper
