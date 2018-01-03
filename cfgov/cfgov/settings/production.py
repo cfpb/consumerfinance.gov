@@ -3,7 +3,7 @@ import sys
 from os.path import exists
 
 from .base import *
-from .mysql_mixin import *
+from .database_mixin import *
 
 
 default_loggers = []
