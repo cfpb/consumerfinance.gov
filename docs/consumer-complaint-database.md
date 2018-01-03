@@ -6,4 +6,4 @@ Each week the CFPB sends thousands of consumers’ complaints about financial pr
 
 The API allows automation of the same filtering and searching functions offered to website visitors.
 
-Detailed documentation for the search API can be found [here](https://higs4281.github.io/ccdb5-api/swagger/index.html).
+Detailed documentation for the search API can be found [here](https://cfpb.github.io/ccdb5-api/documentation/index.html).
