@@ -37,7 +37,7 @@ dockerized() {
 }
 
 # Execute requested (or all) functions.
-if [ "$1" == "docker" ]; then
+if [ "$1" == "docker" ] || [ -f ".USE_DOCKER" ]; then
   dockerized
 else
   standalone

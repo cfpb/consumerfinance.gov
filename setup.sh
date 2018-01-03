@@ -10,6 +10,7 @@
 set -e
 
 standalone() {
+    rm -rf .USE_DOCKER
     ./frontend.sh $1
     ./backend.sh $1
 
@@ -19,10 +20,15 @@ standalone() {
 }
 
 dockerized() {
+    source mac-virtualbox-init.sh
+
+    docker-compose build
+
+    touch .USE_DOCKER
+
     ./frontend.sh $2
 
     touch .python_env
-    source mac-virtualbox-init.sh
 }
 
 # Execute requested (or all) functions.

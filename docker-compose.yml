@@ -19,8 +19,24 @@ services:
         ports:
             - "9200:9200"
             - "9300:9300"
+    gulp:
+        build:
+            context: .
+            dockerfile: Dockerfile-gulp
+        working_dir: /src/cfgov-refresh
+        environment:
+                DJANGO_HTTP_PORT: "8000"
+                TEST_HTTP_HOST: "python"
+        ports:
+            - "3000:3000"
+            - "3001:3001"
+        command: ['gulp','watch']
+        volumes:
+                - ./:/src/cfgov-refresh
     python:
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile-python
         ports:
             - "8000:8000"
         environment:

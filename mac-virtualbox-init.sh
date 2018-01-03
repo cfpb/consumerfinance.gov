@@ -9,23 +9,25 @@ fi
 
 # If docker ps succeeds, docker environment is already sane and
 # we don't need to mess with docker-machine.
-docker ps 2>/dev/null
-if [ $? -eq 0 ]; then
+if [ ! -z "$(docker ps)" ]; then
   echo "You've already got a working docker setup!"
 else
   echo "Maybe we just need to start your default docker machine..."
-  MACHINE_IP=$(docker-machine ip)
-  if [ -z "$MACHINE_IP" ]; then
+  if [ -z "$(docker-machine ip)" ]; then
     echo "No default docker machine found, creating one with virtualbox..."
     docker-machine create default --driver virtualbox\
       --virtualbox-cpu-count "2"\
       --virtualbox-memory "3072"
     vboxmanage controlvm default natpf1 "http,tcp,,8000,,8000"
     vboxmanage controlvm default natpf1 "https,tcp,,8443,,8443"
+    vboxmanage controlvm default natpf1 "browsersync,tcp,,3000,,3000"
+    vboxmanage controlvm default natpf1 "browsersyncui,tcp,,3001,,3001"
   fi
   # Harmless if the machine is already up:
   echo "Starting your machine..."
-  docker-machine start
+  if [ ! -z "$(docker-machine start)" ];then
+    echo "...started!"
+  fi
   echo "You've got a working docker machine, yay!"
   eval $(docker-machine env)
 fi
