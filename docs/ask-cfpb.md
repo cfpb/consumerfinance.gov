@@ -23,11 +23,16 @@ Requests follow this pattern:
 
 - `https://www.consumerfinance.gov/ask-cfpb/search/json/?q=[SEARCH TERMS]`
 
-The json response will includes a list of results, each with a question, an answer, and a URL for the related CFPB page. The payload for the search term "tuition" would look like this, but with more result entries:
+The json response will includes a list of results, each with a question, an answer, and a URL for the related CFPB page. 
+If no results are found, the "suggestion" field will offer a more promising search term if one can be found.
+
+
+The payload for the search term "tuition" would look like this, but with more result entries:
 
 ```json
 {
   query: "tuition",
+  suggestion: null,
   result_query: "tuition",
   results: [
     {
@@ -50,6 +55,7 @@ The payload for the Spanish search term "vehiculo" would look like this, but wit
 ```json
 {
   query: "vehiculo",
+  suggestion: null,
   result_query: "vehiculo",
   results: [
     {
