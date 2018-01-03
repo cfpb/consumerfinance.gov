@@ -1,5 +1,5 @@
-import os
 import dj_database_url
+import os
 
 DATABASES = {}
 if 'DATABASE_URL' in os.environ:
