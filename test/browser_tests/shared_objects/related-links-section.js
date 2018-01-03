@@ -1,8 +1,6 @@
-'use strict';
+const _relatedLinksSection = element( by.css( '.related-links' ) );
 
-var _relatedLinksSection = element( by.css( '.related-links' ) );
-
-var relatedLinksSection = {
+const relatedLinksSection = {
 
   relatedLinksSection: _relatedLinksSection,
 

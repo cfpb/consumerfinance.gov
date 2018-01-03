@@ -1,7 +1,9 @@
 import datetime as dt
-import mock
 
 from django.test import TestCase
+
+import mock
+
 from v1.models.base import CFGOVPage, CFGOVPageCategory
 from v1.models.learn_page import AbstractFilterPage
 from v1.tests.wagtail_pages import helpers

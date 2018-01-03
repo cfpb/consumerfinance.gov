@@ -7,8 +7,10 @@ django-sslserver==0.19
 enum34==1.1.6
 flake8==3.0.4
 github3.py==0.9.6
+isort==4.2.15
 mccabe==0.5.2
 mock==2.0.0
 model_mommy==1.2.6
 moto==0.4.30
 responses==0.5.1
+

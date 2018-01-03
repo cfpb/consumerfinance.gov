@@ -1,5 +1,3 @@
-'use strict';
-
 const utils = require( '../utils' );
 const defaultActionCreators = require( './default' );
 
@@ -34,9 +32,10 @@ chartActionCreators.fetchMetroStates = metroState => dispatch =>
       }
     } );
     // Alphabetical order
-    metroStates = metroStates.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
-    // If the provided state isn't valid for this location type,
-    // use the first state in the list.
+    metroStates = metroStates.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+
+    /* If the provided state isn't valid for this location type,
+       use the first state in the list. */
     if ( !reuseState ) {
       metroState = metroStates[0].abbr;
     }
@@ -67,7 +66,7 @@ chartActionCreators.fetchNonMetroStates = nonMetroState => dispatch =>
       }
     } );
     // Alphabetical order
-    nonMetroStates = nonMetroStates.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    nonMetroStates = nonMetroStates.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
     dispatch( chartActionCreators.setStates( nonMetroStates ) );
     dispatch( chartActionCreators.fetchNonMetros( nonMetroState ) );
     return nonMetroStates;
@@ -87,7 +86,7 @@ chartActionCreators.fetchCountyStates = countyState => dispatch =>
     Object.keys( states ).forEach( state => {
       const isValid = states[state].counties.reduce( ( prev, curr ) =>
         prev || curr.valid || false
-      , false );
+        , false );
       if ( isValid ) {
         reuseState = reuseState || countyState === state;
         countyStates.push( {
@@ -99,9 +98,10 @@ chartActionCreators.fetchCountyStates = countyState => dispatch =>
       }
     } );
     // Alphabetical order
-    countyStates = countyStates.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
-    // If the provided state isn't valid for this location type,
-    // use the first state in the list.
+    countyStates = countyStates.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+
+    /* If the provided state isn't valid for this location type,
+       use the first state in the list. */
     if ( !reuseState ) {
       countyState = countyStates[0].abbr;
     }
@@ -134,7 +134,7 @@ chartActionCreators.fetchStates = ( selectedState, includeComparison ) => dispat
       return state;
     } );
     // Alphabetical order
-    states = states.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    states = states.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
     dispatch( chartActionCreators.setStates( states ) );
     dispatch( chartActionCreators.setGeo( selectedState.fips, selectedState.name, 'state' ) );
     dispatch( chartActionCreators.updateChart( selectedState.fips, selectedState.name, 'state', includeComparison ) );
@@ -164,7 +164,7 @@ chartActionCreators.fetchMetros = ( metroState, includeComparison ) => dispatch 
   dispatch( chartActionCreators.requestMetros( metroState ) );
   return utils.getMetroData( data => {
     // Alphabetical order
-    var newMetros = data[metroState].metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    let newMetros = data[metroState].metros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
     newMetros = newMetros.filter( metro => metro.valid );
     if ( !newMetros.length ) {
       newMetros = [ {
@@ -191,7 +191,7 @@ chartActionCreators.fetchCounties = ( countyState, includeComparison ) => dispat
   dispatch( chartActionCreators.requestCounties( countyState ) );
   return utils.getCountyData( data => {
     // Alphabetical order
-    var newCounties = data[countyState].counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    let newCounties = data[countyState].counties.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
     newCounties = newCounties.filter( county => county.valid );
     dispatch( chartActionCreators.setCounties( newCounties ) );
     dispatch( chartActionCreators.setGeo( newCounties[0].fips, newCounties[0].name, 'county' ) );

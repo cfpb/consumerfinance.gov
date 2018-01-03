@@ -1,9 +1,7 @@
-'use strict';
-
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var Expandable = require( '../organisms/Expandable' );
-var standardType = require( '../modules/util/standard-type' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const Expandable = require( '../organisms/Expandable' );
+const standardType = require( '../modules/util/standard-type' );
 
 /**
  * ExpandableGroup
@@ -17,12 +15,12 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function ExpandableGroup( element ) {
 
-  var BASE_CLASS = 'o-expandable-group';
+  const BASE_CLASS = 'o-expandable-group';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _domChildren = _dom.querySelectorAll( '.o-expandable' );
-  var _lastOpenChild;
-  var _isAccordion;
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _domChildren = _dom.querySelectorAll( '.o-expandable' );
+  let _lastOpenChild;
+  let _isAccordion;
 
   /**
    * @returns {ExpandableGroup|undefined} An instance,
@@ -35,10 +33,10 @@ function ExpandableGroup( element ) {
 
     _isAccordion = _dom.classList.contains( BASE_CLASS + '__accordion' );
 
-    var child;
-    var len = _domChildren.length;
+    let child;
+    const len = _domChildren.length;
 
-    for ( var i = 0; i < len; i++ ) {
+    for ( let i = 0; i < len; i++ ) {
       child = new Expandable( _domChildren[i] ).init();
       child.addEventListener( 'expandBegin', _childBeginExpand );
     }

@@ -162,28 +162,37 @@
     })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
     {# end Google Tag Manager #}
 
-    {# Customized Modernizr build that includes html5shiv.
-       Built via gulp-modernizer in `scripts.js` task. #}
-    <script src="{{ static('js/modernizr.min.js') }}"></script>
+    {# Customized Modernizr build that includes html5printshiv.
+       Built via gulp-modernizer in `scripts.js` task.
+       TODO: Determine if modernizr is actually needed! #}
     <script>
-    //<![CDATA[
-        if ( window.Modernizr && window.Modernizr.es5 === false ) {
-            var script = document.createElement( 'script' );
-            script.type = 'text/javascript';
-            script.src = '{{ static('js/es5-shim.js') }}';
-            document.getElementsByTagName( 'head' )[0].appendChild( script );
-        }
-    //]]>
+        {% include '/js/modernizr.min.js' %}
     </script>
-    <!--[if lt IE 9]>
-    {# If in IE8 reverse no-js/js class change made by modernizr. #}
-    <script>
-        var docElement = document.documentElement;
-        docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-    </script>
-    <![endif]-->
 
-    <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
+    {#
+      Turn off JavaScript for browsers that don't support ECMAScript 5 features
+      (e.g. Internet Explorer 8)
+      by reversing no-js/js CSS class change made by modernizr.
+      The following ECMAScript 5 feature checks come from
+      https://github.com/Modernizr/Modernizr/tree/master/feature-detects/es5
+    #}
+    <script>
+        var modernizr = window.Modernizr;
+        if ( !( typeof modernizr !== 'undefined' &&
+             modernizr.es5array &&
+             modernizr.es5date &&
+             modernizr.es5function &&
+             modernizr.es5object &&
+             modernizr.json &&
+             modernizr.es5string &&
+             modernizr.es5syntax &&
+             modernizr.es5undefined ) ) {
+          var docElement = document.documentElement;
+          docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
+        }
+    </script>
+
+    <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
 </head>
 
 <body>
@@ -241,57 +250,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 #}
 
 {% block javascript scoped %}
-<!--[if gt IE 8]><!-->
-{# Include site-wide JavaScript. #}
-<script src="{{ static('js/routes/common.js') }}"></script>
 
-{# Check and include template-level JavaScript. #}
-{% macro template_js() %}
-    {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
-{% endmacro %}
-{% set js_source = template_js() | trim %}
-{% if js_source | length > 0 %}
-<script src="{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}"></script>
-{% endif %}
+{#
+  Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
+  available. Check for that CSS class here and act accordingly.
+#}
+<script>
+    {# Minified dynamic JavaScript loader that injects a script tag in the head
+       of the page. It also provides a callback parameter. #}
+    function loadScript(t,e){var n=document.createElement('script');n.type='text/javascript',n.onload=function(){return e?e():null},n.src=t,document.getElementsByTagName('head')[0].appendChild(n)}
+    {# Check and include template-level JavaScript. #}
+    function loadScriptTemplate(){
+      {% macro template_js() %}
+         {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
+      {% endmacro %}
+      {% set js_source = template_js() | trim %}
+      {% if js_source | length > 0 %}
+        loadScript('{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}');
+      {% endif %}
+    }
+    {# Check and include component-level JavaScript. #}
+    function loadScriptComponent(){
+      {% if page and page.media %}
+         {% for js in page.media %}
+           loadScript('{{ static('js/routes/on-demand/' + js) }}');
+         {% endfor %}
+      {% endif %}
+    }
+    {# TODO: Remove the below block when all pages
+             using this template are moved to Wagtail. #}
+    function loadScriptPage(){
+      {# Check and include page-level JavaScript. #}
+      {% macro page_js() %}
+         {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+      {% endmacro %}
+      {% set js_source = page_js() | trim %}
+      {% if js_source | length > 0 %}
+        loadScript('{{ static('js/routes/' + request.path[1:] + 'index.js') }}');
+      {% endif %}
+    }
 
-{# Check and include component-level JavaScript. #}
-{% macro component_ondemand_js(js) %}
-    {% include 'js/routes/on-demand/' + js ignore missing %}
-{% endmacro %}
-
-{% if page and page.media %}
-    {% compress js %}
-    <script>
-    {% for js in page.media %}
-       {% set component_js_source = component_ondemand_js(js) | trim %}
-       {% if component_js_source | length > 0 %}
-            {{ component_js_source }}
-       {% endif %}
-    {% endfor %}
-    </script>
-    {% endcompress %}
-{% endif %}
-
-{# TODO: Remove the below block when all pages
-         using this template are moved to Wagtail. #}
-{# Check and include page-level JavaScript. #}
-{% macro page_js() %}
-    {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
-{% endmacro %}
-{% set js_source = page_js() | trim %}
-{% if js_source | length > 0 %}
-<script src="{{ static('js/routes/' + request.path[1:] + 'index.js') }}"></script>
-{% endif %}
-<!--<![endif]-->
+    if (document.body.parentElement.className.indexOf('no-js')===-1){
+      {# Include site-wide JavaScript. #}
+      loadScript('{{ static('js/routes/common.js') }}', function(){
+        loadScriptTemplate();loadScriptComponent();loadScriptPage();
+      });
+    }
+</script>
 
 <script>
 //<![CDATA[
     var usasearch_config = { siteHandle: 'cfpb' };
-
-    var script = document.createElement( 'script' );
-    script.type = 'text/javascript';
-    script.src = 'https://search.usa.gov/javascripts/remote.loader.js';
-    document.getElementsByTagName( 'head' )[0].appendChild( script );
+    loadScript('https://search.usa.gov/javascripts/remote.loader.js');
 //]]>
 </script>
 

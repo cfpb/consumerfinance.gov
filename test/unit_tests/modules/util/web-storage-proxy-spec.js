@@ -1,5 +1,3 @@
-'use strict';
-
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
@@ -46,7 +44,7 @@ describe( 'web-storage-proxy', () => {
           return Object.keys( storage ).length;
         },
         key: function( i ) {
-          var keys = Object.keys( storage );
+          const keys = Object.keys( storage );
           return keys[i] || null;
         }
       };
@@ -195,7 +193,7 @@ describe( 'web-storage-proxy', () => {
       window.localStorage.setItem( 'foo', 'bar' );
       window.sessionStorage.setItem( 'foo', 'baz' );
 
-      var item = getItem( 'foo' );
+      const item = getItem( 'foo' );
 
       expect( item ).to.equal( 'bar' );
       expect( item ).to.not.equal( 'baz' );
@@ -234,9 +232,10 @@ describe( 'web-storage-proxy', () => {
 
     xit( 'should set storage to an object if sessionStorage throws an error',
       () => {
-        // TODO: If cookies are disabled, window.sessionStorage
-        //       will throw a SecurityError and the internal storage will be
-        //       an object literal.
+
+        /* TODO: If cookies are disabled, window.sessionStorage
+           will throw a SecurityError and the internal storage will be
+           an object literal. */
       }
     );
   } );

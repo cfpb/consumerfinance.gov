@@ -4,30 +4,28 @@ import json
 import re
 from urlparse import urlparse
 
-from django.core.paginator import Paginator, InvalidPage
+from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
-from django.template.response import TemplateResponse
 from django.template.defaultfilters import slugify
+from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 from haystack.query import SearchQuerySet
 
-
+from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface)
-from wagtail.contrib.wagtailroutablepage.models import (
-    RoutablePageMixin, route)
-from wagtail.wagtailcore.fields import RichTextField
+    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+)
+from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
-from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
-from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
-from v1.models.snippets import ReusableText, ReusableTextChooserBlock
 from v1.atomic_elements import molecules, organisms
+from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
+from v1.models.snippets import ReusableText
 
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
@@ -513,7 +511,7 @@ class AnswerPage(CFGOVPage):
         ('sidebar_contact', organisms.SidebarContactInfo()),
         ('rss_feed', molecules.RSSFeed()),
         ('social_media', molecules.SocialMedia()),
-        ('reusable_text', ReusableTextChooserBlock(ReusableText)),
+        ('reusable_text', v1_blocks.ReusableTextChooserBlock(ReusableText)),
     ], blank=True)
 
     sidebar_panels = [StreamFieldPanel('sidebar'), ]

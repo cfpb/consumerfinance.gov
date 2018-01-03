@@ -1,8 +1,8 @@
 import math
-import ntplib
 
 from django.conf import settings
 
+import ntplib
 from watchman.decorators import check
 
 

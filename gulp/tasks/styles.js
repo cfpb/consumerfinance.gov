@@ -1,5 +1,3 @@
-'use strict';
-
 const autoprefixer = require( 'autoprefixer' );
 const BROWSER_LIST = require( '../../config/browser-list-config' );
 const browserSync = require( 'browser-sync' );
@@ -57,6 +55,9 @@ function stylesIE9() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
+      postcssUnmq( {
+        width: '75em'
+      } ),
       autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_9 } )
     ] ) )
     .pipe( gulpRename( {
@@ -172,7 +173,7 @@ function stylesKnowledgebaseSpanishProd() {
     .pipe( gulpNewer( {
       dest:  configStyles.dest + '/knowledgebase/es-ask-styles.min.css',
       extra: configStyles.otherBuildTriggerFiles
-             .concat( configStyles.otherBuildTriggerFilesKBSpanish )
+        .concat( configStyles.otherBuildTriggerFilesKBSpanish )
     } ) )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
@@ -200,7 +201,7 @@ function stylesKnowledgebaseSpanishIE() {
     .pipe( gulpNewer( {
       dest:  configLegacy.dest + '/knowledgebase/es-ask-styles-ie.min.css',
       extra: configStyles.otherBuildTriggerFiles
-             .concat( configStyles.otherBuildTriggerFilesKBSpanish )
+        .concat( configStyles.otherBuildTriggerFilesKBSpanish )
     } ) )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
@@ -227,7 +228,7 @@ function stylesNemoProd() {
     .pipe( gulpNewer( {
       dest:  configLegacy.dest + '/nemo/_/c/es-styles.min.css',
       extra: configStyles.otherBuildTriggerFiles
-             .concat( configStyles.otherBuildTriggerFilesNemo )
+        .concat( configStyles.otherBuildTriggerFilesNemo )
     } ) )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
@@ -254,7 +255,7 @@ function stylesNemoIE() {
     .pipe( gulpNewer( {
       dest:  configLegacy.dest + '/nemo/_/c/es-styles-ie.min.css',
       extra: configStyles.otherBuildTriggerFiles
-             .concat( configStyles.otherBuildTriggerFilesNemo )
+        .concat( configStyles.otherBuildTriggerFilesNemo )
     } ) )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )

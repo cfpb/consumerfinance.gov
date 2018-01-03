@@ -1,0 +1,22 @@
+
+.m-jobs-list .m-list__links {
+    .respond-to-min( @bp-sm-min, {
+        .m-list_item + .m-list_item {
+            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        }
+    } );
+    
+    .m-list_link-subtext {
+       .u-link__colors( @black );
+       .u-webfont-regular();
+       display: block;
+       margin-top: unit( 2px / @base-font-size-px, em );
+    }
+}
+
+.pay-grade-link {
+    margin-top: 5px;
+    .respond-to-min( @bp-sm-min, {
+        margin: 0 0 0 unit( 5px / @base-font-size-px, em );
+    } );
+}

@@ -4,9 +4,7 @@ import boto3
 import mock
 
 from alerts.send_new_relic_messages_to_sqs import (
-    cache_known_violations,
-    read_known_violations,
-    send_violations
+    cache_known_violations, read_known_violations, send_violations
 )
 
 

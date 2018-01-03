@@ -1,14 +1,11 @@
-'use strict';
-
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var breakpointState = require( '../modules/util/breakpoint-state' );
-var ClearableInput = require( '../modules/ClearableInput' );
-var EventObserver = require( '../modules/util/EventObserver' );
-var FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
-var fnBind = require( '../modules/util/fn-bind' ).fnBind;
-var MoveTransition = require( '../modules/transition/MoveTransition' );
-var standardType = require( '../modules/util/standard-type' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const breakpointState = require( '../modules/util/breakpoint-state' );
+const ClearableInput = require( '../modules/ClearableInput' );
+const EventObserver = require( '../modules/util/EventObserver' );
+const FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
+const MoveTransition = require( '../modules/transition/MoveTransition' );
+const standardType = require( '../modules/util/standard-type' );
 
 /**
  * GlobalSearch
@@ -22,19 +19,19 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
-  var BASE_CLASS = 'm-global-search';
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
-  var _flyoutMenu = new FlyoutMenu( _dom );
-  var _searchInputDom;
-  var _searchBtnDom;
-  var _clearBtnDom;
+  const BASE_CLASS = 'm-global-search';
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  const _flyoutMenu = new FlyoutMenu( _dom );
+  let _searchInputDom;
+  let _searchBtnDom;
+  let _clearBtnDom;
 
   // TODO: Move tab trigger to its own class.
-  var _tabTriggerDom =
+  const _tabTriggerDom =
     _contentDom.querySelector( '.' + BASE_CLASS + '_tab-trigger' );
 
-  var KEY_TAB = 9;
+  const KEY_TAB = 9;
 
   /**
    * @returns {GlobalSearch|undefined} An instance,
@@ -46,7 +43,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     }
 
     // Set initial appearance.
-    var transition = new MoveTransition( _contentDom ).init();
+    const transition = new MoveTransition( _contentDom ).init();
     transition.moveRight();
     _flyoutMenu.setExpandTransition( transition, transition.moveToOrigin );
     _flyoutMenu.setCollapseTransition( transition, transition.moveRight );
@@ -54,20 +51,23 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
 
     _contentDom.classList.remove( 'u-hidden' );
 
-    var clearBtnSel = '.' + BASE_CLASS + ' .input-contains-label_after__clear';
-    var inputContainsLabelSel =
+    const clearBtnSel =
+      '.' + BASE_CLASS + ' .input-contains-label_after__clear';
+    const inputContainsLabelSel =
       '.' + BASE_CLASS + '_content-form .input-contains-label';
-    var searchBtnSel = '.' + BASE_CLASS + ' .o-form__input-w-btn_btn-container button';
+    const searchBtnSel =
+      '.' + BASE_CLASS + ' .o-form__input-w-btn_btn-container button';
 
     _clearBtnDom = _contentDom.querySelector( clearBtnSel );
-    var inputContainsLabel = _contentDom.querySelector( inputContainsLabelSel );
+    const inputContainsLabel =
+      _contentDom.querySelector( inputContainsLabelSel );
     _searchInputDom = inputContainsLabel.querySelector( 'input' );
     _searchBtnDom = _contentDom.querySelector( searchBtnSel );
 
     // Initialize new clearable input behavior on the input-contains-label.
-    var clearableInput = new ClearableInput( inputContainsLabel );
+    const clearableInput = new ClearableInput( inputContainsLabel );
     clearableInput.init();
-    var handleExpandBeginBinded = fnBind( _handleExpandBegin, this );
+    const handleExpandBeginBinded = _handleExpandBegin.bind( this );
     _flyoutMenu.addEventListener( 'expandBegin', handleExpandBeginBinded );
     _flyoutMenu.addEventListener( 'collapseBegin', _handleCollapseBegin );
     _flyoutMenu.addEventListener( 'collapseEnd', _handleCollapseEnd );
@@ -86,9 +86,9 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * @param {MouseEvent} event The event object for the mousedown event.
    */
   function _handleBodyClick( event ) {
-    var target = event.target;
+    const target = event.target;
 
-    var isInDesktop = breakpointState.isInDesktop();
+    const isInDesktop = breakpointState.isInDesktop();
     if ( isInDesktop && !_isDesktopTarget( target ) ||
          !isInDesktop && !_isMobileTarget( target ) ) {
       collapse();
@@ -133,10 +133,11 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   function _handleExpandBegin() {
     this.dispatchEvent( 'expandBegin', { target: this } );
 
-    // TODO: Remove when Android 4.0-4.4 support is dropped.
-    // Hack to fix reflow issues on legacy Android devices.
+    /* TODO: Remove when Android 4.0-4.4 support is dropped.
+       Hack to fix reflow issues on legacy Android devices. */
     _contentDom.style.display = 'none';
-    _contentDom.offsetHeight; // eslint-disable-line no-unused-expressions, no-inline-comments, max-len
+    // eslint-disable-next-line no-unused-expressions
+    _contentDom.offsetHeight;
     _contentDom.style.display = '';
 
     _contentDom.classList.remove( 'u-invisible' );
@@ -159,10 +160,11 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * Use this to perform post-collapseEnd actions.
    */
   function _handleCollapseEnd() {
-    // TODO: When tabbing is used to collapse the search flyout
-    //       it will not animate with the below line.
-    //       Investigate why this is the case for tab key
-    //       but not with mouse clicks.
+
+    /* TODO: When tabbing is used to collapse the search flyout
+       it will not animate with the below line.
+       Investigate why this is the case for tab key
+       but not with mouse clicks. */
     _contentDom.classList.add( 'u-invisible' );
   }
 
@@ -187,7 +189,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   }
 
   // Attach public events.
-  var eventObserver = new EventObserver();
+  const eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
   this.removeEventListener = eventObserver.removeEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;

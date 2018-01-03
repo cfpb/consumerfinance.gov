@@ -3,9 +3,8 @@
    Used on at least `/external-site/`.
    ========================================================================== */
 
-'use strict';
 
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
 
 /**
  * ExternalSite
@@ -16,15 +15,15 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
  * @param {HTMLElement} element DOM Element.
  */
 function ExternalSite( element ) {
-  var BASE_CLASS = 'external-site_container';
-  var TOTAL_DURATION = 5;
-  var INTERVAL = 1000;
+  const BASE_CLASS = 'external-site_container';
+  const TOTAL_DURATION = 5;
+  const INTERVAL = 1000;
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _durationEl = _dom.querySelector( '.external-site_reload-container' );
-  var _directEl = _dom.querySelector( '.external-site_proceed-btn' );
-  var _duration = TOTAL_DURATION;
-  var _intervalId;
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _durationEl = _dom.querySelector( '.external-site_reload-container' );
+  const _directEl = _dom.querySelector( '.external-site_proceed-btn' );
+  let _duration = TOTAL_DURATION;
+  let _intervalId;
 
   /**
    * Initialize the events and timer.
@@ -48,7 +47,7 @@ function ExternalSite( element ) {
    * Go to the redirect URL.
    */
   function _gotoUrl() {
-    var _formEl = _dom.querySelector( 'form#proceed' );
+    const _formEl = _dom.querySelector( 'form#proceed' );
     clearInterval( _intervalId );
     _formEl.submit();
   }
@@ -57,8 +56,8 @@ function ExternalSite( element ) {
    * Update the timer HTML content.
    */
   function _updateContent() {
-    var plurality = _duration === 1 ? '' : 's';
-    var content = '<span class=\'external-site_reload-duration\'>' +
+    const plurality = _duration === 1 ? '' : 's';
+    const content = '<span class=\'external-site_reload-duration\'>' +
                   _duration + '</span> second' + plurality;
     _durationEl.innerHTML = content;
   }

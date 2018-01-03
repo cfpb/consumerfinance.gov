@@ -45,9 +45,12 @@
 
    ========================================================================== #}
 
-{% macro format_date(datetime) %}
-    {{- datetime | date('%b') | upper -}}
-    {{- ' ' + datetime | date('%d, %Y') -}}
+{% macro format_date(datetime, text_format=False) %}
+    {% if text_format %}
+        {{- date_formatter(datetime, text_format) -}}
+    {% else %}
+        {{- date_formatter(datetime) | upper -}}
+    {% endif %}
 {% endmacro %}
 
 

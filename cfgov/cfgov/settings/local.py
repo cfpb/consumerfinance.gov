@@ -1,7 +1,8 @@
+from unipath import DIRS
+
 from .base import *
 from .database_mixin import *
 
-from unipath import DIRS
 
 DEBUG = True
 SECRET_KEY = 'not-secret-key-for-testing'
@@ -49,7 +50,6 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
 MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
 # Disable caching when working locally.
-# eregs_longterm_cache and api_cache are required by regulations-site.
 CACHES = {
     k: {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',

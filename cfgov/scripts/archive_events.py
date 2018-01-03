@@ -2,9 +2,11 @@ import logging
 
 from django.utils import timezone
 
-from v1.models.browse_filterable_page import (BrowseFilterablePage,
-                                              EventArchivePage)
+from v1.models.browse_filterable_page import (
+    BrowseFilterablePage, EventArchivePage
+)
 from v1.models.learn_page import EventPage
+
 
 logger = logging.getLogger(__name__)
 

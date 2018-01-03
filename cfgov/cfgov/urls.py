@@ -8,48 +8,56 @@ from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
+
+from wagtail.contrib.wagtailsitemaps.views import sitemap
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
-from wagtail.contrib.wagtailsitemaps.views import sitemap
-
+from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
+from flags.views import FlaggedTemplateView
 
 from ask_cfpb.views import (
-    ask_search,
-    ask_autocomplete,
-    print_answer,
-    redirect_ask_search,
+    ask_autocomplete, ask_search, print_answer, redirect_ask_search,
     view_answer
 )
 from core.views import ExternalURLNoticeView
 from legacy.views import token_provider
 from legacy.views.housing_counselor import (
-    HousingCounselorView, HousingCounselorPDFView
+    HousingCounselorPDFView, HousingCounselorView
 )
-
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
-    change_password,
-    check_permissions,
-    login_with_lockout,
-    password_reset_confirm,
-    welcome)
+    change_password, check_permissions, login_with_lockout,
+    password_reset_confirm, welcome
+)
 from v1.views.documents import DocumentServeView
 
 
 oah = SheerSite('owning-a-home')
 
+
+def flagged_wagtail_template_view(flag_name, template_name):
+    """View that serves Wagtail if a flag is set, and a template if not.
+
+    This uses the wagtail-sharing ServeView to ensure that sharing works
+    properly when viewing the page in Wagtail behind a flag.
+    """
+    return FlaggedTemplateView.as_view(
+        fallback=lambda request: ServeView.as_view()(request, request.path),
+        flag_name=flag_name,
+        template_name=template_name,
+        condition=False
+    )
+
+
 urlpatterns = [
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
-
-    # TODO: Enable search route when search is available.
-    # url(r'^search/$', 'search.views.search', name='search'),
 
     url(r'^home/(?P<path>.*)$',
         RedirectView.as_view(url='/%(path)s', permanent=True)),
@@ -135,14 +143,21 @@ urlpatterns = [
                               'ways-to-stay-afloat/index.html'),
                 name='students-helping-borrowers'),
 
-    url(r'^practitioner-resources/servicemembers/$', TemplateView.as_view(
-        template_name='service-members/index.html'),
+    # Servicemembers
+    url(r'^practitioner-resources/servicemembers/$',
+        flagged_wagtail_template_view(
+            flag_name='WAGTAIL_SERVICEMEMBERS',
+            template_name='service-members/index.html'
+        ),
         name='servicemembers'),
     url(r'^practitioner-resources/servicemembers/webinars/$',
-        TemplateView.as_view(
-        template_name='service-members/on-demand-forums-and-tools'
-                      '/index.html'),
-        name='servicemembers'),
+        flagged_wagtail_template_view(
+            flag_name='WAGTAIL_SERVICEMEMBERS',
+            template_name=(
+                'service-members/on-demand-forums-and-tools/index.html'
+            )
+        ),
+        name='servicemembers-webinars'),
     url(r'^practitioner-resources/servicemembers/additionalresources/$',
         TemplateView.as_view(
         template_name='service-members/additionalresources/index.html'),
@@ -428,6 +443,15 @@ urlpatterns = [
     ),
 
     url('^sitemap\.xml$', sitemap),
+
+    flagged_url('SEARCH_DOTGOV_API',
+                r'^search/',
+                include('search.urls')),
+
+    flagged_url('TDP_RELEASE',
+                r'^tdp/',
+                include_if_app_enabled('teachers_digital_platform',
+                                       'teachers_digital_platform.urls')),
 ]
 
 if settings.ALLOW_ADMIN_URL:
@@ -460,7 +484,6 @@ if settings.ALLOW_ADMIN_URL:
             change_password,
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
-
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([

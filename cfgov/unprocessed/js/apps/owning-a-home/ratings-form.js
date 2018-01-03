@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Initialize the ratings form for Owning a Home.
  */

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Escapes a string.
  * @param   {string} s The string to escape.

@@ -1,11 +1,8 @@
-'use strict';
-
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var breakpointState = require( '../modules/util/breakpoint-state' );
-var EventObserver = require( '../modules/util/EventObserver' );
-var fnBind = require( '../modules/util/fn-bind' ).fnBind;
-var standardType = require( '../modules/util/standard-type' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const breakpointState = require( '../modules/util/breakpoint-state' );
+const EventObserver = require( '../modules/util/EventObserver' );
+const standardType = require( '../modules/util/standard-type' );
 
 /**
  * Expandable
@@ -19,38 +16,38 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function Expandable( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  var BASE_CLASS = 'o-expandable';
+  const BASE_CLASS = 'o-expandable';
 
   // Bitwise flags for the state of this Expandable.
-  var COLLAPSED = 0;
-  var COLLAPSING = 1;
-  var EXPANDING = 2;
-  var EXPANDED = 3;
+  const COLLAPSED = 0;
+  const COLLAPSING = 1;
+  const EXPANDING = 2;
+  const EXPANDED = 3;
 
-  // The Expandable element will directly be the Expandable
-  // when used in an ExpandableGroup, otherwise it can be the parent container.
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
-  var _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
-  var _contentAnimated =
+  /* The Expandable element will directly be the Expandable
+     when used in an ExpandableGroup, otherwise it can be the parent container. */
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
+  const _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  const _contentAnimated =
     _content.querySelector( '.' + BASE_CLASS + '_content-animated' );
-  var _link = _dom.querySelector( '.' + BASE_CLASS + '_link' );
+  const _link = _dom.querySelector( '.' + BASE_CLASS + '_link' );
 
-  var _state = COLLAPSED;
-  var _transitionEndEvent = _getTransitionEndEvent( _content );
-  var _transitionPrefix = _getTransitionPrefix( _transitionEndEvent );
-  var _contentHeight;
+  let _state = COLLAPSED;
+  const _transitionEndEvent = _getTransitionEndEvent( _content );
+  const _transitionPrefix = _getTransitionPrefix( _transitionEndEvent );
+  let _contentHeight;
 
   // TODO: Replace function of _that with Function.prototype.bind.
-  var _that = this;
-  var _collapseBinded = fnBind( collapse, this );
-  var _expandBinded = fnBind( expand, this );
+  const _that = this;
+  const _collapseBinded = collapse.bind( this );
+  const _expandBinded = expand.bind( this );
 
-  // Reference to MutationObserver for watching DOM changes within the content.
-  // No-op Function for MutationObserver.disconnect() is set in case destroy()
-  // is called on a DOM node that was copied with the atomic init flag set,
-  // implying it had been initialized when it hadn't.
-  var _observer = { disconnect: standardType.noopFunct };
+  /* Reference to MutationObserver for watching DOM changes within the content.
+     No-op Function for MutationObserver.disconnect() is set in case destroy()
+     is called on a DOM node that was copied with the atomic init flag set,
+     implying it had been initialized when it hadn't. */
+  let _observer = { disconnect: standardType.noopFunct };
 
   /**
    * @param {number} state
@@ -67,10 +64,11 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     if ( !_isInMobile() &&
          ( state === EXPANDED ||
          _dom.getAttribute( 'data-state' ) === 'expanded' ) ) {
-      // If expanded by default, we need to set the height inline so the
-      // inline transition to collapse the Expandable works.
-      // TODO: Handle issue of height calculating before
-      //       web fonts have loaded and changed height.
+
+      /* If expanded by default, we need to set the height inline so the
+         inline transition to collapse the Expandable works.
+         TODO: Handle issue of height calculating before
+         web fonts have loaded and changed height. */
       _setMaxHeight();
       _setExpandedState();
     } else {
@@ -112,10 +110,10 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    * @returns {Expandable} An instance.
    */
   function _initObserver() {
-    var MutationObserver = window.MutationObserver ||
+    const MutationObserver = window.MutationObserver ||
                            window.WebKitMutationObserver ||
                            window.MozMutationObserver;
-    var addObserver;
+    let addObserver;
 
     if ( MutationObserver ) {
       addObserver = _addMutationObserverEvents;
@@ -355,8 +353,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    * @returns {boolean} True if in the desktop view, otherwise false.
    */
   function _isInMobile() {
-    var isInMobile = false;
-    var currentBreakpoint = breakpointState.get();
+    let isInMobile = false;
+    const currentBreakpoint = breakpointState.get();
     if ( currentBreakpoint.isBpXS ) {
       isInMobile = true;
     }
@@ -364,7 +362,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   }
 
   // Attach public events.
-  var eventObserver = new EventObserver();
+  const eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
   this.removeEventListener = eventObserver.removeEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;
@@ -376,11 +374,11 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   this.collapse = collapse;
   this.destroy = destroy;
 
-  // Export constants so initialization signature can support, e.g.
-  // var item = new Expandable( '.item' );
-  // item.init( item.EXPANDED );
-  // TODO: Move these to Expandable.COLLAPSED and Expandable.EXPANDED.
-  //       So that they are set on the constructor, not an instance.
+  /* Export constants so initialization signature can support, e.g.
+     var item = new Expandable( '.item' );
+     item.init( item.EXPANDED );
+     TODO: Move these to Expandable.COLLAPSED and Expandable.EXPANDED.
+     So that they are set on the constructor, not an instance. */
   this.COLLAPSED = COLLAPSED;
   this.EXPANDED = EXPANDED;
 
@@ -394,15 +392,15 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
  * @returns {string} The browser-prefixed transition end event.
  */
 function _getTransitionEndEvent( elm ) {
-  var transition;
-  var transitions = {
+  let transition;
+  const transitions = {
     WebkitTransition: 'webkitTransitionEnd',
     MozTransition:    'transitionend',
     OTransition:      'oTransitionEnd otransitionend',
     transition:       'transitionend'
   };
 
-  for ( var t in transitions ) {
+  for ( const t in transitions ) {
     if ( transitions.hasOwnProperty( t ) &&
          typeof elm.style[t] !== 'undefined' ) {
       transition = transitions[t];
@@ -417,7 +415,7 @@ function _getTransitionEndEvent( elm ) {
  * @returns {string} The browser-prefixed transition event.
  */
 function _getTransitionPrefix( transitionEnd ) {
-  var TRANSITION_PREFIXES = {
+  const TRANSITION_PREFIXES = {
     webkitTransitionEnd: '-webkit-transition',
     MozTransition:       '-moz-transition',
     OTransition:         '-o-transition',

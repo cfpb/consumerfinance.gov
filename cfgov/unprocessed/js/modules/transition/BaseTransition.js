@@ -1,8 +1,5 @@
-'use strict';
-
 // Required modules.
-var EventObserver = require( '../../modules/util/EventObserver' );
-var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
+const EventObserver = require( '../../modules/util/EventObserver' );
 
 /**
  * BaseTransition
@@ -18,23 +15,24 @@ var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
  *   The classes to apply to this transition.
  * @returns {BaseTransition} An instance.
  */
-function BaseTransition( element, classes ) { // eslint-disable-line max-statements, no-inline-comments, max-len
-  var _classes = classes;
-  var _dom;
+// eslint-disable-next-line max-statements
+function BaseTransition( element, classes ) {
+  const _classes = classes;
+  let _dom;
 
-  var _lastClass;
-  var _transitionEndEvent;
-  var _transitionCompleteBinded;
-  var _addEventListenerBinded;
-  var _isAnimating = false;
-  var _isFlushed = false;
+  let _lastClass;
+  let _transitionEndEvent;
+  let _transitionCompleteBinded;
+  let _addEventListenerBinded;
+  let _isAnimating = false;
+  let _isFlushed = false;
 
   /**
    * @returns {BaseTransition} An instance.
    */
   function init() {
-    _transitionCompleteBinded = fnBind( _transitionComplete, this );
-    _addEventListenerBinded = fnBind( _addEventListener, this );
+    _transitionCompleteBinded = _transitionComplete.bind( this );
+    _addEventListenerBinded = _addEventListener.bind( this );
     setElement( element );
 
     return this;
@@ -45,8 +43,9 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    * @param {HTMLNode} elem - The target of the transition.
    */
   function setElement( elem ) {
-    // If the element has already been set,
-    // clear the transition classes from the old element.
+
+    /* If the element has already been set,
+       clear the transition classes from the old element. */
     if ( _dom ) {
       remove();
       animateOn();
@@ -96,8 +95,10 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
     _dom.style.mozTransitionDuration = '0';
     _dom.style.oTransitionDuration = '0';
     _dom.style.transitionDuration = '0';
-    _dom.removeEventListener( _transitionEndEvent,
-                              _transitionCompleteBinded );
+    _dom.removeEventListener(
+      _transitionEndEvent,
+      _transitionCompleteBinded
+    );
     _transitionCompleteBinded();
     _dom.style.webkitTransitionDuration = '';
     _dom.style.mozTransitionDuration = '';
@@ -113,8 +114,10 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
     _isAnimating = true;
     // If transition is not supported, call handler directly (IE9/OperaMini).
     if ( _transitionEndEvent ) {
-      _dom.addEventListener( _transitionEndEvent,
-                             _transitionCompleteBinded );
+      _dom.addEventListener(
+        _transitionEndEvent,
+        _transitionCompleteBinded
+      );
       this.dispatchEvent( BaseTransition.BEGIN_EVENT, { target: this } );
     } else {
       this.dispatchEvent( BaseTransition.BEGIN_EVENT, { target: this } );
@@ -143,7 +146,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    * already been applied to this BaseTransition's target element.
    */
   function _flush() {
-    for ( var prop in _classes ) {
+    for ( const prop in _classes ) {
       if ( _classes.hasOwnProperty( prop ) &&
            _classes[prop] !== _classes.BASE_CLASS &&
            _dom.classList.contains( _classes[prop] ) ) {
@@ -202,19 +205,19 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    */
   function _getTransitionEndEvent( elem ) {
     if ( !elem ) {
-      var msg = 'Element does not have TransitionEnd event. It may be null!';
+      const msg = 'Element does not have TransitionEnd event. It may be null!';
       throw new Error( msg );
     }
 
-    var transition;
-    var transitions = {
+    let transition;
+    const transitions = {
       WebkitTransition: 'webkitTransitionEnd',
       MozTransition:    'transitionend',
       OTransition:      'oTransitionEnd otransitionend',
       transition:       'transitionend'
     };
 
-    for ( var t in transitions ) {
+    for ( const t in transitions ) {
       if ( transitions.hasOwnProperty( t ) &&
            typeof elem.style[t] !== 'undefined' ) {
         transition = transitions[t];
@@ -225,7 +228,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   }
 
   // Attach public events.
-  var eventObserver = new EventObserver();
+  const eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;
   this.removeEventListener = eventObserver.removeEventListener;

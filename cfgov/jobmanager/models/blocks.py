@@ -2,9 +2,11 @@ from __future__ import absolute_import
 
 from django.template.loader import render_to_string
 from django.utils import timezone
+
 from wagtail.wagtailcore import blocks
 
 from v1.atomic_elements import organisms
+from v1.util.util import extended_strftime
 
 
 class OpenJobListingsMixin(object):
@@ -77,4 +79,4 @@ class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
         return ', '.join(sorted(g.grade.grade for g in value.all()))
 
     def make_close_date_value(self, instance, value):
-        return value.strftime('%b %d, %Y').upper()
+        return extended_strftime(value, '%_m %_d, %Y')

@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from wagtail.wagtailcore.models import Page, Site
 
 from v1.routing import get_url_parts_for_site

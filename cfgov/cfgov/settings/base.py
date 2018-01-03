@@ -8,6 +8,7 @@ from unipath import Path
 
 from ..util import admin_emails
 
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
@@ -81,6 +82,7 @@ INSTALLED_APPS = (
     'tinymce',
     'jobmanager',
     'wellbeing',
+    'search',
 )
 
 OPTIONAL_APPS = [
@@ -93,10 +95,11 @@ OPTIONAL_APPS = [
      'complaintdatabase', 'complaint_common',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
-    {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
+    {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
+    {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
 ]
 
 if DEPLOY_ENVIRONMENT == 'build':
@@ -120,7 +123,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'v1.middleware.StagingMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
@@ -159,7 +161,7 @@ TEMPLATES = [
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
-                'v1.jinja2tags.images',
+                'v1.jinja2tags.filters',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
@@ -211,11 +213,6 @@ MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
 
-
-#Enabling compression for use in base.html
-COMPRESS_ENABLED = True
-
-COMPRESS_JS_FILTERS = []
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -333,10 +330,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'tokenizer': 'lowercase',
                     'filter': ['haystack_edgengram']
                 },
-                'synonym' : {
+                'synonym_en' : {
                     'tokenizer' : 'whitespace',
-                    'filter' : ['synonym']
-                }
+                    'filter' : ['synonyms_en']
+                },
+                'synonym_es' : {
+                    'tokenizer' : 'whitespace',
+                    'filter' : ['synonyms_es']
+                },
             },
             'tokenizer': {
                 'haystack_ngram_tokenizer': {
@@ -349,7 +350,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15,
                     'side': 'front'
-                }
+                },
             },
             'filter': {
                 'haystack_ngram': {
@@ -362,12 +363,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15
                 },
-                'synonym': {
+                'synonyms_en': {
                     'type': 'synonym',
-                    'synonyms': [
-                        # 'auto,car,vehicle',
-                    ],
-                }
+                    'synonyms_path' : 'analysis/synonyms_en.txt'
+                },
+                'synonyms_es': {
+                    'type': 'synonym',
+                    'synonyms_path' : 'analysis/synonyms_es.txt'
+                },
             }
         }
     }
@@ -488,9 +491,6 @@ if ENABLE_AKAMAI_CACHE_PURGE:
     }
 
 
-# Staging site
-STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
-
 # CSP Whitelists
 
 # These specify what is allowed in <script> tags.
@@ -579,6 +579,11 @@ CSP_CONNECT_SRC = ("'self'",
 # conditions or an empty dict. If the conditions dict is empty the flag will
 # only be enabled if database conditions are added.
 FLAGS = {
+    # Ask CFPB search spelling correction support
+    # When enabled, spelling suggestions will appear in Ask CFPB search and
+    # will be used when the given search term provides no results.
+	'ASK_SEARCH_TYPOS': {},
+
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
@@ -591,6 +596,9 @@ FLAGS = {
 
     # When enabled, display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
+
+    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
+    'WAGTAIL_COMPANY_SIGNUP': {},
 
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
@@ -626,8 +634,17 @@ FLAGS = {
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
 
+    # Search.gov API-based site-search
+    'SEARCH_DOTGOV_API': {},
+
     # The release of the new Financial Coaching pages
     'FINANCIAL_COACHING': {},
+
+    # Teacher's Digital Platform
+    'TDP_RELEASE': {},
+
+    # Servicemembers pages in Wagtail
+    'WAGTAIL_SERVICEMEMBERS': {},
 }
 
 
@@ -649,3 +666,13 @@ NTP_TIME_SERVER = 'north-america.pool.ntp.org'
 # If server's clock drifts from NTP by more than specified offset
 # (in seconds), check_clock_drift will fail
 MAX_ALLOWED_TIME_OFFSET = 5
+
+# Search.gov values
+SEARCH_DOT_GOV_AFFILIATE = os.environ.get('SEARCH_DOT_GOV_AFFILIATE')
+SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
+
+# We want the ability to serve the latest drafts of some pages on beta.
+# This value is read by v1.wagtail_hooks.
+SERVE_LATEST_DRAFT_PAGES = []
+if DEPLOY_ENVIRONMENT == 'beta':
+    SERVE_LATEST_DRAFT_PAGES = [1288]

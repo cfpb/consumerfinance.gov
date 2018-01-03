@@ -6,9 +6,9 @@ import logging
 import os
 import re
 import sqlite3
+from math import acos, cos, radians, sin
 
 from django.template import loader
-from math import acos, cos, radians, sin
 
 
 logger = logging.getLogger(__name__)

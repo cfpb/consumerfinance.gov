@@ -1,28 +1,22 @@
-from django.shortcuts import render, redirect
-from django.core.exceptions import ObjectDoesNotExist
-from django.utils.translation import ugettext as _
 from django.conf import settings
-from django.http import Http404
-
-from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.auth import (
-    update_session_auth_hash,
-    REDIRECT_FIELD_NAME,
-    login
+    REDIRECT_FIELD_NAME, get_user_model, login, update_session_auth_hash
 )
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponseRedirect
-from django.shortcuts import resolve_url
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import resolve
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import redirect, render, resolve_url
+from django.template.response import TemplateResponse
+from django.utils.encoding import force_text
+from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-from django.utils.encoding import force_text
-from django.utils.http import is_safe_url, urlsafe_base64_decode
-from django.template.response import TemplateResponse
-from django.core.urlresolvers import resolve
 
 from wagtail.wagtailadmin.views import account
 
