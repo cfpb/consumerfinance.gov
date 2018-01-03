@@ -1,22 +1,18 @@
 from __future__ import unicode_literals
 
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
-from wagtail.contrib.modeladmin.options import (
-    ModelAdmin, ModelAdminGroup, modeladmin_register)
-from wagtail.contrib.modeladmin.views import EditView
-
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.utils.html import format_html, format_html_join
+
+from wagtail.contrib.modeladmin.options import (
+    ModelAdmin, ModelAdminGroup, modeladmin_register
+)
+from wagtail.contrib.modeladmin.views import EditView
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.whitelist import attribute_rule
 
-from ask_cfpb.models import (
-    Answer,
-    Audience,
-    Category,
-    NextStep,
-    SubCategory)
+from ask_cfpb.models import Answer, Audience, Category, NextStep, SubCategory
 
 
 class AnswerModelAdminSaveUserEditView(EditView):

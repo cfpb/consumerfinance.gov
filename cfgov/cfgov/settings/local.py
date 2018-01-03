@@ -1,7 +1,8 @@
+from unipath import DIRS
+
 from .base import *
 from .database_mixin import *
 
-from unipath import DIRS
 
 DEBUG = True
 SECRET_KEY = 'not-secret-key-for-testing'

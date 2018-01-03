@@ -8,36 +8,30 @@ from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
+
+from wagtail.contrib.wagtailsitemaps.views import sitemap
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
-from wagtail.contrib.wagtailsitemaps.views import sitemap
-
 
 from flags.urls import flagged_url
 
 from ask_cfpb.views import (
-    ask_search,
-    ask_autocomplete,
-    print_answer,
-    redirect_ask_search,
+    ask_autocomplete, ask_search, print_answer, redirect_ask_search,
     view_answer
 )
 from core.views import ExternalURLNoticeView
 from legacy.views import token_provider
 from legacy.views.housing_counselor import (
-    HousingCounselorView, HousingCounselorPDFView
+    HousingCounselorPDFView, HousingCounselorView
 )
-
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
-    change_password,
-    check_permissions,
-    login_with_lockout,
-    password_reset_confirm,
-    welcome)
+    change_password, check_permissions, login_with_lockout,
+    password_reset_confirm, welcome
+)
 from v1.views.documents import DocumentServeView
 
 
@@ -466,7 +460,6 @@ if settings.ALLOW_ADMIN_URL:
             change_password,
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
-
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([

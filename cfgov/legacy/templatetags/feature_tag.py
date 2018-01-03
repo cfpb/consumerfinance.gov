@@ -4,6 +4,7 @@ from functools import wraps
 from django import template
 from django.http import Http404
 
+
 register = template.Library()
 
 

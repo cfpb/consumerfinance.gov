@@ -1,4 +1,3 @@
-
 const _assign = require( './assign' ).assign;
 
 
