@@ -1,11 +1,11 @@
+from __future__ import unicode_literals
+
 import argparse
 import logging
 import sys
 
-import boto3
-
 from alerts.newrelic_alerts import NewRelicAlertViolations
-
+from alerts.sqs_queue import SQSQueue
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler())
@@ -90,31 +90,8 @@ def read_known_violations(known_violations_filename):
     return known_violations
 
 
-def send_violations(sqs_client, queue_url, violation_messages, dryrun=False):
-    for message in violation_messages:
-        logger.info("Sending message '{}' to SQS".format(message))
-        if not dryrun:
-            response = sqs_client.send_message(
-                QueueUrl=queue_url,
-                MessageBody=message,
-            )
-            if response['ResponseMetadata']['HTTPStatusCode'] != 200:
-                logger.error("There was an error posting the message "
-                             "'{}' to SQS".format(message))
-                sys.exit(1)
-        else:
-            logger.info(message)
-
-
 if __name__ == "__main__":
     args = parser.parse_args()
-
-    client = boto3.client(
-        'sqs',
-        aws_access_key_id=args.aws_access_key_id,
-        aws_secret_access_key=args.aws_secret_access_key,
-        region_name='us-east-1',
-    )
 
     if args.verbose > 0:
         logger.setLevel(logging.DEBUG)
@@ -129,9 +106,26 @@ if __name__ == "__main__":
         args.newrelic_account,
         known_violations=known_violations
     )
-    messages = nralert_violations.get_new_violation_messages()
-    send_violations(client, args.queue_url, messages, dryrun=args.dryrun)
+
+    sqs_queue = SQSQueue(
+        queue_url=args.queue_url,
+        credentials={
+            'access_key': args.aws_access_key_id,
+            'secret_key': args.aws_secret_access_key,
+        }
+    )
+
+    for message in nralert_violations.get_new_violation_messages():
+        if args.dryrun:
+            logger.info(message)
+            continue
+        response = sqs_queue.post(message)
+        if response['ResponseMetadata']['HTTPStatusCode'] != 200:
+            sys.exit(1)
+        logger.info("Sent message '{}' to SQS".format(message))
 
     # Cache known violations
-    cache_known_violations(args.known_violations_file,
-                           nralert_violations.known_violations)
+    cache_known_violations(
+        args.known_violations_file,
+        nralert_violations.known_violations
+    )
