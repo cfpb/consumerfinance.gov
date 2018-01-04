@@ -68,8 +68,15 @@
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em ) !important;
     }
     
+    .content-l__top-divider {
+        .content-l_col-1 + .content-l_col-1 {
+            // Adds top divider between single-column info units
+            .grid_column__top-divider;
+        }
+    }
+    
     .content-l__top-divider + .content-l__top-divider {
-        // Adds top divider between info units
+        // Adds top divider between multi-column info unit rows
         .grid_column__top-divider;
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     }

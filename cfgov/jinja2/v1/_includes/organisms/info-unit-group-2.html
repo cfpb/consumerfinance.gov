@@ -12,8 +12,10 @@
 
    value.format:                  The number and width of columns to output.
    
-   value.has_top_border:          Boolean for whether or not to add top
-                                  border to info-unit-group
+   value.has_top_rule_line:       Boolean for whether or not to add top
+                                  border to info-unit-group. Used in 
+                                  'render_block.html' to modify classes on 
+                                  wrapper '.block' div.
 
    value.heading:                 (Optional) An object containing:
 
@@ -61,36 +63,29 @@
 {%- if value.intro %}
     {{ value.intro | safe }}
 {%- endif %}
-    {% if not value.lines_between_items %}
-    <div class="content-l">
+
+{% for unit in value.info_units %}
+    {% if ( loop.index == 1 ) or
+          ( value.format == '50-50' and loop.index % 2 == 1 ) or
+          ( value.format == '33-33-33' and loop.index  % 3 == 1 ) 
+    %}
+    <div class="content-l
+                {{' content-l__top-divider' if value.lines_between_items else ''}}">
     {% endif %}
-    {% for unit in value.info_units %}
-        {% if value.lines_between_items and  (
-            ( loop.index == 1 ) or
-            ( value.format == '25-75' ) or
-            ( value.format == '50-50' and loop.index % 2 == 1 ) or
-            ( value.format == '33-33-33' and loop.index  % 3 == 1 ) 
-        ) %}
-            <div class="content-l content-l__top-divider">
-        {% endif %}
-        
-        <div class="content-l_col
-                    {{- ' content-l_col-1-2' if value.format == '50-50' else '' -}}
-                    {{- ' content-l_col-1-3' if value.format == '33-33-33' else '' -}}
-                    {{- ' content-l_col-1' if value.format == '25-75' else '' -}}">
-            {{- info_unit(unit, value.format, value.link_image_and_heading) }}
-        </div>
-        
-        {% if value.lines_between_items and (
-            ( value.format == '25-75' ) or
-            ( value.format == '50-50' and loop.index % 2 == 0 ) or
-            ( value.format == '33-33-33' and loop.index % 3 == 0 ) or
-            ( loop.index == value.info_units | length )
-        ) %}
-        </div>
-        {% endif %}
-    {% endfor %}
-    {% if not value.lines_between_items %}
+    
+    <div class="content-l_col
+                {{- ' content-l_col-1-2' if value.format == '50-50' else '' -}}
+                {{- ' content-l_col-1-3' if value.format == '33-33-33' else '' -}}
+                {{- ' content-l_col-1' if value.format == '25-75' else '' -}}">
+        {{- info_unit(unit, value.format, value.link_image_and_heading) }}
+    </div>
+    
+    {% if ( loop.index == value.info_units | length ) or
+          ( value.format == '50-50' and loop.index % 2 == 0 ) or
+          ( value.format == '33-33-33' and loop.index % 3 == 0 )
+    %}
     </div>
     {% endif %}
+{% endfor %}
+
 </div>

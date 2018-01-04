@@ -64,10 +64,9 @@ class InfoUnitGroup(blocks.StructBlock):
                    'the first link in their unit\'s list, if there is a link.')
     )
 
-    has_top_border = blocks.BooleanBlock(
+    has_top_rule_line = blocks.BooleanBlock(
         default=False,
         required=False,
-        label="Has top rule line",
         help_text=('Check this to add a horizontal rule line to top of '
                    'info unit group.')
     )
@@ -322,10 +321,9 @@ class RelatedPosts(blocks.StructBlock):
 
 class MainContactInfo(blocks.StructBlock):
     contact = SnippetChooserBlock(ContactSnippetClass)
-    has_top_border = blocks.BooleanBlock(
+    has_top_rule_line = blocks.BooleanBlock(
         default=False,
         required=False,
-        label="Has top rule line",
         help_text='Add a horizontal rule line to top of contact block.'
     )
 
@@ -873,10 +871,9 @@ class ChartBlock(blocks.StructBlock):
         required=True,
         help_text='Briefly summarize the chart for visually impaired users.')
 
-    has_top_border = blocks.BooleanBlock(
+    has_top_rule_line = blocks.BooleanBlock(
         default=False,
         required=False,
-        label="Has top rule line",
         help_text=('Check this to add a horizontal rule line to top of '
                    'chart block.')
     )
@@ -915,10 +912,9 @@ class MortgageChartBlock(blocks.StructBlock):
     note = blocks.CharBlock(
         required=False,
         help_text='Text for "Note" section of footnotes.')
-    has_top_border = blocks.BooleanBlock(
+    has_top_rule_line = blocks.BooleanBlock(
         default=False,
         required=False,
-        label="Has top rule line",
         help_text=('Check this to add a horizontal rule line to top of '
                    'chart block.')
     )
@@ -927,7 +923,6 @@ class MortgageChartBlock(blocks.StructBlock):
         label = 'Mortgage Chart Block'
         icon = 'image'
         template = '_includes/organisms/mortgage-chart.html'
-        classname = 'block__flush-top'
 
     class Media:
         js = ['mortgage-performance-trends.js']
@@ -947,10 +942,9 @@ class MortgageMapBlock(MortgageChartBlock):
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
-    has_top_border = blocks.BooleanBlock(
+    has_top_rule_line = blocks.BooleanBlock(
         default=False,
         required=False,
-        label="Has top rule line",
         help_text=('Check this to add a horizontal rule line to top of '
                    'snippet list.')
     )
