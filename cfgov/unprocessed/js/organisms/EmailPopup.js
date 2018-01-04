@@ -64,7 +64,7 @@ function EmailPopup( el ) {
     const input = form.querySelector( 'input[name="code"]' );
     const code = input.value;
 
-    if ( code === 'USCFPB_127' ) {
+    if ( code === 'USCFPB_128' ) {
       emailHelpers.recordEmailRegistration();
     }
   }
