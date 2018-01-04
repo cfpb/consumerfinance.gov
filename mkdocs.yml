@@ -23,6 +23,7 @@ pages:
 - APIs:
     - Ask CFPB: ask-cfpb.md
     - Consumer complaints: consumer-complaint-database.md
+    - HMDA data: hmda.md
 
 theme: mkDOCter
 extra:
