@@ -471,11 +471,6 @@ BACKENDS = {
     'diffs': 'regcore.db.django_models.DMDiffs',
 }
 
-# Make regulations-site use Python to call regulations-core.
-# https://github.com/cfpb/regulations-site/pull/845
-if 'regcore' in INSTALLED_APPS and 'regulations' in INSTALLED_APPS:
-    EREGS_REGCORE_URLS = 'regcore.urls'
-
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
