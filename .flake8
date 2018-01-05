@@ -39,7 +39,4 @@ exclude =
     # proper cleanup yet.
     cfgov/v1/tests,
 
-    # Monkey-patching with code from Django that doesn't meet our standards.
-    cfgov/cfgov/monkey_patch/django.py,
-
 # max-complexity = 10
