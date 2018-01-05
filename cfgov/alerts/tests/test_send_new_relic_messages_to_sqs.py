@@ -1,10 +1,8 @@
+import mock
 import unittest
 
-import boto3
-import mock
-
 from alerts.send_new_relic_messages_to_sqs import (
-    cache_known_violations, read_known_violations, send_violations
+    cache_known_violations, read_known_violations
 )
 
 
@@ -32,33 +30,3 @@ class TestSendNewRelicMessagesToSQS(unittest.TestCase):
             mock_open.side_effect = IOError()
             known_violations = read_known_violations('/some/file.json')
         self.assertEqual([], known_violations)
-
-    def test_send_violations(self):
-        mock_boto3_client = mock.MagicMock(boto3.session.Session.client)()
-        mock_boto3_client.send_message.return_value = {
-            'ResponseMetadata': {'HTTPStatusCode': 200}
-        }
-        send_violations(mock_boto3_client,
-                        'http://queue',
-                        ['test violation message'])
-        mock_boto3_client.send_message.assert_called_once_with(
-            MessageBody='test violation message',
-            QueueUrl='http://queue')
-
-    def test_send_violations_not200(self):
-        mock_boto3_client = mock.MagicMock(boto3.session.Session.client)()
-        mock_boto3_client.send_message.return_value = {
-            'ResponseMetadata': {'HTTPStatusCode': 400}
-        }
-        with self.assertRaises(SystemExit):
-            send_violations(mock_boto3_client,
-                            'http://queue',
-                            ['test violation message'])
-
-    def test_send_violations_dryrun(self):
-        mock_boto3_client = mock.MagicMock(boto3.session.Session.client)()
-        send_violations(mock_boto3_client,
-                        'http://queue',
-                        ['test violation message'],
-                        dryrun=True)
-        mock_boto3_client.send_message.assert_not_called()
