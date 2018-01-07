@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @constant
  * @type {string}
@@ -7,7 +5,7 @@
  * Constant for the name of the data-* attribute set on
  * HTML DOM elements for access by JavaScript.
  */
-var JS_HOOK = 'data-js-hook';
+const JS_HOOK = 'data-js-hook';
 
 /**
  * @constant
@@ -25,7 +23,7 @@ var JS_HOOK = 'data-js-hook';
  * which defines that two scripts (FlyoutMenu) and (ClearableInput)
  * should access this DOM element and initialize its behaviors.
  */
-var BEHAVIOR_PREFIX = 'behavior_';
+const BEHAVIOR_PREFIX = 'behavior_';
 
 /**
  * @constant
@@ -41,7 +39,7 @@ var BEHAVIOR_PREFIX = 'behavior_';
  * has been called, such as
  * `var globalSearch = new GlobalSearch( 'm-global-search' ).init()`.
  */
-var STATE_PREFIX = 'state_';
+const STATE_PREFIX = 'state_';
 
 /**
  * Empty function that will do nothing.
@@ -56,7 +54,7 @@ function noopFunct() {
   // Placeholder function meant to be overridden.
 }
 
-var UNDEFINED;
+let UNDEFINED;
 
 module.exports = {
   BEHAVIOR_PREFIX: BEHAVIOR_PREFIX,

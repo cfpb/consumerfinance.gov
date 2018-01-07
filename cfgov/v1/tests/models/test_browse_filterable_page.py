@@ -1,11 +1,12 @@
 from django.test import TestCase
+
 from wagtail.wagtailcore.models import Site
 
 from v1.forms import EventArchiveFilterForm
 from v1.models import CFGOVPageCategory
-from v1.models.browse_filterable_page import (AbstractFilterPage,
-                                              EventArchivePage,
-                                              NewsroomLandingPage)
+from v1.models.browse_filterable_page import (
+    AbstractFilterPage, EventArchivePage, NewsroomLandingPage
+)
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 

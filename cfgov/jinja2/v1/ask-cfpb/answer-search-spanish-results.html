@@ -1,7 +1,7 @@
 {% extends 'spanish-ask-base.html' %}
 
 {% block babel_title %}
-    {% set page_title=page.query %}
+    {% set page_title=page.result_query %}
     {% set search_page = 1 %}
     {% include "ask/title-spanish.html" %}
 {% endblock %}
@@ -13,8 +13,12 @@
                 <div class="primary span8">
                     <header class="header">
                         <h1>
-                            {{ page.query }}
+                            {{ page.result_query }}
                         </h1>
+                        {% if page.suggestion and flag_enabled('ASK_SEARCH_TYPOS', request) %}
+                        <h3>Mostrando resultados para “{{ page.result_query }}”</h3>
+                        <p>Buscar en vez para <a href="/es/obtener-respuestas/buscar/?q={{ page.query }}&correct=0">{{ page.query }}</a></p>
+                        {% endif %}
                     </header><!-- .header -->
 
                     {% if paginator.num_pages > 1 %}
@@ -29,6 +33,7 @@
                         </div>
                     </nav><!-- .pagination -->
                     {% endif %}
+
 
                     {% for question in results %}
                         <a href=" {{ question[0] }} " class="ac-qa-summary">
@@ -59,18 +64,29 @@
 
                 <div class="share s-hide-on-small" data-set="share"></div><!-- .share -->
 
-            {% else %}
+            {% elif not results and page.query %}
+
                 <div class="primary span8">
                     <header class="header">
-                        <h2>No pudimos encontrar resultados para<br>"<em>{{ page.query }}</em>"</h2>
+                        <h3>No pudimos encontrar resultados para "<em>{{ page.result_query }}</em>"</h3>
+                        {% if page.suggestion and flag_enabled('ASK_SEARCH_TYPOS', request) %}
+                        <p>Buscar en vez para <a href="/es/obtener-respuestas/buscar/?q={{ page.suggestion }}&correct=0">{{ page.suggestion }}</a></p>
+                        {% endif %}
                     </header><!-- .header -->
 
                     <p>Siempre estamos agregando respuestas, así que regrese pronto o llame al <a href="tel:+18554112372" class="phone">(855) 411-2372</a> para hacer una pregunta por teléfono.</p>
                     <ul class="unstyled">
-                        <li><a href="/es/presentar-una-queja/">PRESENTAR UNA QUEJA</a></li>
-                        <li><a href="/obtener-respustas">OBTENER RESPUESTAS</a></li>
+                        <li><a href="/es/presentar-una-queja/">Presentar una queja</a></li>
+                        <li><a href="/obtener-respustas">Obtener respuestas</a></li>
                     </ul>
                 </div>
+
+            {% else %}
+
+                <div class="primary span8">
+                    <h4 class="ac-search-prompt">Escriba un término de búsqueda en el cuadro de texto.</h4>
+                </div> 
+
             {% endif %}
 
         </section><!-- .content -->

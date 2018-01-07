@@ -1,12 +1,10 @@
 /* ==========================================================================
-  Error Messages Config
-
-  These messages are manually mirrored on the Python side in config.py
+   Error Messages Config
+   These messages are manually mirrored on the Python side in config.py
    ========================================================================== */
 
-'use strict';
 
-var ERROR_MESSAGES = {
+const ERROR_MESSAGES = {
   CHECKBOX: {
     REQUIRED: 'Please select at least %s of the options.'
   },

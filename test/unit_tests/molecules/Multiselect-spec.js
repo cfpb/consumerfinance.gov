@@ -1,15 +1,13 @@
-'use strict';
+const chai = require( 'chai' );
+const expect = chai.expect;
+const sinon = require( 'sinon' );
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var sinon = require( 'sinon' );
-
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
-var Multiselect = require( BASE_JS_PATH + 'molecules/Multiselect' );
-var multiselect;
-var selectDom;
-var multiselectDom;
-var sandbox;
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+const Multiselect = require( BASE_JS_PATH + 'molecules/Multiselect' );
+let multiselect;
+let selectDom;
+let multiselectDom;
+let sandbox;
 const HTML_SNIPPET =
   '<select name="test-select" id="test-select" multiple>' +
     '<option value="Debt collection">Debt collection</option>' +
@@ -19,7 +17,7 @@ const HTML_SNIPPET =
   '</select>';
 
 function keyPress( target, key ) {
-  var event = target.createEvent( 'Event' );
+  const event = target.createEvent( 'Event' );
   event.keyCode = key;
   event.initEvent( 'keydown' );
   target.dispatchEvent( event );
@@ -57,10 +55,10 @@ describe( 'Multiselect', function() {
 
     it( 'should autocheck any selected options (form submitted pages)',
       function() {
-        var option = document.querySelector( 'option' );
+        const option = document.querySelector( 'option' );
         option.defaultSelected = true;
         multiselect.init();
-        var choices =
+        const choices =
           document.querySelectorAll( '.cf-multi-select_choices li' );
 
         expect( choices.length ).to.equal( 1 );
@@ -69,11 +67,12 @@ describe( 'Multiselect', function() {
     );
 
     it( 'should log a helpful tip if passed a bad option value', function() {
-      // TODO: Remove console.log in favor of throwing an error.
-      //       sandbox.stub console.log will prevent regular `console.log(…)`
-      //       calls in this suite.
+
+      /* TODO: Remove console.log in favor of throwing an error.
+         sandbox.stub console.log will prevent regular `console.log(…)`
+         calls in this suite. */
       sandbox.stub( window.console, 'log' );
-      var option = document.querySelector( 'option' );
+      const option = document.querySelector( 'option' );
       option.value = 'Foo\'';
       multiselect.init();
       selectDom = document.querySelectorAll( 'select[multiple]' );
@@ -81,9 +80,11 @@ describe( 'Multiselect', function() {
 
       expect( selectDom.length ).to.equal( 1 );
       expect( multiselectDom.length ).to.equal( 0 );
-      sinon.assert.calledOnce( console.log ); // eslint-disable-line  no-console
+      // eslint-disable-next-line no-console
+      sinon.assert.calledOnce( console.log );
       sinon.assert.calledWithExactly(
-        console.log, '\'Foo\'\' is not a valid value' // eslint-disable-line  no-console
+        // eslint-disable-next-line no-console
+        console.log, '\'Foo\'\' is not a valid value'
       );
     } );
   } );
@@ -93,7 +94,7 @@ describe( 'Multiselect', function() {
       multiselect.init();
       multiselect.expand();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset =
+      const fieldset =
         multiselectDom.querySelector( '.cf-multi-select_fieldset' );
 
       expect( multiselectDom.className ).to.equal( 'cf-multi-select active' );
@@ -105,7 +106,7 @@ describe( 'Multiselect', function() {
       multiselect.expand();
       multiselect.collapse();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset =
+      const fieldset =
         multiselectDom.querySelector( '.cf-multi-select_fieldset' );
 
       expect( multiselectDom.className ).to.equal( 'cf-multi-select' );
@@ -117,9 +118,9 @@ describe( 'Multiselect', function() {
     xit( 'should open when the search input is clicked', function() {
       multiselect.init();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset =
+      const fieldset =
         multiselectDom.querySelector( '.cf-multi-select_fieldset' );
-      var search = document.querySelector( '#test-select' );
+      const search = document.querySelector( '#test-select' );
       search.click();
 
       expect( document.activeElement.id ).to.equal( 'test-select' );
@@ -129,7 +130,7 @@ describe( 'Multiselect', function() {
 
     xit( 'should highlight the first item when keying down', function() {
       multiselect.init();
-      var search = document.querySelector( '#test-select' );
+      const search = document.querySelector( '#test-select' );
       search.click();
       keyPress( search, 40 );
 
@@ -140,7 +141,7 @@ describe( 'Multiselect', function() {
       multiselect.init();
       multiselect.expand();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset =
+      const fieldset =
         multiselectDom.querySelector( '.cf-multi-select_fieldset' );
       document.click();
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from StringIO import StringIO
 from datetime import timedelta
+from StringIO import StringIO
 
 from django.contrib.auth import get_user_model
 from django.core import mail

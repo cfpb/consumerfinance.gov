@@ -17,7 +17,11 @@
         <div class="error_copy_container">
             <header class="error_header">
                 <h1>500: Server error</h1>
-                <p class="lead-paragraph">We can’t find the page you’re looking for. Visit our homepage for helpful tools and resources, or contact us and we'll point you in the right direction.</p>
+                <p class="lead-paragraph">
+                    We can’t find the page you’re looking for.
+                    Visit our homepage for helpful tools and resources,
+                    or contact us and we'll point you in the right direction.
+                </p>
             </header>
         </div>
 
@@ -33,7 +37,8 @@
         </aside>
 
         <p>Are you sure this is the right web address?
-            <a class="a-link a-link__jump" href={{"mailto:CFPB_website@consumerfinance.gov?subject=500%20Error%20at%20%22" + request.build_absolute_uri() + "%22"}} >
+            <a class="a-link a-link__jump"
+               href={{"mailto:CFPB_website@consumerfinance.gov?subject=500%20Error%20at%20%22" + request.build_absolute_uri() + "%22"}} >
                 <span class="a-link_text">Let us know</span>
             </a>
         </p>
@@ -42,7 +47,5 @@
 
 {% block javascript %}
 {# Include site-wide JavaScript. #}
-<script type='text/javascript'>
-    {% include '/js/routes/common.js' %}
-</script>
+<script type='text/javascript' src="{{ static('js/routes/common.js') }}"></script>
 {% endblock javascript %}

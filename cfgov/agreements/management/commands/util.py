@@ -1,4 +1,5 @@
 import os
+
 from agreements.models import Agreement, Issuer
 from slugify import slugify
 
@@ -47,9 +48,8 @@ def update_agreement(
     return agreement
 
 
-def upload_to_s3(file_path=None, s3_dest_path=None):
+def upload_to_s3(file_path, s3_dest_path):
     import tinys3
-
     AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
@@ -62,4 +62,3 @@ def upload_to_s3(file_path=None, s3_dest_path=None):
 
     file = open(file_path, 'rb')
     conn.upload(s3_dest_path, file, AWS_STORAGE_BUCKET_NAME)
-    print '%s uploaded to %s' % (file_path, s3_dest_path)

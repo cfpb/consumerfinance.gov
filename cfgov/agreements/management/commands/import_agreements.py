@@ -4,7 +4,7 @@ from datetime import datetime
 
 from django.core.management.base import BaseCommand
 
-from .util import upload_to_s3, update_agreement, update_issuer, clear_tables
+from .util import clear_tables, update_agreement, update_issuer, upload_to_s3
 
 
 class Command(BaseCommand):
@@ -18,6 +18,8 @@ class Command(BaseCommand):
         parser.add_argument('-p', '--path', action='store', required=True)
 
     def handle(self, *args, **options):
+        verbosity = options['verbosity']
+
         now = datetime.now()
         suffix = '%s_%s_' % (now.month, now.year)
 
@@ -48,7 +50,12 @@ class Command(BaseCommand):
                         (uri_hostname, s3_key, unique_fname)))
 
                 if os.environ.get('AGREEMENTS_S3_UPLOAD_ENABLED', False):
-                    upload_to_s3(
-                        file_path=os.path.join(current_dir, fname),
-                        s3_dest_path=("%s/%s" % (s3_key, unique_fname))
-                    )
+                    file_path = os.path.join(current_dir, fname)
+                    s3_dest_path = "%s/%s" % (s3_key, unique_fname)
+                    upload_to_s3(file_path, s3_dest_path)
+
+                    if verbosity >= 1:
+                        self.stdout.write('{} uploaded to {}'.format(
+                            file_path,
+                            s3_dest_path
+                        ))

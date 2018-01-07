@@ -1,17 +1,17 @@
 from __future__ import unicode_literals
+
 import datetime
-from dateutil import parser
 import logging
 import os
 
+from dateutil import parser
+
 from data_research.models import (
-    CountyMortgageData, MortgageMetaData,
-    MetroArea, MSAMortgageData,
-    NationalMortgageData,
-    NonMSAMortgageData,
-    State, StateMortgageData,
+    CountyMortgageData, MetroArea, MortgageMetaData, MSAMortgageData,
+    NationalMortgageData, NonMSAMortgageData, State, StateMortgageData,
     validate_counties
 )
+
 
 logger = logging.getLogger(__name__)
 script = os.path.basename(__file__)

@@ -1,5 +1,3 @@
-'use strict';
-
 function StorageMock() {
   this.storage = {};
 }
@@ -21,7 +19,7 @@ function length() {
 }
 
 function key( index ) {
-  var keys = Object.keys( this.storage );
+  const keys = Object.keys( this.storage );
   return keys[index] || null;
 }
 

@@ -1,10 +1,10 @@
 from django.test import TestCase
-from wagtail.wagtailcore.models import Site
-from wagtail.tests.testapp.models import SimplePage
 
-from v1.models.snippets import (
-    Contact, Resource, ReusableText, ReusableTextChooserBlock
-)
+from wagtail.tests.testapp.models import SimplePage
+from wagtail.wagtailcore.models import Site
+
+from v1.blocks import ReusableTextChooserBlock
+from v1.models.snippets import Contact, Resource, ReusableText
 
 
 class TestFilterByTags(TestCase):

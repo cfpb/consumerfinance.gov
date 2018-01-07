@@ -1,5 +1,5 @@
 import json
-import requests
+from functools import partial
 
 from django import forms
 from django.apps import apps
@@ -9,8 +9,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import smart_text
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
-from functools import partial
-from jinja2 import Markup
+
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.utils.widgets import WidgetWithScript
 from wagtail.wagtailcore import blocks
@@ -20,12 +19,13 @@ from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from wagtail.wagtailsnippets.models import get_snippet_models
 
+import requests
+from jinja2 import Markup
+
+import ask_cfpb
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
-from v1.models.snippets import Contact as ContactSnippetClass
-from v1.models.snippets import ReusableText, ReusableTextChooserBlock
 from v1.util import ref
-import ask_cfpb
 
 
 class Well(blocks.StructBlock):
@@ -34,7 +34,6 @@ class Well(blocks.StructBlock):
     class Meta:
         icon = 'title'
         template = '_includes/organisms/well.html'
-        classname = 'block__flush'
 
 
 class InfoUnitGroup(blocks.StructBlock):
@@ -313,7 +312,7 @@ class RelatedPosts(blocks.StructBlock):
 
 
 class MainContactInfo(blocks.StructBlock):
-    contact = SnippetChooserBlock(ContactSnippetClass)
+    contact = SnippetChooserBlock('v1.Contact')
 
     class Meta:
         icon = 'wagtail'
@@ -658,7 +657,7 @@ class FullWidthText(blocks.StreamBlock):
     table = Table(editable=False)
     table_block = AtomicTableBlock(table_options={'renderer': 'html'})
     image_inset = molecules.ImageInset()
-    reusable_text = ReusableTextChooserBlock(ReusableText)
+    reusable_text = v1_blocks.ReusableTextChooserBlock('v1.ReusableText')
 
     class Meta:
         icon = 'edit'
@@ -910,6 +909,24 @@ class MortgageMapBlock(MortgageChartBlock):
         js = ['mortgage-performance-trends.js']
 
 
+def get_snippet_type_choices():
+    return [
+        (
+            m.__module__ + '.' + m.__name__,
+            m._meta.verbose_name_plural.capitalize()
+        ) for m in get_snippet_models()
+    ]
+
+
+def get_snippet_field_choices():
+    return [
+        (
+            m._meta.verbose_name_plural.capitalize(),
+            getattr(m, 'snippet_list_field_choices', [])
+        ) for m in get_snippet_models()
+    ]
+
+
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
@@ -931,12 +948,7 @@ class SnippetList(blocks.StructBlock):
     )
 
     snippet_type = blocks.ChoiceBlock(
-        choices=[
-            (
-                m.__module__ + '.' + m.__name__,
-                m._meta.verbose_name_plural.capitalize()
-            ) for m in get_snippet_models()
-        ],
+        choices=get_snippet_type_choices,
         required=True
     )
     show_thumbnails = blocks.BooleanBlock(
@@ -949,12 +961,7 @@ class SnippetList(blocks.StructBlock):
             help_text='E.g., "Download" or "Order free prints"'
         )),
         ('snippet_field', blocks.ChoiceBlock(
-            choices=[
-                (
-                    m._meta.verbose_name_plural.capitalize(),
-                    getattr(m, 'snippet_list_field_choices', [])
-                ) for m in get_snippet_models()
-            ],
+            choices=get_snippet_field_choices,
             help_text='Corresponds to the available fields for the selected '
                       'snippet type.'
         )),

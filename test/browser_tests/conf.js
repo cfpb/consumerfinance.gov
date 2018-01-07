@@ -1,5 +1,3 @@
-'use strict';
-
 const environmentTest = require( './environment-test' );
 const envvars = require( '../../config/environment' ).envvars;
 const defaultSuites = require( './default-suites.js' );
@@ -26,17 +24,17 @@ function _chooseSuite( params ) {
                           !_paramIsSet( params.version ) &&
                           !_paramIsSet( params.platform );
 
-  // Set the capabilities to use the essential suite,
-  // unless Sauce Labs credentials are set and
-  // no browser/platform flags are passed, in which case use the full suite.
-  // This will make it so that setting the browser/platform flags
-  // won't launch several identical browsers performing the same tests.
+  /* Set the capabilities to use the essential suite,
+     unless Sauce Labs credentials are set and
+     no browser/platform flags are passed, in which case use the full suite.
+     This will make it so that setting the browser/platform flags
+     won't launch several identical browsers performing the same tests. */
   let capabilities = defaultSuites.essential;
 
   if ( envvars.HEADLESS_CHROME_BINARY ) {
     capabilities = defaultSuites.headless;
     const cucumberOpts = minimist( process.argv.slice( 2 ) )
-                         .cucumberOpts || {};
+      .cucumberOpts || {};
     const WINDOW_SIZES = environmentTest.WINDOW_SIZES;
     let windowWidthPx = WINDOW_SIZES.DESKTOP.WIDTH;
     let windowHeightPx = WINDOW_SIZES.DESKTOP.HEIGHT;
@@ -151,7 +149,7 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 
   for ( let i = 0, len = capabilities.length; i < len; i++ ) {
     capability = capabilities[i];
-    for ( var p in injectParams ) {
+    for ( const p in injectParams ) {
       if ( injectParams.hasOwnProperty( p ) ) {
         capability[p] = injectParams[p];
       }
@@ -195,8 +193,8 @@ function _onPrepare() {
   // Ignore Selenium allowances for non-angular sites.
   browser.ignoreSynchronization = true;
 
-  // If --windowSize=w,h flag was passed, set window dimensions.
-  // Otherwise, use default values from the test settings.
+  /* If --windowSize=w,h flag was passed, set window dimensions.
+     Otherwise, use default values from the test settings. */
   const windowSize = browser.params.windowSize;
   const WINDOW_SIZES = environmentTest.WINDOW_SIZES;
   const cucumberOpts = minimist( process.argv.slice( 2 ) ).cucumberOpts || {};
@@ -213,8 +211,8 @@ function _onPrepare() {
     windowHeightPx = WINDOW_SIZES.MOBILE.HEIGHT;
   }
 
-  // Calling setSize with headless chromeDriver doesn't work properly if
-  // the requested size is larger than the available screen size.
+  /* Calling setSize with headless chromeDriver doesn't work properly if
+     the requested size is larger than the available screen size. */
   if ( !envvars.HEADLESS_CHROME_BINARY ) {
     browser.driver.manage().window().setSize(
       windowWidthPx,
@@ -227,8 +225,6 @@ function _onPrepare() {
     browser.params.windowSize = String( windowWidthPx ) +
                                 ',' + String( windowHeightPx );
   }
-
-  return;
 }
 
 const config = {

@@ -10,14 +10,13 @@ import sys
 
 from django.apps import apps
 from django.conf import settings
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.db import connection
 from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
 from django.test.runner import DiscoverRunner, is_discoverable
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from mock import Mock
-
 from scripts import initial_data, test_data
 
 
@@ -53,7 +52,7 @@ class PlaceholderJSMixin(object):
     only created if they don't already exist.
     """
     PLACEHOLDER_FILES = (
-        'static_built/js/routes/common.js',
+        'static_built/js/modernizr.min.js',
     )
 
     PLACEHOLDER_STRING = (

@@ -2,15 +2,14 @@
    Scripts for Feedback Form organism.
    ========================================================================== */
 
-'use strict';
 
-var COMMENT_ERRORS = require( '../../config/error-messages-config' ).COMMENT || {};
-var OPTION_ERRORS = require( '../../config/error-messages-config' ).OPTION || {};
-var FormSubmit = require( '../../organisms/FormSubmit.js' );
-var BASE_CLASS = 'o-feedback';
-var requiredKey = 'REQUIRED';
-var UNDEFINED;
-var element = document.body.querySelector( '.' + BASE_CLASS );
+const COMMENT_ERRORS = require( '../../config/error-messages-config' ).COMMENT;
+const OPTION_ERRORS = require( '../../config/error-messages-config' ).OPTION;
+const FormSubmit = require( '../../organisms/FormSubmit.js' );
+const BASE_CLASS = 'o-feedback';
+let requiredKey = 'REQUIRED';
+let UNDEFINED;
+const element = document.body.querySelector( '.' + BASE_CLASS );
 
 function validateFeedback( fields ) {
   if ( fields.comment ) {
@@ -21,7 +20,7 @@ function validateFeedback( fields ) {
     }
   }
   if ( fields.is_helpful ) {
-    for ( var i = 0; i < fields.is_helpful.length; i++ ) {
+    for ( let i = 0; i < fields.is_helpful.length; i++ ) {
       if ( fields.is_helpful[i].checked ) {
         return UNDEFINED;
       }
@@ -32,21 +31,21 @@ function validateFeedback( fields ) {
 }
 
 if ( element ) {
-  var replaceForm = element.getAttribute( 'data-replace' );
-  var languageField = element.querySelector( 'input[name="language"]' );
-  var language = languageField && languageField.value === 'es' ? 'es' : 'en';
+  const replaceForm = element.getAttribute( 'data-replace' );
+  const languageField = element.querySelector( 'input[name="language"]' );
+  const language = languageField && languageField.value === 'es' ? 'es' : 'en';
   if ( language === 'es' ) {
     requiredKey = 'REQUIRED_ES';
   }
 
-  var opts = {
+  const opts = {
     validator: validateFeedback,
     replaceForm:  replaceForm || language === 'es',
     minReplacementHeight: replaceForm,
     language: language
   };
 
-  var formSubmit = new FormSubmit(
+  const formSubmit = new FormSubmit(
     element,
     BASE_CLASS,
     opts

@@ -1,5 +1,3 @@
-'use strict';
-
 const MultiSelect = require( '../../shared_objects/multi-select.js' );
 const { defineSupportCode } = require( 'cucumber' );
 const chai = require( 'chai' );
@@ -17,15 +15,12 @@ defineSupportCode( function( { Then, When, Before } ) {
     multiSelect = new MultiSelect();
   } );
 
-  When( /I (.*) on the multi-select search input/,
-    function( searchInputAction ) {
-
-      return browser.wait( EC.visibilityOf( multiSelect.elements.search ) )
-             .then( () => {
-               multiSelect.elements.search[searchInputAction]();
-             } );
-    }
-  );
+  /* When( /I (.*) on the multi-select search input/,
+     async function( searchInputAction ) {
+     await browser.wait( EC.visibilityOf( multiSelect.elements.search ) );
+     await multiSelect.elements.search[searchInputAction]();
+     }
+     ); */
 
   When( /I enter "(.*)" in the search input/,
     function( searchInputText ) {
@@ -34,7 +29,7 @@ defineSupportCode( function( { Then, When, Before } ) {
     }
   );
 
-  When( 'I hit the escape button on the search input', function( ) {
+  When( 'I hit the escape button on the search input', function() {
 
     return multiSelect.elements.search.sendKeys( protractor.Key.ESCAPE );
   } );
@@ -44,41 +39,41 @@ defineSupportCode( function( { Then, When, Before } ) {
       const directionConstant = protractor.Key[arrowDirection.toUpperCase()];
 
       return multiSelect.elements.search.sendKeys(
-               directionConstant
-             );
+        directionConstant
+      );
     }
   );
 
   When( 'I click on the first choices element',
-    function( ) {
+    function() {
 
       return multiSelect.getChoiceElements()
-             .first()
-             .click();
+        .first()
+        .click();
     }
   );
 
   When( /I click on the first option in the dropdown(?:\s)?(?:again)?/,
-    function( ) {
+    function() {
 
-      return multiSelect.getDrodownLabelElements()
-             .first()
-             .click();
+      return multiSelect.getDropDownLabelElements()
+        .first()
+        .click();
     }
   );
 
-  Then( 'the multi-select should be rendered', function( ) {
+  Then( 'the multi-select should be rendered', function() {
 
     return expect( multiSelect.isRendered() )
-           .to.eventually
-           .equal( true );
+      .to.eventually
+      .equal( true );
   } );
 
-  Then( 'no tags should be selected', function( ) {
+  Then( 'no tags should be selected', function() {
 
     return expect( multiSelect.areTagSelected() )
-           .to.eventually
-           .equal( false );
+      .to.eventually
+      .equal( false );
   } );
 
   Then( /the multi-select dropdown (should|shouldn't) be visible/,
@@ -90,8 +85,8 @@ defineSupportCode( function( { Then, When, Before } ) {
       }
 
       return expect( multiSelect.elements.fieldSet.isDisplayed() )
-             .to.eventually
-             .equal( dropdownIsDisplayed );
+        .to.eventually
+        .equal( dropdownIsDisplayed );
     }
   );
 
@@ -103,9 +98,9 @@ defineSupportCode( function( { Then, When, Before } ) {
         valueIsDisplayed = false;
       }
 
-      return expect( multiSelect.dropdownHasValue( dropdownValue ) )
-             .to.eventually
-             .equal( valueIsDisplayed );
+      return expect( multiSelect.dropDownHasValue( dropdownValue ) )
+        .to.eventually
+        .equal( valueIsDisplayed );
     }
   );
 
@@ -113,8 +108,8 @@ defineSupportCode( function( { Then, When, Before } ) {
     function( dropDownLength ) {
 
       return expect( multiSelect.getDropDownCount() )
-             .to.eventually
-             .equal( Number( dropDownLength ) );
+        .to.eventually
+        .equal( Number( dropDownLength ) );
     }
   );
 
@@ -126,56 +121,56 @@ defineSupportCode( function( { Then, When, Before } ) {
       if ( shouldContain === 'shouldn\'t' ) {
 
         return expect( multiSelectElement )
-               .to.eventually.not.contain( className );
+          .to.eventually.not.contain( className );
       }
 
       return expect( multiSelectElement )
-             .to.eventually
-             .contain( className );
+        .to.eventually
+        .contain( className );
     }
   );
 
   Then( 'the first option should be highlighted',
-    function( ) {
+    function() {
       function _getfirstElementText() {
 
-        return multiSelect.getDrodownLabelElements()
-               .first()
-               .getText();
+        return multiSelect.getDropDownLabelElements()
+          .first()
+          .getText();
       }
 
       function _getActiveElementValue() {
 
         return browser
-               .driver
-               .switchTo()
-               .activeElement()
-               .getAttribute( 'value' );
+          .driver
+          .switchTo()
+          .activeElement()
+          .getAttribute( 'value' );
       }
 
       return Promise.all( [ _getfirstElementText(), _getActiveElementValue() ] )
-             .then( function( [ firstElementText, activeElementValue ] ) {
+        .then( function( [ firstElementText, activeElementValue ] ) {
 
-               return expect( firstElementText )
-                      .to.equal( activeElementValue );
-             } );
+          return expect( firstElementText )
+            .to.equal( activeElementValue );
+        } );
     }
   );
 
   Then( 'the choices element should contain the first option',
-    function( ) {
+    function() {
       const getChoicesInfo = [
-        multiSelect.getDrodownLabelElements().first().getText(),
+        multiSelect.getDropDownLabelElements().first().getText(),
         multiSelect.getChoiceElements().first().getText(),
         multiSelect.getChoiceElements().count()
       ];
 
       return Promise.all( getChoicesInfo )
-            .then( function( [ firstElementText, choicesText, choicesCount ] ) {
-              expect( choicesCount ).to.equal( 1 );
+        .then( function( [ firstElementText, choicesText, choicesCount ] ) {
+          expect( choicesCount ).to.equal( 1 );
 
-              return expect( choicesText ).to.contain( firstElementText );
-            } );
+          return expect( choicesText ).to.contain( firstElementText );
+        } );
     }
   );
 
@@ -183,8 +178,8 @@ defineSupportCode( function( { Then, When, Before } ) {
     function( choicesCount ) {
 
       return expect( multiSelect.getChoiceElementsCount() )
-             .to.eventually
-             .equal( Number( choicesCount ) );
+        .to.eventually
+        .equal( Number( choicesCount ) );
     }
   );
 

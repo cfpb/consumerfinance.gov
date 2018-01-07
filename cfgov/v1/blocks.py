@@ -1,11 +1,14 @@
-from bs4 import BeautifulSoup
 from django.utils.module_loading import import_string
-from django.utils.safestring import mark_safe, SafeText
+from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
-from wagtail.wagtailcore import blocks
-from v1.atomic_elements import atoms
 
-from .util.util import get_unique_id
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+
+from bs4 import BeautifulSoup
+
+from v1.atomic_elements import atoms
+from v1.util.util import get_unique_id
 
 
 class AbstractFormBlock(blocks.StructBlock):
@@ -187,6 +190,11 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
 
 class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
     pass
+
+
+class ReusableTextChooserBlock(SnippetChooserBlock):
+    class Meta:
+        template = '_includes/snippets/reusable_text.html'
 
 
 class FeaturedMenuContent(blocks.StructBlock):
