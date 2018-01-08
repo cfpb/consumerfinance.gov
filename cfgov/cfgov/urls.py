@@ -12,8 +12,10 @@ from django.views.generic.base import RedirectView, TemplateView
 from wagtail.contrib.wagtailsitemaps.views import sitemap
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
+from flags.views import FlaggedTemplateView
 
 from ask_cfpb.views import (
     ask_autocomplete, ask_search, print_answer, redirect_ask_search,
@@ -36,6 +38,21 @@ from v1.views.documents import DocumentServeView
 
 
 oah = SheerSite('owning-a-home')
+
+
+def flagged_wagtail_template_view(flag_name, template_name):
+    """View that serves Wagtail if a flag is set, and a template if not.
+
+    This uses the wagtail-sharing ServeView to ensure that sharing works
+    properly when viewing the page in Wagtail behind a flag.
+    """
+    return FlaggedTemplateView.as_view(
+        fallback=lambda request: ServeView.as_view()(request, request.path),
+        flag_name=flag_name,
+        template_name=template_name,
+        condition=False
+    )
+
 
 urlpatterns = [
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
@@ -126,14 +143,21 @@ urlpatterns = [
                               'ways-to-stay-afloat/index.html'),
                 name='students-helping-borrowers'),
 
-    url(r'^practitioner-resources/servicemembers/$', TemplateView.as_view(
-        template_name='service-members/index.html'),
+    # Servicemembers
+    url(r'^practitioner-resources/servicemembers/$',
+        flagged_wagtail_template_view(
+            flag_name='WAGTAIL_SERVICEMEMBERS',
+            template_name='service-members/index.html'
+        ),
         name='servicemembers'),
     url(r'^practitioner-resources/servicemembers/webinars/$',
-        TemplateView.as_view(
-        template_name='service-members/on-demand-forums-and-tools'
-                      '/index.html'),
-        name='servicemembers'),
+        flagged_wagtail_template_view(
+            flag_name='WAGTAIL_SERVICEMEMBERS',
+            template_name=(
+                'service-members/on-demand-forums-and-tools/index.html'
+            )
+        ),
+        name='servicemembers-webinars'),
     url(r'^practitioner-resources/servicemembers/additionalresources/$',
         TemplateView.as_view(
         template_name='service-members/additionalresources/index.html'),

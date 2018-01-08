@@ -107,6 +107,9 @@ if DEPLOY_ENVIRONMENT == 'build':
         {'import': 'eregs_core', 'apps': ('eregs_core',)},
     ]
 
+
+POSTGRES_APPS = []
+
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -641,6 +644,9 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
+
+    # Servicemembers pages in Wagtail
+    'WAGTAIL_SERVICEMEMBERS': {},
 }
 
 

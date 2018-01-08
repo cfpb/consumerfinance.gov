@@ -20,6 +20,10 @@ pages:
     - Atomic structure and design: atomic-structure.md
     - Testing: testing-fe.md
 - Development tips: development-tips.md
+- APIs:
+    - Ask CFPB: ask-cfpb.md
+    - Consumer complaints: consumer-complaint-database.md
+    - HMDA data: hmda.md
 
 theme: mkDOCter
 extra:

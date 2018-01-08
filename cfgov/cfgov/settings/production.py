@@ -3,7 +3,7 @@ import sys
 from os.path import exists
 
 from .base import *
-from .mysql_mixin import *
+from .database_mixin import *
 
 
 default_loggers = []
@@ -43,14 +43,10 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
-        'db': {
-            'level': 'ERROR',
-            'class': 'alerts.logging_handlers.CFGovErrorHandler',
-        },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['console', 'db'],
+            'handlers': ['console'],
             'level': 'WARNING',
             'propagate': True,
         },
@@ -70,6 +66,13 @@ LOGGING = {
         }
     }
 }
+
+if os.environ.get('SQS_QUEUE_ENABLED'):
+    LOGGING['handlers']['sqs'] = {
+        'level': 'ERROR',
+        'class': 'alerts.logging_handlers.CFGovErrorHandler',
+    }
+    LOGGING['loggers']['django.request']['handlers'].append('sqs')
 
 # Only add syslog to LOGGING if it's in default_loggers
 if 'syslog' in default_loggers:

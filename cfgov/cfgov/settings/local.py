@@ -1,7 +1,7 @@
 from unipath import DIRS
 
 from .base import *
-from .mysql_mixin import *
+from .database_mixin import *
 
 
 DEBUG = True
