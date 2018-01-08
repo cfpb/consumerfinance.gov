@@ -1,11 +1,8 @@
-'use strict';
-
 /* scripts task
    ---------------
    Bundle javascripty things!
    This task is set up to generate multiple separate bundles,
-   from different sources, and to use watch when run from the default task.
-*/
+   from different sources, and to use watch when run from the default task. */
 
 const browserSync = require( 'browser-sync' );
 const config = require( '../config.js' );
@@ -60,8 +57,14 @@ function scriptsPolyfill() {
       dest:  paths.processed + '/js/modernizr.min.js',
       extra: configScripts.otherBuildTriggerFiles
     } ) )
+
+    /* csspointerevents is used by select menu in Capital Framework.
+       es5 is used for ECMAScript 5 feature detection to change js CSS to no-js.
+       setClasses sets detection checks as feat/no-feat CSS in html element.
+       html5printshiv enables use of HTML5 sectioning elements in IE8
+       See https://github.com/aFarkas/html5shiv */
     .pipe( gulpModernizr( {
-      tests:   [ 'csspointerevents', 'classlist', 'es5' ],
+      tests:   [ 'csspointerevents', 'es5' ],
       options: [ 'setClasses', 'html5printshiv' ]
     } ) )
     .pipe( gulpUglify( {
@@ -83,8 +86,11 @@ function scriptsPolyfill() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsModern() {
-  return _processScript( webpackConfig.modernConf,
-                         '/js/routes/**/*.js', '/js/routes/' );
+  return _processScript(
+    webpackConfig.modernConf,
+    '/js/routes/**/*.js',
+    '/js/routes/'
+  );
 }
 
 /**
@@ -92,8 +98,11 @@ function scriptsModern() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsIE() {
-  return _processScript( webpackConfig.commonConf,
-                         '/js/ie/common.ie.js', '/js/ie/' );
+  return _processScript(
+    webpackConfig.commonConf,
+    '/js/ie/common.ie9.js',
+    '/js/ie/'
+  );
 }
 
 /**
@@ -101,17 +110,23 @@ function scriptsIE() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsExternal() {
-  return _processScript( webpackConfig.externalConf,
-                         '/js/routes/external-site/index.js', '/js/' );
+  return _processScript(
+    webpackConfig.externalConf,
+    '/js/routes/external-site/index.js',
+    '/js/'
+  );
 }
 
- /**
-  * Bundle base js for Spanish Ask CFPB pages.
-  * @returns {PassThrough} A source stream.
-  */
+/**
+ * Bundle base js for Spanish Ask CFPB pages.
+ * @returns {PassThrough} A source stream.
+ */
 function scriptsSpanish() {
-  return _processScript( webpackConfig.spanishConf,
-                         '/js/routes/es/obtener-respuestas/single.js', '/js/' );
+  return _processScript(
+    webpackConfig.spanishConf,
+    '/js/routes/es/obtener-respuestas/single.js',
+    '/js/'
+  );
 }
 
 /**
@@ -121,9 +136,10 @@ function scriptsSpanish() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsOnDemandHeader() {
-  return _processScript( webpackConfig.commonConf,
-                         '/js/routes/on-demand/header.js',
-                         '/js/atomic/'
+  return _processScript(
+    webpackConfig.commonConf,
+    '/js/routes/on-demand/header.js',
+    '/js/atomic/'
   );
 }
 
@@ -134,9 +150,10 @@ function scriptsOnDemandHeader() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsOnDemandFooter() {
-  return _processScript( webpackConfig.commonConf,
-                         '/js/routes/on-demand/footer.js',
-                         '/js/atomic/'
+  return _processScript(
+    webpackConfig.commonConf,
+    '/js/routes/on-demand/footer.js',
+    '/js/atomic/'
   );
 }
 
@@ -183,25 +200,16 @@ function scriptsNemo() {
 }
 
 /**
- * Bundle Es5 shim scripts.
- * @returns {PassThrough} A source stream.
- */
-function scriptsEs5Shim() {
-  return _processScript( webpackConfig.commonConf,
-                         '/js/shims/es5-shim.js',
-                         '/js/'
-  );
-}
-
-/**
  * Bundle scripts in /js/routes/apps/owning-a-home/
  * and factor out common modules into common.js.
  * @returns {PassThrough} A source stream.
  */
 function scriptsOAH() {
-  return _processScript( webpackConfig.owningAHomeConf,
-                         '/js/routes/owning-a-home/**/*.js',
-                         '/js/owning-a-home/' );
+  return _processScript(
+    webpackConfig.owningAHomeConf,
+    '/js/routes/owning-a-home/**/*.js',
+    '/js/owning-a-home/'
+  );
 }
 
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
@@ -219,7 +227,6 @@ gulp.task( 'scripts:ondemand', [
   'scripts:ondemand:nonresponsive'
 ] );
 gulp.task( 'scripts:nemo', scriptsNemo );
-gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
@@ -228,6 +235,5 @@ gulp.task( 'scripts', [
   'scripts:ie',
   'scripts:external',
   'scripts:nemo',
-  'scripts:es5-shim',
   'scripts:spanish'
 ] );

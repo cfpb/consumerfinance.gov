@@ -2,10 +2,10 @@ from django.http import HttpRequest
 from django.template import engines
 from django.template.response import TemplateResponse
 from django.test import TestCase
+
 from wagtail.wagtailcore.models import Site
 
 from v1 import get_protected_url, parse_links
-from v1.middleware import StagingMiddleware
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 
@@ -79,7 +79,4 @@ class GetProtectedUrlTestCase(TestCase):
         request = HttpRequest()
         request.META['SERVER_NAME'] = hostname
         request.site = Site.objects.get(hostname=hostname)
-
-        StagingMiddleware().process_request(request)
-
         return request

@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from mock import patch
 
 from v1.models.base import CFGOVPage

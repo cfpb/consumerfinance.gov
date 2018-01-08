@@ -1,7 +1,6 @@
-'use strict';
-var paginationContent = element( by.css( '.m-pagination' ) );
+const paginationContent = element( by.css( '.m-pagination' ) );
 
-var pagination = {
+const pagination = {
 
   paginationContent: paginationContent,
 

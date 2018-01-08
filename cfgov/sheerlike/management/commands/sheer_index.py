@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 
 from sheerlike.indexer import index
 
+
 LOCATION = os.environ.get('SHEER_LOCATION', os.getcwd())
 ELASTICSEARCH_HOSTS = settings.SHEER_ELASTICSEARCH_SERVER
 ELASTICSEARCH_INDEX = settings.SHEER_ELASTICSEARCH_INDEX

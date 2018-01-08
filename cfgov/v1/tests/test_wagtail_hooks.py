@@ -1,11 +1,12 @@
+from django.test import TestCase, override_settings
+
+from wagtail.tests.testapp.models import SimplePage
+from wagtail.wagtailcore.models import Site
+
 import mock
 
-from django.test import TestCase
-from wagtail.wagtailcore.models import Site
-from wagtail.tests.testapp.models import SimplePage
-
 from v1.wagtail_hooks import (
-    RelativePageLinkHandler, check_permissions, form_module_handlers
+    RelativePageLinkHandler, check_permissions, form_module_handlers,
 )
 
 
@@ -163,3 +164,24 @@ class TestRelativePageLinkHandler(TestCase):
             is_default_site=False
         )
         self.check_page_renders_as_relative_link()
+
+
+class TestServeLatestDraftPage(TestCase):
+    def setUp(self):
+        self.default_site = Site.objects.get(is_default_site=True)
+        self.page = SimplePage(title='live', slug='test', content='test')
+        self.default_site.root_page.add_child(instance=self.page)
+        self.page.title = 'draft'
+        self.page.save_revision()
+
+    @override_settings(SERVE_LATEST_DRAFT_PAGES=[])
+    def test_not_serving_draft_serves_published_revision(self):
+        response = self.client.get('/test/')
+        self.assertContains(response, 'live')
+        self.assertIsNone(response.get('Serving-Wagtail-Draft'))
+
+    def test_serving_draft_serves_latest_revision_and_adds_header(self):
+        with override_settings(SERVE_LATEST_DRAFT_PAGES=[self.page.pk]):
+            response = self.client.get('/test/')
+            self.assertContains(response, 'draft')
+            self.assertEqual(response['Serving-Wagtail-Draft'], '1')

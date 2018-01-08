@@ -1,12 +1,16 @@
 from __future__ import unicode_literals
 
-from dateutil import parser
 import logging
 
 from django.db import models
+
+from wagtail.wagtailcore.models import PageManager
+
+from dateutil import parser
 from jsonfield import JSONField
 
-from v1.models import BrowsePage, PageManager
+from v1.models import BrowsePage
+
 
 logger = logging.getLogger(__name__)
 

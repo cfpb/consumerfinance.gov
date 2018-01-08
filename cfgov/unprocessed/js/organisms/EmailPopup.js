@@ -1,10 +1,8 @@
-'use strict';
-
-var FormSubmit = require( './FormSubmit.js' );
-var validators = require( '../modules/util/validators' );
-var emailHelpers = require( '../modules/util/email-popup-helpers' );
-var BASE_CLASS = 'o-email-signup';
-var language = document.body.querySelector( '.content' ).lang;
+const FormSubmit = require( './FormSubmit.js' );
+const validators = require( '../modules/util/validators' );
+const emailHelpers = require( '../modules/util/email-popup-helpers' );
+const BASE_CLASS = 'o-email-signup';
+const language = document.body.querySelector( '.content' ).lang;
 
 /**
  * EmailPopup
@@ -17,9 +15,9 @@ var language = document.body.querySelector( '.content' ).lang;
  * @returns {EmailSignup} An instance.
  */
 function EmailPopup( el ) {
-  var _baseElement = document.querySelector( el );
-  var _closeElement = _baseElement.querySelector( '.close' );
-  var VISIBLE_CLASS = 'o-email-popup__visible';
+  const _baseElement = document.querySelector( el );
+  const _closeElement = _baseElement.querySelector( '.close' );
+  const VISIBLE_CLASS = 'o-email-popup__visible';
 
   /**
    * Function used to hide popup by removing visible class.
@@ -62,11 +60,11 @@ function EmailPopup( el ) {
    *
    */
   function _onEmailSignupSuccess( event ) {
-    var form = event.form;
-    var input = form.querySelector( 'input[name="code"]' );
-    var code = input.value;
+    const form = event.form;
+    const input = form.querySelector( 'input[name="code"]' );
+    const code = input.value;
 
-    if ( code === 'USCFPB_127' ) {
+    if ( code === 'USCFPB_128' ) {
       emailHelpers.recordEmailRegistration();
     }
   }
@@ -75,7 +73,7 @@ function EmailPopup( el ) {
    * Function used to instatiate and initialize components.
    */
   function init() {
-    var formSubmit = new FormSubmit(
+    const formSubmit = new FormSubmit(
       _baseElement.querySelector( '.' + BASE_CLASS ),
       BASE_CLASS,
       { validator: emailValidation, language: language }

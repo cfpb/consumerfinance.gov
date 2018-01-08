@@ -1,7 +1,8 @@
-from .base import *
-from .mysql_mixin import *
-
 from unipath import DIRS
+
+from .base import *
+from .database_mixin import *
+
 
 DEBUG = True
 SECRET_KEY = 'not-secret-key-for-testing'
@@ -48,11 +49,18 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
 
 MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
-# Define caches necessary for eRegs.
 # Disable caching when working locally.
 CACHES = {
     k: {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'TIMEOUT': 0,
-    } for k in ('default', 'eregs_longterm_cache', 'api_cache')
+    } for k in ('default', 'eregs_longterm_cache', 'api_cache', 'post_preview')
 }
+
+# Optionally enable cache for post_preview
+if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
+    CACHES['post_preview'] = {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'post_preview_cache',
+        'TIMEOUT': None,
+    }

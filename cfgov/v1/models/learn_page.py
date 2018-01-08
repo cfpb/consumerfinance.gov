@@ -3,15 +3,10 @@ from urllib import urlencode
 
 from django.core.validators import RegexValidator
 from django.db import models
-from localflavor.us.models import USStateField
+
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel,
-    FieldRowPanel,
-    InlinePanel,
-    MultiFieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface
+    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
+    StreamFieldPanel, TabbedInterface
 )
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import RichTextField, StreamField
@@ -19,9 +14,11 @@ from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from .. import blocks as v1_blocks
-from ..atomic_elements import molecules, organisms
-from .base import CFGOVPage, CFGOVPageManager
+from localflavor.us.models import USStateField
+
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.models.base import CFGOVPage, CFGOVPageManager
 
 
 class AbstractFilterPage(CFGOVPage):

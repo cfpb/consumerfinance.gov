@@ -1,20 +1,21 @@
-'use strict';
+const _assign = require( './assign' ).assign;
+
 
 /**
  * Stores/retrieves email signup data in localStorage
  */
 
-var POPUP_WAIT_PERIOD = [ 4, 30, 60 ];
-var DISPLAY_DATE_KEY = 'oahPopupShowNext';
-var DISPLAY_COUNT_KEY = 'oahPopupCount';
-var FOREVER = 10000;
+const POPUP_WAIT_PERIOD = [ 4, 30, 60 ];
+const DISPLAY_DATE_KEY = 'oahPopupShowNext';
+const DISPLAY_COUNT_KEY = 'oahPopupCount';
+const FOREVER = 10000;
 
 /**
  * @param {number} days - The number of days to a future date.
  * @returns {Date} A future date x amount of days from now.
  */
 function _getFutureDate( days ) {
-  var date = new Date();
+  const date = new Date();
   return date.setTime( date.getTime() + days * 24 * 60 * 60 * 1000 );
 }
 
@@ -22,10 +23,10 @@ function _getFutureDate( days ) {
  * Record in local storage that the email popup has been viewed.
  */
 function recordEmailPopupView() {
-  var count = Number( localStorage.getItem( DISPLAY_COUNT_KEY ) ) || 0;
-  var max = POPUP_WAIT_PERIOD.length - 1;
+  let count = Number( localStorage.getItem( DISPLAY_COUNT_KEY ) ) || 0;
+  const max = POPUP_WAIT_PERIOD.length - 1;
   count = count >= max ? max : count;
-  var days = POPUP_WAIT_PERIOD[count];
+  const days = POPUP_WAIT_PERIOD[count];
   localStorage.setItem( DISPLAY_COUNT_KEY, count + 1 );
   localStorage.setItem( DISPLAY_DATE_KEY, _getFutureDate( days ) );
 }
@@ -34,8 +35,8 @@ function recordEmailPopupView() {
  * Record in local storage that the email popup has been closed.
  */
 function recordEmailPopupClosure() {
-  var count = POPUP_WAIT_PERIOD.length - 1;
-  var days = POPUP_WAIT_PERIOD[count];
+  const count = POPUP_WAIT_PERIOD.length - 1;
+  const days = POPUP_WAIT_PERIOD[count];
   localStorage.setItem( DISPLAY_COUNT_KEY, count );
   localStorage.setItem( DISPLAY_DATE_KEY, _getFutureDate( days ) );
 }
@@ -53,17 +54,17 @@ function recordEmailRegistration() {
  * @returns {boolean} True if the popup should display, false otherwise.
  */
 function showEmailPopup() {
-  var today = new Date().getTime();
-  var nextDisplayDate = Number( localStorage.getItem( DISPLAY_DATE_KEY ) ) || 0;
+  const today = new Date().getTime();
+  const nextDisplayDate = Number( localStorage.getItem( DISPLAY_DATE_KEY ) ) || 0;
   return today > nextDisplayDate;
 }
 
 function throttle( func, wait, options ) {
-  var context;
-  var args;
-  var result;
-  var timeout = null;
-  var previous = 0;
+  let context;
+  let args;
+  let result;
+  let timeout = null;
+  let previous = 0;
   if ( !options ) options = {};
 
   function later() {
@@ -73,9 +74,9 @@ function throttle( func, wait, options ) {
     if ( !timeout ) context = args = null;
   }
   return function() {
-    var now = Date.now();
+    const now = Date.now();
     if ( !previous && options.leading === !1 ) previous = now;
-    var remaining = wait - ( now - previous );
+    const remaining = wait - ( now - previous );
     context = this;
     args = arguments;
     if ( remaining <= 0 || remaining > wait ) {
@@ -94,8 +95,8 @@ function throttle( func, wait, options ) {
 }
 
 function showOnScroll( elToShow, opts ) {
-  var UNDEFINED;
-  var defaults = {
+  let UNDEFINED;
+  const defaults = {
     scrollPercent: 50,
     throttleDelay: 10,
     targetElement: null,
@@ -104,29 +105,28 @@ function showOnScroll( elToShow, opts ) {
     }
   };
 
-  opts = Object.assign( defaults, opts || {} );
-
+  opts = _assign( defaults, opts || {} );
 
   function _getScrollTargetPosition() {
-    var elHeight = elToShow.offsetHeight;
+    const elHeight = elToShow.offsetHeight;
     if ( opts.targetElement && opts.targetElement.length ) {
-      var top = opts.targetElement.offset().top;
+      const top = opts.targetElement.offset().top;
       return top + elHeight;
     }
-    var percentageTarget = document.body.offsetHeight * ( opts.scrollPercent / 100 );
+    const percentageTarget = document.body.offsetHeight * ( opts.scrollPercent / 100 );
     return percentageTarget + elHeight;
 
   }
 
   function _scrollTargetPositionReached() {
-    var windowHeight = window.innerHeight;
-    var windowTop = window.pageYOffset;
-    var windowBottom = windowTop + windowHeight;
-    var scrollTargetPosition = _getScrollTargetPosition();
+    const windowHeight = window.innerHeight;
+    const windowTop = window.pageYOffset;
+    const windowBottom = windowTop + windowHeight;
+    const scrollTargetPosition = _getScrollTargetPosition();
     return windowBottom > scrollTargetPosition;
   }
 
-  var handler = throttle( function( event ) {
+  const handler = throttle( function( event ) {
     if ( _scrollTargetPositionReached() ) {
       window.removeEventListener( 'scroll', handler );
       if ( typeof opts.cb === 'function' ) {

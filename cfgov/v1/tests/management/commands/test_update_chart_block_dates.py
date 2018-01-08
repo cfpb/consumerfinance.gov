@@ -7,6 +7,7 @@ from django.test import TestCase
 from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
+
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_page
 

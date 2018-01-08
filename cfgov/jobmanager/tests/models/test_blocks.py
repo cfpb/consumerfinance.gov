@@ -2,16 +2,18 @@ from datetime import date
 
 from django.test import TestCase
 from django.utils import timezone
+
+from wagtail.wagtailcore.models import Page, Site
+
 from mock import Mock
 from model_mommy import mommy
-from wagtail.wagtailcore.models import Page, Site
+from scripts._atomic_helpers import job_listing_list
 
 from cfgov.test import HtmlMixin
 from jobmanager.models.blocks import JobListingList, JobListingTable
 from jobmanager.models.django import Grade, JobCategory, JobRegion
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel
-from scripts._atomic_helpers import job_listing_list
 from v1.models import SublandingPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
@@ -66,7 +68,7 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         )
 
         self.assertHtmlRegexpMatches(html, (
-            '<ul class="m-list m-list__unstyled">.*</ul>'
+            '<ul class="m-list m-list__unstyled m-list__links">.*</ul>'
         ))
 
     def test_html_formatting(self):
@@ -89,14 +91,16 @@ class JobListingListTestCase(HtmlMixin, TestCase):
 
         self.assertHtmlRegexpMatches(html, (
             '<li class="m-list_item">'
-            '<a class="m-list_link" href=".*">Assistant</a>'
-            '<p class="a-date">CLOSING<span class="datetime">'
-            '.*APR 21, 2099.*</span></p>'
+            '<a class="m-list_link" href=".*">Assistant' +
+            '<span class="m-list_link-subtext">Closing' +
+            '<span class="datetime">.*Apr. 21, 2099.*</span>'
+            '</span></a>'
             '</li>'
             '<li class="m-list_item">'
-            '<a class="m-list_link" href=".*">Manager</a>'
-            '<p class="a-date">CLOSING<span class="datetime">.'
-            '*AUG 05, 2099.*</span></p>'
+            '<a class="m-list_link" href=".*">Manager' +
+            '<span class="m-list_link-subtext">Closing' +
+            '<span class="datetime">.*Aug. 5, 2099.*</span>'
+            '</span></a>'
             '</li>'
         ))
 
@@ -206,13 +210,13 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<tr>'
             '<td data-label="TITLE"><a class="" href=".*">Assistant</a></td>'
             '<td data-label="GRADE">12</td>'
-            '<td data-label="POSTING CLOSES">APR 21, 2099</td>'
+            '<td data-label="POSTING CLOSES">Apr. 21, 2099</td>'
             '<td data-label="REGION">Silicon Valley</td>'
             '</tr>'
             '<tr>'
             '<td data-label="TITLE"><a class="" href=".*">Manager</a></td>'
             '<td data-label="GRADE">1, 2, 3</td>'
-            '<td data-label="POSTING CLOSES">AUG 05, 2099</td>'
+            '<td data-label="POSTING CLOSES">Aug. 5, 2099</td>'
             '<td data-label="REGION">Silicon Valley</td>'
             '</tr>'
         ))
@@ -230,7 +234,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<tr>'
             '<td data-label="TITLE"><a class="" href=".*">CEO</a></td>'
             '<td data-label="GRADE"></td>'
-            '<td data-label="POSTING CLOSES">DEC 01, 2099</td>'
+            '<td data-label="POSTING CLOSES">Dec. 1, 2099</td>'
             '<td data-label="REGION">Silicon Valley</td>'
             '</tr>'
         ))

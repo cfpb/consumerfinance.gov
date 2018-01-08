@@ -1,7 +1,5 @@
-'use strict';
-
-// TODO: Read these values directly from cf-vars.less.
-// All values are pixel based.
+/* TODO: Read these values directly from cf-vars.less.
+   All values are pixel based. */
 
 module.exports = {
   bpXS: {

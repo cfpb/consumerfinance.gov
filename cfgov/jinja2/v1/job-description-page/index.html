@@ -7,6 +7,12 @@
 {%- endblock %}
 
 {% block content_main %}
+{% set regional_cities = {
+    'Midwest region': 'Chicago, IL; Detroit, MI; Minneapolis, MN; St. Louis, MO; Cincinnati, OH; Cleveland, OH; Columbus, OH; Indianapolis, IN; Milwaukee, WI',
+    'Northeast region': 'New York City, NY; Philadelphia, PA; Boston, MA; Pittsburgh, PA; Providence, RI; Hartford, CT; Buffalo, NY; Rochester, NY; Bridgeport, CT; Worcester, MA',
+    'Southeast region': 'Houston, TX; San Antonio, TX; Dallas, TX; Jacksonville, FL; Austin, TX; Memphis, TN; Baltimore, MD; Charlotte, NC; Atlanta, GA; Virginia Beach, VA; Raleigh, NC',
+    'West region': 'Los Angeles, CA; San Francisco, CA; Phoenix, AZ; San Bernardino, CA; Seattle, WA; San Diego, CA; Denver, CO; Portland, OR; Sacramento, CA; Las Vegas, NV'
+} %}
 
 {% import 'molecules/social-media.html' as social_media with context %}
     <section class="block
@@ -19,40 +25,44 @@
             <dt>Expiration Date:</dt>
             <dd>
                 {% if page.close_date %}
-                    {{ time.render(page.close_date, {'date':true}) }}
+                    {{ time.render(page.close_date, {'date': true}, text_format=True) }}
                 {% endif %}
             </dd>
             <dt>Region:</dt>
             <dd>{{ page.region }}</dd>
+            
+            {% if page.region and page.region.name in ["Midwest region", "Northeast region", "Southeast region", "West region" ]%}
+            <dt class="u-hidden">Location:</dt>
+            <dd class="u-hidden">
+                {{ regional_cities[page.region.name] }}
+            </dd>
+            {% endif %}
+            
             <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
             <dd>
                 {% if page.grades.exists() %}
                 <strong>({{ page.ordered_grades | join(', ') }})</strong>
                 {% endif %}
                 ${{ '{:,.0f}'.format( page.salary_min ) }}–${{ '{:,.0f}'.format( page.salary_max ) }}
+                <a class="a-link 
+                          a-link__jump 
+                          a-link__icon 
+                          cf-icon 
+                          cf-icon__after 
+                          cf-icon-download 
+                          pay-grade-link"
+                   href="http://files.consumerfinance.gov/f/documents/2016-2019_cfpb_Pay-Table.pdf">
+                    <span class="a-link_text">See information on grades and base pay ranges</span>
+                </a>
             </dd>
         </dl>
-        <div class="content-l">
-            <div class="content-l_col content-l_col-1-2">
-                <a href="#interested" class="a-btn">
-                    Interested in applying?
-                </a>
-            </div>
-            <div class="content-l_col
-                        content-l_col-1-2">
-                {{ social_media.render( {
-                    'title':            page.title,
-                    'twitter_hashtags': page.twitter_hash_tag or 'usajobs'
-                } ) }}
-            </div>
-        </div>
     </section>
 
     <section class="block
                     block__padded-top
                     block__border-top">
         <h2>Job Description</h2>
-        {{ page.description | safe }}
+        {{ parse_links( page.description ) | safe }}
     </section>
 
     <section class="block">
@@ -64,46 +74,39 @@
         </em>
     </section>
 
+
     <section class="block
                     block__padded-top
                     block__border-top">
-        <div class="content-l">
-            <div class="content-l_col content-l_col-1-2">
-                <h2 id="interested">Interested in applying?</h2>
-            </div>
-            <div class="content-l_col
-                        content-l_col-1-2">
-                {# TODO: Fix vertical alignment.
-                         Social Media icons are slightly high
-                         relative to Interested in Applying heading. #}
-                {{ social_media.render( {
-                    'title':            page.title,
-                    'twitter_hashtags': page.twitter_hash_tag or 'usajobs'
-                } ) }}
-            </div>
+        <h2 id="interested">Interested in applying?</h2>
+        <div class="block block__sub">
+            <h3>Before you apply</h3>
+            <ul class="m-list m-list__links">
+                <li class="m-list_item">
+                    <a class="a-link a-link__jump"
+                       href="/about-us/careers/working-at-cfpb/">
+                        Learn about working @ CFPB
+                    </a>
+                </li>
+                <li class="m-list_item">
+                    <a class="a-link a-link__jump"
+                       href="/about-us/careers/application-process/">
+                        Learn about the application process
+                    </a>
+                </li>
+                <li class="m-list_item">
+                    <a class="a-link 
+                              a-link__jump
+                              a-link__icon 
+                              cf-icon 
+                              cf-icon__after 
+                              cf-icon-download"
+                        href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/20170615_cfpb_Apply_checklist.pdf">
+                        Use our checklist to complete all the application steps
+                    </a>
+                </li>
+            </ul>
         </div>
-
-        <h3 class="u-mt15">Before you apply</h3>
-        <ul class="m-list m-list__links">
-            <li class="m-list_item">
-                <a class="a-link a-link__jump"
-                   href="/about-us/careers/working-at-cfpb/">
-                    Learn about working @ CFPB
-                </a>
-            </li>
-            <li class="m-list_item">
-                <a class="a-link a-link__jump"
-                   href="/about-us/careers/application-process/">
-                    Learn about the application process
-                </a>
-            </li>
-            <li class="m-list_item">
-                <a class="a-link a-link__jump icon-link icon-link__download"
-                   href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/20170615_cfpb_Apply_checklist.pdf">
-                    Use our checklist to complete all the application steps
-                </a>
-            </li>
-        </ul>
     </section>
 
     {% set usajobs_links = page.usajobs_application_links.order_by(
@@ -140,6 +143,13 @@
 {%- endblock %}
 
 {% block content_sidebar scoped  %}
+ <div class="block block__flush-top">
+    {% import 'molecules/social-media.html' as social_media with context %}
+    {{ social_media.render( {
+        'title':            page.title,
+        'twitter_hashtags': page.twitter_hash_tag or 'usajobs'
+    } ) }}
+</div>
 <div class="block block__flush-top">
     <header class="m-slug-header">
         <h2 class="a-heading">

@@ -1,5 +1,3 @@
-'use strict';
-
 const BaseFilteablePage = require( './base-filterable-page.js' );
 
 class BrowseFilterablePage extends BaseFilteablePage {

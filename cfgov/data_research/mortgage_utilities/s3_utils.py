@@ -1,15 +1,17 @@
 from __future__ import unicode_literals
+
 import datetime
 import os
 import StringIO
 
+from django.conf import settings
+
 import boto
-from boto.s3.connection import OrdinaryCallingFormat
-from boto.s3.key import Key
 import requests
 import unicodecsv
+from boto.s3.connection import OrdinaryCallingFormat
+from boto.s3.key import Key
 
-from django.conf import settings
 
 # bake_to_s3 functions require S3 secrets to be stored in the env
 S3_KEY = os.getenv('AWS_S3_ACCESS_KEY_ID')

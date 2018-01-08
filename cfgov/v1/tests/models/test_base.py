@@ -1,13 +1,15 @@
 import datetime
-import mock
 
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
+
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Site
+
+import mock
 
 from v1.models import BrowsePage, CFGOVPage, Feedback
 from v1.tests.wagtail_pages.helpers import save_new_page
@@ -18,6 +20,11 @@ class TestCFGOVPage(TestCase):
         self.page = CFGOVPage(title='Test', slug='test')
         self.factory = RequestFactory()
         self.request = self.factory.get('/')
+
+    def test_post_preview_cache_key_contains_page_id(self):
+        save_new_page(self.page)
+        key = self.page.post_preview_cache_key
+        self.assertIn(str(self.page.id), key)
 
     @mock.patch('__builtin__.super')
     @mock.patch('v1.models.base.hooks')

@@ -1,18 +1,18 @@
 from __future__ import unicode_literals
+
 import datetime
 import logging
-import pytz
 import sys
 
 from django.utils import timezone
 
+import pytz
+
 from ask_cfpb.models import (
-    AnswerPage,
-    AnswerAudiencePage,
-    AnswerCategoryPage,
-    AnswerLandingPage,
-    AnswerResultsPage,
-    TagResultsPage)
+    AnswerAudiencePage, AnswerCategoryPage, AnswerLandingPage, AnswerPage,
+    AnswerResultsPage, TagResultsPage
+)
+
 
 logger = logging.getLogger('wagtail.core')
 logger.setLevel(logging.ERROR)

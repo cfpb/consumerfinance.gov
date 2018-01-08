@@ -8,12 +8,12 @@ from search.fields import CharFieldWithSynonyms
 class CharFieldWithSynonymsTestCase(TestCase):
 
     @override_settings(ELASTICSEARCH_INDEX_SETTINGS={
-        'settings': {'analysis': {'analyzer': {'synonym': {}}}}
+        'settings': {'analysis': {'analyzer': {'synonym_en': {}}}}
     })
     def test_synonym_analyzer(self):
         text_field = CharFieldWithSynonyms(document=True, use_template=True,
                                            index_fieldname='synonymous_text')
-        self.assertEqual(text_field.analyzer, 'synonym')
+        self.assertEqual(text_field.analyzer, 'synonym_en')
 
     @override_settings(ELASTICSEARCH_INDEX_SETTINGS={
         'settings': {'analysis': {'analyzer': {}}}

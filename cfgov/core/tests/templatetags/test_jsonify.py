@@ -1,5 +1,6 @@
-from core.templatetags.jsonify import jsonify
 from unittest import TestCase
+
+from core.templatetags.jsonify import jsonify
 
 
 class TestJsonify(TestCase):

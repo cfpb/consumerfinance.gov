@@ -1,5 +1,3 @@
-'use strict';
-
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const chai = require( 'chai' );
 const expect = chai.expect;
@@ -164,9 +162,10 @@ describe( 'fwb-questions', () => {
     formDom = document.querySelector( '#quiz-form' );
     submitBtnDom = document.querySelector( '#submit-quiz' );
     radioButtonsDom = document.querySelectorAll( '[type="radio"]' );
-    // JSDOM does not support form submission at this time
-    // and will throw an error. Prevent the form from submitting,
-    // even when the submit button is triggered.
+
+    /* JSDOM does not support form submission at this time
+       and will throw an error. Prevent the form from submitting,
+       even when the submit button is triggered. */
     formDom.addEventListener( 'submit', evt => {
       evt.preventDefault();
     } );
@@ -179,10 +178,10 @@ describe( 'fwb-questions', () => {
   it( 'submit button should have the correct state on initialization.', () => {
     fwbQuestions.init();
     expect( submitBtnDom.disabled )
-    .to.equal( true );
+      .to.equal( true );
 
     expect( submitBtnDom.title )
-    .to.equal( 'Please answer all questions to get your score' );
+      .to.equal( 'Please answer all questions to get your score' );
   } );
 
   it( 'submit button shouldn’t submit the form ' +

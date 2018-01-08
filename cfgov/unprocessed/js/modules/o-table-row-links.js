@@ -1,13 +1,11 @@
-'use strict';
-
 /**
  * Makes a table row whose first table cell child is a link become the link
  * for the entire table row.
  */
 function init() {
-  var tables = document.querySelectorAll( '.o-table__row-links' );
+  const tables = document.querySelectorAll( '.o-table__row-links' );
 
-  for ( var i = tables.length - 1; i >= 0; i-- ) {
+  for ( let i = tables.length - 1; i >= 0; i-- ) {
     tables[i].addEventListener( 'click', _tableClicked, false );
   }
 }
@@ -18,8 +16,8 @@ function init() {
  * @param {Object} event Mouse event for click on the table.
  */
 function _tableClicked( event ) {
-  var target = event.target;
-  var tagName;
+  let target = event.target;
+  let tagName;
   while ( target.tagName !== 'TR' ) {
     tagName = target.tagName;
     if ( tagName === 'TH' || tagName === 'A' ) {

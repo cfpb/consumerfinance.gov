@@ -2,6 +2,7 @@ from django import template
 
 import sheerlike
 
+
 register = template.Library()
 
 

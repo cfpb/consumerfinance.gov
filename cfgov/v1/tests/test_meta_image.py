@@ -1,9 +1,10 @@
+from django.test import TestCase, override_settings
+
+from wagtail.wagtailimages.tests.utils import get_test_image_file
+
 import boto
 import moto
-
-from django.test import TestCase, override_settings
 from model_mommy import mommy
-from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 from v1.models import AbstractFilterPage, CFGOVImage, CFGOVPage, LearnPage
 

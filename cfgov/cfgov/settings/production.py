@@ -1,10 +1,10 @@
 import os
 import sys
-
 from os.path import exists
 
 from .base import *
-from .mysql_mixin import *
+from .database_mixin import *
+
 
 default_loggers = []
 
@@ -43,14 +43,10 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
-        'db': {
-            'level': 'ERROR',
-            'class': 'alerts.logging_handlers.CFGovErrorHandler',
-        },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['console', 'db'],
+            'handlers': ['console'],
             'level': 'WARNING',
             'propagate': True,
         },
@@ -71,6 +67,13 @@ LOGGING = {
     }
 }
 
+if os.environ.get('SQS_QUEUE_ENABLED'):
+    LOGGING['handlers']['sqs'] = {
+        'level': 'ERROR',
+        'class': 'alerts.logging_handlers.CFGovErrorHandler',
+    }
+    LOGGING['loggers']['django.request']['handlers'].append('sqs')
+
 # Only add syslog to LOGGING if it's in default_loggers
 if 'syslog' in default_loggers:
     LOGGING['handlers']['syslog'] = {
@@ -84,9 +87,8 @@ EMAIL_HOST = os.getenv('EMAIL_HOST')
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-# Define caches necessary for eRegs.
 CACHES = {
-    'default' : {
+    'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/eregs_cache',
     },
@@ -98,12 +100,17 @@ CACHES = {
             'MAX_ENTRIES': 10000,
         },
     },
-    'api_cache':{
+    'api_cache': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'api_cache_memory',
         'TIMEOUT': 3600,
         'OPTIONS': {
             'MAX_ENTRIES': 1000,
         },
+    },
+    'post_preview': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'post_preview_cache',
+        'TIMEOUT': None,
     }
 }

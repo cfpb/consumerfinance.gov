@@ -1,6 +1,4 @@
-'use strict';
-
-var _assign = require( './assign' ).assign;
+const _assign = require( './assign' ).assign;
 
 /**
  * Converts a string from selector-case to camelCase.
@@ -25,11 +23,11 @@ function dataSet( element ) {
     return _assign( {}, element.dataset );
   }
 
-  var dataset = {};
-  var regex = /^data-(.+)/;
-  var attr;
-  var match;
-  for ( var i = 0; i < element.attributes.length; i++ ) {
+  const dataset = {};
+  const regex = /^data-(.+)/;
+  let attr;
+  let match;
+  for ( let i = 0; i < element.attributes.length; i++ ) {
     attr = element.attributes[i];
     match = attr.name.match( regex );
     if ( match ) {

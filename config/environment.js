@@ -3,7 +3,6 @@
    Used by JavaScript gulp build process and JavaScript test configuration.
    ========================================================================== */
 
-'use strict';
 
 /**
  * Environment variable mappings in JavaScript from the project root .env file.

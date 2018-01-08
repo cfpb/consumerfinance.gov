@@ -1,12 +1,12 @@
 import os.path
-
-import mock
+from cStringIO import StringIO
 
 from django.core import management
 from django.test import TestCase
 
-from agreements.models import Agreement, Issuer
+import mock
 from agreements.management.commands import util
+from agreements.models import Agreement, Issuer
 
 
 sample_dir = os.path.dirname(__file__) + '/sample_credit_agreements'
@@ -24,11 +24,28 @@ class TestDataLoad(TestCase):
     @mock.patch('agreements.management.commands.' +
                 'import_agreements.upload_to_s3')
     def test_import_with_s3(self, upload_func):
-        management.call_command('import_agreements', '--path=' + sample_dir)
+        management.call_command(
+            'import_agreements',
+            '--path=' + sample_dir,
+            verbosity=0
+        )
 
         # this isn't great, but the dest_name changes to reflect the month
         # AND we can't predict the order agreements will be processed in.
         upload_func.assert_called()
+
+    @mock.patch.dict(os.environ, {'AGREEMENTS_S3_UPLOAD_ENABLED': 'yes'})
+    @mock.patch(
+        'agreements.management.commands.import_agreements.upload_to_s3'
+    )
+    def test_import_with_s3_calls_print_statement(self, _):
+        buf = StringIO()
+        management.call_command(
+            'import_agreements',
+            '--path=' + sample_dir,
+            stdout=buf
+        )
+        self.assertIn('uploaded to', buf.getvalue())
 
 
 class TestManagementUtils(TestCase):

@@ -2,9 +2,11 @@ from django.contrib.auth.models import User
 from django.core import mail
 from django.http import HttpRequest
 from django.test import TestCase
+
+from wagtail.wagtailcore.models import Site
+
 from mock import patch
 from model_mommy import mommy
-from wagtail.wagtailcore.models import Site
 
 from v1.email import create_request_for_email, send_password_reset_email
 

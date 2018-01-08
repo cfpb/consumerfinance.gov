@@ -55,7 +55,7 @@ input[type="checkbox"] {vertical-align: bottom; *vertical-align: baseline;}
 select, input, textarea {font: 99% sans-serif;}
 
 table {font-size: inherit; font: 100%;}
- 
+
 /* Accessible focus treatment
 	people.opera.com/patrickl/experiments/keyboard/test */
 a:hover, a:active {outline: none;}
@@ -87,7 +87,7 @@ button, input, select, textarea {margin: 0;}
 
 /* make buttons play nice in IE */
 button {width: auto; overflow: visible;}
- 
+
 /* scale images in IE7 more attractively */
 .ie7 img {-ms-interpolation-mode: bicubic;}
 
@@ -162,9 +162,6 @@ body {
 .no-js .wrapper-container,
 .no-js .split {
 	width: auto;
-}
-.no-js .logo__no-js {
-	margin-top: 0.5em;
 }
 .no-js .lang {
 	top: 2.5em;
@@ -382,19 +379,9 @@ tr.alt {
 		margin-top: 0.5em;
 	}
 
-	.logo__js {
-		display: none;
-	}
-	.js .logo__js {
-		display: block;
-	}
-	.js .logo__no-js {
-		display: none;
-	}
-
 #header > div {
 	width: 976px;
-	height: auto; 
+	height: auto;
 	padding: 0 20px;
 	margin: 0 auto;
 	position: relative;
@@ -1949,11 +1936,6 @@ aside#reginfo .reg_meta_item {
 	border-bottom: none;
 }
 
-.report .show-hide-content {
-	background: #f7f6f3;
-	padding: 1em;
-}
-
 /* TABS */
 .report .tabset {
 	margin: 0 0 1em;
@@ -2256,10 +2238,6 @@ aside#reginfo .reg_meta_item {
 	font-weight: normal;
 }
 
-.report .show-hide-content .show-hide-content table {
-	margin:0 -1em;
-}
-
 .report table {
 	border:none;
 	font-family:"AvenirNextLTW01-Regular", Verdana, sans-serif;
@@ -2318,10 +2296,6 @@ aside#reginfo .reg_meta_item {
 
 .report table + .figcaption {
 	margin-top:1em;
-}
-
-.report .show-hide-content .figcaption {
-	margin-right:-1em;
 }
 
 .report thead th {
@@ -2571,7 +2545,7 @@ aside#reginfo .reg_meta_item {
 
 /* Grid */
 .hud_hca_api_grid_twothird > .col {
-	display: inline-block; 
+	display: inline-block;
 		/* IE7 hack to mimic inline-block on block elements */
 	*display: inline;
 	*zoom: 1;
