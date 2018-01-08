@@ -11,7 +11,7 @@ from legacy.forms import HousingCounselorForm
 from v1.s3utils import https_s3_url_prefix
 
 
-class HousingCouncelorS3URLMixin(object):
+class HousingCounselorS3URLMixin(object):
 
     @staticmethod
     def s3_url(format, zipcode):
@@ -30,7 +30,7 @@ class HousingCouncelorS3URLMixin(object):
         return cls.s3_url(format='pdf', zipcode=zipcode)
 
 
-class HousingCounselorView(TemplateView, HousingCouncelorS3URLMixin):
+class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
     def get_template_names(self):
         if 'pdf' in self.request.GET:
             return 'hud/housing_counselor_pdf.html'
@@ -75,7 +75,7 @@ class HousingCounselorView(TemplateView, HousingCouncelorS3URLMixin):
         return response.json()
 
 
-class HousingCounselorPDFView(View, HousingCouncelorS3URLMixin):
+class HousingCounselorPDFView(View, HousingCounselorS3URLMixin):
     def get(self, request):
         form = HousingCounselorForm(request.GET)
 

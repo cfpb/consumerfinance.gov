@@ -3,20 +3,20 @@ from django.test import TestCase, override_settings
 import mock
 import requests
 
-from legacy.views.housing_counselor import HousingCouncelorS3URLMixin
+from legacy.views.housing_counselor import HousingCounselorS3URLMixin
 
 
 @override_settings(AWS_STORAGE_BUCKET_NAME='foo.bucket')
-class HousingCouncelorS3URLMixinTestCase(TestCase):
+class HousingCounselorS3URLMixinTestCase(TestCase):
     def test_s3_json_url(self):
         self.assertEqual(
-            HousingCouncelorS3URLMixin.s3_json_url(20001),
+            HousingCounselorS3URLMixin.s3_json_url(20001),
             'https://s3.amazonaws.com/foo.bucket/a/assets/hud/jsons/20001.json'
         )
 
     def test_s3_pdf_url(self):
         self.assertEqual(
-            HousingCouncelorS3URLMixin.s3_pdf_url(20009),
+            HousingCounselorS3URLMixin.s3_pdf_url(20009),
             'https://s3.amazonaws.com/foo.bucket/a/assets/hud/pdfs/20009.pdf'
         )
 
