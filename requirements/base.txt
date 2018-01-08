@@ -3,7 +3,7 @@ awesome-slugify==1.6.5
 BeautifulSoup==3.2.1
 beautifulsoup4==4.5.1
 boto==2.38.0
-boto3==1.5.9
+boto3==1.4.6
 dj-database-url==0.4.2
 django==1.8.15
 djangorestframework==3.1.3
