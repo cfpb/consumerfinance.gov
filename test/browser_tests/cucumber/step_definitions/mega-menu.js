@@ -66,8 +66,8 @@ defineSupportCode( function( { Then, When, Before } ) {
         .perform()
         .then( () =>
           expect( _dom.contentFourthMenuItem.isDisplayed() )
-          .to.eventually
-          .equal( false )
+            .to.eventually
+            .equal( false )
         );
     }
   );
@@ -83,11 +83,11 @@ defineSupportCode( function( { Then, When, Before } ) {
 
           // Wait for delay to show menu
           browser.sleep( 500 )
-          .then( ( ) =>
-            expect( _dom.contentFourthMenuItem.isDisplayed() )
-            .to.eventually
-            .equal( true )
-          )
+            .then( ( ) =>
+              expect( _dom.contentFourthMenuItem.isDisplayed() )
+                .to.eventually
+                .equal( true )
+            )
         );
     }
   );
@@ -96,15 +96,15 @@ defineSupportCode( function( { Then, When, Before } ) {
 
     return browser.wait(
       EC.not( EC.elementToBeClickable( _dom.contentFourthMenuItem ) ) )
-       .then( () => {
-         expect( _dom.contentFourthMenuItem.isDisplayed() )
-         .to.eventually
-         .equal( false );
+        .then( () => {
+          expect( _dom.contentFourthMenuItem.isDisplayed() )
+            .to.eventually
+            .equal( false );
 
-         return expect( _dom.contentFifthMenuItem.isDisplayed() )
-                .to.eventually
-                .equal( true );
-       } );
+          return expect( _dom.contentFifthMenuItem.isDisplayed() )
+            .to.eventually
+            .equal( true );
+        } );
   } );
 
   Then( 'the mega-menu organism should show menu when clicked', function() {
@@ -134,11 +134,11 @@ defineSupportCode( function( { Then, When, Before } ) {
       return browser.driver.actions().click( _dom.triggerFourthMenuItem ).perform()
         .then( () => {
            expect( _dom.contentFourthMenuItem.isDisplayed() )
-           .to.eventually
-           .equal( true );
+            .to.eventually
+            .equal( true );
            expect( _dom.contentFifthMenuItem.isDisplayed() )
-           .to.eventually
-           .equal( false );
+            .to.eventually
+            .equal( false );
          } );
     }
   );

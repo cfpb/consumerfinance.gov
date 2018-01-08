@@ -232,7 +232,7 @@ class MenuItem(models.Model):
     ], blank=True)
 
     panels = [
-         MultiFieldPanel([
+        MultiFieldPanel([
             FieldPanel('link_text'),
             PageChooserPanel('page_link'),
             FieldPanel('external_link'),
