@@ -234,7 +234,7 @@ class NavItem(blocks.StructBlock):
 
 
 class NavGroup(blocks.StructBlock):
-    draft = blocks.BooleanBlock(required=False)
+    draft = blocks.BooleanBlock(required=False, default=False)
     group_title = blocks.CharBlock(
         required=False,
         label="Column title")

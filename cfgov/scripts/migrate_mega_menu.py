@@ -23,7 +23,7 @@ menu_items = [
             }
         },
         'footer': {
-            'type': 'footer',
+            'type': 'nav_footer',
             'value': {
                 'content': '<p>Browse answers to hundreds of financial ' +
                 'questions. <a href="/ask-cfpb/" class="' +
@@ -225,7 +225,7 @@ menu_items = [
             }
         },
         'footer': {
-            'type': 'footer',
+            'type': 'nav_footer',
             'value': {
                 'content':
                     '<p>' +
@@ -865,8 +865,8 @@ def migrate_menu():
                 True,
             ))
         if item.get('footer'):
-            menu_item.footer = StreamValue(
-                menu_item.footer.stream_block,
+            menu_item.nav_footer = StreamValue(
+                menu_item.nav_footer.stream_block,
                 [item['footer']],
                 True,
             )
