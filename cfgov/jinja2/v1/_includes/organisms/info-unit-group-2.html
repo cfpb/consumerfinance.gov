@@ -67,19 +67,19 @@
 {% for unit in value.info_units %}
     {% if ( loop.index == 1 ) or
           ( value.format == '50-50' and loop.index % 2 == 1 ) or
-          ( value.format == '33-33-33' and loop.index  % 3 == 1 ) 
+          ( value.format == '33-33-33' and loop.index % 3 == 1 ) 
     %}
     <div class="content-l
                 {{' content-l__top-divider' if value.lines_between_items else ''}}">
     {% endif %}
-    
-    <div class="content-l_col
-                {{- ' content-l_col-1-2' if value.format == '50-50' else '' -}}
-                {{- ' content-l_col-1-3' if value.format == '33-33-33' else '' -}}
-                {{- ' content-l_col-1' if value.format == '25-75' else '' -}}">
-        {{- info_unit(unit, value.format, value.link_image_and_heading) }}
-    </div>
-    
+
+        <div class="content-l_col
+                    {{- ' content-l_col-1-2' if value.format == '50-50' else '' -}}
+                    {{- ' content-l_col-1-3' if value.format == '33-33-33' else '' -}}
+                    {{- ' content-l_col-1' if value.format == '25-75' else '' -}}">
+            {{- info_unit(unit, value.format, value.link_image_and_heading) }}
+        </div>
+
     {% if ( loop.index == value.info_units | length ) or
           ( value.format == '50-50' and loop.index % 2 == 0 ) or
           ( value.format == '33-33-33' and loop.index % 3 == 0 )
