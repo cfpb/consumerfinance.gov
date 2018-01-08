@@ -709,10 +709,9 @@ class ExpandableGroup(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     is_accordion = blocks.BooleanBlock(required=False)
-    has_rule = blocks.BooleanBlock(
+    has_top_rule_line = blocks.BooleanBlock(
         default=False,
         required=False,
-        label="Has top rule line",
         help_text=('Check this to add a horizontal rule line to top of '
                    'expandable group.')
     )
