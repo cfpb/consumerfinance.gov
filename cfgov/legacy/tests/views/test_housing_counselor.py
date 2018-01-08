@@ -59,12 +59,7 @@ class HousingCounselorPDFViewTestCase(TestCase):
         response = self.client.get('/save-hud-counselors-list/', {})
         self.assertEqual(response.status_code, 400)
 
-    @mock.patch('requests.get')
-    def test_get_valid_form(self, mock_requests_get):
+    def test_get_valid_form(self):
         response = self.client.get('/save-hud-counselors-list/',
                                    {'zip': '12345'})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get('content-type'),
-                         'application/pdf')
-        self.assertEqual(response.get('Content-Disposition'),
-                         'attachment; filename=12345.pdf')
+        self.assertEqual(response.status_code, 302)

@@ -1,7 +1,8 @@
 import re
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, View
 
 import requests
@@ -82,13 +83,4 @@ class HousingCounselorPDFView(View, HousingCouncelorS3URLMixin):
             return HttpResponseBadRequest('invalid zip code')
 
         zipcode = form.cleaned_data['zip']
-        filename = '{}.pdf'.format(zipcode)
-
-        s3_pdf_url = self.s3_pdf_url(zipcode)
-        result = requests.get(s3_pdf_url)
-
-        response = HttpResponse(result.content,
-                                content_type='application/pdf')
-        response['Content-Disposition'] = \
-            'attachment; filename={0}'.format(filename)
-        return response
+        return redirect(self.s3_pdf_url(zipcode))
