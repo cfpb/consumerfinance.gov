@@ -1,11 +1,11 @@
 from datetime import date
 
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 
 from model_mommy import mommy
 
 from v1.atomic_elements.atoms import ImageBasic
-from v1.jinja2tags import date_formatter, image_alt_value
+from v1.jinja2tags import date_formatter, email_popup, image_alt_value
 from v1.models import CFGOVImage, CFGOVRendition
 
 
@@ -63,3 +63,9 @@ class TestDateFormatter(TestCase):
         test_date = date(2018, 9, 5)
         output = date_formatter(test_date, text_format=False)
         self.assertIn('Sep 05, 2018', output)
+
+
+class TestEmailPopup(TestCase):
+    def test_email_popup_defined_and_returns_empty_for_no_popup(self):
+        request = RequestFactory().get('/page/without/a/popup')
+        self.assertEqual(email_popup(request), '')

@@ -179,6 +179,7 @@
     </aside>
     <!-- .content_sidebar -->
   </div>
-  {% include 'organisms/email-popup.html' ignore missing %}
+
+  {{ email_popup(request) }}
 </main>
 {% endblock %}

@@ -620,8 +620,9 @@ FLAGS = {
     # Intended for use with path conditions.
     'AB_TESTING': {},
 
-    # When enabled, should display the email popup.
-    'EMAIL_POPUP': {},
+    # Email popups.
+    'EMAIL_POPUP_OAH': {'boolean': True},
+    'EMAIL_POPUP_DEBT': {'after date': '2018-02-01T00:00'},
 
     # The next version of eRegulations
     'EREGS20': {
@@ -673,3 +674,17 @@ SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
 SERVE_LATEST_DRAFT_PAGES = []
 if DEPLOY_ENVIRONMENT == 'beta':
     SERVE_LATEST_DRAFT_PAGES = [1288]
+
+# Email popup configuration. See v1.templatetags.email_popup.
+EMAIL_POPUPS = {
+    'debt': [
+        '/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/',
+        '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',
+        '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
+        '/consumer-tools/debt-collection/',
+    ],
+    'oah': [
+        '/owning-a-home/',
+        '/owning-a-home/mortgage-estimate/',
+    ],
+}

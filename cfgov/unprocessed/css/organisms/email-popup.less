@@ -67,7 +67,7 @@
     }
 
     .respond-to-max( @bp-xs-max, {
-        background: none;
+        background: none !important;
 
         .o-email-signup.form-submitted {
             margin-bottom: unit( (@grid_gutter-width * 3) / @base-font-size-px, em);
@@ -80,10 +80,8 @@
                 unit( @grid_gutter-width  / @base-font-size-px, em);
 
         padding-right: 155px;
-        background: url( '../img/modal-house.png' )
-                    no-repeat
-                    right
-                    20px;
+        background-repeat: no-repeat;
+        background-position: right 20px;
         background-size: 130px;
 
         h2 {
