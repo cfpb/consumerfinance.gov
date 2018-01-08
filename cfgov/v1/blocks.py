@@ -226,15 +226,11 @@ class Link(blocks.StructBlock):
 
 class NavItem(blocks.StructBlock):
     link = Link(required=False)
-    nav_groups = blocks.StreamBlock([
-        ('nav_group', blocks.StructBlock([
-            ('nav_items', blocks.ListBlock(
-                blocks.StructBlock([
-                    ('link', Link())
-                ])
-            ))
-        ]))
-    ], label="Child nav items")
+    nav_items = blocks.ListBlock(
+        blocks.StructBlock([
+            ('link', Link())
+        ])
+    )
 
 
 class NavGroup(blocks.StructBlock):

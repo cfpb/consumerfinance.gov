@@ -128,7 +128,9 @@
                 {% endif %}
             </span>
             {% endif %}
-
+            {% if nav_item.nav_items %}
+                {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}
+            {% endif %}
             {% if nav_item.nav_groups %}
                 {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
             {% endif %}
@@ -174,7 +176,7 @@
     {% if ( show_draft and link.state != 'live' ) or ( not show_draft and link.state != 'draft' ) %}
         {% set url = link.page_link.url if link.page_link else link.external_link %}
         {% set text = link.link_text %}
-        {% set has_children = nav_item.nav_groups | count > 0 %}
+        {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
 
         <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
             {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>

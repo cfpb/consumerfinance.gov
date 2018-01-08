@@ -2,7 +2,7 @@ from django.core.validators import URLValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, StreamFieldPanel, PageChooserPanel)
+    FieldPanel, MultiFieldPanel, StreamFieldPanel, PageChooserPanel)
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
@@ -224,7 +224,7 @@ class MenuItem(models.Model):
             label="Featured content module"))
     ], blank=True)
 
-    nav_footer = StreamField([
+    footer = StreamField([
         ('footer', blocks.StructBlock([
             ('draft', blocks.BooleanBlock(required=False)),
             ('content', blocks.RichTextBlock(required=False))
@@ -232,15 +232,17 @@ class MenuItem(models.Model):
     ], blank=True)
 
     panels = [
-        FieldPanel('link_text'),
-        PageChooserPanel('page_link'),
-        FieldPanel('external_link'),
+         MultiFieldPanel([
+            FieldPanel('link_text'),
+            PageChooserPanel('page_link'),
+            FieldPanel('external_link'),
+        ], heading='Link'),
         FieldPanel('order'),
         StreamFieldPanel('column_1'),
         StreamFieldPanel('column_2'),
         StreamFieldPanel('column_3'),
         StreamFieldPanel('column_4'),
-        StreamFieldPanel('nav_footer'),
+        StreamFieldPanel('footer'),
     ]
 
     def __str__(self):
@@ -256,7 +258,7 @@ class MenuItem(models.Model):
                                         for col in cols])
         self.featured_content = self.nav_groups.pop() if len(self.nav_groups) \
             and self.nav_groups[-1].block_type == "featured_content" else None
-        self.footer = self.get_active_block(self.nav_footer, draft)
+        self.footer = self.get_active_block(self.footer, draft)
         return self
 
     @staticmethod
