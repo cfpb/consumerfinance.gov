@@ -1,5 +1,4 @@
 import os
-import sys
 
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
@@ -678,3 +677,11 @@ SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
 SERVE_LATEST_DRAFT_PAGES = []
 if DEPLOY_ENVIRONMENT == 'beta':
     SERVE_LATEST_DRAFT_PAGES = [1288]
+
+# minifier doesn't do inline tags well
+# see https://github.com/cobrateam/django-htmlmin/issues/108#issuecomment-268966513
+
+EXCLUDE_TAGS_FROM_MINIFYING = ["a", "abbr", "acronym", "b", "bdo", "big", "br", "button", "cite", 
+                               "code", "dfn", "em", "i", "img", "input", "kbd", "label", "map", 
+                               "object", "q", "samp", "script", "select", "small", "span", "strong", 
+                               "sub", "sup", "textarea", "time", "tt", "var"]
