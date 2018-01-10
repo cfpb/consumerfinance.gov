@@ -198,7 +198,7 @@ class ReusableTextChooserBlock(SnippetChooserBlock):
 
 
 class FeaturedMenuContent(blocks.StructBlock):
-    draft = blocks.BooleanBlock(required=False)
+    draft = blocks.BooleanBlock(required=False, default=False)
     link = atoms.Hyperlink(required=False)
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic(required=False)
