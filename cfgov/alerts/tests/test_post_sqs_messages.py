@@ -40,7 +40,7 @@ class TestPostSQSMessages(TestCase):
             body='Test Job # 1234 - Failed'
         )
         mattermost_post.assert_called_once_with(
-            text=('Alert: Test Job # 1234 - Failed. '
+            text=('Alert: Test Job # 1234. '
                   'Github issue at https://github.com/foo/bar/issues/42')
         )
 
