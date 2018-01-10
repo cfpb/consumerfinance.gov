@@ -11,6 +11,11 @@
    value:                         Object defined from a StreamField block.
 
    value.format:                  The number and width of columns to output.
+   
+   value.has_top_rule_line:       Boolean for whether or not to add top
+                                  border to info-unit-group. Used in
+                                  'render_block.html' to modify classes on
+                                  wrapper '.block' div.
 
    value.heading:                 (Optional) An object containing:
 
@@ -28,7 +33,7 @@
    value.link_image_and_heading:  Boolean for whether the image and heading
                                   should be linked to the value.links[0].url.
 
-   value.lines_between_items:     Boolean for whether 25/75 items should have
+   value.lines_between_items:     Boolean for whether items should have
                                   horizontal rules separating them.
 
    value.info_units:              List of Info Unit molecules. See Info Unit
@@ -45,7 +50,7 @@
      {{- ' id="' ~ value.heading.text|slugify ~ '" ' if value.heading.text else ' ' -}}
      data-qa-hook="@TODO: Find out if I need this!">
 
-{% if value.heading %}
+{% if value.heading and value.heading.text %}
     <{{ value.heading.level -}}
         {%- if value.heading.icon -%}
             {{- ' class="cf-icon cf-icon-' ~ value.heading.icon ~ '"' -}}
@@ -59,19 +64,28 @@
     {{ value.intro | safe }}
 {%- endif %}
 
-    <div class="content-l">
-    {% for unit in value.info_units %}
+{% for unit in value.info_units %}
+    {% if ( loop.index == 1 ) or
+          ( value.format == '50-50' and loop.index % 2 == 1 ) or
+          ( value.format == '33-33-33' and loop.index % 3 == 1 ) 
+    %}
+    <div class="content-l
+                {{- ' content-l__top-divider' if value.lines_between_items else '' -}}">
+    {% endif %}
+
         <div class="content-l_col
                     {{- ' content-l_col-1-2' if value.format == '50-50' else '' -}}
                     {{- ' content-l_col-1-3' if value.format == '33-33-33' else '' -}}
-                    {{- ' content-l_col-1' if value.format == '25-75' else '' -}}
-                   ">
-        {% if value.lines_between_items and value.format == '25-75' and loop.index > 1 %}
-            <div class="a-rule-break"></div>
-        {% endif %}
+                    {{- ' content-l_col-1' if value.format == '25-75' else '' -}}">
             {{- info_unit(unit, value.format, value.link_image_and_heading) }}
         </div>
-    {% endfor %}
+
+    {% if ( loop.index == value.info_units | length ) or
+          ( value.format == '50-50' and loop.index % 2 == 0 ) or
+          ( value.format == '33-33-33' and loop.index % 3 == 0 )
+    %}
     </div>
+    {% endif %}
+{% endfor %}
 
 </div>
