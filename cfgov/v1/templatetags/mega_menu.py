@@ -1,6 +1,6 @@
 from wagtail.wagtailcore import hooks
 
-from v1.models.snippets import MenuItem
+from v1.models.menu_item import MenuItem
 
 @hooks.register('before_serve_shared_page')
 def before_serve_shared_page(page, request, args, kwargs):

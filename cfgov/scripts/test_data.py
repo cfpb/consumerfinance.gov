@@ -10,7 +10,8 @@ from jobmanager.models.pages import JobListingPage
 from v1.models import (
     BlogPage, BrowseFilterablePage, BrowsePage, SublandingFilterablePage
 )
-from v1.models.snippets import ReusableText, MenuItem
+from v1.models.mega_menu import MenuItem
+from v1.models.snippets import ReusableText
 from v1.tests.wagtail_pages.helpers import publish_changes, publish_page
 
 

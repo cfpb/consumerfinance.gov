@@ -12,6 +12,11 @@ from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.rich_text import PageLinkHandler
 
+from wagtail.contrib.modeladmin.options import (
+    ModelAdmin, modeladmin_register
+)
+
+from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.util import util
 
 
@@ -201,3 +206,12 @@ def serve_latest_draft_page(page, request, args, kwargs):
         response = latest_draft.serve(request, *args, **kwargs)
         response['Serving-Wagtail-Draft'] = '1'
         return response
+
+
+class MegaMenuModelAdmin(ModelAdmin):
+    model = MegaMenuItem
+    menu_label = 'Mega Menu'
+    menu_icon = 'cog'
+    list_display = ('link_text', 'order')
+
+modeladmin_register(MegaMenuModelAdmin)
