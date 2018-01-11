@@ -1,7 +1,7 @@
-from itertools import chain
 from django.apps import apps
 from django.db import connections
 from django.core.exceptions import ValidationError
+from django.core import management
 from django.db.models.fields.related import ForeignKey
 
 from taggit.models import TaggedItemBase
@@ -12,7 +12,6 @@ from reversion.models import Revision, Version
 from v1.models.base import CFGOVAuthoredPages
 
 SEEN_MODELS = []
-PAGES_NOT_IMPORTED = []
 
 
 def slow_save(*objects):
@@ -54,37 +53,29 @@ def copy_models_to_postgres(*models):
                 if model._meta.parents:
                     slow_save(*qs)
                 else:
-                    model.objects.using('postgres').bulk_create(qs, batch_size=100)
+                    model.objects.using('postgres').bulk_create(
+                        qs, batch_size=100)
 
             elif issubclass(model,Page):
                 for obj in model.objects.using('default').all():
 
-                    #if isinstance(obj, CFGOVTaggedPages):
-                    #    try:
-                    #        obj.content_object
-                    #    except Page.DoesNotExist:
-                    #        continue
-                    #if isinstance(obj, Answer):
-                    #    extra_save_options['skip_page_update'] = True
-
-
-                    #if isinstance(obj, Page):
                     # numchild numbers seem to screw with the save
                     # so let's just zero them out
+                    # this means we need to run Wagtail's 'fixtree'
                     obj.numchild = 0
 
                     try:
                         slow_save(obj)
-                    except ValidationError as e:
+                    except ValidationError as exception:
                         # there are some pages in the Trash with
                         # duplicate slugs (somehow)
                         # we'll "fix" the slug and try again
-                        if 'slug' in e.error_dict:
+                        if 'slug' in exception.error_dict:
                             obj.slug = obj.slug + str(obj.pk)
                             slow_save(obj)
-                            continue
                         else:
                             raise
+
                     if model is Page:
                         # for some reason, this proved more reliable than
                         # importing all of the revisions at once
