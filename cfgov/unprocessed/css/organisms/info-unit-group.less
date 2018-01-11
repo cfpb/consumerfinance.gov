@@ -58,13 +58,50 @@
     .content-l {
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     }
+    
+    > .content-l:first-child {
+        margin-top: 0;
+    }
 
     .content-l_col-1 + .content-l_col-1 {
         // Adds margin top to info units that follow another
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em ) !important;
     }
+    
+    .content-l__top-divider {
+        .content-l_col-1 + .content-l_col-1 {
+            // Adds top divider between single-column info units
+            .grid_column__top-divider;
+        }
+    }
+    
+    .content-l__top-divider + .content-l__top-divider {
+        // Adds top divider between multi-column info unit rows
+        .grid_column__top-divider;
+        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+    
+    .respond-to-max( @bp-xs-max, {
+        // Adds top divider between info unit cols on small screens
+        .content-l__top-divider {
+            .content-l_col + .content-l_col {
+                .grid_column__top-divider;
+                margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            }
+        }
+    } );
 
     .respond-to-min( @bp-sm-min, {
+        .content-l__top-divider + .content-l__top-divider {
+            // Matches top divider width to cols on larger screens
+            &:before {
+                // Overrides .grid_column__top-divider margin-left !important rule
+                margin-left: 15px !important; 
+                margin-right: 15px;
+                width: auto;
+            }
+        }
+        .content-l_col-1:nth-of-type( n+2 ),
         .content-l_col-1-2:nth-of-type( n+3 ),
         .content-l_col-1-3:nth-of-type( n+4 ) {
             // Adds margin-top to info units that begin a new row in their group

@@ -8,6 +8,11 @@
 
    Create a mortgage chart organism with data.
    See [GHE]/flapjack/Modules-V1/wiki/Mortgage-Chart
+   
+   value.has_top_rule_line:        Boolean for whether or not to add top
+                                   border to mortgage-chart. Used in
+                                   'render_block.html' to modify classes on
+                                   wrapping 'div.block'.
 
    ========================================================================== #}
 {% set csv_meta = download_files[thru_month][delinquency] %}
