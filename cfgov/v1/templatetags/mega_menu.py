@@ -2,9 +2,11 @@ from wagtail.wagtailcore import hooks
 
 from v1.models.menu_item import MenuItem
 
+
 @hooks.register('before_serve_shared_page')
 def before_serve_shared_page(page, request, args, kwargs):
     request.show_draft_megamenu = True
+
 
 def get_menu_items(request):
     show_draft = hasattr(request, 'show_draft_megamenu')

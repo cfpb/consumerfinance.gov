@@ -214,4 +214,5 @@ class MegaMenuModelAdmin(ModelAdmin):
     menu_icon = 'cog'
     list_display = ('link_text', 'order')
 
+
 modeladmin_register(MegaMenuModelAdmin)

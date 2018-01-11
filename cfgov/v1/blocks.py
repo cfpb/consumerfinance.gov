@@ -210,8 +210,9 @@ class Link(blocks.StructBlock):
         ('live', 'Live'),
         ('draft', 'Draft')],
         default='both',
-        help_text='Select state for this link. If draft, will only show on '
-        'sharing sites (like Content). If live, will only show if not sharing site.')
+        help_text='Select state for this link. If draft, will only show '
+        'on sharing sites (like Content). If live, will only show '
+        'if not sharing site.')
     link_text = blocks.CharBlock(required=True)
     page_link = blocks.PageChooserBlock(
         required=False,
@@ -234,7 +235,7 @@ class NavItem(blocks.StructBlock):
 
 class NavGroup(blocks.StructBlock):
     draft = blocks.BooleanBlock(
-        required=False, 
+        required=False,
         default=False,
         help_text='If draft is selected, this nav section will only show on '
         'sharing sites (like Content).')

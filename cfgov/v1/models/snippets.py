@@ -1,9 +1,7 @@
 from django.core.validators import URLValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, MultiFieldPanel, StreamFieldPanel, PageChooserPanel)
-from wagtail.wagtailcore import blocks
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
@@ -15,7 +13,6 @@ from modelcluster.models import ClusterableModel
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
-from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules
 
 # We import ReusableTextChooserBlock here because this is where it used to

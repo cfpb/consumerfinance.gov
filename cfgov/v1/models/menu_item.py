@@ -4,9 +4,10 @@ from django.utils.encoding import python_2_unicode_compatible
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, MultiFieldPanel, StreamFieldPanel, PageChooserPanel)
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import RichTextField, StreamField
+from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
+
 
 @python_2_unicode_compatible
 class MenuItem(models.Model):
