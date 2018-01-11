@@ -114,3 +114,5 @@ CACHES = {
         'TIMEOUT': None,
     }
 }
+
+HTML_MINIFY = True
