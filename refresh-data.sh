@@ -18,10 +18,6 @@ download_data() {
 }
 
 refresh_data(){
-	echo 'Dropping db'
-	./drop-db.sh
-	echo 'Creating db'
-	./create-mysql-db.sh
 	echo 'Importing refresh db'
 	mysql v1 --user='root' --password="$MYSQL_ROOT_PW" < $refresh_dump_name
 	echo 'Setting up initial data'
