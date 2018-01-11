@@ -173,7 +173,7 @@ menu_items = [
                         },
                         {
                             'link': {
-                                'link_text': 'Owning a Home',
+                                'link_text': 'Buying a House',
                                 'external_link': '/owning-a-home/'
                             },
                             'nav_items': []
