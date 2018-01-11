@@ -29,12 +29,15 @@
 {% else %}
     {% set featured_image = value.image %}
 {% endif %}
+
 <aside class="m-featured-menu-content">
     <a class="m-featured-menu-content_link" href="{{ value.link.url }}">
+        {% if featured_image and featured_image.url %}
         <img src="{{ featured_image.url }}"
              alt=""
              height="150"
              width="270">
+        {% endif %}
         <div>
           {{ value.link.text }}
         </div>

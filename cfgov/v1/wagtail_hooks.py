@@ -208,6 +208,11 @@ def serve_latest_draft_page(page, request, args, kwargs):
         return response
 
 
+@hooks.register('before_serve_shared_page')
+def before_serve_shared_page(page, request, args, kwargs):
+    request.show_draft_megamenu = True
+
+
 class MegaMenuModelAdmin(ModelAdmin):
     model = MegaMenuItem
     menu_label = 'Mega Menu'
