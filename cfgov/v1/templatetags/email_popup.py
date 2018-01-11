@@ -11,7 +11,7 @@ register = template.Library()
 
 @register.simple_tag
 def email_popup(request):
-    for label, urls in settings.EMAIL_POPUPS.items():
+    for label, urls in settings.EMAIL_POPUP_URLS.items():
         if request.path not in urls:
             continue
 

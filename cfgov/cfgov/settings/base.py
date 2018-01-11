@@ -676,7 +676,7 @@ if DEPLOY_ENVIRONMENT == 'beta':
     SERVE_LATEST_DRAFT_PAGES = [1288]
 
 # Email popup configuration. See v1.templatetags.email_popup.
-EMAIL_POPUPS = {
+EMAIL_POPUP_URLS = {
     'debt': [
         '/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/',
         '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',
