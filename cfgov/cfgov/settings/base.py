@@ -634,9 +634,6 @@ FLAGS = {
     # Wagtail menu
     'WAGTAIL_MENU': {},
 
-    # Menu draft state
-    'DRAFT_MENU': {},
-
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
 

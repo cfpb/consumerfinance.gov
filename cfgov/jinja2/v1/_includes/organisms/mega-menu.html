@@ -172,8 +172,7 @@
 {% macro _nav_item( nav_depth, nav_item ) %}
 {% set link = nav_item.link if nav_item.link else nav_item %}
 {% if link %}
-    {% set show_draft = flag_enabled( 'DRAFT_MENU', request ) %}
-    {% if ( show_draft and link.state != 'live' ) or ( not show_draft and link.state != 'draft' ) %}
+    {% if ( request.show_draft_megamenu and link.state != 'live' ) or ( not request.show_draft_megamenu and link.state != 'draft' ) %}
         {% set url = link.page_link.url if link.page_link else link.external_link %}
         {% set text = link.link_text %}
         {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
