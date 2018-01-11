@@ -23,10 +23,10 @@ class CFGovErrorHandler(logging.Handler):
     def __init__(self):
         logging.Handler.__init__(self)
         self.sqs_queue = SQSQueue(
-            queue_url=os.environ['QUEUE_URL'],
+            queue_url=os.environ['AWS_SQS_QUEUE_URL'],
             credentials={
-                'access_key': os.environ['AWS_S3_ACCESS_KEY_ID'],
-                'secret_key': os.environ['AWS_S3_SECRET_ACCESS_KEY'],
+                'access_key': os.environ['AWS_SQS_ACCESS_KEY_ID'],
+                'secret_key': os.environ['AWS_SQS_SECRET_ACCESS_KEY'],
             }
         )
 

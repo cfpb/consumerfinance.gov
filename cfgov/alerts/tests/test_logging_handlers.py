@@ -23,9 +23,9 @@ class TestLoggingHandlers(TestCase):
         cls._logging_disable_level = logging.root.manager.disable
 
         credentials = {
-            'QUEUE_URL': 'test-queue',
-            'AWS_S3_ACCESS_KEY_ID': 'access-key',
-            'AWS_S3_SECRET_ACCESS_KEY': 'secret-key',
+            'AWS_SQS_QUEUE_URL': 'test-queue',
+            'AWS_SQS_ACCESS_KEY_ID': 'access-key',
+            'AWS_SQS_SECRET_ACCESS_KEY': 'secret-key',
         }
 
         with patch.dict(os.environ, credentials):

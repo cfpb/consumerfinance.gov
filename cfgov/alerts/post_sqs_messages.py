@@ -93,7 +93,7 @@ def process_sqs_message(message, github_alert, mattermost_alert):
     if mattermost_alert:
         try:
             mattermost_alert.post(text='Alert: {}. Github issue at {}'.format(
-                body,
+                title,
                 issue.html_url
             ))
         except Exception:

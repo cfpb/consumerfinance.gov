@@ -290,9 +290,6 @@ SHEER_ELASTICSEARCH_SETTINGS = \
     }
 
 
-# PDFReactor
-PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
-
 #LEGACY APPS
 
 STATIC_VERSION = ''
