@@ -230,6 +230,15 @@ Get any errors? [See our troubleshooting tips.](#troubleshooting)
   we'll use Docker Machine to start the Docker server in a virtual linux
   environment (using Virtualbox)
 
+#### Quickstart
+
+```shell
+brew install docker docker-compose docker-machine
+source mac-virtualbox-init.sh
+cp .python_env_SAMPLE .python_env
+docker-compose up
+```
+
 ### 1. Setup your Docker environment
 
 If you have never installed Docker before, follow the instructions
@@ -241,13 +250,15 @@ If you are on a machine that is already set up to run Linux docker containers,
 please install [Docker Compose](https://docs.docker.com/compose/install/).
 If `docker-compose ps` runs without error, you can can go to step 2.
 
-#### Mac + Homebrew + Virtualbox quickstart
+#### Mac + Homebrew + Virtualbox 
 
 **Starting assumptions**: You already have homebrew and virtualbox installed.
 You can run `brew search docker` without error.
 
-Install Docker, Docker Machine, and Docker Compose:
-`brew install docker docker-compose docker-machine`
+1. Install Docker, Docker Machine, and Docker Compose: 
+   `brew install docker docker-compose docker-machine`
+2. Create a default docker machine, if necessary, and configure it to map the 
+   appropriate ports locally: `source mac-virtualbox-init.sh`
 
 At this point, `docker-compose ps` should run without error.
 
@@ -256,15 +267,22 @@ At this point, `docker-compose ps` should run without error.
 Refer to the [front-end dependencies](#front-end-dependencies) described above
 in the [standalone installation instructions](#stand-alone-installation).
 
-### 3. Run setup
+### 3. Configure your Python environment
 
-`./setup.sh docker`
+Our docker-compose.yml configuration expects there to be a .python_env file. 
+We provide a sample with some default values that can be copied:
 
-This will install and build the frontend and set up the docker environment.
+```shell
+cp .python_env_SAMPLE .python_env
+```
+
+!!! note
+    This file informs the shell environment in which Python runs and contains 
+    variable definitions but it's not itself a shell script.
 
 ### 4. Run the for the first time
 
-`./runserver.sh docker`
+`docker-compose up`
 
 This will download and/or build images, and then start the containers, as
 described in the docker-compose.yml file. This will take a few minutes, or
