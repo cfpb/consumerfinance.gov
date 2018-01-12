@@ -1,3 +1,6 @@
+import re
+from StringIO import StringIO
+
 from django.apps import apps
 from django.db import connections
 from django.core.exceptions import ValidationError
@@ -152,3 +155,22 @@ def run():
 
     all_models = apps.get_models(include_auto_created=True)
     copy_models_to_postgres(*all_models)
+
+    # update auto-incrementing sequences:
+    # https://stackoverflow.com/a/44113124
+
+    app_labels = [a.label for a in apps.get_app_configs()]
+    sql_captured = StringIO()
+
+    management.call_command('sqlsequencereset',
+                            *app_labels, stdout=sql_captured,
+                            database='postgres')
+
+    sql = sql_captured.getvalue()
+
+    # Remove terminal color codes from sqlsequencereset output
+    ansi_escape = re.compile(r'\x1b[^m]*m')
+    sql = ansi_escape.sub('', sql)
+
+    cursor = connections['postgres'].cursor()
+    cursor.execute(sql)
