@@ -1,6 +1,7 @@
 from jinja2.ext import Extension
 
 from v1.models import CFGOVRendition
+from v1.templatetags.email_popup import email_popup
 from v1.util.util import extended_strftime
 
 
@@ -43,7 +44,7 @@ class V1FiltersExtension(Extension):
         self.environment.globals.update({
             'image_alt_value': image_alt_value,
             'date_formatter': date_formatter,
-
+            'email_popup': email_popup,
         })
 
 
