@@ -28,10 +28,6 @@ def obliterate(*table_names):
 def copy_models_to_postgres(*models):
     for model in models:
 
-        # when importing a Page, we create all of the inherited tables
-        # for the specific type, so no reason to process Page subclasses
-        # here
-
         if model not in SEEN_MODELS:
             SEEN_MODELS.append(model)
 
@@ -47,6 +43,8 @@ def copy_models_to_postgres(*models):
             print "importing %s" % repr(model)
             model.objects.using('postgres').delete()
 
+            # Use bulk_create, except where problematic or impossible
+            
             if ((model not in [Page, PageRevision, CFGOVAuthoredPages])
                     and not issubclass(model, (Page, TaggedItemBase))):
                 qs = model.objects.using('default').all().iterator()
