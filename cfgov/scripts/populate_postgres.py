@@ -3,6 +3,7 @@ from StringIO import StringIO
 
 from django.apps import apps
 from django.db import connections
+from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from django.core import management
 from django.db.models.fields.related import ForeignKey
@@ -15,6 +16,7 @@ from reversion.models import Revision, Version
 from v1.models.base import CFGOVAuthoredPages
 
 SEEN_MODELS = []
+ALREADY_OBLITERATED = []
 
 
 def slow_save(*objects):
@@ -25,7 +27,17 @@ def slow_save(*objects):
 def obliterate(*table_names):
     pg_cursor = connections['postgres'].cursor()
     for table_name in table_names:
-        pg_cursor.execute('delete from %s' % table_name)
+        if table_name in ALREADY_OBLITERATED:
+            continue
+        try:
+            pg_cursor.execute('delete from %s' % table_name)
+            ALREADY_OBLITERATED.append(table_name)
+        except IntegrityError as exception:
+            # extract the problematic table from the exception text
+            # A regex would work too.
+            problematic_table = exception.message.split('"')[-2]
+            obliterate(problematic_table)
+            obliterate(table_name)
 
 
 def copy_models_to_postgres(*models):
@@ -44,8 +56,7 @@ def copy_models_to_postgres(*models):
                     copy_models_to_postgres(field.related_model)
 
             print "importing %s" % repr(model)
-            model.objects.using('postgres').delete()
-
+            obliterate(model._meta.db_table)
             # Use bulk_create, except where problematic or impossible
             
             if ((model not in [Page, PageRevision, CFGOVAuthoredPages])
@@ -109,47 +120,6 @@ def run():
     SEEN_MODELS.append(PageRevision)
     SEEN_MODELS.append(Revision)
     SEEN_MODELS.append(Version)
-    obliterate('ask_cfpb_answerlandingpage',
-               'v1_landingpage',
-               'v1_sublandingpage',
-               'data_research_mortgageperformancepage',
-               'v1_browsepage',
-               'v1_homepage',
-               'v1_learnpage',
-               'v1_eventpage',
-               'v1_documentdetailpage',
-               'v1_newsroompage',
-               'v1_blogpage',
-               'v1_legacynewsroompage',
-               'v1_legacyblogpage',
-               'v1_abstractfilterpage',
-               'v1_activitylogpage',
-               'v1_sublandingfilterablepage',
-               'v1_eventarchivepage',
-               'v1_newsroomlandingpage',
-               'v1_browsefilterablepage',
-               'jobmanager_emailapplicationlink',
-               'jobmanager_usajobsapplicationlink',
-               'jobmanager_gradepanel',
-               'jobmanager_joblistingpage',
-               'ask_cfpb_tagresultspage',
-               'ask_cfpb_answerresultspage',
-               'ask_cfpb_answercategorypage',
-               'ask_cfpb_answerpage',
-               'ask_cfpb_answeraudiencepage',
-               'v1_cfgovauthoredpages',
-               'v1_cfgovtaggedpages',
-               'v1_cfgovpagecategory',
-               'v1_cfgovpage',
-               'wagtailsharing_sharingsite',
-               'wagtailcore_grouppagepermission',
-               'wagtailcore_site',
-               'wagtailcore_pagerevision',
-               'wagtailredirects_redirect',
-               'wagtailinventory_pageblock',
-               'v1_feedback',
-               'wagtailcore_page',
-               )
 
     all_models = apps.get_models(include_auto_created=True)
     copy_models_to_postgres(*all_models)
