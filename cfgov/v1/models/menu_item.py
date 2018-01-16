@@ -60,7 +60,9 @@ class MenuItem(models.Model):
 
     nav_footer = StreamField([
         ('nav_footer', blocks.StructBlock([
-            ('draft', blocks.BooleanBlock(required=False)),
+            ('draft', blocks.BooleanBlock(
+                required=False,
+                default=False)),
             ('content', blocks.RichTextBlock(required=False))
         ], label='Footer'))
     ], blank=True)

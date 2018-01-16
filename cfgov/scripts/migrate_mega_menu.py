@@ -1,6 +1,9 @@
 from wagtail.wagtailcore.blocks import StreamValue
 
 from v1.models.menu_item import MenuItem
+from v1.models.home_page import HomePage
+
+ROOT_PAGE = HomePage.objects.live().first()
 
 menu_items = [
     {
@@ -848,6 +851,35 @@ menu_items = [
 ]
 
 
+def get_page_from_path(page, path_components):
+    if page and path_components:
+        # request is for a child of this page
+        child_slug = path_components[0]
+        remaining_components = path_components[1:]
+        try:
+            subpage = page.get_children().get(slug=child_slug)
+            return get_page_from_path(subpage.specific, remaining_components)
+        except:
+            pass
+    else:
+        # request is for this page
+        return page
+
+
+def replace_external_links(obj):
+    if obj.get('nav_items'):
+        for nav_item in obj['nav_items']:
+            link = nav_item['link']
+            if link.get('external_link'):
+                page = get_page_from_path(
+                    ROOT_PAGE,
+                    filter(None, link['external_link'].split('/')))
+                if page:
+                    link['page_link'] = page.pk
+                    link['external_link'] = ''
+            replace_external_links(nav_item)
+
+
 def migrate_menu():
     MenuItem.objects.all().delete()
     for item in menu_items:
@@ -857,6 +889,7 @@ def migrate_menu():
             order=item['order'],
         )
         for i, group in enumerate(item['nav_groups']):
+            replace_external_links(group['value'])
             column_block = getattr(menu_item, 'column_{}'.format(i + 1))
             stream_block = getattr(column_block, 'stream_block')
             setattr(menu_item, 'column_{}'.format(i + 1), StreamValue(

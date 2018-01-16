@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
@@ -205,14 +206,6 @@ class FeaturedMenuContent(blocks.StructBlock):
 
 
 class Link(blocks.StructBlock):
-    state = blocks.ChoiceBlock(choices=[
-        ('both', 'Live and draft'),
-        ('live', 'Live'),
-        ('draft', 'Draft')],
-        default='both',
-        help_text='Select state for this link. If draft, will only show '
-        'on sharing sites (like Content). If live, will only show '
-        'if not sharing site.')
     link_text = blocks.CharBlock(required=True)
     page_link = blocks.PageChooserBlock(
         required=False,
@@ -220,11 +213,36 @@ class Link(blocks.StructBlock):
     external_link = blocks.CharBlock(
         required=False,
         max_length=1000,
-        default="#",
-        help_text="Enter url for page outside Wagtail.")
+        help_text='Enter url for page outside Wagtail. This will only '
+                  'be used if there is no page link.')
+
+    def clean(self, value):
+        cleaned = super(Link, self).clean(value)
+
+        if not cleaned.get('page_link') and not cleaned.get('external_link'):
+            raise ValidationError(
+                'Validation error in link',
+                params={
+                    'page_link': [
+                        'Either page or external link is required.'
+                    ],
+                    'external_link': [
+                        'Either page or external link is required.'
+                    ]
+                }
+            )
+        return cleaned
 
 
 class NavItem(blocks.StructBlock):
+    state = blocks.ChoiceBlock(choices=[
+        ('both', 'Live and draft'),
+        ('live', 'Live'),
+        ('draft', 'Draft')],
+        default='both',
+        help_text='Select state for this nav link. If draft, will only '
+        'show on sharing sites (like Content). If live, will only show '
+        'if not sharing site.')
     link = Link(required=False)
     nav_items = blocks.ListBlock(
         blocks.StructBlock([

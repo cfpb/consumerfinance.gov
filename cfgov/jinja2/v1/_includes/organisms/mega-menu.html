@@ -68,7 +68,9 @@
             </li>
             {%- endif %}
             {%- for item in group.nav_items %}
-                {{ _nav_item( nav_depth, item ) }}
+                {% if ( request.show_draft_megamenu and item.state != 'live' ) or ( not request.show_draft_megamenu and item.state != 'draft' ) %}
+                    {{ _nav_item( nav_depth, item ) }}
+                {% endif %}
             {%- endfor %}
         </ul>
     </div>
@@ -134,7 +136,6 @@
             {% if nav_item.nav_groups %}
                 {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
             {% endif %}
-
             {% if nav_item.footer and nav_item.footer.value %}
             <div class="{{ base_class ~ '_footer' }}">
                 {{ nav_item.footer.value.content | safe }}
@@ -172,28 +173,26 @@
 {% macro _nav_item( nav_depth, nav_item ) %}
 {% set link = nav_item.link if nav_item.link else nav_item %}
 {% if link %}
-    {% if ( request.show_draft_megamenu and link.state != 'live' ) or ( not request.show_draft_megamenu and link.state != 'draft' ) %}
-        {% set url = link.page_link.url if link.page_link else link.external_link %}
-        {% set text = link.link_text %}
-        {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
+    {% set url = link.page_link.url if link.page_link else link.external_link %}
+    {% set text = link.link_text %}
+    {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
 
-        <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
-            {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
-            {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
-            <a class="{{ 'u-link__disabled' if url == '' else '' }}
-                      {{ _classes( nav_depth, '-link' ) }}
-                      {{ _classes( nav_depth, '-link__has-children' ) if has_children else '' }}
-                      {{ _classes( nav_depth, '-link__current' ) if url == request.path else '' }}"
-               {{ '' if url == '' else 'href=' + url | e }}
-               {{ 'data-js-hook=behavior_flyout-menu_trigger' if has_children else '' }}
-               {{ 'aria-pressed=false' if has_children else '' }}>
-                  {{ text }}
-            </a>
-            {% if has_children %}
-                {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
-            {% endif %}
-        </li>
-    {% endif %}
+    <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
+        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
+        {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
+        <a class="{{ 'u-link__disabled' if url == '' else '' }}
+                  {{ _classes( nav_depth, '-link' ) }}
+                  {{ _classes( nav_depth, '-link__has-children' ) if has_children else '' }}
+                  {{ _classes( nav_depth, '-link__current' ) if url == request.path else '' }}"
+           {{ '' if url == '' else 'href=' + url | e }}
+           {{ 'data-js-hook=behavior_flyout-menu_trigger' if has_children else '' }}
+           {{ 'aria-pressed=false' if has_children else '' }}>
+              {{ text }}
+        </a>
+        {% if has_children %}
+            {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
+        {% endif %}
+    </li>
 {% endif %}
 {% endmacro %}
 
