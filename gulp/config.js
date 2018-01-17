@@ -117,10 +117,6 @@ module.exports = {
       ],
       dest: paths.processed + '/css'
     },
-    vendorImg: {
-      src: [],
-      dest: paths.processed + '/img'
-    },
     timelinejs: {
       src: [
         paths.modules + '/timelinejs/build/**/*'
