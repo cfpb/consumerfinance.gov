@@ -94,7 +94,8 @@ menu_items = [
                         {
                             'link': {
                                 'link_text': 'Money Transfers',
-                                'external_link': '/sending-money/'
+                                'external_link': '/consumer-tools/' +
+                                    'sending-money/'
                             },
                             'nav_items': []
                         },
@@ -852,22 +853,23 @@ menu_items = [
 
 
 def get_page_from_path(page, path_components):
-    if page and path_components:
-        # request is for a child of this page
-        child_slug = path_components[0]
-        remaining_components = path_components[1:]
-        try:
-            subpage = page.get_children().get(slug=child_slug)
-            return get_page_from_path(subpage.specific, remaining_components)
-        except:
-            pass
-    else:
-        # request is for this page
-        return page
+    if page:
+        if path_components:
+            # request is for a child of this page
+            child_slug = path_components[0]
+            remaining_components = path_components[1:]
+            try:
+                subpage = page.get_children().get(slug=child_slug)
+                return get_page_from_path(subpage.specific, remaining_components)
+            except:
+                pass
+        elif page.live:
+            # request is for this page
+            return page
 
 
 def replace_external_links(obj):
-    if obj.get('nav_items'):
+    if ROOT_PAGE and obj.get('nav_items'):
         for nav_item in obj['nav_items']:
             link = nav_item['link']
             if link.get('external_link'):
