@@ -95,7 +95,7 @@ menu_items = [
                             'link': {
                                 'link_text': 'Money Transfers',
                                 'external_link': '/consumer-tools/' +
-                                    'sending-money/'
+                                                 'sending-money/'
                             },
                             'nav_items': []
                         },
@@ -860,7 +860,8 @@ def get_page_from_path(page, path_components):
             remaining_components = path_components[1:]
             try:
                 subpage = page.get_children().get(slug=child_slug)
-                return get_page_from_path(subpage.specific, remaining_components)
+                return get_page_from_path(subpage.specific,
+                                          remaining_components)
             except:
                 pass
         elif page.live:
