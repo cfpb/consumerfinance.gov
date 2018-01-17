@@ -190,7 +190,7 @@
             {% do controls.update({'is_expanded':true}) %}
         {% endif %}
         {% set form_markup = _filters_form(controls, form) %}
-        {% call() expandable(controls) %}
+        {% call() expandable(controls, expandable_cue_additional_text='filters') %}
             {{ form_markup | safe }}
         {% endcall %}
         {% for field in form %}

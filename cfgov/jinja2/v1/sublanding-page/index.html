@@ -54,9 +54,7 @@
         {% endif %}
     {%- endfor %}
 
-    {% if flag_enabled('EMAIL_POPUP', request) %}
-        {% include 'organisms/email-popup.html' ignore missing %}
-    {% endif %}
+    {{ email_popup(request) }}
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}

@@ -3,12 +3,32 @@ const _assign = require( './assign' ).assign;
 
 /**
  * Stores/retrieves email signup data in localStorage
+ *
+ * After the first time a user sees a popup, the popup won't be displayed for
+ * another 4 days. After the second time, it'll be another 30 days, then 60
+ * days. If the user closes the popup, it'll reappear every 60 days.
+ *
+ * Submission of an email address dismisses the popup permanently.
  */
 
 const POPUP_WAIT_PERIOD = [ 4, 30, 60 ];
-const DISPLAY_DATE_KEY = 'oahPopupShowNext';
-const DISPLAY_COUNT_KEY = 'oahPopupCount';
 const FOREVER = 10000;
+
+/**
+ * @param {string} popupLabel - label for this popup.
+ * @returns {string} Local storage key to count popup views.
+ */
+function _getCountKey( popupLabel ) {
+  return popupLabel + 'PopupCount';
+}
+
+/**
+ * @param {string} popupLabel - label for this popup.
+ * @returns {string} Local storage key to record next time to show popup.
+ */
+function _getNextShowKey( popupLabel ) {
+  return popupLabel + 'PopupShowNext';
+}
 
 /**
  * @param {number} days - The number of days to a future date.
@@ -16,46 +36,60 @@ const FOREVER = 10000;
  */
 function _getFutureDate( days ) {
   const date = new Date();
-  return date.setTime( date.getTime() + days * 24 * 60 * 60 * 1000 );
+  return date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
 }
 
 /**
  * Record in local storage that the email popup has been viewed.
+ * @param {string} popupLabel - label for this popup.
  */
-function recordEmailPopupView() {
-  let count = Number( localStorage.getItem( DISPLAY_COUNT_KEY ) ) || 0;
+function recordEmailPopupView( popupLabel ) {
+  const countKey = _getCountKey( popupLabel );
+  const nextShowKey = _getNextShowKey( popupLabel );
+
+  let count = Number( localStorage.getItem( countKey ) ) || 0;
   const max = POPUP_WAIT_PERIOD.length - 1;
   count = count >= max ? max : count;
   const days = POPUP_WAIT_PERIOD[count];
-  localStorage.setItem( DISPLAY_COUNT_KEY, count + 1 );
-  localStorage.setItem( DISPLAY_DATE_KEY, _getFutureDate( days ) );
+  localStorage.setItem( countKey, count + 1 );
+  localStorage.setItem( nextShowKey, _getFutureDate( days ) );
 }
 
 /**
  * Record in local storage that the email popup has been closed.
+ * @param {string} popupLabel - label for this popup.
  */
-function recordEmailPopupClosure() {
+function recordEmailPopupClosure( popupLabel ) {
+  const countKey = _getCountKey( popupLabel );
+  const nextShowKey = _getNextShowKey( popupLabel );
+
   const count = POPUP_WAIT_PERIOD.length - 1;
   const days = POPUP_WAIT_PERIOD[count];
-  localStorage.setItem( DISPLAY_COUNT_KEY, count );
-  localStorage.setItem( DISPLAY_DATE_KEY, _getFutureDate( days ) );
+  localStorage.setItem( countKey, count );
+  localStorage.setItem( nextShowKey, _getFutureDate( days ) );
 }
 
 /**
  * Sets email popup key in local storage with a very long expiry date.
+ * @param {string} popupLabel - label for this popup.
  */
-function recordEmailRegistration() {
-  localStorage.setItem( DISPLAY_DATE_KEY, _getFutureDate( FOREVER ) );
+function recordEmailRegistration( popupLabel ) {
+  const nextShowKey = _getNextShowKey( popupLabel );
+
+  localStorage.setItem( nextShowKey, _getFutureDate( FOREVER ) );
 }
 
 /**
  * Checks today's date against that in local storage for the purposes of
  * displaying a popup.
+ * @param {string} popupLabel - label for this popup.
  * @returns {boolean} True if the popup should display, false otherwise.
  */
-function showEmailPopup() {
+function showEmailPopup( popupLabel ) {
+  const nextShowKey = _getNextShowKey( popupLabel );
+
   const today = new Date().getTime();
-  const nextDisplayDate = Number( localStorage.getItem( DISPLAY_DATE_KEY ) ) || 0;
+  const nextDisplayDate = Number( localStorage.getItem( nextShowKey ) ) || 0;
   return today > nextDisplayDate;
 }
 
