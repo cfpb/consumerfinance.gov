@@ -28,7 +28,7 @@
 
    ========================================================================== #}
 
-{% macro expandable(value) %}
+{% macro expandable(value, expandable_cue_additional_text='') %}
 
 <div data-qa-hook="expandable" class="o-expandable
             o-expandable__expanded
@@ -47,13 +47,13 @@
                          u-hidden">
                 <span class="o-expandable_cue
                              o-expandable_cue-open">
-                    <span class="o-expandable_cue-label">Show</span>
+                    <span class="o-expandable_cue-label">Show {{expandable_cue_additional_text}}</span>
                     <span class="o-expandable_cue-label o-expandable_cue-label__es">Mostrar</span>
                     <span class="cf-icon cf-icon-plus-round"></span>
                 </span>
                 <span class="o-expandable_cue
                              o-expandable_cue-close">
-                    <span class="o-expandable_cue-label">Hide</span>
+                    <span class="o-expandable_cue-label">Hide {{expandable_cue_additional_text}}</span>
                     <span class="o-expandable_cue-label o-expandable_cue-label__es">Ocultar</span>
                     <span class="cf-icon cf-icon-minus-round"></span>
                 </span>
