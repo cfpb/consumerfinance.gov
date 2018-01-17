@@ -16,7 +16,7 @@ const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
 const handleErrors = require( '../utils/handle-errors' );
-const named = require( 'vinyl-named' );
+const vinylNamed = require( 'vinyl-named' );
 const paths = require( '../../config/environment' ).paths;
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
@@ -36,9 +36,7 @@ function _processScript( localWebpackConfig, src, dest ) {
       dest:  paths.processed + dest,
       extra: configScripts.otherBuildTriggerFiles
     } ) )
-    .pipe( named( function( file ) {
-      return file.relative;
-    } ) )
+    .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + dest ) )
