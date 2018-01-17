@@ -66,7 +66,7 @@ gulp.task( 'copy:vendorjs', () => {
 } );
 
 gulp.task( 'copy',
-  [
+  gulp.parallel(
     'copy:icons',
     'copy:codeJson',
     'copy:vendorfonts',
@@ -74,5 +74,5 @@ gulp.task( 'copy',
     'copy:vendorjs',
     'copy:timelinejs',
     'copy:lightbox2'
-  ]
+  )
 );
