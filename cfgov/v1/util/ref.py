@@ -1,3 +1,6 @@
+import itertools
+
+
 limited_categories = [
     ('speech-bubble', 'Blog'),
     ('newspaper', 'Newsroom'),
@@ -249,3 +252,12 @@ def is_report(page):
 
 def filterable_list_page_types():
     return page_types
+
+
+def get_category_children(category_names):
+    """Return a list of page category slugs for given category names."""
+    categories_dict = dict(categories)
+    return sorted(itertools.chain(*(
+        dict(categories_dict[category]).keys()
+        for category in category_names
+    )))

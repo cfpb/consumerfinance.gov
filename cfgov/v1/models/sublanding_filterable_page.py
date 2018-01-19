@@ -1,5 +1,3 @@
-import itertools
-
 from wagtail.wagtailadmin.edit_handlers import (
     ObjectList, StreamFieldPanel, TabbedInterface
 )
@@ -10,8 +8,6 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.feeds import FilterableFeedPageMixin
 from v1.models.base import CFGOVPage
-from v1.models.learn_page import AbstractFilterPage
-from v1.util import ref
 from v1.util.filterable_list import FilterableListMixin
 
 
@@ -49,27 +45,8 @@ class SublandingFilterablePage(FilterableFeedPageMixin,
 
 class ActivityLogPage(SublandingFilterablePage):
     template = 'activity-log/index.html'
+    filterable_categories = ('Blog', 'Newsroom', 'Research Report')
+    filterable_children_only = False
+    filterable_per_page_limit = 100
 
     objects = PageManager()
-
-    @classmethod
-    def eligible_categories(cls):
-        categories = dict(ref.categories)
-        return sorted(itertools.chain(*(
-            dict(categories[category]).keys()
-            for category in ('Blog', 'Newsroom', 'Research Report')
-        )))
-
-    @classmethod
-    def base_query(cls):
-        """
-        Recent updates pages should only show content from certain categories.
-        """
-        eligible_pages = AbstractFilterPage.objects.live()
-
-        return eligible_pages.filter(
-            categories__name__in=cls.eligible_categories()
-        )
-
-    def per_page_limit(self):
-        return 100
