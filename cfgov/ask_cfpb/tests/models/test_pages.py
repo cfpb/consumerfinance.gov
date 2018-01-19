@@ -199,7 +199,11 @@ class AnswerModelTestCase(TestCase):
             update_spanish_page=True)
         self.answer1234.save()
         self.page1 = self.answer1234.english_page
+        self.page1.live = True
+        self.page1.save()
         self.page1_es = self.answer1234.spanish_page
+        self.page1_es.live = True
+        self.page1_es.save()
         self.answer5678 = self.prepare_answer(
             id=5678,
             answer='Mock answer 2',
@@ -279,6 +283,16 @@ class AnswerModelTestCase(TestCase):
             'stub_audience')
         self.assertEqual(
             json.loads(facet_map)['subcategories']['1'], [])
+
+    def test_facet_map_skips_draft_page(self):
+        self.answer1234.category.add(self.category)
+        self.answer1234.audiences.add(self.audience)
+        self.answer1234.subcategory.add(self.subcategories[1])
+        self.page1.live = False
+        self.page1.save()
+        facet_map = self.category.facet_map
+        self.assertEqual(
+            json.loads(facet_map)['answers'].get('1234'), None)
 
     def test_answer_valid_tags(self):
         test_dict = Answer.valid_tags()
