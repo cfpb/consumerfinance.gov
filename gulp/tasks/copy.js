@@ -1,6 +1,5 @@
 const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
-const gulpReplace = require( 'gulp-replace' );
 const configCopy = require( '../config' ).copy;
 const handleErrors = require( '../utils/handle-errors' );
 const browserSync = require( 'browser-sync' );
@@ -42,19 +41,10 @@ gulp.task( 'copy:vendorcss', () => {
   return gulp.src( vendorCss.src )
     .pipe( gulpChanged( vendorCss.dest ) )
     .on( 'error', handleErrors )
-    .pipe( gulpReplace(
-      /url\(".\/ajax-loader.gif"\)/ig,
-      'url("/img/ajax-loader.gif")'
-    ) )
     .pipe( gulp.dest( vendorCss.dest ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );
-} );
-
-gulp.task( 'copy:vendorimg', () => {
-  const vendorImg = configCopy.vendorImg;
-  return _genericCopy( vendorImg.src, vendorImg.dest );
 } );
 
 gulp.task( 'copy:timelinejs', () => {
@@ -81,7 +71,6 @@ gulp.task( 'copy',
     'copy:codeJson',
     'copy:vendorfonts',
     'copy:vendorcss',
-    'copy:vendorimg',
     'copy:vendorjs',
     'copy:timelinejs',
     'copy:lightbox2'
