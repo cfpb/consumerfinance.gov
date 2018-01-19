@@ -4,7 +4,9 @@ from wagtail.contrib.modeladmin.options import (ModelAdmin, ModelAdminGroup,
                                                 modeladmin_register)
 from wagtail.contrib.modeladmin.views import CreateView, EditView, InspectView
 
-from jobmanager.models import ApplicantType, Grade, JobCategory, JobRegion
+from jobmanager.models import (
+    ApplicantType, Grade, JobCategory, Region, Office
+)
 
 
 class ApplicantTypeModelAdmin(ModelAdmin):
@@ -56,8 +58,22 @@ class JobCategoryModelAdmin(ModelAdmin):
 
 
 class JobRegionModelAdmin(ModelAdmin):
-    model = JobRegion
+    model = Region
     menu_label = 'Regions'
+    menu_icon = 'site'
+
+    def states_in_region(self):
+        return ", ".join(str(state) for state in self.states.all())
+
+    def major_cities(self):
+        return "; ".join(str(city) for city in self.cities.all())
+
+    list_display = ('abbreviation', 'name', states_in_region, major_cities)
+
+
+class JobOfficeModelAdmin(ModelAdmin):
+    model = Office
+    menu_label = 'Offices'
     menu_icon = 'site'
     list_display = ('abbreviation', 'name')
 
@@ -70,5 +86,6 @@ class MyModelAdminGroup(ModelAdminGroup):
         ApplicantTypeModelAdmin,
         JobCategoryModelAdmin,
         JobGradeModelAdmin,
-        JobRegionModelAdmin,
+        JobOfficeModelAdmin,
+        JobRegionModelAdmin
     )
