@@ -85,9 +85,9 @@ class NewsroomLandingPage(BrowseFilterablePage):
         )))
 
     @classmethod
-    def base_query(cls):
+    def base_query(cls, site):
         """Newsroom pages should only show content from certain categories."""
-        eligible_pages = AbstractFilterPage.objects.live()
+        eligible_pages = AbstractFilterPage.objects.in_site(site).live()
 
         return eligible_pages.filter(
             categories__name__in=cls.eligible_categories()

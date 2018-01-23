@@ -19,8 +19,11 @@ class EventArchivePageTestCase(TestCase):
 
 
 class TestNewsroomLandingPage(TestCase):
+    def setUp(self):
+        self.site = Site.objects.get(is_default_site=True)
+
     def test_no_pages_by_default(self):
-        query = NewsroomLandingPage.base_query()
+        query = NewsroomLandingPage.base_query(site=self.site)
         self.assertFalse(query.exists())
 
     def test_eligible_categories(self):
@@ -47,10 +50,10 @@ class TestNewsroomLandingPage(TestCase):
 
     def test_no_pages_matching_categories(self):
         self.make_page_with_category('test')
-        query = NewsroomLandingPage.base_query()
+        query = NewsroomLandingPage.base_query(site=self.site)
         self.assertFalse(query.exists())
 
     def test_page_matches_categories(self):
         self.make_page_with_category('op-ed')
-        query = NewsroomLandingPage.base_query()
+        query = NewsroomLandingPage.base_query(site=self.site)
         self.assertTrue(query.exists())

@@ -13,8 +13,9 @@ from v1.util.categories import clean_categories
 class TestFilterableListForm(TestCase):
 
     def setUpFilterableForm(self, data=None):
-        base_query = AbstractFilterPage.objects.live()
-        form = FilterableListForm(base_query=base_query)
+        site = Site.objects.get(is_default_site=True)
+        base_query = AbstractFilterPage.objects.in_site(site).live()
+        form = FilterableListForm(site=site, base_query=base_query)
         form.is_bound = True
         form.cleaned_data = data
         return form
@@ -66,13 +67,13 @@ class TestFilterableListForm(TestCase):
 
     def test_filter_by_author_names(self):
         page1 = BlogPage(title='test page 1')
-        page1.authors.add('richa-agarwal')
-        page1.authors.add('sarah-simpson')
+        page1.authors.add('person-one')
+        page1.authors.add('person-two')
         page2 = BlogPage(title='test page 2')
-        page2.authors.add('richard-cordray')
+        page2.authors.add('person-three')
         publish_page(page1)
         publish_page(page2)
-        form = self.setUpFilterableForm(data={'authors': ['sarah-simpson']})
+        form = self.setUpFilterableForm(data={'authors': ['person-two']})
         page_set = form.get_page_set()
         self.assertEquals(len(page_set), 1)
         self.assertEquals(page_set[0].specific, page1)

@@ -22,8 +22,8 @@ class FilterableListMixin(object):
         context['filter_data'] = self.process_form(request, form)
         return context
 
-    def base_query(self):
-        return AbstractFilterPage.objects.live().filter(
+    def base_query(self, site):
+        return AbstractFilterPage.objects.live().in_site(site).filter(
             CFGOVPage.objects.child_of_q(self))
 
     def process_form(self, request, form):
