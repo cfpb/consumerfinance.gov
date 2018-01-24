@@ -1,8 +1,10 @@
 from django.db import IntegrityError
 from django.test import TestCase
-from mock import Mock, patch
+
 from wagtail.wagtailimages.models import Filter
 from wagtail.wagtailimages.tests.utils import get_test_image_file
+
+from mock import Mock, patch
 
 from v1.models.images import CFGOVImage, CFGOVRendition
 

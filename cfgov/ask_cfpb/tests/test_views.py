@@ -1,22 +1,24 @@
 from __future__ import unicode_literals
 
 import json
-import mock
-
-from model_mommy import mommy
 
 from django.apps import apps
-from django.core.urlresolvers import reverse, NoReverseMatch
-from django.http import HttpRequest, Http404, QueryDict
+from django.core.urlresolvers import NoReverseMatch, reverse
+from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
 from django.utils import timezone
 from wagtail.wagtailcore.models import Site
 from wagtailsharing.models import SharingSite
 
+import mock
+from model_mommy import mommy
+
 from ask_cfpb.models import (
-    AnswerResultsPage, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
-from ask_cfpb.views import annotate_links, redirect_ask_search, ask_search
-from v1.util.migrations import get_or_create_page, get_free_path
+    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
+)
+from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
+from v1.util.migrations import get_or_create_page
+
 
 now = timezone.now()
 
@@ -115,16 +117,6 @@ class AnswerViewTestCase(TestCase):
             language='es',
             live=True)
 
-    def create_answer_results_page(self, **kwargs):
-        kwargs.setdefault(
-            'path', get_free_path(apps, self.english_parent_page))
-        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
-        kwargs.setdefault('slug', 'mock-answer-page-en-1234')
-        kwargs.setdefault('title', 'Mock answer page title')
-        page = mommy.prepare(AnswerResultsPage, **kwargs)
-        page.save()
-        return page
-
     def test_annotate_links(self):
         mock_answer = (
             '<p>Answer with a <a href="http://fake.com">fake link.</a></p>')
@@ -156,10 +148,10 @@ class AnswerViewTestCase(TestCase):
                 kwargs={'language': 'zz'}), {'q': 'payday'})
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
-    def test_en_search_no_such_page(self, mock_filter):
+    def test_en_search_results_page_not_created(self, mock_filter):
         mock_queryset = mock.Mock()
         mock_queryset.count.return_value = 0
-        mock_filter.return_value = mock_queryset
+        mock_filter.return_value = [mock_queryset]
         response = self.client.get(reverse(
             'ask-search-en'), {'q': 'payday'})
         self.assertEqual(mock_filter.call_count, 1)
@@ -204,6 +196,31 @@ class AnswerViewTestCase(TestCase):
         self.assertTrue(mock_sqs_instance.filter.called_with(
             language='en', q='payday'))
 
+    @mock.patch('ask_cfpb.views.SearchQuerySet')
+    def test_en_search_no_term(self, mock_sqs):
+        from v1.util.migrations import get_or_create_page
+        mock_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerResultsPage',
+            'Mock results page',
+            'ask-cfpb-search-results',
+            self.ROOT_PAGE,
+            language='en')
+
+        response = self.client.get(reverse(
+            'ask-search-en'), {'q': ''})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.context_data['page'],
+            mock_page)
+        self.assertEqual(
+            response.context_data['page'].query,
+            '')
+        self.assertEqual(
+            response.context_data['page'].result_query,
+            '')
+
     @override_settings(FLAGS={'ASK_SEARCH_TYPOS': {'boolean': True}})
     @mock.patch('ask_cfpb.views.SearchQuerySet')
     def test_en_search_suggestion(self, mock_sqs):
@@ -214,8 +231,9 @@ class AnswerViewTestCase(TestCase):
             'AnswerResultsPage',
             'Mock results page',
             'ask-cfpb-search-results',
-            self.ROOT_PAGE,
-            language='en')
+            self.english_parent_page,
+            language='en',
+            live=True)
 
         mock_return = mock.Mock()
         mock_return.url = 'mockcfpb.gov'
@@ -262,17 +280,23 @@ class AnswerViewTestCase(TestCase):
         redirect_ask_search(request, language='es')
         self.assertEqual(mock_redirect.call_count, 1)
 
-    def test_ask_search_raises_404_for_empty_query(self):
-        request = HttpRequest()
-        request.GET['q'] = ' '
-        with self.assertRaises(Http404):
-            ask_search(request, language='es')
-        with self.assertRaises(Http404):
-            ask_search(request, language='en')
-
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_es_search(self, mock_filter):
+        get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerResultsPage',
+            'Mock Spanish results page',
+            'respuestas',
+            self.spanish_parent_page,
+            language='es',
+            live=True)
+        mock_return = mock.Mock()
+        mock_return.url = 'mockcfpb.gov'
+        mock_return.autocomplete = 'A mock question'
+        mock_return.text = 'Mock answer text.'
         mock_queryset = mock.Mock()
+        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_queryset.count.return_value = 1
         mock_filter.return_value = mock_queryset
         self.client.get(reverse(
@@ -282,6 +306,15 @@ class AnswerViewTestCase(TestCase):
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_search_page_en_selection(self, mock_filter):
+        page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerResultsPage',
+            'Mock results page',
+            'ask-cfpb-search-results',
+            self.english_parent_page,
+            language='en',
+            live=True)
         mock_return = mock.Mock()
         mock_return.url = 'url'
         mock_return.autocomplete = 'question text'
@@ -289,7 +322,6 @@ class AnswerViewTestCase(TestCase):
         mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_queryset.count.return_value = 1
         mock_filter.return_value = mock_queryset
-        page = self.create_answer_results_page(language='en')
         self.client.get(reverse(
             'ask-search-en'), {'q': 'tuition'})
         self.assertEqual(mock_filter.call_count, 1)
@@ -301,6 +333,15 @@ class AnswerViewTestCase(TestCase):
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_search_page_es_selection(self, mock_filter):
+        page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerResultsPage',
+            'Mock Spanish results page',
+            'respuestas',
+            self.spanish_parent_page,
+            language='es',
+            live=True)
         mock_return = mock.Mock()
         mock_return.url = 'url'
         mock_return.autocomplete = 'question text'
@@ -308,10 +349,8 @@ class AnswerViewTestCase(TestCase):
         mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_queryset.count.return_value = 1
         mock_filter.return_value = mock_queryset
-        page = self.create_answer_results_page(language='es')
         self.client.get(reverse(
-            'ask-search-es',
-            kwargs={'language': 'es'}), {'q': 'hipotecas'})
+            'ask-search-es', kwargs={'language': 'es'}), {'q': 'hipotecas'})
         self.assertEqual(mock_filter.call_count, 1)
         self.assertEqual(page.language, 'es')
         self.assertEqual(page.answers, [])
@@ -320,17 +359,30 @@ class AnswerViewTestCase(TestCase):
             'ask-cfpb/answer-search-spanish-results.html')
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
-    def test_en_search_as_json(self, mock_filter):
-        mock_filter.autocomplete.return_value = ['question text']
-        mock_filter.url.return_value = ['answer/url']
-        self.client.get(reverse(
+    def test_json_response(self, mock_filter):
+        get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerResultsPage',
+            'Mock results page',
+            'ask-cfpb-search-results',
+            self.english_parent_page,
+            language='en',
+            live=True)
+        mock_return = mock.Mock()
+        mock_return.url = "inscisive_url.com"
+        mock_return.autocomplete = "inscisive question"
+        mock_return.text = "inscisive text"
+        mock_queryset = mock.Mock()
+        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
+        mock_queryset.count.return_value = 1
+        mock_filter.return_value = mock_queryset
+        response = self.client.get(reverse(
             'ask-search-en-json',
-            kwargs={'as_json': 'json'}), {'q': 'test_en_search_as_json'})
+            kwargs={'as_json': 'json'}), {'q': 'tuition'})
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_filter.call_count, 1)
-        self.assertTrue(
-            mock_filter.called_with(
-                language='en',
-                as_json='json'))
+        self.assertEqual(json.loads(response.content)['query'], 'tuition')
 
     def test_autocomplete_en_blank_term(self):
         result = self.client.get(reverse(

@@ -1,6 +1,7 @@
 const FormSubmit = require( './FormSubmit.js' );
 const validators = require( '../modules/util/validators' );
 const emailHelpers = require( '../modules/util/email-popup-helpers' );
+
 const BASE_CLASS = 'o-email-signup';
 const language = document.body.querySelector( '.content' ).lang;
 
@@ -17,6 +18,7 @@ const language = document.body.querySelector( '.content' ).lang;
 function EmailPopup( el ) {
   const _baseElement = document.querySelector( el );
   const _closeElement = _baseElement.querySelector( '.close' );
+  const _popupLabel = _baseElement.getAttribute( 'data-popup-label' );
   const VISIBLE_CLASS = 'o-email-popup__visible';
 
   /**
@@ -24,7 +26,7 @@ function EmailPopup( el ) {
    */
   function hidePopup() {
     _baseElement.classList.remove( VISIBLE_CLASS );
-    emailHelpers.recordEmailPopupClosure();
+    emailHelpers.recordEmailPopupClosure( _popupLabel );
   }
 
   /**
@@ -32,9 +34,9 @@ function EmailPopup( el ) {
    * @returns {boolean} true.
    */
   function showPopup() {
-    if ( emailHelpers.showEmailPopup() ) {
+    if ( emailHelpers.showEmailPopup( _popupLabel ) ) {
       _baseElement.classList.add( VISIBLE_CLASS );
-      emailHelpers.recordEmailPopupView();
+      emailHelpers.recordEmailPopupView( _popupLabel );
     }
 
     return true;
@@ -59,14 +61,8 @@ function EmailPopup( el ) {
    * @param {event} event Click event.
    *
    */
-  function _onEmailSignupSuccess( event ) {
-    const form = event.form;
-    const input = form.querySelector( 'input[name="code"]' );
-    const code = input.value;
-
-    if ( code === 'USCFPB_127' ) {
-      emailHelpers.recordEmailRegistration();
-    }
+  function _onEmailSignupSuccess() {
+    emailHelpers.recordEmailRegistration( _popupLabel );
   }
 
   /**

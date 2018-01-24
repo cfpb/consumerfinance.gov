@@ -1,8 +1,11 @@
-from django.test import TestCase
+from datetime import date
+
+from django.test import RequestFactory, TestCase
+
 from model_mommy import mommy
 
 from v1.atomic_elements.atoms import ImageBasic
-from v1.jinja2tags import image_alt_value
+from v1.jinja2tags import date_formatter, email_popup, image_alt_value
 from v1.models import CFGOVImage, CFGOVRendition
 
 
@@ -48,3 +51,21 @@ class TestImageAltValue(TestCase):
         value = block.to_python({'upload': image_with_alt_text.pk,
                                  'alt': 'Alt text on block'})
         self.assertEqual(image_alt_value(value), 'Alt text on block')
+
+
+class TestDateFormatter(TestCase):
+    def test_text_format_date(self):
+        test_date = date(2018, 9, 5)
+        output = date_formatter(test_date, text_format=True)
+        self.assertIn('Sept. 5, 2018', output)
+
+    def test_default_format_date(self):
+        test_date = date(2018, 9, 5)
+        output = date_formatter(test_date, text_format=False)
+        self.assertIn('Sep 05, 2018', output)
+
+
+class TestEmailPopup(TestCase):
+    def test_email_popup_defined_and_returns_empty_for_no_popup(self):
+        request = RequestFactory().get('/page/without/a/popup')
+        self.assertEqual(email_popup(request), '')

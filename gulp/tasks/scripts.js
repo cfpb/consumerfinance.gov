@@ -10,13 +10,13 @@ const configLegacy = config.legacy;
 const configScripts = config.scripts;
 const gulp = require( 'gulp' );
 const gulpConcat = require( 'gulp-concat' );
-const gulpModernizr = require( 'gulp-modernizr' );
+const gulpModernizrBuild = require( 'gulp-modernizr-build' );
 const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
 const handleErrors = require( '../utils/handle-errors' );
-const named = require( 'vinyl-named' );
+const vinylNamed = require( 'vinyl-named' );
 const paths = require( '../../config/environment' ).paths;
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
@@ -36,9 +36,7 @@ function _processScript( localWebpackConfig, src, dest ) {
       dest:  paths.processed + dest,
       extra: configScripts.otherBuildTriggerFiles
     } ) )
-    .pipe( named( function( file ) {
-      return file.relative;
-    } ) )
+    .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + dest ) )
@@ -57,8 +55,14 @@ function scriptsPolyfill() {
       dest:  paths.processed + '/js/modernizr.min.js',
       extra: configScripts.otherBuildTriggerFiles
     } ) )
-    .pipe( gulpModernizr( {
-      tests:   [ 'csspointerevents', 'classlist', 'es5' ],
+
+    /* csspointerevents is used by select menu in Capital Framework.
+       es5 is used for ECMAScript 5 feature detection to change js CSS to no-js.
+       setClasses sets detection checks as feat/no-feat CSS in html element.
+       html5printshiv enables use of HTML5 sectioning elements in IE8
+       See https://github.com/aFarkas/html5shiv */
+    .pipe( gulpModernizrBuild( 'modernizr.min.js', {
+      addFeatures: [ 'css/pointerevents', 'es5/specification' ],
       options: [ 'setClasses', 'html5printshiv' ]
     } ) )
     .pipe( gulpUglify( {
@@ -66,7 +70,6 @@ function scriptsPolyfill() {
         properties: false
       }
     } ) )
-    .pipe( gulpRename( 'modernizr.min.js' ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + '/js/' ) )
     .pipe( browserSync.reload( {
@@ -94,7 +97,7 @@ function scriptsModern() {
 function scriptsIE() {
   return _processScript(
     webpackConfig.commonConf,
-    '/js/ie/common.ie.js',
+    '/js/ie/common.ie9.js',
     '/js/ie/'
   );
 }
@@ -194,18 +197,6 @@ function scriptsNemo() {
 }
 
 /**
- * Bundle Es5 shim scripts.
- * @returns {PassThrough} A source stream.
- */
-function scriptsEs5Shim() {
-  return _processScript(
-    webpackConfig.commonConf,
-    '/js/shims/es5-shim.js',
-    '/js/'
-  );
-}
-
-/**
  * Bundle scripts in /js/routes/apps/owning-a-home/
  * and factor out common modules into common.js.
  * @returns {PassThrough} A source stream.
@@ -233,7 +224,6 @@ gulp.task( 'scripts:ondemand', [
   'scripts:ondemand:nonresponsive'
 ] );
 gulp.task( 'scripts:nemo', scriptsNemo );
-gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
@@ -242,6 +232,5 @@ gulp.task( 'scripts', [
   'scripts:ie',
   'scripts:external',
   'scripts:nemo',
-  'scripts:es5-shim',
   'scripts:spanish'
 ] );

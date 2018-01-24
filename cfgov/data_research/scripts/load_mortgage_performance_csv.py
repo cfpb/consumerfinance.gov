@@ -1,15 +1,19 @@
 from __future__ import unicode_literals
 
-from dateutil import parser
 import logging
 import os
 import sys
 
+from dateutil import parser
+
 from data_research.models import (
-    MortgageDataConstant, County, CountyMortgageData)
-from data_research.mortgage_utilities.s3_utils import (
-    read_in_s3_csv, S3_SOURCE_BUCKET, S3_SOURCE_FILE)
+    County, CountyMortgageData, MortgageDataConstant
+)
 from data_research.mortgage_utilities.fips_meta import validate_fips
+from data_research.mortgage_utilities.s3_utils import (
+    S3_SOURCE_BUCKET, S3_SOURCE_FILE, read_in_s3_csv
+)
+
 
 logger = logging.getLogger(__name__)
 script = os.path.basename(__file__)

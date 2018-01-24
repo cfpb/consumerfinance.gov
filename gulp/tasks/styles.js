@@ -55,6 +55,9 @@ function stylesIE9() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
+      postcssUnmq( {
+        width: '75em'
+      } ),
       autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_9 } )
     ] ) )
     .pipe( gulpRename( {

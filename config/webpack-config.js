@@ -19,7 +19,7 @@ const COMMON_MODULE_CONFIG = {
     loaders: [ {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
-        presets: [ [ 'env', {
+        presets: [ [ 'babel-preset-env', {
           targets: {
             browsers: BROWSER_LIST.LAST_2_IE_9_UP
           },

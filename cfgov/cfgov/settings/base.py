@@ -8,6 +8,7 @@ from unipath import Path
 
 from ..util import admin_emails
 
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
@@ -94,7 +95,7 @@ OPTIONAL_APPS = [
      'complaintdatabase', 'complaint_common',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
-    {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
+    {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
@@ -105,6 +106,9 @@ if DEPLOY_ENVIRONMENT == 'build':
     OPTIONAL_APPS += [
         {'import': 'eregs_core', 'apps': ('eregs_core',)},
     ]
+
+
+POSTGRES_APPS = []
 
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
@@ -119,7 +123,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'v1.middleware.StagingMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
@@ -158,7 +161,7 @@ TEMPLATES = [
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
-                'v1.jinja2tags.images',
+                'v1.jinja2tags.filters',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
@@ -210,11 +213,6 @@ MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
 
-
-#Enabling compression for use in base.html
-COMPRESS_ENABLED = True
-
-COMPRESS_JS_FILTERS = []
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -291,9 +289,6 @@ SHEER_ELASTICSEARCH_SETTINGS = \
         }
     }
 
-
-# PDFReactor
-PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
 
 #LEGACY APPS
 
@@ -493,9 +488,6 @@ if ENABLE_AKAMAI_CACHE_PURGE:
     }
 
 
-# Staging site
-STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
-
 # CSP Whitelists
 
 # These specify what is allowed in <script> tags.
@@ -628,8 +620,9 @@ FLAGS = {
     # Intended for use with path conditions.
     'AB_TESTING': {},
 
-    # When enabled, should display the email popup.
-    'EMAIL_POPUP': {},
+    # Email popups.
+    'EMAIL_POPUP_OAH': {'boolean': True},
+    'EMAIL_POPUP_DEBT': {'after date': '2018-02-01T00:00'},
 
     # The next version of eRegulations
     'EREGS20': {
@@ -647,6 +640,9 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
+
+    # Servicemembers pages in Wagtail
+    'WAGTAIL_SERVICEMEMBERS': {},
 }
 
 
@@ -672,3 +668,23 @@ MAX_ALLOWED_TIME_OFFSET = 5
 # Search.gov values
 SEARCH_DOT_GOV_AFFILIATE = os.environ.get('SEARCH_DOT_GOV_AFFILIATE')
 SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
+
+# We want the ability to serve the latest drafts of some pages on beta.
+# This value is read by v1.wagtail_hooks.
+SERVE_LATEST_DRAFT_PAGES = []
+if DEPLOY_ENVIRONMENT == 'beta':
+    SERVE_LATEST_DRAFT_PAGES = [1288]
+
+# Email popup configuration. See v1.templatetags.email_popup.
+EMAIL_POPUP_URLS = {
+    'debt': [
+        '/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/',
+        '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',
+        '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
+        '/consumer-tools/debt-collection/',
+    ],
+    'oah': [
+        '/owning-a-home/',
+        '/owning-a-home/mortgage-estimate/',
+    ],
+}

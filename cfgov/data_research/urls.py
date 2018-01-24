@@ -1,7 +1,9 @@
 from django.conf.urls import url
 
 from data_research.views import (
-    TimeSeriesData, TimeSeriesNational, MapData, MetaData)
+    MapData, MetaData, TimeSeriesData, TimeSeriesNational
+)
+
 
 urlpatterns = [
 

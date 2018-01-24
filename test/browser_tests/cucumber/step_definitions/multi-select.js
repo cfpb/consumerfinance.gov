@@ -15,15 +15,12 @@ defineSupportCode( function( { Then, When, Before } ) {
     multiSelect = new MultiSelect();
   } );
 
-  When( /I (.*) on the multi-select search input/,
-    function( searchInputAction ) {
-
-      return browser.wait( EC.visibilityOf( multiSelect.elements.search ) )
-        .then( () => {
-          multiSelect.elements.search[searchInputAction]();
-        } );
-    }
-  );
+  /* When( /I (.*) on the multi-select search input/,
+     async function( searchInputAction ) {
+     await browser.wait( EC.visibilityOf( multiSelect.elements.search ) );
+     await multiSelect.elements.search[searchInputAction]();
+     }
+     ); */
 
   When( /I enter "(.*)" in the search input/,
     function( searchInputText ) {

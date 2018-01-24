@@ -3,6 +3,8 @@ awesome-slugify==1.6.5
 BeautifulSoup==3.2.1
 beautifulsoup4==4.5.1
 boto==2.38.0
+boto3==1.5.9
+dj-database-url==0.4.2
 django==1.8.15
 djangorestframework==3.1.3
 djangorestframework-csv==2.0.0
@@ -35,6 +37,7 @@ jsonschema==2.0.0
 lxml==4.1.0
 ntplib==0.3.3
 pbr==1.9.1
+psycopg2==2.7.3.2
 pyelasticsearch==0.6
 python-dateutil==2.1
 PyYAML==3.11

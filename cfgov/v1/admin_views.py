@@ -1,11 +1,12 @@
-from django.shortcuts import render
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
 from django.http.response import HttpResponseForbidden
+from django.shortcuts import render
 
 from wagtail.contrib.wagtailfrontendcache.utils import purge_url_from_cache
 
 from requests.exceptions import HTTPError
+
 from v1.admin_forms import AkamaiFlushForm
 from v1.models.akamai_backend import AkamaiBackend, AkamaiHistory
 

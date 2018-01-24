@@ -8,10 +8,12 @@ from cStringIO import StringIO
 from django.core.mail import EmailMessage
 from django.core.management.base import BaseCommand
 from django.utils.encoding import force_bytes
+
 from wagtail.wagtailcore.models import Page
 
 from data_research.models import ConferenceRegistration
 from v1.util.migrations import get_stream_data
+
 
 logger = logging.getLogger(__name__)
 

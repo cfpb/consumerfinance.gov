@@ -2,6 +2,7 @@ import json
 
 from django.http import HttpResponseRedirect
 from django.test import RequestFactory, TestCase
+
 from mock import Mock, patch
 
 from data_research.forms import ConferenceRegistrationForm

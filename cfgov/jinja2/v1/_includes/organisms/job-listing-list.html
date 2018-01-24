@@ -25,24 +25,24 @@
     <h3>
         {{ heading or 'Career Openings' }}
     </h3>
-    <ul class="m-list m-list__unstyled">
+    <ul class="m-list m-list__unstyled m-list__links">
         {% for job in careers %}
         <li class="m-list_item">
             <a class="m-list_link"
-               href="{{ get_protected_url(job) }}">{{ job.title }}</a>
-            <p class="a-date">
-                CLOSING
-                {% import 'macros/time.html' as time %}
-                {{ time.render(job.close_date, {'date': true}) }}
-            </p>
+               href="{{ get_protected_url(job) }}">
+                  {{ job.title }}
+                <span class="m-list_link-subtext">
+                    Closing
+                    {% import 'macros/time.html' as time %}
+                    {{ time.render(job.close_date, {'date': true}, text_format=True) }}
+               </span>
+            </a>
         </li>
         {% endfor %}
     </ul>
-    <a class="a-link a-link__jump"
+    <a class="a-btn a-btn__full-on-xs"
        href="{{ get_protected_url(more_jobs_page) }}">
-        <span class="a-link_text">
-          {{ more_jobs_text or 'View all job openings' }}
-        </span>
+       {{ more_jobs_text or 'View all job openings' }}
     </a>
     {% else %}
     <h3 class='short-desc'>There are no current openings at this time.</h3>

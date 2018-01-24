@@ -13,11 +13,17 @@ pages:
 - Back-end guidelines:
     - Wagtail and Django migrations: wagtail-migrations.md
     - Wagtail Pages vs Django views: django-to-wagtail.md
+    - Testing: testing-be.md
     - Translation: translation.md
+    - Caching: caching.md
 - Front-end guidelines:
     - Atomic structure and design: atomic-structure.md
-- Testing: testing.md
+    - Testing: testing-fe.md
 - Development tips: development-tips.md
+- APIs:
+    - Ask CFPB: ask-cfpb.md
+    - Consumer complaints: consumer-complaint-database.md
+    - HMDA data: hmda.md
 
 theme: mkDOCter
 extra:

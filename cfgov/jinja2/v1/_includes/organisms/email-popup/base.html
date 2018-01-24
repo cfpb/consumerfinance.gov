@@ -6,29 +6,29 @@
 
  Description:
 
- Sidebar popup that fades in upon scrolling on the Owning a Home sublanding
- page at /owning-a-home/.
+ Sidebar popup that fades in upon scrolling.
 
  Creates Pop-up organism:
 
  ========================================================================== #}
 
-<div class="o-email-popup">
+<div class="o-email-popup" data-popup-label="{{ popup_label }}">
     <div class="o-email-popup_header u-clearfix">
         <div class="close">
             <a>Close <span class="cf-icon cf-icon-delete-round"></span></a>
         </div>
     </div>
-    <div class="o-email-popup_body">
+    <div class="o-email-popup_body"
+         style="background-image: url('{{ static(popup_image) }}')">
         <div class="o-email-signup">
-            <h2>Buying a home?</h2>
+            <h2>{{ popup_headline }}</h2>
             <form id="{{ ('o-email-signup_' ~ range(1, 100) | random) }}"
                   class="o-form o-form__email-signup u-clearfix"
-                  action="/subscriptions/new/"
+                  action="{{ url('govdelivery') }}"
                   method="POST"
                   enctype="application/x-www-form-urlencoded"
                   novalidate>
-                <p>Sign up for email tips and info to help you through the process.</p>
+                <p>{{ popup_content }}</p>
                 <div class="m-form-field-with-button" data-qa-hook="formfield-with-button">
                     <div class="form-group">
                         <input id="form_18"
@@ -39,17 +39,15 @@
                                required>
                     </div>
                     <p>
-                        <a href="/owning-a-home/privacy-act-statement/"
+                        <a href="{{ privacy_link_url }}"
                            target="_blank"
-                           rel="noopener noreferrer">
-                            View Privacy Act statement
-                        </a>
+                           rel="noopener noreferrer">Privacy Act statement</a>
                         <br/>
                     </p>
                     <input class="a-btn a-btn__full-on-xs" type="submit" value="Sign up">
                 </div>
                 <div class="form-group">
-                    <input type="hidden" name="code" value="USCFPB_127">
+                    <input type="hidden" name="code" value="{{ mailing_list_code }}">
                 </div>
             </form>
             <div class="o-email-signup_footer">
