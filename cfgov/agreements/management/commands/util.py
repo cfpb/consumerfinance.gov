@@ -13,6 +13,7 @@ def s3_safe_key(path, prefix=''):
     key = key.replace(';', '')
     return key
 
+
 def upload_to_s3(pdf_obj, s3_key):
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')

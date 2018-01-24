@@ -16,7 +16,7 @@ sample_zip = os.path.dirname(__file__) + '/sample-agreements.zip'
 class TestDataLoad(TestCase):
     def test_import_no_s3(self):
         management.call_command('import_agreements', '--path=' + sample_zip)
-        self.assertEqual(Issuer.objects.all().count(),2)
+        self.assertEqual(Issuer.objects.all().count(), 2)
 
     @mock.patch.dict(os.environ, {'AGREEMENTS_S3_UPLOAD_ENABLED': 'yes'})
     @mock.patch('agreements.management.commands.' +
@@ -70,7 +70,6 @@ class TestManagementUtils(TestCase):
             upload=False)
 
         self.assertEqual(agreement.file_name, '1.pdf')
-
 
     @mock.patch.dict(os.environ, {'AWS_S3_ACCESS_KEY_ID': 'fake',
                                   'AWS_S3_SECRET_ACCESS_KEY': 'fake',
