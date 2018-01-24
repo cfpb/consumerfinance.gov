@@ -14,8 +14,9 @@ menu_items = [
             'type': 'featured_content',
             'value': {
                 'link': {
-                    'text': 'Get your financial well-being score',
-                    'url': '/consumer-tools/financial-well-being/',
+                    'link_text': 'Get your financial well-being score',
+                    'external_link': '/consumer-tools/' +
+                                     'financial-well-being/',
                 },
                 'image': {
                     'url': 'img/fmc-consumer-tools-540x300.png',
@@ -212,9 +213,10 @@ menu_items = [
             'type': 'featured_content',
             'value': {
                 'link': {
-                    'text': 'Explore financial well-being survey results',
-                    'url': '/data-research/research-reports/' +
-                           'financial-well-being-america/',
+                    'link_text': 'Explore financial well-being ' +
+                                 ' survey results',
+                    'external_link': '/data-research/research-reports/' +
+                                     'financial-well-being-america/',
 
                 },
                 'image': {
@@ -358,8 +360,9 @@ menu_items = [
             'type': 'featured_content',
             'value': {
                 'link': {
-                    'text': 'Help advance financial well-being',
-                    'url': '/data-research/financial-well-being-survey-data/',
+                    'link_text': 'Help advance financial well-being',
+                    'external_link': '/data-research/financial-' +
+                                     'well-being-survey-data/',
 
                 },
                 'image': {
@@ -484,8 +487,8 @@ menu_items = [
             'type': 'featured_content',
             'value': {
                 'link': {
-                    'text': 'Resources to help you comply',
-                    'url':
+                    'link_text': 'Resources to help you comply',
+                    'external_link':
                         '/policy-compliance/guidance/' +
                         'implementation-guidance/',
 
@@ -869,17 +872,26 @@ def get_page_from_path(page, path_components):
             return page
 
 
+def get_wagtail_page(link):
+    if link.get('external_link'):
+        page = get_page_from_path(
+            ROOT_PAGE,
+            filter(None, link['external_link'].split('/')))
+        return page
+
+
+def set_page_link(link):
+    page = get_wagtail_page(link)
+    if page:
+        link['page_link'] = page.pk
+        link['external_link'] = ''
+
+
 def replace_external_links(obj):
-    if ROOT_PAGE and obj.get('nav_items'):
+    if obj.get('nav_items'):
         for nav_item in obj['nav_items']:
             link = nav_item['link']
-            if link.get('external_link'):
-                page = get_page_from_path(
-                    ROOT_PAGE,
-                    filter(None, link['external_link'].split('/')))
-                if page:
-                    link['page_link'] = page.pk
-                    link['external_link'] = ''
+            set_page_link(link)
             replace_external_links(nav_item)
 
 
@@ -888,9 +900,13 @@ def migrate_menu():
     for item in menu_items:
         menu_item = MenuItem(
             link_text=item['link_text'],
-            external_link=str(item['external_link']),
             order=item['order'],
         )
+        wagtail_page = get_wagtail_page(item)
+        if wagtail_page:
+            menu_item.page_link = wagtail_page
+        else:
+            menu_item.external_link = str(item['external_link'])
         for i, group in enumerate(item['nav_groups']):
             replace_external_links(group['value'])
             column_block = getattr(menu_item, 'column_{}'.format(i + 1))
@@ -907,9 +923,12 @@ def migrate_menu():
                 True,
             )
         if item.get('featured_content'):
+            featured_content = item['featured_content']
+            if featured_content['value']['link']:
+                set_page_link(featured_content['value']['link'])
             menu_item.column_4 = StreamValue(
                 menu_item.column_4.stream_block,
-                [item['featured_content']],
+                [featured_content],
                 True,
             )
         menu_item.save()

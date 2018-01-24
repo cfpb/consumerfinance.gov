@@ -198,13 +198,6 @@ class ReusableTextChooserBlock(SnippetChooserBlock):
         template = '_includes/snippets/reusable_text.html'
 
 
-class FeaturedMenuContent(blocks.StructBlock):
-    draft = blocks.BooleanBlock(required=False, default=False)
-    link = atoms.Hyperlink(required=False)
-    body = blocks.RichTextBlock(required=False)
-    image = atoms.ImageBasic(required=False)
-
-
 class Link(blocks.StructBlock):
     link_text = blocks.CharBlock(required=True)
     page_link = blocks.PageChooserBlock(
@@ -259,10 +252,17 @@ class NavGroup(blocks.StructBlock):
         'sharing sites (like Content).')
     group_title = blocks.CharBlock(
         required=False,
-        label="Column title")
+        label='Column title')
     hide_group_title = blocks.BooleanBlock(
         required=False,
-        label="Hide column title")
+        label='Hide column title')
     nav_items = blocks.ListBlock(
         NavItem(),
         required=False)
+
+
+class FeaturedMenuContent(blocks.StructBlock):
+    draft = blocks.BooleanBlock(required=False, default=False)
+    link = Link(required=False)
+    body = blocks.RichTextBlock(required=False)
+    image = atoms.ImageBasic(required=False)

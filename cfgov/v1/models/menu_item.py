@@ -13,14 +13,15 @@ from v1 import blocks as v1_blocks
 class MenuItem(models.Model):
     link_text = models.CharField(
         max_length=255,
-        help_text="Display text for menu link")
+        help_text='Display text for menu link')
 
     external_link = models.CharField(
         null=True,
         blank=True,
         max_length=1000,
-        help_text="Enter url for page outside Wagtail.",
-        default="#")
+        help_text='Enter url for page outside Wagtail. This will only '
+                  'be used if there is no page link.',
+        default='#')
 
     page_link = models.ForeignKey(
         'wagtailcore.Page',
@@ -38,24 +39,24 @@ class MenuItem(models.Model):
 
     column_1 = StreamField([
         ('nav_group', v1_blocks.NavGroup(
-            label="Nav items group"),)
+            label='Nav items group'),)
     ], blank=True)
 
     column_2 = StreamField([
         ('nav_group', v1_blocks.NavGroup(
-            label="Nav items group"))
+            label='Nav items group'))
     ], blank=True)
 
     column_3 = StreamField([
         ('nav_group', v1_blocks.NavGroup(
-            label="Nav items group"))
+            label='Nav items group'))
     ], blank=True)
 
     column_4 = StreamField([
         ('nav_group', v1_blocks.NavGroup(
-            label="Nav items group")),
+            label='Nav items group')),
         ('featured_content', v1_blocks.FeaturedMenuContent(
-            label="Featured content module"))
+            label='Featured content module'))
     ], blank=True)
 
     nav_footer = StreamField([
@@ -96,7 +97,7 @@ class MenuItem(models.Model):
         self.nav_groups = filter(None, [self.get_active_block(col, draft)
                                         for col in cols])
         self.featured_content = self.nav_groups.pop() if len(self.nav_groups) \
-            and self.nav_groups[-1].block_type == "featured_content" else None
+            and self.nav_groups[-1].block_type == 'featured_content' else None
         self.footer = self.get_active_block(self.nav_footer, draft)
         return self
 
