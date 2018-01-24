@@ -63,7 +63,9 @@ class MenuItem(models.Model):
         ('nav_footer', blocks.StructBlock([
             ('draft', blocks.BooleanBlock(
                 required=False,
-                default=False)),
+                default=False,
+                help_text='If draft is selected, this block '
+                'will only show on sharing sites (like Content).')),
             ('content', blocks.RichTextBlock(required=False))
         ], label='Footer'))
     ], blank=True)

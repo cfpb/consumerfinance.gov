@@ -235,7 +235,7 @@ class NavItem(blocks.StructBlock):
         default='both',
         help_text='Select state for this nav link. If draft, will only '
         'show on sharing sites (like Content). If live, will only show '
-        'if not sharing site.')
+        'on non-sharing sites (like Production).')
     link = Link(required=False)
     nav_items = blocks.ListBlock(
         blocks.StructBlock([
@@ -262,7 +262,11 @@ class NavGroup(blocks.StructBlock):
 
 
 class FeaturedMenuContent(blocks.StructBlock):
-    draft = blocks.BooleanBlock(required=False, default=False)
+    draft = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        help_text='If draft is selected, this block will only show on '
+        'sharing sites (like Content).')
     link = Link(required=False)
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic(required=False)
