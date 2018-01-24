@@ -12,9 +12,12 @@ class TestFilterableListMixin(TestCase):
         self.mixin = FilterableListMixin()
         self.factory = RequestFactory()
     
-    # FilterableListMixin.per_page_limit tests
+    # FilterableListMixin.filterable_per_page_limit tests
     def test_per_page_limit_returns_integer(self):
-        assert isinstance(self.mixin.per_page_limit(), int)
+        self.assertIsInstance(
+            FilterableListMixin.filterable_per_page_limit,
+            int
+        )
 
     def test_get_form_data_returns_GET_data(self):
         request_string = '/?title=test'
@@ -31,10 +34,16 @@ class TestFilterableListMixin(TestCase):
         self.assertRaises(AttributeError, self.mixin.get_context, request=self.factory.get('/'))
 
     @mock.patch('v1.util.filterable_list.Paginator')
-    @mock.patch('v1.util.filterable_list.FilterableListMixin.per_page_limit')
-    def test_process_form_calls_is_valid_on_each_form(self, mock_per_page_limit, mock_paginator):
+    def test_process_form_calls_is_valid_on_each_form(self, mock_paginator):
         mock_request = mock.Mock()
         mock_request.GET = self.factory.get('/').GET
         mock_form = mock.Mock()
         data = self.mixin.process_form(mock_request, mock_form)
         assert mock_form.is_valid.called
+
+    def test_filterable_pages_not_in_site_returns_no_pages(self):
+        class MockPageInDefaultSite(FilterableListMixin):
+            def get_site(self):
+                return None
+
+        self.assertFalse(MockPageInDefaultSite().filterable_pages().exists())
