@@ -3,7 +3,7 @@ from django.db import models
 
 class Issuer(models.Model):
     name = models.TextField(max_length=500)
-    slug = models.CharField(max_length=500)
+    slug = models.TextField(max_length=500)
 
 
 class Agreement(models.Model):
