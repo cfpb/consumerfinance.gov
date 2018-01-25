@@ -11,6 +11,7 @@ def s3_safe_key(path, prefix=''):
     key = key.replace(' ', '_')
     key = key.replace('%', '')
     key = key.replace(';', '')
+    key = key.replace(',', '')
     return key
 
 
@@ -39,7 +40,7 @@ def get_issuer(name):
 def save_agreement(agreements_zip, raw_path, filename_encoding,
                    outfile, upload=False):
     uri_hostname = 'http://files.consumerfinance.gov'
-    s3_prefix = '/a/assets/credit-card-agreements/pdf/'
+    s3_prefix = 'a/assets/credit-card-agreements/pdf/'
 
     zipinfo = agreements_zip.getinfo(raw_path)
     path = raw_path.decode(filename_encoding)
@@ -57,7 +58,7 @@ def save_agreement(agreements_zip, raw_path, filename_encoding,
     agreement = issuer.agreement_set.create(
         file_name=filename,
         size=int(zipinfo.file_size),
-        uri=uri_hostname + s3_key,
+        uri="{}/{}".format(uri_hostname, s3_key),
         description=filename)
     agreement.save()
 

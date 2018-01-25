@@ -11,15 +11,19 @@ from agreements.models import Issuer, Agreement
 
 class Command(BaseCommand):
     """
-    imports credit card agreement data from provided csv
+    imports credit card agreement data from provided zip file.
     """
 
-    help = "Upload agreements data from new Quarterly Agreement file path"
+    help = "Upload agreements data from new Quarterly Agreement"\
+           "zip file at --path"
 
     def add_arguments(self, parser):
-        parser.add_argument('-p', '--path', action='store', required=True)
+        parser.add_argument('-p', '--path', action='store', required=True,
+                            help="path to a zip file")
         parser.add_argument('-e', '--encoding', action='store',
-                            default='windows-1252')
+                            default='windows-1252',
+                            help="character set used for filenames"
+                                 "within the zip file")
 
     def handle(self, *args, **options):
         source_encoding = options['encoding']
