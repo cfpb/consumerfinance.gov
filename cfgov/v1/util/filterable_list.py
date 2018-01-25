@@ -1,36 +1,81 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from v1.forms import FilterableListForm
-from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
+from v1.util.ref import get_category_children
 from v1.util.util import get_secondary_nav_items
 
 
 class FilterableListMixin(object):
+    """Wagtail Page mixin that allows for filtering of other pages."""
+
+    filterable_categories = []
+    """Determines page categories to be filtered; see filterable_pages."""
+
+    filterable_children_only = True
+    """Determines page tree to be filtered; see filterable_pages."""
+
+    filterable_per_page_limit = 10
+    """Number of results to return per page."""
+
+    def filterable_pages(self):
+        """Return pages that are eligible to be filtered by this page.
+
+        Always includes only live pages and pages that live in the same Wagtail
+        site as this page. If this page cannot be mapped to a Wagtail site (for
+        example, if it does not live under a site root), then it will not
+        return any filterable results.
+
+        The class property filterable_categories can be set to a list of page
+        categories from the set in v1.util.ref.categories. If set, this page
+        will only filter pages that are tagged with a tag in those categories.
+        By default this is an empty list and all page tags are eligible.
+
+        The class property filterable_children_only determines whether this
+        page filters only pages that are direct children of this page. By
+        default this is True; set this to False to allow this page to filter
+        pages that are not direct children of this page.
+        """
+        site = self.get_site()
+
+        if not site:
+            return AbstractFilterPage.objects.none()
+
+        pages = AbstractFilterPage.objects.in_site(site).live()
+
+        if self.filterable_categories:
+            category_names = get_category_children(self.filterable_categories)
+            pages = pages.filter(categories__name__in=category_names)
+
+        if self.filterable_children_only:
+            pages = pages.child_of(self)
+
+        return pages
 
     def get_context(self, request, *args, **kwargs):
-        context = {}
-        try:
-            context = super(FilterableListMixin, self).get_context(
-                request, *args, **kwargs)
-        except AttributeError as e:
-            raise e
-        context['get_secondary_nav_items'] = get_secondary_nav_items
-        form_data, has_active_filters = self.get_form_data(request.GET)
-        form = FilterableListForm(form_data, base_query=self.base_query())
-        context['has_active_filters'] = has_active_filters
-        context['filter_data'] = self.process_form(request, form)
-        return context
+        context = super(FilterableListMixin, self).get_context(
+            request, *args, **kwargs
+        )
 
-    def base_query(self):
-        return AbstractFilterPage.objects.live().filter(
-            CFGOVPage.objects.child_of_q(self))
+        form_data, has_active_filters = self.get_form_data(request.GET)
+        form = FilterableListForm(
+            form_data,
+            filterable_pages=self.filterable_pages()
+        )
+
+        context.update({
+            'filter_data': self.process_form(request, form),
+            'get_secondary_nav_items': get_secondary_nav_items,
+            'has_active_filters': has_active_filters,
+        })
+
+        return context
 
     def process_form(self, request, form):
         filter_data = {}
         if form.is_valid():
             paginator = Paginator(form.get_page_set(),
-                                  self.per_page_limit())
+                                  self.filterable_per_page_limit)
             page = request.GET.get('page')
 
             # Get the page number in the request and get the page from the
@@ -44,7 +89,7 @@ class FilterableListMixin(object):
 
             filter_data['page_set'] = pages
         else:
-            paginator = Paginator([], self.per_page_limit())
+            paginator = Paginator([], self.filterable_per_page_limit)
             filter_data['page_set'] = paginator.page(1)
         filter_data['form'] = form
         return filter_data
@@ -63,9 +108,6 @@ class FilterableListMixin(object):
             if value:
                 has_active_filters = True
         return form_data, has_active_filters
-
-    def per_page_limit(self):
-        return 10
 
     def serve(self, request, *args, **kwargs):
         """ Modify response header to set a shorter TTL in Akamai """
