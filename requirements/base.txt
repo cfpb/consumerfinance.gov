@@ -47,7 +47,6 @@ requests_toolbelt==0.6.0
 simplejson==3.8.2
 six==1.10.0
 suds==0.4
-tinys3==0.1.11
 unicodecsv==0.14.1
 unipath>=1.1,<=2.0
 vobject==0.9.1

@@ -1,61 +1,49 @@
 import os
-import urllib
-from datetime import datetime
+from zipfile import ZipFile
+
+import fnmatch
 
 from django.core.management.base import BaseCommand
 
-from .util import clear_tables, update_agreement, update_issuer, upload_to_s3
+from agreements.management.commands import util
+from agreements.models import Issuer, Agreement
 
 
 class Command(BaseCommand):
     """
-    imports credit card agreement data from provided csv
+    imports credit card agreement data from provided zip file.
     """
 
-    help = "Upload agreements data from new Quarterly Agreement file path"
+    help = "Upload agreements data from new Quarterly Agreement"\
+           "zip file at --path"
 
     def add_arguments(self, parser):
-        parser.add_argument('-p', '--path', action='store', required=True)
+        parser.add_argument('-p', '--path', action='store', required=True,
+                            help="path to a zip file")
+        parser.add_argument('-e', '--encoding', action='store',
+                            default='windows-1252',
+                            help="character set used for filenames"
+                                 "within the zip file")
 
     def handle(self, *args, **options):
-        verbosity = options['verbosity']
+        source_encoding = options['encoding']
+        # maybe this should be replaced with a CLI options:
+        do_upload = os.environ.get('AGREEMENTS_S3_UPLOAD_ENABLED', False)
 
-        now = datetime.now()
-        suffix = '%s_%s_' % (now.month, now.year)
+        Agreement.objects.all().delete()
+        Issuer.objects.all().delete()
 
-        uri_hostname = 'http://files.consumerfinance.gov'
-        s3_key = '/a/assets/credit-card-agreements/pdf'
+        agreements_zip = ZipFile(options['path'])
 
-        clear_tables()
+        all_pdfs = fnmatch.filter(agreements_zip.namelist(), '*.pdf')
 
-        for current_dir, subdirList, fileList in os.walk(options['path'],
-                                                         topdown=True):
-            dir_name = os.path.basename(current_dir)
+        if options['verbosity'] >= 1:
+            output_file = self.stdout
+        else:
+            output_file = open(os.devnull, 'a')
 
-            if ('Credit Card Agreements' in dir_name or
-                    'credit_agreements' in dir_name):
-                continue
-            issuer = update_issuer(dir_name)
-
-            # removes hidden files
-            files = [f for f in fileList if not f[0] == '.']
-            for fname in files:
-                # Make the filename S3-safe by urlencoding it
-                unique_fname = suffix + urllib.quote(fname, ' -')
-
-                update_agreement(
-                    issuer=issuer, file_name=fname, file_path=os.path.join(
-                        current_dir, fname), s3_location=(
-                        "%s%s/%s" %
-                        (uri_hostname, s3_key, unique_fname)))
-
-                if os.environ.get('AGREEMENTS_S3_UPLOAD_ENABLED', False):
-                    file_path = os.path.join(current_dir, fname)
-                    s3_dest_path = "%s/%s" % (s3_key, unique_fname)
-                    upload_to_s3(file_path, s3_dest_path)
-
-                    if verbosity >= 1:
-                        self.stdout.write('{} uploaded to {}'.format(
-                            file_path,
-                            s3_dest_path
-                        ))
+        for encoded_path in all_pdfs:
+            util.save_agreement(agreements_zip, encoded_path,
+                                filename_encoding=source_encoding,
+                                upload=do_upload,
+                                outfile=output_file)
