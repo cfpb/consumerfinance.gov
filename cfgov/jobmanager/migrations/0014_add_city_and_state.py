@@ -17,15 +17,18 @@ class Migration(migrations.Migration):
             name='City',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=255, verbose_name='City name')),
-                ('location', modelcluster.fields.ParentalKey(related_name='related_cities', to='jobmanager.JobLocation')),
+                ('name', models.CharField(max_length=255, verbose_name=b'City name')),
+                ('location', modelcluster.fields.ParentalKey(related_name='cities', to='jobmanager.JobLocation')),
             ],
+            options={
+                'ordering': ('state_id', 'name'),
+            },
         ),
         migrations.CreateModel(
             name='State',
             fields=[
                 ('name', models.CharField(max_length=255, verbose_name=b'State name')),
-                ('abbreviation', models.CharField(max_length=2, serialize=False, verbose_name=b'Abbreviation', primary_key=True)),
+                ('abbreviation', models.CharField(max_length=2, serialize=False, primary_key=True)),
                 ('region', modelcluster.fields.ParentalKey(related_name='states', to='jobmanager.Region')),
             ],
             options={
