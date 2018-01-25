@@ -25,7 +25,7 @@
             </dd>
             {% if location_type == 'region' %}
                 <dt>Region:</dt>
-                <dd>{{ page.location }}</dd>
+                <dd>{{ page.location }}<span class="u-hidden"> ({{states|join(', ')}})</span></dd>
                 {% if cities %}
                     <dt class="u-hidden">Location:</dt>
                     <dd class="u-hidden">
