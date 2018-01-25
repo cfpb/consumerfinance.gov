@@ -1,7 +1,9 @@
 import itertools
 from unittest import TestCase
 
-from v1.util.ref import categories, get_appropriate_categories
+from v1.util.ref import (
+    categories, get_appropriate_categories, get_category_children
+)
 
 
 class TestCategories(TestCase):
@@ -34,3 +36,21 @@ class TestGetAppropriateCategories(TestCase):
     def test_should_return_all_matches(self):
         result = get_appropriate_categories(['Op-Ed', 'Testimony', 'Speech', 'Press Release'], 'newsroom')
         self.assertEqual(len(result), 4)
+
+
+class TestGetCategoryChildren(TestCase):
+    def test_get_children_of_single_category(self):
+        self.assertEqual(
+            get_category_children(['Amicus Brief']),
+            ['fed-circuit-court', 'fed-district-court', 'state-court', 'us-supreme-court']
+        )
+
+    def test_get_children_of_multiple_categories(self):
+        self.assertEqual(
+            get_category_children(['Final Rule', 'Implementation Resource']),
+            ['compliance-aid', 'final-rule', 'interim-final-rule', 'official-guidance']
+        )
+
+    def test_get_children_with_invalid_category_raises_keyerror(self):
+        with self.assertRaises(KeyError):
+            get_category_children(['This is not a valid category'])
