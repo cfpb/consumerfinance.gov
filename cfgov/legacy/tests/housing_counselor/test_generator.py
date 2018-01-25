@@ -105,9 +105,9 @@ class TestGetCounselorJsonFiles(TestCase):
         self.make_empty_file('something.json')
 
         self.assertEqual(
-            list(get_counselor_json_files(self.tempdir)),
-            [
+            sorted(list(get_counselor_json_files(self.tempdir))),
+            sorted([
                 ('20001', os.path.join(self.tempdir, '20001.json')),
                 ('20002', os.path.join(self.tempdir, '20002.json')),
-            ]
+            ])
         )
