@@ -119,9 +119,11 @@ class FilterableListMixin(object):
         return form_data, has_active_filters
 
     def serve(self, request, *args, **kwargs):
-        """ Modify response header to set a shorter TTL in Akamai """
+        """ Modify response headers """
         response = super(FilterableListMixin, self).serve(request)
+        # Set a shorter TTL in Akamai
         response['Edge-Control'] = 'cache-maxage=10m'
+        # Set noindex for crawlers if needed
         if self.do_not_index:
             response['X-Robots-Tag'] = 'noindex'
         return response
