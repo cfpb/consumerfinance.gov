@@ -25,7 +25,10 @@ class JobListingPage(CFGOVPage):
                                  null=True)
     location = models.ForeignKey(JobLocation, related_name='job_listings',
                                  on_delete=models.PROTECT)
-    allow_remote = models.BooleanField(default=False)
+    allow_remote = models.BooleanField(
+        default=False,
+        help_text='Adds remote option to jobs with office locations.'
+    )
 
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([

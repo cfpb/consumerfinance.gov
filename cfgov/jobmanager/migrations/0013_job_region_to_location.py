@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='joblistingpage',
             name='allow_remote',
-            field=models.BooleanField(default=False),
+            field=models.BooleanField(default=False, help_text=b'Adds remote option to jobs with office locations.'),
         ),
         migrations.CreateModel(
             name='Office',

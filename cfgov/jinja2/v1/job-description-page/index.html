@@ -25,16 +25,16 @@
             </dd>
             {% if location_type == 'region' %}
                 <dt>Region:</dt>
-                <dd>{{ page.location }}<span class="u-hidden"> ({{states|join(', ')}})</span></dd>
+                <dd>{{ page.location }}<span class="u-hidden"> ({{ states|join(', ') }})</span></dd>
                 {% if cities %}
                     <dt class="u-hidden">Location:</dt>
                     <dd class="u-hidden">
-                    {{ cities|join('; ') }}
+                    {{- cities|join('; ') -}}
                     </dd>
                 {% endif  %}
             {% else %}
                 <dt>Location:</dt>
-                <dd>{{ cities[0] if cities|length else page.location }} {{ ' or remote' if page.allow_remote else '' }}</dd>
+                <dd>{{- cities[0] if cities|length else page.location -}} {{- ' or remote' if page.allow_remote else '' -}}</dd>
             {% endif %}
             
             <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
