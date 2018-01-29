@@ -5,7 +5,6 @@ const AlphaTransition = require( '../modules/transition/AlphaTransition' );
 const BaseTransition = require( '../modules/transition/BaseTransition' );
 const ERROR_MESSAGES = require( '../config/error-messages-config' );
 const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
-const Notification = require( '../molecules/Notification' );
 const EventObserver = require( '../modules/util/EventObserver' );
 
 /**
@@ -16,19 +15,20 @@ const EventObserver = require( '../modules/util/EventObserver' );
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the organism.
+ * @param {object} _notification Instance of Notification associated
+ *   with this form.
  * @param {string} baseClass class of organism
  * @param {Object} opts optional params, including
  *   validator: validation function, and
  *   replaceForm: Boolean, determines if form is replaced with message
  * @returns {FormSubmit} An instance.
  */
-function FormSubmit( element, baseClass, opts ) {
+function FormSubmit( element, _notification, baseClass, opts ) {
   opts = opts || {};
   let UNDEFINED;
   const _baseElement = atomicHelpers.checkDom( element, baseClass );
   const _formElement = _baseElement.querySelector( 'form' );
   const _notificationElement = _baseElement.querySelector( '.m-notification' );
-  const _notification = new Notification( _baseElement );
   let _cachedFields;
   const eventObserver = new EventObserver();
   const self = this;
@@ -150,7 +150,10 @@ function FormSubmit( element, baseClass, opts ) {
    */
   function _replaceFormWithNotification( message ) {
     const transition = new AlphaTransition( _baseElement ).init();
-    scroll.scrollIntoView( _formElement, { offset: 100, callback: fadeOutForm } );
+    scroll.scrollIntoView(
+      _formElement,
+      { offset: 100, callback: fadeOutForm }
+    );
 
     function fadeOutForm() {
       transition.addEventListener( BaseTransition.END_EVENT, fadeInMessage );
@@ -159,7 +162,8 @@ function FormSubmit( element, baseClass, opts ) {
 
     function fadeInMessage() {
       if ( opts.minReplacementHeight ) {
-        _baseElement.style.marginBottom = Math.min( _formElement.offsetHeight, 100 ) + 'px';
+        _baseElement.style.marginBottom =
+          Math.min( _formElement.offsetHeight, 100 ) + 'px';
       }
       _formElement.style.display = 'none';
       _notification.setTypeAndContent( _notification.SUCCESS, message );
@@ -179,7 +183,11 @@ function FormSubmit( element, baseClass, opts ) {
     const fields = ( _formElement || {} ).elements;
     for ( let f = 0; f < fields.length; f++ ) {
       const field = fields[f];
-      if ( field.name && !field.disabled && nonInputTypes.indexOf( field.type ) === -1 ) {
+      if (
+        field.name
+        && !field.disabled
+        && nonInputTypes.indexOf( field.type ) === -1
+      ) {
         if ( field.type === 'radio' || field.type === 'checkbox' ) {
           cachedFields[field.name] = cachedFields[field.name] || [];
           cachedFields[field.name].push( field );

@@ -10,6 +10,9 @@ frontend() {
 
 # Install backend dependencies
 backend() {
+    npm install -g gulp-cli
+    npm install cf-icons
+    gulp copy:icons
     pip install -r requirements/travis.txt
 }
 

@@ -12,6 +12,7 @@ from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.cache import caches
 from django.core.urlresolvers import reverse
+from django.template import loader
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.utils.module_loading import import_string
 from django.utils.timezone import template_localtime
@@ -141,23 +142,16 @@ EXTERNAL_LINK_PATTERN = re.compile(settings.EXTERNAL_LINK_PATTERN)
 NONCFPB_LINK_PATTERN = re.compile(settings.NONCFPB_LINK_PATTERN)
 FILES_LINK_PATTERN = re.compile(settings.FILES_LINK_PATTERN)
 DOWNLOAD_LINK_PATTERN = re.compile(settings.DOWNLOAD_LINK_PATTERN)
-EXTERNAL_A_CSS = os.environ.get('EXTERNAL_A_CSS',
-                                'a-link '
-                                'a-link__icon '
-                                'cf-icon cf-icon__after '
-                                'cf-icon-external-link')
-DOWNLOAD_A_CSS = os.environ.get('DOWNLOAD_A_CSS',
-                                'a-link '
-                                'a-link__icon '
-                                'cf-icon cf-icon__after '
-                                'cf-icon-download')
-EXTERNAL_SPAN_CSS = os.environ.get('EXTERNAL_SPAN_CSS', 'a-link_text')
+LINK_ICON_CLASSES = os.environ.get('LINK_ICON_CLASSES',
+                                   'a-link a-link__icon')
+LINK_ICON_TEXT_CLASSES = os.environ.get('LINK_ICON_TEXT_CLASSES',
+                                        'a-link_text')
 
 
 def add_link_markup(tags):
 
     for tag in tags:
-        added_icon = False
+        icon = False
         if not tag.attrs.get('class', None):
             tag.attrs.update({'class': []})
         if tag['href'].startswith('/external-site/?'):
@@ -169,23 +163,30 @@ def add_link_markup(tags):
 
         elif NONCFPB_LINK_PATTERN.match(tag['href']):
             # Sets the icon to indicate you're leaving consumerfinance.gov
-            tag.attrs['class'].append(EXTERNAL_A_CSS)
-            if EXTERNAL_LINK_PATTERN.match(tag['href']):
+            tag.attrs['class'].append(LINK_ICON_CLASSES)
 
+            if EXTERNAL_LINK_PATTERN.match(tag['href']):
                 tag['href'] = signed_redirect(tag['href'])
 
-            added_icon = True
+            icon = 'external-link'
         elif DOWNLOAD_LINK_PATTERN.search(tag['href']):
             # Sets the icon to indicate you're downloading a file
-            tag.attrs['class'].append(DOWNLOAD_A_CSS)
-            added_icon = True
-        if added_icon:
+            tag.attrs['class'].append(LINK_ICON_CLASSES)
+            icon = 'download'
+        if icon:
             # Wraps the link text in a span that provides the underline
             contents = tag.contents
             span = BeautifulSoup('', 'html.parser').new_tag('span')
-            span['class'] = EXTERNAL_SPAN_CSS
+            span['class'] = LINK_ICON_TEXT_CLASSES
             span.contents = contents
             tag.contents = [span, NavigableString(' ')]
+            # Appends the SVG icon
+            tag.contents.append(
+                BeautifulSoup(
+                    loader.get_template('icons/' + icon + '.svg').render(),
+                    'html.parser'
+                )
+            )
         elif not FILES_LINK_PATTERN.match(tag['href']):
             fix_link(tag)
 

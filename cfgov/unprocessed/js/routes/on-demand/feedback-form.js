@@ -4,6 +4,7 @@
 
 const COMMENT_ERRORS = require( '../../config/error-messages-config' ).COMMENT;
 const OPTION_ERRORS = require( '../../config/error-messages-config' ).OPTION;
+const Notification = require( '../../molecules/Notification');
 const FormSubmit = require( '../../organisms/FormSubmit.js' );
 const BASE_CLASS = 'o-feedback';
 let requiredKey = 'REQUIRED';
@@ -30,6 +31,9 @@ function validateFeedback( fields ) {
 }
 
 if ( element ) {
+  const _notification = new Notification( element );
+  _notification.init();
+
   const replaceForm = element.getAttribute( 'data-replace' );
   const languageField = element.querySelector( 'input[name="language"]' );
   const language = languageField && languageField.value === 'es' ? 'es' : 'en';
@@ -46,6 +50,7 @@ if ( element ) {
 
   const formSubmit = new FormSubmit(
     element,
+    _notification,
     BASE_CLASS,
     opts
   );

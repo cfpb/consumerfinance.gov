@@ -25,7 +25,7 @@ const COMMON_MODULE_CONFIG = {
         or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/. */
       exclude: /node_modules\/(?:cf.+|atomic-component)/
     },
-    use: {
+    use: [{
       loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ 'babel-preset-env', {
@@ -35,7 +35,7 @@ const COMMON_MODULE_CONFIG = {
           debug: false
         } ] ]
       }
-    }
+    }]
   } ]
 };
 

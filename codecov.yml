@@ -27,3 +27,6 @@ flags:
   frontend:
     paths:
       - cfgov/**/*.js
+
+ignore:
+  - "node_modules/**/*"

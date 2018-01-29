@@ -236,7 +236,7 @@
                 m-notification__visible
                 m-notification__warning
                 u-mb15">
-        <span class="m-notification_icon cf-icon"></span>
+        {% include 'icons/warning-round.svg' %}
         <div class="m-notification_content">
             <div class="h4 m-notification_message">
                 We never collect or store answers to the financial well-being questionnaire.
@@ -265,24 +265,20 @@
         <li class="m-list_item u-js-only">
             <a class="m-list_link
                       a-link
-                      a-link__icon
-                      cf-icon
-                      cf-icon-print
-                      cf-icon__before"
+                      a-link__icon"
                href="javascript:window.print()">
+                {% include 'icons/print.svg' %}
                 <span class="a-link_text">Print</span>
             </a>
         </li>
         <li class="m-list_item">
             <a class="m-list_link
                       a-link
-                      a-link__icon
-                      cf-icon
-                      cf-icon-download
-                      cf-icon__before"
+                      a-link__icon"
                href="../../save-as-pdf-instructions/"
                target="_blank"
                rel="noopener noreferrer">
+                {% include 'icons/download.svg' %}
                 <span class="a-link_text">Save as PDF</span>
             </a>
         </li>
@@ -339,11 +335,11 @@
                     <span class="o-expandable_header-right o-expandable_link">
                         <span class="o-expandable_cue o-expandable_cue-open">
                             Show
-                            <span class="cf-icon cf-icon-plus-round"></span>
+                            {% include 'icons/plus-round.svg' %}
                         </span>
                         <span class="o-expandable_cue o-expandable_cue-close">
                             Hide
-                            <span class="cf-icon cf-icon-minus-round"></span>
+                            {% include 'icons/minus-round.svg' %}
                         </span>
                     </span>
                 </div>
@@ -387,21 +383,17 @@
                         <b>Track where your money goes.</b>
                         Fill out the
                         <a class="a-link
-                                  a-link__icon
-                                  cf-icon
-                                  cf-icon-download
-                                  cf-icon__after"
+                                  a-link__icon"
                            href="http://files.consumerfinance.gov/f/documents/cfpb_well-being_bill-calendar.pdf">
                             <span class="a-link_text">bill calendar</span>
+                            {% include 'icons/download.svg' %}
                         </a>
                         and
                         <a class="a-link
-                                  a-link__icon
-                                  cf-icon
-                                  cf-icon-download
-                                  cf-icon__after"
+                                  a-link__icon"
                            href="http://files.consumerfinance.gov/f/documents/cfpb_well-being_spending-tracker.pdf">
                             <span class="a-link_text">spending tracker</span>
+                            {% include 'icons/download.svg' %}
                         </a>
                         to see and manage your everyday expenses.
                     </li>
@@ -409,12 +401,10 @@
                         <b>Get a grip on debt.</b>
                         Stay on top of what you owe with our
                         <a class="a-link
-                                  a-link__icon
-                                  cf-icon
-                                  cf-icon-download
-                                  cf-icon__after"
+                                  a-link__icon"
                            href="http://files.consumerfinance.gov/f/documents/cfpb_well-being_debt-worksheet.pdf">
                             <span class="a-link_text">debt log</span>
+                            {% include 'icons/download.svg' %}
                         </a>
                         and find templates to help you communicate with
                         <a href="/consumer-tools/debt-collection/">debt collectors</a>.
@@ -441,21 +431,17 @@
                         <b>Create an action plan to meet your goals.</b>
                         Use our
                         <a class="a-link
-                                  a-link__icon
-                                  cf-icon
-                                  cf-icon-download
-                                  cf-icon__after"
+                                  a-link__icon"
                            href="http://files.consumerfinance.gov/f/documents/201705_cfpb_My-New-Money-Goal.pdf">
                             <span class="a-link_text">worksheet</span>
+                            {% include 'icons/download.svg' %}
                         </a>
                         or
                         <a class="a-link
-                                  a-link__icon
-                                  cf-icon
-                                  cf-icon-download
-                                  cf-icon__after"
+                                  a-link__icon"
                            href="http://files.consumerfinance.gov/f/documents/cfpb_well-being_monthly-budget.pdf">
                             <span class="a-link_text">budgeting tool</span>
+                            {% include 'icons/download.svg' %}
                         </a>.
                     </li>
                     <li>
@@ -522,7 +508,7 @@
                     m-notification__visible
                     m-notification__warning
                     u-mb15">
-            <span class="m-notification_icon cf-icon"></span>
+            {% include 'icons/warning-round.svg' %}
             <div class="m-notification_content">
                 <div class="h4 m-notification_message">
                     We never collect or store answers to the financial well-being questionnaire.

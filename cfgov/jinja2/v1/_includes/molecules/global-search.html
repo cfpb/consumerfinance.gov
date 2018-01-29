@@ -14,8 +14,13 @@
      data-js-hook="behavior_flyout-menu">
     <button class="m-global-search_trigger"
             data-js-hook="behavior_flyout-menu_trigger">
-        <span class="m-global-search_trigger-label">
-            <span class="u-visually-hidden">Search</span>
+        <span class="m-global-search_trigger-open-label">
+            {% include 'icons/search.svg' %}
+            <span class="u-hide-on-mobile">Search</span>
+        </span>
+        <span class="m-global-search_trigger-close-label">
+            {% include 'icons/delete.svg' %}
+            <span class="u-hide-on-mobile">Close</span>
         </span>
     </button>
     <div class="m-global-search_content
@@ -41,11 +46,8 @@
                        <label for="query"
                               class="input-contains-label_before
                                      input-contains-label_before__search">
-                       </label>
-                       <label for="query"
-                              class="input-contains-label_after
-                                     input-contains-label_after__clear
-                                     u-hidden">
+                            {%include 'icons/search.svg' %}
+                            <span class="u-visually-hidden">Search</span>
                        </label>
                        <input id="query"
                               name="query"
@@ -54,7 +56,13 @@
                               class="a-text-input"
                               value=""
                               placeholder="Search the CFPB">
-                   </div>
+                       <label for="query"
+                              class="input-contains-label_after
+                                     input-contains-label_after__clear
+                                     u-hidden">
+                            {% include 'icons/delete.svg' %}
+                            <span class="u-visually-hidden">Close</span>
+                       </label>                   </div>
                </div>
                <div class="o-form__input-w-btn_btn-container">
                    <button class="a-btn">Search</button>

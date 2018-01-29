@@ -16,45 +16,43 @@
 
    ========================================================================== #}
 
-{% macro render(category, additional_classes, is_round) %}
+{% macro render(category, is_round) %}
     {% set icons = {
-        'at the cfpb': 'cf-icon-bullhorn',
-        'auto loans': 'cf-icon-buying-car',
-        'bank accounts and services' : 'cf-icon-bank-account',
-        'blog': 'cf-icon-speech-bubble',
-        'credit cards': 'cf-icon-credit-card',
-        'credit reporting': 'cf-icon-credit-report',
-        'credit reports and scores': 'cf-icon-loan',
-        'data, research & reports': 'cf-icon-chart',
-        'debt collection': 'cf-icon-debt-collection',
-        'events': 'cf-icon-date',
-        'families and money': 'cf-icon-money',
-        'featured event': 'cf-icon-date',
-        'featured blog': 'cf-icon-speech-bubble',
-        'featured video': 'cf-icon-play-round',
-        'featured tool': 'cf-icon-settings',
-        'featured news': 'cf-icon-newspaper',
-        'featured': 'cf-icon-favorite',
-        'info for consumers': 'cf-icon-information',
-        'mortgages': 'cf-icon-mortgage',
-        'money basics': 'cf-icon-money',
-        'money transfers': 'cf-icon-money-transfer',
-        'newsroom': 'cf-icon-newspaper',
-        'op-ed': 'cf-icon-contract',
-        'payday loans': 'cf-icon-payday-loan',
-        'policy & compliance': 'cf-icon-bank-account',
-        'prepaid cards': 'cf-icon-prepaid-cards',
-        'press release': 'cf-icon-bullhorn',
-        'report': 'cf-icon-chart',
-        'speech': 'cf-icon-microphone',
-        'student loans': 'cf-icon-paying-college',
-        'testimony': 'cf-icon-double-quote',
+        'at the cfpb': 'bullhorn',
+        'auto loans': 'buying-car',
+        'bank accounts and services' : 'bank-account',
+        'blog': 'speech-bubble',
+        'credit cards': 'credit-card',
+        'credit reporting': 'credit-report',
+        'credit reports and scores': 'loan',
+        'data, research, and reports': 'chart',
+        'debt collection': 'debt-collection',
+        'events': 'date',
+        'families and money': 'money',
+        'featured event': 'date',
+        'featured blog': 'speech-bubble',
+        'featured video': 'play-round',
+        'featured tool': 'settings',
+        'featured news': 'newspaper',
+        'featured': 'favorite',
+        'info for consumers': 'information',
+        'mortgages': 'mortgage',
+        'money basics': 'money',
+        'money transfers': 'money-transfer',
+        'newsroom': 'newspaper',
+        'op-ed': 'contract',
+        'payday loans': 'payday-loan',
+        'policy & compliance': 'bank-account',
+        'prepaid cards': 'prepaid-cards',
+        'press release': 'bullhorn',
+        'report': 'chart',
+        'speech': 'microphone',
+        'student loans': 'college',
+        'testimony': 'left-quote',
       }
     %}
-    {% set icon = icons[category | lower] %}
-    {% if icon %}
-    <span class="cf-icon {{ icon + ( '-round' if is_round else '' ) }} 
-                 cf-icon__before
-                 {{ additional_classes or '' }}"></span>
+    {% set icon_name = icons[category | lower] %}
+    {% if icon_name %}
+        {{ svg_icon( icon_name ~ ( '-round' if is_round else '' ) ) | safe }}
     {% endif %}
 {% endmacro %}
