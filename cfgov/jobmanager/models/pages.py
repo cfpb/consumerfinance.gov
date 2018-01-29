@@ -27,7 +27,8 @@ class JobListingPage(CFGOVPage):
                                  on_delete=models.PROTECT)
     allow_remote = models.BooleanField(
         default=False,
-        help_text='Adds remote option to jobs with office locations.'
+        help_text='Adds remote option to jobs with office locations.',
+        verbose_name="Location can also be remote"
     )
 
     content_panels = CFGOVPage.content_panels + [
@@ -45,7 +46,8 @@ class JobListingPage(CFGOVPage):
         ], heading='Details'),
         MultiFieldPanel([
             FieldPanel('location', classname='full'),
-            FieldPanel('allow_remote', classname='full'),
+            FieldPanel('allow_remote', classname='full', ),
+            
         ], heading='Location'),
         FieldPanel('description', classname='full'),
         InlinePanel(
