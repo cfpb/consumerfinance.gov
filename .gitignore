@@ -79,7 +79,6 @@ vendor/
 #################
 docs/scripts
 docs/*/slick.html
-docs/*/pdfreactor-fonts.html
 
 # Django #
 ##########
