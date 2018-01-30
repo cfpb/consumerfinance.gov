@@ -98,7 +98,7 @@ class FilterableListMixin(object):
         return filter_data
 
     def set_do_not_index(self, field, value):
-        """ Do not index on params except topics, or multiple params """
+        """Do not index queries unless they consist of a single topic field."""
         if field != 'topics' or len(value) > 1:
             self.do_not_index = True
 
@@ -119,7 +119,7 @@ class FilterableListMixin(object):
         return form_data, has_active_filters
 
     def serve(self, request, *args, **kwargs):
-        """ Modify response headers """
+        """Modify response headers."""
         response = super(FilterableListMixin, self).serve(request)
         # Set a shorter TTL in Akamai
         response['Edge-Control'] = 'cache-maxage=10m'
