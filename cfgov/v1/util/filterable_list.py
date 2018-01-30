@@ -18,6 +18,9 @@ class FilterableListMixin(object):
     filterable_per_page_limit = 10
     """Number of results to return per page."""
 
+    do_not_index = False
+    """Determines whether we tell crawlers to index the page or not."""
+
     def filterable_pages(self):
         """Return pages that are eligible to be filtered by this page.
 
@@ -94,6 +97,11 @@ class FilterableListMixin(object):
         filter_data['form'] = form
         return filter_data
 
+    def set_do_not_index(self, field, value):
+        """Do not index queries unless they consist of a single topic field."""
+        if field != 'topics' or len(value) > 1:
+            self.do_not_index = True
+
     # Set up the form's data either with values from the GET request
     # or with defaults based on whether it's a dropdown/list or a text field
     def get_form_data(self, request_dict):
@@ -104,13 +112,18 @@ class FilterableListMixin(object):
                 value = request_dict.getlist(field, [])
             else:
                 value = request_dict.get(field, '')
-            form_data[field] = value
             if value:
+                form_data[field] = value
                 has_active_filters = True
+                self.set_do_not_index(field, value)
         return form_data, has_active_filters
 
     def serve(self, request, *args, **kwargs):
-        """ Modify response header to set a shorter TTL in Akamai """
+        """Modify response headers."""
         response = super(FilterableListMixin, self).serve(request)
+        # Set a shorter TTL in Akamai
         response['Edge-Control'] = 'cache-maxage=10m'
+        # Set noindex for crawlers if needed
+        if self.do_not_index:
+            response['X-Robots-Tag'] = 'noindex'
         return response
