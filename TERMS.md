@@ -57,6 +57,5 @@ author or the affirmer.
   is licensed under MIT License.
 - [Normalize](http://necolas.github.io/normalize.css/) by Nicolas Gallagher,
   co-created with Jonathan Neal, is licensed under the MIT License.
-- [PDFreactor v6.3](http://www.pdfreactor.com/) by realObjects.
 - [Slick](http://kenwheeler.github.io/slick/) by Ken Wheeler is licensed under
   the MIT License.
