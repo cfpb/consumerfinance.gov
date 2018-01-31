@@ -68,28 +68,32 @@
     {% set post_url = get_protected_url(post) %}
     <article class="o-post-preview">
         <div class="m-meta-header">
-            <span class="a-date m-meta-header_right">
-                {{ date_desc }}
-                {% if 'EventPage' in post.specific_class.__name__ %}
-                    {{ time.render(post.specific.start_dt, {'date':true}) }}
-                {% else %}
-                    {{ time.render(post.date_published, {'date':true}) }}
+            <div class="m-meta-header_right">
+                <span class="a-date">
+                    {{ date_desc }}
+                    {% if 'EventPage' in post.specific_class.__name__ %}
+                        {{ time.render(post.specific.start_dt, {'date':true}) }}
+                    {% else %}
+                        {{ time.render(post.date_published, {'date':true}) }}
+                    {% endif %}
+                </span>
+            </div>
+            <div class="m-meta-header_left">
+                {# Newsroom Blog category logic #}
+                {% if show_categories %}
+                    {% import 'macros/category-slug.html' as category_slug %}
+                    {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
+                        {{ category_slug.render('blog', page_url, '', false) }}
+                    {% else %}
+                        {% for cat in post.categories.all() %}
+                            {% if loop.index > 1 %}
+                                |
+                            {% endif %}
+                            {{ category_slug.render(cat.name, page_url, '', false) }}
+                        {% endfor %}
+                    {% endif %}
                 {% endif %}
-            </span>
-            {# Newsroom Blog category logic #}
-            {% if show_categories %}
-                {% import 'macros/category-slug.html' as category_slug %}
-                {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
-                    {{ category_slug.render('blog', page_url, '', false) }}
-                {% else %}
-                    {% for cat in post.categories.all() %}
-                        {% if loop.index > 1 %}
-                            |
-                        {% endif %}
-                        {{ category_slug.render(cat.name, page_url, '', false) }}
-                    {% endfor %}
-                {% endif %}
-            {% endif %}
+            </div>
         </div>
          {% if 'EventPage' in post.specific_class.__name__ %}
             {% set event = post.specific %}
