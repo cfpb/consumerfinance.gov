@@ -102,12 +102,6 @@ OPTIONAL_APPS = [
     {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
 ]
 
-if DEPLOY_ENVIRONMENT == 'build':
-    OPTIONAL_APPS += [
-        {'import': 'eregs_core', 'apps': ('eregs_core',)},
-    ]
-
-
 POSTGRES_APPS = []
 
 MIDDLEWARE_CLASSES = (
@@ -623,11 +617,6 @@ FLAGS = {
     # Email popups.
     'EMAIL_POPUP_OAH': {'boolean': True},
     'EMAIL_POPUP_DEBT': {'after date': '2018-02-01T00:00'},
-
-    # The next version of eRegulations
-    'EREGS20': {
-        'boolean': DEPLOY_ENVIRONMENT == 'build',
-    },
 
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
