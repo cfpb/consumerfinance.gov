@@ -629,9 +629,6 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
-
-    # Servicemembers pages in Wagtail
-    'WAGTAIL_SERVICEMEMBERS': {},
 }
 
 
