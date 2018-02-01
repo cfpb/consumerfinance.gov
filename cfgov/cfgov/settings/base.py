@@ -616,7 +616,7 @@ FLAGS = {
 
     # Email popups.
     'EMAIL_POPUP_OAH': {'boolean': True},
-    'EMAIL_POPUP_DEBT': {'after date': '2018-02-01T00:00'},
+    'EMAIL_POPUP_DEBT': {'boolean': True},
 
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
