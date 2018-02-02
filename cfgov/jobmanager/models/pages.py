@@ -60,6 +60,19 @@ class JobListingPage(CFGOVPage):
 
     objects = PageManager()
 
+    def get_context(self, request, *args, **kwargs):
+        context = super(JobListingPage, self).get_context(request)
+        try:
+            context['about_us'] = ReusableText.objects.get(
+                title='About us (For consumers)')
+        except:
+            pass
+        return context
+
+    @property
+    def page_js(self):
+        return super(JobListingPage, self).page_js + ['read-more.js']
+
     @property
     def ordered_grades(self):
         """Return a list of job grades in numerical order.

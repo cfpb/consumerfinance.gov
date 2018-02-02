@@ -7,14 +7,7 @@
 {%- endblock %}
 
 {% block content_main %}
-{% set regional_cities = {
-    'Midwest region': 'Chicago, IL; Detroit, MI; Minneapolis, MN; St. Louis, MO; Cincinnati, OH; Cleveland, OH; Columbus, OH; Indianapolis, IN; Milwaukee, WI',
-    'Northeast region': 'New York City, NY; Philadelphia, PA; Boston, MA; Pittsburgh, PA; Providence, RI; Hartford, CT; Buffalo, NY; Rochester, NY; Bridgeport, CT; Worcester, MA',
-    'Southeast region': 'Houston, TX; San Antonio, TX; Dallas, TX; Jacksonville, FL; Austin, TX; Memphis, TN; Baltimore, MD; Charlotte, NC; Atlanta, GA; Virginia Beach, VA; Raleigh, NC',
-    'West region': 'Los Angeles, CA; San Francisco, CA; Phoenix, AZ; San Bernardino, CA; Seattle, WA; San Diego, CA; Denver, CO; Portland, OR; Sacramento, CA; Las Vegas, NV'
-} %}
 
-{% import 'molecules/social-media.html' as social_media with context %}
     <section class="block
                     block__flush-top
                     block__sub">
@@ -22,7 +15,7 @@
         <dl>
             <dt>Division/Office: </dt>
             <dd>{{ page.division }}</dd>
-            <dt>Expiration Date:</dt>
+            <dt>Closing Date:</dt>
             <dd>
                 {% if page.close_date %}
                     {{ time.render(page.close_date, {'date': true}, text_format=True) }}
@@ -30,14 +23,6 @@
             </dd>
             <dt>Region:</dt>
             <dd>{{ page.region }}</dd>
-            
-            {% if page.region and page.region.name in ["Midwest region", "Northeast region", "Southeast region", "West region" ]%}
-            <dt class="u-hidden">Location:</dt>
-            <dd class="u-hidden">
-                {{ regional_cities[page.region.name] }}
-            </dd>
-            {% endif %}
-            
             <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
             <dd>
                 {% if page.grades.exists() %}
@@ -55,76 +40,112 @@
                     <span class="a-link_text">See information on grades and base pay ranges</span>
                 </a>
             </dd>
+            {% if usajobs_links %}
+                <dt>
+                    Who may apply:
+                </dt>
+                <dd>
+                     {% for usajobs_link in usajobs_links %}
+                        {% set applicant_type = usajobs_link.applicant_type %}
+                        {{ applicant_type.display_title if applicant_type.display_title else applicant_type }}{{',' if not loop.last else ''}}
+                        {% endfor %}
+                </dd>
+            {% endif %}
         </dl>
     </section>
 
     <section class="block
                     block__padded-top
-                    block__border-top">
-        <h2>Job Description</h2>
-        {{ parse_links( page.description ) | safe }}
+                    block__border-top
+                    block__flush-bottom">
+        <div data-qa-hook="expandable"
+             data-read-more="true"
+             class="o-expandable
+                    o-expandable__read-more">
+            <div class="o-expandable_content" id="job-description-expandable">
+                <div class="o-expandable_content-animated">  
+                    <h4>Summary</h4>
+                    {{ parse_links( page.description ) | safe }}
+                    {% if page.responsibilities %}
+                        <div class="block block__sub">
+                            <h4>Responsibilities</h4>
+                            {{ page.responsibilities | safe }}
+                        </div>
+                    {% endif %}
+        
+                    {% if page.travel_required %}
+                        <div class="block block__sub">
+                            <h4>Travel required</h4>
+                            {{ page.travel_required | safe }}
+                        </div>
+                    {% endif %}
+
+                    {% if page.additional_section_title and page.additional_section_content %}
+                        <div class="block block__sub">
+                            <h4>{{ page.additional_section_title }}</h4>
+                            {{ page.additional_section_content | safe }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <a class="o-expandable_target o-expandable_link a-link" title="Expand content">
+                <span class="a-link_text">
+                    <span class="o-expandable_cue o-expandable_cue-open">
+                        Read full description
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                   </span>
+                    <span class="o-expandable_cue o-expandable_cue-close">
+                        Hide full description
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                   </span>
+                </span>
+            </a>
+        </div>
+
     </section>
-
-    <section class="block">
-        <em>
-            The Consumer Financial Protection Bureau (CFPB) is an equal
-            opportunity employer and seeks to create and maintain a vibrant
-            and diverse workforce. Women, minorities, veterans, and
-            people with disabilities are encouraged to apply.
-        </em>
-    </section>
-
-
+    
     <section class="block
                     block__padded-top
                     block__border-top">
-        <h2 id="interested">Interested in applying?</h2>
+        <h2 id="interested">What to know if you apply</h2>
         <div class="block block__sub">
-            <h3>Before you apply</h3>
-            <ul class="m-list m-list__links">
-                <li class="m-list_item">
-                    <a class="a-link a-link__jump"
-                       href="/about-us/careers/working-at-cfpb/">
-                        Learn about working @ CFPB
-                    </a>
-                </li>
-                <li class="m-list_item">
-                    <a class="a-link a-link__jump"
-                       href="/about-us/careers/application-process/">
-                        Learn about the application process
-                    </a>
-                </li>
-                <li class="m-list_item">
+            <div class="content-l">
+                <div class="content-l_col content-l_col-1-2">
+                    <div class='embed-container'>
+                        <iframe src='https://www.youtube.com/embed/XCbZnTIeTOY' frameborder='0' allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="content-l_col content-l_col-1-2">
+                    <p>Put simply, federal hiring rules prioritize fairness. Our video and resources explain how the application process works, important parts to pay attention to, and what to expect after you apply.</p>
                     <a class="a-link 
-                              a-link__jump
-                              a-link__icon 
-                              cf-icon 
-                              cf-icon__after 
-                              cf-icon-download"
-                        href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/20170615_cfpb_Apply_checklist.pdf">
-                        Use our checklist to complete all the application steps
+                              a-link__jump"
+                        href="/about-us/careers/application-process/">
+                        <span class="a-link_text">Learn about the job application process</span>
                     </a>
-                </li>
-            </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    <section class="block
+                    block__padded-top
+                    block__border-top">
+        <h2 id="interested">Apply for this position</h2>
+        <div class="block block__sub">
+            <div class="content-l">
+                {% for usajobs_link in usajobs_links %}
+                    <div class="content-l_col 
+                                {{ 'content-l_col-1-2' if usajobs_links|length > 1 else 'content-l_col-1'}}">
+                        {% set applicant_type = usajobs_link.applicant_type %}
+                        <h4>{{ applicant_type.display_title if applicant_type.display_title else applicant_type }}</h4>
+                        <p>{{ applicant_type.description }}</p>
+                        <p><a class="a-btn" href="{{ usajobs_link.url }}">Apply on USAJobs</a></p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 
-    {% set usajobs_links = page.usajobs_application_links.order_by(
-      'applicant_type'
-    ) %}
-    {% for usajobs_link in usajobs_links %}
-    <div class="block
-                block__bg
-                block__border">
-        <h4>{{ usajobs_link.applicant_type.applicant_type }}</h4>
-        <p>{{ usajobs_link.applicant_type.description }}</p>
-        <p><a class="a-btn" href="{{ usajobs_link.url }}">Apply now</a></p>
-        <p>
-            You are about to leave consumerfinance.gov. To submit the
-            application, you must go to USAJobs.gov.
-        </p>
-    </div>
-    {% endfor %}
     {% set email_links = page.email_application_links.order_by('label') %}
     {% for email_link in email_links %}
     <div class="block
@@ -143,62 +164,74 @@
 {%- endblock %}
 
 {% block content_sidebar scoped  %}
- <div class="block block__flush-top">
-    {% import 'molecules/social-media.html' as social_media with context %}
-    {{ social_media.render( {
-        'title':            page.title,
-        'twitter_hashtags': page.twitter_hash_tag or 'usajobs'
-    } ) }}
+{% if about_us %}
+    <div class="block block__flush-top">
+        {{ parse_links( about_us.text ) | safe }}
+    </div>
+{% endif %}
+<div class="block block__flush-top">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
+            Working at the CFPB
+        </h2>
+    </header>
+
+    <ul class="m-list m-list__links u-mb0">
+        <li class="m-list_item">
+            <a href="/about-us/careers/working-at-cfpb" class="m-list_link">
+                Working at CFPB
+            </a>
+        </li>
+        <li class="m-list_item">
+            <a href="/office-civil-rights/" class="m-list_link">
+                Office of Civil Rights
+            </a>
+        </li>
+    </ul>
+    <p class="u-mt15">
+        <em>
+           The Consumer Financial Protection Bureau (CFPB) is an equal
+           opportunity employer and seeks to create and maintain a vibrant
+           and diverse workforce. Women, minorities, veterans, and
+           people with disabilities are encouraged to apply.
+        </em>
+    </p>   
 </div>
 <div class="block block__flush-top">
     <header class="m-slug-header">
         <h2 class="a-heading">
-            Before you apply
+            Learn more about CFPB's work
         </h2>
     </header>
-    <p>
-        Consider exploring our information about working at the CFPB
-        and our application process.
-    </p>
     <ul class="m-list m-list__links u-mb0">
         <li class="m-list_item">
-            <a href="/about-us/careers/working-at-cfpb" class="m-list_link">
-                Working at the CFPB
+            <a href="/about-us/blog" class="m-list_link">
+                CFPB Blog
             </a>
         </li>
         <li class="m-list_item">
-            <a href="/about-us/careers/application-process" class="m-list_link">
-                Learn how the application process works
+            <a href="/about-us/newsroom" class="m-list_link">
+                Newsroom
             </a>
         </li>
     </ul>
 </div>
-
 <div class="block block__flush-top">
-    {%- import 'related-links.html' as related_links -%}
-    {{- related_links.render([
-      [ '/about-us/blog/',
-        'CFPB Blog' ],
-      [ '/about-us/newsroom/',
-        'Newsroom' ],
-      [ '/office-civil-rights/',
-        'Office of Civil Rights' ]
-    ]) -}}
+    <header class="m-slug-header">
+        <h2 class="a-heading">
+            Follow us on LinkedIn
+        </h2>
+    </header>
+    <p data-qa-hook="info-section-desc">
+        The CFPB is one of the most searched for agencies
+        in the federal government.
+        Connect with us to stay updated on the work
+        we do and new opportunities to be a part of it.
+    </p>
+    <a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
+       class="a-link a-link__jump a-link__external-link">
+        Follow us on LinkedIn
+    </a>
 </div>
 
-<header class="m-slug-header">
-    <h2 class="a-heading">
-        Follow us on LinkedIn
-    </h2>
-</header>
-<p data-qa-hook="info-section-desc">
-    The CFPB is one of the most searched for agencies
-    in the federal government.
-    Connect with us to stay updated on the work
-    we do and new opportunities to be a part of it.
-</p>
-<a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
-   class="a-link a-link__jump a-link__external-link">
-    Follow us on LinkedIn
-</a>
 {% endblock %}
