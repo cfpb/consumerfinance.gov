@@ -24,6 +24,7 @@
 <!--[if IE 9]>         <html lang="en" class="no-js lt-ie10"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 
+
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 
 {#
@@ -94,7 +95,7 @@
                       {%- endif -%}
                   {%- endblock -%}
               ">
-        <meta property="og:site_name" content="Consumer Financial Protection Bureau">
+        <meta property="og:site_name" content="{% block og_site_name %}Consumer Financial Protection Bureau{% endblock %}">
         {# Facebook Open Graph properties #}
         <meta property="fb:app_id" content="210516218981921">
         {% block og_article_author %}{% endblock %}
