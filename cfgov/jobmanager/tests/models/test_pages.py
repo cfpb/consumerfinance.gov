@@ -119,7 +119,7 @@ class JobListingPageTestCase(TestCase):
         page = self.prepare_job_listing_page(location=region)
         test_context = page.get_context(HttpRequest())
         self.assertEqual(len(test_context['states']), 1)
-        self.assertEqual(test_context['states'][0], state)
+        self.assertEqual(test_context['states'][0], state.abbreviation)
         self.assertEqual(len(test_context['cities']), 2)
         self.assertIn(test_context['cities'][0].name, cities)
 

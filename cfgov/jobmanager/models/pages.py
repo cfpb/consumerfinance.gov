@@ -46,8 +46,7 @@ class JobListingPage(CFGOVPage):
         ], heading='Details'),
         MultiFieldPanel([
             FieldPanel('location', classname='full'),
-            FieldPanel('allow_remote', classname='full', ),
-            
+            FieldPanel('allow_remote', classname='full'),
         ], heading='Location'),
         FieldPanel('description', classname='full'),
         InlinePanel(
@@ -72,7 +71,8 @@ class JobListingPage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(JobListingPage, self).get_context(request)
         if hasattr(self.location, 'region'):
-            context['states'] = self.location.region.states.all()
+            context['states'] = [state.abbreviation for state in
+                                 self.location.region.states.all()]
             context['location_type'] = 'region'
         else:
             context['states'] = []

@@ -14,7 +14,7 @@
                     block__flush-top
                     block__sub">
         <h1>{{ page.title }}</h1>
-        <dl>
+        <dl class="job-details">
             <dt>Division/Office: </dt>
             <dd>{{ page.division }}</dd>
             <dt>Expiration Date:</dt>
@@ -23,20 +23,19 @@
                     {{ time.render(page.close_date, {'date': true}, text_format=True) }}
                 {% endif %}
             </dd>
+
             {% if location_type == 'region' %}
-                <dt>Region:</dt>
-                <dd>{{ page.location }}<span class="u-hidden"> ({{ states|join(', ') }})</span></dd>
-                {% if cities %}
-                    <dt class="u-hidden">Location:</dt>
-                    <dd class="u-hidden">
-                    {{- cities|join('; ') -}}
-                    </dd>
-                {% endif  %}
+                <dt>Location:</dt>
+                <dd>Home duty location in one of the following {{ page.location }} states: {{ states|join(', ') -}}.
+                    {%- if cities -%}
+                        <span class="u-hidden">Cities in this region include {{ cities|join('; ') -}}.</span>
+                    {%- endif  -%}
+                </dd>
             {% else %}
                 <dt>Location:</dt>
                 <dd>{{- cities[0] if cities|length else page.location -}} {{- ' or remote' if page.allow_remote else '' -}}</dd>
             {% endif %}
-            
+
             <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
             <dd>
                 {% if page.grades.exists() %}
