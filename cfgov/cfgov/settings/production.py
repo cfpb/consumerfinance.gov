@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 from os.path import exists
@@ -8,13 +9,13 @@ from .database_mixin import *
 
 default_loggers = []
 
-# Is there a syslog device available? 
+# Is there a syslog device available?
 # selects first of these locations that exist, or None
 syslog_device = next((l for l in ['/dev/log', '/var/run/syslog'] if exists(l)), None)
 
 if syslog_device:
     default_loggers.append('syslog')
-                           
+
 # if not running in mod_wsgi, add console logger
 if not (sys.argv and sys.argv[0] == 'mod_wsgi'):
     default_loggers.append('console')
@@ -114,3 +115,10 @@ CACHES = {
         'TIMEOUT': None,
     }
 }
+
+# ALLOWED_HOSTS should be defined as a JSON list in the ALLOWED_HOSTS
+# environment variable.
+try:
+    ALLOWED_HOSTS = json.loads(os.getenv('ALLOWED_HOSTS'))
+except (TypeError, ValueError):
+    ALLOWED_HOSTS = ['.consumerfinance.gov']
