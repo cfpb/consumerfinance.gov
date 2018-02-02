@@ -5,5 +5,6 @@ Disallow: /es/obtener-respuestas/*.imprimir.html
 Disallow: /external-site
 Disallow: /*?success
 Disallow: *form-id=*
+Disallow: /?page=
 
 sitemap: http://www.consumerfinance.gov/sitemap.xml

@@ -3,9 +3,7 @@ from django.test import RequestFactory, TestCase
 import mock
 
 from v1.forms import FilterableListForm
-
-from ..util.filterable_list import FilterableListMixin
-
+from v1.util.filterable_list import FilterableListMixin
 
 class TestFilterableListMixin(TestCase):
     def setUp(self):
@@ -47,3 +45,26 @@ class TestFilterableListMixin(TestCase):
                 return None
 
         self.assertFalse(MockPageInDefaultSite().filterable_pages().exists())
+
+    def test_do_not_index_is_false_by_default(self):
+        assert self.mixin.do_not_index == False
+
+    def test_do_not_index_is_false_if_no_query(self):
+        request_string = ''
+        self.mixin.get_form_data(self.factory.get(request_string).GET)
+        assert self.mixin.do_not_index == False
+
+    def test_do_not_index_is_true_if_query(self):
+        request_string = '/?categories=test1&topic=test2'
+        self.mixin.get_form_data(self.factory.get(request_string).GET)
+        assert self.mixin.do_not_index == True
+
+    def test_do_not_index_is_false_if_query_is_single_topic(self):
+        request_string = '/?topic=test1'
+        self.mixin.get_form_data(self.factory.get(request_string).GET)
+        assert self.mixin.do_not_index == False
+
+    def test_do_not_index_is_true_if_query_is_multiple_topics(self):
+        request_string = '/?topic=test1&topic=test2'
+        self.mixin.get_form_data(self.factory.get(request_string).GET)
+        assert self.mixin.do_not_index == False
