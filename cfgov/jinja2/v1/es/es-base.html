@@ -3,6 +3,11 @@
 {% block og_type %}government{% endblock %}
 {% block og_site_name %}Oficina para la Protección Financiera del Consumidor{% endblock %}
 
+{% block css %}
+<!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles-ie.min.css') }}"> <![endif]-->
+<!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles.min.css') }}"> <!--<![endif]-->
+{% endblock %}
+
 {% block body %}
 <body class="page {% block body_class %} page-parent {% endblock %}
              page-template
