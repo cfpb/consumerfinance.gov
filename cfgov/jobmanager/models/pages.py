@@ -30,7 +30,6 @@ class JobListingPage(CFGOVPage):
         help_text='Adds remote option to jobs with office locations.',
         verbose_name="Location can also be remote"
     )
-
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('division', classname='full'),
