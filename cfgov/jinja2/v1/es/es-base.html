@@ -1,12 +1,17 @@
 {% extends 'base-base.html' %}
 
-{% block og_type %}government{% endblock %}
-{% block og_site_name %}Oficina para la Protección Financiera del Consumidor{% endblock %}
+    {% block og_type %}government{% endblock %}
+    {% block og_site_name %}Oficina para la Protección Financiera del Consumidor{% endblock %}
 
-{% block css %}
-<!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles-ie.min.css') }}"> <![endif]-->
-<!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles.min.css') }}"> <!--<![endif]-->
-{% endblock %}
+    {% block css %}
+    <!-- Custom modernizr for touch detection and svg support only, see the .js file for the build link -->
+    <script src="{{ static('nemo/_/js/modernizr.custom.js') }}"></script>
+    <!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles-ie.min.css') }}"> <![endif]-->
+    <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles.min.css') }}"> <!--<![endif]-->
+
+    <!--[if lt IE 9]> <script src="{{ static('nemo/_/js/html5shim.js') }}"></script> <![endif]-->
+    <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
+    {% endblock %}
 
 {% block body %}
 <body class="page {% block body_class %} page-parent {% endblock %}
