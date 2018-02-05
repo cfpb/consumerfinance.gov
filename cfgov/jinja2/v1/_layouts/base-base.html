@@ -171,6 +171,7 @@
     {# Customized Modernizr build that includes html5printshiv.
        Built via gulp-modernizer in `scripts.js` task.
        TODO: Determine if modernizr is actually needed! #}
+    {% block modernizr %}
     <script>
         {% include '/js/modernizr.min.js' %}
     </script>
@@ -182,7 +183,6 @@
       The following ECMAScript 5 feature checks come from
       https://github.com/Modernizr/Modernizr/tree/master/feature-detects/es5
     #}
-    {% block modernizr %}
     <script>
         var modernizr = window.Modernizr;
         if ( !( typeof modernizr !== 'undefined' &&
