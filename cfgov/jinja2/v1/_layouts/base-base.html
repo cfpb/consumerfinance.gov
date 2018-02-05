@@ -182,6 +182,7 @@
       The following ECMAScript 5 feature checks come from
       https://github.com/Modernizr/Modernizr/tree/master/feature-detects/es5
     #}
+    {% block modernizr %}
     <script>
         var modernizr = window.Modernizr;
         if ( !( typeof modernizr !== 'undefined' &&
@@ -197,6 +198,7 @@
           docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
         }
     </script>
+    {% endblock %}
 
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
 </head>
