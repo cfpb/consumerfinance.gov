@@ -1,0 +1,200 @@
+{% set data = {
+
+"img": url_for("static", filename="img/closing-disclosure-H25B-1.png"),
+
+"terms":
+    [
+        {
+            "term": "Check the spelling of your name",
+            "definition": "<p>Ask the lender to correct any inaccurate contact information. Even minor misspellings can cause big problems later.</p>",
+            "id": "check-name_1",
+            "category": "checklist",
+            "left": "44.68%",
+            "top": "11.95%",
+            "width": "19.86%",
+            "height": "4.50%"
+        },
+        {
+            "term": "Check that loan term, purpose, product, and loan type match your most recent Loan Estimate",
+            "definition": "<p>It's very important these items match what you were expecting. If they don't, call your lender immediately and ask why they have changed.</p>",
+            "id": "check-term_1",
+            "category": "checklist",
+            "left": "69.93%",
+            "top": "10.20%",
+            "width": "24.11%",
+            "height": "10.31%"
+        },
+        {
+            "term": "Check that the loan amount matches your most recent Loan Estimate",
+            "definition": "<p>If it has increased, ask your lender why. A possible reason could be that closing costs have been rolled into your loan. This reduces your upfront costs at closing, but adds to your overall costs because of the added interest you will pay.</p>",
+            "id": "loan-amount",
+            "category": "checklist",
+            "left": "5.96%",
+            "top": "28.07%",
+            "width": "88.23%",
+            "height": "3.07%"
+        },
+        {
+            "term": "Check your interest rate",
+            "definition": "<p>If your interest rate isn't what you were expecting, ask your lender why. If you locked your rate, your lender is only allowed to change it under limited circumstances.</p><p><a href=\"/askcfpb/143/whats-a-lock-in-or-a-rate-lock.html\" target=\"_blank\">Learn more about rate locks</a></p>",
+            "id": "interest-rate",
+            "category": "checklist",
+            "left": "5.96%",
+            "top": "31.25%",
+            "width": "88.23%",
+            "height": "2.85%"
+        },
+        {
+            "term": "Monthly Principal & Interest",
+            "definition": "<p>Principal (the amount you will borrow) and interest (the lender's charge for lending you money) usually make up the main components of your monthly mortgage payment.</p><p>Your total monthly payment will typically be more than this amount due to taxes and insurance. See the Estimated Total Monthly Payment.</p><p><a href=\"/askcfpb/1941/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment.html\" target=\"_blank\">Learn about the difference between the principal & interest payment and the total monthly payment</a></p>",
+            "id": "monthly-principle-interest",
+            "category": "definitions",
+            "left": "5.96%",
+            "top": "34.10%",
+            "width": "23.55%",
+            "height": "6.03%"
+        },
+        {
+            "term": "Does your loan have a prepayment penalty?",
+            "definition": "<p>This feature is risky. If your loan includes a prepayment penalty, learn more and ask your lender about your other options.</p><p><a href=\"/askcfpb/1957/what-is-a-prepayment-penalty.html\" target=\"_blank\">Learn more about prepayment penalties</a></p>",
+            "id": "prepayment-penalty",
+            "category": "checklist",
+            "left": "5.96%",
+            "top": "40.13%",
+            "width": "88.23%",
+            "height": "6.25%"
+        },
+        {
+            "term": "Does your loan have a balloon payment?",
+            "definition": "<p>This feature is risky. If your loan includes a balloon payment, learn more and ask your lender about your other options.</p> <p><a href=\"/askcfpb/104/what-is-a-balloon-loan.html\" target=\"_blank\">Learn more about balloon payments</a></p>",
+            "id": "balloon-payment",
+            "category": "checklist",
+            "left": "5.96%",
+            "top": "46.38%",
+            "width": "88.23%",
+            "height": "2.74%"
+        },
+        {
+            "term": "Prepayment Penalty",
+            "definition": "<p>A feature on some mortgages. A prepayment penalty means that the lender can charge you a fee if you pay off your mortgage early.</p><p><a href=\"/askcfpb/1957/what-is-a-prepayment-penalty.html\" target=\"_blank\">Learn more</a></p>",
+            "id": "prepayment-penalty",
+            "category": "definitions",
+            "left": "5.96%",
+            "top": "40.13%",
+            "width": "23.55%",
+            "height": "6.25%"
+        },
+        {
+            "term": "Balloon Payment",
+            "definition": "<p>A feature on some mortgages. A balloon payment means that the final mortgage payment is a lump sum much larger than the regular monthly payments, often tens of thousands of dollars.</p><p><a href=\"/askcfpb/104/what-is-a-balloon-loan.html\" target=\"_blank\">Learn more</a></p>",
+            "id": "balloon-payment",
+            "category": "definitions",
+            "left": "5.96%",
+            "top": "46.38%",
+            "width": "23.55%",
+            "height": "2.74%"
+        },
+        {
+            "term": "Principal & Interest",
+            "definition": "<p>Principal is the amount you will borrow.<br>Interest is the lender's charge for lending you money.</p><p><a href=\"/askcfpb/1943/how-does-paying-down-a-mortgage-work.html\" target=\"_blank\">Learn more</a></p>",
+            "id": "principle-interest",
+            "category": "definitions",
+            "left": "5.96%",
+            "top": "56.14%",
+            "width": "23.55%",
+            "height": "4.39%"
+        },
+        {
+            "term": "Mortgage Insurance",
+            "definition": "<p>Mortgage insurance is typically required if your down payment is less than 20 percent of the price of the home.</p><p><a href=\"/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html\" target=\"_blank\">Learn more</a></p>",
+            "id": "mortgage-insurance",
+            "category": "definitions",
+            "left": "5.96%",
+            "top": "60.53%",
+            "width": "23.55%",
+            "height": "2.52%"
+        },
+        {
+            "term": "Estimated Escrow",
+            "term": "Estimated Escrow",
+            "definition": "<p>Additional charges related to homeownership, such as property taxes and homeowners' insurance, that are bundled in your monthly payment.</p><p><a href=\"/askcfpb/140/what-is-an-escrow-or-impound-account.html\" target=\"_blank\">Learn more</a></p>",
+            "id": "estimated-escrow",
+            "category": "definitions",
+            "left": "5.96%",
+            "top": "63.05%",
+            "width": "23.55%",
+            "height": "3.62%"
+        },
+        {
+            "term": "Estimated Total Monthly Payment",
+            "definition": "<p>The total payment you will make each month, including <a href=\"/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html\" target=\"_blank\">mortgage insurance</a> and <a href=\"/askcfpb/140/what-is-an-escrow-or-impound-account.html\" target=\"_blank\">escrow</a>, if applicable.</p><p><a href=\"/askcfpb/1941/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment.html\" target=\"_blank\">Learn more</a></p>",
+            "id": "estimated-total-monthly",
+            "category": "definitions",
+            "left": "5.96%",
+            "top": "66.78%",
+            "width": "23.55%",
+            "height": "3.62%"
+        },
+        {
+            "term": "Check that your Estimated Total Monthly Payment matches your most recent Loan Estimate",
+            "definition": "<p>Make sure you can comfortably afford to pay the Estimated Total Monthly Payment every month. If this number doesn't reflect what you were expecting, ask your lender why it has changed.</p>",
+            "id": "estimated-total-monthly",
+            "category": "checklist",
+            "left": "5.96%",
+            "top": "66.78%",
+            "width": "88.23%",
+            "height": "3.62%"
+        },
+        {
+            "term": "Check to see if you have items in Estimated Taxes, Insurance & Assessments that are not in escrow",
+            "definition": "<p>If so, have you budgeted to pay for these costs separately?</p><p><a href=\"/askcfpb/140/what-is-an-escrow-or-impound-account.html\" target=\"_blank\">Learn more about what escrow is and how it works</a></p>",
+            "id": "estimated-taxes",
+            "category": "checklist",
+            "left": "5.96%",
+            "top": "70.39%",
+            "width": "88.23%",
+            "height": "10.75%"
+        },
+        {
+            "term": "Closing Costs",
+            "definition": "<p>Upfront costs you will be charged to get your loan and transfer ownership of the property. Also sometimes referred to as “settlement costs.”</p>",
+            "id": "closing-costs",
+            "category": "definitions",
+            "left": "5.96%",
+            "top": "85.31%",
+            "width": "23.55%",
+            "height": "4.50%"
+        },
+        {
+            "term": "Cash to Close",
+            "definition": "<p>Total amount you will have to pay at closing, in addition to any money you have already paid. </p>",
+            "id": "cash-close",
+            "category": "definitions",
+            "left": "5.96%",
+            "top": "89.80%",
+            "width": "23.55%",
+            "height": "4.61%"
+        },
+        {
+            "term": "Check that your Closing Costs match your most recent Loan Estimate",
+            "definition": "<p>If there are significant changes in your closing costs, ask your lender to explain why.</p>",
+            "id": "closing-costs",
+            "category": "checklist",
+            "left": "5.96%",
+            "top": "85.31%",
+            "width": "88.23%",
+            "height": "4.50%"
+        },
+        {
+            "term": "Check that your Cash to Close matches your most recent Loan Estimate",
+            "definition": "<p>If not, ask your lender to explain why.</p>",
+            "id": "cash-close",
+            "category": "checklist",
+            "left": "5.96%",
+            "top": "89.80%",
+            "width": "88.23%",
+            "height": "4.61%"
+        }
+    ]
+
+} %}
