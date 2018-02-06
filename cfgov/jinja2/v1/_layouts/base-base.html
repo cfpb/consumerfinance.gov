@@ -66,40 +66,41 @@
           ">
     <link rel="canonical" href="{{ request.url | lower }}">
 
-    {# Open Graph properties #}
-        {# Required Open Graph properties #}
-        <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
-        <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-        <meta property="og:url" content="{{ request.url }}">
+{# Open Graph properties #}
+    {# Required Open Graph properties #}
+    <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{{ request.url }}">
 {% block og_image %}
-    {% if page and page.meta_image %}
-        {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}
-        <meta property="og:image" content="{{ meta_image_url }}">
-        <meta property="twitter:image" content="{{ meta_image_url }}">
-        {% if page.meta_image.should_display_summary_large_image %}
-        <meta name="twitter:card" content="summary_large_image">
-        {% endif %}
-    {% else %}
-        <meta property="og:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
-        <meta property="twitter:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_twitter.png') }}">
+{% if page and page.meta_image %}
+    {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}
+    <meta property="og:image" content="{{ meta_image_url }}">
+    <meta property="twitter:image" content="{{ meta_image_url }}">
+    {% if page.meta_image.should_display_summary_large_image %}
+    <meta name="twitter:card" content="summary_large_image">
     {% endif %}
-{% endblock %}
-        {# Optional Open Graph properties #}
-        <meta property="og:description"
-              content="
-                  {%- block og_desc -%}
-                      {%- if page -%}
-                          {{- page.search_description or page.seo_title or page.title -}}
-                      {%- endif -%}
-                  {%- endblock -%}
-              ">
-        <meta property="og:site_name" content="{% block og_site_name %}Consumer Financial Protection Bureau{% endblock %}">
-        {# Facebook Open Graph properties #}
-        <meta property="fb:app_id" content="210516218981921">
-        {% block og_article_author %}{% endblock %}
-    {# End of Open Graph properties #}
+{% else %}
+    <meta property="og:image"
+          content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
+    <meta property="twitter:image"
+          content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_twitter.png') }}">
+{% endif %}
+{% endblock og_image %}
+    {# Optional Open Graph properties #}
+    <meta property="og:description"
+          content="
+              {%- block og_desc -%}
+                  {%- if page -%}
+                      {{- page.search_description or page.seo_title or page.title -}}
+                  {%- endif -%}
+              {%- endblock -%}
+          ">
+    <meta property="og:site_name" content="{% block og_site_name %}Consumer Financial Protection Bureau{% endblock %}">
+    {# Facebook Open Graph properties #}
+    <meta property="fb:app_id" content="210516218981921">
+    {% block og_page_id %}{% endblock %}
+    {% block og_article_author %}{% endblock %}
+{# End of Open Graph properties #}
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ static('assets/favicon.ico') }}">
 
