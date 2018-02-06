@@ -1,29 +1,12 @@
-{% extends 'base-base.html' %}
+{% extends '/es/es-base.html' %}
 
 {% block og_title %}Obtener Respuestas - Oficina para la Protección Financiera del Consumidor{% endblock %}
-{% block og_type %}government{% endblock %}
-{% block og_site_name %}Oficina para la Protección Financiera del Consumidor{% endblock %}
-
-{%- block og_page_id -%}
-    <meta property="fb:page_id" content="141576752553390">
-{%- endblock -%}
-
-
-    {% block modernizr %}
-    <!-- Custom modernizr for touch detection and svg support only, see the .js file for the build link -->
-    <script src="{{ static('nemo/_/js/modernizr.custom.js') }}"></script>
-    {% endblock %}
-
 
     {% block css %}
-    <!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles-ie.min.css') }}"> <![endif]-->
-    <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles.min.css') }}"> <!--<![endif]-->
+    {{ super() }}
     <!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('knowledgebase/es-ask-styles-ie.min.css') }}"> <![endif]-->
     <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('knowledgebase/es-ask-styles.min.css') }}"> <!--<![endif]-->
-    <!--[if lt IE 9]> <script src="{{ static('nemo/_/js/html5shim.js') }}"></script> <![endif]-->
-    <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
     {% endblock %}
-
 
 {% block body %}
 <div id="fb-root"></div>
