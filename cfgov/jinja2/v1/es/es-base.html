@@ -18,10 +18,7 @@
     {% endblock %}
 
 {% block body %}
-<body class="page {% block body_class %} page-parent {% endblock %}
-             page-template
-             page-template-page-babel
-             page-template-page-babel-php">
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -160,13 +157,15 @@
 
 </footer><!-- .wrapper-footer -->
 
+{% endblock body %}
+
+
+{% block javascript %}
+
 <script src="{{ static('nemo/_/js/scripts.min.js') }}"></script>
 
-{% block page_js %}
 <!--[if gt IE 8]><!-->
 <script src="{{ static('js/spanish.js') }}"></script>
 <!--<![endif]-->
-{% endblock %}
 
-</body>
-{% endblock %}
+{% endblock javascript %}
