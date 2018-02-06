@@ -22,7 +22,6 @@
 
 
 {% block body %}
-<body>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -156,15 +155,14 @@
 
 </footer><!-- .wrapper-footer -->
 
+{% endblock body %}
+
+{% block javascript %}
+
 <script src="{{ static('nemo/_/js/scripts.min.js') }}"></script>
 
-{% block page_js %}
 <!--[if gt IE 8]><!-->
 <script src="{{ static('js/spanish.js') }}"></script>
 <!--<![endif]-->
-{% endblock %}
 
-
-
-</body>
-{% endblock %}
+{% endblock javascript %}

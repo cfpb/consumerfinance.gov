@@ -25,7 +25,6 @@
 <!--[if IE 9]>         <html lang="en" class="no-js lt-ie10"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 
-
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 
 {#
@@ -204,8 +203,38 @@
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
 </head>
 
-{% block body %}
 <body>
+
+{% block analytics %}
+
+{#
+    =========
+    Analytics
+    =========
+#}
+{# Google Tag Manager (noscript) #}
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+{# End Google Tag Manager (noscript) #}
+
+{% endblock analytics %}
+
+
+{% block body %}
+
+{% endblock body %}
+
+{#
+    ============
+    BODY SCRIPTS
+    ============
+    The number of scripts here must be kept to a minimum.
+#}
+
+
+{% block javascript %}
+
+{% endblock javascript %}
+
 </body>
-{% endblock %}
 </html>
