@@ -7,7 +7,6 @@
     <meta property="fb:page_id" content="141576752553390">
 {% endblock %}
 
-    
     {% block modernizr %}
     <!-- Custom modernizr for touch detection and svg support only, see the .js file for the build link -->
     <script src="{{ static('nemo/_/js/modernizr.custom.js') }}"></script>
@@ -87,6 +86,8 @@
  BEGIN CONTENT
  ============= -->
 
+ {% block ask_search %}{% endblock %}
+ 
  {% block babel_content %}{% endblock %}
 
  <div class="ac-search full-bleed full-bleed-padded s-show-on-small">
