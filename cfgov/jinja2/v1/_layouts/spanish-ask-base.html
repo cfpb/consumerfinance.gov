@@ -1,9 +1,13 @@
 {% extends 'base-base.html' %}
 
-{% block page_meta %}
-<meta property="og:title" content="Obtener Respuestas - Oficina para la Protección Financiera del Consumidor">
-<meta property="og:url" content="{{ request.url }}">
-{% endblock %}
+{% block og_title %}Obtener Respuestas - Oficina para la Protección Financiera del Consumidor{% endblock %}
+{% block og_type %}government{% endblock %}
+{% block og_site_name %}Oficina para la Protección Financiera del Consumidor{% endblock %}
+
+{%- block og_page_id -%}
+    <meta property="fb:page_id" content="141576752553390">
+{%- endblock -%}
+
 
     {% block modernizr %}
     <!-- Custom modernizr for touch detection and svg support only, see the .js file for the build link -->
