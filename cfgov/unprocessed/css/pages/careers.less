@@ -21,16 +21,12 @@
     } );
 }
 
-.job-description {
-    .js .o-expandable__read-more[data-js-hook]:not(.o-expandable__expanded) {
-        .respond-to-max( @bp-xs-max, {
-            .o-expandable_content {
-                // shows approx. 10 lines of content
-                height:  unit( @base-line-height-px * 10 / @base-font-size-px, em );
-                overflow: hidden;
-            }
-        });
-    }
+.vacancy-announcement_details dt {
+    margin-top: unit( 12px / @base-font-size-px, em );
+    margin-bottom: 0;
+}
+
+.vacancy-announcement_apply {
     .embed-container {
         position: relative; 
         padding-bottom: 56.25%; 
@@ -48,4 +44,14 @@
             height: 100%;
         }
     } 
+}
+
+.js .vacancy-announcement_description .o-expandable__read-more[data-js-hook]:not(.o-expandable__expanded) {
+    .respond-to-max( @bp-xs-max, {
+        .o-expandable_content {
+            // shows approx. 10 lines of content
+            height:  unit( @base-line-height-px * 10 / @base-font-size-px, em );
+            overflow: hidden;
+        }
+    });
 }

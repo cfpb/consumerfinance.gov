@@ -5,6 +5,10 @@ from django.db import models
 
 class ApplicantType(models.Model):
     applicant_type = models.CharField(max_length=255)
+    display_title = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True)
     description = models.TextField()
 
     def __unicode__(self):
@@ -46,3 +50,23 @@ class JobRegion(models.Model):
 
     class Meta:
         ordering = ('abbreviation',)
+
+
+class ServiceType(models.Model):
+    service_type = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.service_type
+
+    class Meta:
+        ordering = ['service_type']
+
+
+class JobLength(models.Model):
+    job_length = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.job_length
+
+    class Meta:
+        ordering = ['job_length']

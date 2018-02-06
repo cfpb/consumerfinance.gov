@@ -9,12 +9,13 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import PageManager
 
-from jobmanager.models.django import JobCategory, JobRegion
+from jobmanager.models.django import JobCategory, JobRegion, JobLength, ServiceType
 from v1.models import CFGOVPage
+from v1.models.snippets import ReusableText
 
 
 class JobListingPage(CFGOVPage):
-    description = RichTextField('Description')
+    description = RichTextField('Summary')
     open_date = models.DateField('Open date')
     close_date = models.DateField('Close date')
     salary_min = models.DecimalField('Minimum salary', max_digits=11,
@@ -25,6 +26,39 @@ class JobListingPage(CFGOVPage):
                                  null=True)
     region = models.ForeignKey(JobRegion, related_name='job_listings',
                                on_delete=models.PROTECT)
+    job_length = models.ForeignKey(JobLength, on_delete=models.PROTECT,
+                                   null=True, verbose_name="Position length",
+                                   blank=True)
+    service_type = models.ForeignKey(ServiceType, on_delete=models.PROTECT,
+                                     null=True, blank=True)
+    responsibilities = RichTextField('Responsibilities', null=True, blank=True)
+    travel_required = models.BooleanField(
+        blank=False,
+        default=False,
+        help_text=(
+            'Optional: Check to add a "Travel required" section to the job description. '
+            'Section content defaults to "Yes".'
+        )
+    )
+
+    travel_details = RichTextField(
+        'Travel details',
+        null=True,
+        blank=True,
+        help_text='Optional: Add content for "Travel required" section.')
+    additional_section_title = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text='Optional: Add title for an additional section '
+                  'that will display at end of job description.'
+    )
+    additional_section_content = RichTextField(
+        null=True,
+        blank=True,
+        help_text='Optional: Add content for an additional section '
+                  'that will display at end of job description.'
+    )
 
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
@@ -39,8 +73,19 @@ class JobListingPage(CFGOVPage):
                 FieldPanel('salary_min', classname='col6'),
                 FieldPanel('salary_max', classname='col6'),
             ]),
+            FieldRowPanel([
+                FieldPanel('service_type', classname='col6'),
+                FieldPanel('job_length', classname='col6'),
+            ]),
         ], heading='Details'),
-        FieldPanel('description', classname='full'),
+        MultiFieldPanel([
+            FieldPanel('description', classname='full'),
+            FieldPanel('responsibilities', classname='full'),
+            FieldPanel('travel_required', classname='full'),
+            FieldPanel('travel_details', classname='full'),
+            FieldPanel('additional_section_title'),
+            FieldPanel('additional_section_content'),
+        ], heading='Description'),
         InlinePanel(
             'usajobs_application_links',
             label='USAJobs application links'
