@@ -85,11 +85,11 @@ class SublandingPage(CFGOVPage):
                         and 'archive' not in p.title.lower()]
         posts_list = []
         for page in filter_pages:
-            base_query = AbstractFilterPage.objects.live().filter(
+            eligible_children = AbstractFilterPage.objects.live().filter(
                 CFGOVPage.objects.child_of_q(page)
             )
 
-            form = FilterableListForm(base_query=base_query)
+            form = FilterableListForm(filterable_pages=eligible_children)
             for post in form.get_page_set():
                 posts_list.append(post)
         return sorted(posts_list,

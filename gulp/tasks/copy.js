@@ -31,22 +31,6 @@ gulp.task( 'copy:codeJson', () => {
   return _genericCopy( codeJson.src, codeJson.dest );
 } );
 
-gulp.task( 'copy:vendorfonts', () => {
-  const vendorFonts = configCopy.vendorFonts;
-  return _genericCopy( vendorFonts.src, vendorFonts.dest );
-} );
-
-gulp.task( 'copy:vendorcss', () => {
-  const vendorCss = configCopy.vendorCss;
-  return gulp.src( vendorCss.src )
-    .pipe( gulpChanged( vendorCss.dest ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( vendorCss.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
-} );
-
 gulp.task( 'copy:timelinejs', () => {
   const timelinejs = configCopy.timelinejs;
   return _genericCopy( timelinejs.src, timelinejs.dest )
@@ -69,8 +53,6 @@ gulp.task( 'copy',
   [
     'copy:icons',
     'copy:codeJson',
-    'copy:vendorfonts',
-    'copy:vendorcss',
     'copy:vendorjs',
     'copy:timelinejs',
     'copy:lightbox2'
