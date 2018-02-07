@@ -1,64 +1,72 @@
 import os
 
-from agreements.models import Agreement, Issuer
+from agreements.models import Issuer
+import boto3
+
 from slugify import slugify
 
 
-def clear_tables():
-    Agreement.objects.all().delete()
+def s3_safe_key(path, prefix=''):
+    key = prefix + path.encode('utf-8')
+    key = key.replace(' ', '_')
+    key = key.replace('%', '')
+    key = key.replace(';', '')
+    key = key.replace(',', '')
+    return key
 
 
-def get_file_size(path):
-    return os.path.getsize(path)
+def upload_to_s3(pdf_obj, s3_key):
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
+    AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
+
+    s3_client = boto3.client('s3',
+                             aws_access_key_id=AWS_S3_ACCESS_KEY_ID,
+                             aws_secret_access_key=AWS_S3_SECRET_ACCESS_KEY)
+
+    s3_client.upload_fileobj(pdf_obj, AWS_STORAGE_BUCKET_NAME, s3_key)
 
 
-def update_issuer(name):
+def get_issuer(name):
+    slug = slugify(name, to_lower=True)
     try:
-        issuer = Issuer.objects.get(name=name)
+        issuer = Issuer.objects.get(slug=slug)
     except Issuer.DoesNotExist:
-        issuer = Issuer()
-    except Issuer.MultipleObjectsReturned:
-        raise Exception('Multiple Issuers exist for %s' % name)
-
-    issuer.name = name
-    issuer.slug = slugify(name, to_lower=True)
-    issuer.save()
-
+        issuer = Issuer(slug=slug, name=name)
+        issuer.save()
     return issuer
 
 
-def update_agreement(
-        issuer=None,
-        file_name=None,
-        file_path=None,
-        s3_location=None):
+def save_agreement(agreements_zip, raw_path, filename_encoding,
+                   outfile, upload=False):
+    uri_hostname = 'http://files.consumerfinance.gov'
+    s3_prefix = 'a/assets/credit-card-agreements/pdf/'
+
+    zipinfo = agreements_zip.getinfo(raw_path)
+    path = raw_path.decode(filename_encoding)
+
     try:
-        agreement = Agreement.objects.get(file_name=file_name)
-    except Agreement.DoesNotExist:
-        agreement = Agreement()
-    except Agreement.MultipleObjectsReturned:
-        raise Exception('Multiple Agreements exist for %s' % file_name)
+        issuer_name, filename = path.split('/')
+    except ValueError:
+        # too many slashes...
+        outfile.write("%s Does not match issuer/file.pdf pattern" % path)
+        return
 
-    agreement.issuer = issuer
-    agreement.file_name = file_name
-    agreement.uri = s3_location
-    agreement.size = get_file_size(file_path) or 0
-    agreement.description = file_name
+    issuer = get_issuer(issuer_name)
+    s3_key = s3_safe_key(path, prefix=s3_prefix)
+
+    agreement = issuer.agreement_set.create(
+        file_name=filename,
+        size=int(zipinfo.file_size),
+        uri="{}/{}".format(uri_hostname, s3_key),
+        description=filename)
     agreement.save()
+
+    if upload:
+        pdf_file = agreements_zip.open(zipinfo)
+        upload_to_s3(pdf_file, s3_key)
+        outfile.write(u'{} uploaded'.format(
+            repr(s3_key),
+        ))
+
     return agreement
-
-
-def upload_to_s3(file_path, s3_dest_path):
-    import tinys3
-    AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
-    AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-
-    conn = tinys3.Connection(
-        AWS_S3_ACCESS_KEY_ID,
-        AWS_S3_SECRET_ACCESS_KEY,
-        tls=True,
-        endpoint='s3.amazonaws.com')
-
-    file = open(file_path, 'rb')
-    conn.upload(s3_dest_path, file, AWS_STORAGE_BUCKET_NAME)
