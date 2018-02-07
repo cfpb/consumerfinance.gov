@@ -1,12 +1,18 @@
 {% extends '/es/es-base.html' %}
 
+{%- block title -%}
+    {%- block babel_title -%}
+        Obtener Respuestas - Oficina para la Protección Financiera del Consumidor
+    {%- endblock -%}
+{%- endblock title -%}
+
 {% block og_title %}Obtener Respuestas - Oficina para la Protección Financiera del Consumidor{% endblock %}
 
-    {% block css %}
+{% block css %}
     {{ super() }}
     <!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('knowledgebase/es-ask-styles-ie.min.css') }}"> <![endif]-->
     <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('knowledgebase/es-ask-styles.min.css') }}"> <!--<![endif]-->
-    {% endblock %}
+{% endblock %}
 
 {% block ask_search %}
     <div class="ac-search full-bleed full-bleed-padded {% block babel_hide_search %}s-hide-on-small{% endblock %}">
