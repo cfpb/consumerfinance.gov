@@ -204,7 +204,7 @@
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
 </head>
 
-<body>
+<body{% block body_classes %}{% endblock body_classes %}>
 
 {% block analytics %}
 

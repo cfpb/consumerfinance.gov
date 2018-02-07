@@ -7,18 +7,25 @@
     <meta property="fb:page_id" content="141576752553390">
 {% endblock %}
 
-    {% block modernizr %}
+{% block modernizr %}
     <!-- Custom modernizr for touch detection and svg support only, see the .js file for the build link -->
     <script src="{{ static('nemo/_/js/modernizr.custom.js') }}"></script>
-    {% endblock %}
+{% endblock %}
 
-    {% block css %}
+{% block css %}
     <!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles-ie.min.css') }}"> <![endif]-->
     <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles.min.css') }}"> <!--<![endif]-->
 
     <!--[if lt IE 9]> <script src="{{ static('nemo/_/js/html5shim.js') }}"></script> <![endif]-->
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
-    {% endblock %}
+{% endblock %}
+
+{% block body_classes %}
+ class="page {% block body_class %} page-parent {% endblock %}
+             page-template
+             page-template-page-babel
+             page-template-page-babel-php"
+{% endblock body_classes %}
 
 {% block body %}
 
