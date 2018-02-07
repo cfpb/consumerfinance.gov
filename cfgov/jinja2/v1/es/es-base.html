@@ -1,5 +1,11 @@
 {% extends 'base-base.html' %}
 
+{%- block title -%}
+    {%- if self.babel_title() -%} 
+        {{ self.babel_title() | trim }}
+    {%- endif %}
+{%- endblock title -%}
+
 {% block og_type %}government{% endblock %}
 {% block og_site_name %}Oficina para la Protección Financiera del Consumidor{% endblock %}
 

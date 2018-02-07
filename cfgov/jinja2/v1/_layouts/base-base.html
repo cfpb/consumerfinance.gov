@@ -46,15 +46,13 @@
 #}
 
     <title>
-        {% block title -%}
-            {% if page -%}
+        {%- block title -%}
+            {%- if page -%}
                 {{ page.seo_title or page.title }} | Consumer Financial Protection Bureau
-              {% elif self.babel_title() -%} 
-                {{ self.babel_title() | trim }}
             {%- else -%}
                 Consumer Financial Protection Bureau
             {%- endif %}
-        {%- endblock title %}
+        {%- endblock title -%}
     </title>
     <meta name="description"
           content="
