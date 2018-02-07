@@ -230,16 +230,12 @@
 
 
 // Special styles for playing within an FCM
-.o-featured-content-module {
-  &_visual {
-    .respond-to-min( @fcm-bp-min, {
-      &.video-playing {
+.respond-to-min( @fcm-bp-min, {
+    .o-featured-content-module_visual.video-playing {
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
-      }
-    } );
-  }
-}
+    }
+} );
