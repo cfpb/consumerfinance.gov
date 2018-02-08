@@ -7,8 +7,8 @@ from wagtail.contrib.modeladmin.views import CreateView, EditView, InspectView
 
 from tinymce.widgets import TinyMCE
 
-from jobmanager.models import (ApplicantType, Grade, JobCategory, JobRegion,
-    ServiceType, JobLength)
+from jobmanager.models import (ApplicantType, Grade, JobCategory,
+    Region, Office, ServiceType, JobLength)
 
 
 class ApplicantTypeModelAdmin(ModelAdmin):
@@ -60,8 +60,22 @@ class JobCategoryModelAdmin(ModelAdmin):
 
 
 class JobRegionModelAdmin(ModelAdmin):
-    model = JobRegion
+    model = Region
     menu_label = 'Regions'
+    menu_icon = 'site'
+
+    def states_in_region(self):
+        return ", ".join(str(state) for state in self.states.all())
+
+    def major_cities(self):
+        return "; ".join(str(city) for city in self.cities.all())
+
+    list_display = ('abbreviation', 'name', states_in_region, major_cities)
+
+
+class JobOfficeModelAdmin(ModelAdmin):
+    model = Office
+    menu_label = 'Offices'
     menu_icon = 'site'
     list_display = ('abbreviation', 'name')
 
@@ -90,5 +104,6 @@ class MyModelAdminGroup(ModelAdminGroup):
         JobGradeModelAdmin,
         ServiceTypeModelAdmin,
         JobLengthModelAdmin,
-        JobRegionModelAdmin,
+        JobOfficeModelAdmin,
+        JobRegionModelAdmin
     )

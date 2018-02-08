@@ -9,7 +9,8 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import PageManager
 
-from jobmanager.models.django import JobCategory, JobRegion, JobLength, ServiceType
+from jobmanager.models.django import (JobCategory, JobLocation,
+    JobLength, ServiceType)
 from v1.models import CFGOVPage
 from v1.models.snippets import ReusableText
 
@@ -24,13 +25,18 @@ class JobListingPage(CFGOVPage):
                                      decimal_places=2)
     division = models.ForeignKey(JobCategory, on_delete=models.PROTECT,
                                  null=True)
-    region = models.ForeignKey(JobRegion, related_name='job_listings',
-                               on_delete=models.PROTECT)
     job_length = models.ForeignKey(JobLength, on_delete=models.PROTECT,
                                    null=True, verbose_name="Position length",
                                    blank=True)
     service_type = models.ForeignKey(ServiceType, on_delete=models.PROTECT,
                                      null=True, blank=True)
+    location = models.ForeignKey(JobLocation, related_name='job_listings',
+                                 on_delete=models.PROTECT)
+    allow_remote = models.BooleanField(
+        default=False,
+        help_text='Adds remote option to jobs with office locations.',
+        verbose_name="Location can also be remote"
+    )
     responsibilities = RichTextField('Responsibilities', null=True, blank=True)
     travel_required = models.BooleanField(
         blank=False,
@@ -40,7 +46,6 @@ class JobListingPage(CFGOVPage):
             'Section content defaults to "Yes".'
         )
     )
-
     travel_details = RichTextField(
         'Travel details',
         null=True,
@@ -59,12 +64,10 @@ class JobListingPage(CFGOVPage):
         help_text='Optional: Add content for an additional section '
                   'that will display at end of job description.'
     )
-
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('division', classname='full'),
             InlinePanel('grades', label='Grades'),
-            FieldPanel('region', classname='full'),
             FieldRowPanel([
                 FieldPanel('open_date', classname='col6'),
                 FieldPanel('close_date', classname='col6'),
@@ -86,6 +89,10 @@ class JobListingPage(CFGOVPage):
             FieldPanel('additional_section_title'),
             FieldPanel('additional_section_content'),
         ], heading='Description'),
+        MultiFieldPanel([
+            FieldPanel('location', classname='full'),
+            FieldPanel('allow_remote', classname='full'),
+        ], heading='Location'),
         InlinePanel(
             'usajobs_application_links',
             label='USAJobs application links'
@@ -112,11 +119,21 @@ class JobListingPage(CFGOVPage):
                 title='About us (For consumers)')
         except:
             pass
+        if hasattr(self.location, 'region'):
+            context['states'] = [state.abbreviation for state in
+                                 self.location.region.states.all()]
+            context['location_type'] = 'region'
+        else:
+            context['states'] = []
+            context['location_type'] = 'office'
+        context['cities'] = self.location.cities.all()
         return context
+
 
     @property
     def page_js(self):
         return super(JobListingPage, self).page_js + ['read-more.js']
+
 
     @property
     def ordered_grades(self):

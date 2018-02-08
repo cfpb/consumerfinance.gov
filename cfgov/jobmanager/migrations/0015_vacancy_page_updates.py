@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('jobmanager', '0012_jobs_have_one_region'),
+        ('jobmanager', '0014_add_city_and_state'),
     ]
 
     operations = [

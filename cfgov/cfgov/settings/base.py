@@ -462,6 +462,9 @@ BACKENDS = {
     'diffs': 'regcore.db.django_models.DMDiffs',
 }
 
+# Regulations in eRegs that should display the update-in-progress message
+EREGS_REGULATION_UPDATES = ['1002', '1003', '1005', '1010', '1011', '1012', '1013', '1024', '1026']
+
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
