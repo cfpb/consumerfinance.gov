@@ -57,12 +57,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
-        'v1': {
-            'handlers': default_loggers,
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'core.views': {
+        '': {
             'handlers': default_loggers,
             'level': 'INFO',
             'propagate': True,
