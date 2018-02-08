@@ -35,6 +35,7 @@ USE_ETAGS = True
 # Application definition
 
 INSTALLED_APPS = (
+    'permissions_viewer',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',
