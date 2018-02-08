@@ -26,7 +26,11 @@
 
             {% if location_type == 'region' %}
                 <dt>Location:</dt>
-                <dd>Home duty location in one of the following {{ page.location }} states: {{ states|join(', ') -}}.
+                <dd>{%- if states|length -%}
+                    Home duty location in one of the following {{ page.location }} states: {{ states|join(', ') -}}.
+                    {%- else -%}
+                    {{ page.location }}
+                    {%- endif -%}
                     {%- if cities -%}
                         <span class="u-hidden">Cities in this region include {{ cities|join('; ') -}}.</span>
                     {%- endif  -%}
