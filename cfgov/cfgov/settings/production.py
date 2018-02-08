@@ -3,8 +3,10 @@ import os
 import sys
 from os.path import exists
 
-from .base import *
-from .database_mixin import *
+from django.core.exceptions import ImproperlyConfigured
+
+from cfgov.settings.base import *
+from cfgov.settings.database_mixin import *
 
 
 default_loggers = []
@@ -121,4 +123,7 @@ CACHES = {
 try:
     ALLOWED_HOSTS = json.loads(os.getenv('ALLOWED_HOSTS'))
 except (TypeError, ValueError):
-    ALLOWED_HOSTS = ['.consumerfinance.gov']
+    raise ImproperlyConfigured(
+        "Environment variable ALLOWED_HOSTS is either not defined or is "
+        "not valid JSON. Expected a JSON array of allowed hostnames."
+    )
