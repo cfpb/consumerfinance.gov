@@ -22,8 +22,7 @@ APPLICANT_TYPES = [
     }
 ]
 
-JOB_LENGTHS = ['Permanent', 'Term to perm', 
-    'Term', 'Temporary']
+JOB_LENGTHS = ['Permanent', 'Term to perm', 'Term', 'Temporary']
 
 SERVICE_TYPES = ['Competitive service', 'Excepted service']
 
@@ -69,9 +68,9 @@ def update_job_pages():
                 applicant_type = ApplicantType.objects.filter(
                     pk=link['applicant_type']
                 ).first()
-
                 if applicant_type:
-                    current_applicant_type = applicant_type.applicant_type.lower()
+                    current_applicant_type = \
+                        applicant_type.applicant_type.lower()
                     for s in service_types:
                         if s in current_applicant_type:
                             content['service_type'] = service_type_dict[s]
@@ -108,4 +107,3 @@ def run():
     update_job_pages()
     remove_old_applicant_types()
     add_display_titles()
-

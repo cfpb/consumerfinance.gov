@@ -9,8 +9,9 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import PageManager
 
-from jobmanager.models.django import (JobCategory, JobLocation,
-    JobLength, ServiceType)
+from jobmanager.models.django import (
+    JobCategory, JobLocation, JobLength, ServiceType
+)
 from v1.models import CFGOVPage
 from v1.models.snippets import ReusableText
 
@@ -42,8 +43,8 @@ class JobListingPage(CFGOVPage):
         blank=False,
         default=False,
         help_text=(
-            'Optional: Check to add a "Travel required" section to the job description. '
-            'Section content defaults to "Yes".'
+            'Optional: Check to add a "Travel required" section to the '
+            'job description. Section content defaults to "Yes".'
         )
     )
     travel_details = RichTextField(
@@ -129,16 +130,13 @@ class JobListingPage(CFGOVPage):
         context['cities'] = self.location.cities.all()
         return context
 
-
     @property
     def page_js(self):
         return super(JobListingPage, self).page_js + ['read-more.js']
 
-
     @property
     def ordered_grades(self):
         """Return a list of job grades in numerical order.
-
         Non-numeric grades are sorted alphabetically after numeric grades.
         """
         grades = set(g.grade.grade for g in self.grades.all())
