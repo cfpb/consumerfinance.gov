@@ -45,5 +45,5 @@ unipath>=1.1,<=2.0
 wagtail==1.10.1
 wagtail-flags==2.0.8
 wagtail-inventory==0.3
-wagtail-sharing==0.5
+wagtail-sharing==0.6.1
 Wand==0.4.2
