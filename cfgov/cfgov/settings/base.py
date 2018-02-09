@@ -79,7 +79,6 @@ INSTALLED_APPS = (
     'legacy',
     'django_extensions',
     'reversion',
-    'tinymce',
     'jobmanager',
     'wellbeing',
     'search',
