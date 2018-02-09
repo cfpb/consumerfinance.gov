@@ -1,10 +1,10 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n %}
 {% load gravatar %}
-{% block titletag %}{% trans "Permissions for" %} {{user}}{% endblock %}
+{% block titletag %}{% trans "Roster and Permissions for" %} {{group}}{% endblock %}
 
 {% block content %}
-    {% include "wagtailadmin/shared/header.html" with title="User Permissions" %}
+    {% include "wagtailadmin/shared/header.html" with title="Members and Permissions" %}
 
     <div class="nice-padding">
 	    <h1> {{group}} </h1>

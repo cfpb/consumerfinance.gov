@@ -17,7 +17,7 @@
             <tr>
                 <td class="title">
                     <h2>
-			    <a href="{% url 'wagtailusers_groups:edit' group.id %}">{{ group.name }}</a> (<a href="/admin/roster/{{group.pk}}/">{{ group.user_set.count }} users</a>)
+			    <a href="{% url 'wagtailusers_groups:edit' group.id %}">{{ group.name }}</a> (<a href="{% url "permissions:group" group.pk %}">{{ group.user_set.count }} users</a>)
                     </h2>
                 </td>
             </li>

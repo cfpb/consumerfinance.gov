@@ -24,7 +24,7 @@
 			    <td></td> 
 			{% for group in groups %}
 			<td class="title">
-				<a href="/admin/roster/{{group.pk}}/">{{group}}</a></td>
+				<a href="{% url "permissions:group" group.pk %}">{{group}}</a></td>
 			{% endfor %}
 		    </tr>
 		    </thead>
@@ -54,7 +54,7 @@
 			    <td></td> 
 			{% for group in groups %}
 			<td class="title">
-				<a href="/admin/roster/{{group.pk}}/">{{group}}</a></td>
+				<a href="{% url "permissions:group" group.pk %}">{{group}}</a></td>
 			{% endfor %}
 		    </tr>
 		    </thead>
@@ -85,7 +85,7 @@
 			    <td></td> 
 			{% for group in groups %}
 			<td class="title">
-				<a href="/admin/roster/{{group.pk}}/">{{group}}</a></td>
+				<a href="{% url "permissions:group" group.pk %}">{{group}}</a></td>
 			{% endfor %}
 		    </tr>
 		    </thead>

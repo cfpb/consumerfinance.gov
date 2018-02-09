@@ -19,7 +19,7 @@ def display_group_roster(request, group_id):
 
     active_users = group.user_set.filter(is_active=True)
     inactive_users = group.user_set.filter(is_active=False)
-    return render(request, 'permissions_viewer/roster.html', {
+    return render(request, 'permissions_viewer/group.html', {
         'active_users': active_users,
         'inactive_users': inactive_users,
         'group': group,
