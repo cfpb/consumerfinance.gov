@@ -1,13 +1,14 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.db import models
-from modelcluster.fields import ParentalKey
+
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, InlinePanel
 )
-from modelcluster.models import ClusterableModel
-
 from wagtail.wagtailcore.fields import RichTextField
+
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 
 
 class ApplicantType(models.Model):
