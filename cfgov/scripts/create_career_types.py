@@ -38,17 +38,17 @@ def create_new_types():
             applicant_type=a['title'],
             description=a['description']
         )
-        applicant_type_dict[a['related_term']] = new_type.pk
+        applicant_type_dict[a['related_term']] = new_type
     for j in JOB_LENGTHS:
         new_type, cr = JobLength.objects.update_or_create(
             job_length=j
         )
-        job_length_dict[j.lower()] = new_type.pk
+        job_length_dict[j.lower()] = new_type
     for s in SERVICE_TYPES:
         new_type, cr = ServiceType.objects.update_or_create(
             service_type=s
         )
-        service_type_dict[s.lower()] = new_type.pk
+        service_type_dict[s.lower()] = new_type
 
 
 def update_job_pages():
@@ -60,6 +60,16 @@ def update_job_pages():
     new_applicant_types = applicant_type_dict.keys()
 
     for page in JobListingPage.objects.all():
+        for link in page.usajobs_application_links.all():
+            if link.applicant_type:
+                current_applicant_type = \
+                    link.applicant_type.applicant_type.lower()
+                for a in new_applicant_types:
+                    if a.lower() in current_applicant_type:
+                        link.applicant_type = applicant_type_dict[a]
+                        link.save()
+                        page.save()
+
         for revision in page.revisions.all():
             content = json.loads(revision.content_json)
             usajobs_application_links = content['usajobs_application_links']
@@ -68,18 +78,17 @@ def update_job_pages():
                 applicant_type = ApplicantType.objects.filter(
                     pk=link['applicant_type']
                 ).first()
-                if applicant_type:
-                    current_applicant_type = \
-                        applicant_type.applicant_type.lower()
-                    for s in service_types:
-                        if s in current_applicant_type:
-                            content['service_type'] = service_type_dict[s]
-                    for j in job_lengths:
-                        if j in current_applicant_type:
-                            content['job_length'] = job_length_dict[j]
-                    for a in new_applicant_types:
-                        if a.lower() in current_applicant_type:
-                            link['applicant_type'] = applicant_type_dict[a]
+                current_applicant_type = \
+                    applicant_type.applicant_type.lower()
+                for s in service_types:
+                    if s in current_applicant_type:
+                        content['service_type'] = service_type_dict[s].pk
+                for j in job_lengths:
+                    if j in current_applicant_type:
+                        content['job_length'] = job_length_dict[j].pk
+                for a in new_applicant_types:
+                    if a.lower() in current_applicant_type:
+                        link['applicant_type'] = applicant_type_dict[a].pk
         revision.content_json = json.dumps(content)
         revision.save()
 

@@ -83,6 +83,10 @@ class JobListingPage(CFGOVPage):
             ]),
         ], heading='Details'),
         MultiFieldPanel([
+            FieldPanel('location', classname='full'),
+            FieldPanel('allow_remote', classname='full'),
+        ], heading='Location'),
+        MultiFieldPanel([
             FieldPanel('description', classname='full'),
             FieldPanel('responsibilities', classname='full'),
             FieldPanel('travel_required', classname='full'),
@@ -90,10 +94,6 @@ class JobListingPage(CFGOVPage):
             FieldPanel('additional_section_title'),
             FieldPanel('additional_section_content'),
         ], heading='Description'),
-        MultiFieldPanel([
-            FieldPanel('location', classname='full'),
-            FieldPanel('allow_remote', classname='full'),
-        ], heading='Location'),
         InlinePanel(
             'usajobs_application_links',
             label='USAJobs application links'

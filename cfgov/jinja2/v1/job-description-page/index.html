@@ -264,3 +264,56 @@
 </div>
 
 {% endblock %}
+
+{% block javascript %}
+{{ super() }} 
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "JobPosting",
+        "title": "{{ page.title }}",
+        "datePosted": "{{ dt.format_datetime(page.open_date) if page.close_date else '' }}",
+        "validThrough": "{{ dt.format_datetime(page.close_date) if page.close_date else '' }}",
+        "baseSalary": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": {
+                "@type": "QuantitativeValue",
+                "minValue": "{{ page.salary_min }}",
+                "maxValue": "{{ page.salary_max }}",
+                "unitText": "YEAR"
+            }
+        },
+        "description": "{{ page.description }}",
+        "responsibilities": "{{ page.responsibilities }}",
+        "hiringOrganization" : {
+            "@type" : "Organization",
+            "name" : "Consumer Financial Protection Bureau",
+            "sameAs" : "https://www.consumerfinance.gov"
+        },
+        "jobLocation" : {
+            "@type": "Place",
+            "address": [
+                {% if location_type == 'office' and page.allow_remote %}
+                {
+                    "@type": "PostalAddress",
+                    "addressCountry": "US"
+                }
+                {% elif cities %}
+                {%- for city in cities -%}
+                    {
+                        "@type": "PostalAddress",
+                        "addressLocality": "{{ city.name }}",
+                        "addressRegion": "{{ city.state.abbreviation }}",
+                        "addressCountry": "US"
+                    }{{ ', ' if not loop.last else '' }}
+                {%- endfor -%}
+                {% endif %}
+            ]
+        },
+        "employmentType" : "FULL_TIME"
+    }
+</script>
+
+{% endblock %}
