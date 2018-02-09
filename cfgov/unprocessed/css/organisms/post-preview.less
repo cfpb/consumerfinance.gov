@@ -6,19 +6,23 @@
       markup: |
         <article class="o-post-preview">
             <div class="m-meta-header">
-                <span class="a-date m-meta-header_right">
-                    Published
-                    <span class="datetime">
-                        <time class="datetime_date" datetime="2003-08-05T21:36:11.000000-0400">
-                            AUG 05, 2003
-                        </time>
+                <div class="m-meta-header_right">
+                    <span class="a-date">
+                        Published
+                        <span class="datetime">
+                            <time class="datetime_date" datetime="2003-08-05T21:36:11.000000-0400">
+                                AUG 05, 2003
+                            </time>
+                        </span>
                     </span>
-                </span>
-                <a href="/about-us/blog/?filter_blog_category=Info+for+Consumers" class="a-heading a-heading__icon m-meta-header_left">
-                    <span class="cf-icon cf-icon-information"></span>
-                    <span class="u-visually-hidden">Category:</span>
-                    Info for Consumers
-                </a>
+                </div>
+                <div class="m-meta-header_left">
+                    <a href="/about-us/blog/?filter_blog_category=Info+for+Consumers" class="a-heading a-heading__icon">
+                        <span class="cf-icon cf-icon-information"></span>
+                        <span class="u-visually-hidden">Category:</span>
+                        Info for Consumers
+                    </a>
+                </div>
             </div>
             <div class="o-post-preview_image-container">
                 <img class="o-post-preview_image" src="http://www.placehold.it/160x90" alt="">
@@ -83,6 +87,26 @@
     + .o-post-preview {
         margin-top: unit( @grid_gutter-width * 2 / @base-font-size-px, em);
     }
+
+    .m-meta-header {
+        margin-bottom: unit( 15px / @base-font-size-px, em );
+
+        .respond-to-max(@bp-xs-max, {
+            &_right {
+                margin-bottom: unit( 5px / @base-font-size-px, em );
+            }
+        });
+
+        .respond-to-min(@bp-sm-min, {
+
+            .a-date {
+                line-height: 1.35;
+                vertical-align: bottom;
+            }
+
+        });
+
+    }        
 
     &_description {
         margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
