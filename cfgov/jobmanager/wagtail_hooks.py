@@ -5,8 +5,6 @@ from wagtail.contrib.modeladmin.options import (
 )
 from wagtail.contrib.modeladmin.views import CreateView, EditView, InspectView
 
-from tinymce.widgets import TinyMCE
-
 from jobmanager.models import (
     ApplicantType, Grade, JobCategory, Region, Office, ServiceType, JobLength
 )
@@ -29,9 +27,6 @@ class JobCategoryForm(ModelForm):
     class Meta:
         fields = '__all__'
         model = JobCategory
-        widgets = {
-            'blurb': TinyMCE(attrs={'cols': 80, 'rows': 15}),
-        }
 
 
 class JobCategoryModelFormMixin(object):

@@ -1,10 +1,13 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.db import models
-from modelcluster.fields import ParentalKey
+
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, InlinePanel
 )
+from wagtail.wagtailcore.fields import RichTextField
+
+from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 
@@ -37,7 +40,7 @@ class Grade(models.Model):
 
 class JobCategory(models.Model):
     job_category = models.CharField(max_length=255)
-    blurb = models.TextField(null=True, blank=True)
+    blurb = RichTextField(null=True, blank=True)
 
     def __unicode__(self):
         return self.job_category
