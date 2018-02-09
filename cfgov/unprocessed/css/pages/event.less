@@ -57,7 +57,7 @@
 
 .event-meta {
     &__medium {
-        .u-webfont-medium();
+        font-weight: 500;
     }
 }
 
@@ -135,20 +135,6 @@
     .datetime {
         .h5();
         text-transform: uppercase;
-    }
-
-    .event-calendar_download {
-        .u-webfont-demi();
-
-        display: block;
-        padding-top: .2em;
-        text-decoration: none;
-        text-transform: none;
-
-        .respond-to-max(@bp-xs-max, {
-            margin-top: 1em;
-            padding-top: .5em;
-        });
     }
 
     .event-meta_address {
