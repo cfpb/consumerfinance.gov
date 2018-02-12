@@ -74,8 +74,6 @@
 */
 
 .m-list_link {
-    .u-webfont-medium();
-
     &.m-list_link__phone {
         .respond-to-min(@bp-sm-min, {
             .u-link__colors(@black);
@@ -147,6 +145,7 @@ ul:last-child,
 
 .m-meta-header_right {
     .respond-to-max(@bp-sm-max, {
+        display: block;
         margin-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
     });
 }

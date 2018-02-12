@@ -66,8 +66,8 @@ class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
         )
     )
 
-    fields = ['title', 'grades', 'close_date', 'region']
-    field_headers = ['TITLE', 'GRADE', 'POSTING CLOSES', 'REGION']
+    fields = ['title', 'grades', 'close_date', 'location']
+    field_headers = ['TITLE', 'GRADE', 'POSTING CLOSES', 'LOCATION']
 
     def make_title_value(self, instance, value):
         return '<a href="{}">{}</a>'.format(
