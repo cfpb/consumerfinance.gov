@@ -7,7 +7,7 @@ from django.template import Context, Template
 from django.test import TestCase
 
 from agreements import models
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from mock import patch
 
 
@@ -230,6 +230,6 @@ class TemplateTags(TestCase):
         t = Template("{% load agreements_extras %}" +
                      "{% issuer_select id %}")
         soup = BeautifulSoup(t.render(Context({'id': selected.slug})))
-        option = soup.findAll('option', selected='selected')
+        option = soup.find_all('option', selected='selected')
         self.assertTrue(len(option) == 1)
         self.assertTrue(selected.name in option[0])
