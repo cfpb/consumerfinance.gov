@@ -1,5 +1,6 @@
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailusers.widgets import UserListingButton
+from wagtail.wagtailadmin.menu import MenuItem
 
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
@@ -15,6 +16,12 @@ def register_admin_urls():
             namespace='permissions')),
     ]
     return urls
+
+
+@hooks.register('register_settings_menu_item')
+def register_settings_menu_item():
+    return MenuItem('Permissions',reverse('permissions:index'),
+                    classnames='icon icon-unlocked')
 
 
 @hooks.register('register_user_listing_buttons')

@@ -78,3 +78,14 @@ def display_user_permissions(request, user_id):
         'group_ct_permissions': group_ct_permissions,
         'users_ct_permissions': users_ct_permissions,
     })
+
+
+def index(request):
+    active_users = User.objects.filter(is_active=True)
+    inactive_users = User.objects.filter(is_active=False)
+    groups = Group.objects.all()
+
+    return render(request, 'permissions_viewer/index.html', {
+        'active_users': active_users,
+        'inactive_users': inactive_users,
+        'groups': groups})

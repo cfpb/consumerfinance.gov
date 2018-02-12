@@ -8,7 +8,11 @@
 
     <div class="nice-padding">
 	    <h1> {{user}} </h1>
-	    {% if user.is_superuser %}
+	    {% if not user.is_active %}
+	    <p class="help-block help-warning">
+	    This user is not active, and has no access to the site.
+            </p>
+	    {% elif user.is_superuser %}
 	    <p class="help-block help-warning">
 	    This user is an administrator, and thus has complete access to the site.
             </p>
