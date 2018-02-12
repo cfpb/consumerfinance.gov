@@ -35,3 +35,14 @@ class TestPermissionsViews(TestCase):
         response = client.get(url)
 
         self.assertContains(response, 'foo')
+
+    def test_user_and_group_on_index_page(self):
+        client = Client()
+        client.login(username='foo', password='bar')
+
+        url = reverse('permissions:index', args=[self.testgroup.pk])
+
+        response = client.get(url)
+
+        self.assertContains(response, 'foo')
+        self.assertContains(response, 'Developers')
