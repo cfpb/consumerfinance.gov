@@ -6,4 +6,5 @@ isort==4.2.15
 mccabe==0.5.2 
 pycodestyle==2.0.0 
 pyflakes==1.2.3
-tox==2.3.1
+tox-pip-extensions==1.1.0
+tox==2.8.2
