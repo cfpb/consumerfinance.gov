@@ -37,7 +37,7 @@ def display_user_permissions(request, user_id):
         group_perms = [group.page_permissions.filter(page=page)
                        for group in groups]
         page_permissions.append(PagePermissions(page=page,
-                                group_permissions=group_perms))
+                                                group_permissions=group_perms))
 
     collection_permissions = []
     collections = list(Collection.objects.filter(
@@ -61,7 +61,7 @@ def display_user_permissions(request, user_id):
         group_perms = [group.permissions.filter(
             content_type=ct) for group in groups]
         group_ct_permissions.append(
-            CTPermissions(content_type=ct, group_permissions=group_perms)) 
+            CTPermissions(content_type=ct, group_permissions=group_perms))
 
     users_content_types = ContentType.objects.filter(
         permission__user=user).distinct().order_by('app_label', 'model')

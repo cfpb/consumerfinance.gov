@@ -11,16 +11,17 @@ from django.conf.urls import include, url
 def register_admin_urls():
 
     urls = [
-        url(r'^permissions/', include('permissions_viewer.urls',
-            app_name='permissions_viewer',
-            namespace='permissions')),
+        url(r'^permissions/',
+            include('permissions_viewer.urls',
+                    app_name='permissions_viewer',
+                    namespace='permissions')),
     ]
     return urls
 
 
 @hooks.register('register_settings_menu_item')
 def register_settings_menu_item():
-    return MenuItem('Permissions',reverse('permissions:index'),
+    return MenuItem('Permissions', reverse('permissions:index'),
                     classnames='icon icon-unlocked')
 
 
