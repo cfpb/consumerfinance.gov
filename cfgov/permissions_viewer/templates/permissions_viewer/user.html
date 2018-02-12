@@ -10,7 +10,7 @@
 	    <h1> {{user}} </h1>
 	    {% if not user.is_active %}
 	    <p class="help-block help-info">
-	    This user is not active, and has no access to the site.
+	    This user is <strong>not active</strong>, and has no access to the site.
             </p>
 	    {% elif user.is_superuser %}
 	    <p class="help-block help-warning">
