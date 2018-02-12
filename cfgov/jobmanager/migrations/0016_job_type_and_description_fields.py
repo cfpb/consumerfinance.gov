@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('jobmanager', '0014_add_city_and_state'),
+        ('jobmanager', '0015_remove_tinymce'),
     ]
 
     operations = [
