@@ -32,7 +32,7 @@ lxml==4.1.0
 ntplib==0.3.3
 pbr==1.9.1
 psycopg2==2.7.3.2
-pyelasticsearch==0.6
+pyelasticsearch==0.6.1
 python-dateutil==2.1
 PyYAML==3.11
 pytz
@@ -45,5 +45,5 @@ unipath>=1.1,<=2.0
 wagtail==1.10.1
 wagtail-flags==2.0.8
 wagtail-inventory==0.3
-wagtail-sharing==0.5
+wagtail-sharing==0.6.1
 Wand==0.4.2
