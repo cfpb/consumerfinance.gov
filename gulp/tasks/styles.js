@@ -312,35 +312,27 @@ gulp.task( 'styles:knowledgebaseSpanishIE', stylesKnowledgebaseSpanishIE );
 gulp.task( 'styles:nemoProd', stylesNemoProd );
 gulp.task( 'styles:nemoIE', stylesNemoIE );
 
-gulp.task( 'styles:ie',
-  gulp.parallel(
-    'styles:stylesIE8',
-    'styles:stylesIE9'
-  )
-);
+gulp.task( 'styles:ie', [
+  'styles:stylesIE8',
+  'styles:stylesIE9'
+] );
 
-gulp.task( 'styles:knowledgebaseSpanish',
-  gulp.parallel(
-    'styles:knowledgebaseSpanishProd',
-    'styles:knowledgebaseSpanishIE'
-  )
-);
+gulp.task( 'styles:knowledgebaseSpanish', [
+  'styles:knowledgebaseSpanishProd',
+  'styles:knowledgebaseSpanishIE'
+] );
 
-gulp.task( 'styles:nemo',
-  gulp.parallel(
-    'styles:nemoProd',
-    'styles:nemoIE'
-  )
-);
+gulp.task( 'styles:nemo', [
+  'styles:nemoProd',
+  'styles:nemoIE'
+] );
 
-gulp.task( 'styles',
-  gulp.parallel(
-    'styles:modern',
-    'styles:ie',
-    'styles:stylesOAH',
-    'styles:ondemand',
-    'styles:featureFlags',
-    'styles:knowledgebaseSpanish',
-    'styles:nemo'
-  )
-);
+gulp.task( 'styles', [
+  'styles:modern',
+  'styles:ie',
+  'styles:stylesOAH',
+  'styles:ondemand',
+  'styles:featureFlags',
+  'styles:knowledgebaseSpanish',
+  'styles:nemo'
+] );
