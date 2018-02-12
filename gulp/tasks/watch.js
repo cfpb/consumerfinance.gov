@@ -4,8 +4,13 @@
 const gulp = require( 'gulp' );
 const config = require( '../config' );
 
-gulp.task( 'watch', [ 'browsersync' ], function() {
-  gulp.watch( config.scripts.src, [ 'scripts' ] );
-  gulp.watch( config.styles.cwd + '/**/*.less', [ 'styles' ] );
-  gulp.watch( config.images.src, [ 'images' ] );
-} );
+gulp.task( 'watch',
+  gulp.series(
+    'browsersync',
+    () => {
+      gulp.watch( config.scripts.src, [ 'scripts' ] );
+      gulp.watch( config.styles.cwd + '/**/*.less', [ 'styles' ] );
+      gulp.watch( config.images.src, [ 'images' ] );
+    }
+  )
+);
