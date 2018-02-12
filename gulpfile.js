@@ -26,7 +26,7 @@ gulp.task( 'build',
 );
 
 gulp.task( 'default',
-  gulp.series(
+  gulp.parallel(
     'build',
     'lint:scripts',
     'test:unit'
