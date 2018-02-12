@@ -6,7 +6,8 @@ const config = require( '../config' );
 
 gulp.task( 'watch',
   gulp.series(
-    'browsersync', () => {
+    'browsersync',
+    () => {
       gulp.watch( config.scripts.src, [ 'scripts' ] );
       gulp.watch( config.styles.cwd + '/**/*.less', [ 'styles' ] );
       gulp.watch( config.images.src, [ 'images' ] );
