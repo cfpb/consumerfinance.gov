@@ -8,7 +8,7 @@ from scripts import unpublish_closed_jobs
 
 from v1.tests.wagtail_pages import helpers
 
-from jobmanager.models.django import ApplicantType, JobCategory, JobRegion
+from jobmanager.models.django import ApplicantType, JobCategory, Region
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import USAJobsApplicationLink
 
@@ -27,7 +27,7 @@ class UnpublishClosedJobsTestCase(TestCase):
             job_category="category"
         )
         division.save()
-        region = JobRegion(
+        region = Region(
             abbreviation="TS",
             name="TriStateArea"
         )
@@ -45,7 +45,7 @@ class UnpublishClosedJobsTestCase(TestCase):
             open_date=date(2099, 1, 1),
             close_date=date(2099, 1, 15),
             division=division,
-            region=region,
+            location=region,
             live=True)
         helpers.publish_page(child=self.page)
 
