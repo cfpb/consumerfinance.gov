@@ -2,6 +2,7 @@ const configClean = require( '../config' ).clean;
 const del = require( 'del' );
 const gulp = require( 'gulp' );
 
+
 gulp.task( 'clean:css', () => {
   // Clean CSS out of /cfgov/static_built/css/
   del( configClean.css + '/**/*' );

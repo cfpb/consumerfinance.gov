@@ -8,12 +8,8 @@ const imageminJpegtran = require( 'imagemin-jpegtran' );
 const imageminOptipng = require( 'imagemin-optipng' );
 const imageminSvgo = require( 'imagemin-svgo' );
 
-/**
- * Minify images.
- * @returns {Object} An output stream from gulp.
- */
-function images() {
-  return gulp.src( configImages.src )
+gulp.task( 'images', () => {
+  gulp.src( configImages.src )
     .pipe( gulpChanged( configImages.dest ) )
     .pipe( gulpImagemin( [
       imageminGifsicle(),
@@ -23,6 +19,4 @@ function images() {
     ] ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( configImages.dest ) );
-}
-
-gulp.task( 'images', images );
+} );
