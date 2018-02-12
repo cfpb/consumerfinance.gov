@@ -36,7 +36,7 @@
     "cfpb-chart-builder": "3.2.1",
     "del": "3.0.0",
     "glob-all": "3.1.0",
-    "gulp": "3.9.1",
+    "gulp": "4.0.0",
     "gulp-bless": "4.0.0",
     "gulp-changed": "3.2.0",
     "gulp-clean-css": "3.9.2",
