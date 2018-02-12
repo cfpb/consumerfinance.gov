@@ -40,7 +40,7 @@ class TestPermissionsViews(TestCase):
         client = Client()
         client.login(username='foo', password='bar')
 
-        url = reverse('permissions:index', args=[self.testgroup.pk])
+        url = reverse('permissions:index')
 
         response = client.get(url)
 

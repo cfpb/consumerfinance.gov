@@ -11,7 +11,7 @@
 	    <h2>Active Users</h2>
 	    <ul>
 	{% for user in active_users %}
-	<li><a href="/admin/permissions/user/{{user.pk}}/">{{ user }}</a></li>
+	<li><a href="{% url "permissions:user" user.pk %}">{{ user }}</a></li>
 	{% empty %}
 	<li>There are no active users</li>
 	{% endfor %}
@@ -19,7 +19,7 @@
 	    <h2>Inactive Users</h2>
 	    <ul>
 	{% for user in inactive_users %}
-	<li><a href="/admin/permissions/user/{{user.pk}}/">{{ user }}</a></li>
+	<li><a href="{% url "permissions:user" user.pk %}">{{ user }}</a></li>
 	{% empty %}
 	<li>There are no inactive users</li>
 	{% endfor %}
