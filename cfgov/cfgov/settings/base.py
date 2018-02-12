@@ -79,7 +79,6 @@ INSTALLED_APPS = (
     'legacy',
     'django_extensions',
     'reversion',
-    'tinymce',
     'jobmanager',
     'wellbeing',
     'search',
@@ -101,12 +100,6 @@ OPTIONAL_APPS = [
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
     {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
 ]
-
-if DEPLOY_ENVIRONMENT == 'build':
-    OPTIONAL_APPS += [
-        {'import': 'eregs_core', 'apps': ('eregs_core',)},
-    ]
-
 
 POSTGRES_APPS = []
 
@@ -468,6 +461,9 @@ BACKENDS = {
     'diffs': 'regcore.db.django_models.DMDiffs',
 }
 
+# Regulations in eRegs that should display the update-in-progress message
+EREGS_REGULATION_UPDATES = ['1002', '1003', '1005', '1010', '1011', '1012', '1013', '1024', '1026']
+
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
@@ -622,12 +618,7 @@ FLAGS = {
 
     # Email popups.
     'EMAIL_POPUP_OAH': {'boolean': True},
-    'EMAIL_POPUP_DEBT': {'after date': '2018-02-01T00:00'},
-
-    # The next version of eRegulations
-    'EREGS20': {
-        'boolean': DEPLOY_ENVIRONMENT == 'build',
-    },
+    'EMAIL_POPUP_DEBT': {'boolean': True},
 
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
@@ -640,9 +631,6 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
-
-    # Servicemembers pages in Wagtail
-    'WAGTAIL_SERVICEMEMBERS': {},
 }
 
 
@@ -673,7 +661,7 @@ SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
 # This value is read by v1.wagtail_hooks.
 SERVE_LATEST_DRAFT_PAGES = []
 if DEPLOY_ENVIRONMENT == 'beta':
-    SERVE_LATEST_DRAFT_PAGES = [1288]
+    SERVE_LATEST_DRAFT_PAGES = [1288,1286,3273]
 
 # Email popup configuration. See v1.templatetags.email_popup.
 EMAIL_POPUP_URLS = {

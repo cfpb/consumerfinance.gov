@@ -107,16 +107,6 @@ module.exports = {
       src:  paths.modules + '/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
     },
-    vendorFonts: {
-      src:  paths.unprocessed + '/fonts/pdfreactor/*',
-      dest: paths.processed + '/fonts/pdfreactor'
-    },
-    vendorCss: {
-      src: [
-        paths.unprocessed + '/css/pdfreactor-fonts.css'
-      ],
-      dest: paths.processed + '/css'
-    },
     timelinejs: {
       src: [
         paths.modules + '/timelinejs/build/**/*'

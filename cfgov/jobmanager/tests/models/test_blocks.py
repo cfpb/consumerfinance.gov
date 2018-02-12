@@ -11,7 +11,7 @@ from scripts._atomic_helpers import job_listing_list
 
 from cfgov.test import HtmlMixin
 from jobmanager.models.blocks import JobListingList, JobListingTable
-from jobmanager.models.django import Grade, JobCategory, JobRegion
+from jobmanager.models.django import Grade, JobCategory, JobLocation
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel
 from v1.models import SublandingPage
@@ -26,7 +26,7 @@ def make_job_listing_page(title, close_date=None, grades=[], **kwargs):
         close_date=close_date or timezone.now().date(),
         description='description',
         division=mommy.make(JobCategory),
-        region=mommy.make(JobRegion, name='Silicon Valley'),
+        location=mommy.make(JobLocation, name='Silicon Valley'),
         **kwargs
     )
 
@@ -151,7 +151,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<td>TITLE</td>'
             '<td>GRADE</td>'
             '<td>POSTING CLOSES</td>'
-            '<td>REGION</td>'
+            '<td>LOCATION</td>'
             '</tr>'
         ))
 
@@ -168,7 +168,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<th scope="col">TITLE</th>'
             '<th scope="col">GRADE</th>'
             '<th scope="col">POSTING CLOSES</th>'
-            '<th scope="col">REGION</th>'
+            '<th scope="col">LOCATION</th>'
             '</tr>'
         ))
 
@@ -186,7 +186,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<th scope="col">TITLE</th>'
             '<th scope="col">GRADE</th>'
             '<th scope="col">POSTING CLOSES</th>'
-            '<th scope="col">REGION</th>'
+            '<th scope="col">LOCATION</th>'
             '</tr>'
             '</thead>'
         ))
@@ -211,13 +211,13 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<td data-label="TITLE"><a class="" href=".*">Assistant</a></td>'
             '<td data-label="GRADE">12</td>'
             '<td data-label="POSTING CLOSES">Apr. 21, 2099</td>'
-            '<td data-label="REGION">Silicon Valley</td>'
+            '<td data-label="LOCATION">Silicon Valley</td>'
             '</tr>'
             '<tr>'
             '<td data-label="TITLE"><a class="" href=".*">Manager</a></td>'
             '<td data-label="GRADE">1, 2, 3</td>'
             '<td data-label="POSTING CLOSES">Aug. 5, 2099</td>'
-            '<td data-label="REGION">Silicon Valley</td>'
+            '<td data-label="LOCATION">Silicon Valley</td>'
             '</tr>'
         ))
 
@@ -235,7 +235,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<td data-label="TITLE"><a class="" href=".*">CEO</a></td>'
             '<td data-label="GRADE"></td>'
             '<td data-label="POSTING CLOSES">Dec. 1, 2099</td>'
-            '<td data-label="REGION">Silicon Valley</td>'
+            '<td data-label="LOCATION">Silicon Valley</td>'
             '</tr>'
         ))
 
