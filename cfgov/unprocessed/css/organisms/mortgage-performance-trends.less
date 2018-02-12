@@ -15,7 +15,7 @@
              unit( 15px / @base-font-size-px, em );
 
     h3 span {
-      .u-webfont-demi();
+      font-weight: 600;
     }
 
     // Override some cfpb-chart-builder styles
@@ -58,7 +58,9 @@
 }
 
 .m-mp-map-tooltip {
-    .u-webfont-regular();
+    // Needed to override a Highcharts default
+    font-family: 'Avenir Next', Arial, sans-serif;
+
     dt {
         border-bottom: 1px solid @black;
         font-size: @size-vi;
