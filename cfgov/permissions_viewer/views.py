@@ -2,7 +2,7 @@ from collections import namedtuple, OrderedDict
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 
 from wagtail.wagtailcore.models import Page, Collection
 
@@ -13,6 +13,7 @@ CollectionPermissions = namedtuple('CollectionPermissions',
                                    ['collection', 'group_permissions'])
 CTPermissions = namedtuple('CTPermissions',
                            ['content_type', 'group_permissions'])
+
 
 def display_group_roster(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
@@ -25,10 +26,11 @@ def display_group_roster(request, group_id):
         'group': group,
     })
 
+
 def display_user_permissions(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     pages = Page.objects.filter(group_permissions__group__user=user).distinct()
-    
+
     page_permissions = []
     groups = list(user.groups.all())
     for page in pages:
@@ -36,11 +38,11 @@ def display_user_permissions(request, user_id):
                        for group in groups]
         page_permissions.append(PagePermissions(page=page,
                                 group_permissions=group_perms))
-    
+
     collection_permissions = []
     collections = list(Collection.objects.filter(
         group_permissions__group__user=user).distinct())
-    
+
     for collection in collections:
         group_perms = [
             group.collection_permissions.filter(
@@ -51,8 +53,6 @@ def display_user_permissions(request, user_id):
                 collection=collection,
                 group_permissions=group_perms))
 
-
-
     groups_content_types = ContentType.objects.filter(
         permission__group__user=user).distinct().order_by('app_label', 'model')
 
@@ -60,8 +60,8 @@ def display_user_permissions(request, user_id):
     for ct in groups_content_types:
         group_perms = [group.permissions.filter(
             content_type=ct) for group in groups]
-        group_ct_permissions.append(CTPermissions(content_type=ct,
-                                    group_permissions=group_perms))
+        group_ct_permissions.append(
+            CTPermissions(content_type=ct, group_permissions=group_perms)) 
 
     users_content_types = ContentType.objects.filter(
         permission__user=user).distinct().order_by('app_label', 'model')
