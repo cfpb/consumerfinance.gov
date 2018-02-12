@@ -16,20 +16,15 @@
 {% endblock css %}
 
 {% block javascript %}
-    <script
-  src="http://code.jquery.com/jquery-3.3.1.slim.min.js"
-  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
-  crossorigin="anonymous"></script>
     {{ super() }}
     <script src="{{ static('js/owning-a-home/common.js') }}"></script>
-
 {% endblock javascript %}
 
 {% block content %}
 <main class="content">
     <div class="content_wrapper">
         <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a href="/owning-a-home/" class="breadcrumbs_link">Owning a Home</a>
+            <a href="/owning-a-home/" class="breadcrumbs_link">Buying a House</a>
         </nav>
     </div>
     <div class="content_wrapper">

@@ -9,7 +9,7 @@ import { instantiateAll } from '../../modules/util/atomic-helpers';
 import { throttle } from '../../modules/util/throttle';
 
 const EXPLAIN_TYPES = {
-  CHECKLIST: 'checklist',
+  CHECKLIST:   'checklist',
   DEFINITIONS: 'definitions'
 };
 

@@ -1,4 +1,3 @@
-// Required modules.
 import { checkDom, destroyInitFlag, setInitFlag }
   from '../../modules/util/atomic-helpers';
 import DT from './dom-tools';
