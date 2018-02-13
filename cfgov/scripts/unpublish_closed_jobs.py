@@ -1,5 +1,5 @@
 import logging
-import urllib2
+from urllib2 import urlopen
 import requests
 import json
 import os
@@ -19,11 +19,14 @@ HEADERS = {
 
 
 def job_page_closed(link):
-    webpage = urllib2.urlopen(link)
-    soup = BeautifulSoup(webpage, 'html.parser')
-    closed_text = soup.find('div', attrs={'class': 'usajobs-joa-closed'})
-    if closed_text:
-        return 'This job announcement has closed' in closed_text.contents
+    try:
+        webpage = urlopen(link)
+        soup = BeautifulSoup(webpage, 'html.parser')
+        closed_text = soup.find('div', attrs={'class': 'usajobs-joa-closed'})
+        if closed_text:
+            return 'This job announcement has closed' in closed_text.contents
+    except:
+        pass
 
 
 def job_archived(link):
@@ -47,6 +50,7 @@ def run():
 
     if job_pages:
         for page in job_pages:
+            logger.info('Job posting {} found.'.format(page.title))
             if page.usajobs_application_links:
                 closed_count = 0
                 links = page.usajobs_application_links.all()
