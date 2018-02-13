@@ -20,25 +20,49 @@ class JobListingPage(CFGOVPage):
     description = RichTextField('Summary')
     open_date = models.DateField('Open date')
     close_date = models.DateField('Close date')
-    salary_min = models.DecimalField('Minimum salary', max_digits=11,
-                                     decimal_places=2)
-    salary_max = models.DecimalField('Maximum salary', max_digits=11,
-                                     decimal_places=2)
-    division = models.ForeignKey(JobCategory, on_delete=models.PROTECT,
-                                 null=True)
-    job_length = models.ForeignKey(JobLength, on_delete=models.PROTECT,
-                                   null=True, verbose_name="Position length",
-                                   blank=True)
-    service_type = models.ForeignKey(ServiceType, on_delete=models.PROTECT,
-                                     null=True, blank=True)
-    location = models.ForeignKey(JobLocation, related_name='job_listings',
-                                 on_delete=models.PROTECT)
+    salary_min = models.DecimalField(
+        'Minimum salary',
+        max_digits=11,
+        decimal_places=2
+    )
+    salary_max = models.DecimalField(
+        'Maximum salary',
+        max_digits=11,
+        decimal_places=2
+    )
+    division = models.ForeignKey(
+        JobCategory,
+        on_delete=models.PROTECT,
+        null=True
+    )
+    job_length = models.ForeignKey(
+        JobLength,
+        on_delete=models.PROTECT,
+        null=True,
+        verbose_name="Position length",
+        blank=True
+    )
+    service_type = models.ForeignKey(
+        ServiceType,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True
+    )
+    location = models.ForeignKey(
+        JobLocation,
+        related_name='job_listings',
+        on_delete=models.PROTECT
+    )
     allow_remote = models.BooleanField(
         default=False,
         help_text='Adds remote option to jobs with office locations.',
         verbose_name="Location can also be remote"
     )
-    responsibilities = RichTextField('Responsibilities', null=True, blank=True)
+    responsibilities = RichTextField(
+        'Responsibilities',
+        null=True,
+        blank=True
+    )
     travel_required = models.BooleanField(
         blank=False,
         default=False,
@@ -48,10 +72,10 @@ class JobListingPage(CFGOVPage):
         )
     )
     travel_details = RichTextField(
-        'Travel details',
         null=True,
         blank=True,
-        help_text='Optional: Add content for "Travel required" section.')
+        help_text='Optional: Add content for "Travel required" section.'
+    )
     additional_section_title = models.CharField(
         max_length=255,
         null=True,
@@ -91,8 +115,8 @@ class JobListingPage(CFGOVPage):
             FieldPanel('responsibilities', classname='full'),
             FieldPanel('travel_required', classname='full'),
             FieldPanel('travel_details', classname='full'),
-            FieldPanel('additional_section_title'),
-            FieldPanel('additional_section_content'),
+            FieldPanel('additional_section_title', classname='full'),
+            FieldPanel('additional_section_content', classname='full'),
         ], heading='Description'),
         InlinePanel(
             'usajobs_application_links',

@@ -7,7 +7,7 @@ from jobmanager.models import (
 APPLICANT_TYPES = [
     {
         'title': 'Open to the public',
-        'description': 'U.S. citizens, nationals or those who owe '
+        'description': 'U.S. citizens, nationals, or those who owe '
                        'allegiance to the U.S., and excepted service '
                        'employees are invited to apply for this position.',
         'related_term': 'Open to All US Citizens'
@@ -15,8 +15,8 @@ APPLICANT_TYPES = [
     {
         'title': 'Status candidates',
         'description': 'Federal employees, including current and former '
-                       ' competitive service; veterans; and individuals '
-                       'with a disability are invited to apply for '
+                       'competitive service, veterans, and individuals '
+                       'with a disability, are invited to apply for '
                        'this position.',
         'related_term': 'Open to status candidates'
     }

@@ -21,7 +21,7 @@
         <dl class="job-details">
             <dt>Division/Office: </dt>
             <dd>{{ page.division }}</dd>
-            <dt>Closing Date:</dt>
+            <dt>Closing date:</dt>
             <dd>
                 {% if page.close_date %}
                     {{ time.render(page.close_date, {'date': true}, text_format=True) }}
@@ -50,12 +50,13 @@
                 {% endif %}
                 ${{ '{:,.0f}'.format( page.salary_min ) }}–${{ '{:,.0f}'.format( page.salary_max ) }}
                 <a class="a-link 
+                          a-link__icon
                           cf-icon 
                           cf-icon__after 
                           cf-icon-download 
                           pay-grade-link"
                    href="http://files.consumerfinance.gov/f/documents/cfpb_pay_scales.pdf">
-                   See information on grades and base pay ranges
+                   <span class="a-link_text">See information on grades and base pay ranges</span>
                 </a>
             </dd>
             {% if usajobs_links %}
@@ -88,7 +89,7 @@
                     {% if page.responsibilities %}
                         <div class="block block__sub">
                             <h4>Responsibilities</h4>
-                            {{ page.responsibilities | safe }}
+                            {{ parse_links( page.responsibilities ) | safe }}
                         </div>
                     {% endif %}
         
@@ -96,7 +97,7 @@
                         <div class="block block__sub">
                             <h4>Travel required</h4>
                             {% if page.travel_details %}
-                            {{ page.travel_details | safe }}
+                            {{ parse_links( page.travel_details ) | safe }}
                             {% else %}
                             Yes
                             {% endif %}
@@ -106,7 +107,7 @@
                     {% if page.additional_section_title and page.additional_section_content %}
                         <div class="block block__sub">
                             <h4>{{ page.additional_section_title }}</h4>
-                            {{ page.additional_section_content | safe }}
+                            {{ parse_links( page.additional_section_content ) | safe }}
                         </div>
                     {% endif %}
 
@@ -142,8 +143,8 @@
         <div class="block block__sub">
             <div class="content-l">
                 <div class="content-l_col content-l_col-1-2">
-                    <div class='embed-container'>
-                        <iframe src='https://www.youtube.com/embed/XCbZnTIeTOY' frameborder='0' allowfullscreen></iframe>
+                    <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/XCbZnTIeTOY" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="content-l_col content-l_col-1-2">
@@ -207,7 +208,7 @@
         </h2>
     </header>
 
-    <ul class="m-list m-list__links u-mb0">
+    <ul class="m-list m-list__links">
         <li class="m-list_item">
             <a href="/about-us/careers/working-at-cfpb" class="m-list_link">
                 Working at CFPB
@@ -219,7 +220,7 @@
             </a>
         </li>
     </ul>
-    <p class="u-mt15">
+    <p>
        The Consumer Financial Protection Bureau (CFPB) is an equal
        opportunity employer and seeks to create and maintain a vibrant
        and diverse workforce. Women, minorities, veterans, and
@@ -295,12 +296,12 @@
         "jobLocation" : {
             "@type": "Place",
             "address": [
-                {% if location_type == 'office' and page.allow_remote %}
+            {% if location_type == 'office' and page.allow_remote -%}
                 {
                     "@type": "PostalAddress",
                     "addressCountry": "US"
                 }
-                {% elif cities %}
+            {% elif cities %}
                 {%- for city in cities -%}
                     {
                         "@type": "PostalAddress",
@@ -309,7 +310,7 @@
                         "addressCountry": "US"
                     }{{ ', ' if not loop.last else '' }}
                 {%- endfor -%}
-                {% endif %}
+            {% endif %}
             ]
         },
         "employmentType" : "FULL_TIME"
