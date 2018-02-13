@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='joblistingpage',
             name='travel_details',
-            field=wagtail.wagtailcore.fields.RichTextField(help_text=b'Optional: Add content for "Travel required" section.', null=True, verbose_name=b'Travel details', blank=True),
+            field=wagtail.wagtailcore.fields.RichTextField(help_text=b'Optional: Add content for "Travel required" section.', null=True, blank=True),
         ),
         migrations.AddField(
             model_name='joblistingpage',
