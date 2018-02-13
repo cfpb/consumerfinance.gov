@@ -80,14 +80,12 @@ class ServiceTypeModelAdmin(ModelAdmin):
     model = ServiceType
     menu_label = 'Service Type'
     menu_icon = 'site'
-    list_display = ('service_type',)
 
 
 class JobLengthModelAdmin(ModelAdmin):
     model = JobLength
     menu_label = 'Job Length'
     menu_icon = 'site'
-    list_display = ('job_length',)
 
 
 @modeladmin_register
