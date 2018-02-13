@@ -3,5 +3,6 @@
 django-debug-toolbar==1.7
 django-livereload==1.2
 django-sslserver==0.19
-tox==2.3.1
+tox-pip-extensions==1.1.0
+tox==2.8.2
 Werkzeug==0.10.4
