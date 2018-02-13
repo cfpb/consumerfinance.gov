@@ -1,3 +1,5 @@
+from six import string_types as basestring
+
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 

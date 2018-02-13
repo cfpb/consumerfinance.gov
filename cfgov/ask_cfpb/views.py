@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import json
+from six import text_type as unicode
 from urlparse import urljoin
 
 from django.http import Http404, HttpResponse, JsonResponse
