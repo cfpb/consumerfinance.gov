@@ -215,27 +215,22 @@ gulp.task( 'scripts:oah', scriptsOAH );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
-gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
 gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
+gulp.task( 'scripts:ondemand', [
+  'scripts:ondemand:header',
+  'scripts:ondemand:footer',
+  'scripts:ondemand:nonresponsive'
+] );
+gulp.task( 'scripts:nemo', scriptsNemo );
 
-gulp.task( 'scripts:ondemand',
-  gulp.parallel(
-    'scripts:ondemand:header',
-    'scripts:ondemand:footer',
-    'scripts:ondemand:nonresponsive'
-  )
-);
-
-gulp.task( 'scripts',
-  gulp.parallel(
-    'scripts:polyfill',
-    'scripts:modern',
-    'scripts:oah',
-    'scripts:ie',
-    'scripts:external',
-    'scripts:nemo',
-    'scripts:spanish'
-  )
-);
+gulp.task( 'scripts', [
+  'scripts:polyfill',
+  'scripts:modern',
+  'scripts:oah',
+  'scripts:ie',
+  'scripts:external',
+  'scripts:nemo',
+  'scripts:spanish'
+] );
