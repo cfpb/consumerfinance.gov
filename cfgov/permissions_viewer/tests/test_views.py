@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.core.urlresolvers import reverse
 
 User = get_user_model()
@@ -46,3 +46,16 @@ class TestPermissionsViews(TestCase):
 
         self.assertContains(response, 'foo')
         self.assertContains(response, 'Developers')
+
+    def group_model_permission(self):
+        client = Client()
+        client.login(username='foo', password='bar')
+
+        testpermission = Permission.objects.get(
+            name='Can add log entry')
+        self.testgroup.permissions.add(testpermission)
+
+        url = reverse('permissions:user', args=[self.testuser.pk])
+        response = client.get(url)
+
+        self.assertContains(response, 'Can add log entry')
