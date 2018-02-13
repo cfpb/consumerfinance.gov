@@ -26,33 +26,12 @@
     margin-bottom: 0;
 }
 
-.vacancy-announcement_apply {
-    .embed-container {
-        position: relative; 
-        padding-bottom: 56.25%; 
-        height: 0; 
-        overflow: hidden; 
-        max-width: 100%;
-
-        iframe,
-        object,
-        embed {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    } 
-}
-
 .js .vacancy-announcement_description .o-expandable__read-more[data-js-hook]:not(.o-expandable__expanded) {
     .respond-to-max( @bp-xs-max, {
         .o-expandable_content {
             // shows approx. 10 lines of content
             height:  unit( @base-line-height-px * 10 / @base-font-size-px, em );
-            overflow: hidden;
         }
-    });
+    } );
 }
 
