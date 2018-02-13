@@ -18,8 +18,9 @@ CTPermissions = namedtuple('CTPermissions',
 def display_group_roster(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
 
-    active_users = group.user_set.filter(is_active=True)
-    inactive_users = group.user_set.filter(is_active=False)
+    active_users = group.user_set.filter(is_active=True).order_by('username')
+    inactive_users = group.user_set.filter(
+        is_active=False).order_by('username')
     return render(request, 'permissions_viewer/group.html', {
         'active_users': active_users,
         'inactive_users': inactive_users,
@@ -81,9 +82,9 @@ def display_user_permissions(request, user_id):
 
 
 def index(request):
-    active_users = User.objects.filter(is_active=True)
-    inactive_users = User.objects.filter(is_active=False)
-    groups = Group.objects.all()
+    active_users = User.objects.filter(is_active=True).order_by('username')
+    inactive_users = User.objects.filter(is_active=False).order_by('username')
+    groups = Group.objects.all().order_by('name')
 
     return render(request, 'permissions_viewer/index.html', {
         'active_users': active_users,
