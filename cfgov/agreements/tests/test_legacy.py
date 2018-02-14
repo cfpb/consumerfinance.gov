@@ -230,7 +230,6 @@ class TemplateTags(TestCase):
         t = Template("{% load agreements_extras %}" +
                      "{% issuer_select id %}")
         soup = BeautifulSoup(t.render(Context({'id': selected.slug})))
-        option = [o for o in soup.find_all('option')
-                  if o.get('selected') == '']
+        option = soup.find_all('option', selected=True)
         self.assertTrue(len(option) == 1)
         self.assertTrue(selected.name in option[0])
