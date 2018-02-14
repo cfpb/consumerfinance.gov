@@ -79,7 +79,6 @@ INSTALLED_APPS = (
     'sheerlike',
     'legacy',
     'django_extensions',
-    'reversion',
     'jobmanager',
     'wellbeing',
     'search',

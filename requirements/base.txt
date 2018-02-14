@@ -14,7 +14,6 @@ django-extensions==1.5.5
 django-haystack==2.6.0
 django-localflavor==1.1
 django-overextends==0.4.1
-django-reversion==1.10.1
 django-storages==1.1.8
 django-treebeard==3.0
 django-watchman==0.13.1
