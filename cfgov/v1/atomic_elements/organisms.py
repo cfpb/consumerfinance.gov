@@ -1,5 +1,6 @@
 import json
 from functools import partial
+from six import string_types as basestring
 
 from django import forms
 from django.apps import apps

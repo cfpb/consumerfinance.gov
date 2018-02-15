@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+from six.moves import range
+
 import csv
 import itertools
 import logging
@@ -102,7 +104,7 @@ class BulkZipCodeGeocoder(object):
 
     @staticmethod
     def generate_possible_zipcodes(start=0):
-        for n in xrange(start, 100000):
+        for n in range(start, 100000):
             yield '{:05d}'.format(n)
 
     def mapbox_geocode_zipcodes(self, zipcodes):

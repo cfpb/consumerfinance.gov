@@ -15,7 +15,11 @@ sample_zip = os.path.dirname(__file__) + '/sample-agreements.zip'
 
 class TestDataLoad(TestCase):
     def test_import_no_s3(self):
-        management.call_command('import_agreements', '--path=' + sample_zip)
+        management.call_command(
+            'import_agreements',
+            '--path=' + sample_zip,
+            verbosity=0
+        )
         self.assertEqual(Issuer.objects.all().count(), 2)
 
     @mock.patch.dict(os.environ, {'AGREEMENTS_S3_UPLOAD_ENABLED': 'yes'})
@@ -49,7 +53,11 @@ class TestDataLoad(TestCase):
 class TestManagementUtils(TestCase):
 
     def test_get_existing_issuer(self):
-        management.call_command('import_agreements', '--path=' + sample_zip)
+        management.call_command(
+            'import_agreements',
+            '--path=' + sample_zip,
+            verbosity=0
+        )
         issuer = util.get_issuer(u'Bankers\u2019 Bank of Kansas')
         self.assertEqual(issuer.slug, u'bankers-bank-of-kansas')
 

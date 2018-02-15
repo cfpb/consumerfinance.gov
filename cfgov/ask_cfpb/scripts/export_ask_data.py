@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
-import HTMLParser
+from six.moves import html_parser as HTMLParser
 
 from django.utils import html
 
