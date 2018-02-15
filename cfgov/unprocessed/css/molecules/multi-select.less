@@ -80,27 +80,30 @@
     }
 
     &_choices {
+        margin-right: unit( -10px / @base-font-size-px, em );
         margin-bottom: 0;
 
         li {
             display: inline-block;
 
-            margin-right: unit( 15px / @base-font-size-px, em );
+            margin-right: unit( 10px / @base-font-size-px, em );
         }
 
         li:last-child {
-          margin-bottom: unit( 5px / @base-font-size-px, em );
+          margin-bottom: unit( 10px / @base-font-size-px, em );
         }
 
         label {
-            display: block;
+            display: inline-block;
             padding: 2px 5px;
+            padding-right: unit( 25px / 14px, em );
 
             background-color: @navy-80;
             border-radius: unit( 4px / @base-font-size-px, em );
             color: @white;
             cursor: pointer;
             font-size: unit( 14px / @base-font-size-px, em );
+            position: relative;
 
             &:hover {
                 background-color: @navy;
@@ -110,12 +113,14 @@
                 }
             }
 
-            &:after {
+            & span:after {
                 .cf-icon();
+                display: inline;
+                position: absolute;
+                top: 3px;
+                right: 5px;
 
-                margin-left: unit( 15px / 14px, em );
-
-                color: @navy-20;
+                color: @white;
                 content: @cf-icon-delete;
             }
         }

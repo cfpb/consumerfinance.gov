@@ -310,13 +310,18 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           'data-option': option.value
         } );
 
-        domCreate( 'label', {
+        const _selectionsItemLabelDom = domCreate( 'label', {
           'for':       option.value,
-          'innerHTML': option.text,
           'inside':    _selectionsItemDom
         } );
 
+        domCreate( 'span', {
+          'innerHTML': option.text,
+          'inside':    _selectionsItemLabelDom
+        } );
+
         _selectionsDom.appendChild( _selectionsItemDom );
+        _selectionsItemDom.appendChild( _selectionsItemLabelDom );
 
         option.checked = true;
         _selectionsCount += 1;
