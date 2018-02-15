@@ -1,4 +1,4 @@
-from urllib import urlencode
+from six.moves.urllib.parse import urlencode
 
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse

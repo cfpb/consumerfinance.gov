@@ -1,11 +1,14 @@
-try:
-    from django.urls import RegexURLPattern, RegexURLResolver
-except ImportError:
-    from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
+from imp import reload
 
 from django.test import TestCase, override_settings
 
 from cfgov import urls
+
+
+try:
+    from django.urls import RegexURLPattern, RegexURLResolver
+except ImportError:
+    from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
 
 
 # Whitelist is a list of *strings* that match the beginning of a regex string.

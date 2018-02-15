@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-import HTMLParser
 import json
 from collections import Counter, OrderedDict
+from six.moves import html_parser as HTMLParser
 
 from django import forms
 from django.apps import apps
