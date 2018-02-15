@@ -90,7 +90,6 @@ class UnpublishClosedJobsTestCase(TestCase):
             '</html>'
         )
 
-
     @patch('requests.get')
     @patch('scripts.unpublish_closed_jobs.urlopen')
     def test_job_listing_page_still_live_if_job_not_closed(
