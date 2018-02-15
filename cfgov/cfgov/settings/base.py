@@ -35,6 +35,7 @@ USE_ETAGS = True
 # Application definition
 
 INSTALLED_APPS = (
+    'permissions_viewer',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',
@@ -78,7 +79,6 @@ INSTALLED_APPS = (
     'sheerlike',
     'legacy',
     'django_extensions',
-    'reversion',
     'jobmanager',
     'wellbeing',
     'search',
@@ -542,7 +542,8 @@ CSP_IMG_SRC = (
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
     'data:',
-    'www.facebook.com')
+    'www.facebook.com',
+    'www.gravatar.com')
 
 # These specify what URL's we allow to appear in frames/iframes
 CSP_FRAME_SRC = (
