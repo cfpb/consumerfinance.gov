@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
 import datetime
-import HTMLParser
 import json
 import unittest
+from six.moves import html_parser as HTMLParser
 
 from django.apps import apps
 from django.core.urlresolvers import reverse
