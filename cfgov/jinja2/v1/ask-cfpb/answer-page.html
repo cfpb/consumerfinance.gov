@@ -12,6 +12,9 @@
 {% block desc %}
     {{ description | striptags | safe}}
 {% endblock %}
+{%- block og_desc -%}
+  {{- page.search_description or page.seo_title or page.snippet|striptags -}}
+{%- endblock -%}
 
 {% block banner_top %}
     {% if about_us %}
