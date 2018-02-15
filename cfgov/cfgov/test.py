@@ -1,11 +1,14 @@
 from __future__ import print_function
 
+import contextlib
 import importlib
 import logging
 import os
 import re
+import six
 import subprocess
 import sys
+from six import StringIO
 
 from django.apps import apps
 from django.conf import settings
@@ -17,6 +20,20 @@ from django.test.runner import DiscoverRunner
 
 from mock import Mock
 from scripts import initial_data, test_data
+
+
+# contextlib.redirect_stdout exists in Python 3 but not in Python 2.
+# This is an approximation.
+if six.PY2:
+    @contextlib.contextmanager
+    def redirect_stdout(stream):
+        sys.stdout = stream
+        try:
+            yield
+        except:
+            raise
+        finally:
+            sys.stdout = sys.__stdout__
 
 
 class PlaceholderJSMixin(object):
@@ -52,6 +69,18 @@ class PlaceholderJSMixin(object):
 
 
 class TestDataTestRunner(PlaceholderJSMixin, DiscoverRunner):
+    def run_suite(self, suite, **kwargs):
+        stdout = StringIO()
+        with redirect_stdout(stdout):
+            return_value = super(TestDataTestRunner, self).run_suite(
+                suite,
+                **kwargs
+            )
+        assert stdout.getvalue() == '', (
+            'there is content in stdout: {}'.format(stdout.getvalue())
+        )
+        return return_value
+
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
         # Disable logging below CRITICAL during tests.
         logging.disable(logging.CRITICAL)
