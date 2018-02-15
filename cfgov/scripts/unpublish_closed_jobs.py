@@ -26,31 +26,55 @@ def job_page_closed(link):
         if closed_text:
             return 'This job announcement has closed' in closed_text.contents
     except:
-        pass
+        logger.info('Check of USAJobs page "{}" failed'.format(link))
 
 
 def job_archived(link):
     try:
-        control_number = os.path.basename(os.path.normpath(link))
-        response = requests.get(URL, headers=HEADERS, params={
-            'ControlNumber': control_number,
+        job = os.path.basename(os.path.normpath(link))
+        params = {
+            'ControlNumber': job,
             'WhoMayApply': 'all'
-        })
-        results = json.loads(response.text)['SearchResult']
-        search_items = results['SearchResultItems']
-        return search_items[0]['MatchedObjectId'] == control_number
+        }
+        response = requests.get(URL, headers=HEADERS,
+                                params=params, timeout=45)
+        response.raise_for_status()
+        response_text = json.loads(response.text)
+        results = response_text['SearchResult']
+        if results['SearchResultCount']:
+            item = results['SearchResultItems'][0]
+            return item['MatchedObjectId'] == job
+    except requests.exceptions.HTTPError as e:
+        logger.info(
+            'Request for {} failed with HTTP error: "{}"'.format(job, e)
+        )
+    except requests.exceptions.Timeout:
+        logger.info(
+            'Request for {} timed out'.format(job)
+        )
+    except requests.exceptions.ConnectionError as e:
+        logger.info(
+            'Request for {} failed with connection error: "{}"'.format(job, e)
+        )
+    except requests.exceptions.RequestException as e:
+        logger.info(
+            'Request for {} failed with error: "{}"'.format(job, e)
+        )
     except:
-        pass
+        logger.info(
+            'API check for {} failed'.format(job)
+        )
 
 
 def run():
     logger.info('Searching for live job posting pages...')
-
     job_pages = JobListingPage.objects.filter(live=True)
 
     if job_pages:
         for page in job_pages:
-            logger.info('Job posting {} found.'.format(page.title))
+            logger.info(
+                'Checking status of job posting "{}"...'.format(page.title)
+            )
             if page.usajobs_application_links:
                 closed_count = 0
                 links = page.usajobs_application_links.all()
