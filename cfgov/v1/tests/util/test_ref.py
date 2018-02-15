@@ -47,7 +47,7 @@ class TestGetCategoryChildren(TestCase):
 
     def test_get_children_of_multiple_categories(self):
         self.assertEqual(
-            get_category_children(['Final Rule', 'Implementation Resource']),
+            get_category_children(['Final rule', 'Implementation Resource']),
             ['compliance-aid', 'final-rule', 'interim-final-rule', 'official-guidance']
         )
 

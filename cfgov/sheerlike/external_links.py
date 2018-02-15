@@ -1,5 +1,7 @@
 import warnings
 
+from six import string_types as basestring
+
 from django.conf import settings
 
 from v1 import parse_links
