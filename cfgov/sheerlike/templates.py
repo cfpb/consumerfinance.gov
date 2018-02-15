@@ -1,4 +1,5 @@
 import datetime
+from six import string_types as basestring
 
 from dateutil import parser
 from pytz import timezone
