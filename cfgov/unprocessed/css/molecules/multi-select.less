@@ -80,12 +80,16 @@
     }
 
     &_choices {
+        // The following is required to make side-by-side LI
+        // have a space between them.
         margin-right: unit( -10px / @base-font-size-px, em );
         margin-bottom: 0;
 
         li {
             display: inline-block;
 
+            // The following is required to make side-by-side LI
+            // have a space between them.
             margin-right: unit( 10px / @base-font-size-px, em );
         }
 
@@ -96,10 +100,10 @@
         label {
             display: inline-block;
             padding: 2px 5px;
-            padding-right: unit( 25px / 14px, em );
+            padding-right: unit( 25px / @size-v, em );
 
             background-color: @navy-80;
-            border-radius: unit( 4px / @base-font-size-px, em );
+            border-radius: unit( 4px / @size-v, em );
             color: @white;
             cursor: pointer;
             font-size: unit( 14px / @base-font-size-px, em );
