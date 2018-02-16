@@ -186,7 +186,7 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertFalse(self.page.live)
         self.assertTrue(self.page.expired)
 
-    @patch('scripts.unpublish_closed_jobs.logger.info')
+    @patch('scripts.unpublish_closed_jobs.logger.exception')
     @patch('requests.get')
     @patch('scripts.unpublish_closed_jobs.urlopen')
     def test_api_check_failure(self, page_check, api_check, logger_mock):
@@ -196,13 +196,11 @@ class UnpublishClosedJobsTestCase(TestCase):
         page_check.return_value = self.open_usajobs_page()
         api_check.side_effect = requests.exceptions.ConnectionError
         unpublish_closed_jobs.run()
-        logger_mock.assert_called_with(
-            'Request for 1 failed with connection error: ""'
-        )
+        logger_mock.assert_called_with('API check for job "1" failed')
 
         self.assertTrue(self.page.live)
 
-    @patch('scripts.unpublish_closed_jobs.logger.info')
+    @patch('scripts.unpublish_closed_jobs.logger.exception')
     @patch('requests.get')
     @patch('scripts.unpublish_closed_jobs.urlopen')
     def test_page_check_failure(self, page_check, api_check, logger_mock):
