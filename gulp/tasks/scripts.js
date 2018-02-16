@@ -8,6 +8,7 @@ const browserSync = require( 'browser-sync' );
 const config = require( '../config.js' );
 const configLegacy = config.legacy;
 const configScripts = config.scripts;
+const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const gulpConcat = require( 'gulp-concat' );
 const gulpModernizrBuild = require( 'gulp-modernizr-build' );
@@ -15,7 +16,6 @@ const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
-const fs = require( 'fs' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
@@ -220,7 +220,7 @@ function scriptsApps() {
       _processScript(
         webpackConfig.appsConf,
         `/apps/${app}/js/**/*.js`,
-        `/apps/${app}`
+        `/apps/${app}/js`
       )
     )
   } );

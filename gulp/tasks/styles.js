@@ -6,6 +6,7 @@ const configPkg = config.pkg;
 const configBanner = config.banner;
 const configStyles = config.styles;
 const configLegacy = config.legacy;
+const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const gulpBless = require( 'gulp-bless' );
 const gulpCleanCss = require( 'gulp-clean-css' );
@@ -16,6 +17,7 @@ const gulpPostcss = require( 'gulp-postcss' );
 const gulpRename = require( 'gulp-rename' );
 const gulpSourcemaps = require( 'gulp-sourcemaps' );
 const handleErrors = require( '../utils/handle-errors' );
+const mergeStream = require( 'merge-stream' );
 const paths = require( '../../config/environment' ).paths;
 const postcssUnmq = require( 'postcss-unmq' );
 
@@ -275,38 +277,56 @@ function stylesNemoIE() {
 }
 
 /**
- * Process Owning a Home CSS.
+ * Process application CSS in /apps/.
  * @returns {PassThrough} A source stream.
  */
-function stylesOAH() {
-  const oahPath = 'apps/owning-a-home';
-  return gulp.src( `${paths.unprocessed}/${oahPath}/css/main.less` )
-    .pipe( gulpNewer( {
-      dest:  `${paths.processed}/${oahPath}/css/main.css`,
-      extra: configStyles.otherBuildTriggerFiles
-    } ) )
-    .pipe( gulpSourcemaps.init() )
-    .pipe( gulpLess( configStyles.settings ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpPostcss( [
-      autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
-    ] ) )
-    .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
-    .pipe( gulpCleanCss( {
-      compatibility: 'ie9',
-      inline: [ 'none' ]
-    } ) )
-    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulp.dest( `${paths.processed}/${oahPath}/css` ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+function stylesApps() {
+
+  // Aggregate application namespaces that appear in unprocessed/apps.
+  // eslint-disable-line no-sync
+  let apps = fs.readdirSync( `${paths.unprocessed}/apps/` );
+
+  // Filter out .DS_STORE directory.
+  apps = apps.filter( dir => {
+    if ( dir.charAt( 0 ) !== '.' ) return dir;
+  } );
+
+  // Process each application's CSS and store the gulp streams.
+  let streams = [];
+  apps.forEach( app => {
+    streams.push(
+      gulp.src( `${paths.unprocessed}/apps/${app}/css/main.less` )
+        .pipe( gulpNewer( {
+          dest:  `${paths.processed}/apps/${app}/css/main.css`,
+          extra: configStyles.otherBuildTriggerFiles
+        } ) )
+        .pipe( gulpSourcemaps.init() )
+        .pipe( gulpLess( configStyles.settings ) )
+        .on( 'error', handleErrors )
+        .pipe( gulpPostcss( [
+          autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+        ] ) )
+        .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
+        .pipe( gulpCleanCss( {
+          compatibility: 'ie9',
+          inline: [ 'none' ]
+        } ) )
+        .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+        .pipe( gulp.dest( `${paths.processed}/apps/${app}/css` ) )
+        .pipe( browserSync.reload( {
+          stream: true
+        } ) )
+    )
+  } );
+
+  // Return all app's gulp streams as a merged stream.
+  return mergeStream( ...streams );
 }
 
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:stylesIE8', stylesIE8 );
 gulp.task( 'styles:stylesIE9', stylesIE9 );
-gulp.task( 'styles:stylesOAH', stylesOAH );
+gulp.task( 'styles:apps', stylesApps );
 gulp.task( 'styles:ondemand', stylesOnDemand );
 gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:knowledgebaseSpanishProd', stylesKnowledgebaseSpanishProd );
@@ -332,7 +352,7 @@ gulp.task( 'styles:nemo', [
 gulp.task( 'styles', [
   'styles:modern',
   'styles:ie',
-  'styles:stylesOAH',
+  'styles:apps',
   'styles:ondemand',
   'styles:featureFlags',
   'styles:knowledgebaseSpanish',
