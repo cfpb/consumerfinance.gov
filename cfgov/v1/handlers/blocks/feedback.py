@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-# import urllib
 
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
