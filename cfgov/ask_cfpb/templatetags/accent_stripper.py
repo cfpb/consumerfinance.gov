@@ -1,4 +1,5 @@
 import unicodedata
+from six import text_type as unicode
 
 from django import template
 

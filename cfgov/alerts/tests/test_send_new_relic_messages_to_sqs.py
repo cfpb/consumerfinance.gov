@@ -1,5 +1,6 @@
 import mock
 import unittest
+from io import TextIOBase
 
 from alerts.send_new_relic_messages_to_sqs import (
     cache_known_violations, read_known_violations
@@ -10,7 +11,7 @@ class TestSendNewRelicMessagesToSQS(unittest.TestCase):
 
     def test_cache_known_violations(self):
         with mock.patch('__builtin__.open', create=True) as mock_open:
-            mock_open.return_value = mock.MagicMock(spec=file)
+            mock_open.return_value = mock.MagicMock(spec=TextIOBase)
             cache_known_violations('/some/file.json', [12345, '23456'])
 
         file_handle = mock_open.return_value.__enter__.return_value
@@ -18,7 +19,7 @@ class TestSendNewRelicMessagesToSQS(unittest.TestCase):
 
     def test_read_known_violations_existing(self):
         with mock.patch('__builtin__.open', create=True) as mock_open:
-            mock_open.return_value = mock.MagicMock(spec=file)
+            mock_open.return_value = mock.MagicMock(spec=TextIOBase)
             file_handle = mock_open.return_value.__enter__.return_value
             file_handle.readlines.return_value = ['12345\n', '23456\n']
             known_violations = read_known_violations('/some/file.json')
