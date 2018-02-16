@@ -25,8 +25,8 @@ def job_page_closed(link):
         closed_text = soup.find('div', attrs={'class': 'usajobs-joa-closed'})
         if closed_text:
             return 'This job announcement has closed' in closed_text.contents
-    except:
-        logger.info('Check of USAJobs page "{}" failed'.format(link))
+    except Exception:
+        logger.exception('Check of USAJobs page "{}" failed'.format(link))
 
 
 def job_archived(link):
@@ -44,25 +44,9 @@ def job_archived(link):
         if results['SearchResultCount']:
             item = results['SearchResultItems'][0]
             return item['MatchedObjectId'] == job
-    except requests.exceptions.HTTPError as e:
-        logger.info(
-            'Request for {} failed with HTTP error: "{}"'.format(job, e)
-        )
-    except requests.exceptions.Timeout:
-        logger.info(
-            'Request for {} timed out'.format(job)
-        )
-    except requests.exceptions.ConnectionError as e:
-        logger.info(
-            'Request for {} failed with connection error: "{}"'.format(job, e)
-        )
-    except requests.exceptions.RequestException as e:
-        logger.info(
-            'Request for {} failed with error: "{}"'.format(job, e)
-        )
-    except:
-        logger.info(
-            'API check for {} failed'.format(job)
+    except Exception:
+        logger.exception(
+            'API check for job "{}" failed'.format(job)
         )
 
 
