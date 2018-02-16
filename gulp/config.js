@@ -94,10 +94,6 @@ module.exports = {
       paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
     ]
   },
-  images: {
-    src:  [ paths.unprocessed + '/img/**', './cfgov/wellbeing/static/img/**' ],
-    dest: paths.processed + '/img'
-  },
   copy: {
     codejson: {
       src:  'code.json',
