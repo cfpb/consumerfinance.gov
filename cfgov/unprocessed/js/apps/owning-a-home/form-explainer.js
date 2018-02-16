@@ -155,7 +155,7 @@ class FormExplainer {
   updateImagePositionAfterAnimation( delay = 0 ) {
     setTimeout( () => {
       if ( window.outerWidth > 600 ) {
-        DT.nextFrame( this.updateStickiness( ) );
+        DT.nextFrame( this.updateStickiness.bind( this ) );
       }
     }, delay );
   }

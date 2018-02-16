@@ -1,5 +1,5 @@
 // Required modules.
-import { checkDom as _checkDom, setInitFlag as _setInitFlag }
+import { checkDom, setInitFlag }
   from '../../modules/util/atomic-helpers';
 import Expandable from './Expandable';
 import standardType from '../../modules/util/standard-type';
@@ -18,7 +18,7 @@ import standardType from '../../modules/util/standard-type';
 function ExpandableGroup( element, options = {} ) {
 
   const BASE_CLASS = 'o-expandable-group';
-  const _dom = _checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
   const _domChildren = _dom.querySelectorAll( '.o-expandable' );
   let _lastOpenChild;
   let _isAccordion;
@@ -30,7 +30,7 @@ function ExpandableGroup( element, options = {} ) {
    *   or undefined if it was already initialized.
    */
   function init() {
-    if ( !_setInitFlag( _dom ) ) {
+    if ( !setInitFlag( _dom ) ) {
       return standardType.UNDEFINED;
     }
 

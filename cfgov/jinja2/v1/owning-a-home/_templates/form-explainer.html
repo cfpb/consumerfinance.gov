@@ -9,12 +9,12 @@
 
    Renders the entire form explainer.
 
-   data:               The data structure is as follows:
-                       [
-                         { 'img': 'url-to-form-img'
-                           'terms': [ ... ]
-                         }
-                       ]
+   data: The data structure is as follows:
+         [
+          { 'img':   'url-to-form-img',
+             'terms': [ ... ]
+           }
+         ]
 
    ========================================================================== #}
 
@@ -48,7 +48,7 @@
             <div class="image-map_wrapper">
                 <div class="form-explainer_page-buttons">
                     <button class="prev a-btn a-btn__disabled">
-                        <span class="u-visually-hidden">Prev page</span>
+                        <span class="u-visually-hidden">Previous page</span>
                         <span class="cf-icon cf-icon-left"></span>
                     </button>
                     <button class="a-btn next">
@@ -71,7 +71,7 @@
         </figcaption>
     </figure>
     {% endfor %}
-</div><!-- ./explain -->
+</div>
 {% endmacro %}
 
 
@@ -85,20 +85,21 @@
 
    Render a list of o-expandable terms with definitions.
 
-   terms:              An array of term objects. See item() for info on term
-                       objects.
+   terms:    An array of term objects.
 
-   page_num:           The page that these map points belong to.
+   page_num: The page that these map points belong to.
 
    ========================================================================== #}
 
 {% macro render_map_points( terms, page_num ) %}
 {% for item in terms %}
 <a class="image-map_overlay image-map_overlay__{{ item.category }}"
-     style="{{ 'top:' + item.top + ';' 'left:' + item.left + ';' }}{{ 'width:' + item.width + ';' 'height:' + item.height + ';' if item.width and item.height }}"
-     href="{{ '#page-' + page_num|string + '-' + item.category + '-' + item.id }}"
-     id="{{ 'image-map_overlay__' + page_num|string + '-' + item.category + '-' + item.id }}"
-     tabindex="-1">
+   style="{{ 'top:' + item.top + ';' 'left:' + item.left + ';' }}
+          {{ 'width:' + item.width + ';' 'height:' + item.height + ';'
+          if item.width and item.height }}"
+   href="{{ '#page-' + page_num|string + '-' + item.category + '-' + item.id }}"
+   id="{{ 'image-map_overlay__' + page_num|string + '-' + item.category + '-' + item.id }}"
+   tabindex="-1">
     <span class="u-visually-hidden">{{ item.term }}</span>
  </a>
 {% endfor %}
@@ -115,23 +116,22 @@
 
    Render a list of o-expandable terms with definitions.
 
-   terms:              An array of term objects. See item() for info on term
-                       objects.
+   terms:    An array of term objects.
 
-   page_num:           The page that these terms belong to.
+   page_num: The page that these terms belong to.
 
    ========================================================================== #}
 
 {% macro render_terms( terms, page_num ) %}
 {% for item in terms %}
-    {{ term( item, loop.index, page_num ) }}
+    {{ render_term( item, loop.index, page_num ) }}
 {% endfor %}
 {% endmacro %}
 
 
 {# ==========================================================================
 
-   term( term, index, page_num )
+   render_term( term, index, page_num )
 
    ==========================================================================
 
@@ -139,27 +139,27 @@
 
    Render an o-expandable term with a definition.
 
-   item:               A term object. Term objects have the following structure:
-                        {
-                         'category':   'String containing the name of the category.'
-                         'definition': 'This definition can contain HTML.',
-                         'highlight':  'String containing a url to an image.'
-                         'id':         'a-unique-html-id.',
-                         'term':       'Term name.'
-                        }
+   item:      A term object. Term objects have the following structure:
+              {
+                'category':   'String containing the name of the category.'
+                'definition': 'This definition can contain HTML.',
+                'highlight':  'String containing a url to an image.',
+                'id':         'a-unique-html-id.',
+                'term':       'Term name.'
+              }
 
-   index:              The term's position within the array.
+   index:    The term's position within the array.
 
-   page_num:           The page that this term belongs to.
+   page_num: The page that this term belongs to.
 
    ========================================================================== #}
 
-{% macro term( item, index, page_num ) %}
+{% macro render_term( item, index, page_num ) %}
 {% if item.definition == '' %}
 <div class="o-expandable o-expandable__padded
             o-expandable__form-explainer
             o-expandable__form-explainer-{{ item.category }}"
-     id="{{ 'page-' + page_num |string + '-' + item.category + '-' + item.id }}"
+     id="{{ 'page-' + page_num | string + '-' + item.category + '-' + item.id }}"
      tabindex="0">
     <span class="o-expandable_header">
         <span class="o-expandable_label">
@@ -193,10 +193,10 @@
             </span>
         </span>
     </button>
-    <div class="o-expandable_content u-stick" tabindex="0">
-        {{ item.definition|safe }}
+    <div class="o-expandable_content" tabindex="0">
+        {{ item.definition | safe }}
         {% if item.highlight -%}
-            <img class="u-stick_bottom" src="{{ item.highlight }}" alt="">
+            <img src="{{ item.highlight }}" alt="">
         {%- endif %}
     </div>
 </div>
@@ -214,7 +214,12 @@
 
    Render pagination.
 
-   pages: Pages in form
+   pages: Pages in form. The data structure is as follows:
+          [
+            { 'img':   'url-to-form-img',
+              'terms': [ ... ]
+            }
+          ]
 
    ========================================================================== #}
 
@@ -224,9 +229,9 @@
     <ul class="form-explainer_page-links">
         {% for page in pages %}
         <li>
-            <a class="form-explainer_page-link {{' current-page' if loop.index == 1 else '' }}"
-               data-page="{{loop.index}}">
-               {{loop.index}}
+            <a class="form-explainer_page-link {{ 'current-page' if loop.index == 1 else '' }}"
+               data-page="{{ loop.index }}">
+               {{ loop.index }}
             </a>
         </li>
         {% endfor %}

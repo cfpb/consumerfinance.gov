@@ -67,7 +67,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     }
 
     // Show the show/hide links, which otherwise are hidden if JS is off.
-    _link.classList.remove( 'u-hidden' );
+    DT.removeClass( _link, 'u-hidden' );
 
     _target.addEventListener( 'click', _handleClick );
 
@@ -111,14 +111,21 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     }
 
     DT.nextFrame( () => {
+      _setExpandingState( );
+      _content.style[_transitionPrefix] = '';
       _calcHeight();
       duration = duration || _calculateExpandDuration( _contentHeight );
-      _setExpandingState( );
       this.dispatchEvent( 'expandBegin', { target: _that } );
-      _transitionHeight( _expandComplete, duration, 'ease-out' );
+      DT.nextFrame( () =>
+        _transitionHeight(
+          _expandComplete,
+          duration,
+          'cubic-bezier(0.190, 1.000, 0.220, 1.000)'
+        )
+      );
 
       /* on the next frame (as soon as the previous style change has taken effect),
-         have the element transition to height: 0 */
+         have the element transition to it's maximum height. */
       DT.nextFrame( _setMaxHeight );
     } );
 
@@ -133,16 +140,18 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function collapse( duration ) {
     if ( _isCollapsed() || _isCollapsing() ) {
       return this;
+    } else if( _isExpanding() ) {
+      DT.removeClass( _dom, BASE_CLASS + '__expanding' );
+      _content.removeEventListener( _transitionEndEvent, _expandComplete );
     }
 
     DT.nextFrame( () => {
+      _setCollapsingState( );
       _content.style[_transitionPrefix] = '';
       _calcHeight();
       _setMaxHeight();
       duration = duration || _calculateCollapseDuration( _contentHeight );
-      _setCollapsingState( );
       this.dispatchEvent( 'collapseBegin', { target: _that } );
-
       DT.nextFrame( () =>
         _transitionHeight( _collapseComplete, duration, 'ease-in' )
       );
@@ -192,28 +201,30 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function _setExpandingState() {
     _setStateTo( EXPANDING );
-    _dom.classList.add( BASE_CLASS + '__expanding' );
+    DT.removeClass( _dom, BASE_CLASS + '__collapsed' );
+    DT.addClass( _dom, BASE_CLASS + '__expanding' );
   }
 
   /**
    * Configure the expanded state appearance.
    */
   function _setExpandedState() {
-    _dom.classList.remove( BASE_CLASS + '__expanding' );
-    _dom.classList.add( BASE_CLASS + '__expanded' );
+    _setStateTo( EXPANDED );
+    DT.removeClass( _dom, BASE_CLASS + '__expanding' );
+    DT.addClass( _dom, BASE_CLASS + '__expanded' );
     _content.setAttribute( 'aria-expanded', 'true' );
     _target.setAttribute( 'aria-pressed', 'true' );
-    _setStateTo( EXPANDED );
   }
 
   /**
    * Configure the collapsed state appearance.
    */
   function _setCollapsedState() {
-    _dom.classList.remove( BASE_CLASS + '__collapsing' );
+    _setStateTo( COLLAPSED );
+    DT.removeClass( _dom, BASE_CLASS + '__collapsing' );
+    DT.addClass( _dom, BASE_CLASS + '__collapsed' );
     _content.setAttribute( 'aria-expanded', 'false' );
     _target.setAttribute( 'aria-pressed', 'false' );
-    _setStateTo( COLLAPSED );
   }
 
   /**
@@ -221,8 +232,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function _setCollapsingState() {
     _setStateTo( COLLAPSING );
-    _dom.classList.remove( BASE_CLASS + '__expanded' );
-    _dom.classList.add( BASE_CLASS + '__collapsing' );
+    DT.removeClass( _dom, BASE_CLASS + '__expanded' );
+    DT.addClass( _dom, BASE_CLASS + '__collapsing' );
   }
 
   /**
@@ -383,7 +394,7 @@ function _getTransitionPrefix( transitionEnd ) {
  * @returns {number} The amount of time over which to expand in seconds.
  */
 function _calculateExpandDuration( height ) {
-  return _constrainValue( 300, 600, height * 2 ) / 1000;
+  return _constrainValue( 300, 600, height * 4 ) / 1000;
 }
 
 /**
@@ -391,7 +402,7 @@ function _calculateExpandDuration( height ) {
  * @returns {number} The amount of time over which to expand in seconds.
  */
 function _calculateCollapseDuration( height ) {
-  return _constrainValue( 200, 400, height * 4 ) / 1000;
+  return _constrainValue( 250, 500, height * 2 ) / 1000;
 }
 
 /**

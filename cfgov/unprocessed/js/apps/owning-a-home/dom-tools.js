@@ -5,14 +5,14 @@ const NO_OP = function( ) {
 };
 
 const DT = {
-  applyAll: function( elements, applyFn ) {
+  applyAll: function applyAll( elements, applyFn ) {
     if ( elements instanceof HTMLElement ) {
       elements = [ elements ];
     }
 
     return [].slice.call( elements ).forEach( applyFn );
   },
-  bindEvents: function( elements, events, callback = NO_OP ) {
+  bindEvents: function bindEvents( elements, events, callback = NO_OP ) {
     if ( Array.isArray( events ) === false ) {
       events = [ events ];
     }
@@ -27,13 +27,13 @@ const DT = {
       } );
     } );
   },
-  createElement: function( HTML ) {
+  createElement: function createElement( HTML ) {
     const div = document.createElement( 'div' );
     div.innerHTML = HTML;
 
     return div.firstChild;
   },
-  removeClass: function( selector, className ) {
+  removeClass: function removeClass( selector, className ) {
     className = className.split( ', ' );
 
     return DT.applyAll(
@@ -44,7 +44,7 @@ const DT = {
         );
       } );
   },
-  addClass: function( selector, className ) {
+  addClass: function addClass( selector, className ) {
     className = className.split( ', ' );
 
     return DT.applyAll(
@@ -55,24 +55,24 @@ const DT = {
         )
     );
   },
-  hasClass: function( selector, className ) {
+  hasClass: function hasClass( selector, className ) {
     return DT.getEl( selector ).classList.contains( className );
   },
-  getEls: function( selector ) {
+  getEls: function getEls( selector ) {
     if ( DT.isEl( selector ) ) {
       return selector;
     }
 
     return document.querySelectorAll( selector );
   },
-  getEl: function( selector ) {
+  getEl: function getEl( selector ) {
     if ( DT.isEl( selector ) ) {
       return selector;
     }
 
     return document.querySelector( selector );
   },
-  getPreviousEls: function( element, filter = '*' ) {
+  getPreviousEls: function getPreviousEls( element, filter = '*' ) {
     const previousSiblings = [];
     let prevEl = element.previousElementSibling;
     function _getMatches( el ) {
@@ -91,19 +91,19 @@ const DT = {
     }
     return previousSiblings;
   },
-  isEl: function( element ) {
+  isEl: function isEl( element ) {
     return element instanceof NodeList ||
            element instanceof HTMLElement ||
            element instanceof Window;
   },
-  hide: function( selector ) {
+  hide: function hide( selector ) {
     return DT.applyAll( DT.getEls( selector ),
       element => fastDom.mutate(
         () => ( element.style.display = 'none' )
       )
     );
   },
-  show: function( selector ) {
+  show: function show( selector ) {
     return DT.applyAll( DT.getEls( selector ),
       element => fastDom.mutate(
         () => ( element.style.display = 'block' )
@@ -115,13 +115,7 @@ const DT = {
     element.style.opacity = 0.05;
     element.style.display = 'block';
     window.setTimeout( () => ( element.style.opacity = 1 ), 100 );
-    window.setTimeout(
-      () => {
-        element.style.display = 'block';
-        return callback();
-      },
-      time
-    );
+    window.setTimeout( () => callback(), time );
   },
   fadeOut: function fadeOut( element, time, callback = NO_OP ) {
     element.style.transition = 'opacity ' + time + 'ms ease-in-out';
@@ -135,17 +129,7 @@ const DT = {
       time
     );
   },
-  nextFrame: function nextFrame( callback = NO_OP ) {
-    const _nextFrame = window.requestAnimationFrame ||
-                       window.webkitRequestAnimationFrame ||
-                       window.mozRequestAnimationFrame ||
-                       function( callback ) {
-                         return setTimeout( function() {
-                           callback( Number( new Date() ) );
-                         }, 1000 / 60 );
-                       };
-    _nextFrame( callback );
-  }
+  nextFrame: fastDom.raf
 };
 
 export default DT;

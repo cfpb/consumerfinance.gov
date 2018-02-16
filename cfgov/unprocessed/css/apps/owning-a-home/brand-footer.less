@@ -1,8 +1,16 @@
+/* ==========================================================================
+   "Brand footer" custom styles
+   ========================================================================== */
+
 .brand-footer {
     background-color: @gray-5;
     padding-top: @grid_gutter-width;
     padding-bottom: 60px;
     border-top: 1px solid @gray-40;
+
+    .o-email-signup {
+        width: 100%;
+    }
 
     .title-link {
         border-bottom-width: 1px;
@@ -15,10 +23,6 @@
             text-align: left;
         } );
 
-        a:after {
-            display: none !important;
-        }
-
         img {
             width: 150px;
             padding-bottom: unit( ( @grid_gutter-width - 5 ) / @base-font-size-px, em );
@@ -26,6 +30,7 @@
     }
 
     &_headline {
+        margin-bottom: 0;
         .grid_column( 12 );
 
         .cf-icon {
@@ -33,12 +38,12 @@
             top: 2px;
             padding-right: 2px;
             color: @green;
-            font-size: 1.25em;
+            font-size: unit( 20px / @base-font-size-px, em );
         }
     }
 
     &_container {
-        padding-top: unit( ( @grid_gutter-width * 1.5) / @base-font-size-px, em );
+        padding-top: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
 
         &-1 {
             padding-top: unit( @grid_gutter-width / @base-font-size-px, em );

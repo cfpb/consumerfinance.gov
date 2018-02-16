@@ -1,3 +1,6 @@
+/* ==========================================================================
+   "Tabs" custom styles
+   ========================================================================== */
 
 .tabs,
 .tab-list {
@@ -15,7 +18,7 @@
         width: 100%;
         padding: 28px 20px;
         .u-webfont-regular();
-        font-size: 1.375em;
+        font-size: unit( 22px / @base-font-size-px, em );
         text-align: left;
         z-index: 1;
     }
@@ -67,7 +70,7 @@
 }
 
 .tab-list {
-  list-style: none;
+    list-style: none;
 }
 
 .tab-list + .tab-list {
@@ -78,15 +81,15 @@
 }
 
 .next-steps {
-  .tab-list {
-    .grid_column( 6 );
-    border-left: 0;
-    border-right: 0;
-  }
+    .tab-list {
+        .grid_column( 6 );
+        border-left: 0;
+        border-right: 0;
+    }
 }
 
 .tab-content {
-    margin-top: 3.125em;
+    margin-top: unit( 50px / @base-font-size-px, em );
 }
 
 // hide tabbed content when js is enabled

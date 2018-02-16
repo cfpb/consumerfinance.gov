@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 {% import "molecules/social-media.html" as social_media with context %}
-{% set page={"search_description":"Use this tool to double-check that all the details about your loan are correct on your Closing Disclosure. If something looks incorrect or unexpected, ask why."} %}
+{% set page = {"search_description":"Use this tool to double-check that all the details about your loan are correct on your Closing Disclosure. If something looks incorrect or unexpected, ask why."} %}
 {% set active_page = "closing-disclosure" %}
 {% set page_js = "closing-disclosure" %}
 {% block title %}Closing Disclosure Explainer{% endblock title %}
-{% block metadescription %}Use the CFPB"s tool to double-check that all the details about your loan are correct on your Closing Disclosure.{% endblock metadescription %}
+{% block metadescription %}Use the CFPB's tool to double-check that all the details about your loan are correct on your Closing Disclosure.{% endblock metadescription %}
 
 {% block banner_top %}
 {% include "_templates/brand-header.html" %}
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="{{ static('oah/main.css') }}">
-{{ super() }}
+    <link rel="stylesheet" href="{{ static('oah/main.css') }}">
+    {{ super() }}
 {% endblock css %}
 
 {% block javascript %}
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="content-l_col-1-3">
-                    <img src="{{ static('img/ill-form-explainer-closing-disc.png')}}"
+                    <img src="{{ static('img/ill-form-explainer-closing-disc.png') }}"
                          alt=""
                          class="illustration">
                 </div>
@@ -76,7 +76,8 @@
         "img": static("img/footer_keys.png"),
         "text": "Found a home, chosen a lender?",
         "label": "Get ready to close",
-        "url": "/owning-a-home/process/close/"
+        "url": "/owning-a-home/process/close/",
+        "is_jump_link": false
     }, {
         "img": static("img/footer_checklist.png"),
         "text": "Know what to expect during closing?",
