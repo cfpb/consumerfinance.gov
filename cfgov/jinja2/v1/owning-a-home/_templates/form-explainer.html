@@ -97,7 +97,7 @@
    style="{{ 'top:' + item.top + ';' 'left:' + item.left + ';' }}
           {{ 'width:' + item.width + ';' 'height:' + item.height + ';'
           if item.width and item.height }}"
-   href="{{ '#page-' + page_num|string + '-' + item.category + '-' + item.id }}"
+   href="{{ '#page-' + page_num | string + '-' + item.category + '-' + item.id }}"
    id="{{ 'image-map_overlay__' + page_num|string + '-' + item.category + '-' + item.id }}"
    tabindex="-1">
     <span class="u-visually-hidden">{{ item.term }}</span>
