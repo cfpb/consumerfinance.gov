@@ -69,18 +69,6 @@ class PlaceholderJSMixin(object):
 
 
 class TestDataTestRunner(PlaceholderJSMixin, DiscoverRunner):
-    def run_suite(self, suite, **kwargs):
-        stdout = StringIO()
-        with redirect_stdout(stdout):
-            return_value = super(TestDataTestRunner, self).run_suite(
-                suite,
-                **kwargs
-            )
-        assert stdout.getvalue() == '', (
-            'there is content in stdout: {}'.format(stdout.getvalue())
-        )
-        return return_value
-
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
         # Disable logging below CRITICAL during tests.
         logging.disable(logging.CRITICAL)
@@ -201,3 +189,17 @@ class HtmlMixin(object):
             self.assertHtmlRegexpMatches(str(rendered_html), s)
         except AssertionError:
             self.fail('rendered page HTML did not match {}'.format(s))
+
+
+class StdoutCapturingTestRunner(TestDataTestRunner):
+    def run_suite(self, suite, **kwargs):
+        stdout = StringIO()
+        with redirect_stdout(stdout):
+            return_value = super(TestDataTestRunner, self).run_suite(
+                suite,
+                **kwargs
+            )
+        assert stdout.getvalue() == '', (
+            'there is content in stdout: {}'.format(stdout.getvalue())
+        )
+        return return_value
