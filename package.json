@@ -86,6 +86,7 @@
     "jsdom": "11.5.1",
     "jsdom-global": "3.0.2",
     "marked": "0.3.9",
+    "merge-stream": "1.0.1",
     "minimist": "1.2.0",
     "mkdirp": "0.5.1",
     "mockery": "2.1.0",

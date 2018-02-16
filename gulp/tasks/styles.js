@@ -16,6 +16,7 @@ const gulpPostcss = require( 'gulp-postcss' );
 const gulpRename = require( 'gulp-rename' );
 const gulpSourcemaps = require( 'gulp-sourcemaps' );
 const handleErrors = require( '../utils/handle-errors' );
+const paths = require( '../../config/environment' ).paths;
 const postcssUnmq = require( 'postcss-unmq' );
 
 /**
@@ -278,9 +279,10 @@ function stylesNemoIE() {
  * @returns {PassThrough} A source stream.
  */
 function stylesOAH() {
-  return gulp.src( configStyles.cwd + '/apps/owning-a-home/main.less' )
+  const oahPath = 'apps/owning-a-home';
+  return gulp.src( `${paths.unprocessed}/${oahPath}/css/main.less` )
     .pipe( gulpNewer( {
-      dest:  configLegacy.dest + '/oah/main.css',
+      dest:  `${paths.processed}/${oahPath}/css/main.css`,
       extra: configStyles.otherBuildTriggerFiles
     } ) )
     .pipe( gulpSourcemaps.init() )
@@ -295,7 +297,7 @@ function stylesOAH() {
       inline: [ 'none' ]
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/oah/' ) )
+    .pipe( gulp.dest( `${paths.processed}/${oahPath}/css` ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );

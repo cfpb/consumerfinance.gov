@@ -15,8 +15,10 @@ const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
+const fs = require( 'fs' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
+const mergeStream = require( 'merge-stream' );
 const paths = require( '../../config/environment' ).paths;
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
@@ -197,21 +199,39 @@ function scriptsNemo() {
 }
 
 /**
- * Bundle scripts in /js/routes/apps/owning-a-home/
- * and factor out common modules into common.js.
+ * Bundle scripts in /apps/ & factor out shared modules into common.js for each.
  * @returns {PassThrough} A source stream.
  */
-function scriptsOAH() {
-  return _processScript(
-    webpackConfig.owningAHomeConf,
-    '/js/routes/owning-a-home/**/*.js',
-    '/js/owning-a-home/'
-  );
+function scriptsApps() {
+
+  // Aggregate application namespaces that appear in unprocessed/apps.
+  // eslint-disable-line no-sync
+  let apps = fs.readdirSync( `${paths.unprocessed}/apps/` );
+
+  // Filter out .DS_STORE directory.
+  apps = apps.filter( dir => {
+    if ( dir.charAt( 0 ) !== '.' ) return dir;
+  } );
+
+  // Run each application's JS through webpack and store the gulp streams.
+  let streams = [];
+  apps.forEach( app => {
+    streams.push(
+      _processScript(
+        webpackConfig.appsConf,
+        `/apps/${app}/js/**/*.js`,
+        `/apps/${app}`
+      )
+    )
+  } );
+
+  // Return all app's gulp streams as a merged stream.
+  return mergeStream( ...streams );
 }
 
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
-gulp.task( 'scripts:oah', scriptsOAH );
+gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
@@ -228,7 +248,7 @@ gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
-  'scripts:oah',
+  'scripts:apps',
   'scripts:ie',
   'scripts:external',
   'scripts:nemo',
