@@ -100,8 +100,8 @@ module.exports = {
       dest: paths.processed
     },
     jsonKBYO: {
-      src:  `${paths.unprocessed}/apps/know-before-you-owe/js/kbyo-timeline.json`,
-      dest: `${paths.processed}/apps/know-before-you-owe/js`
+      src:  `${ paths.unprocessed }/apps/know-before-you-owe/js/kbyo-timeline.json`,
+      dest: `${ paths.processed }/apps/know-before-you-owe/js`
     },
     icons: {
       src:  paths.modules + '/cf-icons/src/fonts/*',

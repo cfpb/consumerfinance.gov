@@ -205,24 +205,22 @@ function scriptsNemo() {
 function scriptsApps() {
 
   // Aggregate application namespaces that appear in unprocessed/apps.
-  // eslint-disable-line no-sync
-  let apps = fs.readdirSync( `${paths.unprocessed}/apps/` );
+  // eslint-disable-next-line no-sync
+  let apps = fs.readdirSync( `${ paths.unprocessed }/apps/` );
 
   // Filter out .DS_STORE directory.
-  apps = apps.filter( dir => {
-    if ( dir.charAt( 0 ) !== '.' ) return dir;
-  } );
+  apps = apps.filter( dir => dir.charAt( 0 ) !== '.' );
 
   // Run each application's JS through webpack and store the gulp streams.
-  let streams = [];
+  const streams = [];
   apps.forEach( app => {
     streams.push(
       _processScript(
         webpackConfig.appsConf,
-        `/apps/${app}/js/**/*.js`,
-        `/apps/${app}/js`
+        `/apps/${ app }/js/**/*.js`,
+        `/apps/${ app }/js`
       )
-    )
+    );
   } );
 
   // Return all app's gulp streams as a merged stream.

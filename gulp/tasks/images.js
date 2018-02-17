@@ -46,4 +46,4 @@ function imagesGeneral() {
 
 gulp.task( 'images:apps', imagesApps );
 gulp.task( 'images:general', imagesGeneral );
-gulp.task( 'images', ['images:apps', 'images:general'] );
+gulp.task( 'images', [ 'images:apps', 'images:general' ] );

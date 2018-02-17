@@ -283,21 +283,19 @@ function stylesNemoIE() {
 function stylesApps() {
 
   // Aggregate application namespaces that appear in unprocessed/apps.
-  // eslint-disable-line no-sync
-  let apps = fs.readdirSync( `${paths.unprocessed}/apps/` );
+  // eslint-disable-next-line no-sync
+  let apps = fs.readdirSync( `${ paths.unprocessed }/apps/` );
 
   // Filter out .DS_STORE directory.
-  apps = apps.filter( dir => {
-    if ( dir.charAt( 0 ) !== '.' ) return dir;
-  } );
+  apps = apps.filter( dir => dir.charAt( 0 ) !== '.' );
 
   // Process each application's CSS and store the gulp streams.
-  let streams = [];
+  const streams = [];
   apps.forEach( app => {
     streams.push(
-      gulp.src( `${paths.unprocessed}/apps/${app}/css/main.less` )
+      gulp.src( `${ paths.unprocessed }/apps/${ app }/css/main.less` )
         .pipe( gulpNewer( {
-          dest:  `${paths.processed}/apps/${app}/css/main.css`,
+          dest:  `${ paths.processed }/apps/${ app }/css/main.css`,
           extra: configStyles.otherBuildTriggerFiles
         } ) )
         .pipe( gulpSourcemaps.init() )
@@ -312,11 +310,11 @@ function stylesApps() {
           inline: [ 'none' ]
         } ) )
         .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-        .pipe( gulp.dest( `${paths.processed}/apps/${app}/css` ) )
+        .pipe( gulp.dest( `${ paths.processed }/apps/${ app }/css` ) )
         .pipe( browserSync.reload( {
           stream: true
         } ) )
-    )
+    );
   } );
 
   // Return all app's gulp streams as a merged stream.
