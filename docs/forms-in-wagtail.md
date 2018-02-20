@@ -12,7 +12,7 @@ Wagtail provides a FormBuilder module, but it cannot be used with subclasses of 
 
 Here's an example of a form's block class:
 ```python
-...
+…
 
 class FormBlock(AbstractFormBlock):
     heading = blocks.CharBlock()
@@ -22,11 +22,13 @@ class FormBlock(AbstractFormBlock):
         # defaults
         method = 'POST'
         icon = 'form'
+
+…
 ```
 
 And an example of a handler class:
 ```python
-...
+…
 
 class ConferenceRegistrationHandler(Handler):
     def process(self, is_submitted):
@@ -38,4 +40,6 @@ class ConferenceRegistrationHandler(Handler):
                 return fail
 
         return {'form': Form()}
+
+…
 ```
