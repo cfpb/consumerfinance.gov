@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+import urllib
 
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
@@ -41,14 +41,29 @@ class FeedbackHandler(Handler):
         super(FeedbackHandler, self).__init__(page, request)
         self.block_value = block_value
 
-    def process(self, is_submitted):
+    def sanitize_referrer(self):
+        known_miscodings = {
+            u'\xc3\xb3': u'\xf3',
+            u'\xc3\xa9': u'\xe9',
+            u'\xc3\xad': u'\xed',
+        }
+        referrer = self.request.META.get('HTTP_REFERER', '')
+        try:
+            referrer.encode('ascii')
+        except (UnicodeEncodeError):
+            for char in known_miscodings:
+                referrer = referrer.replace(char, known_miscodings[char])
+            referrer = urllib.quote(referrer.encode('utf8'))
+        return referrer
 
+    def process(self, is_submitted):
         form_cls = FEEDBACK_TYPES[get_feedback_type(self.block_value)]
 
         if is_submitted:
             form = form_cls(self.request.POST)
             return self.get_response(form)
 
+        self.block_value.update({'referrer': self.sanitize_referrer()})
         return {'form': form_cls()}
 
     def get_response(self, form):
