@@ -27,6 +27,7 @@ class FormBlock(AbstractFormBlock):
 And an example of a handler class:
 ```python
 ...
+
 class ConferenceRegistrationHandler(Handler):
     def process(self, is_submitted):
         if is_submitted:
