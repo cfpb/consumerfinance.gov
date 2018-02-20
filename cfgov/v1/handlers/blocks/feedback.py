@@ -53,7 +53,7 @@ class FeedbackHandler(Handler):
         except (UnicodeEncodeError):
             for char in known_miscodings:
                 referrer = referrer.replace(char, known_miscodings[char])
-            referrer = urllib.quote(referrer.encode('utf8'))
+            referrer = urllib.quote(referrer.encode('utf8'), safe=':/')
         return referrer
 
     def process(self, is_submitted):

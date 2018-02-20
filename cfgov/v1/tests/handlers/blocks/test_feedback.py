@@ -39,12 +39,12 @@ class TestFeedbackHandler(TestCase):
             handler = FeedbackHandler(page, request, block_value={})
             sanitized = handler.sanitize_referrer()
             self.assertNotIn('\xc3', sanitized)
-        misencoded_string = u'\xc3\xb3'
+        misencoded_string = u'https://fake.com/cr\xc3\xb3dito'
         request = self.factory.get('/')
         request.META = {'HTTP_REFERER': misencoded_string}
         handler = FeedbackHandler(page, request, block_value={})
         sanitized = handler.sanitize_referrer()
-        self.assertEqual(sanitized, '%C3%B3')
+        self.assertEqual(sanitized, 'https://fake.com/cr%C3%B3dito')
 
     @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.get_response')
     def test_process_calls_handler_get_response(self, mock_get_response):
