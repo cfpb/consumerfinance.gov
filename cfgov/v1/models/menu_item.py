@@ -20,15 +20,17 @@ class MenuItem(models.Model):
         blank=True,
         max_length=1000,
         help_text='Enter url for page outside Wagtail. This will only '
-                  'be used if there is no page link.',
-        default='#')
+                  'be used if there is no page selected.',
+        default='#',
+        verbose_name='Direct URL (rare)')
 
     page_link = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
         related_name='+',
-        help_text='Link to a page in Wagtail.'
+        help_text='Link to a page in Wagtail.',
+        verbose_name='Page'
     )
 
     order = models.PositiveSmallIntegerField(
@@ -39,24 +41,24 @@ class MenuItem(models.Model):
 
     column_1 = StreamField([
         ('nav_group', v1_blocks.NavGroup(
-            label='Nav items group'),)
+            label='Menu items group'),)
     ], blank=True)
 
     column_2 = StreamField([
         ('nav_group', v1_blocks.NavGroup(
-            label='Nav items group'))
+            label='Menu items group'))
     ], blank=True)
 
     column_3 = StreamField([
         ('nav_group', v1_blocks.NavGroup(
-            label='Nav items group'))
+            label='Menu items group'))
     ], blank=True)
 
     column_4 = StreamField([
         ('nav_group', v1_blocks.NavGroup(
-            label='Nav items group')),
+            label='Menu items group')),
         ('featured_content', v1_blocks.FeaturedMenuContent(
-            label='Featured content module'))
+            label='Featured image item'))
     ], blank=True)
 
     nav_footer = StreamField([
@@ -64,10 +66,12 @@ class MenuItem(models.Model):
             ('draft', blocks.BooleanBlock(
                 required=False,
                 default=False,
-                help_text='If draft is selected, this block '
-                'will only show on sharing sites (like Content).')),
+                help_text='If checked, this block will only show '
+                'on our sharing site (Content).',
+                label='Mark block as draft'
+            )),
             ('content', blocks.RichTextBlock(required=False))
-        ], label='Footer'))
+        ], label='Menu footer'))
     ], blank=True)
 
     panels = [
@@ -75,7 +79,7 @@ class MenuItem(models.Model):
             FieldPanel('link_text'),
             PageChooserPanel('page_link'),
             FieldPanel('external_link'),
-        ], heading='Link'),
+        ], heading='Overview page link'),
         FieldPanel('order'),
         StreamFieldPanel('column_1'),
         StreamFieldPanel('column_2'),

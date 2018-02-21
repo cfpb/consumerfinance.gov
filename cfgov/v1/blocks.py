@@ -199,15 +199,22 @@ class ReusableTextChooserBlock(SnippetChooserBlock):
 
 
 class Link(blocks.StructBlock):
-    link_text = blocks.CharBlock(required=True)
+    link_text = blocks.CharBlock(
+        required=True,
+        label='Text'
+    )
     page_link = blocks.PageChooserBlock(
         required=False,
-        help_text='Link to a page in Wagtail.')
+        help_text='Link to a page in Wagtail.',
+        label='Page'
+    )
     external_link = blocks.CharBlock(
         required=False,
         max_length=1000,
+        label='Direct URL (rare)',
         help_text='Enter url for page outside Wagtail. This will only '
-                  'be used if there is no page link.')
+                  'be used if there is no page selected.'
+    )
 
     def clean(self, value):
         cleaned = super(Link, self).clean(value)
@@ -229,18 +236,18 @@ class Link(blocks.StructBlock):
 
 class NavItem(blocks.StructBlock):
     state = blocks.ChoiceBlock(choices=[
-        ('both', 'Live and draft'),
-        ('live', 'Live'),
-        ('draft', 'Draft')],
+        ('both', 'Show always'),
+        ('live', 'Show on Production only'),
+        ('draft', 'Show on Content only')],
         default='both',
-        help_text='Select state for this nav link. If draft, will only '
-        'show on sharing sites (like Content). If live, will only show '
-        'on non-sharing sites (like Production).')
+        help_text='Select state for this link. Test new links '
+            'by setting them to only show on Content.')
     link = Link(required=False)
     nav_items = blocks.ListBlock(
         blocks.StructBlock([
             ('link', Link())
-        ])
+        ]),
+        label='Child items (mobile only)'
     )
 
 
@@ -248,25 +255,33 @@ class NavGroup(blocks.StructBlock):
     draft = blocks.BooleanBlock(
         required=False,
         default=False,
-        help_text='If draft is selected, this nav section will only show on '
-        'sharing sites (like Content).')
+        help_text='If checked, this block will only show '
+        'on our sharing site (Content).',
+        label='Mark block as draft'
+    )
     group_title = blocks.CharBlock(
         required=False,
         label='Column title')
     hide_group_title = blocks.BooleanBlock(
         required=False,
-        label='Hide column title')
+        label='Hide column title',
+        help_text='If column shares title with previous column, '
+            'enter title text above but check this box so title '
+            'only shows in first column.')
     nav_items = blocks.ListBlock(
         NavItem(),
-        required=False)
+        required=False,
+        label='Menu items')
 
 
 class FeaturedMenuContent(blocks.StructBlock):
     draft = blocks.BooleanBlock(
         required=False,
         default=False,
-        help_text='If draft is selected, this block will only show on '
-        'sharing sites (like Content).')
-    link = Link(required=False)
+        label='Mark block as draft',
+        help_text='If checked, this block will only show '
+        'on our sharing site (Content).'
+    )
+    link = Link(required=False, label="H4 link")
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic(required=False)
