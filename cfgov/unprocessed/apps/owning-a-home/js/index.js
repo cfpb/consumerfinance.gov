@@ -1,5 +1,5 @@
-const EmailPopup = require( '../../../organisms/EmailPopup' );
-const emailHelpers = require( '../../../modules/util/email-popup-helpers' );
+const EmailPopup = require( '../../../js/organisms/EmailPopup' );
+const emailHelpers = require( '../../../js/modules/util/email-popup-helpers' );
 const emailPopup = document.querySelectorAll( '.o-email-popup' );
 
 if ( emailPopup.length && emailHelpers.showEmailPopup() ) {
