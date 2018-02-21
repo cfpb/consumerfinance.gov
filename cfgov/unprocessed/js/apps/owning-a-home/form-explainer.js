@@ -81,7 +81,7 @@ class FormExplainer {
   updateImageUI( pageNum, isPageLoad ) {
     const elements = this.getPageElements( pageNum );
 
-    if ( window.outerWidth > 600 ) {
+    if ( window.innerWidth > 600 ) {
 
       /* update widths & position on larger screens
          we only pass in the pageNum on pageLoad, when
@@ -154,7 +154,7 @@ class FormExplainer {
    */
   updateImagePositionAfterAnimation( delay = 0 ) {
     setTimeout( () => {
-      if ( window.outerWidth > 600 ) {
+      if ( window.innerWidth > 600 ) {
         DT.nextFrame( this.updateStickiness.bind( this ) );
       }
     }, delay );
@@ -343,7 +343,8 @@ class FormExplainer {
 
       /* on screen less than 800px wide, the terms need a minimum 33%
          width or they become too narrow to read */
-      if ( window.outerWidth <= 800 && newWidthPercentage > 67 ) {
+      if ( window.innerWidth <= 800 && newWidthPercentage > 67 ) {
+
         newWidthPercentage = 67;
       }
 
@@ -516,7 +517,7 @@ class FormExplainer {
    */
   stickImage() {
     window.removeEventListener( 'scroll', this.onScroll );
-    if ( window.outerWidth > 600 ) {
+    if ( window.innerWidth > 600 ) {
       this.onScroll = throttle( () => {
         this.updateStickiness();
       }, 100 );
