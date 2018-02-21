@@ -81,7 +81,7 @@ class FormExplainer {
   updateImageUI( pageNum, isPageLoad ) {
     const elements = this.getPageElements( pageNum );
 
-    if ( window.outerWidth >= 600 ) {
+    if ( window.outerWidth > 600 ) {
 
       /* update widths & position on larger screens
          we only pass in the pageNum on pageLoad, when
@@ -222,13 +222,13 @@ class FormExplainer {
         }
 
         pos = pos - offset + targetExpandable.getBoundingClientRect().top;
-      }
 
-      DT.nextFrame( () => {
-        scrollTo( pos, {
-          duration: 600
+        DT.nextFrame( () => {
+          scrollTo( pos, {
+            duration: 600
+          } );
         } );
-      } );
+      }
     }, 600 );
   }
 
