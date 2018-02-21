@@ -1,12 +1,18 @@
 from django.test import TestCase
 from mock import patch
-
+import mock
 from datetime import date
+import os
 
 from v1.tests.wagtail_pages import helpers
 
 from jobmanager.models.django import JobCategory, Region
 from jobmanager.models.pages import JobListingPage
+
+ENV_VARS = {
+    'GOOGLE_PING_URL': 'http://www.google-url.com',
+    'SITEMAP_URL': 'http://www.sitemap-url.com'
+}
 
 
 class JobListingPagePublishedSignalCase(TestCase):
@@ -30,19 +36,17 @@ class JobListingPagePublishedSignalCase(TestCase):
             division=division,
             location=region)
 
-    @patch('flags.state.flag_enabled', return_value=True)
-    @patch('requests.get')
-    def ping_google_when_job_listing_page_published_if_flag_true(
-            self, google_ping, flag_enabled_check):
-        helpers.publish_page(child=self.page)
-        google_ping.assert_called_once_with(
-            'http://www.google.com/ping',
-            {'sitemap': 'https://www.consumerfinance.gov/sitemap.xml'}
-        )
+    @mock.patch.dict(os.environ, ENV_VARS)
+    def test_ping_google_when_job_page_published(self):
+        with patch('requests.get') as mock_request:
+            helpers.publish_page(child=self.page)
+            mock_request.assert_called_once_with(
+                ENV_VARS['GOOGLE_PING_URL'],
+                {'sitemap': ENV_VARS['SITEMAP_URL']}
+            )
 
-    @patch('flags.state.flag_enabled', return_value=False)
-    @patch('requests.get')
-    def google_not_alerted_when_job_listing_page_published_if_flag_false(
-            self, google_ping, flag_enabled_check):
-        helpers.publish_page(child=self.page)
-        google_ping.assert_not_called()
+    @mock.patch.dict(os.environ, {})
+    def test_ping_google_when_job_page_published_failure(self):
+        with patch('requests.get') as mock_request:
+            helpers.publish_page(child=self.page)
+            mock_request.assert_not_called()

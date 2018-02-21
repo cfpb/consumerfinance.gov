@@ -1,21 +1,28 @@
+import logging
+import os
 import requests
 
 from wagtail.wagtailcore.signals import page_published
 
-from flags.state import flag_enabled
-
 from jobmanager.models.pages import JobListingPage
 
-SITEMAP_URL = 'https://www.consumerfinance.gov/sitemap.xml'
-GOOGLE_URL = 'http://www.google.com/ping'
+logger = logging.getLogger(__name__)
 
 
 def request_site_recrawl(sender, **kwargs):
+    sitemap_url = os.environ.get('SITEMAP_URL')
+    google_url = os.environ.get('GOOGLE_PING_URL')
+
     try:
-        if flag_enabled('PING_GOOGLE'):
-            requests.get(GOOGLE_URL, {'sitemap': SITEMAP_URL})
-    except:
-        pass
+        if sitemap_url and google_url:
+            requests.get(google_url, {'sitemap': sitemap_url})
+            logger.info(
+                'Pinged Google after job page publication.'
+            )
+    except Exception:
+        logger.exception(
+            'Pinging Google after job page publication failed.'
+        )
 
 
 page_published.connect(request_site_recrawl, sender=JobListingPage)
