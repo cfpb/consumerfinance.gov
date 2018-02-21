@@ -95,12 +95,12 @@ const onDemandHeaderRawConf = {
   module: COMMON_MODULE_CONFIG
 };
 
-const owningAHomeConf = {
+const appsConf = {
   cache: true,
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: '[name]',
-    jsonpFunction: 'OAH'
+    jsonpFunction: 'apps'
   },
   plugins: [
     COMMON_CHUNK_CONFIG,
@@ -123,6 +123,6 @@ module.exports = {
   externalConf,
   modernConf,
   onDemandHeaderRawConf,
-  owningAHomeConf,
+  appsConf,
   spanishConf
 };

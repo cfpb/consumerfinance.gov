@@ -8,6 +8,7 @@ const browserSync = require( 'browser-sync' );
 const config = require( '../config.js' );
 const configLegacy = config.legacy;
 const configScripts = config.scripts;
+const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const gulpConcat = require( 'gulp-concat' );
 const gulpModernizrBuild = require( 'gulp-modernizr-build' );
@@ -17,6 +18,7 @@ const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
+const mergeStream = require( 'merge-stream' );
 const paths = require( '../../config/environment' ).paths;
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
@@ -197,21 +199,37 @@ function scriptsNemo() {
 }
 
 /**
- * Bundle scripts in /js/routes/apps/owning-a-home/
- * and factor out common modules into common.js.
+ * Bundle scripts in /apps/ & factor out shared modules into common.js for each.
  * @returns {PassThrough} A source stream.
  */
-function scriptsOAH() {
-  return _processScript(
-    webpackConfig.owningAHomeConf,
-    '/js/routes/owning-a-home/**/*.js',
-    '/js/owning-a-home/'
-  );
+function scriptsApps() {
+
+  // Aggregate application namespaces that appear in unprocessed/apps.
+  // eslint-disable-next-line no-sync
+  let apps = fs.readdirSync( `${ paths.unprocessed }/apps/` );
+
+  // Filter out .DS_STORE directory.
+  apps = apps.filter( dir => dir.charAt( 0 ) !== '.' );
+
+  // Run each application's JS through webpack and store the gulp streams.
+  const streams = [];
+  apps.forEach( app => {
+    streams.push(
+      _processScript(
+        webpackConfig.appsConf,
+        `/apps/${ app }/js/**/*.js`,
+        `/apps/${ app }/js`
+      )
+    );
+  } );
+
+  // Return all app's gulp streams as a merged stream.
+  return mergeStream( ...streams );
 }
 
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
-gulp.task( 'scripts:oah', scriptsOAH );
+gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
@@ -228,7 +246,7 @@ gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
-  'scripts:oah',
+  'scripts:apps',
   'scripts:ie',
   'scripts:external',
   'scripts:nemo',
