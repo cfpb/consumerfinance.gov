@@ -6,18 +6,18 @@
 {% block metadescription %}Are you about to close on your mortgage loan? The CFPB's checklist and interactive sample Closing Disclosure form will help you close with confidence.{% endblock metadescription %}
 
 {% block banner_top %}
-    {% include "_layouts/brand-header.html" %}
+    {% include "_templates/brand-header.html" %}
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ static('oah/main.css') }}">
+    <link rel="stylesheet" href="{{ static('apps/owning-a-home/css/main.css') }}">
     {{ super() }}
 {% endblock css %}
 
 {% block javascript %}
     {{ super() }}
     <script>
-        {% include 'js/owning-a-home/common.js' %}
+        {% include 'apps/owning-a-home/js/common.js' %}
     </script>
 {% endblock javascript %}
 
@@ -99,7 +99,7 @@
                 <span class="a-link_text">Learn more about what to do if you find an error</span>
                 </a>
             </p>
-            {% include "_layouts/ratings-form.html" %}
+            {% include "_templates/ratings-form.html" %}
         </section>
         <!-- .content_main -->
         <aside class="content_sidebar">

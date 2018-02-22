@@ -5,12 +5,12 @@
             margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         }
     } );
-    
+
     .m-list_link-subtext {
        .u-link__colors( @black );
-       .u-webfont-regular();
        display: block;
        margin-top: unit( 2px / @base-font-size-px, em );
+       font-weight: normal;
     }
 }
 
@@ -19,4 +19,10 @@
     .respond-to-min( @bp-sm-min, {
         margin: 0 0 0 unit( 5px / @base-font-size-px, em );
     } );
+}
+
+
+.job-details dt {
+    margin-top: unit( 10px / @base-font-size-px, em );
+    margin-bottom: 0;
 }

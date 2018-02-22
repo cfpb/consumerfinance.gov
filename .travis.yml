@@ -5,7 +5,6 @@ dist: trusty
 python:
   - "2.7"
 
-
 cache:
   pip: true
   directories:
@@ -29,20 +28,26 @@ env:
     - COVERALLS_PARALLEL=true
 
 jobs:
+  fast_finish: true
+  allow_failures: 
+    - env: RUNTEST=backend3
   include:
-  - stage: run tests
-    env: RUNTEST=frontend
-  - env: RUNTEST=backend
-  - stage: Update documentation
-    script:
-      - pip install virtualenv virtualenvwrapper
-      - source activate-virtualenv.sh
-      - pip install -r requirements/manual.txt
-      - mkdocs build
-    deploy:
-      provider: pages
-      local_dir: site
-      skip-cleanup: true
-      github_token: $GITHUB_TOKEN
-      on:
-        branch: master
+    - stage: run tests
+      env: RUNTEST=frontend
+    - env: RUNTEST=backend
+    - stage: Run optional tests
+      env: RUNTEST=backend3
+      python: "3.6"
+    - stage: Update documentation
+      script:
+        - pip install virtualenv virtualenvwrapper
+        - source activate-virtualenv.sh
+        - pip install -r requirements/manual.txt
+        - mkdocs build
+      deploy:
+        provider: pages
+        local_dir: site
+        skip-cleanup: true
+        github_token: $GITHUB_TOKEN
+        on:
+          branch: master

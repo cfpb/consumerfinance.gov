@@ -26,9 +26,14 @@ gulp.task( 'copy:icons', () => {
   return _genericCopy( icons.src, icons.dest );
 } );
 
-gulp.task( 'copy:codeJson', () => {
-  const codeJson = configCopy.codejson;
-  return _genericCopy( codeJson.src, codeJson.dest );
+gulp.task( 'copy:jsonCode', () => {
+  const jsonCode = configCopy.jsonCode;
+  return _genericCopy( jsonCode.src, jsonCode.dest );
+} );
+
+gulp.task( 'copy:jsonKBYO', () => {
+  const jsonKBYO = configCopy.jsonKBYO;
+  return _genericCopy( jsonKBYO.src, jsonKBYO.dest );
 } );
 
 gulp.task( 'copy:timelinejs', () => {
@@ -52,7 +57,8 @@ gulp.task( 'copy:vendorjs', () => {
 gulp.task( 'copy',
   [
     'copy:icons',
-    'copy:codeJson',
+    'copy:jsonCode',
+    'copy:jsonKBYO',
     'copy:vendorjs',
     'copy:timelinejs',
     'copy:lightbox2'

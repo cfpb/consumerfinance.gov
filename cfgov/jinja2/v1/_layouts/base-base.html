@@ -118,6 +118,14 @@
 {% endblock css %}
 
 {#
+    ======
+    PRELOADING DYNAMIC ASSETS
+    ======
+#}
+<link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
+
+
+{#
     ============
     HEAD SCRIPTS
     ============
