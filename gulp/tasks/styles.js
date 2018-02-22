@@ -15,7 +15,6 @@ const gulpLess = require( 'gulp-less' );
 const gulpNewer = require( 'gulp-newer' );
 const gulpPostcss = require( 'gulp-postcss' );
 const gulpRename = require( 'gulp-rename' );
-const gulpReplace = require( 'gulp-replace' );
 const gulpSourcemaps = require( 'gulp-sourcemaps' );
 const handleErrors = require( '../utils/handle-errors' );
 const mergeStream = require( 'merge-stream' );
@@ -305,7 +304,6 @@ function stylesApps() {
         .pipe( gulpPostcss( [
           autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
         ] ) )
-        .pipe( gulpReplace( '../fonts/', '/static/fonts/' ) )
         .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
         .pipe( gulpCleanCss( {
           compatibility: 'ie9',
