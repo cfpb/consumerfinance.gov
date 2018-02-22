@@ -1,6 +1,7 @@
 import logging
-import os
 import requests
+
+from flags.state import flag_enabled
 
 from wagtail.wagtailcore.signals import page_published
 
@@ -9,13 +10,15 @@ from jobmanager.models.pages import JobListingPage
 logger = logging.getLogger(__name__)
 
 
-def request_site_recrawl(sender, **kwargs):
-    sitemap_url = os.environ.get('SITEMAP_URL')
-    google_url = os.environ.get('GOOGLE_PING_URL')
+SITEMAP_URL = 'https://www.consumerfinance.gov/sitemap.xml'
+GOOGLE_URL = 'http://www.google.com/ping'
 
+
+def request_site_recrawl(sender, **kwargs):
     try:
-        if sitemap_url and google_url:
-            requests.get(google_url, {'sitemap': sitemap_url})
+        if flag_enabled('PING_GOOGLE_ON_PUBLISH'):
+            response = requests.get(GOOGLE_URL, {'sitemap': SITEMAP_URL})
+            response.raise_for_status()
             logger.info(
                 'Pinged Google after job page publication.'
             )
