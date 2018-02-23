@@ -201,7 +201,6 @@ function scriptsApps() {
   // Run each application's JS through webpack and store the gulp streams.
   const streams = [];
   apps.forEach( app => {
-
     /* Check if node_modules directory exists in a particular app's folder.
        If it doesn't log the command to add it and don't process the scripts. */
     // eslint-disable-next-line no-sync
