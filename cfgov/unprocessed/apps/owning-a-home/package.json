@@ -1,0 +1,21 @@
+{
+  "name": "owning-a-home",
+  "description": "The consumerfinance.gov/owning-a-home website.",
+  "homepage": "http://www.consumerfinance.gov/owning-a-home",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/cfpb/cfgov-refresh.git"
+  },
+  "license": "SEE LICENSE IN TERMS.md",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "devDependencies": {
+    "fastdom": "1.0.6"
+  }
+}
