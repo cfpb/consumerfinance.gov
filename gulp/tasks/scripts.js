@@ -203,10 +203,11 @@ function scriptsApps() {
   apps.forEach( app => {
     /* Check if node_modules directory exists in a particular app's folder.
        If it doesn't log the command to add it and don't process the scripts. */
+    const appsPath = `${ paths.unprocessed }/apps/${ app }`;
     // eslint-disable-next-line no-sync
-    if ( fs.existsSync( `${ paths.unprocessed }/apps/${ app }/package.json` ) ) {
+    if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
       // eslint-disable-next-line no-sync
-      if ( fs.existsSync( `${ paths.unprocessed }/apps/${ app }/node_modules` ) ) {
+      if ( fs.existsSync( `${ appsPath }/node_modules` ) ) {
         streams.push(
           _processScript(
             webpackConfig.appsConf,
@@ -219,7 +220,7 @@ function scriptsApps() {
         console.log(
           '\x1b[31m%s\x1b[0m',
           'App dependencies not installed, please run from project root:',
-          `npm --prefix ${ paths.unprocessed }/apps/${ app } install ${ paths.unprocessed }/apps/${ app }`
+          `npm --prefix ${ appsPath } install ${ appsPath }`
         );
       }
     }
