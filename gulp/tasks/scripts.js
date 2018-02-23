@@ -58,7 +58,7 @@ function scriptsPolyfill() {
       extra: configScripts.otherBuildTriggerFiles
     } ) )
 
-    /* csspointerevents is used by select menu in Capital Framework.
+    /* csspointerevents is used by select menu in Capital Framework for IE10.
        es5 is used for ECMAScript 5 feature detection to change js CSS to no-js.
        setClasses sets detection checks as feat/no-feat CSS in html element.
        html5printshiv enables use of HTML5 sectioning elements in IE8
@@ -89,18 +89,6 @@ function scriptsModern() {
     webpackConfig.modernConf,
     '/js/routes/**/*.js',
     '/js/routes/'
-  );
-}
-
-/**
- * Bundle IE9-specific script.
- * @returns {PassThrough} A source stream.
- */
-function scriptsIE() {
-  return _processScript(
-    webpackConfig.commonConf,
-    '/js/ie/common.ie9.js',
-    '/js/ie/'
   );
 }
 
@@ -203,7 +191,6 @@ function scriptsNemo() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsApps() {
-
   // Aggregate application namespaces that appear in unprocessed/apps.
   // eslint-disable-next-line no-sync
   let apps = fs.readdirSync( `${ paths.unprocessed }/apps/` );
@@ -214,23 +201,45 @@ function scriptsApps() {
   // Run each application's JS through webpack and store the gulp streams.
   const streams = [];
   apps.forEach( app => {
-    streams.push(
-      _processScript(
-        webpackConfig.appsConf,
-        `/apps/${ app }/js/**/*.js`,
-        `/apps/${ app }/js`
-      )
-    );
+    /* Check if node_modules directory exists in a particular app's folder.
+       If it doesn't log the command to add it and don't process the scripts. */
+    const appsPath = `${ paths.unprocessed }/apps/${ app }`;
+    // eslint-disable-next-line no-sync
+    if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
+      // eslint-disable-next-line no-sync
+      if ( fs.existsSync( `${ appsPath }/node_modules` ) ) {
+        streams.push(
+          _processScript(
+            webpackConfig.appsConf,
+            `/apps/${ app }/js/**/*.js`,
+            `/apps/${ app }/js`
+          )
+        );
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(
+          '\x1b[31m%s\x1b[0m',
+          'App dependencies not installed, please run from project root:',
+          `npm --prefix ${ appsPath } install ${ appsPath }`
+        );
+      }
+    }
   } );
 
   // Return all app's gulp streams as a merged stream.
-  return mergeStream( ...streams );
+  let singleStream;
+
+  if ( streams.length > 0 ) {
+    singleStream = mergeStream( ...streams );
+  } else {
+    singleStream = mergeStream();
+  }
+  return singleStream;
 }
 
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:apps', scriptsApps );
-gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
@@ -247,7 +256,6 @@ gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
   'scripts:apps',
-  'scripts:ie',
   'scripts:external',
   'scripts:nemo',
   'scripts:spanish'
