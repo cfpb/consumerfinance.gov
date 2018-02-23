@@ -1,5 +1,9 @@
 {% extends 'base-common.html' %}
 
+{% block preload %}
+<link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
+{% endblock preload %}
+
 {% block body %}
 
 {# Overlay for the page. Used for the mobile mega menu. #}
