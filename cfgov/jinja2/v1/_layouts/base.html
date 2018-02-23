@@ -263,51 +263,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script async>
   if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
     !function(){
-    {# Include site-wide JavaScript. #}
-    var s = [ '{{ static('js/routes/common.js') }}' ];
+      {# Include site-wide JavaScript. #}
+      var s = [ '{{ static('js/routes/common.js') }}' ];
 
-    {#
-      Check and include template-level JavaScript.
-      Template-level JavaScript applies to all pages under the URL scheme
-      www.consumerfinance.gov/[app-url]/
-      and JavaScript appears in unprocessed/js/routes/[app-url]/single.js.
-    #}
-    {% macro template_js() %}
-       {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
-    {% endmacro %}
-    {% set js_source = template_js() | trim %}
-    {% if js_source | length > 0 %}
-      s.push( '{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}' );
-    {% endif %}
+      {#
+        Check and include template-level JavaScript.
+        Template-level JavaScript applies to all pages under the URL scheme
+        www.consumerfinance.gov/[app-url]/
+        and JavaScript appears in unprocessed/js/routes/[app-url]/single.js.
+      #}
+      {% macro template_js() %}
+         {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
+      {% endmacro %}
+      {% set js_source = template_js() | trim %}
+      {% if js_source | length > 0 %}
+        s.push( '{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}' );
+      {% endif %}
 
-    {#
-      Check and include component-level JavaScript.
-      Component-level JavaScript adds scripts appearing in
-      unprocessed/js/routes/on-demand/[component].js
-      to the page, based on what components were added in Wagtail.
-    #}
-    {% if page and page.media %}
-       {% for js in page.media %}
-         s.push( '{{ static('js/routes/on-demand/' + js) }}' );
-       {% endfor %}
-    {% endif %}
+      {#
+        Check and include component-level JavaScript.
+        Component-level JavaScript adds scripts appearing in
+        unprocessed/js/routes/on-demand/[component].js
+        to the page, based on what components were added in Wagtail.
+      #}
+      {% if page and page.media %}
+         {% for js in page.media %}
+           s.push( '{{ static('js/routes/on-demand/' + js) }}' );
+         {% endfor %}
+      {% endif %}
 
-    {#
-      Check and include page-level JavaScript.
-      Page-level JavaScript applies to a single pages under the URL scheme
-      www.consumerfinance.gov/[app-url]/somepage
-      and JavaScript appears in unprocessed/js/routes/[app-url]/index.js.
-    #}
-    {% macro page_js() %}
-       {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
-    {% endmacro %}
-    {% set js_source = page_js() | trim %}
-    {% if js_source | length > 0 %}
-      s.push( '{{ static('js/routes/' + request.path[1:] + 'index.js') }}' );
-    {% endif %}
+      {#
+        Check and include page-level JavaScript.
+        Page-level JavaScript applies to a single pages under the URL scheme
+        www.consumerfinance.gov/[app-url]/somepage
+        and JavaScript appears in unprocessed/js/routes/[app-url]/index.js.
+      #}
+      {% macro page_js() %}
+         {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+      {% endmacro %}
+      {% set js_source = page_js() | trim %}
+      {% if js_source | length > 0 %}
+        s.push( '{{ static('js/routes/' + request.path[1:] + 'index.js') }}' );
+      {% endif %}
 
-    {# Pass scripts to JavaScript loader. #}
-    jsl(s);
+      {# Pass scripts to JavaScript loader. #}
+      jsl(s);
     }();
   }
 
