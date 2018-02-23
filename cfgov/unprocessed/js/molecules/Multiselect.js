@@ -316,8 +316,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         } );
 
         domCreate( 'span', {
-          'innerHTML': option.text,
-          'inside':    _selectionsItemLabelDom
+          innerHTML: option.text,
+          inside:    _selectionsItemLabelDom
         } );
 
         _selectionsDom.appendChild( _selectionsItemDom );
