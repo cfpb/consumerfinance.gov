@@ -25,8 +25,8 @@ class ExtractAnswersTest(TestCase):
                                'questionid_first': 'some_answer',
                                'questionid_another': 'another_answer'})
         result = extract_answers_from_request(request)
-        assert sorted(result) == [('another', 'another_answer'),
-                                  ('first', 'some_answer')]
+        assert result == [('another', 'another_answer'),
+                          ('first', 'some_answer')]
 
 
 class TestNoMigrations(TestCase):
