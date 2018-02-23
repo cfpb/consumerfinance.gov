@@ -68,7 +68,7 @@
     {# Required Open Graph properties #}
     <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:url" content="{{ request.url | lower }}">
 {% block og_image %}
 {% if page and page.meta_image %}
     {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}
