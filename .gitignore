@@ -47,6 +47,7 @@ Thumbs.db
 # npm packages #
 ####################
 node_modules/
+cfgov/unprocessed/apps/*/node_modules/
 npm-debug.log
 
 # Vim swap files #
@@ -62,6 +63,7 @@ __pycache__/
 
 # Front-End #
 #############
+cfgov/unprocessed/apps/*/config.json
 bower_components/
 vendor/
 
