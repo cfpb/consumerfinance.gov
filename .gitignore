@@ -49,11 +49,6 @@ Thumbs.db
 node_modules/
 npm-debug.log
 
-# Bower packages #
-##################
-bower_components/
-src/vendor
-
 # Vim swap files #
 ##################
 *.swp
@@ -67,7 +62,6 @@ __pycache__/
 
 # Front-End #
 #############
-node_modules/
 bower_components/
 vendor/
 
