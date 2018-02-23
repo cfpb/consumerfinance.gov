@@ -10,9 +10,13 @@ Use this tool throughout your homebuying process to see how your credit score,
 home price, down payment, and more can affect mortgage interest rates.
 {% endblock metadescription %}
 
+{% block banner_top %}
+{% include "_templates/brand-header.html" %}
+{% endblock %}
+
 {% block css %}
-    <link rel="stylesheet" href="{{ static('apps/owning-a-home/css/main.css') }}">
     {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/owning-a-home/css/main.css') }}">
 {% endblock css %}
 
 {% block javascript scoped %}
