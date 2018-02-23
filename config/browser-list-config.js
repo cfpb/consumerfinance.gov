@@ -3,7 +3,8 @@ const LAST_2 = [
   'last 2 versions'
 ];
 
-const ONLY_IE_9 = [
+const ONLY_IE_8_9 = [
+  'Explorer 8',
   'Explorer 9'
 ];
 
@@ -23,7 +24,7 @@ const LAST_2_IE_8_UP = [
 
 module.exports = {
   LAST_2,
-  ONLY_IE_9,
+  ONLY_IE_8_9,
   ONLY_IE_8,
   LAST_2_IE_9_UP,
   LAST_2_IE_8_UP

@@ -58,7 +58,7 @@ function scriptsPolyfill() {
       extra: configScripts.otherBuildTriggerFiles
     } ) )
 
-    /* csspointerevents is used by select menu in Capital Framework.
+    /* csspointerevents is used by select menu in Capital Framework for IE10.
        es5 is used for ECMAScript 5 feature detection to change js CSS to no-js.
        setClasses sets detection checks as feat/no-feat CSS in html element.
        html5printshiv enables use of HTML5 sectioning elements in IE8
@@ -89,18 +89,6 @@ function scriptsModern() {
     webpackConfig.modernConf,
     '/js/routes/**/*.js',
     '/js/routes/'
-  );
-}
-
-/**
- * Bundle IE9-specific script.
- * @returns {PassThrough} A source stream.
- */
-function scriptsIE() {
-  return _processScript(
-    webpackConfig.commonConf,
-    '/js/ie/common.ie9.js',
-    '/js/ie/'
   );
 }
 
@@ -230,7 +218,6 @@ function scriptsApps() {
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:apps', scriptsApps );
-gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
@@ -247,7 +234,6 @@ gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
   'scripts:apps',
-  'scripts:ie',
   'scripts:external',
   'scripts:nemo',
   'scripts:spanish'
