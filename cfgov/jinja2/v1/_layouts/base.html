@@ -245,8 +245,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     The number of scripts here must be kept to a minimum.
 #}
 
-{% block javascript scoped %}
+{% block javascript_loader %}
+<script>
+  {# Minified dynamic JavaScript loader that injects a script tag in the head of the page #}
+  function jsl(a){
+    for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
+  }
+</script>
+{% endblock javascript_loader %}
 
+{% block javascript scoped %}
 
 {#
   Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
@@ -255,51 +263,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script async>
   if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
     !function(){
-    {# Include site-wide JavaScript. #}
-    var a = [ '{{ static('js/routes/common.js') }}' ];
+      {# Include site-wide JavaScript. #}
+      var s = [ '{{ static('js/routes/common.js') }}' ];
 
-    {#
-      Check and include template-level JavaScript.
-      Template-level JavaScript applies to all pages under the URL scheme
-      www.consumerfinance.gov/[app-url]/
-      and JavaScript appears in unprocessed/js/routes/[app-url]/single.js.
-    #}
-    {% macro template_js() %}
-       {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
-    {% endmacro %}
-    {% set js_source = template_js() | trim %}
-    {% if js_source | length > 0 %}
-      a.push( '{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}' );
-    {% endif %}
+      {#
+        Check and include template-level JavaScript.
+        Template-level JavaScript applies to all pages under the URL scheme
+        www.consumerfinance.gov/[app-url]/
+        and JavaScript appears in unprocessed/js/routes/[app-url]/single.js.
+      #}
+      {% macro template_js() %}
+         {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
+      {% endmacro %}
+      {% set js_source = template_js() | trim %}
+      {% if js_source | length > 0 %}
+        s.push( '{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}' );
+      {% endif %}
 
-    {#
-      Check and include component-level JavaScript.
-      Component-level JavaScript adds scripts appearing in
-      unprocessed/js/routes/on-demand/[component].js
-      to the page, based on what components were added in Wagtail.
-    #}
-    {% if page and page.media %}
-       {% for js in page.media %}
-         a.push( '{{ static('js/routes/on-demand/' + js) }}' );
-       {% endfor %}
-    {% endif %}
+      {#
+        Check and include component-level JavaScript.
+        Component-level JavaScript adds scripts appearing in
+        unprocessed/js/routes/on-demand/[component].js
+        to the page, based on what components were added in Wagtail.
+      #}
+      {% if page and page.media %}
+         {% for js in page.media %}
+           s.push( '{{ static('js/routes/on-demand/' + js) }}' );
+         {% endfor %}
+      {% endif %}
 
-    {#
-      Check and include page-level JavaScript.
-      Page-level JavaScript applies to a single pages under the URL scheme
-      www.consumerfinance.gov/[app-url]/somepage
-      and JavaScript appears in unprocessed/js/routes/[app-url]/index.js.
-    #}
-    {% macro page_js() %}
-       {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
-    {% endmacro %}
-    {% set js_source = page_js() | trim %}
-    {% if js_source | length > 0 %}
-      a.push( '{{ static('js/routes/' + request.path[1:] + 'index.js') }}' );
-    {% endif %}
+      {#
+        Check and include page-level JavaScript.
+        Page-level JavaScript applies to a single pages under the URL scheme
+        www.consumerfinance.gov/[app-url]/somepage
+        and JavaScript appears in unprocessed/js/routes/[app-url]/index.js.
+      #}
+      {% macro page_js() %}
+         {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+      {% endmacro %}
+      {% set js_source = page_js() | trim %}
+      {% if js_source | length > 0 %}
+        s.push( '{{ static('js/routes/' + request.path[1:] + 'index.js') }}' );
+      {% endif %}
 
-    {# Minified dynamic JavaScript loader that injects a script tag in the head of the page #}
-    for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
+      {# Pass scripts to JavaScript loader. #}
+      jsl(s);
     }();
   }
 
