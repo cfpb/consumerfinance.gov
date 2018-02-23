@@ -73,13 +73,16 @@ urlpatterns = [
         include(oah.urls_for_prefix('closing-disclosure'))),
 
     url(r'^owning-a-home/explore-rates/',
-        include(oah.urls_for_prefix('explore-rates'))),
-
-    # TODO: uncomment when explore-rates CSS/JS is ready and tested.
-    # url(r'^owning-a-home/explore-rates/',
-    #     TemplateView.as_view(
-    #     template_name='owning-a-home/explore-rates/index.html'),
-    #     name='explore-rates'),
+        FlaggedTemplateView.as_view(
+            flag_name='OAH_EXPLORE_RATES',
+            template_name='owning-a-home/explore-rates/index.html',
+            fallback=SheerTemplateView.as_view(
+                template_engine='owning-a-home',
+                template_name='explore-rates/index.html'
+            )
+        ),
+        name='explore-rates'
+    ),
 
     url(r'^owning-a-home/loan-estimate/',
         include(oah.urls_for_prefix('loan-estimate'))),
