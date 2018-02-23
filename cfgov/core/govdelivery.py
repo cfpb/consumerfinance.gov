@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_govdelivery_api():
-    """Return object that can be used to access to GovDelivery API."""
+    """Return object that can be used to access the GovDelivery API."""
     clsname = getattr(
         settings,
         'GOVDELIVERY_API',
