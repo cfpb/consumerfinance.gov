@@ -34,7 +34,7 @@ def unsigned_redirect(url):
 def extract_answers_from_request(request):
     answers = [(param.split('_')[1], value) for param, value in
                request.POST.items() if param.startswith('questionid')]
-    return answers
+    return sorted(answers)
 
 
 def format_file_size(bytecount, suffix='B'):
