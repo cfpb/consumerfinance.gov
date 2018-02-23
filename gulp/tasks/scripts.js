@@ -191,7 +191,6 @@ function scriptsNemo() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsApps() {
-
   // Aggregate application namespaces that appear in unprocessed/apps.
   // eslint-disable-next-line no-sync
   let apps = fs.readdirSync( `${ paths.unprocessed }/apps/` );
@@ -202,17 +201,40 @@ function scriptsApps() {
   // Run each application's JS through webpack and store the gulp streams.
   const streams = [];
   apps.forEach( app => {
-    streams.push(
-      _processScript(
-        webpackConfig.appsConf,
-        `/apps/${ app }/js/**/*.js`,
-        `/apps/${ app }/js`
-      )
-    );
+
+    /* Check if node_modules directory exists in a particular app's folder.
+       If it doesn't log the command to add it and don't process the scripts. */
+    // eslint-disable-next-line no-sync
+    if ( fs.existsSync( `${ paths.unprocessed }/apps/${ app }/package.json` ) ) {
+      // eslint-disable-next-line no-sync
+      if ( fs.existsSync( `${ paths.unprocessed }/apps/${ app }/node_modules` ) ) {
+        streams.push(
+          _processScript(
+            webpackConfig.appsConf,
+            `/apps/${ app }/js/**/*.js`,
+            `/apps/${ app }/js`
+          )
+        );
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(
+          '\x1b[31m%s\x1b[0m',
+          'App dependencies not installed, please run from project root:',
+          `npm --prefix ${ paths.unprocessed }/apps/${ app } install ${ paths.unprocessed }/apps/${ app }`
+        );
+      }
+    }
   } );
 
   // Return all app's gulp streams as a merged stream.
-  return mergeStream( ...streams );
+  let singleStream;
+
+  if ( streams.length > 0 ) {
+    singleStream = mergeStream( ...streams );
+  } else {
+    singleStream = mergeStream();
+  }
+  return singleStream;
 }
 
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
