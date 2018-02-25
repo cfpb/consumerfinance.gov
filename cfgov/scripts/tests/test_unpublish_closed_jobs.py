@@ -93,7 +93,7 @@ class UnpublishClosedJobsTestCase(TestCase):
     def closed_usajobs_page(self):
         mock_response = Mock()
         mock_response.status_code = 200
-        mock_response.text =  (
+        mock_response.text = (
             '<html>'
             '<div class="usajobs-joa-closed">'
             'This job announcement has closed'
@@ -108,7 +108,7 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertTrue(self.page.live)
 
         control_number = '1'
-        job_link = self.create_job_link(control_number, self.public_type)
+        self.create_job_link(control_number, self.public_type)
         request_mock.return_value = self.api_not_found_job_response()
 
         unpublish_closed_jobs.run()
@@ -136,7 +136,7 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.page.refresh_from_db()
 
         request_mock.assert_called_once_with(job_link.url)
-        
+
         self.assertTrue(self.page.live)
         self.assertFalse(self.page.expired)
 
@@ -162,7 +162,9 @@ class UnpublishClosedJobsTestCase(TestCase):
         control_number = '1'
 
         self.create_job_link(control_number, self.public_type)
-        request_mock.return_value = self.api_closed_job_response(control_number)
+        request_mock.return_value = self.api_closed_job_response(
+            control_number
+        )
 
         unpublish_closed_jobs.run()
         self.page.refresh_from_db()

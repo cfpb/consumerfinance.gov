@@ -18,6 +18,7 @@ HEADERS = {
 }
 CLOSED_TEXT = 'This job announcement has closed'
 
+
 def job_page_closed(link):
     try:
         webpage = requests.get(link)
@@ -81,6 +82,6 @@ def run():
                     page.unpublish(set_expired=True)
                     logger.info(
                         'Job posting {} has closed.'.format(page.title)
-                    )                        
+                    )
     else:
         logger.info('No live job posting pages found...')
