@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/apps/';
 const chai = require( 'chai' );
 const expect = chai.expect;
 const sinon = require( 'sinon' );
@@ -87,7 +87,7 @@ describe( 'ratings-form', () => {
     sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     require(
-      BASE_JS_PATH + 'apps/owning-a-home/ratings-form'
+      BASE_JS_PATH + 'owning-a-home/js/ratings-form'
     ).init();
 
     ratingsInputs = document.querySelectorAll( '.rating-inputs input' );
