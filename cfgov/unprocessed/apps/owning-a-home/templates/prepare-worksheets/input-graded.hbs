@@ -1,0 +1,32 @@
+<section class="input-graded block__border-bottom u-mb20">
+  <div class="u-mt20 u-mb20 u-clearfix">
+    <section class="input-with-btns">
+      <div class="input-with-btns_input">
+        {{#if input.required}}
+            <span class="short-desc">{{input.text}}</span>
+        {{else}}
+            <input type="text" value="{{input.text}}" placeholder="{{placeholder}}">
+        {{/if}}
+        
+      </div>
+
+      <div class="input-with-btns_btns">
+        <label><h6>Priority level: choose one</h6>
+          <button class="btn btn__grouped-first {{#if is_0}}active{{/if}}">{{grades.[0]}}</button>
+          <button class="btn btn__grouped {{#if is_1}}active{{/if}}">{{grades.[1]}}</button>
+          <button class="btn btn__grouped-last {{#if is_2}}active{{/if}}">{{grades.[2]}}</button>
+          {{#unless input.required}}
+          <span class="btn-input-delete cf-form_input-icon cf-icon cf-icon-delete-round" role="button" title="Delete"></span>
+          {{/unless}}
+        </label>
+      </div>
+
+      {{#if input.explanation}}
+      <div class="input-explanation block__sub">
+        <p>{{{input.explanation}}}</p>
+      </div>
+      {{/if}}
+      
+    </section>
+  </div>
+</section>

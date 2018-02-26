@@ -19,14 +19,12 @@
    ========================================================================== #}
 
 {% macro render(value) %}
-
     {% set value = value or {
         'heading': 'Buying a home?',
         'text': 'Sign up for email tips and info to help you through the process.',
         'gd_code': 'USCFPB_127'
       }
     %}
-
     {% set form_id = get_unique_id() %}
     <div class="o-email-signup">
     {% if value.heading %}
@@ -36,7 +34,6 @@
             </h2>
         </header>
     {% endif %}
-
     <form id="o-form {{ value.id or 'o-form__email-signup_' ~ form_id }}"
           class="o-form o-form__email-signup"
           action="/subscriptions/new/"
@@ -52,8 +49,9 @@
         </p>
         {% endif %}
         <div class="m-form-field-with-button" data-qa-hook="formfield-with-button">
-            <div class="form-group">
-                <label for="{{ 'form_' ~ form_id }}">
+            <div class="m-form-field">
+                <label class="a-label a-label__heading"
+                       for="{{ 'form_' ~ form_id }}">
                     <b>Email address</b> (required)
                 </label>
 
@@ -61,7 +59,7 @@
                        type="email"
                        placeholder="mail@example.com"
                        name="email"
-                       class="m-form-field-with-button_field a-text-input"
+                       class="a-text-input a-text-input__full"
                        required>
             </div>
             <p>
