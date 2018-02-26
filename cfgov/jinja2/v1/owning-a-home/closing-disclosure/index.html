@@ -11,13 +11,24 @@
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ static('oah/main.css') }}">
+    <link rel="stylesheet"
+          href="{{ static('apps/owning-a-home/css/main.css') }}">
     {{ super() }}
 {% endblock css %}
 
 {% block javascript %}
     {{ super() }}
-    <script src="{{ static('js/owning-a-home/common.js') }}"></script>
+     <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/owning-a-home/js/common.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
 {% endblock javascript %}
 
 {% block content %}
