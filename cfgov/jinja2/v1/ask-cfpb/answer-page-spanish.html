@@ -8,13 +8,17 @@
     {% include 'ask/title-spanish.html' with context %}
 {% endblock %}
 
-{% block page_meta %}
-    <meta property="og:title" content="{{ page.question }}">
-    <meta property="og:description" content="{{ page.get_open_graph_description if page.get_open_graph_description }}">
-    <meta property="og:image" content="{{ page.open_graph_image_url if page.open_graph_image_url else 'http://www.consumerfinance.gov/static/nemo/_/img/cfpb-logo-spanish.png' }}">
-    <meta property="og:url" content="{{ request.url }}">
-{% endblock %}
+{% block og_title %}{{ page.question }}{% endblock %}
 
+{%- block og_desc -%}
+  {%- if page -%}
+      {{- page.get_open_graph_description or page.search_description or page.seo_title or page.title -}}
+  {%- endif -%}
+{%- endblock -%}
+
+{% block og_image %}
+    <meta property="og:image" content="{{ page.open_graph_image_url if page.open_graph_image_url else 'http://www.consumerfinance.gov/static/nemo/_/img/cfpb-logo-spanish.png' }}">
+{% endblock %}
 
 {% block babel_content %}
     

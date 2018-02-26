@@ -1,4 +1,4 @@
-import fastDom from '../node_modules/fastdom';
+import fastDom from 'fastdom';
 
 const NO_OP = function( ) {
   // Placeholder function meant to be overridden.
@@ -133,3 +133,4 @@ const DT = {
 };
 
 export default DT;
+
