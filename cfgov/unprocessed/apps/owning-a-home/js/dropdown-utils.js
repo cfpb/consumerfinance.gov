@@ -143,7 +143,7 @@ var utils = function( id ) {
   function show() {
     $el.each( function() {
       var $container = $( '.' + $( this ).attr( 'id' ) );
-      $container.removeClass( 'hidden' );
+      $container.removeClass( 'u-hidden' );
     } );
 
     return this;
@@ -156,7 +156,7 @@ var utils = function( id ) {
   function hide() {
     $el.each( function() {
       var $container = $( '.' + $( this ).attr( 'id' ) );
-      $container.addClass( 'hidden' );
+      $container.addClass( 'u-hidden' );
     } );
 
     return this;
