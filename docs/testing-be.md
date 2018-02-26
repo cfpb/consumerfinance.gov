@@ -72,3 +72,15 @@ To run both `flake8` and `isort` with Python 3, run
 ```
 tox -e lint-py3
 ```
+
+## GovDelivery
+
+If you write Python code that interacts with the GovDelivery subscription API, you can use the functionality provided in `core.govdelivery.MockGovDelivery` as a mock interface to avoid the use of `patch` in unit tests.
+
+This object behaves similarly to the real `govdelivery.api.GovDelivery` class in that it handles all requests and returns a valid (200) `requests.Response` instance.
+
+Conveniently for unit testing, all calls are stored in a class-level list that can be retrieved at `MockGovDelivery.calls`. This allows for testing of code that interacts with GovDelivery by checking the contents of this list to ensure that the right methods were called.
+
+This pattern is modeled after Django's [`django.core.mail.outbox`](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#email-services) which provides similar functionality for testing sending of emails.
+
+The related classes `ExceptionMockGovDelivery` and `ServerErrorMockGovDelivery` can similarly be used in unit tests to test for cases where a call to the GovDelivery API raises an exception and returns an HTTP status code of 500, respectively.
