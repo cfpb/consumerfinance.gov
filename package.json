@@ -35,6 +35,7 @@
     "cf-typography": "4.10.2",
     "cfpb-chart-builder": "3.2.1",
     "del": "3.0.0",
+    "fastdom": "1.0.6",
     "glob-all": "3.1.0",
     "gulp": "3.9.1",
     "gulp-babel": "7.0.1",
