@@ -39,3 +39,5 @@ markdown_extensions:
     - tables
     - pymdownx.github
     - pymdownx.superfences
+    - toc:
+        permalink: "¶"
