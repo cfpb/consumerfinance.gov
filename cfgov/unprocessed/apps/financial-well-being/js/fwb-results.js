@@ -1,8 +1,5 @@
-/* eslint no-extra-semi: "off" */
-
-
-const Analytics = require( '../../modules/Analytics' );
-const Expandable = require( '../../organisms/Expandable' );
+const Analytics = require( '../../../js/modules/Analytics' );
+const Expandable = require( '../../../js/organisms/Expandable' );
 
 const expandableDom = document.querySelectorAll( '.content .o-expandable' );
 let expandable;

@@ -760,7 +760,7 @@ rules:
       afterBlockComment: false
       beforeLineComment: false
       afterLineComment: false
-      allowBlockStart: false
+      allowBlockStart: true
       allowBlockEnd: false
 
   # Require or disallow an empty line between class members.

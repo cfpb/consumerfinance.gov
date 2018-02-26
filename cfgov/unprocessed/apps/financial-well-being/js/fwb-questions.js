@@ -1,4 +1,4 @@
-const Analytics = require( '../../modules/Analytics' );
+const Analytics = require( '../../../js/modules/Analytics' );
 
 /**
  * Initialize the questionnaire
