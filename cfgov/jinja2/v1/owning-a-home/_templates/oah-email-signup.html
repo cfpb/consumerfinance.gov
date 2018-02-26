@@ -1,0 +1,7 @@
+{% import "email-signup.html" as email_signup %}
+{% set data = {
+	'heading': 'Buying a home?',
+	'text': 'Sign up for email tips and info to help you through the process.',
+	'gd_code': 'USCFPB_127'
+}%}
+{{ email_signup.render(data) }}
