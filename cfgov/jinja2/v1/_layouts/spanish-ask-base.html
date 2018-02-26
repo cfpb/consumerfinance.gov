@@ -14,12 +14,17 @@
     <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('knowledgebase/es-ask-styles.min.css') }}"> <!--<![endif]-->
 {% endblock %}
 
+<!-- style primary navigation link as "active" page -->
 {% block nav_item_respuestas %}
     s-active
 {% endblock %}
 
 {% block ask_search %}
-    <div class="ac-search full-bleed full-bleed-padded {% block babel_hide_search %}s-hide-on-small{% endblock %}">
+    <!-- babel_hide_search shows or hides Spanish Ask CFPB search for different page layouts and screen sizes -->
+    <div class="ac-search full-bleed full-bleed-padded 
+    {%- block babel_hide_search -%}
+    s-hide-on-small
+    {%- endblock babel_hide_search-%}">
         <p class="lead">Encontrar respuestas a preguntas comunes acerca de productos y servicios financieros de consumo</p>
         <div class="s-hide-on-small" data-set="ac-search-form"></div>
     </div><!-- .ac-search -->
