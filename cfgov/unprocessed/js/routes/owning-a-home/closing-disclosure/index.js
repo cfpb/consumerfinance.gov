@@ -1,4 +1,4 @@
-import FormExplainer from '../../../apps/owning-a-home/form-explainer';
+import FormExplainer from '../../../../apps/owning-a-home/js/form-explainer';
 
 const formExplainerElement = document.querySelector( '.form-explainer' );
 

@@ -1,12 +1,12 @@
 import { elementInView, scrollIntoView, scrollTo }
-  from '../../modules/util/scroll';
+  from '../../../js/modules/util/scroll';
 import DT from './dom-tools';
 import ExpandableGroup from './ExpandableGroup';
 
-import { assign } from '../../modules/util/assign';
-import { closest } from '../../modules/util/dom-traverse';
-import { instantiateAll } from '../../modules/util/atomic-helpers';
-import { throttle } from '../../modules/util/throttle';
+import { assign } from '../../../js/modules/util/assign';
+import { closest } from '../../../js/modules/util/dom-traverse';
+import { instantiateAll } from '../../../js/modules/util/atomic-helpers';
+import { throttle } from '../../../js/modules/util/throttle';
 
 const EXPLAIN_TYPES = {
   CHECKLIST:   'checklist',

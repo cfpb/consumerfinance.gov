@@ -1,7 +1,7 @@
 import { checkDom, destroyInitFlag, setInitFlag }
-  from '../../modules/util/atomic-helpers';
+  from '../../../js/modules/util/atomic-helpers';
 import DT from './dom-tools';
-import EventObserver from '../../modules/util/EventObserver';
+import EventObserver from '../../../js/modules/util/EventObserver';
 
 
 /**

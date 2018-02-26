@@ -1,8 +1,8 @@
 // Required modules.
 import { checkDom, setInitFlag }
-  from '../../modules/util/atomic-helpers';
+  from '../../../js/modules/util/atomic-helpers';
 import Expandable from './Expandable';
-import standardType from '../../modules/util/standard-type';
+import standardType from '../../../js/modules/util/standard-type';
 
 /**
  * ExpandableGroup
