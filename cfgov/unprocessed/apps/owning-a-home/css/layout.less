@@ -1,0 +1,324 @@
+/* apply a natural box layout model to all elements */
+.oah-sheerlike {
+  box-sizing: border-box;
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5em 1.5em 0 1.5em;
+  position: relative;
+  clear: both;
+}
+
+.content_wrapper__narrow { // Matches 1060px wide current CF.gov grid
+  .respond-to-min(801px, {
+    max-width: 1060px;
+    padding: @grid_gutter-width;
+  });
+}
+
+.content_wrapper__narrow-with-sidebar { // Matches 1060px wide current CF.gov grid when page has left nav sidebar
+  .respond-to-min(801px, {
+    max-width: 1100px;
+    padding: @grid_gutter-width;
+  });
+}
+
+.content_wrapper__medium { // 1100px wide grid, Explore Interest Rates, Journey + Loan Comparison
+  .respond-to-min(801px, {
+    max-width: 1100px;
+    padding-left: 0;
+    padding-right: 0;
+  });
+}
+
+// Ghost Grid classes
+
+@media (min-width: 720px) {
+  .col-1 {
+    .grid_column( 1 );
+  }
+
+  .col-2 {
+    .grid_column( 2 );
+  }
+
+  .col-3 {
+    .grid_column( 3 );
+  }
+
+  .col-4 {
+    .grid_column( 4 );
+  }
+
+  .col-5 {
+    .grid_column( 5 );
+  }
+
+  .col-6 {
+    .grid_column( 6 );
+  }
+
+  .col-7 {
+    .grid_column( 7 );
+  }
+
+  .col-8 {
+    .grid_column( 8 );
+  }
+
+  .col-9 {
+    .grid_column( 9 );
+  }
+
+  .col-10 {
+    .grid_column( 10 );
+  }
+
+  .col-11 {
+    .grid_column( 11 );
+  }
+
+  .col-12 {
+    .grid_column( 12 );
+  }
+}
+
+.push-4{
+  .grid_push( 4 );
+}
+
+.wrapper {
+  // .grid_wrapper();
+}
+
+.wrapper-first {
+  margin-left: -15px;
+}
+
+.wrapper-last {
+  margin-right: -15px;
+}
+
+
+@media (max-width: 1000px) {
+  .wrapper-first {
+    margin-left: -15px;
+    margin-right: -15px
+  }
+
+  .wrapper-last {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+
+@media (max-width: 720px) {
+
+  .push-4{
+    .grid_push( 0 );
+  }
+
+  .loan-type-equation {
+    display: none;
+  }
+
+}
+
+// cf.gov refresh layout
+
+@media only all and (min-width: 37.5em) {
+  .content_intro,
+  .content_main,
+  .content_sidebar {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 100%;
+    padding: 3.75em 0.9375em;
+  }
+  .ie .content_intro,
+  .ie .content_main,
+  .ie .content_sidebar {
+    margin-right: -0.26em;
+  }
+}
+@media only all and (min-width: 50.0625em) {
+  .content_intro,
+  .content_main,
+  .content_sidebar {
+    padding: 1em 0;
+  }
+}
+@media only all and (min-width: 50.0625em) {
+  .content_intro {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 100%;
+  }
+  .ie .content_intro {
+    margin-right: -0.26em;
+  }
+}
+@media only all and (min-width: 50.0625em) {
+  .content__1-3 .content_sidebar {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 25%;
+    padding-right: 1.875em;
+  }
+  .ie .content__1-3 .content_sidebar {
+    margin-right: -0.26em;
+  }
+  .content__1-3 .content_main {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 75%;
+    position: relative;
+  }
+  .ie .content__1-3 .content_main {
+    margin-right: -0.26em;
+  }
+  .content__1-3 .content_main:after {
+    content: '';
+    border-left: 1px solid #babbbd;
+    position: absolute;
+    top: 1em;
+    bottom: 0;
+    left: -1.875em;
+  }
+  .content__2-1 .content_main {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 66.66666667%;
+  }
+  .ie .content__2-1 .content_main {
+    margin-right: -0.26em;
+  }
+  .content__2-1 .content_main:after {
+    right: -1.875em;
+  }
+  .content__2-1 .content_sidebar {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 33.33333333%;
+    padding-left: 1.875em;
+  }
+  .ie .content__2-1 .content_sidebar {
+    margin-right: -0.26em;
+  }
+}
+@media only all and (min-width: 64em) {
+  .content__2-1 .content_main__narrow {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 66.66666667%;
+    padding-right: 8.33333333%;
+  }
+  .ie .content__2-1 .content_main__narrow {
+    margin-right: -0.26em;
+  }
+}
+.content__flush-bottom {
+  padding-bottom: 0;
+}
+@media only all and (max-width: 50em) {
+  .content__flush-top-on-small {
+    padding-top: 0;
+  }
+}
+@media only all and (max-width: 50em) {
+  .content__flush-all-on-small {
+    padding: 0;
+    border-width: 0;
+  }
+}
+
+
+// bleedbar
+.content__bleedbar .content_main:after {
+  content: none;
+}
+.content__bleedbar .content_sidebar {
+  padding: 1.875em 0.9375em;
+  background: @gray-5;
+}
+@media only all and (min-width: 50.0625em) {
+  .content__bleedbar {
+    overflow: hidden;
+  }
+  .content__bleedbar .content_sidebar {
+    padding: 1em 0 0.9375em 1.875em;
+    margin-left: 0;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+  }
+  .content__bleedbar .content_wrapper:after {
+    content: '';
+    display: block;
+    width: 9999px;
+    border-left: 1px solid #babbbd;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+    margin-left: 10px;
+    background: @gray-5;
+  }
+  .content__bleedbar.content__2-1 .content_wrapper:after {
+    left: 66.666666667%;
+  }
+  .content__bleedbar.content__3-1 .content_wrapper:after {
+    left: 75%;
+  }
+}
+
+.block__border {
+   border: 1px solid #babbbd;
+}
