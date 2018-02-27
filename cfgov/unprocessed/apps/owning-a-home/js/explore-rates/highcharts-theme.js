@@ -1,8 +1,4 @@
-'use strict';
-
-var Highcharts = require( '../node_modules/highcharts' );
-
-Highcharts.theme = {
+const HIGHCHARTS_SETTINGS = {
   colors: [ '#ADDC91' ],
   style: {
     fontFamily: '"Avenir Next", Arial, Helvetica, sans-serif',
@@ -63,5 +59,15 @@ Highcharts.theme = {
   }
 };
 
-// Apply the theme
-Highcharts.setOptions( Highcharts.theme );
+/**
+ * Apply theme settings to a Highcharts instance.
+ * @param  {Object} highcharts - A Highcharts instance.
+ */
+function applyThemeTo( highcharts ) {
+  highcharts.theme = HIGHCHARTS_SETTINGS;
+
+  // Apply the theme
+  highcharts.setOptions( highcharts.theme );
+}
+
+module.exports = { applyThemeTo: applyThemeTo };
