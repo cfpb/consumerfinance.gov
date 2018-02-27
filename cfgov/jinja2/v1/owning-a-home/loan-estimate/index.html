@@ -7,10 +7,14 @@
 {% block title %}Loan Estimate Explainer{% endblock title %}
 {% block metadescription %}Use the CFPB's tool to review your Loan Estimate to make sure it reflects what you discussed with the lender.{% endblock metadescription %}
 
+{% block banner_top %}
+    {% include "_templates/brand-header.html" %}
+{% endblock %}
+
 {% block css %}
+    {{ super() }}
     <link rel="stylesheet"
           href="{{ static('apps/owning-a-home/css/main.css') }}">
-    {{ super() }}
 {% endblock css %}
 
 {% block javascript %}
