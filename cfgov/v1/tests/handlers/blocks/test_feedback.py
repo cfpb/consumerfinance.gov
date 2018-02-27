@@ -29,9 +29,9 @@ class TestFeedbackHandler(TestCase):
         page.url = '/es/obtener-respuestas/'
         page.language = 'es'
         non_ascii_referrers = [
-            (u'http://localhost:8000/es/obtener-respuestas/'
+            ('http://localhost:8000/es/obtener-respuestas/'
              'buscar-por-etiqueta/rescisi\xc3\xb3n/'),
-            (u'https://www.consumerfinance.gov/es/obtener-respuestas/'
+            ('https://www.consumerfinance.gov/es/obtener-respuestas/'
              'buscar-por-etiqueta/l\xc3\xadnea_de_cr\xc3\xa9dito_personal/')]
         for referrer in non_ascii_referrers:
             request = self.factory.get('/')
@@ -39,7 +39,7 @@ class TestFeedbackHandler(TestCase):
             handler = FeedbackHandler(page, request, block_value={})
             sanitized = handler.sanitize_referrer()
             self.assertNotIn('\xc3', sanitized)
-        misencoded_string = u'https://fake.com/cr\xc3\xb3dito'
+        misencoded_string = 'https://fake.com/cr\xc3\xb3dito'
         request = self.factory.get('/')
         request.META = {'HTTP_REFERER': misencoded_string}
         handler = FeedbackHandler(page, request, block_value={})
