@@ -1,39 +1,65 @@
-'use strict';
-
-var $ = require( '../node_modules/jquery' );
+var $ = require( '../../node_modules/jquery' );
 var jQuery = $;
-var Highcharts = require( '../node_modules/highcharts' );
-require( '../node_modules/highcharts/modules/exporting' )( Highcharts );
 
-var formatUSD = require( '../node_modules/format-usd' );
-var unFormatUSD = require( '../node_modules/unformat-usd' );
+// Load and style Highcharts library. https://www.highcharts.com/docs.
+var Highcharts = require( '../../node_modules/highcharts' );
+require( '../../node_modules/highcharts/modules/exporting' )( Highcharts );
+const highchartsTheme = require( './highcharts-theme' );
+highchartsTheme.applyThemeTo( Highcharts );
+
+var formatUSD = require( '../../node_modules/format-usd' );
+var unFormatUSD = require( '../../node_modules/unformat-usd' );
 // var geolocation = require('./geolocation');
-var dropdown = require( './dropdown-utils' );
-var jumbo = require( '../node_modules/jumbo-mortgage' );
-var median = require( '../node_modules/median' );
-var amortize = require( '../node_modules/amortize' );
-var config = require( '../config.json' );
-var fetchRates = require( './rates' );
-var isNum = require( '../node_modules/is-money-usd' );
-var formatTime = require( './format-timestamp' );
-require( './highcharts-theme' );
-require( '../node_modules/rangeslider.js' );
+var dropdown = require( '../dropdown-utils' );
+var jumbo = require( '../../node_modules/jumbo-mortgage' );
+var median = require( '../../node_modules/median' );
+var amortize = require( '../../node_modules/amortize' );
+var config = require( '../../config.json' );
+var fetchRates = require( '../rates' );
+var isNum = require( '../../node_modules/is-money-usd' );
+var formatTime = require( '../format-timestamp' );
+
+require( '../../node_modules/rangeslider.js' );
 require( './tab' );
-require( './placeholder-polyfill' );
+require( '../placeholder-polyfill' );
 
 // Load our handlebar templates.
-var county = require( 'handlebars-loader!../templates/county-option.hbs' );
-var countyConfWarning = require( 'handlebars-loader!../templates/county-conf-warning.hbs' );
-var countyFHAWarning = require( 'handlebars-loader!../templates/county-fha-warning.hbs' );
-var countyVAWarning = require( 'handlebars-loader!../templates/county-va-warning.hbs' );
-var countyGenWarning = require( 'handlebars-loader!../templates/county-general-warning.hbs' );
-var sliderLabel = require( 'handlebars-loader!../templates/slider-range-label.hbs' );
-var creditAlert = require( 'handlebars-loader!../templates/credit-alert.hbs' );
-var resultAlert = require( 'handlebars-loader!../templates/result-alert.hbs' );
-var failAlert = require( 'handlebars-loader!../templates/fail-alert.hbs' );
-var dpWarning = require( 'handlebars-loader!../templates/down-payment-warning.hbs' );
-var chartTooltipSingle = require( 'handlebars-loader!../templates/chart-tooltip-single.hbs' );
-var chartTooltipMultiple = require( 'handlebars-loader!../templates/chart-tooltip-multiple.hbs' );
+var county = require(
+  'handlebars-loader!../../templates/explore-rates/county-option.hbs'
+);
+var countyConfWarning = require(
+  'handlebars-loader!../../templates/explore-rates/county-conf-warning.hbs'
+);
+var countyFHAWarning = require(
+  'handlebars-loader!../../templates/explore-rates/county-fha-warning.hbs'
+);
+var countyVAWarning = require(
+  'handlebars-loader!../../templates/explore-rates/county-va-warning.hbs'
+);
+var countyGenWarning = require(
+  'handlebars-loader!../../templates/explore-rates/county-general-warning.hbs'
+);
+var sliderLabel = require(
+  'handlebars-loader!../../templates/explore-rates/slider-range-label.hbs'
+);
+var creditAlert = require(
+  'handlebars-loader!../../templates/explore-rates/credit-alert.hbs'
+);
+var resultAlert = require(
+  'handlebars-loader!../../templates/explore-rates/result-alert.hbs'
+);
+var failAlert = require(
+  'handlebars-loader!../../templates/explore-rates/fail-alert.hbs'
+);
+var dpWarning = require(
+  'handlebars-loader!../../templates/explore-rates/down-payment-warning.hbs'
+);
+var chartTooltipSingle = require(
+  'handlebars-loader!../../templates/explore-rates/chart-tooltip-single.hbs'
+);
+var chartTooltipMultiple = require(
+  'handlebars-loader!../../templates/explore-rates/chart-tooltip-multiple.hbs'
+);
 
 var template = {
   county: county,
@@ -260,6 +286,7 @@ function renderLoanAmount() {
  * Render all applicable rate checker areas.
  */
 function updateView() {
+
   chart.startLoading();
 
   // reset view
@@ -938,7 +965,6 @@ function renderSlider( cb ) {
   if ( cb ) {
     cb();
   }
-
 }
 
 /**
@@ -968,6 +994,7 @@ function renderAccessibleData( data ) {
  * @returns {undefined}
  */
 function renderChart( data, cb ) {
+
   if ( chart.isInitialized ) {
 
     //var hc = chart.$el.highcharts();
@@ -984,6 +1011,7 @@ function renderChart( data, cb ) {
     }
 
     chart.$wrapper.addClass( 'geolocating' );
+
     //chart.$el.highcharts( {
     Highcharts.chart( 'chart', {
       chart: {
@@ -1092,7 +1120,7 @@ function renderChart( data, cb ) {
 function init() {
 
   // Only attempt to do things if we're on the rate checker page.
-  if ( $( '.rate-checker' ).length < 1 ) {
+  if ( document.querySelectorAll( '.rate-checker' ).length === 0 ) {
     return;
   }
 
