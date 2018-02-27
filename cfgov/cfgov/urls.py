@@ -97,13 +97,27 @@ urlpatterns = [
         include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
 
     url(r'^owning-a-home/mortgage-closing/',
-        TemplateView.as_view(
-        template_name='owning-a-home/mortgage-closing/index.html'),
-        name='mortgage-closing'),
+        FlaggedTemplateView.as_view(
+            flag_name='OAH_MORTGAGE_CLOSING',
+            template_name='owning-a-home/mortgage-closing/index.html',
+            fallback=SheerTemplateView.as_view(
+                template_engine='owning-a-home',
+                template_name='mortgage-closing/index.html'
+            )
+        ),
+        name='mortgage-closing'
+    ),
     url(r'^owning-a-home/mortgage-estimate/',
-        TemplateView.as_view(
-        template_name='owning-a-home/mortgage-estimate/index.html'),
-        name='mortgage-estimate'),
+        FlaggedTemplateView.as_view(
+            flag_name='OAH_MORTGAGE_ESTIMATE',
+            template_name='owning-a-home/mortgage-estimate/index.html',
+            fallback=SheerTemplateView.as_view(
+                template_engine='owning-a-home',
+                template_name='mortgage-estimate/index.html'
+            )
+        ),
+        name='mortgage-estimate'
+    ),
 
     url(r'^owning-a-home/process/',
         include(oah.urls_for_prefix('process/prepare/'))),
