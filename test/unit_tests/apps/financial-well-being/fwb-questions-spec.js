@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/apps/';
 const chai = require( 'chai' );
 const expect = chai.expect;
 const sinon = require( 'sinon' );
@@ -153,7 +153,7 @@ describe( 'fwb-questions', () => {
 
   beforeEach( () => {
     fwbQuestions = require(
-      BASE_JS_PATH + 'apps/financial-well-being/fwb-questions'
+      BASE_JS_PATH + 'financial-well-being/js/fwb-questions'
     );
     sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
