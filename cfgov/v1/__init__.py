@@ -1,10 +1,11 @@
 from __future__ import absolute_import
 
-import HTMLParser
 import os
 import re
 import unicodedata
-from urlparse import parse_qs, urlparse
+from six import text_type as unicode
+from six.moves import html_parser as HTMLParser
+from six.moves.urllib.parse import parse_qs, urlparse
 
 from django.conf import settings
 from django.contrib import messages

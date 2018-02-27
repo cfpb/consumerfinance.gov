@@ -70,9 +70,20 @@ urlpatterns = [
             url='/static/owning-a-home/resources/%(path)s', permanent=True)),
 
     url(r'^owning-a-home/closing-disclosure/',
-        include(oah.urls_for_prefix('closing-disclosure'))),
+        TemplateView.as_view(
+        template_name='owning-a-home/closing-disclosure/index.html'),
+        name='closing-disclosure'),
     url(r'^owning-a-home/explore-rates/',
-        include(oah.urls_for_prefix('explore-rates'))),
+        FlaggedTemplateView.as_view(
+            flag_name='OAH_EXPLORE_RATES',
+            template_name='owning-a-home/explore-rates/index.html',
+            fallback=SheerTemplateView.as_view(
+                template_engine='owning-a-home',
+                template_name='explore-rates/index.html'
+            )
+        ),
+        name='explore-rates'
+    ),
     url(r'^owning-a-home/loan-estimate/',
         include(oah.urls_for_prefix('loan-estimate'))),
 
@@ -142,40 +153,6 @@ urlpatterns = [
                 template_name='students/helping-borrowers-find-'
                               'ways-to-stay-afloat/index.html'),
                 name='students-helping-borrowers'),
-
-    # Servicemembers
-    url(r'^practitioner-resources/servicemembers/$',
-        flagged_wagtail_template_view(
-            flag_name='WAGTAIL_SERVICEMEMBERS',
-            template_name='service-members/index.html'
-        ),
-        name='servicemembers'),
-    url(r'^practitioner-resources/servicemembers/webinars/$',
-        flagged_wagtail_template_view(
-            flag_name='WAGTAIL_SERVICEMEMBERS',
-            template_name=(
-                'service-members/on-demand-forums-and-tools/index.html'
-            )
-        ),
-        name='servicemembers-webinars'),
-    url(r'^practitioner-resources/servicemembers/additionalresources/$',
-        TemplateView.as_view(
-        template_name='service-members/additionalresources/index.html'),
-        name='servicemembers'),
-    url(r'^practitioner-resources/servicemembers/planning/$',
-        TemplateView.as_view(
-        template_name='service-members/planning/index.html'),
-        name='servicemembers-planning'),
-    url(r'^practitioner-resources/servicemembers/planning/'
-         'creativesavingsstrategies/$',
-            TemplateView.as_view(
-                template_name='service-members/planning/'
-                              'creativesavingsstrategies/index.html'),
-                name='servicemembers-planning'),
-    url(r'^practitioner-resources/servicemembers/protecting/$',
-        TemplateView.as_view(
-        template_name='service-members/protecting/index.html'),
-        name='servicemembers-protecting'),
 
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
@@ -300,10 +277,6 @@ urlpatterns = [
     url(r'^oah-api/county/',
         include_if_app_enabled('countylimits', 'countylimits.urls')),
 
-    flagged_url('EREGS20',
-                r'^eregs2/',
-                include_if_app_enabled('eregs_core', 'eregs_core.urls')
-                ),
     url(r'^eregs-api/',
         include_if_app_enabled('regcore', 'regcore.urls')),
     url(r'^eregulations/',
@@ -368,14 +341,6 @@ urlpatterns = [
     # students redirects
     url(r'^students/(?P<path>.*)$', RedirectView.as_view(
             url='/practitioner-resources/students/%(path)s',
-            permanent=True)),
-
-    # servicemembers redirects
-    url(r'^servicemembers/on-demand-forums-and-tools/$', RedirectView.as_view(
-            url='/practitioner-resources/servicemembers/webinars/',
-            permanent=True)),
-    url(r'^servicemembers/(?P<path>.*)$', RedirectView.as_view(
-            url='/practitioner-resources/servicemembers/%(path)s',
             permanent=True)),
 
     # ask-cfpb

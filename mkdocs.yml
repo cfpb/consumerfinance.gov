@@ -13,6 +13,7 @@ pages:
 - Back-end guidelines:
     - Wagtail and Django migrations: wagtail-migrations.md
     - Wagtail Pages vs Django views: django-to-wagtail.md
+    - Forms in Wagtail page context: forms-in-wagtail.md
     - Testing: testing-be.md
     - Translation: translation.md
     - Caching: caching.md
@@ -38,3 +39,5 @@ markdown_extensions:
     - tables
     - pymdownx.github
     - pymdownx.superfences
+    - toc:
+        permalink: "¶"

@@ -35,6 +35,7 @@ USE_ETAGS = True
 # Application definition
 
 INSTALLED_APPS = (
+    'permissions_viewer',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',
@@ -78,8 +79,6 @@ INSTALLED_APPS = (
     'sheerlike',
     'legacy',
     'django_extensions',
-    'reversion',
-    'tinymce',
     'jobmanager',
     'wellbeing',
     'search',
@@ -101,12 +100,6 @@ OPTIONAL_APPS = [
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
     {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
 ]
-
-if DEPLOY_ENVIRONMENT == 'build':
-    OPTIONAL_APPS += [
-        {'import': 'eregs_core', 'apps': ('eregs_core',)},
-    ]
-
 
 POSTGRES_APPS = []
 
@@ -388,9 +381,6 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery
-
-GOVDELIVERY_USER = os.environ.get('GOVDELIVERY_USER')
-GOVDELIVERY_PASSWORD = os.environ.get('GOVDELIVERY_PASSWORD')
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
 # LOAD OPTIONAL APPS
@@ -468,8 +458,8 @@ BACKENDS = {
     'diffs': 'regcore.db.django_models.DMDiffs',
 }
 
-# GovDelivery environment variables
-ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
+# Regulations in eRegs that should display the update-in-progress message
+EREGS_REGULATION_UPDATES = ['1002', '1003', '1005', '1010', '1011', '1012', '1013', '1024', '1026']
 
 # Regulations.gov environment variables
 REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
@@ -546,7 +536,8 @@ CSP_IMG_SRC = (
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
     'data:',
-    'www.facebook.com')
+    'www.facebook.com',
+    'www.gravatar.com')
 
 # These specify what URL's we allow to appear in frames/iframes
 CSP_FRAME_SRC = (
@@ -615,6 +606,9 @@ FLAGS = {
     # To be enabled when mortgage-performance data visualizations go live
     'MORTGAGE_PERFORMANCE_RELEASE': {},
 
+    # To be enabled when owning-a-home/explore-rates is de-sheered.
+    'OAH_EXPLORE_RATES': {},
+
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
@@ -622,13 +616,8 @@ FLAGS = {
 
     # Email popups.
     'EMAIL_POPUP_OAH': {'boolean': True},
-    'EMAIL_POPUP_DEBT': {'after date': '2018-02-01T00:00'},
+    'EMAIL_POPUP_DEBT': {'boolean': True},
 
-    # The next version of eRegulations
-    'EREGS20': {
-        'boolean': DEPLOY_ENVIRONMENT == 'build',
-    },
-    
     # Wagtail menu
     'WAGTAIL_MENU': {},
 
@@ -643,9 +632,6 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
-
-    # Servicemembers pages in Wagtail
-    'WAGTAIL_SERVICEMEMBERS': {},
 }
 
 
@@ -676,7 +662,7 @@ SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
 # This value is read by v1.wagtail_hooks.
 SERVE_LATEST_DRAFT_PAGES = []
 if DEPLOY_ENVIRONMENT == 'beta':
-    SERVE_LATEST_DRAFT_PAGES = [1288]
+    SERVE_LATEST_DRAFT_PAGES = [1288,1286,3273]
 
 # Email popup configuration. See v1.templatetags.email_popup.
 EMAIL_POPUP_URLS = {

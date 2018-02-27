@@ -22,7 +22,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   const BASE_CLASS = 'cf-multi-select';
   const LIST_CLASS = 'm-list';
-  const CHECKBOX_INPUT_CLASS = 'cf-input';
+  const CHECKBOX_INPUT_CLASS = 'a-checkbox';
   const TEXT_INPUT_CLASS = 'a-text-input';
 
   /* TODO: As the multiselect is developed further
@@ -204,7 +204,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
     _optionsData.forEach( function( option ) {
       const _optionsItemDom = domCreate( 'li', {
-        'data-option': option.value
+        'data-option': option.value,
+        'class': 'm-form-field m-form-field__checkbox'
       } );
 
       domCreate( 'input', {
@@ -221,7 +222,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       domCreate( 'label', {
         'for':         option.value,
         'textContent': option.text,
-        'className':   BASE_CLASS + '_label',
+        'className':   BASE_CLASS + '_label a-label',
         'inside':      _optionsItemDom
       } );
 
@@ -229,7 +230,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
       if ( option.checked ) {
         const selectionsItemDom = domCreate( 'li', {
-          'data-option': option.value
+          'data-option': option.value,
+          'class': 'm-form-field m-form-field__checkbox'
         } );
 
         domCreate( 'label', {
@@ -308,13 +310,18 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           'data-option': option.value
         } );
 
-        domCreate( 'label', {
+        const _selectionsItemLabelDom = domCreate( 'label', {
           'for':       option.value,
-          'innerHTML': option.text,
           'inside':    _selectionsItemDom
         } );
 
+        domCreate( 'span', {
+          innerHTML: option.text,
+          inside:    _selectionsItemLabelDom
+        } );
+
         _selectionsDom.appendChild( _selectionsItemDom );
+        _selectionsItemDom.appendChild( _selectionsItemLabelDom );
 
         option.checked = true;
         _selectionsCount += 1;

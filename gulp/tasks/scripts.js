@@ -8,15 +8,17 @@ const browserSync = require( 'browser-sync' );
 const config = require( '../config.js' );
 const configLegacy = config.legacy;
 const configScripts = config.scripts;
+const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const gulpConcat = require( 'gulp-concat' );
-const gulpModernizr = require( 'gulp-modernizr' );
+const gulpModernizrBuild = require( 'gulp-modernizr-build' );
 const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
 const handleErrors = require( '../utils/handle-errors' );
-const named = require( 'vinyl-named' );
+const vinylNamed = require( 'vinyl-named' );
+const mergeStream = require( 'merge-stream' );
 const paths = require( '../../config/environment' ).paths;
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
@@ -36,9 +38,7 @@ function _processScript( localWebpackConfig, src, dest ) {
       dest:  paths.processed + dest,
       extra: configScripts.otherBuildTriggerFiles
     } ) )
-    .pipe( named( function( file ) {
-      return file.relative;
-    } ) )
+    .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + dest ) )
@@ -58,13 +58,13 @@ function scriptsPolyfill() {
       extra: configScripts.otherBuildTriggerFiles
     } ) )
 
-    /* csspointerevents is used by select menu in Capital Framework.
+    /* csspointerevents is used by select menu in Capital Framework for IE10.
        es5 is used for ECMAScript 5 feature detection to change js CSS to no-js.
        setClasses sets detection checks as feat/no-feat CSS in html element.
        html5printshiv enables use of HTML5 sectioning elements in IE8
        See https://github.com/aFarkas/html5shiv */
-    .pipe( gulpModernizr( {
-      tests:   [ 'csspointerevents', 'es5' ],
+    .pipe( gulpModernizrBuild( 'modernizr.min.js', {
+      addFeatures: [ 'css/pointerevents', 'es5/specification' ],
       options: [ 'setClasses', 'html5printshiv' ]
     } ) )
     .pipe( gulpUglify( {
@@ -72,7 +72,6 @@ function scriptsPolyfill() {
         properties: false
       }
     } ) )
-    .pipe( gulpRename( 'modernizr.min.js' ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + '/js/' ) )
     .pipe( browserSync.reload( {
@@ -90,18 +89,6 @@ function scriptsModern() {
     webpackConfig.modernConf,
     '/js/routes/**/*.js',
     '/js/routes/'
-  );
-}
-
-/**
- * Bundle IE9-specific script.
- * @returns {PassThrough} A source stream.
- */
-function scriptsIE() {
-  return _processScript(
-    webpackConfig.commonConf,
-    '/js/ie/common.ie9.js',
-    '/js/ie/'
   );
 }
 
@@ -200,22 +187,59 @@ function scriptsNemo() {
 }
 
 /**
- * Bundle scripts in /js/routes/apps/owning-a-home/
- * and factor out common modules into common.js.
+ * Bundle scripts in /apps/ & factor out shared modules into common.js for each.
  * @returns {PassThrough} A source stream.
  */
-function scriptsOAH() {
-  return _processScript(
-    webpackConfig.owningAHomeConf,
-    '/js/routes/owning-a-home/**/*.js',
-    '/js/owning-a-home/'
-  );
+function scriptsApps() {
+  // Aggregate application namespaces that appear in unprocessed/apps.
+  // eslint-disable-next-line no-sync
+  let apps = fs.readdirSync( `${ paths.unprocessed }/apps/` );
+
+  // Filter out .DS_STORE directory.
+  apps = apps.filter( dir => dir.charAt( 0 ) !== '.' );
+
+  // Run each application's JS through webpack and store the gulp streams.
+  const streams = [];
+  apps.forEach( app => {
+    /* Check if node_modules directory exists in a particular app's folder.
+       If it doesn't log the command to add it and don't process the scripts. */
+    const appsPath = `${ paths.unprocessed }/apps/${ app }`;
+    // eslint-disable-next-line no-sync
+    if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
+      // eslint-disable-next-line no-sync
+      if ( fs.existsSync( `${ appsPath }/node_modules` ) ) {
+        streams.push(
+          _processScript(
+            webpackConfig.appsConf,
+            `/apps/${ app }/js/**/*.js`,
+            `/apps/${ app }/js`
+          )
+        );
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(
+          '\x1b[31m%s\x1b[0m',
+          'App dependencies not installed, please run from project root:',
+          `npm --prefix ${ appsPath } install ${ appsPath }`
+        );
+      }
+    }
+  } );
+
+  // Return all app's gulp streams as a merged stream.
+  let singleStream;
+
+  if ( streams.length > 0 ) {
+    singleStream = mergeStream( ...streams );
+  } else {
+    singleStream = mergeStream();
+  }
+  return singleStream;
 }
 
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
-gulp.task( 'scripts:oah', scriptsOAH );
-gulp.task( 'scripts:ie', scriptsIE );
+gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
@@ -231,8 +255,7 @@ gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
-  'scripts:oah',
-  'scripts:ie',
+  'scripts:apps',
   'scripts:external',
   'scripts:nemo',
   'scripts:spanish'

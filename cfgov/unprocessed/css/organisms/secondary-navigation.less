@@ -88,8 +88,6 @@
 */
 
 .o-secondary-navigation {
-    .u-webfont-regular();
-
     &__no-children {
       .respond-to-max( @bp-sm-max, {
           display: none;
@@ -102,13 +100,16 @@
     //       behavior and handle its own styling
     //       (possibly shared with expandables).
     .o-expandable_target {
-        .u-webfont-demi();
-
-        text-transform: uppercase;
-
         .respond-to-min( @bp-med-min, {
           display: none;
         } );
+    }
+
+    .o-expandable_label {
+        .heading-5();
+
+        margin-bottom: 0;
+        line-height: unit( 22 / @font-size );
     }
 
     .o-expandable_content {

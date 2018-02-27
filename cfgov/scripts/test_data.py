@@ -5,7 +5,7 @@ from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 
-from jobmanager.models.django import JobCategory, JobRegion
+from jobmanager.models.django import JobCategory, JobLocation
 from jobmanager.models.pages import JobListingPage
 from v1.models import (
     BlogPage, BrowseFilterablePage, BrowsePage, SublandingFilterablePage
@@ -53,7 +53,7 @@ def add_jobs_listing_page(slug, cls):
     )
     job_category.save()
 
-    job_region = JobRegion(
+    job_region = JobLocation(
         abbreviation='TR',
         name='Testing Region'
     )
@@ -68,7 +68,7 @@ def add_jobs_listing_page(slug, cls):
         salary_min=95000,
         slug=slug,
         title=slug,
-        region=job_region
+        location=job_region
     )
 
     publish_page(jobs_listing_page)

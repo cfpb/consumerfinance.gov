@@ -1,25 +1,20 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'macros/time.html' as time %}
+{% import 'macros/util/format/datetime.html' as dt %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
-{% set regional_cities = {
-    'Midwest region': 'Chicago, IL; Detroit, MI; Minneapolis, MN; St. Louis, MO; Cincinnati, OH; Cleveland, OH; Columbus, OH; Indianapolis, IN; Milwaukee, WI',
-    'Northeast region': 'New York City, NY; Philadelphia, PA; Boston, MA; Pittsburgh, PA; Providence, RI; Hartford, CT; Buffalo, NY; Rochester, NY; Bridgeport, CT; Worcester, MA',
-    'Southeast region': 'Houston, TX; San Antonio, TX; Dallas, TX; Jacksonville, FL; Austin, TX; Memphis, TN; Baltimore, MD; Charlotte, NC; Atlanta, GA; Virginia Beach, VA; Raleigh, NC',
-    'West region': 'Los Angeles, CA; San Francisco, CA; Phoenix, AZ; San Bernardino, CA; Seattle, WA; San Diego, CA; Denver, CO; Portland, OR; Sacramento, CA; Las Vegas, NV'
-} %}
 
 {% import 'molecules/social-media.html' as social_media with context %}
     <section class="block
                     block__flush-top
                     block__sub">
         <h1>{{ page.title }}</h1>
-        <dl>
+        <dl class="job-details">
             <dt>Division/Office: </dt>
             <dd>{{ page.division }}</dd>
             <dt>Expiration Date:</dt>
@@ -28,16 +23,23 @@
                     {{ time.render(page.close_date, {'date': true}, text_format=True) }}
                 {% endif %}
             </dd>
-            <dt>Region:</dt>
-            <dd>{{ page.region }}</dd>
-            
-            {% if page.region and page.region.name in ["Midwest region", "Northeast region", "Southeast region", "West region" ]%}
-            <dt class="u-hidden">Location:</dt>
-            <dd class="u-hidden">
-                {{ regional_cities[page.region.name] }}
-            </dd>
+
+            {% if location_type == 'region' %}
+                <dt>Location:</dt>
+                <dd>{%- if states|length -%}
+                    Home duty location in one of the following {{ page.location }} states: {{ states|join(', ') -}}.
+                    {%- else -%}
+                    {{ page.location }}
+                    {%- endif -%}
+                    {%- if cities -%}
+                        <span class="u-hidden">Cities in this region include {{ cities|join('; ') -}}.</span>
+                    {%- endif  -%}
+                </dd>
+            {% else %}
+                <dt>Location:</dt>
+                <dd>{{- cities[0] if cities|length else page.location -}} {{- ' or remote' if page.allow_remote else '' -}}</dd>
             {% endif %}
-            
+
             <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
             <dd>
                 {% if page.grades.exists() %}
@@ -51,10 +53,11 @@
                           cf-icon__after 
                           cf-icon-download 
                           pay-grade-link"
-                   href="http://files.consumerfinance.gov/f/documents/2016-2019_cfpb_Pay-Table.pdf">
+                   href="http://files.consumerfinance.gov/f/documents/cfpb_pay_scales.pdf">
                     <span class="a-link_text">See information on grades and base pay ranges</span>
                 </a>
             </dd>
+                
         </dl>
     </section>
 

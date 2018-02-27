@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-import HTMLParser
 import json
 from collections import Counter, OrderedDict
+from six.moves import html_parser as HTMLParser
 
 from django import forms
 from django.apps import apps
@@ -151,7 +151,9 @@ class Category(models.Model):
 
     @cached_property
     def facet_map(self):
-        answers = self.answer_set.order_by('-pk').select_related()
+        raw_answers = self.answer_set.order_by('-pk').select_related()
+        answers = [
+            answer for answer in raw_answers if answer.english_page.live]
         subcats = self.subcategories.all().select_related()
         audiences = Audience.objects.all()
         container = {

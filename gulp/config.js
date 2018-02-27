@@ -94,38 +94,24 @@ module.exports = {
       paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
     ]
   },
-  images: {
-    src:  [ paths.unprocessed + '/img/**', './cfgov/wellbeing/static/img/**' ],
-    dest: paths.processed + '/img'
-  },
   copy: {
-    codejson: {
+    jsonCode: {
       src:  'code.json',
       dest: paths.processed
+    },
+    jsonKBYO: {
+      src:  `${ paths.unprocessed }/apps/know-before-you-owe/js/kbyo-timeline.json`,
+      dest: `${ paths.processed }/apps/know-before-you-owe/js`
     },
     icons: {
       src:  paths.modules + '/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
     },
-    vendorFonts: {
-      src:  paths.unprocessed + '/fonts/pdfreactor/*',
-      dest: paths.processed + '/fonts/pdfreactor'
-    },
-    vendorCss: {
-      src: [
-        paths.unprocessed + '/css/pdfreactor-fonts.css'
-      ],
-      dest: paths.processed + '/css'
-    },
-    vendorImg: {
-      src: [],
-      dest: paths.processed + '/img'
-    },
     timelinejs: {
       src: [
         paths.modules + '/timelinejs/build/**/*'
       ],
-      dest: paths.processed + '/timelinejs'
+      dest: paths.processed + '/apps/timelinejs'
     },
     lightbox2: {
       src: [
@@ -135,8 +121,7 @@ module.exports = {
     },
     vendorJs: {
       src: [
-        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js',
-        paths.unprocessed + '/js/apps/know-before-you-owe/kbyo-timeline.json'
+        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js'
       ],
       dest: paths.processed + '/js/'
     }

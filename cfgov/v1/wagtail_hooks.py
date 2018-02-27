@@ -1,5 +1,5 @@
 import logging
-from urlparse import urlsplit
+from six.moves.urllib.parse import urlsplit
 
 from django.conf import settings
 from django.conf.urls import url

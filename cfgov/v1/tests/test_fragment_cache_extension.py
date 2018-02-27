@@ -32,7 +32,7 @@ class TestFragmentCacheExtension(TestCase):
         )
         publish_page(page)
 
-        # Add a child to that filterable page so that there are related posts results
+        # Add a child to that filterable page so that there are results with a post preview
         child_page = BlogPage(
             title='test blog page',
             slug='test-blog-page'
