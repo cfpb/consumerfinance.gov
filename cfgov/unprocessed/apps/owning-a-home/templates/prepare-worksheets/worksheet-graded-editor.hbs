@@ -1,0 +1,15 @@
+<article>
+   <header class="subheading u-clearfix">
+     <h4 class="worksheet-left-col-header" ] aria-hidden="true">{{title}}</h4>
+     <h4 class="worksheet-right-col-header" aria-hidden="true">{{prompt}}</h4>
+   </header>
+
+   <div class="worksheet-input-group">
+     <!-- Content filled in dynamically from JS -->
+   </div>
+
+   {{#if is_graded}}
+       <button class="btn btn-worksheet-add-row">Add an item</button>
+       <button class="btn btn-worksheet-reset btn-secondary">Reset list</button>
+   {{/if}}
+</article>

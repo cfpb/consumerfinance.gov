@@ -25,3 +25,5 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
         'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
     },
 }
+
+GOVDELIVERY_API = 'core.govdelivery.MockGovDelivery'

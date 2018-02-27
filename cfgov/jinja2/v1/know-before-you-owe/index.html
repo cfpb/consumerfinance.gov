@@ -12,18 +12,18 @@
     }
 
     .m-hero_image {
-        background-image: url('{{ static("img/kbyo-hero_laptop-2x.png") }}');
+        background-image: url('{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}');
         filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-                src='{{ static("img/kbyo-hero_laptop-2x.png") }}',
+                src='{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}',
                 sizingMethod='scale' );
         padding-bottom: 0;
     }
 
     @media screen and (min-width: 37.5625em) {
         .m-hero_image {
-            background-image: url('{{ static("img/kbyo-hero_laptop-2x.png") }}');
+            background-image: url('{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}');
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-                    src='{{ static("img/kbyo-hero_laptop-2x.png") }}',
+                    src='{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}',
                     sizingMethod='scale' );
             padding-bottom: 41.4893617%
         }
@@ -134,7 +134,7 @@
                         <div class="m-info-unit m-info-unit__inline">
                             <div class="m-info-unit_image
                                 m-info-unit_image__square"
-                                style="background-image: url( /static/img/loan-estimate_324.png );">
+                                style="background-image: url( /static/apps/know-before-you-owe/img/loan-estimate_324.png );">
                             </div>
                             <div class="m-info-unit_content">
                                 <h3>Sample Loan Estimate</h3>
@@ -158,7 +158,7 @@
                         <div class="m-info-unit m-info-unit__inline">
                             <div class="m-info-unit_image
                                 m-info-unit_image__square"
-                                style="background-image: url( /static/img/closing-disclosure_324.png );">
+                                style="background-image: url( /static/apps/know-before-you-owe/img/closing-disclosure_324.png );">
                             </div>
                             <div class="m-info-unit_content">
                                 <h3>Sample Closing Disclosure</h3>
@@ -184,7 +184,7 @@
                         <div class="m-info-unit m-info-unit__inline">
                             <div class="m-info-unit_image
                                 m-info-unit_image__square"
-                                style="background-image: url( /static/img/owning-a-home_324.png );">
+                                style="background-image: url( /static/apps/know-before-you-owe/img/owning-a-home_324.png );">
                             </div>
                             <div class="m-info-unit_content">
                                 <h3>Buying a House</h3>
@@ -208,7 +208,7 @@
                         <div class="m-info-unit m-info-unit__inline">
                             <div class="m-info-unit_image
                                 m-info-unit_image__square"
-                                style="background-image: url( /static/img/home-loan-toolkit_324.png );">
+                                style="background-image: url( /static/apps/know-before-you-owe/img/home-loan-toolkit_324.png );">
                             </div>
                             <div class="m-info-unit_content">
                                 <h3>Your Home Loan Toolkit</h3>
@@ -537,15 +537,15 @@
         var timeline_config = {
           width: '100%',
           height: '600',
-          source: '{{ static("js/kbyo-timeline.json") }}',
+          source: '{{ static("apps/know-before-you-owe/js/kbyo-timeline.json") }}',
           embed_id: 'timeline-embed',
           hash_bookmark: true,
           debug: false,
           lang: 'en',
           maptype: 'ROADMAP',
-          css: '{{ static("timelinejs/css/timeline.css") }}',
-          js: '{{ static("timelinejs/js/timeline-min.js") }}'
+          css: '{{ static("apps/timelinejs/css/timeline.css") }}',
+          js: '{{ static("apps/timelinejs/js/timeline-min.js") }}'
         }
 </script>
-<script type="text/javascript" src='{{ static("timelinejs/js/storyjs-embed.js") }}'></script>
+<script type="text/javascript" src='{{ static("apps/timelinejs/js/storyjs-embed.js") }}'></script>
 {% endblock %}
