@@ -1,10 +1,11 @@
 import json
 
 from django.http import HttpResponseRedirect
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, TestCase, override_settings
 
 from mock import Mock, patch
 
+from core.govdelivery import MockGovDelivery
 from data_research.forms import ConferenceRegistrationForm
 from data_research.handlers import ConferenceRegistrationHandler
 from data_research.models import ConferenceRegistration
@@ -15,10 +16,6 @@ class TestConferenceRegistrationHandler(TestCase):
         self.factory = RequestFactory()
         self.page = Mock()
         self.path = '/path/to/page'
-
-        govdelivery_patcher = patch('data_research.handlers.GovDelivery')
-        self.patched_govdelivery = govdelivery_patcher.start()
-        self.addCleanup(govdelivery_patcher.stop)
 
         self.post_data = {
             'name': 'Generic User',
@@ -183,32 +180,31 @@ class TestConferenceRegistrationHandler(TestCase):
             result = handler.process(True)
             self.assertTrue(result['form'].non_field_errors)
 
-    def test_subscribe_instantiates_GovDelivery_with_account_code(self):
-        with self.settings(ACCOUNT_CODE='abcde'):
-            handler = self.get_handler()
-            handler.subscribe('em@il.com', 'code')
-            self.patched_govdelivery.assert_called_with(account_code='abcde')
-
     def test_subscribe_sets_subscriptions(self):
         handler = self.get_handler()
         handler.subscribe('em@il.com', 'code')
-        mock_govdelivery = self.patched_govdelivery.return_value
-        mock_govdelivery.set_subscriber_topics.assert_called_with(
-            email_address='em@il.com',
-            topic_codes=['code'],
-            send_notifications=True,
+
+        self.assertEqual(
+            MockGovDelivery.calls,
+            [(
+                'set_subscriber_topics',
+                (),
+                {
+                    'contact_details': 'em@il.com',
+                    'topic_codes': ['code'],
+                    'send_notifications': True,
+                }
+            )]
         )
 
     def test_subscribe_returns_true_for_success(self):
-        mock_govdelivery = self.patched_govdelivery.return_value
-        mock_govdelivery.set_subscriber_topics.return_value.status_code = 200
         handler = self.get_handler()
         self.assertTrue(handler.subscribe('em@il.com', 'code'))
 
+    @override_settings(
+        GOVDELIVERY_API='core.govdelivery.ExceptionMockGovDelivery'
+    )
     def test_subscribe_returns_false_for_failure(self):
-        mock_govdelivery = self.patched_govdelivery.return_value
-        mock_response = mock_govdelivery.set_subscriber_topics()
-        mock_response.raise_for_status.side_effect = RuntimeError
         handler = self.get_handler()
         self.assertFalse(handler.subscribe('em@il.com', 'code'))
 

@@ -381,9 +381,6 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery
-
-GOVDELIVERY_USER = os.environ.get('GOVDELIVERY_USER')
-GOVDELIVERY_PASSWORD = os.environ.get('GOVDELIVERY_PASSWORD')
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
 # LOAD OPTIONAL APPS
@@ -463,9 +460,6 @@ BACKENDS = {
 
 # Regulations in eRegs that should display the update-in-progress message
 EREGS_REGULATION_UPDATES = ['1002', '1003', '1005', '1010', '1011', '1012', '1013', '1024', '1026']
-
-# GovDelivery environment variables
-ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
 # Regulations.gov environment variables
 REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
@@ -611,6 +605,15 @@ FLAGS = {
 
     # To be enabled when mortgage-performance data visualizations go live
     'MORTGAGE_PERFORMANCE_RELEASE': {},
+
+    # To be enabled when owning-a-home/explore-rates is de-sheered.
+    'OAH_EXPLORE_RATES': {},
+
+    # To be enabled when owning-a-home/mortgage-closing is de-sheered.
+    'OAH_MORTGAGE_CLOSING': {},
+
+    # To be enabled when owning-a-home/mortgage-estimate is de-sheered.
+    'OAH_MORTGAGE_ESTIMATE': {},
 
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
