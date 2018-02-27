@@ -1119,6 +1119,7 @@ function renderChart( data, cb ) {
  */
 function init() {
 
+  /*
   // Only attempt to do things if we're on the rate checker page.
   if ( document.querySelectorAll( '.rate-checker' ).length === 0 ) {
     return;
@@ -1129,7 +1130,7 @@ function init() {
   renderLoanAmount();
   renderTime();
   setSelections( { usePlaceholder: true } );
-
+*/
 /*
   geolocation.getState({timeout: 2000}, function( state ){
     // If a state is returned (meaning they allowed the browser
@@ -1140,7 +1141,7 @@ function init() {
     }
   } );
 */
-  updateView();
+  //updateView();
 }
 
 // Have the reset button clear selections.
