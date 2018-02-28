@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/apps/';
+const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 const chai = require( 'chai' );
 const expect = chai.expect;
 const sinon = require( 'sinon' );
