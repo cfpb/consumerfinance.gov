@@ -1,3 +1,6 @@
+// TODO: Support is only needed for IE9-
+// https://caniuse.com/#feat=input-placeholder
+// Likely this can be deleted.
 //
 // HTML5 Placeholder Attribute Polyfill (Simple)
 //
