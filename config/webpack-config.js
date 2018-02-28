@@ -14,10 +14,11 @@ const COMMON_BUNDLE_NAME = 'common.js';
 /* Commmon webpack 'module' option used in each configuration.
    Runs code through Babel and uses global supported browser list. */
 const COMMON_MODULE_CONFIG = {
-  loaders: [ {
+  rules: [ {
     test: /\.js$/,
-    loaders: [ {
-      loader: 'babel-loader?cacheDirectory=true',
+    exclude: /node_modules/,
+    use: {
+      loader: 'babel-loader',
       options: {
         presets: [ [ 'babel-preset-env', {
           targets: {
@@ -26,16 +27,9 @@ const COMMON_MODULE_CONFIG = {
           debug: true
         } ] ]
       }
-    } ],
-    exclude: {
-      test: /node_modules/,
-
-      /* The below regex will capture all node modules that start with `cf`
-         or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/. */
-      exclude: /node_modules\/(?:cf.+|atomic-component)/
     }
   } ]
-};
+}
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
@@ -54,13 +48,14 @@ const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
 } );
 
 
-const COMMON_CHUNK_CONFIG = new webpack.optimize.CommonsChunkPlugin( {
+const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
   name: COMMON_BUNDLE_NAME
 } );
 
 
 const commonConf = {
   module: COMMON_MODULE_CONFIG,
+  mode: 'production',
   output: {
     filename: '[name]'
   },
@@ -71,6 +66,7 @@ const commonConf = {
 
 const externalConf = {
   module: COMMON_MODULE_CONFIG,
+  mode: 'production',
   output: {
     filename: 'external-site.js'
   },
@@ -81,6 +77,7 @@ const externalConf = {
 
 const modernConf = {
   cache: true,
+  mode: 'production',
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: '[name]'
@@ -98,6 +95,7 @@ const onDemandHeaderRawConf = {
 const appsConf = {
   cache: true,
   module: COMMON_MODULE_CONFIG,
+  mode: 'production',
   output: {
     filename: '[name]',
     jsonpFunction: 'apps'
@@ -110,6 +108,7 @@ const appsConf = {
 
 const spanishConf = {
   module: COMMON_MODULE_CONFIG,
+  mode: 'production',
   output: {
     filename: 'spanish.js'
   },
@@ -118,8 +117,16 @@ const spanishConf = {
   ]
 };
 
+const devConf = {
+  devtool: 'inline-source-map',
+  mode: 'development',
+  module: COMMON_MODULE_CONFIG,
+  plugins: []
+};
+
 module.exports = {
   commonConf,
+  devConf,
   externalConf,
   modernConf,
   onDemandHeaderRawConf,

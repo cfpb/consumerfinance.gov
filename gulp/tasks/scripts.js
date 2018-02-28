@@ -16,10 +16,12 @@ const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
+const gulpUtil = require( 'gulp-util' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
 const paths = require( '../../config/environment' ).paths;
+const path = require( 'path' );
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
 const webpackStream = require( 'webpack-stream' );
@@ -33,6 +35,11 @@ const webpackStream = require( 'webpack-stream' );
  * @returns {PassThrough} A source stream.
  */
 function _processScript( localWebpackConfig, src, dest ) {
+  var cmdLineArgs = gulpUtil.env;
+  if ( cmdLineArgs.dev || cmdLineArgs.development ) {
+    Object.assign( localWebpackConfig, webpackConfig.devConf );
+  };
+
   return gulp.src( paths.unprocessed + src )
     .pipe( gulpNewer( {
       dest:  paths.processed + dest,
@@ -204,13 +211,20 @@ function scriptsApps() {
     /* Check if node_modules directory exists in a particular app's folder.
        If it doesn't, don't process the scripts and log the command to run. */
     const appsPath = `${ paths.unprocessed }/apps/${ app }`;
+
+    /* Check if webpack-config file exists in a particular app's folder.
+       If it exists use it, if it doesn't then use the default config. */
+    const appWebpackConfigPath = `${ appsPath }/webpack-config.js`;
+    const appWebpackConfig = fs.existsSync( appWebpackConfigPath ) ?
+    require( path.resolve( appWebpackConfigPath ) ).conf : webpackConfig.appsConf;
+
     // eslint-disable-next-line no-sync
     if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
       // eslint-disable-next-line no-sync
       if ( fs.existsSync( `${ appsPath }/node_modules` ) ) {
         streams.push(
           _processScript(
-            webpackConfig.appsConf,
+            appWebpackConfig,
             `/apps/${ app }/js/**/*.js`,
             `/apps/${ app }/js`
           )
