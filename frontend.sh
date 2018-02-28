@@ -17,7 +17,7 @@ init() {
   if [ -f "package-lock.json" ]; then
     DEP_CHECKSUM=$(cat package-lock.json package.json cfgov/unprocessed/apps/**/package*.json | shasum -a 256)
   else
-    DEP_CHECKSUM=$(cat package.json | shasum -a 256)
+    DEP_CHECKSUM=$(cat package.json cfgov/unprocessed/apps/**/package*.json | shasum -a 256)
   fi
 
   if [[ "$(node -v)" != 'v8.'* ]]; then
