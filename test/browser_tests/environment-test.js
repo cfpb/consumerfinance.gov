@@ -9,11 +9,14 @@ module.exports = {
   specsBasePath: specsRoot + '**/*',
 
   suites: {
+    'apps': [
+      specsRoot + 'suites/apps/**/*.feature'
+    ],
     'default': [
-      specsRoot + 'suites/default/*.feature'
+      specsRoot + 'suites/default/**/*.feature'
     ],
     'wagtail-admin': [
-      'cucumber/features/suites/wagtail-admin/*.feature'
+      specsRoot + 'suites/wagtail-admin/*.feature'
     ]
   },
 
