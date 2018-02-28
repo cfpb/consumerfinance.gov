@@ -13,25 +13,29 @@ const paths = require( '../../../config/environment' ).paths;
 // eslint-disable-next-line no-sync
 let apps = fs.readdirSync( `${ paths.unprocessed }/apps/` );
 
-// Filter out .DS_STORE directory.
+// Filter out hidden directories.
 apps = apps.filter( dir => dir.charAt( 0 ) !== '.' );
 
-// Run each application's JS through webpack and store the gulp streams.
+// Install each application's dependencies.
 apps.forEach( app => {
-  /* Check if node_modules directory exists in a particular app's folder.
-     If it doesn't log the command to add it and don't process the scripts. */
+  /* Check if package.json exists in a particular app's folder.
+     If it does, run npm install on that directory. */
   const appsPath = `${ paths.unprocessed }/apps/${ app }`;
   // eslint-disable-next-line no-sync
   if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
     exec( `npm --prefix ${ appsPath } install ${ appsPath }`,
       ( error, stdout, stderr ) => {
         // eslint-disable-next-line no-console
-        console.log( 'App\'s npm output: ' + stdout );
-        // eslint-disable-next-line no-console
-        console.log( 'App\'s npm errors: ' + stderr );
+        console.log( `npm output from ${ appsPath }: ${stdout}` );
+
+        if ( stderr !== null ) {
+          // eslint-disable-next-line no-console
+          console.log( `npm errors/warnings from ${ appsPath }: ${stderr}` );
+        }
+
         if ( error !== null ) {
           // eslint-disable-next-line no-console
-          console.log( 'App\'s exec error: ' + error );
+          console.log( `exec error from ${ appsPath }: ${error}` );
         }
       }
     );
