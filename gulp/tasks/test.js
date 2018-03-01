@@ -35,7 +35,7 @@ function testUnitScripts( cb ) {
         targets: {
           browsers: BROWSER_LIST.LAST_2_IE_9_UP
         },
-        debug: true
+        debug: false
       } ] ]
     } ) )
     .pipe( gulpIstanbul( {
