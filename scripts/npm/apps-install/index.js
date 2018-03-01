@@ -5,7 +5,7 @@ under the ./cfgov/unprocessed/apps/ path.
  */
 
 const fs = require( 'fs' );
-const exec = require( 'child_process' ).exec;
+const execSync = require( 'child_process' ).execSync;
 
 const paths = require( '../../../config/environment' ).paths;
 
@@ -23,21 +23,27 @@ apps.forEach( app => {
   const appsPath = `${ paths.unprocessed }/apps/${ app }`;
   // eslint-disable-next-line no-sync
   if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
-    exec( `npm --prefix ${ appsPath } install ${ appsPath }`,
-      ( error, stdout, stderr ) => {
+    try {
+      // eslint-disable-next-line no-sync
+      const stdOut = execSync(
+        `npm --prefix ${ appsPath } install ${ appsPath }`
+      );
+      console.log( `${ appsPath }'s npm output: ${ stdOut.toString() }` );
+    } catch ( error ) {
+      if ( error.stderr ) {
         // eslint-disable-next-line no-console
-        console.log( `npm output from ${ appsPath }: ${stdout}` );
-
+        console.log( `npm output from ${ appsPath }: ${ error.stderr }` );
+      }
+      if ( error !== null ) {
         if ( stderr !== null ) {
           // eslint-disable-next-line no-console
-          console.log( `npm errors/warnings from ${ appsPath }: ${stderr}` );
+          console.log( `npm errors/warnings from ${ appsPath }: ${ stderr }` );
         }
 
-        if ( error !== null ) {
-          // eslint-disable-next-line no-console
-          console.log( `exec error from ${ appsPath }: ${error}` );
-        }
+        // eslint-disable-next-line no-console
+        console.log( `exec error from ${ appsPath }: ${ error }` );
+        process.exit( 1 );
       }
-    );
+    }
   }
 } );
