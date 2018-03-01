@@ -5,6 +5,7 @@ under the ./cfgov/unprocessed/apps/ path.
  */
 
 const fs = require( 'fs' );
+// eslint-disable-next-line no-sync
 const execSync = require( 'child_process' ).execSync;
 
 const paths = require( '../../../config/environment' ).paths;
@@ -28,22 +29,18 @@ apps.forEach( app => {
       const stdOut = execSync(
         `npm --prefix ${ appsPath } install ${ appsPath }`
       );
+      // eslint-disable-next-line no-console
       console.log( `${ appsPath }'s npm output: ${ stdOut.toString() }` );
     } catch ( error ) {
       if ( error.stderr ) {
         // eslint-disable-next-line no-console
         console.log( `npm output from ${ appsPath }: ${ error.stderr }` );
       }
-      if ( error !== null ) {
-        if ( stderr !== null ) {
-          // eslint-disable-next-line no-console
-          console.log( `npm errors/warnings from ${ appsPath }: ${ stderr }` );
-        }
 
-        // eslint-disable-next-line no-console
-        console.log( `exec error from ${ appsPath }: ${ error }` );
-        process.exit( 1 );
-      }
+      // eslint-disable-next-line no-console
+      console.log( `exec error from ${ appsPath }: ${ error }` );
+      // eslint-disable-next-line no-process-exit
+      process.exit( 1 );
     }
   }
 } );
