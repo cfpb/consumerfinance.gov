@@ -633,6 +633,11 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
+
+    # Ping google on page publication in production only
+    'PING_GOOGLE_ON_PUBLISH': {
+        'boolean': DEPLOY_ENVIRONMENT == 'production'
+    },
 }
 
 
