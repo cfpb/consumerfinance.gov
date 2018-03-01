@@ -4,7 +4,7 @@ const expect = chai.expect;
 
 const HTML_SNIPPET = `
   <input id="credit-score"
-          type="range" min="600" max="840" step="20" value="700">
+         type="range" min="600" max="840" step="20" value="700">
   <input id="down-payment" type="text" placeholder="20,000">
   <input id="house-price" type="text" placeholder="200,000">
   <input id="loan-amount" type="text" placeholder="200,000">

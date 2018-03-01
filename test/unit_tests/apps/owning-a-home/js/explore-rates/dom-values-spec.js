@@ -4,7 +4,7 @@ const expect = chai.expect;
 
 const HTML_SNIPPET = `
   <input id="credit-score"
-          type="range" min="600" max="840" step="20" value="700">
+         type="range" min="600" max="840" step="20" value="700">
   <select id="arm-type">
       <option value="3-1">3/1</option>
       <option value="5-1">5/1</option>
