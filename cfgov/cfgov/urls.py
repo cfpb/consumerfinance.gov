@@ -91,8 +91,16 @@ urlpatterns = [
         name='explore-rates'
     ),
     url(r'^owning-a-home/loan-estimate/',
-        include(oah.urls_for_prefix('loan-estimate'))),
-
+        FlaggedTemplateView.as_view(
+            flag_name='OAH_FORM_EXPLAINERS',
+            template_name='owning-a-home/loan-estimate/index.html',
+            fallback=SheerTemplateView.as_view(
+                template_engine='owning-a-home',
+                template_name='loan-estimate/index.html'
+            )
+        ),
+        name='loan-estimate'
+    ),
     url(r'^owning-a-home/loan-options/',
         include(oah.urls_for_prefix('loan-options'))),
     url(r'^owning-a-home/loan-options/FHA-loans/',
