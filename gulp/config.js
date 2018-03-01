@@ -32,7 +32,8 @@ module.exports = {
     build: [
       'config/**/*.js',
       'gulpfile.js',
-      'gulp/**/*.js'
+      'gulp/**/*.js',
+      'scripts/npm/**/*.js'
     ]
   },
   test: {
