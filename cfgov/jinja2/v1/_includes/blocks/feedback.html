@@ -30,7 +30,7 @@
 
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <input type="hidden" name="form_id" value="{{ form_id }}">
-    <input type="hidden" name="referrer" value="{{ value.referrer }}">
+    <input type="hidden" name="referrer" value="{{ settings.referrer }}">
     <input type="hidden" name="language" value="{{ page.language }}">
 
     {% if value.was_it_helpful_text %}

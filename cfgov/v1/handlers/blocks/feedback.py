@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import urllib
+from __future__ import unicode_literals
+from six.moves import urllib
 
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
@@ -17,7 +18,7 @@ FEEDBACK_TYPES = {
 
 THANKS_MAP = {
     'en': 'Thanks for your feedback!',
-    'es': '¡Gracias por tus comentarios!'
+    'es': '\xa1Gracias por tus comentarios!'
 }
 
 
@@ -43,9 +44,9 @@ class FeedbackHandler(Handler):
 
     def sanitize_referrer(self):
         known_miscodings = {
-            u'\xc3\xb3': u'\xf3',
-            u'\xc3\xa9': u'\xe9',
-            u'\xc3\xad': u'\xed',
+            '\xc3\xb3': '\xf3',
+            '\xc3\xa9': '\xe9',
+            '\xc3\xad': '\xed',
         }
         referrer = self.request.META.get('HTTP_REFERER', '')
         try:
@@ -53,7 +54,10 @@ class FeedbackHandler(Handler):
         except (UnicodeEncodeError):
             for char in known_miscodings:
                 referrer = referrer.replace(char, known_miscodings[char])
-            referrer = urllib.quote(referrer.encode('utf8'), safe=':/')
+            parsed_referrer = urllib.parse.urlparse(referrer)
+            referrer = "{}{}".format(
+                parsed_referrer.netloc,
+                urllib.parse.quote(parsed_referrer.path.encode('utf8')))
         return referrer
 
     def process(self, is_submitted):
@@ -63,8 +67,8 @@ class FeedbackHandler(Handler):
             form = form_cls(self.request.POST)
             return self.get_response(form)
 
-        self.block_value.update({'referrer': self.sanitize_referrer()})
-        return {'form': form_cls()}
+        return {'form': form_cls(),
+                'referrer': self.sanitize_referrer()}
 
     def get_response(self, form):
         if form.is_valid():
