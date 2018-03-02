@@ -41,8 +41,6 @@ var chartTooltipSingle = require( TEMPLATE_DIR + 'chart-tooltip-single.hbs' );
 var chartTooltipMultiple =
   require( TEMPLATE_DIR + 'chart-tooltip-multiple.hbs' );
 
-console.log( county );
-
 var template = {
   county: county,
   countyConfWarning: countyConfWarning,
