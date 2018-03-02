@@ -35,10 +35,10 @@ const webpackStream = require( 'webpack-stream' );
  * @returns {PassThrough} A source stream.
  */
 function _processScript( localWebpackConfig, src, dest ) {
-  var cmdLineArgs = gulpUtil.env;
+  const cmdLineArgs = gulpUtil.env;
   if ( cmdLineArgs.dev || cmdLineArgs.development ) {
     Object.assign( localWebpackConfig, webpackConfig.devConf );
-  };
+  }
 
   return gulp.src( paths.unprocessed + src )
     .pipe( gulpNewer( {
@@ -214,9 +214,14 @@ function scriptsApps() {
 
     /* Check if webpack-config file exists in a particular app's folder.
        If it exists use it, if it doesn't then use the default config. */
+    let appWebpackConfig = webpackConfig.appsConf;
     const appWebpackConfigPath = `${ appsPath }/webpack-config.js`;
-    const appWebpackConfig = fs.existsSync( appWebpackConfigPath ) ?
-    require( path.resolve( appWebpackConfigPath ) ).conf : webpackConfig.appsConf;
+
+    // eslint-disable-next-line no-sync
+    if ( fs.existsSync( appWebpackConfigPath ) ) {
+      // eslint-disable-next-line global-require
+      appWebpackConfig = require( path.resolve( appWebpackConfigPath ) ).conf;
+    }
 
     // eslint-disable-next-line no-sync
     if ( fs.existsSync( `${ appsPath }/package.json` ) ) {

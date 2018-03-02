@@ -32,7 +32,7 @@ const COMMON_MODULE_CONFIG = {
       }
     }
   } ]
-}
+};
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
