@@ -24,20 +24,24 @@ require( '../../node_modules/rangeslider.js' );
 require( './tab' );
 require( '../placeholder-polyfill' );
 
-// Load our handlebar templates.
-var county = require( '../templates/county-option.hbs' );
-var countyConfWarning = require( '../templates/county-conf-warning.hbs' );
-var countyFHAWarning = require( '../templates/county-fha-warning.hbs' );
-var countyVAWarning = require( '../templates/county-va-warning.hbs' );
-var countyGenWarning = require( '../templates/county-general-warning.hbs' );
-var sliderLabel = require( '../templates/slider-range-label.hbs' );
-var creditAlert = require( '../templates/credit-alert.hbs' );
-var resultAlert = require( '../templates/result-alert.hbs' );
-var failAlert = require( '../templates/fail-alert.hbs' );
-var dpWarning = require( '../templates/down-payment-warning.hbs' );
-var chartTooltipSingle = require( '../templates/chart-tooltip-single.hbs' );
-var chartTooltipMultiple = require( '../templates/chart-tooltip-multiple.hbs' );
+var TEMPLATE_DIR = '../../templates/explore-rates/';
 
+// Load our handlebar templates.
+var county = require( TEMPLATE_DIR + 'county-option.hbs' );
+var countyConfWarning = require( TEMPLATE_DIR + 'county-conf-warning.hbs' );
+var countyFHAWarning = require( TEMPLATE_DIR + 'county-fha-warning.hbs' );
+var countyVAWarning = require( TEMPLATE_DIR + 'county-va-warning.hbs' );
+var countyGenWarning = require( TEMPLATE_DIR + 'county-general-warning.hbs' );
+var sliderLabel = require( TEMPLATE_DIR + 'slider-range-label.hbs' );
+var creditAlert = require( TEMPLATE_DIR + 'credit-alert.hbs' );
+var resultAlert = require( TEMPLATE_DIR + 'result-alert.hbs' );
+var failAlert = require( TEMPLATE_DIR + 'fail-alert.hbs' );
+var dpWarning = require( TEMPLATE_DIR + 'down-payment-warning.hbs' );
+var chartTooltipSingle = require( TEMPLATE_DIR + 'chart-tooltip-single.hbs' );
+var chartTooltipMultiple =
+  require( TEMPLATE_DIR + 'chart-tooltip-multiple.hbs' );
+
+console.log( county );
 
 var template = {
   county: county,

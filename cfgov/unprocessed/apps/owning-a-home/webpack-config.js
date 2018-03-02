@@ -48,12 +48,6 @@ const COMMON_MODULE_CONFIG = {
     use: {
       loader: 'handlebars-loader'
     }
-    options: {
-      helperDirs: path.join(__dirname, 'modules/helpers'),
-      precompileOptions: {
-        knownHelpersOnly: false
-      }
-    }
   } ]
 }
 
