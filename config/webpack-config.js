@@ -16,9 +16,12 @@ const COMMON_BUNDLE_NAME = 'common.js';
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
-    exclude: /node_modules/,
+
+    /* The below regex will capture all node modules that start with `cf`
+      or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/. */
+    exclude: /node_modules\/(?:cf.+|atomic-component)/,
     use: {
-      loader: 'babel-loader',
+      loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ 'babel-preset-env', {
           targets: {
