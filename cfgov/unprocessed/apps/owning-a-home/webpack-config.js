@@ -31,9 +31,12 @@ const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
-    exclude: /node_modules/,
+
+    /* The below regex will capture all node modules that start with `cf`
+      or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/. */
+    exclude: /node_modules\/(?:cf.+|atomic-component)/,
     use: {
-      loader: 'babel-loader',
+      loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ 'babel-preset-env', {
           targets: {
@@ -49,7 +52,7 @@ const COMMON_MODULE_CONFIG = {
       loader: 'handlebars-loader'
     }
   } ]
-}
+};
 
 const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
   name: COMMON_BUNDLE_NAME
