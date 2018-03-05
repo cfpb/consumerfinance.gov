@@ -12,7 +12,7 @@ def run():
     index_name = settings.SHEER_ELASTICSEARCH_INDEX
 
     if not es.indices.exists(index_name):
-        print 'Index %s does not exist' % index_name
+        print('Index {} does not exist'.format(index_name))
         return
 
     es_settings = settings.SHEER_ELASTICSEARCH_SETTINGS

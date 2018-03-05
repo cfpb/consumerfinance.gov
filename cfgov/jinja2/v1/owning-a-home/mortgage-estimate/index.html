@@ -6,18 +6,24 @@
 {% block metadescription %}If you’ve received a Loan Estimate, you may be wondering what's next. The CFPB's tools and resources help you choose a mortgage that’s right for you.{% endblock metadescription %}
 
 {% block banner_top %}
-    {% include "_layouts/brand-header.html" %}
+    {% include "_templates/brand-header.html" %}
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ static('oah/main.css') }}">
+    <link rel="stylesheet" href="{{ static('apps/owning-a-home/css/main.css') }}">
     {{ super() }}
 {% endblock css %}
 
 {% block javascript %}
     {{ super() }}
-    <script>
-        {% include 'js/owning-a-home/common.js' %}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [ '/static/apps/owning-a-home/js/common.js' ];
+          jsl(s);
+        }()
+      }
     </script>
 {% endblock javascript %}
 
@@ -95,7 +101,7 @@
           <span class="a-link_text">Learn more about when you might receive a revised Loan Estimate</span>
         </a>
       </p>
-      {% include "_layouts/ratings-form.html" %}
+      {% include "_templates/ratings-form.html" %}
     </section>
     <!-- .content_main -->
     <aside class="content_sidebar">
@@ -112,7 +118,7 @@
         } ) }}
       </div>
       <div class="block">
-      {% import "_layouts/email-signup.html" as email_signup %}
+      {% import "_templates/email-signup.html" as email_signup %}
       {{ email_signup.render( data ) }}
       </div>
       <section class="block">

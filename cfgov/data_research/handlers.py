@@ -1,12 +1,10 @@
 import json
 import logging
 
-from django.conf import settings
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect
 
-from govdelivery.api import GovDelivery
-
+from core.govdelivery import get_govdelivery_api
 from data_research.forms import ConferenceRegistrationForm
 from data_research.models import ConferenceRegistration
 from v1.handlers import Handler
@@ -75,10 +73,10 @@ class ConferenceRegistrationHandler(Handler):
     def subscribe(self, email, code):
         try:
             logger.info('subscribing to GovDelivery')
-            gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
+            gd = get_govdelivery_api()
 
             subscription_response = gd.set_subscriber_topics(
-                email_address=email,
+                contact_details=email,
                 topic_codes=[code],
                 send_notifications=True,
             )

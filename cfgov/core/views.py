@@ -12,10 +12,10 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 
 import requests
-from govdelivery.api import GovDelivery
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.forms import ExternalURLForm
+from core.govdelivery import get_govdelivery_api
 from core.utils import extract_answers_from_request
 
 
@@ -46,7 +46,8 @@ def govdelivery_subscribe(request):
                 redirect('govdelivery:user_error')
     email_address = request.POST['email']
     codes = request.POST.getlist('code')
-    gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
+
+    gd = get_govdelivery_api()
     try:
         subscription_response = gd.set_subscriber_topics(
             email_address,

@@ -1,3 +1,5 @@
+const BROWSER_LIST = require( '../../config/browser-list-config' );
+const gulpBabel = require( 'gulp-babel' );
 const configTest = require( '../config' ).test;
 const envvars = require( '../../config/environment' ).envvars;
 const fsHelper = require( '../utils/fs-helper' );
@@ -28,6 +30,14 @@ function testUnitScripts( cb ) {
   }
 
   gulp.src( configTest.src )
+    .pipe( gulpBabel( {
+      presets: [ [ 'babel-preset-env', {
+        targets: {
+          browsers: BROWSER_LIST.LAST_2_IE_9_UP
+        },
+        debug: false
+      } ] ]
+    } ) )
     .pipe( gulpIstanbul( {
       includeUntested: false
     } ) )
