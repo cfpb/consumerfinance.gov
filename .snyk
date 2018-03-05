@@ -1,0 +1,39 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.10.2
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - localtunnel > debug:
+        patched: '2018-03-05T14:05:56.872Z'
+    - browser-sync > connect > debug:
+        patched: '2018-03-05T14:05:56.872Z'
+    - browser-sync > connect > finalhandler > debug:
+        patched: '2018-03-05T14:05:56.872Z'
+    - browser-sync > serve-index > debug:
+        patched: '2018-03-05T14:05:56.872Z'
+    - browser-sync > serve-static > send > debug:
+        patched: '2018-03-05T14:05:56.872Z'
+    - browser-sync > localtunnel > debug:
+        patched: '2018-03-05T14:05:56.872Z'
+  'npm:minimatch:20160620':
+    - gulp > vinyl-fs > glob-stream > minimatch:
+        patched: '2018-03-05T14:05:56.872Z'
+    - gulp > vinyl-fs > glob-watcher > gaze > globule > minimatch:
+        patched: '2018-03-05T14:05:56.872Z'
+    - gulp > vinyl-fs > glob-watcher > gaze > globule > glob > minimatch:
+        patched: '2018-03-05T14:05:56.872Z'
+  'npm:ms:20170412':
+    - browser-sync > connect > debug > ms:
+        patched: '2018-03-05T14:05:56.872Z'
+    - browser-sync > connect > finalhandler > debug > ms:
+        patched: '2018-03-05T14:05:56.872Z'
+    - browser-sync > serve-index > debug > ms:
+        patched: '2018-03-05T14:05:56.872Z'
+    - browser-sync > serve-static > send > ms:
+        patched: '2018-03-05T14:05:56.872Z'
+    - browser-sync > serve-static > send > debug > ms:
+        patched: '2018-03-05T14:05:56.872Z'
+  'npm:qs:20170213':
+    - browser-sync > qs:
+        patched: '2018-03-05T14:05:56.872Z'
