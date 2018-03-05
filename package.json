@@ -37,7 +37,7 @@
     "del": "3.0.0",
     "fastdom": "1.0.6",
     "glob-all": "3.1.0",
-    "gulp": "3.9.1",
+    "gulp": "4.0.0",
     "gulp-babel": "7.0.1",
     "gulp-bless": "4.0.0",
     "gulp-changed": "3.2.0",
@@ -48,7 +48,7 @@
     "gulp-imagemin": "4.1.0",
     "gulp-istanbul": "1.1.3",
     "gulp-less": "3.4.0",
-    "gulp-mocha": "3.0.1",
+    "gulp-mocha": "5.0.0",
     "gulp-modernizr-build": "0.0.5",
     "gulp-mq-remove": "0.0.2",
     "gulp-newer": "1.4.0",
@@ -76,7 +76,8 @@
     "vinyl-named": "1.1.0",
     "webpack": "3.10.0",
     "webpack-stream": "4.0.0",
-    "xdr": "0.5.3"
+    "xdr": "0.5.3",
+    "snyk": "^1.69.10"
   },
   "devDependencies": {
     "chai": "4.1.2",
@@ -97,12 +98,13 @@
     "protractor-cucumber-framework": "4.1.1",
     "selenium-webdriver": "3.6.0",
     "sinon": "4.1.3",
-    "snyk": "1.65.1",
     "wcag": "0.3.0"
   },
   "scripts": {
     "test": "snyk test",
-    "postinstall": "node scripts/npm/apps-install"
+    "postinstall": "node scripts/npm/apps-install",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "snyk": true
 }
