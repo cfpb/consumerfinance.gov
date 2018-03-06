@@ -1,0 +1,15 @@
+{% if at_capacity %}
+The {{ conference_name }} has reached capacity with {{ count }} submissions. Signups are now closed.
+
+The capacity for this event was set to {{ capacity }} at the time of this email.
+{% elif count %}
+The {{ conference_name }} is at {{ count }} of {{ capacity }} capacity for signups.
+{% else %}
+The {{ conference_name }} has no registrations yet.
+{% endif %}
+
+{% if count %}
+See attached for attendee details.
+{% endif %}
+
+This is an automated message.
