@@ -1,7 +1,7 @@
 const envvars = require( '../../config/environment' ).envvars;
+const fancyLog = require( 'fancy-log' );
 const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
-const gulpUtil = require( 'gulp-util' );
 const isReachable = require( 'is-reachable' );
 const localtunnel = require( 'localtunnel' );
 const minimist = require( 'minimist' );
@@ -18,10 +18,10 @@ function testA11y() {
     { stdio: 'inherit' }
   ).once( 'close', code => {
     if ( code ) {
-      gulpUtil.log( 'WCAG tests exited with code ' + code );
+      fancyLog( 'WCAG tests exited with code ' + code );
       process.exit( 1 );
     }
-    gulpUtil.log( 'WCAG tests done!' );
+    fancyLog( 'WCAG tests done!' );
   } );
 }
 
@@ -40,7 +40,7 @@ function _getWCAGParams() {
   const checkerId = envvars.ACHECKER_ID;
   const urlPath = _parsePath( commandLineParams.u );
   const url = host + ':' + port + urlPath;
-  gulpUtil.log( 'WCAG tests checking URL: http://' + url );
+  fancyLog( 'WCAG tests checking URL: http://' + url );
 
   return [ '--u=' + url, '--id=' + checkerId ];
 }
@@ -52,7 +52,7 @@ function testPerf() {
   _createPSITunnel()
     .then( _runPSI )
     .catch( err => {
-      gulpUtil.log( err );
+      fancyLog( err );
     } );
 }
 
@@ -137,14 +137,14 @@ function _parsePath( urlPath ) {
  * @param {Object} params - url, options, and tunnel for running PSI.
  */
 function _runPSI( params ) {
-  gulpUtil.log( 'PSI tests checking URL: http://' + params.url );
+  fancyLog( 'PSI tests checking URL: http://' + params.url );
   psi.output( params.url, params.options )
     .then( () => {
-      gulpUtil.log( 'PSI tests done!' );
+      fancyLog( 'PSI tests done!' );
       params.tunnel.close();
     } )
     .catch( err => {
-      gulpUtil.log( err.message );
+      fancyLog( err.message );
       params.tunnel.close();
       process.exit( 1 );
     } );

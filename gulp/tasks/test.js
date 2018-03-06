@@ -1,7 +1,9 @@
+const ansiColors = require( 'ansi-colors' );
 const BROWSER_LIST = require( '../../config/browser-list-config' );
 const gulpBabel = require( 'gulp-babel' );
 const configTest = require( '../config' ).test;
 const envvars = require( '../../config/environment' ).envvars;
+const fancyLog = require( 'fancy-log' );
 const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
 const gulpIstanbul = require( 'gulp-istanbul' );
@@ -82,10 +84,10 @@ function testAcceptanceBrowser() {
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
     .once( 'close', function( code ) {
       if ( code ) {
-        gulpUtil.log( 'Tox tests exited with code ' + code );
+        fancyLog( 'Tox tests exited with code ' + code );
         process.exit( 1 );
       }
-      gulpUtil.log( 'Tox tests done!' );
+      fancyLog( 'Tox tests done!' );
     } );
 }
 
@@ -173,8 +175,7 @@ function _createSauceTunnel( ) {
 
   if ( !( SAUCE_USERNAME && SAUCE_ACCESS_KEY && SAUCE_TUNNEL_ID ) ) {
     const ERROR_MSG = 'Please ensure your SAUCE variables are set.';
-    gulpUtil.colors.enabled = true;
-    gulpUtil.log( gulpUtil.colors.red( ERROR_MSG ) );
+    fancyLog( ansiColors.red( ERROR_MSG ) );
 
     return Promise.reject( new Error( ERROR_MSG ) );
   }
@@ -186,7 +187,7 @@ function _createSauceTunnel( ) {
     const sauceTunnelParam = { sauceTunnel: sauceTunnel };
 
     sauceTunnel.on( 'verbose:debug', debugMsg => {
-      gulpUtil.log( debugMsg );
+      fancyLog( debugMsg );
     } );
 
     sauceTunnel.start( status => {
@@ -221,7 +222,7 @@ function spawnProtractor( ) {
    * @returns {Promise} Promise which runs Protractor.
    */
   function _runProtractor( args ) {
-    gulpUtil.log( 'Running Protractor with params: ' + params );
+    fancyLog( 'Running Protractor with params: ' + params );
 
     return new Promise( ( resolve, reject ) => {
       spawn(
@@ -230,10 +231,10 @@ function spawnProtractor( ) {
         { stdio: 'inherit' }
       ).once( 'close', code => {
         if ( code ) {
-          gulpUtil.log( 'Protractor tests exited with code ' + code );
+          fancyLog( 'Protractor tests exited with code ' + code );
           reject( args );
         }
-        gulpUtil.log( 'Protractor tests done!' );
+        fancyLog( 'Protractor tests done!' );
         resolve( args );
       } );
     } );
