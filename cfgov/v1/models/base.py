@@ -473,8 +473,13 @@ class Feedback(models.Model):
         for feedback in queryset:
             feedback.submitted_on = "{}".format(feedback.submitted_on.date())
             feedback.comment = feedback.comment.encode('utf-8')
-            writer.writerow(
-                ["{}".format(getattr(feedback, heading))
-                 for heading in headings]
-            )
+            try:
+                writer.writerow(
+                    ["{}".format(getattr(feedback, heading))
+                     for heading in headings]
+                )
+            except UnicodeEncodeError as e:
+                print("Error occurred encoding a character in:")
+                print(feedback)
+                raise e
         return csvfile.getvalue()
