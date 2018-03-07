@@ -1,0 +1,4 @@
+{
+  "rateCheckerAPI": "/oah-api/rates/",
+  "countyAPI":      "/oah-api/county/"
+}

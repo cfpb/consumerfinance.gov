@@ -455,8 +455,6 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^d/admin/(?P<path>.*)$',
             RedirectView.as_view(url='/django-admin/%(path)s',
                                  permanent=True)),
-        url(r'^picard/(?P<path>.*)$',
-            RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
 
         url(r'^tasks/(?P<path>.*)$',
             RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
