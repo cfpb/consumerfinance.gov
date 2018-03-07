@@ -13,7 +13,8 @@ from v1 import blocks as v1_blocks
 class MenuItem(models.Model):
     link_text = models.CharField(
         max_length=255,
-        help_text='Display text for menu link')
+        help_text='Display text for menu link',
+        verbose_name="Menu label")
 
     external_link = models.CharField(
         null=True,
@@ -30,7 +31,7 @@ class MenuItem(models.Model):
         blank=True,
         related_name='+',
         help_text='Link to a page in Wagtail.',
-        verbose_name='Page'
+        verbose_name='Overview page link'
     )
 
     order = models.PositiveSmallIntegerField(
@@ -79,7 +80,7 @@ class MenuItem(models.Model):
             FieldPanel('link_text'),
             PageChooserPanel('page_link'),
             FieldPanel('external_link'),
-        ], heading='Overview page link'),
+        ], heading='Menu Information'),
         FieldPanel('order'),
         StreamFieldPanel('column_1'),
         StreamFieldPanel('column_2'),
