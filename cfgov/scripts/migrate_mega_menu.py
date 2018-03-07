@@ -83,6 +83,14 @@ menu_items = [
                             },
                             'nav_items': []
                         },
+                        {
+                            'link': {
+                                'link_text': 'Frauds & Scams',
+                                'external_link':
+                                    '/consumer-tools/frauds/'
+                            },
+                            'nav_items': []
+                        },
                     ]
                 }
             },
@@ -142,6 +150,13 @@ menu_items = [
                     'nav_items': [
                         {
                             'link': {
+                                'link_text': 'Buying a House',
+                                'external_link': '/owning-a-home/'
+                            },
+                            'nav_items': []
+                        },
+                        {
+                            'link': {
                                 'link_text': 'Getting an Auto Loan',
                                 'external_link':
                                     '/consumer-tools/getting-an-auto-loan/'
@@ -173,13 +188,6 @@ menu_items = [
                                 'external_link':
                                     '/consumer-tools/military' +
                                     '-financial-lifecycle/'
-                            },
-                            'nav_items': []
-                        },
-                        {
-                            'link': {
-                                'link_text': 'Buying a House',
-                                'external_link': '/owning-a-home/'
                             },
                             'nav_items': []
                         },

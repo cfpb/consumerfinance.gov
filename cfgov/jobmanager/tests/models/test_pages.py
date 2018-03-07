@@ -12,6 +12,9 @@ from jobmanager.models.django import (
 )
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel
+
+from v1.models.snippets import ReusableText
+
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 
@@ -148,3 +151,19 @@ class JobListingPageTestCase(TestCase):
         self.assertEqual(len(test_context['states']), 0)
         self.assertEqual(len(test_context['cities']), 1)
         self.assertEqual(test_context['cities'][0].name, 'Zenith')
+
+    def test_context_without_about_us_snippet(self):
+        page = self.prepare_job_listing_page()
+        test_context = page.get_context(HttpRequest())
+        self.assertNotIn('about_us', test_context)
+
+    def test_context_with_about_us_snippet(self):
+        about_us_snippet = ReusableText(title='About us (For consumers)')
+        about_us_snippet.save()
+        page = self.prepare_job_listing_page()
+        test_context = page.get_context(HttpRequest())
+        self.assertIn('about_us', test_context)
+        self.assertEqual(
+            test_context['about_us'],
+            about_us_snippet
+        )

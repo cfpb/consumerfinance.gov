@@ -609,6 +609,10 @@ FLAGS = {
     # To be enabled when owning-a-home/explore-rates is de-sheered.
     'OAH_EXPLORE_RATES': {},
 
+    # To be enabled when owning-a-home/closing-disclosure/
+    # and owning-a-home/loan-estimate/ are de-sheered.
+    'OAH_FORM_EXPLAINERS': {},
+
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
@@ -632,6 +636,11 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
+
+    # Ping google on page publication in production only
+    'PING_GOOGLE_ON_PUBLISH': {
+        'boolean': DEPLOY_ENVIRONMENT == 'production'
+    },
 }
 
 
