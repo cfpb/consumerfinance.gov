@@ -14,7 +14,6 @@ exclude =
     config,
     docs,
     gulp,
-    picard_scripts,
     requirements,
     node_modules,
     site,
