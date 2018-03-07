@@ -51,13 +51,6 @@
 
     <title>{% block title %}{% endblock %} > {% trans "Consumer Financial Protection Bureau" %}</title>
 
-    {# Google Optimize page-hiding snippet #}
-
-    <style> .optimize-loading { opacity: 0 !important; } </style>
-    <script> (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date; h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')}; (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c; })(window,document.documentElement,'optimize-loading','dataLayer',5000, {'GTM-KHB8MB':true}); </script>
-
-    {# end Google Optimize page-hiding snippet #}
-
     <!-- Meta -->
     <meta name="google-site-verification" content=""> <!-- http://google.com/webmasters -->
     <meta name="Copyright" content="Public domain">
@@ -144,6 +137,10 @@
     the head, then file an issue or PR to discuss including it.
 -->
 
+    {# Google Optimize page-hiding snippet #}
+    <style> .optimize-loading { opacity: 0 !important; } </style>
+    <script> (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date; h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')}; (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c; })(window,document.documentElement,'optimize-loading','dataLayer',1000, {'GTM-KHB8MB':true}); </script>
+    {# end Google Optimize page-hiding snippet #}
     {# Google Tag Manager #}
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
