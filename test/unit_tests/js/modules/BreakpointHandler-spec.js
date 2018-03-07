@@ -8,41 +8,7 @@ const standardType = require( BASE_JS_PATH + 'modules/util/standard-type' );
 
 describe( 'BreakpointHandler', () => {
   before( () => {
-    this.jsdom = require( 'jsdom-global' )( '', {
-      beforeParse( win ) {
-        const resizeEvent = win.document.createEvent( 'Event' );
-        resizeEvent.initEvent( 'resize', true, true );
-
-        win.resizeTo = function( width, height ) {
-          this.innerWidth = this.outerWidth = width;
-          this.innerHeight = this.outerHeight = height;
-          win.dispatchEvent( resizeEvent );
-        };
-
-        win.useMock = function() {
-          const mockwin = {
-            addEventListener: win.addEventListener,
-            document:         { documentElement: {}},
-            innerWidth:       win.innerWidth,
-            innerHeight:      win.innerHeight,
-            resizeTo:         win.resizeTo
-          };
-
-          mockwin.document.documentElement.clientWidth =
-          win.document.documentElement.clientWidth;
-
-          mockwin.document.body = win.document.body;
-
-          mockwin.restore = function() {
-            global.window = win;
-            global.document = win.document;
-          };
-
-          global.window = mockwin;
-          global.document = mockwin.document;
-        };
-      }
-    } );
+    this.jsdom = require( 'jsdom-global' )( '' );
 
     // Simulate window resize event
     const resizeEvent = document.createEvent( 'Event' );
@@ -74,20 +40,6 @@ describe( 'BreakpointHandler', () => {
     }
 
     expect( createBreakpointInstance ).to.throw( errorTxt );
-  } );
-
-  it( 'should compute window width properly on older browsers', () => {
-    function createBreakpointInstance() {
-      return new BreakpointHandler( args );
-    }
-
-    window.useMock();
-    delete window.innerWidth;
-    expect( createBreakpointInstance ).to.not.throw( Error );
-
-    delete window.document.documentElement;
-    expect( createBreakpointInstance ).to.not.throw( Error );
-    window.restore();
   } );
 
   it( 'should correctly create BreakpointHandler instances', () => {
