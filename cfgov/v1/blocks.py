@@ -241,7 +241,7 @@ class NavItem(blocks.StructBlock):
         ('draft', 'Show on Content only')],
         default='both',
         help_text='Select state for this link. Test new links '
-            'by setting them to only show on Content.')
+                  'by setting them to only show on Content.')
     link = Link(required=False)
     nav_items = blocks.ListBlock(
         blocks.StructBlock([
@@ -266,8 +266,8 @@ class NavGroup(blocks.StructBlock):
         required=False,
         label='Hide column title',
         help_text='If column shares title with previous column, '
-            'enter title text above but check this box so title '
-            'only shows in first column.')
+                  'enter title text above but check this box so title '
+                  'only shows in first column.')
     nav_items = blocks.ListBlock(
         NavItem(),
         required=False,
