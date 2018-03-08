@@ -40,7 +40,7 @@ function _processScript( localWebpackConfig, src, dest ) {
     } ) )
     .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
-    .on( 'error', handleErrors )
+    .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulp.dest( paths.processed + dest ) )
     .pipe( browserSync.reload( {
       stream: true
