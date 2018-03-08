@@ -158,7 +158,7 @@ describe( 'fwb-questions', () => {
     sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     window.dataLayer = [];
-    window.tagManagerIsLoaded = true;
+    window['google_tag_manager'] = {};
     formDom = document.querySelector( '#quiz-form' );
     submitBtnDom = document.querySelector( '#submit-quiz' );
     radioButtonsDom = document.querySelectorAll( '[type="radio"]' );
