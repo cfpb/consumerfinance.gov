@@ -85,7 +85,7 @@ menu_items = [
                         },
                         {
                             'link': {
-                                'link_text': 'Frauds & Scams',
+                                'link_text': 'Fraud & Scams',
                                 'external_link':
                                     '/consumer-tools/frauds/'
                             },
