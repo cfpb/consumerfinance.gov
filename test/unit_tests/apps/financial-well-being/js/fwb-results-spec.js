@@ -120,7 +120,7 @@ describe( 'fwb-results', () => {
     sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     window.dataLayer = [];
-    window.tagManagerIsLoaded = true;
+    window['google_tag_manager'] = {};
 
     toggleButtons = document.querySelectorAll(
       '.comparison-chart_toggle-button'
