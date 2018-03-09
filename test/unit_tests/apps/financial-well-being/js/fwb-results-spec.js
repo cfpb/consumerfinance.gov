@@ -1,7 +1,7 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 const chai = require( 'chai' );
 const expect = chai.expect;
-const sinon = require( 'sinon' );
+
 const SELECTED_CLASS = 'comparison-chart_toggle-button__selected';
 const HIDDEN_CLASS = 'u-hidden';
 let expandableContent;
@@ -10,16 +10,17 @@ let fwbResults;
 let sandbox;
 let toggleButtons;
 let dataPoint;
+
 const dataLayerEvent = {
   event: 'Financial Well-Being Tool Interaction',
   action: 'Compare By Button Clicked',
   label: 'Age',
-  eventCallback: undefined, // eslint-disable-line  no-undefined
+  eventCallback: undefined, // eslint-disable-line no-undefined
   eventTimeout: 500
 };
 
-const HTML_SNIPPET =
-  `<div class="content">
+const HTML_SNIPPET = `
+  <div class="content">
     <div class="o-expandable">
       <button class="o-expandable_target">
         <div class="o-expandable_header">
@@ -99,7 +100,8 @@ const HTML_SNIPPET =
         </dd>
       </dl>
     </figure>
-  </div>`;
+  </div>
+`;
 
 function triggerClickEvent( target ) {
   const event = document.createEvent( 'Event' );
@@ -116,8 +118,6 @@ function initFwbResults( ) {
 
 describe( 'fwb-results', () => {
   beforeEach( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     window.dataLayer = [];
     window['google_tag_manager'] = {};
@@ -130,11 +130,6 @@ describe( 'fwb-results', () => {
     );
     expandableContent = document.querySelector( '.o-expandable_content' );
     expandableTarget = document.querySelector( '.o-expandable_target' );
-  } );
-
-  afterEach( () => {
-    sandbox.restore();
-    this.jsdom();
   } );
 
   it( 'initialize the expandables on page load', () => {
@@ -150,6 +145,7 @@ describe( 'fwb-results', () => {
     () => {
       initFwbResults();
       triggerClickEvent( toggleButtons[0] );
+
       expect( window.dataLayer[0] ).to.deep.equal( dataLayerEvent );
     }
   );

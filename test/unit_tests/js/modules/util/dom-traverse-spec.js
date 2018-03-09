@@ -5,14 +5,8 @@ const expect = chai.expect;
 const domTraverse = require( BASE_JS_PATH + 'modules/util/dom-traverse' );
 
 describe( 'Dom Traverse', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )();
-  } );
-
-  after( () => this.jsdom() );
-
   describe( 'queryOne()', () => {
-    before( () => {
+    beforeAll( () => {
       document.body.innerHTML =
         '<div class="div-1"></div><div class="div-2"></div>';
     } );
@@ -39,7 +33,7 @@ describe( 'Dom Traverse', () => {
   } );
 
   describe( 'getSiblings()', () => {
-    before( () => {
+    beforeAll( () => {
       document.body.innerHTML =
         '<div class="div-1"></div><div class="div-2"></div>';
     } );
@@ -54,7 +48,7 @@ describe( 'Dom Traverse', () => {
   } );
 
   describe( 'not()', () => {
-    before( () => {
+    beforeAll( () => {
       document.body.innerHTML =
         '<div class="div-1"></div><div class="div-2"></div>';
     } );
@@ -71,7 +65,7 @@ describe( 'Dom Traverse', () => {
   } );
 
   describe( 'closest()', () => {
-    before( () => {
+    beforeAll( () => {
       document.body.innerHTML =
         '<div class="grandparent"><div class="parent"><div class="child">' +
         '</div></div></div>';

@@ -6,22 +6,17 @@ const expect = chai.expect;
 const MoveTransition =
   require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
 
+let transition;
+
+// DOM-related settings.
+let contentDom;
+
 const HTML_SNIPPET = '<div class="content-1"></div>';
 
 describe( 'MoveTransition', () => {
-
-  let transition;
-
-  // DOM-related settings.
-  let document;
-  let contentDom;
-
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
+  beforeAll( () => {
+    document.body.innerHTML = HTML_SNIPPET;
   } );
-
-  after( () => this.jsdom() );
 
   beforeEach( () => {
     contentDom = document.querySelector( '.content-1' );

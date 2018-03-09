@@ -6,12 +6,6 @@ let input;
 let clicked;
 
 describe( 'Dom Events bindEvent', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )();
-  } );
-
-  after( () => this.jsdom() );
-
   beforeEach( () => {
     input = document.createElement( 'input' );
     input.type = 'checkbox';

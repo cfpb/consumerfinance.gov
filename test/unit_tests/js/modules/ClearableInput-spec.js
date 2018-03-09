@@ -2,15 +2,15 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const sinon = require( 'sinon' );
+
 const ClearableInput = require( BASE_JS_PATH + 'modules/ClearableInput' );
 let sandbox;
 let baseDom;
 let clearBtnDom;
 let inputDom;
 
-const HTML_SNIPPET =
-  `<div class="o-form__input-w-btn_input-container">
+const HTML_SNIPPET = `
+  <div class="o-form__input-w-btn_input-container">
        <div class="m-btn-inside-input
                    input-contains-label">
            <label for="query" class="input-contains-label_before
@@ -25,7 +25,8 @@ const HTML_SNIPPET =
                   value=""
                   placeholder="Search the CFPB">
        </div>
-   </div>`;
+  </div>
+`;
 
 function triggerEvent( target, eventType, eventOption ) {
   const event = document.createEvent( 'Event' );
@@ -37,22 +38,11 @@ function triggerEvent( target, eventType, eventOption ) {
 }
 
 describe( 'ClearableInput', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-  } );
-
-  after( () => this.jsdom() );
-
   beforeEach( () => {
-    sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     baseDom = document.querySelector( '.o-form__input-w-btn_input-container' );
     inputDom = baseDom.querySelector( 'input' );
     clearBtnDom = baseDom.querySelector( '.input-contains-label_after__clear' );
-  } );
-
-  afterEach( () => {
-    sandbox.restore();
   } );
 
   describe( 'init function', () => {

@@ -1,35 +1,24 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
-const sinon = require( 'sinon' );
 const expect = chai.expect;
+const expandedState = require( BASE_JS_PATH + 'modules/util/expanded-state.js' );
+let divExpanded;
+let divClosed;
+let openMenu;
+
+const HTML_SNIPPET = `
+  <div class="div-expanded" aria-expanded="true" />
+  <div class="div-closed" aria-expanded="false" />
+`;
 
 describe( 'Event States', () => {
-  let expandedState;
-  let sandbox;
-  let divExpanded;
-  let divClosed;
-  let openMenu;
-
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )();
-    expandedState = require( BASE_JS_PATH + 'modules/util/expanded-state.js' );
-    sandbox = sinon.sandbox.create();
-  } );
-
-  after( () => this.jsdom() );
 
   beforeEach( () => {
-    const mockedContent = '<div class="div-expanded" aria-expanded="true" />' +
-                          '<div class="div-closed" aria-expanded="false" />';
-    document.body.innerHTML = mockedContent;
+    document.body.innerHTML = HTML_SNIPPET;
     divExpanded = document.querySelector( '.div-expanded' );
     divClosed = document.querySelector( '.div-closed' );
     openMenu = document.querySelectorAll( 'div' );
-  } );
-
-  afterEach( () => {
-    sandbox.restore();
   } );
 
   describe( 'get expanded state', () => {

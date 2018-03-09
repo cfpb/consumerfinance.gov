@@ -7,13 +7,7 @@ const domManipulators = require(
 );
 
 describe( 'Dom Manipulators create', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )();
-  } );
-
-  after( () => this.jsdom() );
-
-  before( () => {
+  beforeAll( () => {
     const heading = domManipulators.create( 'h1', {
       'textContent': 'Create Heading Text',
       'id':          'create-heading-id',
@@ -38,7 +32,6 @@ describe( 'Dom Manipulators create', () => {
       'around':    heading
     } );
   } );
-
 
   it( 'should create a single elem', () => {
     const query = document.querySelector( 'h1' );
