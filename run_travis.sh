@@ -6,7 +6,6 @@ set -ex
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
     source $HOME/.nvm/nvm.sh
-    npm install --production
     gulp "test" --travis
     bash <(curl -s https://codecov.io/bash) -F frontend
 elif [ "$RUNTEST" == "backend" ]; then

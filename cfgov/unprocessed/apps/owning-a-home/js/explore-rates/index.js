@@ -1,4 +1,4 @@
-var $ = require( '../../node_modules/jquery' );
+var $ = require( 'jquery' );
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
 var Highcharts = require( '../../node_modules/highcharts' );

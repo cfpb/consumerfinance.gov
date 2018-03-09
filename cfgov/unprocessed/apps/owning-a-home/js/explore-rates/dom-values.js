@@ -1,4 +1,4 @@
-const unFormatUSD = require( '../../node_modules/unformat-usd' );
+const unFormatUSD = require( 'unformat-usd' );
 
 /**
  * Get value(s) of an individual HTML element in the control panel.
