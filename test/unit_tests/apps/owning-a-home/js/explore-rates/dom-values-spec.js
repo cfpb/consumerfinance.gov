@@ -1,16 +1,15 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const chai = require( 'chai' );
-const expect = chai.expect;
 
 const HTML_SNIPPET = `
   <input id="credit-score"
-          type="range" min="600" max="840" step="20" value="700">
+         type="range" min="600" max="840" step="20" value="700">
   <select id="arm-type">
       <option value="3-1">3/1</option>
       <option value="5-1">5/1</option>
       <option value="7-1">7/1</option>
       <option value="10-1">10/1</option>
   </select>
+  <input id="location" type="text" value="AL">
   <input id="test-price" type="text" value="$300,000">
   <input id="house-price" type="text" placeholder="200,000">
 `;
@@ -23,9 +22,11 @@ describe( 'explore-rates/dom-values', () => {
   } );
 
   it( 'should be able to get a value', () => {
-    expect( domValues.getSelection( 'credit-score' ) ).to.equal( 700 );
-    expect( domValues.getSelection( 'arm-type' ) ).to.equal( '3-1' );
-    expect( domValues.getSelection( 'test-price' ) ).to.equal( 300000 );
-    expect( domValues.getSelection( 'house-price' ) ).to.equal( 200000 );
+    expect( domValues.getSelection( 'not-found-elm' ) ).toBeUndefined();
+    expect( domValues.getSelection( 'location' ) ).toEqual( 'AL' );
+    expect( domValues.getSelection( 'credit-score' ) ).toEqual( 700 );
+    expect( domValues.getSelection( 'arm-type' ) ).toEqual( '3-1' );
+    expect( domValues.getSelection( 'test-price' ) ).toEqual( 300000 );
+    expect( domValues.getSelection( 'house-price' ) ).toEqual( 200000 );
   } );
 } );
