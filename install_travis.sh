@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Set script to exit on any errors.
+set -e
+
 # Install frontend dependencies
 frontend() {
 
