@@ -58,7 +58,7 @@ function testUnitScripts( cb ) {
   spawn(
     fsHelper.getBinary( 'jest-cli', 'jest.js', '../bin' ),
     [
-      `--config=jest.config.json`,
+      '--config=jest.config.json',
       `--collectCoverageFrom=${ fileSrcPath }`,
       `--testRegex=${ fileTestRegex }`
     ],
