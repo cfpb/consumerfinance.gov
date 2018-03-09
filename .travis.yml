@@ -9,7 +9,7 @@ cache:
   pip: true
   directories:
     - node_modules
-    - cfgov/unprocessed/apps/*/node_modules
+    - "cfgov/unprocessed/apps/*/node_modules"
 
 install:
   - ./install_travis.sh
