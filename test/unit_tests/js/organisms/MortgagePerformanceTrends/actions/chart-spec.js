@@ -1,19 +1,14 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/js/';
-
 const chai = require( 'chai' );
-const mockery = require( 'mockery' );
-const sinon = require( 'sinon' );
 const expect = chai.expect;
+const sinon = require( 'sinon' );
 
-// Disable the AJAX library used by the action creator
-const noop = () => ( {} );
-mockery.enable( {
-  warnOnReplace: false,
-  warnOnUnregistered: false
-} );
-mockery.registerMock( 'xdr', noop );
+/* Disable the AJAX library used by the action creator
+   Unfortunately, we can't place path variables into import statements. */
+import * as actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/chart.js';
+import * as utils from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils';
 
-mockery.registerMock( '../utils', {
+jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
+jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils', () => ( {
   getMetroData: cb => {
     const metros = {
       AL: {
@@ -75,11 +70,7 @@ mockery.registerMock( '../utils', {
     };
     cb( counties );
   }
-} );
-
-const actions = require(
-  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/actions/chart.js'
-);
+} ) );
 
 describe( 'Mortgage Performance chart action creators', () => {
 

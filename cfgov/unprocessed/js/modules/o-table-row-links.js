@@ -25,7 +25,7 @@ function _tableClicked( event ) {
     }
     target = target.parentNode;
   }
-  window.location = target.querySelector( 'a' ).getAttribute( 'href' );
+  window.location.assign( target.querySelector( 'a' ).getAttribute( 'href' ) );
 }
 
 module.exports = { init: init };

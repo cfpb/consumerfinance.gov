@@ -8,18 +8,16 @@ const expect = chai.expect;
 const AlphaTransition =
   require( BASE_JS_PATH + 'modules/transition/AlphaTransition' );
 
+let transition;
+
+// DOM-related settings.
+let contentDom;
+
 const HTML_SNIPPET = '<div class="content-1"></div>';
 
 describe( 'AlphaTransition', () => {
-  let transition;
-
-  // DOM-related settings.
-  let document;
-  let contentDom;
-
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
+  beforeAll( () => {
+    document.body.innerHTML = HTML_SNIPPET;
     contentDom = document.querySelector( '.content-1' );
   } );
 
@@ -27,8 +25,6 @@ describe( 'AlphaTransition', () => {
     transition = new AlphaTransition( contentDom );
     transition.init();
   } );
-
-  after( () => this.jsdom() );
 
   describe( '.fadeIn()', () => {
     it( 'should return instance of AlphaTransition', () => {

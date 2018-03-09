@@ -1,80 +1,61 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
-const sinon = require( 'sinon' );
 const expect = chai.expect;
 
-describe( 'web-storage-proxy', () => {
-  let webStorageProxy;
-  let sandbox;
-  let setItem;
-  let getItem;
-  let removeItem;
-  let setStorage;
+const webStorageProxy = require(
+  BASE_JS_PATH + 'modules/util/web-storage-proxy.js'
+);
+const setItem = webStorageProxy.setItem;
+const getItem = webStorageProxy.getItem;
+const removeItem = webStorageProxy.removeItem;
+const setStorage = webStorageProxy.setStorage;
 
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )();
-    webStorageProxy =
-      require( BASE_JS_PATH + 'modules/util/web-storage-proxy.js' );
-    setItem = webStorageProxy.setItem;
-    getItem = webStorageProxy.getItem;
-    removeItem = webStorageProxy.removeItem;
-    setStorage = webStorageProxy.setStorage;
-    sandbox = sinon.sandbox.create();
-  } );
-
-  after( () => this.jsdom() );
-
-  beforeEach( () => {
-    // Storage Mock
-    function storageMock() {
-      const storage = {};
-
-      return {
-        setItem: function( key, value ) {
-          storage[key] = value || '';
-        },
-        getItem: function( key ) {
-          return storage[key];
-        },
-        removeItem: function( key ) {
-          delete storage[key];
-        },
-        get length() {
-          return Object.keys( storage ).length;
-        },
-        key: function( i ) {
-          const keys = Object.keys( storage );
-          return keys[i] || null;
-        }
-      };
+/**
+ * Mock a object store.
+ * @returns {Object} A new object store with general access methods.
+ */
+function storageMock() {
+  const storage = {};
+  return {
+    setItem: function( key, value ) {
+      storage[key] = value || '';
+    },
+    getItem: function( key ) {
+      return storage[key];
+    },
+    removeItem: function( key ) {
+      delete storage[key];
+    },
+    get length() {
+      return Object.keys( storage ).length;
+    },
+    key: function( i ) {
+      const keys = Object.keys( storage );
+      return keys[i] || null;
     }
-    // mock the localStorage
-    window.localStorage = storageMock();
-    // mock the sessionStorage
-    window.sessionStorage = storageMock();
-  } );
+  };
+}
 
-  afterEach( () => {
-    sandbox.restore();
+describe( 'web-storage-proxy', () => {
+  beforeEach( () => {
+    // Mock the window's web storage APIs.
+    window.localStorage = storageMock( {} );
+    window.sessionStorage = storageMock( {} );
   } );
 
   describe( '.setItem()', () => {
-    it( 'should set an item of "bar" for the key "foo" in sessionStorage',
-      () => {
-        setItem( 'foo', 'bar', window.sessionStorage );
-        expect( window.sessionStorage.getItem( 'foo' ) ).to.equal( 'bar' );
-        expect( window.localStorage.getItem( 'foo' ) ).to.be.undefined;
-      }
-    );
+    it( 'should set an item of "bar" for the key "foo" in sessionStorage', () => {
+      setItem( 'foo', 'bar', window.sessionStorage );
+      expect( window.sessionStorage.getItem( 'foo' ) ).to.equal( 'bar' );
+      expect( window.localStorage.getItem( 'foo' ) ).to.be.undefined;
+    } );
 
-    it( 'should set an item of "baz" for the key "foo" in localStorage',
-      () => {
-        setItem( 'foo', 'baz', window.localStorage );
-        expect( window.localStorage.getItem( 'foo' ) ).to.equal( 'baz' );
-        expect( window.sessionStorage.getItem( 'foo' ) ).to.be.undefined;
-      }
-    );
+    it( 'should set an item of "baz" for the key "foo" in localStorage', () => {
+      setItem( 'foo', 'baz', window.localStorage );
+      expect( window.localStorage.getItem( 'foo' ) ).to.equal( 'baz' );
+      expect( window.sessionStorage.getItem( 'foo' ) ).to.be.undefined;
+    } );
 
     it( 'should default to sessionStorage is storage arg is omitted', () => {
       setItem( 'foo', 'bar' );
@@ -116,26 +97,20 @@ describe( 'web-storage-proxy', () => {
       }
     );
 
-    it( 'should default to sessionStorage if storage arg is omitted',
-      () => {
-        const item = getItem( 'foo' );
-        expect( item ).to.equal( 'bar' );
-      }
-    );
+    it( 'should default to sessionStorage if storage arg is omitted', () => {
+      const item = getItem( 'foo' );
+      expect( item ).to.equal( 'bar' );
+    } );
 
-    it( 'should default to sessionStorage if storage arg is a string',
-      () => {
-        const item = getItem( 'foo', 'baz' );
-        expect( item ).to.equal( 'bar' );
-      }
-    );
+    it( 'should default to sessionStorage if storage arg is a string', () => {
+      const item = getItem( 'foo', 'baz' );
+      expect( item ).to.equal( 'bar' );
+    } );
 
-    it( 'should default to sessionStorage if storage arg is a boolean',
-      () => {
-        const item = getItem( 'foo', false );
-        expect( item ).to.equal( 'bar' );
-      }
-    );
+    it( 'should default to sessionStorage if storage arg is a boolean', () => {
+      const item = getItem( 'foo', false );
+      expect( item ).to.equal( 'bar' );
+    } );
   } );
 
   describe( '.removeItem()', () => {

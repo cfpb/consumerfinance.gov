@@ -2,21 +2,18 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const getBreakpointState =
-  require( BASE_JS_PATH + 'modules/util/breakpoint-state.js' ).get;
-const breakpointConfig =
-  require( BASE_JS_PATH + 'config/breakpoints-config.js' );
+
+const getBreakpointState = require(
+  BASE_JS_PATH + 'modules/util/breakpoint-state.js'
+).get;
+const breakpointConfig = require(
+  BASE_JS_PATH + 'config/breakpoints-config.js'
+);
 
 let breakpointState;
 let configKeys;
 
 describe( 'getBreakpointState', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )();
-  } );
-
-  after( () => this.jsdom() );
-
   beforeEach( () => {
     configKeys = Object.keys( breakpointConfig );
   } );

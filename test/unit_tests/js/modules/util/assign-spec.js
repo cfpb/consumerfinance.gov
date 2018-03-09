@@ -8,30 +8,26 @@ let testObjectB;
 let testObjectC;
 let undefinedVar;
 
-
-beforeEach( () => {
-
-  testObjectA = {
-    str:  'test',
-    func: () => 'testStr',
-    num:  1
-  };
-
-  testObjectB = {
-    obj:   { test: 2 },
-    arr:   [ 3 ],
-    _null: null
-  };
-
-  testObjectC = {
-    bool:  Boolean( false ),
-    undef: undefinedVar,
-    num:   4
-  };
-
-} );
-
 describe( 'Assign', () => {
+  beforeEach( () => {
+    testObjectA = {
+      str:  'test',
+      func: () => 'testStr',
+      num:  1
+    };
+
+    testObjectB = {
+      obj:   { test: 2 },
+      arr:   [ 3 ],
+      _null: null
+    };
+
+    testObjectC = {
+      bool:  Boolean( false ),
+      undef: undefinedVar,
+      num:   4
+    };
+  } );
 
   it( 'should assign properties from source to destination', () => {
     assign( testObjectA, testObjectB );

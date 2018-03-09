@@ -8,13 +8,15 @@ let multiselect;
 let selectDom;
 let multiselectDom;
 let sandbox;
-const HTML_SNIPPET =
-  '<select name="test-select" id="test-select" multiple>' +
-    '<option value="Debt collection">Debt collection</option>' +
-    '<option value="consumers-responses">Consumer&#39;s Responses</option>' +
-    '<option value="Mortgage disclosure">Mortgage disclosure</option>' +
-    '<optgroup label="All other topics">' +
-  '</select>';
+
+const HTML_SNIPPET = `
+  <select name="test-select" id="test-select" multiple>
+    <option value="Debt collection">Debt collection</option>
+    <option value="consumers-responses">Consumer&#39;s Responses</option>
+    <option value="Mortgage disclosure">Mortgage disclosure</option>
+    <optgroup label="All other topics">
+  </select>
+`;
 
 function keyPress( target, key ) {
   const event = target.createEvent( 'Event' );
@@ -23,14 +25,8 @@ function keyPress( target, key ) {
   target.dispatchEvent( event );
 }
 
-describe( 'Multiselect', function() {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-  } );
-
-  after( () => this.jsdom() );
-
-  beforeEach( function() {
+describe( 'Multiselect', () => {
+  beforeEach( () => {
     sandbox = sinon.sandbox.create();
 
     document.body.innerHTML = HTML_SNIPPET;
@@ -43,8 +39,8 @@ describe( 'Multiselect', function() {
     sandbox.restore();
   } );
 
-  describe( 'init', function() {
-    it( 'should intitialize the Multiselect', function() {
+  describe( 'init', () => {
+    it( 'should intitialize the Multiselect', () => {
       multiselect.init();
       selectDom = document.querySelectorAll( 'select[multiple]' );
       multiselectDom = document.querySelectorAll( '.cf-multi-select' );
@@ -53,20 +49,19 @@ describe( 'Multiselect', function() {
       expect( multiselectDom.length ).to.equal( 1 );
     } );
 
-    it( 'should autocheck any selected options (form submitted pages)',
-      function() {
-        const option = document.querySelector( 'option' );
-        option.defaultSelected = true;
-        multiselect.init();
-        const choices =
+    it( 'should autocheck any selected options (form submitted pages)', () => {
+      const option = document.querySelector( 'option' );
+      option.defaultSelected = true;
+      multiselect.init();
+      const choices =
           document.querySelectorAll( '.cf-multi-select_choices li' );
 
-        expect( choices.length ).to.equal( 1 );
-        expect( choices[0].innerHTML ).to.contain( 'Debt collection' );
-      }
+      expect( choices.length ).to.equal( 1 );
+      expect( choices[0].innerHTML ).to.contain( 'Debt collection' );
+    }
     );
 
-    it( 'should log a helpful tip if passed a bad option value', function() {
+    it( 'should log a helpful tip if passed a bad option value', () => {
 
       /* TODO: Remove console.log in favor of throwing an error.
          sandbox.stub console.log will prevent regular `console.log(…)`
@@ -89,8 +84,8 @@ describe( 'Multiselect', function() {
     } );
   } );
 
-  describe( 'public methods', function() {
-    it( 'should open when the expand method is called', function() {
+  describe( 'public methods', () => {
+    it( 'should open when the expand method is called', () => {
       multiselect.init();
       multiselect.expand();
       multiselectDom = document.querySelector( '.cf-multi-select' );
@@ -101,7 +96,7 @@ describe( 'Multiselect', function() {
       expect( fieldset.getAttribute( 'aria-hidden' ) ).to.equal( 'false' );
     } );
 
-    it( 'should close when the collapse method is called', function() {
+    it( 'should close when the collapse method is called', () => {
       multiselect.init();
       multiselect.expand();
       multiselect.collapse();
@@ -114,7 +109,7 @@ describe( 'Multiselect', function() {
     } );
   } );
 
-  describe( 'interactions', function() {
+  describe( 'interactions', () => {
     xit( 'should open when the search input is clicked', function() {
       multiselect.init();
       multiselectDom = document.querySelector( '.cf-multi-select' );

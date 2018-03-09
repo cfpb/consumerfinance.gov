@@ -3,24 +3,19 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const chai = require( 'chai' );
 const expect = chai.expect;
 const sinon = require( 'sinon' );
-let sandbox;
+
 let Analytics;
 let dataLayerOptions;
 let getDataLayerOptions;
 let UNDEFINED;
 
 describe( 'Analytics', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )();
+  beforeAll( () => {
     Analytics = require( BASE_JS_PATH + 'modules/Analytics' );
     getDataLayerOptions = Analytics.getDataLayerOptions;
   } );
 
-  after( () => this.jsdom() );
-
   beforeEach( () => {
-    sandbox = sinon.sandbox.create();
-
     function push( object ) {
       if ( object.hasOwnProperty( 'eventCallback' ) &&
            typeof object.eventCallback === 'function' ) {
@@ -30,8 +25,7 @@ describe( 'Analytics', () => {
     }
     window.dataLayer = [];
     window.dataLayer.push = push;
-
-    delete window.google_tag_manager; // eslint-disable-line  camelcase
+    delete window['google_tag_manager'];
     Analytics.tagManagerIsLoaded = false;
 
     dataLayerOptions = {
@@ -44,14 +38,10 @@ describe( 'Analytics', () => {
 
   } );
 
-  afterEach( () => {
-    sandbox.restore();
-  } );
-
   describe( '.init()', () => {
     it( 'should have a proper state after initialization', () => {
       expect( Analytics.tagManagerIsLoaded === false ).to.be.true;
-      window.google_tag_manager = {}; // eslint-disable-line  camelcase
+      window['google_tag_manager'] = {};
       Analytics.init();
       expect( Analytics.tagManagerIsLoaded === true ).to.be.true;
     } );
@@ -60,7 +50,7 @@ describe( 'Analytics', () => {
       const mockGTMObject = { testing: true };
       Analytics.init();
       expect( Analytics.tagManagerIsLoaded === false ).to.be.true;
-      window.google_tag_manager = mockGTMObject; // eslint-disable-line  camelcase
+      window['google_tag_manager'] = mockGTMObject;
       expect( Analytics.tagManagerIsLoaded === true ).to.be.true;
       expect( window.google_tag_manager ).to.deep.equal( mockGTMObject );
     } );
@@ -74,18 +64,18 @@ describe( 'Analytics', () => {
         action: action,
         label:  label
       } );
-      window.google_tag_manager = {}; // eslint-disable-line  camelcase
+      window['google_tag_manager'] = {};
       Analytics.init();
       Analytics.sendEvent( getDataLayerOptions( action, label ) );
       expect( window.dataLayer.length === 1 ).to.be.true;
       expect( window.dataLayer[0] ).to.deep.equal( options );
     } );
 
-    it( "shouldn't add objects to the dataLayer Array if GTM is undefined",
+    it( 'shouldn\'t add objects to the dataLayer Array if GTM is undefined',
       () => {
         const action = 'inbox:clicked';
         const label = 'text:null';
-        delete window.google_tag_manager;
+        delete window['google_tag_manager'];
         Analytics.init();
         Analytics.sendEvent( getDataLayerOptions( action, label ) );
         expect( window.dataLayer.length === 0 ).to.be.true;
@@ -97,7 +87,7 @@ describe( 'Analytics', () => {
       const action = 'inbox:clicked';
       const label = 'text:null';
       const callback = sinon.stub();
-      window.google_tag_manager = {}; // eslint-disable-line  camelcase
+      window['google_tag_manager'] = {};
       Analytics.sendEvent( getDataLayerOptions( action, label, '', callback ) );
       expect( callback.called ).to.be.true;
     } );
@@ -117,13 +107,13 @@ describe( 'Analytics', () => {
           label:  'text:label_2'
         } )
       );
-      window.google_tag_manager = {}; // eslint-disable-line  camelcase
+      window['google_tag_manager'] = {};
       Analytics.init();
       Analytics.sendEvents( [ options1, options2 ] );
       expect( window.dataLayer.length === 2 ).to.be.true;
     } );
 
-    it( "shouldn't add objects to the dataLayer Array if an array isn't passed",
+    it( 'shouldn\'t add objects to the dataLayer Array if an array isn\'t passed',
       () => {
         const options1 = getDataLayerOptions(
           Object.assign( {}, dataLayerOptions, {
@@ -137,7 +127,7 @@ describe( 'Analytics', () => {
             label:  'text:label_2'
           } )
         );
-        window.google_tag_manager = {}; // eslint-disable-line  camelcase
+        window['google_tag_manager'] = {};
         Analytics.init();
         Analytics.sendEvents( options1, options2 );
         expect( window.dataLayer.length === 0 ).to.be.true;

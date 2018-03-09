@@ -1,18 +1,12 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
+const ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
 const chai = require( 'chai' );
 const expect = chai.expect;
-const ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
 const validators = require( BASE_JS_PATH + 'modules/util/validators.js' );
 let testField;
 let returnedObject;
 
 describe( 'Validators', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )();
-  } );
-
-  after( () => this.jsdom() );
-
   describe( 'date field', () => {
     beforeEach( () => {
       testField = document.createElement( 'input' );
