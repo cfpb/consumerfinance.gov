@@ -10,7 +10,6 @@ const HTML_SNIPPET = `
       <option value="10-1">10/1</option>
   </select>
   <input id="location" type="text" value="AL">
-  <input id="location" type="text" value="AL">
   <input id="test-price" type="text" value="$300,000">
   <input id="house-price" type="text" placeholder="200,000">
 `;
