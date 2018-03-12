@@ -32,5 +32,6 @@ if ( autocompleteContainer ) {
       li.appendChild( link );
       return li;
     }
-  } ).init();
+  } );
+  autocomplete.init();
 }
