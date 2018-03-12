@@ -1,23 +1,12 @@
 require( '../on-demand/ask-autocomplete' );
+require( '../on-demand/read-more' );
 const Analytics = require( '../../modules/Analytics' );
 
-const Expandable = require( '../../organisms/Expandable' );
-const getBreakpointState = require( '../../modules/util/breakpoint-state' ).get;
-const readMoreContainer = document.querySelector( '.o-expandable__read-more' );
 const analyticsData = document.querySelector( '.analytics-data' );
 
 let answerID;
 let categorySlug;
 let categoryName;
-
-
-if ( readMoreContainer && getBreakpointState().isBpXS ) {
-  const readMoreExpandable = new Expandable( readMoreContainer ).init();
-  readMoreExpandable.addEventListener( 'expandEnd', function() {
-    readMoreExpandable.destroy();
-    readMoreContainer.querySelector( '.o-expandable_content' ).style.height = '';
-  } );
-}
 
 if ( analyticsData ) {
   answerID = analyticsData.getAttribute( 'data-answer-id' );

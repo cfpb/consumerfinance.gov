@@ -40,7 +40,7 @@ function _processScript( localWebpackConfig, src, dest ) {
     } ) )
     .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
-    .on( 'error', handleErrors )
+    .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulp.dest( paths.processed + dest ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -195,14 +195,14 @@ function scriptsApps() {
   // eslint-disable-next-line no-sync
   let apps = fs.readdirSync( `${ paths.unprocessed }/apps/` );
 
-  // Filter out .DS_STORE directory.
+  // Filter out hidden directories.
   apps = apps.filter( dir => dir.charAt( 0 ) !== '.' );
 
   // Run each application's JS through webpack and store the gulp streams.
   const streams = [];
   apps.forEach( app => {
     /* Check if node_modules directory exists in a particular app's folder.
-       If it doesn't log the command to add it and don't process the scripts. */
+       If it doesn't, don't process the scripts and log the command to run. */
     const appsPath = `${ paths.unprocessed }/apps/${ app }`;
     // eslint-disable-next-line no-sync
     if ( fs.existsSync( `${ appsPath }/package.json` ) ) {

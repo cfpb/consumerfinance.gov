@@ -1,42 +1,42 @@
+from __future__ import absolute_import, unicode_literals
+
 from wagtail.wagtailcore import blocks
 
-from v1.atomic_elements import atoms, organisms
 from v1.blocks import AbstractFormBlock
 
 
 class ConferenceRegistrationForm(AbstractFormBlock):
-    heading = blocks.CharBlock(required=False, help_text=(
-        'Note: Additional form field options will appear in '
-        'Preview and Publish modes.'
-    ))
-    code = blocks.CharBlock(label='GovDelivery Code')
-    sessions = blocks.ListBlock(
-        blocks.CharBlock(label='Session'),
-        label='Sessions attending'
+    govdelivery_code = blocks.CharBlock(
+        help_text=(
+            "Conference registrants will be subscribed to this GovDelivery "
+            "list."
+        )
     )
-    capacity = atoms.IntegerBlock(help_text=(
-        'Enter an integer that will be the conference attendance limit.'
-    ))
+    capacity = blocks.IntegerBlock(
+        help_text=(
+            "Enter an integer that will be the conference attendance limit."
+        )
+    )
     success_message = blocks.RichTextBlock(
         help_text=(
-            'Enter a message that will be shown on successful registration.'
+            "Enter a message that will be shown on successful registration."
         )
     )
-    at_capacity_message = organisms.FullWidthText(
+    at_capacity_message = blocks.RichTextBlock(
         help_text=(
-            'Enter a message that will be shown when the event is at capacity.'
+            "Enter a message that will be shown when the event is at capacity."
         )
     )
-    failure_message = blocks.CharBlock(
+    failure_message = blocks.RichTextBlock(
         help_text=(
-            'Enter a message that will be shown if the GovDelivery '
-            'subscription fails.'
+            "Enter a message that will be shown if the GovDelivery "
+            "subscription fails."
         )
     )
 
     class Meta:
         handler = 'data_research.handlers.ConferenceRegistrationHandler'
-        template = '_includes/conference-registration-form.html'
+        template = 'data_research/conference-registration-form.html'
 
 
 class MortgageDataDownloads(blocks.StructBlock):

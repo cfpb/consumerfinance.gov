@@ -4,7 +4,10 @@ const COUNTIES_URL = '/data-research/mortgages/api/v1/metadata/state_county_meta
 const METROS_URL = '/data-research/mortgages/api/v1/metadata/state_msa_meta';
 const NON_METROS_URL = '/data-research/mortgages/api/v1/metadata/non_msa_fips';
 const STATES_URL = '/data-research/mortgages/api/v1/metadata/state_meta';
-let counties, metros, nonMetros, states;
+let counties;
+let metros;
+let nonMetros;
+let states;
 let globalZoomLevel = 10;
 
 const utils = {

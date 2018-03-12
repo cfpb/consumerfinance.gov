@@ -1,0 +1,1 @@
+[{{ conference_name }}] Attendance {{ at_capacity|yesno:"Full,Update" }}
