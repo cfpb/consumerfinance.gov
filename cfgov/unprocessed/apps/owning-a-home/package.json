@@ -15,7 +15,7 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "devDependencies": {
+  "dependencies": {
     "fastdom": "1.0.6",
     "amortize": "0.2.2",
     "date-format": "0.0.2",

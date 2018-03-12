@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require( '../node_modules/jquery' );
+var $ = require( 'jquery' );
 
 /**
  * Some dropdown utility methods.

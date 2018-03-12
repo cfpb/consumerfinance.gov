@@ -9,6 +9,7 @@ cache:
   pip: true
   directories:
     - node_modules
+    - cfgov/unprocessed/apps/owning-a-home/node_modules
 
 install:
   - ./install_travis.sh
@@ -29,7 +30,7 @@ env:
 
 jobs:
   fast_finish: true
-  allow_failures: 
+  allow_failures:
     - env: RUNTEST=backend3
   include:
     - stage: run tests

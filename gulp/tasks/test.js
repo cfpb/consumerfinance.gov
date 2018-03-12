@@ -1,64 +1,77 @@
-const BROWSER_LIST = require( '../../config/browser-list-config' );
-const gulpBabel = require( 'gulp-babel' );
-const configTest = require( '../config' ).test;
-const envvars = require( '../../config/environment' ).envvars;
+const ansiColors = require( 'ansi-colors' );
+const environment = require( '../../config/environment' );
+const envvars = environment.envvars;
+const fancyLog = require( 'fancy-log' );
 const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
-const gulpIstanbul = require( 'gulp-istanbul' );
-const gulpMocha = require( 'gulp-mocha' );
 const gulpUtil = require( 'gulp-util' );
 const minimist = require( 'minimist' );
 const spawn = require( 'child_process' ).spawn;
 const SauceConnectTunnel = require( 'sauce-connect-tunnel' );
+const paths = environment.paths;
 
 /**
- * Run Mocha JavaScript unit tests.
+ * Run JavaScript unit tests.
  * @param {Function} cb - Callback function to call on completion.
  */
 function testUnitScripts( cb ) {
+  // eslint-disable-next-line no-process-env
+  process.env.NODE_ENV = 'test';
   const params = minimist( process.argv.slice( 3 ) ) || {};
 
   /* If --specs=path/to/js/spec flag is added on the command-line,
      pass the value to mocha to test individual unit test files. */
-  const specs = params.specs;
-  let src = configTest.tests + '/unit_tests/';
+  let specs = params.specs;
 
+  /* Set path defaults for source files.
+     Remove ./ from beginning of path,
+     which collectCoverageFrom doesn't support. */
+  const pathSrc = paths.unprocessed.substring( 2 );
+
+  // Set regex defaults.
+  let fileTestRegex = 'unit_tests/';
+  let fileSrcPath = pathSrc + '/';
+
+  // If --specs flag is passed, adjust regex defaults.
   if ( specs ) {
-    src += specs;
+    fileSrcPath += specs;
+    // If the --specs argument is a file, strip it off.
+    if ( specs.slice( -3 ) === '.js' ) {
+      // TODO: Perform a more robust replacement here.
+      fileSrcPath = fileSrcPath.replace( '-spec', '' );
+      fileTestRegex += specs;
+    } else {
+
+      // Ensure there's a trailing slash.
+      if ( specs.slice( -1 ) !== '/' ) {
+        specs += '/';
+      }
+
+      fileSrcPath += '**/*.js';
+      fileTestRegex += specs + '.*-spec.js';
+    }
   } else {
-    src += '**/*.js';
+    fileSrcPath += '**/*.js';
+    fileTestRegex += '.*-spec.js';
   }
 
-  gulp.src( configTest.src )
-    .pipe( gulpBabel( {
-      presets: [ [ 'babel-preset-env', {
-        targets: {
-          browsers: BROWSER_LIST.LAST_2_IE_9_UP
-        },
-        debug: true
-      } ] ]
-    } ) )
-    .pipe( gulpIstanbul( {
-      includeUntested: false
-    } ) )
-    .pipe( gulpIstanbul.hookRequire() )
-    .on( 'finish', () => {
-      gulp.src( src )
-        .pipe( gulpMocha( {
-          reporter: configTest.reporter ? 'spec' : 'nyan'
-        } ) )
-        .pipe( gulpIstanbul.writeReports( {
-          dir: configTest.tests + '/unit_test_coverage'
-        } ) )
-
-        /* TODO: we want this but it breaks because we don't have good coverage
-           .pipe( gulpIstanbul.enforceThresholds( {
-           thresholds: { global: 90 }
-           } ) ) */
-        .on( 'end', cb );
-    } );
+  spawn(
+    fsHelper.getBinary( 'jest-cli', 'jest.js', '../bin' ),
+    [
+      '--config=jest.config.json',
+      `--collectCoverageFrom=${ fileSrcPath }`,
+      `--testRegex=${ fileTestRegex }`
+    ],
+    { stdio: 'inherit' }
+  ).once( 'close', code => {
+    if ( code ) {
+      fancyLog( 'Unit tests exited with code ' + code );
+      process.exit( 1 );
+    }
+    fancyLog( 'Unit tests done!' );
+    cb();
+  } );
 }
-
 
 /**
  * Run tox Acceptance tests.
@@ -82,10 +95,10 @@ function testAcceptanceBrowser() {
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
     .once( 'close', function( code ) {
       if ( code ) {
-        gulpUtil.log( 'Tox tests exited with code ' + code );
+        fancyLog( 'Tox tests exited with code ' + code );
         process.exit( 1 );
       }
-      gulpUtil.log( 'Tox tests done!' );
+      fancyLog( 'Tox tests done!' );
     } );
 }
 
@@ -173,8 +186,7 @@ function _createSauceTunnel( ) {
 
   if ( !( SAUCE_USERNAME && SAUCE_ACCESS_KEY && SAUCE_TUNNEL_ID ) ) {
     const ERROR_MSG = 'Please ensure your SAUCE variables are set.';
-    gulpUtil.colors.enabled = true;
-    gulpUtil.log( gulpUtil.colors.red( ERROR_MSG ) );
+    fancyLog( ansiColors.red( ERROR_MSG ) );
 
     return Promise.reject( new Error( ERROR_MSG ) );
   }
@@ -186,7 +198,7 @@ function _createSauceTunnel( ) {
     const sauceTunnelParam = { sauceTunnel: sauceTunnel };
 
     sauceTunnel.on( 'verbose:debug', debugMsg => {
-      gulpUtil.log( debugMsg );
+      fancyLog( debugMsg );
     } );
 
     sauceTunnel.start( status => {
@@ -221,7 +233,7 @@ function spawnProtractor( ) {
    * @returns {Promise} Promise which runs Protractor.
    */
   function _runProtractor( args ) {
-    gulpUtil.log( 'Running Protractor with params: ' + params );
+    fancyLog( 'Running Protractor with params: ' + params );
 
     return new Promise( ( resolve, reject ) => {
       spawn(
@@ -230,10 +242,10 @@ function spawnProtractor( ) {
         { stdio: 'inherit' }
       ).once( 'close', code => {
         if ( code ) {
-          gulpUtil.log( 'Protractor tests exited with code ' + code );
+          fancyLog( 'Protractor tests exited with code ' + code );
           reject( args );
         }
-        gulpUtil.log( 'Protractor tests done!' );
+        fancyLog( 'Protractor tests done!' );
         resolve( args );
       } );
     } );
