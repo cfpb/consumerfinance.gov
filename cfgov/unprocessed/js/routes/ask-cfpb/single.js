@@ -21,8 +21,9 @@ if ( analyticsData ) {
 }
 
 function sendEvent() {
-  const eventData = Analytics.getDataLayerOptions( '/askcfpb/' + answerID + '/',
-    document.title, 'Virtual Pageview' );
+  const eventData = Analytics.getDataLayerOptions(
+    '/askcfpb/' + answerID + '/', document.title, 'Virtual Pageview'
+  );
   eventData.category = categoryName;
   Analytics.sendEvent( eventData );
 }
