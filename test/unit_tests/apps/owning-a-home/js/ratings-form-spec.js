@@ -1,6 +1,4 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const chai = require( 'chai' );
-const expect = chai.expect;
 
 let feedBackLinkElement;
 let ratingsInputs;
@@ -94,21 +92,21 @@ describe( 'ratings-form', () => {
   it( 'should add the change event listener when init called', () => {
     triggerClickEvent( ratingsInputs[0] );
 
-    expect( ratingsInputs[0].checked ).to.equal( true );
-    expect( ratingsInputs[1].checked ).to.equal( false );
+    expect( ratingsInputs[0].checked ).toBe( true );
+    expect( ratingsInputs[1].checked ).toBe( false );
   } );
 
   it( 'should update the feeback link when an input is clicked', () => {
     triggerClickEvent( ratingsInputs[1] );
 
-    expect( feedBackLinkElement.href ).to.contain( '?is_helpful=1' );
+    expect( feedBackLinkElement.href ).toContain( '?is_helpful=1' );
   } );
 
   it( 'should disable the ratings inputs when an input is clicked', () => {
     triggerClickEvent( ratingsInputs[0] );
 
-    expect( ratingsInputs[0].disabled ).to.equal( true );
-    expect( ratingsInputs[1].disabled ).to.equal( true );
+    expect( ratingsInputs[0].disabled ).toBe( true );
+    expect( ratingsInputs[1].disabled ).toBe( true );
   } );
 
 } );

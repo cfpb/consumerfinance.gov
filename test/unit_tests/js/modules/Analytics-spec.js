@@ -1,9 +1,5 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
-const chai = require( 'chai' );
-const expect = chai.expect;
-const sinon = require( 'sinon' );
-
 let Analytics;
 let dataLayerOptions;
 let getDataLayerOptions;
@@ -40,19 +36,19 @@ describe( 'Analytics', () => {
 
   describe( '.init()', () => {
     it( 'should have a proper state after initialization', () => {
-      expect( Analytics.tagManagerIsLoaded === false ).to.be.true;
+      expect( Analytics.tagManagerIsLoaded === false ).toBe( true );
       window['google_tag_manager'] = {};
       Analytics.init();
-      expect( Analytics.tagManagerIsLoaded === true ).to.be.true;
+      expect( Analytics.tagManagerIsLoaded === true ).toBe( true );
     } );
 
     it( 'should properly set the google_tag_manager object', () => {
       const mockGTMObject = { testing: true };
       Analytics.init();
-      expect( Analytics.tagManagerIsLoaded === false ).to.be.true;
+      expect( Analytics.tagManagerIsLoaded === false ).toBe( true );
       window['google_tag_manager'] = mockGTMObject;
-      expect( Analytics.tagManagerIsLoaded === true ).to.be.true;
-      expect( window.google_tag_manager ).to.deep.equal( mockGTMObject );
+      expect( Analytics.tagManagerIsLoaded === true ).toBe( true );
+      expect( window.google_tag_manager ).toEqual( mockGTMObject );
     } );
   } );
 
@@ -67,8 +63,8 @@ describe( 'Analytics', () => {
       window['google_tag_manager'] = {};
       Analytics.init();
       Analytics.sendEvent( getDataLayerOptions( action, label ) );
-      expect( window.dataLayer.length === 1 ).to.be.true;
-      expect( window.dataLayer[0] ).to.deep.equal( options );
+      expect( window.dataLayer.length === 1 ).toBe( true );
+      expect( window.dataLayer[0] ).toEqual( options );
     } );
 
     it( 'shouldn\'t add objects to the dataLayer Array if GTM is undefined',
@@ -78,7 +74,7 @@ describe( 'Analytics', () => {
         delete window['google_tag_manager'];
         Analytics.init();
         Analytics.sendEvent( getDataLayerOptions( action, label ) );
-        expect( window.dataLayer.length === 0 ).to.be.true;
+        expect( window.dataLayer.length === 0 ).toBe( true );
       }
     );
 
@@ -86,10 +82,22 @@ describe( 'Analytics', () => {
       Analytics.init();
       const action = 'inbox:clicked';
       const label = 'text:null';
-      const callback = sinon.stub();
+      const callback = {
+        method: jest.fn()
+      };
+      const callbackSpy = jest.spyOn( callback, 'method' );
       window['google_tag_manager'] = {};
-      Analytics.sendEvent( getDataLayerOptions( action, label, '', callback ) );
-      expect( callback.called ).to.be.true;
+      Analytics.sendEvent(
+        getDataLayerOptions( action, label, '', callback.method )
+      );
+      expect( callbackSpy ).toHaveBeenCalledTimes( 1 );
+
+      // Check code branch for when Analytics.tagManagerIsLoaded is not set.
+      Analytics.tagManagerIsLoaded = false;
+      Analytics.sendEvent(
+        getDataLayerOptions( action, label, '', callback.method )
+      );
+      expect( callbackSpy ).toHaveBeenCalledTimes( 2 );
     } );
   } );
 
@@ -110,7 +118,7 @@ describe( 'Analytics', () => {
       window['google_tag_manager'] = {};
       Analytics.init();
       Analytics.sendEvents( [ options1, options2 ] );
-      expect( window.dataLayer.length === 2 ).to.be.true;
+      expect( window.dataLayer.length === 2 ).toBe( true );
     } );
 
     it( 'shouldn\'t add objects to the dataLayer Array if an array isn\'t passed',
@@ -130,7 +138,7 @@ describe( 'Analytics', () => {
         window['google_tag_manager'] = {};
         Analytics.init();
         Analytics.sendEvents( options1, options2 );
-        expect( window.dataLayer.length === 0 ).to.be.true;
+        expect( window.dataLayer.length === 0 ).toBe( true );
       }
     );
   } );
