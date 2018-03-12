@@ -1,28 +1,29 @@
-const $ = require( 'jquery' );
-const amortize = require( 'amortize' );
-const formatUSD = require( 'format-usd' );
-const isNum = require( 'is-money-usd' );
-const jumbo = require( 'jumbo-mortgage' );
-const median = require( 'median' );
-const unFormatUSD = require( 'unformat-usd' );
+import * as $ from 'jquery';
+import * as amortize from 'amortize';
+import * as formatUSD from 'format-usd';
+import * as isNum from 'is-money-usd';
+import * as jumbo from 'jumbo-mortgage';
+import * as median from 'median';
+import * as unFormatUSD from 'unformat-usd';
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
-const Highcharts = require( 'highcharts' );
-require( 'highcharts/modules/exporting' )( Highcharts );
-const highchartsTheme = require( './highcharts-theme' );
+import * as Highcharts from 'highcharts';
+import * as highChartsExporting from 'highcharts/modules/exporting';
+highChartsExporting( Highcharts );
+import * as highchartsTheme from './highcharts-theme';
 highchartsTheme.applyThemeTo( Highcharts );
 
 // var geolocation = require('./geolocation');
-const config = require( '../../config.json' );
-const domValues = require( './dom-values' );
-const dropdown = require( '../dropdown-utils' );
-const fetchRates = require( '../rates' );
-const formatTime = require( '../format-timestamp' );
-const params = require( './params' );
+import * as config from '../../config.json';
+import * as domValues from './dom-values';
+import * as dropdown from '../dropdown-utils';
+import * as fetchRates from '../rates';
+import * as formatTime from '../format-timestamp';
+import * as params from './params';
 
-require( 'rangeslider.js' );
-require( './tab' );
-require( '../placeholder-polyfill' );
+import * from 'rangeslider.js';
+import * from './tab';
+import * from '../placeholder-polyfill';
 
 // Load our handlebar templates.
 const template = require( './template-loader' );
@@ -808,7 +809,7 @@ function addCommas( value ) {
  * @param {Function} cb - Optional callback.
  */
 function renderSlider( cb ) {
-
+  const creditScoreDom
   $( '#credit-score' ).rangeslider({
     polyfill:    false,
     rangeClass:  'rangeslider',
