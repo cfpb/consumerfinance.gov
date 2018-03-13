@@ -15,8 +15,6 @@ const paths = environment.paths;
  * @param {Function} cb - Callback function to call on completion.
  */
 function testUnitScripts( cb ) {
-  // eslint-disable-next-line no-process-env
-  process.env.NODE_ENV = 'test';
   const params = minimist( process.argv.slice( 3 ) ) || {};
 
   /* If --specs=path/to/js/spec flag is added on the command-line,
