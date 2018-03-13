@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require( '../../node_modules/jquery' );
+var $ = require( 'jquery' );
 
 $( '.tab-link' ).click( function( evt ) {
   var $tabs = $( '.tab-list' ),

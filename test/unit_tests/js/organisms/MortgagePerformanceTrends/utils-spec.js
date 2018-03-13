@@ -1,26 +1,17 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
-const mockery = require( 'mockery' );
-const sinon = require( 'sinon' );
 const expect = chai.expect;
+const sinon = require( 'sinon' );
 
-// Disable the AJAX library used by the action creator
-const noop = () => ( { mock: 'data' } );
-mockery.enable( {
-  warnOnReplace: false,
-  warnOnUnregistered: false
-} );
-mockery.registerMock( 'xdr', noop );
+// Disable the AJAX library used by the action creator.
+jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
 
 const utils = require(
   BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/utils.js'
 );
 
 let el;
-const document = {
-  createElement: () => ( {} )
-};
 
 describe( 'Mortgage Performance utilities', () => {
 
@@ -58,7 +49,8 @@ describe( 'Mortgage Performance utilities', () => {
       text: 'Alabama',
       selected: false
     } );
-    expect( option ).to.deep.equal( { value: 'AL', text: 'Alabama' } );
+    expect( option.value ).to.equal( 'AL' );
+    expect( option.text ).to.equal( 'Alabama' );
   } );
 
   it( 'should get metro data', () => {

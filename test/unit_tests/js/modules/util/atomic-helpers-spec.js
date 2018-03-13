@@ -2,25 +2,22 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-// eslint-disable-next-line no-unused-vars This is used in dependent classes.
-const jsdom = require( 'jsdom' );
 
 const atomicHelpers = require( BASE_JS_PATH + 'modules/util/atomic-helpers' );
 
-const HTML_SNIPPET = '<div class="container">' +
-                     '<div class="o-expandable"></div></div>';
+let containerDom;
+let expandableDom;
+const HTML_SNIPPET = `
+  <div class="container">
+  <div class="o-expandable"></div></div>
+`;
 
 describe( 'atomic-helpers', () => {
-  let containerDom;
-  let expandableDom;
-
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+  beforeAll( () => {
+    document.body.innerHTML = HTML_SNIPPET;
     containerDom = document.querySelector( '.container' );
     expandableDom = document.querySelector( '.o-expandable' );
   } );
-
-  after( () => this.jsdom() );
 
   describe( '.checkDom()', () => {
     it( 'should throw an error if element DOM not found', () => {
@@ -45,13 +42,15 @@ describe( 'atomic-helpers', () => {
       () => {
         const dom = atomicHelpers.checkDom( expandableDom, 'o-expandable' );
         expect( dom ).to.be.equal( expandableDom );
-      } );
+      }
+    );
 
     it( 'should return the correct HTMLElement when parent element is searched',
       () => {
         const dom = atomicHelpers.checkDom( containerDom, 'o-expandable' );
         expect( dom ).to.be.equal( expandableDom );
-      } );
+      }
+    );
   } );
 
   describe( '.instantiateAll()', () => {
@@ -73,7 +72,7 @@ describe( 'atomic-helpers', () => {
 
   describe( '.destroyInitFlag()', () => {
 
-    beforeEach( function() {
+    beforeEach( () => {
       atomicHelpers.setInitFlag( expandableDom );
     } );
 

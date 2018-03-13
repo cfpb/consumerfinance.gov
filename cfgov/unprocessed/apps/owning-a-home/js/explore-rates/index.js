@@ -1,23 +1,24 @@
-var $ = require( '../../node_modules/jquery' );
+const $ = require( 'jquery' );
+const amortize = require( 'amortize' );
+const formatUSD = require( 'format-usd' );
+const isNum = require( 'is-money-usd' );
+const jumbo = require( 'jumbo-mortgage' );
+const median = require( 'median' );
+const unFormatUSD = require( 'unformat-usd' );
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
-var Highcharts = require( '../../node_modules/highcharts' );
+const Highcharts = require( '../../node_modules/highcharts' );
 require( '../../node_modules/highcharts/modules/exporting' )( Highcharts );
 const highchartsTheme = require( './highcharts-theme' );
 highchartsTheme.applyThemeTo( Highcharts );
 
-var formatUSD = require( '../../node_modules/format-usd' );
-var unFormatUSD = require( '../../node_modules/unformat-usd' );
 // var geolocation = require('./geolocation');
+const config = require( '../../config.json' );
 const domValues = require( './dom-values' );
-var dropdown = require( '../dropdown-utils' );
-var jumbo = require( '../../node_modules/jumbo-mortgage' );
-var median = require( '../../node_modules/median' );
-var amortize = require( '../../node_modules/amortize' );
-var config = require( '../../config.json' );
-var fetchRates = require( '../rates' );
-var isNum = require( '../../node_modules/is-money-usd' );
-var formatTime = require( '../format-timestamp' );
+const dropdown = require( '../dropdown-utils' );
+const fetchRates = require( '../rates' );
+const formatTime = require( '../format-timestamp' );
+const params = require( './params' );
 
 require( '../../node_modules/rangeslider.js' );
 require( './tab' );
@@ -75,8 +76,6 @@ var template = {
   chartTooltipSingle: chartTooltipSingle,
   chartTooltipMultiple: chartTooltipMultiple
 };
-
-const params = require( './params' );
 
 // Set some properties for the histogram.
 var chart = {

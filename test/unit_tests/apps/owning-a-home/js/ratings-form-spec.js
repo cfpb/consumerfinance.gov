@@ -1,13 +1,12 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 const chai = require( 'chai' );
 const expect = chai.expect;
-const sinon = require( 'sinon' );
+
 let feedBackLinkElement;
 let ratingsInputs;
-let sandbox;
 
-const HTML_SNIPPET =
-  `<form method="post"
+const HTML_SNIPPET = `
+  <form method="post"
         class="o-form
                oah-ratings-form
                block
@@ -65,7 +64,8 @@ const HTML_SNIPPET =
               </a>
           </div>
       </fieldset>
-  </form>`;
+  </form>
+`;
 
 function triggerClickEvent( target ) {
   const event = document.createEvent( 'Event' );
@@ -77,14 +77,11 @@ function triggerClickEvent( target ) {
 }
 
 describe( 'ratings-form', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
+  beforeAll( () => {
+    document.body.innerHTML = HTML_SNIPPET;
   } );
 
-  after( () => this.jsdom() );
-
   beforeEach( () => {
-    sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     require(
       BASE_JS_PATH + 'owning-a-home/js/ratings-form'
@@ -92,10 +89,6 @@ describe( 'ratings-form', () => {
 
     ratingsInputs = document.querySelectorAll( '.rating-inputs input' );
     feedBackLinkElement = document.querySelector( '.feedback-link' );
-  } );
-
-  afterEach( () => {
-    sandbox.restore();
   } );
 
   it( 'should add the change event listener when init called', () => {

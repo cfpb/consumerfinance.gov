@@ -6,28 +6,23 @@ const expect = chai.expect;
 const BaseTransition =
   require( BASE_JS_PATH + 'modules/transition/BaseTransition' );
 
+let transition;
+
+// DOM-related settings.
+let contentDom;
+let content2Dom;
+
 const HTML_SNIPPET = '<div class="content-1"></div>' +
                      '<div class="content-2"></div>';
 
 describe( 'BaseTransition', () => {
-
-  let transition;
-
-  // DOM-related settings.
-  let document;
-  let contentDom;
-  let content2Dom;
-
   beforeEach( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
+    document.body.innerHTML = HTML_SNIPPET;
     contentDom = document.querySelector( '.content-1' );
     content2Dom = document.querySelector( '.content-2' );
     transition =
       new BaseTransition( contentDom, { BASE_CLASS: 'u-test-transition' } );
   } );
-
-  afterEach( () => this.jsdom() );
 
   describe( '.init()', () => {
     it( 'should have public static methods', () => {

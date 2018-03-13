@@ -8,16 +8,17 @@ const FlyoutMenu = require( BASE_JS_PATH + 'modules/behavior/FlyoutMenu' );
 const MoveTransition =
   require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
 
-const HTML_SNIPPET =
-  `<div data-js-hook="behavior_flyout-menu">
-    <button data-js-hook="behavior_flyout-menu_trigger"
-            aria-pressed="false"
-            aria-expanded="false"></button>
-    <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
-      <button data-js-hook="behavior_flyout-menu_alt-trigger"
+const HTML_SNIPPET = `
+  <div data-js-hook="behavior_flyout-menu">
+      <button data-js-hook="behavior_flyout-menu_trigger"
+              aria-pressed="false"
               aria-expanded="false"></button>
-    </div>
-  </div>`;
+      <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
+        <button data-js-hook="behavior_flyout-menu_alt-trigger"
+                aria-expanded="false"></button>
+      </div>
+  </div>
+`;
 
 describe( 'FlyoutMenu', () => {
 
@@ -32,7 +33,6 @@ describe( 'FlyoutMenu', () => {
   let collapseEndSpy;
 
   // DOM-related settings.
-  let document;
   const SEL_PREFIX = '[data-js-hook=behavior_flyout-menu';
 
   let containerDom;
@@ -41,21 +41,15 @@ describe( 'FlyoutMenu', () => {
   let altTriggerDom;
 
   beforeEach( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
+    document.body.innerHTML = HTML_SNIPPET;
     containerDom = document.querySelector( SEL_PREFIX + ']' );
-    triggerDom =
-      document.querySelector( SEL_PREFIX + '_trigger]' );
-    contentDom =
-      document.querySelector( SEL_PREFIX + '_content]' );
+    triggerDom = document.querySelector( SEL_PREFIX + '_trigger]' );
+    contentDom = document.querySelector( SEL_PREFIX + '_content]' );
     // TODO: check for cases where alt trigger is absent.
-    altTriggerDom =
-      document.querySelector( SEL_PREFIX + '_alt-trigger]' );
+    altTriggerDom = document.querySelector( SEL_PREFIX + '_alt-trigger]' );
 
     flyoutMenu = new FlyoutMenu( containerDom );
   } );
-
-  afterEach( () => this.jsdom() );
 
   describe( '.init()', () => {
     it( 'should have public static methods', () => {
@@ -111,7 +105,7 @@ describe( 'FlyoutMenu', () => {
     it( 'should dispatch events when called by trigger click', () => {
 
       /* TODO: Ideally this would use `new MouseEvent`,
-         but how do we import MouseEvent (or Event) into Mocha.
+         but how do we import MouseEvent (or Event) into Jest.
          Please investigate. */
       const mouseEvent = document.createEvent( 'MouseEvents' );
       mouseEvent.initEvent( 'mouseover', true, true );
@@ -228,7 +222,7 @@ describe( 'FlyoutMenu', () => {
   } );
 
   describe( '.setExpandTransition()', () => {
-    it( 'should set a transition', function( done ) {
+    it( 'should set a transition', done => {
       flyoutMenu.init();
       const transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
@@ -246,7 +240,7 @@ describe( 'FlyoutMenu', () => {
   } );
 
   describe( '.setCollapseTransition()', () => {
-    it( 'should set a transition', function( done ) {
+    it( 'should set a transition', done => {
       flyoutMenu.init();
       const transition = new MoveTransition( contentDom ).init();
       triggerDom.click();
@@ -362,7 +356,7 @@ describe( 'FlyoutMenu', () => {
   } );
 
   describe( '.isAnimating()', () => {
-    it( 'should return true when expanding', function( done ) {
+    it( 'should return true when expanding', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandBegin', () => {
         try {
@@ -375,7 +369,7 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return false after expanding', function( done ) {
+    it( 'should return false after expanding', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandEnd', () => {
         try {
@@ -388,7 +382,7 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return true while collapsing', function( done ) {
+    it( 'should return true while collapsing', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'collapseBegin', () => {
         try {
@@ -402,7 +396,7 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return false after collapsing', function( done ) {
+    it( 'should return false after collapsing', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'collapseEnd', () => {
         try {
@@ -418,7 +412,7 @@ describe( 'FlyoutMenu', () => {
   } );
 
   describe( '.isExpanded()', () => {
-    it( 'should return false before expanding', function( done ) {
+    it( 'should return false before expanding', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandBegin', () => {
         try {
@@ -431,7 +425,7 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return true after expanding', function( done ) {
+    it( 'should return true after expanding', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandEnd', () => {
         try {
@@ -444,7 +438,7 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return true before collapsing', function( done ) {
+    it( 'should return true before collapsing', done => {
       flyoutMenu.init();
       triggerDom.click();
       flyoutMenu.addEventListener( 'triggerClick', () => {
@@ -458,7 +452,7 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return false after collapsing', function( done ) {
+    it( 'should return false after collapsing', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'collapseEnd', () => {
         try {

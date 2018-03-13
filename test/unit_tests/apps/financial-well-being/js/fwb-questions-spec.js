@@ -1,9 +1,8 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 const chai = require( 'chai' );
 const expect = chai.expect;
-const sinon = require( 'sinon' );
+
 let fwbQuestions;
-let sandbox;
 let formDom;
 let submitBtnDom;
 let radioButtonsDom;
@@ -22,8 +21,8 @@ const dataLayerEventSubmit = {
   eventTimeout: 500
 };
 
-const HTML_SNIPPET =
-  `<form id="quiz-form"
+const HTML_SNIPPET = `
+  <form id="quiz-form"
          action="/consumer-tools/financial-well-being/results/"
          method="POST">
     <div class="block">
@@ -128,7 +127,8 @@ const HTML_SNIPPET =
              data-gtm-label="Get my score"
              data-gtm-category="Financial Well-Being Tool Interaction">
     </div>
-  </form>`;
+  </form>
+`;
 
 function triggerClickEvent( target ) {
   const event = document.createEvent( 'Event' );
@@ -145,17 +145,10 @@ function fillOutForm() {
 }
 
 describe( 'fwb-questions', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-  } );
-
-  after( () => this.jsdom() );
-
   beforeEach( () => {
     fwbQuestions = require(
       BASE_JS_PATH + 'financial-well-being/js/fwb-questions'
     );
-    sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     window.dataLayer = [];
     window['google_tag_manager'] = {};
@@ -169,10 +162,6 @@ describe( 'fwb-questions', () => {
     formDom.addEventListener( 'submit', evt => {
       evt.preventDefault();
     } );
-  } );
-
-  afterEach( () => {
-    sandbox.restore();
   } );
 
   it( 'submit button should have the correct state on initialization.', () => {

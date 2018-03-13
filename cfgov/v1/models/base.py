@@ -474,6 +474,8 @@ class Feedback(models.Model):
         for feedback in queryset:
             feedback.submitted_on = "{}".format(feedback.submitted_on.date())
             feedback.comment = feedback.comment.encode('utf-8')
+            if feedback.referrer is not None:
+                feedback.referrer = feedback.referrer.encode('utf-8')
             writer.writerow(
                 ["{}".format(getattr(feedback, heading))
                  for heading in headings]

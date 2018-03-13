@@ -6,23 +6,21 @@ let BreakpointHandler;
 let args;
 const standardType = require( BASE_JS_PATH + 'modules/util/standard-type' );
 
+/**
+ * Change the viewport to width x height. Mocks window.resizeTo( w, h ).
+ * @param  {number} width - width in pixels.
+ * @param  {number} height - height in pixels.
+ */
+function windowResizeTo( width, height ) {
+  // Change the viewport to width x height. Mocks window.resizeTo( w, h ).
+  global.innerWidth = width;
+  global.innerHeight = height;
+
+  // Trigger the window resize event.
+  global.dispatchEvent( new Event( 'resize' ) );
+}
+
 describe( 'BreakpointHandler', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )( '' );
-
-    // Simulate window resize event
-    const resizeEvent = document.createEvent( 'Event' );
-    resizeEvent.initEvent( 'resize', true, true );
-
-    global.window.resizeTo = ( width, height ) => {
-      global.window.innerWidth = width || global.window.innerWidth;
-      global.window.innerHeight = height || global.window.innerHeight;
-      global.window.dispatchEvent( resizeEvent );
-    };
-  } );
-
-  after( () => this.jsdom() );
-
   beforeEach( () => {
     args = {
       enter:      standardType.noopFunct,
@@ -90,12 +88,12 @@ describe( 'BreakpointHandler', () => {
     let enterSpy = sinon.spy( breakpointHandler, 'enter' );
     let leaveSpy = sinon.spy( breakpointHandler, 'leave' );
 
-    window.resizeTo( 598, 800 );
+    windowResizeTo( 598, 800 );
     expect( enterSpy.calledOnce ).to.be.true;
     expect( enterSpy.calledWithMatch( sinon.match.has( 'isBpXS', true ) ) )
       .to.be.true;
 
-    window.resizeTo( 601, 800 );
+    windowResizeTo( 601, 800 );
     expect( leaveSpy.calledOnce ).to.be.true;
     expect( leaveSpy.calledWithMatch( sinon.match.has( 'isBpSM', true ) ) )
       .to.be.true;
@@ -104,7 +102,7 @@ describe( 'BreakpointHandler', () => {
     args.breakpoint = 901;
     breakpointHandler = new BreakpointHandler( args );
     enterSpy = sinon.spy( breakpointHandler, 'enter' );
-    window.resizeTo( 1000, 800 );
+    windowResizeTo( 1000, 800 );
     expect( enterSpy.calledOnce ).to.be.true;
     expect( enterSpy.calledWithMatch( sinon.match.has( 'isBpMED', true ) ) )
       .to.be.true;
@@ -113,7 +111,7 @@ describe( 'BreakpointHandler', () => {
     args.breakpoint = 1020;
     breakpointHandler = new BreakpointHandler( args );
     leaveSpy = sinon.spy( breakpointHandler, 'leave' );
-    window.resizeTo( 1021, 800 );
+    windowResizeTo( 1021, 800 );
     expect( leaveSpy.calledOnce ).to.be.true;
     expect( leaveSpy.calledWithMatch( sinon.match.has( 'isBpLG', true ) ) )
       .to.be.true;
@@ -121,12 +119,12 @@ describe( 'BreakpointHandler', () => {
 
   it( 'should watch for window resize events', () => {
     const breakpointHandler = new BreakpointHandler( args );
-    const handleViewportChangeSpy =
-    sinon.spy( breakpointHandler, 'handleViewportChange' );
+    const handleViewportChangeSpy = sinon.spy(
+      breakpointHandler, 'handleViewportChange'
+    );
 
     expect( handleViewportChangeSpy.called ).to.be.false;
-    window.resizeTo( 1200, 800 );
+    windowResizeTo( 1200, 800 );
     expect( handleViewportChangeSpy.called ).to.be.true;
   } );
-
 } );

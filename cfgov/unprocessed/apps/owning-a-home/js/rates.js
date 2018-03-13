@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require( '../node_modules/jquery' );
+var $ = require( 'jquery' );
 var config = require( '../config.json' );
 
 // TODO: Consolidate with mortgage-insurance.js.

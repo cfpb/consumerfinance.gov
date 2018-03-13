@@ -1,6 +1,6 @@
 'use strict';
 
-var format = require( '../node_modules/date-format' );
+var format = require( 'date-format' );
 
 module.exports = function( then ) {
 

@@ -33,7 +33,8 @@ module.exports = {
       'config/**/*.js',
       'gulpfile.js',
       'gulp/**/*.js',
-      'scripts/npm/**/*.js'
+      'scripts/npm/**/*.js',
+      'jest.config.js'
     ]
   },
   test: {
@@ -41,7 +42,6 @@ module.exports = {
       paths.unprocessed + '/apps/**/js/**/*.js',
       paths.unprocessed + '/js/**/*.js'
     ],
-    tests: paths.test,
     reporter: environment.CONTINUOUS_INTEGRATION
   },
   clean: {
