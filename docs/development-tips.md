@@ -1,13 +1,47 @@
 ## Development tips
 
-### TIP: Loading sibling projects
+### TIP: Developing on nested satellite apps
+Some projects can sit inside cfgov-refresh, but manage their own asset
+dependencies. These projects have their own package.json and base templates.
+The structure looks like this:
+
+#### npm modules
+- App's own dependency list is in
+  `cfgov/unprocessed/apps/[project namespace]/package.json`
+- App's `node_modules` path is listed in the Travis config
+  https://github.com/cfpb/cfgov-refresh/blob/master/.travis.yml#L10
+  so that their dependencies will be available when Travis runs.
+
+#### Webpack
+- App's may include their own webpack-config.js configuration that adjusts how
+  their app specific assets should be built. This configuration appears in
+  `cfgov/unprocessed/apps/[project namespace]/webpack-config.js`
+
+#### Templates
+- App's use a jinja template that extends the `base.html`
+  template used by the rest of the site.
+  This template would reside in `cfgov/jinja2/v1/[project namespace]/index.html`
+  or similar (for example, [owning-a-home](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/owning-a-home/explore-rates/index.html)).
+
+!!! note
+    A template may support a non-standard browser, like an older IE version,
+    by including the required dependencies, polyfills, etc. in its
+    template's `{% block css %}` or `{% block javascript scoped %}` blocks.
+
+
+### TIP: Loading satellite apps
 Some projects fit within the cfgov-refresh architecture,
 but are not fully incorporated into the project.
 These are known as "satellite apps."
 
 Satellite apps are listed in the
-[optional-public.txt](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt).
+[optional-public.txt](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt)
 requirements file.
+
+In addition to the aforementioned list,
+[HMDA Explorer](https://github.com/cfpb/hmda-explorer) and
+[Rural or Underserved](https://github.com/cfpb/rural-or-underserved-test),
+have their own installation requirements.
 
 If using Docker, follow
 [these guidelines](https://github.com/cfpb/cfgov-refresh/blob/master/docs/usage.md#develop-satellite-apps).
@@ -22,11 +56,6 @@ Otherwise, if not using Docker, follow these guidelines:
     Do not install the projects directly into the `cfgov-refresh` directory.
     Clone and install the projects as siblings to `cfgov-refresh`,
     so that they share the same parent directory (`~/Projects` or similar).
-
-In addition to the aforementioned list,
-[HMDA Explorer](https://github.com/cfpb/hmda-explorer) and
-[Rural or Underserved](https://github.com/cfpb/rural-or-underserved-test),
-have their own installation requirements.
 
 ### TIP: Loading data into Django models
 The Django management command `import-data` will import data from the specified
