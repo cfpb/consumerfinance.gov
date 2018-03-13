@@ -3,6 +3,7 @@
 ### TIP: Developing on nested satellite apps
 Some projects can sit inside cfgov-refresh, but manage their own asset
 dependencies. These projects have their own package.json and base templates.
+
 The structure looks like this:
 
 #### npm modules
@@ -13,12 +14,12 @@ The structure looks like this:
   so that their dependencies will be available when Travis runs.
 
 #### Webpack
-- App's may include their own webpack-config.js configuration that adjusts how
-  their app specific assets should be built. This configuration appears in
+- Apps may include their own webpack-config.js configuration that adjusts how
+  their app-specific assets should be built. This configuration appears in
   `cfgov/unprocessed/apps/[project namespace]/webpack-config.js`
 
 #### Templates
-- App's use a jinja template that extends the `base.html`
+- Apps use a jinja template that extends the `base.html`
   template used by the rest of the site.
   This template would reside in `cfgov/jinja2/v1/[project namespace]/index.html`
   or similar (for example, [owning-a-home](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/owning-a-home/explore-rates/index.html)).
