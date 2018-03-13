@@ -23,7 +23,6 @@ const CLASSES = {
  *   DOM element to apply move transition to.
  * @returns {MoveTransition} An instance.
  */
-// eslint-disable-next-line max-statements
 function MoveTransition( element ) {
 
   const _baseTransition = new BaseTransition( element, CLASSES );
