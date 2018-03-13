@@ -1,7 +1,4 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-
-const chai = require( 'chai' );
-const expect = chai.expect;
 const arrayHelpers = require( BASE_JS_PATH + 'modules/util/array-helpers' );
 let array;
 let index;
@@ -12,7 +9,7 @@ describe( 'Array Helpers indexOfObject', () => {
     array = [];
     index = arrayHelpers.indexOfObject( array, 'foo' );
 
-    expect( index ).to.equal( -1 );
+    expect( index ).toEqual( -1 );
   } );
 
   it( 'should return -1 if there is no match', () => {
@@ -22,7 +19,7 @@ describe( 'Array Helpers indexOfObject', () => {
     ];
     index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
 
-    expect( index ).to.equal( -1 );
+    expect( index ).toEqual( -1 );
   } );
 
   it( 'should return the matched index', () => {
@@ -33,6 +30,6 @@ describe( 'Array Helpers indexOfObject', () => {
     ];
     index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
 
-    expect( index ).to.equal( 0 );
+    expect( index ).toEqual( 0 );
   } );
 } );

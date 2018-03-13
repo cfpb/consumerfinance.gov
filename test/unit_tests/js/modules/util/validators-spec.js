@@ -1,7 +1,5 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 const ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
-const chai = require( 'chai' );
-const expect = chai.expect;
 const validators = require( BASE_JS_PATH + 'modules/util/validators.js' );
 let testField;
 let returnedObject;
@@ -16,25 +14,25 @@ describe( 'Validators', () => {
       testField.value = '11/12/2007';
       returnedObject = validators.date( testField );
 
-      expect( returnedObject ).to.be.empty;
+      expect( returnedObject ).toEqual( {} );
     } );
 
     it( 'should return an error object for a malformed date', () => {
       testField.value = '11-12-07';
       returnedObject = validators.date( testField );
 
-      expect( returnedObject ).to.have.property( 'date', false );
-      expect( returnedObject )
-        .to.have.property( 'msg', ERROR_MESSAGES.DATE.INVALID );
+      console.log( 'returnedObject', returnedObject );
+
+      expect( returnedObject['date'] ).toBe( false );
+      expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.DATE.INVALID );
     } );
 
     it( 'should return an error object for a UTC date', () => {
       testField.value = new Date( 2007, 11, 12 );
       returnedObject = validators.date( testField );
 
-      expect( returnedObject ).to.have.property( 'date', false );
-      expect( returnedObject )
-        .to.have.property( 'msg', ERROR_MESSAGES.DATE.INVALID );
+      expect( returnedObject['date'] ).toBe( false );
+      expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.DATE.INVALID );
     } );
   } );
 
@@ -47,25 +45,23 @@ describe( 'Validators', () => {
       testField.value = 'test@demo.com';
       returnedObject = validators.email( testField );
 
-      expect( returnedObject ).to.be.empty;
+      expect( returnedObject ).toEqual( {} );
     } );
 
     it( 'should return an error object for a missing domain', () => {
       testField.value = 'test';
       returnedObject = validators.email( testField );
 
-      expect( returnedObject ).to.have.property( 'email', false );
-      expect( returnedObject )
-        .to.have.property( 'msg', ERROR_MESSAGES.EMAIL.INVALID );
+      expect( returnedObject['email'] ).toBe( false );
+      expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.EMAIL.INVALID );
     } );
 
     it( 'should return an error object for a missing user', () => {
       testField.value = '@demo.com';
       returnedObject = validators.email( testField );
 
-      expect( returnedObject ).to.have.property( 'email', false );
-      expect( returnedObject )
-        .to.have.property( 'msg', ERROR_MESSAGES.EMAIL.INVALID );
+      expect( returnedObject['email'] ).toBe( false );
+      expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.EMAIL.INVALID );
     } );
   } );
 
@@ -79,16 +75,15 @@ describe( 'Validators', () => {
       testField.value = 'testing';
       returnedObject = validators.empty( testField );
 
-      expect( returnedObject ).to.be.empty;
+      expect( returnedObject ).toEqual( {} );
     } );
 
     it( 'should return an error object for am empty field', () => {
       testField.value = '';
       returnedObject = validators.empty( testField );
 
-      expect( returnedObject ).to.have.property( 'required', false );
-      expect( returnedObject )
-        .to.have.property( 'msg', ERROR_MESSAGES.FIELD.REQUIRED );
+      expect( returnedObject['required'] ).toBe( false );
+      expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.FIELD.REQUIRED );
     } );
   } );
 
@@ -107,7 +102,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.checkbox( testField, null, fieldset );
 
-      expect( returnedObject ).to.be.empty;
+      expect( returnedObject ).toEqual( {} );
     } );
 
     it( 'should return an empty object ' +
@@ -119,7 +114,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.checkbox( testField, null, fieldset );
 
-      expect( returnedObject ).to.be.empty;
+      expect( returnedObject ).toEqual( {} );
     } );
 
     it( 'should return an error object ' +
@@ -129,10 +124,10 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.checkbox( testField, null, fieldset );
 
-      expect( returnedObject ).to.have.property( 'checkbox', false );
-      expect( returnedObject ).to.have.property(
-        'msg', ERROR_MESSAGES.CHECKBOX.REQUIRED.replace( '%s', '2' )
-      );
+      expect( returnedObject['checkbox'] ).toBe( false );
+      expect( returnedObject['msg'] )
+        .toBe( ERROR_MESSAGES.CHECKBOX.REQUIRED.replace( '%s', '2' )
+        );
     } );
 
     it( 'should return an empty object when required total is empty', () => {
@@ -142,7 +137,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.checkbox( testField, null, fieldset );
 
-      expect( returnedObject ).to.be.empty;
+      expect( returnedObject ).toEqual( {} );
     } );
   } );
 
@@ -160,7 +155,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.radio( testField, null, fieldset );
 
-      expect( returnedObject ).to.be.empty;
+      expect( returnedObject ).toEqual( {} );
     } );
 
     it( 'should return an empty object ' +
@@ -171,7 +166,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.radio( testField, null, fieldset );
 
-      expect( returnedObject ).to.be.empty;
+      expect( returnedObject ).toEqual( {} );
     } );
 
     it( 'should return an error object ' +
@@ -179,10 +174,9 @@ describe( 'Validators', () => {
       const fieldset = [];
       returnedObject = validators.radio( testField, null, fieldset );
 
-      expect( returnedObject ).to.have.property( 'radio', false );
-      expect( returnedObject ).to.have.property(
-        'msg', ERROR_MESSAGES.CHECKBOX.REQUIRED.replace( '%s', '1' )
-      );
+      expect( returnedObject['radio'] ).toBe( false );
+      expect( returnedObject['msg'] )
+        .toBe( ERROR_MESSAGES.CHECKBOX.REQUIRED.replace( '%s', '1' ) );
     } );
 
     it( 'should return an empty object ' +
@@ -193,7 +187,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.radio( testField, null, fieldset );
 
-      expect( returnedObject ).to.be.empty;
+      expect( returnedObject ).toEqual( {} );
     } );
   } );
 } );

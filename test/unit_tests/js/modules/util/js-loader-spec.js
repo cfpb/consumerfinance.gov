@@ -1,6 +1,4 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const chai = require( 'chai' );
-const expect = chai.expect;
 const jsLoader = require( BASE_JS_PATH + 'modules/util/js-loader' );
 
 describe( 'loadScript method', () => {
@@ -19,7 +17,7 @@ describe( 'loadScript method', () => {
     } );
 
     return loaderPromise.then( result => {
-      expect( result ).to.equal( 'Callback called' );
+      expect( result ).toEqual( 'Callback called' );
     } );
   } );
 
