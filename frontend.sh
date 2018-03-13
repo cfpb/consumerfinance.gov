@@ -44,8 +44,7 @@ clean() {
 install() {
   echo 'Installing front-end dependencies…'
 
-  if [ "$cli_flag" = "development" ] ||
-     [ "$cli_flag" = "test" ]; then
+  if [ "$cli_flag" = "development" ]; then
 
     npm install -d --loglevel warn
 
