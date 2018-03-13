@@ -5,12 +5,10 @@ const Analytics = require( '../../modules/Analytics' );
 const analyticsData = document.querySelector( '.analytics-data' );
 
 let answerID;
-let categorySlug;
 let categoryName;
 
 if ( analyticsData ) {
   answerID = analyticsData.getAttribute( 'data-answer-id' );
-  categorySlug = analyticsData.getAttribute( 'data-category-slug' );
   categoryName = analyticsData.getAttribute( 'data-category-name' );
 
   if ( Analytics.tagManagerIsLoaded ) {
