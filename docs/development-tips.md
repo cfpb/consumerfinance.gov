@@ -3,27 +3,16 @@
 ### TIP: Loading sibling projects
 Some projects fit within the cfgov-refresh architecture,
 but are not fully incorporated into the project.
-These are known as "non-v1 Django apps."
-In order to visit areas of the site locally where those projects are used,
-the sibling projects need to be installed
-and then indexed within this cfgov-refresh project.
+These are known as "satellite apps."
 
-The non-v1 apps are the following:
+Satellite apps are listed in the
+[optional-public.txt](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt).
+requirements file.
 
- - [Owning a Home](https://github.com/cfpb/owning-a-home).
- - fin-ed-resources (ghe/CFGOV/fin-ed-resources) - for the Education Resources section.
- - know-before-you-owe (ghe/CFGOV/know-before-you-owe) - for the Consumer Tools > Know before you owe section.
+If using Docker, follow
+[these guidelines](https://github.com/cfpb/cfgov-refresh/blob/master/docs/usage.md#develop-satellite-apps).
 
-After installing these projects as sibling directories to the `cfgov-refresh` repository,
-
-##### Option 1: Sheer Index and Elasticsearch (e.g. owning-a-home)
-
-1. build the third-party projects per their directions,
-1. stop the web server and return to `cfgov-refresh`
-1. and run `cfgov/manage.py sheer_index -r` to load the projects' data into ElasticSearch.
-
-
-##### Option 2: Direct dependencies
+Otherwise, if not using Docker, follow these guidelines:
 
 1. Build the third-party projects per their directions
 1. Stop the web server and return to `cfgov-refresh`
@@ -33,6 +22,11 @@ After installing these projects as sibling directories to the `cfgov-refresh` re
     Do not install the projects directly into the `cfgov-refresh` directory.
     Clone and install the projects as siblings to `cfgov-refresh`,
     so that they share the same parent directory (`~/Projects` or similar).
+
+In addition to the aforementioned list,
+[HMDA Explorer](https://github.com/cfpb/hmda-explorer) and
+[Rural or Underserved](https://github.com/cfpb/rural-or-underserved-test),
+have their own installation requirements.
 
 ### TIP: Loading data into Django models
 The Django management command `import-data` will import data from the specified
