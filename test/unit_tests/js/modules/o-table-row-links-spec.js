@@ -27,6 +27,10 @@ const HTML_SNIPPET = `
   </table>
 `;
 
+/**
+ * Simulate a click event
+ * @param  {HTMLNode} target - Element that dispatches the click event.
+ */
 function triggerClickEvent( target ) {
   const event = document.createEvent( 'Event' );
   event.initEvent( 'click', true, true );
@@ -49,21 +53,18 @@ describe( 'o-table-row-links', () => {
 
   it( 'should navigate to new location when link row cell clicked', () => {
     triggerClickEvent( linkRowCellDom );
-    expect( window.location.assign ).toBeCalledWith( 'http://www.example.com' );
+    expect( locationSpy ).toBeCalledWith( 'http://www.example.com' );
   } );
 
-  it( 'should not set window location when link is clicked',
-    () => {
-      triggerClickEvent( linkDom );
-      expect( window.location.assign ).toHaveBeenCalledTimes( 0 );
-    }
-  );
+  it( 'should not set window location when link is clicked', () => {
+    triggerClickEvent( linkDom );
+    expect( locationSpy ).toHaveBeenCalledTimes( 0 );
+  } );
 
   it( 'should not navigate to new location when non link row cell clicked',
     () => {
-
       triggerClickEvent( nonLinkRowCellDom );
-      expect( window.location.assign ).toHaveBeenCalledTimes( 0 );
+      expect( locationSpy ).toHaveBeenCalledTimes( 0 );
     }
   );
 } );

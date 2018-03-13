@@ -1,7 +1,5 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 const dataSet = require( BASE_JS_PATH + 'modules/util/data-set' ).dataSet;
-const chai = require( 'chai' );
-const expect = chai.expect;
 
 let baseDom;
 
@@ -24,11 +22,11 @@ describe( 'data-set', () => {
   describe( 'dataset attribute is supported', () => {
     it( 'should have the correct keys and values when using utility', () => {
       const dataset = dataSet( baseDom );
-      expect( dataset.testValueA ).to.equal( 'testValueA' );
-      expect( dataset.testValueB ).to.equal( 'testValueB' );
-      expect( dataset.testvalueC ).to.equal( 'testValueC' );
-      expect( dataset.testValueD ).to.equal( 'testValueD' );
-      expect( dataset.testValueE ).to.equal( 'testValueE' );
+      expect( dataset.testValueA ).toBe( 'testValueA' );
+      expect( dataset.testValueB ).toBe( 'testValueB' );
+      expect( dataset.testvalueC ).toBe( 'testValueC' );
+      expect( dataset.testValueD ).toBe( 'testValueD' );
+      expect( dataset.testValueE ).toBe( 'testValueE' );
     } );
   } );
 
@@ -41,11 +39,11 @@ describe( 'data-set', () => {
       delete document.documentElement.dataset;
 
       const dataset = dataSet( baseDom );
-      expect( dataset.testValueA ).to.equal( 'testValueA' );
-      expect( dataset.testValueB ).to.equal( 'testValueB' );
-      expect( dataset.testvalueC ).to.equal( 'testValueC' );
-      expect( dataset.testValueD ).to.equal( 'testValueD' );
-      expect( dataset.testValueE ).to.equal( 'testValueE' );
+      expect( dataset.testValueA ).toBe( 'testValueA' );
+      expect( dataset.testValueB ).toBe( 'testValueB' );
+      expect( dataset.testvalueC ).toBe( 'testValueC' );
+      expect( dataset.testValueD ).toBe( 'testValueD' );
+      expect( dataset.testValueE ).toBe( 'testValueE' );
     } );
   } );
 } );
