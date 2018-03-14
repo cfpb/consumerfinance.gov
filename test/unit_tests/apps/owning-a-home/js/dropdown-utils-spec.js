@@ -33,7 +33,7 @@ function getOptionsDisabled( dropDown ) {
  * @returns {Array} List of classes on 'foo' div.
  */
 function getDivClassList( divDom ) {
-  return divDom.querySelector( '.foo' ).classList;
+  return divDom.classList;
 }
 
 describe( 'Dropdown utils', () => {
