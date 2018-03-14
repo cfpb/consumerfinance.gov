@@ -1,7 +1,4 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/js/';
-
-const chai = require( 'chai' );
-const expect = chai.expect;
 const Store = require(
   BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/stores/chart.js'
 );
@@ -14,30 +11,44 @@ describe( 'Mortgage Performance line chart store', () => {
   } );
 
   it( 'should instantiate a store', () => {
-    expect( store instanceof Store ).to.be.true;
+    expect( store instanceof Store ).toBe( true );
   } );
 
   it( 'should inherit helper methods', () => {
-    expect( store.getState() ).to.exist;
+    const mockData = {
+      geo: { type: null, id: null, name: null },
+      isLoading: false,
+      isLoadingMetros: false,
+      isLoadingNonMetros: false,
+      isLoadingCounties: false,
+      isLoadingStates: false,
+      includeComparison: true,
+      counties: {},
+      metros: {},
+      nonMetros: {},
+      states: {}
+    };
+
+    expect( store.getState() ).toEqual( mockData );
   } );
 
   it( 'should be able to add subscribers', () => {
     store.subscribe( () => true );
-    expect( store.subscribers.length ).to.equal( 1 );
+    expect( store.subscribers.length ).toBe( 1 );
   } );
 
   it( 'should default to no geo', () => {
-    expect( store.state.geo.type ).to.equal( null );
-    expect( store.state.geo.id ).to.equal( null );
-    expect( store.state.geo.name ).to.equal( null );
+    expect( store.state.geo.type ).toBeNull();
+    expect( store.state.geo.id ).toBeNull();
+    expect( store.state.geo.name ).toBeNull();
   } );
 
   it( 'should default to having an empty previous state', () => {
-    expect( store.prevState ).to.deep.equal( {} );
+    expect( store.prevState ).toEqual( {} );
   } );
 
   it( 'should default to comparing national data', () => {
-    expect( store.state.includeComparison ).to.be.true;
+    expect( store.state.includeComparison ).toBe( true );
   } );
 
   it( 'should properly reduce geos', () => {
@@ -50,9 +61,9 @@ describe( 'Mortgage Performance line chart store', () => {
       }
     };
     store.dispatch( action );
-    expect( store.getState().geo.type ).to.equal( 'county' );
-    expect( store.getState().geo.id ).to.equal( 12345 );
-    expect( store.getState().geo.name ).to.equal( 'Acme County' );
+    expect( store.getState().geo.type ).toEqual( 'county' );
+    expect( store.getState().geo.id ).toEqual( 12345 );
+    expect( store.getState().geo.name ).toEqual( 'Acme County' );
   } );
 
   it( 'should properly clear geos', () => {
@@ -60,9 +71,9 @@ describe( 'Mortgage Performance line chart store', () => {
       type: 'CLEAR_GEO'
     };
     store.dispatch( action );
-    expect( store.getState().geo.type ).to.equal( null );
-    expect( store.getState().geo.id ).to.equal( null );
-    expect( store.getState().geo.name ).to.equal( null );
+    expect( store.getState().geo.type ).toBeNull();
+    expect( store.getState().geo.id ).toBeNull();
+    expect( store.getState().geo.name ).toBeNull();
   } );
 
   it( 'should pass through geos if action is bad', () => {
@@ -79,9 +90,9 @@ describe( 'Mortgage Performance line chart store', () => {
       type: 'SOME_OTHER_ACTION'
     };
     store.dispatch( action );
-    expect( store.getState().geo.type ).to.equal( 'county' );
-    expect( store.getState().geo.id ).to.equal( 12345 );
-    expect( store.getState().geo.name ).to.equal( 'Acme County' );
+    expect( store.getState().geo.type ).toBe( 'county' );
+    expect( store.getState().geo.id ).toBe( 12345 );
+    expect( store.getState().geo.name ).toBe( 'Acme County' );
   } );
 
   it( 'should properly reduce app loading state', () => {
@@ -89,12 +100,12 @@ describe( 'Mortgage Performance line chart store', () => {
       type: 'SET_GEO'
     };
     store.dispatch( action );
-    expect( store.getState().isLoading ).to.be.true;
+    expect( store.getState().isLoading ).toBe( true );
     action = {
       type: 'SOME_OTHER_ACTION'
     };
     store.dispatch( action );
-    expect( store.getState().isLoading ).to.be.false;
+    expect( store.getState().isLoading ).toBe( false );
   } );
 
   it( 'should properly reduce loading metros state', () => {
@@ -102,7 +113,7 @@ describe( 'Mortgage Performance line chart store', () => {
       type: 'REQUEST_METROS'
     };
     store.dispatch( action );
-    expect( store.getState().isLoadingMetros ).to.be.true;
+    expect( store.getState().isLoadingMetros ).toBe( true );
   } );
 
   it( 'should properly reduce loading non-metros state', () => {
@@ -110,7 +121,7 @@ describe( 'Mortgage Performance line chart store', () => {
       type: 'REQUEST_NON_METROS'
     };
     store.dispatch( action );
-    expect( store.getState().isLoadingNonMetros ).to.be.true;
+    expect( store.getState().isLoadingNonMetros ).toBe( true );
   } );
 
   it( 'should properly reduce loading counties state', () => {
@@ -118,7 +129,7 @@ describe( 'Mortgage Performance line chart store', () => {
       type: 'REQUEST_COUNTIES'
     };
     store.dispatch( action );
-    expect( store.getState().isLoadingCounties ).to.be.true;
+    expect( store.getState().isLoadingCounties ).toBe( true );
   } );
 
   it( 'should properly reduce loading u.s. states', () => {
@@ -126,7 +137,7 @@ describe( 'Mortgage Performance line chart store', () => {
       type: 'REQUEST_STATES'
     };
     store.dispatch( action );
-    expect( store.getState().isLoadingStates ).to.be.true;
+    expect( store.getState().isLoadingStates ).toBe( true );
   } );
 
   it( 'should properly reduce metros', () => {
@@ -135,7 +146,7 @@ describe( 'Mortgage Performance line chart store', () => {
       metros: { 12345: 'Akron, OH' }
     };
     store.dispatch( action );
-    expect( store.getState().metros ).to.deep.equal( { 12345: 'Akron, OH' } );
+    expect( store.getState().metros ).toEqual( { 12345: 'Akron, OH' } );
   } );
 
   it( 'should properly reduce non-metros', () => {
@@ -144,8 +155,7 @@ describe( 'Mortgage Performance line chart store', () => {
       nonMetros: { 67890: 'Boston, MA' }
     };
     store.dispatch( action );
-    expect( store.getState().nonMetros )
-      .to.deep.equal( { 67890: 'Boston, MA' } );
+    expect( store.getState().nonMetros ).toEqual( { 67890: 'Boston, MA' } );
   } );
 
   it( 'should properly reduce counties', () => {
@@ -154,8 +164,7 @@ describe( 'Mortgage Performance line chart store', () => {
       counties: { 12345: 'Acme County' }
     };
     store.dispatch( action );
-    expect( store.getState().counties )
-      .to.deep.equal( { 12345: 'Acme County' } );
+    expect( store.getState().counties ).toEqual( { 12345: 'Acme County' } );
   } );
 
   it( 'should properly reduce u.s. states', () => {
@@ -164,22 +173,19 @@ describe( 'Mortgage Performance line chart store', () => {
       states: { AL: 'Alabama' }
     };
     store.dispatch( action );
-    expect( store.getState().states )
-      .to.deep.equal( { AL: 'Alabama' } );
+    expect( store.getState().states ).toEqual( { AL: 'Alabama' } );
     action = {
       type: 'FETCH_STATES',
       states: { CA: 'California' }
     };
     store.dispatch( action );
-    expect( store.getState().states )
-      .to.deep.equal( { AL: 'Alabama' } );
+    expect( store.getState().states ).toEqual( { AL: 'Alabama' } );
     action = {
       type: 'SET_STATES',
       states: { CA: 'California' }
     };
     store.dispatch( action );
-    expect( store.getState().states )
-      .to.deep.equal( { CA: 'California' } );
+    expect( store.getState().states ).toEqual( { CA: 'California' } );
   } );
 
   it( 'should properly reduce national comparison', () => {
@@ -187,13 +193,13 @@ describe( 'Mortgage Performance line chart store', () => {
       type: 'UPDATE_CHART'
     };
     store.dispatch( action );
-    expect( store.getState().includeComparison ).to.be.true;
+    expect( store.getState().includeComparison ).toBe( true );
     action = {
       type: 'UPDATE_CHART',
       includeComparison: false
     };
     store.dispatch( action );
-    expect( store.getState().includeComparison ).to.be.false;
+    expect( store.getState().includeComparison ).toBe( false );
   } );
 
 } );

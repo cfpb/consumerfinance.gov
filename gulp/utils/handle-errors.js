@@ -5,8 +5,8 @@ module.exports = function() {
   let exitProcessParam = false;
   let errorParam = args[0] || {};
   const isWatching = this.tasks &&
-                   this.tasks.browsersync &&
-                   this.tasks.browsersync.done === false;
+                     this.tasks.browsersync &&
+                     this.tasks.browsersync.done === false;
 
   if ( errorParam.exitProcess ) {
     exitProcessParam = errorParam.exitProcess;
@@ -24,7 +24,6 @@ module.exports = function() {
   } else {
 
     // Keep gulp from hanging on this task.
-    this.emit( 'end' );
+    this.process.emit( 'end' );
   }
-
 };

@@ -1,22 +1,15 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-
-const chai = require( 'chai' );
-const expect = chai.expect;
-const getBreakpointState =
-  require( BASE_JS_PATH + 'modules/util/breakpoint-state.js' ).get;
-const breakpointConfig =
-  require( BASE_JS_PATH + 'config/breakpoints-config.js' );
+const getBreakpointState = require(
+  BASE_JS_PATH + 'modules/util/breakpoint-state.js'
+).get;
+const breakpointConfig = require(
+  BASE_JS_PATH + 'config/breakpoints-config.js'
+);
 
 let breakpointState;
 let configKeys;
 
 describe( 'getBreakpointState', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )();
-  } );
-
-  after( () => this.jsdom() );
-
   beforeEach( () => {
     configKeys = Object.keys( breakpointConfig );
   } );
@@ -31,9 +24,9 @@ describe( 'getBreakpointState', () => {
 
     breakpointState = getBreakpointState();
 
-    expect( breakpointState instanceof Object ).to.be.true;
+    expect( breakpointState instanceof Object ).toBe( true );
     expect( configKeys.sort().join() === breakpointStatekeys.sort().join() )
-      .to.be.true;
+      .toBe( true );
   } );
 
   it( 'should return an object with one state property set to true', () => {
@@ -44,7 +37,7 @@ describe( 'getBreakpointState', () => {
       if ( breakpointState[stateKey] === true ) trueValueCount++;
     }
 
-    expect( trueValueCount === 1 ).to.be.true;
+    expect( trueValueCount === 1 ).toBe( true );
   } );
 
   it( 'should set the correct state property when passed width', () => {
@@ -58,7 +51,7 @@ describe( 'getBreakpointState', () => {
       breakpointStateKey =
       'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
 
-      expect( breakpointState[breakpointStateKey] ).to.be.true;
+      expect( breakpointState[breakpointStateKey] ).toBe( true );
     }
   } );
 

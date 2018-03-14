@@ -1,9 +1,6 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const chai = require( 'chai' );
-const expect = chai.expect;
-const sinon = require( 'sinon' );
+
 let fwbQuestions;
-let sandbox;
 let formDom;
 let submitBtnDom;
 let radioButtonsDom;
@@ -22,8 +19,8 @@ const dataLayerEventSubmit = {
   eventTimeout: 500
 };
 
-const HTML_SNIPPET =
-  `<form id="quiz-form"
+const HTML_SNIPPET = `
+  <form id="quiz-form"
          action="/consumer-tools/financial-well-being/results/"
          method="POST">
     <div class="block">
@@ -128,7 +125,8 @@ const HTML_SNIPPET =
              data-gtm-label="Get my score"
              data-gtm-category="Financial Well-Being Tool Interaction">
     </div>
-  </form>`;
+  </form>
+`;
 
 function triggerClickEvent( target ) {
   const event = document.createEvent( 'Event' );
@@ -145,17 +143,10 @@ function fillOutForm() {
 }
 
 describe( 'fwb-questions', () => {
-  before( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-  } );
-
-  after( () => this.jsdom() );
-
   beforeEach( () => {
     fwbQuestions = require(
       BASE_JS_PATH + 'financial-well-being/js/fwb-questions'
     );
-    sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     window.dataLayer = [];
     window['google_tag_manager'] = {};
@@ -171,25 +162,20 @@ describe( 'fwb-questions', () => {
     } );
   } );
 
-  afterEach( () => {
-    sandbox.restore();
-  } );
-
   it( 'submit button should have the correct state on initialization.', () => {
     fwbQuestions.init();
-    expect( submitBtnDom.disabled )
-      .to.equal( true );
+    expect( submitBtnDom.disabled ).toBe( true );
 
     expect( submitBtnDom.title )
-      .to.equal( 'Please answer all questions to get your score' );
+      .toBe( 'Please answer all questions to get your score' );
   } );
 
   it( 'submit button shouldn’t submit the form ' +
       'unless all the questions are completed.', () => {
     fwbQuestions.init();
     const formSubmissionStatus = triggerClickEvent( submitBtnDom );
-    expect( submitBtnDom.disabled ).to.equal( true );
-    expect( formSubmissionStatus ).to.equal( false );
+    expect( submitBtnDom.disabled ).toBe( true );
+    expect( formSubmissionStatus ).toBe( false );
   } );
 
   it( 'submit button should submit the form ' +
@@ -197,8 +183,8 @@ describe( 'fwb-questions', () => {
     fillOutForm();
     fwbQuestions.init();
     const formSubmissionStatus = triggerClickEvent( submitBtnDom );
-    expect( submitBtnDom.disabled ).to.equal( false );
-    expect( formSubmissionStatus ).to.equal( true );
+    expect( submitBtnDom.disabled ).toBe( false );
+    expect( formSubmissionStatus ).toBe( true );
   } );
 
   it( 'submit button should submit the form ' +
@@ -206,15 +192,15 @@ describe( 'fwb-questions', () => {
     fwbQuestions.init();
     fillOutForm();
     const formSubmissionStatus = triggerClickEvent( submitBtnDom );
-    expect( submitBtnDom.disabled ).to.equal( false );
-    expect( formSubmissionStatus ).to.equal( true );
+    expect( submitBtnDom.disabled ).toBe( false );
+    expect( formSubmissionStatus ).toBe( true );
   } );
 
   it( 'should send the correct analytics ' +
       'when a radio button is clicked', () => {
     fwbQuestions.init();
     triggerClickEvent( radioButtonsDom[0] );
-    expect( window.dataLayer[0] ).to.deep.equal( dataLayerEventRadio );
+    expect( window.dataLayer[0] ).toEqual( dataLayerEventRadio );
   } );
 
   it( 'should send the correct analytics ' +
@@ -222,6 +208,6 @@ describe( 'fwb-questions', () => {
     fillOutForm();
     fwbQuestions.init();
     triggerClickEvent( submitBtnDom );
-    expect( window.dataLayer[0] ).to.deep.equal( dataLayerEventSubmit );
+    expect( window.dataLayer[0] ).toEqual( dataLayerEventSubmit );
   } );
 } );

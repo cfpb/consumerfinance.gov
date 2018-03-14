@@ -1,18 +1,9 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/js/';
+/* Disable the AJAX library used by the action creator
+   Unfortunately, we can't place path variables into import statements. */
+import * as actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/map.js';
 
-const chai = require( 'chai' );
-const mockery = require( 'mockery' );
-const sinon = require( 'sinon' );
-const expect = chai.expect;
-
-// Disable the AJAX library used by the action creator
-const noop = () => ( {} );
-mockery.enable( {
-  warnOnReplace: false,
-  warnOnUnregistered: false
-} );
-mockery.registerMock( 'xdr', noop );
-mockery.registerMock( '../utils', {
+jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
+jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils', () => ( {
   getMetroData: cb => {
     const metros = {
       AL: {
@@ -41,17 +32,13 @@ mockery.registerMock( '../utils', {
     };
     cb( counties );
   }
-} );
-
-const actions = require(
-  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/actions/map.js'
-);
+} ) );
 
 describe( 'Mortgage Performance map action creators', () => {
 
   it( 'should create an action to update the chart', () => {
     const action = actions.updateChart( 123, 'Alabama', 'state' );
-    expect( action ).to.deep.equal( {
+    expect( action ).toEqual( {
       type: 'UPDATE_CHART',
       geo: {
         id: 123,
@@ -63,7 +50,7 @@ describe( 'Mortgage Performance map action creators', () => {
 
   it( 'should create an action without a geo type', () => {
     const action = actions.updateChart( 123, 'Alabama' );
-    expect( action ).to.deep.equal( {
+    expect( action ).toEqual( {
       type: 'UPDATE_CHART',
       geo: {
         id: 123,
@@ -74,7 +61,7 @@ describe( 'Mortgage Performance map action creators', () => {
 
   it( 'should create an action without a geoId', () => {
     const action = actions.updateChart( null, null );
-    expect( action ).to.deep.equal( {
+    expect( action ).toEqual( {
       type: 'UPDATE_CHART',
       geo: {
         id: null,
@@ -86,35 +73,35 @@ describe( 'Mortgage Performance map action creators', () => {
   } );
 
   it( 'should dispatch actions to fetch metros', () => {
-    const dispatch = sinon.spy();
+    const dispatch = jest.fn();
     actions.fetchMetros( 'AL', true )( dispatch );
-    expect( dispatch.callCount ).to.equal( 3 );
+    expect( dispatch ).toHaveBeenCalledTimes( 3 );
   } );
 
   it( 'should fail on bad metro state abbr', () => {
-    expect( actions.fetchMetros( 'bloop', true ) ).to.throw();
+    expect( actions.fetchMetros( 'bloop', true ) ).toThrow();
   } );
 
   it( 'should not require map zoom after fetching metros', () => {
-    const dispatch = sinon.spy();
+    const dispatch = jest.fn();
     actions.fetchMetros( 'AL', false )( dispatch );
-    expect( dispatch.callCount ).to.equal( 2 );
+    expect( dispatch ).toHaveBeenCalledTimes( 2 );
   } );
 
   it( 'should dispatch actions to fetch counties', () => {
-    const dispatch = sinon.spy();
+    const dispatch = jest.fn();
     actions.fetchCounties( 'AL', true )( dispatch );
-    expect( dispatch.callCount ).to.equal( 3 );
+    expect( dispatch ).toHaveBeenCalledTimes( 3 );
   } );
 
   it( 'should not require map zoom after fetching counties', () => {
-    const dispatch = sinon.spy();
+    const dispatch = jest.fn();
     actions.fetchCounties( 'AL', false )( dispatch );
-    expect( dispatch.callCount ).to.equal( 2 );
+    expect( dispatch ).toHaveBeenCalledTimes( 2 );
   } );
 
   it( 'should fail on bad county state abbr', () => {
-    expect( actions.fetchCounties( 'bloop', true ) ).to.throw();
+    expect( actions.fetchCounties( 'bloop', true ) ).toThrow();
   } );
 
 } );

@@ -1,29 +1,25 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-
-const chai = require( 'chai' );
-const expect = chai.expect;
-const sinon = require( 'sinon' );
-
 const FlyoutMenu = require( BASE_JS_PATH + 'modules/behavior/FlyoutMenu' );
 const MoveTransition =
   require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
 
-const HTML_SNIPPET =
-  `<div data-js-hook="behavior_flyout-menu">
-    <button data-js-hook="behavior_flyout-menu_trigger"
-            aria-pressed="false"
-            aria-expanded="false"></button>
-    <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
-      <button data-js-hook="behavior_flyout-menu_alt-trigger"
+const HTML_SNIPPET = `
+  <div data-js-hook="behavior_flyout-menu">
+      <button data-js-hook="behavior_flyout-menu_trigger"
+              aria-pressed="false"
               aria-expanded="false"></button>
-    </div>
-  </div>`;
+      <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
+        <button data-js-hook="behavior_flyout-menu_alt-trigger"
+                aria-expanded="false"></button>
+      </div>
+  </div>
+`;
 
 describe( 'FlyoutMenu', () => {
 
   let flyoutMenu;
 
-  // Sinon-related settings.
+  // Mock-related settings.
   let triggerClickSpy;
   let triggerOverSpy;
   let expandBeginSpy;
@@ -32,7 +28,6 @@ describe( 'FlyoutMenu', () => {
   let collapseEndSpy;
 
   // DOM-related settings.
-  let document;
   const SEL_PREFIX = '[data-js-hook=behavior_flyout-menu';
 
   let containerDom;
@@ -41,54 +36,48 @@ describe( 'FlyoutMenu', () => {
   let altTriggerDom;
 
   beforeEach( () => {
-    this.jsdom = require( 'jsdom-global' )( HTML_SNIPPET );
-    document = window.document;
+    document.body.innerHTML = HTML_SNIPPET;
     containerDom = document.querySelector( SEL_PREFIX + ']' );
-    triggerDom =
-      document.querySelector( SEL_PREFIX + '_trigger]' );
-    contentDom =
-      document.querySelector( SEL_PREFIX + '_content]' );
+    triggerDom = document.querySelector( SEL_PREFIX + '_trigger]' );
+    contentDom = document.querySelector( SEL_PREFIX + '_content]' );
     // TODO: check for cases where alt trigger is absent.
-    altTriggerDom =
-      document.querySelector( SEL_PREFIX + '_alt-trigger]' );
+    altTriggerDom = document.querySelector( SEL_PREFIX + '_alt-trigger]' );
 
     flyoutMenu = new FlyoutMenu( containerDom );
   } );
 
-  afterEach( () => this.jsdom() );
-
   describe( '.init()', () => {
     it( 'should have public static methods', () => {
-      expect( FlyoutMenu.EXPAND_TYPE ).to.equal( 'expand' );
-      expect( FlyoutMenu.COLLAPSE_TYPE ).to.equal( 'collapse' );
-      expect( FlyoutMenu.BASE_CLASS ).to.equal( 'behavior_flyout-menu' );
+      expect( FlyoutMenu.EXPAND_TYPE ).toBe( 'expand' );
+      expect( FlyoutMenu.COLLAPSE_TYPE ).toBe( 'collapse' );
+      expect( FlyoutMenu.BASE_CLASS ).toBe( 'behavior_flyout-menu' );
     } );
 
     it( 'should have correct state before initializing', () => {
-      expect( triggerDom.getAttribute( 'aria-pressed' ) ).to.equal( 'false' );
-      expect( triggerDom.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
-      expect( contentDom.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
-      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).to.be.null;
+      expect( triggerDom.getAttribute( 'aria-pressed' ) ).toBe( 'false' );
+      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).toBeNull();
       expect(
         altTriggerDom.getAttribute( 'aria-expanded' )
-      ).to.equal( 'false' );
+      ).toBe( 'false' );
 
-      expect( flyoutMenu.isAnimating() ).to.be.false;
-      expect( flyoutMenu.isExpanded() ).to.be.false;
-      expect( flyoutMenu.getTransition() ).to.be.undefined;
-      expect( flyoutMenu.getData() ).to.be.undefined;
+      expect( flyoutMenu.isAnimating() ).toBe( false );
+      expect( flyoutMenu.isExpanded() ).toBe( false );
+      expect( flyoutMenu.getTransition() ).toBeUndefined();
+      expect( flyoutMenu.getData() ).toBeUndefined();
     } );
 
     it( 'should have correct state after initializing', () => {
-      expect( flyoutMenu.init() instanceof FlyoutMenu ).to.be.true;
+      expect( flyoutMenu.init() ).toBeInstanceOf( FlyoutMenu );
     } );
   } );
 
   describe( 'mouseover/click', () => {
     beforeEach( () => {
       // Set up expected event listeners.
-      triggerOverSpy = sinon.spy();
-      triggerClickSpy = sinon.spy();
+      triggerOverSpy = jest.fn();
+      triggerClickSpy = jest.fn();
 
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'triggerOver', triggerOverSpy );
@@ -97,21 +86,21 @@ describe( 'FlyoutMenu', () => {
 
     afterEach( () => {
       // Check expected event broadcasts.
-      expect( triggerOverSpy.callCount ).to.equal( 1 );
-      let args = triggerOverSpy.getCall( 0 ).args[0];
-      expect( args.target ).to.equal( flyoutMenu );
-      expect( args.type ).to.equal( 'triggerOver' );
+      expect( triggerOverSpy ).toHaveBeenCalledTimes( 1 );
+      expect( triggerOverSpy ).toHaveBeenCalledWith(
+        { target: flyoutMenu, type: 'triggerOver' }
+      );
 
-      expect( triggerClickSpy.callCount ).to.equal( 1 );
-      args = triggerClickSpy.getCall( 0 ).args[0];
-      expect( args.target ).to.equal( flyoutMenu );
-      expect( args.type ).to.equal( 'triggerClick' );
+      expect( triggerClickSpy ).toHaveBeenCalledTimes( 1 );
+      expect( triggerClickSpy ).toHaveBeenCalledWith(
+        { target: flyoutMenu, type: 'triggerClick' }
+      );
     } );
 
     it( 'should dispatch events when called by trigger click', () => {
 
       /* TODO: Ideally this would use `new MouseEvent`,
-         but how do we import MouseEvent (or Event) into Mocha.
+         but how do we import MouseEvent (or Event) into Jest.
          Please investigate. */
       const mouseEvent = document.createEvent( 'MouseEvents' );
       mouseEvent.initEvent( 'mouseover', true, true );
@@ -133,8 +122,8 @@ describe( 'FlyoutMenu', () => {
   describe( '.expand()', () => {
     beforeEach( () => {
       // Set up expected event listeners.
-      expandBeginSpy = sinon.spy();
-      expandEndSpy = sinon.spy();
+      expandBeginSpy = jest.fn();
+      expandEndSpy = jest.fn();
 
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandBegin', expandBeginSpy );
@@ -143,23 +132,22 @@ describe( 'FlyoutMenu', () => {
 
     afterEach( () => {
       // Check expected event broadcasts.
-      expect( expandBeginSpy.callCount ).to.equal( 1 );
-      let args = expandBeginSpy.getCall( 0 ).args[0];
-      expect( args.target ).to.equal( flyoutMenu );
-      expect( args.type ).to.equal( 'expandBegin' );
+      expect( expandBeginSpy ).toHaveBeenCalledTimes( 1 );
+      expect( expandBeginSpy ).toHaveBeenCalledWith(
+        { target: flyoutMenu, type: 'expandBegin' }
+      );
 
-      expect( expandEndSpy.callCount ).to.equal( 1 );
-      args = expandEndSpy.getCall( 0 ).args[0];
-      expect( args.target ).to.equal( flyoutMenu );
-      expect( args.type ).to.equal( 'expandEnd' );
+      expect( expandEndSpy ).toHaveBeenCalledTimes( 1 );
+      expect( expandEndSpy ).toHaveBeenCalledWith(
+        { target: flyoutMenu, type: 'expandEnd' }
+      );
 
       // Check expected aria attributes state.
-      expect( triggerDom.getAttribute( 'aria-pressed' ) ).to.equal( 'true' );
-      expect( triggerDom.getAttribute( 'aria-expanded' ) ).to.equal( 'true' );
-      expect( contentDom.getAttribute( 'aria-expanded' ) ).to.equal( 'true' );
-      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).to.be.null;
-      expect( altTriggerDom.getAttribute( 'aria-expanded' ) )
-        .to.equal( 'true' );
+      expect( triggerDom.getAttribute( 'aria-pressed' ) ).toBe( 'true' );
+      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).toBeNull();
+      expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
     } );
 
     it( 'should dispatch events and set aria attributes, ' +
@@ -181,8 +169,8 @@ describe( 'FlyoutMenu', () => {
   describe( '.collapse()', () => {
     beforeEach( () => {
       // Set up expected event listeners.
-      collapseBeginSpy = sinon.spy();
-      collapseEndSpy = sinon.spy();
+      collapseBeginSpy = jest.fn();
+      collapseEndSpy = jest.fn();
 
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'collapseBegin', collapseBeginSpy );
@@ -192,23 +180,22 @@ describe( 'FlyoutMenu', () => {
 
     afterEach( () => {
       // Check expected event broadcasts.
-      expect( collapseBeginSpy.callCount ).to.equal( 1 );
-      let args = collapseBeginSpy.getCall( 0 ).args[0];
-      expect( args.target ).to.equal( flyoutMenu );
-      expect( args.type ).to.equal( 'collapseBegin' );
+      expect( collapseBeginSpy ).toHaveBeenCalledTimes( 1 );
+      expect( collapseBeginSpy ).toHaveBeenCalledWith(
+        { target: flyoutMenu, type: 'collapseBegin' }
+      );
 
-      expect( collapseEndSpy.callCount ).to.equal( 1 );
-      args = collapseEndSpy.getCall( 0 ).args[0];
-      expect( args.target ).to.equal( flyoutMenu );
-      expect( args.type ).to.equal( 'collapseEnd' );
+      expect( collapseEndSpy ).toHaveBeenCalledTimes( 1 );
+      expect( collapseEndSpy ).toHaveBeenCalledWith(
+        { target: flyoutMenu, type: 'collapseEnd' }
+      );
 
       // Check expected aria attribute states.
-      expect( triggerDom.getAttribute( 'aria-pressed' ) ).to.equal( 'false' );
-      expect( triggerDom.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
-      expect( contentDom.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
-      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).to.be.null;
-      expect( altTriggerDom.getAttribute( 'aria-expanded' ) )
-        .to.equal( 'false' );
+      expect( triggerDom.getAttribute( 'aria-pressed' ) ).toBe( 'false' );
+      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).toBeNull();
+      expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
     } );
 
     it( 'should dispatch events and set aria attributes, ' +
@@ -228,14 +215,14 @@ describe( 'FlyoutMenu', () => {
   } );
 
   describe( '.setExpandTransition()', () => {
-    it( 'should set a transition', function( done ) {
+    it( 'should set a transition', done => {
       flyoutMenu.init();
       const transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.addEventListener( 'expandEnd', () => {
         try {
           const hasClass = contentDom.classList.contains( 'u-move-transition' );
-          expect( hasClass ).to.be.true;
+          expect( hasClass ).toBe( true );
           done();
         } catch ( err ) {
           done( err );
@@ -246,7 +233,7 @@ describe( 'FlyoutMenu', () => {
   } );
 
   describe( '.setCollapseTransition()', () => {
-    it( 'should set a transition', function( done ) {
+    it( 'should set a transition', done => {
       flyoutMenu.init();
       const transition = new MoveTransition( contentDom ).init();
       triggerDom.click();
@@ -254,7 +241,7 @@ describe( 'FlyoutMenu', () => {
       flyoutMenu.addEventListener( 'collapseEnd', () => {
         try {
           const hasClass = contentDom.classList.contains( 'u-move-transition' );
-          expect( hasClass ).to.be.true;
+          expect( hasClass ).toBe( true );
           done();
         } catch ( err ) {
           done( err );
@@ -267,13 +254,13 @@ describe( 'FlyoutMenu', () => {
   describe( '.getTransition()', () => {
     it( 'should return a transition instance', () => {
       flyoutMenu.init();
-      expect( flyoutMenu.getTransition() ).to.be.undefined;
+      expect( flyoutMenu.getTransition() ).toBeUndefined();
       const transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
-      expect( flyoutMenu.getTransition() ).to.equal( transition );
+      expect( flyoutMenu.getTransition() ).toEqual( transition );
       expect( flyoutMenu.getTransition( FlyoutMenu.COLLAPSE_TYPE ) )
-        .to.equal( transition );
+        .toEqual( transition );
     } );
   } );
 
@@ -284,11 +271,11 @@ describe( 'FlyoutMenu', () => {
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
       let hasClass = contentDom.classList.contains( 'u-move-transition' );
-      expect( hasClass ).to.be.true;
+      expect( hasClass ).toBe( true );
       flyoutMenu.clearTransitions();
-      expect( flyoutMenu.getTransition() ).to.be.undefined;
+      expect( flyoutMenu.getTransition() ).toBeUndefined();
       hasClass = contentDom.classList.contains( 'u-move-transition' );
-      expect( hasClass ).to.be.false;
+      expect( hasClass ).toBe( false );
     } );
   } );
 
@@ -296,20 +283,20 @@ describe( 'FlyoutMenu', () => {
     it( 'should return references to full dom', () => {
       flyoutMenu.init();
       const dom = flyoutMenu.getDom();
-      expect( dom.container ).to.equal( containerDom );
-      expect( dom.trigger ).to.equal( triggerDom );
-      expect( dom.content ).to.equal( contentDom );
-      expect( dom.altTrigger ).to.equal( altTriggerDom );
+      expect( dom.container ).toEqual( containerDom );
+      expect( dom.trigger ).toEqual( triggerDom );
+      expect( dom.content ).toEqual( contentDom );
+      expect( dom.altTrigger ).toEqual( altTriggerDom );
     } );
   } );
 
   describe( 'suspend/resume behavior', () => {
     beforeEach( () => {
       // Set up expected event listeners.
-      expandBeginSpy = sinon.spy();
-      expandEndSpy = sinon.spy();
-      collapseBeginSpy = sinon.spy();
-      collapseEndSpy = sinon.spy();
+      expandBeginSpy = jest.fn();
+      expandEndSpy = jest.fn();
+      collapseBeginSpy = jest.fn();
+      collapseEndSpy = jest.fn();
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandBegin', expandBeginSpy );
       flyoutMenu.addEventListener( 'expandEnd', expandEndSpy );
@@ -322,10 +309,11 @@ describe( 'FlyoutMenu', () => {
         // Set up expected event listeners.
         flyoutMenu.suspend();
         triggerDom.click();
-        expect( expandBeginSpy.callCount ).to.equal( 0 );
-        expect( expandEndSpy.callCount ).to.equal( 0 );
-        expect( collapseBeginSpy.callCount ).to.equal( 0 );
-        expect( collapseEndSpy.callCount ).to.equal( 0 );
+
+        expect( expandBeginSpy ).toHaveBeenCalledTimes( 0 );
+        expect( expandEndSpy ).toHaveBeenCalledTimes( 0 );
+        expect( collapseBeginSpy ).toHaveBeenCalledTimes( 0 );
+        expect( collapseEndSpy ).toHaveBeenCalledTimes( 0 );
       } );
     } );
 
@@ -335,11 +323,12 @@ describe( 'FlyoutMenu', () => {
         flyoutMenu.suspend();
         flyoutMenu.resume();
         triggerDom.click();
-        expect( expandBeginSpy.callCount ).to.equal( 1 );
-        expect( expandEndSpy.callCount ).to.equal( 1 );
+
+        expect( expandBeginSpy ).toHaveBeenCalledTimes( 1 );
+        expect( expandEndSpy ).toHaveBeenCalledTimes( 1 );
         triggerDom.click();
-        expect( collapseBeginSpy.callCount ).to.equal( 1 );
-        expect( collapseEndSpy.callCount ).to.equal( 1 );
+        expect( collapseBeginSpy ).toHaveBeenCalledTimes( 1 );
+        expect( collapseEndSpy ).toHaveBeenCalledTimes( 1 );
       } );
     } );
 
@@ -349,7 +338,7 @@ describe( 'FlyoutMenu', () => {
     it( 'should return the instance when set', () => {
       flyoutMenu.init();
       const inst = flyoutMenu.setData( 'test-data' );
-      expect( inst instanceof FlyoutMenu ).to.be.true;
+      expect( inst ).toBeInstanceOf( FlyoutMenu );
     } );
   } );
 
@@ -357,16 +346,16 @@ describe( 'FlyoutMenu', () => {
     it( 'should return the set data', () => {
       flyoutMenu.init();
       flyoutMenu.setData( 'test-data' );
-      expect( flyoutMenu.getData() ).to.equal( 'test-data' );
+      expect( flyoutMenu.getData() ).toBe( 'test-data' );
     } );
   } );
 
   describe( '.isAnimating()', () => {
-    it( 'should return true when expanding', function( done ) {
+    it( 'should return true when expanding', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandBegin', () => {
         try {
-          expect( flyoutMenu.isAnimating() ).to.be.true;
+          expect( flyoutMenu.isAnimating() ).toBe( true );
           done();
         } catch ( err ) {
           done( err );
@@ -375,11 +364,11 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return false after expanding', function( done ) {
+    it( 'should return false after expanding', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandEnd', () => {
         try {
-          expect( flyoutMenu.isAnimating() ).to.be.false;
+          expect( flyoutMenu.isAnimating() ).toBe( false );
           done();
         } catch ( err ) {
           done( err );
@@ -388,11 +377,11 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return true while collapsing', function( done ) {
+    it( 'should return true while collapsing', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'collapseBegin', () => {
         try {
-          expect( flyoutMenu.isAnimating() ).to.be.true;
+          expect( flyoutMenu.isAnimating() ).toBe( true );
           done();
         } catch ( err ) {
           done( err );
@@ -402,11 +391,11 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return false after collapsing', function( done ) {
+    it( 'should return false after collapsing', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'collapseEnd', () => {
         try {
-          expect( flyoutMenu.isAnimating() ).to.be.false;
+          expect( flyoutMenu.isAnimating() ).toBe( false );
           done();
         } catch ( err ) {
           done( err );
@@ -418,11 +407,11 @@ describe( 'FlyoutMenu', () => {
   } );
 
   describe( '.isExpanded()', () => {
-    it( 'should return false before expanding', function( done ) {
+    it( 'should return false before expanding', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandBegin', () => {
         try {
-          expect( flyoutMenu.isExpanded() ).to.be.false;
+          expect( flyoutMenu.isExpanded() ).toBe( false );
           done();
         } catch ( err ) {
           done( err );
@@ -431,11 +420,11 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return true after expanding', function( done ) {
+    it( 'should return true after expanding', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'expandEnd', () => {
         try {
-          expect( flyoutMenu.isExpanded() ).to.be.true;
+          expect( flyoutMenu.isExpanded() ).toBe( true );
           done();
         } catch ( err ) {
           done( err );
@@ -444,12 +433,12 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return true before collapsing', function( done ) {
+    it( 'should return true before collapsing', done => {
       flyoutMenu.init();
       triggerDom.click();
       flyoutMenu.addEventListener( 'triggerClick', () => {
         try {
-          expect( flyoutMenu.isExpanded() ).to.be.true;
+          expect( flyoutMenu.isExpanded() ).toBe( true );
           done();
         } catch ( err ) {
           done( err );
@@ -458,11 +447,11 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    it( 'should return false after collapsing', function( done ) {
+    it( 'should return false after collapsing', done => {
       flyoutMenu.init();
       flyoutMenu.addEventListener( 'collapseEnd', () => {
         try {
-          expect( flyoutMenu.isExpanded() ).to.be.false;
+          expect( flyoutMenu.isExpanded() ).toBe( false );
           done();
         } catch ( err ) {
           done( err );
