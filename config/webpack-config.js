@@ -141,7 +141,7 @@ const configExports = {
   onDemandHeaderRawConf,
   appsConf,
   spanishConf
-}
+};
 
 if ( NODE_ENV === 'development' ) {
   for ( let key in configExports ) {
