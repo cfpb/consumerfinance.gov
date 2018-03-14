@@ -1,7 +1,8 @@
 module.exports = {
   verbose: false,
   transform: {
-    '^.+\\.jsx?$': 'babel-jest'
+    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.hbs$': '<rootDir>/test/util/preprocessor-handlebars.js'
   },
   collectCoverage: true,
   collectCoverageFrom: [

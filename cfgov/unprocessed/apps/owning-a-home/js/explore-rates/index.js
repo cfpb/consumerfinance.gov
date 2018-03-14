@@ -24,37 +24,8 @@ require( '../../node_modules/rangeslider.js' );
 require( './tab' );
 require( '../placeholder-polyfill' );
 
-var TEMPLATE_DIR = '../../templates/explore-rates/';
-
 // Load our handlebar templates.
-var county = require( TEMPLATE_DIR + 'county-option.hbs' );
-var countyConfWarning = require( TEMPLATE_DIR + 'county-conf-warning.hbs' );
-var countyFHAWarning = require( TEMPLATE_DIR + 'county-fha-warning.hbs' );
-var countyVAWarning = require( TEMPLATE_DIR + 'county-va-warning.hbs' );
-var countyGenWarning = require( TEMPLATE_DIR + 'county-general-warning.hbs' );
-var sliderLabel = require( TEMPLATE_DIR + 'slider-range-label.hbs' );
-var creditAlert = require( TEMPLATE_DIR + 'credit-alert.hbs' );
-var resultAlert = require( TEMPLATE_DIR + 'result-alert.hbs' );
-var failAlert = require( TEMPLATE_DIR + 'fail-alert.hbs' );
-var dpWarning = require( TEMPLATE_DIR + 'down-payment-warning.hbs' );
-var chartTooltipSingle = require( TEMPLATE_DIR + 'chart-tooltip-single.hbs' );
-var chartTooltipMultiple =
-  require( TEMPLATE_DIR + 'chart-tooltip-multiple.hbs' );
-
-var template = {
-  county: county,
-  countyConfWarning: countyConfWarning,
-  countyFHAWarning: countyFHAWarning,
-  countyVAWarning: countyVAWarning,
-  countyGenWarning: countyGenWarning,
-  sliderLabel: sliderLabel,
-  creditAlert: creditAlert,
-  resultAlert: resultAlert,
-  failAlert: failAlert,
-  dpWarning: dpWarning,
-  chartTooltipSingle: chartTooltipSingle,
-  chartTooltipMultiple: chartTooltipMultiple
-};
+const template = require( './template-loader' );
 
 // Set some properties for the histogram.
 var chart = {
