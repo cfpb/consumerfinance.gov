@@ -16,7 +16,6 @@ const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
 const gulpUglify = require( 'gulp-uglify' );
-const gulpUtil = require( 'gulp-util' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
@@ -35,11 +34,6 @@ const webpackStream = require( 'webpack-stream' );
  * @returns {PassThrough} A source stream.
  */
 function _processScript( localWebpackConfig, src, dest ) {
-  const cmdLineArgs = gulpUtil.env;
-  if ( cmdLineArgs.dev || cmdLineArgs.development ) {
-    Object.assign( localWebpackConfig, webpackConfig.devConf );
-  }
-
   return gulp.src( paths.unprocessed + src )
     .pipe( gulpNewer( {
       dest:  paths.processed + dest,

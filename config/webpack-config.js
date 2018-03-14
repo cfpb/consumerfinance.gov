@@ -4,8 +4,11 @@
 
 
 const BROWSER_LIST = require( '../config/browser-list-config' );
+const envVars = require( '../config/environment' ).envvars;
+const NODE_ENV = envVars.NODE_ENV;
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
+
 
 
 // Constants
@@ -130,7 +133,7 @@ const devConf = {
   plugins: []
 };
 
-module.exports = {
+const configExports = {
   commonConf,
   devConf,
   externalConf,
@@ -138,4 +141,12 @@ module.exports = {
   onDemandHeaderRawConf,
   appsConf,
   spanishConf
-};
+}
+
+if ( NODE_ENV === 'development' ) {
+  for ( let key in configExports ) {
+    Object.assign( configExports[ key ], devConf );
+  }
+}
+
+module.exports = configExports;
