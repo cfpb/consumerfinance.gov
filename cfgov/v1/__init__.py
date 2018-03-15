@@ -22,7 +22,7 @@ from wagtail.wagtailcore.rich_text import RichText, expand_db_html
 from bs4 import BeautifulSoup, NavigableString
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_disabled, flag_enabled
-from jinja2 import Markup, contextfunction, TemplateNotFound
+from jinja2 import Markup, TemplateNotFound, contextfunction
 
 from core.utils import signed_redirect, unsigned_redirect
 from processors.processors_common import fix_link

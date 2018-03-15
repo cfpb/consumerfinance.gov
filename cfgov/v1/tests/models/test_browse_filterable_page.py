@@ -4,10 +4,10 @@ from wagtail.wagtailcore.models import Page, Site
 
 from v1.forms import EventArchiveFilterForm
 from v1.models import CFGOVPageCategory
-from v1.models.learn_page import AbstractFilterPage
 from v1.models.browse_filterable_page import (
     EventArchivePage, NewsroomLandingPage
 )
+from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
 
 

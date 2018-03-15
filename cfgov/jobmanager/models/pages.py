@@ -10,7 +10,7 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import PageManager
 
 from jobmanager.models.django import (
-    JobCategory, JobLocation, JobLength, ServiceType
+    JobCategory, JobLength, JobLocation, ServiceType
 )
 from v1.models import CFGOVPage
 from v1.models.snippets import ReusableText
