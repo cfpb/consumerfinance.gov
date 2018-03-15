@@ -1,5 +1,5 @@
 const _assign = require( './assign' ).assign;
-
+const throttle = require( './throttle' );
 
 /**
  * Stores/retrieves email signup data in localStorage
@@ -93,41 +93,6 @@ function showEmailPopup( popupLabel ) {
   return today > nextDisplayDate;
 }
 
-function throttle( func, wait, options ) {
-  let context;
-  let args;
-  let result;
-  let timeout = null;
-  let previous = 0;
-  if ( !options ) options = {};
-
-  function later() {
-    previous = options.leading === !1 ? 0 : Date.now();
-    timeout = null;
-    result = func.apply( context, args );
-    if ( !timeout ) context = args = null;
-  }
-  return function() {
-    const now = Date.now();
-    if ( !previous && options.leading === !1 ) previous = now;
-    const remaining = wait - ( now - previous );
-    context = this;
-    args = arguments;
-    if ( remaining <= 0 || remaining > wait ) {
-      if ( timeout ) {
-        clearTimeout( timeout );
-        timeout = null;
-      }
-      previous = now;
-      result = func.apply( context, args );
-      if ( !timeout ) context = args = null;
-    } else if ( !timeout && options.trailing !== !1 ) {
-      timeout = setTimeout( later, remaining );
-    }
-    return result;
-  };
-}
-
 function showOnScroll( elToShow, opts ) {
   let UNDEFINED;
   const defaults = {
@@ -177,6 +142,5 @@ module.exports = {
   recordEmailPopupView: recordEmailPopupView,
   recordEmailRegistration: recordEmailRegistration,
   recordEmailPopupClosure: recordEmailPopupClosure,
-  showOnScroll: showOnScroll,
-  throttle: throttle
+  showOnScroll: showOnScroll
 };
