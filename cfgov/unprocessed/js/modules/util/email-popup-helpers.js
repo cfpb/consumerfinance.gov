@@ -1,5 +1,5 @@
 const _assign = require( './assign' ).assign;
-import { throttle } from './throttle';
+const throttle = require( 'lodash.throttle' );
 
 /**
  * Stores/retrieves email signup data in localStorage
@@ -90,7 +90,8 @@ function showEmailPopup( popupLabel ) {
 
   const today = new Date().getTime();
   const nextDisplayDate = Number( localStorage.getItem( nextShowKey ) ) || 0;
-  return today > nextDisplayDate;
+  //return today > nextDisplayDate;
+  return true;
 }
 
 /**
