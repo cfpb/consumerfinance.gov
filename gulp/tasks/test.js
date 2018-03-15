@@ -15,8 +15,6 @@ const paths = environment.paths;
  * @param {Function} cb - Callback function to call on completion.
  */
 function testUnitScripts( cb ) {
-  // eslint-disable-next-line no-process-env
-  process.env.NODE_ENV = 'test';
   const params = minimist( process.argv.slice( 3 ) ) || {};
 
   /* If --specs=path/to/js/spec flag is added on the command-line,
@@ -55,9 +53,15 @@ function testUnitScripts( cb ) {
     fileTestRegex += '.*-spec.js';
   }
 
+  /*
+    The --no-cache flag is needed so the transforms don't cache.
+    If they are cached, preprocessor-handlebars.js can't find handlebars. See
+    https://facebook.github.io/jest/docs/en/troubleshooting.html#caching-issues
+  */
   spawn(
     fsHelper.getBinary( 'jest-cli', 'jest.js', '../bin' ),
     [
+      '--no-cache',
       '--config=jest.config.js',
       `--collectCoverageFrom=${ fileSrcPath }`,
       `--testRegex=${ fileTestRegex }`

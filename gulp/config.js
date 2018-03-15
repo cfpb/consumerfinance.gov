@@ -26,6 +26,7 @@ module.exports = {
   lint: {
     src: [ paths.unprocessed + '/js/**/*.js' ],
     test:  [
+      paths.test + '/util/**/*.js',
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'
     ],
