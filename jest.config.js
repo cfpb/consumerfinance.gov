@@ -5,9 +5,12 @@ module.exports = {
   },
   collectCoverage: true,
   collectCoverageFrom: [
-    '!<rootDir>/node_modules/**',
-    '!<rootDir>/cfgov/unprocessed/apps/**/node_modules/**',
     '<rootDir>/cfgov/unprocessed/**/*.js'
+  ],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/cfgov/unprocessed/apps/.?/node_modules/',
+    '<rootDir>/cfgov/unprocessed/js/routes/'
   ],
   coverageDirectory: '<rootDir>/test/unit_test_coverage'
 };
