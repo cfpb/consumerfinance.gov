@@ -22,7 +22,7 @@ from wagtail.wagtailcore.rich_text import RichText, expand_db_html
 from bs4 import BeautifulSoup, NavigableString
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_disabled, flag_enabled
-from jinja2 import Markup, contextfunction
+from jinja2 import Markup, contextfunction, TemplateNotFound
 
 from core.utils import signed_redirect, unsigned_redirect
 from processors.processors_common import fix_link
@@ -111,7 +111,7 @@ def parse_links(value):
     for tag in soup.recursiveChildGenerator():
         try:
             del tag['style']
-        except:
+        except TypeError:
             # 'NavigableString' object has does not have attr's
             pass
 
@@ -196,7 +196,7 @@ def render_stream_child(context, stream_child):
     try:
         template = context.environment.get_template(
             stream_child.block.meta.template)
-    except:
+    except TemplateNotFound:
         return stream_child
 
     # Create a new context based on the current one as we can't edit it
@@ -206,7 +206,7 @@ def render_stream_child(context, stream_child):
     # wagtail for the blocks context)
     try:
         new_context['value'] = stream_child.value
-    except:
+    except AttributeError:
         new_context['value'] = stream_child
 
     # Render the template with the context

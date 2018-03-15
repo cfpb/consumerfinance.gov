@@ -53,6 +53,7 @@ class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
         return PageQuerySet(self.model).order_by('path')
 
+
 CFGOVPageManager = BaseCFGOVPageManager.from_queryset(PageQuerySet)
 
 

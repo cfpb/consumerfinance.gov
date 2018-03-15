@@ -142,7 +142,7 @@ class JobListingPage(CFGOVPage):
         try:
             context['about_us'] = ReusableText.objects.get(
                 title='About us (For consumers)')
-        except:
+        except Exception:
             pass
         if hasattr(self.location, 'region'):
             context['states'] = [state.abbreviation for state in
