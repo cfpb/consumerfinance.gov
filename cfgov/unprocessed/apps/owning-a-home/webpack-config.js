@@ -6,6 +6,7 @@
 const BROWSER_LIST = require( '../../../../config/browser-list-config' );
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
+const path = require( 'path' );
 
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
@@ -65,6 +66,19 @@ const conf = {
   output: {
     filename: '[name]',
     jsonpFunction: 'apps'
+  },
+  resolveLoader: {
+    alias: {
+      'handlebars-loader': path.resolve( 
+        __dirname, 'node_modules', 'handlebars-loader' 
+      )
+    },
+    mainFields: [ 'loader', 'main' ]
+  },
+  resolve: { 
+    alias: {
+      Templates: path.resolve( __dirname, 'templates/' )
+    }
   },
   plugins: [
     COMMON_CHUNK_CONFIG,
