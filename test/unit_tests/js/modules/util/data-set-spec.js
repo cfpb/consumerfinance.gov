@@ -32,11 +32,8 @@ describe( 'data-set', () => {
 
   describe( 'dataset attribute is NOT supported', () => {
     it( 'should have the correct keys and values when using utility', () => {
-
-      /* Removes dataset from jsdom by setting dataset to undefined.
-         document = {}; // eslint-disable-line no-global-assign
-         document.documentElement = {}; */
-      delete document.documentElement.dataset;
+      // Removes dataset from jsdom by setting dataset to undefined.
+      Object.defineProperty(document.documentElement, 'dataset', {});
 
       const dataset = dataSet( baseDom );
       expect( dataset.testValueA ).toBe( 'testValueA' );
