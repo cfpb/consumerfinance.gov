@@ -1,5 +1,5 @@
 const _assign = require( './assign' ).assign;
-const throttle = require( './throttle' );
+import { throttle } from './throttle';
 
 /**
  * Stores/retrieves email signup data in localStorage
@@ -93,6 +93,11 @@ function showEmailPopup( popupLabel ) {
   return today > nextDisplayDate;
 }
 
+/**
+ * Show the popup when scrolling.
+ * @param  {HTMLNode} elToShow - Element to check the height of.
+ * @param  {Object} opts - Object with callback and target HTML element.
+ */
 function showOnScroll( elToShow, opts ) {
   let UNDEFINED;
   const defaults = {
@@ -138,9 +143,9 @@ function showOnScroll( elToShow, opts ) {
 }
 
 module.exports = {
-  showEmailPopup: showEmailPopup,
-  recordEmailPopupView: recordEmailPopupView,
-  recordEmailRegistration: recordEmailRegistration,
-  recordEmailPopupClosure: recordEmailPopupClosure,
+  showEmailPopup,
+  recordEmailPopupView,
+  recordEmailRegistration,
+  recordEmailPopupClosure,
   showOnScroll: showOnScroll
 };

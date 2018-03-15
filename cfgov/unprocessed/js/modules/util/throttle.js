@@ -51,4 +51,4 @@ function throttle( func, wait, options ) {
   };
 }
 
-module.exports = { throttle: throttle };
+module.exports = { throttle };
