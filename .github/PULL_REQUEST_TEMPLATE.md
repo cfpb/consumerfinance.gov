@@ -38,7 +38,7 @@
 - [ ] New functions are documented (with a description, list of inputs, and expected output)
 - [ ] Placeholder code is flagged / future todos are captured in comments
 - [ ] Visually tested in supported browsers and devices (see checklist below :point_down:)
-- [ ] Project documentation has been updated (including the "Unreleased" section of the CHANGELOG)
+- [ ] Project documentation has been updated
 - [ ] Reviewers requested with the [Reviewers tool](https://help.github.com/articles/requesting-a-pull-request-review/) :arrow_right:
 
 ## Testing checklist
