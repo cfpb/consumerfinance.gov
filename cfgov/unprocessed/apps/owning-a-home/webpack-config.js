@@ -75,15 +75,11 @@ const conf = {
     },
     mainFields: [ 'loader', 'main' ]
   },
-  resolve: { 
-    alias: {
-      Templates: path.resolve( __dirname, 'templates/' )
-    }
-  },
   plugins: [
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
   ]
 };
+
 
 module.exports = { conf };

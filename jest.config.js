@@ -14,8 +14,5 @@ module.exports = {
     '<rootDir>/cfgov/unprocessed/apps/.+/webpack-config\.js$',
     '<rootDir>/cfgov/unprocessed/js/routes/'
   ],
-  coverageDirectory: '<rootDir>/test/unit_test_coverage',
-  moduleNameMapper: {
-    '^Templates(.*)$': '<rootDir>/cfgov/unprocessed/apps/owning-a-home/templates$1'
-  }
+  coverageDirectory: '<rootDir>/test/unit_test_coverage'
 };
