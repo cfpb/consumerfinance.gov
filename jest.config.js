@@ -16,6 +16,6 @@ module.exports = {
   ],
   coverageDirectory: '<rootDir>/test/unit_test_coverage',
   moduleNameMapper: {
-    "^Templates(.*)$": "<rootDir>/cfgov/unprocessed/apps/owning-a-home/templates$1",
+    '^Templates(.*)$': '<rootDir>/cfgov/unprocessed/apps/owning-a-home/templates$1'
   }
 };
