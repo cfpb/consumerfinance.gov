@@ -1,9 +1,9 @@
 const configLint = require( '../config' ).lint;
 const gulp = require( 'gulp' );
 const gulpEslint = require( 'gulp-eslint' );
-const gulpUtil = require( 'gulp-util' );
 const handleErrors = require( '../utils/handle-errors' );
 const minimist = require( 'minimist' );
+const through2 = require( 'through2' );
 
 /**
  * Generic lint a script source.
@@ -22,7 +22,7 @@ function _genericLint( src ) {
         return gulpEslint.failAfterError();
       }
 
-      return gulpUtil.noop();
+      return () => through2.obj();
     } )( ) )
     .pipe( gulp.dest( './' ) )
     .on( 'error', handleErrors );

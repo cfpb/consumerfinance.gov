@@ -4,7 +4,6 @@ const envvars = environment.envvars;
 const fancyLog = require( 'fancy-log' );
 const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
-const gulpUtil = require( 'gulp-util' );
 const minimist = require( 'minimist' );
 const spawn = require( 'child_process' ).spawn;
 const SauceConnectTunnel = require( 'sauce-connect-tunnel' );
@@ -283,7 +282,9 @@ function spawnProtractor( ) {
     }
   }
 
-  if ( gulpUtil.env.sauce === 'true' ) {
+  const commandLineParams = minimist( process.argv.slice( 2 ) ) || {};
+  
+  if ( commandLineParams.sauce === 'true' ) {
     _createSauceTunnel()
       .then( _runProtractor )
       .then( _handleSuccess )
