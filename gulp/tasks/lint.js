@@ -22,7 +22,7 @@ function _genericLint( src ) {
         return gulpEslint.failAfterError();
       }
 
-      return () => through2.obj();
+      return through2.obj();
     } )( ) )
     .pipe( gulp.dest( './' ) )
     .on( 'error', handleErrors );

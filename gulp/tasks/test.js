@@ -283,7 +283,6 @@ function spawnProtractor( ) {
   }
 
   const commandLineParams = minimist( process.argv.slice( 2 ) ) || {};
-  
   if ( commandLineParams.sauce === 'true' ) {
     _createSauceTunnel()
       .then( _runProtractor )
