@@ -11,7 +11,7 @@ Given( /I run gulp build to generate JS bundles/, () => {
 } );
 
 When( /the JS bundles shouldn't contain double arrows or constants/, () => {
-  const transpileRegex = /\(\)\s?=>|const .*=/g;
+  const transpileRegex = /\(\)\s?=>|const \w*=/g;
   const directoryMapKeys = Object.keys( directoryMap );
   const directoryMapLength = directoryMapKeys.length;
 
