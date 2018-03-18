@@ -72,7 +72,7 @@
 #}
 
 {% block javascript_loader %}
-<script async>
+<script>
   {# Minified dynamic JavaScript loader that injects a script tag in the head of the page #}
   function jsl(a){
     for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
