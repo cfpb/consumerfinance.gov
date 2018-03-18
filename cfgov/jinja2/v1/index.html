@@ -4,6 +4,19 @@
     Consumer Financial Protection Bureau
 {%- endblock %}
 
+{% block preload %}
+    {{ super() }}
+    <link rel="preload"
+          href="{{ static('img/home-hero_sm.jpg') }}"
+          as="image"
+          media="(max-width: 600px)">
+    <link rel="preload"
+          href="{{ static('img/home-hero_lg.jpg') }}"
+          as="image"
+          media="(min-width: 601px)">
+{%- endblock %}
+
+
 {% block desc -%}
     Our vision is a consumer finance marketplace that works for American consumers,
     responsible providers, and the economy as a whole.
