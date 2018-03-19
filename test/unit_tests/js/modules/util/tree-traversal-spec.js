@@ -1,7 +1,4 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-
-const chai = require( 'chai' );
-const expect = chai.expect;
 const Tree = require( BASE_JS_PATH + 'modules/Tree' );
 const treeTraversal = require( BASE_JS_PATH + 'modules/util/tree-traversal' );
 
@@ -43,10 +40,10 @@ describe( 'Tree traversal', () => {
         nodes.push( node );
       } );
 
-      expect( that ).to.equal( treeTraversal );
-      expect( nodes[0] ).to.equal( nodeC );
-      expect( nodes[1] ).to.equal( nodeA );
-      expect( nodes[2] ).to.equal( nodeR );
+      expect( that ).toEqual( treeTraversal );
+      expect( nodes[0] ).toEqual( nodeC );
+      expect( nodes[1] ).toEqual( nodeA );
+      expect( nodes[2] ).toEqual( nodeR );
     } );
   } );
 
@@ -59,13 +56,13 @@ describe( 'Tree traversal', () => {
         nodes.push( node );
       } );
 
-      expect( that ).to.equal( treeTraversal );
-      expect( nodes[0] ).to.equal( nodeR );
-      expect( nodes[1] ).to.equal( nodeA );
-      expect( nodes[2] ).to.equal( nodeB );
-      expect( nodes[3] ).to.equal( nodeC );
-      expect( nodes[4] ).to.equal( nodeD );
-      expect( nodes[5] ).to.equal( nodeE );
+      expect( that ).toEqual( treeTraversal );
+      expect( nodes[0] ).toEqual( nodeR );
+      expect( nodes[1] ).toEqual( nodeA );
+      expect( nodes[2] ).toEqual( nodeB );
+      expect( nodes[3] ).toEqual( nodeC );
+      expect( nodes[4] ).toEqual( nodeD );
+      expect( nodes[5] ).toEqual( nodeE );
     } );
   } );
 
@@ -78,13 +75,13 @@ describe( 'Tree traversal', () => {
         nodes.push( node );
       } );
 
-      expect( that ).to.equal( treeTraversal );
-      expect( nodes[0] ).to.equal( nodeR );
-      expect( nodes[1] ).to.equal( nodeA );
-      expect( nodes[2] ).to.equal( nodeC );
-      expect( nodes[3] ).to.equal( nodeD );
-      expect( nodes[4] ).to.equal( nodeE );
-      expect( nodes[5] ).to.equal( nodeB );
+      expect( that ).toEqual( treeTraversal );
+      expect( nodes[0] ).toEqual( nodeR );
+      expect( nodes[1] ).toEqual( nodeA );
+      expect( nodes[2] ).toEqual( nodeC );
+      expect( nodes[3] ).toEqual( nodeD );
+      expect( nodes[4] ).toEqual( nodeE );
+      expect( nodes[5] ).toEqual( nodeB );
     } );
   } );
 

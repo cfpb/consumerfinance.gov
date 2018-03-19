@@ -1,62 +1,65 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-
-const chai = require( 'chai' );
-const expect = chai.expect;
-
-const getBreakpointState = require(
-  BASE_JS_PATH + 'modules/util/breakpoint-state.js'
-).get;
-const breakpointConfig = require(
-  BASE_JS_PATH + 'config/breakpoints-config.js'
+const breakpointState = require(
+  BASE_JS_PATH + 'modules/util/breakpoint-state'
 );
+const breakpointConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
 
-let breakpointState;
 let configKeys;
 
-describe( 'getBreakpointState', () => {
+describe( 'breakpoint-state', () => {
   beforeEach( () => {
     configKeys = Object.keys( breakpointConfig );
   } );
 
-  it( 'should return an object with properties from config file', () => {
-    const breakpointStatekeys =
-      Object.keys( breakpointConfig ).map( key => {
-        key.replace( 'is', '' );
-        key.charAt( 0 ).toLowerCase() + key.slice( 1 );
-        return key;
-      } );
+  describe( '.get()', () => {
+    it( 'should return an object with properties from config file', () => {
+      const breakpointStatekeys =
+        Object.keys( breakpointConfig ).map( key => {
+          key.replace( 'is', '' );
+          key.charAt( 0 ).toLowerCase() + key.slice( 1 );
+          return key;
+        } );
 
-    breakpointState = getBreakpointState();
+      expect( breakpointState.get() instanceof Object ).toBe( true );
+      expect( configKeys.sort().join() === breakpointStatekeys.sort().join() )
+        .toBe( true );
+    } );
 
-    expect( breakpointState instanceof Object ).to.be.true;
-    expect( configKeys.sort().join() === breakpointStatekeys.sort().join() )
-      .to.be.true;
+    it( 'should return an object with one state property set to true', () => {
+      let trueValueCount = 0;
+
+      const breakpointStateGet = breakpointState.get();
+      // eslint-disable-next guard-for-in
+      for ( const stateKey in breakpointStateGet ) {
+        if ( breakpointStateGet[stateKey] === true ) trueValueCount++;
+      }
+
+      expect( trueValueCount === 1 ).toBe( true );
+    } );
+
+    it( 'should set the correct state property when passed width', () => {
+      let width;
+      let breakpointStateKey;
+
+      // eslint-disable-next-line guard-for-in
+      for ( const rangeKey in breakpointConfig ) {
+        width = breakpointConfig[rangeKey].max ||
+                breakpointConfig[rangeKey].min;
+        breakpointStateKey =
+        'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
+
+        expect( breakpointState.get( width )[breakpointStateKey] ).toBe( true );
+      }
+    } );
+
   } );
 
-  it( 'should return an object with one state property set to true', () => {
-    let trueValueCount = 0;
-
-    breakpointState = getBreakpointState();
-    for ( const stateKey in breakpointState ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
-      if ( breakpointState[stateKey] === true ) trueValueCount++;
-    }
-
-    expect( trueValueCount === 1 ).to.be.true;
-  } );
-
-  it( 'should set the correct state property when passed width', () => {
-    let width;
-    let breakpointStateKey;
-
-    for ( const rangeKey in breakpointConfig ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
-      width = breakpointConfig[rangeKey].max ||
-              breakpointConfig[rangeKey].min;
-      breakpointState = getBreakpointState( width );
-      breakpointStateKey =
-      'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
-
-      expect( breakpointState[breakpointStateKey] ).to.be.true;
-    }
+  describe( '.isInDesktop()', () => {
+    it( 'should determine whether inside desktop breakpoint threshold', () => {
+      expect( breakpointState.isInDesktop() ).toBe( true );
+      // TODO: Mock breakpointState.get() to a smaller size so this has false.
+      // expect( breakpointState.isInDesktop() ).toBe( false );
+    } );
   } );
 
 } );

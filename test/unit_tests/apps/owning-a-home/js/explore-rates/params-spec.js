@@ -1,6 +1,4 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const chai = require( 'chai' );
-const expect = chai.expect;
 
 const HTML_SNIPPET = `
   <input id="credit-score"
@@ -40,45 +38,45 @@ describe( 'explore-rates/params', () => {
   } );
 
   it( 'should be able to get a value', () => {
-    expect( params.getVal( 'credit-score' ) ).to.equal( 700 );
-    expect( params.getVal( 'down-payment' ) ).to.equal( '20,000' );
-    expect( params.getVal( 'house-price' ) ).to.equal( '200,000' );
-    expect( params.getVal( 'loan-amount' ) ).to.be.undefined;
-    expect( params.getVal( 'location' ) ).to.equal( 'AL' );
-    expect( params.getVal( 'rate-structure' ) ).to.equal( 'fixed' );
-    expect( params.getVal( 'loan-term' ) ).to.equal( 30 );
-    expect( params.getVal( 'loan-type' ) ).to.equal( 'conf' );
-    expect( params.getVal( 'arm-type' ) ).to.equal( '5-1' );
-    expect( params.getVal( 'edited' ) ).to.be.false;
-    expect( params.getVal( 'isJumbo' ) ).to.be.false;
-    expect( params.getVal( 'prevLoanType' ) ).to.equal( '' );
-    expect( params.getVal( 'prevLocation' ) ).to.equal( '' );
-    expect( params.getVal( 'verbotenKeys' ) ).to.be.an( 'array' );
-    expect( params.getVal( 'verbotenKeys' )[0] ).to.equal( 9 );
-    expect( params.getVal( 'verbotenKeys' )[1] ).to.equal( 37 );
-    expect( params.getVal( 'verbotenKeys' )[2] ).to.equal( 38 );
-    expect( params.getVal( 'verbotenKeys' )[3] ).to.equal( 39 );
-    expect( params.getVal( 'verbotenKeys' )[4] ).to.equal( 40 );
-    expect( params.getVal( 'verbotenKeys' )[5] ).to.equal( 13 );
-    expect( params.getVal( 'verbotenKeys' )[6] ).to.equal( 16 );
+    expect( params.getVal( 'credit-score' ) ).toBe( 700 );
+    expect( params.getVal( 'down-payment' ) ).toBe( '20,000' );
+    expect( params.getVal( 'house-price' ) ).toBe( '200,000' );
+    expect( params.getVal( 'loan-amount' ) ).toBeUndefined();
+    expect( params.getVal( 'location' ) ).toBe( 'AL' );
+    expect( params.getVal( 'rate-structure' ) ).toBe( 'fixed' );
+    expect( params.getVal( 'loan-term' ) ).toBe( 30 );
+    expect( params.getVal( 'loan-type' ) ).toBe( 'conf' );
+    expect( params.getVal( 'arm-type' ) ).toBe( '5-1' );
+    expect( params.getVal( 'edited' ) ).toBe( false );
+    expect( params.getVal( 'isJumbo' ) ).toBe( false );
+    expect( params.getVal( 'prevLoanType' ) ).toBe( '' );
+    expect( params.getVal( 'prevLocation' ) ).toBe( '' );
+    expect( params.getVal( 'verbotenKeys' ) ).toBeInstanceOf( Array );
+    expect( params.getVal( 'verbotenKeys' )[0] ).toBe( 9 );
+    expect( params.getVal( 'verbotenKeys' )[1] ).toBe( 37 );
+    expect( params.getVal( 'verbotenKeys' )[2] ).toBe( 38 );
+    expect( params.getVal( 'verbotenKeys' )[3] ).toBe( 39 );
+    expect( params.getVal( 'verbotenKeys' )[4] ).toBe( 40 );
+    expect( params.getVal( 'verbotenKeys' )[5] ).toBe( 13 );
+    expect( params.getVal( 'verbotenKeys' )[6] ).toBe( 16 );
   } );
 
   it( 'should be able to set a value', () => {
     params.setVal( 'credit-score', 800 );
-    expect( params.getVal( 'credit-score' ) ).to.equal( 800 );
+    expect( params.getVal( 'credit-score' ) ).toBe( 800 );
   } );
 
   it( 'should be able to update a value from the HTML', () => {
-    expect( params.getVal( 'prevLoanType' ) ).to.equal( '' );
-    expect( params.getVal( 'prevLocation' ) ).to.equal( '' );
+    expect( params.getVal( 'prevLoanType' ) ).toBe( '' );
+    expect( params.getVal( 'prevLocation' ) ).toBe( '' );
     params.update();
-    expect( params.getVal( 'prevLoanType' ) ).to.equal( 'conf' );
-    expect( params.getVal( 'prevLocation' ) ).to.equal( 'AL' );
+    expect( params.getVal( 'prevLoanType' ) ).toBe( 'conf' );
+    expect( params.getVal( 'prevLocation' ) ).toBe( 'AL' );
 
     const sliderElement = document.querySelector( '#credit-score' );
-    expect( params.getVal( 'credit-score' ) ).to.equal( 700 );
+    expect( params.getVal( 'credit-score' ) ).toBe( 700 );
     sliderElement.value = 800;
     params.update();
-    expect( params.getVal( 'credit-score' ) ).to.equal( 800 );
+    expect( params.getVal( 'credit-score' ) ).toBe( 800 );
   } );
 } );

@@ -212,5 +212,6 @@ def welcome(request):
             {'destinations': valid_destinations}
         )
 
+
 password_reset_confirm = account._wrap_password_reset_view(
     custom_password_reset_confirm)

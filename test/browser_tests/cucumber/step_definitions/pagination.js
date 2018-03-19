@@ -1,34 +1,30 @@
 const pagination = require( '../../shared_objects/pagination.js' );
-const { defineSupportCode } = require( 'cucumber' );
+const { Then, When } = require( 'cucumber' );
 const chai = require( 'chai' );
 const expect = chai.expect;
 const chaiAsPromised = require( 'chai-as-promised' );
 
 chai.use( chaiAsPromised );
 
-defineSupportCode( function( { Then, When } ) {
+When( /I click on the (.*) button(?:\s)?(?:again)?/,
+  function( navigationButton ) {
 
-  When( /I click on the (.*) button(?:\s)?(?:again)?/,
-    function( navigationButton ) {
+    return pagination[navigationButton + 'Btn'].click();
+  }
+);
 
-      return pagination[navigationButton + 'Btn'].click();
-    }
-  );
+When( /I enter "(\d)" in the page input field/,
+  function( pageNumber ) {
 
-  When( /I enter "(\d)" in the page input field/,
-    function( pageNumber ) {
+    return pagination.pageInput.sendKeys( pageNumber );
+  }
+);
 
-      return pagination.pageInput.sendKeys( pageNumber );
-    }
-  );
+Then( /the page url should contain "(.*)"/,
+  function( urlComponent ) {
 
-  Then( /the page url should contain "(.*)"/,
-    function( urlComponent ) {
-
-      return expect( browser.getCurrentUrl() )
-        .to.eventually
-        .contain( urlComponent );
-    }
-  );
-
-} );
+    return expect( browser.getCurrentUrl() )
+      .to.eventually
+      .contain( urlComponent );
+  }
+);

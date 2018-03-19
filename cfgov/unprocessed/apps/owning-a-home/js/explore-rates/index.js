@@ -1,82 +1,31 @@
-var $ = require( 'jquery' );
+const $ = require( 'jquery' );
+const amortize = require( 'amortize' );
+const formatUSD = require( 'format-usd' );
+const isNum = require( 'is-money-usd' );
+const jumbo = require( 'jumbo-mortgage' );
+const median = require( 'median' );
+const unFormatUSD = require( 'unformat-usd' );
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
-var Highcharts = require( '../../node_modules/highcharts' );
+const Highcharts = require( '../../node_modules/highcharts' );
 require( '../../node_modules/highcharts/modules/exporting' )( Highcharts );
 const highchartsTheme = require( './highcharts-theme' );
 highchartsTheme.applyThemeTo( Highcharts );
 
-var formatUSD = require( '../../node_modules/format-usd' );
-var unFormatUSD = require( '../../node_modules/unformat-usd' );
 // var geolocation = require('./geolocation');
+const config = require( '../../config.json' );
 const domValues = require( './dom-values' );
-var dropdown = require( '../dropdown-utils' );
-var jumbo = require( '../../node_modules/jumbo-mortgage' );
-var median = require( '../../node_modules/median' );
-var amortize = require( '../../node_modules/amortize' );
-var config = require( '../../config.json' );
-var fetchRates = require( '../rates' );
-var isNum = require( '../../node_modules/is-money-usd' );
-var formatTime = require( '../format-timestamp' );
+const dropdown = require( '../dropdown-utils' );
+const fetchRates = require( '../rates' );
+const formatTime = require( '../format-timestamp' );
+const params = require( './params' );
 
 require( '../../node_modules/rangeslider.js' );
 require( './tab' );
 require( '../placeholder-polyfill' );
 
 // Load our handlebar templates.
-var county = require(
-  'handlebars-loader!../../templates/explore-rates/county-option.hbs'
-);
-var countyConfWarning = require(
-  'handlebars-loader!../../templates/explore-rates/county-conf-warning.hbs'
-);
-var countyFHAWarning = require(
-  'handlebars-loader!../../templates/explore-rates/county-fha-warning.hbs'
-);
-var countyVAWarning = require(
-  'handlebars-loader!../../templates/explore-rates/county-va-warning.hbs'
-);
-var countyGenWarning = require(
-  'handlebars-loader!../../templates/explore-rates/county-general-warning.hbs'
-);
-var sliderLabel = require(
-  'handlebars-loader!../../templates/explore-rates/slider-range-label.hbs'
-);
-var creditAlert = require(
-  'handlebars-loader!../../templates/explore-rates/credit-alert.hbs'
-);
-var resultAlert = require(
-  'handlebars-loader!../../templates/explore-rates/result-alert.hbs'
-);
-var failAlert = require(
-  'handlebars-loader!../../templates/explore-rates/fail-alert.hbs'
-);
-var dpWarning = require(
-  'handlebars-loader!../../templates/explore-rates/down-payment-warning.hbs'
-);
-var chartTooltipSingle = require(
-  'handlebars-loader!../../templates/explore-rates/chart-tooltip-single.hbs'
-);
-var chartTooltipMultiple = require(
-  'handlebars-loader!../../templates/explore-rates/chart-tooltip-multiple.hbs'
-);
-
-var template = {
-  county: county,
-  countyConfWarning: countyConfWarning,
-  countyFHAWarning: countyFHAWarning,
-  countyVAWarning: countyVAWarning,
-  countyGenWarning: countyGenWarning,
-  sliderLabel: sliderLabel,
-  creditAlert: creditAlert,
-  resultAlert: resultAlert,
-  failAlert: failAlert,
-  dpWarning: dpWarning,
-  chartTooltipSingle: chartTooltipSingle,
-  chartTooltipMultiple: chartTooltipMultiple
-};
-
-const params = require( './params' );
+const template = require( './template-loader' );
 
 // Set some properties for the histogram.
 var chart = {

@@ -5,6 +5,7 @@ import mock
 from v1.forms import FilterableListForm
 from v1.util.filterable_list import FilterableListMixin
 
+
 class TestFilterableListMixin(TestCase):
     def setUp(self):
         self.mixin = FilterableListMixin()

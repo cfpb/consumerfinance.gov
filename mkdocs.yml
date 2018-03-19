@@ -4,7 +4,6 @@ pages:
 - Installation: installation.md
 - Usage: usage.md
 - Building and Deploying for cf.gov:
-    - What's new: whats-new.md
     - New projects: new-projects.md
     - Branching and merging: branching-merging.md
     - Release cadence: release-cadence.md

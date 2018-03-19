@@ -187,9 +187,9 @@ JavaScript module unit tests are run with `gulp test:unit`.
 
 If you want to run individual spec files, pass in the `--specs` command-line
 argument with the path to the spec,
-such as `gulp test:unit --specs=modules/Tree-spec.js`.
-Globs can be used to run a group of unit tests in the same directory,
-such as `gulp test:unit --specs=modules/transition/*.js`.
+such as `gulp test:unit --specs=js/modules/Tree-spec.js`.
+Also, a directory of unit tests can be run,
+such as `gulp test:unit --specs=js/modules/transition/`.
 
 
 # Accessibility Testing
@@ -203,10 +203,10 @@ If you'd like to audit a specific page, use `gulp audit:a11y`:
   1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
      Get a free [AChecker API ID](http://achecker.ca/register.php) for the value.
   2. Reload your `.env` with `source ./.env` while in the project root directory.
-  3. Run `gulp test:a11y` to run an audit on the homepage.
+  3. Run `gulp audit:a11y` to run an audit on the homepage.
   4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
-     For example, `gulp test:a11y --u=contact-us`
-     or `gulp test:a11y --u=the-bureau/bureau-structure/`.
+     For example, `gulp audit:a11y --u=contact-us`
+     or `gulp audit:a11y --u=the-bureau/bureau-structure/`.
 
 # Source code linting
 

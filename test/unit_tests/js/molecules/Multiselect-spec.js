@@ -1,13 +1,9 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const chai = require( 'chai' );
-const expect = chai.expect;
-const sinon = require( 'sinon' );
 
 const Multiselect = require( BASE_JS_PATH + 'molecules/Multiselect' );
 let multiselect;
 let selectDom;
 let multiselectDom;
-let sandbox;
 
 const HTML_SNIPPET = `
   <select name="test-select" id="test-select" multiple>
@@ -27,16 +23,10 @@ function keyPress( target, key ) {
 
 describe( 'Multiselect', () => {
   beforeEach( () => {
-    sandbox = sinon.sandbox.create();
-
     document.body.innerHTML = HTML_SNIPPET;
 
     selectDom = document.querySelector( 'select[multiple]' );
     multiselect = new Multiselect( selectDom );
-  } );
-
-  afterEach( function() {
-    sandbox.restore();
   } );
 
   describe( 'init', () => {
@@ -45,8 +35,8 @@ describe( 'Multiselect', () => {
       selectDom = document.querySelectorAll( 'select[multiple]' );
       multiselectDom = document.querySelectorAll( '.cf-multi-select' );
 
-      expect( selectDom.length ).to.equal( 0 );
-      expect( multiselectDom.length ).to.equal( 1 );
+      expect( selectDom.length ).toBe( 0 );
+      expect( multiselectDom.length ).toBe( 1 );
     } );
 
     it( 'should autocheck any selected options (form submitted pages)', () => {
@@ -56,31 +46,25 @@ describe( 'Multiselect', () => {
       const choices =
           document.querySelectorAll( '.cf-multi-select_choices li' );
 
-      expect( choices.length ).to.equal( 1 );
-      expect( choices[0].innerHTML ).to.contain( 'Debt collection' );
+      expect( choices.length ).toBe( 1 );
+      expect( choices[0].innerHTML ).toContain( 'Debt collection' );
     }
     );
 
     it( 'should log a helpful tip if passed a bad option value', () => {
 
-      /* TODO: Remove console.log in favor of throwing an error.
-         sandbox.stub console.log will prevent regular `console.log(…)`
-         calls in this suite. */
-      sandbox.stub( window.console, 'log' );
+      /* TODO: Remove console.log in favor of throwing an error. */
+      const consoleSpy = jest.spyOn( window.console, 'log' );
       const option = document.querySelector( 'option' );
       option.value = 'Foo\'';
       multiselect.init();
       selectDom = document.querySelectorAll( 'select[multiple]' );
       multiselectDom = document.querySelectorAll( '.cf-multi-select' );
 
-      expect( selectDom.length ).to.equal( 1 );
-      expect( multiselectDom.length ).to.equal( 0 );
-      // eslint-disable-next-line no-console
-      sinon.assert.calledOnce( console.log );
-      sinon.assert.calledWithExactly(
-        // eslint-disable-next-line no-console
-        console.log, '\'Foo\'\' is not a valid value'
-      );
+      expect( selectDom.length ).toBe( 1 );
+      expect( multiselectDom.length ).toBe( 0 );
+      expect( consoleSpy ).toHaveBeenCalledTimes( 1 );
+      expect( consoleSpy ).toHaveBeenCalledWith( '\'Foo\'\' is not a valid value' );
     } );
   } );
 
@@ -92,8 +76,8 @@ describe( 'Multiselect', () => {
       const fieldset =
         multiselectDom.querySelector( '.cf-multi-select_fieldset' );
 
-      expect( multiselectDom.className ).to.equal( 'cf-multi-select active' );
-      expect( fieldset.getAttribute( 'aria-hidden' ) ).to.equal( 'false' );
+      expect( multiselectDom.className ).toBe( 'cf-multi-select active' );
+      expect( fieldset.getAttribute( 'aria-hidden' ) ).toBe( 'false' );
     } );
 
     it( 'should close when the collapse method is called', () => {
@@ -104,8 +88,8 @@ describe( 'Multiselect', () => {
       const fieldset =
         multiselectDom.querySelector( '.cf-multi-select_fieldset' );
 
-      expect( multiselectDom.className ).to.equal( 'cf-multi-select' );
-      expect( fieldset.getAttribute( 'aria-hidden' ) ).to.equal( 'true' );
+      expect( multiselectDom.className ).toBe( 'cf-multi-select' );
+      expect( fieldset.getAttribute( 'aria-hidden' ) ).toBe( 'true' );
     } );
   } );
 
@@ -118,9 +102,9 @@ describe( 'Multiselect', () => {
       const search = document.querySelector( '#test-select' );
       search.click();
 
-      expect( document.activeElement.id ).to.equal( 'test-select' );
-      expect( multiselectDom.className ).to.equal( 'cf-multi-select active' );
-      expect( fieldset.getAttribute( 'aria-hidden' ) ).to.equal( 'false' );
+      expect( document.activeElement.id ).toBe( 'test-select' );
+      expect( multiselectDom.className ).toBe( 'cf-multi-select active' );
+      expect( fieldset.getAttribute( 'aria-hidden' ) ).toBe( 'false' );
     } );
 
     xit( 'should highlight the first item when keying down', function() {
@@ -129,7 +113,7 @@ describe( 'Multiselect', () => {
       search.click();
       keyPress( search, 40 );
 
-      expect( document.activeElement.id ).to.equal( 'Debt collection' );
+      expect( document.activeElement.id ).toBe( 'Debt collection' );
     } );
 
     xit( 'should close when the body is clicked', function() {
@@ -140,8 +124,8 @@ describe( 'Multiselect', () => {
         multiselectDom.querySelector( '.cf-multi-select_fieldset' );
       document.click();
 
-      expect( multiselectDom.className ).to.equal( 'cf-multi-select' );
-      expect( fieldset.getAttribute( 'aria-hidden' ) ).to.equal( 'true' );
+      expect( multiselectDom.className ).toBe( 'cf-multi-select' );
+      expect( fieldset.getAttribute( 'aria-hidden' ) ).toBe( 'true' );
     } );
   } );
 } );

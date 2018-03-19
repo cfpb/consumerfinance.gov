@@ -1,29 +1,53 @@
 ## Development tips
 
-### TIP: Loading sibling projects
+### TIP: Developing on nested satellite apps
+Some projects can sit inside cfgov-refresh, but manage their own asset
+dependencies. These projects have their own package.json and base templates.
+
+The structure looks like this:
+
+#### npm modules
+- App's own dependency list is in
+  `cfgov/unprocessed/apps/[project namespace]/package.json`
+- App's `node_modules` path is listed in the Travis config
+  https://github.com/cfpb/cfgov-refresh/blob/master/.travis.yml#L10
+  so that their dependencies will be available when Travis runs.
+
+#### Webpack
+- Apps may include their own webpack-config.js configuration that adjusts how
+  their app-specific assets should be built. This configuration appears in
+  `cfgov/unprocessed/apps/[project namespace]/webpack-config.js`
+
+#### Templates
+- Apps use a jinja template that extends the `base.html`
+  template used by the rest of the site.
+  This template would reside in `cfgov/jinja2/v1/[project namespace]/index.html`
+  or similar (for example, [owning-a-home](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/owning-a-home/explore-rates/index.html)).
+
+!!! note
+    A template may support a non-standard browser, like an older IE version,
+    by including the required dependencies, polyfills, etc. in its
+    template's `{% block css %}` or `{% block javascript scoped %}` blocks.
+
+
+### TIP: Loading satellite apps
 Some projects fit within the cfgov-refresh architecture,
 but are not fully incorporated into the project.
-These are known as "non-v1 Django apps."
-In order to visit areas of the site locally where those projects are used,
-the sibling projects need to be installed
-and then indexed within this cfgov-refresh project.
+These are known as "satellite apps."
 
-The non-v1 apps are the following:
+Satellite apps are listed in the
+[optional-public.txt](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt)
+requirements file.
 
- - [Owning a Home](https://github.com/cfpb/owning-a-home).
- - fin-ed-resources (ghe/CFGOV/fin-ed-resources) - for the Education Resources section.
- - know-before-you-owe (ghe/CFGOV/know-before-you-owe) - for the Consumer Tools > Know before you owe section.
+In addition to the aforementioned list,
+[HMDA Explorer](https://github.com/cfpb/hmda-explorer) and
+[Rural or Underserved](https://github.com/cfpb/rural-or-underserved-test),
+have their own installation requirements.
 
-After installing these projects as sibling directories to the `cfgov-refresh` repository,
+If using Docker, follow
+[these guidelines](https://github.com/cfpb/cfgov-refresh/blob/master/docs/usage.md#develop-satellite-apps).
 
-##### Option 1: Sheer Index and Elasticsearch (e.g. owning-a-home)
-
-1. build the third-party projects per their directions,
-1. stop the web server and return to `cfgov-refresh`
-1. and run `cfgov/manage.py sheer_index -r` to load the projects' data into ElasticSearch.
-
-
-##### Option 2: Direct dependencies
+Otherwise, if not using Docker, follow these guidelines:
 
 1. Build the third-party projects per their directions
 1. Stop the web server and return to `cfgov-refresh`

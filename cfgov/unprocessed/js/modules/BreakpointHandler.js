@@ -1,5 +1,5 @@
-import { get as getBreakpointState } from './util/breakpoint-state';
 import _breakpointsConfig from '../config/breakpoints-config';
+import { get as getBreakpointState } from './util/breakpoint-state';
 
 /**
  * BreakpointHandler
