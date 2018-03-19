@@ -11,9 +11,8 @@ describe( 'Loan calculator helps users calculate loan data', function() {
   } );
 
   it( 'should calculate a loan\'s monthly payment', function() {
-    expect(
-      loanCalculator.getMonthlyPayment( 180000, 4.25, 360, 60 )
-    ).to.equal( 885.4918039430557 );
+    const payment = loanCalculator.getMonthlyPayment( 180000, 4.25, 360, 60 );
+    expect( payment ).to.equal( 885.4918039430557 );
   } );
 
 } );
