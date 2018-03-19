@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
-from functools import partial
 import logging
+from functools import partial
 
 from django.conf import settings
 from django.utils.module_loading import import_string

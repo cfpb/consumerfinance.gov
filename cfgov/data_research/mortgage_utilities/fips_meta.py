@@ -92,6 +92,7 @@ class FipsMeta(object):
         self.created = 0  # final 2 can serve as a global counters
         self.updated = 0
 
+
 FIPS = FipsMeta()
 
 

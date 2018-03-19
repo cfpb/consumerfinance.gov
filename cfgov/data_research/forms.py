@@ -5,7 +5,7 @@ from django import forms
 from core.govdelivery import get_govdelivery_api
 from data_research.models import ConferenceRegistration
 from data_research.widgets import (
-    CheckboxSelectMultiple, EmailInput, TextInput, Textarea
+    CheckboxSelectMultiple, EmailInput, Textarea, TextInput
 )
 
 

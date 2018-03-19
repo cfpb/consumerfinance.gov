@@ -57,8 +57,9 @@ class SheerlikeContext(Context):
         if 'request' not in self.vars and 'request' not in self.keys():
             try:
                 self.vars['request'] = get_request()
-            except:
+            except Exception:
                 pass
+
 
 # Monkey patch not needed in master version of Jinja2
 # https://github.com/mitsuhiko/jinja2/commit/f22fdd5ffe81aab743f78290071b0aa506705533
