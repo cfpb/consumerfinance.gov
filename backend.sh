@@ -29,8 +29,6 @@ install() {
   # Install requirements for Django Server or tox.
   if [ "$cli_flag" = "development" ]; then
     pip install -r ./requirements/local.txt
-  elif [ "$cli_flag" = "test" ]; then
-    pip install -r ./requirements/test.txt
   elif [ "$cli_flag" = "production" ]; then
     pip install -r ./requirements/deployment.txt
   fi
