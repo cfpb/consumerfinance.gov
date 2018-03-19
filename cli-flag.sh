@@ -20,9 +20,9 @@ cli_flag=$2
 # Warn if unsupported command-line flag was used.
 if [ "$cli_flag" != "development" ] &&
    [ "$cli_flag" != "production" ]; then
-  suppied_cli_flag=$cli_flag
+  supplied_cli_flag=$cli_flag
   cli_flag='development'
-  echo "WARNING: '$suppied_cli_flag' flag not found, reverting to $cli_flag environment."
+  echo "WARNING: '$supplied_cli_flag' flag not found, reverting to $cli_flag environment."
 fi
 
 # Set label for front or back end
