@@ -1,19 +1,18 @@
-const TEMPLATE_DIR = '../../templates/explore-rates/';
+
 
 // Load our handlebar templates.
-const county = require( TEMPLATE_DIR + 'county-option.hbs' );
-const countyConfWarning = require( TEMPLATE_DIR + 'county-conf-warning.hbs' );
-const countyFHAWarning = require( TEMPLATE_DIR + 'county-fha-warning.hbs' );
-const countyVAWarning = require( TEMPLATE_DIR + 'county-va-warning.hbs' );
-const countyGenWarning = require( TEMPLATE_DIR + 'county-general-warning.hbs' );
-const sliderLabel = require( TEMPLATE_DIR + 'slider-range-label.hbs' );
-const creditAlert = require( TEMPLATE_DIR + 'credit-alert.hbs' );
-const resultAlert = require( TEMPLATE_DIR + 'result-alert.hbs' );
-const failAlert = require( TEMPLATE_DIR + 'fail-alert.hbs' );
-const dpWarning = require( TEMPLATE_DIR + 'down-payment-warning.hbs' );
-const chartTooltipSingle = require( TEMPLATE_DIR + 'chart-tooltip-single.hbs' );
-const chartTooltipMultiple =
-  require( TEMPLATE_DIR + 'chart-tooltip-multiple.hbs' );
+const county = require( '../../templates/county-option.hbs' );
+const countyConfWarning = require(  '../../templates/county-conf-warning.hbs' );
+const countyFHAWarning = require( '../../templates/county-fha-warning.hbs' );
+const countyVAWarning = require( '../../templates/county-va-warning.hbs' );
+const countyGenWarning = require( '../../templates/county-general-warning.hbs' );
+const sliderLabel = require( '../../templates/slider-range-label.hbs' );
+const creditAlert = require( '../../templates/credit-alert.hbs' );
+const resultAlert = require( '../../templates/result-alert.hbs' );
+const failAlert = require( '../../templates/fail-alert.hbs' );
+const dpWarning = require( '../../templates/down-payment-warning.hbs' );
+const chartTooltipSingle = require( '../../templates/chart-tooltip-single.hbs' );
+const chartTooltipMultiple = require( '../../templates/chart-tooltip-multiple.hbs' );
 
 module.exports = {
   county,
