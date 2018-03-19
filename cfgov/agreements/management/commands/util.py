@@ -1,8 +1,7 @@
 import os
 
-from agreements.models import Issuer
 import boto3
-
+from agreements.models import Issuer
 from slugify import slugify
 
 

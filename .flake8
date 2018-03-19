@@ -12,6 +12,7 @@ exclude =
     ansible,
     bin,
     config,
+    develop-apps,
     docs,
     gulp,
     requirements,

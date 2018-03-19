@@ -1,10 +1,10 @@
 // Required modules.
+const assign = require( '../modules/util/assign' ).assign;
 const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const throttle = require( '../modules/util/throttle' ).throttle;
 const ajaxRequest = require( '../modules/util/ajax-request' ).ajaxRequest;
 const bindEvent = require( '../modules/util/dom-events' ).bindEvent;
 const standardType = require( '../modules/util/standard-type' );
-const assign = require( '../modules/util/assign' ).assign;
+const throttle = require( 'lodash.throttle' );
 
 /**
  * Autocomplete

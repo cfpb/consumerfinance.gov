@@ -1,10 +1,10 @@
+from django.conf.urls import include, url
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
+
+from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailusers.widgets import UserListingButton
-from wagtail.wagtailadmin.menu import MenuItem
-
-from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
-from django.conf.urls import include, url
 
 
 @hooks.register('register_admin_urls')

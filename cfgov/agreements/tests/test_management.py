@@ -1,6 +1,6 @@
 import os.path
-from cStringIO import StringIO
 import zipfile
+from cStringIO import StringIO
 
 from django.core import management
 from django.test import TestCase

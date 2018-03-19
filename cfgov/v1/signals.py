@@ -44,4 +44,5 @@ def invalidate_post_preview(sender, **kwargs):
     instance = kwargs['instance']
     caches['post_preview'].delete(instance.post_preview_cache_key)
 
+
 page_published.connect(invalidate_post_preview)
