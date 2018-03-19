@@ -1,7 +1,7 @@
 {
-  "name": "regulations-3000",
-  "description": "The consumerfinance.gov/regulations website.",
-  "homepage": "http://www.consumerfinance.gov/regulations",
+  "name": "cfpb-regulations-3000",
+  "description": "The consumerfinance.gov/eregulations website.",
+  "homepage": "https://www.consumerfinance.gov/eregulations/",
   "author": {
     "name": "Consumer Financial Protection Bureau",
     "email": "tech@cfpb.gov",
