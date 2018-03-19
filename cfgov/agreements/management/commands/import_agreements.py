@@ -1,12 +1,11 @@
+import fnmatch
 import os
 from zipfile import ZipFile
-
-import fnmatch
 
 from django.core.management.base import BaseCommand
 
 from agreements.management.commands import util
-from agreements.models import Issuer, Agreement
+from agreements.models import Agreement, Issuer
 
 
 class Command(BaseCommand):

@@ -1,12 +1,13 @@
-import logging
-import requests
 import json
+import logging
 import os
 import sys
 
+import requests
 from bs4 import BeautifulSoup
 
 from jobmanager.models.pages import JobListingPage
+
 
 logger = logging.getLogger(__name__)
 

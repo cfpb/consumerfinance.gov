@@ -16,9 +16,9 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "fastdom": "1.0.6",
     "amortize": "0.2.2",
     "date-format": "0.0.2",
+    "fastdom": "1.0.6",
     "format-usd": "0.2.0",
     "handlebars": "^4.0.11",
     "handlebars-loader": "^1.6.0",

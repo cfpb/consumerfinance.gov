@@ -1,6 +1,7 @@
-import mock
 import unittest
 from io import TextIOBase
+
+import mock
 
 from alerts.send_new_relic_messages_to_sqs import (
     cache_known_violations, read_known_violations

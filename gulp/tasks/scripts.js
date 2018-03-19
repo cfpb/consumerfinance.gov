@@ -20,6 +20,7 @@ const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
 const paths = require( '../../config/environment' ).paths;
+const path = require( 'path' );
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
 const webpackStream = require( 'webpack-stream' );
@@ -204,13 +205,25 @@ function scriptsApps() {
     /* Check if node_modules directory exists in a particular app's folder.
        If it doesn't, don't process the scripts and log the command to run. */
     const appsPath = `${ paths.unprocessed }/apps/${ app }`;
+
+    /* Check if webpack-config file exists in a particular app's folder.
+       If it exists use it, if it doesn't then use the default config. */
+    let appWebpackConfig = webpackConfig.appsConf;
+    const appWebpackConfigPath = `${ appsPath }/webpack-config.js`;
+
+    // eslint-disable-next-line no-sync
+    if ( fs.existsSync( appWebpackConfigPath ) ) {
+      // eslint-disable-next-line global-require
+      appWebpackConfig = require( path.resolve( appWebpackConfigPath ) ).conf;
+    }
+
     // eslint-disable-next-line no-sync
     if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
       // eslint-disable-next-line no-sync
       if ( fs.existsSync( `${ appsPath }/node_modules` ) ) {
         streams.push(
           _processScript(
-            webpackConfig.appsConf,
+            appWebpackConfig,
             `/apps/${ app }/js/**/*.js`,
             `/apps/${ app }/js`
           )
