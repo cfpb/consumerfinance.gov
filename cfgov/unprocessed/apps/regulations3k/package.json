@@ -1,0 +1,21 @@
+{
+  "name": "regulations-3000",
+  "description": "The consumerfinance.gov/regulations website.",
+  "homepage": "http://www.consumerfinance.gov/regulations",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/cfpb/cfgov-refresh.git"
+  },
+  "license": "SEE LICENSE IN TERMS.md",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "amortize": "0.2.2"
+  }
+}

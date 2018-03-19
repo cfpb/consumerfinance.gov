@@ -1,10 +1,8 @@
-'use strict';
-
-const amortize = require('amortize');
+const amortize = require( 'amortize' );
 
 const module1 = {
   init: () => {
-    console.log( 'hooray!' );
+    console.log( 'module 1 loaded!' );
   },
   getMonthlyPayment: ( amount, rate, months, amortizeMonths ) => {
     const terms = amortize( {

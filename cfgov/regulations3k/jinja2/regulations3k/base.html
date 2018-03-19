@@ -27,10 +27,7 @@
 
 {% block css -%}
     {{ super() }}
-
-
-    <link rel="stylesheet" href="{{ static('regulations3k/css/regulations3k.css') }}">
-
+    <link rel="stylesheet" href="{{ static('apps/regulations3k/css/main.css') }}">
 {%- endblock css %}
 
 
@@ -46,26 +43,18 @@
     <code>content_sidebar</code>
 {% endblock content_sidebar %}
 
-{% block javascript scoped -%}
-{# Conditional comment used to block IE8 and under from receiving JS #}
-<!--[if gt IE 8]><!-->
-    {# Include site-wide JavaScript. #}
-    <script src="{{ static('js/routes/common.js') }}"></script>
-
-
-    <script src="{{ static('regulations3k/js/regulations3k.js') }}"></script>
-
-<!--<![endif]-->
-
-    <script>
-    //<![CDATA[
-        var usasearch_config = { siteHandle: 'cfpb' };
-
-        var script = document.createElement( 'script' );
-        script.type = 'text/javascript';
-        script.src = 'https://search.usa.gov/javascripts/remote.loader.js';
-        document.getElementsByTagName( 'head' )[0].appendChild( script );
-    //]]>
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/regulations3k/js/common.js') }}',
+            '{{ static('apps/regulations3k/js/index.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
     </script>
-{%- endblock javascript %}
-
+{% endblock javascript %}

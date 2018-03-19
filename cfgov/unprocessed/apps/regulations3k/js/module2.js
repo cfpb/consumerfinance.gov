@@ -1,8 +1,6 @@
-'use strict';
-
 const module2 = {
   init: () => {
-    console.log( 'hooray again!' );
+    console.log( 'module 2 loaded!' );
   }
 };
 
