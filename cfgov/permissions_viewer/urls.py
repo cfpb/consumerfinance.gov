@@ -1,5 +1,7 @@
 from django.conf.urls import url
+
 from permissions_viewer import views
+
 
 urlpatterns = [
     url(r'^user/([^\/]+)/',
