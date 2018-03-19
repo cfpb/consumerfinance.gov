@@ -1,7 +1,7 @@
-import mock
 import unittest
 
 import boto3
+import mock
 
 from alerts.sqs_queue import SQSQueue
 

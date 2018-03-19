@@ -1,20 +1,18 @@
 from six import string_types as basestring
 
 from django.core.exceptions import ValidationError
+from django.http import HttpRequest
 from django.test import TestCase
 
 from mock import patch
 from model_mommy import mommy
-from django.http import HttpRequest
 
 from jobmanager.models.django import (
-    Grade, JobCategory, Region, Office, City, State
+    City, Grade, JobCategory, Office, Region, State
 )
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel
-
 from v1.models.snippets import ReusableText
-
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 

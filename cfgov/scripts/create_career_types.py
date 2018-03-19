@@ -1,8 +1,9 @@
 import json
 
 from jobmanager.models import (
-    ApplicantType, JobListingPage, JobLength, ServiceType
+    ApplicantType, JobLength, JobListingPage, ServiceType
 )
+
 
 APPLICANT_TYPES = [
     {

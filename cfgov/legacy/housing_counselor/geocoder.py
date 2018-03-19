@@ -1,11 +1,10 @@
 from __future__ import absolute_import, unicode_literals
 
-from six.moves import range
-
 import csv
 import itertools
 import logging
 import time
+from six.moves import range
 
 from django.conf import settings
 
