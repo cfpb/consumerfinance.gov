@@ -1,0 +1,32 @@
+/* ==========================================================================
+   college-costs
+   ========================================================================== */
+
+// This is your project's main Less file.
+// Project-specific Less rules go after the imports.
+
+// Import Capital Frmework by reference so that variables and mixins are
+// available, but the whole output doesn't duplicate what we're already getting
+// from cfgov-refresh.
+@import (reference) 'cf-core.less';
+@import (reference) 'cf-icons.less';
+@import (reference) 'cf-buttons.less';
+@import (reference) 'cf-forms.less';
+@import (reference) 'cf-grid.less';
+@import (reference) 'cf-layout.less';
+@import (reference) 'cf-typography.less';
+@import (reference) 'cf-notifications.less';
+@import (reference) 'cf-pagination.less';
+@import (reference) 'cf-expandables.less';
+@import (reference) 'cf-tables.less';
+
+// Import any Capital Framework enhancements you might have
+@import 'cf-enhancements.less';
+
+// Project specific Less goes here or you can break it up into discrete files.
+//
+// @import "my-other-module.less"
+
+body {
+  color: @red !important;
+}
