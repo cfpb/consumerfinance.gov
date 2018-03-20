@@ -1,3 +1,7 @@
+{#
+    This is the shared template for both the
+    English and Spanish-language consumerfinance.gov.
+#}
 <!DOCTYPE html>
 {% if flag_enabled('CFPB_RECRUITING', request) %}
 <!--
@@ -112,8 +116,7 @@
 #}
 
 {% block css %}
-<!--[if lt IE 9]><link rel="stylesheet" href="{{ static('css/main.ie8.css') }}"><![endif]-->
-<!--[if IE 9]><link rel="stylesheet" href="{{ static('css/main.ie9.css') }}"><![endif]-->
+<!--[if lt IE 10]><link rel="stylesheet" href="{{ static('css/main.ie.css') }}"><![endif]-->
 <!--[if gt IE 9]><!--><link rel="stylesheet" href="{{ static('css/main.css') }}"><!--<![endif]-->
 {% endblock css %}
 
@@ -188,27 +191,18 @@
       Turn off JavaScript for browsers that don't support ECMAScript 5 features
       (e.g. Internet Explorer 8)
       by reversing no-js/js CSS class change made by modernizr.
-      The following ECMAScript 5 feature checks come from
+      The ECMAScript 5 feature checks are listed in
       https://github.com/Modernizr/Modernizr/tree/master/feature-detects/es5
     #}
     <script>
         var modernizr = window.Modernizr;
-        if ( !( typeof modernizr !== 'undefined' &&
-             modernizr.es5array &&
-             modernizr.es5date &&
-             modernizr.es5function &&
-             modernizr.es5object &&
-             modernizr.json &&
-             modernizr.es5string &&
-             modernizr.es5syntax &&
-             modernizr.es5undefined ) ) {
+        if ( !( typeof modernizr !== 'undefined' && modernizr.es5 ) ) {
           var docElement = document.documentElement;
           docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
         }
     </script>
     {% endblock %}
 
-    <!--[if IE 9]><script src="{{ static('js/ie/common.ie9.js') }}"></script><![endif]-->
 </head>
 
 <body{% block body_classes %}{% endblock body_classes %}>
