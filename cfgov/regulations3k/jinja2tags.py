@@ -1,6 +1,5 @@
 from jinja2.ext import Extension
 from jinja2.filters import do_mark_safe
-
 from regulations3k.regdown import regdown as regdown_func
 
 

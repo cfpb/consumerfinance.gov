@@ -1,5 +1,5 @@
-from django.test import TestCase
 from django.template import engines
+from django.test import TestCase
 
 
 class RegDownExtensionTestCase(TestCase):
