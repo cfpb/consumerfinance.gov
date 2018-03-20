@@ -25,6 +25,7 @@ Jinja2==2.7.3
 jsonfield==2.0.2
 jsonschema==2.0.0
 lxml==4.1.0
+Markdown==2.6.11
 ntplib==0.3.3
 openpyxl==2.5.0
 pbr==1.9.1
@@ -35,6 +36,7 @@ PyYAML==3.11
 pytz
 requests==2.12.4
 requests_toolbelt==0.6.0
+sha3==0.2.1
 simplejson==3.8.2
 six==1.10.0
 unicodecsv==0.14.1
