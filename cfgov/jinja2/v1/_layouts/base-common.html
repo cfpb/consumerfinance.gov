@@ -195,11 +195,13 @@
       https://github.com/Modernizr/Modernizr/tree/master/feature-detects/es5
     #}
     <script>
-        var modernizr = window.Modernizr;
-        if ( !( typeof modernizr !== 'undefined' && modernizr.es5 ) ) {
-          var docElement = document.documentElement;
-          docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-        }
+        !function(){
+          var modernizr = window.Modernizr;
+          if ( !( typeof modernizr !== 'undefined' && modernizr.es5 ) ) {
+            var docElement = document.documentElement;
+            docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
+          }
+        }();
     </script>
     {% endblock %}
 
