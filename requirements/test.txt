@@ -1,8 +1,3 @@
-# Django and Wagtail have to installed seperate from requirements
-# -r django.txt
-# -r wagtail.txt
--r libraries.txt
-
 configparser==3.5.0
 coverage==4.2
 django-sslserver==0.19
