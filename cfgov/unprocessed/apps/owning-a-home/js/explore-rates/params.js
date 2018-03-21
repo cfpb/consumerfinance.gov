@@ -13,6 +13,7 @@ const _params = {
   'credit-score':   700,
   'down-payment':   '20,000',
   'house-price':    '200,000',
+  'location':       'AL',
   'loan-amount':    UNDEFINED,
   'location':       'AL',
   'rate-structure': 'fixed',
