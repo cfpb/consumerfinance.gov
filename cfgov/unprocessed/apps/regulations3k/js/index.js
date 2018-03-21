@@ -9,7 +9,7 @@ const app = {
     module1.init();
     module2.init();
     const payment = module1.getMonthlyPayment( 180000, 4.25, 360, 60 );
-    console.log( `Your monthly payment is $${payment}.` );
+    console.log( `Your monthly payment is $${ payment }.` );
   }
 };
 

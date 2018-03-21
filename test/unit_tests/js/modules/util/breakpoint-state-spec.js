@@ -57,8 +57,11 @@ describe( 'breakpoint-state', () => {
   describe( '.isInDesktop()', () => {
     it( 'should determine whether inside desktop breakpoint threshold', () => {
       expect( breakpointState.isInDesktop() ).toBe( true );
-      // TODO: Mock breakpointState.get() to a smaller size so this has false.
-      // expect( breakpointState.isInDesktop() ).toBe( false );
+
+      /* TODO:
+         Mock breakpointState.get() to return a small breakpoint size, so
+         that breakpointState.isInDesktop() returns false and can be tested with
+         expect( breakpointState.isInDesktop() ).toBe( false ); */
     } );
   } );
 
