@@ -8,7 +8,7 @@ from wagtail.wagtailcore.models import PageRevision
 
 import mock
 
-from v1.models import CFGOVPage, BrowsePage, BrowseFilterablePage
+from v1.models import BrowseFilterablePage, BrowsePage, CFGOVPage
 from v1.tests.wagtail_pages import helpers
 from v1.util import util
 
