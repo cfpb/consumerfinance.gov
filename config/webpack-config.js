@@ -143,6 +143,7 @@ const configExports = {
 };
 
 if ( NODE_ENV === 'development' ) {
+  // eslint-disable-next-line guard-for-in
   for ( const key in configExports ) {
     Object.assign( configExports[key], devConf );
   }

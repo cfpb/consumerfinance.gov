@@ -1,6 +1,7 @@
 // Required modules.
 const EventObserver = require( '../../modules/util/EventObserver' );
 
+// eslint-disable-next-line max-statements
 /**
  * BaseTransition
  * @class
@@ -15,7 +16,6 @@ const EventObserver = require( '../../modules/util/EventObserver' );
  *   The classes to apply to this transition.
  * @returns {BaseTransition} An instance.
  */
-// eslint-disable-next-line max-statements
 function BaseTransition( element, classes ) {
   const _classes = classes;
   let _dom;
