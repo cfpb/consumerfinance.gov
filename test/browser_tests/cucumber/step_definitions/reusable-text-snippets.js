@@ -1,35 +1,27 @@
-'use strict';
+const util = require( '../../util/index.js' );
+const shouldShouldnt = util.shouldShouldnt;
 
+const { When, Then } = require( 'cucumber' );
+const { expect } = require( 'chai' );
 
-var util = require( '../../util/index.js' );
-var shouldShouldnt = util.shouldShouldnt;
+When( 'there exists a reusable text snippet on this page',
+  function() {
+    const rts = element( by.css( '.m-reusable-text-snippet' ) );
+    return expect( rts.isPresent() ).to.eventually.equal( true );
+  }
+);
 
-var { defineSupportCode } = require( 'cucumber' );
-var { expect } = require( 'chai' );
+Then( /the snippet output (should|shouldn't) include a slug-style header/,
+  function( includeHeader ) {
+    let rts;
 
-
-defineSupportCode( function( { When, Then } ) {
-
-  When( 'there exists a reusable text snippet on this page',
-    function() {
-      var rts = element( by.css( '.m-reusable-text-snippet' ) );
-      return expect( rts.isPresent() ).to.eventually.equal( true );
+    if ( shouldShouldnt( includeHeader ) ) {
+      rts = element.all( by.css( '.m-reusable-text-snippet' ) ).first();
+    } else {
+      rts = element.all( by.css( '.m-reusable-text-snippet' ) ).last();
     }
-  );
 
-  Then( /the snippet output (should|shouldn't) include a slug-style header/,
-    function( includeHeader ) {
-      var rts;
-
-      if ( shouldShouldnt( includeHeader ) ) {
-        rts = element.all( by.css( '.m-reusable-text-snippet' ) ).first();
-      } else {
-        rts = element.all( by.css( '.m-reusable-text-snippet' ) ).last();
-      }
-
-      return expect( rts.element( by.css( '.m-slug-header' ) ).isPresent() )
-             .to.eventually.equal( shouldShouldnt( includeHeader ) );
-    }
-  );
-
-} );
+    return expect( rts.element( by.css( '.m-slug-header' ) ).isPresent() )
+      .to.eventually.equal( shouldShouldnt( includeHeader ) );
+  }
+);

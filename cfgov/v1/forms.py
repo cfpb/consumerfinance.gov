@@ -1,12 +1,15 @@
 from collections import Counter
+
 from django import forms
 from django.db.models import Q
 from django.forms import widgets
+
 from taggit.models import Tag
 
-from .models.base import Feedback
-from v1.util.categories import clean_categories
 from v1.util import ERROR_MESSAGES, ref
+from v1.util.categories import clean_categories
+
+from .models.base import Feedback
 
 
 class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
@@ -88,19 +91,18 @@ class FilterableListForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        self.base_query = kwargs.pop('base_query')
+        self.filterable_pages = kwargs.pop('filterable_pages')
         super(FilterableListForm, self).__init__(*args, **kwargs)
 
-        pages = self.base_query.live()
-        page_ids = pages.values_list('id', flat=True)
-
         clean_categories(selected_categories=self.data.get('categories'))
+
+        page_ids = self.filterable_pages.values_list('id', flat=True)
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
     def get_page_set(self):
         query = self.generate_query()
-        return self.base_query.filter(query).distinct().order_by(
+        return self.filterable_pages.filter(query).distinct().order_by(
             '-date_published'
         )
 

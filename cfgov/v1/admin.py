@@ -2,10 +2,12 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+
 from wagtail.wagtailcore.models import Page
 
 from v1.email import send_password_reset_email
 from v1.models import Contact, Feedback
+
 
 admin.site.register(Contact)
 admin.site.unregister(User)
@@ -30,6 +32,7 @@ class UserAdmin(UserAdmin):
 def feedback_page_title(feedback):
     if feedback.page:
         return feedback.page.title
+
 
 feedback_page_title.short_description = 'Page'
 

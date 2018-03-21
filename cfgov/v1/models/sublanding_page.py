@@ -1,9 +1,5 @@
-import logging
-
 from wagtail.wagtailadmin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface
+    ObjectList, StreamFieldPanel, TabbedInterface
 )
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
@@ -16,8 +12,6 @@ from v1.atomic_elements import molecules, organisms
 from v1.forms import FilterableListForm
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
-
-logger = logging.getLogger(__name__)
 
 
 class SublandingPage(CFGOVPage):
@@ -91,12 +85,11 @@ class SublandingPage(CFGOVPage):
                         and 'archive' not in p.title.lower()]
         posts_list = []
         for page in filter_pages:
-            base_query = AbstractFilterPage.objects.live().filter(
+            eligible_children = AbstractFilterPage.objects.live().filter(
                 CFGOVPage.objects.child_of_q(page)
             )
 
-            logger.info('Filtering by parent {}'.format(page))
-            form = FilterableListForm(base_query=base_query)
+            form = FilterableListForm(filterable_pages=eligible_children)
             for post in form.get_page_set():
                 posts_list.append(post)
         return sorted(posts_list,

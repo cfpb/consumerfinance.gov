@@ -1,5 +1,8 @@
-import mock
+from __future__ import unicode_literals
+
 from django.test import RequestFactory, TestCase
+
+import mock
 
 from v1.handlers.blocks.feedback import FeedbackHandler, get_feedback_type
 
@@ -21,9 +24,31 @@ class TestFeedbackHandler(TestCase):
                                         'radio_intro': None}
         )
 
+    def test_sanitize_referrer(self):
+        """Make sure referrers with non-ascii characters are handled."""
+        page = mock.Mock()
+        page.url = '/es/obtener-respuestas/'
+        page.language = 'es'
+        non_ascii_referrers = [
+            ('http://localhost:8000/es/obtener-respuestas/'
+             'buscar-por-etiqueta/rescisi\xc3\xb3n/'),
+            ('https://www.consumerfinance.gov/es/obtener-respuestas/'
+             'buscar-por-etiqueta/l\xc3\xadnea_de_cr\xc3\xa9dito_personal/')]
+        for referrer in non_ascii_referrers:
+            request = self.factory.get('/')
+            request.META = {'HTTP_REFERER': referrer}
+            handler = FeedbackHandler(page, request, block_value={})
+            sanitized = handler.sanitize_referrer()
+            self.assertNotIn('\xc3', sanitized)
+        misencoded_string = 'https://fake.com/cr\xc3\xb3dito'
+        request = self.factory.get('/')
+        request.META = {'HTTP_REFERER': misencoded_string}
+        handler = FeedbackHandler(page, request, block_value={})
+        sanitized = handler.sanitize_referrer()
+        self.assertEqual(sanitized, 'fake.com/cr%C3%B3dito')
+
     @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.get_response')
-    def test_process_calls_handler_get_response(self,
-                                                mock_get_response):
+    def test_process_calls_handler_get_response(self, mock_get_response):
         mock_get_response.return_value = "Success!"
         msg = self.handler.process(is_submitted=True)
         self.assertEqual(mock_get_response.call_count, 1)
@@ -31,9 +56,8 @@ class TestFeedbackHandler(TestCase):
 
     @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.get_response')
     @mock.patch('v1.handlers.blocks.feedback.FeedbackForm')
-    def test_process_does_not_bind_form_non_submissions(self,
-                                                        mock_form,
-                                                        mock_get_response):
+    def test_process_does_not_bind_form_non_submissions(
+            self, mock_form, mock_get_response):
         self.handler.process(is_submitted=False)
         self.assertEqual(mock_get_response.call_count, 0)
 

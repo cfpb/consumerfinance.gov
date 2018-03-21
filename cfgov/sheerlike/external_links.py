@@ -1,4 +1,5 @@
 import warnings
+from six import string_types as basestring
 
 from django.conf import settings
 

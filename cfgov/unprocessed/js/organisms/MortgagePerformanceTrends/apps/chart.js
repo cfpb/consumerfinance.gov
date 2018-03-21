@@ -1,11 +1,9 @@
-'use strict';
+const ccb = require( 'cfpb-chart-builder' );
+const actions = require( '../actions/chart' );
+const Store = require( '../stores/chart' );
+const utils = require( '../utils' );
 
-var ccb = require( 'cfpb-chart-builder' );
-var actions = require( '../actions/chart' );
-var Store = require( '../stores/chart' );
-var utils = require( '../utils' );
-
-var store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
+const store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
 
 class MortgagePerformanceLineChart {
   constructor( { container } ) {
@@ -47,7 +45,7 @@ MortgagePerformanceLineChart.prototype.eventListeners = function() {
 };
 
 MortgagePerformanceLineChart.prototype.onClick = function( event ) {
-  var change = new Event( 'change' );
+  const change = new Event( 'change' );
   this.$container.querySelector( 'input[name="mp-line-chart_geo"]:checked' ).checked = false;
   this.$form.dispatchEvent( change );
   event.preventDefault();
@@ -55,9 +53,9 @@ MortgagePerformanceLineChart.prototype.onClick = function( event ) {
 
 MortgagePerformanceLineChart.prototype.onChange = function( event ) {
 
-  var action, geoEl, geoType, geoId, geoName;
-  var includeComparison = this.$compare.checked;
-  var abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
+  let action, geoEl, geoType, geoId, geoName;
+  const includeComparison = this.$compare.checked;
+  const abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
 
   switch ( event.target.id ) {
     case 'mp-line-chart_geo-state':
@@ -130,8 +128,8 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
 };
 
 MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state ) {
-  var source;
-  var baseSource = `time-series/${ this.timespan }/national`;
+  let source;
+  const baseSource = `time-series/${ this.timespan }/national`;
   // If the geo hasn't changed, don't re-render the chart.
   if ( prevState.geo.id === state.geo.id && prevState.includeComparison === state.includeComparison ) {
     return;
@@ -160,11 +158,11 @@ MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state 
 };
 
 MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, state ) {
-  var geoType = state.geo.type;
-  var title = this.$container.querySelector( '#mp-state-dropdown-title' );
-  var geo = this.$container.querySelector( `#mp-line-chart-${ geoType }-container` );
-  var containers = this.$container.querySelectorAll( '.mp-line-chart-select-container' );
-  for ( var i = 0; i < containers.length; ++i ) {
+  const geoType = state.geo.type;
+  const title = this.$container.querySelector( '#mp-state-dropdown-title' );
+  const geo = this.$container.querySelector( `#mp-line-chart-${ geoType }-container` );
+  const containers = this.$container.querySelectorAll( '.mp-line-chart-select-container' );
+  for ( let i = 0; i < containers.length; ++i ) {
     utils.hideEl( containers[i] );
   }
   utils.hideEl( this.$container.querySelector( '#mp-state-county-helper-text' ) );
@@ -198,12 +196,12 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
 };
 
 MortgagePerformanceLineChart.prototype.renderChartTitle = function( prevState, state ) {
-  var geoName = state.geo.name;
+  let geoName = state.geo.name;
   // Append the U.S. state if it's a county
   if ( state.geo.type === 'county' ) {
     geoName = `${ geoName }, ${ utils.getCountyState( state.geo.id ) }`;
   }
-  var includeComparison = state.includeComparison;
+  const includeComparison = state.includeComparison;
   if ( geoName ) {
     utils.showEl( this.$chartTitle );
     this.$chartTitleGeo.innerText = geoName;
@@ -223,10 +221,10 @@ MortgagePerformanceLineChart.prototype.renderCounties = function( prevState, sta
   if ( JSON.stringify( prevState.counties ) === JSON.stringify( state.counties ) ) {
     return;
   }
-  state.counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
-  var fragment = document.createDocumentFragment();
+  state.counties.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+  const fragment = document.createDocumentFragment();
   state.counties.forEach( county => {
-    var option = document.createElement( 'option' );
+    const option = document.createElement( 'option' );
     option.value = county.fips;
     option.text = county.name;
     fragment.appendChild( option );
@@ -240,14 +238,14 @@ MortgagePerformanceLineChart.prototype.renderMetros = function( prevState, state
   if ( JSON.stringify( prevState.metros ) === JSON.stringify( state.metros ) ) {
     return;
   }
-  state.metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
-  var fragment = document.createDocumentFragment();
+  state.metros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+  const fragment = document.createDocumentFragment();
   state.metros.forEach( metro => {
     // Remove non-metros (locations with fips ending in -non)
     if ( utils.isNonMetro( metro.fips ) ) {
       return;
     }
-    var option = document.createElement( 'option' );
+    const option = document.createElement( 'option' );
     option.value = metro.fips;
     option.text = metro.name;
     fragment.appendChild( option );
@@ -261,9 +259,9 @@ MortgagePerformanceLineChart.prototype.renderStates = function( prevState, state
   if ( JSON.stringify( prevState.states ) === JSON.stringify( state.states ) ) {
     return;
   }
-  var fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
   state.states.forEach( s => {
-    var option = document.createElement( 'option' );
+    const option = document.createElement( 'option' );
     option.value = s.fips;
     option.text = s.text || s.name;
     option.selected = s.selected;

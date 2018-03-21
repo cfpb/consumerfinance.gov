@@ -229,7 +229,6 @@
 }
 
 .o-bureau-structure_node {
-    .u-webfont-regular();
     position: relative;
     box-sizing: border-box;
     padding: @margin @margin / 2;
@@ -312,12 +311,11 @@
 
     &_name,
     &_title {
-        .u-webfont-regular();
         display: block;
     }
 
     &_name {
-        .u-webfont-medium();
+        font-weight: 500;
     }
 
     + .o-expandable_target {

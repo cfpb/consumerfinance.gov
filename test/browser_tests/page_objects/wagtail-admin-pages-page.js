@@ -1,5 +1,3 @@
-'use strict';
-
 const BasePage = require( './base-page.js' );
 const contentMenu = require(
   '../shared_objects/wagtail-admin-content-menu.js'
@@ -52,8 +50,8 @@ class WagtailAdminPages extends BasePage {
 
   createPage( pageName = 'landing' ) {
     const normalizedPageName = pageName
-                             .toUpperCase()
-                             .replace( /\s/g, '_' );
+      .toUpperCase()
+      .replace( /\s/g, '_' );
     const pageType = PAGE_TYPES[normalizedPageName];
 
     // Add the new page as a child of page ID 3 (the site root).

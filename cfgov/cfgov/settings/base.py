@@ -8,6 +8,7 @@ from unipath import Path
 
 from ..util import admin_emails
 
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
@@ -34,6 +35,7 @@ USE_ETAGS = True
 # Application definition
 
 INSTALLED_APPS = (
+    'permissions_viewer',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',
@@ -77,10 +79,9 @@ INSTALLED_APPS = (
     'sheerlike',
     'legacy',
     'django_extensions',
-    'reversion',
-    'tinymce',
     'jobmanager',
     'wellbeing',
+    'search',
 )
 
 OPTIONAL_APPS = [
@@ -93,17 +94,15 @@ OPTIONAL_APPS = [
      'complaintdatabase', 'complaint_common',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
-    {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
-    {'import': 'eregsip', 'apps': ('eregsip',)},
+    {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
+    {'import': 'regulations3k', 'apps': ('regulations3k',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
+    {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
 ]
 
-if DEPLOY_ENVIRONMENT == 'build':
-    OPTIONAL_APPS += [
-        {'import': 'eregs_core', 'apps': ('eregs_core',)},
-    ]
+POSTGRES_APPS = []
 
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
@@ -118,7 +117,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'v1.middleware.StagingMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
@@ -157,7 +155,7 @@ TEMPLATES = [
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
-                'v1.jinja2tags.images',
+                'v1.jinja2tags.filters',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
@@ -210,11 +208,6 @@ MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
 MEDIA_URL = '/f/'
 
 
-#Enabling compression for use in base.html
-COMPRESS_ENABLED = True
-
-COMPRESS_JS_FILTERS = []
-
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
@@ -245,7 +238,7 @@ EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
 EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
 NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
 FILES_LINK_PATTERN = r'https?:\/\/files\.consumerfinance.gov\/f\/\S+\.[a-z]+'
-DOWNLOAD_LINK_PATTERN = r'(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
+DOWNLOAD_LINK_PATTERN = r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 
 # Wagtail settings
 
@@ -291,9 +284,6 @@ SHEER_ELASTICSEARCH_SETTINGS = \
     }
 
 
-# PDFReactor
-PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
-
 #LEGACY APPS
 
 STATIC_VERSION = ''
@@ -331,10 +321,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'tokenizer': 'lowercase',
                     'filter': ['haystack_edgengram']
                 },
-                'synonym' : {
+                'synonym_en' : {
                     'tokenizer' : 'whitespace',
-                    'filter' : ['synonym']
-                }
+                    'filter' : ['synonyms_en']
+                },
+                'synonym_es' : {
+                    'tokenizer' : 'whitespace',
+                    'filter' : ['synonyms_es']
+                },
             },
             'tokenizer': {
                 'haystack_ngram_tokenizer': {
@@ -347,7 +341,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15,
                     'side': 'front'
-                }
+                },
             },
             'filter': {
                 'haystack_ngram': {
@@ -360,12 +354,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'min_gram': 3,
                     'max_gram': 15
                 },
-                'synonym': {
+                'synonyms_en': {
                     'type': 'synonym',
-                    'synonyms': [
-                        # 'auto,car,vehicle',
-                    ],
-                }
+                    'synonyms_path' : 'analysis/synonyms_en.txt'
+                },
+                'synonyms_es': {
+                    'type': 'synonym',
+                    'synonyms_path' : 'analysis/synonyms_es.txt'
+                },
             }
         }
     }
@@ -386,9 +382,6 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery
-
-GOVDELIVERY_USER = os.environ.get('GOVDELIVERY_USER')
-GOVDELIVERY_PASSWORD = os.environ.get('GOVDELIVERY_PASSWORD')
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
 # LOAD OPTIONAL APPS
@@ -466,8 +459,8 @@ BACKENDS = {
     'diffs': 'regcore.db.django_models.DMDiffs',
 }
 
-# GovDelivery environment variables
-ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
+# Regulations in eRegs that should display the update-in-progress message
+EREGS_REGULATION_UPDATES = ['1002', '1003', '1005', '1010', '1011', '1012', '1013', '1024', '1026']
 
 # Regulations.gov environment variables
 REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
@@ -485,9 +478,6 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         },
     }
 
-
-# Staging site
-STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
 
 # CSP Whitelists
 
@@ -547,7 +537,8 @@ CSP_IMG_SRC = (
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
     'data:',
-    'www.facebook.com')
+    'www.facebook.com',
+    'www.gravatar.com')
 
 # These specify what URL's we allow to appear in frames/iframes
 CSP_FRAME_SRC = (
@@ -577,6 +568,11 @@ CSP_CONNECT_SRC = ("'self'",
 # conditions or an empty dict. If the conditions dict is empty the flag will
 # only be enabled if database conditions are added.
 FLAGS = {
+    # Ask CFPB search spelling correction support
+    # When enabled, spelling suggestions will appear in Ask CFPB search and
+    # will be used when the given search term provides no results.
+	'ASK_SEARCH_TYPOS': {},
+
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
@@ -589,6 +585,9 @@ FLAGS = {
 
     # When enabled, display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
+
+    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
+    'WAGTAIL_COMPANY_SIGNUP': {},
 
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
@@ -608,24 +607,42 @@ FLAGS = {
     # To be enabled when mortgage-performance data visualizations go live
     'MORTGAGE_PERFORMANCE_RELEASE': {},
 
+    # To be enabled when owning-a-home/explore-rates is de-sheered.
+    'OAH_EXPLORE_RATES': {},
+
+    # To be enabled when owning-a-home/closing-disclosure/
+    # and owning-a-home/loan-estimate/ are de-sheered.
+    'OAH_FORM_EXPLAINERS': {},
+
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     'AB_TESTING': {},
 
-    # When enabled, should display the email popup.
-    'EMAIL_POPUP': {},
-
-    # The next version of eRegulations
-    'EREGS20': {
-        'boolean': DEPLOY_ENVIRONMENT == 'build',
-    },
+    # Email popups.
+    'EMAIL_POPUP_OAH': {'boolean': True},
+    'EMAIL_POPUP_DEBT': {'boolean': True},
 
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
 
+    # Search.gov API-based site-search
+    'SEARCH_DOTGOV_API': {},
+
     # The release of the new Financial Coaching pages
     'FINANCIAL_COACHING': {},
+
+    # Teacher's Digital Platform
+    'TDP_RELEASE': {},
+
+    # Ping google on page publication in production only
+    'PING_GOOGLE_ON_PUBLISH': {
+        'boolean': DEPLOY_ENVIRONMENT == 'production'
+    },
+
+    'REGULATIONS3K': {
+        'boolean': DEPLOY_ENVIRONMENT == 'build'
+    }
 }
 
 
@@ -647,3 +664,27 @@ NTP_TIME_SERVER = 'north-america.pool.ntp.org'
 # If server's clock drifts from NTP by more than specified offset
 # (in seconds), check_clock_drift will fail
 MAX_ALLOWED_TIME_OFFSET = 5
+
+# Search.gov values
+SEARCH_DOT_GOV_AFFILIATE = os.environ.get('SEARCH_DOT_GOV_AFFILIATE')
+SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
+
+# We want the ability to serve the latest drafts of some pages on beta.
+# This value is read by v1.wagtail_hooks.
+SERVE_LATEST_DRAFT_PAGES = []
+if DEPLOY_ENVIRONMENT == 'beta':
+    SERVE_LATEST_DRAFT_PAGES = [1288,1286,3273]
+
+# Email popup configuration. See v1.templatetags.email_popup.
+EMAIL_POPUP_URLS = {
+    'debt': [
+        '/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/',
+        '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',
+        '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
+        '/consumer-tools/debt-collection/',
+    ],
+    'oah': [
+        '/owning-a-home/',
+        '/owning-a-home/mortgage-estimate/',
+    ],
+}

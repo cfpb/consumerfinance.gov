@@ -2,27 +2,29 @@
 from __future__ import unicode_literals
 
 import datetime
-import pytz
+import logging
 import re
 import sys
 import time
-import logging
+from six import text_type as unicode
 
-from bs4 import BeautifulSoup as bs
 from django.apps import apps
 from django.core.management import call_command
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from django.template.defaultfilters import slugify
 
-from knowledgebase.models import QuestionCategory as QC
-from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
+
+import pytz
+from bs4 import BeautifulSoup as bs
+from knowledgebase.models import (
+    Audience, EnglishAnswer, Question, QuestionCategory as QC, UpsellItem
+)
+
 from ask_cfpb.models import (
-    Answer,
-    Category,
-    NextStep,
-    SubCategory)
-from ask_cfpb.models import Audience as ASK_audience
+    Answer, Audience as ASK_audience, Category, NextStep, SubCategory
+)
 from v1.util.migrations import get_or_create_page
+
 
 TZ = pytz.timezone('US/Eastern')
 
@@ -572,7 +574,7 @@ def set_featured_ids():
         answer.featured = True
         answer.featured_rank = FEATURED_ANSWER_IDS[answer.id]
         answer.save()
-    print "Marked {} answers as 'featured'".format(featured.count())
+    print("Marked {} answers as 'featured'".format(featured.count()))
 
 
 def run():

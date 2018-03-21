@@ -5,37 +5,28 @@
     - name: Default example
       markup: |
           <aside class="m-featured-menu-content">
-              <div class="m-featured-menu-content_text">
-                  <p class="h4">
-                      <a href="#">
-                          The CFPB: Working for you
-                      </a>
-                  </p>
-                  <p>
-                      Short description.
-                  </p>
-              </div>
-              <a href="#" class="m-featured-menu-content_img">
+              <a class="m-featured-menu-content_link" href="#">
                   <img src="../img/fmc-image-540x300.jpg"
-                       alt="Video image"
+                       alt=""
                        height="150"
                        width="270">
+                  <div>
+                      The CFPB: Working for you
+                  </div>
               </a>
+              <p>
+                  Short description.
+              </p>
           </aside>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
           .m-featured-menu-content
-            .m-featured-menu-content_text
-              p.h4
-                a
-              p
-            a.m-featured-menu-content_img
+            a.m-featured-menu-content_link
               img
-      notes:
-        - "The m-featured-menu-content__horizontal
-           can be added to change the layout side-by-side text and image."
+              div
+            p
   tags:
     - cfgov-molecules
 */
@@ -45,26 +36,9 @@
 
     padding: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
-    &_text {
-        display: table-footer-group;
-    }
-
-    &_img {
-        // Width of Featured Menu Content image.
-        min-width: 270px;
-        display: table-header-group;
-    }
-
-    &__horizontal {
-        .m-featured-menu-content_text,
-        .m-featured-menu-content_img {
-            display: table-cell;
-            vertical-align: top;
-        }
-
-        .m-featured-menu-content_text {
-            padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        }
+    &_link {
+        .h4();
+        display: block;
     }
 
     .respond-to-max( @bp-med-max, {

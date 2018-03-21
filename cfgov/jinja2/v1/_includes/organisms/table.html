@@ -41,7 +41,6 @@
 {% macro _render_cell(cell) %}
     {{ parse_links(cell or '&nbsp;') | safe | trim | linebreaksbr }}
 {% endmacro %}
-
 <table class="o-table
               {{- ' o-table__row-links' if value.row_links else '' -}}
               {{- ' o-table__stack-on-small' if value.is_stacked else '' -}}

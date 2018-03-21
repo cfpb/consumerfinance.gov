@@ -1,5 +1,8 @@
 from __future__ import unicode_literals
 
+from six.moves import range
+
+
 CHUNK_SIZE = 20000  # We chunk data into rows of 20,000 entries for speed
 
 DROP_AND_CREATE_STRING = """-- MySQL dump 10.13  Distrib 5.7.17
@@ -72,7 +75,7 @@ UNLOCK TABLES;
 
 
 def chunk_entries(data, chunk):
-    for i in xrange(0, len(data), chunk):
+    for i in range(0, len(data), chunk):
         yield [row for row in data[i:i + chunk]]
 
 

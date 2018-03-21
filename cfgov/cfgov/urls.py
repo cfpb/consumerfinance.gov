@@ -8,48 +8,56 @@ from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
+
+from wagtail.contrib.wagtailsitemaps.views import sitemap
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
-from wagtail.contrib.wagtailsitemaps.views import sitemap
-
+from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
+from flags.views import FlaggedTemplateView
 
 from ask_cfpb.views import (
-    ask_search,
-    ask_autocomplete,
-    print_answer,
-    redirect_ask_search,
+    ask_autocomplete, ask_search, print_answer, redirect_ask_search,
     view_answer
 )
 from core.views import ExternalURLNoticeView
 from legacy.views import token_provider
 from legacy.views.housing_counselor import (
-    HousingCounselorView, HousingCounselorPDFView
+    HousingCounselorPDFView, HousingCounselorView
 )
-
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
-    change_password,
-    check_permissions,
-    login_with_lockout,
-    password_reset_confirm,
-    welcome)
+    change_password, check_permissions, login_with_lockout,
+    password_reset_confirm, welcome
+)
 from v1.views.documents import DocumentServeView
 
 
 oah = SheerSite('owning-a-home')
 
+
+def flagged_wagtail_template_view(flag_name, template_name):
+    """View that serves Wagtail if a flag is set, and a template if not.
+
+    This uses the wagtail-sharing ServeView to ensure that sharing works
+    properly when viewing the page in Wagtail behind a flag.
+    """
+    return FlaggedTemplateView.as_view(
+        fallback=lambda request: ServeView.as_view()(request, request.path),
+        flag_name=flag_name,
+        template_name=template_name,
+        condition=False
+    )
+
+
 urlpatterns = [
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
-
-    # TODO: Enable search route when search is available.
-    # url(r'^search/$', 'search.views.search', name='search'),
 
     url(r'^home/(?P<path>.*)$',
         RedirectView.as_view(url='/%(path)s', permanent=True)),
@@ -60,14 +68,39 @@ urlpatterns = [
     url(r'^owning-a-home/resources/(?P<path>.*)$',
         RedirectView.as_view(
             url='/static/owning-a-home/resources/%(path)s', permanent=True)),
-
     url(r'^owning-a-home/closing-disclosure/',
-        include(oah.urls_for_prefix('closing-disclosure'))),
+        FlaggedTemplateView.as_view(
+            flag_name='OAH_FORM_EXPLAINERS',
+            template_name='owning-a-home/closing-disclosure/index.html',
+            fallback=SheerTemplateView.as_view(
+                template_engine='owning-a-home',
+                template_name='closing-disclosure/index.html'
+            )
+        ),
+        name='closing-disclosure'
+    ),
     url(r'^owning-a-home/explore-rates/',
-        include(oah.urls_for_prefix('explore-rates'))),
+        FlaggedTemplateView.as_view(
+            flag_name='OAH_EXPLORE_RATES',
+            template_name='owning-a-home/explore-rates/index.html',
+            fallback=SheerTemplateView.as_view(
+                template_engine='owning-a-home',
+                template_name='explore-rates/index.html'
+            )
+        ),
+        name='explore-rates'
+    ),
     url(r'^owning-a-home/loan-estimate/',
-        include(oah.urls_for_prefix('loan-estimate'))),
-
+        FlaggedTemplateView.as_view(
+            flag_name='OAH_FORM_EXPLAINERS',
+            template_name='owning-a-home/loan-estimate/index.html',
+            fallback=SheerTemplateView.as_view(
+                template_engine='owning-a-home',
+                template_name='loan-estimate/index.html'
+            )
+        ),
+        name='loan-estimate'
+    ),
     url(r'^owning-a-home/loan-options/',
         include(oah.urls_for_prefix('loan-options'))),
     url(r'^owning-a-home/loan-options/FHA-loans/',
@@ -76,16 +109,18 @@ urlpatterns = [
         include(oah.urls_for_prefix('loan-options/conventional-loans/'))),
     url(r'^owning-a-home/loan-options/special-loan-programs/',
         include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
-
     url(r'^owning-a-home/mortgage-closing/',
         TemplateView.as_view(
-        template_name='owning-a-home/mortgage-closing/index.html'),
-        name='mortgage-closing'),
+            template_name='owning-a-home/mortgage-closing/index.html'
+        ),
+        name='mortgage-closing'
+    ),
     url(r'^owning-a-home/mortgage-estimate/',
         TemplateView.as_view(
-        template_name='owning-a-home/mortgage-estimate/index.html'),
-        name='mortgage-estimate'),
-
+            template_name='owning-a-home/mortgage-estimate/index.html',
+        ),
+        name='mortgage-estimate'
+    ),
     url(r'^owning-a-home/process/',
         include(oah.urls_for_prefix('process/prepare/'))),
     url(r'^owning-a-home/process/prepare/',
@@ -117,10 +152,6 @@ urlpatterns = [
                       'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
-    url(r'^practitioner-resources/economically-vulnerable/$',
-        TemplateView.as_view(
-            template_name='empowerment/index.html'),
-            name='empowerment'),
     url(r'^fair-lending/$', TemplateView.as_view(
         template_name='fair-lending/index.html'),
         name='fair-lending'),
@@ -138,33 +169,6 @@ urlpatterns = [
                 template_name='students/helping-borrowers-find-'
                               'ways-to-stay-afloat/index.html'),
                 name='students-helping-borrowers'),
-
-    url(r'^practitioner-resources/servicemembers/$', TemplateView.as_view(
-        template_name='service-members/index.html'),
-        name='servicemembers'),
-    url(r'^practitioner-resources/servicemembers/webinars/$',
-        TemplateView.as_view(
-        template_name='service-members/on-demand-forums-and-tools'
-                      '/index.html'),
-        name='servicemembers'),
-    url(r'^practitioner-resources/servicemembers/additionalresources/$',
-        TemplateView.as_view(
-        template_name='service-members/additionalresources/index.html'),
-        name='servicemembers'),
-    url(r'^practitioner-resources/servicemembers/planning/$',
-        TemplateView.as_view(
-        template_name='service-members/planning/index.html'),
-        name='servicemembers-planning'),
-    url(r'^practitioner-resources/servicemembers/planning/'
-         'creativesavingsstrategies/$',
-            TemplateView.as_view(
-                template_name='service-members/planning/'
-                              'creativesavingsstrategies/index.html'),
-                name='servicemembers-planning'),
-    url(r'^practitioner-resources/servicemembers/protecting/$',
-        TemplateView.as_view(
-        template_name='service-members/protecting/index.html'),
-        name='servicemembers-protecting'),
 
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
@@ -289,10 +293,6 @@ urlpatterns = [
     url(r'^oah-api/county/',
         include_if_app_enabled('countylimits', 'countylimits.urls')),
 
-    flagged_url('EREGS20',
-                r'^eregs2/',
-                include_if_app_enabled('eregs_core', 'eregs_core.urls')
-                ),
     url(r'^eregs-api/',
         include_if_app_enabled('regcore', 'regcore.urls')),
     url(r'^eregulations/',
@@ -359,14 +359,6 @@ urlpatterns = [
             url='/practitioner-resources/students/%(path)s',
             permanent=True)),
 
-    # servicemembers redirects
-    url(r'^servicemembers/on-demand-forums-and-tools/$', RedirectView.as_view(
-            url='/practitioner-resources/servicemembers/webinars/',
-            permanent=True)),
-    url(r'^servicemembers/(?P<path>.*)$', RedirectView.as_view(
-            url='/practitioner-resources/servicemembers/%(path)s',
-            permanent=True)),
-
     # ask-cfpb
     url(r'^askcfpb/$',
         RedirectView.as_view(
@@ -412,8 +404,8 @@ urlpatterns = [
     url(r'^es/$', TemplateView.as_view(
                  template_name='/es/index.html')),
 
-    url(r'^es/hogar/$', TemplateView.as_view(
-                 template_name='es/hogar/index.html')),
+    url(r'^es/comprar-casa/$', TemplateView.as_view(
+                 template_name='es/comprar-casa/index.html')),
 
     url(r'^es/nuestra-historia/$', TemplateView.as_view(
                  template_name='es/nuestra-historia/index.html')),
@@ -432,6 +424,19 @@ urlpatterns = [
     ),
 
     url('^sitemap\.xml$', sitemap),
+
+    flagged_url('SEARCH_DOTGOV_API',
+                r'^search/',
+                include('search.urls')),
+
+    flagged_url('TDP_RELEASE',
+                r'^tdp/',
+                include_if_app_enabled('teachers_digital_platform',
+                                       'teachers_digital_platform.urls')),
+
+    flagged_url('REGULATIONS3K',
+                r'^regulations3k/',
+                include_if_app_enabled('regulations3k', 'regulations3k.urls')),
 ]
 
 if settings.ALLOW_ADMIN_URL:
@@ -454,8 +459,6 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^d/admin/(?P<path>.*)$',
             RedirectView.as_view(url='/django-admin/%(path)s',
                                  permanent=True)),
-        url(r'^picard/(?P<path>.*)$',
-            RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
 
         url(r'^tasks/(?P<path>.*)$',
             RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
@@ -464,7 +467,6 @@ if settings.ALLOW_ADMIN_URL:
             change_password,
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
-
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([

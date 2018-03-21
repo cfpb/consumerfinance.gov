@@ -1,10 +1,8 @@
-'use strict';
-
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var GlobalSearch = require( '../molecules/GlobalSearch.js' );
-var MegaMenu = require( '../organisms/MegaMenu.js' );
-var standardType = require( '../modules/util/standard-type' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const GlobalSearch = require( '../molecules/GlobalSearch.js' );
+const MegaMenu = require( '../organisms/MegaMenu.js' );
+const standardType = require( '../modules/util/standard-type' );
 
 /**
  * Header
@@ -18,13 +16,13 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function Header( element ) {
 
-  var BASE_CLASS = 'o-header';
+  const BASE_CLASS = 'o-header';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
-  var _globalSearch;
-  var _megaMenu;
-  var _overlay;
+  let _globalSearch;
+  let _megaMenu;
+  let _overlay;
 
   /**
    * @param {HTMLNode} overlay

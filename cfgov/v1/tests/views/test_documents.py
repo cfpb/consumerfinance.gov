@@ -2,8 +2,10 @@ from django.core.files.base import ContentFile
 from django.core.urlresolvers import resolve, reverse
 from django.http import Http404
 from django.test import TestCase, override_settings
-from mock import Mock, patch
+
 from wagtail.wagtaildocs.models import get_document_model
+
+from mock import Mock, patch
 
 from v1.views.documents import DocumentServeView
 

@@ -2,15 +2,22 @@ from django.http import HttpRequest
 from django.template import engines
 from django.template.response import TemplateResponse
 from django.test import TestCase
+
 from wagtail.wagtailcore.models import Site
 
+from bs4 import BeautifulSoup
+
 from v1 import get_protected_url, parse_links
-from v1.middleware import StagingMiddleware
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 
-class ImportDataTest(TestCase):
+class ParseLinksTests(TestCase):
+    def test_parse_links_returns_beautiful_soup(self):
+        self.assertIsInstance(
+            parse_links('<a href="/something">text</a>'),
+            BeautifulSoup
+        )
 
     def test_external_link(self):
         link = '<a href="https://wwww.google.com">external link/a>'
@@ -29,6 +36,16 @@ class ImportDataTest(TestCase):
         output = str(parse_links(link))
         self.assertNotIn('external-site', output)
         self.assertIn('cf-icon-external-link', output)
+
+    def test_pdf_link_gets_download_icon(self):
+        link = '<a href="/something.pdf">link</a>'
+        parsed = str(parse_links(link))
+        self.assertIn('cf-icon-download', parsed)
+
+    def test_different_case_pdf_link_gets_download_icon(self):
+        link = '<a href="/something.PDF">link</a>'
+        parsed = str(parse_links(link))
+        self.assertIn('cf-icon-download', parsed)
 
 
 class GetProtectedUrlTestCase(TestCase):
@@ -79,7 +96,4 @@ class GetProtectedUrlTestCase(TestCase):
         request = HttpRequest()
         request.META['SERVER_NAME'] = hostname
         request.site = Site.objects.get(hostname=hostname)
-
-        StagingMiddleware().process_request(request)
-
         return request

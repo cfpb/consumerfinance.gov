@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
+import json
 
 from django.test import TestCase
-from mock import patch
 
-import json
+from mock import patch
 
 from alerts.mattermost_alert import MattermostAlert
 

@@ -74,8 +74,6 @@
 */
 
 .m-list_link {
-    .u-webfont-medium();
-
     &.m-list_link__phone {
         .respond-to-min(@bp-sm-min, {
             .u-link__colors(@black);
@@ -83,6 +81,7 @@
         });
     }
 }
+
 
 /* topdoc
   name: Base styles for definition lists
@@ -128,26 +127,6 @@ p:last-child,
 ul:last-child,
 .m-list__links .m-list_item:last-child {
     margin-bottom: 0;
-}
-
-/* topdoc
-  name: Adjustments to meta-header
-  family: cf-typography
-  notes:
-    - "Changes to meta-header to be ported to cf-typography to allow better adjustments on mobile"
-    - "Changes to better control spacing when a category isn't set"
-  tags:
-    - cf-typography
-*/
-
-.m-meta-header {
-    overflow: auto;
-}
-
-.m-meta-header_right {
-    .respond-to-max(@bp-sm-max, {
-        margin-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-    });
 }
 
 /* topdoc

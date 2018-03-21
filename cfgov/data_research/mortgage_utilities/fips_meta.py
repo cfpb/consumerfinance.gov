@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 import logging
 
 from django.conf import settings
+
 import unicodecsv
+
 
 PROJECT_ROOT = settings.PROJECT_ROOT
 FIPS_DATA_PATH = (
@@ -89,6 +91,7 @@ class FipsMeta(object):
         self.threshold_count = None
         self.created = 0  # final 2 can serve as a global counters
         self.updated = 0
+
 
 FIPS = FipsMeta()
 

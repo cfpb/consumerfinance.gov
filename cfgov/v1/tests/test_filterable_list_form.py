@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from wagtail.wagtailcore.models import Site
 
 from v1.forms import FilterableListForm
@@ -12,8 +13,8 @@ from v1.util.categories import clean_categories
 class TestFilterableListForm(TestCase):
 
     def setUpFilterableForm(self, data=None):
-        base_query = AbstractFilterPage.objects.live()
-        form = FilterableListForm(base_query=base_query)
+        filterable_pages = AbstractFilterPage.objects.live()
+        form = FilterableListForm(filterable_pages=filterable_pages)
         form.is_bound = True
         form.cleaned_data = data
         return form

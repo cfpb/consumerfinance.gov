@@ -1,13 +1,15 @@
 import json
 import re
+from urllib import urlencode
 
 from django.core.urlresolvers import reverse
 from django.http import Http404, QueryDict
-from django.test import RequestFactory, TestCase
-from mock import Mock, call, patch
-from requests_toolbelt.multipart.encoder import MultipartEncoder
-from urllib import urlencode
+from django.test import RequestFactory, TestCase, override_settings
 
+from mock import Mock, patch
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+
+from core.govdelivery import MockGovDelivery
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment,
     submit_comment
@@ -53,18 +55,7 @@ class GovDeliverySubscribeTest(TestCase):
     def check_post(self, post, response_check, ajax=False):
         response_check(self.post(post, ajax=ajax))
 
-    def mock_govdelivery(self, status_code=200):
-        gd = Mock(set_subscriber_topics=Mock(
-            return_value=Mock(status_code=status_code)
-        ))
-
-        patcher = patch('core.views.GovDelivery', return_value=gd)
-        patcher.start()
-        self.addCleanup(patcher.stop)
-
-        return gd
-
-    def check_subscribe(self, response_check, ajax=False, status_code=200,
+    def check_subscribe(self, response_check, ajax=False,
                         include_answers=False):
         post = {
             'code': 'FAKE_CODE',
@@ -79,19 +70,21 @@ class GovDeliverySubscribeTest(TestCase):
         if include_answers:
             post.update({'questionid_' + q: a for q, a in answers})
 
-        gd = self.mock_govdelivery(status_code=status_code)
         self.check_post(post, response_check, ajax=ajax)
-        gd.set_subscriber_topics.assert_called_with(
-            post['email'],
-            [post['code']],
-            send_notifications=True
-        )
+
+        self.assertEqual(MockGovDelivery.calls[0], (
+            'set_subscriber_topics',
+            (post['email'], [post['code']]),
+            {'send_notifications': True}
+        ))
 
         if include_answers:
-            gd.set_subscriber_answers_to_question.assert_has_calls(
-                [call(post['email'], q, a) for q, a in answers],
-                any_order=True
-            )
+            for i, (q, a) in enumerate(answers):
+                self.assertEqual(MockGovDelivery.calls[i + 1], (
+                    'set_subscriber_answers_to_question',
+                    (post['email'], q, a),
+                    {}
+                ))
 
     def test_missing_email_address(self):
         post = {'code': 'FAKE_CODE'}
@@ -115,11 +108,29 @@ class GovDeliverySubscribeTest(TestCase):
     def test_successful_subscribe_ajax(self):
         self.check_subscribe(self.assertJSONSuccess, ajax=True)
 
-    def test_server_error(self):
-        self.check_subscribe(self.assertRedirectServerError, status_code=500)
+    @override_settings(
+        GOVDELIVERY_API='core.govdelivery.ExceptionMockGovDelivery'
+    )
+    def test_exception(self):
+        self.check_subscribe(self.assertRedirectServerError)
 
+    @override_settings(
+        GOVDELIVERY_API='core.govdelivery.ExceptionMockGovDelivery'
+    )
+    def test_exception_ajax(self):
+        self.check_subscribe(self.assertJSONError, ajax=True)
+
+    @override_settings(
+        GOVDELIVERY_API='core.govdelivery.ServerErrorMockGovDelivery'
+    )
+    def test_server_error(self):
+        self.check_subscribe(self.assertRedirectServerError)
+
+    @override_settings(
+        GOVDELIVERY_API='core.govdelivery.ServerErrorMockGovDelivery'
+    )
     def test_server_error_ajax(self):
-        self.check_subscribe(self.assertJSONError, ajax=True, status_code=500)
+        self.check_subscribe(self.assertJSONError, ajax=True)
 
     def test_setting_subscriber_answers_to_questions(self):
         self.check_subscribe(self.assertRedirectSuccess, include_answers=True)
@@ -166,9 +177,6 @@ class RegsgovCommentTest(TestCase):
             response.content.decode('utf-8'),
             json.dumps(expected)
         )
-
-    def assertJSONSuccess(self, response):
-        return self.assertJSON(response, 'success')
 
     def assertJSONSuccessCommented(self, response):
         return self.assertJSON(response, 'pass', has_tracking_num=True)

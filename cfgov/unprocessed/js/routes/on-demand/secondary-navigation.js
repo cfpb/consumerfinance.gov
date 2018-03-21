@@ -2,13 +2,13 @@
    Scripts for Secondary Navigation organism
    ========================================================================== */
 
-'use strict';
+const SecondaryNavigation = require( '../../organisms/SecondaryNavigation' );
 
-var SecondaryNavigation = require( '../../organisms/SecondaryNavigation' );
+const dom = document.querySelector( '.o-secondary-navigation' );
 
-var dom = document.querySelector( '.o-secondary-navigation' );
-// Check that this script has been delivered to a page that actually
-// has secondary navigation markup.
+/* Check that this script has been delivered to a page that actually
+   has secondary navigation markup. */
 if ( dom ) {
-  var secondaryNavigation = new SecondaryNavigation( dom ).init();
+  const secondaryNavigation = new SecondaryNavigation( dom );
+  secondaryNavigation.init();
 }

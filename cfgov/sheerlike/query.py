@@ -2,18 +2,21 @@ import datetime
 import json
 import os
 from collections import namedtuple
+from six import text_type as unicode
 
-import elasticsearch
-from dateutil import parser
 from django.conf import settings
 from django.utils.datastructures import MultiValueDict as MultiDict
 from django.utils.http import urlencode
+
+import elasticsearch
+from dateutil import parser
 from pytz import timezone
 from unipath import Path
 
 from .filters import filter_dsl_from_multidict
 from .middleware import get_request
 from .templates import _convert_date
+
 
 ALLOWED_SEARCH_PARAMS = (
     'doc_type',
@@ -213,7 +216,7 @@ class Query(object):
         self.json_safe = json_safe
 
     def get_tag_related_documents(self, tags, size=0, additional_args={}):
-        query_file = json.loads(file(self.filename).read())
+        query_file = json.loads(open(self.filename).read())
         doc_type = query_file['query']['doc_type']
         query_dict = {'sort': [{'date': {'order': 'desc'}}]}
 
@@ -224,7 +227,7 @@ class Query(object):
                     {'match': {'tags.lower': tag.lower()}})
 
         else:
-            filtered_query = json.loads(file(
+            filtered_query = json.loads(open(
                 getattr(QueryFinder(), 'filtered_17').filename).read())
             query_dict['query'] = filtered_query
 
@@ -251,7 +254,7 @@ class Query(object):
             size=10,
             pdf_print=False,
             **kwargs):
-        query_file = json.loads(file(self.filename).read())
+        query_file = json.loads(open(self.filename).read())
         query_dict = query_file['query']
 
         if pdf_print:

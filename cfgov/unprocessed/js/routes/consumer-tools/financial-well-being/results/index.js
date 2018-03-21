@@ -1,5 +1,5 @@
-'use strict';
-
-const fwbResults = require( '../../../../apps/financial-well-being/fwb-results' );
+const fwbResults = require(
+  '../../../../../apps/financial-well-being/js/fwb-results'
+);
 
 fwbResults.init();

@@ -53,23 +53,6 @@
         pkg: "devtoolset-2"
         state: present
 
-    # PDFReactor
-    - name: Download PDFReactor
-      get_url: 
-        url: http://download.realobjects.de/PDFreactor_6_3_6828_3_unix_installer.tar.gz 
-        dest: /opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz 
-        force: false
-
-    - name: Untar PDFReactor
-      unarchive: 
-        src: /opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz 
-        dest: /opt 
-        copy: no
-        creates: /opt/.pdfreactor_untarred
-
-    - name: Start PDFReactor service
-      command: /opt/PDFreactor/bin/pdfreactorwebservice start 
-
     # Django Development Setup
     - name: Install virtualenv
       command: "/usr/local/bin/pip install virtualenv"

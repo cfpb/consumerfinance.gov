@@ -1,6 +1,6 @@
 import csv
-from cStringIO import StringIO
-from urllib import urlencode
+from six.moves import cStringIO as StringIO
+from six.moves.urllib.parse import urlencode
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -11,23 +11,25 @@ from django.utils import timezone, translation
 from django.utils.module_loading import import_string
 from django.utils.translation import ugettext_lazy as _
 
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
+    TabbedInterface
+)
+from wagtail.wagtailcore import hooks
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import (
+    Orderable, Page, PageManager, PageQuerySet
+)
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
-from wagtail.wagtailadmin.edit_handlers import (FieldPanel, InlinePanel,
-                                                MultiFieldPanel, ObjectList,
-                                                StreamFieldPanel,
-                                                TabbedInterface)
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import (Orderable, Page, PageManager,
-                                        PageQuerySet)
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtailinventory.helpers import get_page_blocks
 
-from v1 import get_protected_url
+from v1 import blocks as v1_blocks, get_protected_url
 from v1.atomic_elements import molecules, organisms
-from v1.models.snippets import ReusableText, ReusableTextChooserBlock
+from v1.models.snippets import ReusableText
 from v1.util import ref
 
 
@@ -50,6 +52,7 @@ class CFGOVTaggedPages(TaggedItemBase):
 class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
         return PageQuerySet(self.model).order_by('path')
+
 
 CFGOVPageManager = BaseCFGOVPageManager.from_queryset(PageQuerySet)
 
@@ -95,7 +98,7 @@ class CFGOVPage(Page):
         ('sidebar_contact', organisms.SidebarContactInfo()),
         ('rss_feed', molecules.RSSFeed()),
         ('social_media', molecules.SocialMedia()),
-        ('reusable_text', ReusableTextChooserBlock(ReusableText)),
+        ('reusable_text', v1_blocks.ReusableTextChooserBlock(ReusableText)),
     ], blank=True)
 
     # Panels
@@ -147,10 +150,14 @@ class CFGOVPage(Page):
     def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage
 
-        def match_all_topic_tags(queryset, tags):
-            for tag in tags:
-                queryset = queryset.filter(tags__name=tag)
-            return queryset
+        def tag_set(related_page):
+            return set([tag.pk for tag in related_page.tags.all()])
+
+        def match_all_topic_tags(queryset, page_tags):
+            """Return pages that share every one of the current page's tags."""
+            current_tag_set = set([tag.pk for tag in page_tags])
+            return [page for page in queryset
+                    if current_tag_set.issubset(tag_set(page))]
 
         related_types = []
         related_items = {}
@@ -163,7 +170,7 @@ class CFGOVPage(Page):
         if not related_types:
             return related_items
 
-        tags = self.tags.names()
+        tags = self.tags.all()
         and_filtering = block.value['and_filtering']
         specific_categories = block.value['specific_categories']
         limit = int(block.value['limit'])
@@ -173,13 +180,13 @@ class CFGOVPage(Page):
         for parent in related_types:  # blog, newsroom or events
             # Include children of this slug that match at least 1 tag
             children = Page.objects.child_of_q(Page.objects.get(slug=parent))
-            filters = children & Q(('tags__name__in', tags))
+            filters = children & Q(('tags__in', tags))
 
             if parent == 'events':
                 # Include archived events matches
                 archive = Page.objects.get(slug='archive-past-events')
                 children = Page.objects.child_of_q(archive)
-                filters |= children & Q(('tags__name__in', tags))
+                filters |= children & Q(('tags__in', tags))
 
             if specific_categories:
                 # Filter by any additional categories specified
@@ -467,6 +474,8 @@ class Feedback(models.Model):
         for feedback in queryset:
             feedback.submitted_on = "{}".format(feedback.submitted_on.date())
             feedback.comment = feedback.comment.encode('utf-8')
+            if feedback.referrer is not None:
+                feedback.referrer = feedback.referrer.encode('utf-8')
             writer.writerow(
                 ["{}".format(getattr(feedback, heading))
                  for heading in headings]

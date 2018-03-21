@@ -1,5 +1,3 @@
-'use strict';
-
 const envvars = require( '../../config/environment' ).envvars;
 const specsRoot = 'cucumber/features/';
 
@@ -11,16 +9,19 @@ module.exports = {
   specsBasePath: specsRoot + '**/*',
 
   suites: {
+    'apps': [
+      specsRoot + 'suites/apps/**/*.feature'
+    ],
     'default': [
-      specsRoot + 'suites/default/*.feature'
+      specsRoot + 'suites/default/**/*.feature'
     ],
     'wagtail-admin': [
-      'cucumber/features/suites/wagtail-admin/*.feature'
+      specsRoot + 'suites/wagtail-admin/*.feature'
     ]
   },
 
-  // The default window width and height.
-  // Can be overridden with the --windowSize=w,h command-line flag.
+  /* The default window width and height.
+     Can be overridden with the --windowSize=w,h command-line flag. */
   WINDOW_SIZES: {
     DESKTOP: {
       WIDTH:  1200,

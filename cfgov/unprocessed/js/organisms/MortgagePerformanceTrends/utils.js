@@ -1,15 +1,16 @@
-'use strict';
-
 const ajax = require( 'xdr' );
 
 const COUNTIES_URL = '/data-research/mortgages/api/v1/metadata/state_county_meta';
 const METROS_URL = '/data-research/mortgages/api/v1/metadata/state_msa_meta';
 const NON_METROS_URL = '/data-research/mortgages/api/v1/metadata/non_msa_fips';
 const STATES_URL = '/data-research/mortgages/api/v1/metadata/state_meta';
-let counties, metros, nonMetros, states;
+let counties;
+let metros;
+let nonMetros;
+let states;
 let globalZoomLevel = 10;
 
-var utils = {
+const utils = {
 
   /**
    * showEl - Un-hides a page element.
@@ -88,7 +89,7 @@ var utils = {
       return cb( states );
     }
     return ajax( { url: STATES_URL }, function( resp ) {
-      var data = JSON.parse( resp.data );
+      const data = JSON.parse( resp.data );
       cb( data );
     } );
   },
@@ -105,7 +106,7 @@ var utils = {
       return cb( counties );
     }
     return ajax( { url: COUNTIES_URL }, function( resp ) {
-      var data = JSON.parse( resp.data );
+      const data = JSON.parse( resp.data );
       cb( data );
     } );
   },
@@ -122,7 +123,7 @@ var utils = {
       return cb( metros );
     }
     return ajax( { url: METROS_URL }, function( resp ) {
-      var data = JSON.parse( resp.data );
+      const data = JSON.parse( resp.data );
       cb( data );
     } );
   },
@@ -139,7 +140,7 @@ var utils = {
       return cb( nonMetros );
     }
     return ajax( { url: NON_METROS_URL }, function( resp ) {
-      var data = JSON.parse( resp.data );
+      const data = JSON.parse( resp.data );
       cb( data );
     } );
   },
@@ -152,11 +153,11 @@ var utils = {
    * @returns {string} Date in the format Month YYYY.
    */
   getDate: dateString => {
-    var dates = dateString.split( '-' );
+    const dates = dateString.split( '-' );
     if ( dates.length < 2 ) {
       return dateString;
     }
-    var months = [
+    const months = [
       'January',
       'February',
       'March',

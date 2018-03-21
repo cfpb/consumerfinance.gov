@@ -1,13 +1,15 @@
 import json
 import logging
 import os
-import requests
 
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
-from akamai.edgegrid import EdgeGridAuth
 from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
+
+import requests
+from akamai.edgegrid import EdgeGridAuth
+
 
 logger = logging.getLogger(__name__)
 

@@ -1,14 +1,12 @@
-'use strict';
-
 const gulpNotify = require( 'gulp-notify' );
 
 module.exports = function() {
-  var args = Array.prototype.slice.call( arguments );
-  var exitProcessParam = false;
-  var errorParam = args[0] || {};
-  var isWatching = this.tasks &&
-                   this.tasks.browsersync &&
-                   this.tasks.browsersync.done === false;
+  const args = Array.prototype.slice.call( arguments );
+  let exitProcessParam = false;
+  let errorParam = args[0] || {};
+  const isWatching = this.tasks &&
+                     this.tasks.browsersync &&
+                     this.tasks.browsersync.done === false;
 
   if ( errorParam.exitProcess ) {
     exitProcessParam = errorParam.exitProcess;
@@ -26,7 +24,6 @@ module.exports = function() {
   } else {
 
     // Keep gulp from hanging on this task.
-    this.emit( 'end' );
+    this.process.emit( 'end' );
   }
-
 };

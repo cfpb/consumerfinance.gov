@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.test import RequestFactory, TestCase
 
@@ -20,7 +21,9 @@ class TestIssuerSearch(TestCase):
 
     def test_issuer_no_agreements(self):
         Issuer.objects.create(name='A & B Bank', slug='a-b-bank')
-        response = issuer_search(self.request, 'a-b-bank')
+        response = self.client.get(
+            reverse('issuer_search', kwargs={'issuer_slug': 'a-b-bank'})
+        )
         self.assertContains(response, 'A &amp; B Bank')
 
     def test_issuer_has_agreements(self):
@@ -34,14 +37,18 @@ class TestIssuerSearch(TestCase):
                 size=0
             )
 
-        response = issuer_search(self.request, 'a-b-bank')
+        response = self.client.get(
+            reverse('issuer_search', kwargs={'issuer_slug': 'a-b-bank'})
+        )
         self.assertContains(response, 'agreement1.pdf')
         self.assertContains(response, 'agreement2.pdf')
 
     def test_multiple_issuers_with_same_slug_no_agreements_uses_latest(self):
         Issuer.objects.create(name='A & B Bank', slug='a-b-bank')
         Issuer.objects.create(name='A - B Bank', slug='a-b-bank')
-        response = issuer_search(self.request, 'a-b-bank')
+        response = self.client.get(
+            reverse('issuer_search', kwargs={'issuer_slug': 'a-b-bank'})
+        )
         self.assertContains(response, 'A - B Bank')
 
     def test_multiple_issuers_with_same_slug_uses_latest_agreement(self):
@@ -54,5 +61,7 @@ class TestIssuerSearch(TestCase):
         )
 
         Issuer.objects.create(name='A - B Bank', slug='a-b-bank')
-        response = issuer_search(self.request, 'a-b-bank')
+        response = self.client.get(
+            reverse('issuer_search', kwargs={'issuer_slug': 'a-b-bank'})
+        )
         self.assertContains(response, 'A &amp; B Bank')

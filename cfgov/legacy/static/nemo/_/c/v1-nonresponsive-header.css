@@ -834,22 +834,6 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
     width: 237px;
     vertical-align: middle;
 }
-.o-header_logo noscript .o-header_logo-img {
-    display: none;
-}
-.no-js noscript .o-header_logo-img {
-    display: block;
-    margin-bottom: 10px;
-    margin-top: 0;
-    padding-top: 10px;
-}
-
-@media only all and (max-width:56.25em) {
-
-    .no-js noscript .o-header_logo-img {
-        padding-left: 10px;
-    }
-}
 
 .o-mega-menu_content-item {
     margin-bottom: 0;

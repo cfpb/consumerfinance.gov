@@ -1,12 +1,14 @@
 from __future__ import unicode_literals
 
 import datetime
-import HTMLParser
+from six.moves import html_parser as HTMLParser
 
 from django.utils import html
+
 import unicodecsv
 
 from ask_cfpb.models import Answer
+
 
 html_parser = HTMLParser.HTMLParser()
 

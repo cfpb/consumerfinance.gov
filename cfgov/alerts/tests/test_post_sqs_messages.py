@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from mock import patch
 
 import github3
+from mock import patch
 
 from alerts.github_alert import GithubAlert
 from alerts.mattermost_alert import MattermostAlert
@@ -40,6 +40,16 @@ class TestPostSQSMessages(TestCase):
             body='Test Job # 1234 - Failed'
         )
         mattermost_post.assert_called_once_with(
-            text=('Alert: Test Job # 1234 - Failed. '
+            text=('Alert: Test Job # 1234. '
                   'Github issue at https://github.com/foo/bar/issues/42')
+        )
+
+    @patch('alerts.mattermost_alert.MattermostAlert.post',
+           side_effect=Exception)
+    @patch('alerts.github_alert.GithubAlert.post')
+    def test_mattermost_failure_ignored(self, gh, mm):
+        process_sqs_message(
+            {'Body': 'Test Job #1234 - Failed'},
+            GithubAlert({}),
+            MattermostAlert({})
         )

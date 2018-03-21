@@ -1,14 +1,14 @@
 import random
 
-from BeautifulSoup import BeautifulSoup
 from django.core.paginator import Page
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.template import Context, Template
 from django.test import TestCase
-from mock import patch
 
 from agreements import models
+from bs4 import BeautifulSoup
+from mock import patch
 
 
 def agreement_factory(**kwargs):
@@ -230,6 +230,6 @@ class TemplateTags(TestCase):
         t = Template("{% load agreements_extras %}" +
                      "{% issuer_select id %}")
         soup = BeautifulSoup(t.render(Context({'id': selected.slug})))
-        option = soup.findAll('option', selected='selected')
+        option = soup.find_all('option', selected=True)
         self.assertTrue(len(option) == 1)
         self.assertTrue(selected.name in option[0])

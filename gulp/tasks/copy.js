@@ -1,8 +1,5 @@
-'use strict';
-
 const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
-const gulpReplace = require( 'gulp-replace' );
 const configCopy = require( '../config' ).copy;
 const handleErrors = require( '../utils/handle-errors' );
 const browserSync = require( 'browser-sync' );
@@ -29,34 +26,14 @@ gulp.task( 'copy:icons', () => {
   return _genericCopy( icons.src, icons.dest );
 } );
 
-gulp.task( 'copy:codeJson', () => {
-  const codeJson = configCopy.codejson;
-  return _genericCopy( codeJson.src, codeJson.dest );
+gulp.task( 'copy:jsonCode', () => {
+  const jsonCode = configCopy.jsonCode;
+  return _genericCopy( jsonCode.src, jsonCode.dest );
 } );
 
-gulp.task( 'copy:vendorfonts', () => {
-  const vendorFonts = configCopy.vendorFonts;
-  return _genericCopy( vendorFonts.src, vendorFonts.dest );
-} );
-
-gulp.task( 'copy:vendorcss', () => {
-  const vendorCss = configCopy.vendorCss;
-  return gulp.src( vendorCss.src )
-    .pipe( gulpChanged( vendorCss.dest ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpReplace(
-      /url\(".\/ajax-loader.gif"\)/ig,
-      'url("/img/ajax-loader.gif")'
-    ) )
-    .pipe( gulp.dest( vendorCss.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
-} );
-
-gulp.task( 'copy:vendorimg', () => {
-  const vendorImg = configCopy.vendorImg;
-  return _genericCopy( vendorImg.src, vendorImg.dest );
+gulp.task( 'copy:jsonKBYO', () => {
+  const jsonKBYO = configCopy.jsonKBYO;
+  return _genericCopy( jsonKBYO.src, jsonKBYO.dest );
 } );
 
 gulp.task( 'copy:timelinejs', () => {
@@ -80,10 +57,8 @@ gulp.task( 'copy:vendorjs', () => {
 gulp.task( 'copy',
   [
     'copy:icons',
-    'copy:codeJson',
-    'copy:vendorfonts',
-    'copy:vendorcss',
-    'copy:vendorimg',
+    'copy:jsonCode',
+    'copy:jsonKBYO',
     'copy:vendorjs',
     'copy:timelinejs',
     'copy:lightbox2'

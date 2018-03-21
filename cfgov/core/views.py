@@ -1,21 +1,23 @@
 import json
 import logging
 
-import requests
 from django.conf import settings
 from django.contrib import messages
-from django.http import (Http404, JsonResponse)
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
-from govdelivery.api import GovDelivery
+
+import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.forms import ExternalURLForm
+from core.govdelivery import get_govdelivery_api
 from core.utils import extract_answers_from_request
+
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +46,8 @@ def govdelivery_subscribe(request):
                 redirect('govdelivery:user_error')
     email_address = request.POST['email']
     codes = request.POST.getlist('code')
-    gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
+
+    gd = get_govdelivery_api()
     try:
         subscription_response = gd.set_subscriber_topics(
             email_address,

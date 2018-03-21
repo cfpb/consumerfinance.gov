@@ -1,13 +1,15 @@
 import datetime
-import mock
 
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
+
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Site
+
+import mock
 
 from v1.models import BrowsePage, CFGOVPage, Feedback
 from v1.tests.wagtail_pages.helpers import save_new_page

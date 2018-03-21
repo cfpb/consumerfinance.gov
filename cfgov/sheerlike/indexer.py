@@ -6,6 +6,7 @@ import sys
 from collections import OrderedDict
 
 from django.conf import settings
+
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 from unipath import Path
@@ -33,7 +34,7 @@ class ContentProcessor(object):
 
     def mapping(self):
         if 'mappings' in self.kwargs:
-            with file(self.kwargs['mappings']) as mapping_json:
+            with open(self.kwargs['mappings']) as mapping_json:
                 return json.load(mapping_json)
         else:
             return None
@@ -122,7 +123,7 @@ def index(args, options):
     # reindex, we're expected to reindex everything. Delete the existing index.
     if not options.get('processors') and options.get(
             'reindex') and es.indices.exists(index_name):
-        print "reindexing %s" % index_name
+        print("reindexing {}".format(index_name))
         es.indices.delete(index_name)
 
     # If the index doesn't exist, create it.

@@ -1,0 +1,10 @@
+############################################
+# Production DB location for refresh-data.sh
+############################################
+# CFGOV_PROD_DB_LOCATION=''
+
+########################################
+# Search.gov affiliate id and access key
+########################################
+# SEARCH_DOT_GOV_AFFILIATE=''
+# SEARCH_DOT_GOV_ACCESS_KEY=''

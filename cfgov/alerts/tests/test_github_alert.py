@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from mock import patch
 
 import github3
+from mock import patch
 
 from alerts.github_alert import GithubAlert
 
@@ -68,7 +68,6 @@ class TestGithubAlert(TestCase):
             title=self.text,
             body=self.text,
             labels=[
-                'Maintenance and Response',
                 'alert'
             ],
         )

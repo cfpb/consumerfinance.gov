@@ -3,7 +3,8 @@ import unittest
 from django.test import TestCase
 
 from core.utils import (
-    NoMigrations, extract_answers_from_request, format_file_size)
+    NoMigrations, extract_answers_from_request, format_file_size
+)
 
 
 class FakeRequest(object):
@@ -24,8 +25,8 @@ class ExtractAnswersTest(TestCase):
                                'questionid_first': 'some_answer',
                                'questionid_another': 'another_answer'})
         result = extract_answers_from_request(request)
-        assert sorted(result) == [('another', 'another_answer'),
-                                  ('first', 'some_answer')]
+        assert result == [('another', 'another_answer'),
+                          ('first', 'some_answer')]
 
 
 class TestNoMigrations(TestCase):

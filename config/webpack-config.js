@@ -2,9 +2,10 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-'use strict';
 
 const BROWSER_LIST = require( '../config/browser-list-config' );
+const envVars = require( '../config/environment' ).envvars;
+const NODE_ENV = envVars.NODE_ENV;
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
@@ -12,33 +13,34 @@ const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
 
-// Commmon webpack 'module' option used in each configuration.
-// Runs code through Babel and uses global supported browser list.
+/* Commmon webpack 'module' option used in each configuration.
+   Runs code through Babel and uses global supported browser list. */
 const COMMON_MODULE_CONFIG = {
-  loaders: [ {
+  rules: [ {
     test: /\.js$/,
-    loaders: [ {
+    exclude: {
+      test: /node_modules/,
+
+      /* The below regex will capture all node modules that start with `cf`
+        or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/. */
+      exclude: /node_modules\/(?:cf.+|atomic-component)/
+    },
+    use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
-        presets: [ [ 'env', {
+        presets: [ [ 'babel-preset-env', {
           targets: {
             browsers: BROWSER_LIST.LAST_2_IE_9_UP
           },
           debug: true
         } ] ]
       }
-    } ],
-    exclude: {
-      test: /node_modules/,
-      // The below regex will capture all node modules that start with `cf`
-      // or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/.
-      exclude: /node_modules\/(?:cf.+|atomic-component)/
     }
   } ]
 };
 
- // Set warnings to true to show linter-style warnings.
- // Set mangle to false and beautify to true to debug the output code.
+/* Set warnings to true to show linter-style warnings.
+   Set mangle to false and beautify to true to debug the output code. */
 const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
   parallel: true,
   uglifyOptions: {
@@ -54,13 +56,14 @@ const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
 } );
 
 
-const COMMON_CHUNK_CONFIG = new webpack.optimize.CommonsChunkPlugin( {
+const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
   name: COMMON_BUNDLE_NAME
 } );
 
 
 const commonConf = {
   module: COMMON_MODULE_CONFIG,
+  mode: 'production',
   output: {
     filename: '[name]'
   },
@@ -71,6 +74,7 @@ const commonConf = {
 
 const externalConf = {
   module: COMMON_MODULE_CONFIG,
+  mode: 'production',
   output: {
     filename: 'external-site.js'
   },
@@ -81,6 +85,7 @@ const externalConf = {
 
 const modernConf = {
   cache: true,
+  mode: 'production',
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: '[name]'
@@ -95,12 +100,13 @@ const onDemandHeaderRawConf = {
   module: COMMON_MODULE_CONFIG
 };
 
-const owningAHomeConf = {
+const appsConf = {
   cache: true,
   module: COMMON_MODULE_CONFIG,
+  mode: 'production',
   output: {
     filename: '[name]',
-    jsonpFunction: 'OAH'
+    jsonpFunction: 'apps'
   },
   plugins: [
     COMMON_CHUNK_CONFIG,
@@ -110,6 +116,7 @@ const owningAHomeConf = {
 
 const spanishConf = {
   module: COMMON_MODULE_CONFIG,
+  mode: 'production',
   output: {
     filename: 'spanish.js'
   },
@@ -118,11 +125,28 @@ const spanishConf = {
   ]
 };
 
-module.exports = {
+const devConf = {
+  devtool: 'inline-source-map',
+  mode: 'development',
+  module: COMMON_MODULE_CONFIG,
+  plugins: []
+};
+
+const configExports = {
   commonConf,
+  devConf,
   externalConf,
   modernConf,
   onDemandHeaderRawConf,
-  owningAHomeConf,
+  appsConf,
   spanishConf
 };
+
+if ( NODE_ENV === 'development' ) {
+  // eslint-disable-next-line guard-for-in
+  for ( const key in configExports ) {
+    Object.assign( configExports[key], devConf );
+  }
+}
+
+module.exports = configExports;

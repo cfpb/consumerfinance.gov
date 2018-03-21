@@ -7,6 +7,7 @@ import time
 import requests
 from bs4 import BeautifulSoup as bs
 
+
 logger = logging.getLogger('static_asset_smoke_tests')
 logger.setLevel(logging.ERROR)
 shell_log = logging.StreamHandler()
@@ -68,6 +69,7 @@ def check_static(url):
     else:
         return ("\x1B[32m{} static links passed "
                 "for {}\x1B[0m\n".format(count, url))
+
 
 if __name__ == '__main__':
     fail = False

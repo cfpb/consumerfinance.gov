@@ -5,16 +5,27 @@ dist: trusty
 python:
   - "2.7"
 
-addons:
-  chrome: beta
-
 cache:
   pip: true
   directories:
     - node_modules
+    # App's may have their own node_modules directory and should be listed here
+    # in the format cfgov/unprocessed/apps/[namespace]/node_modules
+    # If they are not listed here the caching mechanism will falsely see the
+    # main node_modules directory as being cached and never run npm install,
+    # which also installs app's node_modules.
+    - cfgov/unprocessed/apps/owning-a-home/node_modules
+    - cfgov/unprocessed/apps/regulations3k/node_modules
 
 install:
-  - ./install_travis.sh
+  - ./travis_install.sh
+
+branches:
+  only:
+    - master
+
+script:
+  - ./travis_run.sh
 
 env:
   global:
@@ -23,14 +34,22 @@ env:
     - DJANGO_STAGING_HOSTNAME=content.localhost
     - COVERALLS_PARALLEL=true
 
-  matrix:
-    - RUNTEST=frontend
-    - RUNTEST=backend
-    - RUNTEST=acceptance
-
-branches:
-  only:
-    - master
-
-script:
-  - ./run_travis.sh
+jobs:
+  fast_finish: true
+  include:
+    - stage: run tests
+      env: RUNTEST=frontend
+    - env: RUNTEST=backend
+    - stage: Update documentation
+      script:
+        - pip install virtualenv virtualenvwrapper
+        - source activate-virtualenv.sh
+        - pip install -r requirements/manual.txt
+        - mkdocs build
+      deploy:
+        provider: pages
+        local_dir: site
+        skip-cleanup: true
+        github_token: $GITHUB_TOKEN
+        on:
+          branch: master

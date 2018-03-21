@@ -1,13 +1,16 @@
+from __future__ import unicode_literals
+
 import logging
+import os
 
 from django.utils.encoding import force_text
 from django.views.debug import get_exception_reporter_filter
 
-from alerts.github_alert import GithubAlert
+from alerts.sqs_queue import SQSQueue
 
 
 class CFGovErrorHandler(logging.Handler):
-    """Logging handler that posts errors to GitHub.
+    """Logging handler that posts errors to our SQS queue.
 
     Based on django.utils.log.AdminEmailHandler.
 
@@ -16,17 +19,22 @@ class CFGovErrorHandler(logging.Handler):
 
     https://docs.djangoproject.com/en/1.8/howto/error-reporting/#filtering-sensitive-information
     """
+
+    def __init__(self):
+        logging.Handler.__init__(self)
+        self.sqs_queue = SQSQueue(
+            queue_url=os.environ['AWS_SQS_QUEUE_URL'],
+            credentials={
+                'access_key': os.environ['AWS_SQS_ACCESS_KEY_ID'],
+                'secret_key': os.environ['AWS_SQS_SECRET_ACCESS_KEY'],
+            }
+        )
+
     def emit(self, record):
         title = self.format_title(record)
         body = self.format_body(record)
-
-        github_api = GithubAlert(credentials={})
-        github_api.post(title=title,
-                        body=body,
-                        labels=[
-                            'logging',
-                            'Maintenance and Response'
-                        ])
+        message = '{title} - {body}'.format(title=title, body=body)
+        self.sqs_queue.post(message=message)
 
     def format_title(self, record):
         return record.getMessage()

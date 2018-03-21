@@ -15,9 +15,9 @@ init() {
   source cli-flag.sh 'Front end' $1
 
   if [ -f "package-lock.json" ]; then
-    DEP_CHECKSUM=$(cat package-lock.json package.json | shasum -a 256)
+    DEP_CHECKSUM=$(cat package*.json cfgov/unprocessed/apps/**/package*.json | shasum -a 256)
   else
-    DEP_CHECKSUM=$(cat package.json | shasum -a 256)
+    DEP_CHECKSUM=$(cat package.json cfgov/unprocessed/apps/**/package.json | shasum -a 256)
   fi
 
   if [[ "$(node -v)" != 'v8.'* ]]; then
@@ -44,8 +44,7 @@ clean() {
 install() {
   echo 'Installing front-end dependencies…'
 
-  if [ "$cli_flag" = "development" ] ||
-     [ "$cli_flag" = "test" ]; then
+  if [ "$cli_flag" = "development" ]; then
 
     npm install -d --loglevel warn
 

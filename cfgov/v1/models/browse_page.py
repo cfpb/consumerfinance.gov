@@ -1,22 +1,20 @@
 from django.db import models
+
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface
+    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailcore import blocks
 
 from data_research.blocks import (
-    ConferenceRegistrationForm, MortgageDataDownloads)
+    ConferenceRegistrationForm, MortgageDataDownloads
+)
 from jobmanager.models import JobListingTable
-
-from .. import blocks as v1_blocks
-from ..atomic_elements import molecules, organisms
-from ..util.util import get_secondary_nav_items
-from .base import CFGOVPage
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.models.base import CFGOVPage
+from v1.util.util import get_secondary_nav_items
 
 
 class BrowsePage(CFGOVPage):

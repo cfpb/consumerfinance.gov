@@ -1,52 +1,43 @@
 from __future__ import unicode_literals
 
 import datetime
-from dateutil import parser
-import mock
-from mock import mock_open, patch
 import StringIO
 import unittest
 
 import django
-from model_mommy import mommy
+
+import mock
 import unicodecsv
+from dateutil import parser
+from mock import mock_open, patch
+from model_mommy import mommy
 
 from data_research.models import (
-    MortgageMetaData, MortgageDataConstant,
-    County, CountyMortgageData,
-    MetroArea, MSAMortgageData, NonMSAMortgageData,
-    State, StateMortgageData,
-    NationalMortgageData,
-    validate_counties)
-from data_research.mortgage_utilities.fips_meta import (
-    validate_fips)
+    County, CountyMortgageData, MetroArea, MortgageDataConstant,
+    MortgageMetaData, MSAMortgageData, NationalMortgageData,
+    NonMSAMortgageData, State, StateMortgageData, validate_counties
+)
+from data_research.mortgage_utilities.fips_meta import validate_fips
 from data_research.mortgage_utilities.sql_utils import (
-    assemble_insertions,
-    chunk_entries)
+    assemble_insertions, chunk_entries
+)
 from data_research.scripts.export_public_csvs import (
-    export_downloadable_csv,
-    round_pct, row_starter,
-    run as run_export,
-    save_metadata)
+    export_downloadable_csv, round_pct, row_starter, run as run_export,
+    save_metadata
+)
 from data_research.scripts.load_mortgage_aggregates import (
-    load_msa_values,
-    load_national_values,
-    load_non_msa_state_values,
-    load_state_values,
-    merge_the_dades,
-    update_sampling_dates,
-    run as run_aggregates)
+    load_msa_values, load_national_values, load_non_msa_state_values,
+    load_state_values, merge_the_dades, run as run_aggregates,
+    update_sampling_dates
+)
 from data_research.scripts.load_mortgage_performance_csv import load_values
 from data_research.scripts.source_to_dump import (
-    update_through_date_constant,
-    convert_row_to_sql_tuple,
-    dump_as_csv,
-    dump_as_sql,
-    create_dump,
-    run as run_source_to_dump)
+    convert_row_to_sql_tuple, create_dump, dump_as_csv, dump_as_sql,
+    run as run_source_to_dump, update_through_date_constant
+)
 from data_research.scripts.update_county_msa_meta import (
-    run as run_update,
-    update_state_to_geo_meta)
+    run as run_update, update_state_to_geo_meta
+)
 
 
 STARTING_DATE = datetime.date(2008, 1, 1)

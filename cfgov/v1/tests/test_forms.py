@@ -1,7 +1,8 @@
 import datetime
 
-import mock
 from django.test import TestCase
+
+import mock
 
 from v1.forms import FilterableDateField, FilterableListForm
 

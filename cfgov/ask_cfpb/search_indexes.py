@@ -1,8 +1,9 @@
 from haystack import indexes
+
+from ask_cfpb.models import Category, EnglishAnswerProxy, SpanishAnswerProxy
 from search import fields
 
-from ask_cfpb.models import (
-    Category, EnglishAnswerProxy, SpanishAnswerProxy)
+
 # AnswerTagProxy,
 
 
@@ -52,6 +53,7 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
 
 class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
     text = fields.CharFieldWithSynonyms(
+        language='es',
         document=True,
         use_template=True,
         boost=10.0)
