@@ -5,7 +5,7 @@ frontend() {
     npm install -g gulp-cli
 
     chmod +x ./frontend.sh
-    ./frontend.sh test
+    ./frontend.sh development
 }
 
 # Install backend dependencies

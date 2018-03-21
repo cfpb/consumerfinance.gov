@@ -4,7 +4,7 @@
  *
  * To Reproduce:
  * - Edit webpack-config.js to remove banner and un-uglify
- * - Remove everything but header.js and focus-target in main.js
+ * - Remove everything but header.js
  * - Edit any functions that check for breakpoints like `isInDesktop` to return desktop only JS
  * - Run gulp and paste below.
  *

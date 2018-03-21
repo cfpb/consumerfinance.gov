@@ -1,7 +1,10 @@
+{#
+    This is the base template for the Spanish-language consumerfinance.gov.
+#}
 {% extends 'base-common.html' %}
 
 {%- block title -%}
-    {%- if self.babel_title() -%} 
+    {%- if self.babel_title() -%}
         {{ self.babel_title() | trim }}
     {%- endif %}
 {%- endblock title -%}
@@ -99,7 +102,7 @@
  ============= -->
 
  {% block ask_search %}{% endblock %}
- 
+
  {% block babel_content %}{% endblock %}
 
  <div class="ac-search full-bleed full-bleed-padded s-show-on-small">
