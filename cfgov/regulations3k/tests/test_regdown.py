@@ -1,5 +1,6 @@
 import unittest
 
+import markdown
 from regulations3k.regdown import regdown
 
 
@@ -35,3 +36,11 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             '<p id="725445113243d57f132b6408fa8583122d2641e591a9001f04fcde08">'
             'This is a paragraph with a label.</p>'
         )
+
+    def test_makeExtension(self):
+        """ Test that Markdown can load our extension from a string """
+        try:
+            markdown.Markdown(extensions=['regulations3k.regdown'])
+        except AttributeError as e:
+            self.fail('Markdown failed to load regdown extension: '
+                      '{}'.format(e.message))

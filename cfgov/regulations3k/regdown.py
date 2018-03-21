@@ -28,7 +28,7 @@ class LabeledParagraphProcessor(ParagraphProcessor):
     This processor entirely replaces the standard ParagraphProcessor in
     order to ensure that all paragraphs are labeled in some way. """
 
-    RE = re.compile(r'(?:^|\n){([\w\-]+)}(?:\s?)(.*)(?:\n|$)')
+    RE = re.compile(r'(?:^){([\w\-]+)}(?:\s?)(.*)(?:\n|$)')
 
     def test(self, parent, block):
         # return self.RE.search(block)
