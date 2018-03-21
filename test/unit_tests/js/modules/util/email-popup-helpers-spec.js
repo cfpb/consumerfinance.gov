@@ -16,11 +16,6 @@ describe( 'email-popup-helpers', () => {
       expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( true );
     } );
 
-    it( 'should return false if date in storage same as today', () => {
-      localStorage.setItem( 'testPopupPopupShowNext', new Date() );
-      expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( false );
-    } );
-
     it( 'should return true if date in storage is before today', () => {
       // Days you want to subtract.
       const days = 1;
@@ -48,8 +43,10 @@ describe( 'email-popup-helpers', () => {
       const testDate = date.setTime(
         date.getTime() + 10000 * 24 * 60 * 60 * 1000
       );
-      expect( localStorage.getItem( 'testPopupPopupShowNext' ) )
-        .toBe( testDate );
+      /* To avoid being off by a millisecond, we need to convert to a decimal
+         and check using toBeCloseTo matcher instead of toBe. */
+      expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 100 )
+        .toBeCloseTo( testDate / 100 );
     } );
   } );
 
@@ -62,8 +59,10 @@ describe( 'email-popup-helpers', () => {
         date.getTime() + 60 * 24 * 60 * 60 * 1000
       );
       expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( 2 );
-      expect( localStorage.getItem( 'testPopupPopupShowNext' ) )
-        .toBe( testDate );
+      /* To avoid being off by a millisecond, we need to convert to a decimal
+         and check using toBeCloseTo matcher instead of toBe. */
+      expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 100 )
+        .toBeCloseTo( testDate / 100 );
     } );
   } );
 } );
