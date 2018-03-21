@@ -18,9 +18,8 @@ class RegulationsExtension(Extension):
 
     def extendMarkdown(self, md, md_globals):
         md.registerExtension(self)
-        md.parser.blockprocessors.add('labeledparagraph',
-                                      LabeledParagraphProcessor(md.parser),
-                                      '_begin')
+        md.parser.blockprocessors['paragraph'] = \
+            LabeledParagraphProcessor(md.parser)
 
 
 class LabeledParagraphProcessor(ParagraphProcessor):

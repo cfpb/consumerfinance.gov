@@ -37,6 +37,14 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             'This is a paragraph with a label.</p>'
         )
 
+    def test_list_state(self):
+        text = '- {my-label} This is a paragraph in a list.'
+        self.assertEqual(
+            regdown(text),
+            '<ul>\n<li>\n<p id="my-label">This is a paragraph in a list.'
+            '</p>\n</li>\n</ul>'
+        )
+
     def test_makeExtension(self):
         """ Test that Markdown can load our extension from a string """
         try:
