@@ -96,6 +96,7 @@ OPTIONAL_APPS = [
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
     {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
+    {'import': 'regulations3k', 'apps': ('regulations3k',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
     {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
@@ -237,7 +238,7 @@ EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
 EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
 NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
 FILES_LINK_PATTERN = r'https?:\/\/files\.consumerfinance.gov\/f\/\S+\.[a-z]+'
-DOWNLOAD_LINK_PATTERN = r'(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
+DOWNLOAD_LINK_PATTERN = r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 
 # Wagtail settings
 
@@ -638,6 +639,10 @@ FLAGS = {
     'PING_GOOGLE_ON_PUBLISH': {
         'boolean': DEPLOY_ENVIRONMENT == 'production'
     },
+
+    'REGULATIONS3K': {
+        'boolean': DEPLOY_ENVIRONMENT == 'build'
+    }
 }
 
 

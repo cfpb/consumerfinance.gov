@@ -21,7 +21,7 @@
     "fastdom": "1.0.6",
     "format-usd": "0.2.0",
     "handlebars": "^4.0.11",
-    "handlebars-loader": "^1.6.0",
+    "handlebars-loader": "git+https://github.com/Waavi/handlebars-loader.git",
     "highcharts": "^4.0.0",
     "is-money-usd": "0.1.2",
     "jquery": "^3.3.1",

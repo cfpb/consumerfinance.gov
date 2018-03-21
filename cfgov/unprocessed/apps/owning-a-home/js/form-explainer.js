@@ -6,7 +6,7 @@ import ExpandableGroup from './ExpandableGroup';
 import { assign } from '../../../js/modules/util/assign';
 import { closest } from '../../../js/modules/util/dom-traverse';
 import { instantiateAll } from '../../../js/modules/util/atomic-helpers';
-import { throttle } from '../../../js/modules/util/throttle';
+const throttle = require( 'lodash.throttle' );
 
 const EXPLAIN_TYPES = {
   CHECKLIST:   'checklist',

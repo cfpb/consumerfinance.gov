@@ -10,7 +10,6 @@ const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
 
-
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
 
@@ -144,8 +143,8 @@ const configExports = {
 };
 
 if ( NODE_ENV === 'development' ) {
-  for ( let key in configExports ) {
-    Object.assign( configExports[ key ], devConf );
+  for ( const key in configExports ) {
+    Object.assign( configExports[key], devConf );
   }
 }
 

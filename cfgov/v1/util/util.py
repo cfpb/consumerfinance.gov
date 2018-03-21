@@ -50,6 +50,10 @@ def get_secondary_nav_items(request, current_page):
     if not page:
         return [], False
 
+    # Return a boolean about whether or not the current page has Browse
+    # children
+    has_children = False
+
     # Handle the Newsroom page specially.
     # TODO: Remove this ASAP once Press Resources gets its own Wagtail page
     if page.slug == 'newsroom':
@@ -97,35 +101,30 @@ def get_secondary_nav_items(request, current_page):
             'expanded': item_selected,
         }
 
-        visible_children = filter(
-            lambda c: (
-                instanceOfBrowseOrFilterablePages(c) and
-                (c.live)
-            ),
-            sibling.get_children().specific()
-        )
+        if page.id == sibling.id:
+            visible_children = filter(
+                lambda c: (
+                    instanceOfBrowseOrFilterablePages(c) and
+                    (c.live)
+                ),
+                sibling.get_children().specific()
+            )
+            if len(visible_children):
+                has_children = True
+                for child in visible_children:
+                    child_selected = current_page.pk == child.pk
 
-        for child in visible_children:
-            child_selected = current_page.pk == child.pk
+                    if child_selected:
+                        item['expanded'] = True
 
-            if child_selected:
-                item['expanded'] = True
-
-            item['children'].append({
-                'title': child.title,
-                'slug': child.slug,
-                'url': child.relative_url(request.site),
-                'active': child_selected,
-            })
+                    item['children'].append({
+                        'title': child.title,
+                        'slug': child.slug,
+                        'url': child.relative_url(request.site),
+                        'active': child_selected,
+                    })
 
         nav_items.append(item)
-
-    # Return a boolean about whether or not the current page has Browse
-    # children
-    has_children = any(
-        page.relative_url(request.site) == item['url'] and item['children']
-        for item in nav_items
-    )
 
     return nav_items, has_children
 

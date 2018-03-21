@@ -15,6 +15,7 @@ cache:
     # main node_modules directory as being cached and never run npm install,
     # which also installs app's node_modules.
     - cfgov/unprocessed/apps/owning-a-home/node_modules
+    - cfgov/unprocessed/apps/regulations3k/node_modules
 
 install:
   - ./travis_install.sh

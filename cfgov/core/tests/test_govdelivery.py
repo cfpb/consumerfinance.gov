@@ -4,11 +4,11 @@ from unittest import TestCase
 
 from django.test import SimpleTestCase, override_settings
 
-from mock import patch
 import requests
+from mock import patch
 
 from core.govdelivery import (
-    ExceptionMockGovDelivery, MockGovDelivery, LoggingMockGovDelivery,
+    ExceptionMockGovDelivery, LoggingMockGovDelivery, MockGovDelivery,
     ServerErrorMockGovDelivery, get_govdelivery_api
 )
 

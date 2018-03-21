@@ -6,7 +6,7 @@ from wagtail.wagtailcore.models import Site
 import mock
 
 from v1.wagtail_hooks import (
-    RelativePageLinkHandler, check_permissions, form_module_handlers,
+    RelativePageLinkHandler, check_permissions, form_module_handlers
 )
 
 
