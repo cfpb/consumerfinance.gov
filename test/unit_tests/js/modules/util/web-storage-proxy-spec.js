@@ -2,36 +2,12 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 const webStorageProxy = require(
   BASE_JS_PATH + 'modules/util/web-storage-proxy.js'
 );
+const storageMock = require( '../../../../util/mock-web-storage' );
+
 const setItem = webStorageProxy.setItem;
 const getItem = webStorageProxy.getItem;
 const removeItem = webStorageProxy.removeItem;
 const setStorage = webStorageProxy.setStorage;
-
-/**
- * Mock a object store.
- * @returns {Object} A new object store with general access methods.
- */
-function storageMock() {
-  const storage = {};
-  return {
-    setItem: function( key, value ) {
-      storage[key] = value || '';
-    },
-    getItem: function( key ) {
-      return storage[key];
-    },
-    removeItem: function( key ) {
-      delete storage[key];
-    },
-    get length() {
-      return Object.keys( storage ).length;
-    },
-    key: function( i ) {
-      const keys = Object.keys( storage );
-      return keys[i] || null;
-    }
-  };
-}
 
 describe( 'web-storage-proxy', () => {
   beforeEach( () => {
