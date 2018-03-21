@@ -16,11 +16,6 @@ describe( 'email-popup-helpers', () => {
       expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( true );
     } );
 
-    it( 'should return false if date in storage same as today', () => {
-      localStorage.setItem( 'testPopupPopupShowNext', new Date() );
-      expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( false );
-    } );
-
     it( 'should return true if date in storage is before today', () => {
       // Days you want to subtract.
       const days = 1;
