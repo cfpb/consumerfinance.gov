@@ -73,6 +73,7 @@ function email( field, currentStatus, options ) {
   return status;
 }
 
+// TODO: Rename this so it's clearer it's checking a required attribute
 /**
  * empty Determines if a required field contains a value.
  *
@@ -81,7 +82,6 @@ function email( field, currentStatus, options ) {
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
-// TODO: Rename this so it's clearer it's checking a required attribute
 function empty( field, currentStatus ) {
   const status = currentStatus || {};
   const isRequired = field.getAttribute( 'required' ) !== null;

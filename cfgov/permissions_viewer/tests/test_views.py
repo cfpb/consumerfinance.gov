@@ -1,7 +1,8 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.core.urlresolvers import reverse
+from django.test import TestCase
+
 
 User = get_user_model()
 

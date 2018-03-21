@@ -1,6 +1,5 @@
-from jobmanager.models import (
-    City, Office, Region, State
-)
+from jobmanager.models import City, Office, Region, State
+
 
 REGIONS = (
     ('MW', 'Midwest region'),
@@ -166,7 +165,7 @@ def create_regional_cities():
                     name=c[0],
                     state_id=c[1]
                 )
-            except:
+            except City.DoesNotExist:
                 related_city = City(
                     name=c[0],
                     state_id=c[1]

@@ -4,7 +4,6 @@ const envvars = environment.envvars;
 const fancyLog = require( 'fancy-log' );
 const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
-const gulpUtil = require( 'gulp-util' );
 const minimist = require( 'minimist' );
 const spawn = require( 'child_process' ).spawn;
 const SauceConnectTunnel = require( 'sauce-connect-tunnel' );
@@ -15,8 +14,6 @@ const paths = environment.paths;
  * @param {Function} cb - Callback function to call on completion.
  */
 function testUnitScripts( cb ) {
-  // eslint-disable-next-line no-process-env
-  process.env.NODE_ENV = 'test';
   const params = minimist( process.argv.slice( 3 ) ) || {};
 
   /* If --specs=path/to/js/spec flag is added on the command-line,
@@ -55,10 +52,16 @@ function testUnitScripts( cb ) {
     fileTestRegex += '.*-spec.js';
   }
 
+  /*
+    The --no-cache flag is needed so the transforms don't cache.
+    If they are cached, preprocessor-handlebars.js can't find handlebars. See
+    https://facebook.github.io/jest/docs/en/troubleshooting.html#caching-issues
+  */
   spawn(
     fsHelper.getBinary( 'jest-cli', 'jest.js', '../bin' ),
     [
-      '--config=jest.config.json',
+      '--no-cache',
+      '--config=jest.config.js',
       `--collectCoverageFrom=${ fileSrcPath }`,
       `--testRegex=${ fileTestRegex }`
     ],
@@ -279,7 +282,8 @@ function spawnProtractor( ) {
     }
   }
 
-  if ( gulpUtil.env.sauce === 'true' ) {
+  const commandLineParams = minimist( process.argv.slice( 2 ) ) || {};
+  if ( commandLineParams.sauce === 'true' ) {
     _createSauceTunnel()
       .then( _runProtractor )
       .then( _handleSuccess )

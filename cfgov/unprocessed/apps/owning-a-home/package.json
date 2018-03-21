@@ -16,12 +16,12 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "fastdom": "1.0.6",
     "amortize": "0.2.2",
     "date-format": "0.0.2",
+    "fastdom": "1.0.6",
     "format-usd": "0.2.0",
     "handlebars": "^4.0.11",
-    "handlebars-loader": "^1.6.0",
+    "handlebars-loader": "git+https://github.com/Waavi/handlebars-loader.git",
     "highcharts": "^4.0.0",
     "is-money-usd": "0.1.2",
     "jquery": "^3.3.1",

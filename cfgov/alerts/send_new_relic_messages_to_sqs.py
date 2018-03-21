@@ -7,6 +7,7 @@ import sys
 from alerts.newrelic_alerts import NewRelicAlertViolations
 from alerts.sqs_queue import SQSQueue
 
+
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.INFO)

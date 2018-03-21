@@ -1,7 +1,4 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const chai = require( 'chai' );
-const expect = chai.expect;
-
 const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 
 let footerBtnDom;
@@ -16,6 +13,10 @@ const HTML_SNIPPET = `
   </a>
 `;
 
+/**
+ * Simulate a click event
+ * @param  {HTMLNode} target - Element that dispatches the click event.
+ */
 function triggerClick( target ) {
   const clickEvent = new window.MouseEvent( 'click', {
     bubbles: true,
@@ -68,7 +69,7 @@ describe( 'Footer', () => {
     triggerClick( footerBtnDom );
     // this.timeout( 3000 );
     window.setTimeout( () => {
-      expect( window.scrollY ).to.equal( 0 );
+      expect( window.scrollY ).toEqual( 0 );
       done();
     }, 2000 );
   } );

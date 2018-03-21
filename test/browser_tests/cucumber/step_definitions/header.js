@@ -1,4 +1,4 @@
-const { defineSupportCode } = require( 'cucumber' );
+const { Then, When, Before } = require( 'cucumber' );
 const { shouldShouldnt, toCamelCase } = require( '../../util/index.js' );
 const chai = require( 'chai' );
 const expect = chai.expect;
@@ -25,73 +25,69 @@ chai.use( chaiAsPromised );
 
 let _dom;
 
-defineSupportCode( function( { Then, When, Before } ) {
+Before( function() {
+  _dom = {
+    header:              element( by.css( BASE_SEL ) ),
+    logo:                element( by.css( LOGO_SEL ) ),
+    overlay:             element( by.css( OVERLAY_SEL ) ),
+    megaMenu:            element( by.css( MEGA_MENU_SEL ) ),
+    megaMenuTrigger:     element( by.css( MEGA_MENU_TRIGGER_SEL ) ),
+    megaMenuContent:     element
+      .all( by.css( MEGA_MENU_CONTENT_SEL ) )
+      .first(),
+    globalSearch:        element( by.css( GLOBAL_SEARCH_SEL ) ),
+    globalSearchTrigger: element( by.css( GLOBAL_SEARCH_TRIGGER_SEL ) ),
+    globalSearchContent: element( by.css( GLOBAL_SEARCH_CONTENT_SEL ) ),
+    globalHeaderCtaLG:   element( by.css( GLOBAL_CTA_LG_SEL ) ),
+    globalHeaderCtaSM:   element( by.css( GLOBAL_CTA_SM_SEL ) ),
+    globalEyebrowLG:     element( by.css( GLOBAL_EYEBROW_LG_SEL ) ),
+    globalEyebrowSM:     element( by.css( GLOBAL_EYEBROW_SM_SEL ) )
+  };
+} );
 
-  Before( function() {
-    _dom = {
-      header:              element( by.css( BASE_SEL ) ),
-      logo:                element( by.css( LOGO_SEL ) ),
-      overlay:             element( by.css( OVERLAY_SEL ) ),
-      megaMenu:            element( by.css( MEGA_MENU_SEL ) ),
-      megaMenuTrigger:     element( by.css( MEGA_MENU_TRIGGER_SEL ) ),
-      megaMenuContent:     element
-        .all( by.css( MEGA_MENU_CONTENT_SEL ) )
-        .first(),
-      globalSearch:        element( by.css( GLOBAL_SEARCH_SEL ) ),
-      globalSearchTrigger: element( by.css( GLOBAL_SEARCH_TRIGGER_SEL ) ),
-      globalSearchContent: element( by.css( GLOBAL_SEARCH_CONTENT_SEL ) ),
-      globalHeaderCtaLG:   element( by.css( GLOBAL_CTA_LG_SEL ) ),
-      globalHeaderCtaSM:   element( by.css( GLOBAL_CTA_SM_SEL ) ),
-      globalEyebrowLG:     element( by.css( GLOBAL_EYEBROW_LG_SEL ) ),
-      globalEyebrowSM:     element( by.css( GLOBAL_EYEBROW_SM_SEL ) )
-    };
-  } );
+Then( /the header organism (should|shouldn't) display the (.*)/,
+  function( dispayElement, element ) {
 
-  Then( /the header organism (should|shouldn't) display the (.*)/,
-    function( dispayElement, element ) {
+    return expect( _dom[toCamelCase( element )].isDisplayed() )
+      .to.eventually
+      .equal( shouldShouldnt( dispayElement ) );
+  }
+);
 
-      return expect( _dom[toCamelCase( element )].isDisplayed() )
-        .to.eventually
-        .equal( shouldShouldnt( dispayElement ) );
-    }
-  );
+When( 'I click on the mega-menu',
+  function() {
 
-  When( 'I click on the mega-menu',
-    function() {
+    return _dom.megaMenu.click();
+  }
+);
 
-      return _dom.megaMenu.click();
-    }
-  );
+When( 'I click on the mega-menu trigger',
+  function() {
 
-  When( 'I click on the mega-menu trigger',
-    function() {
+    return _dom.megaMenuTrigger.click();
+  }
+);
 
-      return _dom.megaMenuTrigger.click();
-    }
-  );
+When( 'I click on the mega-menu search trigger', function() {
 
-  When( 'I click on the mega-menu search trigger', function() {
+  return _dom.globalSearchTrigger.click();
+} );
 
-    return _dom.globalSearchTrigger.click();
-  } );
+Then( /the mega-menu\s?(shouldn't|should)/, function( dispayElement ) {
+  browser.sleep( 500 );
 
-  Then( /the mega-menu\s?(shouldn't|should)/, function( dispayElement ) {
+  return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
+    .to.eventually
+    .equal( shouldShouldnt( dispayElement ).toString() );
+} );
+
+Then( /the mega-menu search form (shouldn't|should)/,
+
+  function( displayElement ) {
     browser.sleep( 500 );
 
-    return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
+    return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
       .to.eventually
-      .equal( shouldShouldnt( dispayElement ).toString() );
-  } );
-
-  Then( /the mega-menu search form (shouldn't|should)/,
-
-    function( displayElement ) {
-      browser.sleep( 500 );
-
-      return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
-        .to.eventually
-        .equal( shouldShouldnt( displayElement ).toString() );
-    }
-  );
-
-} );
+      .equal( shouldShouldnt( displayElement ).toString() );
+  }
+);

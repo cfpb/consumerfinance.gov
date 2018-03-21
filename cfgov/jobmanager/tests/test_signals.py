@@ -1,11 +1,12 @@
-from django.test import TestCase
-from mock import patch
 from datetime import date
 
-from v1.tests.wagtail_pages import helpers
+from django.test import TestCase
+
+from mock import patch
 
 from jobmanager.models.django import JobCategory, Region
 from jobmanager.models.pages import JobListingPage
+from v1.tests.wagtail_pages import helpers
 
 
 class JobListingPagePublishedSignalCase(TestCase):
