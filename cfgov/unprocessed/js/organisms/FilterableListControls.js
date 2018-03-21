@@ -106,13 +106,12 @@ function FilterableListControls( element ) {
     } );
 
     _form.addEventListener( 'change', function sendEvent( event ) {
-      let action;
       const field = event.target;
 
       if ( !field ) {
         return;
       }
-      action = field.name + ':change';
+      const action = field.name + ':change';
       cachedFields[field.name] = getDataLayerOptions( action, field.value );
     } );
 
