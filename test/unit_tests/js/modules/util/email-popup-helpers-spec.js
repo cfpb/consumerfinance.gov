@@ -16,16 +16,11 @@ describe( 'email-popup-helpers', () => {
       expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( true );
     } );
 
-    it( 'should return false if date in storage same as today', () => {
-      localStorage.setItem( 'testPopupPopupShowNext', new Date() );
-      expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( false );
-    } );
-
     it( 'should return true if date in storage is before today', () => {
       // Days you want to subtract.
       const days = 1;
       const date = new Date();
-      const last = new Date( date.getTime() - ( days * 24 * 60 * 60 * 1000 ) );
+      const last = new Date( date.getTime() - days * 24 * 60 * 60 * 1000 );
       localStorage.setItem( 'testPopupPopupShowNext', last );
       expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( true );
     } );
@@ -46,10 +41,12 @@ describe( 'email-popup-helpers', () => {
       emailPopupsHelpers.recordEmailRegistration( 'testPopup' );
       const date = new Date();
       const testDate = date.setTime(
-        date.getTime() + ( 10000 * 24 * 60 * 60 * 1000 )
+        date.getTime() + 10000 * 24 * 60 * 60 * 1000
       );
-      expect( localStorage.getItem( 'testPopupPopupShowNext' ) )
-        .toBe( testDate );
+      /* To avoid being off by a millisecond, we need to convert to a decimal
+         and check using toBeCloseTo matcher instead of toBe. */
+      expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 10000 )
+        .toBeCloseTo( testDate / 10000 );
     } );
   } );
 
@@ -59,11 +56,13 @@ describe( 'email-popup-helpers', () => {
       emailPopupsHelpers.recordEmailPopupClosure( 'testPopup' );
       const date = new Date();
       const testDate = date.setTime(
-        date.getTime() + ( 60 * 24 * 60 * 60 * 1000 )
+        date.getTime() + 60 * 24 * 60 * 60 * 1000
       );
       expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( 2 );
-      expect( localStorage.getItem( 'testPopupPopupShowNext' ) )
-        .toBe( testDate );
+      /* To avoid being off by a millisecond, we need to convert to a decimal
+         and check using toBeCloseTo matcher instead of toBe. */
+      expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 10000 )
+        .toBeCloseTo( testDate / 10000 );
     } );
   } );
 } );

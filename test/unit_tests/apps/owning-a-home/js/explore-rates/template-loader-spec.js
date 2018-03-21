@@ -4,6 +4,7 @@ const templateLoader = require( BASE_JS_PATH + 'js/explore-rates/template-loader
 describe( 'explore-rates/template-loader', () => {
 
   it( 'should be able to render county template', () => {
+    // eslint-disable-next-line camelcase
     const mockData = {
       complete_fips: 1,
       gse_limit: 1,
