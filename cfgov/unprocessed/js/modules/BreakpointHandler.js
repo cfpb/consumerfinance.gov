@@ -18,15 +18,15 @@ import { get as getBreakpointState } from './util/breakpoint-state';
  * }
  */
 function BreakpointHandler( opts ) {
-  const hasRequiredArgs =
-  Boolean( opts && opts.breakpoint && opts.enter && opts.leave );
-  let breakpoint;
+  const hasRequiredArgs = Boolean(
+    opts && opts.breakpoint && opts.enter && opts.leave
+  );
 
   if ( hasRequiredArgs === false ) {
     throw new Error( 'BreakpointHandler constructor requires arguments!' );
   }
 
-  breakpoint = opts.breakpoint;
+  const breakpoint = opts.breakpoint;
   this.match = false;
   this.type = opts.type || 'max';
   this.breakpoint = _breakpointsConfig[breakpoint] &&
