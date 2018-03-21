@@ -9,6 +9,7 @@ exclude =
     # These are directories that it's a waste of time to traverse
     .git,
     .tox,
+    .venv,
     ansible,
     bin,
     config,
