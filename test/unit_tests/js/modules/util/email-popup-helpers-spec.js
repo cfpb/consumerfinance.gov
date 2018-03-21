@@ -45,8 +45,8 @@ describe( 'email-popup-helpers', () => {
       );
       /* To avoid being off by a millisecond, we need to convert to a decimal
          and check using toBeCloseTo matcher instead of toBe. */
-      expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 100 )
-        .toBeCloseTo( testDate / 100 );
+      expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 10000 )
+        .toBeCloseTo( testDate / 10000 );
     } );
   } );
 
@@ -61,8 +61,8 @@ describe( 'email-popup-helpers', () => {
       expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( 2 );
       /* To avoid being off by a millisecond, we need to convert to a decimal
          and check using toBeCloseTo matcher instead of toBe. */
-      expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 100 )
-        .toBeCloseTo( testDate / 100 );
+      expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 10000 )
+        .toBeCloseTo( testDate / 10000 );
     } );
   } );
 } );
