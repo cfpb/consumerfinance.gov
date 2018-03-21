@@ -21,8 +21,6 @@ describe( 'Validators', () => {
       testField.value = '11-12-07';
       returnedObject = validators.date( testField );
 
-      console.log( 'returnedObject', returnedObject );
-
       expect( returnedObject['date'] ).toBe( false );
       expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.DATE.INVALID );
     } );

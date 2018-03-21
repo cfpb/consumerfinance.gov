@@ -52,6 +52,17 @@ function testUnitScripts( cb ) {
     fileTestRegex += '.*-spec.js';
   }
 
+  const jestOptions = [
+    '--no-cache',
+    '--config=jest.config.js',
+    `--collectCoverageFrom=${ fileSrcPath }`,
+    `--testRegex=${ fileTestRegex }`
+  ];
+
+  if ( params.travis ) {
+    jestOptions.push( '--runInBand' );
+  }
+
   /*
     The --no-cache flag is needed so the transforms don't cache.
     If they are cached, preprocessor-handlebars.js can't find handlebars. See
@@ -59,12 +70,7 @@ function testUnitScripts( cb ) {
   */
   spawn(
     fsHelper.getBinary( 'jest-cli', 'jest.js', '../bin' ),
-    [
-      '--no-cache',
-      '--config=jest.config.js',
-      `--collectCoverageFrom=${ fileSrcPath }`,
-      `--testRegex=${ fileTestRegex }`
-    ],
+    jestOptions,
     { stdio: 'inherit' }
   ).once( 'close', code => {
     if ( code ) {
