@@ -1,3 +1,5 @@
+import dj_database_url
+
 from .local import *
 
 
@@ -7,6 +9,9 @@ DATABASES = {
         'NAME': os.path.join(REPOSITORY_ROOT, 'db.sqlite3'),
     }
 }
+
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config()
 
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
