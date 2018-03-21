@@ -17,7 +17,6 @@ let selectedFilterablePage;
 let UNDEFINED;
 
 
-
 After( function() {
   selectedFilterablePage = UNDEFINED;
 } );
