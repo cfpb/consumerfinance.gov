@@ -13,17 +13,17 @@ const through2 = require( 'through2' );
 function _genericLint( src ) {
   // Pass all command line flags to EsLint.
   const options = minimist( process.argv.slice( 2 ) );
+  let errorHandler = through2.obj();
+
+  if( options.travis ) {
+    options.quiet = true;
+    errorHandler = gulpEslint.failAfterError();
+  }
 
   return gulp.src( src, { base: './' } )
     .pipe( gulpEslint( options ) )
     .pipe( gulpEslint.format() )
-    .pipe( ( () => {
-      if ( options.travis ) {
-        return gulpEslint.failAfterError();
-      }
-
-      return through2.obj();
-    } )( ) )
+    .pipe( errorHandler )
     .pipe( gulp.dest( './' ) )
     .on( 'error', handleErrors );
 }
@@ -31,7 +31,7 @@ function _genericLint( src ) {
 /**
  * Lints the gulpfile for errors.
  */
-gulp.task( 'lint:build', () => _genericLint( configLint.build ) );
+gulp.task(   'lint:build', () => _genericLint( configLint.build ) );
 
 /**
  * Lints the test js files for errors.
