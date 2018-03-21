@@ -185,6 +185,7 @@ function _getMultiCapabilities() {
   return capabilities;
 }
 
+
 /**
  * The onPrepare method for Protractor's workflow.
  * See https://github.com/angular/protractor/blob/master/docs/system-setup.md
@@ -228,19 +229,20 @@ function _onPrepare() {
 }
 
 const config = {
-  baseUrl:              environmentTest.baseUrl,
+  baseUrl:                environmentTest.baseUrl,
   cucumberOpts: {
     'require':   'cucumber/step_definitions/*.js',
     'tags':      [ '~@mobile', '~@skip' ],
     'profile':   false,
     'no-source': true
   },
-  unknownFlags_:        [ 'cucumberOpts' ],
-  directConnect:        true,
-  framework:            'custom',
-  frameworkPath:        require.resolve( 'protractor-cucumber-framework' ),
-  getMultiCapabilities: _getMultiCapabilities,
-  onPrepare:            _onPrepare
+  unknownFlags_:            [ 'cucumberOpts' ],
+  directConnect:            true,
+  framework:                'custom',
+  frameworkPath:            require.resolve( 'protractor-cucumber-framework' ),
+  getMultiCapabilities:     _getMultiCapabilities,
+  onPrepare:                _onPrepare,
+  SELENIUM_PROMISE_MANAGER: false
 };
 
 // Set Sauce Labs credientials from .env file.

@@ -25,7 +25,7 @@ chai.use( chaiAsPromised );
 
 let _dom;
 
-Before( function() {
+Before( function( ) {
   _dom = {
     header:              element( by.css( BASE_SEL ) ),
     logo:                element( by.css( LOGO_SEL ) ),
@@ -55,39 +55,36 @@ Then( /the header organism (should|shouldn't) display the (.*)/,
 );
 
 When( 'I click on the mega-menu',
-  function() {
+  function( ) {
 
-    return _dom.megaMenu.click();
+    return _dom.megaMenu.click( );
   }
 );
 
 When( 'I click on the mega-menu trigger',
-  function() {
+  function( ) {
 
-    return _dom.megaMenuTrigger.click();
+    return _dom.megaMenuTrigger.click( );
   }
 );
 
-When( 'I click on the mega-menu search trigger', function() {
+When( 'I click on the mega-menu search trigger', function( ) {
 
-  return _dom.globalSearchTrigger.click();
+  return _dom.globalSearchTrigger.click( );
 } );
 
 Then( /the mega-menu\s?(shouldn't|should)/, function( dispayElement ) {
-  browser.sleep( 500 );
 
   return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
     .to.eventually
-    .equal( shouldShouldnt( dispayElement ).toString() );
+    .equal( shouldShouldnt( dispayElement ).toString( ) );
 } );
 
 Then( /the mega-menu search form (shouldn't|should)/,
-
   function( displayElement ) {
-    browser.sleep( 500 );
 
     return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
       .to.eventually
-      .equal( shouldShouldnt( displayElement ).toString() );
+      .equal( shouldShouldnt( displayElement ).toString( ) );
   }
 );

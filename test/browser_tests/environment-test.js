@@ -14,9 +14,6 @@ module.exports = {
     ],
     'default': [
       specsRoot + 'suites/default/**/*.feature'
-    ],
-    'wagtail-admin': [
-      specsRoot + 'suites/wagtail-admin/*.feature'
     ]
   },
 
