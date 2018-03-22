@@ -1,9 +1,8 @@
 const FormSubmit = require( './FormSubmit.js' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const standardType = require( '../modules/util/standard-type' );
 const validators = require( '../modules/util/validators' );
 const emailHelpers = require( '../modules/util/email-popup-helpers' );
-
-const BASE_CLASS = 'o-email-signup';
-const language = document.body.querySelector( '.content' ).lang;
 
 /**
  * EmailPopup
@@ -11,41 +10,54 @@ const language = document.body.querySelector( '.content' ).lang;
  *
  * @classdesc Initializes the organism.
  *
- * @param {string} el
+ * @param {string} element
  *   The selector for the organism.
  * @returns {EmailSignup} An instance.
  */
-function EmailPopup( el ) {
-  const _baseElement = document.querySelector( el );
-  const _closeElement = _baseElement.querySelector( '.close' );
-  const _popupLabel = _baseElement.getAttribute( 'data-popup-label' );
+function EmailPopup( element ) {
+
+  const BASE_CLASS = 'o-email-popup';
   const VISIBLE_CLASS = 'o-email-popup__visible';
+
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _popupLabel = _dom.getAttribute( 'data-popup-label' );
+
+  /**
+   * @returns {HTMLNode} The base element of the email popup.
+   */
+  function getDom() {
+    return _dom;
+  }
 
   /**
    * Function used to hide popup by removing visible class.
+   * @returns {EmailPopup}
    */
   function hidePopup() {
-    _baseElement.classList.remove( VISIBLE_CLASS );
+    _dom.classList.remove( VISIBLE_CLASS );
     emailHelpers.recordEmailPopupClosure( _popupLabel );
+
+    return this;
   }
 
   /**
    * Function used to show popup by adding visible class.
-   * @returns {boolean} true.
+   * @returns {boolean} True if the popup is shown, false otherwise.
    */
   function showPopup() {
     if ( emailHelpers.showEmailPopup( _popupLabel ) ) {
-      _baseElement.classList.add( VISIBLE_CLASS );
+      _dom.classList.add( VISIBLE_CLASS );
       emailHelpers.recordEmailPopupView( _popupLabel );
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   /**
    * Function used to validate email address.
-   * @param {object} fields An object containing form fields.
-   * @returns {object} Validation status.
+   * @param {Object} fields An object containing form fields.
+   * @returns {Object} Validation status.
    */
   function emailValidation( fields ) {
 
@@ -58,7 +70,7 @@ function EmailPopup( el ) {
 
   /**
    * Callback function invoked after successful email submission.
-   * @param {event} event Click event.
+   * @param {Event} event Click event.
    *
    */
   function _onEmailSignupSuccess() {
@@ -67,12 +79,21 @@ function EmailPopup( el ) {
 
   /**
    * Function used to instatiate and initialize components.
+   * @returns {EmailPopup|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
+    const _closeElement = _dom.querySelector( '.close' );
+    const _language = _dom.getAttribute( 'lang' );
+
     const formSubmit = new FormSubmit(
-      _baseElement.querySelector( '.' + BASE_CLASS ),
+      _dom,
       BASE_CLASS,
-      { validator: emailValidation, language: language }
+      { validator: emailValidation, language: _language }
     );
 
     formSubmit.init();
@@ -80,12 +101,14 @@ function EmailPopup( el ) {
     formSubmit.addEventListener( 'success', _onEmailSignupSuccess );
 
     _closeElement.addEventListener( 'click', hidePopup );
+
+    return this;
   }
 
   this.init = init;
   this.hidePopup = hidePopup;
   this.showPopup = showPopup;
-  this.el = _baseElement;
+  this.getDom = getDom;
   return this;
 }
 

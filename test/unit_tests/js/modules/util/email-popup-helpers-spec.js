@@ -36,7 +36,7 @@ describe( 'email-popup-helpers', () => {
   } );
 
   describe( 'recordEmailRegistration()', () => {
-    it( 'should sets email popup key in local storage with ' +
+    it( 'should set email popup key in local storage with ' +
         'a very long expiry date', () => {
       emailPopupsHelpers.recordEmailRegistration( 'testPopup' );
       const date = new Date();

@@ -11,16 +11,17 @@ register = template.Library()
 
 @register.simple_tag
 def email_popup(request):
-    for label, urls in settings.EMAIL_POPUP_URLS.items():
-        if request.path not in urls:
-            continue
+    for label, details in settings.EMAIL_POPUP_URLS.items():
+        for language, urls in details.items():
+            if request.path not in urls:
+                continue
 
-        feature_flag = 'EMAIL_POPUP_{}'.format(label.upper())
-        if not flag_enabled(feature_flag, request=request):
-            continue
+            feature_flag = 'EMAIL_POPUP_{}'.format(label.upper())
+            if not flag_enabled(feature_flag, request=request):
+                continue
 
-        template = 'organisms/email-popup/{}.html'.format(label)
-        context = {'popup_label': label}
-        return mark_safe(render_to_string(template, context=context))
+            template = 'organisms/email-popup/{}.html'.format(label)
+            context = {'popup_label': label, 'popup_language': language}
+            return mark_safe(render_to_string(template, context=context))
 
     return ''

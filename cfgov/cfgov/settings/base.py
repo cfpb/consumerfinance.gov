@@ -677,14 +677,18 @@ if DEPLOY_ENVIRONMENT == 'beta':
 
 # Email popup configuration. See v1.templatetags.email_popup.
 EMAIL_POPUP_URLS = {
-    'debt': [
-        '/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/',
-        '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',
-        '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
-        '/consumer-tools/debt-collection/',
-    ],
-    'oah': [
-        '/owning-a-home/',
-        '/owning-a-home/mortgage-estimate/',
-    ],
+    'debt': {
+        'en': [
+            '/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/',
+            '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',
+            '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
+            '/consumer-tools/debt-collection/',
+        ]
+    },
+    'oah': {
+        'en': [
+            '/owning-a-home/',
+            '/owning-a-home/mortgage-estimate/',
+        ]
+    },
 }

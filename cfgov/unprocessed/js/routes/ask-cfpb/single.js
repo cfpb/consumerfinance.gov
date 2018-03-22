@@ -33,7 +33,7 @@ const emailPopup = document.querySelectorAll( '.o-email-popup' );
 
 
 if ( emailPopup.length && emailHelpers.showEmailPopup() ) {
-  const popup = new EmailPopup( '.o-email-popup' );
+  const popup = new EmailPopup();
   popup.init();
   emailHelpers.showOnScroll( popup.el, {
     cb: popup.showPopup,

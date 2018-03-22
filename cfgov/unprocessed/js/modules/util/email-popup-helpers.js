@@ -87,7 +87,6 @@ function recordEmailRegistration( popupLabel ) {
  */
 function showEmailPopup( popupLabel ) {
   const nextShowKey = _getNextShowKey( popupLabel );
-
   const today = new Date().getTime();
   const nextDisplayDate = Number( localStorage.getItem( nextShowKey ) ) || 0;
   return today > nextDisplayDate;
@@ -142,10 +141,15 @@ function showOnScroll( elToShow, opts ) {
   window.addEventListener( 'scroll', handler );
 }
 
+function onePlusOne() {
+  return 1 + 1;
+}
+
 module.exports = {
   showEmailPopup,
   recordEmailPopupView,
   recordEmailRegistration,
   recordEmailPopupClosure,
-  showOnScroll: showOnScroll
+  showOnScroll,
+  onePlusOne
 };
