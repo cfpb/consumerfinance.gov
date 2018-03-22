@@ -16,10 +16,9 @@ const emailHelpers = require( '../modules/util/email-popup-helpers' );
  */
 function EmailPopup( element ) {
 
-  const BASE_CLASS = 'o-email-popup';
   const VISIBLE_CLASS = 'o-email-popup__visible';
 
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = atomicHelpers.checkDom( element, EmailPopup.BASE_CLASS );
   const _popupLabel = _dom.getAttribute( 'data-popup-label' );
 
   /**
@@ -92,7 +91,7 @@ function EmailPopup( element ) {
 
     const formSubmit = new FormSubmit(
       _dom,
-      BASE_CLASS,
+      EmailPopup.BASE_CLASS,
       { validator: emailValidation, language: _language }
     );
 
@@ -111,5 +110,6 @@ function EmailPopup( element ) {
   this.getDom = getDom;
   return this;
 }
+EmailPopup.BASE_CLASS = 'o-email-popup';
 
 module.exports = EmailPopup;
