@@ -2,7 +2,6 @@
    "Rate checker" custom styles
    ========================================================================== */
 
-
 .rate-checker {
 
     .page-intro {
@@ -17,7 +16,7 @@
     .calc-footer,
     .calc-subsection {
         .grid_column( 12 );
-    } 
+    }
 
     /*
         layout
@@ -184,11 +183,11 @@
         display: block;
         width: 100%;
         height: 20px;
-        background: transparent 
-                    url( '@{image_path}/slider-bg.png' ) 
-                    scroll 
-                    no-repeat 
-                    center 
+        background: transparent
+                    url( '@{image_path}/slider-bg.png' )
+                    scroll
+                    no-repeat
+                    center
                     center;
         background-size: 100%;
     }
@@ -205,20 +204,20 @@
         width: 22px;
         height: 21px;
         border: 0;
-        background: transparent 
-                    url( '@{image_path}/slider-handle.png' ) 
-                    no-repeat 
-                    0 
+        background: transparent
+                    url( '@{image_path}/slider-handle.png' )
+                    no-repeat
+                    0
                     0;
         background-size: 100%;
 
         &.warning {
             width: 22px;
             height: 21px;
-            background: transparent 
-                        url( '@{image_path}/slider-handle.png' ) 
-                        no-repeat 
-                        0 
+            background: transparent
+                        url( '@{image_path}/slider-handle.png' )
+                        no-repeat
+                        0
                         100%;
             background-size: 100%;
         }
@@ -250,7 +249,7 @@
         Middle section with chart
         --------------------------- */
 
-    // this is shameful, but this is needed to force 
+    // this is shameful, but this is needed to force
     // highcharts to display overflowing tooltips
     .highcharts-container {
         overflow: visible !important;
@@ -262,20 +261,32 @@
         border-top: 1px solid @gray-10;
         border-bottom: 1px solid @gray-10;
         margin: unit( 20px / @base-font-size-px, em )
-            unit( 20px / @base-font-size-px, em )
-            unit( 20px / @base-font-size-px, em )
-            0;
+                unit( 20px / @base-font-size-px, em )
+                unit( 20px / @base-font-size-px, em )
+                0;
 
         &.geolocating {
-            background: transparent 
-                        url( '@{image_path}icon_spinner.gif' ) 
-                        scroll 
-                        no-repeat 
-                        center 
+            background: transparent
+                        url( '@{image_path}icon_spinner.gif' )
+                        scroll
+                        no-repeat
+                        center
                         center;
             #chart {
                 opacity: 0;
             }
+        }
+
+        .highcharts-color-0 {
+            fill: #ADDC91;
+
+            &:hover {
+                fill: #2CB34A;
+            }
+        }
+
+        .highcharts-tooltip-box {
+            fill: none
         }
 
         .m-notification {
@@ -452,7 +463,7 @@
 
     .down-payment {
         margin-top: 0;
-        
+
         .dollar-input {
             display: inline-block;
             width: 65%;
@@ -602,7 +613,7 @@
         Media queries
         --------------------------- */
     .respond-to-max( 720px, {
-        
+
         .calculator,
         .rc-results {
             .grid_column( 12 );
@@ -678,7 +689,7 @@
     } );
 
     .respond-to-min( 1000px, {
-        
+
         .rate-checker-heading {
             width: 75%;
         }
@@ -701,20 +712,20 @@
             width: 22px;
             height: 21px;
             border: 0;
-            background: transparent 
-                        url( '@{image_path}/slider-handle@2x.png' ) 
-                        no-repeat 
-                        0 
+            background: transparent
+                        url( '@{image_path}/slider-handle@2x.png' )
+                        no-repeat
+                        0
                         0;
             background-size: 100%;
 
             &.warning {
                 width: 22px;
                 height: 21px;
-                background: transparent 
-                            url( '@{image_path}/slider-handle@2x.png' ) 
-                            no-repeat 
-                            0 
+                background: transparent
+                            url( '@{image_path}/slider-handle@2x.png' )
+                            no-repeat
+                            0
                             100%;
                 background-size: 100%;
             }
