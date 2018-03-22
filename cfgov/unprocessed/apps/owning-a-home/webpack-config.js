@@ -65,12 +65,12 @@ const conf = {
   mode: 'production',
   output: {
     filename: '[name]',
-    jsonpFunction: 'apps'
+    jsonpFunction: 'oah'
   },
   resolveLoader: {
     alias: {
-      'handlebars-loader': path.resolve( 
-        __dirname, 'node_modules', 'handlebars-loader' 
+      'handlebars-loader': path.resolve(
+        __dirname, 'node_modules', 'handlebars-loader'
       )
     },
     mainFields: [ 'loader', 'main' ]

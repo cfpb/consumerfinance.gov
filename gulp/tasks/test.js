@@ -57,14 +57,20 @@ function testUnitScripts( cb ) {
     If they are cached, preprocessor-handlebars.js can't find handlebars. See
     https://facebook.github.io/jest/docs/en/troubleshooting.html#caching-issues
   */
+  const jestOptions = [
+    '--no-cache',
+    '--config=jest.config.js',
+    `--collectCoverageFrom=${ fileSrcPath }`,
+    `--testRegex=${ fileTestRegex }`
+  ];
+
+  if ( params.travis ) {
+    jestOptions.push( '--runInBand' );
+  }
+
   spawn(
     fsHelper.getBinary( 'jest-cli', 'jest.js', '../bin' ),
-    [
-      '--no-cache',
-      '--config=jest.config.js',
-      `--collectCoverageFrom=${ fileSrcPath }`,
-      `--testRegex=${ fileTestRegex }`
-    ],
+    jestOptions,
     { stdio: 'inherit' }
   ).once( 'close', code => {
     if ( code ) {

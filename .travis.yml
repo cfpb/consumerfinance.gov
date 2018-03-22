@@ -36,15 +36,10 @@ env:
 
 jobs:
   fast_finish: true
-  allow_failures:
-    - env: RUNTEST=backend3
   include:
     - stage: run tests
       env: RUNTEST=frontend
     - env: RUNTEST=backend
-    - stage: Run optional tests
-      env: RUNTEST=backend3
-      python: "3.6"
     - stage: Update documentation
       script:
         - pip install virtualenv virtualenvwrapper
