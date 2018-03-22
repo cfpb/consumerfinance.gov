@@ -22,7 +22,7 @@
     "format-usd": "0.2.0",
     "handlebars": "^4.0.11",
     "handlebars-loader": "git+https://github.com/Waavi/handlebars-loader.git",
-    "highcharts": "^4.0.0",
+    "highcharts": "5.0.11",
     "is-money-usd": "0.1.2",
     "jquery": "^3.3.1",
     "jumbo-mortgage": "2.0.0",

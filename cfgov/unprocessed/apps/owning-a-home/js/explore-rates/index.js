@@ -52,6 +52,8 @@ var chart = {
   }
 };
 
+let highChart;
+
 // Set some properties for the credit score slider.
 var slider = {
   $el:    $( '#credit-score' ),
@@ -89,7 +91,6 @@ var delay = ( function() {
     t = setTimeout( callback, delay );
   };
 } )();
-
 
 /**
  * Get data from the API.
@@ -873,19 +874,22 @@ function renderAccessibleData( data ) {
  * Render (or update) the Highcharts chart.
  * @param  {Object} data Data processed from the API.
  * @param  {Function} cb Optional callback.
- * @returns {undefined}
+ * @returns {*} Value of callback invocation or undefined.
  */
 function renderChart( data, cb ) {
 
   if ( chart.isInitialized ) {
 
-    //var hc = chart.$el.highcharts();
-    var hc = Highcharts.chart( 'chart' );
+    highChart.update( {
+      xAxis: {
+        categories: data.labels
+      },
+      series: {
+        data: data.vals
+      }
+    } );
 
     chart.$wrapper.removeClass( 'geolocating' );
-    hc.xAxis[0].setCategories( data.labels );
-    hc.series[0].setData( data.vals );
-
   } else {
 
     if ( chart.$el.length < 1 ) {
@@ -894,20 +898,11 @@ function renderChart( data, cb ) {
 
     chart.$wrapper.addClass( 'geolocating' );
 
-    //chart.$el.highcharts( {
-    Highcharts.chart( 'chart', {
+    highChart = new Highcharts.Chart( {
       chart: {
+        renderTo: chart.$el[0],
         type: 'column',
         animation: false
-      },
-      plotOptions: {
-        column: {
-          states: {
-            hover: {
-              color: '#2CB34A'
-            }
-          }
-        }
       },
       title: {
         text: ''
@@ -921,7 +916,7 @@ function renderChart( data, cb ) {
         },
         labels: {
           formatter: function() {
-            return this.value > 9 ? ( this.value + '+' ) : this.value;
+            return this.value > 9 ? this.value + '+' : this.value;
           }
         },
         max: 10,
@@ -947,7 +942,7 @@ function renderChart( data, cb ) {
           formatter: function() {
             var point = this.point;
             window.setTimeout( function() {
-              if( point.y > 9 ) {
+              if ( point.y > 9 ) {
                 point.dataLabel.attr( {
                   y: -32,
                   x: point.plotX - 24
@@ -991,9 +986,12 @@ function renderChart( data, cb ) {
   }
 
   if ( cb ) {
-    cb();
+    return cb(); // eslint-disable-line consistent-return
   }
+
+  return; // eslint-disable-line consistent-return
 }
+
 
 /**
  * Initialize the rate checker app.
