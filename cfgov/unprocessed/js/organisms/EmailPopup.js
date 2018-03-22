@@ -86,6 +86,9 @@ function EmailPopup( element ) {
       return standardType.UNDEFINED;
     }
 
+    // Ensure EmailPopup is definitely hidden on initialization.
+    _dom.classList.remove( VISIBLE_CLASS );
+
     const _closeElement = _dom.querySelector( '.close' );
     const _language = _dom.getAttribute( 'lang' );
 
