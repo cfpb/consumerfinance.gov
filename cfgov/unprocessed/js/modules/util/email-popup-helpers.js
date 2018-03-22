@@ -141,15 +141,10 @@ function showOnScroll( elToShow, opts ) {
   window.addEventListener( 'scroll', handler );
 }
 
-function onePlusOne() {
-  return 1 + 1;
-}
-
 module.exports = {
   showEmailPopup,
   recordEmailPopupView,
   recordEmailRegistration,
   recordEmailPopupClosure,
-  showOnScroll,
-  onePlusOne
+  showOnScroll
 };
