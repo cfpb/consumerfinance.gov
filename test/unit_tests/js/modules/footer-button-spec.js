@@ -3,7 +3,6 @@ const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 
 let footerBtnDom;
 let bodyDom;
-let lastTime = 0;
 
 const HTML_SNIPPET = `
   <a class="a-btn a-btn__secondary o-footer_top-button"
@@ -27,50 +26,46 @@ function triggerClick( target ) {
   target.dispatchEvent( clickEvent );
 }
 
+/**
+ * Mock window.scrollTo() method.
+ * @param  {number} xCoord An x coordinate.
+ * @param  {number} yCoord A y coordinate.
+ */
 function scrollTo( xCoord, yCoord ) {
   window.scrollX = xCoord;
   window.scrollY = yCoord;
 }
 
-function requestAnimationFrame( callback ) {
-  const currTime = new Date().getTime();
-  const timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) );
-  const id = window.setTimeout(
-    function() {
-      callback( currTime + timeToCall );
-    }, timeToCall
-  );
-
-  lastTime = currTime + timeToCall;
-
-  return id;
-}
-
-describe( 'Footer', () => {
+describe( 'footer-button', () => {
   beforeAll( () => {
-    document.body.innerHTML = HTML_SNIPPET;
-
-    global.NodeList = window.NodeList;
-    global.Node = window.Node;
-  } );
-
-  beforeEach( () => {
-    bodyDom = document.body;
-    bodyDom.innerHTML = HTML_SNIPPET;
-    footerBtnDom = document.querySelector( '.o-footer_top-button' );
-
-    window.requestAnimationFrame = requestAnimationFrame;
     window.scrollTo = scrollTo;
   } );
 
-  it( 'button should initiate scroll to page top when clicked', done => {
+  beforeEach( () => {
+    document.body.innerHTML = HTML_SNIPPET;
+    footerBtnDom = document.querySelector( '.o-footer_top-button' );
+  } );
+
+  it( 'button should scroll when clicked ' +
+      'and requestAnimationFrame is supported', done => {
     window.scrollY = 10;
     FooterButton.init();
     triggerClick( footerBtnDom );
-    // this.timeout( 3000 );
+
     window.setTimeout( () => {
-      expect( window.scrollY ).toEqual( 0 );
+      expect( window.scrollY ).toBe( 0 );
       done();
     }, 2000 );
+  } );
+
+  it( 'button should scroll when clicked ' +
+      'and requestAnimationFrame is not supported', () => {
+    jest.spyOn( window, 'scrollTo' );
+    delete window.requestAnimationFrame;
+    window.scrollY = 10;
+    FooterButton.init();
+    triggerClick( footerBtnDom );
+
+    expect( window.scrollTo ).toHaveBeenCalledWith( 0, 0 );
   } );
 } );
