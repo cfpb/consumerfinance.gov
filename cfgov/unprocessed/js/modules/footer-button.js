@@ -6,7 +6,7 @@
    ========================================================================== */
 
 // Required modules.
-const behavior = require( './util/behavior' );
+import * as behavior from './util/behavior';
 
 /**
  * Set up event handler for button to scroll to top of page.
