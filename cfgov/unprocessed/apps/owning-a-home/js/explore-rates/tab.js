@@ -1,20 +1,14 @@
-let tabGroups;
-let tabLinks;
-let tabContents;
-
 /**
  * Initialize the functionality of a group of tabs with content.
  */
 function init() {
-  tabGroups = document.querySelectorAll( '.tabs-layout' );
+  let tabGroups = document.querySelectorAll( '.tabs-layout' );
+  let tabContents;
 
   tabGroups.forEach( tabGroup => {
-    tabLinks = tabGroup.querySelectorAll( '.tab-link' );
     tabContents = tabGroup.querySelectorAll( '.tab-content' );
 
-    tabLinks.forEach( tabLink => {
-      _bindTabLink( tabGroup, tabLink, tabContents );
-    } );
+    _bindTabLink( tabGroup, tabContents );
 
     // Hide all but the first tab.
     for ( let i = 1; i < tabContents.length; i++ ) {
@@ -24,12 +18,11 @@ function init() {
 }
 
 /**
- *
  * @param {HTMLNode} tabGroup - HTML element parent of tabs and tabs-content.
- * @param {HTMLNode} tabLink - HTML element for links in tabs.
+ * @param {HTMLNode} tabContents - HTML element for content in tabs.
  */
-function _bindTabLink( tabGroup, tabLink, tabContents ) {
-  tabLink.addEventListener( 'click', _tabLinkClicked );
+function _bindTabLink( tabGroup, tabContents ) {
+  tabGroup.addEventListener( 'click', _tabLinkClicked );
   const tabs = tabGroup.querySelectorAll( '.tab-list' );
 
   /**
@@ -37,9 +30,12 @@ function _bindTabLink( tabGroup, tabLink, tabContents ) {
    * @param {MouseEvent} evt - Event object for a click on a tab.
    */
   function _tabLinkClicked( evt ) {
+    const target = evt.target;
+    if ( target.tagName !== 'A' ) {
+      return;
+    }
     evt.preventDefault();
 
-    const target = evt.target;
     const tabLi = target.parentNode;
     const current = tabGroup.querySelector( target.getAttribute( 'href' ) );
 
