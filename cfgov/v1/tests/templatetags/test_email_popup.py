@@ -12,7 +12,7 @@ class TestEmailPopupSettings(TestCase):
     def test_setting_keys_and_values(self):
         for k, v in settings.EMAIL_POPUP_URLS.items():
             self.assertIsInstance(k, str)
-            self.assertIsInstance(v, dict)
+            self.assertIsInstance(v, list)
 
 class TestEmailPopupTag(TestCase):
     def render(self, path):
@@ -26,7 +26,7 @@ class TestEmailPopupTag(TestCase):
         self.assertEqual(response, '')
 
     @override_settings(
-        EMAIL_POPUP_URLS={'foo': {'en': ['/page/configured/']}},
+        EMAIL_POPUP_URLS={'foo': ['/page/configured/']},
         FLAGS={}
     )
     def test_popup_configured_but_no_flag(self):
@@ -34,7 +34,7 @@ class TestEmailPopupTag(TestCase):
         self.assertEqual(response, '')
 
     @override_settings(
-        EMAIL_POPUP_URLS={'foo': {'en': ['/page/configured/']}},
+        EMAIL_POPUP_URLS={'foo': ['/page/configured/']},
         FLAGS={'EMAIL_POPUP_FOO': {'boolean': False}}
     )
     def test_popup_configured_but_flag_false(self):
@@ -42,7 +42,7 @@ class TestEmailPopupTag(TestCase):
         self.assertEqual(response, '')
 
     @override_settings(
-        EMAIL_POPUP_URLS={'foo': {'en': ['/page/configured/']}},
+        EMAIL_POPUP_URLS={'foo': ['/page/configured/']},
         FLAGS={'EMAIL_POPUP_FOO': {'boolean': False}}
     )
     def test_popup_configured_and_flag_true_but_path_doesnt_match(self):
@@ -50,7 +50,7 @@ class TestEmailPopupTag(TestCase):
         self.assertEqual(response, '')
 
     @override_settings(
-        EMAIL_POPUP_URLS={'oah': {'en': ['/page/configured/']}},
+        EMAIL_POPUP_URLS={'oah': ['/page/configured/']},
         FLAGS={'EMAIL_POPUP_OAH': {'boolean': True}}
     )
     def test_popup_configured_and_flag_true_and_path_matches(self):
