@@ -70,6 +70,7 @@ def check_static(url):
         return ("\x1B[32m{} static links passed "
                 "for {}\x1B[0m\n".format(count, url))
 
+
 if __name__ == '__main__':
     fail = False
     start = time.time()

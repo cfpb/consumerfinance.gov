@@ -6,6 +6,7 @@ import logging
 import re
 import sys
 import time
+from six import text_type as unicode
 
 from django.apps import apps
 from django.core.management import call_command
@@ -573,7 +574,7 @@ def set_featured_ids():
         answer.featured = True
         answer.featured_rank = FEATURED_ANSWER_IDS[answer.id]
         answer.save()
-    print "Marked {} answers as 'featured'".format(featured.count())
+    print("Marked {} answers as 'featured'".format(featured.count()))
 
 
 def run():

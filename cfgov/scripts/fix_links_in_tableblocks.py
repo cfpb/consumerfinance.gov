@@ -16,7 +16,7 @@ def get_tableblocks(page):
     """
     try:
         stream_data = page.specific.content.stream_data
-    except:
+    except Exception:
         return []
     tableblocks = list(
         filter(lambda item: item['type'] == 'table_block', stream_data))

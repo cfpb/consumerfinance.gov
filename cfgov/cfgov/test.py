@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 import importlib
-import itertools
 import logging
 import os
 import re
@@ -14,29 +13,10 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.db import connection
 from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
-from django.test.runner import DiscoverRunner, is_discoverable
+from django.test.runner import DiscoverRunner
 
 from mock import Mock
 from scripts import initial_data, test_data
-
-
-class OptionalAppsMixin(object):
-    def build_suite(self, test_labels=None, extra_tests=None, **kwargs):
-        if not test_labels:
-            app_names = set(itertools.chain(*(
-                optional_app['apps']
-                for optional_app in settings.OPTIONAL_APPS
-            )))
-
-            discoverable_app_names = filter(is_discoverable, app_names)
-
-            test_labels = list(discoverable_app_names) + ['.']
-
-        return super(OptionalAppsMixin, self).build_suite(
-            test_labels=test_labels,
-            extra_tests=extra_tests,
-            **kwargs
-        )
 
 
 class PlaceholderJSMixin(object):
@@ -52,7 +32,7 @@ class PlaceholderJSMixin(object):
     only created if they don't already exist.
     """
     PLACEHOLDER_FILES = (
-        'static_built/js/routes/common.js',
+        'static_built/js/modernizr.min.js',
     )
 
     PLACEHOLDER_STRING = (
@@ -71,8 +51,7 @@ class PlaceholderJSMixin(object):
                     f.write(self.PLACEHOLDER_STRING)
 
 
-class TestDataTestRunner(OptionalAppsMixin, PlaceholderJSMixin,
-                         DiscoverRunner):
+class TestDataTestRunner(PlaceholderJSMixin, DiscoverRunner):
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
         # Disable logging below CRITICAL during tests.
         logging.disable(logging.CRITICAL)

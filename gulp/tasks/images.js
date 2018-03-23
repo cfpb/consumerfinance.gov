@@ -1,4 +1,3 @@
-const configImages = require( '../config' ).images;
 const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
 const gulpImagemin = require( 'gulp-imagemin' );
@@ -7,10 +6,17 @@ const imageminGifsicle = require( 'imagemin-gifsicle' );
 const imageminJpegtran = require( 'imagemin-jpegtran' );
 const imageminOptipng = require( 'imagemin-optipng' );
 const imageminSvgo = require( 'imagemin-svgo' );
+const paths = require( '../../config/environment' ).paths;
 
-gulp.task( 'images', () => {
-  gulp.src( configImages.src )
-    .pipe( gulpChanged( configImages.dest ) )
+/**
+ * Process and copy images from a source to destination directory.
+ * @param {string} src - A source directory.
+ * @param {string} dest - A destination directory.
+ * @returns {PassThrough} A source stream.
+ */
+function _genericCopy( src, dest ) {
+  return gulp.src( src )
+    .pipe( gulpChanged( dest ) )
     .pipe( gulpImagemin( [
       imageminGifsicle(),
       imageminJpegtran(),
@@ -18,5 +24,29 @@ gulp.task( 'images', () => {
       imageminSvgo()
     ] ) )
     .on( 'error', handleErrors )
-    .pipe( gulp.dest( configImages.dest ) );
-} );
+    .pipe( gulp.dest( dest ) );
+}
+
+/**
+ * Move and process images for apps.
+ * @returns {PassThrough} A source stream.
+ */
+function imagesApps() {
+  const imageAppsSrc = paths.unprocessed + '/apps/**/img/**';
+  const imageAppsDest = paths.processed + '/apps';
+  return _genericCopy( imageAppsSrc, imageAppsDest );
+}
+
+/**
+ * Move and process main images for the project.
+ * @returns {PassThrough} A source stream.
+ */
+function imagesGeneral() {
+  const imageGeneralSrc = paths.unprocessed + '/img/**';
+  const imageGeneralDest = paths.processed + '/img';
+  return _genericCopy( imageGeneralSrc, imageGeneralDest );
+}
+
+gulp.task( 'images:apps', imagesApps );
+gulp.task( 'images:general', imagesGeneral );
+gulp.task( 'images', [ 'images:apps', 'images:general' ] );

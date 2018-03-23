@@ -1,6 +1,6 @@
 import csv
-from cStringIO import StringIO
-from urllib import urlencode
+from six.moves import cStringIO as StringIO
+from six.moves.urllib.parse import urlencode
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -52,6 +52,7 @@ class CFGOVTaggedPages(TaggedItemBase):
 class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
         return PageQuerySet(self.model).order_by('path')
+
 
 CFGOVPageManager = BaseCFGOVPageManager.from_queryset(PageQuerySet)
 
@@ -473,6 +474,8 @@ class Feedback(models.Model):
         for feedback in queryset:
             feedback.submitted_on = "{}".format(feedback.submitted_on.date())
             feedback.comment = feedback.comment.encode('utf-8')
+            if feedback.referrer is not None:
+                feedback.referrer = feedback.referrer.encode('utf-8')
             writer.writerow(
                 ["{}".format(getattr(feedback, heading))
                  for heading in headings]

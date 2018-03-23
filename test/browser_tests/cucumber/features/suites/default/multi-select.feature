@@ -20,7 +20,6 @@ Feature: MultiSelect Tags
     When I focus on the multi-select search input
     Then the multi-select dropdown should be visible
 
-  @skip
   Scenario: Search input blur
     When I focus on the multi-select search input
     And I click away from the search input
@@ -60,13 +59,11 @@ Feature: MultiSelect Tags
     And I click on the first option in the dropdown again
     Then the choices length should be 0
 
-  @skip
   Scenario: XIT - Interacting with options list, add an option with RETURN key
     When I click on the multi-select search input
     And I hit the down arrow on the multi-select
     And I switch to the active element
 
-  @skip
   Scenario: XIT - Interacting with options list, remove an option with RETURN key
     When I click on the multi-select search input
     And I hit the down arrow on the multi-select

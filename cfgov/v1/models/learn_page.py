@@ -1,5 +1,5 @@
 from datetime import date
-from urllib import urlencode
+from six.moves.urllib.parse import urlencode
 
 from django.core.validators import RegexValidator
 from django.db import models

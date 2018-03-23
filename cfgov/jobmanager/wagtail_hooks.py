@@ -5,9 +5,9 @@ from wagtail.contrib.modeladmin.options import (
 )
 from wagtail.contrib.modeladmin.views import CreateView, EditView, InspectView
 
-from tinymce.widgets import TinyMCE
-
-from jobmanager.models import ApplicantType, Grade, JobCategory, JobRegion
+from jobmanager.models import (
+    ApplicantType, Grade, JobCategory, JobLength, Office, Region, ServiceType
+)
 
 
 class ApplicantTypeModelAdmin(ModelAdmin):
@@ -27,9 +27,6 @@ class JobCategoryForm(ModelForm):
     class Meta:
         fields = '__all__'
         model = JobCategory
-        widgets = {
-            'blurb': TinyMCE(attrs={'cols': 80, 'rows': 15}),
-        }
 
 
 class JobCategoryModelFormMixin(object):
@@ -59,10 +56,36 @@ class JobCategoryModelAdmin(ModelAdmin):
 
 
 class JobRegionModelAdmin(ModelAdmin):
-    model = JobRegion
+    model = Region
     menu_label = 'Regions'
     menu_icon = 'site'
+
+    def states_in_region(self):
+        return ", ".join(str(state) for state in self.states.all())
+
+    def major_cities(self):
+        return "; ".join(str(city) for city in self.cities.all())
+
+    list_display = ('abbreviation', 'name', states_in_region, major_cities)
+
+
+class JobOfficeModelAdmin(ModelAdmin):
+    model = Office
+    menu_label = 'Offices'
+    menu_icon = 'site'
     list_display = ('abbreviation', 'name')
+
+
+class ServiceTypeModelAdmin(ModelAdmin):
+    model = ServiceType
+    menu_label = 'Service Type'
+    menu_icon = 'site'
+
+
+class JobLengthModelAdmin(ModelAdmin):
+    model = JobLength
+    menu_label = 'Job Length'
+    menu_icon = 'site'
 
 
 @modeladmin_register
@@ -73,5 +96,8 @@ class MyModelAdminGroup(ModelAdminGroup):
         ApplicantTypeModelAdmin,
         JobCategoryModelAdmin,
         JobGradeModelAdmin,
-        JobRegionModelAdmin,
+        ServiceTypeModelAdmin,
+        JobLengthModelAdmin,
+        JobOfficeModelAdmin,
+        JobRegionModelAdmin
     )

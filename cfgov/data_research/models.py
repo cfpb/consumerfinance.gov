@@ -15,20 +15,13 @@ from v1.models import BrowsePage
 logger = logging.getLogger(__name__)
 
 
-# Used for registering users for a conference
 class ConferenceRegistration(models.Model):
-    # Required entries: name, email, sessions
-    name = models.CharField(max_length=250, blank=True)
-    organization = models.CharField(max_length=250, blank=True)
-    email = models.EmailField(max_length=250, blank=True)
-    sessions = models.TextField(blank=False)
-    foodinfo = models.CharField(max_length=250, blank=True)
-    accommodations = models.CharField(max_length=250, blank=True)
-    code = models.CharField(max_length=250)
+    created = models.DateTimeField(auto_now_add=True)
+    govdelivery_code = models.CharField(max_length=250)
+    details = JSONField()
 
 
 # mortgage metadata models
-
 class MortgageDataConstant(models.Model):
     """Constant values that Research can change via the admin."""
     name = models.CharField(max_length=255)

@@ -1,10 +1,11 @@
 from __future__ import absolute_import
 
-import HTMLParser
 import os
 import re
 import unicodedata
-from urlparse import parse_qs, urlparse
+from six import text_type as unicode
+from six.moves import html_parser as HTMLParser
+from six.moves.urllib.parse import parse_qs, urlparse
 
 from django.conf import settings
 from django.contrib import messages
@@ -110,7 +111,7 @@ def parse_links(value):
     for tag in soup.recursiveChildGenerator():
         try:
             del tag['style']
-        except:
+        except TypeError:
             # 'NavigableString' object has does not have attr's
             pass
 
@@ -195,7 +196,7 @@ def render_stream_child(context, stream_child):
     try:
         template = context.environment.get_template(
             stream_child.block.meta.template)
-    except:
+    except Exception:
         return stream_child
 
     # Create a new context based on the current one as we can't edit it
@@ -205,7 +206,7 @@ def render_stream_child(context, stream_child):
     # wagtail for the blocks context)
     try:
         new_context['value'] = stream_child.value
-    except:
+    except AttributeError:
         new_context['value'] = stream_child
 
     # Render the template with the context

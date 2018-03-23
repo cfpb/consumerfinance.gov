@@ -1,7 +1,6 @@
 // Required modules.
 const EventObserver = require( '../../modules/util/EventObserver' );
 const BaseTransition = require( './BaseTransition' );
-const fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 
 // Exported constants.
 const CLASSES = {
@@ -24,7 +23,6 @@ const CLASSES = {
  *   DOM element to apply move transition to.
  * @returns {MoveTransition} An instance.
  */
-// eslint-disable-next-line max-statements
 function MoveTransition( element ) {
 
   const _baseTransition = new BaseTransition( element, CLASSES );
@@ -34,7 +32,7 @@ function MoveTransition( element ) {
    */
   function init() {
     _baseTransition.init();
-    const _transitionCompleteBinded = fnBind( _transitionComplete, this );
+    const _transitionCompleteBinded = _transitionComplete.bind( this );
     _baseTransition.addEventListener(
       BaseTransition.END_EVENT,
       _transitionCompleteBinded

@@ -1,7 +1,7 @@
 // Required modules.
 const EventObserver = require( '../../modules/util/EventObserver' );
-const fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 
+// eslint-disable-next-line max-statements
 /**
  * BaseTransition
  * @class
@@ -16,7 +16,6 @@ const fnBind = require( '../../modules/util/fn-bind' ).fnBind;
  *   The classes to apply to this transition.
  * @returns {BaseTransition} An instance.
  */
-// eslint-disable-next-line max-statements
 function BaseTransition( element, classes ) {
   const _classes = classes;
   let _dom;
@@ -32,8 +31,8 @@ function BaseTransition( element, classes ) {
    * @returns {BaseTransition} An instance.
    */
   function init() {
-    _transitionCompleteBinded = fnBind( _transitionComplete, this );
-    _addEventListenerBinded = fnBind( _addEventListener, this );
+    _transitionCompleteBinded = _transitionComplete.bind( this );
+    _addEventListenerBinded = _addEventListener.bind( this );
     setElement( element );
 
     return this;

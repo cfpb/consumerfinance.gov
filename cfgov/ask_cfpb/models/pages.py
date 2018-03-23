@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import json
 import re
-from urlparse import urlparse
+from six.moves.urllib.parse import urlparse
 
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models

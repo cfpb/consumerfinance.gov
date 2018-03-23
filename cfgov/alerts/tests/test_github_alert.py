@@ -68,7 +68,6 @@ class TestGithubAlert(TestCase):
             title=self.text,
             body=self.text,
             labels=[
-                'Maintenance and Response',
                 'alert'
             ],
         )

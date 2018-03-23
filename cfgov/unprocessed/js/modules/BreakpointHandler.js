@@ -1,11 +1,5 @@
-const getBreakpointState = require( './util/breakpoint-state' ).get;
-const _breakpointsConfig = require( '../config/breakpoints-config' );
-
-/* Used for checking browser capabilities.
-   TODO: Check what browsers this is necessary for and
-   check whether it is still applicable. */
-let _viewportEl;
-let _propPrefix;
+import _breakpointsConfig from '../config/breakpoints-config';
+import { get as getBreakpointState } from './util/breakpoint-state';
 
 /**
  * BreakpointHandler
@@ -24,15 +18,15 @@ let _propPrefix;
  * }
  */
 function BreakpointHandler( opts ) {
-  const hasRequiredArgs =
-  Boolean( opts && opts.breakpoint && opts.enter && opts.leave );
-  let breakpoint;
+  const hasRequiredArgs = Boolean(
+    opts && opts.breakpoint && opts.enter && opts.leave
+  );
 
   if ( hasRequiredArgs === false ) {
     throw new Error( 'BreakpointHandler constructor requires arguments!' );
   }
 
-  breakpoint = opts.breakpoint;
+  const breakpoint = opts.breakpoint;
   this.match = false;
   this.type = opts.type || 'max';
   this.breakpoint = _breakpointsConfig[breakpoint] &&
@@ -49,17 +43,6 @@ function BreakpointHandler( opts ) {
  * @param {object} self Reference to instance.
  */
 function _init( self ) {
-
-  /* TODO: Check what browsers this is necessary for and
-     check whether it is still applicable. */
-  _viewportEl = window;
-  _propPrefix = 'inner';
-  const modernBrowser = 'innerWidth' in window;
-  if ( !modernBrowser ) {
-    _viewportEl = document.documentElement || document.body;
-    _propPrefix = 'client';
-  }
-
   self.handleViewportChange();
   self.watchWindowResize();
 }
@@ -78,7 +61,7 @@ function watchWindowResize() {
  * Test the viewport size and set whether the test passes on the instance.
  */
 function handleViewportChange() {
-  const width = _viewportEl[_propPrefix + 'Width'];
+  const width = window.innerWidth;
   const match = this.testBreakpoint( width );
   let breakpointState;
 

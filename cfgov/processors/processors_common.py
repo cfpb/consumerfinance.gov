@@ -1,4 +1,4 @@
-from urlparse import urlsplit, urlunsplit
+from six.moves.urllib.parse import urlsplit, urlunsplit
 
 
 replacements = (

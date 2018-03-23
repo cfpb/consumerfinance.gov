@@ -1,5 +1,6 @@
 import json
 from functools import partial
+from six import string_types as basestring
 
 from django import forms
 from django.apps import apps
@@ -63,12 +64,19 @@ class InfoUnitGroup(blocks.StructBlock):
                    'the first link in their unit\'s list, if there is a link.')
     )
 
-    lines_between_items = blocks.BooleanBlock(
-        default=True,
+    has_top_rule_line = blocks.BooleanBlock(
+        default=False,
         required=False,
-        label='Show lines between 25/75 items',
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'info unit group.')
+    )
+
+    lines_between_items = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Show rule lines between items',
         help_text=('Check this to show horizontal rule lines between info '
-                   'units in a 25/75 layout. Does not apply to other formats.')
+                   'units.')
     )
 
     info_units = blocks.ListBlock(molecules.InfoUnit())
@@ -313,6 +321,11 @@ class RelatedPosts(blocks.StructBlock):
 
 class MainContactInfo(blocks.StructBlock):
     contact = SnippetChooserBlock('v1.Contact')
+    has_top_rule_line = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text='Add a horizontal rule line to top of contact block.'
+    )
 
     class Meta:
         icon = 'wagtail'
@@ -695,9 +708,13 @@ class Expandable(BaseExpandable):
 class ExpandableGroup(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
-
     is_accordion = blocks.BooleanBlock(required=False)
-    has_rule = blocks.BooleanBlock(required=False)
+    has_top_rule_line = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'expandable group.')
+    )
 
     expandables = blocks.ListBlock(Expandable())
 
@@ -853,6 +870,13 @@ class ChartBlock(blocks.StructBlock):
         required=True,
         help_text='Briefly summarize the chart for visually impaired users.')
 
+    has_top_rule_line = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'chart block.')
+    )
+
     last_updated_projected_data = blocks.DateBlock(
         help_text='Month of latest entry in dataset'
     )
@@ -887,12 +911,17 @@ class MortgageChartBlock(blocks.StructBlock):
     note = blocks.CharBlock(
         required=False,
         help_text='Text for "Note" section of footnotes.')
+    has_top_rule_line = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'chart block.')
+    )
 
     class Meta:
         label = 'Mortgage Chart Block'
         icon = 'image'
         template = '_includes/organisms/mortgage-chart.html'
-        classname = 'block__flush-top'
 
     class Media:
         js = ['mortgage-performance-trends.js']
@@ -909,9 +938,33 @@ class MortgageMapBlock(MortgageChartBlock):
         js = ['mortgage-performance-trends.js']
 
 
+def get_snippet_type_choices():
+    return [
+        (
+            m.__module__ + '.' + m.__name__,
+            m._meta.verbose_name_plural.capitalize()
+        ) for m in get_snippet_models()
+    ]
+
+
+def get_snippet_field_choices():
+    return [
+        (
+            m._meta.verbose_name_plural.capitalize(),
+            getattr(m, 'snippet_list_field_choices', [])
+        ) for m in get_snippet_models()
+    ]
+
+
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
+    has_top_rule_line = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'snippet list.')
+    )
     image = atoms.ImageBasic(required=False)
     actions_column_width = blocks.ChoiceBlock(
         label='Width of "Actions" column',
@@ -930,12 +983,7 @@ class SnippetList(blocks.StructBlock):
     )
 
     snippet_type = blocks.ChoiceBlock(
-        choices=[
-            (
-                m.__module__ + '.' + m.__name__,
-                m._meta.verbose_name_plural.capitalize()
-            ) for m in get_snippet_models()
-        ],
+        choices=get_snippet_type_choices,
         required=True
     )
     show_thumbnails = blocks.BooleanBlock(
@@ -948,12 +996,7 @@ class SnippetList(blocks.StructBlock):
             help_text='E.g., "Download" or "Order free prints"'
         )),
         ('snippet_field', blocks.ChoiceBlock(
-            choices=[
-                (
-                    m._meta.verbose_name_plural.capitalize(),
-                    getattr(m, 'snippet_list_field_choices', [])
-                ) for m in get_snippet_models()
-            ],
+            choices=get_snippet_field_choices,
             help_text='Corresponds to the available fields for the selected '
                       'snippet type.'
         )),

@@ -1,5 +1,5 @@
 import logging
-from urlparse import urlsplit
+from six.moves.urllib.parse import urlsplit
 
 from django.conf import settings
 from django.conf.urls import url
@@ -192,3 +192,12 @@ def register_frank_menu_item():
 def register_flag_admin_urls():
     handler = 'v1.admin_views.manage_cdn'
     return [url(r'^cdn/$', handler, name='manage-cdn'), ]
+
+
+@hooks.register('before_serve_page')
+def serve_latest_draft_page(page, request, args, kwargs):
+    if page.pk in settings.SERVE_LATEST_DRAFT_PAGES:
+        latest_draft = page.get_latest_revision_as_page()
+        response = latest_draft.serve(request, *args, **kwargs)
+        response['Serving-Wagtail-Draft'] = '1'
+        return response

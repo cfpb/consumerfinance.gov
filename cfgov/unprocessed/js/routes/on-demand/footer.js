@@ -4,4 +4,5 @@
 
 
 const Footer = require( '../../organisms/Footer.js' );
-const footer = new Footer( document.body ).init();
+const footer = new Footer( document.body );
+footer.init();

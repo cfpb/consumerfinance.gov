@@ -1,19 +1,25 @@
+from six import string_types as basestring
+
 from django.core.exceptions import ValidationError
+from django.http import HttpRequest
 from django.test import TestCase
 
 from mock import patch
 from model_mommy import mommy
 
-from jobmanager.models.django import Grade, JobCategory, JobRegion
+from jobmanager.models.django import (
+    City, Grade, JobCategory, Office, Region, State
+)
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel
+from v1.models.snippets import ReusableText
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 
 class JobListingPageTestCase(TestCase):
     def setUp(self):
         self.division = mommy.make(JobCategory)
-        self.region = mommy.make(JobRegion)
+        self.location = mommy.make(Region)
 
         page_clean = patch('jobmanager.models.pages.CFGOVPage.clean')
         page_clean.start()
@@ -22,7 +28,7 @@ class JobListingPageTestCase(TestCase):
     def prepare_job_listing_page(self, **kwargs):
         kwargs.setdefault('description', 'default')
         kwargs.setdefault('division', self.division)
-        kwargs.setdefault('region', self.region)
+        kwargs.setdefault('location', self.location)
         return mommy.prepare(JobListingPage, **kwargs)
 
     def test_clean_with_all_fields_passes_validation(self):
@@ -95,3 +101,67 @@ class JobListingPageTestCase(TestCase):
         page = self.make_page_with_grades('3', '2', '1')
         for grade in page.ordered_grades:
             self.assertIsInstance(grade, basestring)
+
+    def test_context_for_page_with_region_location(self):
+        region = mommy.make(
+            Region,
+            name="Tri-State Area",
+            abbreviation="TA",
+        )
+        state = mommy.make(
+            State,
+            name="Unknown",
+            abbreviation='UN',
+            region=region
+        )
+        cities = ['Danville', 'Townsville']
+        for city in cities:
+            region.cities.add(
+                City(name=city, state=state)
+            )
+        page = self.prepare_job_listing_page(location=region)
+        test_context = page.get_context(HttpRequest())
+        self.assertEqual(len(test_context['states']), 1)
+        self.assertEqual(test_context['states'][0], state.abbreviation)
+        self.assertEqual(len(test_context['cities']), 2)
+        self.assertIn(test_context['cities'][0].name, cities)
+
+    def test_context_for_page_with_office_location(self):
+        region = mommy.make(
+            Region,
+            name="Mideastern",
+            abbreviation="ME")
+        office = mommy.make(
+            Office,
+            name="Zenith Office",
+            abbreviation="ZE")
+        state = mommy.make(
+            State,
+            name="Winnemac",
+            abbreviation='WM',
+            region=region
+        )
+        office.cities.add(
+            City(name='Zenith', state=state)
+        )
+        page = self.prepare_job_listing_page(location=office)
+        test_context = page.get_context(HttpRequest())
+        self.assertEqual(len(test_context['states']), 0)
+        self.assertEqual(len(test_context['cities']), 1)
+        self.assertEqual(test_context['cities'][0].name, 'Zenith')
+
+    def test_context_without_about_us_snippet(self):
+        page = self.prepare_job_listing_page()
+        test_context = page.get_context(HttpRequest())
+        self.assertNotIn('about_us', test_context)
+
+    def test_context_with_about_us_snippet(self):
+        about_us_snippet = ReusableText(title='About us (For consumers)')
+        about_us_snippet.save()
+        page = self.prepare_job_listing_page()
+        test_context = page.get_context(HttpRequest())
+        self.assertIn('about_us', test_context)
+        self.assertEqual(
+            test_context['about_us'],
+            about_us_snippet
+        )

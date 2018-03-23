@@ -1,7 +1,7 @@
 from unipath import DIRS
 
 from .base import *
-from .mysql_mixin import *
+from .database_mixin import *
 
 
 DEBUG = True
@@ -64,3 +64,7 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
         'LOCATION': 'post_preview_cache',
         'TIMEOUT': None,
     }
+
+# Use a mock GovDelivery API instead of the real thing.
+# Remove this line to use the real API instead.
+GOVDELIVERY_API = 'core.govdelivery.LoggingMockGovDelivery'
