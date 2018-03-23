@@ -13,11 +13,6 @@ const HTML_SNIPPET = `
   </a>
 `;
 
-function scrollTo( xCoord, yCoord ) {
-  window.scrollX = xCoord;
-  window.scrollY = yCoord;
-}
-
 /**
  * Simulate a click event
  * @param  {HTMLNode} target - Element that dispatches the click event.
@@ -30,6 +25,16 @@ function triggerClick( target ) {
   } );
 
   target.dispatchEvent( clickEvent );
+}
+
+/**
+ * Mock window.scrollTo() method.
+ * @param  {number} xCoord An x coordinate.
+ * @param  {number} yCoord A y coordinate.
+ */
+function scrollTo( xCoord, yCoord ) {
+  window.scrollX = xCoord;
+  window.scrollY = yCoord;
 }
 
 describe( 'footer-button', () => {
