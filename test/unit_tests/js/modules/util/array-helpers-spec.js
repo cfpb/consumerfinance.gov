@@ -3,33 +3,47 @@ const arrayHelpers = require( BASE_JS_PATH + 'modules/util/array-helpers' );
 let array;
 let index;
 
-describe( 'Array Helpers indexOfObject', () => {
+describe( 'array-helpers', () => {
 
-  it( 'should return -1 if the array is empty', () => {
-    array = [];
-    index = arrayHelpers.indexOfObject( array, 'foo' );
+  describe( 'indexOfObject()', () => {
 
-    expect( index ).toEqual( -1 );
+    it( 'should return -1 if the array is empty', () => {
+      array = [];
+      index = arrayHelpers.indexOfObject( array, 'foo' );
+
+      expect( index ).toBe( -1 );
+    } );
+
+    it( 'should return -1 if there is no match', () => {
+      array = [
+        { value: 'bar' },
+        { value: 'baz' }
+      ];
+      index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
+
+      expect( index ).toBe( -1 );
+    } );
+
+    it( 'should return the matched index', () => {
+      array = [
+        { value: 'foo' },
+        { value: 'bar' },
+        { value: 'baz' }
+      ];
+      index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
+
+      expect( index ).toBe( 0 );
+    } );
   } );
 
-  it( 'should return -1 if there is no match', () => {
-    array = [
-      { value: 'bar' },
-      { value: 'baz' }
-    ];
-    index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
+  describe( 'uniquePrimitives()', () => {
+    it( 'should return an array without duplicate primitives', () => {
+      const testArray = [ 1, 2, 2, 3, 3, 3, '4.500%', '4.500%', null, null ];
+      const testArrayMatch = [ 1, 2, 3, '4.500%', null ];
 
-    expect( index ).toEqual( -1 );
-  } );
+      const newArr = arrayHelpers.uniquePrimitives( testArray );
 
-  it( 'should return the matched index', () => {
-    array = [
-      { value: 'foo' },
-      { value: 'bar' },
-      { value: 'baz' }
-    ];
-    index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
-
-    expect( index ).toEqual( 0 );
+      expect( newArr ).toEqual( testArrayMatch );
+    } );
   } );
 } );
