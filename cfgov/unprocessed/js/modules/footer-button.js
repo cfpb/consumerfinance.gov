@@ -5,7 +5,6 @@
    scrolltop-animation-without-jquery
    ========================================================================== */
 
-
 // Required modules.
 const behavior = require( './util/behavior' );
 
@@ -13,11 +12,7 @@ const behavior = require( './util/behavior' );
  * Set up event handler for button to scroll to top of page.
  */
 function init() {
-  if ( 'requestAnimationFrame' in window === false ) {
-    return;
-  }
-
-  behavior.attach( 'return-to-top', 'click', function( event ) {
+  behavior.attach( 'return-to-top', 'click', event => {
     event.preventDefault();
     _scrollToTop();
   } );
@@ -35,22 +30,28 @@ function _scrollToTop() {
   let scrollCount = 0;
   let scrollMargin;
 
+  // If requestAnimationFrame is not supported, return to top immediately.
+  if ( 'requestAnimationFrame' in window === false ) {
+    window.scrollTo( 0, 0 );
+    return;
+  }
+
   window.requestAnimationFrame( _step );
 
   /**
    * Decrement scroll Y position.
    */
   function _step() {
-    window.setTimeout( function() {
-      if ( window.scrollY !== 0 ) {
-        window.requestAnimationFrame( _step );
-        scrollCount += 1;
-        scrollMargin = cosParameter - cosParameter *
-                       Math.cos( scrollCount * scrollStep );
-        window.scrollTo( 0, scrollHeight - scrollMargin );
-      }
-    }, SCROLL_STEP_DURATION );
+    if ( window.scrollY !== 0 ) {
+      window.setTimeout( () => {
+          scrollCount += 1;
+          let adjustVal = cosParameter * Math.cos( scrollCount * scrollStep );
+          scrollMargin = cosParameter - adjustVal;
+          window.scrollTo( 0, scrollHeight - scrollMargin );
+          window.requestAnimationFrame( _step );
+      }, SCROLL_STEP_DURATION );
+    }
   }
 }
 
-module.exports = { init: init };
+module.exports = { init };
