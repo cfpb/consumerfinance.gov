@@ -27,6 +27,8 @@ require( '../placeholder-polyfill' );
 // Load our handlebar templates.
 const template = require( './template-loader' );
 
+import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
+
 // Set some properties for the histogram.
 var chart = {
   $el:           $( '#chart' ),
@@ -258,7 +260,7 @@ function updateView() {
         return;
       }
 
-      data.uniqueLabels = unique( data.labels.slice( 0 ) );
+      data.uniqueLabels = uniquePrimitives( data.labels.slice( 0 ) );
 
       chart.stopLoading();
       removeAlerts();
@@ -287,21 +289,6 @@ function updateView() {
       renderInterestAmounts();
     } );
   }
-}
-
-function unique( arr ) {
-  var m = {};
-  var newarr = [];
-  var v;
-  for ( var i = 0, len = arr.length; i < len; i++ ) {
-    v = arr[i];
-    if ( !m[v] ) {
-      newarr.push( v );
-      m[v] = true;
-    }
-  }
-
-  return newarr;
 }
 
 /**
