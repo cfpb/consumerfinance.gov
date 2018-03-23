@@ -1,4 +1,4 @@
-import * as rateExplorer from './rate-checker';
+import * as rateChecker from './rate-checker';
 
 // Do it!
-rateExplorer.init();
+rateChecker.init();

@@ -13,16 +13,16 @@ const highchartsTheme = require( './highcharts-theme' );
 highchartsTheme.applyThemeTo( Highcharts );
 
 // var geolocation = require('./geolocation');
-const config = require( '../../config.json' );
-const domValues = require( './dom-values' );
+import * as config from '../../config.json';
+import * as domValues from './dom-values';
 const dropdown = require( '../dropdown-utils' );
 const fetchRates = require( '../rates' );
 const formatTime = require( '../format-timestamp' );
 const params = require( './params' );
 
-require( 'rangeslider.js' );
-require( './tab' );
-require( '../placeholder-polyfill' );
+import 'rangeslider.js';
+import './tab';
+import '../placeholder-polyfill';
 
 // Load our handlebar templates.
 const template = require( './template-loader' );
@@ -808,7 +808,6 @@ function addCommas( value ) {
  * @param {Function} cb - Optional callback.
  */
 function renderSlider( cb ) {
-
   $( '#credit-score' ).rangeslider({
     polyfill:    false,
     rangeClass:  'rangeslider',
