@@ -47,7 +47,9 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self, using=None):
         ids = [record.id for record in self.get_model().objects.all()
-               if record.english_page and record.english_page.live is True]
+               if record.english_page
+               and record.english_page.live is True
+               and record.english_page.redirect_to is None]
         return self.get_model().objects.filter(id__in=ids)
 
 
@@ -92,7 +94,9 @@ class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self, using=None):
         ids = [record.id for record in self.get_model().objects.all()
-               if record.spanish_page and record.spanish_page.live is True]
+               if record.spanish_page
+               and record.spanish_page.live is True
+               and record.spanish_page.redirect_to is None]
         return self.get_model().objects.filter(id__in=ids)
 
 

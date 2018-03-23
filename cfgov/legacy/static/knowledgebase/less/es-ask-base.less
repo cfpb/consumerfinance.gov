@@ -1,3 +1,133 @@
+/* Changes to make ES look like English Ask */
+
+body {
+    font-family: "Avenir Next", Arial, sans-serif;
+}
+
+.wrapper-body .wrapper-container {
+    padding-top: 15px;
+}
+
+.ac-search {
+    .lead {
+        text-transform: none;
+        font-weight: 400;
+        font-size: 22px;
+        font-family: "Avenir Next", Arial, sans-serif;
+        line-height: 1.2727;
+        margin: 0 0 0.68em;
+        max-width: 670px;
+    }
+}
+
+.full-bleed.content {
+    margin-top: 0em;
+}
+
+.es-ask_results-section {
+
+    margin-top: 15px;
+
+    h1 {
+      margin-bottom: 1.25em;
+      font-family: "Avenir Next Bold", Arial, sans-serif;
+      line-height: 1;
+    }
+
+    h3 {
+        text-transform: none;
+        font-size: 18px;
+        font-family: "Avenir Next Medium", Arial, sans-serif;
+        font-weight: 400;
+        line-height: 1.222222;
+        margin: 0 0 0.68em;  
+    }
+
+    p {
+        font-family: "Avenir Next",Arial,sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        color: #101820;
+        font-size: 100%;
+        line-height: 1.375;
+        margin: unit( 15px / 16px, em ) 0 unit( 5px / 16px, em);
+
+        a {
+          font-family: "Avenir Next Medium", Arial, sans-serif;
+          border-width: 0;
+          border-bottom-width: 1px;
+          border-style: dotted;
+          border-color: #0072ce;
+          color: #0072ce;
+          font-size: 16px;
+          line-height: 1.375;
+          text-decoration: none;
+        }
+    }
+    
+    .share a {
+        border: none;
+    }
+
+    .ac-search {
+        margin-top: unit( 40px / 16px, em );
+        margin-bottom: unit( 40px / 16px, em );
+        padding-top: 1.25em; /* 20/16 */
+        padding-bottom: 1.25em; /* 20/16 */
+        background: #e7e7e6;
+    }
+
+    li {
+        margin-bottom: 0.5em;
+    }
+
+    .pagination a {
+        border: none;
+    }
+
+}
+
+@media @respond-to-medium-screens {
+    .es-ask_results-section {
+        .ac-search { 
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: unit( 30px / 36px, em );
+        }
+
+        h3 {
+          text-transform: none;
+          font-weight: 400;
+          font-size: 22px;
+          font-family: "Avenir Next", Arial, sans-serif;
+          line-height: 1.2727;
+          margin: 0 0 0.68em;
+        }
+    }
+}
+
+@media @respond-to-large-screens {
+    .es-ask_results-section {
+
+        h1 {
+            margin-bottom: unit( 30px / 36px, em );
+        }
+
+        h3 {
+          text-transform: none;
+          font-weight: 400;
+          font-size: 22px;
+          font-family: "Avenir Next", Arial, sans-serif;
+          line-height: 1.2727;
+          margin: 0 0 0.68em;
+        }
+    }
+}
+
+/* End changes to make ES look like English Ask */
+
 /**
  * Spanish version of Ask CFPB
  */
@@ -16,31 +146,59 @@
    ========================================================================== */
 
 .ac-search {
-    margin-top: -1.625em; /* 26/16 */
-    margin-bottom: 1.625em; /* 26/16 */
-    padding-top: 1.25em; /* 20/16 */
-    padding-bottom: 1.25em; /* 20/16 */
     background: #e7e7e6;
 }
 
 .ac-search.s-show-on-small {
-    margin-top: 1.625em; /* 26/16 */
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+
+    label {
+        margin-bottom: 15px;
+    }
 }
+
+
 
 @media @respond-to-medium-screens {
 
+    .wrapper-body .wrapper-container {
+        padding-top: 0px;
+    }
+
+
+    .full-bleed.content {
+        margin-top: -2em;
+    }
+
+    .es-ask_results-section {
+        margin-top: 0px;
+    }
+
     .ac-search {
-        margin-top: -1.625em; /* 26/16 */
-        margin-bottom: 1.625em; /* 26/16 */
+        padding: 30px 20px;
+        margin-top: 0em; 
+        margin-bottom: unit( 30px / 16px, em );
     }
 
 }
 
 @media @respond-to-large-screens {
 
+    .full-bleed.content {
+        margin-top: -2em;
+    }
+
+    .es-ask__results-section {
+        margin-top: 0em;
+    }
+
     .ac-search {
-        margin-top: -2em; /* 32/16 */
-        margin-bottom: 2em; /* 32/16 */
+        margin-top: 0em;
+        margin-bottom: unit( 30px / 16px, em );
+        padding: 70px;
         padding-top: 2em;
         padding-bottom: 2em;
     }
@@ -323,9 +481,15 @@
     padding: 0 0 0 1.625em; /* 26/16 */
 }
 
-.ac-qa-question,
+.ac-qa-question {
+    font-size: 1.125em;
+    font-family: "Avenir Next Medium", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+}
+
 .ac-qa-answer {
-    font-size: 0.875em; /* 14/16 */
+    font-size: 1em; /* 14/16 */
     text-transform: none;
 }
 
@@ -334,7 +498,7 @@
 }
 
 .ac-qa-answer {
-    font-family: Georgia, "Times New Roman", serif;
+
 }
 
 .ac-qa-answer p:first-child {
@@ -360,10 +524,12 @@
 
 .ac-qa-question:before {
     content: "P:";
+    font-size: 18px;
 }
 
 .ac-qa-answer > p:first-child:before {
     content: "R:";
+    font-size: 18px;
 }
 
 /* Summary version */
@@ -451,6 +617,11 @@ a.ac-qa-summary:focus {
 
 /* Enlarge this component for larger screens */
 
+
+.ac-qa-answer p:first-child:before {
+    width: 1.40em;
+}
+
 @media @respond-to-medium-screens {
 
     .ac-qa {
@@ -468,15 +639,17 @@ a.ac-qa-summary:focus {
 
     .ac-qa-question,
     .ac-qa-answer {
-        font-size: 1.125em; /* 18/16 */
         line-height: 1.333333333; /* 24/18 */
     }
 
-    .ac-qa-question:before,
+    .ac-qa-question:before {
+        width: 2.2em; /* 40/20 match .ac-qa left padding */
+        margin-left: -2.2em; /* 40/20 match .ac-qa left padding */
+    }
+
     .ac-qa-answer p:first-child:before {
-        width: 2em; /* 40/20 match .ac-qa left padding */
-        margin-left: -2em; /* 40/20 match .ac-qa left padding */
-        font-size: 1.111111111em; /* 20/18 */
+        width: 2.0em; /* 40/20 match .ac-qa left padding */
+        margin-left: -2.2em; /* 40/20 match .ac-qa left padding */    
     }
 
 }
