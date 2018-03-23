@@ -13,6 +13,11 @@ const HTML_SNIPPET = `
   </a>
 `;
 
+function scrollTo( xCoord, yCoord ) {
+  window.scrollX = xCoord;
+  window.scrollY = yCoord;
+}
+
 /**
  * Simulate a click event
  * @param  {HTMLNode} target - Element that dispatches the click event.
@@ -28,6 +33,10 @@ function triggerClick( target ) {
 }
 
 describe( 'footer-button', () => {
+  beforeAll( () => {
+    window.scrollTo = scrollTo;
+  } );
+
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     footerBtnDom = document.querySelector( '.o-footer_top-button' );
@@ -35,13 +44,12 @@ describe( 'footer-button', () => {
 
   it( 'button should scroll when clicked ' +
       'and requestAnimationFrame is supported', done => {
-    spyOn( window, 'scrollTo' );
     window.scrollY = 10;
     FooterButton.init();
     triggerClick( footerBtnDom );
 
     window.setTimeout( () => {
-      expect( window.scrollTo ).toHaveBeenCalledWith( 0, 0 );
+      expect( window.scrollY ).toBe( 0 );
       done();
     }, 1000 );
   } );
