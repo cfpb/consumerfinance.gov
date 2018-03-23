@@ -34,10 +34,7 @@ function indexOfObject( array, key, val ) {
  * @returns {Array}      Return processed list.
  */
 function uniquePrimitives( array ) {
-  const arrayProcessed = array.filter( (value, index, self) => {
-    return self.indexOf( value ) === index;
-  } );
-  return arrayProcessed;
+  return array.filter( ( val, i, self ) => self.indexOf( val ) === i );
 }
 
 module.exports = {

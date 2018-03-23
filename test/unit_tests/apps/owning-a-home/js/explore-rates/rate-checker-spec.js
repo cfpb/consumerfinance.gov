@@ -12,7 +12,7 @@ describe( 'explore-rates/rate-checker', () => {
 
   describe( 'init()', () => {
 
-    it( `should not initialize when rate-checker class isn't found`, () => {
+    it( 'should not initialize when rate-checker class isn\'t found', () => {
       document.body.innerHTML = '';
       expect( rateChecker.init() ).toBe( false );
     } );

@@ -38,8 +38,8 @@ describe( 'array-helpers', () => {
 
   describe( 'uniquePrimitives()', () => {
     it( 'should return an array without duplicate primitives', () => {
-      const testArray = [ 1, 2, 2, 3, 3, 3, "4.500%", "4.500%", null, null ];
-      const testArrayMatch = [ 1, 2, 3, "4.500%", null ];
+      const testArray = [ 1, 2, 2, 3, 3, 3, '4.500%', '4.500%', null, null ];
+      const testArrayMatch = [ 1, 2, 3, '4.500%', null ];
 
       const newArr = arrayHelpers.uniquePrimitives( testArray );
 
