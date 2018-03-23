@@ -44,11 +44,11 @@ function _scrollToTop() {
   function _step() {
     if ( window.scrollY !== 0 ) {
       window.setTimeout( () => {
-          scrollCount += 1;
-          let adjustVal = cosParameter * Math.cos( scrollCount * scrollStep );
-          scrollMargin = cosParameter - adjustVal;
-          window.scrollTo( 0, scrollHeight - scrollMargin );
-          window.requestAnimationFrame( _step );
+        scrollCount += 1;
+        const adjustVal = cosParameter * Math.cos( scrollCount * scrollStep );
+        scrollMargin = cosParameter - adjustVal;
+        window.scrollTo( 0, scrollHeight - scrollMargin );
+        window.requestAnimationFrame( _step );
       }, SCROLL_STEP_DURATION );
     }
   }

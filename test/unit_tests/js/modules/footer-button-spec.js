@@ -3,7 +3,6 @@ const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 
 let footerBtnDom;
 let bodyDom;
-let lastTime = 0;
 
 const HTML_SNIPPET = `
   <a class="a-btn a-btn__secondary o-footer_top-button"
@@ -61,7 +60,7 @@ describe( 'footer-button', () => {
 
   it( 'button should scroll when clicked ' +
       'and requestAnimationFrame is not supported', () => {
-    spyOn( window, 'scrollTo' );
+    jest.spyOn( window, 'scrollTo' );
     delete window.requestAnimationFrame;
     window.scrollY = 10;
     FooterButton.init();
