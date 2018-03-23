@@ -21,6 +21,9 @@ function EmailPopup( element ) {
   const _dom = atomicHelpers.checkDom( element, EmailPopup.BASE_CLASS );
   const _popupLabel = _dom.getAttribute( 'data-popup-label' );
 
+  // Set language default.
+  let _language = 'en';
+
   /**
    * @returns {HTMLNode} The base element of the email popup.
    */
@@ -30,7 +33,7 @@ function EmailPopup( element ) {
 
   /**
    * Function used to hide popup by removing visible class.
-   * @returns {EmailPopup}
+   * @returns {EmailPopup} An instance.
    */
   function hidePopup() {
     _dom.classList.remove( VISIBLE_CLASS );
@@ -63,7 +66,7 @@ function EmailPopup( element ) {
     return validators.email(
       fields.email,
       '',
-      { language: language }
+      { language: _language }
     ).msg;
   }
 
@@ -90,7 +93,7 @@ function EmailPopup( element ) {
     _dom.classList.remove( VISIBLE_CLASS );
 
     const _closeElement = _dom.querySelector( '.close' );
-    const _language = _dom.getAttribute( 'lang' );
+    _language = _dom.getAttribute( 'lang' );
 
     const formSubmit = new FormSubmit(
       _dom,
