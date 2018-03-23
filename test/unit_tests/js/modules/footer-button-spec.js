@@ -51,7 +51,7 @@ describe( 'footer-button', () => {
     window.setTimeout( () => {
       expect( window.scrollY ).toBe( 0 );
       done();
-    }, 1000 );
+    }, 2000 );
   } );
 
   it( 'button should scroll when clicked ' +
