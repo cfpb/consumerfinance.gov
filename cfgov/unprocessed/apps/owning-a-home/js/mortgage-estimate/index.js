@@ -1,12 +1,1 @@
-const EmailPopup = require( '../../../../js/organisms/EmailPopup' );
-const emailHelpers = require( '../../../../js/modules/util/email-popup-helpers' );
-const emailPopup = document.querySelectorAll( '.o-email-popup' );
-
-if ( emailPopup.length && emailHelpers.showEmailPopup() ) {
-  const popup = new EmailPopup( '.o-email-popup' );
-  popup.init();
-  emailHelpers.showOnScroll( popup.el, {
-    cb: popup.showPopup,
-    targetElement: document.querySelector( '.o-info-unit-group' )
-  } );
-}
+require( '../../../../js/modules/util/add-email-popup' );

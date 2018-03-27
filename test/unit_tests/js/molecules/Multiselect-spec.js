@@ -29,8 +29,8 @@ describe( 'Multiselect', () => {
     multiselect = new Multiselect( selectDom );
   } );
 
-  describe( 'init', () => {
-    it( 'should intitialize the Multiselect', () => {
+  describe( 'init()', () => {
+    it( 'should initialize the Multiselect', () => {
       multiselect.init();
       selectDom = document.querySelectorAll( 'select[multiple]' );
       multiselectDom = document.querySelectorAll( '.cf-multi-select' );
