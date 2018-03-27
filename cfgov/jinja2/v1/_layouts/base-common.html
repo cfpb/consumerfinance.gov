@@ -132,6 +132,14 @@
     If you come across a script that makes a convincing case to be included in
     the head, then file an issue or PR to discuss including it.
 #}
+    {% block javascript_loader %}
+    <script>
+      {# Minified dynamic JavaScript loader that injects a script tag in the head of the page. #}
+      function jsl(a){
+        for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
+      }
+    </script>
+    {% endblock javascript_loader %}
 
     {% if flag_enabled('AB_TESTING', request) %}
     {# Google Optimize page-hiding snippet #}
@@ -225,17 +233,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     The number of scripts here must be kept to a minimum.
 #}
 
-{% block javascript_loader %}
-
-{% endblock javascript_loader %}
-
 {% block javascript %}
 
 {% endblock javascript %}
 
 {% block font_tracker %}
 <!--[if gt IE 8]><!-->
-<link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
+<link rel="stylesheet"
+      href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50"
+      media="none"
+      onload="media='all'">
+<noscript><link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
+</noscript>
 <!--<![endif]-->
 {% endblock font_tracker %}
 

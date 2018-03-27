@@ -43,6 +43,7 @@ describe( 'email-popup-helpers', () => {
       const testDate = date.setTime(
         date.getTime() + 10000 * 24 * 60 * 60 * 1000
       );
+
       /* To avoid being off by a millisecond, we need to convert to a decimal
          and check using toBeCloseTo matcher instead of toBe. */
       expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 10000 )
@@ -59,6 +60,7 @@ describe( 'email-popup-helpers', () => {
         date.getTime() + 60 * 24 * 60 * 60 * 1000
       );
       expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( 2 );
+
       /* To avoid being off by a millisecond, we need to convert to a decimal
          and check using toBeCloseTo matcher instead of toBe. */
       expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 10000 )

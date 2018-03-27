@@ -1,0 +1,21 @@
+{
+  "name": "analytics-gtm",
+  "description": "The consumerfinance.gov Google Tag Manager tracking code.",
+  "homepage": "http://www.consumerfinance.gov",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/cfpb/cfgov-refresh.git"
+  },
+  "license": "SEE LICENSE IN TERMS.md",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}
