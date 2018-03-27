@@ -71,8 +71,8 @@
     "uglifyjs-webpack-plugin": "1.2.4",
     "ustream-embedapi": "1.0.0",
     "vinyl-named": "1.1.0",
-    "webpack": "4.1.1",
-    "webpack-stream": "4.0.2",
+    "webpack": "4.3.0",
+    "webpack-stream": "4.0.3",
     "xdr": "0.5.3"
   },
   "devDependencies": {
