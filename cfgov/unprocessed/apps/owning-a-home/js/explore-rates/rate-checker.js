@@ -1,37 +1,30 @@
-const $ = require( 'jquery' );
-const amortize = require( 'amortize' );
+
+import $ from 'jquery'
+import '../placeholder-polyfill';
+import './tab';
+import 'rangeslider.js';
+import * as params from './params';
+import * as template from './template-loader';
+import amortize from 'amortize';
+import config from '../../config.json';
+import dropdown from '../dropdown-utils';
+import fetchRates from '../rates';
+import formatTime from  '../format-timestamp';
 import formatUSD from 'format-usd';
-const isNum = require( 'is-money-usd' );
-const jumbo = require( 'jumbo-mortgage' );
-const median = require( 'median' );
+import Highcharts from 'highcharts';
+import HighchartsExport from 'highcharts/modules/exporting';
+import isNum from 'is-money-usd';
+import jumbo from 'jumbo-mortgage';
+import median from 'median';
 import unFormatUSD from 'unformat-usd';
-import {
-  calcLoanAmount,
-  renderAccessibleData,
-  renderDatestamp,
-  renderLoanAmount
-} from './util';
+import { applyThemeTo } from './highcharts-theme';
+import { getSelection } from './dom-values';
+import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
-const Highcharts = require( 'highcharts' );
-require( 'highcharts/modules/exporting' )( Highcharts );
-const highchartsTheme = require( './highcharts-theme' );
-highchartsTheme.applyThemeTo( Highcharts );
+HighchartsExport( Highcharts );
+applyThemeTo( Highcharts );
 
-// var geolocation = require('./geolocation');
-import * as config from '../../config.json';
-import * as domValues from './dom-values';
-const dropdown = require( '../dropdown-utils' );
-const fetchRates = require( '../rates' );
-const params = require( './params' );
-
-import 'rangeslider.js';
-import './tab';
-
-// Load our handlebar templates.
-const template = require( './template-loader' );
-
-import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 
 // Set some properties for the histogram.
 const chart = {
@@ -71,8 +64,13 @@ const slider = {
   max:    params.getVal( 'credit-score' ) + 20,
   step:   20,
   update: function() {
+<<<<<<< HEAD
     const leftVal = +Number( $( '.rangeslider__handle' ).css( 'left' ).replace( 'px', '' ) );
     this.min = domValues.getSelection( 'credit-score' );
+=======
+    var leftVal = +Number( $( '.rangeslider__handle' ).css( 'left' ).replace( 'px', '' ) );
+    this.min = getSelection( 'credit-score' );
+>>>>>>> Modifying code to use import statements
     if ( this.min === 840 || this.min === '840' ) {
       this.max = this.min + 10;
     } else {
@@ -315,12 +313,21 @@ function updateLanguage( data ) {
   }
 
   function updateTerm() {
+<<<<<<< HEAD
     const termVal = domValues.getSelection( 'loan-term' );
     $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
     // change from 5 years to x if an ARM
     if ( domValues.getSelection( 'rate-structure' ) === 'arm' ) {
       const armVal = domValues.getSelection( 'arm-type' );
       const term = armVal.match( /[^-]*/i )[0];
+=======
+    var termVal = getSelection( 'loan-term' );
+    $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
+    // change from 5 years to x if an ARM
+    if ( getSelection( 'rate-structure' ) === 'arm' ) {
+      var armVal = getSelection( 'arm-type' );
+      var term = armVal.match( /[^-]*/i )[0];
+>>>>>>> Modifying code to use import statements
       $( '.rc-comparison-short .loan-years, .arm-comparison-term' ).text( term ).fadeIn();
     } else {
       $( '.rc-comparison-short .loan-years' ).text( 5 ).fadeIn();
@@ -560,8 +567,8 @@ function processLoanAmount( element ) {
   }
 
   renderDownPayment.apply( element );
-  params.setVal( 'house-price', domValues.getSelection( 'house-price' ) );
-  params.setVal( 'down-payment', domValues.getSelection( 'down-payment' ) );
+  params.setVal( 'house-price', getSelection( 'house-price' ) );
+  params.setVal( 'down-payment', getSelection( 'down-payment' ) );
   params.update();
   renderLoanAmountResult();
   checkForJumbo();
@@ -607,10 +614,10 @@ function renderDownPayment() {
 
   if ( $price.val() !== 0 ) {
     if ( $el.attr( 'id' ) === 'down-payment' || options['dp-constant'] === 'down-payment' ) {
-      val = ( domValues.getSelection( 'down-payment' ) / domValues.getSelection( 'house-price' ) * 100 ) || '';
+      val = ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) * 100 ) || '';
       $percent.val( Math.round( val ) );
     } else {
-      val = domValues.getSelection( 'house-price' ) * ( domValues.getSelection( 'percent-down' ) / 100 );
+      val = getSelection( 'house-price' ) * ( getSelection( 'percent-down' ) / 100 );
       val = val >= 0 ? Math.round( val ) : '';
       val = addCommas( val );
       $down.val( val );
@@ -641,7 +648,11 @@ function renderInterestAmounts() {
   let shortTermVal = [],
       longTermVal = [],
       rate,
+<<<<<<< HEAD
       fullTerm = Number( domValues.getSelection( 'loan-term' ) ) * 12;
+=======
+      fullTerm = +( getSelection( 'loan-term' ) ) * 12;
+>>>>>>> Modifying code to use import statements
   $( '.interest-cost' ).each( function( index ) {
     if ( $( this ).hasClass( 'interest-cost-primary' ) ) {
       rate = $( '#rate-compare-1' ).val().replace( '%', '' );
