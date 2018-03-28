@@ -23,7 +23,6 @@ module.exports = function() {
     process.exit( 1 );
   } else {
 
-    console.log( 'exitProcessParam', exitProcessParam , isWatching );
     // Keep gulp from hanging on this task.
     this.process.emit( 'end' );
   }
