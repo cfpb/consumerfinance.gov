@@ -19,10 +19,11 @@ module.exports = function() {
     message: '<%= error %>'
   } ).call( this, errorParam );
 
-  if ( exitProcessParam === true && isWatching === false ) {
+  if ( exitProcessParam === true && !isWatching ) {
     process.exit( 1 );
   } else {
 
+    console.log( 'exitProcessParam', exitProcessParam , isWatching );
     // Keep gulp from hanging on this task.
     this.process.emit( 'end' );
   }
