@@ -1,10 +1,11 @@
 const $ = require( 'jquery' );
 const amortize = require( 'amortize' );
-const formatUSD = require( 'format-usd' );
+import formatUSD from 'format-usd';
 const isNum = require( 'is-money-usd' );
 const jumbo = require( 'jumbo-mortgage' );
 const median = require( 'median' );
-const unFormatUSD = require( 'unformat-usd' );
+import unFormatUSD from 'unformat-usd';
+import { calcLoanAmount, renderDatestamp, renderLoanAmount } from './util';
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
 const Highcharts = require( 'highcharts' );
@@ -22,7 +23,6 @@ const params = require( './params' );
 import 'rangeslider.js';
 import './tab';
 import '../placeholder-polyfill';
-import { renderDatestamp } from './util';
 
 // Load our handlebar templates.
 const template = require( './template-loader' );
@@ -56,6 +56,7 @@ var chart = {
 
 let highChart;
 let timeStampDom;
+let loanAmountResultDom;
 
 // Set some properties for the credit score slider.
 var slider = {
@@ -158,14 +159,10 @@ function setSelection( param, options ) {
 /**
  * Calculate and render the loan amount.
  */
-function renderLoanAmount() {
-  var loan = unFormatUSD( params.getVal( 'house-price' ) ) - unFormatUSD( params.getVal( 'down-payment' ) );
-  if ( loan > 0 ) {
-    params.setVal( 'loan-amount', loan );
-  } else {
-    params.setVal( 'loan-amount', 0 );
-  }
-  $( '#loan-amount-result' ).text( formatUSD( params.getVal( 'loan-amount' ), { decimalPlaces: 0 } ) );
+function renderLoanAmountResult() {
+  const loanAmount = calcLoanAmount( params.getVal( 'house-price' ), params.getVal( 'down-payment' ) );
+  params.setVal( 'loan-amount', loanAmount );
+  renderLoanAmount( loanAmountResultDom, loanAmount );
 }
 
 /**
@@ -557,7 +554,7 @@ function processLoanAmount( element ) {
   params.setVal( 'house-price', domValues.getSelection( 'house-price' ) );
   params.setVal( 'down-payment', domValues.getSelection( 'down-payment' ) );
   params.update();
-  renderLoanAmount();
+  renderLoanAmountResult();
   checkForJumbo();
   processCounty();
   updateView();
@@ -980,9 +977,11 @@ function init() {
   // Record timestamp HTML element that's updated from date from API.
   timeStampDom = document.querySelector( '#timestamp' );
 
+  loanAmountResultDom = document.querySelector( '#loan-amount-result' );
+
   renderSlider();
   renderChart();
-  renderLoanAmount();
+  renderLoanAmountResult();
   setSelections( { usePlaceholder: true } );
   registerEvents();
 /*
