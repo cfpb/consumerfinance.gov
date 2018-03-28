@@ -132,8 +132,7 @@ class Resource(ClusterableModel):
         blank=True,
         help_text='Snippets will be listed alphabetically by title in a '
         'Snippet List module, unless any in the list have a number in this '
-        'field; those with an order value will appear at the bottom of the '
-        'list, in ascending order.'
+        'field; those with an order value will appear in ascending order.'
     )
 
     tags = TaggableManager(

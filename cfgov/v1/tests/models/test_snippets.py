@@ -58,15 +58,6 @@ class TestOrderedResources(TestCase):
             [self.snippetAbc, self.snippetBBC, self.snippetZebra]
         )
 
-    def test_partial_explicit_ordering(self):
-        self.snippetBBC.order = 1
-        self.snippetBBC.save()
-
-        self.assertSequenceEqual(
-            Resource.objects.all(),
-            [self.snippetAbc, self.snippetZebra, self.snippetBBC]
-        )
-
     def test_total_explicit_ordering(self):
         self.snippetAbc.order = 23
         self.snippetAbc.save()
@@ -79,18 +70,6 @@ class TestOrderedResources(TestCase):
             Resource.objects.all(),
             [self.snippetBBC, self.snippetAbc, self.snippetZebra]
         )
-
-    def test_order_tiebreaking(self):
-        self.snippetAbc.order = 1
-        self.snippetAbc.save()
-        self.snippetBBC.order = 1
-        self.snippetBBC.save()
-
-        self.assertSequenceEqual(
-            Resource.objects.all(),
-            [self.snippetZebra, self.snippetAbc, self.snippetBBC]
-        )
-
 
 class TestUnicodeCompatibility(TestCase):
     def test_unicode_contact_heading_str(self):
