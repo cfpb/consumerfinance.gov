@@ -1,10 +1,16 @@
 const $ = require( 'jquery' );
 const amortize = require( 'amortize' );
-const formatUSD = require( 'format-usd' );
+import formatUSD from 'format-usd';
 const isNum = require( 'is-money-usd' );
 const jumbo = require( 'jumbo-mortgage' );
 const median = require( 'median' );
-const unFormatUSD = require( 'unformat-usd' );
+import unFormatUSD from 'unformat-usd';
+import {
+  calcLoanAmount,
+  renderAccessibleData,
+  renderDatestamp,
+  renderLoanAmount
+} from './util';
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
 const Highcharts = require( 'highcharts' );
@@ -17,7 +23,6 @@ import * as config from '../../config.json';
 import * as domValues from './dom-values';
 const dropdown = require( '../dropdown-utils' );
 const fetchRates = require( '../rates' );
-const formatTime = require( '../format-timestamp' );
 const params = require( './params' );
 
 import 'rangeslider.js';
@@ -55,6 +60,10 @@ var chart = {
 };
 
 let highChart;
+let timeStampDom;
+let loanAmountResultDom;
+let accessibleDataTableHeadDom;
+let accessibleDataTableBodyDom;
 
 // Set some properties for the credit score slider.
 var slider = {
@@ -157,14 +166,10 @@ function setSelection( param, options ) {
 /**
  * Calculate and render the loan amount.
  */
-function renderLoanAmount() {
-  var loan = unFormatUSD( params.getVal( 'house-price' ) ) - unFormatUSD( params.getVal( 'down-payment' ) );
-  if ( loan > 0 ) {
-    params.setVal( 'loan-amount', loan );
-  } else {
-    params.setVal( 'loan-amount', 0 );
-  }
-  $( '#loan-amount-result' ).text( formatUSD( params.getVal( 'loan-amount' ), { decimalPlaces: 0 } ) );
+function renderLoanAmountResult() {
+  const loanAmount = calcLoanAmount( params.getVal( 'house-price' ), params.getVal( 'down-payment' ) );
+  params.setVal( 'loan-amount', loanAmount );
+  renderLoanAmount( loanAmountResultDom, loanAmount );
 }
 
 /**
@@ -265,7 +270,10 @@ function updateView() {
       chart.stopLoading();
       removeAlerts();
       updateLanguage( data );
-      renderAccessibleData( data );
+      renderAccessibleData(
+        accessibleDataTableHeadDom, accessibleDataTableBodyDom,
+        data.labels, data.vals
+      );
       renderChart( data );
 
       // Update timestamp
@@ -283,7 +291,7 @@ function updateView() {
         // An error occurred.
       }
 
-      renderTime( _timestamp );
+      renderDatestamp( timeStampDom, _timestamp );
 
       updateComparisons( data );
       renderInterestAmounts();
@@ -541,19 +549,6 @@ function processCounty() {
 }
 
 /**
- * Updates the sentence data date sentence below the chart
- * @param {string} time - Timestamp from API
- */
-function renderTime( time ) {
-  if ( time ) {
-    time = formatTime( time );
-  }
-
-  $( '#timestamp' ).text( time );
-}
-
-
-/**
  * Store the loan amount and down payment, process the county data, check if it's a jumbo loan.
  * @param {HTMLNode} element - TODO: Add description.
  */
@@ -569,7 +564,7 @@ function processLoanAmount( element ) {
   params.setVal( 'house-price', domValues.getSelection( 'house-price' ) );
   params.setVal( 'down-payment', domValues.getSelection( 'down-payment' ) );
   params.update();
-  renderLoanAmount();
+  renderLoanAmountResult();
   checkForJumbo();
   processCounty();
   updateView();
@@ -837,26 +832,6 @@ function renderSlider( cb ) {
 }
 
 /**
- * Render chart data in an accessible format.
- * @param {Object} data - Data processed from the API.
- */
-function renderAccessibleData( data ) {
-  var $tableHead = $( '#accessible-data .table-head' );
-  var $tableBody = $( '#accessible-data .table-body' );
-
-  $tableHead.empty();
-  $tableBody.empty();
-
-  $.each( data.labels, function( index, value ) {
-    $tableHead.append( '<th>' + value + '</th>' );
-  } );
-
-  $.each( data.vals, function( index, value ) {
-    $tableBody.append( '<td>' + value + '</td>' );
-  } );
-}
-
-/**
  * Render (or update) the Highcharts chart.
  * @param  {Object} data Data processed from the API.
  * @param  {Function} cb Optional callback.
@@ -989,10 +964,18 @@ function init() {
     return false;
   }
 
+  // Record timestamp HTML element that's updated from date from API.
+  timeStampDom = document.querySelector( '#timestamp' );
+
+  loanAmountResultDom = document.querySelector( '#loan-amount-result' );
+
+  const accessibleDataDom = document.querySelector( '#accessible-data' );
+  accessibleDataTableHeadDom = accessibleDataDom.querySelector( '.table-head' );
+  accessibleDataTableBodyDom = accessibleDataDom.querySelector( '.table-body' );
+
   renderSlider();
   renderChart();
-  renderLoanAmount();
-  renderTime();
+  renderLoanAmountResult();
   setSelections( { usePlaceholder: true } );
   registerEvents();
 /*
