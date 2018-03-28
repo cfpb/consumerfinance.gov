@@ -21,6 +21,10 @@ describe( 'explore-rates/util', () => {
         'given a house price and down payment amount.', () => {
       expect( util.calcLoanAmount( 200000, 20000 ) ).toBe( 180000 );
     } );
+
+    it( 'should return 0 if loan amount is negative.', () => {
+      expect( util.calcLoanAmount( 200000, 2000000 ) ).toBe( 0 );
+    } );
   } );
 
   describe( 'formatTimestampMMddyyyy()', () => {

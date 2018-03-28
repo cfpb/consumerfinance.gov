@@ -28,6 +28,8 @@ function renderDatestamp( elem, time ) {
 
 /**
  * Calculate and render the loan amount.
+ * @param {number} housePrice - A home price.
+ * @param {number} downPayment - A down payment amount.
  */
 function calcLoanAmount( housePrice, downPayment ) {
   const loan = unFormatUSD( housePrice ) - unFormatUSD( downPayment );
@@ -40,7 +42,9 @@ function calcLoanAmount( housePrice, downPayment ) {
 }
 
 /**
- * Calculate and render the loan amount.
+ * Calculate and render the loan amount in the format $100,000.
+ * @param {HTMLNode} elem - HTML element to fill in with loan amount.
+ * @param {number} loanAmount - A loan amount as a number.
  */
 function renderLoanAmount( elem, loanAmount ) {
   elem.textContent = formatUSD( loanAmount, { decimalPlaces: 0 } );
