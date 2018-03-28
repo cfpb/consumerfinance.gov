@@ -5,13 +5,15 @@ const HTML_SNIPPET = `
   <strong id="timestamp"></strong>
   <span id="loan-amount-result"></span>
   <table id="accessible-data">
-    <tbody><tr class="table-head">
-      <th>Loan Rates</th>
-    </tr>
-    <tr class="table-body">
-      <td>number of corresponding rates</td>
-    </tr>
-  </tbody></table>
+    <tbody>
+      <tr class="table-head">
+        <th>Loan Rates</th>
+      </tr>
+      <tr class="table-body">
+        <td>number of corresponding rates</td>
+      </tr>
+    </tbody>
+  </table>
 `;
 
 let timeStampDom;
@@ -53,10 +55,10 @@ describe( 'explore-rates/util', () => {
   describe( 'renderAccessibleData()', () => {
     it( 'should format a timestamp as a date.', () => {
       const mockLabels = [ '4.500%', '4.625%' ];
-      const mockVals = [3, 6];
+      const mockVals = [ 3, 6 ];
 
-      const tableHeadHtml = `<th>4.500%</th><th>4.625%</th>`;
-      const tableBodyHtml = `<td>3</td><td>6</td>`;
+      const tableHeadHtml = '<th>4.500%</th><th>4.625%</th>';
+      const tableBodyHtml = '<td>3</td><td>6</td>';
 
       util.renderAccessibleData(
         accessibleDataTableHeadDom, accessibleDataTableBodyDom,

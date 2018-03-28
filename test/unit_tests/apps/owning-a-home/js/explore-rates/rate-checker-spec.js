@@ -3,6 +3,20 @@ const rateChecker = require( BASE_JS_PATH + 'js/explore-rates/rate-checker' );
 
 const HTML_SNIPPET = `
   <div class="rate-checker">
+    <div id="rate-results">
+      <div id="accessible-data-results">
+        <table id="accessible-data">
+          <tbody>
+            <tr class="table-head">
+              <th>Loan Rates</th>
+            </tr>
+            <tr class="table-body">
+              <td>number of corresponding rates</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     <div class="result">
       <div class="calculator">
         <section class="credit-score">
