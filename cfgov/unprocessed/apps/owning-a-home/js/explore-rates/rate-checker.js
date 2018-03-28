@@ -17,12 +17,12 @@ import * as config from '../../config.json';
 import * as domValues from './dom-values';
 const dropdown = require( '../dropdown-utils' );
 const fetchRates = require( '../rates' );
-const formatTime = require( '../format-timestamp' );
 const params = require( './params' );
 
 import 'rangeslider.js';
 import './tab';
 import '../placeholder-polyfill';
+import { renderDatestamp } from './util';
 
 // Load our handlebar templates.
 const template = require( './template-loader' );
@@ -55,6 +55,7 @@ var chart = {
 };
 
 let highChart;
+let timeStampDom;
 
 // Set some properties for the credit score slider.
 var slider = {
@@ -283,7 +284,7 @@ function updateView() {
         // An error occurred.
       }
 
-      renderTime( _timestamp );
+      renderDatestamp( timeStampDom, _timestamp );
 
       updateComparisons( data );
       renderInterestAmounts();
@@ -539,19 +540,6 @@ function processCounty() {
   // Hide the county warning.
   $( '#county-warning' ).addClass( 'u-hidden' );
 }
-
-/**
- * Updates the sentence data date sentence below the chart
- * @param {string} time - Timestamp from API
- */
-function renderTime( time ) {
-  if ( time ) {
-    time = formatTime( time );
-  }
-
-  $( '#timestamp' ).text( time );
-}
-
 
 /**
  * Store the loan amount and down payment, process the county data, check if it's a jumbo loan.
@@ -989,10 +977,12 @@ function init() {
     return false;
   }
 
+  // Record timestamp HTML element that's updated from date from API.
+  timeStampDom = document.querySelector( '#timestamp' );
+
   renderSlider();
   renderChart();
   renderLoanAmount();
-  renderTime();
   setSelections( { usePlaceholder: true } );
   registerEvents();
 /*
