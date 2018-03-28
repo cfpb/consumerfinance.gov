@@ -18,6 +18,31 @@ function formatTimestampMMddyyyy( timestamp ) {
 };
 
 /**
+ * Render chart data in an accessible format.
+ * @param {HTMLNode} tableHead - A <thead> element.
+ * @param {HTMLNode} tableBody - A <tbody> element.
+ * @param {Array} labels - Data labels from the API.
+ * @param {Array} vals - Data values from the API.
+ */
+function renderAccessibleData( tableHead, tableBody, labels, vals ) {
+  // Empty the contents of the table elements (equivalent to jQuery's .empty()).
+  while( tableHead.firstChild ) tableHead.removeChild( tableHead.firstChild );
+  while( tableBody.firstChild ) tableBody.removeChild( tableBody.firstChild );
+
+  labels.forEach( value => {
+    const thElem = document.createElement( 'th' );
+    thElem.innerHTML = value;
+    tableHead.appendChild( thElem );
+  } );
+
+  vals.forEach( value => {
+    const tdElem = document.createElement( 'td' );
+    tdElem.innerHTML = value;
+    tableBody.appendChild( tdElem );
+  } );
+}
+
+/**
  * Updates the sentence data date sentence below the chart.
  * @param {HTMLNode} elem - An HTML element holding the timestamp.
  * @param {string} time - Timestamp from API.
@@ -53,6 +78,7 @@ function renderLoanAmount( elem, loanAmount ) {
 module.exports = {
   calcLoanAmount,
   formatTimestampMMddyyyy,
+  renderAccessibleData,
   renderDatestamp,
   renderLoanAmount
 };

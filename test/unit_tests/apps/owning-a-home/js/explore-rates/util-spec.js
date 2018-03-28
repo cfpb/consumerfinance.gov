@@ -4,16 +4,32 @@ const util = require( BASE_JS_PATH + 'js/explore-rates/util' );
 const HTML_SNIPPET = `
   <strong id="timestamp"></strong>
   <span id="loan-amount-result"></span>
+  <table id="accessible-data">
+    <tbody><tr class="table-head">
+      <th>Loan Rates</th>
+    </tr>
+    <tr class="table-body">
+      <td>number of corresponding rates</td>
+    </tr>
+  </tbody></table>
 `;
 
 let timeStampDom;
 let loanAmountResultDom;
+let accessibleDataDom;
+let accessibleDataTableHeadDom;
+let accessibleDataTableBodyDom;
 
 describe( 'explore-rates/util', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     timeStampDom = document.querySelector( '#timestamp' );
     loanAmountResultDom = document.querySelector( '#loan-amount-result' );
+    accessibleDataDom = document.querySelector( '#accessible-data' );
+    accessibleDataTableHeadDom =
+      accessibleDataDom.querySelector( '.table-head' );
+    accessibleDataTableBodyDom =
+      accessibleDataDom.querySelector( '.table-body' );
   } );
 
   describe( 'calcLoanAmount()', () => {
@@ -31,6 +47,23 @@ describe( 'explore-rates/util', () => {
     it( 'should format a timestamp as a date.', () => {
       expect( util.formatTimestampMMddyyyy( '2018-03-14T04:00:00Z' ) )
         .toBe( '03/14/2018' );
+    } );
+  } );
+
+  describe( 'renderAccessibleData()', () => {
+    it( 'should format a timestamp as a date.', () => {
+      const mockLabels = [ '4.500%', '4.625%' ];
+      const mockVals = [3, 6];
+
+      const tableHeadHtml = `<th>4.500%</th><th>4.625%</th>`;
+      const tableBodyHtml = `<td>3</td><td>6</td>`;
+
+      util.renderAccessibleData(
+        accessibleDataTableHeadDom, accessibleDataTableBodyDom,
+        mockLabels, mockVals
+      );
+      expect( accessibleDataTableHeadDom.innerHTML ).toBe( tableHeadHtml );
+      expect( accessibleDataTableBodyDom.innerHTML ).toBe( tableBodyHtml );
     } );
   } );
 

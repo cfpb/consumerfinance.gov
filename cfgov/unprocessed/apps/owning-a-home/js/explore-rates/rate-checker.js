@@ -5,7 +5,12 @@ const isNum = require( 'is-money-usd' );
 const jumbo = require( 'jumbo-mortgage' );
 const median = require( 'median' );
 import unFormatUSD from 'unformat-usd';
-import { calcLoanAmount, renderDatestamp, renderLoanAmount } from './util';
+import {
+  calcLoanAmount,
+  renderAccessibleData,
+  renderDatestamp,
+  renderLoanAmount
+} from './util';
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
 const Highcharts = require( 'highcharts' );
@@ -57,6 +62,8 @@ var chart = {
 let highChart;
 let timeStampDom;
 let loanAmountResultDom;
+let accessibleDataTableHeadDom;
+let accessibleDataTableBodyDom;
 
 // Set some properties for the credit score slider.
 var slider = {
@@ -263,7 +270,10 @@ function updateView() {
       chart.stopLoading();
       removeAlerts();
       updateLanguage( data );
-      renderAccessibleData( data );
+      renderAccessibleData(
+        accessibleDataTableHeadDom, accessibleDataTableBodyDom,
+        data.labels, data.vals
+      );
       renderChart( data );
 
       // Update timestamp
@@ -822,26 +832,6 @@ function renderSlider( cb ) {
 }
 
 /**
- * Render chart data in an accessible format.
- * @param {Object} data - Data processed from the API.
- */
-function renderAccessibleData( data ) {
-  var $tableHead = $( '#accessible-data .table-head' );
-  var $tableBody = $( '#accessible-data .table-body' );
-
-  $tableHead.empty();
-  $tableBody.empty();
-
-  $.each( data.labels, function( index, value ) {
-    $tableHead.append( '<th>' + value + '</th>' );
-  } );
-
-  $.each( data.vals, function( index, value ) {
-    $tableBody.append( '<td>' + value + '</td>' );
-  } );
-}
-
-/**
  * Render (or update) the Highcharts chart.
  * @param  {Object} data Data processed from the API.
  * @param  {Function} cb Optional callback.
@@ -978,6 +968,10 @@ function init() {
   timeStampDom = document.querySelector( '#timestamp' );
 
   loanAmountResultDom = document.querySelector( '#loan-amount-result' );
+
+  const accessibleDataDom = document.querySelector( '#accessible-data' );
+  accessibleDataTableHeadDom = accessibleDataDom.querySelector( '.table-head' );
+  accessibleDataTableBodyDom = accessibleDataDom.querySelector( '.table-body' );
 
   renderSlider();
   renderChart();
