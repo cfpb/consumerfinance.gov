@@ -31,7 +31,6 @@ var OAHRCAnalytics = (function() {
     track('OAH Rate Tool Interactions', 'Score range', score);
   }
 
-
   // state select
   var locationEl = document.querySelector( '#location' );
   locationEl.addEventListener( 'change', function(evt) {
