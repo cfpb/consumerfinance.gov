@@ -16,6 +16,7 @@ cache:
     # which also installs app's node_modules.
     - cfgov/unprocessed/apps/owning-a-home/node_modules
     - cfgov/unprocessed/apps/regulations3k/node_modules
+    - cfgov/unprocessed/apps/analytics-gtm/node_modules
 
 install:
   - ./travis_install.sh
