@@ -6,6 +6,6 @@ const config = require( '../config' );
 
 gulp.task( 'watch', [ 'browsersync' ], function() {
   gulp.watch( config.scripts.src, [ 'scripts' ] );
-  gulp.watch( [config.styles.cwd + '/**/*.less', config.legacy.cwd + '/*/less/*.less'], [ 'styles' ] );
+  gulp.watch( [ config.styles.cwd + '/**/*.less', config.legacy.cwd + '/*/less/*.less' ], [ 'styles' ] );
 } );
 

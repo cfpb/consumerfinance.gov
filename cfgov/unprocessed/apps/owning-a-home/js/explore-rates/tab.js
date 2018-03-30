@@ -2,7 +2,7 @@
  * Initialize the functionality of a group of tabs with content.
  */
 function init() {
-  let tabGroups = document.querySelectorAll( '.tabs-layout' );
+  const tabGroups = document.querySelectorAll( '.tabs-layout' );
   let tabContents;
 
   tabGroups.forEach( tabGroup => {

@@ -140,7 +140,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function collapse( duration ) {
     if ( _isCollapsed() || _isCollapsing() ) {
       return this;
-    } else if( _isExpanding() ) {
+    } else if ( _isExpanding() ) {
       DT.removeClass( _dom, BASE_CLASS + '__expanding' );
       _content.removeEventListener( _transitionEndEvent, _expandComplete );
     }
