@@ -25,6 +25,7 @@ function ExpandableGroup( element, options = {} ) {
 
   this.options = options;
   this.collapseDuration = options.collapseDuration;
+
   /**
    * @returns {ExpandableGroup|undefined} An instance,
    *   or undefined if it was already initialized.

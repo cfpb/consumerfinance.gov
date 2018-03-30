@@ -4,7 +4,7 @@ import unFormatUSD from 'unformat-usd';
 
 /**
  * @param  {string} timestamp - A timestamp.
- * @return {string} Date in the format of MM/dd/yyyy.
+ * @returns {string} Date in the format of MM/dd/yyyy.
  */
 function formatTimestampMMddyyyy( timestamp ) {
 
@@ -15,7 +15,7 @@ function formatTimestampMMddyyyy( timestamp ) {
      return (timestamp.getUTCMonth() + 1) + '/' + timestamp.getUTCDate() +
             '/' +  timestamp.getUTCFullYear(); */
   return formatDate.asString( 'MM/dd/yyyy', new Date( timestamp ) );
-};
+}
 
 /**
  * Render chart data in an accessible format.
@@ -26,8 +26,8 @@ function formatTimestampMMddyyyy( timestamp ) {
  */
 function renderAccessibleData( tableHead, tableBody, labels, vals ) {
   // Empty the contents of the table elements (equivalent to jQuery's .empty()).
-  while( tableHead.firstChild ) tableHead.removeChild( tableHead.firstChild );
-  while( tableBody.firstChild ) tableBody.removeChild( tableBody.firstChild );
+  while ( tableHead.firstChild ) tableHead.removeChild( tableHead.firstChild );
+  while ( tableBody.firstChild ) tableBody.removeChild( tableBody.firstChild );
 
   labels.forEach( value => {
     const thElem = document.createElement( 'th' );
@@ -55,6 +55,7 @@ function renderDatestamp( elem, time ) {
  * Calculate and render the loan amount.
  * @param {number} housePrice - A home price.
  * @param {number} downPayment - A down payment amount.
+ * @returns {number} Loan amount.
  */
 function calcLoanAmount( housePrice, downPayment ) {
   const loan = unFormatUSD( housePrice ) - unFormatUSD( downPayment );
