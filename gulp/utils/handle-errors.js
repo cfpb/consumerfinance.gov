@@ -19,7 +19,7 @@ module.exports = function() {
     message: '<%= error %>'
   } ).call( this, errorParam );
 
-  if ( exitProcessParam === true && isWatching === false ) {
+  if ( exitProcessParam === true && !isWatching ) {
     process.exit( 1 );
   } else {
 
