@@ -1,8 +1,6 @@
-
-
 // Load our handlebar templates.
 const county = require( '../../templates/county-option.hbs' );
-const countyConfWarning = require(  '../../templates/county-conf-warning.hbs' );
+const countyConfWarning = require( '../../templates/county-conf-warning.hbs' );
 const countyFHAWarning = require( '../../templates/county-fha-warning.hbs' );
 const countyVAWarning = require( '../../templates/county-va-warning.hbs' );
 const countyGenWarning = require( '../../templates/county-general-warning.hbs' );

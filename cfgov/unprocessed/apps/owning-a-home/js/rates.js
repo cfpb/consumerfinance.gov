@@ -1,7 +1,5 @@
-'use strict';
-
-var $ = require( 'jquery' );
-var config = require( '../config.json' );
+const $ = require( 'jquery' );
+const config = require( '../config.json' );
 
 // TODO: Consolidate with mortgage-insurance.js.
 /**
@@ -13,8 +11,8 @@ var config = require( '../config.json' );
  * @returns {Object} jQuery promise.
  */
 function fetch( params ) {
-  var today = new Date();
-  var decache = '' + today.getDate() + today.getMonth();
+  const today = new Date();
+  const decache = String( today.getDate() ) + today.getMonth();
 
   return $.ajax( {
     type:        'GET',
