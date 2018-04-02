@@ -1,4 +1,3 @@
-
 import $ from 'jquery'
 import './tab';
 import 'rangeslider.js';
@@ -18,6 +17,12 @@ import unFormatUSD from 'unformat-usd';
 import { applyThemeTo } from './highcharts-theme';
 import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
+import {
+  calcLoanAmount,
+  renderAccessibleData,
+  renderDatestamp,
+  renderLoanAmount
+} from './util';
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
 HighchartsExport( Highcharts );
@@ -63,7 +68,7 @@ const slider = {
   step:   20,
   update: function() {
     const leftVal = +Number( $( '.rangeslider__handle' ).css( 'left' ).replace( 'px', '' ) );
-    this.min = domValues.getSelection( 'credit-score' );
+    this.min = getSelection( 'credit-score' );
     if ( this.min === 840 || this.min === '840' ) {
       this.max = this.min + 10;
     } else {
@@ -306,11 +311,11 @@ function updateLanguage( data ) {
   }
 
   function updateTerm() {
-    const termVal = domValues.getSelection( 'loan-term' );
+    const termVal = getSelection( 'loan-term' );
     $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
     // change from 5 years to x if an ARM
-    if ( domValues.getSelection( 'rate-structure' ) === 'arm' ) {
-      const armVal = domValues.getSelection( 'arm-type' );
+    if ( getSelection( 'rate-structure' ) === 'arm' ) {
+      const armVal = getSelection( 'arm-type' );
       const term = armVal.match( /[^-]*/i )[0];
       $( '.rc-comparison-short .loan-years, .arm-comparison-term' ).text( term ).fadeIn();
     } else {
@@ -551,8 +556,8 @@ function processLoanAmount( element ) {
   }
 
   renderDownPayment.apply( element );
-  params.setVal( 'house-price', domValues.getSelection( 'house-price' ) );
-  params.setVal( 'down-payment', domValues.getSelection( 'down-payment' ) );
+  params.setVal( 'house-price', getSelection( 'house-price' ) );
+  params.setVal( 'down-payment', getSelection( 'down-payment' ) );
   params.update();
   renderLoanAmountResult();
   checkForJumbo();
@@ -598,10 +603,10 @@ function renderDownPayment() {
 
   if ( $price.val() !== 0 ) {
     if ( $el.attr( 'id' ) === 'down-payment' || options['dp-constant'] === 'down-payment' ) {
-      val = ( domValues.getSelection( 'down-payment' ) / domValues.getSelection( 'house-price' ) * 100 ) || '';
+      val = ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) * 100 ) || '';
       $percent.val( Math.round( val ) );
     } else {
-      val = domValues.getSelection( 'house-price' ) * ( domValues.getSelection( 'percent-down' ) / 100 );
+      val = getSelection( 'house-price' ) * ( getSelection( 'percent-down' ) / 100 );
       val = val >= 0 ? Math.round( val ) : '';
       val = addCommas( val );
       $down.val( val );
@@ -632,7 +637,7 @@ function renderInterestAmounts() {
   let shortTermVal = [],
       longTermVal = [],
       rate,
-      fullTerm = Number( domValues.getSelection( 'loan-term' ) ) * 12;
+      fullTerm = Number( getSelection( 'loan-term' ) ) * 12;
   $( '.interest-cost' ).each( function( index ) {
     if ( $( this ).hasClass( 'interest-cost-primary' ) ) {
       rate = $( '#rate-compare-1' ).val().replace( '%', '' );
