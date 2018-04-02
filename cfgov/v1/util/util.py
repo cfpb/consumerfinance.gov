@@ -138,9 +138,11 @@ def get_secondary_nav_items(request, current_page):
     )
     if current_page.relative_url(request.site).startswith(journey_urls):
         for item in nav_items:
-            item['url'] = '/owning-a-home/process' + item['url'][14:]
+            item['url'] = item['url'].replace(
+                'owning-a-home', 'owning-a-home/process')
             for child in item['children']:
-                child['url'] = '/owning-a-home/process' + child['url'][14:]
+                child['url'] = child['url'].replace(
+                    'owning-a-home', 'owning-a-home/process')
     # END TODO
 
     return nav_items, has_children
