@@ -1,4 +1,4 @@
-import $ from 'jquery'
+import $ from 'jquery';
 import './tab';
 import 'rangeslider.js';
 import * as params from './params';
@@ -9,7 +9,7 @@ import dropdown from '../dropdown-utils';
 import fetchRates from '../rates';
 import formatUSD from 'format-usd';
 import Highcharts from 'highcharts';
-import HighchartsExport from 'highcharts/modules/exporting';
+import highchartsExport from 'highcharts/modules/exporting';
 import isNum from 'is-money-usd';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
@@ -25,7 +25,7 @@ import {
 } from './util';
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
-HighchartsExport( Highcharts );
+highchartsExport( Highcharts );
 applyThemeTo( Highcharts );
 
 
