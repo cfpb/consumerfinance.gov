@@ -126,6 +126,23 @@ def get_secondary_nav_items(request, current_page):
 
         nav_items.append(item)
 
+    # Add `/process/` segment to OAH journey page nav urls.
+    # TODO: Remove this when redirects for `/process/` urls
+    # are added after 2018 homebuying campaign.
+    journey_urls = (
+        '/owning-a-home/prepare',
+        '/owning-a-home/explore',
+        '/owning-a-home/compare',
+        '/owning-a-home/close',
+        '/owning-a-home/sources',
+    )
+    if current_page.relative_url(request.site).startswith(journey_urls):
+        for item in nav_items:
+            item['url'] = '/owning-a-home/process' + item['url'][14:]
+            for child in item['children']:
+                child['url'] = '/owning-a-home/process' + child['url'][14:]
+    # END TODO
+
     return nav_items, has_children
 
 
