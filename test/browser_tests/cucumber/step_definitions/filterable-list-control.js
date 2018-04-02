@@ -5,5 +5,5 @@ const { When } = require( 'cucumber' );
 
 When( /I (.*) the filterable list control/, function( action ) {
 
-  return filterableListControl[action]( );
+  return filterableListControl[action]();
 } );

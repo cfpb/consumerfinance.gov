@@ -9,7 +9,7 @@ chai.use( chaiAsPromised );
 When( /I click on the (.*) button(?:\s)?(?:again)?/,
   function( navigationButton ) {
 
-    return pagination[navigationButton + 'Btn'].click( );
+    return pagination[navigationButton + 'Btn'].click();
   }
 );
 

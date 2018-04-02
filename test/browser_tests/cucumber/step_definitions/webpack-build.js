@@ -30,7 +30,7 @@ When( /the JS bundles shouldn't contain double arrows or constants/, () => {
             );
           } else if ( i === directoryMapLength - 1 ) {
             // All files searched.
-            resolve( );
+            resolve();
           }
         }
       );

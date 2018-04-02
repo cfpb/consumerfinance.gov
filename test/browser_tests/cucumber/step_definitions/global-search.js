@@ -19,7 +19,7 @@ let _nonLinkDom;
 
 chai.use( chaiAsPromised );
 
-Before( function( ) {
+Before( function() {
   _nonLinkDom = element( by.css( '.o-footer_official-website' ) );
   _dom = {
     trigger:   element( by.css( TRIGGER_SEL ) ),
@@ -32,41 +32,41 @@ Before( function( ) {
 } );
 
 When( 'I click on the search molecule',
-  function( ) {
+  function() {
 
-    return _dom.trigger.click( );
+    return _dom.trigger.click();
   }
 );
 
 When( /I enter "(.*)" in the search molecule/,
   async function( searchText ) {
-    await _dom.trigger.click( );
+    await _dom.trigger.click();
 
     return _dom.input.sendKeys( searchText );
   }
 );
 
 When( 'I click off the search molecule',
-  async function( ) {
-    await _dom.trigger.click( );
+  async function() {
+    await _dom.trigger.click();
     await browser.wait( EC.visibilityOf( _dom.input ) );
 
-    return _nonLinkDom.click( );
+    return _nonLinkDom.click();
   }
 );
 
 When( 'I focus on the search molecule trigger',
-  function( ) {
+  function() {
 
     return _dom.trigger.sendKeys( protractor.Key.SPACE );
   }
 );
 
 When( 'I perform tab actions on the search molecule',
-  async function( ) {
-    let activeElement = await browser.driver.switchTo( ).activeElement( );
+  async function() {
+    let activeElement = await browser.driver.switchTo().activeElement();
     await activeElement.sendKeys( protractor.Key.TAB );
-    activeElement = await browser.driver.switchTo( ).activeElement( );
+    activeElement = await browser.driver.switchTo().activeElement();
 
     return activeElement.sendKeys( protractor.Key.TAB );
   }
@@ -75,18 +75,18 @@ When( 'I perform tab actions on the search molecule',
 Then( /it (should|shouldn't) have a clear button label/,
   function( haveLabel ) {
 
-    return expect( _dom.clearBtn.isDisplayed( ) )
+    return expect( _dom.clearBtn.isDisplayed() )
       .to.eventually
       .equal( shouldShouldnt( haveLabel ) );
   }
 );
 
 Then( 'it should focus the search input field',
-  async function( ) {
+  async function() {
     const attributeId = await browser
       .driver
-      .switchTo( )
-      .activeElement( )
+      .switchTo()
+      .activeElement()
       .getAttribute( 'id' );
 
     return expect( _dom.input.getAttribute( 'id' ) )
@@ -125,14 +125,14 @@ Then( /it (should|shouldn't) have search input content/,
 );
 
 Then( 'I should navigate to search portal',
-  async function( ) {
+  async function() {
     const portalUrl = 'https://search.consumerfinance.gov/' +
                       'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
 
     await browser.wait( EC.visibilityOf( _dom.searchBtn ) );
-    await _dom.searchBtn.click( );
+    await _dom.searchBtn.click();
 
-    return expect( browser.getCurrentUrl( ) )
+    return expect( browser.getCurrentUrl() )
       .to.eventually
       .equal( portalUrl );
   }
@@ -141,16 +141,16 @@ Then( 'I should navigate to search portal',
 Then( /it (should|shouldn't) have suggested search terms/,
   function( haveTerms ) {
 
-    return expect( _dom.suggest.isDisplayed( ) )
+    return expect( _dom.suggest.isDisplayed() )
       .to.eventually
       .equal( shouldShouldnt( haveTerms ) );
   }
 );
 
 Then( 'should have suggested search terms',
-  function( ) {
+  function() {
 
-    return expect( _dom.suggest.isDisplayed( ) )
+    return expect( _dom.suggest.isDisplayed() )
       .to.eventually
       .equal( true );
   }

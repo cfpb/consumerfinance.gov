@@ -51,7 +51,7 @@ class MultiSelect {
   async dropDownHasValue( value ) {
     const selector = `li[data-option="${ value }"].filter-match`;
     const choicesWithValue = element.all( by.css( selector ) );
-    const selectedTagsCount = await choicesWithValue.count( );
+    const selectedTagsCount = await choicesWithValue.count();
 
     return selectedTagsCount > 0;
   }

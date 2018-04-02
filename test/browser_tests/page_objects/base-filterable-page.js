@@ -12,11 +12,11 @@ class BaseFilterablePage extends BasePage {
   getResultsCount() {
     const count = this.results.length;
 
-    return count.toString( );
+    return count.toString();
   }
 
   async getResultText( resultPosition = 'first' ) {
-    return await this[resultPosition + 'Result'].getText( );
+    return await this[resultPosition + 'Result'].getText();
   }
 }
 

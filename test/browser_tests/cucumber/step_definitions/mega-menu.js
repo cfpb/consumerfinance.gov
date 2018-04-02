@@ -28,7 +28,7 @@ Before( function() {
 } );
 
 When( 'mouse moves from one link to another after a delay',
-  async function( ) {
+  async function() {
     await browser.actions().mouseMove( _dom.triggerPolyCom ).perform();
     await browser.sleep( 500 );
 
@@ -37,7 +37,7 @@ When( 'mouse moves from one link to another after a delay',
 );
 
 Then( 'the mega-menu organism shouldn\'t show content',
-  function( ) {
+  function() {
 
     return expect( _dom.contentAboutUs.isDisplayed() )
       .to.eventually.equal( false );
@@ -45,7 +45,7 @@ Then( 'the mega-menu organism shouldn\'t show content',
 );
 
 Then( 'the mega-menu organism shouldn\'t show the first link immediately',
-  async function( ) {
+  async function() {
     await browser.actions().mouseMove( _dom.triggerPolyCom ).perform();
 
     return expect( _dom.contentPolyCom.isDisplayed() )
@@ -54,8 +54,8 @@ Then( 'the mega-menu organism shouldn\'t show the first link immediately',
 );
 
 Then( /the mega-menu organism should show the first link after a delay/,
-  async function( ) {
-    await browser.actions( ).mouseMove( _dom.triggerPolyCom ).perform();
+  async function() {
+    await browser.actions().mouseMove( _dom.triggerPolyCom ).perform();
     await browser.sleep( 500 );
 
     return expect( _dom.contentPolyCom.isDisplayed() )
@@ -63,21 +63,22 @@ Then( /the mega-menu organism should show the first link after a delay/,
   }
 );
 
-Then( 'should only show second link content', async function( ) {
+Then( 'should only show second link content', async function() {
   await EC.not( EC.elementToBeClickable( _dom.contentPolyCom ) );
   await browser.sleep( 500 );
 
+  // TODO: Investigate inconsistent test failure.
   // await expect( _dom.contentPolyCom.isDisplayed() )
-  //   .to.eventually
-  //   .equal( false );
+  // .to.eventually
+  // .equal( false );
 
   return expect( _dom.contentPolyCom.isDisplayed() )
     .to.eventually.equal( false );
 } );
 
 Then( 'the mega-menu organism should show menu when clicked',
-  async function( ) {
-    await browser.driver.actions( ).click( _dom.triggerBtn ).perform();
+  async function() {
+    await browser.driver.actions().click( _dom.triggerBtn ).perform();
 
     return expect( _dom.contentWrapper.isDisplayed() )
       .to.eventually.equal( true );
@@ -85,13 +86,13 @@ Then( 'the mega-menu organism should show menu when clicked',
 );
 
 Then( 'the mega-menu organism should show the PolyCom menu when clicked',
-  async function( ) {
-    await browser.driver.actions( ).click( _dom.triggerBtn ).perform( );
-    await browser.driver.actions().click( _dom.triggerPolyCom ).perform( );
-    await expect( _dom.contentPolyCom.isDisplayed( ) )
+  async function() {
+    await browser.driver.actions().click( _dom.triggerBtn ).perform();
+    await browser.driver.actions().click( _dom.triggerPolyCom ).perform();
+    await expect( _dom.contentPolyCom.isDisplayed() )
       .to.eventually.equal( true );
 
-    return expect( _dom.contentAboutUs.isDisplayed( ) )
+    return expect( _dom.contentAboutUs.isDisplayed() )
       .to.eventually.equal( false );
   }
 );
@@ -99,12 +100,12 @@ Then( 'the mega-menu organism should show the PolyCom menu when clicked',
 /* This test is failing right now, but should pass
    when we fix keyboard tabbing on mobile */
 Then( 'the mega-menu organism should not shift menus when tabbing',
-  async function( ) {
-    await browser.driver.actions( ).click( _dom.triggerBtn ).perform( );
-    await browser.driver.actions( ).sendKeys( protractor.Key.TAB ).perform( );
-    await browser.driver.actions( ).sendKeys( protractor.Key.TAB ).perform( );
-    await browser.driver.actions( ).sendKeys( protractor.Key.TAB ).perform( );
-    await browser.driver.actions( ).sendKeys( protractor.Key.TAB ).perform( );
+  async function() {
+    await browser.driver.actions().click( _dom.triggerBtn ).perform();
+    await browser.driver.actions().sendKeys( protractor.Key.TAB ).perform();
+    await browser.driver.actions().sendKeys( protractor.Key.TAB ).perform();
+    await browser.driver.actions().sendKeys( protractor.Key.TAB ).perform();
+    await browser.driver.actions().sendKeys( protractor.Key.TAB ).perform();
 
     return expect( _dom.eyebrow.isDisplayed() ).to.eventually.equal( false );
   }

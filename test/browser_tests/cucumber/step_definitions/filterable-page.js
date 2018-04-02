@@ -17,18 +17,18 @@ let selectedFilterablePage;
 let UNDEFINED;
 
 
-After( function( ) {
+After( function() {
   selectedFilterablePage = UNDEFINED;
 } );
 
 When( /I goto a (.*) filterable page/, function( pageType ) {
   selectedFilterablePage = filterablePages[pageType];
 
-  return filterablePages[pageType].gotoURL( );
+  return filterablePages[pageType].gotoURL();
 } );
 
-When( /I do not select a filter/, async function( ) {
-  const url = await browser.getCurrentUrl( );
+When( /I do not select a filter/, async function() {
+  const url = await browser.getCurrentUrl();
 
   return expect( url ).not.to.contain( '?' );
 } );
@@ -44,7 +44,7 @@ Then( /I should see the (first|last) page result, (.*)/,
 
 Then( /I should see (.*) page results/,
   async function( numPageResults ) {
-    const resultsCount = await selectedFilterablePage.getResultsCount( );
+    const resultsCount = await selectedFilterablePage.getResultsCount();
 
     return expect( resultsCount ).to.equal( numPageResults );
   }

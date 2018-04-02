@@ -24,7 +24,7 @@ class BasePage {
      * Disable CSS3 animations in when running tests.
      * @param {Object} browser Protractor browser object.
      */
-    function _disableAnimations( ) {
+    function _disableAnimations() {
       const style = document.createElement( 'style' );
       style.type = 'text/css';
       style.innerHTML = '* { transition-duration: .1ms !important; }';
@@ -39,16 +39,16 @@ class BasePage {
   static async dismissAlert() {
     function _accepAlert( alert ) {
       if ( alert ) {
-        return alert.accept( );
+        return alert.accept();
       }
-      return Promise.resolve( );
+      return Promise.resolve();
     }
 
     try {
-      const alertObj = await browser.switchTo( ).alert( );
+      const alertObj = await browser.switchTo().alert();
       await _accepAlert( alertObj );
     } catch( error ) {
-      Promise.resolve( );
+      Promise.resolve();
     }
   }
 }

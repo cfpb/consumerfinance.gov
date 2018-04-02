@@ -32,7 +32,7 @@ function _processScreenshot( screenShotName = 'screenshot', png ) {
  * @param {string} screenShotName - Name of the screenshot.
  */
 async function capture( screenShotName ) {
-  const png = await browser.takeScreenshot( );
+  const png = await browser.takeScreenshot();
   await _processScreenshot( screenShotName, png );
 }
 
