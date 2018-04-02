@@ -1,6 +1,5 @@
 
 import $ from 'jquery'
-import '../placeholder-polyfill';
 import './tab';
 import 'rangeslider.js';
 import * as params from './params';
@@ -9,7 +8,6 @@ import amortize from 'amortize';
 import config from '../../config.json';
 import dropdown from '../dropdown-utils';
 import fetchRates from '../rates';
-import formatTime from  '../format-timestamp';
 import formatUSD from 'format-usd';
 import Highcharts from 'highcharts';
 import HighchartsExport from 'highcharts/modules/exporting';
@@ -64,13 +62,8 @@ const slider = {
   max:    params.getVal( 'credit-score' ) + 20,
   step:   20,
   update: function() {
-<<<<<<< HEAD
     const leftVal = +Number( $( '.rangeslider__handle' ).css( 'left' ).replace( 'px', '' ) );
     this.min = domValues.getSelection( 'credit-score' );
-=======
-    var leftVal = +Number( $( '.rangeslider__handle' ).css( 'left' ).replace( 'px', '' ) );
-    this.min = getSelection( 'credit-score' );
->>>>>>> Modifying code to use import statements
     if ( this.min === 840 || this.min === '840' ) {
       this.max = this.min + 10;
     } else {
@@ -313,21 +306,12 @@ function updateLanguage( data ) {
   }
 
   function updateTerm() {
-<<<<<<< HEAD
     const termVal = domValues.getSelection( 'loan-term' );
     $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
     // change from 5 years to x if an ARM
     if ( domValues.getSelection( 'rate-structure' ) === 'arm' ) {
       const armVal = domValues.getSelection( 'arm-type' );
       const term = armVal.match( /[^-]*/i )[0];
-=======
-    var termVal = getSelection( 'loan-term' );
-    $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
-    // change from 5 years to x if an ARM
-    if ( getSelection( 'rate-structure' ) === 'arm' ) {
-      var armVal = getSelection( 'arm-type' );
-      var term = armVal.match( /[^-]*/i )[0];
->>>>>>> Modifying code to use import statements
       $( '.rc-comparison-short .loan-years, .arm-comparison-term' ).text( term ).fadeIn();
     } else {
       $( '.rc-comparison-short .loan-years' ).text( 5 ).fadeIn();
@@ -567,8 +551,8 @@ function processLoanAmount( element ) {
   }
 
   renderDownPayment.apply( element );
-  params.setVal( 'house-price', getSelection( 'house-price' ) );
-  params.setVal( 'down-payment', getSelection( 'down-payment' ) );
+  params.setVal( 'house-price', domValues.getSelection( 'house-price' ) );
+  params.setVal( 'down-payment', domValues.getSelection( 'down-payment' ) );
   params.update();
   renderLoanAmountResult();
   checkForJumbo();
@@ -614,10 +598,10 @@ function renderDownPayment() {
 
   if ( $price.val() !== 0 ) {
     if ( $el.attr( 'id' ) === 'down-payment' || options['dp-constant'] === 'down-payment' ) {
-      val = ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) * 100 ) || '';
+      val = ( domValues.getSelection( 'down-payment' ) / domValues.getSelection( 'house-price' ) * 100 ) || '';
       $percent.val( Math.round( val ) );
     } else {
-      val = getSelection( 'house-price' ) * ( getSelection( 'percent-down' ) / 100 );
+      val = domValues.getSelection( 'house-price' ) * ( domValues.getSelection( 'percent-down' ) / 100 );
       val = val >= 0 ? Math.round( val ) : '';
       val = addCommas( val );
       $down.val( val );
@@ -648,11 +632,7 @@ function renderInterestAmounts() {
   let shortTermVal = [],
       longTermVal = [],
       rate,
-<<<<<<< HEAD
       fullTerm = Number( domValues.getSelection( 'loan-term' ) ) * 12;
-=======
-      fullTerm = +( getSelection( 'loan-term' ) ) * 12;
->>>>>>> Modifying code to use import statements
   $( '.interest-cost' ).each( function( index ) {
     if ( $( this ).hasClass( 'interest-cost-primary' ) ) {
       rate = $( '#rate-compare-1' ).val().replace( '%', '' );
