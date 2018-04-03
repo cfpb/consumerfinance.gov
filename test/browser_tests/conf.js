@@ -31,7 +31,7 @@ function _chooseSuite( params ) {
      won't launch several identical browsers performing the same tests. */
   let capabilities = defaultSuites.essential;
 
-  if ( envvars.HEADLESS_CHROME_BINARY ) {
+  if ( _useHeadlessChrome() ) {
     capabilities = defaultSuites.headless;
     const cucumberOpts = minimist( process.argv.slice( 2 ) )
       .cucumberOpts || {};
@@ -74,6 +74,18 @@ function _useSauceLabs() {
   const isSauceParamSet = sauceParam && sauceParam === 'true';
 
   return isSauceCredentialsSet && isSauceParamSet;
+}
+
+/**
+ * Check that headless param is set to true.
+ *
+ * @returns {boolean} True if headless param is set to true.
+ */
+function _useHeadlessChrome() {
+  const headlessParam = ( minimist( process.argv ).params || {} ).headless;
+  const isHeadlessParamSet = headlessParam && headlessParam === 'true';
+
+  return isHeadlessParamSet;
 }
 
 /**
@@ -214,7 +226,7 @@ function _onPrepare() {
 
   /* Calling setSize with headless chromeDriver doesn't work properly if
      the requested size is larger than the available screen size. */
-  if ( !envvars.HEADLESS_CHROME_BINARY ) {
+  if ( _useHeadlessChrome() === false ) {
     browser.driver.manage().window().setSize(
       windowWidthPx,
       windowHeightPx

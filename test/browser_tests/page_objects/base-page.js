@@ -4,18 +4,28 @@ class BasePage {
     await browser.get( gotoUrl );
     await this.setElements();
     await this.disableAnimations();
+    await this.removeExternalScripts();
 
     return BasePage.dismissAlert( gotoUrl );
   }
 
   removeExternalScripts() {
-    [].slice.call( document.querySelectorAll( 'script, style, link' ) )
+
+    /**
+     * Remove any exernal scripts.
+     * @param {Object} browser Protractor browser object.
+     */
+    function _removeScripts() {
+      [].slice.call( document.querySelectorAll( 'script, style, link' ) )
       .filter( script => {
         const src = script.href || script.src;
 
         return src && src.indexOf( 'localhost' ) === -1;
       } )
       .forEach( script => script.parentNode.removeChild( script ) );
+    }
+
+    return browser.executeScript( _removeScripts );
   }
 
   disableAnimations() {
@@ -31,7 +41,7 @@ class BasePage {
       document.body.appendChild( style );
     }
 
-    browser.executeScript( _disableAnimations );
+    return browser.executeScript( _disableAnimations );
   }
 
   setElements() { } // eslint-disable-line no-empty-function

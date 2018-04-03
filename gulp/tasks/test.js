@@ -176,6 +176,9 @@ function _getProtractorParams( suite ) {
   // If --tags=@tagName flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'tags' );
 
+  // If --headless=false flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'headless' );
+
   /* If the --suite=suite1,suite2 flag is added on the command-line
      or, if not, if a suite is passed as part of the gulp task definition. */
   const suiteParam = { suite: commandLineParams.suite || suite };
