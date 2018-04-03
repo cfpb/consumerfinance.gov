@@ -3,35 +3,36 @@ import './tab';
 import 'rangeslider.js';
 import * as params from './params';
 import * as template from './template-loader';
+import Highcharts from 'highcharts';
 import amortize from 'amortize';
 import config from '../../config.json';
 import dropdown from '../dropdown-utils';
 import fetchRates from '../rates';
 import formatUSD from 'format-usd';
-import Highcharts from 'highcharts';
 import highchartsExport from 'highcharts/modules/exporting';
 import isNum from 'is-money-usd';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
+import tab from './tab';
 import unFormatUSD from 'unformat-usd';
 import { applyThemeTo } from './highcharts-theme';
-import { getSelection } from './dom-values';
 import {
   calcLoanAmount,
   renderAccessibleData,
   renderDatestamp,
   renderLoanAmount
 } from './util';
+import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
-
-// Load and style Highcharts library. https://www.highcharts.com/docs.
-highchartsExport( Highcharts );
-applyThemeTo( Highcharts );
 
 let creditAlertDom;
 let resultAlertDom;
 let failAlertDom;
 let dpAlertDom;
+
+// Load and style Highcharts library. https://www.highcharts.com/docs.
+highchartsExport( Highcharts );
+applyThemeTo( Highcharts );
 
 // Set some properties for the histogram.
 const chart = {
@@ -294,6 +295,7 @@ function updateView() {
 
       updateComparisons( data );
       renderInterestAmounts();
+      tab.init();
     } );
   }
 }
