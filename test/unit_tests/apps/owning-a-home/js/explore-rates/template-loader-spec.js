@@ -47,26 +47,6 @@ describe( 'explore-rates/template-loader', () => {
     expect( testTemplate ).toBe( '1 - 360\n' );
   } );
 
-  it( 'should be able to render creditAlert template', () => {
-    const testTemplate = templateLoader.creditAlert();
-    expect( typeof testTemplate ).toBe( 'string' );
-  } );
-
-  it( 'should be able to render resultAlert template', () => {
-    const testTemplate = templateLoader.resultAlert();
-    expect( typeof testTemplate ).toBe( 'string' );
-  } );
-
-  it( 'should be able to render failAlert template', () => {
-    const testTemplate = templateLoader.failAlert();
-    expect( typeof testTemplate ).toBe( 'string' );
-  } );
-
-  it( 'should be able to render dpWarning template', () => {
-    const testTemplate = templateLoader.dpWarning();
-    expect( typeof testTemplate ).toBe( 'string' );
-  } );
-
   it( 'should be able to render chartTooltipSingle template', () => {
     const testTemplate = templateLoader.chartTooltipSingle();
     expect( typeof testTemplate ).toBe( 'string' );
