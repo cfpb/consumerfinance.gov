@@ -31,7 +31,7 @@ class BasePage {
   disableAnimations() {
 
     /**
-     * Disable CSS3 animations in when running tests.
+     * Disable CSS3 animations when running tests.
      * @param {Object} browser Protractor browser object.
      */
     function _disableAnimations() {

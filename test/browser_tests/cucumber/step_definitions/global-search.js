@@ -2,7 +2,7 @@ const chai = require( 'chai' );
 const chaiAsPromised = require( 'chai-as-promised' );
 const { Then, When, Before } = require( 'cucumber' );
 const { expect } = require( 'chai' );
-const { shouldShouldnt } = require( '../../util/index.js' );
+const { isShould } = require( '../../util/index.js' );
 
 const BASE_SEL = '.m-global-search';
 const TRIGGER_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_trigger"]';
@@ -77,7 +77,7 @@ Then( /it (should|shouldn't) have a clear button label/,
 
     return expect( _dom.clearBtn.isDisplayed() )
       .to.eventually
-      .equal( shouldShouldnt( haveLabel ) );
+      .equal( isShould( haveLabel ) );
   }
 );
 
@@ -98,7 +98,7 @@ Then( /the search molecule (should|shouldn't) have a search trigger/,
   async function( haveTrigger ) {
     let expectedCondition;
 
-    if ( shouldShouldnt( haveTrigger ) ) {
+    if ( isShould( haveTrigger ) ) {
       expectedCondition =
         await EC.elementToBeClickable( _dom.trigger );
     } else {
@@ -110,7 +110,7 @@ Then( /the search molecule (should|shouldn't) have a search trigger/,
 
     return expect( _dom.trigger.isDisplayed() )
       .to.eventually
-      .equal( shouldShouldnt( haveTrigger ) );
+      .equal( isShould( haveTrigger ) );
   }
 );
 
@@ -120,7 +120,7 @@ Then( /it (should|shouldn't) have search input content/,
 
     return expect( _dom.content.isDisplayed() )
       .to.eventually
-      .equal( shouldShouldnt( haveInput ) );
+      .equal( isShould( haveInput ) );
   }
 );
 
@@ -143,7 +143,7 @@ Then( /it (should|shouldn't) have suggested search terms/,
 
     return expect( _dom.suggest.isDisplayed() )
       .to.eventually
-      .equal( shouldShouldnt( haveTerms ) );
+      .equal( isShould( haveTerms ) );
   }
 );
 

@@ -4,7 +4,7 @@ const relatedLinksSection = {
 
   relatedLinksSection: _relatedLinksSection,
 
-  relatedLinksSectionTitles:  _relatedLinksSection.all( by.css( 'h2' ) ),
+  relatedLinksSectionTitles: _relatedLinksSection.all( by.css( 'h2' ) ),
 
   relatedLinksSectionDescriptions:
     _relatedLinksSection.all( by.css( '.short-desc' ) ),

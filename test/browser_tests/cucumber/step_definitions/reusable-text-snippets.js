@@ -1,5 +1,5 @@
 const util = require( '../../util/index.js' );
-const shouldShouldnt = util.shouldShouldnt;
+const isShould = util.isShould;
 
 const { When, Then } = require( 'cucumber' );
 const { expect } = require( 'chai' );
@@ -16,7 +16,7 @@ Then( /the snippet output (should|shouldn't) include a slug-style header/,
   async function( includeHeader ) {
     let rts;
 
-    if ( shouldShouldnt( includeHeader ) ) {
+    if ( isShould( includeHeader ) ) {
       rts = await element.all( by.css( '.m-reusable-text-snippet' ) ).first();
     } else {
       rts = await element.all( by.css( '.m-reusable-text-snippet' ) ).last();
@@ -24,6 +24,6 @@ Then( /the snippet output (should|shouldn't) include a slug-style header/,
 
     return expect( rts.element( by.css( '.m-slug-header' ) )
       .isPresent() )
-      .to.eventually.equal( shouldShouldnt( includeHeader ) );
+      .to.eventually.equal( isShould( includeHeader ) );
   }
 );
