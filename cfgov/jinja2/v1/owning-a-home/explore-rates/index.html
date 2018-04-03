@@ -92,6 +92,22 @@ home price, down payment, and more can affect mortgage interest rates.
                                    step="20"
                                    value="700">
                             <div id="slider-range" class="range-text"></div>
+
+                            {#
+                              Credit alert for when low credit score is chosen.
+                            #}
+                            <div id="credit-score-alert"
+                                 class="result-alert credit-alert u-hidden"
+                                 role="alert">
+                              <p class="alert">
+                                Many lenders do not accept borrowers with credit scores less than 620.
+                                Even if your score is low, you may still have options.
+                                <a href="http://www.consumerfinance.gov/mortgagehelp/">
+                                  Contact a housing counselor
+                                </a>
+                                to learn more.
+                              </p>
+                            </div>
                         </div>
                         <p class="form-sub">Credit score has a big impact on the rate you’ll receive. <a href="/askcfpb/319/how-does-my-credit-score-affect-my-ability-to-get-a-mortgage-loan.html" id="ask-cfpb-credit" target="_blank">Learn more</a></p>
                     </section>
@@ -203,6 +219,16 @@ home price, down payment, and more can affect mortgage interest rates.
                                 </select>
                             </div>
                         </div>
+
+                        {#
+                          Alert when down payment is greater than house price.
+                        #}
+                        <div id="dp-alert"
+                             class="downpayment-warning alert-alt col-7 u-hidden"
+                             role="alert">
+                          Your down payment cannot be more than your house price.
+                        </div>
+
                     </section>
                     <section class="form-sub warning u-hidden" id="county-warning">
                         <p class="warning-text"></p>
@@ -288,6 +314,37 @@ home price, down payment, and more can affect mortgage interest rates.
                                 </div>
                             </figcaption>
                         </figure>
+
+                        {# Alert Shown when there are no results. #}
+                        <div id="chart-result-alert"
+                             class="result-alert chart-alert u-hidden"
+                             role="alert">
+                          <p class="alert">
+                            <strong>We're sorry!</strong>
+                            Based on the information you entered,
+                            we don't have enough data to display results.
+                          </p>
+                          <p class="point-right">
+                            Change your settings
+                          </p>
+                          <p>
+                            <a id ="reload-link" class="defaults-link" href="">
+                              Or, revert to our default values
+                            </a>
+                          </p>
+                        </div>
+
+                        {# Alert Shown when there was an API failure. #}
+                        <div id="chart-fail-alert"
+                             class="result-alert chart-alert u-hidden"
+                             role="alert">
+                          <p class="alert">
+                            <strong>We're sorry!</strong>
+                            We're having trouble connecting to our data.<br>
+                            Try again another time.
+                          </p>
+                        </div>
+
                     </section>
                     <p id="timestamp-p" class="data-enabled timestamp-message clear">These rates are current as of <strong id="timestamp">…</strong>.</p>
                     <section class="compare wrapper data-enabled loading">
