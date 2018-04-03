@@ -16,18 +16,22 @@ import median from 'median';
 import unFormatUSD from 'unformat-usd';
 import { applyThemeTo } from './highcharts-theme';
 import { getSelection } from './dom-values';
-import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import {
   calcLoanAmount,
   renderAccessibleData,
   renderDatestamp,
   renderLoanAmount
 } from './util';
+import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
 highchartsExport( Highcharts );
 applyThemeTo( Highcharts );
 
+let creditAlertDom;
+let resultAlertDom;
+let failAlertDom;
+let dpAlertDom;
 
 // Set some properties for the histogram.
 const chart = {
@@ -737,9 +741,7 @@ function checkARM() {
  */
 function scoreWarning() {
   $( '.rangeslider__handle' ).addClass( 'warning' );
-  if ( !$( '.credit-alert' ).length > 0 ) {
-    $( '#slider-range' ).after( template.creditAlert );
-  }
+  creditAlertDom.classList.remove( 'u-hidden' );
   resultWarning();
 }
 
@@ -748,35 +750,58 @@ function scoreWarning() {
  */
 function resultWarning() {
   chart.stopLoading( 'error' );
-  $( '#chart-section' ).addClass( 'warning' ).append( template.resultAlert );
+  $( '#chart-section' ).addClass( 'warning' );
+  resultAlertDom.classList.remove( 'u-hidden' );
 }
-
-function resultFailWarning() {
-  chart.stopLoading( 'error' );
-  $( '#chart-section' ).addClass( 'warning' ).append( template.failAlert );
-}
-
-function downPaymentWarning() {
-  $( '#loan-amt-inputs' ).append( template.dpWarning );
-}
-
 
 /**
- * Remove alerts and warnings
+ * Show alert that data call to the API failed.
+ */
+function resultFailWarning() {
+  chart.stopLoading( 'error' );
+  $( '#chart-section' ).addClass( 'warning' );
+  failAlertDom.classList.remove( 'u-hidden' );
+}
+
+/**
+ * Show alert that down payment is greater than house price.
+ */
+function downPaymentWarning() {
+  dpAlertDom.classList.remove( 'u-hidden' );
+}
+
+/**
+ * @param  {HTMLNode} elem - An HTML element to check for u-hidden class.
+ * @returns {boolean} True is the element is visible, false otherwise.
+ */
+function isVisible( elem ) {
+  return !elem.classList.contains( 'u-hidden' );
+}
+
+/**
+ * Hide all alert messages that are showing.
  */
 function removeAlerts() {
-  if ( $( '.result-alert' ) ) {
+  if ( isVisible( resultAlertDom ) ||
+       isVisible( failAlertDom ) ||
+       isVisible( dpAlertDom ) ) {
     $( '#chart' ).removeClass( 'warning' );
-    $( '.result-alert' ).not( '.credit-alert' ).remove();
-    $( '#dp-alert' ).remove();
+    resultAlertDom.classList.add( 'u-hidden' );
+    failAlertDom.classList.add( 'u-hidden' );
+    dpAlertDom.classList.add( 'u-hidden' );
+    removeCreditScoreAlert();
   }
 }
 
-
+/**
+ * Hide the credit score alert message.
+ */
 function removeCreditScoreAlert() {
-  if ( $( '.credit-alert' ) || $( '.rangeslider__handle' ).hasClass( 'warning' ) ) {
+  if ( params.getVal( 'credit-score' ) >= 620 &&
+       ( isVisible( creditAlertDom ) ||
+       $( '.rangeslider__handle' ).hasClass( 'warning' ) ) ) {
     $( '.rangeslider__handle' ).removeClass( 'warning' );
-    $( '.credit-alert' ).remove();
+    creditAlertDom.classList.add( 'u-hidden' );
   }
 }
 
@@ -959,6 +984,11 @@ function init() {
   if ( document.querySelectorAll( '.rate-checker' ).length === 0 ) {
     return false;
   }
+
+  creditAlertDom = document.querySelector( '#credit-score-alert' );
+  resultAlertDom = document.querySelector( '#chart-result-alert' );
+  failAlertDom = document.querySelector( '#chart-fail-alert' );
+  dpAlertDom = document.querySelector( '#dp-alert' );
 
   // Record timestamp HTML element that's updated from date from API.
   timeStampDom = document.querySelector( '#timestamp' );

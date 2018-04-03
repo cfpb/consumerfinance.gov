@@ -613,6 +613,9 @@ FLAGS = {
     # To be enabled when owning-a-home/closing-disclosure/
     # and owning-a-home/loan-estimate/ are de-sheered.
     'OAH_FORM_EXPLAINERS': {},
+    
+    # To be enabled when journey pages are released in Wagtail.
+    'OAH_JOURNEY': {},
 
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.

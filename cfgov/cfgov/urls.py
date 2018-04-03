@@ -121,18 +121,19 @@ urlpatterns = [
         ),
         name='mortgage-estimate'
     ),
-    url(r'^owning-a-home/process/',
-        include(oah.urls_for_prefix('process/prepare/'))),
-    url(r'^owning-a-home/process/prepare/',
-        include(oah.urls_for_prefix('process/prepare/'))),
-    url(r'^owning-a-home/process/explore/',
-        include(oah.urls_for_prefix('process/explore/'))),
-    url(r'^owning-a-home/process/compare/',
-        include(oah.urls_for_prefix('process/compare/'))),
-    url(r'^owning-a-home/process/close/',
-        include(oah.urls_for_prefix('process/close/'))),
-    url(r'^owning-a-home/process/sources/',
-        include(oah.urls_for_prefix('process/sources/'))),
+
+    # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
+    # TODO: change to redirects after 2018 homebuying campaign.
+    flagged_url('OAH_JOURNEY', r'^owning-a-home/process/(?P<path>.*)$',
+        lambda req, path: ServeView.as_view()(
+            req, 'owning-a-home/{}'.format(path or 'prepare/')
+        ),
+        fallback=lambda req, path: SheerTemplateView.as_view(
+            template_engine='owning-a-home',
+            template_name='process/{}/index.html'.format(path or 'prepare')
+        )(req)
+    ),
+    # END TODO
 
     url(r'^know-before-you-owe/$',
         TemplateView.as_view(
