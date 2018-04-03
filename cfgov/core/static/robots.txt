@@ -6,5 +6,6 @@ Disallow: /external-site
 Disallow: /*?success
 Disallow: *form-id=*
 Disallow: /?page=
+Disallow: /eregulations
 
 sitemap: http://www.consumerfinance.gov/sitemap.xml
