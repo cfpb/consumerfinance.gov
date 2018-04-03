@@ -124,10 +124,14 @@ urlpatterns = [
 
     # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
     # TODO: change to redirects after 2018 homebuying campaign.
-    url(r'^owning-a-home/process/(?P<path>.*)$',
+    flagged_url('OAH_JOURNEY', r'^owning-a-home/process/(?P<path>.*)$',
         lambda req, path: ServeView.as_view()(
             req, 'owning-a-home/{}'.format(path or 'prepare/')
-        )
+        ),
+        fallback=lambda req, path: SheerTemplateView.as_view(
+            template_engine='owning-a-home',
+            template_name='process/{}/index.html'.format(path or 'prepare')
+        )(req)
     ),
     # END TODO
 
