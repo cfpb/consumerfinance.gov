@@ -67,10 +67,10 @@ Then( 'should only show second link content', async function() {
   await EC.not( EC.elementToBeClickable( _dom.contentPolyCom ) );
   await browser.sleep( 500 );
 
-  // TODO: Investigate inconsistent test failure.
-  // await expect( _dom.contentPolyCom.isDisplayed() )
-  // .to.eventually
-  // .equal( false );
+  /* TODO: Investigate inconsistent test failure.
+     await expect( _dom.contentPolyCom.isDisplayed() )
+     .to.eventually
+     .equal( false ); */
 
   return expect( _dom.contentPolyCom.isDisplayed() )
     .to.eventually.equal( false );

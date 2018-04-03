@@ -1,5 +1,5 @@
 class BasePage {
-  async gotoURL ( url ) {
+  async gotoURL( url ) {
     const gotoUrl = url || this.URL || '/';
     await browser.get( gotoUrl );
     await this.setElements();
@@ -17,12 +17,12 @@ class BasePage {
      */
     function _removeScripts() {
       [].slice.call( document.querySelectorAll( 'script, style, link' ) )
-      .filter( script => {
-        const src = script.href || script.src;
+        .filter( script => {
+          const src = script.href || script.src;
 
-        return src && src.indexOf( 'localhost' ) === -1;
-      } )
-      .forEach( script => script.parentNode.removeChild( script ) );
+          return src && src.indexOf( 'localhost' ) === -1;
+        } )
+        .forEach( script => script.parentNode.removeChild( script ) );
     }
 
     return browser.executeScript( _removeScripts );
@@ -57,7 +57,7 @@ class BasePage {
     try {
       const alertObj = await browser.switchTo().alert();
       await _accepAlert( alertObj );
-    } catch( error ) {
+    } catch ( error ) {
       Promise.resolve();
     }
   }

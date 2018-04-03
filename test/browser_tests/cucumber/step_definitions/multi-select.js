@@ -156,7 +156,7 @@ Then( 'the first option should be highlighted',
 );
 
 Then( 'the choices element should contain the first option',
-  async function () {
+  async function() {
     const firstElementText =
       await multiSelect.getDropDownLabelElements().first().getText();
     const choicesText =
