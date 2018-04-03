@@ -1,30 +1,25 @@
+import {
+  addEventListenerToElem,
+  delay,
+  track
+} from './util/analytics-util';
+
 const OAHRCAnalytics = ( function() {
-
-  const delay = ( function() {
-    let timer = 0;
-    return function( callback, ms ) {
-      clearTimeout( timer );
-      timer = setTimeout( callback, ms );
-    };
-  } )();
-
-  const track = function( event, action, label ) {
-    window.dataLayer.push( {
-      event: event,
-      action: action,
-      label: label
-    } );
-    console.log( event, action, label );
-  };
 
   // credit score slider
   const rangeSliders = document.querySelectorAll( '.rangeslider' );
   let rangeSliderEl;
   for ( let i = 0, len = rangeSliders.length; i < len; i++ ) {
     rangeSliderEl = rangeSliders[i];
-    rangeSliderEl.addEventListener( 'click', _rangeSliderEventHandler );
-    rangeSliderEl.addEventListener( 'touchend', _rangeSliderEventHandler );
+    addEventListenerToElem( rangeSliderEl, 'click', _rangeSliderEventHandler );
+    addEventListenerToElem(
+      rangeSliderEl, 'touchend', _rangeSliderEventHandler
+    );
   }
+
+  /**
+   * Event handler for range slider interactions.
+   */
   function _rangeSliderEventHandler() {
     const sliderRangeEl = document.querySelector( '#slider-range' );
     const score = sliderRangeEl.textContent;
@@ -33,7 +28,7 @@ const OAHRCAnalytics = ( function() {
 
   // state select
   const locationEl = document.querySelector( '#location' );
-  locationEl.addEventListener( 'change', function( evt ) {
+  addEventListenerToElem( locationEl, 'change', function( evt ) {
     const target = evt.target;
     const value = target.value;
     track( 'OAH Rate Tool Interactions', 'Select state', value );
@@ -41,7 +36,7 @@ const OAHRCAnalytics = ( function() {
 
   // house price
   const housePriceEl = document.querySelector( '#house-price' );
-  housePriceEl.addEventListener( 'keyup', function( evt ) {
+  addEventListenerToElem( housePriceEl, 'keyup', function( evt ) {
     const target = evt.target;
     const value = target.value;
     delay( function() {
@@ -51,7 +46,7 @@ const OAHRCAnalytics = ( function() {
 
   // down payment percentage
   const percentDownEl = document.querySelector( '#percent-down' );
-  percentDownEl.addEventListener( 'keyup', function( evt ) {
+  addEventListenerToElem( percentDownEl, 'keyup', function( evt ) {
     const target = evt.target;
     const value = target.value;
     delay( function() {
@@ -61,7 +56,7 @@ const OAHRCAnalytics = ( function() {
 
   // down payment $
   const downPaymentEl = document.querySelector( '#down-payment' );
-  downPaymentEl.addEventListener( 'keyup', function( evt ) {
+  addEventListenerToElem( downPaymentEl, 'keyup', function( evt ) {
     const target = evt.target;
     const value = target.value;
     delay( function() {
@@ -71,7 +66,7 @@ const OAHRCAnalytics = ( function() {
 
   // rate structure
   const rateStructureEl = document.querySelector( '#rate-structure' );
-  rateStructureEl.addEventListener( 'change', function( evt ) {
+  addEventListenerToElem( rateStructureEl, 'change', function( evt ) {
     const target = evt.target;
     const value = target.value;
     track( 'OAH Rate Tool Interactions', 'Rate structure', value );
@@ -79,7 +74,7 @@ const OAHRCAnalytics = ( function() {
 
   // loan term
   const loanTermEl = document.querySelector( '#loan-term' );
-  loanTermEl.addEventListener( 'change', function( evt ) {
+  addEventListenerToElem( loanTermEl, 'change', function( evt ) {
     const target = evt.target;
     const value = target.value;
     track( 'OAH Rate Tool Interactions', 'Loan term', value );
@@ -87,7 +82,7 @@ const OAHRCAnalytics = ( function() {
 
   // loan type
   const loanTypeEl = document.querySelector( '#loan-type' );
-  loanTypeEl.addEventListener( 'change', function( evt ) {
+  addEventListenerToElem( loanTypeEl, 'change', function( evt ) {
     const target = evt.target;
     const value = target.value;
     track( 'OAH Rate Tool Interactions', 'Loan type', value );
@@ -95,7 +90,7 @@ const OAHRCAnalytics = ( function() {
 
   // arm type
   const armTypeEl = document.querySelector( '#arm-type' );
-  armTypeEl.addEventListener( 'change', function( evt ) {
+  addEventListenerToElem( armTypeEl, 'change', function( evt ) {
     const target = evt.target;
     const value = target.value;
     track( 'OAH Rate Tool Interactions', 'ARM type', value );
@@ -103,7 +98,7 @@ const OAHRCAnalytics = ( function() {
 
   // rate comparison select #1
   const rateCompare1El = document.querySelector( '#rate-compare-1' );
-  rateCompare1El.addEventListener( 'change', function( evt ) {
+  addEventListenerToElem( rateCompare1El, 'change', function( evt ) {
     const target = evt.target;
     const value = target.value;
     track( 'OAH Rate Tool Interactions', 'Interest cost 1', value );
@@ -111,7 +106,7 @@ const OAHRCAnalytics = ( function() {
 
   // rate comparison select #2
   const rateCompare2El = document.querySelector( '#rate-compare-2' );
-  rateCompare2El.addEventListener( 'change', function( evt ) {
+  addEventListenerToElem( rateCompare2El, 'change', function( evt ) {
     const target = evt.target;
     const value = target.value;
     track( 'OAH Rate Tool Interactions', 'Interest cost 2', value );
@@ -119,21 +114,19 @@ const OAHRCAnalytics = ( function() {
 
   // page reload link
   const reloadLinkEl = document.querySelector( '#reload-link' );
-  if ( reloadLinkEl ) {
-    reloadLinkEl.addEventListener( 'click', function() {
-      track( 'OAH Rate Tool Interactions', 'Revert', '/owning-a-home/rate-checker' );
-    } );
-  }
+  addEventListenerToElem( reloadLinkEl, 'click', function() {
+    track( 'OAH Rate Tool Interactions', 'Revert', '/owning-a-home/rate-checker' );
+  } );
 
   // next steps: I plan to buy in the next couple of months
   const planToBuyTabEl = document.querySelector( '#plan-to-buy-tab' );
-  planToBuyTabEl.addEventListener( 'click', function() {
+  addEventListenerToElem( planToBuyTabEl, 'click', function() {
     track( 'OAH Rate Tool Interactions', 'Click', 'Collapsed_Tabs_Buying' );
   } );
 
   // next steps: I won't buy for several months
   const wontBuyTabEl = document.querySelector( '#wont-buy-tab' );
-  wontBuyTabEl.addEventListener( 'click', function() {
+  addEventListenerToElem( wontBuyTabEl, 'click', function() {
     track( 'OAH Rate Tool Interactions', 'Click', 'Collapsed_Tabs_Not_Buying' );
   } );
 } )();

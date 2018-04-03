@@ -1,24 +1,14 @@
+// TODO: Remove jquery.
 import $ from 'jquery';
+
+import {
+  delay,
+  track
+} from './util/analytics-util';
 
 // HMDA Explore custom analytics file
 
 const HMDAAnalytics = ( function() {
-
-  const delay = ( function() {
-    let timer = 0;
-    return function( callback, ms ) {
-      clearTimeout( timer );
-      timer = setTimeout( callback, ms );
-    };
-  } )();
-
-  const track = function( event, action, label ) {
-    window.dataLayer.push( {
-      event: event,
-      action: action,
-      label: label
-    } );
-  };
 
   // Collapsible open and close
   $( '#all div.filter' ).click( function() {

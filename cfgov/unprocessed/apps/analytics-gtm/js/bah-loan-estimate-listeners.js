@@ -1,33 +1,24 @@
+// TODO: Remove jquery.
 import $ from 'jquery';
+
+import {
+  addEventListenerToElem,
+  delay,
+  track
+} from './util/analytics-util';
 
 // Owning a Home - Loan Estimate custom analytics file
 
 const OAHLEAnalytics = ( function() {
 
-  const delay = ( function() {
-    let timer = 0;
-    return function( callback, ms ) {
-      clearTimeout( timer );
-      timer = setTimeout( callback, ms );
-    };
-  } )();
-
   $( '.tab-link' ).click( function() {
     const text = $( this ).text().trim();
-    window.dataLayer.push( {
-      event: 'OAH Loan Estimate Interaction',
-      action: 'Tab click',
-      label: text
-    } );
+    track( 'OAH Loan Estimate Interaction', 'Tab click', text );
   } );
 
   $( '.form-explainer_page-link ' ).click( function() {
     const pageNumber = 'Page ' + $( this ).attr( 'data-page' );
-    window.dataLayer.push( {
-      event: 'OAH Loan Estimate Interaction',
-      action: 'Page link click',
-      label: pageNumber
-    } );
+    track( 'OAH Loan Estimate Interaction', 'Page link click', pageNumber );
   } );
 
   $( '.form-explainer_page-buttons button' ).click( function() {
@@ -36,12 +27,7 @@ const OAHLEAnalytics = ( function() {
     if ( $( this ).hasClass( 'prev' ) ) {
       action = 'Previous Page button clicked';
     }
-    window.dataLayer.push( {
-      event: 'OAH Loan Estimate Interaction',
-      action: action,
-      label: currentPage
-    } );
-
+    track( 'OAH Loan Estimate Interaction', action, currentPage );
   } );
 
   $( '.expandable_target' ).click( function() {
@@ -61,11 +47,7 @@ const OAHLEAnalytics = ( function() {
         if ( state === 'true' ) {
           action = 'Expandable expanded - ' + tabText;
         }
-        window.dataLayer.push( {
-          event: 'OAH Loan Estimate Interaction',
-          action: action,
-          label: text
-        } );
+        track( 'OAH Loan Estimate Interaction', action, text );
       }, 250 );
   } );
 
@@ -79,13 +61,8 @@ const OAHLEAnalytics = ( function() {
         if ( target.hasClass( 'expandable__expanded' ) ) {
           action = 'Image Overlay click - expandable expanded';
         }
-        window.dataLayer.push( {
-          event: 'OAH Loan Estimate Interaction',
-          action: action,
-          label: text
-        } );
+        track( 'OAH Loan Estimate Interaction', action, text );
       }, 250 );
   } );
-
 
 } )( $ );
