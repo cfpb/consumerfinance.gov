@@ -44,7 +44,9 @@ class BasePage {
     return browser.executeScript( _disableAnimations );
   }
 
-  setElements() { } // eslint-disable-line no-empty-function
+  setElements() {
+    // Noop function, which should be overridden when setting page elements.
+  }
 
   static async dismissAlert() {
     function _accepAlert( alert ) {
