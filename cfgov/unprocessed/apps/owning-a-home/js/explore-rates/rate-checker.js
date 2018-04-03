@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import './tab';
 import 'rangeslider.js';
 import * as params from './params';
 import * as template from './template-loader';
