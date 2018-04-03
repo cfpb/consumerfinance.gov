@@ -5,9 +5,6 @@ dist: trusty
 python:
   - "2.7"
 
-addons:
-  chrome: beta
-
 cache:
   pip: true
   directories:
@@ -44,7 +41,6 @@ jobs:
     - stage: run tests
       env: RUNTEST=frontend
     - env: RUNTEST=backend
-    - env: RUNTEST=acceptance
     - stage: Update documentation
       script:
         - pip install virtualenv virtualenvwrapper

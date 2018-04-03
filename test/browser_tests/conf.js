@@ -19,7 +19,6 @@ function _paramIsSet( param ) {
  * @returns {Array} List of multiCapabilities objects.
  */
 function _chooseSuite( params ) {
-
   const paramsAreNotSet = !_paramIsSet( params.browserName ) &&
                           !_paramIsSet( params.version ) &&
                           !_paramIsSet( params.platform );
