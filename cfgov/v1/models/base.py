@@ -254,7 +254,7 @@ class CFGOVPage(Page):
                                 'owning-a-home', 'owning-a-home/process')
                         breadcrumbs.append({
                             'title': ancestor.title,
-                            'href':  ancestor_url,
+                            'href': ancestor_url,
                         })
                     return breadcrumbs
                 # END TODO
