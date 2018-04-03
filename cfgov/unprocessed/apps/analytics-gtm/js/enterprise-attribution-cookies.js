@@ -61,10 +61,10 @@ const sourceCookies = {
     this._timeStamps.firstVisit = this._timeStamps.currentVisit;
 
     // Determine referral source
-    this.parseDirect( host, query, referrer )
-    this.parseReferral( host, query, referrer )
-    this.parseOrganicSearch( host, query, referrer )
-    this.parseUTMparameters( host, query, referrer )
+    this.parseDirect( host, query, referrer );
+    this.parseReferral( host, query, referrer );
+    this.parseOrganicSearch( host, query, referrer );
+    this.parseUTMparameters( host, query, referrer );
     this.parseAdWords( host, query, referrer );
 
     // .parseSocialMedia(host, query, referrer)

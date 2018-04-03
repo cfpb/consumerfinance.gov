@@ -7,7 +7,7 @@ import { track } from './util/analytics-util';
 
 const BYCAnalytics = ( function() {
 
-  let questionsAnswered = [];
+  const questionsAnswered = [];
   let sliderClicks = 0;
   let sliderIsActive = false;
   let stepOneSubmitted = false;
