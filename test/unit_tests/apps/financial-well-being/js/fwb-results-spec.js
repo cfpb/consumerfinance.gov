@@ -106,7 +106,7 @@ function triggerClickEvent( target ) {
   return target.dispatchEvent( event );
 }
 
-function initFwbResults( ) {
+function initFwbResults() {
   fwbResults = require(
     BASE_JS_PATH + 'financial-well-being/js/fwb-results'
   );

@@ -7,8 +7,7 @@ const rssSubscribeSection = {
 
   rssSubscribeDescription: _getQAelement( 'rss-subscribe-desc' ),
 
-  rssSubscribeBtn:
-  _rssSubscribeSection.element( by.css( '.btn' ) )
+  rssSubscribeBtn: _rssSubscribeSection.element( by.css( '.btn' ) )
 
 };
 

@@ -2,14 +2,14 @@ const chai = require( 'chai' );
 const chaiAsPromised = require( 'chai-as-promised' );
 const { Then, When, Before } = require( 'cucumber' );
 const { expect } = require( 'chai' );
-const { shouldShouldnt } = require( '../../util/index.js' );
+const { isShould } = require( '../../util/index.js' );
 
 const BASE_SEL = '.m-global-search';
 const TRIGGER_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_trigger"]';
 const CONTENT_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_content"]';
 const INPUT_SEL = BASE_SEL + ' input#query';
 const SEARCH_SEL = BASE_SEL +
-                   ' [data-js-hook="behavior_flyout-menu_content"] .a-btn';
+  ' [data-js-hook="behavior_flyout-menu_content"] .a-btn';
 const CLEAR_SEL = BASE_SEL + ' .input-contains-label_after';
 const SUGGEST_SEL = BASE_SEL + ' .m-global-search_content-suggestions';
 const EC = protractor.ExpectedConditions;
@@ -39,19 +39,19 @@ When( 'I click on the search molecule',
 );
 
 When( /I enter "(.*)" in the search molecule/,
-  function( searchText ) {
-    _dom.trigger.click();
+  async function( searchText ) {
+    await _dom.trigger.click();
 
     return _dom.input.sendKeys( searchText );
   }
 );
 
 When( 'I click off the search molecule',
-  function() {
+  async function() {
+    await _dom.trigger.click();
+    await browser.wait( EC.visibilityOf( _dom.input ) );
 
-
-    return _dom.trigger.click()
-      .then( _nonLinkDom.click );
+    return _nonLinkDom.click();
   }
 );
 
@@ -63,10 +63,10 @@ When( 'I focus on the search molecule trigger',
 );
 
 When( 'I perform tab actions on the search molecule',
-  function() {
-    let activeElement = browser.driver.switchTo().activeElement();
-    activeElement.sendKeys( protractor.Key.TAB );
-    activeElement = browser.driver.switchTo().activeElement();
+  async function() {
+    let activeElement = await browser.driver.switchTo().activeElement();
+    await activeElement.sendKeys( protractor.Key.TAB );
+    activeElement = await browser.driver.switchTo().activeElement();
 
     return activeElement.sendKeys( protractor.Key.TAB );
   }
@@ -77,96 +77,77 @@ Then( /it (should|shouldn't) have a clear button label/,
 
     return expect( _dom.clearBtn.isDisplayed() )
       .to.eventually
-      .equal( shouldShouldnt( haveLabel ) );
+      .equal( isShould( haveLabel ) );
   }
 );
 
 Then( 'it should focus the search input field',
-  function() {
-    const activeElement = browser
+  async function() {
+    const attributeId = await browser
       .driver
       .switchTo()
       .activeElement()
       .getAttribute( 'id' );
 
-    return activeElement
-      .then( attributeId =>
-        expect( _dom.input.getAttribute( 'id' ) )
-          .to.eventually
-          .equal( attributeId )
-      );
+    return expect( _dom.input.getAttribute( 'id' ) )
+      .to.eventually.equal( attributeId );
   }
 );
 
 Then( /the search molecule (should|shouldn't) have a search trigger/,
-  function( haveTrigger ) {
+  async function( haveTrigger ) {
     let expectedCondition;
 
-    if ( shouldShouldnt( haveTrigger ) ) {
-      expectedCondition = EC.elementToBeClickable( _dom.trigger );
+    if ( isShould( haveTrigger ) ) {
+      expectedCondition =
+        await EC.elementToBeClickable( _dom.trigger );
     } else {
-      expectedCondition = EC.not( EC.elementToBeClickable( _dom.trigger ) );
+      expectedCondition =
+        await EC.not( EC.elementToBeClickable( _dom.trigger ) );
     }
 
-    return browser.wait( expectedCondition )
-      .then( () =>
-        expect( _dom.trigger.isDisplayed() )
-          .to.eventually
-          .equal( shouldShouldnt( haveTrigger ) )
-      );
+    await browser.wait( expectedCondition );
+
+    return expect( _dom.trigger.isDisplayed() )
+      .to.eventually
+      .equal( isShould( haveTrigger ) );
   }
 );
 
 Then( /it (should|shouldn't) have search input content/,
-  function( haveInput ) {
-    let expectedCondition;
+  async function( haveInput ) {
+    await browser.sleep( 300 );
 
-    if ( shouldShouldnt( haveInput ) ) {
-      expectedCondition = EC.elementToBeClickable( _dom.content );
-    } else {
-      expectedCondition = EC.not( EC.elementToBeClickable( _dom.content ) );
-    }
-
-    return browser.wait( expectedCondition )
-      .then( () =>
-        expect( _dom.content.isDisplayed() )
-          .to.eventually
-          .equal( shouldShouldnt( haveInput ) )
-      );
+    return expect( _dom.content.isDisplayed() )
+      .to.eventually
+      .equal( isShould( haveInput ) );
   }
 );
 
 Then( 'I should navigate to search portal',
-  function() {
+  async function() {
+    const portalUrl = 'https://search.consumerfinance.gov/' +
+                      'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
 
-    return browser.wait( EC.visibilityOf( _dom.searchBtn ) )
-      .then( () => {
-        const portalUrl =
-               'https://search.consumerfinance.gov/' +
-               'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
+    await browser.wait( EC.visibilityOf( _dom.searchBtn ) );
+    await _dom.searchBtn.click();
 
-        _dom.searchBtn.click();
-
-        return expect( browser.getCurrentUrl() )
-          .to.eventually
-          .equal( portalUrl );
-      } );
+    return expect( browser.getCurrentUrl() )
+      .to.eventually
+      .equal( portalUrl );
   }
 );
 
 Then( /it (should|shouldn't) have suggested search terms/,
-
   function( haveTerms ) {
 
     return expect( _dom.suggest.isDisplayed() )
       .to.eventually
-      .equal( shouldShouldnt( haveTerms ) );
+      .equal( isShould( haveTerms ) );
   }
 );
 
-
 Then( 'should have suggested search terms',
-
   function() {
 
     return expect( _dom.suggest.isDisplayed() )

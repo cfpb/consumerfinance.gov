@@ -1,6 +1,5 @@
 /* eslint max-len: "off" */
 
-
 const _streamMenu = element.all( by.css( '.stream-menu' ) ).first();
 
 function _getContentElement( selector ) {

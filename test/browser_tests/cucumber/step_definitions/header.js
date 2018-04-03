@@ -1,5 +1,5 @@
 const { Then, When, Before } = require( 'cucumber' );
-const { shouldShouldnt, toCamelCase } = require( '../../util/index.js' );
+const { isShould, toCamelCase } = require( '../../util/index.js' );
 const chai = require( 'chai' );
 const expect = chai.expect;
 const chaiAsPromised = require( 'chai-as-promised' );
@@ -50,7 +50,7 @@ Then( /the header organism (should|shouldn't) display the (.*)/,
 
     return expect( _dom[toCamelCase( element )].isDisplayed() )
       .to.eventually
-      .equal( shouldShouldnt( dispayElement ) );
+      .equal( isShould( dispayElement ) );
   }
 );
 
@@ -74,20 +74,17 @@ When( 'I click on the mega-menu search trigger', function() {
 } );
 
 Then( /the mega-menu\s?(shouldn't|should)/, function( dispayElement ) {
-  browser.sleep( 500 );
 
   return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
     .to.eventually
-    .equal( shouldShouldnt( dispayElement ).toString() );
+    .equal( isShould( dispayElement ).toString() );
 } );
 
 Then( /the mega-menu search form (shouldn't|should)/,
-
   function( displayElement ) {
-    browser.sleep( 500 );
 
     return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
       .to.eventually
-      .equal( shouldShouldnt( displayElement ).toString() );
+      .equal( isShould( displayElement ).toString() );
   }
 );

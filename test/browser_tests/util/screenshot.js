@@ -11,11 +11,11 @@ const _screenShotDirectory = 'test/';
  * @param {string} filename - The filename of the file to create.
  * @param {string} data - A base64-encoded string to write to a file.
  */
-function _writeScreenShot( filename, data ) {
-  const stream = fs.createWriteStream( _screenShotDirectory + filename );
+async function _writeScreenShot( filename, data ) {
+  const stream = await fs.createWriteStream( _screenShotDirectory + filename );
 
-  stream.write( new Buffer( data, 'base64' ) );
-  stream.end();
+  await stream.write( new Buffer( data, 'base64' ) );
+  await stream.end();
 }
 
 /**
@@ -31,10 +31,9 @@ function _processScreenshot( screenShotName = 'screenshot', png ) {
  * Capture a screenshot of the current browser window.
  * @param {string} screenShotName - Name of the screenshot.
  */
-function capture( screenShotName ) {
-  browser.takeScreenshot().then( function( png ) {
-    _processScreenshot( screenShotName, png );
-  } );
+async function capture( screenShotName ) {
+  const png = await browser.takeScreenshot();
+  await _processScreenshot( screenShotName, png );
 }
 
 // Expose public methods.
