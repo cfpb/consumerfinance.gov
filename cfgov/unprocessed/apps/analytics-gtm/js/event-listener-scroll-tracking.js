@@ -31,7 +31,7 @@ const startTime = new Date();
 const timeAtPageLoad = startTime.getTime();
 
 /**
- * @return {number} The number of seconds that have elapsed since the base time.
+ * @returns {number} Seconds that have elapsed since the page load time.
  */
 function getTimeStamp() {
   const currentTime = new Date();
