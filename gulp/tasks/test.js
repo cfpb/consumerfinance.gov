@@ -89,8 +89,8 @@ function testAcceptanceBrowser() {
   const params = minimist( process.argv.slice( 3 ) ) || {};
   const toxParams = [ '-e' ];
 
-  if ( params.fast ) {
-    toxParams.push( 'acceptance-fast' );
+  if ( params.recreate ) {
+    toxParams.push( 'acceptance-recreate' );
   } else {
     toxParams.push( 'acceptance' );
   }

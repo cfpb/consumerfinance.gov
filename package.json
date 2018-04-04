@@ -64,6 +64,7 @@
     "localtunnel": "1.8.3",
     "lodash.throttle": "4.1.1",
     "postcss-unmq": "1.0.2",
+    "protractor-retry": "1.1.9",
     "psi": "3.1.0",
     "require-dir": "1.0.0",
     "sauce-connect-tunnel": "0.2.1",
