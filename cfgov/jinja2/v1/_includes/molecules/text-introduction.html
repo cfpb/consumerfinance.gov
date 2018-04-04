@@ -11,6 +11,8 @@
 
    value:               Object defined from a StreamField block.
 
+   value.eyebrow:       (Optional) Text to display above heading.
+
    value.heading:       (Optional) String for heading text.
 
    value.intro:         (Optional) String for body introduction text.
@@ -30,9 +32,19 @@
 
    ========================================================================== #}
 
+{% if value.eyebrow and value.heading %}
+<header>
+{% endif %}
+{% if value.eyebrow %}
+    <div class="h5">{{ value.eyebrow }}</div>
+{% endif %}
 {% if value.heading %}
     <h1>{{ value.heading }}</h1>
 {% endif %}
+{% if value.eyebrow and value.heading %}
+</header>
+{% endif %}
+
 {% if value.intro.source %}
     <div class="lead-paragraph">
         {{ parse_links(value.intro) | safe }}

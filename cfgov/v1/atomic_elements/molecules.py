@@ -1,3 +1,6 @@
+from django.core.exceptions import ValidationError
+from django.forms.utils import ErrorList
+
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
@@ -71,6 +74,12 @@ class ImageText2575(blocks.StructBlock):
 
 
 class TextIntroduction(blocks.StructBlock):
+    eyebrow = blocks.CharBlock(
+        required=False,
+        help_text=('Optional: Adds small (H5) pre-heading above heading text. '
+                   'Only use in conjunction with heading.'),
+        label="Pre-heading"
+    )
     heading = blocks.CharBlock(required=False)
     intro = blocks.RichTextBlock(required=False)
     body = blocks.RichTextBlock(required=False)
@@ -81,6 +90,20 @@ class TextIntroduction(blocks.StructBlock):
         help_text=('Check this to add a horizontal rule line to bottom of '
                    'text introduction.')
     )
+
+    def clean(self, value):
+        cleaned = super(TextIntroduction, self).clean(value)
+
+        # Eyebrow requires a heading.
+        if cleaned.get('eyebrow') and not cleaned.get('heading'):
+            raise ValidationError(
+                'Validation error in TextIntroduction: pre-heading with no heading',
+                params={'heading': ErrorList([
+                    'Required if pre-heading is specified.'
+                ])}
+            )
+
+        return cleaned
 
     class Meta:
         icon = 'title'
