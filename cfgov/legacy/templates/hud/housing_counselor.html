@@ -169,10 +169,11 @@ Find a housing counselor
                                                             {% if valid_url %}</a>{% endif %}
                                                         </div>
                                                         <div class="hud_hca_api_counselor_address">
-                                                            <span class="hud_hca_api_adr">{{ counselor.adr1 }}</span>
-                                                            {% if counselor.adr2 and counselor.adr2 != ' '  %}
-                                                            </br>{{ counselor.adr2 }}
-                                                            {% endif %}
+                                                            <span class="hud_hca_api_adr">{{ counselor.adr1 }}
+                                                                {% if counselor.adr2 and counselor.adr2 != ' '  %}
+                                                                </br>{{ counselor.adr2 }}
+                                                                {% endif %}
+                                                            </span>
                                                             <span class="hud_hca_api_region">{{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}</span>
                                                         </div>
                                                         <div class="hud_hca_api_counselor_meta">
