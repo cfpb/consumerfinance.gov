@@ -258,7 +258,7 @@ const config = {
   onCleanUp:                results => retry.onCleanUp( results ),
   onPrepare:                _onPrepare,
   SELENIUM_PROMISE_MANAGER: false,
-  unknownFlags_:            [ 'cucumberOpts' ],
+  unknownFlags_:            [ 'cucumberOpts' ]
 };
 
 // Set Sauce Labs credientials from .env file.
