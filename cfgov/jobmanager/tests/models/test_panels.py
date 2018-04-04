@@ -1,6 +1,5 @@
-from unittest import TestCase
-
 from django.core.exceptions import ValidationError
+from django.test import TestCase
 
 from wagtail.wagtailcore.models import Page
 
@@ -19,6 +18,7 @@ class ApplicationLinkTestCaseMixin(object):
 
     @classmethod
     def setUpClass(cls):
+        super(ApplicationLinkTestCaseMixin, cls).setUpClass()
         cls.root = Page.objects.get(slug='root')
 
     def setUp(self):
