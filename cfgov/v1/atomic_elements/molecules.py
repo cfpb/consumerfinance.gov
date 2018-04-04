@@ -76,7 +76,7 @@ class ImageText2575(blocks.StructBlock):
 class TextIntroduction(blocks.StructBlock):
     eyebrow = blocks.CharBlock(
         required=False,
-        help_text=('Optional: Adds small (H5) pre-heading above heading text. '
+        help_text=('Optional: Adds an H5 eyebrow above H1 heading text. '
                    'Only use in conjunction with heading.'),
         label="Pre-heading"
     )
