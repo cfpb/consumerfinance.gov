@@ -1,3 +1,4 @@
+
 /**
  * Check if an element exists on the page, and if it does, add listeners.
  * @param {[type]}   elem     [description]
@@ -34,7 +35,7 @@ function track( event, action, label ) {
     label: label
   } );
   analyticsLog( event, action, label );
-}
+};
 
 /**
  * Check if two hosts are the same.
@@ -44,23 +45,25 @@ function track( event, action, label ) {
  * @returns {boolean} True if the hosts are equal, false otherwise.
  */
 function hostsAreEqual( host1, host2 ) {
-  let h1 = document.createElement( 'a' );
-  h1.href = host1;
 
-  let h2 = document.createElement( 'a' );
-  h2.href = host2;
+  /**
+   * Pick the host out of a URL.
+   * @param {string} srcHost - A URL
+   * @returns {string} A hostname without subdomain.
+   */
+  function createTestHost( srcHost ) {
+    let testHost = document.createElement( 'a' );
+    testHost.href = srcHost;
 
-  // Check for www
-  h1 = h1.host;
-  if ( h1.substring( 0, 4 ) === 'www.' ) {
-    h1 = h1.substring( 4 );
+    testHost = testHost.host;
+    if ( testHost.substring( 0, 4 ) === 'www.' ) {
+      testHost = testHost.substring( 4 );
+    }
+
+    return testHost;
   }
-  h2 = h2.host;
-  if ( h2.substring( 0, 4 ) === 'www.' ) {
-    h2 = h2.substring( 4 );
-  }
 
-  return h1 === h2;
+  return createTestHost( host1 ) === createTestHost( host2 );
 }
 
 /**
