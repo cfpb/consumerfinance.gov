@@ -87,12 +87,11 @@ function testUnitScripts( cb ) {
  */
 function testAcceptanceBrowser() {
   const params = minimist( process.argv.slice( 3 ) ) || {};
-  const toxParams = [ '-e' ];
+  const toxParams = [ '-e', 'acceptance' ];
 
   if ( params.recreate ) {
-    toxParams.push( 'acceptance-recreate' );
-  } else {
-    toxParams.push( 'acceptance' );
+    delete params.recreate;
+    toxParams.push( '-r' );
   }
 
   Object.keys( params ).forEach( key => {
@@ -175,9 +174,6 @@ function _getProtractorParams( suite ) {
 
   // If --tags=@tagName flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'tags' );
-
-  // If --headless=false flag is added on the command-line.
-  params = _addCommandLineFlag( params, commandLineParams, 'headless' );
 
   /* If the --suite=suite1,suite2 flag is added on the command-line
      or, if not, if a suite is passed as part of the gulp task definition. */

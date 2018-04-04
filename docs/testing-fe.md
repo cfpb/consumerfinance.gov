@@ -27,7 +27,6 @@ The same options can be used with tox (--omitted):
 tox -e acceptance suite=wagtail-admin
 tox -e acceptance specs=multi-select.feature
 tox -e acceptance tags=@mobile
-tox -e acceptance-recreate
 ```
 
 These tests will run on their own server; you do not need to be running your development server.
