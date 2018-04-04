@@ -1,40 +1,24 @@
+import { hostsAreEqual } from './util/analytics-util';
+
 /* ********************************
 Blast Analytics & Marketing
 Create Source Attribution Cookie
 ******************************** */
 
 const sourceCookies = {
-
-  // zeroPad - prepends '0' before numbers 0-9
-  zeroPad: function( n ) {
-    let r = n.toString();
-    if ( n <= 9 && n >= 0 ) { r = '0' + n.toString(); }
-    return r;
-  },
-
-  /**
-  * session length in milliseconds : defaul 30 mins
-  */
+  // Session length in milliseconds : default 30 mins.
   _sessionLength: 1800000,
 
-  /**
-  * Cookie domain name
-  */
+  // Cookie domain name.
   _cookieDomain: '{{cookie domain}}',
 
-  /**
-  * Session cookie name
-  */
+  // Session cookie name.
   _sourceCookieName: '_A_source',
 
-  /**
-  * Session cookie name
-  */
+  // Session cookie name.
   _timeCookieName: '_A_time',
 
-  /**
-  * Classic analytics parameter mapping
-  */
+  // Classic analytics parameter mapping.
   _classicParameterMap: {
     gclid: 'utmgclid',
     source: 'utmcsr',
@@ -44,9 +28,7 @@ const sourceCookies = {
     content: 'utmcct'
   },
 
-  /**
-  * Referral source
-  */
+  // Referral source.
   _referral: {
     gclid: '',
     source: '',
@@ -62,13 +44,12 @@ const sourceCookies = {
     currentVisit: ( new Date() ).getTime()
   },
 
-
   /**
-  * Determine referral source
-  * @param {string} host - A URL.
-  * @param {string} query - A query string.
-  * @param {string} referrer - A referrer URL.
-  */
+   * Determine referral source
+   * @param {string} host - A URL.
+   * @param {string} query - A query string.
+   * @param {string} referrer - A referrer URL.
+   */
   update: function( host, query, referrer ) {
     const q = new Date();
     let sourceString = '';
@@ -80,23 +61,23 @@ const sourceCookies = {
     this._timeStamps.firstVisit = this._timeStamps.currentVisit;
 
     // Determine referral source
-    this
-      .parseDirect( host, query, referrer )
-      .parseReferral( host, query, referrer )
-      .parseOrganicSearch( host, query, referrer )
-      .parseUTMparameters( host, query, referrer )
-      .parseAdWords( host, query, referrer );
+    this.parseDirect( host, query, referrer );
+    this.parseReferral( host, query, referrer );
+    this.parseOrganicSearch( host, query, referrer );
+    this.parseUTMparameters( host, query, referrer );
+    this.parseAdWords( host, query, referrer );
 
     // .parseSocialMedia(host, query, referrer)
 
-    // set temp source values
+    // Set temp source values.
     for ( const property in this._referral ) {
       if ( property !== 'date' && this._referral[property].length > 0 ) {
-        newSource = newSource + this._classicParameterMap[property] + '=' + this._referral[property].replace( /\s/g, '%20' ) + '|';
+        newSource = newSource + this._classicParameterMap[property] + '=' +
+                    this._referral[property].replace( /\s/g, '%20' ) + '|';
       }
     }
 
-    // Remove trailing pipe
+    // Remove trailing pipe.
     newSource = newSource.slice( 0, -1 );
 
     if ( this._getCookie( this._timeCookieName ) !== '' ) {
@@ -113,7 +94,8 @@ const sourceCookies = {
       }
     }
 
-    if ( ( sourceString !== decodeURIComponent( newSource ) ) || this._newSession ) {
+    if ( ( sourceString !== decodeURIComponent( newSource ) ) ||
+         this._newSession ) {
       /* check values
       set cookies */
       this._timeStamps.visitCount++;
@@ -128,10 +110,11 @@ const sourceCookies = {
         window.dataLayer.push( { visitNumber: this._timeStamps.visitCount, event: 'visitCounter' } );
       }
     }
-    // set time values
-    newTime = this._timeStamps.visitCount + '.' + this._timeStamps.firstVisit + '.' + this._timeStamps.currentVisit;
+    // Set time values.
+    newTime = this._timeStamps.visitCount + '.' + this._timeStamps.firstVisit +
+              '.' + this._timeStamps.currentVisit;
 
-    // set time cookie, updated current visit
+    // Set time cookie, updated current visit.
     this._setCookie( this._timeCookieName, newTime, 365 * 2, false );
   },
 
@@ -186,12 +169,12 @@ const sourceCookies = {
 
 
   /**
-  * Check for UTM parameters
-  * @param {string} host - A URL.
-  * @param {string} query - A query string.
-  * @param {string} referrer - A referrer URL.
-  * @returns {Object} visitAttribution
-  */
+   * Check for UTM parameters
+   * @param {string} host - A URL.
+   * @param {string} query - A query string.
+   * @param {string} referrer - A referrer URL.
+   * @returns {Object} visitAttribution
+   */
   parseUTMparameters: function( host, query, referrer ) {
     // Check for gclid or gclsrc
     if ( this._getQueryParameter( query, 'utm_source' ) !== '' ) {
@@ -210,15 +193,15 @@ const sourceCookies = {
 
 
   /**
-  * Check for organic search referral
-  * @param {string} host - A URL.
-  * @param {string} query - A query string.
-  * @param {string} referrer - A referrer URL.
-  * @returns {Object} visitAttribution
-  */
+   * Check for organic search referral
+   * @param {string} host - A URL.
+   * @param {string} query - A query string.
+   * @param {string} referrer - A referrer URL.
+   * @returns {Object} visitAttribution
+   */
   parseOrganicSearch: function( host, query, referrer ) {
     // Referrer must not be the same host
-    if ( this._hostsAreEqual( 'http://' + host, referrer ) === false ) {
+    if ( hostsAreEqual( 'http://' + host, referrer ) === false ) {
 
       // Check for search engine
       const referrerMatch = referrer.match( /^https?:\/\/(.*\.search\.|www\.)?(google|bing|aol|yahoo|ask|comcast).([a-z]+)([\.a-z]{3,5})?\// );
@@ -245,15 +228,16 @@ const sourceCookies = {
 
 
   /**
-  * Check for social media referral
-  * @param {string} host - A URL.
-  * @param {string} query - A query string.
-  * @param {string} referrer - A referrer URL.
-  * @returns {Object} visitAttribution
-  */
+   * Check for social media referral
+   * @param {string} host - A URL.
+   * @param {string} query - A query string.
+   * @param {string} referrer - A referrer URL.
+   * @returns {Object} visitAttribution
+   */
   parseSocialMedia: function( host, query, referrer ) {
     // Referrer must not be the same host
-    if ( typeof referrer === typeof '' && referrer.length > 0 && this._hostsAreEqual( 'http://' + host, referrer ) === false ) {
+    if ( typeof referrer === typeof '' && referrer.length > 0 &&
+         hostsAreEqual( 'http://' + host, referrer ) === false ) {
       // Check for search engine
       const referrerMatch = referrer.match( /^https?:\/\/(www.)?(blogspot\.com|delicious\.com|deviantart\.com|disqus\.com|facebook\.com|faceparty\.com|fc2\.com|flickr\.com|flixster\.com|foursquare\.com|friendfeed\.com|friendster\.com|hi5\.com|linkedin\.com|livejournal\.com|myspace\.com|photobucket\.com|pinterest\.com|plus\.google\.com|reddit\.com|slideshare\.net|smugmug\.com|stumbleupon\.com|t\.co|tumblr\.com|twitter\.com|vimeo\.com|yelp\.com|youtube\.com)($|\/)/ );
       if ( referrerMatch !== null ) {
@@ -276,15 +260,16 @@ const sourceCookies = {
 
 
   /**
-  * Check for website referral
-  * @param {string} host - A URL.
-  * @param {string} query - A query string.
-  * @param {string} referrer - A referrer URL.
-  * @returns {Object} visitAttribution
-  */
+   * Check for website referral
+   * @param {string} host - A URL.
+   * @param {string} query - A query string.
+   * @param {string} referrer - A referrer URL.
+   * @returns {Object} visitAttribution
+   */
   parseReferral: function( host, query, referrer ) {
     // Referrer must not be the same host
-    if ( typeof referrer === typeof '' && referrer.length > 0 && this._hostsAreEqual( 'http://' + host, referrer ) === false ) {
+    if ( typeof referrer === typeof '' && referrer.length > 0 &&
+         hostsAreEqual( 'http://' + host, referrer ) === false ) {
       // Check for search engine
       const referrerMatch = referrer.match( /^https?:\/\/([^\/]+)\/?(.*)$/ );
       if ( referrerMatch !== null ) {
@@ -304,12 +289,12 @@ const sourceCookies = {
 
 
   /**
-  * Check for direct
-  * @param {string} host - A URL.
-  * @param {string} query - A query string.
-  * @param {string} referrer - A referrer URL.
-  * @returns {Object} visitAttribution
-  */
+   * Check for direct
+   * @param {string} host - A URL.
+   * @param {string} query - A query string.
+   * @param {string} referrer - A referrer URL.
+   * @returns {Object} visitAttribution
+   */
   parseDirect: function( host, query, referrer ) {
 
     if ( typeof referrer === typeof '' && referrer.length === 0 ) {
@@ -325,13 +310,13 @@ const sourceCookies = {
   },
 
   /**
-  * Set cookie
-  * @param {string} name - The key for the cookie value.
-  * @param {string|Object} value - The cookie value.
-  * @param {number} days - The lifetime of the cookie in days.
-  * @param {boolean} escapeValue - Whether to escape the value or not.
-  * @returns {Object} Referral
-  */
+   * Set cookie
+   * @param {string} name - The key for the cookie value.
+   * @param {string|Object} value - The cookie value.
+   * @param {number} days - The lifetime of the cookie in days.
+   * @param {boolean} escapeValue - Whether to escape the value or not.
+   * @returns {Object} Referral
+   */
   _setCookie: function( name, value, days, escapeValue ) {
     // Calculate expiration date
     const today = new Date();
@@ -357,10 +342,10 @@ const sourceCookies = {
 
 
   /**
-  * Get cookie
-  * @param {string} name - The key for the cookie value.
-  * @returns {string} The cookie value.
-  */
+   * Get cookie
+   * @param {string} name - The key for the cookie value.
+   * @returns {string} The cookie value.
+   */
   _getCookie: function( name ) {
     // Get cookie value
     let value = ( document.cookie.match( '(^|; )' + name + '=([^;]*)' ) || 0 )[2];
@@ -384,11 +369,11 @@ const sourceCookies = {
 
 
   /**
-  * Get a query parameter value.
-  * @param {string} queryString - A query string.
-  * @param {string} key - The key for the query value.
-  * @returns {string} The query parameter value.
-  */
+   * Get a query parameter value.
+   * @param {string} queryString - A query string.
+   * @param {string} key - The key for the query value.
+   * @returns {string} The query parameter value.
+   */
   _getQueryParameter: function( queryString, key ) {
     const query = queryString.substring( 1 );
     const vars = query.split( '&' );
@@ -403,10 +388,10 @@ const sourceCookies = {
 
 
   /**
-  * Get the query string.
-  * @param {string} fullURL - A URL with query string.
-  * @returns {string} - Just the query string of a full URL.
-  */
+   * Get the query string.
+   * @param {string} fullURL - A URL with query string.
+   * @returns {string} - Just the query string of a full URL.
+   */
   _getQueryString: function( fullURL ) {
     if ( typeof fullURL === typeof '' && fullURL.length > 0 ) {
       const url = document.createElement( 'a' );
@@ -423,34 +408,6 @@ const sourceCookies = {
 
     // Return
     return '?';
-  },
-
-
-  /**
-  * Check if two hosts are the same
-  * @param {string} host1 - A URL.
-  * @param {string} host2 - Another URL.
-  * @returns {boolean} True if the hosts are equal, false otherwise.
-  */
-  _hostsAreEqual: function( host1, host2 ) {
-    let h1 = document.createElement( 'a' );
-    h1.href = host1;
-
-    let h2 = document.createElement( 'a' );
-    h2.href = host2;
-
-    // Check for www
-    h1 = h1.host;
-    if ( h1.substring( 0, 4 ) === 'www.' ) {
-      h1 = h1.substring( 4 );
-    }
-    h2 = h2.host;
-    if ( h2.substring( 0, 4 ) === 'www.' ) {
-      h2 = h2.substring( 4 );
-    }
-
-    // Return
-    return h1 === h2;
   }
 };
 
