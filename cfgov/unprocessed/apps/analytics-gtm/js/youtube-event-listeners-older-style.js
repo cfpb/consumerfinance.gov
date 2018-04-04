@@ -1,10 +1,12 @@
+import { analyticsLog } from './util/analytics-util';
+
 /* LunaMetrics Google Analytics YouTube Tracking
    Uses the YouTube Iframe API to fire events
    to Google Analytics. Supports Google Tag Manager
    and IE8+ and tracks all YouTube videos available
    on the page at the time of loading.
    WARNING: Overwrites older <embed> style players
-   and reloads improperly formatted <iframe> players */
+   and reloads improperly formatted <iframe> players. */
 
 /* Put everything into an IIFE to prevent scope pollution
    and run the script automatically. */
@@ -49,12 +51,12 @@
   };
 
   /**
-  * Process list of potential videos and hand qualified
-  * objects to be uniformly formatted and attach
-  * our events to them
-  *
-  * @param {Array} potentialVideos - Aarray objects.
-  */
+   * Process list of potential videos and hand qualified
+   * objects to be uniformly formatted and attach
+   * our events to them
+   *
+   * @param {Array} potentialVideos - Aarray objects.
+   */
   function digestPotentialVideos( potentialVideos ) {
     for ( let i = 0; i < potentialVideos.length; i++ ) {
 
@@ -69,13 +71,13 @@
   }
 
   /**
-  * Checks if the object has an href that a
-  * YouTube video would have, and returns
-  * true or false if it finds a match
-  *
-  * @param {Object} potentialYouTubeVideo object
-  * @returns {boolean} true or false
-  */
+   * Checks if the object has an href that a
+   * YouTube video would have, and returns
+   * true or false if it finds a match
+   *
+   * @param {Object} potentialYouTubeVideo object
+   * @returns {boolean} true or false
+   */
   function checkIfYouTubeVideo( potentialYouTubeVideo ) {
 
     /* Fallback to '' if there is no src attribute, so our test
@@ -92,15 +94,15 @@
   }
 
   /**
-  * Checks if the YouTube video has all the required parameters for tracking,
-  * and if it does not, it reloads it with the appropriate parameters. It will
-  * reload videos that do not have the correct parameters and destroy old-style
-  * <object> embeds and replace them with an <iframe>
-  * WARNING: This may cause the video to briefly flicker on the page
-  *
-  * @param {Object} youTubeVideo iframe or embed
-  * @returns {Object} video object reference
-  */
+   * Checks if the YouTube video has all the required parameters for tracking,
+   * and if it does not, it reloads it with the appropriate parameters. It will
+   * reload videos that do not have the correct parameters and destroy old-style
+   * <object> embeds and replace them with an <iframe>
+   * WARNING: This may cause the video to briefly flicker on the page
+   *
+   * @param {Object} youTubeVideo iframe or embed
+   * @returns {Object} video object reference
+   */
   function normalizeYouTubeIframe( youTubeVideo ) {
 
     /* Create a fake <a> element to use the HREF apis and extract
@@ -160,13 +162,13 @@
   }
 
   /**
-  * Creates a new Player object for each video
-  * detected on the page and binds to the onStateChange
-  * event emitted  by the YouTube API and checks if we
-  * should emit the event to Google Analytics.
-  *
-  * @param {Object} youTubeIframe object
-  */
+   * Creates a new Player object for each video
+   * detected on the page and binds to the onStateChange
+   * event emitted  by the YouTube API and checks if we
+   * should emit the event to Google Analytics.
+   *
+   * @param {Object} youTubeIframe object
+   */
   function addYouTubeEvents( youTubeIframe ) {
     const YouTubePlayer = window.YT;
     // Create a locally scoped new YT.Player for each iframe
@@ -181,11 +183,11 @@
   }
 
   /**
-  * Function we bind to the onStateChange event from the YouTube API
-  *
-  * @param {Event} evt object
-  * @param {Object} youTubeIframe object
-  */
+   * Function we bind to the onStateChange event from the YouTube API
+   *
+   * @param {Event} evt object
+   * @param {Object} youTubeIframe object
+   */
   function onStateChangeHandler( evt, youTubeIframe ) {
 
     const state = playerStatesIndex[evt.data]; // Determine state text from event number
@@ -209,17 +211,14 @@
   }
 
   /**
-  * Function that fires our event to Google Analytics
-  *
-  * @param {Object} youTubeIframe object
-  * @param {number} state number
-  */
+   * Function that fires our event to Google Analytics.
+   *
+   * @param {Object} youTubeIframe object
+   * @param {number} state number
+   */
   function fireAnalyticsEvent( youTubeIframe, state ) {
-
-    // Send an event to the dataLayer with our event info
-
+    // Send an event to the dataLayer with our event info.
     window.dataLayer.push( {
-
       event: 'YouTube Events',
       action: state,
       label: youTubeIframe.videoTitle,
@@ -249,15 +248,15 @@
   }
 
   /**
-  * Function that checks the state of our iframes attributes
-  * and the latest event emitted by the API to determine
-  * whether we want to fire an event or not. Handles many
-  * wrinkles in YouTube iframe API.
-  *
-  * @param {number} stateIndex number
-  * @param {Object} youTubeIframe object
-  * @returns {boolean} true or false
-  */
+   * Function that checks the state of our iframes attributes
+   * and the latest event emitted by the API to determine
+   * whether we want to fire an event or not. Handles many
+   * wrinkles in YouTube iframe API.
+   *
+   * @param {number} stateIndex number
+   * @param {Object} youTubeIframe object
+   * @returns {boolean} true or false
+   */
   function checkIfEventShouldFire( stateIndex, youTubeIframe ) {
 
     if ( stateIndex === 0 ) {
@@ -292,13 +291,13 @@
   }
 
   /**
-  * Adjusts the iframes playback attributes
-  * depending on the state of the player and
-  * the event emitted from the YouTube API
-  *
-  * @param {number} stateIndex number
-  * @param {Object} youTubeIframe object
-  */
+   * Adjusts the iframes playback attributes
+   * depending on the state of the player and
+   * the event emitted from the YouTube API
+   *
+   * @param {number} stateIndex number
+   * @param {Object} youTubeIframe object
+   */
   function interpretState( stateIndex, youTubeIframe ) {
 
     /* Playlists reference NEXT video in the playlist
@@ -334,15 +333,15 @@
   }
 
   /**
-  * Utility: IE 8+, Firefox, Opera, Chrome, Safari XDR object
-  *
-  * modified from code courtesy github user xeoncross
-  * https://gist.github.com/Xeoncross/7663273
-  * @param {string} url - A URL
-  * @param {Function} callback - A callback function.
-  * @param {*} data - Some arbitrary data to send.
-  * @param {null} x - XHR class constructor.
-  */
+   * Utility: IE 8+, Firefox, Opera, Chrome, Safari XDR object
+   *
+   * modified from code courtesy github user xeoncross
+   * https://gist.github.com/Xeoncross/7663273
+   * @param {string} url - A URL
+   * @param {Function} callback - A callback function.
+   * @param {*} data - Some arbitrary data to send.
+   * @param {null} x - XHR class constructor.
+   */
   function ajax( url, callback, data, x ) {
     /* Modified to remove headers causing CORS errors
        Modified to use XDomainRequest
@@ -373,7 +372,7 @@
       }
     } catch ( e ) {
       // If we can't invoke our call, log it to console
-      console.log( e.message );
+      analyticsLog( e.message );
     }
   }
 } )( document, window );
