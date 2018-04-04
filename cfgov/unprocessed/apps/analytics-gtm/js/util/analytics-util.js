@@ -1,4 +1,3 @@
-
 /**
  * Check if an element exists on the page, and if it does, add listeners.
  * @param {[type]}   elem     [description]
@@ -35,7 +34,7 @@ function track( event, action, label ) {
     label: label
   } );
   analyticsLog( event, action, label );
-};
+}
 
 /**
  * Check if two hosts are the same.
