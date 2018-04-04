@@ -7,12 +7,10 @@ Feature: Pagination
   Background:
     Given I goto a browse filterable page
 
-  @skip
   Scenario: Navigate to the next page
     When I click on the next button
     Then the page url should contain "page=2"
 
-  @skip
   Scenario: Navigate to the previous page
     When I click on the next button
     And I click on the previous button again

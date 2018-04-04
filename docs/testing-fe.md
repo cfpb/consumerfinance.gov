@@ -18,7 +18,7 @@ and/or to run it in "fast" mode:
 gulp test:acceptance --suite=wagtail-admin ( runs just the wagtail-admin suite )
 gulp test:acceptance --specs=multi-select.feature ( runs just the multi-select feature )
 gulp test:acceptance --tags=@mobile ( runs all scenarios tagged with @mobile )
-gulp test:acceptance --fast ( runs the tests without recreating the virtual environment )
+gulp test:acceptance --recreate ( runs the tests and recreates the virtual environment )
 ```
 
 The same options can be used with tox (--omitted):
@@ -27,7 +27,6 @@ The same options can be used with tox (--omitted):
 tox -e acceptance suite=wagtail-admin
 tox -e acceptance specs=multi-select.feature
 tox -e acceptance tags=@mobile
-tox -e acceptance-fast
 ```
 
 These tests will run on their own server; you do not need to be running your development server.
