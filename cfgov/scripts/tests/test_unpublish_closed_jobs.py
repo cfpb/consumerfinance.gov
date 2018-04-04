@@ -176,12 +176,14 @@ class UnpublishClosedJobsTestCase(TestCase):
             self, request_mock):
         self.assertTrue(self.page.live)
 
+        def side_effect(*args, **kwargs):
+            if str(args[0]).startswith('http://www.test.com'):
+                return self.open_usajobs_page()
+            return self.api_closed_job_response('1')
+
         self.create_job_link('1', self.public_type)
         self.create_job_link('2', self.status_type)
-        request_mock.side_effect = [
-            self.api_closed_job_response('1'),
-            self.open_usajobs_page()
-        ]
+        request_mock.side_effect = side_effect
 
         unpublish_closed_jobs.run()
         self.page.refresh_from_db()
@@ -194,12 +196,14 @@ class UnpublishClosedJobsTestCase(TestCase):
             self, request_mock):
         self.assertTrue(self.page.live)
 
+        def side_effect(*args, **kwargs):
+            if str(args[0]).startswith('http://www.test.com'):
+                return self.closed_usajobs_page()
+            return self.api_closed_job_response('1')
+
         self.create_job_link('1', self.public_type)
         self.create_job_link('2', self.status_type)
-        request_mock.side_effect = [
-            self.api_closed_job_response('1'),
-            self.closed_usajobs_page()
-        ]
+        request_mock.side_effect = side_effect
 
         unpublish_closed_jobs.run()
         self.page.refresh_from_db()
