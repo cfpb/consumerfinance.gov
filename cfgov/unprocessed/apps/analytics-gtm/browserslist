@@ -1,0 +1,10 @@
+# Browsers that Google Analytics Tag manager custom tags support.
+# This file (browserlist) is picked up by babel-preset-env (in webpack config).
+# See https://github.com/browserslist/browserslist#config-file
+#
+# browserslist-stats.json
+# is the "my stats" file and is generated via the command `npx browserslist-ga`.
+# See https://github.com/browserslist/browserslist-ga
+
+> 0.5% in my stats
+> 5% in US

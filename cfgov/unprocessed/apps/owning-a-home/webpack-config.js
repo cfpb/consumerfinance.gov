@@ -43,7 +43,7 @@ const COMMON_MODULE_CONFIG = {
           targets: {
             browsers: BROWSER_LIST.LAST_2_IE_9_UP
           },
-          debug: true
+          debug: false
         } ] ]
       }
     }
