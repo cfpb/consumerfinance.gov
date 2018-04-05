@@ -87,12 +87,11 @@ function testUnitScripts( cb ) {
  */
 function testAcceptanceBrowser() {
   const params = minimist( process.argv.slice( 3 ) ) || {};
-  const toxParams = [ '-e' ];
+  const toxParams = [ '-e', 'acceptance' ];
 
-  if ( params.fast ) {
-    toxParams.push( 'acceptance-fast' );
-  } else {
-    toxParams.push( 'acceptance' );
+  if ( params.recreate ) {
+    delete params.recreate;
+    toxParams.push( '-r' );
   }
 
   Object.keys( params ).forEach( key => {

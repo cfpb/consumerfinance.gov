@@ -122,6 +122,20 @@ urlpatterns = [
         name='mortgage-estimate'
     ),
 
+    # Temporarily serve sheer version of OAH Journey sources page.
+    # TODO: remove once page is migrated into Wagtail.
+    flagged_url('OAH_JOURNEY_SHEER_SOURCE_PAGE',
+        r'^owning-a-home/process/sources(?P<path>.*)$',
+        lambda req, path: SheerTemplateView.as_view(
+            template_engine='owning-a-home',
+            template_name='process/sources{}index.html'.format(path or '/')
+        )(req),
+        fallback=lambda req, path: ServeView.as_view()(
+            req, 'owning-a-home/sources{}'.format(path or '/')
+        ),
+    ),
+    # END TODO
+
     # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
     # TODO: change to redirects after 2018 homebuying campaign.
     flagged_url('OAH_JOURNEY', r'^owning-a-home/process/(?P<path>.*)$',
