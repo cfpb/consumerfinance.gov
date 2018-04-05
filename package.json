@@ -95,6 +95,7 @@
     "protractor": "5.3.0",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "protractor-cucumber-framework": "4.2.0",
+    "protractor-retry": "1.1.9",
     "selenium-webdriver": "3.6.0",
     "snyk": "1.70.2",
     "wcag": "0.3.0"
