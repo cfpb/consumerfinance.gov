@@ -51,5 +51,5 @@ gulp.task( 'lint',
     'lint:build',
     'lint:tests',
     'lint:scripts'
-  ) 
+  )
 );
