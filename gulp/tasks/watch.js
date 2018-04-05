@@ -3,10 +3,18 @@
 
 const gulp = require( 'gulp' );
 const config = require( '../config' );
+const paths = require( '../../config/environment' ).paths;
 
 gulp.task( 'watch',
   gulp.series( 'browsersync', () => {
-    gulp.watch( config.scripts.src, [ 'scripts' ] );
-    gulp.watch( [ config.styles.cwd + '/**/*.less', config.legacy.cwd + '/*/less/*.less' ], [ 'styles' ] );
+    gulp.watch( [
+      config.scripts.src,
+      paths.unprocessed + '/apps/**/js/**/*.js'
+    ], [ 'scripts' ] );
+    gulp.watch( [
+      config.styles.cwd + '/**/*.less',
+      config.legacy.cwd + '/*/less/*.less',
+      paths.unprocessed + '/apps/**/css/**/*.less'
+    ], [ 'styles' ] );
   } )
 );
