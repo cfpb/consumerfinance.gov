@@ -61,7 +61,7 @@
     "imagemin-svgo": "5.2.4",
     "is-reachable": "2.3.3",
     "lightbox2": "2.10.0",
-    "localtunnel": "1.8.3",
+    "localtunnel": "1.9.0",
     "lodash.throttle": "4.1.1",
     "postcss-unmq": "1.0.2",
     "psi": "3.1.0",
@@ -74,7 +74,8 @@
     "vinyl-named": "1.1.0",
     "webpack": "4.3.0",
     "webpack-stream": "4.0.3",
-    "xdr": "0.5.3"
+    "xdr": "0.5.3",
+    "snyk": "^1.71.0"
   },
   "devDependencies": {
     "ansi-colors": "1.1.0",
@@ -97,12 +98,13 @@
     "protractor-cucumber-framework": "4.2.0",
     "protractor-retry": "1.1.9",
     "selenium-webdriver": "3.6.0",
-    "snyk": "1.70.2",
     "wcag": "0.3.0"
   },
   "scripts": {
     "test": "snyk test",
-    "postinstall": "node scripts/npm/apps-install"
+    "postinstall": "node scripts/npm/apps-install",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "snyk": true
 }
