@@ -38,7 +38,8 @@ const COMMON_MODULE_CONFIG = {
         presets: [ [ 'babel-preset-env', {
           targets: {
             browsers: BROWSER_LIST.LAST_2_IE_9_UP
-          }
+          },
+          debug: false
         } ] ]
       }
     }
