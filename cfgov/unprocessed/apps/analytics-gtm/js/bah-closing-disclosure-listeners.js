@@ -1,5 +1,5 @@
 // TODO: Remove $.
-import $ from '$';
+import $ from 'jquery';
 
 import {
   delay,
@@ -21,8 +21,8 @@ const OAHCDAnalytics = ( function( $ ) {
   } );
 
   $( '.form-explainer_page-buttons button' ).click( function() {
-    let currentPage = 'Page ' + $( '.form-explainer_page-link.current-page' ).attr( 'data-page' ),
-        action = 'Next Page button clicked';
+    const currentPage = 'Page ' + $( '.form-explainer_page-link.current-page' ).attr( 'data-page' );
+    let action = 'Next Page button clicked';
     if ( $( this ).hasClass( 'prev' ) ) {
       action = 'Previous Page button clicked';
     }
@@ -31,15 +31,15 @@ const OAHCDAnalytics = ( function( $ ) {
   } );
 
   $( '.expandable_target' ).click( function() {
-    let ele = $( this ),
-        tab = $( this ).closest( '.explain' ).find( '.active-tab' ),
-        tabText = tab.find( '.tab-label' ).text().trim();
+    const ele = $( this );
+    const tab = $( this ).closest( '.explain' ).find( '.active-tab' );
+    const tabText = tab.find( '.tab-label' ).text().trim();
     delay(
       function() {
-        let state = ele.attr( 'aria-pressed' ),
-            action = 'Expandable collapsed - ' + tabText,
-            label = $( '<p>' + ele.find( '.expandable_label' ).html() + '</p>' ),
-            text = '';
+        const state = ele.attr( 'aria-pressed' );
+        let action = 'Expandable collapsed - ' + tabText;
+        const label = $( '<p>' + ele.find( '.expandable_label' ).html() + '</p>' );
+        let text = '';
 
         label.find( 'span' ).empty();
         text = label.text().trim();
@@ -52,12 +52,12 @@ const OAHCDAnalytics = ( function( $ ) {
   } );
 
   $( '.image-map_overlay' ).click( function() {
-    let href = $( this ).attr( 'href' ),
-        text = $( this ).text().trim();
+    const href = $( this ).attr( 'href' );
+    const text = $( this ).text().trim();
     delay(
       function() {
-        let action = 'Image Overlay click - expandable collapsed',
-            target = $( href );
+        let action = 'Image Overlay click - expandable collapsed';
+        const target = $( href );
         if ( target.hasClass( 'expandable__expanded' ) ) {
           action = 'Image Overlay click - expandable expanded';
         }
