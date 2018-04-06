@@ -30,7 +30,7 @@ const OAHCDAnalytics = ( function( $ ) {
 
   } );
 
-  $( '.expandable_target' ).click( function() {
+  $( '.o-expandable_target' ).click( function() {
     const ele = $( this );
     const tab = $( this ).closest( '.explain' ).find( '.active-tab' );
     const tabText = tab.find( '.tab-label' ).text().trim();
@@ -38,7 +38,7 @@ const OAHCDAnalytics = ( function( $ ) {
       function() {
         const state = ele.attr( 'aria-pressed' );
         let action = 'Expandable collapsed - ' + tabText;
-        const label = $( '<p>' + ele.find( '.expandable_label' ).html() + '</p>' );
+        const label = $( '<p>' + ele.find( '.o-expandable_label' ).html() + '</p>' );
         let text = '';
 
         label.find( 'span' ).empty();
@@ -58,7 +58,7 @@ const OAHCDAnalytics = ( function( $ ) {
       function() {
         let action = 'Image Overlay click - expandable collapsed';
         const target = $( href );
-        if ( target.hasClass( 'expandable__expanded' ) ) {
+        if ( target.hasClass( 'o-expandable__expanded' ) ) {
           action = 'Image Overlay click - expandable expanded';
         }
         track( 'OAH Closing Disclosure Interaction', action, text );
