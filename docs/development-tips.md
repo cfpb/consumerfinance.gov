@@ -18,6 +18,12 @@ The structure looks like this:
   their app-specific assets should be built. This configuration appears in
   `cfgov/unprocessed/apps/[project namespace]/webpack-config.js`
 
+#### Browserlist
+- Apps may include a
+  [browserlist config](https://github.com/browserslist/browserslist#config-file)
+  file, which is automatically picked up by `babel-preset-env` inside the
+  webpack config, if no `browsers` option is supplied.
+
 #### Templates
 - Apps use a jinja template that extends the `base.html`
   template used by the rest of the site.
