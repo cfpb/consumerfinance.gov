@@ -303,8 +303,19 @@ function spawnProtractor( ) {
   }
 }
 
-gulp.task( 'test', [ 'lint', 'test:unit' ] );
 gulp.task( 'test:acceptance', testAcceptanceBrowser );
 gulp.task( 'test:acceptance:protractor', spawnProtractor );
-gulp.task( 'test:unit', [ 'test:unit:scripts' ] );
 gulp.task( 'test:unit:scripts', testUnitScripts );
+
+gulp.task( 'test:unit',
+  gulp.parallel(
+    'test:unit:scripts'
+  )
+);
+
+gulp.task( 'test',
+  gulp.parallel(
+    'lint',
+    'test:unit'
+  )
+);
