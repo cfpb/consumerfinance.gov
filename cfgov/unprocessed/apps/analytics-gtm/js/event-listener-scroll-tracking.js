@@ -89,13 +89,13 @@ function trackLocation() {
   }
 
   // If user has hit 25%, currently disabled.
-  // trackSpecificLocation( bottomPos, 25 );
+  trackSpecificLocation( bottomPos, 25 );
 
   // If user has hit 50%.
   trackSpecificLocation( bottomPos, 50 );
 
   // If user has hit 75%, currently disabled.
-  // trackSpecificLocation( bottomPos, 75 );
+  trackSpecificLocation( bottomPos, 75 );
 
   // If user has hit 100%.
   trackSpecificLocation( bottomPos, 100 );
