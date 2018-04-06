@@ -82,169 +82,178 @@ Find a housing counselor
             </p>
         </div><!-- end .cfpb_hud_hca_api_print_text -->
 
-            <div class="hud_hca_api_print border">
-                <div class="hud_hca_api_print_full">
-                    <div id="hud_hca_api_interactions_container" class="hud_hca_api_interactions">
-                        <div class="hud_hca_api_grid_twothird clearfix hud_hca_api_print_hide">
-                            <div id="hud_hca_api_form_container" class="hud_hca_api_form_container col">
-                                <div id="hud_hca_api_form" class="hud_hca_api_form">
-                                    <form action="." method="get">
-                                        <label for="hud_hca_api_query">Search by ZIP code:</label>
-                                        <input type="text" name="zipcode" id="hud_hca_api_query" value="{{ zipcode|default:'' }}" placeholder="Please enter a 5-digit ZIP code">
-                                        <button class="hud_hca_api_form_button">Find a counselor</button>
-                                    </form>
-                                    <a class="cfpb_visually_hide" href="#hud_hca_api_results_meta_container">Skip to results</a>
-                                </div>
-                                <div id="hud_hca_api_more_info_container" class="hud_hca_api_more_info">
-                                    <p>
-                                        This tool is open sourced on
-                                        <a href="https://github.com/cfpb/django-hud">GitHub</a>
-                                        and powered by <a href="https://data.hud.gov/housing_counseling.html">HUD's</a>
-                                        official list of housing counselors.
-                                        We encourage you to leverage it in your own applications.
-                                    </p>
-
-                                    <p>
-                                        If you notice errors in the housing counselor data,
-                                        contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
-                                    </p>
-                                </div><!-- end .cfpb_hud_hca_api_more_info -->
-                            </div><!-- end .hud_hca_api_form_container -->
-
-                            <div id="hud_hca_api_map_container" class="hud_hca_api_map col">
-                                <div id="hud_hca_api_map_canvas" ></div>
-                            </div><!-- end .hud_hca_api_map -->
-                        </div><!-- end .hud_hca_api_grid_twothird -->
-
-                        {% if zipcode %}
-                        <div id="hud_hca_api_results_container" class="hud_hca_api_results">
-                            {% if not zipcode_valid %}
-                            <div id="hud_hca_api_message" role="alert" class="hud_hca_api_message">
-                                <p>Sorry, you have entered an invalid zip code.</p>
-                                <p>Please enter a valid five-digit ZIP code above.</p>
+        <div class="hud_hca_api_print border">
+            <div class="hud_hca_api_print_full">
+                <div id="hud_hca_api_interactions_container" class="hud_hca_api_interactions">
+                    <div class="hud_hca_api_grid_twothird clearfix hud_hca_api_print_hide">
+                        <div id="hud_hca_api_form_container" class="hud_hca_api_form_container col">
+                            <div id="hud_hca_api_form" class="hud_hca_api_form">
+                                <form action="." method="get">
+                                    <label for="hud_hca_api_query">Search by ZIP code:</label>
+                                    <input type="text" name="zipcode" id="hud_hca_api_query" value="{{ zipcode|default:'' }}" placeholder="Please enter a 5-digit ZIP code">
+                                    <button class="hud_hca_api_form_button">Find a counselor</button>
+                                </form>
+                                <a class="cfpb_visually_hide" href="#hud_hca_api_results_meta_container">Skip to results</a>
                             </div>
-                            {% else %}
-                            <div id="hud_hca_api_results_meta_container" class="hud_hca_api_results_meta clearfix">
-                                <div id="hud_hca_api_results_info" class="hud_hca_api_results_info hud_hca_api_print_hide clearfix">
-                                    <div class="hud_hca_api_results_total">
-                                        <p>Displaying the {{ api_json.counseling_agencies|length }} locations closest to ZIP code <span class="hud_hca_api_search_zip">{{ zipcode|escape }}</span></p>
-                                    </div><!-- end .hud_hca_api_results_total -->
-                                    <div class="hud_hca_api_results_actions">
-                                        <p>
-                                            <span class="icon-print"></span>
-                                            <span class="hud_hca_api_results_print"></span>
-                                            <span class="icon-save"></span>
-                                            <span class="hud_hca_api_results_save">
-                                                <a id="generate-pdf-link"
-                                                href="{{ pdf_url }}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="icon-link icon-link__download">
+                            <div id="hud_hca_api_more_info_container" class="hud_hca_api_more_info">
+                                <p>
+                                    This tool is open sourced on
+                                    <a href="https://github.com/cfpb/django-hud">GitHub</a>
+                                    and powered by <a href="https://data.hud.gov/housing_counseling.html">HUD's</a>
+                                    official list of housing counselors.
+                                    We encourage you to leverage it in your own applications.
+                                </p>
+
+                                <p>
+                                    If you notice errors in the housing counselor data,
+                                    contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
+                                </p>
+                            </div><!-- end .cfpb_hud_hca_api_more_info -->
+                        </div><!-- end .hud_hca_api_form_container -->
+
+                        <div id="hud_hca_api_map_container" class="hud_hca_api_map col">
+                            <div id="hud_hca_api_map_canvas" ></div>
+                        </div><!-- end .hud_hca_api_map -->
+                    </div><!-- end .hud_hca_api_grid_twothird -->
+
+                    {% if zipcode %}
+                    <div id="hud_hca_api_results_container" class="hud_hca_api_results">
+                        {% if not zipcode_valid %}
+                        <div id="hud_hca_api_message" role="alert" class="hud_hca_api_message">
+                            <p>Sorry, you have entered an invalid zip code.</p>
+                            <p>Please enter a valid five-digit ZIP code above.</p>
+                        </div>
+                        {% else %}
+                        <div id="hud_hca_api_results_meta_container" class="hud_hca_api_results_meta clearfix">
+                            <div id="hud_hca_api_results_info" class="hud_hca_api_results_info hud_hca_api_print_hide clearfix">
+                                <div class="hud_hca_api_results_total">
+                                    <p>Displaying the {{ api_json.counseling_agencies|length }} locations closest to ZIP code <span class="hud_hca_api_search_zip">{{ zipcode|escape }}</span></p>
+                                </div><!-- end .hud_hca_api_results_total -->
+                                <div class="hud_hca_api_results_actions">
+                                    <p>
+                                        <span class="icon-print"></span>
+                                        <span class="hud_hca_api_results_print"></span>
+                                        <span class="icon-save"></span>
+                                        <span class="hud_hca_api_results_save">
+                                            <a id="generate-pdf-link"
+                                            href="{{ pdf_url }}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="icon-link icon-link__download">
                                                 <span class="icon-link_text">Save list as PDF</span>
-                                            </a></span>
-                                        </p>
-                                    </div><!-- end .hud_hca_api_results_actions -->
-                                </div><!-- end .hud_hca_api_results_info -->
-                                <div id="hud_hca_api_results_list_container" class="hud_hca_api_results_list">
-                                    <div id="hud_hca_api_the_results" class="hud_hca_api_the_results_list_container">
-                                        <table id="hud_hca_api_results_table" class="hud_hca_api_results_listing hud_hca_api_print">
-                                            <thead class="hud_hca_api_print_hide">
-                                                <tr>
-                                                    <th scope="col" class="hud_hca_api_titles hud_hca_api_titles_left">Agency</th>
-                                                    <th scope="col" class="hud_hca_api_titles hud_hca_api_titles_middle">Services</th>
-                                                    <th scope="col" class="hud_hca_api_titles hud_hca_api_titles_right">Distance</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for counselor in api_json.counseling_agencies %}
-                                                {% with valid_url=counselor.weburl|is_url signed_url=counselor.weburl|signed_redirect %}
-                                                <tr class="hud_hca_api_result" id="hud-result-{{ forloop.counter|stringformat:"02d" }}">
-                                                    <td class="hud_hca_api_result hud_hca_api_counselors_td">
-                                                        <div class="hud_hca_api_num">{{ forloop.counter }}.</div>
-                                                        <div class="hud_hca_api_counselor_info_container">
-                                                            <div class="hud_hca_api_counselor">
-                                                                {% if valid_url %}<a href="{{ signed_url }}" class="icon-link icon-link__external-link">{% endif %}
-                                                                    <span class="icon-link_text">{{ counselor.nme }}</span>
-                                                                    {% if valid_url %}</a>{% endif %}
-                                                                </div>
-                                                                <div class="hud_hca_api_counselor_address">
-                                                                    <span class="hud_hca_api_adr">{{ counselor.adr1 }}</span>
-                                                                    {% if counselor.adr2 and counselor.adr2 != ' '  %}
+                                            </a>
+                                        </span>
+                                    </p>
+                                </div><!-- end .hud_hca_api_results_actions -->
+                            </div><!-- end .hud_hca_api_results_info -->
+                            <div id="hud_hca_api_results_list_container" class="hud_hca_api_results_list">
+                                <div id="hud_hca_api_the_results" class="hud_hca_api_the_results_list_container">
+                                    <table id="hud_hca_api_results_table" class="hud_hca_api_results_listing hud_hca_api_print">
+                                        <thead class="hud_hca_api_print_hide">
+                                            <tr>
+                                                <th scope="col" class="hud_hca_api_titles hud_hca_api_titles_left">Agency</th>
+                                                <th scope="col" class="hud_hca_api_titles hud_hca_api_titles_middle">Services</th>
+                                                <th scope="col" class="hud_hca_api_titles hud_hca_api_titles_right">Distance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for counselor in api_json.counseling_agencies %}
+                                            {% with valid_url=counselor.weburl|is_url signed_url=counselor.weburl|signed_redirect %}
+                                            <tr class="hud_hca_api_result" id="hud-result-{{ forloop.counter|stringformat:"02d" }}">
+                                                <td class="hud_hca_api_result hud_hca_api_counselors_td">
+                                                    <div class="hud_hca_api_num">{{ forloop.counter }}.</div>
+                                                    <div class="hud_hca_api_counselor_info_container">
+                                                        <div class="hud_hca_api_counselor">
+                                                            {% if valid_url %}<a href="{{ signed_url }}" class="icon-link icon-link__external-link">{% endif %}
+                                                            <span class="icon-link_text">{{ counselor.nme }}</span>
+                                                            {% if valid_url %}</a>{% endif %}
+                                                        </div>
+                                                        <div class="hud_hca_api_counselor_address">
+                                                            <span class="hud_hca_api_adr">{{ counselor.adr1 }}
+                                                                {% if counselor.adr2 and counselor.adr2 != ' '  %}
                                                                 </br>{{ counselor.adr2 }}
                                                                 {% endif %}
-                                                                <span class="hud_hca_api_region">{{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}</span>
-                                                            </div>
-                                                            <div class="hud_hca_api_counselor_meta">
-                                                                <span class="hud_hca_api_results_listing_title">Website: <span class="hud_hca_api_site">
-                                                                    {% if valid_url %}<a href="{{ signed_url }}" class="icon-link icon-link__external-link">{% endif %}
-                                                                        <span class="icon-link_text">{{ counselor.weburl }}</span>
-                                                                        {% if valid_url %}</a>{% endif %}
-                                                                    </span>
-                                                                    <span class="hud_hca_api_results_listing_title">Phone: <span class="hud_hca_api_tel">{{ counselor.phone1 }}</span></span>
-                                                                    <span class="hud_hca_api_results_listing_title">Email Address: <span class="hud_hca_api_email">{{ counselor.email }}</span></span>
-                                                                    <span class="hud_hca_api_results_listing_title">Languages: <span class="hud_hca_api_lang">{{ counselor.languages|join:', ' }}</span></span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="hud_hca_api_result hud_hca_api_services_td">
-                                                            <div class="hud_hca_api_services">
-                                                                <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span>
-                                                                <span class="hud_hca_api_serv">
-                                                                    {% for service in counselor.services %}
-                                                                    <span class="hud_hca_api_serv_item">{{ service }}</span>
-                                                                    {% endfor %}
-                                                                </span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="hud_hca_api_result hud_hca_api_distances_td">
-                                                            <div class="hud_hca_api_distance">
-                                                                <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Distance</span>
-                                                                <span class="hud_hca_api_the_distance"><span class="hud_hca_api_miles">{{ counselor.distance|floatformat }}</span> miles</span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    {% endwith %}
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table><!-- end .hud_hca_api_results_listing -->
-                                        </div>
-                                        <div class="show-hide default-hidden hud_hca_api_print_hide hud_hca_api_pras">
-                                          <div>
-                                            <h3>Paperwork Reduction Act statement</h3>
+                                                            </span>
+                                                            <span class="hud_hca_api_region">{{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}</span>
+                                                        </div>
+                                                        <div class="hud_hca_api_counselor_meta">
+                                                            <span class="hud_hca_api_results_listing_title">Website: <span class="hud_hca_api_site">
+                                                                {% if valid_url %}<a href="{{ signed_url }}" class="icon-link icon-link__external-link">{% endif %}
+                                                                <span class="icon-link_text">{{ counselor.weburl }}</span>
+                                                                {% if valid_url %}</a>{% endif %}
+                                                            </span>
+                                                            <span class="hud_hca_api_results_listing_title">Phone: <span class="hud_hca_api_tel">{{ counselor.phone1 }}</span></span>
+                                                            <span class="hud_hca_api_results_listing_title">Email Address: <span class="hud_hca_api_email">{{ counselor.email }}</span></span>
+                                                            <span class="hud_hca_api_results_listing_title">Languages: <span class="hud_hca_api_lang">{{ counselor.languages|join:', ' }}</span></span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="hud_hca_api_result hud_hca_api_services_td">
+                                                    <div class="hud_hca_api_services">
+                                                        <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span>
+                                                        <span class="hud_hca_api_serv">
+                                                            {% for service in counselor.services %}
+                                                            <span class="hud_hca_api_serv_item">{{ service }}</span>
+                                                            {% endfor %}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td class="hud_hca_api_result hud_hca_api_distances_td">
+                                                    <div class="hud_hca_api_distance">
+                                                        <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Distance</span>
+                                                        <span class="hud_hca_api_the_distance"><span class="hud_hca_api_miles">{{ counselor.distance|floatformat }}</span> miles</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endwith %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table><!-- end .hud_hca_api_results_listing -->
+                                </div>
+                                <div class="show-hide default-hidden hud_hca_api_print_hide hud_hca_api_pras">
+                                    <div>
+                                        <h3>Paperwork Reduction Act statement</h3>
 
-                                            <p>According to the Paperwork Reduction Act of 1995, an agency may not conduct or sponsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number.  The OMB control number for this collection is <a href="https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025">3170-0025</a>. It expires on 04/30/2016.  Using this tool to generate a list of HUD-Approved Housing Counseling Agencies is voluntary however, if you are an entity subject to 12 CFR § 1024 (78 FR 6856 (Jan. 31, 2013)), you are required to provide this list as specified in the regulation. Comments regarding this collection of information, including suggestions for improving the usefulness of the information, or suggestions for reducing the burden to respond to this collection should be submitted to Bureau at the Consumer Financial Protection Bureau (Attention:  PRA Office), 1700 G Street NW, Washington, DC 20552, or by email to <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.</p>
-                                          </div>
-                                        </div><!-- end .show-hide-mod default-hidden hud_hca_api_print_hide -->
-                                    </div><!-- end .hud_hca_api_results_list -->
-                                </div><!-- end .hud_hca_api_results_meta -->
-                                {% endif %}
-                            </div><!-- end .hud_hca_api_results -->
-                        </div><!-- end .hud_hca_api_interactions -->
+                                        <p>
+                                            According to the Paperwork Reduction Act of 1995, an agency may not conduct or sponsor,
+                                            and a person is not required to respond to a collection of information unless it displays a valid OMB control number.
+                                            The OMB control number for this collection is <a href="https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025">3170-0025</a>.
+                                            It expires on 04/30/2016.  Using this tool to generate a list of HUD-Approved Housing Counseling Agencies is voluntary however,
+                                            if you are an entity subject to 12 CFR § 1024 (78 FR 6856 (Jan. 31, 2013)), you are required to provide this list as specified in the regulation.
+                                            Comments regarding this collection of information, including suggestions for improving the usefulness of the information,
+                                            or suggestions for reducing the burden to respond to this collection should be submitted
+                                            to Bureau at the Consumer Financial Protection Bureau (Attention:  PRA Office), 1700 G Street NW, Washington, DC 20552,
+                                            or by email to <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.
+                                        </p>
+                                    </div>
+                                </div><!-- end .show-hide-mod default-hidden hud_hca_api_print_hide -->
+                            </div><!-- end .hud_hca_api_results_list -->
+                        </div><!-- end .hud_hca_api_results_meta -->
                         {% endif %}
+                    </div><!-- end .hud_hca_api_results -->
+                    {% endif %}
+                </div><!-- end .hud_hca_api_interactions -->
+            </div><!-- end .hud_hca_api_print_full -->
+        </div><!-- end .hud_hca_api_print border -->
+    </article>
+</section>
+{% endblock content %}
 
-                    </div><!-- end .hud_hca_api_print_full -->
-                </div><!-- end .hud_hca_api_print border -->
-            </article>
-        </section>
+{% block app_css %}
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+<link href='{% static 'hud/hud.css' %}' rel='stylesheet' />
+<link href='{% static 'hud/hud_print.css' %}' rel='stylesheet' />
+{% endblock %}
 
-        {% endblock content %}
+{% block app_js %}
+<script type='text/javascript' src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+<script>
+document.agc_base="/static/nemo/_/img/hud_gmap/agc_";
+</script>
 
-        {% block app_css %}
-        <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
-        <link href='{% static 'hud/hud.css' %}' rel='stylesheet' />
-        <link href='{% static 'hud/hud_print.css' %}' rel='stylesheet' />
-        {% endblock %}
-
-        {% block app_js %}
-        <script type='text/javascript' src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-        <script>
-        document.agc_base="/static/nemo/_/img/hud_gmap/agc_";
-        </script>
-
-        <script type='text/javascript'>
-        var hud_data = JSON.parse("{{ api_json|jsonify|escapejs }}"),
-        mapbox_access_token = "{{ mapbox_access_token }}";
-        </script>
-        <script type='text/javascript' src='{% static 'hud/hud.js' %}'></script>
-
-        {% endblock %}
+<script type='text/javascript'>
+var hud_data = JSON.parse("{{ api_json|jsonify|escapejs }}"),
+mapbox_access_token = "{{ mapbox_access_token }}";
+</script>
+<script type='text/javascript' src='{% static 'hud/hud.js' %}'></script>
+{% endblock %}
