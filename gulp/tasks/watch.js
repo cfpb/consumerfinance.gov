@@ -30,7 +30,7 @@ gulp.task( 'watch',
       paths.unprocessed + '/css/**/*.less',
       paths.unprocessed + '/apps/**/css/**/*.less',
       paths.legacy + '/*/less/*.less'
-    ], gulp.parallel( 'scripts' ) );
+    ], gulp.parallel( 'styles' ) );
     _addChangeListener( cssWatcher );
   } )
 );
