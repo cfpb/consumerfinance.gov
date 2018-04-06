@@ -9,6 +9,7 @@ const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
+  cache: true,
   parallel: true,
   uglifyOptions: {
     ie8: false,

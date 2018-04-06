@@ -41,6 +41,7 @@ const COMMON_MODULE_CONFIG = {
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
+  cache: true,
   parallel: true,
   uglifyOptions: {
     ie8: false,
@@ -59,7 +60,7 @@ const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
   name: COMMON_BUNDLE_NAME
 } );
 
-const STATS_CONFIG  = {
+const STATS_CONFIG = {
   stats: {
     entrypoints: false
   }
@@ -141,7 +142,7 @@ const devConf = {
   devtool: 'inline-source-map',
   mode: 'development',
   module: COMMON_MODULE_CONFIG,
-  plugins: [],
+  plugins: []
 };
 
 const configExports = {
