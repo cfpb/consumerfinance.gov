@@ -9,6 +9,7 @@ const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
+  cache: true,
   parallel: true,
   uglifyOptions: {
     ie8: false,
@@ -38,11 +39,17 @@ const COMMON_MODULE_CONFIG = {
           targets: {
             browsers: BROWSER_LIST.LAST_2_IE_9_UP
           },
-          debug: true
+          debug: false
         } ] ]
       }
     }
   } ]
+};
+
+const STATS_CONFIG  = {
+  stats: {
+    entrypoints: false
+  }
 };
 
 const conf = {
@@ -55,7 +62,8 @@ const conf = {
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  ...STATS_CONFIG
 };
 
 module.exports = { conf };
