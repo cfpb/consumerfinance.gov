@@ -31,8 +31,7 @@ const COMMON_MODULE_CONFIG = {
         presets: [ [ 'babel-preset-env', {
           targets: {
             browsers: BROWSER_LIST.LAST_2_IE_9_UP
-          },
-          debug: true
+          }
         } ] ]
       }
     }
@@ -60,8 +59,14 @@ const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
   name: COMMON_BUNDLE_NAME
 } );
 
+const STATS_CONFIG  = {
+  stats: {
+    entrypoints: false
+  }
+};
 
 const commonConf = {
+  cache: true,
   module: COMMON_MODULE_CONFIG,
   mode: 'production',
   output: {
@@ -69,10 +74,12 @@ const commonConf = {
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  ...STATS_CONFIG
 };
 
 const externalConf = {
+  cache: true,
   module: COMMON_MODULE_CONFIG,
   mode: 'production',
   output: {
@@ -80,7 +87,8 @@ const externalConf = {
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  ...STATS_CONFIG
 };
 
 const modernConf = {
@@ -93,7 +101,8 @@ const modernConf = {
   plugins: [
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  ...STATS_CONFIG
 };
 
 const onDemandHeaderRawConf = {
@@ -111,10 +120,12 @@ const appsConf = {
   plugins: [
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  ...STATS_CONFIG
 };
 
 const spanishConf = {
+  cache: true,
   module: COMMON_MODULE_CONFIG,
   mode: 'production',
   output: {
@@ -122,14 +133,15 @@ const spanishConf = {
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  ...STATS_CONFIG
 };
 
 const devConf = {
   devtool: 'inline-source-map',
   mode: 'development',
   module: COMMON_MODULE_CONFIG,
-  plugins: []
+  plugins: [],
 };
 
 const configExports = {

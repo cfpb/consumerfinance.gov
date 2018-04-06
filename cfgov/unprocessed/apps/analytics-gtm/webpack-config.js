@@ -37,12 +37,17 @@ const COMMON_MODULE_CONFIG = {
         presets: [ [ 'babel-preset-env', {
           targets: {
             browsers: BROWSER_LIST.LAST_2_IE_9_UP
-          },
-          debug: true
+          }
         } ] ]
       }
     }
   } ]
+};
+
+const STATS_CONFIG  = {
+  stats: {
+    entrypoints: false
+  }
 };
 
 const conf = {
@@ -55,7 +60,8 @@ const conf = {
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  ...STATS_CONFIG
 };
 
 module.exports = { conf };
