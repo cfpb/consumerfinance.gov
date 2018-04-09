@@ -1128,29 +1128,6 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(context['category'], None)
         self.assertEqual(context['subcategories'], set())
 
-    def test_answer_context_with_portal_referrer(self):
-        """ If the referrer is a portal page but portal's related category
-        does not appear on answer page, breadcrumbs should lead back to portal
-        but there should be no category or subcategories on context."""
-        from ask_cfpb.models import CONSUMER_TOOLS_PORTAL_PAGES as portals
-        portal_path = list(portals.keys())[0]
-        portal_title = portals[portal_path][0]
-        answer = self.answer1234
-        answer.category.add(self.category)
-        for each in self.subcategories:
-            answer.subcategory.add(each)
-        page = answer.english_page
-        request = HttpRequest()
-        request.META['HTTP_REFERER'] = \
-            'https://www.consumerfinance.gov' + portal_path
-        context = page.get_context(request)
-        breadcrumbs = context['breadcrumb_items']
-        self.assertEqual(len(breadcrumbs), 1)
-        self.assertEqual(breadcrumbs[0]['title'], portal_title)
-        self.assertEqual(breadcrumbs[0]['href'], portal_path)
-        self.assertEqual(context['category'], None)
-        self.assertEqual(context['subcategories'], set())
-
     def test_answer_context_with_journey_referrer_and_mortgages_category(self):
         """ If the referrer is a Buying a House journey page and 'mortgages'
         category appears on answer page, breadcrumbs should lead back to BAH &
