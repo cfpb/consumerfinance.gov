@@ -77,7 +77,7 @@ const commonConf = {
   plugins: [
     COMMON_UGLIFY_CONFIG
   ],
-  ...STATS_CONFIG
+  stats: STATS_CONFIG.stats
 };
 
 const externalConf = {
@@ -90,7 +90,7 @@ const externalConf = {
   plugins: [
     COMMON_UGLIFY_CONFIG
   ],
-  ...STATS_CONFIG
+  stats: STATS_CONFIG.stats
 };
 
 const modernConf = {
@@ -104,7 +104,7 @@ const modernConf = {
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
   ],
-  ...STATS_CONFIG
+  stats: STATS_CONFIG.stats
 };
 
 const onDemandHeaderRawConf = {
@@ -123,7 +123,7 @@ const appsConf = {
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
   ],
-  ...STATS_CONFIG
+  stats: STATS_CONFIG.stats
 };
 
 const spanishConf = {
@@ -136,7 +136,7 @@ const spanishConf = {
   plugins: [
     COMMON_UGLIFY_CONFIG
   ],
-  ...STATS_CONFIG
+  stats: STATS_CONFIG.stats
 };
 
 const devConf = {

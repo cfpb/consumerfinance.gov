@@ -86,7 +86,7 @@ const conf = {
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
   ],
-  ...STATS_CONFIG
+  stats: STATS_CONFIG.stats
 };
 
 
