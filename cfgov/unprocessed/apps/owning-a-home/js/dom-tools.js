@@ -129,6 +129,8 @@ const DT = {
       time
     );
   },
+  mutate: fastDom.mutate.bind( fastDom ),
+  measure: fastDom.measure.bind( fastDom ),
   nextFrame: fastDom.raf
 };
 

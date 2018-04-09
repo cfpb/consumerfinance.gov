@@ -329,18 +329,16 @@
     }
 
     .caption-title {
-        .u-webfont-regular();
+        .grid_column( 12 );
 
-        color: @black;
+        white-space: nowrap;
     }
 
     .rc-data-link {
-        text-align: right;
-        .u-webfont-medium();
+        .grid_column( 12 );
 
-        a {
-            border-bottom-width: 1px;
-        }
+        margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        white-space: nowrap;
     }
 
     .highcharts-tooltip > span {
@@ -437,7 +435,6 @@
             width: 100%;
             box-sizing: border-box;
             padding-left: unit( 15px / @base-font-size-px, em );
-            border: solid 1px #d0d0ce;
         }
 
         .unit {
@@ -472,10 +469,6 @@
         .percent-input {
             display: inline-block;
             width: 32%;
-        }
-
-        input {
-            border: solid 1px #d0d0ce;
         }
     }
 
@@ -620,10 +613,6 @@
             .grid_push( 0 );
         }
 
-        .rc-data-link {
-            display: none;
-        }
-
         .rc-home-illu {
             display: none;
         }
@@ -631,7 +620,6 @@
         .rc-illu-inner {
             padding: 0;
         }
-
 
         .next-steps-list li {
             position: relative;
@@ -689,9 +677,19 @@
     } );
 
     .respond-to-min( 1000px, {
-
         .rate-checker-heading {
             width: 75%;
+        }
+
+        .caption-title {
+            .grid_column( 7 );
+        }
+
+        .rc-data-link {
+            .grid_column( 5 );
+
+            margin-top: 0;
+            text-align: right;
         }
     } );
 
