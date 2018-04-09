@@ -200,16 +200,13 @@ class FormExplainer {
    * current focus.
    */
   openAndScrollToExpandable( imageOverlay, targetExpandable ) {
-    const targetExpandableTarget = targetExpandable.querySelector(
+    let targetExpandableTarget = targetExpandable.querySelector(
       '.o-expandable_target'
     );
 
     targetExpandableTarget.focus();
 
-    window.setTimeout( () =>
-      targetExpandableTarget.click(),
-    100
-    );
+    window.setTimeout( () => targetExpandableTarget.click(), 100 );
   }
 
   /**
