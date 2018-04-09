@@ -9,7 +9,7 @@ parserOptions:
     globalReturn: false
     impliedStrict: true
     jsx: true
-    experimentalObjectRestSpread: false
+    experimentalObjectRestSpread: true
 
 parser: espree
 
