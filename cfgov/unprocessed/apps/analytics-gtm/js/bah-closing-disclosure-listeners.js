@@ -13,7 +13,7 @@ const OAHCDAnalytics = ( function( $ ) {
     track( 'OAH Closing Disclosure Interaction', 'Tab click', text );
   } );
 
-  $( '.form-explainer_page-link ' ).click( function() {
+  $( '.form-explainer_page-link' ).click( function() {
     const pageNumber = 'Page ' + $( this ).attr( 'data-page' );
     track(
       'OAH Closing Disclosure Interaction', 'Page link click', pageNumber
