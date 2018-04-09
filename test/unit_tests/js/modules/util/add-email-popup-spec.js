@@ -1,12 +1,15 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/modules/util';
 const storageMock = require( '../../../../util/mock-web-storage' );
+const iconsPath = '../../../../node_modules/cf-icons/src/icons/';
+const closeIcon = require( iconsPath + 'close.svg' );
+const informationRoundIcon = require( iconsPath + 'information-round.svg' );
 let addEmailPopup;
 
 const HTML_SNIPPET = `
 <div class="o-email-popup o-email-popup__visible" lang="en" data-popup-label="testPopup">
     <div class="o-email-popup_header">
         <div class="close">
-            <a>Close <span class="cf-icon cf-icon-delete-round"></span></a>
+            <a>Close ${closeIcon}</a>
         </div>
     </div>
     <div class="o-email-popup_body">
@@ -32,8 +35,7 @@ const HTML_SNIPPET = `
                 <div class="m-notification
                             m-notification__success
                             ">
-                    <span class="m-notification_icon
-                                 cf-icon"></span>
+                    ${informationRoundIcon}
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message"></div>
 

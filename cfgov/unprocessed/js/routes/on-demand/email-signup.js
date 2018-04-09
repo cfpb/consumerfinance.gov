@@ -4,6 +4,7 @@
 
 
 const FormSubmit = require( '../../organisms/FormSubmit.js' );
+const Notification = require( '../../molecules/Notification' );
 const validators = require( '../../modules/util/validators' );
 
 const BASE_CLASS = 'o-email-signup';
@@ -21,8 +22,12 @@ function emailValidation( fields ) {
 }
 
 for ( let i = 0; i < emailSignUpsLength; i++ ) {
+  const _notification = new Notification( emailSignUps[i] );
+  _notification.init();
+
   formSubmit = new FormSubmit(
     emailSignUps[i],
+    _notification,
     BASE_CLASS,
     { validator: emailValidation, language: language }
   );

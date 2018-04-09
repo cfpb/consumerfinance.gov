@@ -190,7 +190,7 @@
                                          It should either be a list or not. #}
                                 <div class="m-related-posts_list-container m-list">
                                     <h3 class="h4">
-                                         <span class="cf-icon cf-icon-{{ block.categories }}"></span>
+                                         {% include 'icons/' ~ block.categories ~ '.svg' %}
                                         {{ page.get_category_name(block.categories) }}
                                     </h3>
                                     <a class="m-list_link" href="{{ block.link.url }}">

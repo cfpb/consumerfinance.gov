@@ -28,14 +28,13 @@
                    m-list
                    m-list__unstyled">
             <li class="o-bureau-structure_branch_name">
-                <button class="o-bureau-structure_nav-item
-                               a-link
+                <button class="a-link
                                a-link__jump
-                               cf-icon
-                               cf-icon__before
-                               cf-icon-left
+                               a-link__icon-before-text
+                               o-bureau-structure_nav-item
                                u-show-on-mobile"
                         data-show-slide-index="0">
+                    {% include 'icons/left.svg' %}
                     {{ category.title }}
                 </button>
             </li>
@@ -73,14 +72,13 @@
         {% for category in categories %}
         <li>
             <button class="a-link
-                           a-link__jump
                            a-link__bg
-                           cf-icon
-                           cf-icon__after
-                           cf-icon-right
+                           a-link__jump
+                           a-link__icon-after-text
                            o-bureau-structure_nav-item"
                     data-show-slide-index="{{ loop.index }}">
                 {{ category.title }}
+                {% include 'icons/right.svg' %}
             </button>
         </li>
         {% endfor %}
@@ -128,13 +126,15 @@
                              o-expandable_link">
                     <span class="o-expandable_cue
                                  o-expandable_cue-open">
-                        <span class="o-expandable_cue-label">Show</span>
-                        <span class="cf-icon cf-icon-plus-round"></span>
+                        <span class="o-expandable_cue-label">
+                            Show {% include 'icons/plus-round.svg' %}
+                        </span>
                     </span>
                     <span class="o-expandable_cue
                                  o-expandable_cue-close">
-                        <span class="o-expandable_cue-label">Hide</span>
-                        <span class="cf-icon cf-icon-minus-round"></span>
+                        <span class="o-expandable_cue-label">
+                            Hide {% include 'icons/minus-round.svg' %}
+                        </span>
                     </span>
                 </span>
             </div>
@@ -269,7 +269,9 @@
             </p>
             <a class="a-btn"
                href="{{ download_image_url }}">
-                <span class="a-btn_icon__on-left cf-icon cf-icon-save"></span>
+                <span class="a-btn_icon a-btn_icon__on-left">
+                    {%- include 'icons/save.svg' -%}
+                </span>
                 Download PDF
             </a>
         </div>
@@ -279,13 +281,16 @@
                 Ask a CFPB employee to be involved in a forum, publication, discussion, or
                 other event; or to inquire about any CFPB events.
             </p>
-            <span class="cf-icon cf-icon-email m-list_icon"></span>
-            <span class="m-list_text">
-                <a class="m-list_link"
+            <p>
+                <a class="a-link
+                          a-link__icon"
                    href="mailto:invitations2cfpb@consumerfinance.gov">
-                    invitations2cfpb@consumerfinance.gov
+                    {% include 'icons/mail.svg' %}
+                    <span class="a-link_text">
+                        invitations2cfpb@consumerfinance.gov
+                    </span>
                 </a>
-            </span>
+            </p>
         </div>
     </div>
 </aside>

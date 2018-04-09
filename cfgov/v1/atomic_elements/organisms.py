@@ -661,8 +661,9 @@ class ModelList(ModelBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
-    content_with_anchor = molecules.ContentWithAnchor()
     content = blocks.RichTextBlock(icon='edit')
+    content_with_anchor = molecules.ContentWithAnchor()
+    heading = v1_blocks.HeadingBlock(required=False)
     media = images_blocks.ImageChooserBlock(icon='image')
     quote = molecules.Quote()
     cta = molecules.CallToAction()

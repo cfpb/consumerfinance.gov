@@ -14,5 +14,8 @@ module.exports = {
     '<rootDir>/cfgov/unprocessed/apps/.+/webpack-config.js$',
     '<rootDir>/cfgov/unprocessed/js/routes/'
   ],
-  coverageDirectory: '<rootDir>/test/unit_test_coverage'
+  coverageDirectory: '<rootDir>/test/unit_test_coverage',
+  moduleNameMapper: {
+    '\\.(svg)$': '<rootDir>/test/unit_tests/mocks/fileMock.js'
+  }
 };

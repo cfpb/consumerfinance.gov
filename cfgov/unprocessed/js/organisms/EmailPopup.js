@@ -12,12 +12,12 @@ const emailHelpers = require( '../modules/util/email-popup-helpers' );
  *
  * @param {string} element
  *   The selector for the organism.
+ * @param {object} _notification Instance of Notification associated
+ *   with this form.
  * @returns {EmailSignup} An instance.
  */
-function EmailPopup( element ) {
-
+function EmailPopup( element, _notification ) {
   const VISIBLE_CLASS = 'o-email-popup__visible';
-
   const _dom = atomicHelpers.checkDom( element, EmailPopup.BASE_CLASS );
   const _popupLabel = _dom.getAttribute( 'data-popup-label' );
 
@@ -97,6 +97,7 @@ function EmailPopup( element ) {
 
     const formSubmit = new FormSubmit(
       _dom,
+      _notification,
       EmailPopup.BASE_CLASS,
       { validator: emailValidation, language: _language }
     );

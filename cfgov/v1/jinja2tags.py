@@ -1,5 +1,6 @@
 from jinja2.ext import Extension
 
+from core.templatetags.svg_icon import svg_icon
 from v1.models import CFGOVRendition
 from v1.templatetags.email_popup import email_popup
 from v1.util.util import extended_strftime
@@ -45,6 +46,7 @@ class V1FiltersExtension(Extension):
             'image_alt_value': image_alt_value,
             'date_formatter': date_formatter,
             'email_popup': email_popup,
+            'svg_icon': svg_icon,
         })
 
 

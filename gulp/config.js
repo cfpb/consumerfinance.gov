@@ -113,8 +113,8 @@ module.exports = {
       dest: `${ paths.processed }/apps/know-before-you-owe/js`
     },
     icons: {
-      src:  paths.modules + '/cf-icons/src/fonts/*',
-      dest: paths.processed + '/fonts/'
+      src:  paths.modules + '/cf-icons/src/icons/*.svg',
+      dest: paths.processed + '/icons/'
     },
     timelinejs: {
       src: [

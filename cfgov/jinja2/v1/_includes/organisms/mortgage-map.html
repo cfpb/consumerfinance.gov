@@ -157,9 +157,11 @@
                         m-notification__warning u-mt30"
                   id="mp-map-notification"
                   style="display:none">
-                <span class="m-notification_icon cf-icon"></span>
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message">Invalid date</div>
+                    <div class="h4 m-notification_message">
+                        {% include 'icons/warning.svg' %}
+                        Invalid date
+                    </div>
                     <p class="h4 m-notification_explanation">
                       We only have data available through {{ thru_month_formatted }}.
                       Please select a valid date.

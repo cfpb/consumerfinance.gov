@@ -10,7 +10,7 @@
 
 {% block content_main %}
 
-    <h1><span class="cf-icon cf-icon-approved-round"></span> Success!</h1>
+    <h1>{% include 'icons/approved-round.svg' %}</span> Success!</h1>
     <p>
         Your comment was successfully submitted.
 
@@ -26,9 +26,9 @@
     </p>
     <p>
         Your comment may be viewable on
-        <a class="icon-link icon-link__external-link"
-           href="https://www.regulations.gov/">
-            <span class="icon-link_text">Regulations.gov</span>
+        <a class="a-link a-link__icon" href="https://www.regulations.gov/">
+            <span class="a-link_text">Regulations.gov</span>
+            {% include 'icons/external-link.svg' %}
         </a>
         once the CFPB has processed it.
         Processing times are dependent on the number of comments received.

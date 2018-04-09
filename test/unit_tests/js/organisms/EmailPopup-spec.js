@@ -1,14 +1,15 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const EmailPopup = require( BASE_JS_PATH + 'organisms/EmailPopup' );
 const storageMock = require( '../../../util/mock-web-storage' );
-
+const iconsPath = '../../../../node_modules/cf-icons/src/icons/';
+const closeIcon = require( iconsPath + 'close.svg' );
 let emailPopup;
 
 const HTML_SNIPPET = `
 <div class="o-email-popup" lang="en" data-popup-label="testPopup">
     <div class="o-email-popup_header">
         <div class="close">
-            <a>Close <span class="cf-icon cf-icon-delete-round"></span></a>
+            <a>Close ${closeIcon}</a>
         </div>
     </div>
     <div class="o-email-popup_body">
