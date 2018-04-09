@@ -9,6 +9,7 @@ const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
+  cache: true,
   parallel: true,
   uglifyOptions: {
     ie8: false,
@@ -37,11 +38,17 @@ const COMMON_MODULE_CONFIG = {
         presets: [ [ 'babel-preset-env', {
           configPath: __dirname,
           useBuiltIns: 'usage',
-          debug: true
+          debug: false
         } ] ]
       }
     }
   } ]
+};
+
+const STATS_CONFIG  = {
+  stats: {
+    entrypoints: false
+  }
 };
 
 const conf = {
@@ -54,7 +61,8 @@ const conf = {
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  stats: STATS_CONFIG.stats
 };
 
 module.exports = { conf };

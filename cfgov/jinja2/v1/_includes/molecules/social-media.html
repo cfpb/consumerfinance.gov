@@ -131,7 +131,7 @@
                 <li class="m-list_item">
                     <a class="m-social-media_icon"
                        href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
-                       {{ 'target=_blank' if link.name != 'email' else '' }}>
+                       {{ 'target="_blank" rel="noopener noreferrer"' if link.name != 'email' else '' }}>
                         <span class="cf-icon {{ link.class }}"></span>
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
                     </a>

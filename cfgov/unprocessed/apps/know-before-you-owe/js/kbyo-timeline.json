@@ -1,247 +1,247 @@
 {
-	"timeline": {
-		"headline": "Know Before You Owe: Mortgages",
-		"type": "default",
-		"text": "<p>A look back at our effort to make mortgage disclosures more effective, with the input of the people who will actually use them.</p>",
-		"asset": {
-			"media": "../static/img/timeline-201105_cfpb_screenshot_kbyo-mortgages-round-one.png",
-			"caption": "The original Know Before You Owe page, May 2011"
-		},
-		"date": [
-			{
-				"startDate": "2010,7,21",
-				"endDate": "2010,7,21",
-				"headline": "The Dodd-Frank Wall Street Reform and Consumer Protection Act is signed into law.",
-				"text": "<p>The <a href='http://www.gpo.gov/fdsys/pkg/BILLS-111hr4173enr/pdf/BILLS-111hr4173enr.pdf' target='_blank'>new law</a> required the CFPB to combine the Truth in Lending and Real Estate Settlement Procedures Act disclosures.</p>",
-				"asset": {
-					"media": "../static/img/timeline-asset_dfa-page-1.png",
-					"caption": "The cover page of the Dodd-Frank Act."
-				}
-			},
-			{
-				"startDate": "2010,12,6",
-				"endDate": "2010,12,6",
-				"headline": "The Treasury Department hosts a mortgage disclosure symposium.",
-				"text": "<p>The event brought together consumer advocates, industry, marketers, and more to discuss CFPB implementation of the combined disclosures.</p>",
-				"asset": {
-					"media": "../static/img/timeline-meeting.jpg",
-					"caption": "A CFPB staffer listens to comments during the mortgage disclosure symposium."
-				}
-			},
-			{
-				"startDate": "2011,2,21",
-				"endDate": "2011,2,21",
-				"headline": "Design begins.",
-				"text": "<p>Starting with the legal requirements and the consumer in mind, we began sketching prototype forms for testing.</p><p>During this process, the team discussed preliminary issues and ideas about mortgage disclosures. This session set the context for the disclosures and was a starting point for their development. The team continued to develop these issues and ideas over more than a year during the development process.</p>",
-				"asset": {
-					"media": "../static/img/timeline-201102_cfpb_tila-respa-design-process.jpg",
-					"caption": "A photograph taken during the sketch session."
-				}
-			},
-			{
-				"startDate": "2011,5,18",
-				"endDate": "2011,5,18",
-				"headline": "Know Before You Owe opens online.",
-				"text": "<p>We posted the first two prototype loan estimates. We asked consumers and industry to examine them and tell us what worked and what didn't. We repeated this process for several future rounds. Over the course of the next ten months, people submitted more than 27,000 comments.</p>",
-				"asset": {
-					"media": "../static/img/timeline-launch_tweet.png",
-					"caption": "Our tweet announcing Know Before You Owe."
-				}
-			},
-			{
-				"startDate": "2011,5,19",
-				"endDate": "2011,5,24",
-				"headline": "Qualitative testing begins in Baltimore.",
-				"text": "<p>We sat down with consumers, lenders, and brokers to examine the first set of loan estimate prototypes to test two different graphic design approaches.</p><p><h6>Disclosures tested:</h6><a href='/f/201105_cfpb_mortgage-disclosure-prototype-Round1-Ficus-ANL.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201105_cfpb_mortgage-disclosure-prototype-Round1-Pecan-ANL.pdf' target='_blank'>Prototype B</a></p>"
-			},
-			{
-				"startDate": "2011,6,27",
-				"endDate": "2011,7,1",
-				"headline": "Los Angeles, CA",
-				"text": "<p>Consumers and industry participants worked with prototypes with lump sum closing costs and prototypes with itemized closing costs.</p><p><h6>Disclosures tested:</h6><a href='/f/201106_cfpb_mortgage-disclosure-prototype-Round2-Dogwood.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201106_cfpb_mortgage-disclosure-prototype-Round2-Redbud.pdf' target='_blank'>Prototype B</a></p>"
-			},
-			{
-				"startDate": "2011,8,1",
-				"endDate": "2011,8,3",
-				"headline": "Chicago, IL",
-				"text": "<p>Again, we asked testing participants to work with prototypes with lump sum closing costs and itemized closing costs.</p><p><h6>Disclosures tested:</h6><a href='/f/201108_cfpb_mortgage-disclosure-prototype-Round3-Camellia.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201108_cfpb_mortgage-disclosure-prototype-Round3-Azalea.pdf' target='_blank'>Prototype B</a></p>"
-			},
-			{
-				"startDate": "2011,9,12",
-				"endDate": "2011,9,14",
-				"headline": "Springfield, MA",
-				"text": "<p>Another round of closing cost tests, as we presented participants with one disclosure that has the two-column design from previous rounds and another that uses a new graphic presentations of the costs.</p><p><h6>Disclosures tested:</h6><a href='/f/201109_cfpb_mortgage-disclosure-prototype-Round4-Jasmine.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201109_cfpb_mortgage-disclosure-prototype-Round4-Nandina.pdf' target='_blank'>Prototype B</a></p>"
-			},
-			{
-				"startDate": "2011,10,17",
-				"endDate": "2011,10,19",
-				"headline": "Albuquerque, NM",
-				"text": "<p>In this round, we presented closing costs in the itemized format and worked on a table that shows how payments change over time.</p><p><h6>Disclosures tested:</h6><a href='/f/201110_cfpb_mortgage-disclosure-prototype-Round5-Yucca.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201110_cfpb_mortgage-disclosure-prototype-Round5-Pinyon.pdf' target='_blank'>Prototype B</a></p>"
-			},
-			{
-				"startDate": "2011,11,8",
-				"endDate": "2011,11,10",
-				"headline": "Des Moines, IA",
-				"text": "<p>We began testing closing disclosures. Both designs included HUD-1-style numbering for closing details, but two different ways of presenting other costs and Truth in Lending information.</p><p><h6>Disclosures tested:</h6><a href='/f/201111_cfpb_mortgage-disclosure-prototype-Round6-Hornbeam-CD.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201105_cfpb_mortgage-disclosure-prototype-Round6-Ironwood-CD.pdf' target='_blank'>Prototype B</a></p>"
-			},
-			{
-				"startDate": "2011,12,13",
-				"endDate": "2011,12,15",
-				"headline": "Birmingham, AL",
-				"text": "<p>One form continued to use the HUD-1 style numbered closing cost details; the other was formatted more like the Loan Estimate, carrying over the Cash to Close table and no line numbers.</p><p><h6>Disclosures tested:</h6><a href='/f/201112_cfpb_mortgage-disclosure-prototype-Round7-Mimosa.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201112_cfpb_mortgage-disclosure-prototype-Round7-Sassafras.pdf' target='_blank'>Prototype B</a></p>"
-			},
-			{
-				"startDate": "2012,1,24",
-				"endDate": "2012,1,26",
-				"headline": "Philadelphia, PA",
-				"text": "<p>In this round, we settle on prototypes formatted like the Loan Estimate, but one includes line numbers and the other doesn’t.  We also begin testing the Loan Estimate with the Closing Disclosure.</p><p><h6>Disclosures tested:</h6><a href='/f/201201_cfpb_mortgage-disclosure-prototype-Round8-Honeylocust-LE.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201201_cfpb_mortgage-disclosure-prototype-Round8-Hemlock-CD.pdf' target='_blank'>Prototype B</a><br/><a href='/f/201201_cfpb_mortgage-disclosure-prototype-Round8-Butternut-CD.pdf' target='_blank'>Prototype C</a></p>"
-			},
-			{
-				"startDate": "2012,2,20",
-				"endDate": "2012,2,23",
-				"headline": "Austin, TX",
-				"text": "<p>Participants reviewed one Loan Estimate and one Closing Disclosure (with line numbers) to see how well they worked together.</p><p><h6>Disclosures tested:</h6><a href='/f/201202_cfpb_mortgage-disclosure-prototype-Round9-Basswood-CD.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201202_cfpb_mortgage-disclosure-prototype-Round9-Tupelo_LE.pdf' target='_blank'>Prototype B</a></p>"
-			},
-			{
-				"startDate": "2012,2,21",
-				"endDate": "2012,2,21",
-				"headline": "We convene a small business review panel.",
-				"text": "<p>A panel of representatives from the CFPB, the Small Business Administration (SBA), and the Office of Management and Budget (OMB) considered the potential impact of the proposals under consideration on small businesses that will provide the mortgage disclosures.</p>",
-				"asset": {
-					"media": "<blockquote>&#8220;In the upcoming weeks, the Review Panel will meet with a group of small lenders, brokers, and settlement agents that we have selected in consultation with the SBA.&#8221;</blockquote>",
-					"caption": "<a href='http://www.consumerfinance.gov/blog/sbrefa-small-providers-and-mortgage-disclosure/'><em>SBREFA, Small Providers, and Mortgage Disclosure</em></a>, February 21, 2012"
-				}
-			},
-			{
-				"startDate": "2012,3,6",
-				"endDate": "2012,3,6",
-				"headline": "We meet with small businesses.",
-				"text": "<p>The panel met with small businesses and asked for their feedback on the impacts of various proposals the CFPB was considering. <a href='/f/201207_cfpb_report_tila-respa-sbrefa-feedback.pdf' target='_blank'>This feedback is summarized in the panel’s report.</a></p>"
-			},
-			{
-				"startDate": "2012,3,26",
-				"endDate": "2012,3,26",
-				"headline": "Back to Baltimore!",
-				"text": "<p>We conducted one final round of testing to confirm that some modifications from the last round work for consumers.</p><p><h6>Disclosures tested:</h6><a href='/f/201203_cfpb_mortgage-disclosure-prototype-Round10-Ficus-LE.pdf' target='_blank'>Prototype A</a><br/><a href='/f/201203_cfpb_mortgage-disclosure-prototype-Round10-OptionA-CD.pdf' target='_blank'>Prototype B</a><br/><a href='/f/201203_cfpb_mortgage-disclosure-prototype-Round10-OptionB-CD.pdf' target='_blank'>Prototype C</a></p>"
-			},
-			{
-				"startDate": "2012,7,9",
-				"endDate": "2012,7,9",
-				"headline": "Proposal of the new rule.",
-				"text": "<p><a href='/f/201207_cfpb_proposed-rule_integrated-mortgage-disclosures.pdf' target='_blank'>The CFPB released a Notice of Proposed Rulemaking.</a> The notice proposed a new rule to implement the combined mortgage disclosures and requested your comments on the proposal.</p>"
-			},
-			{
-				"startDate": "2012,10,11",
-				"endDate": "2012,12,13",
-				"headline": "We test Spanish language versions of the disclosures across the country.",
-				"text": "<p>We conducted qualitative consumer testing on Spanish language versions of the proposed disclosures. We tested in three cities: Arlington, Va. (October 11-12); Phoenix, Az. (November 14-15); and Miami, Fla. (December 12-13).</p>"
-			},
-			{
-				"startDate": "2012,11,6",
-				"endDate": "2012,11,6",
-				"headline": "Comment period on most of the proposed rule closes.",
-				"text": "<p>Between the public comment period and other information for the record, <a href='http://www.regulations.gov/#!documentDetail;D=CFPB-2012-0028-0001' target='_blank'>the CFPB reviewed nearly 3,000 comments</a>. These comments helped us improve the disclosures and the final rule.</p>"
-			},
-			{
-				"startDate": "2013,4,23",
-				"endDate": "2013,6,13",
-				"headline": "Validating our testing",
-				"text": "<p>With the help of Kleimann Communication Group, the contractor who helped us throughout the testing process, we conducted <a href='/f/201311_cfpb_study_tila-respa_disclosure-comparison.pdf' target='_blank'>a quantitative study of the new forms</a> with 858 consumers in 20 locations across the country. By nearly every measure, the study showed that the new forms offer a statistically significant improvement over the existing forms.</p>",
-				"asset": {
-					"media": "<blockquote>&#8220;The performance advantage for the proposed disclosures was similar across the factors of the study: for experienced as well as inexperienced respondents, easier as well as more challenging loans, and fixed as well as adjustable rate loans.&#8221;</blockquote>",
-					"caption": "<a href='/f/201311_cfpb_study_tila-respa_disclosure-comparison.pdf'><em>Know Before You Owe: QuantitativeStudy of the Current and Integrated TILA-RESPA Disclosures</em></a>, November 20, 2013"
-				}
-			},
-			{
-				"startDate": "2013,6,18",
-				"endDate": "2013,7,26",
-				"headline": "Additional testing with modified disclosures",
-				"text": "<p>In response to comments, we developed and tested different versions of the disclosures for refinance loans, which we tested for three rounds. (In our last round, we tested a modification for both purchases and refinances.) We also did one more round of Spanish language testing for the refinance versions. <a href='/f/201311_cfpb_report_tila-respa_testing-spanish-refinancing.pdf'>The modified disclosures tested well</a> and are the ones included in the final rule.</p>"
-			},
-			{
-				"startDate": "2013,11,20",
-				"endDate": "2013,11,20",
-				"headline": "A final TILA-RESPA rule",
-				"text": "<p><a href='/f/201311_cfpb_final-rule_integrated-mortgage-disclosures.pdf' target='_blank'>The CFPB issues a Final Rule.</a> The final rule creates new integrated mortgage disclosures and details the requirements for using them. The rule is effective for mortgage applications received starting August 1, 2015.</p>"
-			},
-			{
-				"startDate": "2014,5,28",
-				"endDate": "2014,5,28",
-				"headline": "Resources for mortgage professionals are created.",
-				"text": "<p>To help mortgage professionals prepare for the launch of the rule, we created the <a href='/regulatory-implementation/tila-respa/' target='_blank'> TILA - RESPA Integrated Disclosure webpage </a> with the publication of a Small Entity Compliance Guide and sample forms.</p> "
-			},
-			{
-				"startDate": "2014,4,18",
-				"endDate": "2014,4,18",
-				"headline": "A guide to forms is published for mortgage professionals.",
-				"text": "<p>We published a <a href='/f/201503_cfpb_tila-respa-integrated-disclosure-guide-to-the-loan-estimate-and-closing.pdf' target='_blank'> Guide to Forms </a> to assist mortgage professionals in understanding the new rule, the forms, and how to use the forms. </p> "
-			},
-			{
-				"startDate": "2014,9,3",
-				"endDate": "2014,9,3",
-				"headline": "A readiness guide is published for mortgage professionals.",
-				"text": "<p>We published a <a href='/guidance/' target='_blank'> Readiness Guide </a> for mortgage professionals, which is updated as we learn more from industry about their implementation. This guide is a tool to help professionals comply with the rule.</p> "
-			},
-			{
-				"startDate": "2014,10,24",
-				"endDate": "2014,10,24",
-				"headline": "Owning a Home debuts.",
-				"text": "<p>Owning a Home, an online suite of tools and resources that helps consumers learn about mortgages, debuts with the <a href='/owning-a-home/resources/checklist_mortgage_closing.pdf' target='_blank'> closing checklist </a> and <a href='/owning-a-home/loan-options/' target='_blank'> loan options guide </a>.</p> "
-			},
-			{
-				"startDate": "2015,1,13",
-				"endDate": "2015,1,13",
-				"headline": "Owning a Home expands.",
-				"text": "<p>Owning a Home <a href='/owning-a-home/check-rates/' target='_blank'> adds a tool that empowers homebuyers to explore interest rates </a>, allowing people to see information on rates being offered to others in similar situations. </p> "
-			},
-			{
-				"startDate": "2015,1,20",
-				"endDate": "2015,1,20",
-				"headline": "Amendments to the rule are issued.",
-				"text": "<p>We issued minor amendments <a href='/newsroom/cfpb-finalizes-minor-changes-to-know-before-you-owe-mortgage-rules/' target='_blank'> to the rule </a> that extend the timing requirement for revised disclosures when consumers lock a rate or extend a rate lock after the Loan Estimate is provided and permit certain language related to construction loans for transactions involving new construction on the Loan Estimate. </p> "
-			},
-			{
-				"startDate": "2015,3,31",
-				"endDate": "2015,3,31",
-				"headline": "Your Home Loan Toolkit, an informative guide to the mortgage process, is released.",
-				"text": "<p>This resource guides homebuyers through the mortgage process step-by-step with checklists, conversation starters, and worksheets. <a href='/f/201503_cfpb_your-home-loan-toolkit-web.pdf' target='_blank'>The toolkit, available online</a>, is designed to replace the Settlement Cost Booklet for most mortgage loan transactions. Lenders are required to give potential borrowers a copy of the booklet within three business days after they apply for a home purchase mortgage loan.</p>"
-			},
-			{
-				"startDate": "2015,4,1",
-				"endDate": "2015,4,1",
-				"headline": "We publish examination procedures to ensure the rule is implemented correctly.",
-				"text": "<p>Part of our job as a Bureau is to oversee companies that provide consumer financial products and services. We published examination procedures for our examiners to use when making sure mortgage professionals are compliant with the rule. Industry can also use these procedures to improve their own assessment of compliance.</p>"
-			},
-			{
-				"startDate": "2015,6,24",
-				"endDate": "2015,6,24",
-				"headline": "New Effective Date Proposed",
-				"text": "<p><a href='/newsroom/cfpb-proposes-two-month-extension-of-know-before-you-owe-mortgage-rule/'>The CFPB proposes a new effective date of October 3, 2015 for the Know Before You Owe mortgage disclosure rule.</a></p> "
-			},
-			{
-				"startDate": "2015,7,21",
-				"endDate": "2015,7,21",
-				"headline": "New Effective Date Announced",
-				"text": "<p><a href='/newsroom/cfpb-finalizes-two-month-extension-of-know-before-you-owe-effective-date/'>The CFPB issues a final rule moving the effective date to October 3, 2015.</a></p>"
-			},
-			{
-				"startDate": "2015,8,14",
-				"endDate": "2015,8,14",
-				"headline": "A consumer&rsquo;s digital guide to the disclosures is unveiled.",
-				"text": "<p>Our interactive form resources are released. These take you through both the <a href='/owning-a-home/loan-estimate/' target='_blank'> Loan Estimate </a> and <a href='/owning-a-home/closing-disclosure/' target='_blank'> Closing Disclosure </a>, defining terms and helping you understand what each field means. Updated landing pages enable consumers following the links on the <a href='/owning-a-home/mortgage-estimate/' target='_blank'> Loan Estimate </a> and <a href='/owning-a-home/mortgage-closing/' target='_blank'> Closing Disclosure </a> to access an array of resources.</p> "
-			},
-			{
-				"startDate": "2015,8,14",
-				"endDate": "2015,8,14",
-				"headline": "A guide for real estate professionals is released.",
-				"text": "<p>We released the <a href='/know-before-you-owe/real-estate-professionals/'> Know Before You Owe: Real estate professional&rsquo;s guide </a>. This resource helps real estate professionals educate their clients on the mortgage process to ensure smooth and on-time closings.  </p> "
-			},
-			{
-				"startDate": "2015,9,17",
-				"endDate": "2015,9,17",
-				"headline": "We help consumers understand the mortgage process with more Owning a Home resources.",
-				"text": "<p><a href='/owning-a-home/' target='_blank'>Owning a Home</a> continues to grow with the launch of content that helps you understand the mortgage process step-by-step. This new resource helps you navigate the mortgage process, avoid common pitfalls, and keep on track.</p>"
-			}
-		]
-	}
+  "timeline": {
+    "headline": "Know Before You Owe: Mortgages",
+    "type": "default",
+    "text": "<p>A look back at our effort to make mortgage disclosures more effective, with the input of the people who will actually use them.</p>",
+    "asset": {
+      "media": "../static/img/timeline-201105_cfpb_screenshot_kbyo-mortgages-round-one.png",
+      "caption": "The original Know Before You Owe page, May 2011"
+    },
+    "date": [
+      {
+        "startDate": "2010,7,21",
+        "endDate": "2010,7,21",
+        "headline": "The Dodd-Frank Wall Street Reform and Consumer Protection Act is signed into law.",
+        "text": "<p>The <a href='http://www.gpo.gov/fdsys/pkg/BILLS-111hr4173enr/pdf/BILLS-111hr4173enr.pdf' target='_blank' rel='noopener noreferrer'>new law</a> required the CFPB to combine the Truth in Lending and Real Estate Settlement Procedures Act disclosures.</p>",
+        "asset": {
+          "media": "../static/img/timeline-asset_dfa-page-1.png",
+          "caption": "The cover page of the Dodd-Frank Act."
+        }
+      },
+      {
+        "startDate": "2010,12,6",
+        "endDate": "2010,12,6",
+        "headline": "The Treasury Department hosts a mortgage disclosure symposium.",
+        "text": "<p>The event brought together consumer advocates, industry, marketers, and more to discuss CFPB implementation of the combined disclosures.</p>",
+        "asset": {
+          "media": "../static/img/timeline-meeting.jpg",
+          "caption": "A CFPB staffer listens to comments during the mortgage disclosure symposium."
+        }
+      },
+      {
+        "startDate": "2011,2,21",
+        "endDate": "2011,2,21",
+        "headline": "Design begins.",
+        "text": "<p>Starting with the legal requirements and the consumer in mind, we began sketching prototype forms for testing.</p><p>During this process, the team discussed preliminary issues and ideas about mortgage disclosures. This session set the context for the disclosures and was a starting point for their development. The team continued to develop these issues and ideas over more than a year during the development process.</p>",
+        "asset": {
+          "media": "../static/img/timeline-201102_cfpb_tila-respa-design-process.jpg",
+          "caption": "A photograph taken during the sketch session."
+        }
+      },
+      {
+        "startDate": "2011,5,18",
+        "endDate": "2011,5,18",
+        "headline": "Know Before You Owe opens online.",
+        "text": "<p>We posted the first two prototype loan estimates. We asked consumers and industry to examine them and tell us what worked and what didn't. We repeated this process for several future rounds. Over the course of the next ten months, people submitted more than 27,000 comments.</p>",
+        "asset": {
+          "media": "../static/img/timeline-launch_tweet.png",
+          "caption": "Our tweet announcing Know Before You Owe."
+        }
+      },
+      {
+        "startDate": "2011,5,19",
+        "endDate": "2011,5,24",
+        "headline": "Qualitative testing begins in Baltimore.",
+        "text": "<p>We sat down with consumers, lenders, and brokers to examine the first set of loan estimate prototypes to test two different graphic design approaches.</p><p><h6>Disclosures tested:</h6><a href='/f/201105_cfpb_mortgage-disclosure-prototype-Round1-Ficus-ANL.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201105_cfpb_mortgage-disclosure-prototype-Round1-Pecan-ANL.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a></p>"
+      },
+      {
+        "startDate": "2011,6,27",
+        "endDate": "2011,7,1",
+        "headline": "Los Angeles, CA",
+        "text": "<p>Consumers and industry participants worked with prototypes with lump sum closing costs and prototypes with itemized closing costs.</p><p><h6>Disclosures tested:</h6><a href='/f/201106_cfpb_mortgage-disclosure-prototype-Round2-Dogwood.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201106_cfpb_mortgage-disclosure-prototype-Round2-Redbud.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a></p>"
+      },
+      {
+        "startDate": "2011,8,1",
+        "endDate": "2011,8,3",
+        "headline": "Chicago, IL",
+        "text": "<p>Again, we asked testing participants to work with prototypes with lump sum closing costs and itemized closing costs.</p><p><h6>Disclosures tested:</h6><a href='/f/201108_cfpb_mortgage-disclosure-prototype-Round3-Camellia.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201108_cfpb_mortgage-disclosure-prototype-Round3-Azalea.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a></p>"
+      },
+      {
+        "startDate": "2011,9,12",
+        "endDate": "2011,9,14",
+        "headline": "Springfield, MA",
+        "text": "<p>Another round of closing cost tests, as we presented participants with one disclosure that has the two-column design from previous rounds and another that uses a new graphic presentations of the costs.</p><p><h6>Disclosures tested:</h6><a href='/f/201109_cfpb_mortgage-disclosure-prototype-Round4-Jasmine.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201109_cfpb_mortgage-disclosure-prototype-Round4-Nandina.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a></p>"
+      },
+      {
+        "startDate": "2011,10,17",
+        "endDate": "2011,10,19",
+        "headline": "Albuquerque, NM",
+        "text": "<p>In this round, we presented closing costs in the itemized format and worked on a table that shows how payments change over time.</p><p><h6>Disclosures tested:</h6><a href='/f/201110_cfpb_mortgage-disclosure-prototype-Round5-Yucca.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201110_cfpb_mortgage-disclosure-prototype-Round5-Pinyon.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a></p>"
+      },
+      {
+        "startDate": "2011,11,8",
+        "endDate": "2011,11,10",
+        "headline": "Des Moines, IA",
+        "text": "<p>We began testing closing disclosures. Both designs included HUD-1-style numbering for closing details, but two different ways of presenting other costs and Truth in Lending information.</p><p><h6>Disclosures tested:</h6><a href='/f/201111_cfpb_mortgage-disclosure-prototype-Round6-Hornbeam-CD.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201105_cfpb_mortgage-disclosure-prototype-Round6-Ironwood-CD.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a></p>"
+      },
+      {
+        "startDate": "2011,12,13",
+        "endDate": "2011,12,15",
+        "headline": "Birmingham, AL",
+        "text": "<p>One form continued to use the HUD-1 style numbered closing cost details; the other was formatted more like the Loan Estimate, carrying over the Cash to Close table and no line numbers.</p><p><h6>Disclosures tested:</h6><a href='/f/201112_cfpb_mortgage-disclosure-prototype-Round7-Mimosa.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201112_cfpb_mortgage-disclosure-prototype-Round7-Sassafras.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a></p>"
+      },
+      {
+        "startDate": "2012,1,24",
+        "endDate": "2012,1,26",
+        "headline": "Philadelphia, PA",
+        "text": "<p>In this round, we settle on prototypes formatted like the Loan Estimate, but one includes line numbers and the other doesn’t.  We also begin testing the Loan Estimate with the Closing Disclosure.</p><p><h6>Disclosures tested:</h6><a href='/f/201201_cfpb_mortgage-disclosure-prototype-Round8-Honeylocust-LE.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201201_cfpb_mortgage-disclosure-prototype-Round8-Hemlock-CD.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a><br/><a href='/f/201201_cfpb_mortgage-disclosure-prototype-Round8-Butternut-CD.pdf' target='_blank' rel='noopener noreferrer'>Prototype C</a></p>"
+      },
+      {
+        "startDate": "2012,2,20",
+        "endDate": "2012,2,23",
+        "headline": "Austin, TX",
+        "text": "<p>Participants reviewed one Loan Estimate and one Closing Disclosure (with line numbers) to see how well they worked together.</p><p><h6>Disclosures tested:</h6><a href='/f/201202_cfpb_mortgage-disclosure-prototype-Round9-Basswood-CD.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201202_cfpb_mortgage-disclosure-prototype-Round9-Tupelo_LE.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a></p>"
+      },
+      {
+        "startDate": "2012,2,21",
+        "endDate": "2012,2,21",
+        "headline": "We convene a small business review panel.",
+        "text": "<p>A panel of representatives from the CFPB, the Small Business Administration (SBA), and the Office of Management and Budget (OMB) considered the potential impact of the proposals under consideration on small businesses that will provide the mortgage disclosures.</p>",
+        "asset": {
+          "media": "<blockquote>&#8220;In the upcoming weeks, the Review Panel will meet with a group of small lenders, brokers, and settlement agents that we have selected in consultation with the SBA.&#8221;</blockquote>",
+          "caption": "<a href='http://www.consumerfinance.gov/blog/sbrefa-small-providers-and-mortgage-disclosure/'><em>SBREFA, Small Providers, and Mortgage Disclosure</em></a>, February 21, 2012"
+        }
+      },
+      {
+        "startDate": "2012,3,6",
+        "endDate": "2012,3,6",
+        "headline": "We meet with small businesses.",
+        "text": "<p>The panel met with small businesses and asked for their feedback on the impacts of various proposals the CFPB was considering. <a href='/f/201207_cfpb_report_tila-respa-sbrefa-feedback.pdf' target='_blank' rel='noopener noreferrer'>This feedback is summarized in the panel’s report.</a></p>"
+      },
+      {
+        "startDate": "2012,3,26",
+        "endDate": "2012,3,26",
+        "headline": "Back to Baltimore!",
+        "text": "<p>We conducted one final round of testing to confirm that some modifications from the last round work for consumers.</p><p><h6>Disclosures tested:</h6><a href='/f/201203_cfpb_mortgage-disclosure-prototype-Round10-Ficus-LE.pdf' target='_blank' rel='noopener noreferrer'>Prototype A</a><br/><a href='/f/201203_cfpb_mortgage-disclosure-prototype-Round10-OptionA-CD.pdf' target='_blank' rel='noopener noreferrer'>Prototype B</a><br/><a href='/f/201203_cfpb_mortgage-disclosure-prototype-Round10-OptionB-CD.pdf' target='_blank' rel='noopener noreferrer'>Prototype C</a></p>"
+      },
+      {
+        "startDate": "2012,7,9",
+        "endDate": "2012,7,9",
+        "headline": "Proposal of the new rule.",
+        "text": "<p><a href='/f/201207_cfpb_proposed-rule_integrated-mortgage-disclosures.pdf' target='_blank' rel='noopener noreferrer'>The CFPB released a Notice of Proposed Rulemaking.</a> The notice proposed a new rule to implement the combined mortgage disclosures and requested your comments on the proposal.</p>"
+      },
+      {
+        "startDate": "2012,10,11",
+        "endDate": "2012,12,13",
+        "headline": "We test Spanish language versions of the disclosures across the country.",
+        "text": "<p>We conducted qualitative consumer testing on Spanish language versions of the proposed disclosures. We tested in three cities: Arlington, Va. (October 11-12); Phoenix, Az. (November 14-15); and Miami, Fla. (December 12-13).</p>"
+      },
+      {
+        "startDate": "2012,11,6",
+        "endDate": "2012,11,6",
+        "headline": "Comment period on most of the proposed rule closes.",
+        "text": "<p>Between the public comment period and other information for the record, <a href='http://www.regulations.gov/#!documentDetail;D=CFPB-2012-0028-0001' target='_blank' rel='noopener noreferrer'>the CFPB reviewed nearly 3,000 comments</a>. These comments helped us improve the disclosures and the final rule.</p>"
+      },
+      {
+        "startDate": "2013,4,23",
+        "endDate": "2013,6,13",
+        "headline": "Validating our testing",
+        "text": "<p>With the help of Kleimann Communication Group, the contractor who helped us throughout the testing process, we conducted <a href='/f/201311_cfpb_study_tila-respa_disclosure-comparison.pdf' target='_blank' rel='noopener noreferrer'>a quantitative study of the new forms</a> with 858 consumers in 20 locations across the country. By nearly every measure, the study showed that the new forms offer a statistically significant improvement over the existing forms.</p>",
+        "asset": {
+          "media": "<blockquote>&#8220;The performance advantage for the proposed disclosures was similar across the factors of the study: for experienced as well as inexperienced respondents, easier as well as more challenging loans, and fixed as well as adjustable rate loans.&#8221;</blockquote>",
+          "caption": "<a href='/f/201311_cfpb_study_tila-respa_disclosure-comparison.pdf'><em>Know Before You Owe: QuantitativeStudy of the Current and Integrated TILA-RESPA Disclosures</em></a>, November 20, 2013"
+        }
+      },
+      {
+        "startDate": "2013,6,18",
+        "endDate": "2013,7,26",
+        "headline": "Additional testing with modified disclosures",
+        "text": "<p>In response to comments, we developed and tested different versions of the disclosures for refinance loans, which we tested for three rounds. (In our last round, we tested a modification for both purchases and refinances.) We also did one more round of Spanish language testing for the refinance versions. <a href='/f/201311_cfpb_report_tila-respa_testing-spanish-refinancing.pdf'>The modified disclosures tested well</a> and are the ones included in the final rule.</p>"
+      },
+      {
+        "startDate": "2013,11,20",
+        "endDate": "2013,11,20",
+        "headline": "A final TILA-RESPA rule",
+        "text": "<p><a href='/f/201311_cfpb_final-rule_integrated-mortgage-disclosures.pdf' target='_blank' rel='noopener noreferrer'>The CFPB issues a Final Rule.</a> The final rule creates new integrated mortgage disclosures and details the requirements for using them. The rule is effective for mortgage applications received starting August 1, 2015.</p>"
+      },
+      {
+        "startDate": "2014,5,28",
+        "endDate": "2014,5,28",
+        "headline": "Resources for mortgage professionals are created.",
+        "text": "<p>To help mortgage professionals prepare for the launch of the rule, we created the <a href='/regulatory-implementation/tila-respa/' target='_blank' rel='noopener noreferrer'> TILA - RESPA Integrated Disclosure webpage </a> with the publication of a Small Entity Compliance Guide and sample forms.</p> "
+      },
+      {
+        "startDate": "2014,4,18",
+        "endDate": "2014,4,18",
+        "headline": "A guide to forms is published for mortgage professionals.",
+        "text": "<p>We published a <a href='/f/201503_cfpb_tila-respa-integrated-disclosure-guide-to-the-loan-estimate-and-closing.pdf' target='_blank' rel='noopener noreferrer'> Guide to Forms </a> to assist mortgage professionals in understanding the new rule, the forms, and how to use the forms. </p> "
+      },
+      {
+        "startDate": "2014,9,3",
+        "endDate": "2014,9,3",
+        "headline": "A readiness guide is published for mortgage professionals.",
+        "text": "<p>We published a <a href='/guidance/' target='_blank' rel='noopener noreferrer'> Readiness Guide </a> for mortgage professionals, which is updated as we learn more from industry about their implementation. This guide is a tool to help professionals comply with the rule.</p> "
+      },
+      {
+        "startDate": "2014,10,24",
+        "endDate": "2014,10,24",
+        "headline": "Owning a Home debuts.",
+        "text": "<p>Owning a Home, an online suite of tools and resources that helps consumers learn about mortgages, debuts with the <a href='/owning-a-home/resources/checklist_mortgage_closing.pdf' target='_blank' rel='noopener noreferrer'> closing checklist </a> and <a href='/owning-a-home/loan-options/' target='_blank' rel='noopener noreferrer'> loan options guide </a>.</p> "
+      },
+      {
+        "startDate": "2015,1,13",
+        "endDate": "2015,1,13",
+        "headline": "Owning a Home expands.",
+        "text": "<p>Owning a Home <a href='/owning-a-home/check-rates/' target='_blank' rel='noopener noreferrer'> adds a tool that empowers homebuyers to explore interest rates </a>, allowing people to see information on rates being offered to others in similar situations. </p> "
+      },
+      {
+        "startDate": "2015,1,20",
+        "endDate": "2015,1,20",
+        "headline": "Amendments to the rule are issued.",
+        "text": "<p>We issued minor amendments <a href='/newsroom/cfpb-finalizes-minor-changes-to-know-before-you-owe-mortgage-rules/' target='_blank' rel='noopener noreferrer'> to the rule </a> that extend the timing requirement for revised disclosures when consumers lock a rate or extend a rate lock after the Loan Estimate is provided and permit certain language related to construction loans for transactions involving new construction on the Loan Estimate. </p> "
+      },
+      {
+        "startDate": "2015,3,31",
+        "endDate": "2015,3,31",
+        "headline": "Your Home Loan Toolkit, an informative guide to the mortgage process, is released.",
+        "text": "<p>This resource guides homebuyers through the mortgage process step-by-step with checklists, conversation starters, and worksheets. <a href='/f/201503_cfpb_your-home-loan-toolkit-web.pdf' target='_blank' rel='noopener noreferrer'>The toolkit, available online</a>, is designed to replace the Settlement Cost Booklet for most mortgage loan transactions. Lenders are required to give potential borrowers a copy of the booklet within three business days after they apply for a home purchase mortgage loan.</p>"
+      },
+      {
+        "startDate": "2015,4,1",
+        "endDate": "2015,4,1",
+        "headline": "We publish examination procedures to ensure the rule is implemented correctly.",
+        "text": "<p>Part of our job as a Bureau is to oversee companies that provide consumer financial products and services. We published examination procedures for our examiners to use when making sure mortgage professionals are compliant with the rule. Industry can also use these procedures to improve their own assessment of compliance.</p>"
+      },
+      {
+        "startDate": "2015,6,24",
+        "endDate": "2015,6,24",
+        "headline": "New Effective Date Proposed",
+        "text": "<p><a href='/newsroom/cfpb-proposes-two-month-extension-of-know-before-you-owe-mortgage-rule/'>The CFPB proposes a new effective date of October 3, 2015 for the Know Before You Owe mortgage disclosure rule.</a></p> "
+      },
+      {
+        "startDate": "2015,7,21",
+        "endDate": "2015,7,21",
+        "headline": "New Effective Date Announced",
+        "text": "<p><a href='/newsroom/cfpb-finalizes-two-month-extension-of-know-before-you-owe-effective-date/'>The CFPB issues a final rule moving the effective date to October 3, 2015.</a></p>"
+      },
+      {
+        "startDate": "2015,8,14",
+        "endDate": "2015,8,14",
+        "headline": "A consumer&rsquo;s digital guide to the disclosures is unveiled.",
+        "text": "<p>Our interactive form resources are released. These take you through both the <a href='/owning-a-home/loan-estimate/' target='_blank' rel='noopener noreferrer'> Loan Estimate </a> and <a href='/owning-a-home/closing-disclosure/' target='_blank' rel='noopener noreferrer'> Closing Disclosure </a>, defining terms and helping you understand what each field means. Updated landing pages enable consumers following the links on the <a href='/owning-a-home/mortgage-estimate/' target='_blank' rel='noopener noreferrer'> Loan Estimate </a> and <a href='/owning-a-home/mortgage-closing/' target='_blank' rel='noopener noreferrer'> Closing Disclosure </a> to access an array of resources.</p> "
+      },
+      {
+        "startDate": "2015,8,14",
+        "endDate": "2015,8,14",
+        "headline": "A guide for real estate professionals is released.",
+        "text": "<p>We released the <a href='/know-before-you-owe/real-estate-professionals/'> Know Before You Owe: Real estate professional&rsquo;s guide </a>. This resource helps real estate professionals educate their clients on the mortgage process to ensure smooth and on-time closings.  </p> "
+      },
+      {
+        "startDate": "2015,9,17",
+        "endDate": "2015,9,17",
+        "headline": "We help consumers understand the mortgage process with more Owning a Home resources.",
+        "text": "<p><a href='/owning-a-home/' target='_blank' rel='noopener noreferrer'>Owning a Home</a> continues to grow with the launch of content that helps you understand the mortgage process step-by-step. This new resource helps you navigate the mortgage process, avoid common pitfalls, and keep on track.</p>"
+      }
+    ]
+  }
 }
