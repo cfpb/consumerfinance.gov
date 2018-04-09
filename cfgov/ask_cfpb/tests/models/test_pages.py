@@ -23,13 +23,14 @@ from ask_cfpb.models.django import (
     NextStep, SubCategory, generate_short_slug
 )
 from ask_cfpb.models.pages import (
-    AnswerAudiencePage, AnswerCategoryPage, AnswerPage
+    AnswerAudiencePage, AnswerCategoryPage, AnswerPage, JOURNEY_PATHS
 )
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
-from v1.models import CFGOVImage
+from v1.models import BrowsePage, CFGOVImage, HomePage
 from v1.util.migrations import get_free_path, get_or_create_page
+from v1.tests.wagtail_pages import helpers
 
 
 html_parser = HTMLParser.HTMLParser()
@@ -135,7 +136,6 @@ class AnswerModelTestCase(TestCase):
         return AnswerAudiencePage.objects.create(**kwargs)
 
     def setUp(self):
-        from v1.models import HomePage
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.audience = mommy.make(Audience, name='stub_audience')
         self.category = mommy.make(Category, name='stub_cat', name_es='que')
@@ -1127,3 +1127,123 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(breadcrumbs[0]['href'], portal_path)
         self.assertEqual(context['category'], None)
         self.assertEqual(context['subcategories'], set())
+
+    def test_answer_context_with_portal_referrer(self):
+        """ If the referrer is a portal page but portal's related category
+        does not appear on answer page, breadcrumbs should lead back to portal
+        but there should be no category or subcategories on context."""
+        from ask_cfpb.models import CONSUMER_TOOLS_PORTAL_PAGES as portals
+        portal_path = list(portals.keys())[0]
+        portal_title = portals[portal_path][0]
+        answer = self.answer1234
+        answer.category.add(self.category)
+        for each in self.subcategories:
+            answer.subcategory.add(each)
+        page = answer.english_page
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov' + portal_path
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 1)
+        self.assertEqual(breadcrumbs[0]['title'], portal_title)
+        self.assertEqual(breadcrumbs[0]['href'], portal_path)
+        self.assertEqual(context['category'], None)
+        self.assertEqual(context['subcategories'], set())
+
+    def test_answer_context_with_journey_referrer_and_mortgages_category(self):
+        """ If the referrer is a Buying a House journey page and 'mortgages'
+        category appears on answer page, breadcrumbs should lead back to BAH &
+        referrer pages, and category should be 'mortgages'."""
+
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_path = JOURNEY_PATHS[0]
+        journey_page = BrowsePage(
+            title='Journey page',
+            slug=journey_path.strip('/').split('/')[-1]
+        )
+        helpers.save_new_page(journey_page, bah_page)
+        mortgage_category = mommy.make(
+            Category, name='mortgages', slug='mortgages'
+        )
+        answer = self.answer1234
+        answer.category.add(mortgage_category)
+        page = answer.english_page
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov' + journey_path
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Journey page')
+        self.assertEqual(context['category'], mortgage_category)
+
+    def test_answer_context_with_journey_referrer_and_default_category(self):
+        """ If the referrer is a Buying a House journey page and 'mortgages'
+        category does not appear on answer page, breadcrumbs should lead
+        back to BAH & referrer pages, and category should default to first
+        category on answer."""
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_path = JOURNEY_PATHS[0]
+        journey_page = BrowsePage(
+            title='Journey page',
+            slug=journey_path.strip('/').split('/')[-1]
+        )
+        helpers.save_new_page(journey_page, bah_page)
+        answer = self.answer1234
+        answer.category.add(self.category)
+        page = answer.english_page
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov' + journey_path
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Journey page')
+        self.assertEqual(context['category'], self.category)
+
+    def test_answer_context_with_nested_journey_referrer(self):
+        """If the referrer is a nested Buying a House journey page,
+        breadcrumbs should reflect the BAH page hierarchy."""
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_path = JOURNEY_PATHS[0]
+        journey_page = BrowsePage(
+            title='Journey page',
+            slug=journey_path.strip('/').split('/')[-1]
+        )
+        helpers.save_new_page(journey_page, bah_page)
+        journey_child_page = BrowsePage(
+            title='Journey child page',
+            slug='child'
+        )
+        helpers.save_new_page(journey_child_page, journey_page)
+        page = self.page1
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov' + journey_path + '/child'
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 3)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Journey page')
+        self.assertEqual(breadcrumbs[2]['title'], 'Journey child page')
