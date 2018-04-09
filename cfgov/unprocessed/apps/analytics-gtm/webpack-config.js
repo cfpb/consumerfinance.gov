@@ -63,7 +63,7 @@ const conf = {
   plugins: [
     COMMON_UGLIFY_CONFIG
   ],
- stats: STATS_CONFIG.stats
+  stats: STATS_CONFIG.stats
 };
 
 module.exports = { conf };
