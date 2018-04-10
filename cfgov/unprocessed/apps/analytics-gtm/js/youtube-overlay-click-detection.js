@@ -26,5 +26,5 @@ function _addAnalyticEvent() {
   // Tell GA about the image click.
   const h1El = document.querySelector( 'h1' );
   const YTtitle = h1El.textContent.trim();
-  track( 'image click', YTtitle, 'YouTube Events' );
+  track( 'YouTube Events', 'image click', YTtitle );
 }
