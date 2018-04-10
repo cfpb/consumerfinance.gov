@@ -29,6 +29,7 @@
     .o-expandable_header,
     .o-expandable_content {
         background: transparent;
+        will-change: height;
     }
 
     .image-map {
@@ -107,6 +108,7 @@
         border-bottom: none;
         transition: transform 100ms ease-out;
         transform: translate3d( 0, 0, 0 );
+        will-change: transform;
 
         &.o-expandable__expanded,
         &.o-expandable__expanding,
