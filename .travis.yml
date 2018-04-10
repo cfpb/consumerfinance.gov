@@ -5,6 +5,12 @@ dist: trusty
 python:
   - "2.7"
 
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.6"
+
 cache:
   pip: true
   directories:
@@ -24,6 +30,9 @@ install:
 branches:
   only:
     - master
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
   - ./travis_run.sh
