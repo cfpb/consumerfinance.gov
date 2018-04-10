@@ -85,7 +85,9 @@ describe( 'explore-rates/util', () => {
 
   describe( 'delay()', () => {
     it( 'should delay function execution.', () => {
-      const testFunct = () => {};
+      const testFunct = () => {
+        // This is an empty function to test the delay callback.
+      };
       jest.useFakeTimers();
       util.delay( testFunct, 500 );
       expect( setTimeout ).toHaveBeenLastCalledWith( testFunct, 500 );
