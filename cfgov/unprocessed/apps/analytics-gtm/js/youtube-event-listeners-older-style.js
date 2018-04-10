@@ -11,16 +11,14 @@ import { analyticsLog } from './util/analytics-util';
    and run the script automatically. */
 ( function( document, window ) {
 
-  /* Check if something else already has bound to the onYouTubeIframeAPIReady callback
-     If it has, throw an error so we can see something's wrong */
-  /*
+  /* Check if something else already has bound to the onYouTubeIframeAPIReady
+     callback. If it has, throw an error so we can see something's wrong. */
   if( typeof window.onYouTubeIframeAPIReady !== 'undefined' ) {
-
-    var err = new Error( 'There is already a function defined at window.onYouTubeIframeAPIReady; aborting LunaMetrics Google Analytics YouTube Tracking', 'gtm-yt-tracker.js', '14' );
-    throw err;
-
+    analyticsLog(
+      'There is already a function defined at window.onYouTubeIframeAPIReady;' +
+      ' aborting LunaMetrics Google Analytics YouTube Tracking'
+    );
   }
-  */
 
   // Invoked by the YouTube API once it has finished loading.
   window.onYouTubeIframeAPIReady = function() {
@@ -31,10 +29,9 @@ import { analyticsLog } from './util/analytics-util';
     digestPotentialVideos( embeds );
   };
 
-
   // Load the YouTube API; If it is already loaded, browser will reference that.
   const tag = document.createElement( 'script' );
-  tag.src = '//www.youtube.com/iframe_api';
+  tag.src = 'https://www.youtube.com/iframe_api';
   const firstScriptTag = document.getElementsByTagName( 'script' )[0];
   firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
 
@@ -314,50 +311,6 @@ import { analyticsLog } from './util/analytics-util';
        play event was set */
     if ( stateIndex === 1 ) {
       youTubeIframe.pauseFlag = false;
-    }
-  }
-
-  /**
-   * Utility: IE 8+, Firefox, Opera, Chrome, Safari XDR object
-   *
-   * modified from code courtesy github user xeoncross
-   * https://gist.github.com/Xeoncross/7663273
-   * @param {string} url - A URL
-   * @param {Function} callback - A callback function.
-   * @param {*} data - Some arbitrary data to send.
-   * @param {null} x - XHR class constructor.
-   */
-  function ajax( url, callback, data, x ) {
-    /* Modified to remove headers causing CORS errors
-       Modified to use XDomainRequest
-       IE>8 does not support XDomainRequests */
-    try {
-      // Cross-browser hoop for IE8 & IE9
-      if ( 'XDomainRequest' in window && window.XDomainRequest !== null ) {
-
-        x = new XDomainRequest();
-        x.open( 'GET', url, 1 );
-        x.onload = function() {
-
-          callback( x.responseText, x );
-
-        };
-        x.send();
-      } else {
-        // Cross-Browser hoop for IE8 & IE9
-        x = new ( this.XMLHttpRequest || window.ActiveXObject )( 'MSXML2.XMLHTTP.3.0' );
-        x.open( 'GET', url, 1 );
-        x.onreadystatechange = function() {
-          if ( x.readyState > 3 && callback ) {
-            return callback( x.responseText, x );
-          }
-          return null;
-        };
-        x.send( data );
-      }
-    } catch ( e ) {
-      // If we can't invoke our call, log it to console
-      analyticsLog( e.message );
     }
   }
 } )( document, window );
