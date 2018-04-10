@@ -82,4 +82,13 @@ describe( 'explore-rates/util', () => {
       expect( loanAmountResultDom.textContent ).toBe( '$180,000' );
     } );
   } );
+
+  describe( 'delay()', () => {
+    it( 'should delay function execution.', () => {
+      const testFunct = () => {};
+      jest.useFakeTimers();
+      util.delay( testFunct, 500 );
+      expect( setTimeout ).toHaveBeenLastCalledWith( testFunct, 500 );
+    } );
+  } );
 } );
