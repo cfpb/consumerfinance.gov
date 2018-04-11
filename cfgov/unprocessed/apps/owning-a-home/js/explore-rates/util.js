@@ -3,6 +3,18 @@ import formatUSD from 'format-usd';
 import unFormatUSD from 'unformat-usd';
 
 /**
+ * Simple (anonymous) delay function.
+ * @return {Object} function that has been delayed.
+ */
+const delay = ( function() {
+  let t = 0;
+  return function( callback, delayAmount ) {
+    clearTimeout( t );
+    t = setTimeout( callback, delayAmount );
+  };
+} )();
+
+/**
  * @param  {string} timestamp - A timestamp.
  * @returns {string} Date in the format of MM/dd/yyyy.
  */
@@ -78,6 +90,7 @@ function renderLoanAmount( elem, loanAmount ) {
 
 module.exports = {
   calcLoanAmount,
+  delay,
   formatTimestampMMddyyyy,
   renderAccessibleData,
   renderDatestamp,

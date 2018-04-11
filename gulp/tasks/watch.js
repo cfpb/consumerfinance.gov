@@ -9,13 +9,15 @@ const paths = require( '../../config/environment' ).paths;
  * @param {FSWatcher} watcher - Output from gulp.watch.
  */
 function _addChangeListener( watcher ) {
-  watcher.on( 'change', function( path, stats ) {
-    fancyLog.info( 'File ' + path + ' was changed' );
-  } );
+  watcher.on(
+    'change',
+    path => fancyLog.info( 'File ' + path + ' was changed' )
+  );
 
-  watcher.on('unlink', function( path ) {
-    fancyLog.info( 'File ' + path + ' was removed' );
-  } );
+  watcher.on(
+    'unlink',
+    path => fancyLog.info( 'File ' + path + ' was removed' )
+  );
 }
 
 gulp.task( 'watch',
