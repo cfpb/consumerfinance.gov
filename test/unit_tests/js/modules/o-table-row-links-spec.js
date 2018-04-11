@@ -20,7 +20,7 @@ const HTML_SNIPPET = `
               <th>cell4</th>
           </tr>
           <tr>
-              <td><a href="http://www.example.com">linkCell5</a></td>
+              <td><a href="https://www.example.com">linkCell5</a></td>
               <td class="linkRowCell">cell6</td>
               <td>cell7</td>
               <td>cell8</td>
@@ -45,7 +45,7 @@ describe( 'o-table-row-links', () => {
 
   it( 'should navigate to new location when link row cell clicked', () => {
     simulateEvent( 'click', linkRowCellDom );
-    expect( locationSpy ).toBeCalledWith( 'http://www.example.com' );
+    expect( locationSpy ).toBeCalledWith( 'https://www.example.com' );
   } );
 
   it( 'should not set window location when link is clicked', () => {

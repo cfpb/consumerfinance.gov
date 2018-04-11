@@ -861,7 +861,7 @@ class ChartBlock(blocks.StructBlock):
     data_source = blocks.CharBlock(
         required=True,
         help_text='Location of the chart\'s data source relative to '
-                  '"http://files.consumerfinance.gov/data/". For example,'
+                  '"https://files.consumerfinance.gov/data/". For example,'
                   '"consumer-credit-trends/volume_data_Score_Level_AUT.csv".')
     date_published = blocks.DateBlock(
         help_text='Automatically generated when CCT cron job runs'
