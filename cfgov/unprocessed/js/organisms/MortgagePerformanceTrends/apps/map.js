@@ -156,7 +156,7 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   if ( prevState.date === state.date && prevType === currType && currId ) {
 
     /* Highcharts zooming is unreliable and difficult to customize :(
-       http://api.highcharts.com/highmaps/Chart.mapZoom
+       https://api.highcharts.com/class-reference/Highcharts.Chart.html#mapZoom
        If it's a state or non-metro, zoom in more than other location types */
     zoomLevel = currType === 'state' || utils.isNonMetro( currId ) ? 5 : 10;
     this.chart.highchart.chart.get( currId ).select( true );

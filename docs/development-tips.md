@@ -77,7 +77,7 @@ Required option:
 - `--parent` is the slug of the parent page that the pages will exist
   under.
 - `--snippet` is a flag that's used to signify that the importing data will be
-  inserted into a Django model, registered as a [Wagtail snippet](http://docs.wagtail.io/en/v1.1/topics/snippets.html).
+  inserted into a Django model, registered as a [Wagtail snippet](http://docs.wagtail.io/en/v2.0.1/topics/snippets.html).
   One of these options must be set for the command to run.
 
 Other options:
@@ -257,10 +257,10 @@ may have an impact on local server performance.
 ### TIP: Updating the documentation
 
 Our documentation is written as Markdown files and served in GitHub pages
-by [mkdocs](http://www.mkdocs.org/user-guide/deploying-your-docs/).
+by [mkdocs](https://www.mkdocs.org/user-guide/deploying-your-docs/).
 
 To update the docs in GitHub Pages once a pull request has been merged,
-mkdocs provides [a helpful command](http://www.mkdocs.org/user-guide/deploying-your-docs/):
+mkdocs provides [a helpful command](https://www.mkdocs.org/user-guide/deploying-your-docs/):
 
 ```
 mkdocs gh-deploy --clean

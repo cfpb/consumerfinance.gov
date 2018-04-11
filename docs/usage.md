@@ -43,7 +43,7 @@ and rebuild the site's JavaScript and CSS assets.
 	This Elasticsearch tab (or window) might not be necessary if you opted for the `launchd` option when [installing Elasticsearch](installation#elasticsearch).
 
 To launch Elasticsearch, first find out where your Elasticsearch config file is located.
-You can do this with [Homebrew](http://brew.sh) using:
+You can do this with [Homebrew](https://brew.sh) using:
 
 ```bash
 brew info elasticsearch
@@ -77,7 +77,7 @@ python cfgov/manage.py sheer_index -r
 
 !!! note
 	To view the indexed content you can use a tool called
-	[elasticsearch-head](http://mobz.github.io/elasticsearch-head/).
+	[elasticsearch-head](https://mobz.github.io/elasticsearch-head/).
 
 From the project root, start the Django server:
 
@@ -160,13 +160,13 @@ gulp watch           # Watch for source code changes and auto-update a browser i
 
 ## Usage: Docker
 
-Much of the guidance above for the "stand-alone" set-up still stands, and it 
+Much of the guidance above for the "stand-alone" set-up still stands, and it
 is worth reviewing in full. Here are some things that might be different:
 
-- `docker-compose` takes care of running Elasticsearch for you, and all 
-Elastisearch, MySQL, and Python output will be shown in a single Terminal 
+- `docker-compose` takes care of running Elasticsearch for you, and all
+Elastisearch, MySQL, and Python output will be shown in a single Terminal
 window or tab. (whereever you run `docker-compose up`)
-- `manage.py`commands can only be run after you've opened up a terminal in the 
+- `manage.py`commands can only be run after you've opened up a terminal in the
 Python container, which you can do with `./shell.sh`
 - There is not *yet* a good way to use SSL/HTTPS, but that is in the works
 - You won't ever use these scripts: `setup.sh`, `backend.sh`, `runserver.sh`
@@ -175,49 +175,49 @@ Python container, which you can do with `./shell.sh`
 
 #### Use Docker Machine
 
-If you used `mac-virtualbox-init.sh` or `setup.sh docker`, then we used Docker 
-Machine to create a virtualbox VM, running the docker server. Here are some 
+If you used `mac-virtualbox-init.sh` or `setup.sh docker`, then we used Docker
+Machine to create a virtualbox VM, running the docker server. Here are some
 useful docker machine commands:
 
 - Start and stop the VM with  `docker-machine start` and `docker-machine stop`
 - get the current machine IP with `docker-machine ip`
-- if for some reason you want to start over, `docker-machine rm default`, and 
+- if for some reason you want to start over, `docker-machine rm default`, and
   `source mac-virtualbox-init.sh`
 
 You'll need to run this command in any new terminal window or tab:
 
 `eval $(docker-machine env)`
 
-It may be helpful to run `docker-machine env` by itself, so you understand 
-what's happening. Those variables are what allows docker-compose and the docker 
-command line tool, running natively on your mac, to connect to the Docker 
+It may be helpful to run `docker-machine env` by itself, so you understand
+what's happening. Those variables are what allows docker-compose and the docker
+command line tool, running natively on your mac, to connect to the Docker
 server running inside virtualbox.
 
-If you use autoenv (described in the stand-alone intructions) or something 
-similar, you might consider adding `eval $(docker-machine env)` to your .env 
-file. You could also achieve the same results (and start the VM if it's not 
+If you use autoenv (described in the stand-alone intructions) or something
+similar, you might consider adding `eval $(docker-machine env)` to your .env
+file. You could also achieve the same results (and start the VM if it's not
 running yet) with `source mac-virtualbox-init.sh`
 
-Any further Docker documentation will assume you are either in a shell where 
-you have already run `eval $(docker-machine env)`, or you are in an environment 
+Any further Docker documentation will assume you are either in a shell where
+you have already run `eval $(docker-machine env)`, or you are in an environment
 where that's not neccessary.
 
 #### Run manage.py commands like migrate, shell, and dbshell, and shell scripts like refresh-data.sh
 
-run `./shell.sh` to open up a shell *inside* the Python container. From there, 
+run `./shell.sh` to open up a shell *inside* the Python container. From there,
 commands like `cfgov/manage.py migrate` should run as expected.
 
-The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` -- 
+The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` --
 they will work as expected once you're inside the container.
 
-In addition you can run single commands by passing them as arguments to 
+In addition you can run single commands by passing them as arguments to
 `shell.sh`, for example:
 
 `./shell.sh cfgov/manage.py migrate`
 
 #### Use PDB
 
-Run `./attach.sh` to connect to the TTY session where `manage.py runserver` is 
+Run `./attach.sh` to connect to the TTY session where `manage.py runserver` is
 running. If the app is paused at a PDB prompt, this is where you can access it.
 
 #### Handle updates to Python requirements
@@ -226,16 +226,16 @@ If Compose is running, stop it with CTRL-C. Run:
 
 `docker-compose build python`
 
-This will update your Python image. The next time you run `docker-compose up`, 
+This will update your Python image. The next time you run `docker-compose up`,
 the new requirements will be in place.
 
 #### Set environment variables
 
-Your shell environment variables (and the variables in your .env file, if you 
-are using one) are not visible to applications running in Docker. If you need 
-to set variables that will be visible to Django, and in `./shell.sh`, you'll 
-need to set them in the .python_env file, and restart the python container (it 
-might be simpler to simple stop compose with ctrl-c, and start it again with 
+Your shell environment variables (and the variables in your .env file, if you
+are using one) are not visible to applications running in Docker. If you need
+to set variables that will be visible to Django, and in `./shell.sh`, you'll
+need to set them in the .python_env file, and restart the python container (it
+might be simpler to simple stop compose with ctrl-c, and start it again with
 `docker-compose up`)
 
 .python_env is *not* a shell script, like your .env file, ~/.bash_profile, etc.
@@ -243,45 +243,45 @@ See the [Docker Compose docs](https://docs.docker.com/compose/compose-file/#env_
 
 #### Get familiar with Docker Compose, and our configuration
 
-docker-compose.yml contains a sort of "recipe" for running the site. Each entry 
-in the Compose file describes a component of our application stack (MySQL, 
-Elasticsearch, and Python), and either points to a public image on Dockerhub, 
-or to a Dockerfile in cfgov-refresh. You can learn a lot more about Compose 
+docker-compose.yml contains a sort of "recipe" for running the site. Each entry
+in the Compose file describes a component of our application stack (MySQL,
+Elasticsearch, and Python), and either points to a public image on Dockerhub,
+or to a Dockerfile in cfgov-refresh. You can learn a lot more about Compose
 files in [the docs](https://docs.docker.com/compose/compose-file/)
 
-Similarly, a Dockerfile contains instructions for transforming some base image, 
-to one that suits our needs. The Dockerfile sitting in the top level of 
-cfgov-refresh is probably the most interesting. It starts with 
-[the public CentOS:7 image](https://hub.docker.com/_/centos/), and installs 
-everything else neccessary to run our Python dependencies and the Django app 
+Similarly, a Dockerfile contains instructions for transforming some base image,
+to one that suits our needs. The Dockerfile sitting in the top level of
+cfgov-refresh is probably the most interesting. It starts with
+[the public CentOS:7 image](https://hub.docker.com/_/centos/), and installs
+everything else neccessary to run our Python dependencies and the Django app
 itself.  This file will only be executed:
 
-- the first time you run `docker-compose up` (or the first time after you 
+- the first time you run `docker-compose up` (or the first time after you
 re-create the Docker Machine VM)
 - any time you run `docker-compose build`
 
-That's why you need to run `docker-compose build` after any changes to 
+That's why you need to run `docker-compose build` after any changes to
 /requirements/
 
-There are other compose subcommands you might be interested in. Consider 
-[learning about](https://docs.docker.com/compose/reference/overview/) 
+There are other compose subcommands you might be interested in. Consider
+[learning about](https://docs.docker.com/compose/reference/overview/)
 `build`, `restarts`, `logs`, `ps`, `top`, and the `-d` option for `up`.
 
 #### Develop satellite apps
 
-Check out any apps you are developing into the develop-apps directory. These 
-will automatically be added to the 
-[PYTHONPATH](https://docs.python.org/2/using/cmdline.html#envvar-PYTHONPATH), 
-and apps contained within will be importable from Python running in the 
+Check out any apps you are developing into the develop-apps directory. These
+will automatically be added to the
+[PYTHONPATH](https://docs.python.org/2/using/cmdline.html#envvar-PYTHONPATH),
+and apps contained within will be importable from Python running in the
 container.
 
-For example, if your app is called 'foobar', in a repo called foobar-project, 
+For example, if your app is called 'foobar', in a repo called foobar-project,
 you could clone foobar-project in to develop apps:
 
 `git clone https://github.com/myorg/foobar-project`
 
-... which will create a directory at develop-apps/foobar-project. Assuming 
-'foobar' is at the top-level of 'foobar-project', you should be able to 
+... which will create a directory at develop-apps/foobar-project. Assuming
+'foobar' is at the top-level of 'foobar-project', you should be able to
 import it from your python code:
 
 ```python
@@ -289,5 +289,5 @@ import foobar
 ```
 #### runserver has crashed! How do I start it again
 
-In a seperate terminal window or tab, `docker-compose up python` should restart 
-it. 
+In a seperate terminal window or tab, `docker-compose up python` should restart
+it.

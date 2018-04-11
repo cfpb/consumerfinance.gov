@@ -1,7 +1,7 @@
 {
   "name": "cfgov-refresh",
   "description": "The consumerfinance.gov website.",
-  "homepage": "http://www.consumerfinance.gov/",
+  "homepage": "https://www.consumerfinance.gov/",
   "author": {
     "name": "Consumer Financial Protection Bureau",
     "email": "tech@cfpb.gov",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/cfpb/cfgov-refresh.git"
+    "url": "https://github.com/cfpb/cfgov-refresh.git"
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {

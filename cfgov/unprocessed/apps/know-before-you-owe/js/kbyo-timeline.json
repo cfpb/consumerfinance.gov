@@ -12,7 +12,7 @@
         "startDate": "2010,7,21",
         "endDate": "2010,7,21",
         "headline": "The Dodd-Frank Wall Street Reform and Consumer Protection Act is signed into law.",
-        "text": "<p>The <a href='http://www.gpo.gov/fdsys/pkg/BILLS-111hr4173enr/pdf/BILLS-111hr4173enr.pdf' target='_blank' rel='noopener noreferrer'>new law</a> required the CFPB to combine the Truth in Lending and Real Estate Settlement Procedures Act disclosures.</p>",
+        "text": "<p>The <a href='https://www.gpo.gov/fdsys/pkg/BILLS-111hr4173enr/pdf/BILLS-111hr4173enr.pdf' target='_blank' rel='noopener noreferrer'>new law</a> required the CFPB to combine the Truth in Lending and Real Estate Settlement Procedures Act disclosures.</p>",
         "asset": {
           "media": "../static/img/timeline-asset_dfa-page-1.png",
           "caption": "The cover page of the Dodd-Frank Act."
@@ -109,7 +109,7 @@
         "text": "<p>A panel of representatives from the CFPB, the Small Business Administration (SBA), and the Office of Management and Budget (OMB) considered the potential impact of the proposals under consideration on small businesses that will provide the mortgage disclosures.</p>",
         "asset": {
           "media": "<blockquote>&#8220;In the upcoming weeks, the Review Panel will meet with a group of small lenders, brokers, and settlement agents that we have selected in consultation with the SBA.&#8221;</blockquote>",
-          "caption": "<a href='http://www.consumerfinance.gov/blog/sbrefa-small-providers-and-mortgage-disclosure/'><em>SBREFA, Small Providers, and Mortgage Disclosure</em></a>, February 21, 2012"
+          "caption": "<a href='https://www.consumerfinance.gov/blog/sbrefa-small-providers-and-mortgage-disclosure/'><em>SBREFA, Small Providers, and Mortgage Disclosure</em></a>, February 21, 2012"
         }
       },
       {
@@ -140,7 +140,7 @@
         "startDate": "2012,11,6",
         "endDate": "2012,11,6",
         "headline": "Comment period on most of the proposed rule closes.",
-        "text": "<p>Between the public comment period and other information for the record, <a href='http://www.regulations.gov/#!documentDetail;D=CFPB-2012-0028-0001' target='_blank' rel='noopener noreferrer'>the CFPB reviewed nearly 3,000 comments</a>. These comments helped us improve the disclosures and the final rule.</p>"
+        "text": "<p>Between the public comment period and other information for the record, <a href='https://www.regulations.gov/#!documentDetail;D=CFPB-2012-0028-0001' target='_blank' rel='noopener noreferrer'>the CFPB reviewed nearly 3,000 comments</a>. These comments helped us improve the disclosures and the final rule.</p>"
       },
       {
         "startDate": "2013,4,23",

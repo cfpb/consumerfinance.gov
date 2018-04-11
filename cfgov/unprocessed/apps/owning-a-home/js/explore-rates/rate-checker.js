@@ -674,14 +674,13 @@ function renderInterestAmounts() {
 function renderInterestSummary( intVals, term ) {
 
   let sortedRates;
-  let diff;
   const id = '#rc-comparison-summary-' + term;
 
   sortedRates = intVals.sort( function( a, b ) {
     return a.rate - b.rate;
   } );
 
-  diff = formatUSD( sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest, { decimalPlaces: 0 } );
+  const diff = formatUSD( sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest, { decimalPlaces: 0 } );
   $( id + ' .comparison-term' ).text( sortedRates[0].term );
   $( id + ' .rate-diff' ).text( diff );
   $( id + ' .higher-rate' ).text( sortedRates[sortedRates.length - 1].rate + '%' );
