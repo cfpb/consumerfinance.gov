@@ -49,6 +49,7 @@ jobs:
     - stage: run tests
       env: RUNTEST=frontend
     - env: RUNTEST=backend
+    - env: RUNTEST=acceptance
     - stage: Update documentation
       script:
         - pip install virtualenv virtualenvwrapper
