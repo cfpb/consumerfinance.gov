@@ -68,6 +68,9 @@ const defaultSuites = {
   ]
 };
 
+if ( process.env.GOOGLE_CHROME_BINARY ) {
+  defaultSuites.headless.chromeOptions.binary = process.env.GOOGLE_CHROME_BINARY;
+}
 
 // Run all browsers together.
 defaultSuites.full = defaultSuites.essential.concat(

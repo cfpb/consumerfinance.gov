@@ -10,6 +10,11 @@ services:
 
 addons:
   postgresql: "9.6"
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
 
 cache:
   pip: true
@@ -42,6 +47,7 @@ env:
     - DJANGO_SETTINGS_MODULE=cfgov.settings.test
     - DJANGO_STAGING_HOSTNAME=content.localhost
     - COVERALLS_PARALLEL=true
+    - HEADLESS_CHROME_BINARY=/usr/bin/google-chrome-stable
 
 jobs:
   fast_finish: true
@@ -49,6 +55,7 @@ jobs:
     - stage: run tests
       env: RUNTEST=frontend
     - env: RUNTEST=backend
+    - env: RUNTEST=acceptance
     - stage: Update documentation
       script:
         - pip install virtualenv virtualenvwrapper
