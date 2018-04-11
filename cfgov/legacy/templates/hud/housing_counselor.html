@@ -181,7 +181,7 @@ Find a housing counselor
                                                                 {% if valid_url %}<a href="{{ signed_url }}" class="icon-link icon-link__external-link">{% endif %}
                                                                 <span class="icon-link_text">{{ counselor.weburl }}</span>
                                                                 {% if valid_url %}</a>{% endif %}
-                                                            </span>
+                                                            </span></span>
                                                             <span class="hud_hca_api_results_listing_title">Phone: <span class="hud_hca_api_tel">{{ counselor.phone1 }}</span></span>
                                                             <span class="hud_hca_api_results_listing_title">Email Address: <span class="hud_hca_api_email">{{ counselor.email }}</span></span>
                                                             <span class="hud_hca_api_results_listing_title">Languages: <span class="hud_hca_api_lang">{{ counselor.languages|join:', ' }}</span></span>
