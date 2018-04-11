@@ -294,7 +294,7 @@ function updateView() {
 function updateLanguage( totalVals ) {
   function renderLocation() {
     const stateDropDown = document.querySelector( '#location' );
-    const state = stateDropDown.options[stateDropDown.selectedIndex].text;
+    const state = stateDropDown.options[stateDropDown.selectedIndex].textContent;
     const locations = document.querySelectorAll( '.location' );
     locations.forEach( item => {
       item.innerText = state;

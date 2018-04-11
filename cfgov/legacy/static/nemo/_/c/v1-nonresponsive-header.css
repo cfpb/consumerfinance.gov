@@ -460,7 +460,6 @@ ul:last-child,.list__links .list_item:last-child {
     display: inline;
     margin-right: 0;
     zoom: 1;
-    *behavior: url('/static/js/boxsizing.htc');;
 }
 .m-featured-menu-content_text {
     display: table-footer-group;
@@ -990,7 +989,6 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
     display: inline;
     margin-right: 0;
     zoom: 1;
-    *behavior: url('/static/js/boxsizing.htc');;
 }
 .o-mega-menu_content-2-link {
     padding-top: .55555556em;
@@ -1023,7 +1021,6 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
     display: inline;
     margin-right: 0;
     zoom: 1;
-    *behavior: url('/static/js/boxsizing.htc');;
 }
 @media only all and (min-width:76.9375em) {
     .o-mega-menu_content-1-item {
