@@ -6,8 +6,6 @@ pages:
 - Building and Deploying for cf.gov:
     - New projects: new-projects.md
     - Branching and merging: branching-merging.md
-    - Release cadence: release-cadence.md
-    - Deployment: deployment.md
     - Feature flags: feature-flags.md
 - Back-end guidelines:
     - Wagtail and Django migrations: wagtail-migrations.md

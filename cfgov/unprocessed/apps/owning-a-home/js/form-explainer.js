@@ -200,36 +200,13 @@ class FormExplainer {
    * current focus.
    */
   openAndScrollToExpandable( imageOverlay, targetExpandable ) {
-    let pos = window.scrollY;
-    let offset = 0;
-
-
-    targetExpandable.querySelector(
+    let targetExpandableTarget = targetExpandable.querySelector(
       '.o-expandable_target'
-    ).click();
+    );
 
-    window.setTimeout( () => {
-      if ( elementInView( targetExpandable, true ) === false ) {
-        const prevExpanded = DT.getPreviousEls(
-          targetExpandable,
-          '.o-expandable__expanded'
-        )[0];
+    targetExpandableTarget.focus();
 
-        if ( prevExpanded ) {
-          offset = prevExpanded.querySelector(
-            '.o-expandable_content'
-          ).offsetHeight - 30;
-        }
-
-        pos = pos - offset + targetExpandable.getBoundingClientRect().top;
-
-        DT.nextFrame( () => {
-          scrollTo( pos, {
-            duration: 600
-          } );
-        } );
-      }
-    }, 600 );
+    window.setTimeout( () => targetExpandableTarget.click(), 100 );
   }
 
   /**

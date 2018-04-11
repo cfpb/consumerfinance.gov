@@ -270,19 +270,70 @@ class AnswerModelTestCase(TestCase):
             page.get_template(HttpRequest()),
             'ask-cfpb/answer-page.html')
 
-    def test_facet_map(self):
-        self.answer1234.category.add(self.category)
-        self.answer1234.audiences.add(self.audience)
-        self.answer1234.subcategory.add(self.subcategories[1])
-        facet_map = self.category.facet_map
+    def create_live_answer(self, answer_id=None, question=None):
+        kwargs = {}
+
+        if answer_id is not None:
+            kwargs['id'] = answer_id
+
+        if question is not None:
+            kwargs['question'] = question
+
+        answer = self.prepare_answer(update_english_page=True, **kwargs)
+        answer.save()
+
+        answer_english_page = answer.english_page
+        answer_english_page.live = True
+        answer_english_page.save()
+
+        return answer
+
+    def test_category_facet_map_includes_answer_and_question(self):
+        answer = self.create_live_answer(
+            answer_id=999,
+            question='test question'
+        )
+
+        category = mommy.make(Category)
+        answer.category.add(category)
+
+        category_facet_map = json.loads(category.facet_map)
         self.assertEqual(
-            json.loads(facet_map)['answers']['1234']['question'],
-            'Mock question1')
+            category_facet_map['answers']['999']['question'],
+            'test question'
+        )
+
+    def test_category_facet_map_includes_audience_name(self):
+        answer = self.create_live_answer()
+
+        audience = mommy.make(Audience, id=123, name='test audience')
+        answer.audiences.add(audience)
+
+        category = mommy.make(Category)
+        answer.category.add(category)
+
+        category_facet_map = json.loads(category.facet_map)
         self.assertEqual(
-            json.loads(facet_map)['audiences']['1']['name'],
-            'stub_audience')
-        self.assertEqual(
-            json.loads(facet_map)['subcategories']['1'], [])
+            category_facet_map['audiences']['123']['name'],
+            'test audience'
+        )
+
+    def test_category_facet_map_includes_subcategories_with_answer_ids(self):
+        category = mommy.make(Category)
+        subcategory = mommy.make(SubCategory, parent=category, id=7)
+        category.subcategories.add(subcategory)
+
+        answer1 = self.create_live_answer(answer_id=14)
+        answer1.subcategory.add(subcategory)
+
+        answer2 = self.create_live_answer(answer_id=21)
+        answer2.subcategory.add(subcategory)
+
+        category_facet_map = json.loads(category.facet_map)
+        self.assertItemsEqual(
+            category_facet_map['subcategories']['7'],
+            ['14', '21']
+        )
 
     def test_facet_map_skips_draft_page(self):
         self.answer1234.category.add(self.category)

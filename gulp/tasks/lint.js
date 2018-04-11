@@ -46,8 +46,10 @@ gulp.task( 'lint:scripts', () => _genericLint( configLint.src ) );
 /**
  * Lints all the js files for errors
  */
-gulp.task( 'lint', [
-  'lint:build',
-  'lint:tests',
-  'lint:scripts'
-] );
+gulp.task( 'lint',
+  gulp.parallel(
+    'lint:build',
+    'lint:tests',
+    'lint:scripts'
+  )
+);

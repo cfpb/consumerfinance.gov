@@ -1,6 +1,8 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-
 const Multiselect = require( BASE_JS_PATH + 'molecules/Multiselect' );
+
+import { simulateEvent } from '../../../util/simulate-event';
+
 let multiselect;
 let selectDom;
 let multiselectDom;
@@ -13,13 +15,6 @@ const HTML_SNIPPET = `
     <optgroup label="All other topics">
   </select>
 `;
-
-function keyPress( target, key ) {
-  const event = target.createEvent( 'Event' );
-  event.keyCode = key;
-  event.initEvent( 'keydown' );
-  target.dispatchEvent( event );
-}
 
 describe( 'Multiselect', () => {
   beforeEach( () => {
@@ -111,7 +106,7 @@ describe( 'Multiselect', () => {
       multiselect.init();
       const search = document.querySelector( '#test-select' );
       search.click();
-      keyPress( search, 40 );
+      simulateEvent( 'keydown', search, { keyCode: 40 } );
 
       expect( document.activeElement.id ).toBe( 'Debt collection' );
     } );

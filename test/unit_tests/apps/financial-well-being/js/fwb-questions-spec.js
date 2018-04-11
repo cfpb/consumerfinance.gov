@@ -1,5 +1,7 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 
+import { simulateEvent } from '../../../../util/simulate-event';
+
 let fwbQuestions;
 let formDom;
 let submitBtnDom;
@@ -128,17 +130,10 @@ const HTML_SNIPPET = `
   </form>
 `;
 
-function triggerClickEvent( target ) {
-  const event = document.createEvent( 'Event' );
-  event.initEvent( 'click', true, true );
-
-  return target.dispatchEvent( event );
-}
-
 function fillOutForm() {
   const radioButtons = document.querySelectorAll( '[type="radio"]' );
   [].forEach.call( radioButtons, radioElement => {
-    triggerClickEvent( radioElement );
+    simulateEvent( 'click', radioElement );
   } );
 }
 
@@ -173,7 +168,7 @@ describe( 'fwb-questions', () => {
   it( 'submit button shouldn’t submit the form ' +
       'unless all the questions are completed.', () => {
     fwbQuestions.init();
-    const formSubmissionStatus = triggerClickEvent( submitBtnDom );
+    const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
     expect( submitBtnDom.disabled ).toBe( true );
     expect( formSubmissionStatus ).toBe( false );
   } );
@@ -182,7 +177,7 @@ describe( 'fwb-questions', () => {
       'if all the questions are completed before page load.', () => {
     fillOutForm();
     fwbQuestions.init();
-    const formSubmissionStatus = triggerClickEvent( submitBtnDom );
+    const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
     expect( submitBtnDom.disabled ).toBe( false );
     expect( formSubmissionStatus ).toBe( true );
   } );
@@ -191,7 +186,7 @@ describe( 'fwb-questions', () => {
       'if all the questions are completed after page load.', () => {
     fwbQuestions.init();
     fillOutForm();
-    const formSubmissionStatus = triggerClickEvent( submitBtnDom );
+    const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
     expect( submitBtnDom.disabled ).toBe( false );
     expect( formSubmissionStatus ).toBe( true );
   } );
@@ -199,7 +194,7 @@ describe( 'fwb-questions', () => {
   it( 'should send the correct analytics ' +
       'when a radio button is clicked', () => {
     fwbQuestions.init();
-    triggerClickEvent( radioButtonsDom[0] );
+    simulateEvent( 'click', radioButtonsDom[0] );
     expect( window.dataLayer[0] ).toEqual( dataLayerEventRadio );
   } );
 
@@ -207,7 +202,7 @@ describe( 'fwb-questions', () => {
       'when the submit button is clicked', () => {
     fillOutForm();
     fwbQuestions.init();
-    triggerClickEvent( submitBtnDom );
+    simulateEvent( 'click', submitBtnDom );
     expect( window.dataLayer[0] ).toEqual( dataLayerEventSubmit );
   } );
 } );
