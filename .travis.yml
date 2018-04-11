@@ -10,6 +10,7 @@ services:
 
 addons:
   postgresql: "9.6"
+  chrome: beta
 
 cache:
   pip: true
