@@ -2,6 +2,8 @@ const simpleTableRowLinks = require(
   '../../../../cfgov/unprocessed/js/modules/o-table-row-links'
 );
 
+import { simulateEvent } from '../../../util/simulate-event';
+
 let tableDom;
 let linkDom;
 let linkRowCellDom;
@@ -27,16 +29,6 @@ const HTML_SNIPPET = `
   </table>
 `;
 
-/**
- * Simulate a click event
- * @param  {HTMLNode} target - Element that dispatches the click event.
- */
-function triggerClickEvent( target ) {
-  const event = document.createEvent( 'Event' );
-  event.initEvent( 'click', true, true );
-  target.dispatchEvent( event );
-}
-
 describe( 'o-table-row-links', () => {
   beforeEach( () => {
     window.location.assign = jest.fn();
@@ -52,18 +44,18 @@ describe( 'o-table-row-links', () => {
   } );
 
   it( 'should navigate to new location when link row cell clicked', () => {
-    triggerClickEvent( linkRowCellDom );
+    simulateEvent( 'click', linkRowCellDom );
     expect( locationSpy ).toBeCalledWith( 'http://www.example.com' );
   } );
 
   it( 'should not set window location when link is clicked', () => {
-    triggerClickEvent( linkDom );
+    simulateEvent( 'click', linkDom );
     expect( locationSpy ).toHaveBeenCalledTimes( 0 );
   } );
 
   it( 'should not navigate to new location when non link row cell clicked',
     () => {
-      triggerClickEvent( nonLinkRowCellDom );
+      simulateEvent( 'click', nonLinkRowCellDom );
       expect( locationSpy ).toHaveBeenCalledTimes( 0 );
     }
   );
