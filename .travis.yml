@@ -34,6 +34,8 @@ branches:
 
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
+  - sudo chown root /opt/google/chrome/chrome-sandbox
+  - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
 
 script:
   - ./travis_run.sh
