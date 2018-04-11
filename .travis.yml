@@ -1,5 +1,5 @@
 language: python
-sudo: required
+sudo: false
 dist: trusty
 
 python:
@@ -10,7 +10,11 @@ services:
 
 addons:
   postgresql: "9.6"
-  chrome: beta
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
 
 cache:
   pip: true
@@ -43,7 +47,7 @@ env:
     - DJANGO_SETTINGS_MODULE=cfgov.settings.test
     - DJANGO_STAGING_HOSTNAME=content.localhost
     - COVERALLS_PARALLEL=true
-    - HEADLESS_CHROME_BINARY=/usr/bin/google-chrome-beta
+    - HEADLESS_CHROME_BINARY=/usr/bin/google-chrome-stable
 
 jobs:
   fast_finish: true
