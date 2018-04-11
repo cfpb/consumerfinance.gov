@@ -13,3 +13,13 @@ nav ol ol {
 }
 
 // END enhancement for normalize-legacy-addon
+
+h1,
+.h1 {
+    .respond-to-max( @bp-xs-max, {
+        h5.eyebrow + &,
+        .h5.eyebrow + & {
+            margin-top: 0;
+        }
+    } );
+}
