@@ -200,7 +200,7 @@ class FormExplainer {
    * current focus.
    */
   openAndScrollToExpandable( imageOverlay, targetExpandable ) {
-    let targetExpandableTarget = targetExpandable.querySelector(
+    const targetExpandableTarget = targetExpandable.querySelector(
       '.o-expandable_target'
     );
 
