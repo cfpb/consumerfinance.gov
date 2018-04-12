@@ -23,14 +23,14 @@ from ask_cfpb.models.django import (
     NextStep, SubCategory, generate_short_slug
 )
 from ask_cfpb.models.pages import (
-    AnswerAudiencePage, AnswerCategoryPage, AnswerPage, JOURNEY_PATHS
+    JOURNEY_PATHS, AnswerAudiencePage, AnswerCategoryPage, AnswerPage
 )
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
 from v1.models import BrowsePage, CFGOVImage, HomePage
-from v1.util.migrations import get_free_path, get_or_create_page
 from v1.tests.wagtail_pages import helpers
+from v1.util.migrations import get_free_path, get_or_create_page
 
 
 html_parser = HTMLParser.HTMLParser()

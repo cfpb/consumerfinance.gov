@@ -27,6 +27,7 @@ from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
 from v1.models.snippets import ReusableText
 
+
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
 ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
