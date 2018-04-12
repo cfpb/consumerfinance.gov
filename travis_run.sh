@@ -9,7 +9,7 @@ if [ "$RUNTEST" == "frontend" ]; then
     bash <(curl -s https://codecov.io/bash) -F frontend
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e lint
-    tox -e fast
+    DATABASE_URL=postgres://postgres@localhost/travis_ci_test tox -e fast
     tox -e missing-migrations
     bash <(curl -s https://codecov.io/bash) -F backend
 elif [ "$RUNTEST" == "acceptance" ]; then

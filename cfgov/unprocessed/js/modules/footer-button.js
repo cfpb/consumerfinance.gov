@@ -1,7 +1,7 @@
 /* ==========================================================================
    Footer Button: Scroll to Top
    Code copied from the following with minimal modifications :
-   - http://stackoverflow.com/questions/21474678/
+   - https://stackoverflow.com/questions/21474678/
    scrolltop-animation-without-jquery
    ========================================================================== */
 

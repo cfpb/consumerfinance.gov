@@ -10,7 +10,7 @@ describe( 'loadScript method', () => {
   xit( 'should invoke the callback method when the script loads', () => {
     // eslint-disable-next-line no-unused-vars
     const loaderPromise = new Promise( ( resolve, reject ) => {
-      const scriptLocation = 'http://code.jquery.com/jquery-1.5.min.js';
+      const scriptLocation = 'https://code.jquery.com/jquery-1.5.min.js';
       jsLoader.loadScript( scriptLocation, () => {
         resolve( 'Callback called' );
       } );

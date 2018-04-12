@@ -1,5 +1,12 @@
 import $ from 'jquery';
 import 'rangeslider.js';
+import {
+  calcLoanAmount,
+  delay,
+  renderAccessibleData,
+  renderDatestamp,
+  renderLoanAmount
+} from './util';
 import * as params from './params';
 import * as template from './template-loader';
 import Highcharts from 'highcharts';
@@ -9,18 +16,11 @@ import dropdown from '../dropdown-utils';
 import fetchRates from '../rates';
 import formatUSD from 'format-usd';
 import highchartsExport from 'highcharts/modules/exporting';
-import isNum from 'is-money-usd';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
 import tab from './tab';
 import unFormatUSD from 'unformat-usd';
 import { applyThemeTo } from './highcharts-theme';
-import {
-  calcLoanAmount,
-  renderAccessibleData,
-  renderDatestamp,
-  renderLoanAmount
-} from './util';
 import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 
@@ -89,18 +89,6 @@ const options = {
   'dp-constant': 'percent-down',
   'request':     ''
 };
-
-/**
- * Simple (anonymous) delay function
- * @return {object} function that has been delayed
- */
-const delay = ( function() {
-  let t = 0;
-  return function( callback, delay ) {
-    clearTimeout( t );
-    t = setTimeout( callback, delay );
-  };
-} )();
 
 /**
  * Get data from the API.
@@ -268,7 +256,7 @@ function updateView() {
 
       chart.stopLoading();
       removeAlerts();
-      updateLanguage( data );
+      updateLanguage( data.totalVals );
       renderAccessibleData(
         accessibleDataTableHeadDom, accessibleDataTableBodyDom,
         data.labels, data.vals
@@ -301,18 +289,22 @@ function updateView() {
 
 /**
  * Updates the sentence above the chart
- * @param {string} data - TODO: Add description.
+ * @param {Array} totalVals - List of interest rates.
  */
-function updateLanguage( data ) {
-
+function updateLanguage( totalVals ) {
   function renderLocation() {
-    const state = $( '#location option:selected' ).text();
-    $( '.location' ).text( state );
+    const stateDropDown = document.querySelector( '#location' );
+    const state = stateDropDown.options[stateDropDown.selectedIndex].textContent;
+    const locations = document.querySelectorAll( '.location' );
+    locations.forEach( item => {
+      item.innerText = state;
+    } );
   }
 
-  function renderMedian( data ) {
-    const loansMedian = median( data.totalVals ).toFixed( 3 );
-    $( '#median-rate' ).text( loansMedian + '%' );
+  function renderMedian( totalVals ) {
+    const loansMedian = median( totalVals ).toFixed( 3 );
+    const medianRate = document.querySelector( '#median-rate' );
+    medianRate.innerText = loansMedian + '%';
   }
 
   function updateTerm() {
@@ -329,8 +321,8 @@ function updateLanguage( data ) {
   }
 
   renderLocation();
-  renderMedian( data );
-  updateTerm( data );
+  renderMedian( totalVals );
+  updateTerm();
 }
 
 
@@ -682,14 +674,13 @@ function renderInterestAmounts() {
 function renderInterestSummary( intVals, term ) {
 
   let sortedRates;
-  let diff;
   const id = '#rc-comparison-summary-' + term;
 
   sortedRates = intVals.sort( function( a, b ) {
     return a.rate - b.rate;
   } );
 
-  diff = formatUSD( sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest, { decimalPlaces: 0 } );
+  const diff = formatUSD( sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest, { decimalPlaces: 0 } );
   $( id + ' .comparison-term' ).text( sortedRates[0].term );
   $( id + ' .rate-diff' ).text( diff );
   $( id + ' .higher-rate' ).text( sortedRates[sortedRates.length - 1].rate + '%' );
@@ -1060,10 +1051,12 @@ function registerEvents() {
 
   // Prevent non-numeric characters from being entered.
   $( '.calc-loan-amt .recalc' ).on( 'keydown', function( event ) {
-    let key = event.which,
-        allowedKeys = [ 8, 9, 37, 38, 39, 40, 48, 49,
-          50, 51, 52, 53, 54, 55, 56, 57,
-          96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 188, 190 ];
+    const key = event.which;
+    const allowedKeys = [
+      8, 9, 37, 38, 39, 40, 48, 49,
+      50, 51, 52, 53, 54, 55, 56, 57,
+      96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 188, 190
+    ];
 
     /* If it's not an allowed key OR the shift key is held down (and they're not tabbing)
        stop everything. */
@@ -1088,9 +1081,7 @@ function registerEvents() {
     // Don't recalculate on TAB or arrow keys.
     if ( params.getVal( 'verbotenKeys' ).indexOf( evt.which ) === -1 ||
          $( this ).hasClass( 'range' ) ) {
-      delay( function() {
-        processLoanAmount( element );
-      }, 500 );
+      delay( () => processLoanAmount( element ), 500 );
     }
   } );
 

@@ -255,7 +255,7 @@ info_unit_group = {
 html_block = {
     "type": "html_block",
     "value": {
-        "html_url": "http://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/charts/auto-loans/borrower-age/figure-4a__30-to-44__auto-loans.html"  # noqa
+        "html_url": "https://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/charts/auto-loans/borrower-age/figure-4a__30-to-44__auto-loans.html"  # noqa
     }
 }
 

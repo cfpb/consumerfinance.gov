@@ -146,7 +146,7 @@ class Command(BaseCommand):
             "information security policies, if you take no action, your " + \
             "account will be deactivated after 90 days of inactivity.\n\n" + \
             "To keep your account active, please log in at " + \
-            "http://content.consumerfinance.gov/admin/\n\n" + \
+            "https://content.consumerfinance.gov/admin/\n\n" + \
             "Thank you,\nWagtail system owners"
         user.email_user(subject, msg.format(warn_period, period))
 

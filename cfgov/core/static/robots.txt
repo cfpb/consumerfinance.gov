@@ -8,4 +8,4 @@ Disallow: *form-id=*
 Disallow: /?page=
 Disallow: /eregulations
 
-sitemap: http://www.consumerfinance.gov/sitemap.xml
+sitemap: https://www.consumerfinance.gov/sitemap.xml
