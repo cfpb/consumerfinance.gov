@@ -105,10 +105,10 @@ function setup_decision_tree(){
 
 var dec_urls = {
     'manager_dec_tree':{
-        '00':'http://usajobs.gov/GetJob/ViewDetails/315271600',
-        '01':'http://usajobs.gov/GetJob/ViewDetails/315271200',
-        '10':'http://usajobs.gov/GetJob/ViewDetails/315271800',
-        '11':'http://usajobs.gov/GetJob/ViewDetails/315271800'
+        '00':'https://usajobs.gov/GetJob/ViewDetails/315271600',
+        '01':'https://usajobs.gov/GetJob/ViewDetails/315271200',
+        '10':'https://usajobs.gov/GetJob/ViewDetails/315271800',
+        '11':'https://usajobs.gov/GetJob/ViewDetails/315271800'
     }
 };
 

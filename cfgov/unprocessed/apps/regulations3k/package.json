@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/cfpb/cfgov-refresh.git"
+    "url": "https://github.com/cfpb/cfgov-refresh.git"
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {

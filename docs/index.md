@@ -1,17 +1,17 @@
 # Introduction
 
-This is the documentation for the `cfgov-refresh` project, a redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
+This is the documentation for the `cfgov-refresh` project, a redesign of the [www.consumerfinance.gov](https://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
 
 # Disclaimer
 
-**This project is a work in progress.** Nothing presented in this repo—whether in the source code, issue tracker, or wiki—is a final product unless it is marked as such or appears on [www.consumerfinance.gov](http://www.consumerfinance.gov). In-progress updates may appear on [beta.consumerfinance.gov](http://beta.consumerfinance.gov).
+**This project is a work in progress.** Nothing presented in this repo—whether in the source code, issue tracker, or wiki—is a final product unless it is marked as such or appears on [www.consumerfinance.gov](https://www.consumerfinance.gov). In-progress updates may appear on [beta.consumerfinance.gov](https://beta.consumerfinance.gov).
 
 # Technology stack
 
 The standard technology stack for development of cfgov-refresh within the CFPB consists of the following base:
 
 - Mac OSX
-- [Homebrew](http://brew.sh) - package manager for installing system software on OSX
+- [Homebrew](https://brew.sh) - package manager for installing system software on OSX
 - Python and PIP (Python package manager)
 - WordPress API data source URL
 - [Jinja templates](http://jinja.pocoo.org) for front-end rendering
@@ -20,7 +20,7 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 
 # Dependencies
 
-- [Elasticsearch](http://www.elasticsearch.org):
+- [Elasticsearch](https://www.elastic.co):
   Used for full-text search capabilities and content indexing.
 - [Node](http://nodejs.org) and [npm (Node Package Manager)](https://www.npmjs.com):
   Used for downloading and managing front-end dependencies and assets.

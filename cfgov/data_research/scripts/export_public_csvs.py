@@ -117,7 +117,7 @@ def export_downloadable_csv(geo_type, late_value):
     Each CSV is to start with a National row for comparison.
 
     CSVs are posted at
-    http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/  # noqa: E501
+    https://files.consumerfinance.gov/data/mortgage-performance/downloads/  # noqa: E501
 
     The script also stores URLs and file sizes for use in page footnotes.
     """

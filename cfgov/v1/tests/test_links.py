@@ -26,13 +26,13 @@ class ParseLinksTests(TestCase):
         self.assertIn('cf-icon-external-link', output)
 
     def test_cfpb_link(self):
-        link = '<a href="http://www.consumerfinance.gov/foo">cfpb link</a>'
+        link = '<a href="https://www.consumerfinance.gov/foo">cfpb link</a>'
         output = str(parse_links(link))
         self.assertNotIn('external-site', output)
         self.assertNotIn('cf-icon-external-link', output)
 
     def test_gov_link(self):
-        link = '<a href="http://www.fdic.gov/bar">gov link</a>'
+        link = '<a href="https://www.fdic.gov/bar">gov link</a>'
         output = str(parse_links(link))
         self.assertNotIn('external-site', output)
         self.assertIn('cf-icon-external-link', output)

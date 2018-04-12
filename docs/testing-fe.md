@@ -118,7 +118,7 @@ Scenario: User logs in
 
 Sauce Labs can be used to run tests remotely in the cloud.
 
-1. Log into [http://saucelabs.com/account](http://saucelabs.com/account).
+1. Log into [https://saucelabs.com/account](https://saucelabs.com/account).
 
 2. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
    and `SAUCE_SELENIUM_URL` values in your `.env` file.
@@ -163,10 +163,10 @@ Tests are organized into suites under the `test/browser_tests/cucumber/features`
 ## Further reading
 
 - [Cucumber features](https://github.com/cucumber/cucumber/wiki/Feature-Introduction)
-- [Protractor](http://angular.github.io/protractor/#/)
-- [Select elements on a page](http://www.seleniumhq.org/docs/03_webdriver.jsp#locating-ui-elements-webelements)
-- [Writing Jasmin expectations](http://jasmine.github.io/2.0/introduction.html#section-Expectations).
-- [Understanding Page Objects](http://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings)
+- [Protractor](https://angular.github.io/protractor/#/)
+- [Select elements on a page](https://www.seleniumhq.org/docs/03_webdriver.jsp#locating-ui-elements-webelements)
+- [Writing Jasmin expectations](https://jasmine.github.io/2.0/introduction.html#section-Expectations).
+- [Understanding Page Objects](https://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings)
 
 
 # Performance testing
@@ -200,7 +200,7 @@ to check every webpage for WCAG and Section 508 compliancy using Protractor's
 If you'd like to audit a specific page, use `gulp audit:a11y`:
 
   1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
-     Get a free [AChecker API ID](http://achecker.ca/register.php) for the value.
+     Get a free [AChecker API ID](https://achecker.ca/register.php) for the value.
   2. Reload your `.env` with `source ./.env` while in the project root directory.
   3. Run `gulp audit:a11y` to run an audit on the homepage.
   4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
@@ -213,7 +213,7 @@ The default test task includes linting of the JavaScript source, build,
 and test files.
 Use the `gulp lint` command from the command-line to run the ESLint linter,
 which checks the JavaScript against the rules configured in `.eslintrc`.
-[See the ESLint docs](http://eslint.org/docs/rules/)
+[See the ESLint docs](https://eslint.org/docs/rules/)
 for detailed rule descriptions.
 
 There are a number of options to the command:
