@@ -36,7 +36,7 @@ class TestExternalURLForm(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_url_not_in_whitelist(self):
-        data = {'ext_url': 'http://google.com'}
+        data = {'ext_url': 'https://google.com'}
         form = ExternalURLForm(data)
 
         self.assertFalse(form.is_valid())

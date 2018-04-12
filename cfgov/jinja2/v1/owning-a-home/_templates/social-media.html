@@ -183,7 +183,7 @@
    ========================================================================== #}
 
 {%- macro _share_twitter_url(parsed_url, blurb, options) -%}
-    {%- set _share_twitter_url = 'http://twitter.com/intent/tweet' -%}
+    {%- set _share_twitter_url = 'https://twitter.com/intent/tweet' -%}
     {%- set _share_twitter_url = _share_twitter_url + '?url=' + parsed_url -%}
     {%- set _share_twitter_url = _share_twitter_url + '&via=CFPB' -%}
     {%- set _share_twitter_url = _share_twitter_url + '&text=' + blurb + '%20--' -%}

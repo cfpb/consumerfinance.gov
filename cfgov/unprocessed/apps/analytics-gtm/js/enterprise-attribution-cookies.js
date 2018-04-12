@@ -201,7 +201,7 @@ const sourceCookies = {
    */
   parseOrganicSearch: function( host, query, referrer ) {
     // Referrer must not be the same host
-    if ( hostsAreEqual( 'http://' + host, referrer ) === false ) {
+    if ( hostsAreEqual( 'https://' + host, referrer ) === false ) {
 
       // Check for search engine
       const referrerMatch = referrer.match( /^https?:\/\/(.*\.search\.|www\.)?(google|bing|aol|yahoo|ask|comcast).([a-z]+)([\.a-z]{3,5})?\// );
@@ -237,7 +237,7 @@ const sourceCookies = {
   parseSocialMedia: function( host, query, referrer ) {
     // Referrer must not be the same host
     if ( typeof referrer === typeof '' && referrer.length > 0 &&
-         hostsAreEqual( 'http://' + host, referrer ) === false ) {
+         hostsAreEqual( 'https://' + host, referrer ) === false ) {
       // Check for search engine
       const referrerMatch = referrer.match( /^https?:\/\/(www.)?(blogspot\.com|delicious\.com|deviantart\.com|disqus\.com|facebook\.com|faceparty\.com|fc2\.com|flickr\.com|flixster\.com|foursquare\.com|friendfeed\.com|friendster\.com|hi5\.com|linkedin\.com|livejournal\.com|myspace\.com|photobucket\.com|pinterest\.com|plus\.google\.com|reddit\.com|slideshare\.net|smugmug\.com|stumbleupon\.com|t\.co|tumblr\.com|twitter\.com|vimeo\.com|yelp\.com|youtube\.com)($|\/)/ );
       if ( referrerMatch !== null ) {
@@ -269,7 +269,7 @@ const sourceCookies = {
   parseReferral: function( host, query, referrer ) {
     // Referrer must not be the same host
     if ( typeof referrer === typeof '' && referrer.length > 0 &&
-         hostsAreEqual( 'http://' + host, referrer ) === false ) {
+         hostsAreEqual( 'https://' + host, referrer ) === false ) {
       // Check for search engine
       const referrerMatch = referrer.match( /^https?:\/\/([^\/]+)\/?(.*)$/ );
       if ( referrerMatch !== null ) {

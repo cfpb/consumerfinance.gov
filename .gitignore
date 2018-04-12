@@ -73,7 +73,6 @@ vendor/
 # Documentation #
 #################
 docs/scripts
-docs/*/slick.html
 
 # Django #
 ##########
