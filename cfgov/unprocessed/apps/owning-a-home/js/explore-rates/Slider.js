@@ -7,14 +7,14 @@ import { getSelection } from './dom-values';
 import rangesliderJs from 'rangeslider-js';
 
 /**
- * Footer
+ * Slider
  * @class
  *
  * @classdesc Initializes the organism.
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the organism.
- * @returns {Footer} An instance.
+ * @returns {Slider} An instance.
  */
 function Slider( element ) {
   const BASE_CLASS = 'a-range';
