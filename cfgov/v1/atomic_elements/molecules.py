@@ -97,9 +97,10 @@ class TextIntroduction(blocks.StructBlock):
         # Eyebrow requires a heading.
         if cleaned.get('eyebrow') and not cleaned.get('heading'):
             raise ValidationError(
-                'Validation error in TextIntroduction: pre-heading with no heading',
+                'Validation error in TextIntroduction: '
+                'pre-heading requires heading',
                 params={'heading': ErrorList([
-                    'Required if pre-heading is specified.'
+                    'Required if a pre-heading is entered.'
                 ])}
             )
 
