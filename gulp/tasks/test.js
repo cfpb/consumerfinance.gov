@@ -87,12 +87,11 @@ function testUnitScripts( cb ) {
  */
 function testAcceptanceBrowser() {
   const params = minimist( process.argv.slice( 3 ) ) || {};
-  const toxParams = [ '-e' ];
+  const toxParams = [ '-e', 'acceptance' ];
 
-  if ( params.fast ) {
-    toxParams.push( 'acceptance-fast' );
-  } else {
-    toxParams.push( 'acceptance' );
+  if ( params.recreate ) {
+    delete params.recreate;
+    toxParams.push( '-r' );
   }
 
   Object.keys( params ).forEach( key => {
@@ -175,6 +174,9 @@ function _getProtractorParams( suite ) {
 
   // If --tags=@tagName flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'tags' );
+
+  // If --headless=false flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'headless' );
 
   /* If the --suite=suite1,suite2 flag is added on the command-line
      or, if not, if a suite is passed as part of the gulp task definition. */
@@ -301,8 +303,19 @@ function spawnProtractor( ) {
   }
 }
 
-gulp.task( 'test', [ 'lint', 'test:unit' ] );
 gulp.task( 'test:acceptance', testAcceptanceBrowser );
 gulp.task( 'test:acceptance:protractor', spawnProtractor );
-gulp.task( 'test:unit', [ 'test:unit:scripts' ] );
 gulp.task( 'test:unit:scripts', testUnitScripts );
+
+gulp.task( 'test:unit',
+  gulp.parallel(
+    'test:unit:scripts'
+  )
+);
+
+gulp.task( 'test',
+  gulp.parallel(
+    'lint',
+    'test:unit'
+  )
+);

@@ -13,6 +13,66 @@ from jobmanager.models.panels import USAJobsApplicationLink
 from v1.tests.wagtail_pages import helpers
 
 
+def create_job_link(control_number, applicant_type, page):
+    job_link = USAJobsApplicationLink(
+        announcement_number=control_number,
+        applicant_type=applicant_type,
+        url='http://www.test.com/{}'.format(control_number),
+        job_listing=page
+    )
+    job_link.save()
+    return job_link
+
+
+def api_not_found_job_response():
+    mock_response = Mock()
+    mock_response.status_code = 200
+    text = {
+        "SearchResult": {
+            "SearchResultCount": 0,
+            "SearchResultItems": []
+        }
+    }
+    mock_response.text = json.dumps(text)
+    return mock_response
+
+
+def api_closed_job_response(control_number):
+    mock_response = Mock()
+    mock_response.status_code = 200
+    text = {
+        "SearchResult": {
+            "SearchResultCount": 1,
+            "SearchResultItems": [
+                {"MatchedObjectId": control_number}
+            ]
+        }
+    }
+    mock_response.text = json.dumps(text)
+    return mock_response
+
+
+def open_usajobs_page():
+    mock_response = Mock(
+        status_code=200,
+        text='<html></html>'
+    )
+    return mock_response
+
+
+def closed_usajobs_page():
+    mock_response = Mock()
+    mock_response.status_code = 200
+    mock_response.text = (
+        '<html>'
+        '<div class="usajobs-joa-closed">'
+        'This job announcement has closed'
+        '</div>'
+        '</html>'
+    )
+    return mock_response
+
+
 class UnpublishClosedJobsTestCase(TestCase):
     def setUp(self):
         division = JobCategory(
@@ -46,69 +106,13 @@ class UnpublishClosedJobsTestCase(TestCase):
             live=True)
         helpers.publish_page(child=self.page)
 
-    def create_job_link(self, control_number, applicant_type):
-        job_link = USAJobsApplicationLink(
-            announcement_number=control_number,
-            applicant_type=applicant_type,
-            url='http://www.test.com/{}'.format(control_number),
-            job_listing=self.page
-        )
-        job_link.save()
-        return job_link
-
-    def api_not_found_job_response(self):
-        mock_response = Mock()
-        mock_response.status_code = 200
-        text = {
-            "SearchResult": {
-                "SearchResultCount": 0,
-                "SearchResultItems": []
-            }
-        }
-        mock_response.text = json.dumps(text)
-        return mock_response
-
-    def api_closed_job_response(self, control_number):
-        mock_response = Mock()
-        mock_response.status_code = 200
-        text = {
-            "SearchResult": {
-                "SearchResultCount": 1,
-                "SearchResultItems": [
-                    {"MatchedObjectId": control_number}
-                ]
-            }
-        }
-        mock_response.text = json.dumps(text)
-        return mock_response
-
-    def open_usajobs_page(self):
-        mock_response = Mock(
-            status_code=200,
-            text='<html></html>'
-        )
-        return mock_response
-
-    def closed_usajobs_page(self):
-        mock_response = Mock()
-        mock_response.status_code = 200
-        mock_response.text = (
-            '<html>'
-            '<div class="usajobs-joa-closed">'
-            'This job announcement has closed'
-            '</div>'
-            '</html>'
-        )
-        return mock_response
-
-    @patch('requests.get')
+    @patch('requests.get', return_value=api_not_found_job_response())
     def test_job_listing_page_still_live_if_job_not_closed_on_api(
             self, request_mock):
         self.assertTrue(self.page.live)
 
         control_number = '1'
-        self.create_job_link(control_number, self.public_type)
-        request_mock.return_value = self.api_not_found_job_response()
+        create_job_link(control_number, self.public_type, self.page)
 
         unpublish_closed_jobs.run()
         self.page.refresh_from_db()
@@ -122,14 +126,15 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertTrue(self.page.live)
         self.assertFalse(self.page.expired)
 
-    @patch('requests.get')
+    @patch('requests.get', return_value=open_usajobs_page())
     def test_job_listing_page_still_live_if_job_page_not_closed(
             self, request_mock):
         self.assertTrue(self.page.live)
 
         control_number = '1'
-        job_link = self.create_job_link(control_number, self.status_type)
-        request_mock.return_value = self.open_usajobs_page()
+        job_link = create_job_link(
+            control_number, self.status_type, self.page
+        )
 
         unpublish_closed_jobs.run()
         self.page.refresh_from_db()
@@ -139,13 +144,14 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertTrue(self.page.live)
         self.assertFalse(self.page.expired)
 
-    @patch('requests.get')
+    @patch('requests.get', return_value=closed_usajobs_page())
     def test_job_listing_page_unpublished_if_job_closed_on_usajobs(
             self, request_mock):
         self.assertTrue(self.page.live)
         control_number = '1'
-        job_link = self.create_job_link(control_number, self.status_type)
-        request_mock.return_value = self.closed_usajobs_page()
+        job_link = create_job_link(
+            control_number, self.status_type, self.page
+        )
 
         unpublish_closed_jobs.run()
         self.page.refresh_from_db()
@@ -160,8 +166,8 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertTrue(self.page.live)
         control_number = '1'
 
-        self.create_job_link(control_number, self.public_type)
-        request_mock.return_value = self.api_closed_job_response(
+        create_job_link(control_number, self.public_type, self.page)
+        request_mock.return_value = api_closed_job_response(
             control_number
         )
 
@@ -176,11 +182,12 @@ class UnpublishClosedJobsTestCase(TestCase):
             self, request_mock):
         self.assertTrue(self.page.live)
 
-        self.create_job_link('1', self.public_type)
-        self.create_job_link('2', self.status_type)
+        create_job_link('1', self.status_type, self.page)
+        create_job_link('2', self.status_type, self.page)
+
         request_mock.side_effect = [
-            self.api_closed_job_response('1'),
-            self.open_usajobs_page()
+            open_usajobs_page(),
+            closed_usajobs_page()
         ]
 
         unpublish_closed_jobs.run()
@@ -189,20 +196,17 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertTrue(self.page.live)
         self.assertFalse(self.page.expired)
 
-    @patch('requests.get')
+    @patch('requests.get', return_value=closed_usajobs_page())
     def test_job_listing_page_unpublished_if_all_links_closed(
             self, request_mock):
         self.assertTrue(self.page.live)
 
-        self.create_job_link('1', self.public_type)
-        self.create_job_link('2', self.status_type)
-        request_mock.side_effect = [
-            self.api_closed_job_response('1'),
-            self.closed_usajobs_page()
-        ]
+        create_job_link('1', self.status_type, self.page)
+        create_job_link('2', self.status_type, self.page)
 
         unpublish_closed_jobs.run()
         self.page.refresh_from_db()
+
         self.assertFalse(self.page.live)
         self.assertTrue(self.page.expired)
 
@@ -211,7 +215,7 @@ class UnpublishClosedJobsTestCase(TestCase):
     def test_api_check_failure(self, request_mock, logger_mock):
         self.assertTrue(self.page.live)
 
-        job_link = self.create_job_link('1', self.public_type)
+        job_link = create_job_link('1', self.public_type, self.page)
         request_mock.side_effect = requests.exceptions.ConnectionError
         with self.assertRaises(SystemExit):
             unpublish_closed_jobs.run()
@@ -226,7 +230,7 @@ class UnpublishClosedJobsTestCase(TestCase):
     @patch('requests.get')
     def test_page_check_failure(self, request_mock, logger_mock):
         self.assertTrue(self.page.live)
-        job_link = self.create_job_link('1', self.status_type)
+        job_link = create_job_link('1', self.status_type, self.page)
         request_mock.side_effect = Exception
         with self.assertRaises(SystemExit):
             unpublish_closed_jobs.run()

@@ -1,6 +1,6 @@
 # Notes on Atomic Design
 
-Check out [Don't Build Pages, Build Modules](http://www.ebaytechblog.com/?p=3113).
+Check out [Don't Build Pages, Build Modules](https://www.ebaytechblog.com/?p=3113).
 It encompasses exactly what we are trying to achieve by building components
 using atomic design.
 It's important to note that our front-end atomic architecture is still evolving.
@@ -251,6 +251,6 @@ Here is an example of the media property on a component from the [Email signup o
 ```
 class Media:
     js = ['email-signup.js']
-``` 
+```
 
 This will load the `email-signup.js` script on any page that includes the Email Signup organism in its template.

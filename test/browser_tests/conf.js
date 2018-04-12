@@ -2,6 +2,8 @@ const environmentTest = require( './environment-test' );
 const envvars = require( '../../config/environment' ).envvars;
 const defaultSuites = require( './default-suites.js' );
 const minimist = require( 'minimist' );
+const retry = require( 'protractor-retry' ).retry;
+
 
 /**
  * Check whether a parameter value is set.
@@ -19,7 +21,6 @@ function _paramIsSet( param ) {
  * @returns {Array} List of multiCapabilities objects.
  */
 function _chooseSuite( params ) {
-
   const paramsAreNotSet = !_paramIsSet( params.browserName ) &&
                           !_paramIsSet( params.version ) &&
                           !_paramIsSet( params.platform );
@@ -31,7 +32,7 @@ function _chooseSuite( params ) {
      won't launch several identical browsers performing the same tests. */
   let capabilities = defaultSuites.essential;
 
-  if ( envvars.HEADLESS_CHROME_BINARY ) {
+  if ( _useHeadlessChrome() ) {
     capabilities = defaultSuites.headless;
     const cucumberOpts = minimist( process.argv.slice( 2 ) )
       .cucumberOpts || {};
@@ -74,6 +75,18 @@ function _useSauceLabs() {
   const isSauceParamSet = sauceParam && sauceParam === 'true';
 
   return isSauceCredentialsSet && isSauceParamSet;
+}
+
+/**
+ * Check that headless param is set to true.
+ *
+ * @returns {boolean} True if headless param is set to true.
+ */
+function _useHeadlessChrome() {
+  const headlessParam = ( minimist( process.argv ).params || {} ).headless;
+  const isHeadlessParamSet = headlessParam && headlessParam === 'true';
+
+  return isHeadlessParamSet;
 }
 
 /**
@@ -185,11 +198,13 @@ function _getMultiCapabilities() {
   return capabilities;
 }
 
+
 /**
  * The onPrepare method for Protractor's workflow.
  * See https://github.com/angular/protractor/blob/master/docs/system-setup.md
  */
 function _onPrepare() {
+  retry.onPrepare();
   // Ignore Selenium allowances for non-angular sites.
   browser.ignoreSynchronization = true;
 
@@ -213,7 +228,7 @@ function _onPrepare() {
 
   /* Calling setSize with headless chromeDriver doesn't work properly if
      the requested size is larger than the available screen size. */
-  if ( !envvars.HEADLESS_CHROME_BINARY ) {
+  if ( _useHeadlessChrome() === false ) {
     browser.driver.manage().window().setSize(
       windowWidthPx,
       windowHeightPx
@@ -228,19 +243,22 @@ function _onPrepare() {
 }
 
 const config = {
-  baseUrl:              environmentTest.baseUrl,
+  baseUrl:                environmentTest.baseUrl,
   cucumberOpts: {
     'require':   'cucumber/step_definitions/*.js',
     'tags':      [ '~@mobile', '~@skip' ],
     'profile':   false,
     'no-source': true
   },
-  unknownFlags_:        [ 'cucumberOpts' ],
-  directConnect:        true,
-  framework:            'custom',
-  frameworkPath:        require.resolve( 'protractor-cucumber-framework' ),
-  getMultiCapabilities: _getMultiCapabilities,
-  onPrepare:            _onPrepare
+  afterLaunch:              () => retry.afterLaunch( 1 ),
+  directConnect:            true,
+  framework:                'custom',
+  frameworkPath:            require.resolve( 'protractor-cucumber-framework' ),
+  getMultiCapabilities:     _getMultiCapabilities,
+  onCleanUp:                results => retry.onCleanUp( results ),
+  onPrepare:                _onPrepare,
+  SELENIUM_PROMISE_MANAGER: false,
+  unknownFlags_:            [ 'cucumberOpts' ]
 };
 
 // Set Sauce Labs credientials from .env file.

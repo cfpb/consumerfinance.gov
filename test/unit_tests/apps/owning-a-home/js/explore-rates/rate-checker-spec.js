@@ -16,6 +16,20 @@ const HTML_SNIPPET = `
           </tbody>
         </table>
       </div>
+
+      <section id="chart-section">
+
+        <div id="chart-result-alert"
+             class="result-alert chart-alert u-hidden"
+             role="alert">
+        </div>
+
+        <div id="chart-fail-alert"
+             class="result-alert chart-alert u-hidden"
+             role="alert">
+        </div>
+
+      </section>
     </div>
     <div class="result">
       <div class="calculator">
@@ -24,6 +38,11 @@ const HTML_SNIPPET = `
                  id="credit-score"
                  class="a-range">
           <div id="slider-range"></div>
+
+          <div id="credit-score-alert"
+               class="result-alert chart-alert u-hidden"
+               role="alert">
+          </div>
         </section>
 
         <section class="calc-loan-amt" id="loan-amt-inputs">
@@ -59,6 +78,12 @@ const HTML_SNIPPET = `
                     <select name="county" class="recalc" id="county">
                     </select>
                 </div>
+            </div>
+
+            <div id="dp-alert"
+                 class="downpayment-warning alert-alt col-7 u-hidden"
+                 role="alert">
+              Your down payment cannot be more than your house price.
             </div>
         </section>
       </div>

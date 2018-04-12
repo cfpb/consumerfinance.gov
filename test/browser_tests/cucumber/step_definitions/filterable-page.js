@@ -27,27 +27,25 @@ When( /I goto a (.*) filterable page/, function( pageType ) {
   return filterablePages[pageType].gotoURL();
 } );
 
-When( /I do not select a filter/, function() {
+When( /I do not select a filter/, async function() {
+  const url = await browser.getCurrentUrl();
 
-  return browser.getCurrentUrl().then( function( url ) {
-    expect( url ).not.to.contain( '?' );
-  } );
+  return expect( url ).not.to.contain( '?' );
 } );
 
 Then( /I should see the (first|last) page result, (.*)/,
-  function( pagePosition, pageName ) {
+  async function( pagePosition, pageName ) {
+    const resultText =
+      await selectedFilterablePage.getResultText( pagePosition );
 
-    return selectedFilterablePage.getResultText( pagePosition )
-      .then( function( resultText ) {
-        expect( resultText ).to.contain( pageName );
-      } );
+    return expect( resultText ).to.contain( pageName );
   }
 );
 
-Then( /I should see (.*) page results/, function( numPageResults ) {
+Then( /I should see (.*) page results/,
+  async function( numPageResults ) {
+    const resultsCount = await selectedFilterablePage.getResultsCount();
 
-  return selectedFilterablePage.getResultsCount()
-    .then( function( resultsCount ) {
-      expect( resultsCount ).to.equal( numPageResults );
-    } );
-} );
+    return expect( resultsCount ).to.equal( numPageResults );
+  }
+);

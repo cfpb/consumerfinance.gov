@@ -122,4 +122,4 @@ features. For more information visit the [Babel documentation site]
 
 - https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
 - https://saucelabs.com/beta/dashboard/tests
-- http://developer.samsung.com/remotetestlab/rtlDeviceList.action#
+- https://developer.samsung.com/remotetestlab/rtlDeviceList.action

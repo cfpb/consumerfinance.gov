@@ -156,19 +156,16 @@ Then( 'the first option should be highlighted',
 );
 
 Then( 'the choices element should contain the first option',
-  function() {
-    const getChoicesInfo = [
-      multiSelect.getDropDownLabelElements().first().getText(),
-      multiSelect.getChoiceElements().first().getText(),
-      multiSelect.getChoiceElements().count()
-    ];
+  async function() {
+    const firstElementText =
+      await multiSelect.getDropDownLabelElements().first().getText();
+    const choicesText =
+      await multiSelect.getChoiceElements().first().getText();
+    const choicesCount = await multiSelect.getChoiceElements().count();
 
-    return Promise.all( getChoicesInfo )
-      .then( function( [ firstElementText, choicesText, choicesCount ] ) {
-        expect( choicesCount ).to.equal( 1 );
+    expect( choicesCount ).to.equal( 1 );
 
-        return expect( choicesText ).to.contain( firstElementText );
-      } );
+    return expect( choicesText ).to.contain( firstElementText );
   }
 );
 

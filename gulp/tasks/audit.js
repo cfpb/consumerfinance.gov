@@ -137,7 +137,7 @@ function _parsePath( urlPath ) {
  * @param {Object} params - url, options, and tunnel for running PSI.
  */
 function _runPSI( params ) {
-  fancyLog( 'PSI tests checking URL: http://' + params.url );
+  fancyLog( 'PSI tests checking URL: ' + params.url );
   psi.output( params.url, params.options )
     .then( () => {
       fancyLog( 'PSI tests done!' );

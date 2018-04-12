@@ -260,7 +260,10 @@ function stylesApps() {
   const streams = [];
   apps.forEach( app => {
     streams.push(
-      gulp.src( `${ paths.unprocessed }/apps/${ app }/css/main.less` )
+      gulp.src(
+        `${ paths.unprocessed }/apps/${ app }/css/main.less`,
+        { allowEmpty: true }
+      )
         .pipe( gulpNewer( {
           dest:  `${ paths.processed }/apps/${ app }/css/main.css`,
           extra: configStyles.otherBuildTriggerFiles
@@ -288,32 +291,38 @@ function stylesApps() {
   return mergeStream( ...streams );
 }
 
-gulp.task( 'styles:modern', stylesModern );
-gulp.task( 'styles:ie', stylesIE );
 gulp.task( 'styles:apps', stylesApps );
-gulp.task( 'styles:ondemand', stylesOnDemand );
 gulp.task( 'styles:featureFlags', stylesFeatureFlags );
+gulp.task( 'styles:ie', stylesIE );
+gulp.task( 'styles:modern', stylesModern );
+gulp.task( 'styles:ondemand', stylesOnDemand );
+
 gulp.task( 'styles:knowledgebaseSpanishProd', stylesKnowledgebaseSpanishProd );
 gulp.task( 'styles:knowledgebaseSpanishIE8', stylesKnowledgebaseSpanishIE8 );
+gulp.task( 'styles:knowledgebaseSpanish',
+  gulp.parallel(
+    'styles:knowledgebaseSpanishProd',
+    'styles:knowledgebaseSpanishIE8'
+  )
+);
+
 gulp.task( 'styles:nemoProd', stylesNemoProd );
 gulp.task( 'styles:nemoIE8', stylesNemoIE8 );
+gulp.task( 'styles:nemo',
+  gulp.parallel(
+    'styles:nemoProd',
+    'styles:nemoIE8'
+  )
+);
 
-gulp.task( 'styles:knowledgebaseSpanish', [
-  'styles:knowledgebaseSpanishProd',
-  'styles:knowledgebaseSpanishIE8'
-] );
-
-gulp.task( 'styles:nemo', [
-  'styles:nemoProd',
-  'styles:nemoIE8'
-] );
-
-gulp.task( 'styles', [
-  'styles:modern',
-  'styles:ie',
-  'styles:apps',
-  'styles:ondemand',
-  'styles:featureFlags',
-  'styles:knowledgebaseSpanish',
-  'styles:nemo'
-] );
+gulp.task( 'styles',
+  gulp.parallel(
+    'styles:apps',
+    'styles:featureFlags',
+    'styles:ie',
+    'styles:knowledgebaseSpanish',
+    'styles:modern',
+    'styles:nemo',
+    'styles:ondemand'
+  )
+);

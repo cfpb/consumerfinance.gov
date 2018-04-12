@@ -1,37 +1,37 @@
-const $ = require( 'jquery' );
-const amortize = require( 'amortize' );
-import formatUSD from 'format-usd';
-const isNum = require( 'is-money-usd' );
-const jumbo = require( 'jumbo-mortgage' );
-const median = require( 'median' );
-import unFormatUSD from 'unformat-usd';
+import $ from 'jquery';
+import 'rangeslider.js';
 import {
   calcLoanAmount,
+  delay,
   renderAccessibleData,
   renderDatestamp,
   renderLoanAmount
 } from './util';
+import * as params from './params';
+import * as template from './template-loader';
+import Highcharts from 'highcharts';
+import amortize from 'amortize';
+import config from '../../config.json';
+import dropdown from '../dropdown-utils';
+import fetchRates from '../rates';
+import formatUSD from 'format-usd';
+import highchartsExport from 'highcharts/modules/exporting';
+import jumbo from 'jumbo-mortgage';
+import median from 'median';
+import tab from './tab';
+import unFormatUSD from 'unformat-usd';
+import { applyThemeTo } from './highcharts-theme';
+import { getSelection } from './dom-values';
+import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
+
+let creditAlertDom;
+let resultAlertDom;
+let failAlertDom;
+let dpAlertDom;
 
 // Load and style Highcharts library. https://www.highcharts.com/docs.
-const Highcharts = require( 'highcharts' );
-require( 'highcharts/modules/exporting' )( Highcharts );
-const highchartsTheme = require( './highcharts-theme' );
-highchartsTheme.applyThemeTo( Highcharts );
-
-// var geolocation = require('./geolocation');
-import * as config from '../../config.json';
-import * as domValues from './dom-values';
-const dropdown = require( '../dropdown-utils' );
-const fetchRates = require( '../rates' );
-const params = require( './params' );
-
-import 'rangeslider.js';
-import './tab';
-
-// Load our handlebar templates.
-const template = require( './template-loader' );
-
-import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
+highchartsExport( Highcharts );
+applyThemeTo( Highcharts );
 
 // Set some properties for the histogram.
 const chart = {
@@ -72,7 +72,7 @@ const slider = {
   step:   20,
   update: function() {
     const leftVal = +Number( $( '.rangeslider__handle' ).css( 'left' ).replace( 'px', '' ) );
-    this.min = domValues.getSelection( 'credit-score' );
+    this.min = getSelection( 'credit-score' );
     if ( this.min === 840 || this.min === '840' ) {
       this.max = this.min + 10;
     } else {
@@ -89,18 +89,6 @@ const options = {
   'dp-constant': 'percent-down',
   'request':     ''
 };
-
-/**
- * Simple (anonymous) delay function
- * @return {object} function that has been delayed
- */
-const delay = ( function() {
-  let t = 0;
-  return function( callback, delay ) {
-    clearTimeout( t );
-    t = setTimeout( callback, delay );
-  };
-} )();
 
 /**
  * Get data from the API.
@@ -268,7 +256,7 @@ function updateView() {
 
       chart.stopLoading();
       removeAlerts();
-      updateLanguage( data );
+      updateLanguage( data.totalVals );
       renderAccessibleData(
         accessibleDataTableHeadDom, accessibleDataTableBodyDom,
         data.labels, data.vals
@@ -294,32 +282,37 @@ function updateView() {
 
       updateComparisons( data );
       renderInterestAmounts();
+      tab.init();
     } );
   }
 }
 
 /**
  * Updates the sentence above the chart
- * @param {string} data - TODO: Add description.
+ * @param {Array} totalVals - List of interest rates.
  */
-function updateLanguage( data ) {
-
+function updateLanguage( totalVals ) {
   function renderLocation() {
-    const state = $( '#location option:selected' ).text();
-    $( '.location' ).text( state );
+    const stateDropDown = document.querySelector( '#location' );
+    const state = stateDropDown.options[stateDropDown.selectedIndex].textContent;
+    const locations = document.querySelectorAll( '.location' );
+    locations.forEach( item => {
+      item.innerText = state;
+    } );
   }
 
-  function renderMedian( data ) {
-    const loansMedian = median( data.totalVals ).toFixed( 3 );
-    $( '#median-rate' ).text( loansMedian + '%' );
+  function renderMedian( totalVals ) {
+    const loansMedian = median( totalVals ).toFixed( 3 );
+    const medianRate = document.querySelector( '#median-rate' );
+    medianRate.innerText = loansMedian + '%';
   }
 
   function updateTerm() {
-    const termVal = domValues.getSelection( 'loan-term' );
+    const termVal = getSelection( 'loan-term' );
     $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
     // change from 5 years to x if an ARM
-    if ( domValues.getSelection( 'rate-structure' ) === 'arm' ) {
-      const armVal = domValues.getSelection( 'arm-type' );
+    if ( getSelection( 'rate-structure' ) === 'arm' ) {
+      const armVal = getSelection( 'arm-type' );
       const term = armVal.match( /[^-]*/i )[0];
       $( '.rc-comparison-short .loan-years, .arm-comparison-term' ).text( term ).fadeIn();
     } else {
@@ -328,8 +321,8 @@ function updateLanguage( data ) {
   }
 
   renderLocation();
-  renderMedian( data );
-  updateTerm( data );
+  renderMedian( totalVals );
+  updateTerm();
 }
 
 
@@ -520,8 +513,8 @@ function processCounty() {
       dropdown( 'loan-type' ).disable( 'conf' );
     }
     // Add links to loan messages.
-    loan.msg = loan.msg.replace( 'jumbo (non-conforming)', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank">jumbo (non-conforming)</a>' );
-    loan.msg = loan.msg.replace( 'conforming jumbo', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank">conforming jumbo</a>' );
+    loan.msg = loan.msg.replace( 'jumbo (non-conforming)', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">jumbo (non-conforming)</a>' );
+    loan.msg = loan.msg.replace( 'conforming jumbo', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">conforming jumbo</a>' );
     $( '#hb-warning' ).removeClass( 'u-hidden' ).find( 'p' ).html( loan.msg );
 
   } else {
@@ -560,8 +553,8 @@ function processLoanAmount( element ) {
   }
 
   renderDownPayment.apply( element );
-  params.setVal( 'house-price', domValues.getSelection( 'house-price' ) );
-  params.setVal( 'down-payment', domValues.getSelection( 'down-payment' ) );
+  params.setVal( 'house-price', getSelection( 'house-price' ) );
+  params.setVal( 'down-payment', getSelection( 'down-payment' ) );
   params.update();
   renderLoanAmountResult();
   checkForJumbo();
@@ -607,10 +600,10 @@ function renderDownPayment() {
 
   if ( $price.val() !== 0 ) {
     if ( $el.attr( 'id' ) === 'down-payment' || options['dp-constant'] === 'down-payment' ) {
-      val = ( domValues.getSelection( 'down-payment' ) / domValues.getSelection( 'house-price' ) * 100 ) || '';
+      val = ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) * 100 ) || '';
       $percent.val( Math.round( val ) );
     } else {
-      val = domValues.getSelection( 'house-price' ) * ( domValues.getSelection( 'percent-down' ) / 100 );
+      val = getSelection( 'house-price' ) * ( getSelection( 'percent-down' ) / 100 );
       val = val >= 0 ? Math.round( val ) : '';
       val = addCommas( val );
       $down.val( val );
@@ -641,7 +634,7 @@ function renderInterestAmounts() {
   let shortTermVal = [],
       longTermVal = [],
       rate,
-      fullTerm = Number( domValues.getSelection( 'loan-term' ) ) * 12;
+      fullTerm = Number( getSelection( 'loan-term' ) ) * 12;
   $( '.interest-cost' ).each( function( index ) {
     if ( $( this ).hasClass( 'interest-cost-primary' ) ) {
       rate = $( '#rate-compare-1' ).val().replace( '%', '' );
@@ -681,14 +674,13 @@ function renderInterestAmounts() {
 function renderInterestSummary( intVals, term ) {
 
   let sortedRates;
-  let diff;
   const id = '#rc-comparison-summary-' + term;
 
   sortedRates = intVals.sort( function( a, b ) {
     return a.rate - b.rate;
   } );
 
-  diff = formatUSD( sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest, { decimalPlaces: 0 } );
+  const diff = formatUSD( sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest, { decimalPlaces: 0 } );
   $( id + ' .comparison-term' ).text( sortedRates[0].term );
   $( id + ' .rate-diff' ).text( diff );
   $( id + ' .higher-rate' ).text( sortedRates[sortedRates.length - 1].rate + '%' );
@@ -741,9 +733,7 @@ function checkARM() {
  */
 function scoreWarning() {
   $( '.rangeslider__handle' ).addClass( 'warning' );
-  if ( !$( '.credit-alert' ).length > 0 ) {
-    $( '#slider-range' ).after( template.creditAlert );
-  }
+  creditAlertDom.classList.remove( 'u-hidden' );
   resultWarning();
 }
 
@@ -752,35 +742,58 @@ function scoreWarning() {
  */
 function resultWarning() {
   chart.stopLoading( 'error' );
-  $( '#chart-section' ).addClass( 'warning' ).append( template.resultAlert );
+  $( '#chart-section' ).addClass( 'warning' );
+  resultAlertDom.classList.remove( 'u-hidden' );
 }
-
-function resultFailWarning() {
-  chart.stopLoading( 'error' );
-  $( '#chart-section' ).addClass( 'warning' ).append( template.failAlert );
-}
-
-function downPaymentWarning() {
-  $( '#loan-amt-inputs' ).append( template.dpWarning );
-}
-
 
 /**
- * Remove alerts and warnings
+ * Show alert that data call to the API failed.
+ */
+function resultFailWarning() {
+  chart.stopLoading( 'error' );
+  $( '#chart-section' ).addClass( 'warning' );
+  failAlertDom.classList.remove( 'u-hidden' );
+}
+
+/**
+ * Show alert that down payment is greater than house price.
+ */
+function downPaymentWarning() {
+  dpAlertDom.classList.remove( 'u-hidden' );
+}
+
+/**
+ * @param  {HTMLNode} elem - An HTML element to check for u-hidden class.
+ * @returns {boolean} True is the element is visible, false otherwise.
+ */
+function isVisible( elem ) {
+  return !elem.classList.contains( 'u-hidden' );
+}
+
+/**
+ * Hide all alert messages that are showing.
  */
 function removeAlerts() {
-  if ( $( '.result-alert' ) ) {
+  if ( isVisible( resultAlertDom ) ||
+       isVisible( failAlertDom ) ||
+       isVisible( dpAlertDom ) ) {
     $( '#chart' ).removeClass( 'warning' );
-    $( '.result-alert' ).not( '.credit-alert' ).remove();
-    $( '#dp-alert' ).remove();
+    resultAlertDom.classList.add( 'u-hidden' );
+    failAlertDom.classList.add( 'u-hidden' );
+    dpAlertDom.classList.add( 'u-hidden' );
+    removeCreditScoreAlert();
   }
 }
 
-
+/**
+ * Hide the credit score alert message.
+ */
 function removeCreditScoreAlert() {
-  if ( $( '.credit-alert' ) || $( '.rangeslider__handle' ).hasClass( 'warning' ) ) {
+  if ( params.getVal( 'credit-score' ) >= 620 &&
+       ( isVisible( creditAlertDom ) ||
+       $( '.rangeslider__handle' ).hasClass( 'warning' ) ) ) {
     $( '.rangeslider__handle' ).removeClass( 'warning' );
-    $( '.credit-alert' ).remove();
+    creditAlertDom.classList.add( 'u-hidden' );
   }
 }
 
@@ -964,6 +977,11 @@ function init() {
     return false;
   }
 
+  creditAlertDom = document.querySelector( '#credit-score-alert' );
+  resultAlertDom = document.querySelector( '#chart-result-alert' );
+  failAlertDom = document.querySelector( '#chart-fail-alert' );
+  dpAlertDom = document.querySelector( '#dp-alert' );
+
   // Record timestamp HTML element that's updated from date from API.
   timeStampDom = document.querySelector( '#timestamp' );
 
@@ -1033,10 +1051,12 @@ function registerEvents() {
 
   // Prevent non-numeric characters from being entered.
   $( '.calc-loan-amt .recalc' ).on( 'keydown', function( event ) {
-    let key = event.which,
-        allowedKeys = [ 8, 9, 37, 38, 39, 40, 48, 49,
-          50, 51, 52, 53, 54, 55, 56, 57,
-          96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 188, 190 ];
+    const key = event.which;
+    const allowedKeys = [
+      8, 9, 37, 38, 39, 40, 48, 49,
+      50, 51, 52, 53, 54, 55, 56, 57,
+      96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 188, 190
+    ];
 
     /* If it's not an allowed key OR the shift key is held down (and they're not tabbing)
        stop everything. */
@@ -1061,9 +1081,7 @@ function registerEvents() {
     // Don't recalculate on TAB or arrow keys.
     if ( params.getVal( 'verbotenKeys' ).indexOf( evt.which ) === -1 ||
          $( this ).hasClass( 'range' ) ) {
-      delay( function() {
-        processLoanAmount( element );
-      }, 500 );
+      delay( () => processLoanAmount( element ), 500 );
     }
   } );
 

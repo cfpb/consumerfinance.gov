@@ -1,12 +1,16 @@
+// TODO: Remove jquery.
 import $ from 'jquery';
+
+import { track } from './util/analytics-util';
 
 // Retirement - Before You Claim custom analytics file
 
 const BYCAnalytics = ( function() {
-  let questionsAnswered = [],
-      sliderClicks = 0,
-      sliderIsActive = false,
-      stepOneSubmitted = false;
+
+  const questionsAnswered = [];
+  let sliderClicks = 0;
+  let sliderIsActive = false;
+  let stepOneSubmitted = false;
 
   function calculateAge( month, day, year, currentDate ) {
     let now = currentDate;
@@ -25,15 +29,6 @@ const BYCAnalytics = ( function() {
     return age;
   }
 
-
-  const delay = ( function() {
-    let timer = 0;
-    return function( callback, ms ) {
-      clearTimeout( timer );
-      timer = setTimeout( callback, ms );
-    };
-  } )();
-
   $( document ).ready( function() {
 
     $( '#step-one-form' ).submit( function( e ) {
@@ -41,11 +36,11 @@ const BYCAnalytics = ( function() {
       stepOneSubmitted = true;
       let month = $( '#bd-month' ).val(),
           day = $( '#bd-day' ).val();
-      window.dataLayer.push( {
-        event: 'Before You Claim Interaction',
-        action: 'Get Your Estimates submit birthdate',
-        label: 'Birthdate Month and Day - ' + month + '/' + day
-      } );
+      track(
+        'Before You Claim Interaction',
+        'Get Your Estimates submit birthdate',
+        'Birthdate Month and Day - ' + month + '/' + day
+      );
     } );
 
     $( '#step-one-form' ).submit( function( e ) {
@@ -54,49 +49,49 @@ const BYCAnalytics = ( function() {
           day = $( '#bd-day' ).val(),
           year = $( '#bd-year' ).val(),
           age = calculateAge( month, day, year );
-      window.dataLayer.push( {
-        event: 'Before You Claim Interaction',
-        action: 'Get Your Estimates submit age',
-        label: 'Age ' + age
-      } );
+      track(
+        'Before You Claim Interaction',
+        'Get Your Estimates submit age',
+        'Age ' + age
+      );
     } );
 
     $( '#claim-canvas' ).on( 'mousedown', 'rect', function() {
       const age = $( this ).attr( 'data-age' );
-      window.dataLayer.push( {
-        event: 'Before You Claim Interaction',
-        action: 'Graph Age Bar clicked',
-        label: 'Age ' + age
-      } );
+      track(
+        'Before You Claim Interaction',
+        'Graph Age Bar clicked',
+        'Age ' + age
+      );
     } );
 
     $( '#claim-canvas' ).on( 'mousedown', '#graph_slider-input', function() {
       sliderIsActive = true;
       sliderClicks++;
-      window.dataLayer.push( {
-        event: 'Before You Claim Interaction',
-        action: 'Slider clicked',
-        label: 'Slider clicked ' + sliderClicks + ' times'
-      } );
+      track(
+        'Before You Claim Interaction',
+        'Slider clicked',
+        'Slider clicked ' + sliderClicks + ' times'
+      );
     } );
 
     $( '#claim-canvas' ).on( 'click', '.age-text', function() {
       const age = $( this ).attr( 'data-age-value' );
-      window.dataLayer.push( {
-        event: 'Before You Claim Interaction',
-        action: 'Age Text Box clicked',
-        label: 'Age ' + age
-      } );
+      track(
+        'Before You Claim Interaction',
+        'Age Text Box clicked',
+        'Age ' + age
+      );
     } );
 
     $( 'body' ).on( 'mouseup', function() {
       if ( sliderIsActive === true ) {
         const age = $( '.selected-age' ).text();
-        window.dataLayer.push( {
-          event: 'Before You Claim Interaction',
-          action: 'Slider released',
-          label: 'Age ' + age
-        } );
+        track(
+          'Before You Claim Interaction',
+          'Slider released',
+          'Age ' + age
+        );
         sliderIsActive = false;
       }
     } );
@@ -109,55 +104,55 @@ const BYCAnalytics = ( function() {
         questionsAnswered.push( question );
       }
       if ( questionsAnswered.length === 5 ) {
-        window.dataLayer.push( {
-          event: 'Before You Claim Interaction',
-          action: 'All Lifestyle Buttons clicked',
-          label: 'All button clicks'
-        } );
+        track(
+          'Before You Claim Interaction',
+          'All Lifestyle Buttons clicked',
+          'All button clicks'
+        );
       }
-      window.dataLayer.push( {
-        event: 'Before You Claim Interaction',
-        action: 'Lifestyle Button clicked',
-        label: 'Question: ' + question + ' - ' + value
-      } );
+      track(
+        'Before You Claim Interaction',
+        'Lifestyle Button clicked',
+        'Question: ' + question + ' - ' + value
+      );
     } );
 
     $( 'input[name="benefits-display"]' ).click( function() {
       if ( stepOneSubmitted ) {
         const val = $( this ).val();
-        window.dataLayer.push( {
-          event: 'Before You Claim Interaction',
-          action: 'Benefits View clicked',
-          label: val
-        } );
+        track(
+          'Before You Claim Interaction',
+          'Benefits View clicked',
+          val
+        );
       }
     } );
 
     $( '#retirement-age-selector' ).change( function() {
       const val = $( this ).find( 'option:selected' ).val();
-      window.dataLayer.push( {
-        event: 'Before You Claim Interaction',
-        action: 'Planned Retirement Age selected',
-        label: val
-      } );
+      track(
+        'Before You Claim Interaction',
+        'Planned Retirement Age selected',
+        val
+      );
     } );
 
     $( 'button.helpful-btn' ).click( function() {
       const val = $( this ).val();
-      window.dataLayer.push( {
-        event: 'Before You Claim Interaction',
-        action: 'Was This Page Helpful clicked',
-        label: val
-      } );
+      track(
+        'Before You Claim Interaction',
+        'Was This Page Helpful clicked',
+        val
+      );
     } );
 
     $( '[data-tooltip-target]' ).click( function() {
       const target = $( this ).attr( 'data-tooltip-target' );
-      window.dataLayer.push( {
-        event: 'Before You Claim Interaction',
-        action: 'Tooltip clicked',
-        label: 'Target: ' + target
-      } );
+      track(
+        'Before You Claim Interaction',
+        'Tooltip clicked',
+        'Target: ' + target
+      );
     } );
   } );
 

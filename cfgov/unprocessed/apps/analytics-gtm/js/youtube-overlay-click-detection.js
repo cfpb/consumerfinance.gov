@@ -1,3 +1,5 @@
+import { track } from './util/analytics-util';
+
 const waitO = setInterval( _attachListener, 1000 );
 
 // Wait a second then attach a listener to any play image.
@@ -24,9 +26,5 @@ function _addAnalyticEvent() {
   // Tell GA about the image click.
   const h1El = document.querySelector( 'h1' );
   const YTtitle = h1El.textContent.trim();
-  window.dataLayer.push( {
-    action: 'image click',
-    label: YTtitle,
-    event: 'YouTube Events'
-  } );
+  track( 'YouTube Events', 'image click', YTtitle );
 }

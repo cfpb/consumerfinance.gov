@@ -22,7 +22,7 @@ def agreement_factory(**kwargs):
     args = {
         'file_name': '',
         'size': 0,
-        'uri': 'http://example.com',
+        'uri': 'https://example.com',
         'description': '',
     }
 

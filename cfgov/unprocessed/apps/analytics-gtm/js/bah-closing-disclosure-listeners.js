@@ -1,140 +1,68 @@
-const OAHRCAnalytics = ( function() {
+// TODO: Remove $.
+import $ from 'jquery';
 
-  const delay = ( function() {
-    let timer = 0;
-    return function( callback, ms ) {
-      clearTimeout( timer );
-      timer = setTimeout( callback, ms );
-    };
-  } )();
+import {
+  delay,
+  track
+} from './util/analytics-util';
 
-  const track = function( event, action, label ) {
-    window.dataLayer.push( {
-      event: event,
-      action: action,
-      label: label
-    } );
-    console.log( event, action, label );
-  };
+const OAHCDAnalytics = ( function( $ ) {
 
-  // credit score slider
-  const rangeSliders = document.querySelectorAll( '.rangeslider' );
-  let rangeSliderEl;
-  for ( let i = 0, len = rangeSliders.length; i < len; i++ ) {
-    rangeSliderEl = rangeSliders[i];
-    rangeSliderEl.addEventListener( 'click', _rangeSliderEventHandler );
-    rangeSliderEl.addEventListener( 'touchend', _rangeSliderEventHandler );
-  }
-  function _rangeSliderEventHandler() {
-    const sliderRangeEl = document.querySelector( '#slider-range' );
-    const score = sliderRangeEl.textContent;
-    track( 'OAH Rate Tool Interactions', 'Score range', score );
-  }
-
-
-  // state select
-  const locationEl = document.querySelector( '#location' );
-  locationEl.addEventListener( 'change', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    track( 'OAH Rate Tool Interactions', 'Select state', value );
+  $( '.tab-link' ).click( function() {
+    const text = $( this ).text().trim();
+    track( 'OAH Closing Disclosure Interaction', 'Tab click', text );
   } );
 
-  // house price
-  const housePriceEl = document.querySelector( '#house-price' );
-  housePriceEl.addEventListener( 'keyup', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    delay( function() {
-      track( 'OAH Rate Tool Interactions', 'House price', value );
-    }, 5000 );
+  $( '.form-explainer_page-link' ).click( function() {
+    const pageNumber = 'Page ' + $( this ).attr( 'data-page' );
+    track(
+      'OAH Closing Disclosure Interaction', 'Page link click', pageNumber
+    );
   } );
 
-  // down payment percentage
-  const percentDownEl = document.querySelector( '#percent-down' );
-  percentDownEl.addEventListener( 'keyup', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    delay( function() {
-      track( 'OAH Rate Tool Interactions', 'Down payment percent', value );
-    }, 5000 );
+  $( '.form-explainer_page-buttons button' ).click( function() {
+    const currentPage = 'Page ' + $( '.form-explainer_page-link.current-page' ).attr( 'data-page' );
+    let action = 'Next Page button clicked';
+    if ( $( this ).hasClass( 'prev' ) ) {
+      action = 'Previous Page button clicked';
+    }
+    track( 'OAH Closing Disclosure Interaction', action, currentPage );
+
   } );
 
-  // down payment $
-  const downPaymentEl = document.querySelector( '#down-payment' );
-  downPaymentEl.addEventListener( 'keyup', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    delay( function() {
-      track( 'OAH Rate Tool Interactions', 'Down payment amount', value );
-    }, 5000 );
+  $( '.o-expandable_target' ).click( function() {
+    const ele = $( this );
+    const tab = $( this ).closest( '.explain' ).find( '.active-tab' );
+    const tabText = tab.find( '.tab-label' ).text().trim();
+    delay(
+      function() {
+        const state = ele.attr( 'aria-pressed' );
+        let action = 'Expandable collapsed - ' + tabText;
+        const label = $( '<p>' + ele.find( '.o-expandable_label' ).html() + '</p>' );
+        let text = '';
+
+        label.find( 'span' ).empty();
+        text = label.text().trim();
+
+        if ( state === 'true' ) {
+          action = 'Expandable expanded - ' + tabText;
+        }
+        track( 'OAH Closing Disclosure Interaction', action, text );
+      }, 250 );
   } );
 
-  // rate structure
-  const rateStructureEl = document.querySelector( '#rate-structure' );
-  rateStructureEl.addEventListener( 'change', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    track( 'OAH Rate Tool Interactions', 'Rate structure', value );
+  $( '.image-map_overlay' ).click( function() {
+    const href = $( this ).attr( 'href' );
+    const text = $( this ).text().trim();
+    delay(
+      function() {
+        let action = 'Image Overlay click - expandable collapsed';
+        const target = $( href );
+        if ( target.hasClass( 'o-expandable__expanded' ) ) {
+          action = 'Image Overlay click - expandable expanded';
+        }
+        track( 'OAH Closing Disclosure Interaction', action, text );
+      }, 250 );
   } );
 
-  // loan term
-  const loanTermEl = document.querySelector( '#loan-term' );
-  loanTermEl.addEventListener( 'change', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    track( 'OAH Rate Tool Interactions', 'Loan term', value );
-  } );
-
-  // loan type
-  const loanTypeEl = document.querySelector( '#loan-type' );
-  loanTypeEl.addEventListener( 'change', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    track( 'OAH Rate Tool Interactions', 'Loan type', value );
-  } );
-
-  // arm type
-  const armTypeEl = document.querySelector( '#arm-type' );
-  armTypeEl.addEventListener( 'change', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    track( 'OAH Rate Tool Interactions', 'ARM type', value );
-  } );
-
-  // rate comparison select #1
-  const rateCompare1El = document.querySelector( '#rate-compare-1' );
-  rateCompare1El.addEventListener( 'change', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    track( 'OAH Rate Tool Interactions', 'Interest cost 1', value );
-  } );
-
-  // rate comparison select #2
-  const rateCompare2El = document.querySelector( '#rate-compare-2' );
-  rateCompare2El.addEventListener( 'change', function( evt ) {
-    const target = evt.target;
-    const value = target.value;
-    track( 'OAH Rate Tool Interactions', 'Interest cost 2', value );
-  } );
-
-  // page reload link
-  const reloadLinkEl = document.querySelector( '#reload-link' );
-  if ( reloadLinkEl ) {
-    reloadLinkEl.addEventListener( 'click', function() {
-      track( 'OAH Rate Tool Interactions', 'Revert', '/owning-a-home/rate-checker' );
-    } );
-  }
-
-  // next steps: I plan to buy in the next couple of months
-  const planToBuyTabEl = document.querySelector( '#plan-to-buy-tab' );
-  planToBuyTabEl.addEventListener( 'click', function() {
-    track( 'OAH Rate Tool Interactions', 'Click', 'Collapsed_Tabs_Buying' );
-  } );
-
-  // next steps: I won't buy for several months
-  const wontBuyTabEl = document.querySelector( '#wont-buy-tab' );
-  wontBuyTabEl.addEventListener( 'click', function() {
-    track( 'OAH Rate Tool Interactions', 'Click', 'Collapsed_Tabs_Not_Buying' );
-  } );
-} )();
+} )( $ );

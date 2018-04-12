@@ -42,7 +42,7 @@ if [[ -z "$refresh_dump_name" ]]; then
 
 Or you can define the location of a dump and this script will download it for you:
 
-	export CFGOV_PROD_DB_LOCATION=http://some-bucket.s3.amazonaws.com/wherever/production_django.sql.gz
+	export CFGOV_PROD_DB_LOCATION=https://example.com/wherever/production_django.sql.gz
 	./refresh-data.sh
 	'
 else

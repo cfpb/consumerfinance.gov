@@ -1,6 +1,8 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 
+import { simulateEvent } from '../../../util/simulate-event';
+
 let footerBtnDom;
 let bodyDom;
 
@@ -11,20 +13,6 @@ const HTML_SNIPPET = `
       Back to top <span class="cf-icon cf-icon-arrow-up"></span>
   </a>
 `;
-
-/**
- * Simulate a click event
- * @param  {HTMLNode} target - Element that dispatches the click event.
- */
-function triggerClick( target ) {
-  const clickEvent = new window.MouseEvent( 'click', {
-    bubbles: true,
-    cancelable: true,
-    view: window
-  } );
-
-  target.dispatchEvent( clickEvent );
-}
 
 /**
  * Mock window.scrollTo() method.
@@ -50,7 +38,7 @@ describe( 'footer-button', () => {
       'and requestAnimationFrame is supported', done => {
     window.scrollY = 10;
     FooterButton.init();
-    triggerClick( footerBtnDom );
+    simulateEvent( 'click', footerBtnDom );
 
     window.setTimeout( () => {
       expect( window.scrollY ).toBe( 0 );
@@ -64,7 +52,7 @@ describe( 'footer-button', () => {
     delete window.requestAnimationFrame;
     window.scrollY = 10;
     FooterButton.init();
-    triggerClick( footerBtnDom );
+    simulateEvent( 'click', footerBtnDom );
 
     expect( window.scrollTo ).toHaveBeenCalledWith( 0, 0 );
   } );

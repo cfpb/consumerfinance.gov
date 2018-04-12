@@ -9,13 +9,12 @@ if [ "$RUNTEST" == "frontend" ]; then
     bash <(curl -s https://codecov.io/bash) -F frontend
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e lint
-    tox -e fast
+    DATABASE_URL=postgres://postgres@localhost/travis_ci_test tox -e fast
     tox -e missing-migrations
     bash <(curl -s https://codecov.io/bash) -F backend
 elif [ "$RUNTEST" == "acceptance" ]; then
     export DISPLAY=:99.0
     sh -e /etc/init.d/xvfb start &
     sleep 3
-    export HEADLESS_CHROME_BINARY=/usr/bin/google-chrome-beta
     gulp test:acceptance
 fi

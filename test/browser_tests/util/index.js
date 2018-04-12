@@ -1,9 +1,9 @@
 /**
- * Converts (should|shouldn't) to Boolean.
+ * Converts (isShould) to Boolean.
  * @param {string} value - The string value to convert.
  * @returns {boolean} True if 'should', otherwise false.
  */
-function shouldShouldnt( value ) {
+function isShould( value ) {
 
   return value === 'should' ? true : false;
 }
@@ -17,6 +17,6 @@ function toCamelCase( value ) {
 }
 
 module.exports = {
-  shouldShouldnt: shouldShouldnt,
-  toCamelCase:    toCamelCase
+  isShould,
+  toCamelCase
 };

@@ -55,12 +55,12 @@ gulp.task( 'copy:vendorjs', () => {
 } );
 
 gulp.task( 'copy',
-  [
+  gulp.parallel(
     'copy:icons',
     'copy:jsonCode',
     'copy:jsonKBYO',
     'copy:vendorjs',
     'copy:timelinejs',
     'copy:lightbox2'
-  ]
+  )
 );
