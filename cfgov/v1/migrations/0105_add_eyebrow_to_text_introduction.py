@@ -14,7 +14,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0103_update_resource_order_help_text'),
+        ('v1', '0104_convert_http_to_https'),
     ]
 
     operations = [
