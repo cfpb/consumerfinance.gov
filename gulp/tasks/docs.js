@@ -22,7 +22,7 @@ function docsScripts() {
 gulp.task( 'docs:scripts', docsScripts );
 
 gulp.task( 'docs',
-  [
+  gulp.parallel(
     'docs:scripts'
-  ]
+  )
 );

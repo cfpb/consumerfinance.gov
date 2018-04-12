@@ -5,26 +5,22 @@ import { analyticsLog } from './util/analytics-util';
    to Google Analytics. Supports Google Tag Manager
    and IE8+ and tracks all YouTube videos available
    on the page at the time of loading.
-   WARNING: Overwrites older <embed> style players
-   and reloads improperly formatted <iframe> players. */
+   WARNING: Reloads improperly formatted <iframe> players. */
 
 /* Put everything into an IIFE to prevent scope pollution
    and run the script automatically. */
 ( function( document, window ) {
 
-  /* Check if something else already has bound to the onYouTubeIframeAPIReady callback
-     If it has, throw an error so we can see something's wrong */
-  /*
+  /* Check if something else already has bound to the onYouTubeIframeAPIReady
+     callback. If it has, throw an error so we can see something's wrong. */
   if( typeof window.onYouTubeIframeAPIReady !== 'undefined' ) {
-
-    var err = new Error( 'There is already a function defined at window.onYouTubeIframeAPIReady; aborting LunaMetrics Google Analytics YouTube Tracking', 'gtm-yt-tracker.js', '14' );
-    throw err;
-
+    analyticsLog(
+      'There is already a function defined at window.onYouTubeIframeAPIReady;' +
+      ' aborting LunaMetrics Google Analytics YouTube Tracking'
+    );
   }
-  */
 
-  /* This method is invoked by the YouTube API once it has
-     finished loading */
+  // Invoked by the YouTube API once it has finished loading.
   window.onYouTubeIframeAPIReady = function() {
     const iframes = document.getElementsByTagName( 'iframe' );
     const embeds = document.getElementsByTagName( 'embed' );
@@ -33,14 +29,13 @@ import { analyticsLog } from './util/analytics-util';
     digestPotentialVideos( embeds );
   };
 
-
-  // Load the YouTube API; If it is already loaded, browser will reference that
+  // Load the YouTube API; If it is already loaded, browser will reference that.
   const tag = document.createElement( 'script' );
-  tag.src = '//www.youtube.com/iframe_api';
+  tag.src = 'https://www.youtube.com/iframe_api';
   const firstScriptTag = document.getElementsByTagName( 'script' )[0];
   firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
 
-  // This object maps the numbers emitted by events from the API to string 'states'
+  // Map of the numbers emitted by events from the API to string 'states'.
   const playerStatesIndex = {
     '-1': 'Unstarted',
     '0': 'Watch to End',
@@ -96,27 +91,29 @@ import { analyticsLog } from './util/analytics-util';
   /**
    * Checks if the YouTube video has all the required parameters for tracking,
    * and if it does not, it reloads it with the appropriate parameters. It will
-   * reload videos that do not have the correct parameters and destroy old-style
-   * <object> embeds and replace them with an <iframe>
-   * WARNING: This may cause the video to briefly flicker on the page
+   * reload videos that do not have the correct parameters.
    *
    * @param {Object} youTubeVideo iframe or embed
    * @returns {Object} video object reference
    */
   function normalizeYouTubeIframe( youTubeVideo ) {
 
-    /* Create a fake <a> element to use the HREF apis and extract
-       our pathname, protocol, et. al. */
+    /* Create a fake <a> element to use the HREF APIs and extract
+       our pathname, protocol, et al. */
     const a = document.createElement( 'a' );
     a.href = youTubeVideo.src;
     a.hostname = 'www.youtube.com';
     a.protocol = document.location.protocol;
-    let tmpPathname = a.pathname.charAt( 0 ) === '/' ? a.pathname : '/' + a.pathname; // IE10 shim
-    // For security reasons, YouTube wants an origin parameter set that matches our hostname
+
+    // IE10 shim.
+    let tmpPathname = a.pathname.charAt( 0 ) === '/' ? a.pathname : '/' + a.pathname;
+
+    /* For security reasons,
+       YouTube wants an origin parameter set that matches our hostname. */
     const origin = window.location.protocol + '%2F%2F' + window.location.hostname;
 
     /* If enablejsapi=1 isn't present in our URL, we need to add it,
-       otherwise the YouTube iframe script won't try and track the video */
+       otherwise the YouTube iframe script won't try and track the video. */
     if ( a.search.indexOf( 'enablejsapi' ) === -1 ) {
       a.search = a.search.length > 0 ? a.search + '&enablejsapi=1' : a.search = 'enablejsapi=1&origin=' + origin;
     }
@@ -125,21 +122,6 @@ import { analyticsLog } from './util/analytics-util';
        YouTube tracking script will throw origin errors */
     if ( a.search.indexOf( 'origin' ) === -1 ) {
       a.search = a.search + '&origin=' + origin;
-    }
-
-    // If our video is actually a flash object, transform it to an iframe
-    if ( youTubeVideo.type === 'application/x-shockwave-flash' ) {
-
-      const newIframe = document.createElement( 'iframe' );
-      newIframe.height = youTubeVideo.height;
-      newIframe.width = youTubeVideo.width;
-
-      tmpPathname = '/embed/' + youTubeVideo.videoId;
-
-      // Replace our old <object> in the DOM with our new iframe
-      youTubeVideo.parentNode.parentNode.replaceChild( newIframe, youTubeVideo.parentNode );
-
-      youTubeVideo = newIframe;
     }
 
     // Put it all together and send it back
@@ -329,50 +311,6 @@ import { analyticsLog } from './util/analytics-util';
        play event was set */
     if ( stateIndex === 1 ) {
       youTubeIframe.pauseFlag = false;
-    }
-  }
-
-  /**
-   * Utility: IE 8+, Firefox, Opera, Chrome, Safari XDR object
-   *
-   * modified from code courtesy github user xeoncross
-   * https://gist.github.com/Xeoncross/7663273
-   * @param {string} url - A URL
-   * @param {Function} callback - A callback function.
-   * @param {*} data - Some arbitrary data to send.
-   * @param {null} x - XHR class constructor.
-   */
-  function ajax( url, callback, data, x ) {
-    /* Modified to remove headers causing CORS errors
-       Modified to use XDomainRequest
-       IE>8 does not support XDomainRequests */
-    try {
-      // Cross-browser hoop for IE8 & IE9
-      if ( 'XDomainRequest' in window && window.XDomainRequest !== null ) {
-
-        x = new XDomainRequest();
-        x.open( 'GET', url, 1 );
-        x.onload = function() {
-
-          callback( x.responseText, x );
-
-        };
-        x.send();
-      } else {
-        // Cross-Browser hoop for IE8 & IE9
-        x = new ( this.XMLHttpRequest || window.ActiveXObject )( 'MSXML2.XMLHTTP.3.0' );
-        x.open( 'GET', url, 1 );
-        x.onreadystatechange = function() {
-          if ( x.readyState > 3 && callback ) {
-            return callback( x.responseText, x );
-          }
-          return null;
-        };
-        x.send( data );
-      }
-    } catch ( e ) {
-      // If we can't invoke our call, log it to console
-      analyticsLog( e.message );
     }
   }
 } )( document, window );

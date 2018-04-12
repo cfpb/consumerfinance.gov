@@ -250,26 +250,31 @@ function scriptsApps() {
   return singleStream;
 }
 
-gulp.task( 'scripts:polyfill', scriptsPolyfill );
-gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:external', scriptsExternal );
+gulp.task( 'scripts:modern', scriptsModern );
+gulp.task( 'scripts:nemo', scriptsNemo );
+gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:spanish', scriptsSpanish );
+
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
 gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
-gulp.task( 'scripts:ondemand', [
-  'scripts:ondemand:header',
-  'scripts:ondemand:footer',
-  'scripts:ondemand:nonresponsive'
-] );
-gulp.task( 'scripts:nemo', scriptsNemo );
+gulp.task( 'scripts:ondemand',
+  gulp.parallel(
+    'scripts:ondemand:header',
+    'scripts:ondemand:footer',
+    'scripts:ondemand:nonresponsive'
+  )
+);
 
-gulp.task( 'scripts', [
-  'scripts:polyfill',
-  'scripts:modern',
-  'scripts:apps',
-  'scripts:external',
-  'scripts:nemo',
-  'scripts:spanish'
-] );
+gulp.task( 'scripts',
+  gulp.parallel(
+    'scripts:polyfill',
+    'scripts:modern',
+    'scripts:apps',
+    'scripts:external',
+    'scripts:nemo',
+    'scripts:spanish'
+  )
+);
