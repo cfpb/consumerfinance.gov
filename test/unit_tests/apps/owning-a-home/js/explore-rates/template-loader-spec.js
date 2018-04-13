@@ -38,15 +38,6 @@ describe( 'explore-rates/template-loader', () => {
     expect( typeof testTemplate ).toBe( 'string' );
   } );
 
-  it( 'should be able to render sliderLabel template', () => {
-    const mockData = {
-      min: 1,
-      max: 360
-    };
-    const testTemplate = templateLoader.sliderLabel( mockData );
-    expect( testTemplate ).toBe( '1 - 360\n' );
-  } );
-
   it( 'should be able to render chartTooltipSingle template', () => {
     const testTemplate = templateLoader.chartTooltipSingle();
     expect( typeof testTemplate ).toBe( 'string' );
