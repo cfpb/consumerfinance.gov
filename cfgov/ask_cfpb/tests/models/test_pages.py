@@ -1275,3 +1275,55 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
         self.assertEqual(breadcrumbs[1]['title'], 'Journey page')
         self.assertEqual(breadcrumbs[2]['title'], 'Journey child page')
+
+    def test_answer_context_with_process_as_journey_referrer(self):
+        """If the referrer is a nested Buying a House journey page,
+        breadcrumbs should reflect the BAH page hierarchy."""
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_page = BrowsePage(
+            title='Prepare page',
+            slug='prepare'
+        )
+        helpers.save_new_page(journey_page, bah_page)
+
+        page = self.page1
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov/owning-a-home/process/'
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Prepare page')
+
+    def test_answer_context_with_process_segment_in_journey_referrer(self):
+        """If the referrer is a nested Buying a House journey page,
+        breadcrumbs should reflect the BAH page hierarchy."""
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_page = BrowsePage(
+            title='Compare page',
+            slug='compare'
+        )
+        helpers.save_new_page(journey_page, bah_page)
+
+        page = self.page1
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov/owning-a-home/process/compare/'
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Compare page')
