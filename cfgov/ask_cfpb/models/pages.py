@@ -110,7 +110,7 @@ def get_journey_breadcrumbs(request, path):
     # TODO: replace when journey page urls are updated
     # after 2018 homebuying season campaign ends
     # Also remove related tests
-    if len(pages) == 1:
+    if pages == ['owning-a-home']:
         pages.append('prepare')
     # end TODO
     breadcrumbs = []
