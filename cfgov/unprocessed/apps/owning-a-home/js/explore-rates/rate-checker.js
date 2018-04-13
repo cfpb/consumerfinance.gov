@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import 'rangeslider.js';
 import {
   calcLoanAmount,
   delay,
@@ -10,6 +9,7 @@ import {
 import * as params from './params';
 import * as template from './template-loader';
 import Highcharts from 'highcharts';
+import Slider from './Slider';
 import amortize from 'amortize';
 import config from '../../config.json';
 import dropdown from '../dropdown-utils';
@@ -24,14 +24,18 @@ import { applyThemeTo } from './highcharts-theme';
 import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 
+// Load and style Highcharts library. https://www.highcharts.com/docs.
+highchartsExport( Highcharts );
+applyThemeTo( Highcharts );
+
+// References to alert HTML.
 let creditAlertDom;
 let resultAlertDom;
 let failAlertDom;
 let dpAlertDom;
 
-// Load and style Highcharts library. https://www.highcharts.com/docs.
-highchartsExport( Highcharts );
-applyThemeTo( Highcharts );
+// Range slider for credit rating.
+let slider;
 
 // Set some properties for the histogram.
 const chart = {
@@ -64,24 +68,6 @@ let loanAmountResultDom;
 let accessibleDataTableHeadDom;
 let accessibleDataTableBodyDom;
 
-// Set some properties for the credit score slider.
-const slider = {
-  $el:    $( '#credit-score' ),
-  min:    params.getVal( 'credit-score' ),
-  max:    params.getVal( 'credit-score' ) + 20,
-  step:   20,
-  update: function() {
-    const leftVal = +Number( $( '.rangeslider__handle' ).css( 'left' ).replace( 'px', '' ) );
-    this.min = getSelection( 'credit-score' );
-    if ( this.min === 840 || this.min === '840' ) {
-      this.max = this.min + 10;
-    } else {
-      this.max = this.min + 19;
-    }
-    $( '#slider-range' ).text( template.sliderLabel( this ) ).css( 'left', leftVal - 9 + 'px' );
-  }
-};
-
 /* options object
    dp-constant: track the down payment interactions
    request: Keep the latest AJAX request accessible so we can terminate it if need be. */
@@ -100,8 +86,8 @@ function getData() {
   const promise = fetchRates( {
     price:          params.getVal( 'house-price' ),
     loan_amount:    params.getVal( 'loan-amount' ),
-    minfico:        slider.min,
-    maxfico:        slider.max,
+    minfico:        slider.valMin(),
+    maxfico:        slider.valMax(),
     state:          params.getVal( 'location' ),
     rate_structure: params.getVal( 'rate-structure' ),
     loan_term:      params.getVal( 'loan-term' ),
@@ -163,7 +149,6 @@ function renderLoanAmountResult() {
  * Render all applicable rate checker areas.
  */
 function updateView() {
-
   chart.startLoading();
 
   // reset view
@@ -199,9 +184,11 @@ function updateView() {
     // If it succeeds, update the DOM.
     options.request.done( function( results ) {
       // sort results by interest rate, ascending
-      let sortedKeys = [],
-          sortedResults = {},
-          key, x, len;
+      const sortedKeys = [];
+      const sortedResults = {};
+      let key;
+      let x;
+      let len;
 
       for ( key in results.data ) {
         if ( results.data.hasOwnProperty( key ) ) {
@@ -728,11 +715,11 @@ function checkARM() {
 }
 
 /**
- * Low credit score warning display if user selects a
- * score of 620 or below
+ * Low credit score warning displayed if the user selects a
+ * score of 620 or below.
  */
 function scoreWarning() {
-  $( '.rangeslider__handle' ).addClass( 'warning' );
+  slider.setState( Slider.STATUS_WARNING );
   creditAlertDom.classList.remove( 'u-hidden' );
   resultWarning();
 }
@@ -789,10 +776,8 @@ function removeAlerts() {
  * Hide the credit score alert message.
  */
 function removeCreditScoreAlert() {
-  if ( params.getVal( 'credit-score' ) >= 620 &&
-       ( isVisible( creditAlertDom ) ||
-       $( '.rangeslider__handle' ).hasClass( 'warning' ) ) ) {
-    $( '.rangeslider__handle' ).removeClass( 'warning' );
+  if ( params.getVal( 'credit-score' ) >= 620 ) {
+    slider.setState( Slider.STATUS_OKAY );
     creditAlertDom.classList.add( 'u-hidden' );
   }
 }
@@ -807,41 +792,6 @@ function addCommas( value ) {
   value = formatUSD( value, { decimalPlaces: 0 } )
     .replace( '$', '' );
   return value;
-}
-
-/**
- * Initialize the range slider. http://andreruffert.github.io/rangeslider.js/
- * @param {Function} cb - Optional callback.
- * @returns {*|null} The result of the callback or null.
- */
-function renderSlider( cb ) {
-  $( '#credit-score' ).rangeslider( {
-    polyfill:    false,
-    rangeClass:  'rangeslider',
-    fillClass:   'rangeslider__fill',
-    handleClass: 'rangeslider__handle',
-    onInit:      function() {
-      slider.update();
-    },
-    onSlide:     function( position, value ) {
-      slider.update();
-    },
-    onSlideEnd:  function( position, value ) {
-      params.update();
-      if ( params.getVal( 'credit-score' ) < 620 ) {
-        removeAlerts();
-        scoreWarning();
-      } else {
-        updateView();
-        removeCreditScoreAlert();
-      }
-    }
-  } );
-
-  if ( cb ) {
-    return cb();
-  }
-  return null;
 }
 
 /**
@@ -966,6 +916,19 @@ function renderChart( data, cb ) {
   // eslint-disable-line consistent-return
 }
 
+/**
+ * Event handler for when slider is released.
+ */
+function onSlideEndHandler() {
+  params.update();
+  if ( params.getVal( 'credit-score' ) < 620 ) {
+    removeAlerts();
+    scoreWarning();
+  } else {
+    updateView();
+    removeCreditScoreAlert();
+  }
+}
 
 /**
  * Initialize the rate checker app.
@@ -982,6 +945,19 @@ function init() {
   failAlertDom = document.querySelector( '#chart-fail-alert' );
   dpAlertDom = document.querySelector( '#dp-alert' );
 
+  const sliderDom = document.querySelector( '#credit-score-range' );
+  const creditScore = params.getVal( 'credit-score' );
+  slider = new Slider( sliderDom );
+  slider.init(
+    {
+      min: 600,
+      max: 850,
+      value: creditScore,
+      // callbacks
+      onSlideEnd: onSlideEndHandler
+    }
+  );
+
   // Record timestamp HTML element that's updated from date from API.
   timeStampDom = document.querySelector( '#timestamp' );
 
@@ -991,11 +967,11 @@ function init() {
   accessibleDataTableHeadDom = accessibleDataDom.querySelector( '.table-head' );
   accessibleDataTableBodyDom = accessibleDataDom.querySelector( '.table-body' );
 
-  renderSlider();
   renderChart();
   renderLoanAmountResult();
   setSelections( { usePlaceholder: true } );
   registerEvents();
+  tab.init();
 
   /*
   geolocation.getState({timeout: 2000}, function( state ){

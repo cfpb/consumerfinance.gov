@@ -33,11 +33,17 @@ const HTML_SNIPPET = `
     </div>
     <div class="result">
       <div class="calculator">
+
         <section class="credit-score">
-          <input type="range"
-                 id="credit-score"
-                 class="a-range">
-          <div id="slider-range"></div>
+          <div class="a-range" id="credit-score-range">
+            <div class="a-range_labels">
+              <span class="a-range_labels-min"></span>
+              <span class="a-range_labels-max"></span>
+            </div>
+            <input type="range"
+                   class="a-range_input">
+            <div class="a-range_text"></div>
+          </div>
 
           <div id="credit-score-alert"
                class="result-alert chart-alert u-hidden"
