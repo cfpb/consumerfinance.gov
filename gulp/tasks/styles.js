@@ -1,6 +1,5 @@
 const autoprefixer = require( 'autoprefixer' );
 const BROWSER_LIST = require( '../../config/browser-list-config' );
-const browserSync = require( 'browser-sync' );
 const config = require( '../config' );
 const configPkg = config.pkg;
 const configBanner = config.banner;
@@ -20,6 +19,7 @@ const handleErrors = require( '../utils/handle-errors' );
 const mergeStream = require( 'merge-stream' );
 const paths = require( '../../config/environment' ).paths;
 const postcssUnmq = require( 'postcss-unmq' );
+const runBrowserSyncApp = require( '../utils/browser-sync' ).runBrowserSyncApp;
 
 /**
  * Process modern CSS.
@@ -40,9 +40,7 @@ function stylesModern() {
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
     .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( runBrowserSyncApp() );
 }
 
 /**
@@ -70,9 +68,7 @@ function stylesIE() {
     .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( { compatibility: 'ie8', inline: false } ) )
     .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( runBrowserSyncApp() );
 }
 
 /**
@@ -105,9 +101,7 @@ function stylesOnDemand() {
       extname: '.css'
     } ) )
     .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( runBrowserSyncApp() );
 }
 
 /**
@@ -128,9 +122,7 @@ function stylesFeatureFlags() {
       autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
     ] ) )
     .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( runBrowserSyncApp() );
 }
 
 /**
@@ -156,9 +148,7 @@ function stylesKnowledgebaseSpanishProd() {
       extname: '.css'
     } ) )
     .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( runBrowserSyncApp() );
 }
 
 /**
@@ -184,9 +174,7 @@ function stylesKnowledgebaseSpanishIE8() {
       extname: '.css'
     } ) )
     .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( runBrowserSyncApp() );
 }
 
 /**
@@ -211,9 +199,7 @@ function stylesNemoProd() {
       extname: '.css'
     } ) )
     .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( runBrowserSyncApp() );
 }
 
 /**
@@ -238,9 +224,7 @@ function stylesNemoIE8() {
       extname: '.css'
     } ) )
     .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( runBrowserSyncApp() );
 }
 
 /**
@@ -281,9 +265,7 @@ function stylesApps() {
         } ) )
         .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
         .pipe( gulp.dest( `${ paths.processed }/apps/${ app }/css` ) )
-        .pipe( browserSync.reload( {
-          stream: true
-        } ) )
+        .pipe( runBrowserSyncApp() )
     );
   } );
 
