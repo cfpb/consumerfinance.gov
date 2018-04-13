@@ -4,8 +4,7 @@
 
 
 const BROWSER_LIST = require( '../config/browser-list-config' );
-const envVars = require( '../config/environment' ).envvars;
-const NODE_ENV = envVars.NODE_ENV;
+const envvars = require( '../config/environment' ).envvars;
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
@@ -156,7 +155,7 @@ const configExports = {
   spanishConf
 };
 
-if ( NODE_ENV === 'development' ) {
+if ( envvars.NODE_ENV === 'development' ) {
   // eslint-disable-next-line guard-for-in
   for ( const key in configExports ) {
     Object.assign( configExports[key], devConf );

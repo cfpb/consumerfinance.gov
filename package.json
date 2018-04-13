@@ -20,7 +20,6 @@
     "babel-core": "7.0.0-beta.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^7.0.0-beta.3",
-    "browser-sync": "2.24.0",
     "cf-atomic-component": "1.5.4",
     "cf-buttons": "4.6.0",
     "cf-core": "4.6.4",

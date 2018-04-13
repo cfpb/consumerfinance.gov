@@ -3,7 +3,7 @@
 my $workDir = $ENV{'CFGOV_HOME'};
 my $currDir = `pwd`;
 
-($workDir eq "") && 
+($workDir eq "") &&
 die("\nPlease set the CFGOV_HOME environment variable to your vagrant directory.\n\n");
 
 chdir($workDir) ||
@@ -15,31 +15,21 @@ if ($#ARGV >= 0) {
 			print("\nStarting Django server on port 8001\n");
 			`vagrant ssh -c "/vagrant/bin/cfgovd start_django" &`;
 		}
-		elsif (($#ARGV >= 1) && ($ARGV[1] eq "watch")) {
-			print("\nStarting gulp watch\n");
-			exec("vagrant ssh -c \"cd /vagrant; source /opt/rh/devtoolset-2/enable; gulp watch\"");
-		}
 		else {
 			print("\nStarting CF Gov Refresh VM...\n\n");
-			my $argList = "";	
+			my $argList = "";
 			for ($i=1;$i<=$#ARGV;$i++) {
 				$argList .= $ARGV[$i]." ";
 			}
 			`vagrant up $argList`;
 		}
-		print("\nDone.\n");	
+		print("\nDone.\n");
 	}
 	elsif ($ARGV[0] eq 'stop') {
 		if (($#ARGV >= 1) && ($ARGV[1] eq "django")) {
 			print("\nStopping Django server on port 8001\n");
 			for ($i = 0; $i < 3; $i++) {
 				`vagrant ssh -c "/vagrant/bin/cfgovd stop_django" 2>/dev/null`;
-			}
-		}
-		elsif (($#ARGV >= 1) && ($ARGV[1] eq "watch")) {
-			print("\nStopped gulp watch\n");
-			for ($i = 0; $i < 3; $i++) {
-				`vagrant ssh -c "/vagrant/bin/cfgovd stop_gulp_watch" 2>/dev/null`;
 			}
 		}
 		else {
@@ -64,10 +54,10 @@ if ($#ARGV >= 0) {
 		print("\n$logData\n")
 	}
 	else {
-		print "\nUsage: cfgov [init |start | stop | log | assets] [django | watch]\n"; 
+		print "\nUsage: cfgov [init |start | stop | log | assets] [django]\n";
 	}
 }
 else {
-	print "\nUsage: cfgov [init |start | stop | log | assets] [django | watch]\n";
+	print "\nUsage: cfgov [init |start | stop | log | assets] [django]\n";
 }
 chdir($currDir);
