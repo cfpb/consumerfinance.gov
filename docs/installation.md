@@ -45,7 +45,7 @@ This project uses a large number of environment variables.
 To automatically define environment variables and launch the virtualenv
 upon `cd`ing to the project folder,
 [install Autoenv](https://github.com/kennethreitz/autoenv#install).
-We recommend using [Homebrew](http://brew.sh):
+We recommend using [Homebrew](https://brew.sh):
 
 ```bash
 brew install autoenv
@@ -92,7 +92,7 @@ You can optionally install a different version with Homebrew.
     is no longer supported by `brew`.__
 
 [Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
-however you’d like. We use [Homebrew](http://brew.sh) for developing on OS X):
+however you’d like. We use [Homebrew](https://brew.sh) for developing on OS X):
 
 ```bash
 brew tap homebrew/versions
@@ -126,7 +126,7 @@ brew info elasticsearch17
 
 The cfgov-refresh front end currently uses the following frameworks / tools:
 
-- [Gulp](http://gulpjs.com): task management for pulling in assets,
+- [Gulp](https://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Less](http://lesscss.org): CSS pre-processor.
 - [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
@@ -136,10 +136,10 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
     If you’re new to Capital Framework, we encourage you to
     [start here](https://cfpb.github.io/capital-framework/getting-started).
 
-1. Install [Node.js](http://nodejs.org) however you’d like.
+1. Install [Node.js](https://nodejs.org) however you’d like.
    We recommend using [nvm](https://github.com/creationix/nvm), though.
 
-2. Install [Gulp](http://gulpjs.com):
+2. Install [Gulp](https://gulpjs.com):
 
 ```bash
 npm install -g gulp

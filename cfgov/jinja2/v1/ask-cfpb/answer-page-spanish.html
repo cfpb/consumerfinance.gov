@@ -17,11 +17,11 @@
 {%- endblock -%}
 
 {% block og_image %}
-    <meta property="og:image" content="{{ page.open_graph_image_url if page.open_graph_image_url else 'http://www.consumerfinance.gov/static/nemo/_/img/cfpb-logo-spanish.png' }}">
+    <meta property="og:image" content="{{ page.open_graph_image_url if page.open_graph_image_url else 'https://www.consumerfinance.gov/static/nemo/_/img/cfpb-logo-spanish.png' }}">
 {% endblock %}
 
 {% block babel_content %}
-    
+
     <section class="content row ask-cfpb-page__es">
 
         <div class="primary span8">
@@ -88,7 +88,7 @@
 
 
     </section><!-- .row -->
-    <div class="analytics-data" 
+    <div class="analytics-data"
          data-answer-id="{{ answer_id }}"
          data-category-slug="{{ category.slug_es }}"
          data-category-name="{{ category.name_es }}">
@@ -104,4 +104,3 @@
         </span>
     </div><!-- .share -->
 {% endblock %}
-

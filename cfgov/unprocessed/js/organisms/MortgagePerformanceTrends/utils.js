@@ -260,7 +260,7 @@ const utils = {
    * takes a `howMuch` parameter to determine how much to zoom the map.
    * Values less than 1 zooms in. 0.5 zooms in to half the current view.
    * 2 zooms to twice the current view. If omitted, the zoom is reset.
-   * See http://api.highcharts.com/highmaps/Chart.mapZoom
+   * See https://api.highcharts.com/class-reference/Highcharts.Chart.html#mapZoom
    *
    * This function normalizes the map's zooming by keeping track of the current
    * zoom level and calculating a new one based on the requested amount of zoom.

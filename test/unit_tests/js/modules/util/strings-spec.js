@@ -6,9 +6,9 @@ let control;
 describe( 'Strings stringEscape()', () => {
 
   it( 'should escape a url', () => {
-    string = 'http://google.com';
+    string = 'https://google.com';
 
-    expect( strings.stringEscape( string ) ).toBe( 'http://google\\.com' );
+    expect( strings.stringEscape( string ) ).toBe( 'https://google\\.com' );
   } );
 
   it( 'should escape a hyphenated name', () => {

@@ -45,7 +45,7 @@ env:
 
 # Linting rules for ESLint.
 # 0's ignore a rule, 1's produce a warning, and 2's throw an error.
-# See http://eslint.org/docs/rules/ for full documentation.
+# See https://eslint.org/docs/rules/ for full documentation.
 rules:
 
   # Rules for flagging POSSIBLE ERRORS.

@@ -30,7 +30,7 @@ parser.add_argument(
     help="choose a server base other than www.consumerfinance.gov"
 )
 
-CFPB_BASE = 'http://www.consumerfinance.gov'
+CFPB_BASE = 'https://www.consumerfinance.gov'
 
 
 def check_static(url):
