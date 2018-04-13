@@ -78,20 +78,23 @@ home price, down payment, and more can affect mortgage interest rates.
                     <section class="form-intro">
                         <h4>Explore rate options</h4>
                     </section>
+
                     <section class="credit-score">
-                        <div class="range recalc">
+
+                        <div class="a-range recalc" id="credit-score-range">
                             <label for="credit-score">Credit score range</label>
-                            <div class="labels">
-                                <span>600</span>
-                                <span class="max">850</span>
+                            <div class="a-range_labels">
+                                <span class="a-range_labels-min">600</span>
+                                <span class="a-range_labels-max">850</span>
                             </div>
                             <input id="credit-score"
+                                   class="a-range_input"
                                    type="range"
                                    min="600"
                                    max="840"
                                    step="20"
                                    value="700">
-                            <div id="slider-range" class="range-text"></div>
+                            <div id="slider-range" class="a-range_text"></div>
 
                             {#
                               Credit alert for when low credit score is chosen.
@@ -111,6 +114,7 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                         <p class="form-sub">Credit score has a big impact on the rate you’ll receive. <a href="/askcfpb/319/how-does-my-credit-score-affect-my-ability-to-get-a-mortgage-loan.html" id="ask-cfpb-credit" target="_blank" rel="noopener noreferrer">Learn more</a></p>
                     </section>
+
                     <section class="demographics">
                         <div class="state-col">
                             <label for="location">Choose your state</label>
