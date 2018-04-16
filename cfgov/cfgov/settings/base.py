@@ -1,9 +1,11 @@
 import os
 import sys
+import warnings
 
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import dj_database_url
 from unipath import Path
 
 from ..util import admin_emails
@@ -171,7 +173,42 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
-DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
+
+# Databases
+DATABASES = {}
+
+# If DATABASE_URL is defined in the environment, use it to set the Django DB.
+if os.getenv('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config()
+# Otherwise, support the legacy use of MySQL-specific environment variables.
+elif os.getenv('MYSQL_NAME'):
+    MYSQL_VARIABLES_DEPRECATED = """
+The ability to define your MySQL database through the use of environment
+variables like MYSQL_NAME will soon be deprecated in favor of the single
+DATABASE_URL environment variable.
+
+Please modify your environment to instead use something like this:
+
+DATABASE_URL=mysql://username:password@host/dbname
+
+See https://github.com/kennethreitz/dj-database-url for other examples of how
+to define DATABASE_URL.
+"""
+
+    warnings.warn(MYSQL_VARIABLES_DEPRECATED)
+    DATABASES['default'] =  {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('MYSQL_NAME', ''),
+        'USER': os.environ.get('MYSQL_USER', ''),
+        'PASSWORD': os.environ.get('MYSQL_PW', ''),
+        'HOST': os.environ.get('MYSQL_HOST', ''),
+        'PORT': os.environ.get('MYSQL_PORT', ''),
+    }
+
+    if 'STORAGE_ENGINE' in os.environ:
+        DATABASES['default']['OPTIONS'] = {
+            'init_command': os.environ['STORAGE_ENGINE'],
+        }
 
 
 # Internationalization

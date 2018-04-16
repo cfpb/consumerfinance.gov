@@ -35,17 +35,5 @@ install() {
 }
 
 
-# Returns 1 if a global command-line program installed, else 0.
-# For example, echo "node: $(is_installed node)".
-is_installed() {
-  # Set to 1 initially.
-  local return_=1
-
-  # Set to 0 if program is not found.
-  type $1 >/dev/null 2>&1 || { local return_=0; }
-
-  echo "$return_"
-}
-
 init "$1"
 install
