@@ -29,10 +29,12 @@ Before( function() {
 
 When( 'mouse moves from one link to another after a delay',
   async function() {
-    await browser.actions().mouseMove( _dom.triggerPolyCom ).perform();
+    await browser.actions( {bridge:true} )
+      .mouseMove( _dom.triggerPolyCom ).perform();
     await browser.sleep( 500 );
 
-    return browser.actions().mouseMove( _dom.triggerAboutUs ).perform();
+    return browser.actions( {bridge:true} )
+      .mouseMove( _dom.triggerAboutUs ).perform();
   }
 );
 
@@ -46,16 +48,26 @@ Then( 'the mega-menu organism shouldn\'t show content',
 
 Then( 'the mega-menu organism shouldn\'t show the first link immediately',
   async function() {
-    await browser.actions().mouseMove( _dom.triggerPolyCom ).perform();
+    function _modifyTransitionDuration( duration ) {
+      duration = duration || 'inherit';
+      var style = document.createElement( 'style' ); // eslint-disable-line no-var, inline-comments
+      style.type = 'text/css';
+      style.innerHTML = '* { transition-delay: ' + duration + ' !important; }';
+      document.body.appendChild( style );
+    }
 
-    return expect( _dom.contentPolyCom.isDisplayed() )
+    await browser.executeScript( _modifyTransitionDuration, '750ms' );
+    await browser.actions( {bridge:true} ).mouseMove( _dom.triggerPolyCom ).perform();
+    await expect( _dom.contentPolyCom.isDisplayed() )
       .to.eventually.equal( false );
+
+    return browser.executeScript( _modifyTransitionDuration );
   }
 );
 
 Then( /the mega-menu organism should show the first link after a delay/,
   async function() {
-    await browser.actions().mouseMove( _dom.triggerPolyCom ).perform();
+    await browser.actions( {bridge:true} ).mouseMove( _dom.triggerPolyCom ).perform();
     await browser.sleep( 500 );
 
     return expect( _dom.contentPolyCom.isDisplayed() )
@@ -78,7 +90,7 @@ Then( 'should only show second link content', async function() {
 
 Then( 'the mega-menu organism should show menu when clicked',
   async function() {
-    await browser.driver.actions().click( _dom.triggerBtn ).perform();
+    await browser.driver.actions( {bridge:true} ).click( _dom.triggerBtn ).perform();
 
     return expect( _dom.contentWrapper.isDisplayed() )
       .to.eventually.equal( true );
