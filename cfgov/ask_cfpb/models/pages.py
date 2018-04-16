@@ -60,6 +60,13 @@ CONSUMER_TOOLS_PORTAL_PAGES = {
         'Student Loans',
         'student-loans')
 }
+JOURNEY_PATHS = (
+    '/owning-a-home/prepare',
+    '/owning-a-home/explore',
+    '/owning-a-home/compare',
+    '/owning-a-home/close',
+    '/owning-a-home/process',
+)
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -94,12 +101,48 @@ def get_ask_breadcrumbs(category=None):
     return breadcrumbs
 
 
+def get_journey_breadcrumbs(request, path):
+    """
+    If referrer is a BAH journey page, breadcrumbs should
+    reflect the BAH journey page hierarchy.
+    """
+    pages = path.replace('process/', '').strip('/').split('/')
+    # TODO: replace when journey page urls are updated
+    # after 2018 homebuying season campaign ends
+    # Also remove related tests
+    if pages == ['owning-a-home']:
+        pages.append('prepare')
+    # end TODO
+    breadcrumbs = []
+    parent = request.site.root_page
+    idx = 0
+    while idx < len(pages):
+        page = parent.get_children().get(slug=pages[idx])
+        # TODO: replace when journey page urls are updated
+        # after 2018 homebuying season campaign ends
+        if len(breadcrumbs):
+            href = page.relative_url(request.site).replace(
+                '/owning-a-home/',
+                '/owning-a-home/process/'
+            )
+        else:
+            href = page.relative_url(request.site)
+        # end TODO
+        breadcrumbs.append({
+            'title': page.title,
+            'href': href
+        })
+        parent = page
+        idx += 1
+    return breadcrumbs
+
+
 def get_question_referrer_data(request, categories):
     """
     Determines whether a question page's referrer is a
-    portal or Ask category page, and if so returns the
-    appropriate category and breadcrumbs. Otherwise,
-    returns question's first category and its breadcrumbs.
+    portal, Ask category, or BAH journey page. If so, returns
+    the appropriate category and breadcrumbs. Otherwise, returns
+    question's first category and its breadcrumbs.
     """
     try:
         referrer = request.META.get('HTTP_REFERER', '')
@@ -108,6 +151,11 @@ def get_question_referrer_data(request, categories):
         if portal_data:
             category = categories.filter(slug=portal_data[1]).first()
             breadcrumbs = [{'title': portal_data[0], 'href': path}]
+            return (category, breadcrumbs)
+        elif path.startswith(JOURNEY_PATHS):
+            category = categories.filter(slug='mortgages').first() \
+                or categories.first()
+            breadcrumbs = get_journey_breadcrumbs(request, path)
             return (category, breadcrumbs)
         else:
             match = re.search(r'ask-cfpb/category-([A-Za-z0-9-_]*)/', path)
