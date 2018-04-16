@@ -47,8 +47,6 @@ jobs:
   fast_finish: true
   include:
     - stage: run tests
-      env: RUNTEST=frontend
-    - env: RUNTEST=backend
     - env: RUNTEST=acceptance
     - stage: Update documentation
       script:

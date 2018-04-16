@@ -46,6 +46,8 @@ function _chooseSuite( params ) {
     const windowSize = `--window-size=${ windowWidthPx }x${ windowHeightPx }`;
     capabilities[0].chromeOptions.args.push( windowSize );
 
+    console.log( envvars.TRAVIS );
+
     if ( envvars.TRAVIS ) {
       capabilities[0].chromeOptions.args.push( '--no-sandbox' );
     }
