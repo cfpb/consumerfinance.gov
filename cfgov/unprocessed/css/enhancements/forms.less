@@ -361,6 +361,14 @@ input {
     } );
 }
 
+/*
+ * Removes top margin from text input when it follows
+ * .a-label__heading, which applies a 10px bottom margin.
+ */
+.m-form-field .a-label__heading + .a-text-input {
+    margin-top: 0;
+}
+
 /* topdoc
   name: EOF
   eof: true
