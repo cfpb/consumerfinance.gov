@@ -13,8 +13,5 @@ elif [ "$RUNTEST" == "backend" ]; then
     tox -e missing-migrations
     bash <(curl -s https://codecov.io/bash) -F backend
 elif [ "$RUNTEST" == "acceptance" ]; then
-    export DISPLAY=:99.0
-    sh -e /etc/init.d/xvfb start &
-    sleep 3
-    gulp test:acceptance
+    gulp test:acceptance --headless
 fi
