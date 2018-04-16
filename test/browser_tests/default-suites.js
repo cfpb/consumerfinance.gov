@@ -13,11 +13,9 @@ const defaultSuites = {
   essential: [
     {
       browserName:      'chrome',
-      extendedDebugging: 'true',
+      extendedDebugging: true,
       maxDuration:      10800,
-      maxInstances:     2,
       platform:         'Windows',
-      shardTestFiles:   'true',
       tunnelIdentifier: tunnelIdentifier,
       version:          ''
     }
@@ -30,7 +28,7 @@ const defaultSuites = {
       maxDuration:      10800,
       maxInstances:     2,
       platform:         'Windows 7',
-      shardTestFiles:   'true',
+      shardTestFiles:   true,
       tunnelIdentifier: tunnelIdentifier,
       version:          '10.0'
     }
@@ -45,7 +43,7 @@ const defaultSuites = {
       maxDuration:      10800,
       maxInstances:     2,
       platform:         'Windows 10',
-      shardTestFiles:   'true',
+      shardTestFiles:   true,
       tunnelIdentifier: tunnelIdentifier,
       version:          ''
     },
@@ -57,7 +55,7 @@ const defaultSuites = {
       maxInstances:                2,
       nativeEvents:                false,
       platform:                    'Windows 10',
-      shardTestFiles:              'true',
+      shardTestFiles:              true,
       tunnelIdentifier:            tunnelIdentifier,
       version:                     ''
     }
@@ -70,9 +68,7 @@ const defaultSuites = {
       chromeOptions: {
         args: [ '--headless', '--disable-gpu' ]
       },
-      maxDuration:    10800,
-      maxInstances:   2,
-      shardTestFiles: 'true'
+      maxDuration:    10800
     }
   ]
 };

@@ -301,9 +301,9 @@ async function spawnProtractor( cb ) {
       sauceTunnel = await _createSauceTunnel();
     }
     await _runProtractor( );
-    _handleSuccess( sauceTunnel );
+    await _handleSuccess( sauceTunnel );
   } catch ( error ) {
-    _handleErrors( sauceTunnel );
+    await _handleErrors( sauceTunnel );
   }
 }
 
