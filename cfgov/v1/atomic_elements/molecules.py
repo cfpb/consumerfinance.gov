@@ -78,7 +78,7 @@ class TextIntroduction(blocks.StructBlock):
         required=False,
         help_text=('Optional: Adds an H5 eyebrow above H1 heading text. '
                    'Only use in conjunction with heading.'),
-        label="Pre-heading"
+        label='Pre-heading'
     )
     heading = blocks.CharBlock(required=False)
     intro = blocks.RichTextBlock(required=False)

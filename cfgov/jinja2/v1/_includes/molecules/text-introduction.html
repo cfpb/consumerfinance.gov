@@ -31,7 +31,7 @@
                         at the bottom of the molecule.
 
    ========================================================================== #}
-{% if value.eyebrow and value.heading %}
+{% if value.heading %}
 <header>
 {% endif %}
 {% if value.eyebrow %}
@@ -39,8 +39,6 @@
 {% endif %}
 {% if value.heading %}
     <h1>{{ value.heading }}</h1>
-{% endif %}
-{% if value.eyebrow and value.heading %}
 </header>
 {% endif %}
 
