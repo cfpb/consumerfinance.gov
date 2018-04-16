@@ -31,15 +31,11 @@
                         at the bottom of the molecule.
 
    ========================================================================== #}
-{% if value.heading %}
-<header>
-{% endif %}
 {% if value.eyebrow %}
     <div class="h5 eyebrow">{{ value.eyebrow }}</div>
 {% endif %}
 {% if value.heading %}
     <h1>{{ value.heading }}</h1>
-</header>
 {% endif %}
 
 {% if value.intro.source %}
