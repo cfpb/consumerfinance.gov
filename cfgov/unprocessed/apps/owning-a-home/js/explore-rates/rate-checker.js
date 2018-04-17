@@ -1,7 +1,9 @@
 import $ from 'jquery';
 import {
   calcLoanAmount,
+  checkIfZero,
   delay,
+  isVisible,
   renderAccessibleData,
   renderDatestamp,
   renderLoanAmount
@@ -550,50 +552,37 @@ function processLoanAmount( element ) {
 }
 
 /**
- * Check if the house price entered is 0
- * @param {Object} $price - TODO: Add description.
- * @param {Object} $percent - TODO: Add description.
- * @param {Object} $down - TODO: Add description.
- * @returns {boolean} TODO: Add description.
- */
-function checkIfZero( $price, $percent, $down ) {
-  if ( params.getVal( 'house-price' ) === '0' ||
-       +Number( params.getVal( 'house-price' ) ) === 0 ) {
-    removeAlerts();
-    chart.stopLoading();
-    downPaymentWarning();
-    return true;
-  }
-  return false;
-}
-
-/**
  * Update either the down payment % or $ amount
  * depending on the input they've changed.
  */
 function renderDownPayment() {
 
   const $el = $( this );
-  const $price = $( '#house-price' );
-  const $percent = $( '#percent-down' );
-  const $down = $( '#down-payment' );
+  const price = document.querySelector( '#house-price' );
+  const percent = document.querySelector( '#percent-down' );
+  const down = document.querySelector( '#down-payment' );
   let val;
 
   if ( !$el.val() ) {
     return;
   }
 
-  checkIfZero( $price, $percent, $down );
+  if ( checkIfZero( params.getVal( 'house-price' ) ) ) {
+    removeAlerts();
+    chart.stopLoading();
+    downPaymentWarning();
+  }
 
-  if ( $price.val() !== 0 ) {
-    if ( $el.attr( 'id' ) === 'down-payment' || options['dp-constant'] === 'down-payment' ) {
+  if ( price.val() !== 0 ) {
+    if ( $el.attr( 'id' ) === 'down-payment' ||
+          options['dp-constant'] === 'down-payment' ) {
       val = ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) * 100 ) || '';
-      $percent.val( Math.round( val ) );
+      percent.val( Math.round( val ) );
     } else {
       val = getSelection( 'house-price' ) * ( getSelection( 'percent-down' ) / 100 );
       val = val >= 0 ? Math.round( val ) : '';
       val = addCommas( val );
-      $down.val( val );
+      down.val( val );
     }
   }
 }
@@ -747,14 +736,6 @@ function resultFailWarning() {
  */
 function downPaymentWarning() {
   dpAlertDom.classList.remove( 'u-hidden' );
-}
-
-/**
- * @param  {HTMLNode} elem - An HTML element to check for u-hidden class.
- * @returns {boolean} True is the element is visible, false otherwise.
- */
-function isVisible( elem ) {
-  return !elem.classList.contains( 'u-hidden' );
 }
 
 /**

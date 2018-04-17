@@ -155,6 +155,7 @@ TEMPLATES = [
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
+                'core.jinja2tags.filters',
                 'v1.jinja2tags.filters',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
@@ -616,9 +617,6 @@ FLAGS = {
     
     # To be enabled when journey pages are released in Wagtail.
     'OAH_JOURNEY': {},
-
-    # To be enabled while journey sources page is migrated to Wagtail.
-    'OAH_JOURNEY_SHEER_SOURCE_PAGE': {},
 
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.

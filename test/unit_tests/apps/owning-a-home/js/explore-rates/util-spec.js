@@ -45,11 +45,47 @@ describe( 'explore-rates/util', () => {
     } );
   } );
 
+  describe( 'checkIfZero()', () => {
+    it( 'should return true if value is zero.', () => {
+      expect( util.checkIfZero( '0' ) ).toBe( true );
+      expect( util.checkIfZero( 0 ) ).toBe( true );
+    } );
+
+    it( 'should return false if value is NOT zero.', () => {
+      expect( util.checkIfZero( '1' ) ).toBe( false );
+      expect( util.checkIfZero( -1 ) ).toBe( false );
+    } );
+  } );
+
+  describe( 'delay()', () => {
+    it( 'should delay function execution.', () => {
+      const testFunct = () => {
+        // This is an empty function to test the delay callback.
+      };
+      jest.useFakeTimers();
+      util.delay( testFunct, 500 );
+      expect( setTimeout ).toHaveBeenLastCalledWith( testFunct, 500 );
+    } );
+  } );
+
   describe( 'formatTimestampMMddyyyy()', () => {
     it( 'should format a timestamp as a date.', () => {
       expect( util.formatTimestampMMddyyyy( '2018-03-14T04:00:00Z' ) )
         .toBe( '03/14/2018' );
     } );
+  } );
+
+  describe( 'isVisible()', () => {
+    it( 'should return true if HTML element has u-hidden class.', () => {
+      expect( util.isVisible( timeStampDom ) ).toBe( true );
+    } );
+
+    it( 'should return false if HTML element does NOT have u-hidden class.',
+      () => {
+        timeStampDom.classList.add( 'u-hidden' );
+        expect( util.isVisible( timeStampDom ) ).toBe( false );
+      }
+    );
   } );
 
   describe( 'renderAccessibleData()', () => {
@@ -80,17 +116,6 @@ describe( 'explore-rates/util', () => {
     it( 'should format a timestamp as a date.', () => {
       util.renderLoanAmount( loanAmountResultDom, 180000 );
       expect( loanAmountResultDom.textContent ).toBe( '$180,000' );
-    } );
-  } );
-
-  describe( 'delay()', () => {
-    it( 'should delay function execution.', () => {
-      const testFunct = () => {
-        // This is an empty function to test the delay callback.
-      };
-      jest.useFakeTimers();
-      util.delay( testFunct, 500 );
-      expect( setTimeout ).toHaveBeenLastCalledWith( testFunct, 500 );
     } );
   } );
 } );
