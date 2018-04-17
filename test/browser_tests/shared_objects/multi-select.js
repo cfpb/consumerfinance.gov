@@ -36,8 +36,7 @@ class MultiSelect {
 
   async areTagSelected() {
     const tagsSelected = this._selectedTags.length;
-    const elements = this.getDisplayedTagElements();
-    const selectedTagsCount = await elements.count();
+    const selectedTagsCount = await this.getDisplayedTagElements().count();
 
     return tagsSelected !== 0 || selectedTagsCount !== 0;
   }
@@ -50,8 +49,7 @@ class MultiSelect {
 
   async dropDownHasValue( value ) {
     const selector = `li[data-option="${ value }"].filter-match`;
-    const choicesWithValue = element.all( by.css( selector ) );
-    const selectedTagsCount = await choicesWithValue.count();
+    const selectedTagsCount = await element.all( by.css( selector ) ).count();
 
     return selectedTagsCount > 0;
   }
