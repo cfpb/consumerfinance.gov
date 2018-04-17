@@ -3,6 +3,18 @@ import formatUSD from 'format-usd';
 import unFormatUSD from 'unformat-usd';
 
 /**
+ * Check if the house price entered is 0
+ * @param {string|number} price - A price.
+ * @returns {boolean} True if price is zero, false otherwise.
+ */
+function checkIfZero( price ) {
+  if ( price === '0' || +Number( price ) === 0 ) {
+    return true;
+  }
+  return false;
+}
+
+/**
  * Simple (anonymous) delay function.
  * @return {Object} function that has been delayed.
  */
@@ -27,6 +39,14 @@ function formatTimestampMMddyyyy( timestamp ) {
      return (timestamp.getUTCMonth() + 1) + '/' + timestamp.getUTCDate() +
             '/' +  timestamp.getUTCFullYear(); */
   return formatDate.asString( 'MM/dd/yyyy', new Date( timestamp ) );
+}
+
+/**
+ * @param  {HTMLNode} elem - An HTML element to check for u-hidden class.
+ * @returns {boolean} True is the element is visible, false otherwise.
+ */
+function isVisible( elem ) {
+  return !elem.classList.contains( 'u-hidden' );
 }
 
 /**
@@ -90,7 +110,9 @@ function renderLoanAmount( elem, loanAmount ) {
 
 module.exports = {
   calcLoanAmount,
+  checkIfZero,
   delay,
+  isVisible,
   formatTimestampMMddyyyy,
   renderAccessibleData,
   renderDatestamp,
