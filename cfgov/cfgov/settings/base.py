@@ -614,7 +614,7 @@ FLAGS = {
     # To be enabled when owning-a-home/closing-disclosure/
     # and owning-a-home/loan-estimate/ are de-sheered.
     'OAH_FORM_EXPLAINERS': {},
-    
+
     # To be enabled when journey pages are released in Wagtail.
     'OAH_JOURNEY': {},
 
@@ -638,6 +638,10 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
+
+    # Turbolinks is a JS library that speeds up page loads
+    # https://github.com/turbolinks/turbolinks
+    'TURBOLINKS': {},
 
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': {

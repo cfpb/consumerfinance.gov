@@ -69,6 +69,7 @@
     "sauce-connect-tunnel": "0.2.1",
     "through2": "2.0.3",
     "timelinejs": "2.35.6",
+    "turbolinks": "5.1.1",
     "uglifyjs-webpack-plugin": "1.2.4",
     "ustream-embedapi": "1.0.0",
     "vinyl-named": "1.1.0",
