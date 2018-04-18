@@ -84,8 +84,9 @@ function testUnitScripts( cb ) {
 
 /**
  * Run tox Acceptance tests.
+ * @param {Function} cb - Callback function to call on completion.
  */
-function testAcceptanceBrowser() {
+function testAcceptanceBrowser( cb ) {
   const params = minimist( process.argv.slice( 3 ) ) || {};
   const toxParams = [ '-e', 'acceptance' ];
 
@@ -104,9 +105,11 @@ function testAcceptanceBrowser() {
     .once( 'close', function( code ) {
       if ( code ) {
         fancyLog( 'Tox tests exited with code ' + code );
+        cb(); // eslint-disable-line callback-return, inline-comments
         process.exit( 1 );
       }
       fancyLog( 'Tox tests done!' );
+      cb(); // eslint-disable-line callback-return, inline-comments
     } );
 }
 
@@ -225,7 +228,7 @@ function _createSauceTunnel( ) {
 
       setTimeout( () => {
         resolve( sauceTunnelParam );
-      }, 5000 );
+      }, 1000 );
     } );
 
   } );
@@ -233,17 +236,18 @@ function _createSauceTunnel( ) {
 
 /**
  * Spawn the appropriate acceptance tests.
- * @param {string} args Protractor arguments.
+ * @param {Function} cb - Callback function to call on completion.
  */
-function spawnProtractor( ) {
+async function spawnProtractor( cb ) {
   const params = _getProtractorParams();
+  const commandLineParams = minimist( process.argv.slice( 2 ) ) || {};
+  let sauceTunnel;
 
   /**
    * Spawn the appropriate acceptance tests.
-   * @param {string} args Protractor arguments.
    * @returns {Promise} Promise which runs Protractor.
    */
-  function _runProtractor( args ) {
+  function _runProtractor( ) {
     fancyLog( 'Running Protractor with params: ' + params );
 
     return new Promise( ( resolve, reject ) => {
@@ -253,53 +257,55 @@ function spawnProtractor( ) {
         { stdio: 'inherit' }
       ).once( 'close', code => {
         if ( code ) {
-          fancyLog( 'Protractor tests exited with code ' + code );
-          reject( args );
+          reject( new Error( 'Protractor tests exited with code ' + code ) );
         }
         fancyLog( 'Protractor tests done!' );
-        resolve( args );
+        resolve();
       } );
     } );
   }
 
   /**
    * Acceptance tests error handler.
-   * @param {string} args Failure arguments.
+   * @param {Object} args Failure arguments.
    */
-  function _handleErrors( args = {} ) {
+  async function _handleErrors( args = {} ) {
+    const stopSauceTunnel = () => new Promise( resolve => {
+      args.sauceTunnel.stop( resolve );
+    } );
+
     if ( args.sauceTunnel ) {
-      args.sauceTunnel.stop( () => {
-        process.exit( 1 );
-      } );
-    } else {
-      process.exit( 1 );
+      await stopSauceTunnel();
     }
+
+    cb(); // eslint-disable-line callback-return, inline-comments
+    process.exit( 1 );
   }
 
   /**
    * Acceptance tests success handler.
-   * @param {string} args Success arguments.
+   * @param {Object} args Success arguments.
    */
-  function _handleSuccess( args = {} ) {
+  async function _handleSuccess( args = {} ) {
+    const stopSauceTunnel = () => new Promise( resolve => {
+      args.sauceTunnel.stop( resolve );
+    } );
+
     if ( args.sauceTunnel ) {
-      args.sauceTunnel.stop( () => {
-        process.exit( 0 );
-      } );
-    } else {
-      process.exit( 0 );
+      await stopSauceTunnel();
     }
+    cb(); // eslint-disable-line callback-return, inline-comments
+    process.exit( 0 );
   }
 
-  const commandLineParams = minimist( process.argv.slice( 2 ) ) || {};
-  if ( commandLineParams.sauce === 'true' ) {
-    _createSauceTunnel()
-      .then( _runProtractor )
-      .then( _handleSuccess )
-      .catch( _handleErrors );
-  } else {
-    _runProtractor()
-      .then( _handleSuccess )
-      .catch( _handleErrors );
+  try {
+    if ( commandLineParams.sauce === 'true' ) {
+      sauceTunnel = await _createSauceTunnel();
+    }
+    await _runProtractor( );
+    await _handleSuccess( sauceTunnel );
+  } catch ( error ) {
+    await _handleErrors( sauceTunnel );
   }
 }
 

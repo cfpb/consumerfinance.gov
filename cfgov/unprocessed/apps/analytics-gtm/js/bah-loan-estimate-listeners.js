@@ -30,7 +30,7 @@ const OAHLEAnalytics = ( function() {
     track( 'OAH Loan Estimate Interaction', action, currentPage );
   } );
 
-  $( '.expandable_target' ).click( function() {
+  $( '.o-expandable_target' ).click( function() {
     let ele = $( this ),
         tab = ele.closest( '.explain' ).find( '.active-tab' ),
         tabText = tab.find( '.tab-label' ).text().trim();
@@ -38,7 +38,7 @@ const OAHLEAnalytics = ( function() {
       function() {
         let state = ele.attr( 'aria-pressed' ),
             action = 'Expandable collapsed - ' + tabText,
-            label = $( '<p>' + ele.find( '.expandable_label' ).html() + '</p>' ),
+            label = $( '<p>' + ele.find( '.o-expandable_label' ).html() + '</p>' ),
             text = '';
 
         label.find( 'span' ).empty();
@@ -58,7 +58,7 @@ const OAHLEAnalytics = ( function() {
       function() {
         let action = 'Image Overlay click - expandable collapsed',
             target = $( href );
-        if ( target.hasClass( 'expandable__expanded' ) ) {
+        if ( target.hasClass( 'o-expandable__expanded' ) ) {
           action = 'Image Overlay click - expandable expanded';
         }
         track( 'OAH Loan Estimate Interaction', action, text );

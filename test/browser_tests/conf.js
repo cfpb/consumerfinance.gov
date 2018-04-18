@@ -4,7 +4,6 @@ const defaultSuites = require( './default-suites.js' );
 const minimist = require( 'minimist' );
 const retry = require( 'protractor-retry' ).retry;
 
-
 /**
  * Check whether a parameter value is set.
  * @param {string} param The value of a parameter.
@@ -46,6 +45,10 @@ function _chooseSuite( params ) {
     }
     const windowSize = `--window-size=${ windowWidthPx }x${ windowHeightPx }`;
     capabilities[0].chromeOptions.args.push( windowSize );
+
+    if ( envvars.TRAVIS ) {
+      capabilities[0].chromeOptions.args.push( '--no-sandbox' );
+    }
   } else if ( paramsAreNotSet && _useSauceLabs() ) {
     capabilities = defaultSuites.full;
   }
@@ -243,12 +246,13 @@ function _onPrepare() {
 }
 
 const config = {
-  baseUrl:                environmentTest.baseUrl,
+  baseUrl:                  environmentTest.baseUrl,
   cucumberOpts: {
     'require':   'cucumber/step_definitions/*.js',
-    'tags':      [ '~@mobile', '~@skip' ],
+    'tags':      [ '~@mobile', '~@skip', '~@undefined' ],
     'profile':   false,
-    'no-source': true
+    'no-source': true,
+    'fail-fast': true
   },
   afterLaunch:              () => retry.afterLaunch( 1 ),
   directConnect:            true,

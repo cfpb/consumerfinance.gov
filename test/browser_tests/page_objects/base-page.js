@@ -1,12 +1,19 @@
+const { setDefaultTimeout } = require( 'cucumber' );
+
+setDefaultTimeout( 60 * 1000 );
+
 class BasePage {
   async gotoURL( url ) {
     const gotoUrl = url || this.URL || '/';
     await browser.get( gotoUrl );
     await this.setElements();
-    await this.disableAnimations();
-    await this.removeExternalScripts();
 
-    return BasePage.dismissAlert( gotoUrl );
+    try {
+      await this.disableAnimations();
+      return this.removeExternalScripts();
+    } catch ( error ) {
+      return Promise.resolve();
+    }
   }
 
   removeExternalScripts() {
@@ -16,13 +23,15 @@ class BasePage {
      * @param {Object} browser Protractor browser object.
      */
     function _removeScripts() {
-      [].slice.call( document.querySelectorAll( 'script, style, link' ) )
-        .filter( script => {
-          const src = script.href || script.src;
-
-          return src && src.indexOf( 'localhost' ) === -1;
-        } )
-        .forEach( script => script.parentNode.removeChild( script ) );
+      [].forEach.call(
+        document.querySelectorAll( 'script, style, link' ),
+        function( script ) {
+          var src = script.href || script.src; // eslint-disable-line no-var, inline-comments
+          if( src && src.indexOf( 'localhost' ) === -1 ) {
+            script.parentNode.removeChild( script );
+          }
+        }
+      );
     }
 
     return browser.executeScript( _removeScripts );
@@ -35,7 +44,7 @@ class BasePage {
      * @param {Object} browser Protractor browser object.
      */
     function _disableAnimations() {
-      const style = document.createElement( 'style' );
+      var style = document.createElement( 'style' ); // eslint-disable-line no-var, inline-comments
       style.type = 'text/css';
       style.innerHTML = '* { transition-duration: .1ms !important; }';
       document.body.appendChild( style );

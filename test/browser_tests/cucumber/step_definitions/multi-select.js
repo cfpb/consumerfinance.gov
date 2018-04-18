@@ -13,12 +13,12 @@ Before( function() {
   multiSelect = new MultiSelect();
 } );
 
-/* When( /I (.*) on the multi-select search input/,
-   async function( searchInputAction ) {
-   await browser.wait( EC.visibilityOf( multiSelect.elements.search ) );
-   await multiSelect.elements.search[searchInputAction]();
-   }
-   ); */
+When( /I (.*) on the multi-select search input/,
+  async function( searchInputAction ) {
+    await browser.wait( EC.visibilityOf( multiSelect.elements.search ) );
+    await multiSelect.elements.search[searchInputAction]();
+  }
+);
 
 When( /I enter "(.*)" in the search input/,
   function( searchInputText ) {
@@ -52,11 +52,11 @@ When( 'I click on the first choices element',
 );
 
 When( /I click on the first option in the dropdown(?:\s)?(?:again)?/,
-  function() {
+  async function() {
+    const firstOption = await multiSelect.getDropDownLabelElements().first();
+    await browser.wait( EC.visibilityOf( firstOption ) );
 
-    return multiSelect.getDropDownLabelElements()
-      .first()
-      .click();
+    return firstOption.click();
   }
 );
 
