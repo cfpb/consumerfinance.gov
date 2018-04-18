@@ -127,10 +127,6 @@ module.exports = {
         paths.modules + '/lightbox2/dist/**/*'
       ],
       dest: paths.processed + '/lightbox2'
-    },
-    vendorJs: {
-      src: [''],
-      dest: paths.processed + '/js/'
     }
   }
 };
