@@ -19,8 +19,8 @@ const envvars = {
   SAUCE_USERNAME:          process.env.SAUCE_USERNAME,
   SAUCE_ACCESS_KEY:        process.env.SAUCE_ACCESS_KEY,
   ACHECKER_ID:             process.env.ACHECKER_ID,
-  SAUCE_TUNNEL:            process.env.SAUCE_TUNNEL ||
-                           new Date().getTime()
+  SAUCE_TUNNEL:            process.env.SAUCE_TUNNEL,
+  TRAVIS:                  process.env.TRAVIS
   /* eslint-enable no-process-env */
 };
 
