@@ -5,8 +5,8 @@ set -ex
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
-    gulp test --travis
-    bash <(curl -s https://codecov.io/bash) -F frontend
+    gulp test --travis --headless
+    bash <(curl -s https://codecov.io/bash) -F frontend -X coveragepy
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e lint
     DATABASE_URL=postgres://postgres@localhost/travis_ci_test tox -e fast
@@ -15,6 +15,4 @@ elif [ "$RUNTEST" == "backend" ]; then
 
     pip install -r requirements/manual.txt
     mkdocs build
-elif [ "$RUNTEST" == "acceptance" ]; then
-    gulp test:acceptance --headless
 fi
