@@ -37,7 +37,9 @@ const COMMON_MODULE_CONFIG = {
       options: {
         presets: [ [ 'babel-preset-env', {
           configPath: __dirname,
-          useBuiltIns: 'usage',
+          /* Use useBuiltIns: 'usage' and set `debug: false` to see what
+             scripts require polyfilling. */
+          useBuiltIns: false,
           debug: false
         } ] ]
       }
