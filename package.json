@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "autoprefixer": "8.2.0",
-    "babel-core": "6.26.0",
-    "babel-loader": "7.1.4",
-    "babel-preset-env": "1.6.1",
+    "babel-core": "7.0.0-beta.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^7.0.0-beta.3",
     "browser-sync": "2.23.6",
     "cf-atomic-component": "1.5.4",
     "cf-buttons": "4.6.0",
