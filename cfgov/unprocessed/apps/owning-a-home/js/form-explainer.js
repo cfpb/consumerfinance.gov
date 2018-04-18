@@ -6,7 +6,7 @@ import ExpandableGroup from './ExpandableGroup';
 import { assign } from '../../../js/modules/util/assign';
 import { closest } from '../../../js/modules/util/dom-traverse';
 import { instantiateAll } from '../../../js/modules/util/atomic-helpers';
-import throttle from 'lodash.throttle';
+import throttle from w'lodash.throttle';
 
 const EXPLAIN_TYPES = {
   CHECKLIST:   'checklist',
@@ -435,7 +435,7 @@ class FormExplainer {
    * Paginate through the various form pages.
    * @param {number} pageNum - Number of the current page.
    * @param {function} callback - Function to invode after scroll.
-   * @param {boolean} shouldScrollIntoView - Wether to scroll the page into view.
+   * @param {boolean} shouldScrollIntoView - Whether to scroll the page into view.
    */
   setCurrentPage( pageNum, callback, shouldScrollIntoView = true ) {
     const CURRENT_PAGE = 'current-page';
