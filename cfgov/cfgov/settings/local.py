@@ -1,7 +1,6 @@
 from unipath import DIRS
 
 from .base import *
-from .database_mixin import *
 
 
 DEBUG = True

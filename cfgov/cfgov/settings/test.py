@@ -1,17 +1,23 @@
-import dj_database_url
-
 from .local import *
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(REPOSITORY_ROOT, 'db.sqlite3'),
+# If a database wasn't defined in settings.base through the use of environment
+# variables, default to using an in-memory SQLite one for unit tests.
+#
+# If a database is configured through environment settings, the unit tests will
+# be run against a new test database on the same backend.
+#
+# See https://docs.djangoproject.com/en/dev/topics/testing/overview/#the-test-database
+if not DATABASES:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+            'TEST': {
+                'NAME': ':memory:',
+            },
+        }
     }
-}
-
-if 'DATABASE_URL' in os.environ:
-    DATABASES['default'] = dj_database_url.config()
 
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
