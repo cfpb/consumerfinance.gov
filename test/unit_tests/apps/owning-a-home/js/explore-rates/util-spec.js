@@ -145,14 +145,14 @@ describe( 'explore-rates/util', () => {
   describe( 'setSelections()', () => {
     it( 'should set value or attribute of element.', () => {
       downPaymentDom = document.querySelector( '#down-payment' );
-      housePriceDom = document.querySelector( '#house-price' )
+      housePriceDom = document.querySelector( '#house-price' );
       const mockParams = {
         'down-payment': '20,000',
-        'house-price':  '200,000',
+        'house-price':  '200,000'
       };
       expect( downPaymentDom.value ).toBe( '0' );
       expect( housePriceDom.getAttribute( 'placeholder' ) ).toBe( '0' );
-      util.setSelections( mockParams  );
+      util.setSelections( mockParams );
       expect( downPaymentDom.value ).toBe( '20,000' );
       expect( housePriceDom.getAttribute( 'placeholder' ) ).toBe( '200,000' );
     } );

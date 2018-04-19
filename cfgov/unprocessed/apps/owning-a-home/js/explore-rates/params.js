@@ -27,7 +27,7 @@ const _params = {
 };
 
 /**
- * @return {Object} Underlying object of parameters.
+ * @returns {Object} Underlying object of parameters.
  */
 function getAllParams() {
   return _params;

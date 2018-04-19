@@ -127,7 +127,7 @@ function setSelections( fields ) {
 /**
  * Set value(s) of an individual HTML element in the control panel.
  * @param  {HTMLNode} el An HTML input element on the page.
- * @param  {string} value Value to set inside the HTML element.
+ * @param  {string} val Value to set inside the HTML element.
  */
 function setSelection( el, val ) {
 
@@ -150,7 +150,6 @@ module.exports = {
   calcLoanAmount,
   checkIfZero,
   delay,
-  isVisible,
   formatTimestampMMddyyyy,
   isVisible,
   renderAccessibleData,
