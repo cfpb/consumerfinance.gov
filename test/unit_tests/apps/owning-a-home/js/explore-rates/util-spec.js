@@ -98,6 +98,16 @@ describe( 'explore-rates/util', () => {
     } );
   } );
 
+  describe( 'isKeyAllowed()', () => {
+    it( 'should return true if key code is not in forbidden list.', () => {
+      expect( util.isKeyAllowed( 0 ) ).toBe( true );
+    } );
+
+    it( 'should return false if key code is in forbidden list.', () => {
+      expect( util.isKeyAllowed( 9 ) ).toBe( false );
+    } );
+  } );
+
   describe( 'isVisible()', () => {
     it( 'should return true if HTML element has u-hidden class.', () => {
       expect( util.isVisible( timeStampDom ) ).toBe( true );
@@ -110,6 +120,7 @@ describe( 'explore-rates/util', () => {
       }
     );
   } );
+
 
   describe( 'renderAccessibleData()', () => {
     it( 'should format a timestamp as a date.', () => {

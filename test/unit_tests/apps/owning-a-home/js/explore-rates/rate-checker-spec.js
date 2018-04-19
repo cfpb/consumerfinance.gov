@@ -34,7 +34,7 @@ const HTML_SNIPPET = `
     <div class="result">
       <div class="calculator">
 
-        <section class="credit-score">
+        <section id="credit-score-container">
           <div class="a-range" id="credit-score-range">
             <div class="a-range_labels">
               <span class="a-range_labels-min"></span>
@@ -93,6 +93,12 @@ const HTML_SNIPPET = `
             </div>
         </section>
       </div>
+    </div>
+    <div class="rc-results" id="rate-results" aria-live="polite">
+      <section class="compare wrapper data-enabled loaded">
+        <div id="rate-selects">
+        </div>
+      </section>
     </div>
   </div>
 `;
