@@ -13,10 +13,11 @@ const defaultSuites = {
   essential: [
     {
       browserName:      'chrome',
-      version:          '',
-      platform:         'Windows',
+      extendedDebugging: true,
       maxDuration:      10800,
-      tunnelIdentifier: tunnelIdentifier
+      platform:         'Windows',
+      tunnelIdentifier: tunnelIdentifier,
+      version:          ''
     }
   ],
 
@@ -24,17 +25,12 @@ const defaultSuites = {
   legacy: [
     {
       browserName:      'internet explorer',
-      version:          '9.0',
-      platform:         'Windows 7',
       maxDuration:      10800,
-      tunnelIdentifier: tunnelIdentifier
-    },
-    {
-      browserName:      'internet explorer',
-      version:          '10.0',
+      maxInstances:     2,
       platform:         'Windows 7',
-      maxDuration:      10800,
-      tunnelIdentifier: tunnelIdentifier
+      shardTestFiles:   true,
+      tunnelIdentifier: tunnelIdentifier,
+      version:          '10.0'
     }
   ],
 
@@ -42,17 +38,26 @@ const defaultSuites = {
   modern: [
     {
       browserName:      'firefox',
-      version:          '',
-      platform:         'Windows 10',
+      marionette:       false,
+      native:           false,
       maxDuration:      10800,
-      tunnelIdentifier: tunnelIdentifier
+      maxInstances:     2,
+      platform:         'Windows 10',
+      shardTestFiles:   true,
+      tunnelIdentifier: tunnelIdentifier,
+      version:          ''
     },
     {
-      browserName:      'internet explorer',
-      version:          '',
-      platform:         'Windows 10',
-      maxDuration:      10800,
-      tunnelIdentifier: tunnelIdentifier
+      browserName:                 'internet explorer',
+      ignoreProtectedModeSettings: true,
+      ignoreZoomSetting:           true,
+      maxDuration:                 10800,
+      maxInstances:                2,
+      nativeEvents:                false,
+      platform:                    'Windows 10',
+      shardTestFiles:              true,
+      tunnelIdentifier:            tunnelIdentifier,
+      version:                     ''
     }
   ],
 
@@ -63,11 +68,10 @@ const defaultSuites = {
       chromeOptions: {
         args: [ '--headless', '--disable-gpu' ]
       },
-      maxDuration: 10800
+      maxDuration:    10800
     }
   ]
 };
-
 
 // Run all browsers together.
 defaultSuites.full = defaultSuites.essential.concat(

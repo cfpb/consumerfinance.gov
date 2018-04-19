@@ -101,40 +101,6 @@ urlpatterns = [
         ),
         name='loan-estimate'
     ),
-    url(r'^owning-a-home/loan-options/',
-        include(oah.urls_for_prefix('loan-options'))),
-    url(r'^owning-a-home/loan-options/FHA-loans/',
-        include(oah.urls_for_prefix('loan-options/FHA-loans/'))),
-    url(r'^owning-a-home/loan-options/conventional-loans/',
-        include(oah.urls_for_prefix('loan-options/conventional-loans/'))),
-    url(r'^owning-a-home/loan-options/special-loan-programs/',
-        include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
-    url(r'^owning-a-home/mortgage-closing/',
-        TemplateView.as_view(
-            template_name='owning-a-home/mortgage-closing/index.html'
-        ),
-        name='mortgage-closing'
-    ),
-    url(r'^owning-a-home/mortgage-estimate/',
-        TemplateView.as_view(
-            template_name='owning-a-home/mortgage-estimate/index.html',
-        ),
-        name='mortgage-estimate'
-    ),
-
-    # Temporarily serve sheer version of OAH Journey sources page.
-    # TODO: remove once page is migrated into Wagtail.
-    flagged_url('OAH_JOURNEY_SHEER_SOURCE_PAGE',
-        r'^owning-a-home/process/sources(?P<path>.*)$',
-        lambda req, path: SheerTemplateView.as_view(
-            template_engine='owning-a-home',
-            template_name='process/sources{}index.html'.format(path or '/')
-        )(req),
-        fallback=lambda req, path: ServeView.as_view()(
-            req, 'owning-a-home/sources{}'.format(path or '/')
-        ),
-    ),
-    # END TODO
 
     # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
     # TODO: change to redirects after 2018 homebuying campaign.

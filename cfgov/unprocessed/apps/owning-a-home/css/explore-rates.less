@@ -150,93 +150,6 @@
     }
 
     /*
-        Range slider for credit score
-        --------------------------- */
-    .credit-score {
-        position: relative;
-
-        .labels {
-            margin: unit( 15px / @base-font-size-px, em ) 0 unit( 8px / @base-font-size-px, em );
-            font-size: 0.625em;
-            line-height: 0;
-        }
-
-        .max {
-            float: right;
-        }
-    }
-
-    .range {
-        margin-bottom: 1.5em;
-    }
-
-    .range-text {
-        position: absolute;
-        display: block;
-        margin-left: unit( -10px / @base-font-size-px, em );
-        font-size: 0.875em;
-        white-space: nowrap;
-    }
-
-    .rangeslider {
-        position: relative;
-        display: block;
-        width: 100%;
-        height: 20px;
-        background: transparent
-                    url( '@{image_path}/slider-bg.png' )
-                    scroll
-                    no-repeat
-                    center
-                    center;
-        background-size: 100%;
-    }
-
-    .rangeslider__fill {
-        position: absolute;
-        top: 0;
-        background: #0f0;
-    }
-
-    .rangeslider__handle {
-        position: absolute;
-        display: inline-block;
-        width: 22px;
-        height: 21px;
-        border: 0;
-        background: transparent
-                    url( '@{image_path}/slider-handle.png' )
-                    no-repeat
-                    0
-                    0;
-        background-size: 100%;
-
-        &.warning {
-            width: 22px;
-            height: 21px;
-            background: transparent
-                        url( '@{image_path}/slider-handle.png' )
-                        no-repeat
-                        0
-                        100%;
-            background-size: 100%;
-        }
-
-    }
-
-    #credit-score:focus + .rangeslider .rangeslider__handle {
-        border: 1px solid #0072ce;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-        outline: 1px solid #0072ce;
-        outline-offset: 0;
-    }
-
-    #slider-range {
-        text-align: center;
-    }
-
-    /*
         Main section with output
         --------------------------- */
     .rate-checker-heading {
@@ -329,18 +242,16 @@
     }
 
     .caption-title {
-        .u-webfont-regular();
+        .grid_column( 12 );
 
-        color: @black;
+        white-space: nowrap;
     }
 
     .rc-data-link {
-        text-align: right;
-        .u-webfont-medium();
+        .grid_column( 12 );
 
-        a {
-            border-bottom-width: 1px;
-        }
+        margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        white-space: nowrap;
     }
 
     .highcharts-tooltip > span {
@@ -437,7 +348,6 @@
             width: 100%;
             box-sizing: border-box;
             padding-left: unit( 15px / @base-font-size-px, em );
-            border: solid 1px #d0d0ce;
         }
 
         .unit {
@@ -472,10 +382,6 @@
         .percent-input {
             display: inline-block;
             width: 32%;
-        }
-
-        input {
-            border: solid 1px #d0d0ce;
         }
     }
 
@@ -620,10 +526,6 @@
             .grid_push( 0 );
         }
 
-        .rc-data-link {
-            display: none;
-        }
-
         .rc-home-illu {
             display: none;
         }
@@ -631,7 +533,6 @@
         .rc-illu-inner {
             padding: 0;
         }
-
 
         .next-steps-list li {
             position: relative;
@@ -689,9 +590,19 @@
     } );
 
     .respond-to-min( 1000px, {
-
         .rate-checker-heading {
             width: 75%;
+        }
+
+        .caption-title {
+            .grid_column( 7 );
+        }
+
+        .rc-data-link {
+            .grid_column( 5 );
+
+            margin-top: 0;
+            text-align: right;
         }
     } );
 
@@ -705,40 +616,6 @@
             margin-top: unit( 20px / @base-font-size-px, em );
         }
     } );
-
-    @media( -webkit-min-device-pixel-ratio: 2),
-        ( min-resolution: 192dpi ) {
-        .rangeslider__handle {
-            width: 22px;
-            height: 21px;
-            border: 0;
-            background: transparent
-                        url( '@{image_path}/slider-handle@2x.png' )
-                        no-repeat
-                        0
-                        0;
-            background-size: 100%;
-
-            &.warning {
-                width: 22px;
-                height: 21px;
-                background: transparent
-                            url( '@{image_path}/slider-handle@2x.png' )
-                            no-repeat
-                            0
-                            100%;
-                background-size: 100%;
-            }
-        }
-    }
-
-    // Print styles
-    @media print {
-        .rangeslider,
-        .credit-score .labels {
-            display: none;
-        }
-    }
 
     @media print {
         .rc-illu-inner {

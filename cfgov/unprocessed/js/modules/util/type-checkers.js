@@ -3,7 +3,7 @@
    Various utility functions to check Javascript types and primitives.
    Copied from:
    https://github.com/angular/angular.js/blob/master/src/Angular.js.
-   Copyright (c) 2010-2015 Google, Inc. http://angularjs.org
+   Copyright (c) 2010-2015 Google, Inc. https://angularjs.org
    ========================================================================== */
 
 
@@ -52,7 +52,7 @@ function isDefined( value ) {
  * @returns {boolean} True if `value` is an `Object` but not `null`.
  */
 function isObject( value ) {
-  // http://jsperf.com/isobject4
+  // https://jsperf.com/isobject4
   return value !== null && typeof value === 'object';
 }
 

@@ -51,7 +51,7 @@ home price, down payment, and more can affect mortgage interest rates.
                         <p class="lead">Use this tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.  See how your credit score, loan type, home price, and down payment amount can affect your rate.   Knowing your options and what to expect helps ensure that you get a mortgage that is right for you.  Check back often -- the rates in the tool are updated every Wednesday and Friday.</p>
                         <div class="page-intro_cols">
                             <p class="page-intro_col-left u-mb30">
-                                Keep in mind that the interest rate is important, but not the only cost of a mortgage.  Fees, <a href="http://www.consumerfinance.gov/askcfpb/136/what-are-discount-points-and-lender-credits-and-how-do-they-work.html">points</a>, <a href="http://www.consumerfinance.gov/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html">mortgage insurance</a>, and <a href="http://www.consumerfinance.gov/askcfpb/1845/what-fees-or-charges-are-paid-closing-and-who-pays-them.html">closing costs</a> all add up.  Compare <a href="http://www.consumerfinance.gov/askcfpb/1995/what-is-a-loan-estimate.html">Loan Estimates</a> to get the best deal.
+                                Keep in mind that the interest rate is important, but not the only cost of a mortgage.  Fees, <a href="https://www.consumerfinance.gov/askcfpb/136/what-are-discount-points-and-lender-credits-and-how-do-they-work.html">points</a>, <a href="https://www.consumerfinance.gov/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html">mortgage insurance</a>, and <a href="https://www.consumerfinance.gov/askcfpb/1845/what-fees-or-charges-are-paid-closing-and-who-pays-them.html">closing costs</a> all add up.  Compare <a href="https://www.consumerfinance.gov/askcfpb/1995/what-is-a-loan-estimate.html">Loan Estimates</a> to get the best deal.
                             </p>
                             <div class="page-intro_col-right u-right-on-desktop">
                                 {{ social_media.render( {
@@ -78,20 +78,23 @@ home price, down payment, and more can affect mortgage interest rates.
                     <section class="form-intro">
                         <h4>Explore rate options</h4>
                     </section>
+
                     <section class="credit-score">
-                        <div class="range recalc">
+
+                        <div class="a-range recalc" id="credit-score-range">
                             <label for="credit-score">Credit score range</label>
-                            <div class="labels">
-                                <span>600</span>
-                                <span class="max">850</span>
+                            <div class="a-range_labels">
+                                <span class="a-range_labels-min">600</span>
+                                <span class="a-range_labels-max">850</span>
                             </div>
                             <input id="credit-score"
+                                   class="a-range_input"
                                    type="range"
                                    min="600"
                                    max="840"
                                    step="20"
                                    value="700">
-                            <div id="slider-range" class="range-text"></div>
+                            <div id="slider-range" class="a-range_text"></div>
 
                             {#
                               Credit alert for when low credit score is chosen.
@@ -102,7 +105,7 @@ home price, down payment, and more can affect mortgage interest rates.
                               <p class="alert">
                                 Many lenders do not accept borrowers with credit scores less than 620.
                                 Even if your score is low, you may still have options.
-                                <a href="http://www.consumerfinance.gov/mortgagehelp/">
+                                <a href="https://www.consumerfinance.gov/mortgagehelp/">
                                   Contact a housing counselor
                                 </a>
                                 to learn more.
@@ -111,9 +114,10 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                         <p class="form-sub">Credit score has a big impact on the rate you’ll receive. <a href="/askcfpb/319/how-does-my-credit-score-affect-my-ability-to-get-a-mortgage-loan.html" id="ask-cfpb-credit" target="_blank" rel="noopener noreferrer">Learn more</a></p>
                     </section>
+
                     <section class="demographics">
                         <div class="state-col">
-                            <label for="location">State</label>
+                            <label for="location">Choose your state</label>
                             <div class="select-content a-select">
                                 <select name="location"
                                         class="recalc"
@@ -310,7 +314,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                     Interest rates for your situation
                                 </div>
                                 <div class="rc-data-link">
-                                    <a href="#about">About our data source</a>
+                                    <a href="#about" class="u-link-underline">About our data source</a>
                                 </div>
                             </figcaption>
                         </figure>
@@ -519,7 +523,7 @@ home price, down payment, and more can affect mortgage interest rates.
                 </section>
                 <!-- /.next-steps -->
                 <div class="note">
-                    <p class="alert"><strong>Check your credit report.</strong> If you haven’t <a id="annualcreditreport" class="external-link" href="http://annualcreditreport.com" target="_blank" rel="noopener noreferrer">checked your credit report recently</a>, do so now. If you find errors, <a id="ask-dispute-credit-report" href="/askcfpb/314/how-do-i-dispute-an-error-on-my-credit-report.html" target="_blank" rel="noopener noreferrer">get them corrected</a> <strong>before</strong> you apply for a mortgage.</p>
+                    <p class="alert"><strong>Check your credit report.</strong> If you haven’t <a id="annualcreditreport" class="external-link" href="https://annualcreditreport.com" target="_blank" rel="noopener noreferrer">checked your credit report recently</a>, do so now. If you find errors, <a id="ask-dispute-credit-report" href="/askcfpb/314/how-do-i-dispute-an-error-on-my-credit-report.html" target="_blank" rel="noopener noreferrer">get them corrected</a> <strong>before</strong> you apply for a mortgage.</p>
                 </div> <!-- /.note -->
                 <section id="about" class="about wrapper">
                     <div class="content-l">
@@ -531,9 +535,9 @@ home price, down payment, and more can affect mortgage interest rates.
                                         block
                                         block__padded-top
                                         block__flush-top">
-                            <h3 class="subhead">About this tool</h3>
+                            <h3 class="subhead">About our data source for this tool</h3>
                             <p>The lenders in our data include a mix of large banks, regional banks, and credit unions. The data is updated semiweekly every Wednesday and Friday at 7 a.m. In the event of a holiday, data will be refreshed on the next available business day.</p>
-                            <p>The data is provided by Informa Research Services, Inc., Calabasas, CA. <a id="informars" href="http://www.informars.com" target="_blank" rel="noopener noreferrer">www.informars.com</a>. Informa collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
+                            <p>The data is provided by Informa Research Services, Inc., Calabasas, CA. <a id="informars" href="https://www.informars.com" target="_blank" rel="noopener noreferrer">www.informars.com</a>. Informa collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
                             </div>
                         </div>
                     </div>

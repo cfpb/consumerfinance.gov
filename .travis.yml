@@ -5,6 +5,13 @@ dist: trusty
 python:
   - "2.7"
 
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.6"
+  chrome: stable
+
 cache:
   pip: true
   directories:
@@ -25,6 +32,9 @@ branches:
   only:
     - master
 
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+
 script:
   - ./travis_run.sh
 
@@ -40,12 +50,6 @@ jobs:
     - stage: run tests
       env: RUNTEST=frontend
     - env: RUNTEST=backend
-    - stage: Update documentation
-      script:
-        - pip install virtualenv virtualenvwrapper
-        - source activate-virtualenv.sh
-        - pip install -r requirements/manual.txt
-        - mkdocs build
       deploy:
         provider: pages
         local_dir: site
@@ -53,3 +57,4 @@ jobs:
         github_token: $GITHUB_TOKEN
         on:
           branch: master
+    - env: RUNTEST=acceptance

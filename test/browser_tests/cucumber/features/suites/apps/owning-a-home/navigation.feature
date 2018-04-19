@@ -38,4 +38,4 @@ Examples:
   | Learn how the CFPB is protecting mortgage borrowers | Know before you owe                | /know-before-you-owe/ |
   | We can help | Mortgage help                | /mortgagehelp/ |
   | Get videos, compliance guides, and other resources | Regulatory implementation                | /regulatory-implementation/ |
-   | Your home loan toolkit: a step-by-step guide | http://www.consumerfinance.gov/f/201503_cfpb_your-home-loan-toolkit-web.pdf                | http://www.consumerfinance.gov/f/201503_cfpb_your-home-loan-toolkit-web.pdf |
+   | Your home loan toolkit: a step-by-step guide | https://www.consumerfinance.gov/f/201503_cfpb_your-home-loan-toolkit-web.pdf                | https://www.consumerfinance.gov/f/201503_cfpb_your-home-loan-toolkit-web.pdf |
