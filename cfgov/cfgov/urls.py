@@ -86,9 +86,8 @@ urlpatterns = [
     ),
     url(r'^owning-a-home/loan-estimate/$',
         TemplateView.as_view(
-            template_name='owning-a-home/loan-estimate/index.html')
-        ,
-        name='loan-estimate'
+            template_name='owning-a-home/loan-estimate/index.html'),
+            name='loan-estimate'
     ),
 
     # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
