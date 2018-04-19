@@ -42,6 +42,24 @@ function formatTimestampMMddyyyy( timestamp ) {
 }
 
 /**
+ * @param  {number} keyCode - A key code.
+ * @returns {boolean} True if key is forbidden, false otherwise.
+ */
+function isKeyAllowed( keyCode ) {
+  /* `FORBIDDEN_KEYS` are as follows:
+  9 = tab
+  37, 38, 39, 40 = arrow keys.
+  13 = enter
+  16 = shift */
+  const FORBIDDEN_KEYS = [ 9, 37, 38, 39, 40, 13, 16 ];
+
+  if ( FORBIDDEN_KEYS.indexOf( keyCode ) !== -1 ) {
+    return false;
+  }
+  return true;
+}
+
+/**
  * @param  {HTMLNode} elem - An HTML element to check for u-hidden class.
  * @returns {boolean} True is the element is visible, false otherwise.
  */
@@ -151,6 +169,7 @@ module.exports = {
   checkIfZero,
   delay,
   formatTimestampMMddyyyy,
+  isKeyAllowed,
   isVisible,
   renderAccessibleData,
   renderDatestamp,

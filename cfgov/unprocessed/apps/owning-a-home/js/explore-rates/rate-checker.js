@@ -3,6 +3,7 @@ import {
   calcLoanAmount,
   checkIfZero,
   delay,
+  isKeyAllowed,
   isVisible,
   renderAccessibleData,
   renderDatestamp,
@@ -71,13 +72,9 @@ let loanAmountResultDom;
 let accessibleDataTableHeadDom;
 let accessibleDataTableBodyDom;
 
-/* options object
-   dp-constant: track the down payment interactions
-   request: Keep the latest AJAX request accessible so we can terminate it if need be. */
-const options = {
-  'dp-constant': 'percent-down',
-  'request':     ''
-};
+let rateSelectsDom;
+let rateCompare1Dom;
+let rateCompare2Dom;
 
 /**
  * Get data from the API.
@@ -141,9 +138,10 @@ function updateView() {
     }
   };
 
+  let request = params.getVal( 'request' );
   // Abort the previous request.
-  if ( typeof options.request === 'object' ) {
-    options.request.abort();
+  if ( typeof request === 'object' ) {
+    request.abort();
   }
 
   // And start a new one.
@@ -151,10 +149,10 @@ function updateView() {
     resultWarning();
     downPaymentWarning();
   } else {
-    options.request = getData();
+    params.setVal( 'request', getData() );
 
     // If it succeeds, update the DOM.
-    options.request.done( function( results ) {
+    params.getVal( 'request' ).done( function( results ) {
       // sort results by interest rate, ascending
       const sortedKeys = [];
       const sortedResults = {};
@@ -504,12 +502,12 @@ function processCounty() {
  * @param {HTMLNode} element - TODO: Add description.
  */
 function processLoanAmount( element ) {
-  const name = $( element ).attr( 'name' );
+  const name = element.getAttribute( 'name' );
 
   /* Save the dp-constant value when the user interacts with
      down payment or down payment percentages. */
   if ( name === 'down-payment' || name === 'percent-down' ) {
-    options['dp-constant'] = name;
+    params.setVal( 'dp-constant', name );
   }
 
   renderDownPayment.apply( element );
@@ -546,7 +544,7 @@ function renderDownPayment() {
 
   if ( price.value !== 0 ) {
     if ( $el.attr( 'id' ) === 'down-payment' ||
-         options['dp-constant'] === 'down-payment' ) {
+         params.getVal( 'dp-constant' ) === 'down-payment' ) {
       val = ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) * 100 ) || '';
       percent.value = Math.round( val );
     } else {
@@ -578,21 +576,27 @@ function updateComparisons( data ) {
  * Calculate and display the interest rates in the comparison section.
  */
 function renderInterestAmounts() {
-  let shortTermVal = [],
-      longTermVal = [],
-      rate,
-      fullTerm = Number( getSelection( 'loan-term' ) ) * 12;
-  $( '.interest-cost' ).each( function( index ) {
-    if ( $( this ).hasClass( 'interest-cost-primary' ) ) {
-      rate = $( '#rate-compare-1' ).val().replace( '%', '' );
+  const shortTermVal = [];
+  const longTermVal = [];
+  let rate;
+  let fullTerm = Number( getSelection( 'loan-term' ) ) * 12;
+
+  const interestCostDoms = document.querySelectorAll( '.interest-cost' );
+  const interestCostList = Array.prototype.slice.call( interestCostDoms );
+
+  interestCostList.forEach( item => {
+
+    if ( item.classList.contains( 'interest-cost-primary' ) ) {
+      rate = rateCompare1Dom.value.replace( '%', '' );
     } else {
-      rate = $( '#rate-compare-2' ).val().replace( '%', '' );
+      rate = rateCompare2Dom.value.replace( '%', '' );
     }
-    const length = parseInt( $( this ).parents( '.rc-comparison-section' ).find( '.loan-years' ).text(), 10 ) * 12;
+
+    const length = parseInt( $( item ).parents( '.rc-comparison-section' ).find( '.loan-years' ).text(), 10 ) * 12;
     const amortizedVal = amortize( { amount: params.getVal( 'loan-amount' ), rate: rate, totalTerm: fullTerm, amortizeTerm: length } );
     const totalInterest = amortizedVal.interest;
     const roundedInterest = Math.round( unFormatUSD( totalInterest ) );
-    const $el = $( this ).find( '.new-cost' );
+    const $el = $( item ).find( '.new-cost' );
     $el.text( formatUSD( roundedInterest, { decimalPlaces: 0 } ) );
     // Add short term rates, interest, and term to the shortTermVal array.
     if ( length < 180 ) {
@@ -897,6 +901,10 @@ function init() {
   failAlertDom = document.querySelector( '#chart-fail-alert' );
   dpAlertDom = document.querySelector( '#dp-alert' );
 
+  rateSelectsDom = document.querySelector( '#rate-selects' );
+  rateCompare1Dom = document.querySelector( '#rate-compare-1' );
+  rateCompare2Dom = document.querySelector( '#rate-compare-2' );
+
   const sliderDom = document.querySelector( '#credit-score-range' );
   const creditScore = params.getVal( 'credit-score' );
   slider = new Slider( sliderDom );
@@ -996,21 +1004,33 @@ function registerEvents() {
   /* Check if input value is a number.
      If not, replace the character with an empty string. */
   $( '.calc-loan-amt .recalc' ).on( 'keyup', function( evt ) {
+    const key = event.which;
     // on keyup (not tab or arrows), immediately gray chart
-    if ( params.getVal( 'verbotenKeys' ).indexOf( evt.which ) === -1 ) {
+    if ( isKeyAllowed( key ) ) {
       chart.startLoading();
     }
 
   } );
 
-  // delayed function for processing and updating
-  $( '.calc-loan-amt, .credit-score' ).on( 'keyup', '.recalc', function( evt ) {
-    const element = this;
+  // Delayed function for processing and updating
+  const calcLoanAmountDom = document.querySelector( '#loan-amt-inputs' );
+  const creditScoreDom = document.querySelector( '#credit-score-container' );
+
+  calcLoanAmountDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
+  creditScoreDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
+
+  function NoCalcOnForbiddenKeys( event ) {
+    const element = event.target;
+    const key = event.which;
+
     // Don't recalculate on TAB or arrow keys.
-    if ( params.getVal( 'verbotenKeys' ).indexOf( evt.which ) === -1 ||
-         $( this ).hasClass( 'range' ) ) {
+    if ( isKeyAllowed( key ) || element.classList.contains( 'a-range' ) ) {
       delay( () => processLoanAmount( element ), 500 );
     }
+  }
+
+  $( '.calc-loan-amt, .credit-score' ).on( 'keyup', '.recalc', function( evt ) {
+
   } );
 
   $( '#house-price, #down-payment' ).on( 'focusout', function( evt ) {
@@ -1035,7 +1055,7 @@ function registerEvents() {
   } );
 
   // Recalculate interest costs.
-  $( '.compare' ).on( 'change', 'select', renderInterestAmounts );
+  rateSelectsDom.addEventListener( 'change', renderInterestAmounts );
 }
 
 module.exports = { init };
