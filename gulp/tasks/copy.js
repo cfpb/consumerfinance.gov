@@ -49,17 +49,12 @@ gulp.task( 'copy:lightbox2', () => {
   return _genericCopy( lightbox2.src, lightbox2.dest );
 } );
 
-gulp.task( 'copy:vendorjs', () => {
-  const vendorJs = configCopy.vendorJs;
-  return _genericCopy( vendorJs.src, vendorJs.dest );
-} );
 
 gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
     'copy:jsonCode',
     'copy:jsonKBYO',
-    'copy:vendorjs',
     'copy:timelinejs',
     'copy:lightbox2'
   )

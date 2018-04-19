@@ -71,7 +71,6 @@
     "timelinejs": "2.35.6",
     "turbolinks": "5.1.1",
     "uglifyjs-webpack-plugin": "1.2.4",
-    "ustream-embedapi": "1.0.0",
     "vinyl-named": "1.1.0",
     "webpack": "4.6.0",
     "webpack-stream": "4.0.3",
