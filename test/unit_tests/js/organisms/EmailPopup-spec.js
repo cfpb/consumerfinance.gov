@@ -101,7 +101,7 @@ describe( 'EmailPopup', () => {
         'if date is set in local storage', () => {
       const days = 1;
       const date = new Date();
-      const last = new Date( date.getTime() - days * 24 * 60 * 60 * 1000 );
+      const last = new Date( date.getTime() - ( days * 24 * 60 * 60 * 1000 ) );
       localStorage.setItem( 'testPopupPopupShowNext', last );
       const isShown = emailPopup.showPopup();
       const baseElement = emailPopup.getDom();

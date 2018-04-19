@@ -27,7 +27,7 @@ class BasePage {
         document.querySelectorAll( 'script, style, link' ),
         function( script ) {
           var src = script.href || script.src; // eslint-disable-line no-var, inline-comments
-          if( src && src.indexOf( 'localhost' ) === -1 ) {
+          if ( src && src.indexOf( 'localhost' ) === -1 ) {
             script.parentNode.removeChild( script );
           }
         }
