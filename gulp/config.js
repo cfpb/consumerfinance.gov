@@ -4,7 +4,8 @@ const paths = environment.paths;
 const globAll = require( 'glob-all' );
 
 module.exports = {
-  pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
+  // eslint-disable-next-line no-sync
+  pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ),
   banner:
       '/*!\n' +
       ' *               ad$$               $$\n' +
@@ -41,18 +42,6 @@ module.exports = {
       'scripts/npm/**/*.js',
       'jest.config.js'
     ]
-  },
-  test: {
-    src: [
-      paths.unprocessed + '/apps/**/js/**/*.js',
-      paths.unprocessed + '/js/**/*.js'
-    ],
-    reporter: environment.CONTINUOUS_INTEGRATION
-  },
-  clean: {
-    css: paths.processed + '/css',
-    js: paths.processed + '/js',
-    dest: paths.processed
   },
   scripts: {
     src: paths.unprocessed + '/js/**/*.js',
@@ -127,12 +116,6 @@ module.exports = {
         paths.modules + '/lightbox2/dist/**/*'
       ],
       dest: paths.processed + '/lightbox2'
-    },
-    vendorJs: {
-      src: [
-        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js'
-      ],
-      dest: paths.processed + '/js/'
     }
   }
 };

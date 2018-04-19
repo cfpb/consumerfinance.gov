@@ -320,8 +320,11 @@ gulp.task( 'test:unit',
 );
 
 gulp.task( 'test',
-  gulp.parallel(
-    'lint',
-    'test:unit'
+  gulp.series(
+    gulp.parallel(
+      'lint',
+      'test:unit'
+    ),
+    'test:acceptance'
   )
 );
