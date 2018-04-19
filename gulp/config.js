@@ -116,12 +116,6 @@ module.exports = {
         paths.modules + '/lightbox2/dist/**/*'
       ],
       dest: paths.processed + '/lightbox2'
-    },
-    vendorJs: {
-      src: [
-        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js'
-      ],
-      dest: paths.processed + '/js/'
     }
   }
 };
