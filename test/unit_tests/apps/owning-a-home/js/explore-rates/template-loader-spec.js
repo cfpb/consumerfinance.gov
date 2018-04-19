@@ -4,7 +4,7 @@ const templateLoader = require( BASE_JS_PATH + 'js/explore-rates/template-loader
 describe( 'explore-rates/template-loader', () => {
 
   it( 'should be able to render county template', () => {
-    // eslint-disable-next-line camelcase
+    /* eslint-disable camelcase */
     const mockData = {
       complete_fips: 1,
       gse_limit: 1,
@@ -12,6 +12,8 @@ describe( 'explore-rates/template-loader', () => {
       va_limit: 1,
       county: 'Test'
     };
+    /* eslint-enable camelcase */
+
     const testTemplate = templateLoader.county( mockData );
     expect( testTemplate ).toBe(
       '<option value="1" data-gse="1" data-fha="1" data-va="1">Test</option>\n'
