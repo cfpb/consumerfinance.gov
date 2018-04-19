@@ -20,7 +20,7 @@ describe( 'email-popup-helpers', () => {
       // Days you want to subtract.
       const days = 1;
       const date = new Date();
-      const last = new Date( date.getTime() - days * 24 * 60 * 60 * 1000 );
+      const last = new Date( date.getTime() - ( days * 24 * 60 * 60 * 1000 ) );
       localStorage.setItem( 'testPopupPopupShowNext', last );
       expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( true );
     } );
@@ -41,7 +41,7 @@ describe( 'email-popup-helpers', () => {
       emailPopupsHelpers.recordEmailRegistration( 'testPopup' );
       const date = new Date();
       const testDate = date.setTime(
-        date.getTime() + 10000 * 24 * 60 * 60 * 1000
+        date.getTime() + ( 10000 * 24 * 60 * 60 * 1000 )
       );
 
       /* To avoid being off by a millisecond, we need to convert to a decimal
@@ -57,7 +57,7 @@ describe( 'email-popup-helpers', () => {
       emailPopupsHelpers.recordEmailPopupClosure( 'testPopup' );
       const date = new Date();
       const testDate = date.setTime(
-        date.getTime() + 60 * 24 * 60 * 60 * 1000
+        date.getTime() + ( 60 * 24 * 60 * 60 * 1000 )
       );
       expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( 2 );
 
