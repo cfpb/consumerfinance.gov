@@ -13,7 +13,7 @@ import { analyticsLog } from './util/analytics-util';
 
   /* Check if something else already has bound to the onYouTubeIframeAPIReady
      callback. If it has, throw an error so we can see something's wrong. */
-  if( typeof window.onYouTubeIframeAPIReady !== 'undefined' ) {
+  if ( typeof window.onYouTubeIframeAPIReady !== 'undefined' ) {
     analyticsLog(
       'There is already a function defined at window.onYouTubeIframeAPIReady;' +
       ' aborting LunaMetrics Google Analytics YouTube Tracking'
@@ -106,7 +106,7 @@ import { analyticsLog } from './util/analytics-util';
     a.protocol = document.location.protocol;
 
     // IE10 shim.
-    let tmpPathname = a.pathname.charAt( 0 ) === '/' ? a.pathname : '/' + a.pathname;
+    const tmpPathname = a.pathname.charAt( 0 ) === '/' ? a.pathname : '/' + a.pathname;
 
     /* For security reasons,
        YouTube wants an origin parameter set that matches our hostname. */
