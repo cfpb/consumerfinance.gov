@@ -65,7 +65,7 @@ function testUnitScripts( cb ) {
   ];
 
   if ( params.travis ) {
-    jestOptions.push( '--runInBand' );
+    jestOptions.push( '--maxWorkers=2' );
   }
 
   spawn(

@@ -93,7 +93,7 @@ describe( 'explore-rates/util', () => {
 
   describe( 'formatTimestampMMddyyyy()', () => {
     it( 'should format a timestamp as a date.', () => {
-      expect( util.formatTimestampMMddyyyy( '2018-03-14T04:00:00Z' ) )
+      expect( util.formatTimestampMMddyyyy( '2018-03-14T12:00:00Z' ) )
         .toBe( '03/14/2018' );
     } );
   } );
@@ -141,7 +141,7 @@ describe( 'explore-rates/util', () => {
 
   describe( 'renderDatestamp()', () => {
     it( 'should format a timestamp as a date.', () => {
-      util.renderDatestamp( timeStampDom, '2018-03-14T04:00:00Z' );
+      util.renderDatestamp( timeStampDom, '2018-03-14T12:00:00Z' );
       expect( timeStampDom.textContent ).toBe( '03/14/2018' );
     } );
   } );
