@@ -138,7 +138,7 @@ function updateView() {
     }
   };
 
-  let request = params.getVal( 'request' );
+  const request = params.getVal( 'request' );
   // Abort the previous request.
   if ( typeof request === 'object' ) {
     request.abort();
@@ -579,7 +579,7 @@ function renderInterestAmounts() {
   const shortTermVal = [];
   const longTermVal = [];
   let rate;
-  let fullTerm = Number( getSelection( 'loan-term' ) ) * 12;
+  const fullTerm = Number( getSelection( 'loan-term' ) ) * 12;
 
   const interestCostDoms = document.querySelectorAll( '.interest-cost' );
   const interestCostList = Array.prototype.slice.call( interestCostDoms );
@@ -1028,10 +1028,6 @@ function registerEvents() {
       delay( () => processLoanAmount( element ), 500 );
     }
   }
-
-  $( '.calc-loan-amt, .credit-score' ).on( 'keyup', '.recalc', function( evt ) {
-
-  } );
 
   $( '#house-price, #down-payment' ).on( 'focusout', function( evt ) {
     let value;
