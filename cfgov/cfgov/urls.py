@@ -68,7 +68,7 @@ urlpatterns = [
     url(r'^owning-a-home/resources/(?P<path>.*)$',
         RedirectView.as_view(
             url='/static/owning-a-home/resources/%(path)s', permanent=True)),
-    url(r'^owning-a-home/closing-disclosure/',
+    url(r'^owning-a-home/closing-disclosure/$',
         TemplateView.as_view(
             template_name='owning-a-home/closing-disclosure/index.html'),
             name='closing-disclosure'
@@ -84,9 +84,10 @@ urlpatterns = [
         ),
         name='explore-rates'
     ),
-    url(r'^owning-a-home/loan-estimate/',
+    url(r'^owning-a-home/loan-estimate/$',
         TemplateView.as_view(
-            template_name='owning-a-home/loan-estimate/index.html'),
+            template_name='owning-a-home/loan-estimate/index.html')
+        ,
         name='loan-estimate'
     ),
 
