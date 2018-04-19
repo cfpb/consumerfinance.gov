@@ -6,7 +6,8 @@ import {
   isVisible,
   renderAccessibleData,
   renderDatestamp,
-  renderLoanAmount
+  renderLoanAmount,
+  setSelections
 } from './util';
 import * as params from './params';
 import * as template from './template-loader';
@@ -105,44 +106,13 @@ function getData() {
 }
 
 /**
- * Set value(s) of all HTML elements in the control panel.
- * @param {string} options - TODO: Add description.
- */
-function setSelections( options ) {
-  for ( const param in params ) {
-    setSelection( param, options );
-  }
-}
-
-/**
- * Set value(s) of an individual HTML element in the control panel.
- * @param  {string} param Name of parameter to set. Usually the HTML element's id attribute.
- * @param  {Object} options Hash of options.
- */
-function setSelection( param, options ) {
-
-  const opts = options || {};
-  const $el = $( '#' + param );
-  const val = opts.value || params.getVal( param );
-
-  switch ( param ) {
-    case 'credit-score':
-      $el.val( val ).change();
-      break;
-    default:
-      if ( opts.usePlaceholder && $el.is( '[placeholder]' ) ) {
-        $el.attr( 'placeholder', val );
-      } else {
-        $el.val( val );
-      }
-  }
-}
-
-/**
  * Calculate and render the loan amount.
  */
 function renderLoanAmountResult() {
-  const loanAmount = calcLoanAmount( params.getVal( 'house-price' ), params.getVal( 'down-payment' ) );
+  const loanAmount = calcLoanAmount(
+    params.getVal( 'house-price' ),
+    params.getVal( 'down-payment' )
+  );
   params.setVal( 'loan-amount', loanAmount );
   renderLoanAmount( loanAmountResultDom, loanAmount );
 }
@@ -235,7 +205,8 @@ function updateView() {
       }
 
       // display an error message if the downpayment is greater than the house price
-      if ( +Number( params.getVal( 'house-price' ) ) < +Number( params.getVal( 'down-payment' ) ) ) {
+      if ( +Number( params.getVal( 'house-price' ) ) <
+           +Number( params.getVal( 'down-payment' ) ) ) {
         resultWarning();
         downPaymentWarning();
         return;
@@ -573,16 +544,16 @@ function renderDownPayment() {
     downPaymentWarning();
   }
 
-  if ( price.val() !== 0 ) {
+  if ( price.value !== 0 ) {
     if ( $el.attr( 'id' ) === 'down-payment' ||
-          options['dp-constant'] === 'down-payment' ) {
+         options['dp-constant'] === 'down-payment' ) {
       val = ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) * 100 ) || '';
-      percent.val( Math.round( val ) );
+      percent.value = Math.round( val );
     } else {
       val = getSelection( 'house-price' ) * ( getSelection( 'percent-down' ) / 100 );
       val = val >= 0 ? Math.round( val ) : '';
       val = addCommas( val );
-      down.val( val );
+      down.value = val;
     }
   }
 }
@@ -950,7 +921,7 @@ function init() {
 
   renderChart();
   renderLoanAmountResult();
-  setSelections( { usePlaceholder: true } );
+  setSelections( params.getAllParams() );
   registerEvents();
   tab.init();
 
@@ -976,7 +947,7 @@ function registerEvents() {
   // Have the reset button clear selections.
   $( '.defaults-link' ).click( function( evt ) {
     evt.preventDefault();
-    setSelections( { usePlaceholder: true } );
+    setSelections( params.getAllParams() );
     updateView();
     removeCreditScoreAlert();
   } );

@@ -66,6 +66,28 @@ describe( 'explore-rates/params', () => {
     expect( params.getVal( 'credit-score' ) ).toBe( 800 );
   } );
 
+  it( 'should be able to return all stored values', () => {
+    let UNDEFINED;
+    const mockData = {
+      'credit-score':   800,
+      'down-payment':   '20,000',
+      'house-price':    '200,000',
+      'location':       'AL',
+      'loan-amount':    UNDEFINED,
+      'rate-structure': 'fixed',
+      'loan-term':      30,
+      'loan-type':      'conf',
+      'arm-type':       '5-1',
+      'edited':         false,
+      'isJumbo':        false,
+      'prevLoanType':   '',
+      'prevLocation':   '',
+      'verbotenKeys':   [ 9, 37, 38, 39, 40, 13, 16 ]
+    };
+    const storedValues = params.getAllParams();
+    expect( storedValues ).toEqual( mockData );
+  } );
+
   it( 'should be able to update a value from the HTML', () => {
     expect( params.getVal( 'prevLoanType' ) ).toBe( '' );
     expect( params.getVal( 'prevLocation' ) ).toBe( '' );

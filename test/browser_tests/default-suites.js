@@ -37,15 +37,15 @@ const defaultSuites = {
   // Modern browsers to run in the cloud.
   modern: [
     {
-      browserName:      'firefox',
-      marionette:       false,
-      native:           false,
-      maxDuration:      10800,
-      maxInstances:     2,
-      platform:         'Windows 10',
-      shardTestFiles:   true,
-      tunnelIdentifier: tunnelIdentifier,
-      version:          ''
+      'browserName':      'firefox',
+      'marionette':       false,
+      'native':           false,
+      'maxDuration':      10800,
+      'maxInstances':     2,
+      'platform':         'Windows 10',
+      'shardTestFiles':   true,
+      'tunnelIdentifier': tunnelIdentifier,
+      'version':          ''
     },
     {
       browserName:                 'internet explorer',

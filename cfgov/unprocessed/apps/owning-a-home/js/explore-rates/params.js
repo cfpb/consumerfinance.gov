@@ -27,12 +27,10 @@ const _params = {
 };
 
 /**
- * Set a value inside the params object.
- * @param {string} key - The key on the params object to set.
- * @param {string|number|Array|undefined} val - The value to set on `key`.
+ * @returns {Object} Underlying object of parameters.
  */
-function setVal( key, val ) {
-  _params[key] = val;
+function getAllParams() {
+  return _params;
 }
 
 /**
@@ -42,6 +40,15 @@ function setVal( key, val ) {
  */
 function getVal( key ) {
   return _params[key];
+}
+
+/**
+ * Set a value inside the params object.
+ * @param {string} key - The key on the params object to set.
+ * @param {string|number|Array|undefined} val - The value to set on `key`.
+ */
+function setVal( key, val ) {
+  _params[key] = val;
 }
 
 /**
@@ -64,7 +71,8 @@ function update() {
 }
 
 module.exports = {
-  setVal: setVal,
-  getVal: getVal,
-  update: update
+  getAllParams,
+  getVal,
+  setVal,
+  update
 };

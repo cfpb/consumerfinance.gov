@@ -108,13 +108,52 @@ function renderLoanAmount( elem, loanAmount ) {
   elem.textContent = formatUSD( loanAmount, { decimalPlaces: 0 } );
 }
 
+
+/**
+ * Set value(s) of all HTML elements in the control panel.
+ * @param {string} fields - TODO: Add description.
+ */
+function setSelections( fields ) {
+  let val;
+  for ( const key in fields ) {
+    val = fields[key];
+    const el = document.querySelector( '#' + key );
+    if ( el ) {
+      setSelection( el, val );
+    }
+  }
+}
+
+/**
+ * Set value(s) of an individual HTML element in the control panel.
+ * @param  {HTMLNode} el An HTML input element on the page.
+ * @param  {string} val Value to set inside the HTML element.
+ */
+function setSelection( el, val ) {
+
+  const placeHolders = document.querySelectorAll( '[placeholder]' );
+  let isInPlaceholders = false;
+  for ( let i = 0, len = placeHolders.length; i < len; i++ ) {
+    if ( placeHolders[i] === el ) {
+      isInPlaceholders = true;
+      break;
+    }
+  }
+  if ( isInPlaceholders ) {
+    el.setAttribute( 'placeholder', val );
+  } else {
+    el.value = val;
+  }
+}
+
 module.exports = {
   calcLoanAmount,
   checkIfZero,
   delay,
-  isVisible,
   formatTimestampMMddyyyy,
+  isVisible,
   renderAccessibleData,
   renderDatestamp,
-  renderLoanAmount
+  renderLoanAmount,
+  setSelections
 };
