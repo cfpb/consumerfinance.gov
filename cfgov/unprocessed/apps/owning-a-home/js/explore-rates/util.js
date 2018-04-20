@@ -68,6 +68,17 @@ function isVisible( elem ) {
 }
 
 /**
+ * Add commas to numbers where appropriate.
+ * @param {string} value - Old value where commas will be added.
+ * @returns {string} Value with commas and no dollar sign.
+ */
+function removeDollarAddCommas( value ) {
+  let parseValue = unFormatUSD( value );
+  parseValue = formatUSD( parseValue, { decimalPlaces: 0 } ).replace( '$', '' );
+  return parseValue;
+}
+
+/**
  * Render chart data in an accessible format.
  * @param {HTMLNode} tableHead - A <thead> element.
  * @param {HTMLNode} tableBody - A <tbody> element.
@@ -171,6 +182,7 @@ module.exports = {
   formatTimestampMMddyyyy,
   isKeyAllowed,
   isVisible,
+  removeDollarAddCommas,
   renderAccessibleData,
   renderDatestamp,
   renderLoanAmount,
