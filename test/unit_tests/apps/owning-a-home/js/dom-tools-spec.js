@@ -31,7 +31,7 @@ describe( 'dom-tools', () => {
 
     it( 'should create a div containing arbitrary HTML', () => {
       expect( domTools.createElement( HTML_SNIPPET ).outerHTML ).toBe(
-        `<div id="test"></div>`
+        '<div id="test"></div>'
       );
     } );
   } );

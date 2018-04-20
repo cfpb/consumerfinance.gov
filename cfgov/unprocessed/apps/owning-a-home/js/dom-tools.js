@@ -7,6 +7,7 @@ const NO_OP = () => {
 /**
  * Apply a function to one or more elements.
  * @param {HTMLElement|NodeList} elements - An HTML element or a list of them.
+ * @param {Function} applyFn - A function to apply to the elements.
  * @returns {boolean} True if function was applied, false otherwise.
  */
 function applyAll( elements, applyFn ) {
@@ -88,6 +89,7 @@ function addClass( selector, className ) {
 /**
  * @param {string} selector - A DOM selector.
  * @param {string} className - A CSS class name.
+ * @returns {boolean} True if it contains the class, false otherwise.
  */
 function hasClass( selector, className ) {
   return getEl( selector ).classList.contains( className );
@@ -95,6 +97,7 @@ function hasClass( selector, className ) {
 
 /**
  * @param {string} selector - A DOM selector.
+ * @returns {NodeList} List of retrieved elements.
  * TODO: This should have a conistent return type if possible.
  */
 function getEls( selector ) {
@@ -107,6 +110,7 @@ function getEls( selector ) {
 
 /**
  * @param {string} selector - A DOM selector.
+ * @returns {HTMLNode} The retrieved element.
  * TODO: This should have a conistent return type if possible.
  */
 function getEl( selector ) {
@@ -118,7 +122,9 @@ function getEl( selector ) {
 }
 
 /**
- * @param {string} selector - A DOM selector.
+ * @param {string} element - An HTML element.
+ * @param {string} filter - Selector for matching on elements.
+ * @returns {Array} List of previous elements.
  * TODO: This should have a conistent return type if possible.
  */
 function getPreviousEls( element, filter = '*' ) {
