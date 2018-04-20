@@ -163,12 +163,12 @@ describe( 'explore-rates/rate-checker', () => {
       rateStructureDom = document.querySelector( '#rate-structure' );
       armTypeDom = document.querySelector( '#arm-type' );
       rateChecker.init();
-    } )
+    } );
 
     it( 'Should process value in down payment when leaving focus', () => {
-      expect( downPaymentDom.value ).toBe( "20000" );
+      expect( downPaymentDom.value ).toBe( '20000' );
       simulateEvent( 'focusout', downPaymentDom );
-      expect( downPaymentDom.value ).toBe( "20,000" );
+      expect( downPaymentDom.value ).toBe( '20,000' );
     } );
   } );
 } );

@@ -1034,7 +1034,7 @@ function registerEvents() {
    */
   function priceFocusOutHandler( evt ) {
     evt.target.value = removeDollarAddCommas( evt.target.value );
-  };
+  }
 
 
   // Once the user has edited fields, put the kibosh on the placeholders
