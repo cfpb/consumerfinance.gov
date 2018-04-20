@@ -1,15 +1,28 @@
 import fastDom from 'fastdom';
 
-const NO_OP = function( ) {
+const NO_OP = () => {
   // Placeholder function meant to be overridden.
 };
 
+/**
+ * Apply a function to one or more elements.
+ * @param {HTMLElement|NodeList} elements - An HTML element or a list of them.
+ * @returns {boolean} True if function was applied, false otherwise.
+ */
 function applyAll( elements, applyFn ) {
-  if ( elements instanceof HTMLElement ) {
-    elements = [ elements ];
+  let parsedElements = elements;
+  if ( parsedElements instanceof HTMLElement ) {
+    parsedElements = [ parsedElements ];
+  } else if ( parsedElements instanceof NodeList ) {
+    parsedElements = Array.prototype.slice.call( elements );
   }
 
-  return [].slice.call( elements ).forEach( applyFn );
+  if ( parsedElements instanceof Array ) {
+    parsedElements.forEach( applyFn );
+    return true;
+  }
+
+  return false;
 }
 
 function bindEvents( elements, events, callback = NO_OP ) {
@@ -18,28 +31,37 @@ function bindEvents( elements, events, callback = NO_OP ) {
   }
 
   if ( typeof elements === 'string' ) {
-    elements = DT.getEls( elements );
+    elements = getEls( elements );
   }
 
-  DT.applyAll( elements, function( element ) {
+  applyAll( elements, function( element ) {
     events.forEach( event => {
       element.addEventListener( event, callback );
     } );
   } );
 }
 
+/**
+ * Creates and returns a div HTML element containing arbitrary HTML.
+ * @param {string} HTML - Arbitrary HTML to include in created div.
+ * @returns {HTMLNode} First HTMLNode in the created div.
+ */
 function createElement( HTML ) {
   const div = document.createElement( 'div' );
   div.innerHTML = HTML;
 
-  return div.firstChild;
+  return div.children[0];
 }
 
+/**
+ * @param {string} selector - A DOM selector.
+ * @param {string} className - A CSS class name.
+ */
 function removeClass( selector, className ) {
   className = className.split( ', ' );
 
-  return DT.applyAll(
-    DT.getEls( selector ),
+  applyAll(
+    getEls( selector ),
     element => {
       fastDom.mutate( () =>
         element.classList.remove( ...className )
@@ -47,11 +69,15 @@ function removeClass( selector, className ) {
     } );
 }
 
+/**
+ * @param {string} selector - A DOM selector.
+ * @param {string} className - A CSS class name.
+ */
 function addClass( selector, className ) {
   className = className.split( ', ' );
 
-  return DT.applyAll(
-    DT.getEls( selector ),
+  applyAll(
+    getEls( selector ),
     element =>
       fastDom.mutate( () =>
         element.classList.add( ...className )
@@ -59,10 +85,18 @@ function addClass( selector, className ) {
   );
 }
 
+/**
+ * @param {string} selector - A DOM selector.
+ * @param {string} className - A CSS class name.
+ */
 function hasClass( selector, className ) {
-  return DT.getEl( selector ).classList.contains( className );
+  return getEl( selector ).classList.contains( className );
 }
 
+/**
+ * @param {string} selector - A DOM selector.
+ * TODO: This should have a conistent return type if possible.
+ */
 function getEls( selector ) {
   if ( _isEl( selector ) ) {
     return selector;
@@ -71,6 +105,10 @@ function getEls( selector ) {
   return document.querySelectorAll( selector );
 }
 
+/**
+ * @param {string} selector - A DOM selector.
+ * TODO: This should have a conistent return type if possible.
+ */
 function getEl( selector ) {
   if ( _isEl( selector ) ) {
     return selector;
@@ -79,6 +117,10 @@ function getEl( selector ) {
   return document.querySelector( selector );
 }
 
+/**
+ * @param {string} selector - A DOM selector.
+ * TODO: This should have a conistent return type if possible.
+ */
 function getPreviousEls( element, filter = '*' ) {
   const previousSiblings = [];
   let prevEl = element.previousElementSibling;
@@ -100,9 +142,9 @@ function getPreviousEls( element, filter = '*' ) {
 }
 
 /**
- * Check whether something is an element or not.
- * @param  {[type]}  element [description]
- * @return {Boolean}         [description]
+ * Check whether something is a NodeList, HTML element, or window.
+ * @param  {*} element Something, possibly a list, element or window instance.
+ * @returns {boolean} True if `element` meets the criteria, false otherwise.
  */
 function _isEl( element ) {
   return element instanceof NodeList ||
@@ -110,24 +152,37 @@ function _isEl( element ) {
          element instanceof Window;
 }
 
+/**
+ * Check whether something is a NodeList, HTML element, or window.
+ * @param {*} selector Something, possibly a list, element or window instance.
+ */
 function hide( selector ) {
-  return DT.applyAll(
-    DT.getEls( selector ),
+  applyAll(
+    getEls( selector ),
     element => fastDom.mutate(
       () => ( element.style.display = 'none' )
     )
   );
 }
 
+/**
+ * Check whether something is a NodeList, HTML element, or window.
+ * @param {*} selector Something, possibly a list, element or window instance.
+ */
 function show( selector ) {
-  return DT.applyAll(
-    DT.getEls( selector ),
+  applyAll(
+    getEls( selector ),
     element => fastDom.mutate(
       () => ( element.style.display = 'block' )
     )
   );
 }
 
+/**
+ * @param {HTMLNode} element - HTML element to adjust.
+ * @param {number} time - When to call the callback.
+ * @param {[Function]} callback - Function to call after delay.
+ */
 function fadeIn( element, time, callback = NO_OP ) {
   element.style.transition = 'opacity ' + time + 'ms ease-in-out';
   element.style.opacity = 0.05;
@@ -136,6 +191,11 @@ function fadeIn( element, time, callback = NO_OP ) {
   window.setTimeout( () => callback(), time );
 }
 
+/**
+ * @param {HTMLNode} element - HTML element to adjust.
+ * @param {number} time - When to call the callback.
+ * @param {[Function]} callback - Function to call after delay.
+ */
 function fadeOut( element, time, callback = NO_OP ) {
   element.style.transition = 'opacity ' + time + 'ms ease-in-out';
   element.style.opacity = 1;
