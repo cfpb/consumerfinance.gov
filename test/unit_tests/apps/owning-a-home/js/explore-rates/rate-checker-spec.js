@@ -19,7 +19,21 @@ const HTML_SNIPPET = `
         </table>
       </div>
 
-      <section id="chart-section">
+      <section id="chart-section" class="chart">
+
+        <figure class="data-enabled loading">
+            <div id="chart" class="chart-area"></div>
+            <figcaption class="chart-caption">
+                <div class="caption-title">
+                    Interest rates for your situation
+                </div>
+                <div class="rc-data-link">
+                    <a href="#about" class="u-link-underline">
+                      About our data source
+                    </a>
+                </div>
+            </figcaption>
+        </figure>
 
         <div id="chart-result-alert"
              class="result-alert chart-alert u-hidden"
