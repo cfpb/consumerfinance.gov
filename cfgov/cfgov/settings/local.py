@@ -1,3 +1,5 @@
+import warnings
+
 from unipath import DIRS
 
 from .base import *
@@ -67,3 +69,19 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
 # Use a mock GovDelivery API instead of the real thing.
 # Remove this line to use the real API instead.
 GOVDELIVERY_API = 'core.govdelivery.LoggingMockGovDelivery'
+
+
+if not os.getenv('DATABASE_URL') and os.getenv('MYSQL_NAME'):
+    MYSQL_VARIABLES_DEPRECATED = """
+The ability to define your MySQL database through the use of environment
+variables like MYSQL_NAME will soon be deprecated in favor of the single
+DATABASE_URL environment variable.
+
+Please modify your environment to instead use something like this:
+
+DATABASE_URL=mysql://username:password@host/dbname
+
+See https://github.com/kennethreitz/dj-database-url for other examples of how
+to define DATABASE_URL.
+"""
+    warnings.warn(MYSQL_VARIABLES_DEPRECATED)
