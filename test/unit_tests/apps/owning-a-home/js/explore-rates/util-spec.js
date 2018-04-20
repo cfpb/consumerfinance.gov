@@ -57,6 +57,12 @@ describe( 'explore-rates/util', () => {
       accessibleDataDom.querySelector( '.table-body' );
   } );
 
+  describe( 'removeDollarAddCommas()', () => {
+    it( 'should return true if HTML element has u-hidden class.', () => {
+      expect( util.removeDollarAddCommas( '$10000' ) ).toBe( '10,000' );
+    } );
+  } );
+
   describe( 'calcLoanAmount()', () => {
     it( 'should calculate a loan amount in USD ' +
         'given a house price and down payment amount.', () => {
@@ -120,7 +126,6 @@ describe( 'explore-rates/util', () => {
       }
     );
   } );
-
 
   describe( 'renderAccessibleData()', () => {
     it( 'should format a timestamp as a date.', () => {

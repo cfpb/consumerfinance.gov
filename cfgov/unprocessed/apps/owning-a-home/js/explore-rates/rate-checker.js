@@ -5,6 +5,7 @@ import {
   delay,
   isKeyAllowed,
   isVisible,
+  removeDollarAddCommas,
   renderAccessibleData,
   renderDatestamp,
   renderLoanAmount,
@@ -192,7 +193,7 @@ function updateView() {
       if ( $( '#county' ).is( ':visible' ) && $( '#county' ).val() === null ) {
         chart.startLoading();
         dropdown( 'county' ).showHighlight();
-        $( '#hb-warning' ).addClass( 'u-hidden' );
+        document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
         return;
       }
 
@@ -364,11 +365,11 @@ function checkForJumbo() {
   } );
   dropdown( 'loan-type' ).enable( norms );
   dropdown( 'loan-type' ).hideHighlight();
-  $( '#county-warning' ).addClass( 'u-hidden' );
+  document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
 
   // if loan is not a jumbo, hide the loan type warning
   if ( $.inArray( params.getVal( 'loan-type' ), jumbos ) < 0 ) {
-    $( '#hb-warning' ).addClass( 'u-hidden' );
+    document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
     dropdown( 'loan-type' ).hideHighlight();
   }
 
@@ -399,7 +400,7 @@ function checkForJumbo() {
   dropdown( 'county' ).show();
 
   // Hide any existing message, then show a message if appropriate.
-  $( '#county-warning' ).addClass( 'u-hidden' );
+  document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
   if ( warnings.hasOwnProperty( params.getVal( 'loan-type' ) ) ) {
     $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'p' ).text( warnings[params.getVal( 'loan-type' )].call() );
   } else {
@@ -480,7 +481,7 @@ function processCounty() {
     dropdown( 'loan-type' ).removeOption( jumbos );
     dropdown( 'loan-type' ).enable( norms );
 
-    $( '#hb-warning' ).addClass( 'u-hidden' );
+    document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
     // Select appropriate loan type if loan was kicked out of jumbo
     if ( params.getVal( 'prevLoanType' ) === 'fha-hb' ) {
       $( '#loan-type' ).val( 'fha' );
@@ -494,7 +495,7 @@ function processCounty() {
   }
 
   // Hide the county warning.
-  $( '#county-warning' ).addClass( 'u-hidden' );
+  document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
 }
 
 /**
@@ -550,7 +551,7 @@ function renderDownPayment() {
     } else {
       val = getSelection( 'house-price' ) * ( getSelection( 'percent-down' ) / 100 );
       val = val >= 0 ? Math.round( val ) : '';
-      val = addCommas( val );
+      val = removeDollarAddCommas( val );
       down.value = val;
     }
   }
@@ -644,7 +645,7 @@ function renderInterestSummary( intVals, term ) {
  */
 function checkARM() {
   // reset warning and info
-  $( '#arm-warning' ).addClass( 'u-hidden' );
+  document.querySelector( '#arm-warning' ).classList.add( 'u-hidden' );
   $( '.arm-info' ).addClass( 'u-hidden' );
   const disallowedTypes = [ 'fha', 'va', 'va-hb', 'fha-hb' ];
   const disallowedTerms = [ '15' ];
@@ -672,7 +673,7 @@ function checkARM() {
       dropdown( [ 'loan-term', 'loan-type' ] ).enable();
     }
     dropdown( 'arm-type' ).hide();
-    $( '#arm-warning' ).addClass( 'u-hidden' );
+    document.querySelector( '#arm-warning' ).classList.add( 'u-hidden' );
     $( '.arm-info' ).addClass( 'u-hidden' );
     $( '.no-arm' ).removeClass( 'u-hidden' );
   }
@@ -693,7 +694,7 @@ function scoreWarning() {
  */
 function resultWarning() {
   chart.stopLoading( 'error' );
-  $( '#chart-section' ).addClass( 'warning' );
+  document.querySelector( '#chart-section' ).classList.add( 'warning' );
   resultAlertDom.classList.remove( 'u-hidden' );
 }
 
@@ -702,7 +703,7 @@ function resultWarning() {
  */
 function resultFailWarning() {
   chart.stopLoading( 'error' );
-  $( '#chart-section' ).addClass( 'warning' );
+  document.querySelector( '#chart-section' ).classList.add( 'warning' );
   failAlertDom.classList.remove( 'u-hidden' );
 }
 
@@ -736,18 +737,6 @@ function removeCreditScoreAlert() {
     slider.setState( Slider.STATUS_OKAY );
     creditAlertDom.classList.add( 'u-hidden' );
   }
-}
-
-/**
- * Add commas to numbers where appropriate.
- * @param {string} value - Old value where commas will be added.
- * @returns {string} value - Value with commas and no dollar sign.
- */
-function addCommas( value ) {
-  value = unFormatUSD( value );
-  value = formatUSD( value, { decimalPlaces: 0 } )
-    .replace( '$', '' );
-  return value;
 }
 
 /**
@@ -961,13 +950,15 @@ function registerEvents() {
   } );
 
   // ARM highlighting handler.
-  $( '#rate-structure' ).on( 'change', function() {
-    if ( $( this ).val() !== params.getVal( 'rate-structure' ) ) {
+  const rateStructureDom = document.querySelector( '#rate-structure' );
+  rateStructureDom.addEventListener( 'change', evt => {
+    if ( evt.target.value !== params.getVal( 'rate-structure' ) ) {
       dropdown( 'arm-type' ).showHighlight();
     }
   } );
 
-  $( '#arm-type' ).on( 'change', function() {
+  const armTypeDom = document.querySelector( '#arm-type' );
+  armTypeDom.addEventListener( 'change', () => {
     dropdown( 'arm-type' ).hideHighlight();
   } );
 
@@ -976,7 +967,7 @@ function registerEvents() {
     /* If the loan-type is conf, and there's a county visible,
        then we just exited a HB situation.
        Clear the county before proceeding. */
-    $( '#hb-warning' ).addClass( 'u-hidden' );
+    document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
     // If the state field changed, wipe out county.
     if ( $( this ).attr( 'id' ) === 'location' ) {
       $( '#county' ).html( '' );
@@ -1019,9 +1010,12 @@ function registerEvents() {
   calcLoanAmountDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
   creditScoreDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
 
-  function NoCalcOnForbiddenKeys( event ) {
-    const element = event.target;
-    const key = event.which;
+  /**
+   * @param  {KeyboardEvent} evt Event object.
+   */
+  function NoCalcOnForbiddenKeys( evt ) {
+    const element = evt.target;
+    const key = evt.keyCode;
 
     // Don't recalculate on TAB or arrow keys.
     if ( isKeyAllowed( key ) || element.classList.contains( 'a-range' ) ) {
@@ -1029,12 +1023,18 @@ function registerEvents() {
     }
   }
 
-  $( '#house-price, #down-payment' ).on( 'focusout', function( evt ) {
-    let value;
-    value = $( evt.target ).val();
-    value = addCommas( value );
-    $( evt.target ).val( value );
-  } );
+  const housePriceDom = document.querySelector( '#house-price' );
+  const downPaymentDom = document.querySelector( '#down-payment' );
+
+  housePriceDom.addEventListener( 'focusout', priceFocusOutHandler );
+  downPaymentDom.addEventListener( 'focusout', priceFocusOutHandler );
+
+  /**
+   * @param  {FocusEvent} evt Event object.
+   */
+  function priceFocusOutHandler( evt ) {
+    evt.target.value = removeDollarAddCommas( evt.target.value );
+  }
 
 
   // Once the user has edited fields, put the kibosh on the placeholders
