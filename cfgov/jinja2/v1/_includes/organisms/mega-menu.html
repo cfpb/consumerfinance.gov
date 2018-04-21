@@ -45,9 +45,9 @@
 {% macro _nav_list( nav_depth, nav_groups ) %}
 {%- for group in nav_groups %}
 <div class="{{ _classes( nav_depth, '-list' ) }}">
-    {% if group.title %} 
-    <h3 class="h5 
-              {{ base_class ~ '_group-heading' }} 
+    {% if group.title %}
+    <h3 class="h5
+              {{ base_class ~ '_group-heading' }}
               {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_title else ''}} "
         {% if group.hide_title %} aria-hidden="true"{% endif %}>
         {{group.title | safe}}
@@ -156,7 +156,7 @@
                 {{ fmc }}
                 {% endif %}
             {% endfor %}
-         
+
         {# Close Wrapper if needed #}
         {{ '</div>' | safe if nav_depth > 1 else '' }}
     </div>
@@ -181,7 +181,7 @@
 
    ========================================================================== #}
 <nav class="{{ base_class }}
-            u-hidden"
+            u-hide-on-mobile"
      data-js-hook="behavior_flyout-menu"
      aria-label="main navigation"
      role="navigation">
