@@ -409,6 +409,14 @@ urlpatterns = [
         lambda request: ServeView.as_view()(request, request.path),
         fallback=RedirectView.as_view(url='policy-compliance/rulemaking/')
     ),
+    flagged_url(
+        'REGULATIONS3K',
+        r'^eregs-service-worker.js',
+        TemplateView.as_view(
+        template_name='regulations3k/eregs-service-worker.js',
+        content_type='application/javascript'),
+        name='eregs-service-worker.js'
+    ),
 
 ]
 
