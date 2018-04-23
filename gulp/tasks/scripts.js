@@ -213,6 +213,7 @@ function scriptsApps() {
 
     // eslint-disable-next-line no-sync
     if ( fs.existsSync( appWebpackConfigPath ) ) {
+
       // eslint-disable-next-line global-require
       appWebpackConfig = require( path.resolve( appWebpackConfigPath ) ).conf;
     }
