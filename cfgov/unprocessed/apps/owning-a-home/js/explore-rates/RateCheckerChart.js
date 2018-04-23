@@ -33,6 +33,8 @@ function RateCheckerChart() {
     _failAlertDom = _containerDom.querySelector( '#chart-fail-alert' );
     _chartDom = _containerDom.querySelector( '#chart' );
     _dataLoadedDom = _containerDom.querySelector( '.data-enabled' );
+
+    startLoading();
   }
 
   function _createHighcharts() {
@@ -164,25 +166,20 @@ function RateCheckerChart() {
     _currentState = state;
   }
 
-  /**
-   * Show an error alert.
-   * @param {number} errorType 1 = warning, 2 = error.
-   */
-  function stopLoadingShowError( errorType ) {
-    setStatus( errorType );
-    stopLoading();
-  }
-
   function startLoading() {
     setStatus( RateCheckerChart.STATUS_OKAY );
     _dataLoadedDom.classList.add( 'loading' );
     _dataLoadedDom.classList.remove( 'loaded' );
   }
 
-  function stopLoading() {
+  /**
+   * Show an error alert.
+   * @param {[number]} errorStatusId Pass RateCheckerChart.STATUS_ERROR.
+   */
+  function finishLoading( errorStatusId ) {
     _containerDom.classList.remove( 'geolocating' );
 
-    if ( _currentState !== RateCheckerChart.STATUS_ERROR ) {
+    if ( errorStatusId !== RateCheckerChart.STATUS_ERROR ) {
       _dataLoadedDom.classList.remove( 'loading' );
       _dataLoadedDom.classList.add( 'loaded' );
     }
@@ -190,8 +187,7 @@ function RateCheckerChart() {
 
   this.setStatus = setStatus;
   this.startLoading = startLoading;
-  this.stopLoading = stopLoading;
-  this.stopLoadingShowError = stopLoadingShowError;
+  this.finishLoading = finishLoading;
   this.currentState = _currentState;
   this.render = render;
   this.init = init;

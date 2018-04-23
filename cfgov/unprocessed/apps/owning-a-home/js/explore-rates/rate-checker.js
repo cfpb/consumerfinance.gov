@@ -185,7 +185,7 @@ function updateView() {
 
       data.uniqueLabels = uniquePrimitives( data.labels.slice( 0 ) );
 
-      stopLoading();
+      finishLoading();
       hideSummary();
       removeAlerts();
       updateLanguage( data.totalVals );
@@ -512,7 +512,7 @@ function renderDownPayment() {
 
   if ( checkIfZero( params.getVal( 'house-price' ) ) ) {
     removeAlerts();
-    stopLoading();
+    finishLoading();
     hideSummary();
     downPaymentWarning();
   }
@@ -678,14 +678,14 @@ function scoreWarning() {
  * Overlays a warning/error message on the chart.
  */
 function resultWarning() {
-  chart.stopLoadingShowError( RateCheckerChart.STATUS_WARNING );
+  chart.finishLoading( RateCheckerChart.STATUS_WARNING );
 }
 
 /**
  * Show alert that data call to the API failed.
  */
 function resultFailWarning() {
-  chart.stopLoadingShowError( RateCheckerChart.STATUS_ERROR );
+  chart.finishLoading( RateCheckerChart.STATUS_ERROR );
 }
 
 /**
@@ -797,6 +797,10 @@ function init() {
   return true;
 }
 
+/**
+ * Start loading
+ * @return {[type]} [description]
+ */
 function startLoading() {
   chart.startLoading();
   let item;
@@ -807,8 +811,8 @@ function startLoading() {
   }
 }
 
-function stopLoading() {
-  chart.stopLoading();
+function finishLoading() {
+  chart.finishLoading();
   if ( chart.currentState !== RateCheckerChart.STATUS_ERROR ) {
     let item;
     for ( let i = 0, len = dataLoadedDomList.length; i < len; i++ ) {

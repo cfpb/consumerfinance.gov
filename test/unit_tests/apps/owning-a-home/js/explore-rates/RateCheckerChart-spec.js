@@ -12,7 +12,7 @@ const HTML_SNIPPET = `
             </div>
             <div class="rc-data-link">
                 <a href="#about" class="u-link-underline">
-                  About our data source
+                    About our data source
                 </a>
             </div>
         </figcaption>
@@ -67,10 +67,10 @@ describe( 'explore-rates/RateCheckerChart', () => {
     } );
   } );
 
-  describe( 'stopLoading()', () => {
+  describe( 'finishLoading()', () => {
     it( 'should add loaded class', () => {
       chart.render();
-      chart.stopLoading();
+      chart.finishLoading();
       const dataLoadedDom =
         document.querySelector( '#chart-section .data-enabled' );
       expect( dataLoadedDom.classList.contains( 'loading' ) ).toBe( false );
