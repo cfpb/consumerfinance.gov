@@ -25,6 +25,12 @@
     {{ self.desc() }}
 {%- endblock og_desc %}
 
+{% block preload %}
+    {{ super() }}
+    <link rel="manifest" href="{{ static('apps/regulations3k/eregs-manifest.json') }}">
+    <meta name="theme-color" content="#20aa3f">
+{%- endblock %}
+
 {% block css -%}
     {{ super() }}
     <link rel="stylesheet" href="{{ static('apps/regulations3k/css/main.css') }}">
@@ -63,7 +69,6 @@
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [
-            '{{ static('apps/regulations3k/js/common.js') }}',
             '{{ static('apps/regulations3k/js/index.js') }}'
           ];
           jsl(s);

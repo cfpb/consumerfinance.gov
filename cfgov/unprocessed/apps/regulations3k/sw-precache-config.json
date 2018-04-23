@@ -1,0 +1,28 @@
+{
+  "staticFileGlobs": [
+    "../../../static_built/apps/regulations3k/css/main.css",
+    "../../../static_built/apps/regulations3k/js/index.js"
+  ],
+  "stripPrefix": "../../../static_built/",
+  "replacePrefix": "/static/",
+  "runtimeCaching": [
+    {
+      "urlPattern": "/eregulations3k\/(\\d\\d\\d\\d\/\\d)?/",
+      "handler": "cacheFirst",
+      "options": {
+        "cache": {
+          "name": "eregs-content"
+        }
+      }
+    },
+    {
+      "urlPattern": "/\/static\/app\/eregulations3k\/(css/js/img)\/.*\\.(css|js)/",
+      "handler": "cacheFirst",
+      "options": {
+        "cache": {
+          "name": "eregs-assets"
+        }
+      }
+    }
+  ]
+}
