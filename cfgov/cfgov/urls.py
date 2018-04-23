@@ -68,16 +68,10 @@ urlpatterns = [
     url(r'^owning-a-home/resources/(?P<path>.*)$',
         RedirectView.as_view(
             url='/static/owning-a-home/resources/%(path)s', permanent=True)),
-    url(r'^owning-a-home/closing-disclosure/',
-        FlaggedTemplateView.as_view(
-            flag_name='OAH_FORM_EXPLAINERS',
-            template_name='owning-a-home/closing-disclosure/index.html',
-            fallback=SheerTemplateView.as_view(
-                template_engine='owning-a-home',
-                template_name='closing-disclosure/index.html'
-            )
-        ),
-        name='closing-disclosure'
+    url(r'^owning-a-home/closing-disclosure/$',
+        TemplateView.as_view(
+            template_name='owning-a-home/closing-disclosure/index.html'),
+            name='closing-disclosure'
     ),
     url(r'^owning-a-home/explore-rates/',
         FlaggedTemplateView.as_view(
@@ -90,16 +84,10 @@ urlpatterns = [
         ),
         name='explore-rates'
     ),
-    url(r'^owning-a-home/loan-estimate/',
-        FlaggedTemplateView.as_view(
-            flag_name='OAH_FORM_EXPLAINERS',
-            template_name='owning-a-home/loan-estimate/index.html',
-            fallback=SheerTemplateView.as_view(
-                template_engine='owning-a-home',
-                template_name='loan-estimate/index.html'
-            )
-        ),
-        name='loan-estimate'
+    url(r'^owning-a-home/loan-estimate/$',
+        TemplateView.as_view(
+            template_name='owning-a-home/loan-estimate/index.html'),
+            name='loan-estimate'
     ),
 
     # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
