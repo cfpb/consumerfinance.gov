@@ -798,8 +798,7 @@ function init() {
 }
 
 /**
- * Start loading
- * @return {[type]} [description]
+ * Add loading CSS class to all items with data-loaded class.
  */
 function startLoading() {
   chart.startLoading();
@@ -811,6 +810,9 @@ function startLoading() {
   }
 }
 
+/**
+ * Add loaded CSS class to all items with data-loaded class.
+ */
 function finishLoading() {
   chart.finishLoading();
   if ( chart.currentState !== RateCheckerChart.STATUS_ERROR ) {

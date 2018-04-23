@@ -48,7 +48,7 @@ describe( 'explore-rates/RateCheckerChart', () => {
     } );
 
     it( 'should remove geolocating class', () => {
-      const mockData = { labels: {}, vals: {} };
+      const mockData = { labels: {}, vals: {}};
       chart.render();
       chart.render( mockData );
       const containerDom = document.querySelector( '#chart-section' );
