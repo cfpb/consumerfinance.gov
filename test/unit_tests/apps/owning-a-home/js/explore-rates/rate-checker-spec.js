@@ -29,7 +29,7 @@ const HTML_SNIPPET = `
                 </div>
                 <div class="rc-data-link">
                     <a href="#about" class="u-link-underline">
-                      About our data source
+                        About our data source
                     </a>
                 </div>
             </figcaption>
