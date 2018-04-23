@@ -28,7 +28,7 @@ function FormSubmit( element, baseClass, opts ) {
   const _baseElement = atomicHelpers.checkDom( element, baseClass );
   const _formElement = _baseElement.querySelector( 'form' );
   const _notificationElement = _baseElement.querySelector( '.m-notification' );
-  const _notification = new Notification( _baseElement );
+  let _notification;
   let _cachedFields;
   const eventObserver = new EventObserver();
   const self = this;
@@ -46,6 +46,8 @@ function FormSubmit( element, baseClass, opts ) {
     }
     _cachedFields = _cacheFields();
     _formElement.addEventListener( 'submit', _onSubmit );
+    _notification = new Notification( _baseElement );
+    _notification.init();
 
     return this;
   }

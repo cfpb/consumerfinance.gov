@@ -57,6 +57,12 @@ describe( 'explore-rates/util', () => {
       accessibleDataDom.querySelector( '.table-body' );
   } );
 
+  describe( 'removeDollarAddCommas()', () => {
+    it( 'should return true if HTML element has u-hidden class.', () => {
+      expect( util.removeDollarAddCommas( '$10000' ) ).toBe( '10,000' );
+    } );
+  } );
+
   describe( 'calcLoanAmount()', () => {
     it( 'should calculate a loan amount in USD ' +
         'given a house price and down payment amount.', () => {
@@ -93,8 +99,18 @@ describe( 'explore-rates/util', () => {
 
   describe( 'formatTimestampMMddyyyy()', () => {
     it( 'should format a timestamp as a date.', () => {
-      expect( util.formatTimestampMMddyyyy( '2018-03-14T04:00:00Z' ) )
+      expect( util.formatTimestampMMddyyyy( '2018-03-14T12:00:00Z' ) )
         .toBe( '03/14/2018' );
+    } );
+  } );
+
+  describe( 'isKeyAllowed()', () => {
+    it( 'should return true if key code is not in forbidden list.', () => {
+      expect( util.isKeyAllowed( 0 ) ).toBe( true );
+    } );
+
+    it( 'should return false if key code is in forbidden list.', () => {
+      expect( util.isKeyAllowed( 9 ) ).toBe( false );
     } );
   } );
 
@@ -130,7 +146,7 @@ describe( 'explore-rates/util', () => {
 
   describe( 'renderDatestamp()', () => {
     it( 'should format a timestamp as a date.', () => {
-      util.renderDatestamp( timeStampDom, '2018-03-14T04:00:00Z' );
+      util.renderDatestamp( timeStampDom, '2018-03-14T12:00:00Z' );
       expect( timeStampDom.textContent ).toBe( '03/14/2018' );
     } );
   } );

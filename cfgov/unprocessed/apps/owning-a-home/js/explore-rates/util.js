@@ -42,11 +42,40 @@ function formatTimestampMMddyyyy( timestamp ) {
 }
 
 /**
+ * @param  {number} keyCode - A key code.
+ * @returns {boolean} True if key is forbidden, false otherwise.
+ */
+function isKeyAllowed( keyCode ) {
+  /* `FORBIDDEN_KEYS` are as follows:
+  9 = tab
+  37, 38, 39, 40 = arrow keys.
+  13 = enter
+  16 = shift */
+  const FORBIDDEN_KEYS = [ 9, 37, 38, 39, 40, 13, 16 ];
+
+  if ( FORBIDDEN_KEYS.indexOf( keyCode ) !== -1 ) {
+    return false;
+  }
+  return true;
+}
+
+/**
  * @param  {HTMLNode} elem - An HTML element to check for u-hidden class.
  * @returns {boolean} True is the element is visible, false otherwise.
  */
 function isVisible( elem ) {
   return !elem.classList.contains( 'u-hidden' );
+}
+
+/**
+ * Add commas to numbers where appropriate.
+ * @param {string} value - Old value where commas will be added.
+ * @returns {string} Value with commas and no dollar sign.
+ */
+function removeDollarAddCommas( value ) {
+  let parseValue = unFormatUSD( value );
+  parseValue = formatUSD( parseValue, { decimalPlaces: 0 } ).replace( '$', '' );
+  return parseValue;
 }
 
 /**
@@ -151,7 +180,9 @@ module.exports = {
   checkIfZero,
   delay,
   formatTimestampMMddyyyy,
+  isKeyAllowed,
   isVisible,
+  removeDollarAddCommas,
   renderAccessibleData,
   renderDatestamp,
   renderLoanAmount,
