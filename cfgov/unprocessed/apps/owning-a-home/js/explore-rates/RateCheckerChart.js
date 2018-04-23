@@ -6,7 +6,7 @@ import Highcharts from 'highcharts';
 import highchartsExport from 'highcharts/modules/exporting';
 import { applyThemeTo } from './highcharts-theme';
 
-function RCChart() {
+function RateCheckerChart() {
 
   let _highChart;
   let _containerDom;
@@ -148,17 +148,17 @@ function RCChart() {
    * @param {number} state 0 = okay, 1 = warning state.
    */
   function setStatus( state ) {
-    if ( state === RCChart.STATUS_OKAY ) {
+    if ( state === RateCheckerChart.STATUS_OKAY ) {
       _chartDom.classList.remove( 'warning' );
       _resultAlertDom.classList.add( 'u-hidden' );
       _failAlertDom.classList.add( 'u-hidden' );
-    } else if ( state === RCChart.STATUS_WARNING ) {
+    } else if ( state === RateCheckerChart.STATUS_WARNING ) {
       _chartDom.classList.add( 'warning' );
       _resultAlertDom.classList.remove( 'u-hidden' );
-    } else if ( state === RCChart.STATUS_ERROR ) {
+    } else if ( state === RateCheckerChart.STATUS_ERROR ) {
       _failAlertDom.classList.remove( 'u-hidden' );
     } else {
-      throw new Error( `Status ${state} set in chart is not supported!` );
+      throw new Error( `Status ${ state } set in chart is not supported!` );
     }
 
     _currentState = state;
@@ -174,7 +174,7 @@ function RCChart() {
   }
 
   function startLoading() {
-    setStatus( RCChart.STATUS_OKAY );
+    setStatus( RateCheckerChart.STATUS_OKAY );
     _dataLoadedDom.classList.add( 'loading' );
     _dataLoadedDom.classList.remove( 'loaded' );
   }
@@ -182,7 +182,7 @@ function RCChart() {
   function stopLoading() {
     _containerDom.classList.remove( 'geolocating' );
 
-    if ( _currentState !== RCChart.STATUS_ERROR ) {
+    if ( _currentState !== RateCheckerChart.STATUS_ERROR ) {
       _dataLoadedDom.classList.remove( 'loading' );
       _dataLoadedDom.classList.add( 'loaded' );
     }
@@ -199,8 +199,8 @@ function RCChart() {
   return this;
 }
 
-RCChart.STATUS_OKAY = 0;
-RCChart.STATUS_WARNING = 1;
-RCChart.STATUS_ERROR = 2;
+RateCheckerChart.STATUS_OKAY = 0;
+RateCheckerChart.STATUS_WARNING = 1;
+RateCheckerChart.STATUS_ERROR = 2;
 
-module.exports = RCChart;
+module.exports = RateCheckerChart;

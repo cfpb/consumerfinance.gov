@@ -13,7 +13,7 @@ import {
 } from './util';
 import * as params from './params';
 import * as template from './template-loader';
-import RCChart from './RCChart';
+import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
 import amortize from 'amortize';
 import config from '../../config.json';
@@ -536,7 +536,7 @@ function renderDownPayment() {
  */
 function hideSummary() {
   if ( rcSummaryDom.classList.contains( 'clear' ) &&
-       chart.currentState !== RCChart.STATUS_ERROR ) {
+       chart.currentState !== RateCheckerChart.STATUS_ERROR ) {
     rcSummaryDom.classList.remove( 'clear' );
     rcDisclaimerDom.classList.remove( 'clear' );
   }
@@ -678,14 +678,14 @@ function scoreWarning() {
  * Overlays a warning/error message on the chart.
  */
 function resultWarning() {
-  chart.stopLoadingShowError( RCChart.STATUS_WARNING );
+  chart.stopLoadingShowError( RateCheckerChart.STATUS_WARNING );
 }
 
 /**
  * Show alert that data call to the API failed.
  */
 function resultFailWarning() {
-  chart.stopLoadingShowError( RCChart.STATUS_ERROR );
+  chart.stopLoadingShowError( RateCheckerChart.STATUS_ERROR );
 }
 
 /**
@@ -700,7 +700,7 @@ function downPaymentWarning() {
  */
 function removeAlerts() {
   if ( isVisible( dpAlertDom ) ) {
-    chart.setStatus( RCChart.STATUS_OKAY );
+    chart.setStatus( RateCheckerChart.STATUS_OKAY );
     dpAlertDom.classList.add( 'u-hidden' );
     removeCreditScoreAlert();
   }
@@ -762,7 +762,7 @@ function init() {
     }
   );
 
-  chart = new RCChart();
+  chart = new RateCheckerChart();
   chart.init();
 
   // Record timestamp HTML element that's updated from date from API.
@@ -809,7 +809,7 @@ function startLoading() {
 
 function stopLoading() {
   chart.stopLoading();
-  if ( chart.currentState !== RCChart.STATUS_ERROR ) {
+  if ( chart.currentState !== RateCheckerChart.STATUS_ERROR ) {
     let item;
     for ( let i = 0, len = dataLoadedDomList.length; i < len; i++ ) {
       item = dataLoadedDomList[i];

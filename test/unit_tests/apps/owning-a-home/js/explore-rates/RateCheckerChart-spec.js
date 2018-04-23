@@ -1,5 +1,5 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const RCChart = require( BASE_JS_PATH + 'js/explore-rates/RCChart' );
+const RateCheckerChart = require( BASE_JS_PATH + 'js/explore-rates/RateCheckerChart' );
 
 const HTML_SNIPPET = `
   <section id="chart-section" class="chart">
@@ -33,10 +33,10 @@ const HTML_SNIPPET = `
 
 let chart;
 
-describe( 'explore-rates/RCChart', () => {
+describe( 'explore-rates/RateCheckerChart', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
-    chart = new RCChart();
+    chart = new RateCheckerChart();
     chart.init();
   } );
 
@@ -80,7 +80,7 @@ describe( 'explore-rates/RCChart', () => {
 
   describe( 'setStatus()', () => {
     it( 'should set state to warning status', () => {
-      chart.setStatus( RCChart.STATUS_WARNING );
+      chart.setStatus( RateCheckerChart.STATUS_WARNING );
       const chartDom = document.querySelector( '#chart' );
       const resultAlertDom = document.querySelector( '#chart-result-alert' );
       expect( chartDom.classList.contains( 'warning' ) ).toBe( true );
