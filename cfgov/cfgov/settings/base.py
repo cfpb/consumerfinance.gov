@@ -157,6 +157,7 @@ TEMPLATES = [
             'environment': 'v1.environment',
             'extensions': [
                 'core.jinja2tags.filters',
+                'regulations3k.jinja2tags.regdown',
                 'v1.jinja2tags.filters',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
@@ -716,3 +717,11 @@ EMAIL_POPUP_URLS = {
         '/owning-a-home/mortgage-estimate/',
     ],
 }
+
+REGULATIONS_REFERENCE_MAPPING = [
+    (
+    	r'(?P<label>(?P<part>^[0-9]+)-(?P<section>[\w]+))-(?P<paragraph>[\w-]*-Interp)',
+    	'{part}-Interp-{section}',
+    	'{section}-{paragraph}'
+    ),
+]

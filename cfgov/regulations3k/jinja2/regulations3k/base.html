@@ -34,9 +34,22 @@
 {# BODY items #}
 
 {% block content_main scoped %}
-    <h1>Hello, world!</h1>
+    <h1>A RegDown&copy; platform to read regulations </h1>
 
-    <p>This is the <code>content_main</code> block.</p>
+    <h2>Title XII Banks and Banking<h2>
+    <ul>
+    {% for reg in regs %}
+    <li>
+        <a href="/eregulations3k/{{reg.part_number}}">
+            <span class="title-num">{{reg.part_number}}</span>
+        </a>
+        <div class="reg-sub-title">
+            <span class="reg-letter">Regulation {{reg.letter_code}}</span><br>
+            <span class="reg-title">{{reg.title}}</span>
+        </div>
+    </li>
+    {% endfor %}
+    </ul>
 {% endblock content_main %}
 
 {% block content_sidebar scoped %}

@@ -1,0 +1,25 @@
+<div class="o-expandable o-expandable__padded">
+  <button class="o-expandable_header o-expandable_target"
+          title="Expand content">
+    <span class="o-expandable_header-left o-expandable_label">
+      Official interpretation
+    </span>
+    <span class="o-expandable_header-right o-expandable_link">
+      <span class="o-expandable_cue o-expandable_cue-open">
+        Show
+        {# {% include icons/plus-round.svg %} #}
+      </span>
+      <span class="o-expandable_cue o-expandable_cue-close">
+        Hide
+        {# {% include icons/minus-round.svg %} #}
+      </span>
+    </span>
+  </button>
+  <div class="o-expandable_content">
+    <div class="o-expandable_content-animated">
+      {{ contents }}
+
+      <p><a href="{{ url }}">See this interpretation in Supplement I</a></p>
+    </div>
+  </div>
+</div>
