@@ -1,4 +1,4 @@
-from urlparse import urlparse
+from six.moves.urllib.parse import parse_qs, urlparse
 
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import View
