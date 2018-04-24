@@ -174,13 +174,14 @@ function RateCheckerChart() {
 
   /**
    * Show an error alert.
-   * @param {[number]} errorStatusId Pass RateCheckerChart.STATUS_ERROR.
+   * @param {[number]} state
+   *   Pass RateCheckerChart.STATUS_WARNING or RateCheckerChart.STATUS_ERROR.
    */
-  function finishLoading( errorStatusId ) {
+  function finishLoading( state ) {
     _containerDom.classList.remove( 'geolocating' );
 
     if ( errorStatusId ) {
-      setStatus( errorStatusId );
+      setStatus( state );
     } else {
       _dataLoadedDom.classList.remove( 'loading' );
       _dataLoadedDom.classList.add( 'loaded' );
