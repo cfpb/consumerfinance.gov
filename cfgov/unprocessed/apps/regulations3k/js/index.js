@@ -3,6 +3,21 @@
 
 const module1 = require( './module1.js' );
 const module2 = require( './module2.js' );
+const Turbolinks = require( 'turbolinks' );
+
+const Expandable = require( '../../../js/organisms/Expandable.js' );
+
+const expandableDom = document.querySelectorAll( '.block .o-expandable' );
+let expandable;
+
+if ( expandableDom ) {
+  for ( let i = 0, len = expandableDom.length; i < len; i++ ) {
+    expandable = new Expandable( expandableDom[i] );
+    expandable.init();
+  }
+}
+
+Turbolinks.start();
 
 const app = {
   init: () => {

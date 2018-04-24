@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Regulations 3000
+   Regulations search
+   ========================================================================== */
+
+/* Footer search bar */
+
+.o-search-bar {
+    &_label .break {
+        display: block;
+    }
+
+    .respond-to-max(@bp-xs-max, {
+        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
+        .o-search-bar_col + .o-search-bar_col {
+            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        }
+
+        form {
+            margin-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+        }
+    });
+
+    .respond-to-min(@bp-sm-min, {
+        .o-search-bar_col {
+            .grid_column( 6 );
+        }
+    });
+
+    &__full {
+        form {
+            max-width: 700px;
+        }
+    }
+
+    &__with-sidebar {
+        .search-bar__full-width-content {
+            .search-bar_label .break {
+                display: inline;
+            }
+            .o-search-bar_col {
+                width: 100%;
+            }
+            .o-search-bar_col + .o-search-bar_col {
+                margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+            }
+        }
+
+        .search-bar__variable-cols {
+            form {
+                display: table;
+                width: 100%;
+            }
+            .o-search-bar_col {
+                display: table-cell;
+            }
+            .o-search-bar_label {
+                width: auto;
+                vertical-align: top;
+                padding-right: unit( ( @grid_gutter-width / 2) / @base-font-size-px, em );
+                white-space: nowrap;
+                .break {
+                    display: block;
+                }
+            }
+            .o-search-bar_input {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+
+        .respond-to-range( @bp-xs-max, 700px, {
+            .search-bar__full-width-content;
+        } );
+
+        .respond-to-range( 700px, @bp-sm-max, {
+            .search-bar__variable-cols;
+        } );
+
+        .respond-to-range(@bp-med-min, @bp-med-max, {
+            .search-bar__full-width-content;
+        });
+
+        .respond-to-min(@bp-lg-min, {
+            .search-bar__variable-cols;
+        });
+    }
+
+    &.block__bg-branded {
+        background: @green-20;
+    }
+}

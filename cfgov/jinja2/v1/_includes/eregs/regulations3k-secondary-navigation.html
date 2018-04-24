@@ -1,0 +1,127 @@
+{# ==========================================================================
+
+   secondary_navigation.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for Header organism within eregulations.
+
+   TODO: `active_nav_id` and `nav_items` parameters can be removed when
+         `_render_secondary_navigation_deprecated` is removed.
+
+   active_nav_id: Name of active navigation item.
+
+   nav_items:     The secondary navigation item structure.
+
+   ========================================================================== #}
+
+{% macro render(active_nav_id, nav_items) %}
+{% if page %}
+    {{ _render_secondary_navigation() }}
+{% else %}
+    {# TODO: Remove when non-wagtail pages have been migrated to wagtail. #}
+    {{ _render_secondary_navigation_deprecated(active_nav_id, nav_items) }}
+{% endif %}
+{% endmacro %}
+
+{# ==========================================================================
+
+   _render_secondary_navigation()
+
+   ========================================================================== #}
+{% macro _render_secondary_navigation() %}
+{% if nav_items is not defined and has_children is not defined %}
+    {% set nav_items, has_children = get_secondary_nav_items(request, page) %}
+{% endif %}
+<nav class="o-secondary-navigation
+            {{ '' if has_children else 'o-secondary-navigation__no-children' }}"
+     aria-label="Section navigation">
+     <h4>TABLE OF CONTENTS</h4>
+    {% set sec_nav_settings = {
+        'label': 'In this section',
+        'is_bordered': false,
+        'is_midtone': true,
+        'is_expanded': false
+    } %}
+
+    {% from 'organisms/expandable.html' import expandable with context %}
+    {% call() expandable(sec_nav_settings) %}
+        {% import 'molecules/nav-link.html' as nav_link %}
+        <ul class="o-secondary-navigation_list
+                   o-secondary-navigation_list__parents">
+        {% set subpart_state = '' %}
+        {%- for item in nav_items %}
+            <li data-nav-is-active="{{ item.expanded }}">
+                {% if item.section.subpart != subpart_state %}
+                <h5>{{ item.section.subpart.subpart_heading }} {{item.section.subpart.title}} {{item.section.subpart.section_range|safe}}</h5>
+                {% set subpart_state = item.section.subpart %}
+                <br>
+                {% endif %}
+                {{ nav_link.render(item.title, item.url, true, item.active) }}
+            {%- if item.children -%}
+                <ul class="o-secondary-navigation_list
+                           o-secondary-navigation_list__children">
+                {%- for child in item.children -%}
+                    <li>
+                        {{ nav_link.render(child.title, child.url, false, child.active) }}
+                    </li>
+                {%- endfor %}
+                </ul>
+            {%- endif -%}
+            </li>
+
+        {%- endfor %}
+        </ul>
+    {% endcall %}
+</nav>
+{% endmacro %}
+
+
+{# TODO: Remove `_render_secondary_navigation_deprecated` and
+         `_secondary_navigation_deprecated` when non-wagtail pages
+         have been migrated to wagtail. #}
+{# ==========================================================================
+
+   _render_secondary_navigation_deprecated()
+
+   ========================================================================== #}
+{% macro _render_secondary_navigation_deprecated(active_nav_id, nav_items) %}
+<nav class="o-secondary-navigation"
+     aria-label="Section navigation">
+    {% set sec_nav_settings = {
+        'label': 'In this section',
+        'is_bordered': false,
+        'is_midtone': true,
+        'is_expanded': false
+    } %}
+
+    {% from 'organisms/expandable.html' import expandable with context %}
+    {% call() expandable(sec_nav_settings) %}
+        {% import 'molecules/nav-link.html' as nav_link %}
+        <ul class="o-secondary-navigation_list
+                   o-secondary-navigation_list__parents">
+        {%- for item in nav_items %}
+            {%- set href, id, caption, children = item[0], item[1], item[2], item[3:] %}
+
+            <li>
+                {{ nav_link.render(caption, href, true, id == active_nav_id) }}
+            {%- if children -%}
+                {% set children = children[0] %}
+                <ul class="o-secondary-navigation_list
+                           o-secondary-navigation_list__children">
+                {%- for href, id, caption in children %}
+                    <li>
+                        {{ nav_link.render(caption, href, false, id == active_nav_id) }}
+                    </li>
+                {%- endfor %}
+                </ul>
+            {%- endif %}
+            </li>
+
+        {%- endfor %}
+        </ul>
+    {% endcall %}
+</nav>
+{% endmacro %}
