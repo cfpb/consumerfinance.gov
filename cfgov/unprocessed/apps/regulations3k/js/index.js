@@ -3,6 +3,9 @@
 
 const module1 = require( './module1.js' );
 const module2 = require( './module2.js' );
+const Turbolinks = require( 'turbolinks' );
+
+Turbolinks.start();
 
 const app = {
   init: () => {

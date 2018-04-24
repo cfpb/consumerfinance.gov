@@ -35,7 +35,8 @@ cfgov-refresh/
 ._*
 .Spotlight-V100
 .Trashes
-Icon
+Icon
+
 ehthumbs.db
 Thumbs.db
 
@@ -104,6 +105,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 .snyk
+.python-version
 protractorFailuresReport/
 
 # IDE Specifc #
