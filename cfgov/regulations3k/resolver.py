@@ -66,7 +66,7 @@ def get_url_resolver(page):
     given page. """
     def url_resolver(reference):
         dest_section_label, dest_paragraph_label = resolve_reference(reference)
-        return (page.full_url +
+        return (page.url +
                 page.reverse_subpage('section', args=([dest_section_label])))
 
     return url_resolver

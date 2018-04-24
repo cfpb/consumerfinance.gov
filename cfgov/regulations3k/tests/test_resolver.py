@@ -117,4 +117,4 @@ class ReferenceResolutionTestCase(TestCase):
     def test_get_url_resolver(self):
         url_resolver = get_url_resolver(self.reg_page)
         result = url_resolver('2-c-Interp')
-        self.assertEqual(result, 'http://localhost/reg-landing/1002/Interp-2/')
+        self.assertEqual(result, '/reg-landing/1002/Interp-2/')
