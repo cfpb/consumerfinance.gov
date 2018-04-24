@@ -16,7 +16,7 @@ from wagtail.wagtailcore.models import PageManager
 
 from regulations3k.models import Part, Section  # , Subpart
 from regulations3k.regdown import regdown
-from regulations3k.resolver import get_contents_resolver
+from regulations3k.resolver import get_contents_resolver, get_url_resolver
 
 # Our RegDownTextField field doesn't generate a good widget yet
 # from regulations3k.models.fields import RegDownTextField
@@ -95,7 +95,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         context.update({'contents': contents})
         return template.render(context)
 
-    @route(r'^(?P<section>[0-9A-Za-z-]+)/$')
+    @route(r'^(?P<section>[0-9A-Za-z-]+)/$', name="section")
     def section_page(self, request, section):
         section_label = "{}-{}".format(
             self.regulation.part_number, section)
@@ -111,7 +111,8 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
         content = regdown(
             section.contents,
-            contents_resolver=get_contents_resolver(section),
+            url_resolver=get_url_resolver(self),
+            contents_resolver=get_contents_resolver(self),
             render_block_reference=partial(self.render_interp, context)
         )
 

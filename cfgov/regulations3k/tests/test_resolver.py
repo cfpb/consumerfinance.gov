@@ -6,9 +6,14 @@ import datetime
 from django.test import TestCase, override_settings
 
 from model_mommy import mommy
-from regulations3k.models import EffectiveVersion, Part, Section, Subpart
+from regulations3k.models import (
+    EffectiveVersion, Part, RegulationLandingPage, RegulationPage, Section,
+    Subpart
+)
 from regulations3k.regdown import regdown
-from regulations3k.resolver import get_contents_resolver, resolve_reference
+from regulations3k.resolver import (
+    get_contents_resolver, get_url_resolver, resolve_reference
+)
 
 
 # Our setup and tests use as close to regulation examples as possible.
@@ -26,6 +31,12 @@ from regulations3k.resolver import get_contents_resolver, resolve_reference
 class ReferenceResolutionTestCase(TestCase):
 
     def setUp(self):
+        from v1.models import HomePage
+        self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.landing_page = RegulationLandingPage(
+            title='Reg Landing', slug='reg-landing')
+        self.ROOT_PAGE.add_child(instance=self.landing_page)
+
         self.part_1002 = mommy.make(
             Part,
             part_number='1002',
@@ -72,6 +83,12 @@ class ReferenceResolutionTestCase(TestCase):
             subpart=self.subpart,
         )
 
+        self.reg_page = RegulationPage(
+            regulation=self.part_1002,
+            title='Reg B',
+            slug='1002')
+        self.landing_page.add_child(instance=self.reg_page)
+
     def test_resolve_reference(self):
         section, paragraph = resolve_reference('2-c-Interp')
         self.assertEqual(section, 'Interp-2')
@@ -83,16 +100,21 @@ class ReferenceResolutionTestCase(TestCase):
         self.assertIsNone(paragraph)
 
     def test_get_contents_resolver(self):
-        contents_resolver = get_contents_resolver(self.section_2)
+        contents_resolver = get_contents_resolver(self.reg_page)
         result = regdown(self.section_2.contents,
                          contents_resolver=contents_resolver)
         self.assertIn('Interpreting adverse action', result)
 
     def test_get_contents_resolver_reference_doesnt_exist(self):
-        contents_resolver = get_contents_resolver(self.section_3)
+        contents_resolver = get_contents_resolver(self.reg_page)
         result = regdown(self.section_3.contents,
                          contents_resolver=contents_resolver)
         self.assertEqual(
             result,
             '<p class="level-0" id="b">Securities credit.</p>'
         )
+
+    def test_get_url_resolver(self):
+        url_resolver = get_url_resolver(self.reg_page)
+        result = url_resolver('2-c-Interp')
+        self.assertEqual(result, 'http://localhost/reg-landing/1002/Interp-2/')

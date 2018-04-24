@@ -37,13 +37,13 @@ def resolve_reference(reference):
     return (None, None)
 
 
-def get_contents_resolver(section):
-    """ Return a Regdown contents_resolver function to call from the section
+def get_contents_resolver(page):
+    """ Return a Regdown contents_resolver function for the RegulationPage
     This constructs a contents_resolver that will resolve references and
-    return their contents for all sections that are part of the same
-    EffectiveVersion as the given section. """
+    return their contents for all sections that are part of the current
+    EffectiveVersion served by the given page. """
     section_query = Section.objects.filter(
-        subpart__version=section.subpart.version,
+        subpart__version=page.regulation.effective_version
     )
 
     def contents_resolver(reference):
@@ -57,3 +57,16 @@ def get_contents_resolver(section):
         return dest_paragraph
 
     return contents_resolver
+
+
+def get_url_resolver(page):
+    """ Returns a Regdown url_resolver function for the RegulationPage
+    This constructs a url_resolver that will resolve the URL of references to
+    any section that is part of the current EffectiveVersion served by the
+    given page. """
+    def url_resolver(reference):
+        dest_section_label, dest_paragraph_label = resolve_reference(reference)
+        return (page.full_url +
+                page.reverse_subpage('section', args=([dest_section_label])))
+
+    return url_resolver
