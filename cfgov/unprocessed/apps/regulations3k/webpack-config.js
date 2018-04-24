@@ -104,17 +104,20 @@ const conf = {
   stats: STATS_CONFIG.stats
 };
 
-const finish = err => {
+fancyLog( 'Started generating service worker file...' );
+swPrecache.write( SERVICE_WORKER_DEST, SERVICE_WORKER_CONFIG, err => {
   if ( err ) {
     return fancyLog( `Error generating service worker file: ${ err }` );
   }
-  return fancyLog( `Service worker file successfully generated: ${ SERVICE_WORKER_DEST }` );
-};
+  return fancyLog( `Service worker file successfully generated to ${ SERVICE_WORKER_DEST }` );
+} );
 
-fancyLog( 'Started generating service worker file...' );
-swPrecache.write( SERVICE_WORKER_DEST, SERVICE_WORKER_CONFIG, finish );
-
-fancyLog( 'Copying eRegs manifest...' );
-fs.copyFile( MANIFEST_SRC, MANIFEST_DEST, finish );
+fancyLog( 'Copying eRegs\' manifest...' );
+fs.copyFile( MANIFEST_SRC, MANIFEST_DEST, err => {
+  if ( err ) {
+    return fancyLog( `Error copying eRegs' manifest: ${ err }` );
+  }
+  return fancyLog( `Successfully copied eRegs' manifest to ${ SERVICE_WORKER_DEST }` );
+} );
 
 module.exports = { conf };
