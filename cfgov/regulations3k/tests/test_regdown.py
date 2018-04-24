@@ -59,9 +59,21 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             self.fail('Markdown failed to load regdown extension: '
                       '{}'.format(e.message))
 
-    def test_block_reference_no_resolver(self):
+    def test_block_reference_resolver_not_callable(self):
         text = 'see(foo-bar)'
-        self.assertEqual(regdown(text), '')
+        self.assertEqual(regdown(text, contents_resolver=None), '')
+
+    def test_block_reference_renderer_not_callable(self):
+        text = 'see(foo-bar)'
+        self.assertEqual(regdown(text, render_block_reference=None), '')
+
+    def test_block_reference_no_contents(self):
+        contents_resolver = lambda l: ''
+        text = 'see(foo-bar)'
+        self.assertEqual(
+            regdown(text, contents_resolver=contents_resolver),
+            ''
+        )
 
     def test_block_reference(self):
         contents_resolver = lambda l: '{foo-bar}\n# §FooBar\n\n'
@@ -90,7 +102,6 @@ class RegdownUtilsTestCase(unittest.TestCase):
         )
         result = extract_labeled_paragraph('my-label', text)
         self.assertEqual(result, '')
-
 
     def test_extract_labeled_paragraph_startswith(self):
         text = (

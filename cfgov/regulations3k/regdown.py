@@ -2,8 +2,6 @@ from __future__ import unicode_literals
 
 import re
 
-from jinja2 import Template
-
 from markdown import markdown, util
 from markdown.blockprocessors import BlockProcessor, ParagraphProcessor
 from markdown.extensions import Extension
@@ -31,9 +29,9 @@ class RegulationsExtension(Extension):
             'Should return markdown contents of the reference or an empty '
             'string.'
         ],
-        'block_reference_template': [
-            Template('<blockquote>{{ contents }}</blockquote>'),
-            'Jinja2 template to use to render block references'
+        'render_block_reference': [
+            lambda c: '<blockquote>{}</blockquote>'.format(c),
+            'Function that will render a block reference'
         ],
     }
 
@@ -46,7 +44,8 @@ class RegulationsExtension(Extension):
             BlockReferenceProcessor(
                 md.parser,
                 contents_resolver=self.getConfig('contents_resolver'),
-                reference_template=self.getConfig('block_reference_template'),
+                render_block_reference=self.getConfig(
+                    'render_block_reference'),
             ),
             '<paragraph'
         )
@@ -102,14 +101,21 @@ class LabeledParagraphProcessor(ParagraphProcessor):
 
 
 class BlockReferenceProcessor(BlockProcessor):
-    """ Process `see(label)` as an blockquoted reference """
+    """ Process `see(label)` as an blockquoted reference.
+    To render the block reference, the extension must be initialized with a
+    callable render_block_reference option that will take the contents of
+    the block reference, rendering to HTML, and return the HTML.
+    """
 
     RE = re.compile(r'(?:^)see\((?P<label>[\w-]+)\)(?:\n|$)')
 
-    def __init__(self, parser, contents_resolver=None, reference_template=''):
+    def __init__(self,
+                 parser,
+                 contents_resolver=None,
+                 render_block_reference=None):
         super(BlockReferenceProcessor, self).__init__(parser)
         self.contents_resolver = contents_resolver
-        self.reference_template = reference_template
+        self.render_block_reference = render_block_reference
 
     def test(self, parent, block):
         return self.RE.search(block)
@@ -120,18 +126,18 @@ class BlockReferenceProcessor(BlockProcessor):
 
         if match:
             # Without a contents_resolver, we can't resolve block contents
-            if self.contents_resolver is '':
+            if (not callable(self.contents_resolver) or
+                    not callable(self.render_block_reference)):
                 return
 
             label = match.group('label')
             contents = self.contents_resolver(label)
 
-            if contents is '':
+            if contents == '':
                 return
 
-            rendered_contents = self.reference_template.render(
-                context={'contents': regdown(contents)}
-            )
+            rendered_contents = self.render_block_reference(regdown(contents))
+
             parent.append(
                 util.etree.fromstring(rendered_contents.encode('utf-8'))
             )

@@ -1,10 +1,11 @@
 from __future__ import absolute_import, unicode_literals
 
 import re
+from functools import partial
 
 from django.db import models
-from django.template.response import TemplateResponse
 from django.template.loader import get_template
+from django.template.response import TemplateResponse
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
@@ -89,6 +90,11 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         })
         return context
 
+    def render_interp(self, context, contents):
+        template = get_template('regulations3k/inline_interps.html')
+        context.update({'contents': contents})
+        return template.render(context)
+
     @route(r'^(?P<section>[0-9A-Za-z-]+)/$')
     def section_page(self, request, section):
         section_label = "{}-{}".format(
@@ -96,17 +102,19 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         section = Section.objects.filter(
             subpart__version=self.regulation.effective_version,
         ).get(label=section_label)
-        content = regdown(
-            section.contents,
-            contents_resolver=get_contents_resolver(section),
-            block_reference_template=get_template(
-                'regulations3k/inline_interps.html'
-            )
-        )
+
         sibling_sections = sorted_section_nav_list(
             self.regulation.effective_version)
         current_index = sibling_sections.index(section)
+
         context = self.get_context(request)
+
+        content = regdown(
+            section.contents,
+            contents_resolver=get_contents_resolver(section),
+            render_block_reference=partial(self.render_interp, context)
+        )
+
         context.update({
             'version': self.regulation.effective_version,
             'content': content,

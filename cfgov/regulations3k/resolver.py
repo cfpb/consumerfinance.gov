@@ -5,6 +5,7 @@ from django.conf import settings
 from regulations3k.models import Section
 from regulations3k.regdown import extract_labeled_paragraph
 
+
 DEFAULT_REGULATIONS_REFERENCE_MAPPING = [
     (
         r'(?P<section>[\w]+)-(?P<paragraph>[\w-]*)',
