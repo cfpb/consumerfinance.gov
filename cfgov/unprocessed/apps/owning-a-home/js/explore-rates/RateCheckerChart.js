@@ -180,7 +180,7 @@ function RateCheckerChart() {
   function finishLoading( state ) {
     _containerDom.classList.remove( 'geolocating' );
 
-    if ( errorStatusId ) {
+    if ( state ) {
       setStatus( state );
     } else {
       _dataLoadedDom.classList.remove( 'loading' );
