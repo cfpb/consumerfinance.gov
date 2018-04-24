@@ -25,6 +25,17 @@
     {{ self.desc() }}
 {%- endblock og_desc %}
 
+{% block preload %}
+    {{ super() }}
+    <link rel="manifest" href="{{ static('apps/regulations3k/eregs-manifest.json') }}">
+    <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/eregs-icon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ static('apps/regulations3k/img/eregs-icon-192.png') }}" >
+    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/eregs-icon-192.png') }}">
+    <meta name="apple-mobile-web-app-title" content="eRegs">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#20aa3f"/>
+{%- endblock %}
+
 {% block css -%}
     {{ super() }}
     <link rel="stylesheet" href="{{ static('apps/regulations3k/css/main.css') }}">
@@ -63,7 +74,6 @@
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [
-            '{{ static('apps/regulations3k/js/common.js') }}',
             '{{ static('apps/regulations3k/js/index.js') }}'
           ];
           jsl(s);

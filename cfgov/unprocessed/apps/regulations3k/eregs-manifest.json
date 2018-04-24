@@ -1,0 +1,60 @@
+{
+  "short_name": "eRegs",
+  "name": "eRegulations",
+  "display": "standalone",
+  "theme_color": "#20aa3f",
+  "background_color": "#fff",
+  "icons": [
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-76.png",
+      "type": "image/png",
+      "sizes": "76x76"
+    },
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-120.png",
+      "type": "image/png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-152.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-172.png",
+      "type": "image/png",
+      "sizes": "172x172"
+    },
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-196.png",
+      "type": "image/png",
+      "sizes": "196x196"
+    },
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/static/apps/regulations3k/img/eregs-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/eregulations3k/?utm_source=homescreen"
+}

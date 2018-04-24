@@ -1,5 +1,5 @@
 {
-  "name": "cfpb-regulations-3000",
+  "name": "eRegulations",
   "description": "The consumerfinance.gov/eregulations website.",
   "homepage": "https://www.consumerfinance.gov/eregulations/",
   "author": {
@@ -16,6 +16,6 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "amortize": "0.2.2"
+    "sw-precache": "^5.2.1"
   }
 }

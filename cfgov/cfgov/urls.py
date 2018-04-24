@@ -406,6 +406,13 @@ urlpatterns = [
     flagged_url('REGULATIONS3K',
                 r'^regulations3k/',
                 include_if_app_enabled('regulations3k', 'regulations3k.urls')),
+    flagged_url('REGULATIONS3K',
+                r'^eregs-service-worker.js',
+                TemplateView.as_view(
+                template_name='regulations3k/eregs-service-worker.js',
+                content_type='application/javascript'),
+                name='eregs-service-worker.js'),
+
 ]
 
 if settings.ALLOW_ADMIN_URL:
