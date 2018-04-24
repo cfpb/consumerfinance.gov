@@ -1,5 +1,5 @@
 {
-  "name": "cfpb-regulations-3000",
+  "name": "eRegulations",
   "description": "The consumerfinance.gov/eregulations website.",
   "homepage": "https://www.consumerfinance.gov/eregulations/",
   "author": {
@@ -16,12 +16,6 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "amortize": "0.2.2",
-    "sw-precache-webpack-plugin": "^0.11.5",
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.15"
-  },
-  "scripts": {
-    "sw": "gulp scripts && npx contolini/sw-precache --config=sw-precache-config.json && cp service-worker.js ../../../regulations3k/jinja2/regulations3k/eregs-service-worker.js && cp manifest.json ../../../static_built/apps/regulations3k/eregs-manifest.json"
+    "sw-precache": "^5.2.1"
   }
 }

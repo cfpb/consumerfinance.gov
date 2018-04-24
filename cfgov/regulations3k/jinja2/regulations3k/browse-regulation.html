@@ -19,10 +19,12 @@
     {% if next_section %}
     <link rel="prerender" href="/eregulations3k/{{regulation.part_number}}/{{next_section.section_number}}/">
     {% endif %}
-    <link rel="apple-touch-icon" sizes="512x512" href="{{ static('apps/regulations3k/img/eregs-launcher-icon-10x.png') }}" />
-    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/eregs-launcher-icon-10x.png') }}">
     <link rel="manifest" href="{{ static('apps/regulations3k/eregs-manifest.json') }}">
-    <meta name="theme-color" content="#20aa3f">
+    <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/eregs-icon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ static('apps/regulations3k/img/eregs-icon-192.png') }}" >
+    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/eregs-icon-192.png') }}">
+    <meta name="apple-mobile-web-app-title" content="eRegs">
+    <meta name="mobile-web-app-capable" content="yes">
 {%- endblock %}
 
 {% block css -%}

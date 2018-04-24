@@ -2,54 +2,21 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-
-const BROWSER_LIST = require( '../../../../config/browser-list-config' );
-const webpack = require( 'webpack' );
+const envVars = require( '../../../../config/environment' ).envvars;
+const paths = require( '../../../../config/environment' ).paths;
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
-const path = require( 'path' );
-const SWPrecacheWebpackPlugin = require( 'sw-precache-webpack-plugin' );
+const fs = require( 'fs' );
+const fancyLog = require( 'fancy-log' );
+const swPrecache = require( 'sw-precache' );
 
 // Constants
-const COMMON_BUNDLE_NAME = 'common.js';
-const SERVICE_WORKER_FILENAME = 'eregs-service-worker.js';
-const SERVICE_WORKER_CACHEID = 'eregs';
-
-/* Webpack plugin that generates a service worker using sw-precache that will
-   cache webpack's bundles' emitted assets.
-   https://github.com/goldhand/sw-precache-webpack-plugin */
-const SERVICE_WORKERS_PRECACHE_CONFIG = new SWPrecacheWebpackPlugin( {
-  cacheId: SERVICE_WORKER_CACHEID,
-  filename: SERVICE_WORKER_FILENAME,
-  minify: false,
-  staticFileGlobs: [
-    'static_built/apps/regulations3k/css/main.css',
-    'static_built/apps/regulations3k/js/index.js'
-  ],
-  stripPrefix: 'static_built/',
-  replacePrefix: /static/,
-  runtimeCaching: [
-    {
-      urlPattern: '/eregulations3k\/(\\d\\d\\d\\d\/\\d)?/',
-      handler: 'fastest',
-      options: {
-        cache: {
-          maxEntries: 10,
-          name: 'eregs-content'
-        }
-      }
-    },
-    {
-      urlPattern: '/\/static\/app\/eregulations3k\/(css/js/img)\/.*\\.(css|js)/',
-      handler: 'fastest',
-      options: {
-        cache: {
-          maxEntries: 10,
-          name: 'eregs-assets'
-        }
-      }
-    }
-  ]
-} );
+const APP_NAME = 'eregs';
+const APP_PATH = envVars.NODE_ENV === 'production' ? 'eregulations' : 'eregulations3k';
+const SERVICE_WORKER_FILENAME = `${ APP_NAME }-service-worker.js`;
+const SERVICE_WORKER_DEST = `cfgov/regulations3k/jinja2/regulations3k/${ SERVICE_WORKER_FILENAME }`;
+const MANIFEST_FILENAME = `${ APP_NAME }-manifest.json`;
+const MANIFEST_SRC = `${ paths.unprocessed }/apps/regulations3k/${ MANIFEST_FILENAME }`;
+const MANIFEST_DEST = `${ paths.processed }/apps/regulations3k/${ MANIFEST_FILENAME }`;
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
@@ -81,24 +48,46 @@ const COMMON_MODULE_CONFIG = {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ 'babel-preset-env', {
-          targets: {
-            browsers: BROWSER_LIST.LAST_2_IE_9_UP
-          },
-          debug: true
+          debug: false
         } ] ]
       }
     }
   } ]
 };
 
-const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
-  name: COMMON_BUNDLE_NAME
-} );
-
 const STATS_CONFIG = {
   stats: {
     entrypoints: false
   }
+};
+
+const SERVICE_WORKER_CONFIG = {
+  staticFileGlobs: [
+    `${ paths.processed }/apps/regulations3k/css/main.css`,
+    `${ paths.processed }/apps/regulations3k/js/index.js`
+  ],
+  stripPrefix: `${ paths.processed }/`,
+  replacePrefix: /static/,
+  runtimeCaching: [
+    {
+      urlPattern: `/${ APP_PATH }\/(\\d\\d\\d\\d\/\\d)?/`,
+      handler: 'cacheFirst',
+      options: {
+        cache: {
+          name: `${ APP_NAME }-content`
+        }
+      }
+    },
+    {
+      urlPattern: `/\/static\/app\/${ APP_PATH }\/(css/js/img)\/.*\\.(css|js)/`,
+      handler: 'cacheFirst',
+      options: {
+        cache: {
+          name: `${ APP_NAME }-assets`
+        }
+      }
+    }
+  ]
 };
 
 const conf = {
@@ -110,11 +99,22 @@ const conf = {
     jsonpFunction: 'apps'
   },
   plugins: [
-    COMMON_CHUNK_CONFIG,
-    COMMON_UGLIFY_CONFIG,
-    SERVICE_WORKERS_PRECACHE_CONFIG
+    COMMON_UGLIFY_CONFIG
   ],
   stats: STATS_CONFIG.stats
 };
+
+const finish = err => {
+  if ( err ) {
+    return fancyLog( `Error generating service worker file: ${ err }` );
+  }
+  return fancyLog( `Service worker file successfully generated: ${ SERVICE_WORKER_DEST }` );
+};
+
+fancyLog( 'Started generating service worker file...' );
+swPrecache.write( SERVICE_WORKER_DEST, SERVICE_WORKER_CONFIG, finish );
+
+fancyLog( 'Copying eRegs manifest...' );
+fs.copyFile( MANIFEST_SRC, MANIFEST_DEST, finish );
 
 module.exports = { conf };
