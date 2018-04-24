@@ -179,7 +179,9 @@ function RateCheckerChart() {
   function finishLoading( errorStatusId ) {
     _containerDom.classList.remove( 'geolocating' );
 
-    if ( errorStatusId !== RateCheckerChart.STATUS_ERROR ) {
+    if ( errorStatusId ) {
+      setStatus( errorStatusId );
+    } else {
       _dataLoadedDom.classList.remove( 'loading' );
       _dataLoadedDom.classList.add( 'loaded' );
     }
