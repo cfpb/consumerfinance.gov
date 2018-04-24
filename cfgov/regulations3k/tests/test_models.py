@@ -150,3 +150,6 @@ class RegModelTests(DjangoTestCase):
         response = self.reg_page.section_page(
             HttpRequest(), section='4')
         self.assertEqual(response.status_code, 200)
+    def test_render_interp(self):
+        result = self.reg_page.render_interp({}, 'some contents')
+        self.assertIn('some contents', result)
