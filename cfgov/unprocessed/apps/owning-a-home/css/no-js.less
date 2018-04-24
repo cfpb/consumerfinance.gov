@@ -1,16 +1,16 @@
-/* no-js error message */
+
 .no-js {
+
+	/* Show the no-js notification when Javascript is disabled. */
     .m-notification__no-js {
         display: block;
         position: absolute;
         top: -150px;
         width: 100%;
      }
-}
 
-/* loan types expandables */
-.no-js {
-    .expandable-hidden {
-      display: block;
-    }
+     /* Hide the rate checker when JavaScript is disabled. */
+     .rate-checker .result{
+        opacity: .1;
+     }
 }

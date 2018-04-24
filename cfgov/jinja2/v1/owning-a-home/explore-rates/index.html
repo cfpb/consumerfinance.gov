@@ -51,7 +51,8 @@ home price, down payment, and more can affect mortgage interest rates.
                         <p class="lead">Use this tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.  See how your credit score, loan type, home price, and down payment amount can affect your rate.   Knowing your options and what to expect helps ensure that you get a mortgage that is right for you.  Check back often -- the rates in the tool are updated every Wednesday and Friday.</p>
                         <div class="page-intro_cols">
                             <p class="page-intro_col-left u-mb30">
-                                Keep in mind that the interest rate is important, but not the only cost of a mortgage.  Fees, <a href="/askcfpb/136/what-are-discount-points-and-lender-credits-and-how-do-they-work.html">points</a>, <a href="/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html">mortgage insurance</a>, and <a href="/askcfpb/1845/what-fees-or-charges-are-paid-closing-and-who-pays-them.html">closing costs</a> all add up.  Compare <a href="/askcfpb/1995/what-is-a-loan-estimate.html">Loan Estimates</a> to get the best deal.
+                                Keep in mind that the interest rate is important,
+                                but not the only cost of a mortgage.  Fees, <a href="/askcfpb/136/what-are-discount-points-and-lender-credits-and-how-do-they-work.html">points</a>, <a href="/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html">mortgage insurance</a>, and <a href="/askcfpb/1845/what-fees-or-charges-are-paid-closing-and-who-pays-them.html">closing costs</a> all add up.  Compare <a href="/askcfpb/1995/what-is-a-loan-estimate.html">Loan Estimates</a> to get the best deal.
                             </p>
                             <div class="page-intro_col-right u-right-on-desktop">
                                 {{ social_media.render( {
@@ -225,7 +226,7 @@ home price, down payment, and more can affect mortgage interest rates.
                           Alert when down payment is greater than house price.
                         #}
                         <div id="dp-alert"
-                             class="downpayment-warning alert-alt col-7 u-hidden"
+                             class="downpayment-warning alert-alt half-width-gt-1230 u-hidden"
                              role="alert">
                           Your down payment cannot be more than your house price.
                         </div>
@@ -303,7 +304,7 @@ home price, down payment, and more can affect mortgage interest rates.
                         </table>
                     </div>
                     <section id="chart-section" class="chart">
-                        <div class='chart-menu'>
+                        <div class="chart-menu">
                             <button class="chart-menu_btn
                                            cf-icon
                                            cf-icon__after
@@ -311,10 +312,10 @@ home price, down payment, and more can affect mortgage interest rates.
                                 Download chart
                             </button>
                             <ul class="chart-menu_options">
-                                <li>PNG</li>
-                                <li>SVG</li>
-                                <li>JPEG</li>
-                                <li>Print chart</li>
+                                <li data-export-type="0">PNG</li>
+                                <li data-export-type="1">SVG</li>
+                                <li data-export-type="2">JPEG</li>
+                                <li data-export-type="3">Print chart</li>
                             </ul>
                         </div>
                         <figure class="data-enabled loading">
@@ -342,8 +343,8 @@ home price, down payment, and more can affect mortgage interest rates.
                                     Based on the information you entered,
                                     we don't have enough data to display results.
                                     Change your settings or
-                                    <a id ="reload-link" class="defaults-link" href="">
-                                        revert to our default values
+                                    <a id="reload-link" class="defaults-link" href="">
+                                        revert to our default values.
                                     </a>
                                 </div>
                             </div>
@@ -548,9 +549,9 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                         <div class="content-l_col content-l_col-1-3">
                             <div class="o-form">
-                            <h3 class="subhead">About our data source for this tool</h3>
-                            <p>The lenders in our data include a mix of large banks, regional banks, and credit unions. The data is updated semiweekly every Wednesday and Friday at 7 a.m. In the event of a holiday, data will be refreshed on the next available business day.</p>
-                            <p>The data is provided by Informa Research Services, Inc., Calabasas, CA. <a id="informars" href="https://www.informars.com" target="_blank" rel="noopener noreferrer">www.informars.com</a>. Informa collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
+                                <h3 class="subhead">About our data source for this tool</h3>
+                                <p>The lenders in our data include a mix of large banks, regional banks, and credit unions. The data is updated semiweekly every Wednesday and Friday at 7 a.m. In the event of a holiday, data will be refreshed on the next available business day.</p>
+                                <p>The data is provided by Informa Research Services, Inc., Calabasas, CA. <a id="informars" href="https://www.informars.com" target="_blank" rel="noopener noreferrer">www.informars.com</a>. Informa collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
                             </div>
                         </div>
                     </div>
