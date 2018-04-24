@@ -13,6 +13,31 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel
 # from wagtail.wagtailcore.fields import RichTextField
 # from regulations3k.models.fields import RegDownTextField
 
+class SortableLabelMixin(object):
+
+    def sortable_label(self, separator='-'):
+        """ Create a sortable tuple out of a label.
+        Converts a dashed label into a tuple based on the following rules:
+            - If a segment is numeric, it will get three leading zero places
+            - If a segment is alphabetic and is already uppercase, it is
+              returned as is.
+            - If a segment is alphabetic but is not all uppercase, it is
+              lowercased entirely.
+            - Anything else is returned as-is.
+        Intended to be used like `sorted(sections, key=Section.sortable_label)`
+        """
+        segments = []
+        for segment in self.label.split(separator):
+            if segment.isdigit():
+                segments.append(segment.zfill(4))
+            elif segment.isalpha() and segment.isupper():
+                segments.append(segment)
+            elif segment.isalpha():
+                segments.append(segment.lower())
+            else:
+                segments.append(segment)
+        return tuple(segments)
+
 
 @python_2_unicode_compatible
 class Part(models.Model):
@@ -133,7 +158,7 @@ class Subpart(models.Model):
 
 
 @python_2_unicode_compatible
-class Section(models.Model):
+class Section(models.Model, SortableLabelMixin):
     label = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)

@@ -4,6 +4,7 @@ import re
 from functools import partial
 
 from django.db import models
+from django.utils.functional import cached_property
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
 
@@ -81,6 +82,18 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
+    @cached_property
+    def section_query(self):
+        """ Query set for Sections in this regulation's effective version """
+        return Section.objects.filter(
+            subpart__version=self.regulation.effective_version,
+        )
+
+    @cached_property
+    def sorted_sections(self):
+        """ Sort all sections within our section_query on sortable_label """
+        return sorted(self.section_query.all(), key=Section.sortable_label)
+
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
         context.update({
@@ -90,23 +103,13 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         })
         return context
 
-    def render_interp(self, context, contents):
-        template = get_template('regulations3k/inline_interps.html')
-        context.update({'contents': contents})
-        return template.render(context)
-
     @route(r'^(?P<section>[0-9A-Za-z-]+)/$', name="section")
     def section_page(self, request, section):
         section_label = "{}-{}".format(
             self.regulation.part_number, section)
-        section = Section.objects.filter(
-            subpart__version=self.regulation.effective_version,
-        ).get(label=section_label)
 
-        sibling_sections = sorted_section_nav_list(
-            self.regulation.effective_version)
-        current_index = sibling_sections.index(section)
-
+        section = self.section_query.get(label=section_label)
+        current_index = self.sorted_sections.index(section)
         context = self.get_context(request)
 
         content = regdown(
@@ -121,9 +124,9 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             'content': content,
             'get_secondary_nav_items': get_reg_nav_items,
             'next_section': get_next_section(
-                sibling_sections, current_index),
+                self.sorted_sections, current_index),
             'previous_section': get_previous_section(
-                sibling_sections, current_index),
+                self.sorted_sections, current_index),
             'section': section,
         })
 
@@ -131,6 +134,11 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             request,
             self.template,
             context)
+
+    def render_interp(self, context, contents):
+        template = get_template('regulations3k/inline_interps.html')
+        context.update({'contents': contents})
+        return template.render(context)
 
 
 def get_next_section(section_list, current_index):
@@ -147,32 +155,17 @@ def get_previous_section(section_list, current_index):
         return section_list[current_index - 1]
 
 
-def sorted_section_nav_list(version):
-    numeric_check = re.compile('\d{4}\-(\d{1,2})')
-    section_query = Section.objects.filter(
-        subpart__version=version
-    )
-    numeric_sections = [sect for sect in section_query
-                        if re.match(numeric_check, sect.label)]
-    numeric_sorted = sorted(
-        numeric_sections, key=lambda x: int(x.section_number))
-    alpha_sorted = sorted(
-        [sect for sect in section_query
-         if sect not in numeric_sections], key=lambda x: x.title)
-    return numeric_sorted + alpha_sorted
-
-
 def get_reg_nav_items(request, current_page):
-    version = current_page.regulation.effective_version
     url_bits = [bit for bit in request.url.split('/') if bit]
     current_label = url_bits[-1]
     current_part = current_page.regulation.part_number
     return [
         {
             'title': gathered_section.title,
-            'url': '/eregulations3k/{}/{}/'.format(
-                current_part,
-                gathered_section.label.partition('-')[-1]),
+            'url': current_page.url + current_page.reverse_subpage(
+                'section',
+                args=([gathered_section.label.partition('-')[-1]])
+            ),
             'active': gathered_section.label == '{}-{}'.format(
                 current_part,
                 current_label),
@@ -180,5 +173,5 @@ def get_reg_nav_items(request, current_page):
             'section': gathered_section,
         }
         for gathered_section
-        in sorted_section_nav_list(version)
+        in current_page.sorted_sections
     ], True

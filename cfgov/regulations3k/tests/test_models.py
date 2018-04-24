@@ -15,7 +15,6 @@ from regulations3k.models.django import (
 )
 from regulations3k.models.pages import (
     RegulationLandingPage, RegulationPage, get_reg_nav_items,
-    sorted_section_nav_list
 )
 
 
@@ -139,17 +138,25 @@ class RegModelTests(DjangoTestCase):
             Section.objects.filter(
                 label__startswith='1002').count())
 
-    def test_sorted_section_nav_list(self):
-        result_list = sorted_section_nav_list(self.effective_version)
-        self.assertEqual(
-            result_list,
-            [self.section_num4, self.section_num15, self.section_alpha]
-        )
-
     def test_routable_page_view(self):
         response = self.reg_page.section_page(
             HttpRequest(), section='4')
         self.assertEqual(response.status_code, 200)
+
+    def test_sortable_label(self):
+        section = mommy.make(
+            Section,
+            label='1-A-Interp',
+            title='Testable Section',
+            contents='.',
+            subpart=self.subpart,
+        )
+        self.assertEqual(section.sortable_label(), ('0001', 'A', 'interp'))
+
+    def test_sorted_sections(self):
+        sorted_sections = [s.label for s in self.reg_page.sorted_sections]
+        self.assertEqual(sorted_sections, ['1002-4', '1002-15', '1002-A'])
+
     def test_render_interp(self):
         result = self.reg_page.render_interp({}, 'some contents')
         self.assertIn('some contents', result)
