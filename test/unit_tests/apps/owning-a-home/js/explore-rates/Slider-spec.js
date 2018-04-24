@@ -1,7 +1,6 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
 const Slider = require( BASE_JS_PATH + 'js/explore-rates/Slider' );
 let sliderDom;
-let sliderTextDom;
 let slider;
 
 const HTML_SNIPPET = `
@@ -20,7 +19,6 @@ describe( 'explore-rates/Slider', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     sliderDom = document.querySelector( '.a-range' );
-    sliderTextDom = sliderDom.querySelector( '.a-range_text' );
     slider = new Slider( sliderDom );
     slider.init( {
       min: 0,
@@ -73,7 +71,6 @@ describe( 'explore-rates/Slider', () => {
         'value of the range slider is less than 20 units from maximum', () => {
       document.body.innerHTML = HTML_SNIPPET;
       sliderDom = document.querySelector( '.a-range' );
-      sliderTextDom = sliderDom.querySelector( '.a-range_text' );
       slider = new Slider( sliderDom );
       slider.init( {
         min: 0,

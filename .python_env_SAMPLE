@@ -8,3 +8,22 @@
 ########################################
 # SEARCH_DOT_GOV_AFFILIATE=''
 # SEARCH_DOT_GOV_ACCESS_KEY=''
+
+#########################################################################
+# Django database.
+#
+# See https://github.com/kennethreitz/dj-database-url for URL formatting.
+#########################################################################
+# DATABASE_URL=sqlite:///db.sqlite3
+
+# DATABASE_URL=postgres://cfgov:cfgov@postgres/cfgov
+# Required for Postgres dbshell in Django < 1.9.
+# PGPASSWORD=cfgov
+
+DATABASE_URL=mysql://v1:v1@mysql/v1
+# Required for existing MySQL-specific database scripts.
+MYSQL_HOST=mysql
+MYSQL_ROOT_PW=root
+MYSQL_NAME=v1
+MYSQL_USER=v1
+MYSQL_PW=v1

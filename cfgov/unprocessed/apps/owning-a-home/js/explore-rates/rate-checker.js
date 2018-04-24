@@ -3,80 +3,49 @@ import {
   calcLoanAmount,
   checkIfZero,
   delay,
+  isKeyAllowed,
   isVisible,
+  removeDollarAddCommas,
   renderAccessibleData,
   renderDatestamp,
-  renderLoanAmount
+  renderLoanAmount,
+  setSelections
 } from './util';
 import * as params from './params';
 import * as template from './template-loader';
-import Highcharts from 'highcharts';
+import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
 import amortize from 'amortize';
 import config from '../../config.json';
 import dropdown from '../dropdown-utils';
 import fetchRates from '../rates';
 import formatUSD from 'format-usd';
-import highchartsExport from 'highcharts/modules/exporting';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
 import tab from './tab';
 import unFormatUSD from 'unformat-usd';
-import { applyThemeTo } from './highcharts-theme';
 import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 
-// Load and style Highcharts library. https://www.highcharts.com/docs.
-highchartsExport( Highcharts );
-applyThemeTo( Highcharts );
-
 // References to alert HTML.
 let creditAlertDom;
-let resultAlertDom;
-let failAlertDom;
 let dpAlertDom;
 
 // Range slider for credit rating.
 let slider;
+let chart;
 
-// Set some properties for the histogram.
-const chart = {
-  $el:           $( '#chart' ),
-  $wrapper:      $( '.chart' ),
-  $load:         $( '.data-enabled' ),
-  $summary:      $( '#rc-summary' ),
-  $timestamp:    $( '#timestamp-p' ),
-  $clear:        $( '#rc-summary, #timestamp-p' ),
-  isInitialized: false,
-  startLoading:  function() {
-    removeAlerts();
-    this.$load.addClass( 'loading' ).removeClass( 'loaded' );
-  },
-  stopLoading:   function( state ) {
-    this.$wrapper.removeClass( 'geolocating' );
-    if ( this.$clear.hasClass( 'clear' ) && state !== 'error' ) {
-      this.$clear.removeClass( 'clear' );
-    }
-
-    if ( state !== 'error' ) {
-      this.$load.removeClass( 'loading' ).addClass( 'loaded' );
-    }
-  }
-};
-
-let highChart;
 let timeStampDom;
 let loanAmountResultDom;
 let accessibleDataTableHeadDom;
 let accessibleDataTableBodyDom;
+let rcSummaryDom;
+let rcDisclaimerDom;
+let dataLoadedDomList;
 
-/* options object
-   dp-constant: track the down payment interactions
-   request: Keep the latest AJAX request accessible so we can terminate it if need be. */
-const options = {
-  'dp-constant': 'percent-down',
-  'request':     ''
-};
+let rateSelectsDom;
+let rateCompare1Dom;
+let rateCompare2Dom;
 
 /**
  * Get data from the API.
@@ -105,44 +74,13 @@ function getData() {
 }
 
 /**
- * Set value(s) of all HTML elements in the control panel.
- * @param {string} options - TODO: Add description.
- */
-function setSelections( options ) {
-  for ( const param in params ) {
-    setSelection( param, options );
-  }
-}
-
-/**
- * Set value(s) of an individual HTML element in the control panel.
- * @param  {string} param Name of parameter to set. Usually the HTML element's id attribute.
- * @param  {Object} options Hash of options.
- */
-function setSelection( param, options ) {
-
-  const opts = options || {};
-  const $el = $( '#' + param );
-  const val = opts.value || params.getVal( param );
-
-  switch ( param ) {
-    case 'credit-score':
-      $el.val( val ).change();
-      break;
-    default:
-      if ( opts.usePlaceholder && $el.is( '[placeholder]' ) ) {
-        $el.attr( 'placeholder', val );
-      } else {
-        $el.val( val );
-      }
-  }
-}
-
-/**
  * Calculate and render the loan amount.
  */
 function renderLoanAmountResult() {
-  const loanAmount = calcLoanAmount( params.getVal( 'house-price' ), params.getVal( 'down-payment' ) );
+  const loanAmount = calcLoanAmount(
+    params.getVal( 'house-price' ),
+    params.getVal( 'down-payment' )
+  );
   params.setVal( 'loan-amount', loanAmount );
   renderLoanAmount( loanAmountResultDom, loanAmount );
 }
@@ -151,7 +89,8 @@ function renderLoanAmountResult() {
  * Render all applicable rate checker areas.
  */
 function updateView() {
-  chart.startLoading();
+  removeAlerts();
+  startLoading();
 
   // reset view
   dropdown( [ 'county', 'loan-term' ] ).hideHighlight();
@@ -171,9 +110,10 @@ function updateView() {
     }
   };
 
+  const request = params.getVal( 'request' );
   // Abort the previous request.
-  if ( typeof options.request === 'object' ) {
-    options.request.abort();
+  if ( typeof request === 'object' ) {
+    request.abort();
   }
 
   // And start a new one.
@@ -181,10 +121,10 @@ function updateView() {
     resultWarning();
     downPaymentWarning();
   } else {
-    options.request = getData();
+    params.setVal( 'request', getData() );
 
     // If it succeeds, update the DOM.
-    options.request.done( function( results ) {
+    params.getVal( 'request' ).done( function( results ) {
       // sort results by interest rate, ascending
       const sortedKeys = [];
       const sortedResults = {};
@@ -222,9 +162,10 @@ function updateView() {
 
       // fade out chart and highlight county if no county is selected
       if ( $( '#county' ).is( ':visible' ) && $( '#county' ).val() === null ) {
-        chart.startLoading();
+        removeAlerts();
+        startLoading();
         dropdown( 'county' ).showHighlight();
-        $( '#hb-warning' ).addClass( 'u-hidden' );
+        document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
         return;
       }
 
@@ -235,7 +176,8 @@ function updateView() {
       }
 
       // display an error message if the downpayment is greater than the house price
-      if ( +Number( params.getVal( 'house-price' ) ) < +Number( params.getVal( 'down-payment' ) ) ) {
+      if ( +Number( params.getVal( 'house-price' ) ) <
+           +Number( params.getVal( 'down-payment' ) ) ) {
         resultWarning();
         downPaymentWarning();
         return;
@@ -243,14 +185,15 @@ function updateView() {
 
       data.uniqueLabels = uniquePrimitives( data.labels.slice( 0 ) );
 
-      chart.stopLoading();
+      finishLoading();
+      hideSummary();
       removeAlerts();
       updateLanguage( data.totalVals );
       renderAccessibleData(
         accessibleDataTableHeadDom, accessibleDataTableBodyDom,
         data.labels, data.vals
       );
-      renderChart( data );
+      chart.render( data );
 
       // Update timestamp
       let _timestamp = results.timestamp;
@@ -395,11 +338,11 @@ function checkForJumbo() {
   } );
   dropdown( 'loan-type' ).enable( norms );
   dropdown( 'loan-type' ).hideHighlight();
-  $( '#county-warning' ).addClass( 'u-hidden' );
+  document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
 
   // if loan is not a jumbo, hide the loan type warning
   if ( $.inArray( params.getVal( 'loan-type' ), jumbos ) < 0 ) {
-    $( '#hb-warning' ).addClass( 'u-hidden' );
+    document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
     dropdown( 'loan-type' ).hideHighlight();
   }
 
@@ -430,7 +373,7 @@ function checkForJumbo() {
   dropdown( 'county' ).show();
 
   // Hide any existing message, then show a message if appropriate.
-  $( '#county-warning' ).addClass( 'u-hidden' );
+  document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
   if ( warnings.hasOwnProperty( params.getVal( 'loan-type' ) ) ) {
     $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'p' ).text( warnings[params.getVal( 'loan-type' )].call() );
   } else {
@@ -463,14 +406,13 @@ function processCounty() {
     'fha-hb': 'FHA high-balance',
     'va-hb':  'VA high-balance'
   };
-  let loan;
 
   // If the county field is u-hidden or they haven't selected a county, abort.
   if ( !$counties.is( ':visible' ) || !$counties.val() ) {
     return;
   }
 
-  loan = jumbo( {
+  const loan = jumbo( {
     loanType:       params.getVal( 'loan-type' ),
     loanAmount:     params.getVal( 'loan-amount' ),
     gseCountyLimit: parseInt( $county.data( 'gse' ), 10 ),
@@ -511,21 +453,22 @@ function processCounty() {
     dropdown( 'loan-type' ).removeOption( jumbos );
     dropdown( 'loan-type' ).enable( norms );
 
-    $( '#hb-warning' ).addClass( 'u-hidden' );
+    document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
+    const loanTypeDom = document.querySelector( '#loan-type' );
     // Select appropriate loan type if loan was kicked out of jumbo
     if ( params.getVal( 'prevLoanType' ) === 'fha-hb' ) {
-      $( '#loan-type' ).val( 'fha' );
+      loanTypeDom.value = 'fha';
     } else if ( params.getVal( 'prevLoanType' ) === 'va-hb' ) {
-      $( '#loan-type' ).val( 'va' );
+      loanTypeDom.value = 'va';
     }
 
-    if ( $( '#loan-type' ).val === null ) {
-      $( '#loan-type' ).val( 'conf' );
+    if ( loanTypeDom.value === null ) {
+      loanTypeDom.value = 'conf';
     }
   }
 
   // Hide the county warning.
-  $( '#county-warning' ).addClass( 'u-hidden' );
+  document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
 }
 
 /**
@@ -533,12 +476,12 @@ function processCounty() {
  * @param {HTMLNode} element - TODO: Add description.
  */
 function processLoanAmount( element ) {
-  const name = $( element ).attr( 'name' );
+  const name = element.getAttribute( 'name' );
 
   /* Save the dp-constant value when the user interacts with
      down payment or down payment percentages. */
   if ( name === 'down-payment' || name === 'percent-down' ) {
-    options['dp-constant'] = name;
+    params.setVal( 'dp-constant', name );
   }
 
   renderDownPayment.apply( element );
@@ -569,21 +512,33 @@ function renderDownPayment() {
 
   if ( checkIfZero( params.getVal( 'house-price' ) ) ) {
     removeAlerts();
-    chart.stopLoading();
+    finishLoading();
+    hideSummary();
     downPaymentWarning();
   }
 
-  if ( price.val() !== 0 ) {
+  if ( price.value !== 0 ) {
     if ( $el.attr( 'id' ) === 'down-payment' ||
-          options['dp-constant'] === 'down-payment' ) {
+         params.getVal( 'dp-constant' ) === 'down-payment' ) {
       val = ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) * 100 ) || '';
-      percent.val( Math.round( val ) );
+      percent.value = Math.round( val );
     } else {
       val = getSelection( 'house-price' ) * ( getSelection( 'percent-down' ) / 100 );
       val = val >= 0 ? Math.round( val ) : '';
-      val = addCommas( val );
-      down.val( val );
+      val = removeDollarAddCommas( val );
+      down.value = val;
     }
+  }
+}
+
+/**
+ * Hides the rate checker summary above the chart.
+ */
+function hideSummary() {
+  if ( rcSummaryDom.classList.contains( 'clear' ) &&
+       chart.currentState !== RateCheckerChart.STATUS_ERROR ) {
+    rcSummaryDom.classList.remove( 'clear' );
+    rcDisclaimerDom.classList.remove( 'clear' );
   }
 }
 
@@ -600,28 +555,34 @@ function updateComparisons( data ) {
     $( '.compare select' ).append( option );
   } );
   // In the second comparison dropdown, select the last (largest) rate.
-  $( '#rate-compare-2' ).val( uniqueLabels[uniqueLabels.length - 1] );
+  rateCompare2Dom.value = uniqueLabels[uniqueLabels.length - 1];
 }
 
 /**
  * Calculate and display the interest rates in the comparison section.
  */
 function renderInterestAmounts() {
-  let shortTermVal = [],
-      longTermVal = [],
-      rate,
-      fullTerm = Number( getSelection( 'loan-term' ) ) * 12;
-  $( '.interest-cost' ).each( function( index ) {
-    if ( $( this ).hasClass( 'interest-cost-primary' ) ) {
-      rate = $( '#rate-compare-1' ).val().replace( '%', '' );
+  const shortTermVal = [];
+  const longTermVal = [];
+  let rate;
+  const fullTerm = Number( getSelection( 'loan-term' ) ) * 12;
+
+  const interestCostDoms = document.querySelectorAll( '.interest-cost' );
+  const interestCostList = Array.prototype.slice.call( interestCostDoms );
+
+  interestCostList.forEach( item => {
+
+    if ( item.classList.contains( 'interest-cost-primary' ) ) {
+      rate = rateCompare1Dom.value.replace( '%', '' );
     } else {
-      rate = $( '#rate-compare-2' ).val().replace( '%', '' );
+      rate = rateCompare2Dom.value.replace( '%', '' );
     }
-    const length = parseInt( $( this ).parents( '.rc-comparison-section' ).find( '.loan-years' ).text(), 10 ) * 12;
+
+    const length = parseInt( $( item ).parents( '.rc-comparison-section' ).find( '.loan-years' ).text(), 10 ) * 12;
     const amortizedVal = amortize( { amount: params.getVal( 'loan-amount' ), rate: rate, totalTerm: fullTerm, amortizeTerm: length } );
     const totalInterest = amortizedVal.interest;
     const roundedInterest = Math.round( unFormatUSD( totalInterest ) );
-    const $el = $( this ).find( '.new-cost' );
+    const $el = $( item ).find( '.new-cost' );
     $el.text( formatUSD( roundedInterest, { decimalPlaces: 0 } ) );
     // Add short term rates, interest, and term to the shortTermVal array.
     if ( length < 180 ) {
@@ -669,7 +630,7 @@ function renderInterestSummary( intVals, term ) {
  */
 function checkARM() {
   // reset warning and info
-  $( '#arm-warning' ).addClass( 'u-hidden' );
+  document.querySelector( '#arm-warning' ).classList.add( 'u-hidden' );
   $( '.arm-info' ).addClass( 'u-hidden' );
   const disallowedTypes = [ 'fha', 'va', 'va-hb', 'fha-hb' ];
   const disallowedTerms = [ '15' ];
@@ -697,7 +658,7 @@ function checkARM() {
       dropdown( [ 'loan-term', 'loan-type' ] ).enable();
     }
     dropdown( 'arm-type' ).hide();
-    $( '#arm-warning' ).addClass( 'u-hidden' );
+    document.querySelector( '#arm-warning' ).classList.add( 'u-hidden' );
     $( '.arm-info' ).addClass( 'u-hidden' );
     $( '.no-arm' ).removeClass( 'u-hidden' );
   }
@@ -717,18 +678,14 @@ function scoreWarning() {
  * Overlays a warning/error message on the chart.
  */
 function resultWarning() {
-  chart.stopLoading( 'error' );
-  $( '#chart-section' ).addClass( 'warning' );
-  resultAlertDom.classList.remove( 'u-hidden' );
+  chart.finishLoading( RateCheckerChart.STATUS_WARNING );
 }
 
 /**
  * Show alert that data call to the API failed.
  */
 function resultFailWarning() {
-  chart.stopLoading( 'error' );
-  $( '#chart-section' ).addClass( 'warning' );
-  failAlertDom.classList.remove( 'u-hidden' );
+  chart.finishLoading( RateCheckerChart.STATUS_ERROR );
 }
 
 /**
@@ -742,12 +699,8 @@ function downPaymentWarning() {
  * Hide all alert messages that are showing.
  */
 function removeAlerts() {
-  if ( isVisible( resultAlertDom ) ||
-       isVisible( failAlertDom ) ||
-       isVisible( dpAlertDom ) ) {
-    $( '#chart' ).removeClass( 'warning' );
-    resultAlertDom.classList.add( 'u-hidden' );
-    failAlertDom.classList.add( 'u-hidden' );
+  if ( isVisible( dpAlertDom ) ) {
+    chart.setStatus( RateCheckerChart.STATUS_OKAY );
     dpAlertDom.classList.add( 'u-hidden' );
     removeCreditScoreAlert();
   }
@@ -761,140 +714,6 @@ function removeCreditScoreAlert() {
     slider.setState( Slider.STATUS_OKAY );
     creditAlertDom.classList.add( 'u-hidden' );
   }
-}
-
-/**
- * Add commas to numbers where appropriate.
- * @param {string} value - Old value where commas will be added.
- * @returns {string} value - Value with commas and no dollar sign.
- */
-function addCommas( value ) {
-  value = unFormatUSD( value );
-  value = formatUSD( value, { decimalPlaces: 0 } )
-    .replace( '$', '' );
-  return value;
-}
-
-/**
- * Render (or update) the Highcharts chart.
- * @param  {Object} data Data processed from the API.
- * @param  {Function} cb Optional callback.
- * @returns {*} Value of callback invocation or undefined.
- */
-function renderChart( data, cb ) {
-
-  if ( chart.isInitialized ) {
-
-    highChart.update( {
-      xAxis: {
-        categories: data.labels
-      },
-      series: {
-        data: data.vals
-      }
-    } );
-
-    chart.$wrapper.removeClass( 'geolocating' );
-  } else {
-
-    if ( chart.$el.length < 1 ) {
-      return;
-    }
-
-    chart.$wrapper.addClass( 'geolocating' );
-
-    highChart = new Highcharts.Chart( {
-      chart: {
-        renderTo: chart.$el[0],
-        type: 'column',
-        animation: false
-      },
-      title: {
-        text: ''
-      },
-      xAxis: {
-        categories: [ 1, 2, 3, 4, 5 ]
-      },
-      yAxis: [ {
-        title: {
-          text: ''
-        },
-        labels: {
-          formatter: function() {
-            return this.value > 9 ? this.value + '+' : this.value;
-          }
-        },
-        max: 10,
-        min: 0
-      }, {
-        title: {
-          text: 'Number of lenders offering rate'
-        }
-      } ],
-      series: [ {
-        name: 'Number of Lenders',
-        data: [ 1, 1, 1, 1, 1 ],
-        showInLegend: false,
-        dataLabels: {
-          enabled:   true,
-          useHTML:   true,
-          crop:      false,
-          overflow:  'none',
-          defer:     true,
-          color:     '#919395',
-          x:         2,
-          y:         2,
-          formatter: function() {
-            const point = this.point;
-            window.setTimeout( function() {
-              if ( point.y > 9 ) {
-                point.dataLabel.attr( {
-                  y: -32,
-                  x: point.plotX - 24
-                } );
-              }
-            } );
-            return '<div class="data-label"><span class="data-label_number">' + this.x + '</span><br>|</div>';
-          }
-        }
-      } ],
-      credits: {
-        text: ''
-      },
-      tooltip: {
-        useHTML: true,
-        formatter: function() {
-          if ( this.y === 1 ) {
-            return template.chartTooltipSingle( this );
-          }
-
-          return template.chartTooltipMultiple( this );
-        },
-        positioner: function( boxWidth, boxHeight, point ) {
-          let x, y;
-          if ( point.plotY < 0 ) {
-            x = point.plotX - 74;
-            y = this.chart.plotTop - 74;
-          } else {
-            x = point.plotX - 54;
-            y = point.plotY - 66;
-          }
-          return {
-            x: x,
-            y: y
-          };
-        }
-      }
-    } );
-
-    chart.isInitialized = true;
-  }
-
-  if ( cb ) {
-    return cb(); // eslint-disable-line consistent-return
-  }
-
-  // eslint-disable-line consistent-return
 }
 
 /**
@@ -922,9 +741,13 @@ function init() {
   }
 
   creditAlertDom = document.querySelector( '#credit-score-alert' );
-  resultAlertDom = document.querySelector( '#chart-result-alert' );
-  failAlertDom = document.querySelector( '#chart-fail-alert' );
   dpAlertDom = document.querySelector( '#dp-alert' );
+
+  rateSelectsDom = document.querySelector( '#rate-selects' );
+  rateCompare1Dom = document.querySelector( '#rate-compare-1' );
+  rateCompare2Dom = document.querySelector( '#rate-compare-2' );
+
+  dataLoadedDomList = document.querySelectorAll( '#rate-results .data-enabled' );
 
   const sliderDom = document.querySelector( '#credit-score-range' );
   const creditScore = params.getVal( 'credit-score' );
@@ -939,6 +762,9 @@ function init() {
     }
   );
 
+  chart = new RateCheckerChart();
+  chart.init();
+
   // Record timestamp HTML element that's updated from date from API.
   timeStampDom = document.querySelector( '#timestamp' );
 
@@ -948,9 +774,12 @@ function init() {
   accessibleDataTableHeadDom = accessibleDataDom.querySelector( '.table-head' );
   accessibleDataTableBodyDom = accessibleDataDom.querySelector( '.table-body' );
 
-  renderChart();
+  rcSummaryDom = document.querySelector( '#rc-summary' );
+  rcDisclaimerDom = document.querySelector( '#timestamp-p' );
+
+  chart.render();
   renderLoanAmountResult();
-  setSelections( { usePlaceholder: true } );
+  setSelections( params.getAllParams() );
   registerEvents();
   tab.init();
 
@@ -969,6 +798,34 @@ function init() {
 }
 
 /**
+ * Add loading CSS class to all items with data-loaded class.
+ */
+function startLoading() {
+  chart.startLoading();
+  let item;
+  for ( let i = 0, len = dataLoadedDomList.length; i < len; i++ ) {
+    item = dataLoadedDomList[i];
+    item.classList.add( 'loading' );
+    item.classList.remove( 'loaded' );
+  }
+}
+
+/**
+ * Add loaded CSS class to all items with data-loaded class.
+ */
+function finishLoading() {
+  chart.finishLoading();
+  if ( chart.currentState !== RateCheckerChart.STATUS_ERROR ) {
+    let item;
+    for ( let i = 0, len = dataLoadedDomList.length; i < len; i++ ) {
+      item = dataLoadedDomList[i];
+      item.classList.remove( 'loading' );
+      item.classList.add( 'loaded' );
+    }
+  }
+}
+
+/**
  * Register event handlers.
  */
 function registerEvents() {
@@ -976,19 +833,21 @@ function registerEvents() {
   // Have the reset button clear selections.
   $( '.defaults-link' ).click( function( evt ) {
     evt.preventDefault();
-    setSelections( { usePlaceholder: true } );
+    setSelections( params.getAllParams() );
     updateView();
     removeCreditScoreAlert();
   } );
 
   // ARM highlighting handler.
-  $( '#rate-structure' ).on( 'change', function() {
-    if ( $( this ).val() !== params.getVal( 'rate-structure' ) ) {
+  const rateStructureDom = document.querySelector( '#rate-structure' );
+  rateStructureDom.addEventListener( 'change', evt => {
+    if ( evt.target.value !== params.getVal( 'rate-structure' ) ) {
       dropdown( 'arm-type' ).showHighlight();
     }
   } );
 
-  $( '#arm-type' ).on( 'change', function() {
+  const armTypeDom = document.querySelector( '#arm-type' );
+  armTypeDom.addEventListener( 'change', () => {
     dropdown( 'arm-type' ).hideHighlight();
   } );
 
@@ -997,7 +856,7 @@ function registerEvents() {
     /* If the loan-type is conf, and there's a county visible,
        then we just exited a HB situation.
        Clear the county before proceeding. */
-    $( '#hb-warning' ).addClass( 'u-hidden' );
+    document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
     // If the state field changed, wipe out county.
     if ( $( this ).attr( 'id' ) === 'location' ) {
       $( '#county' ).html( '' );
@@ -1025,29 +884,47 @@ function registerEvents() {
   /* Check if input value is a number.
      If not, replace the character with an empty string. */
   $( '.calc-loan-amt .recalc' ).on( 'keyup', function( evt ) {
+    const key = event.which;
     // on keyup (not tab or arrows), immediately gray chart
-    if ( params.getVal( 'verbotenKeys' ).indexOf( evt.which ) === -1 ) {
-      chart.startLoading();
+    if ( isKeyAllowed( key ) ) {
+      removeAlerts();
+      startLoading();
     }
 
   } );
 
-  // delayed function for processing and updating
-  $( '.calc-loan-amt, .credit-score' ).on( 'keyup', '.recalc', function( evt ) {
-    const element = this;
+  // Delayed function for processing and updating
+  const calcLoanAmountDom = document.querySelector( '#loan-amt-inputs' );
+  const creditScoreDom = document.querySelector( '#credit-score-container' );
+
+  calcLoanAmountDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
+  creditScoreDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
+
+  /**
+   * @param  {KeyboardEvent} evt Event object.
+   */
+  function NoCalcOnForbiddenKeys( evt ) {
+    const element = evt.target;
+    const key = evt.keyCode;
+
     // Don't recalculate on TAB or arrow keys.
-    if ( params.getVal( 'verbotenKeys' ).indexOf( evt.which ) === -1 ||
-         $( this ).hasClass( 'range' ) ) {
+    if ( isKeyAllowed( key ) || element.classList.contains( 'a-range' ) ) {
       delay( () => processLoanAmount( element ), 500 );
     }
-  } );
+  }
 
-  $( '#house-price, #down-payment' ).on( 'focusout', function( evt ) {
-    let value;
-    value = $( evt.target ).val();
-    value = addCommas( value );
-    $( evt.target ).val( value );
-  } );
+  const housePriceDom = document.querySelector( '#house-price' );
+  const downPaymentDom = document.querySelector( '#down-payment' );
+
+  housePriceDom.addEventListener( 'focusout', priceFocusOutHandler );
+  downPaymentDom.addEventListener( 'focusout', priceFocusOutHandler );
+
+  /**
+   * @param  {FocusEvent} evt Event object.
+   */
+  function priceFocusOutHandler( evt ) {
+    evt.target.value = removeDollarAddCommas( evt.target.value );
+  }
 
 
   // Once the user has edited fields, put the kibosh on the placeholders
@@ -1064,7 +941,7 @@ function registerEvents() {
   } );
 
   // Recalculate interest costs.
-  $( '.compare' ).on( 'change', 'select', renderInterestAmounts );
+  rateSelectsDom.addEventListener( 'change', renderInterestAmounts );
 }
 
 module.exports = { init };

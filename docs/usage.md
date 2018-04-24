@@ -164,8 +164,8 @@ Much of the guidance above for the "stand-alone" set-up still stands, and it
 is worth reviewing in full. Here are some things that might be different:
 
 - `docker-compose` takes care of running Elasticsearch for you, and all
-Elastisearch, MySQL, and Python output will be shown in a single Terminal
-window or tab. (whereever you run `docker-compose up`)
+Elasticsearch, MySQL, and Python output will be shown in a single Terminal
+window or tab. (wherever you run `docker-compose up`)
 - `manage.py`commands can only be run after you've opened up a terminal in the
 Python container, which you can do with `./shell.sh`
 - There is not *yet* a good way to use SSL/HTTPS, but that is in the works

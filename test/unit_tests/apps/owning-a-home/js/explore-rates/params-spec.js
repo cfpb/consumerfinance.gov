@@ -40,6 +40,7 @@ describe( 'explore-rates/params', () => {
   it( 'should be able to get a value', () => {
     expect( params.getVal( 'credit-score' ) ).toBe( 700 );
     expect( params.getVal( 'down-payment' ) ).toBe( '20,000' );
+    expect( params.getVal( 'dp-constant' ) ).toBe( '' );
     expect( params.getVal( 'house-price' ) ).toBe( '200,000' );
     expect( params.getVal( 'loan-amount' ) ).toBeUndefined();
     expect( params.getVal( 'location' ) ).toBe( 'AL' );
@@ -51,19 +52,35 @@ describe( 'explore-rates/params', () => {
     expect( params.getVal( 'isJumbo' ) ).toBe( false );
     expect( params.getVal( 'prevLoanType' ) ).toBe( '' );
     expect( params.getVal( 'prevLocation' ) ).toBe( '' );
-    expect( params.getVal( 'verbotenKeys' ) ).toBeInstanceOf( Array );
-    expect( params.getVal( 'verbotenKeys' )[0] ).toBe( 9 );
-    expect( params.getVal( 'verbotenKeys' )[1] ).toBe( 37 );
-    expect( params.getVal( 'verbotenKeys' )[2] ).toBe( 38 );
-    expect( params.getVal( 'verbotenKeys' )[3] ).toBe( 39 );
-    expect( params.getVal( 'verbotenKeys' )[4] ).toBe( 40 );
-    expect( params.getVal( 'verbotenKeys' )[5] ).toBe( 13 );
-    expect( params.getVal( 'verbotenKeys' )[6] ).toBe( 16 );
+    expect( params.getVal( 'request' ) ).toBeUndefined();
   } );
 
   it( 'should be able to set a value', () => {
     params.setVal( 'credit-score', 800 );
     expect( params.getVal( 'credit-score' ) ).toBe( 800 );
+  } );
+
+  it( 'should be able to return all stored values', () => {
+    let UNDEFINED;
+    const mockData = {
+      'credit-score':   800,
+      'down-payment':   '20,000',
+      'dp-constant':    '',
+      'house-price':    '200,000',
+      'location':       'AL',
+      'loan-amount':    UNDEFINED,
+      'rate-structure': 'fixed',
+      'loan-term':      30,
+      'loan-type':      'conf',
+      'arm-type':       '5-1',
+      'edited':         false,
+      'isJumbo':        false,
+      'prevLoanType':   '',
+      'prevLocation':   '',
+      'request':        UNDEFINED
+    };
+    const storedValues = params.getAllParams();
+    expect( storedValues ).toEqual( mockData );
   } );
 
   it( 'should be able to update a value from the HTML', () => {

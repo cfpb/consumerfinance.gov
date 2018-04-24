@@ -1,4 +1,5 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
+const domValues = require( BASE_JS_PATH + 'js/explore-rates/dom-values' );
 
 const HTML_SNIPPET = `
   <input id="credit-score"
@@ -13,8 +14,6 @@ const HTML_SNIPPET = `
   <input id="test-price" type="text" value="$300,000">
   <input id="house-price" type="text" placeholder="200,000">
 `;
-
-const domValues = require( BASE_JS_PATH + 'js/explore-rates/dom-values' );
 
 describe( 'explore-rates/dom-values', () => {
   beforeEach( () => {

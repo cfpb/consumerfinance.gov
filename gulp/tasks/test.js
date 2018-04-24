@@ -65,7 +65,7 @@ function testUnitScripts( cb ) {
   ];
 
   if ( params.travis ) {
-    jestOptions.push( '--runInBand' );
+    jestOptions.push( '--maxWorkers=2' );
   }
 
   spawn(
@@ -320,8 +320,11 @@ gulp.task( 'test:unit',
 );
 
 gulp.task( 'test',
-  gulp.parallel(
-    'lint',
-    'test:unit'
+  gulp.series(
+    gulp.parallel(
+      'lint',
+      'test:unit'
+    ),
+    'test:acceptance'
   )
 );
