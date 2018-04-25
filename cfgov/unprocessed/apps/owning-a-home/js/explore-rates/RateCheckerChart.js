@@ -3,11 +3,11 @@ import {
   chartTooltipSingle
 } from './template-loader';
 import Highcharts from 'highcharts';
+import RateCheckerChartMenu from './RateCheckerChartMenu';
 import highchartsExport from 'highcharts/modules/exporting';
 import { applyThemeTo } from './highcharts-theme';
 
 function RateCheckerChart() {
-
   let _highChart;
   let _containerDom;
 
@@ -121,6 +121,8 @@ function RateCheckerChart() {
         }
       }
     } );
+
+    new RateCheckerChartMenu( _highChart );
   }
 
   /**

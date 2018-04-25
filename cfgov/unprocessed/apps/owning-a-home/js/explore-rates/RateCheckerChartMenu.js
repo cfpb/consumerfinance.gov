@@ -10,7 +10,7 @@ class RateCheckerChartMenu {
   /**
    * Set the initial state value and call
    * the appropriate instantiation methods.
-   * @param {object} highCharts The previous state of the menu.
+   * @param {object} highCharts HighCharts instance.
    */
   constructor( highCharts ) {
     this.highCharts = highCharts;
@@ -42,21 +42,21 @@ class RateCheckerChartMenu {
   }
 
   /**
-   * Open the menu by set the appropriate state.
+   * Open the menu by setting the appropriate state.
    */
   open() {
     this._setState( { position: STATES.OPEN } );
   }
 
   /**
-   * Close the menu by set the appropriate state.
+   * Close the menu by setting the appropriate state.
    */
   close() {
     this._setState( { position: STATES.CLOSED } );
   }
 
   /**
-   * Set the state of the RateCheckerChartMenu.
+   * Call the appropriate methods based on the event.
    * @param {MouseEvent} event Menu click event.
    */
   onClick( event ) {
@@ -102,5 +102,7 @@ class RateCheckerChartMenu {
     this.render( oldState, this.state );
   }
 }
+
+RateCheckerChartMenu.STATES = STATES;
 
 export default RateCheckerChartMenu;
