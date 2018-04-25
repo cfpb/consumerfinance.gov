@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import {
-  getData,
-  getCounties
+  getCounties,
+  getData
 } from './data-loader';
 import {
   calcLoanAmount,
@@ -87,11 +87,12 @@ function updateView() {
   };
 
   let request = params.getVal( 'request' );
-  // TODO: We may have to find a way to cancel the promise from the request.
-  // Abort the previous request.
-  // if ( typeof request === 'object' ) {
-  //   request.abort();
-  // }
+
+  /* TODO: We may have to find a way to cancel the promise from the request.
+     Abort the previous request.
+     if ( typeof request === 'object' ) {
+     request.abort();
+     } */
 
   // And start a new one.
   if ( +Number( params.getVal( 'loan-amount' ) ) === 0 ) {
@@ -116,7 +117,7 @@ function updateView() {
     params.setVal( 'request', request );
 
     // Handle errors
-    request.catch( error => {
+    request.catch( () => {
       resultFailWarning();
     } );
 
