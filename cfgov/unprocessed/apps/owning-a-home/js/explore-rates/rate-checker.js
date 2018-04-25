@@ -1,5 +1,9 @@
 import $ from 'jquery';
 import {
+  getData,
+  getCounties
+} from './data-loader';
+import {
   calcLoanAmount,
   checkIfZero,
   delay,
@@ -16,9 +20,7 @@ import * as template from './template-loader';
 import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
 import amortize from 'amortize';
-import config from '../../config.json';
 import dropdown from '../dropdown-utils';
-import fetchRates from '../rates';
 import formatUSD from 'format-usd';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
@@ -46,32 +48,6 @@ let dataLoadedDomList;
 let rateSelectsDom;
 let rateCompare1Dom;
 let rateCompare2Dom;
-
-/**
- * Get data from the API.
- * @returns {Object} jQuery promise.
- */
-function getData() {
-  params.update();
-
-  const promise = fetchRates( {
-    price:          params.getVal( 'house-price' ),
-    loan_amount:    params.getVal( 'loan-amount' ),
-    minfico:        slider.valMin(),
-    maxfico:        slider.valMax(),
-    state:          params.getVal( 'location' ),
-    rate_structure: params.getVal( 'rate-structure' ),
-    loan_term:      params.getVal( 'loan-term' ),
-    loan_type:      params.getVal( 'loan-type' ),
-    arm_type:       params.getVal( 'arm-type' )
-  } );
-
-  promise.fail( function( request, status, errorThrown ) {
-    resultFailWarning();
-  } );
-
-  return promise;
-}
 
 /**
  * Calculate and render the loan amount.
@@ -110,21 +86,43 @@ function updateView() {
     }
   };
 
-  const request = params.getVal( 'request' );
+  let request = params.getVal( 'request' );
+  // TODO: We may have to find a way to cancel the promise from the request.
   // Abort the previous request.
-  if ( typeof request === 'object' ) {
-    request.abort();
-  }
+  // if ( typeof request === 'object' ) {
+  //   request.abort();
+  // }
 
   // And start a new one.
   if ( +Number( params.getVal( 'loan-amount' ) ) === 0 ) {
     resultWarning();
     downPaymentWarning();
   } else {
-    params.setVal( 'request', getData() );
+
+    params.update();
+    const fieldsToFetch = {
+      price:          params.getVal( 'house-price' ),
+      loan_amount:    params.getVal( 'loan-amount' ),
+      minfico:        slider.valMin(),
+      maxfico:        slider.valMax(),
+      state:          params.getVal( 'location' ),
+      rate_structure: params.getVal( 'rate-structure' ),
+      loan_term:      params.getVal( 'loan-term' ),
+      loan_type:      params.getVal( 'loan-type' ),
+      arm_type:       params.getVal( 'arm-type' )
+    };
+
+    request = getData( fieldsToFetch );
+    params.setVal( 'request', request );
+
+    // Handle errors
+    request.catch( error => {
+      resultFailWarning();
+    } );
 
     // If it succeeds, update the DOM.
-    params.getVal( 'request' ).done( function( results ) {
+    request.then( rawResults => {
+      const results = JSON.parse( rawResults );
       // sort results by interest rate, ascending
       const sortedKeys = [];
       const sortedResults = {};
@@ -257,26 +255,14 @@ function updateLanguage( totalVals ) {
   updateTerm();
 }
 
-
-/**
- * Get a list of counties from the API for the selected state.
- * @returns {Object} jQuery promise.
- */
-function getCounties() {
-  return $.get( config.countyAPI, {
-    state: params.getVal( 'location' )
-  } );
-
-}
-
 /**
  * Request a list of counties and bring them into the DOM.
  */
 function loadCounties() {
 
   // And request 'em.
-  const request = getCounties();
-  request.done( function( resp ) {
+  const request = getCounties( params.getVal( 'location' ) );
+  request.then( resp => {
 
     if ( params.getVal( 'location' ) ) {
       /* Empty the current counties and cache the current state so we
@@ -284,7 +270,9 @@ function loadCounties() {
       $( '#county' ).html( '' ).data( 'state', params.getVal( 'location' ) );
 
       // Inject each county into the DOM.
-      $.each( resp.data, function( i, countyData ) {
+      const parseCountyData = JSON.parse( resp ).data;
+      $.each( parseCountyData, function( i, countyData ) {
+        console.log( 'countyData', countyData );
         const countyOption = template.county( countyData );
         $( '#county' ).append( countyOption );
       } );
@@ -304,7 +292,8 @@ function loadCounties() {
       $( '#county' ).empty().append( countyOptions );
 
       // Don't select any options by default.
-      $( '#county' ).prop( 'selectedIndex', -1 );
+      const countyDropDownDom = document.querySelector( '#county' );
+      countyDropDownDom.selectedIndex = -1;
     } else {
       // If they haven't yet selected a state highlight the field.
       dropdown( 'location' ).showHighlight();
@@ -312,9 +301,7 @@ function loadCounties() {
   } );
 
   // Hide loading animation regardless of whether or not we're successful.
-  request.then( function() {
-    dropdown( 'county' ).hideLoadingAnimation();
-  } );
+  dropdown( 'county' ).hideLoadingAnimation();
 }
 
 /**
