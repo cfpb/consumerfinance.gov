@@ -273,7 +273,6 @@ function loadCounties() {
       // Inject each county into the DOM.
       const parseCountyData = JSON.parse( resp ).data;
       $.each( parseCountyData, function( i, countyData ) {
-        console.log( 'countyData', countyData );
         const countyOption = template.county( countyData );
         $( '#county' ).append( countyOption );
       } );
