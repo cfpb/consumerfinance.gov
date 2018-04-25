@@ -13,6 +13,7 @@ function _makeRequest( method, url, data ) {
     let queryString = '?';
     for ( const item in data ) {
       queryString += `${ item }=${ data[item] }&`;
+      queryString = queryString.substring( 0, queryString.length - 1 );
     }
     url += queryString;
     data = null;

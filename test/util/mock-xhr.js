@@ -1,5 +1,3 @@
-const jest = require( 'jest' );
-
 let open;
 let send;
 let onload;
