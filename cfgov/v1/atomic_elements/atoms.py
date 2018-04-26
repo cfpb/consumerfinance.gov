@@ -73,6 +73,13 @@ class IntegerBlock(blocks.FieldBlock):
 class Hyperlink(blocks.StructBlock):
     text = blocks.CharBlock(required=False)
     url = blocks.CharBlock(default='/', required=False)
+    aria_label = blocks.CharBlock(
+        label='ARIA label',
+        help_text='If the main link text is not descriptive enough for a '
+                  'screen reader user, use this field to have a screen reader '
+                  'read something else in place of the link text.',
+        required=False,
+    )
 
     def __init__(self, required=True):
         self.is_required = required
