@@ -4,6 +4,7 @@ import sys
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import dj_database_url
 from unipath import Path
 
 from ..util import admin_emails
@@ -171,7 +172,28 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
-DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
+
+# Databases
+DATABASES = {}
+
+# If DATABASE_URL is defined in the environment, use it to set the Django DB.
+if os.getenv('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config()
+# Otherwise, support the legacy use of MySQL-specific environment variables.
+elif os.getenv('MYSQL_NAME'):
+    DATABASES['default'] =  {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('MYSQL_NAME', ''),
+        'USER': os.environ.get('MYSQL_USER', ''),
+        'PASSWORD': os.environ.get('MYSQL_PW', ''),
+        'HOST': os.environ.get('MYSQL_HOST', ''),
+        'PORT': os.environ.get('MYSQL_PORT', ''),
+    }
+
+    if 'STORAGE_ENGINE' in os.environ:
+        DATABASES['default']['OPTIONS'] = {
+            'init_command': os.environ['STORAGE_ENGINE'],
+        }
 
 
 # Internationalization
@@ -611,15 +633,8 @@ FLAGS = {
     # To be enabled when owning-a-home/explore-rates is de-sheered.
     'OAH_EXPLORE_RATES': {},
 
-    # To be enabled when owning-a-home/closing-disclosure/
-    # and owning-a-home/loan-estimate/ are de-sheered.
-    'OAH_FORM_EXPLAINERS': {},
-    
     # To be enabled when journey pages are released in Wagtail.
     'OAH_JOURNEY': {},
-
-    # To be enabled while journey sources page is migrated to Wagtail.
-    'OAH_JOURNEY_SHEER_SOURCE_PAGE': {},
 
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
@@ -641,6 +656,10 @@ FLAGS = {
 
     # Teacher's Digital Platform
     'TDP_RELEASE': {},
+
+    # Turbolinks is a JS library that speeds up page loads
+    # https://github.com/turbolinks/turbolinks
+    'TURBOLINKS': {},
 
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': {

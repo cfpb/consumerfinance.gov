@@ -45,7 +45,8 @@ When in doubt, mimic the styles and patterns in the existing codebase.
 
 ### Browser support
 
-We configure [Autoprefixer](#autoprefixer) and [Babel](#babel) to support the following list of browsers.
+We configure [Autoprefixer](#autoprefixer) and [Babel](#babel) to support the
+following list of browsers.
 
 - Latest 2 releases of all browsers including:
     - Chrome
@@ -80,6 +81,17 @@ For example, we do not deliver interactive scripting for Internet Explorer 8,
 but we do ensure that default browser features continue to work so users
 that can't or don't want to upgrade continue to have access to the site and
 our content.
+
+#### Satellite app assets
+
+Satellite apps may run within consumerfinance.gov, but manage their own assets
+within the
+[unprocessed/apps](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/apps)
+directory. These apps can have their own package.json file, webpack config file,
+and
+[browserlist config](https://github.com/browserslist/browserslist#config-file)
+file. Together of which may create a different level of browser support,
+third-party assets, or configuration for these apps, relative to the main site.
 
 #### Browser Testing
 

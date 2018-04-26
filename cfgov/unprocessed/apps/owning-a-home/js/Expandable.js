@@ -195,10 +195,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function _setExpandingState() {
     _setStateTo( EXPANDING );
     DT.mutate( () => {
-      _dom.classList.replace(
-        BASE_CLASS + '__collapsed',
-        BASE_CLASS + '__expanding'
-      );
+      _dom.classList.remove( BASE_CLASS + '__collapsed' );
+      _dom.classList.add( BASE_CLASS + '__expanding' );
     } );
   }
 
@@ -208,10 +206,9 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function _setExpandedState() {
     _setStateTo( EXPANDED );
     DT.mutate( () => {
-      _dom.classList.replace(
-        BASE_CLASS + '__expanding',
-        BASE_CLASS + '__expanded'
-      );
+      _content.style.height = '';
+      _dom.classList.remove( BASE_CLASS + '__expanding' );
+      _dom.classList.add( BASE_CLASS + '__expanded' );
       _content.setAttribute( 'aria-expanded', 'true' );
       _target.setAttribute( 'aria-pressed', 'true' );
     } );
@@ -223,10 +220,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function _setCollapsedState() {
     _setStateTo( COLLAPSED );
     DT.mutate( () => {
-      _dom.classList.replace(
-        BASE_CLASS + '__collapsing',
-        BASE_CLASS + '__collapsed'
-      );
+      _dom.classList.remove( BASE_CLASS + '__collapsing' );
+      _dom.classList.add( BASE_CLASS + '__collapsed' );
       _content.setAttribute( 'aria-expanded', 'false' );
       _target.setAttribute( 'aria-pressed', 'false' );
     } );
@@ -238,10 +233,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function _setCollapsingState() {
     _setStateTo( COLLAPSING );
     DT.mutate( () => {
-      _dom.classList.replace(
-        BASE_CLASS + '__expanded',
-        BASE_CLASS + '__collapsing'
-      );
+      _dom.classList.remove( BASE_CLASS + '__expanded' );
+      _dom.classList.add( BASE_CLASS + '__collapsing' );
     } );
   }
 

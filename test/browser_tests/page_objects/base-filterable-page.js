@@ -15,8 +15,8 @@ class BaseFilterablePage extends BasePage {
     return count.toString();
   }
 
-  async getResultText( resultPosition = 'first' ) {
-    return await this[resultPosition + 'Result'].getText();
+  getResultText( resultPosition = 'first' ) {
+    return this[resultPosition + 'Result'].getText();
   }
 }
 
