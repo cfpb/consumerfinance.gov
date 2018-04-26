@@ -1,6 +1,6 @@
 <{{ value.level -}}
     {%- if value.icon -%}
-        {{- ' class="cf-icon cf-icon-' ~ value.icon ~ '"' -}}
+        {{ svg_icon(value.icon) }}
     {%- endif -%}
 >
     {{ value.text | safe }}

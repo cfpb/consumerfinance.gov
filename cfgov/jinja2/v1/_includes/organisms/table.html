@@ -54,7 +54,7 @@
 {% if value.heading_text %}
     <{{ value.heading_level -}}
         {%- if value.heading_icon -%}
-            {{- ' class="cf-icon cf-icon-' ~ value.heading_icon ~ '"' -}}
+            {{ svg_icon(value.heading_icon) }}
         {%- endif -%}>
         {{ value.heading_text }}
     </{{ value.heading_level}}>

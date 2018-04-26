@@ -15,9 +15,7 @@ const emailHelpers = require( '../modules/util/email-popup-helpers' );
  * @returns {EmailSignup} An instance.
  */
 function EmailPopup( element ) {
-
   const VISIBLE_CLASS = 'o-email-popup__visible';
-
   const _dom = atomicHelpers.checkDom( element, EmailPopup.BASE_CLASS );
   const _popupLabel = _dom.getAttribute( 'data-popup-label' );
 

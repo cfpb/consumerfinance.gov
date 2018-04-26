@@ -25,7 +25,7 @@
             <button class="tab-link tab-link__checklist"
                     data-target="checklist"
                     tabindex="0">
-                <span class="cf-icon cf-icon-approved-round"></span>
+                {{ svg_icon('approved-round') }}
                 <span class="tab-label">Check details</span>
             </button>
         </li>
@@ -33,7 +33,7 @@
             <button class="tab-link tab-link__definitions"
                     data-target="definitions"
                     tabindex="0">
-                <span class="cf-icon cf-icon-help-round"></span>
+                {{ svg_icon('help-round') }}
                 <span class="tab-label">Get definitions</span>
             </button>
         </li>
@@ -49,11 +49,11 @@
                 <div class="form-explainer_page-buttons">
                     <button class="prev a-btn a-btn__disabled">
                         <span class="u-visually-hidden">Previous page</span>
-                        <span class="cf-icon cf-icon-left"></span>
+                        {{ svg_icon('left') }}
                     </button>
                     <button class="a-btn next">
                         <span class="u-visually-hidden">Next page</span>
-                        <span class="cf-icon cf-icon-right"></span>
+                        {{ svg_icon('right') }}
                     </button>
                   </div>
                 <img class="image-map_image"
@@ -185,11 +185,11 @@
         <span class="o-expandable_header-right o-expandable_link">
             <span class="o-expandable_cue-open">
                 <span class="u-visually-hidden">Show</span>
-                <span class="cf-icon cf-icon-plus"></span>
+                {{ svg_icon('plus-round') }}
             </span>
             <span class="o-expandable_cue-close">
                 <span class="u-visually-hidden">Hide</span>
-                <span class="cf-icon cf-icon-minus"></span>
+                {{{ svg_icon('minus-round') }}
             </span>
         </span>
     </button>

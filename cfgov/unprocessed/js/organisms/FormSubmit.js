@@ -152,7 +152,10 @@ function FormSubmit( element, baseClass, opts ) {
    */
   function _replaceFormWithNotification( message ) {
     const transition = new AlphaTransition( _baseElement ).init();
-    scroll.scrollIntoView( _formElement, { offset: 100, callback: fadeOutForm } );
+    scroll.scrollIntoView(
+      _formElement,
+      { offset: 100, callback: fadeOutForm }
+    );
 
     function fadeOutForm() {
       transition.addEventListener( BaseTransition.END_EVENT, fadeInMessage );
@@ -161,7 +164,8 @@ function FormSubmit( element, baseClass, opts ) {
 
     function fadeInMessage() {
       if ( opts.minReplacementHeight ) {
-        _baseElement.style.marginBottom = Math.min( _formElement.offsetHeight, 100 ) + 'px';
+        _baseElement.style.marginBottom =
+          Math.min( _formElement.offsetHeight, 100 ) + 'px';
       }
       _formElement.style.display = 'none';
       _notification.setTypeAndContent( _notification.SUCCESS, message );
@@ -181,7 +185,11 @@ function FormSubmit( element, baseClass, opts ) {
     const fields = ( _formElement || {} ).elements;
     for ( let f = 0; f < fields.length; f++ ) {
       const field = fields[f];
-      if ( field.name && !field.disabled && nonInputTypes.indexOf( field.type ) === -1 ) {
+      if (
+        field.name
+        && !field.disabled
+        && nonInputTypes.indexOf( field.type ) === -1
+      ) {
         if ( field.type === 'radio' || field.type === 'checkbox' ) {
           cachedFields[field.name] = cachedFields[field.name] || [];
           cachedFields[field.name].push( field );
