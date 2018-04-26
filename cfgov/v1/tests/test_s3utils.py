@@ -25,7 +25,7 @@ from v1.s3utils import (
 )
 class S3UtilsTestCase(TestCase):
     def setUp(self):
-        mock_s3 = moto.mock_s3()
+        mock_s3 = moto.mock_s3_deprecated()
         mock_s3.start()
         self.addCleanup(mock_s3.stop)
 
