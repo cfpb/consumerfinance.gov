@@ -51,7 +51,8 @@ home price, down payment, and more can affect mortgage interest rates.
                         <p class="lead">Use this tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.  See how your credit score, loan type, home price, and down payment amount can affect your rate.   Knowing your options and what to expect helps ensure that you get a mortgage that is right for you.  Check back often -- the rates in the tool are updated every Wednesday and Friday.</p>
                         <div class="page-intro_cols">
                             <p class="page-intro_col-left u-mb30">
-                                Keep in mind that the interest rate is important, but not the only cost of a mortgage.  Fees, <a href="https://www.consumerfinance.gov/askcfpb/136/what-are-discount-points-and-lender-credits-and-how-do-they-work.html">points</a>, <a href="https://www.consumerfinance.gov/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html">mortgage insurance</a>, and <a href="https://www.consumerfinance.gov/askcfpb/1845/what-fees-or-charges-are-paid-closing-and-who-pays-them.html">closing costs</a> all add up.  Compare <a href="https://www.consumerfinance.gov/askcfpb/1995/what-is-a-loan-estimate.html">Loan Estimates</a> to get the best deal.
+                                Keep in mind that the interest rate is important,
+                                but not the only cost of a mortgage.  Fees, <a href="/askcfpb/136/what-are-discount-points-and-lender-credits-and-how-do-they-work.html">points</a>, <a href="/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html">mortgage insurance</a>, and <a href="/askcfpb/1845/what-fees-or-charges-are-paid-closing-and-who-pays-them.html">closing costs</a> all add up.  Compare <a href="/askcfpb/1995/what-is-a-loan-estimate.html">Loan Estimates</a> to get the best deal.
                             </p>
                             <div class="page-intro_col-right u-right-on-desktop">
                                 {{ social_media.render( {
@@ -78,9 +79,7 @@ home price, down payment, and more can affect mortgage interest rates.
                     <section class="form-intro">
                         <h4>Explore rate options</h4>
                     </section>
-
                     <section id="credit-score-container">
-
                         <div class="a-range recalc" id="credit-score-range">
                             <label for="credit-score">Credit score range</label>
                             <div class="a-range_labels">
@@ -114,7 +113,6 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                         <p class="form-sub">Credit score has a big impact on the rate you’ll receive. <a href="/askcfpb/319/how-does-my-credit-score-affect-my-ability-to-get-a-mortgage-loan.html" id="ask-cfpb-credit" target="_blank" rel="noopener noreferrer">Learn more</a></p>
                     </section>
-
                     <section class="demographics">
                         <div class="state-col">
                             <label for="location">Choose your state</label>
@@ -228,11 +226,10 @@ home price, down payment, and more can affect mortgage interest rates.
                           Alert when down payment is greater than house price.
                         #}
                         <div id="dp-alert"
-                             class="downpayment-warning alert-alt col-7 u-hidden"
+                             class="downpayment-warning alert-alt half-width-gt-1230 u-hidden"
                              role="alert">
                           Your down payment cannot be more than your house price.
                         </div>
-
                     </section>
                     <section class="form-sub warning u-hidden" id="county-warning">
                         <p class="warning-text"></p>
@@ -307,6 +304,20 @@ home price, down payment, and more can affect mortgage interest rates.
                         </table>
                     </div>
                     <section id="chart-section" class="chart">
+                        <div class="chart-menu">
+                            <button class="chart-menu_btn
+                                           cf-icon
+                                           cf-icon__after
+                                           cf-icon-down">
+                                Download chart
+                            </button>
+                            <ul class="chart-menu_options">
+                                <li data-export-type="0">PNG</li>
+                                <li data-export-type="1">SVG</li>
+                                <li data-export-type="2">JPEG</li>
+                                <li data-export-type="3">Print chart</li>
+                            </ul>
+                        </div>
                         <figure class="data-enabled loading">
                             <div id="chart" class="chart-area"></div>
                             <figcaption class="chart-caption">
@@ -314,41 +325,40 @@ home price, down payment, and more can affect mortgage interest rates.
                                     Interest rates for your situation
                                 </div>
                                 <div class="rc-data-link">
-                                    <a href="#about" class="u-link-underline">About our data source</a>
+                                    <a href="#about" class="u-link-underline">Read about our data source</a>
                                 </div>
                             </figcaption>
                         </figure>
 
                         {# Alert Shown when there are no results. #}
                         <div id="chart-result-alert"
-                             class="result-alert chart-alert u-hidden"
+                             class="result-alert
+                                    m-notification
+                                    m-notification__error"
                              role="alert">
-                          <p class="alert">
-                            <strong>We're sorry!</strong>
-                            Based on the information you entered,
-                            we don't have enough data to display results.
-                          </p>
-                          <p class="point-right">
-                            Change your settings
-                          </p>
-                          <p>
-                            <a id ="reload-link" class="defaults-link" href="">
-                              Or, revert to our default values
-                            </a>
-                          </p>
+                            <span class="m-notification_icon cf-icon"></span>
+                            <div class="m-notification_content">
+                                <div class="h4 m-notification_message">We're sorry!</div>
+                                <div class="h4 m-notification_explanation">
+                                    Based on the information you entered,
+                                    we don't have enough data to display results.
+                                    Change your settings or
+                                    <a id="reload-link" class="defaults-link" href="">
+                                        revert to our default values.
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-
                         {# Alert Shown when there was an API failure. #}
                         <div id="chart-fail-alert"
                              class="result-alert chart-alert u-hidden"
                              role="alert">
-                          <p class="alert">
-                            <strong>We're sorry!</strong>
-                            We're having trouble connecting to our data.<br>
-                            Try again another time.
-                          </p>
+                              <p class="alert">
+                                <strong>We're sorry!</strong>
+                                We're having trouble connecting to our data.<br>
+                                Try again another time.
+                              </p>
                         </div>
-
                     </section>
                     <p id="timestamp-p" class="data-enabled timestamp-message clear">These rates are current as of <strong id="timestamp">…</strong>.</p>
                     <section class="compare wrapper data-enabled loading">
@@ -522,22 +532,26 @@ home price, down payment, and more can affect mortgage interest rates.
                     </div>
                 </section>
                 <!-- /.next-steps -->
-                <div class="note">
-                    <p class="alert"><strong>Check your credit report.</strong> If you haven’t <a id="annualcreditreport" class="external-link" href="https://annualcreditreport.com" target="_blank" rel="noopener noreferrer">checked your credit report recently</a>, do so now. If you find errors, <a id="ask-dispute-credit-report" href="/askcfpb/314/how-do-i-dispute-an-error-on-my-credit-report.html" target="_blank" rel="noopener noreferrer">get them corrected</a> <strong>before</strong> you apply for a mortgage.</p>
-                </div> <!-- /.note -->
+                <div class="block
+                            block__border-top
+                            block__flush-top
+                            block__padded-top
+                            note-ctr">
+                    <div class="note">
+                        <p class="alert"><strong>Check your credit report.</strong></p>
+                        If you haven’t checked your credit report recently, <a id="annualcreditreport" class="external-link" href="https://annualcreditreport.com" target="_blank" rel="noopener noreferrer">do so now</a>. If you find errors, <a id="ask-dispute-credit-report" href="/askcfpb/314/how-do-i-dispute-an-error-on-my-credit-report.html" target="_blank" rel="noopener noreferrer">get them corrected</a> <strong>before</strong> you apply for a mortgage.
+                    </div> <!-- /.note -->
+                </div>
                 <section id="about" class="about wrapper">
                     <div class="content-l">
                         <div class="about-data content-l_col content-l_col-2-3">
                             {% include "_templates/ratings-form.html" %}
                         </div>
                         <div class="content-l_col content-l_col-1-3">
-                            <div class="o-form
-                                        block
-                                        block__padded-top
-                                        block__flush-top">
-                            <h3 class="subhead">About our data source for this tool</h3>
-                            <p>The lenders in our data include a mix of large banks, regional banks, and credit unions. The data is updated semiweekly every Wednesday and Friday at 7 a.m. In the event of a holiday, data will be refreshed on the next available business day.</p>
-                            <p>The data is provided by Informa Research Services, Inc., Calabasas, CA. <a id="informars" href="https://www.informars.com" target="_blank" rel="noopener noreferrer">www.informars.com</a>. Informa collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
+                            <div class="o-form">
+                                <h3 class="subhead">About our data source for this tool</h3>
+                                <p>The lenders in our data include a mix of large banks, regional banks, and credit unions. The data is updated semiweekly every Wednesday and Friday at 7 a.m. In the event of a holiday, data will be refreshed on the next available business day.</p>
+                                <p>The data is provided by Informa Research Services, Inc., Calabasas, CA. <a id="informars" href="https://www.informars.com" target="_blank" rel="noopener noreferrer">www.informars.com</a>. Informa collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
                             </div>
                         </div>
                     </div>
