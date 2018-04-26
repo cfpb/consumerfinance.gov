@@ -3,11 +3,11 @@ import {
   chartTooltipSingle
 } from './template-loader';
 import Highcharts from 'highcharts';
+import RateCheckerChartMenu from './RateCheckerChartMenu';
 import highchartsExport from 'highcharts/modules/exporting';
 import { applyThemeTo } from './highcharts-theme';
 
 function RateCheckerChart() {
-
   let _highChart;
   let _containerDom;
 
@@ -121,6 +121,8 @@ function RateCheckerChart() {
         }
       }
     } );
+
+    new RateCheckerChartMenu( _highChart );
   }
 
   /**
@@ -152,11 +154,11 @@ function RateCheckerChart() {
   function setStatus( state ) {
     if ( state === RateCheckerChart.STATUS_OKAY ) {
       _chartDom.classList.remove( 'warning' );
-      _resultAlertDom.classList.add( 'u-hidden' );
+      _resultAlertDom.classList.remove( 'm-notification__visible' );
       _failAlertDom.classList.add( 'u-hidden' );
     } else if ( state === RateCheckerChart.STATUS_WARNING ) {
       _chartDom.classList.add( 'warning' );
-      _resultAlertDom.classList.remove( 'u-hidden' );
+      _resultAlertDom.classList.add( 'm-notification__visible' );
     } else if ( state === RateCheckerChart.STATUS_ERROR ) {
       _failAlertDom.classList.remove( 'u-hidden' );
     } else {

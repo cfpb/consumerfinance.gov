@@ -3,6 +3,7 @@
    ========================================================================== */
 
 .rate-checker {
+    position: relative;
 
     .page-intro {
         border-bottom: 1px solid @gray-10;
@@ -21,7 +22,6 @@
     /*
         layout
         --------------------------- */
-
     .rc-results {
         .grid_column( 8 );
         .grid_pull( 4 );
@@ -137,8 +137,6 @@
     }
 
     .downpayment-warning {
-        .grid_column( 12 );
-
         padding-top: unit( 10px / @base-font-size-px, em );
         font-size: 0.875em;
     }
@@ -166,6 +164,18 @@
     // highcharts to display overflowing tooltips
     .highcharts-container {
         overflow: visible !important;
+    }
+
+    .highcharts-tooltip > span {
+        z-index: 9999;
+        padding: unit( 4px / @base-font-size-px, em )
+                 unit( 10px / @base-font-size-px, em )
+                 unit( 4px / @base-font-size-px, em )
+                 unit( 8px / @base-font-size-px, em );
+        border: 2px solid @green-60;
+        margin: 0 2px;
+        background-color: @white;
+        color: @dark-gray;
     }
 
     .chart {
@@ -225,7 +235,7 @@
     }
 
     .data-label_number {
-        background-color: #fff;
+        background-color: @white;
 
         .respond-to-max( @bp-xs-max, {
             display: block;
@@ -242,28 +252,16 @@
     }
 
     .caption-title {
-        .grid_column( 12 );
-
-        white-space: nowrap;
+        text-align: center;
+        margin-top: 0;
     }
 
     .rc-data-link {
-        .grid_column( 12 );
-
-        margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        white-space: nowrap;
-    }
-
-    .highcharts-tooltip > span {
-        z-index: 9999;
-        padding: unit( 4px / @base-font-size-px, em )
-                 unit( 10px / @base-font-size-px, em )
-                 unit( 4px / @base-font-size-px, em )
-                 unit( 8px / @base-font-size-px, em );
-        border: 2px solid @green-60;
-        margin: 0 2px;
-        background-color: #fff;
-        color: @dark-gray;
+        text-align: left;
+        margin: unit( 20px / @base-font-size-px, em )
+                0
+                unit( 10px / @base-font-size-px, em )
+                0;
     }
 
     .chart-tooltip {
@@ -400,7 +398,7 @@
         --------------------------- */
     .next-steps {
         margin-top: 5em;
-        margin-bottom: 3.625em;
+        margin-bottom: unit( 45px / @base-font-size-px, em );
 
         .tabs {
             box-sizing: border-box;
@@ -453,30 +451,81 @@
     }
 
     /*
-        about
-        --------------------------- */
-    .about {
-        border-top: 1px solid @gray-10;
-        margin-top: 3.75em;
-    }
-
-    /*
         Alerts and warnings
         --------------------------- */
-    .result-alert {
-        border: 1px solid @red-60;
-        background: #fff;
-    }
 
     .chart-alert {
         position: absolute;
         top: 30%;
         padding: 1em 2em 1em 3em;
-        background: #fff;
+        background: @white;
         .u-webfont-regular();
 
         .point-right {
             font-size: 1.5em;
+        }
+    }
+
+    .chart-menu {
+        position: absolute;
+        z-index: 1000;
+        right: 0;
+        top: 0;
+        width: 145px;
+        border-left: 1px solid transparent;
+        border-right: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        background-color: @white;
+        font-size: 13px;
+
+        &_btn {
+            width: 100%;
+            padding: unit( 15px / @base-font-size-px, em )
+                     unit( 15px / @base-font-size-px, em )
+                     unit( 5px / @base-font-size-px, em )
+                     unit( 15px / @base-font-size-px, em );
+            border: none;
+            background-color: inherit;
+            color: @pacific;
+            font-weight: 500;
+            outline: none;
+            text-align: left;
+        }
+
+        &_options {
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            transition: height 300ms;
+            cursor: pointer;
+
+            li {
+                list-style: none;
+                padding: unit( 5px / @base-font-size-px, em )
+                         0
+                         unit( 5px / @base-font-size-px, em )
+                         unit( 15px / @base-font-size-px, em );
+                margin: 0;
+
+                &:hover {
+                    background-color: @pacific;
+                    color: @white;
+                }
+            }
+        }
+
+        &__open {
+            border-color: @gray-10;
+
+            .chart-menu_options {
+                height: 110px;
+
+            }
+
+            .chart-menu_btn:after {
+                transform: scaleY( -1 );
+            }
         }
     }
 
@@ -513,6 +562,28 @@
 
     .related-links {
         margin-top: @grid_gutter-width;
+    }
+
+    .note-ctr {
+        border-top: 1px solid @gray-10;
+    }
+
+    .note {
+        .grid_column( 8 );
+        margin: 0;
+        padding: 0 0 0 25px;
+
+        .alert:before {
+            color: @gold;
+        }
+
+        p {
+            width: 100%;
+        }
+    }
+
+    .oah-ratings-form {
+        margin-top: 0;
     }
 
     /*
@@ -593,17 +664,6 @@
         .rate-checker-heading {
             width: 75%;
         }
-
-        .caption-title {
-            .grid_column( 7 );
-        }
-
-        .rc-data-link {
-            .grid_column( 5 );
-
-            margin-top: 0;
-            text-align: right;
-        }
     } );
 
     .respond-to-max( @bp-lg-max, {
@@ -621,17 +681,13 @@
         .rc-illu-inner {
             display: none;
         }
-    }
 
-    @media print {
         .calculator,
         .rc-results {
             .grid_column( 12 );
             .grid_push( 0 );
         }
-    }
 
-    @media print {
         .calculator section {
             display: inline-block;
             width: 100%;
