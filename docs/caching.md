@@ -12,7 +12,7 @@ Starting in December 2017, we use [template fragment caching](https://github.com
 
 It can easily be enabled on other templates. See [this PR](https://github.com/cfpb/cfgov-refresh/pull/3663/files) as an example of the code that would need to be introduced to cache a new fragment.
 
-When a page gets published, it will update the post preview cache for that particular page.  However, if there are code changes that impact the page's content, or the post preview template itself gets updated, the entire post preview cache will need to be manually cleared. Clearing this particular cache could be an option when deploying, as it is with Akamai, but should not be a default since most deploys wouldn't impact the code in question.  Currently, the manual way to do this would be to run the following from a production server:
+When a page gets published, it will update the post preview cache for that particular page.  However, if there are code changes that impact the page's content, or the post preview template itself gets updated, the entire post preview cache will need to be manually cleared. Clearing this particular cache could be an option when deploying, as it is with Akamai, but should not be a default since most deploys wouldn't impact the code in question.  Currently, the manual way to do this would be to run the following from a production server's django shell:
 
 ```
 from django.core.cache import caches
