@@ -10,7 +10,6 @@
 const envvars = {
 
   /* eslint-disable no-process-env */
-  CONTINUOUS_INTEGRATION:  process.env.CONTINUOUS_INTEGRATION,
   DJANGO_STAGING_HOSTNAME: process.env.DJANGO_STAGING_HOSTNAME,
   NODE_ENV:                process.env.NODE_ENV,
   TEST_HTTP_HOST:          process.env.TEST_HTTP_HOST,
@@ -19,8 +18,8 @@ const envvars = {
   SAUCE_USERNAME:          process.env.SAUCE_USERNAME,
   SAUCE_ACCESS_KEY:        process.env.SAUCE_ACCESS_KEY,
   ACHECKER_ID:             process.env.ACHECKER_ID,
-  SAUCE_TUNNEL:            process.env.SAUCE_TUNNEL ||
-                           new Date().getTime()
+  SAUCE_TUNNEL:            process.env.SAUCE_TUNNEL,
+  TRAVIS:                  process.env.TRAVIS
   /* eslint-enable no-process-env */
 };
 

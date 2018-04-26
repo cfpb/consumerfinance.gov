@@ -55,7 +55,7 @@ install() {
     # directly from a GitHub.com URL which enforces rate-limiting. This can
     # cause installation failures when running automated testing. Currently
     # we don't rely on Gecko for testing.
-    ./$NODE_DIR/protractor/bin/webdriver-manager update --gecko false
+    ./$NODE_DIR/protractor/bin/webdriver-manager update --gecko false --standalone false
 
   else
     npm install --production --loglevel warn --no-optional

@@ -4,7 +4,6 @@ const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 import { simulateEvent } from '../../../util/simulate-event';
 
 let footerBtnDom;
-let bodyDom;
 
 const HTML_SNIPPET = `
   <a class="a-btn a-btn__secondary o-footer_top-button"

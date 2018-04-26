@@ -4,14 +4,14 @@ let UNDEFINED;
 
 /* List all the parameters the user can change and set
    their default values.
-   `verbotenKeys` are as follows:
-   9 = tab
-   37, 38, 39, 40 = arrow keys.
-   13 = enter
-   16 = shift */
+
+   dp-constant: track the down payment interactions
+   request: Keep the AJAX request accessible so we can terminate it if needed.
+*/
 const _params = {
   'credit-score':   700,
   'down-payment':   '20,000',
+  'dp-constant':    '',
   'house-price':    '200,000',
   'location':       'AL',
   'loan-amount':    UNDEFINED,
@@ -23,16 +23,14 @@ const _params = {
   'isJumbo':        false,
   'prevLoanType':   '',
   'prevLocation':   '',
-  'verbotenKeys':   [ 9, 37, 38, 39, 40, 13, 16 ]
+  'request':        UNDEFINED
 };
 
 /**
- * Set a value inside the params object.
- * @param {string} key - The key on the params object to set.
- * @param {string|number|Array|undefined} val - The value to set on `key`.
+ * @returns {Object} Underlying object of parameters.
  */
-function setVal( key, val ) {
-  _params[key] = val;
+function getAllParams() {
+  return _params;
 }
 
 /**
@@ -42,6 +40,15 @@ function setVal( key, val ) {
  */
 function getVal( key ) {
   return _params[key];
+}
+
+/**
+ * Set a value inside the params object.
+ * @param {string} key - The key on the params object to set.
+ * @param {string|number|Array|undefined} val - The value to set on `key`.
+ */
+function setVal( key, val ) {
+  _params[key] = val;
 }
 
 /**
@@ -64,7 +71,8 @@ function update() {
 }
 
 module.exports = {
-  setVal: setVal,
-  getVal: getVal,
-  update: update
+  getAllParams,
+  getVal,
+  setVal,
+  update
 };

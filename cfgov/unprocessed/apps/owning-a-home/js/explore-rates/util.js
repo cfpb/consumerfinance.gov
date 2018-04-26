@@ -3,6 +3,18 @@ import formatUSD from 'format-usd';
 import unFormatUSD from 'unformat-usd';
 
 /**
+ * Check if the house price entered is 0
+ * @param {string|number} price - A price.
+ * @returns {boolean} True if price is zero, false otherwise.
+ */
+function checkIfZero( price ) {
+  if ( price === '0' || +Number( price ) === 0 ) {
+    return true;
+  }
+  return false;
+}
+
+/**
  * Simple (anonymous) delay function.
  * @return {Object} function that has been delayed.
  */
@@ -27,6 +39,43 @@ function formatTimestampMMddyyyy( timestamp ) {
      return (timestamp.getUTCMonth() + 1) + '/' + timestamp.getUTCDate() +
             '/' +  timestamp.getUTCFullYear(); */
   return formatDate.asString( 'MM/dd/yyyy', new Date( timestamp ) );
+}
+
+/**
+ * @param  {number} keyCode - A key code.
+ * @returns {boolean} True if key is forbidden, false otherwise.
+ */
+function isKeyAllowed( keyCode ) {
+  /* `FORBIDDEN_KEYS` are as follows:
+  9 = tab
+  37, 38, 39, 40 = arrow keys.
+  13 = enter
+  16 = shift */
+  const FORBIDDEN_KEYS = [ 9, 37, 38, 39, 40, 13, 16 ];
+
+  if ( FORBIDDEN_KEYS.indexOf( keyCode ) !== -1 ) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * @param  {HTMLNode} elem - An HTML element to check for u-hidden class.
+ * @returns {boolean} True is the element is visible, false otherwise.
+ */
+function isVisible( elem ) {
+  return !elem.classList.contains( 'u-hidden' );
+}
+
+/**
+ * Add commas to numbers where appropriate.
+ * @param {string} value - Old value where commas will be added.
+ * @returns {string} Value with commas and no dollar sign.
+ */
+function removeDollarAddCommas( value ) {
+  let parseValue = unFormatUSD( value );
+  parseValue = formatUSD( parseValue, { decimalPlaces: 0 } ).replace( '$', '' );
+  return parseValue;
 }
 
 /**
@@ -88,11 +137,54 @@ function renderLoanAmount( elem, loanAmount ) {
   elem.textContent = formatUSD( loanAmount, { decimalPlaces: 0 } );
 }
 
+
+/**
+ * Set value(s) of all HTML elements in the control panel.
+ * @param {string} fields - TODO: Add description.
+ */
+function setSelections( fields ) {
+  let val;
+  for ( const key in fields ) {
+    val = fields[key];
+    const el = document.querySelector( '#' + key );
+    if ( el ) {
+      setSelection( el, val );
+    }
+  }
+}
+
+/**
+ * Set value(s) of an individual HTML element in the control panel.
+ * @param  {HTMLNode} el An HTML input element on the page.
+ * @param  {string} val Value to set inside the HTML element.
+ */
+function setSelection( el, val ) {
+
+  const placeHolders = document.querySelectorAll( '[placeholder]' );
+  let isInPlaceholders = false;
+  for ( let i = 0, len = placeHolders.length; i < len; i++ ) {
+    if ( placeHolders[i] === el ) {
+      isInPlaceholders = true;
+      break;
+    }
+  }
+  if ( isInPlaceholders ) {
+    el.setAttribute( 'placeholder', val );
+  } else {
+    el.value = val;
+  }
+}
+
 module.exports = {
   calcLoanAmount,
+  checkIfZero,
   delay,
   formatTimestampMMddyyyy,
+  isKeyAllowed,
+  isVisible,
+  removeDollarAddCommas,
   renderAccessibleData,
   renderDatestamp,
-  renderLoanAmount
+  renderLoanAmount,
+  setSelections
 };

@@ -30,13 +30,7 @@ services:
         ports:
             - "8000:8000"
         environment:
-            MYSQL_ROOT_PW: root
-            MYSQL_HOST: mysql
-            MYSQL_NAME: v1
-            MYSQL_USER: v1
-            MYSQL_PW: v1
             ES_HOST: elasticsearch
-            PG_DATABASE_URL: postgres://cfgov:cfgov@postgres/cfgov
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps
@@ -44,8 +38,8 @@ services:
             - sh
             - /src/cfgov-refresh/cfgov/entrypoint.sh
         depends_on:
-            - mysql
             - elasticsearch
+            - mysql
             - postgres
         working_dir: /src/cfgov-refresh
         env_file: .python_env

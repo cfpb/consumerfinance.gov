@@ -111,11 +111,15 @@
 {% set has_children = org.offices | list | length %}
 
 <{{ tagName }} class="o-bureau-structure_node
-       {{ 'o-expandable
-           o-expandable__expanded'
-          if has_children else '' }}">
+    {{ 'o-expandable o-expandable__expanded' if has_children else '' }}">
     {% if has_children %}
     {{ _role(org) }}
+    {% if org.division_lead_1 %}
+        {{ _role( {
+            'division_lead': org.division_lead_1,
+            'title':         org.title_1 } )
+        }}
+    {% endif %}
     <button class="o-expandable_target">
         <div class="o-expandable_header">
             <div class="o-bureau-structure_node_expander">

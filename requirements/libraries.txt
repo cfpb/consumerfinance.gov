@@ -27,7 +27,6 @@ jsonschema==2.0.0
 lxml==4.1.0
 ntplib==0.3.3
 openpyxl==2.5.0
-psycopg2==2.7.3.2
 pyelasticsearch==0.6.1
 python-dateutil==2.1
 PyYAML==3.11

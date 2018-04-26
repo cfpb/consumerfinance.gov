@@ -1,10 +1,11 @@
+from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 
 from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 
-from v1.atomic_elements.molecules import FormFieldWithButton
+from v1.atomic_elements.molecules import FormFieldWithButton, TextIntroduction
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.browse_page import BrowsePage
 from v1.models.landing_page import LandingPage
@@ -225,3 +226,42 @@ class MoleculesTestCase(TestCase):
         response = django_client.get('/sublanding/')
         self.assertContains(response, 'this is a form field with button')
         self.assertNotContains(response, '(required)')
+
+class TestTextIntroductionValidation(TestCase):
+
+    def test_text_intro_without_eyebrow_or_heading_passes_validation(self):
+        block = TextIntroduction()
+        value = block.to_python({})
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('no heading and no eyebrow should not fail validation')
+
+    def test_text_intro_with_just_heading_passes_validation(self):
+        block = TextIntroduction()
+        value = block.to_python({'heading': 'Heading'})
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('heading without eyebrow should not fail validation')
+
+    def test_text_intro_with_eyebrow_but_no_heading_fails_validation(self):
+        block = TextIntroduction()
+        value = block.to_python({'eyebrow': 'Eyebrow'})
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_text_intro_with_heading_and_eyebrow_passes_validation(self):
+        block = TextIntroduction()
+        value = block.to_python({
+            'heading': 'Heading',
+            'eyebrow': 'Eyebrow'
+        })
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('eyebrow with heading should not fail validation')

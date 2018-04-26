@@ -104,6 +104,10 @@ function Slider( element ) {
     _labelDom.style.left = leftVal - 9 + 'px';
   }
 
+  /**
+   * Set the state of the slider.
+   * @param {number} state 0 = okay, 1 = warning state.
+   */
   function setState( state ) {
     if ( state === Slider.STATUS_WARNING ) {
       _rangeSliderHandleDom.classList.add( 'warning' );
@@ -127,7 +131,7 @@ function Slider( element ) {
   return this;
 }
 
-Slider.STATUS_WARNING = 0;
-Slider.STATUS_OKAY = 1;
+Slider.STATUS_OKAY = 0;
+Slider.STATUS_WARNING = 1;
 
 module.exports = Slider;
