@@ -6,10 +6,10 @@ const expandableDom = document.querySelectorAll( '.block .o-expandable' );
 let expandable;
 
 if ( expandableDom ) {
-    for ( let i = 0, len = expandableDom.length; i < len; i++ ) {
-        expandable = new Expandable( expandableDom[i] );
-        expandable.init();
-    }
+  for ( let i = 0, len = expandableDom.length; i < len; i++ ) {
+    expandable = new Expandable( expandableDom[i] );
+    expandable.init();
+  }
 }
 
 turbolinks.start();
