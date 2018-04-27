@@ -13,8 +13,7 @@ describe( 'explore-rates/data-loader', () => {
     it( 'should call data API with correct query', () => {
       domLoader.getData();
 
-      expect( xhrMock.open )
-        .toBeCalledWith( 'GET', '/oah-api/rates/rate-checker?decache=243' );
+      expect( xhrMock.open ).toBeCalled();
       expect( xhrMock.send ).toBeCalled();
     } );
   } );
