@@ -11,7 +11,8 @@ const swPrecache = require( 'sw-precache' );
 
 // Constants
 const APP_NAME = 'eregs';
-const APP_PATH = envVars.NODE_ENV === 'production' ? 'eregulations' : 'eregulations3k';
+// This'll need to be changed if the app doesn't live at cf.gov/regulations
+const APP_PATH = 'regulations';
 const SERVICE_WORKER_FILENAME = `${ APP_NAME }-service-worker.js`;
 const SERVICE_WORKER_DEST = `cfgov/regulations3k/jinja2/regulations3k/${ SERVICE_WORKER_FILENAME }`;
 const MANIFEST_FILENAME = `${ APP_NAME }-manifest.json`;
@@ -70,7 +71,7 @@ const SERVICE_WORKER_CONFIG = {
   replacePrefix: /static/,
   runtimeCaching: [
     {
-      urlPattern: `/${ APP_PATH }\/(\\d\\d\\d\\d\/\\d)?/`,
+      urlPattern: new RegExp( `/${ APP_PATH }/(\\d\\d\\d\\d/\\d)?` ),
       handler: 'cacheFirst',
       options: {
         cache: {
@@ -79,7 +80,7 @@ const SERVICE_WORKER_CONFIG = {
       }
     },
     {
-      urlPattern: `/\/static\/app\/${ APP_PATH }\/(css/js/img)\/.*\\.(css|js)/`,
+      urlPattern: new RegExp( `/static/app/${ APP_PATH }/(css|js|img)/.*\\.(css|js)` ),
       handler: 'cacheFirst',
       options: {
         cache: {
