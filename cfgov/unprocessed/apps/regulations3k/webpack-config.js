@@ -71,20 +71,11 @@ const SERVICE_WORKER_CONFIG = {
   replacePrefix: /static/,
   runtimeCaching: [
     {
-      urlPattern: new RegExp( `/${ APP_PATH }/(\\d\\d\\d\\d/\\d)?` ),
-      handler: 'cacheFirst',
+      urlPattern: /\/$/,
+      handler: 'fastest',
       options: {
         cache: {
-          name: `${ APP_NAME }-content`
-        }
-      }
-    },
-    {
-      urlPattern: new RegExp( `/static/app/${ APP_PATH }/(css|js|img)/.*\\.(css|js)` ),
-      handler: 'cacheFirst',
-      options: {
-        cache: {
-          name: `${ APP_NAME }-assets`
+          name: `${ APP_NAME }`
         }
       }
     }

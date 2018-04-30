@@ -17,7 +17,7 @@
 {% block preload %}
     {{ super() }}
     {% if next_section %}
-    <link rel="prerender" href="/eregulations3k/{{regulation.part_number}}/{{next_section.section_number}}/">
+    <link rel="prerender" href="{{ routablepageurl(page, "section", next_section.section_number) }}">
     {% endif %}
     <link rel="manifest" href="{{ static('apps/regulations3k/eregs-manifest.json') }}">
     <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/eregs-icon-192.png') }}">
@@ -59,12 +59,12 @@
             <ul>
                 {% if previous_section %}
                 <li class="previous next-prev">
-                    <a href="/eregulations3k/{{regulation.part_number}}/{{previous_section.section_number}}/" class="navigation-link backward next-prev-link"><span class="cf-icon cf-icon-left"></span><span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label}}</a> <span class="next-prev-title">{{previous_section.title_content}}</span>
+                    <a href="{{ routablepageurl(page, "section", previous_section.section_number) }}" class="navigation-link backward next-prev-link"><span class="cf-icon cf-icon-left"></span><span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label}}</a> <span class="next-prev-title">{{previous_section.title_content}}</span>
                 </li>
                 {% endif %}
                 {% if next_section %}
                 <li class="next next-prev">
-                    <a href="/eregulations3k/{{regulation.part_number}}/{{next_section.section_number}}/" class="navigation-link forward next-prev-link"><span class="cf-icon cf-icon-right"></span><span class="next-prev-label">Next section - </span>{{next_section.numeric_label}}</a> <span class="next-prev-title">{{next_section.title_content}}</span>
+                    <a href="{{ routablepageurl(page, "section", next_section.section_number) }}" class="navigation-link forward next-prev-link"><span class="cf-icon cf-icon-right"></span><span class="next-prev-label">Next section - </span>{{next_section.numeric_label}}</a> <span class="next-prev-title">{{next_section.title_content}}</span>
                 </li>
                 {% endif %}
             </ul>
