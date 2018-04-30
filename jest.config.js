@@ -9,6 +9,7 @@ module.exports = {
     '<rootDir>/cfgov/unprocessed/**/*.js'
   ],
   coveragePathIgnorePatterns: [
+    '<rootDir>/collectstatic/',
     '<rootDir>/node_modules/',
     '<rootDir>/cfgov/unprocessed/apps/.+/node_modules/',
     '<rootDir>/cfgov/unprocessed/apps/.+/webpack-config.js$',
