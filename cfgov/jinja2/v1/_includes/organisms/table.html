@@ -62,8 +62,11 @@
                 {% endif %}
             <th scope="col"{{ width_class | default }}>
                 {% if value.is_sortable and value.sortable_types[loop.index0] != '' %}
-                    {% set data_sort = ' data-sort_type="' + value.sortable_types[loop.index0] + '"' %}
-                    <button class="sortable"{{ data_sort }}>
+                    {% set sort_value = value.sortable_types[loop.index0] %}
+                    {% set data_sort = sort_value | replace('-default', '') %}
+                    {% set sort_default = true if '-default' in sort_value else false %}
+                    <button class="sortable{{ ' sorted-up' if sort_default else '' }}"
+                            data-sort_type="{{ data_sort }}">
                         {{ _render_cell(cell) | striptags }}
                     </button>
                 {% else %}
