@@ -600,7 +600,7 @@ FLAGS = {
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
     'BETA_NOTICE': {
-        'site': 'beta.consumerfinance.gov',
+        'site': 'beta.consumerfinance.gov:443',
     },
 
     # When enabled, include a recruitment code comment in the base template.
