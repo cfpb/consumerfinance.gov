@@ -655,7 +655,9 @@ FLAGS = {
     'FINANCIAL_COACHING': {},
 
     # Teacher's Digital Platform
-    'TDP_RELEASE': {},
+    'TDP_RELEASE': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
 
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
