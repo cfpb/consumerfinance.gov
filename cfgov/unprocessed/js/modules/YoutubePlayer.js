@@ -66,8 +66,10 @@ const API = {
     let player;
     if ( YouTubePlayer && YouTubePlayer.Player ) {
       YouTubePlayer.setConfig( this.YOUTUBE_API_CONFIG );
-      player = new YouTubePlayer.Player( this.iFrameProperties.id
-        , this.playerOptions );
+      player = new YouTubePlayer.Player(
+        this.iFrameProperties.id,
+        this.playerOptions
+      );
       this.state.isPlayerInitialized = true;
     } else if ( this.state.isScriptLoading === false ) {
       window.onYouTubeIframeAPIReady = this.initPlayer.bind( this );
