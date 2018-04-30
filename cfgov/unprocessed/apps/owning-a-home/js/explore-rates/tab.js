@@ -31,7 +31,9 @@ function _bindTabLink( tabGroup, tabContents ) {
    */
   function _tabLinkClicked( evt ) {
     const target = evt.target;
-    if ( target.tagName !== 'A' ) {
+
+    if ( target.tagName !== 'A' ||
+      target.classList.contains( 'tab-link' ) === false ) {
       return;
     }
     evt.preventDefault();
