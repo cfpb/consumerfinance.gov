@@ -88,11 +88,10 @@ function updateView() {
 
   let request = params.getVal( 'request' );
 
-  /* TODO: We may have to find a way to cancel the promise from the request.
-     Abort the previous request.
-     if ( typeof request === 'object' ) {
-     request.abort();
-     } */
+  // Abort the previous request.
+  if ( request && typeof request.cancel === 'function' ) {
+    request.cancel( 'Aborting request for a new request.' );
+  }
 
   // And start a new one.
   if ( +Number( params.getVal( 'loan-amount' ) ) === 0 ) {
@@ -117,13 +116,14 @@ function updateView() {
     params.setVal( 'request', request );
 
     // Handle errors
-    request.catch( () => {
+    request.promise.catch( () => {
       resultFailWarning();
     } );
 
     // If it succeeds, update the DOM.
-    request.then( rawResults => {
-      const results = JSON.parse( rawResults );
+    request.promise.then( rawResults => {
+      const results = rawResults.data.data;
+
       // sort results by interest rate, ascending
       const sortedKeys = [];
       const sortedResults = {};
@@ -131,8 +131,8 @@ function updateView() {
       let x;
       let len;
 
-      for ( key in results.data ) {
-        if ( results.data.hasOwnProperty( key ) ) {
+      for ( key in results ) {
+        if ( results.hasOwnProperty( key ) ) {
           sortedKeys.push( key );
         }
       }
@@ -141,7 +141,7 @@ function updateView() {
       len = sortedKeys.length;
 
       for ( x = 0; x < len; x++ ) {
-        sortedResults[sortedKeys[x]] = results.data[sortedKeys[x]];
+        sortedResults[sortedKeys[x]] = results[sortedKeys[x]];
       }
 
       $.each( sortedResults, function( key, val ) {
@@ -263,7 +263,7 @@ function loadCounties() {
 
   // And request 'em.
   const request = getCounties( params.getVal( 'location' ) );
-  request.then( resp => {
+  request.promise.then( resp => {
 
     if ( params.getVal( 'location' ) ) {
       /* Empty the current counties and cache the current state so we
@@ -271,7 +271,7 @@ function loadCounties() {
       $( '#county' ).html( '' ).data( 'state', params.getVal( 'location' ) );
 
       // Inject each county into the DOM.
-      const parseCountyData = JSON.parse( resp ).data;
+      const parseCountyData = resp.data.data;
       $.each( parseCountyData, function( i, countyData ) {
         const countyOption = template.county( countyData );
         $( '#county' ).append( countyOption );
