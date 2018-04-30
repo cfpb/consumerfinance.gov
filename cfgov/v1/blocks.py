@@ -156,6 +156,8 @@ class HeadingBlock(blocks.StructBlock):
     )
 
     class Meta:
+        icon = 'title'
+        template = '_includes/blocks/heading.html'
         form_template = (
             'admin/form_templates/struct-with-block-wrapper-classes.html'
         )
