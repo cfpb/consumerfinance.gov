@@ -600,7 +600,7 @@ FLAGS = {
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
     'BETA_NOTICE': {
-        'site': 'beta.consumerfinance.gov',
+        'site': 'beta.consumerfinance.gov:443',
     },
 
     # When enabled, include a recruitment code comment in the base template.
@@ -655,7 +655,9 @@ FLAGS = {
     'FINANCIAL_COACHING': {},
 
     # Teacher's Digital Platform
-    'TDP_RELEASE': {},
+    'TDP_RELEASE': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
 
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
