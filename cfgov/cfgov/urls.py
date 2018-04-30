@@ -403,9 +403,13 @@ urlpatterns = [
                 include_if_app_enabled('teachers_digital_platform',
                                        'teachers_digital_platform.urls')),
 
-    flagged_url('REGULATIONS3K',
-                r'^regulations3k/',
-                include_if_app_enabled('regulations3k', 'regulations3k.urls')),
+    flagged_url(
+        'REGULATIONS3K',
+        r'^regulations/',
+        lambda request: ServeView.as_view()(request, request.path),
+        fallback=RedirectView.as_view(url='policy-compliance/rulemaking/')
+    ),
+
 ]
 
 if settings.ALLOW_ADMIN_URL:

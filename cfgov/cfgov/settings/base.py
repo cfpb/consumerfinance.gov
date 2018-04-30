@@ -720,8 +720,8 @@ EMAIL_POPUP_URLS = {
 
 REGULATIONS_REFERENCE_MAPPING = [
     (
-    	r'(?P<label>(?P<part>^[0-9]+)-(?P<section>[\w]+))-(?P<paragraph>[\w-]*-Interp)',
-    	'{part}-Interp-{section}',
-    	'{section}-{paragraph}'
+        r'(?P<label>(?P<part>^[0-9]+)-(?P<section>[\w]+))-(?P<paragraph>[\w-]*-Interp)',
+        '{part}-Interp-{section}',
+        '{section}-{paragraph}'
     ),
 ]
