@@ -1,5 +1,10 @@
+
+import jinja2
 from jinja2.ext import Extension
 from jinja2.filters import do_mark_safe
+
+from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import routablepageurl  # noqa: E501
+
 from regulations3k.regdown import regdown as regdown_func
 
 
@@ -7,14 +12,17 @@ def regdown_filter(text):
     return do_mark_safe(regdown_func(text))
 
 
-class RegDownExtension(Extension):
+class RegulationsExtension(Extension):
 
     def __init__(self, environment):
-        super(RegDownExtension, self).__init__(environment)
+        super(RegulationsExtension, self).__init__(environment)
 
+        self.environment.globals.update({
+            'routablepageurl': jinja2.contextfunction(routablepageurl),
+        })
         self.environment.filters.update({
             'regdown': regdown_filter,
         })
 
 
-regdown = RegDownExtension
+regulations = RegulationsExtension
