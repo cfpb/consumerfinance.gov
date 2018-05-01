@@ -10,7 +10,7 @@ const fancyLog = require( 'fancy-log' );
 const swPrecache = require( 'sw-precache' );
 
 // Constants
-const APP_NAME = 'eregs';
+const APP_NAME = 'regulations3k';
 // This'll need to be changed if the app doesn't live at cf.gov/regulations
 const APP_PATH = 'regulations';
 const SERVICE_WORKER_FILENAME = `${ APP_NAME }-service-worker.js`;
@@ -71,11 +71,35 @@ const SERVICE_WORKER_CONFIG = {
   replacePrefix: /static/,
   runtimeCaching: [
     {
-      urlPattern: /\/$/,
+      urlPattern: new RegExp( `${ APP_PATH }` ),
       handler: 'fastest',
       options: {
         cache: {
-          name: `${ APP_NAME }`
+          name: `${ APP_NAME }-content`,
+          // Delete entries older than twelve hours
+          maxAgeSeconds: 60 * 60 * 12
+        }
+      }
+    },
+    {
+      urlPattern: new RegExp( `static/apps/${ APP_NAME }` ),
+      handler: 'fastest',
+      options: {
+        cache: {
+          name: `${ APP_NAME }-assets`,
+          // Delete entries older than twelve hours
+          maxAgeSeconds: 60 * 60 * 12
+        }
+      }
+    },
+    {
+      urlPattern: new RegExp( 'static/(css|js|fonts|img)' ),
+      handler: 'fastest',
+      options: {
+        cache: {
+          name: 'cfpb-assets',
+          // Delete entries older than twelve hours
+          maxAgeSeconds: 60 * 60 * 12
         }
       }
     }

@@ -412,11 +412,11 @@ urlpatterns = [
     ),
     flagged_url(
         'REGULATIONS3K',
-        r'^eregs-service-worker.js',
+        r'^regulations3k-service-worker.js',
         TemplateView.as_view(
-        template_name='regulations3k/eregs-service-worker.js',
+        template_name='regulations3k/regulations3k-service-worker.js',
         content_type='application/javascript'),
-        name='eregs-service-worker.js'
+        name='regulations3k-service-worker.js'
     ),
 
 ]
