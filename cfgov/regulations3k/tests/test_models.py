@@ -125,7 +125,7 @@ class RegModelTests(DjangoTestCase):
 
     def test_get_reg_nav_items(self):
         request = HttpRequest()
-        request.url = '/regulations/1002/1002-4/'
+        request.url = '/regulations/1002/4/'
         test_nav_items = get_reg_nav_items(request, self.reg_page)[0]
         self.assertEqual(
             len(test_nav_items),
