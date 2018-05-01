@@ -59,13 +59,13 @@
                 {% set subpart_state = item.section.subpart %}
                 <br>
                 {% endif %}
-                {{ nav_link.render(item.title, item.url, true, item.active) }}
+                {{ nav_link.render(item.title, item.url, true, item.active, true) }}
             {%- if item.children -%}
                 <ul class="o-secondary-navigation_list
                            o-secondary-navigation_list__children">
                 {%- for child in item.children -%}
                     <li>
-                        {{ nav_link.render(child.title, child.url, false, child.active) }}
+                        {{ nav_link.render(child.title, child.url, false, child.active, true) }}
                     </li>
                 {%- endfor %}
                 </ul>
@@ -106,14 +106,14 @@
             {%- set href, id, caption, children = item[0], item[1], item[2], item[3:] %}
 
             <li>
-                {{ nav_link.render(caption, href, true, id == active_nav_id) }}
+                {{ nav_link.render(caption, href, true, id == active_nav_id, true) }}
             {%- if children -%}
                 {% set children = children[0] %}
                 <ul class="o-secondary-navigation_list
                            o-secondary-navigation_list__children">
                 {%- for href, id, caption in children %}
                     <li>
-                        {{ nav_link.render(caption, href, false, id == active_nav_id) }}
+                        {{ nav_link.render(caption, href, false, id == active_nav_id, true) }}
                     </li>
                 {%- endfor %}
                 </ul>
