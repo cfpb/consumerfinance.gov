@@ -111,7 +111,7 @@ class TestMetaImage(TestCase):
     )
     def test_template_image_image_url_s3(self):
         """Meta image links should work if using S3 storage."""
-        mock_s3 = moto.mock_s3()
+        mock_s3 = moto.mock_s3_deprecated()
         mock_s3.start()
 
         s3 = boto.connect_s3()

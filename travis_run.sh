@@ -9,7 +9,7 @@ if [ "$RUNTEST" == "frontend" ]; then
     bash <(curl -s https://codecov.io/bash) -F frontend -X coveragepy
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e lint
-    DATABASE_URL=postgres://postgres@localhost/travis_ci_test tox -e fast
+    TEST_DATABASE_URL=postgres://postgres@localhost/travis_ci_test tox -e fast
     tox -e missing-migrations
     bash <(curl -s https://codecov.io/bash) -F backend
 

@@ -365,13 +365,22 @@ class BureauStructurePosition(blocks.StructBlock):
 
 class BureauStructureDivision(blocks.StructBlock):
     division = v1_blocks.PlaceholderCharBlock(label='Division')
-    division_lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
+    division_lead = v1_blocks.PlaceholderCharBlock(placeholder='Name')
     title = blocks.StructBlock([
         ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 1")),
+                                                  placeholder='Title 1')),
         ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 2"))
+                                                  placeholder='Title 2'))
     ])
+    division_lead_1 = v1_blocks.PlaceholderCharBlock(required=False,
+                                                     placeholder='Name',
+                                                     label='Division Lead')
+    title_1 = blocks.StructBlock([
+        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
+                                                  placeholder='Title 1')),
+        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
+                                                  placeholder='Title 2'))
+    ], label='Title')
     link_to_division_page = atoms.Hyperlink(required=False)
     offices = blocks.ListBlock(BureauStructurePosition(required=False))
 
@@ -661,8 +670,9 @@ class ModelList(ModelBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
-    content_with_anchor = molecules.ContentWithAnchor()
     content = blocks.RichTextBlock(icon='edit')
+    content_with_anchor = molecules.ContentWithAnchor()
+    heading = v1_blocks.HeadingBlock(required=False)
     media = images_blocks.ImageChooserBlock(icon='image')
     quote = molecules.Quote()
     cta = molecules.CallToAction()

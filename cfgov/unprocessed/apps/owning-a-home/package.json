@@ -16,13 +16,14 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "amortize": "0.2.2",
     "date-format": "0.0.2",
     "fastdom": "1.0.6",
     "format-usd": "0.2.0",
     "handlebars": "^4.0.11",
     "handlebars-loader": "git+https://github.com/Waavi/handlebars-loader.git",
-    "highcharts": "5.0.11",
+    "highcharts": "6.0.7",
     "jquery": "^3.3.1",
     "jumbo-mortgage": "2.0.0",
     "median": "0.0.2",

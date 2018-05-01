@@ -1,5 +1,9 @@
 import $ from 'jquery';
 import {
+  getCounties,
+  getData
+} from './data-loader';
+import {
   calcLoanAmount,
   checkIfZero,
   delay,
@@ -13,95 +17,37 @@ import {
 } from './util';
 import * as params from './params';
 import * as template from './template-loader';
-import Highcharts from 'highcharts';
+import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
 import amortize from 'amortize';
-import config from '../../config.json';
 import dropdown from '../dropdown-utils';
-import fetchRates from '../rates';
 import formatUSD from 'format-usd';
-import highchartsExport from 'highcharts/modules/exporting';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
 import tab from './tab';
 import unFormatUSD from 'unformat-usd';
-import { applyThemeTo } from './highcharts-theme';
 import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 
-// Load and style Highcharts library. https://www.highcharts.com/docs.
-highchartsExport( Highcharts );
-applyThemeTo( Highcharts );
-
 // References to alert HTML.
 let creditAlertDom;
-let resultAlertDom;
-let failAlertDom;
 let dpAlertDom;
 
 // Range slider for credit rating.
 let slider;
+let chart;
 
-// Set some properties for the histogram.
-const chart = {
-  $el:           $( '#chart' ),
-  $wrapper:      $( '.chart' ),
-  $load:         $( '.data-enabled' ),
-  $summary:      $( '#rc-summary' ),
-  $timestamp:    $( '#timestamp-p' ),
-  $clear:        $( '#rc-summary, #timestamp-p' ),
-  isInitialized: false,
-  startLoading:  function() {
-    removeAlerts();
-    this.$load.addClass( 'loading' ).removeClass( 'loaded' );
-  },
-  stopLoading:   function( state ) {
-    this.$wrapper.removeClass( 'geolocating' );
-    if ( this.$clear.hasClass( 'clear' ) && state !== 'error' ) {
-      this.$clear.removeClass( 'clear' );
-    }
-
-    if ( state !== 'error' ) {
-      this.$load.removeClass( 'loading' ).addClass( 'loaded' );
-    }
-  }
-};
-
-let highChart;
 let timeStampDom;
 let loanAmountResultDom;
 let accessibleDataTableHeadDom;
 let accessibleDataTableBodyDom;
+let rcSummaryDom;
+let rcDisclaimerDom;
+let dataLoadedDomList;
 
 let rateSelectsDom;
 let rateCompare1Dom;
 let rateCompare2Dom;
-
-/**
- * Get data from the API.
- * @returns {Object} jQuery promise.
- */
-function getData() {
-  params.update();
-
-  const promise = fetchRates( {
-    price:          params.getVal( 'house-price' ),
-    loan_amount:    params.getVal( 'loan-amount' ),
-    minfico:        slider.valMin(),
-    maxfico:        slider.valMax(),
-    state:          params.getVal( 'location' ),
-    rate_structure: params.getVal( 'rate-structure' ),
-    loan_term:      params.getVal( 'loan-term' ),
-    loan_type:      params.getVal( 'loan-type' ),
-    arm_type:       params.getVal( 'arm-type' )
-  } );
-
-  promise.fail( function( request, status, errorThrown ) {
-    resultFailWarning();
-  } );
-
-  return promise;
-}
 
 /**
  * Calculate and render the loan amount.
@@ -119,7 +65,8 @@ function renderLoanAmountResult() {
  * Render all applicable rate checker areas.
  */
 function updateView() {
-  chart.startLoading();
+  removeAlerts();
+  startLoading();
 
   // reset view
   dropdown( [ 'county', 'loan-term' ] ).hideHighlight();
@@ -139,10 +86,11 @@ function updateView() {
     }
   };
 
-  const request = params.getVal( 'request' );
+  let request = params.getVal( 'request' );
+
   // Abort the previous request.
-  if ( typeof request === 'object' ) {
-    request.abort();
+  if ( request && typeof request.cancel === 'function' ) {
+    request.cancel( 'Aborting request for a new request.' );
   }
 
   // And start a new one.
@@ -150,10 +98,32 @@ function updateView() {
     resultWarning();
     downPaymentWarning();
   } else {
-    params.setVal( 'request', getData() );
+
+    params.update();
+    const fieldsToFetch = {
+      price:          params.getVal( 'house-price' ),
+      loan_amount:    params.getVal( 'loan-amount' ),
+      minfico:        slider.valMin(),
+      maxfico:        slider.valMax(),
+      state:          params.getVal( 'location' ),
+      rate_structure: params.getVal( 'rate-structure' ),
+      loan_term:      params.getVal( 'loan-term' ),
+      loan_type:      params.getVal( 'loan-type' ),
+      arm_type:       params.getVal( 'arm-type' )
+    };
+
+    request = getData( fieldsToFetch );
+    params.setVal( 'request', request );
+
+    // Handle errors
+    request.promise.catch( () => {
+      resultFailWarning();
+    } );
 
     // If it succeeds, update the DOM.
-    params.getVal( 'request' ).done( function( results ) {
+    request.promise.then( rawResults => {
+      const results = rawResults.data.data;
+
       // sort results by interest rate, ascending
       const sortedKeys = [];
       const sortedResults = {};
@@ -161,8 +131,8 @@ function updateView() {
       let x;
       let len;
 
-      for ( key in results.data ) {
-        if ( results.data.hasOwnProperty( key ) ) {
+      for ( key in results ) {
+        if ( results.hasOwnProperty( key ) ) {
           sortedKeys.push( key );
         }
       }
@@ -171,7 +141,7 @@ function updateView() {
       len = sortedKeys.length;
 
       for ( x = 0; x < len; x++ ) {
-        sortedResults[sortedKeys[x]] = results.data[sortedKeys[x]];
+        sortedResults[sortedKeys[x]] = results[sortedKeys[x]];
       }
 
       $.each( sortedResults, function( key, val ) {
@@ -191,7 +161,8 @@ function updateView() {
 
       // fade out chart and highlight county if no county is selected
       if ( $( '#county' ).is( ':visible' ) && $( '#county' ).val() === null ) {
-        chart.startLoading();
+        removeAlerts();
+        startLoading();
         dropdown( 'county' ).showHighlight();
         document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
         return;
@@ -213,14 +184,15 @@ function updateView() {
 
       data.uniqueLabels = uniquePrimitives( data.labels.slice( 0 ) );
 
-      chart.stopLoading();
+      finishLoading();
+      hideSummary();
       removeAlerts();
       updateLanguage( data.totalVals );
       renderAccessibleData(
         accessibleDataTableHeadDom, accessibleDataTableBodyDom,
         data.labels, data.vals
       );
-      renderChart( data );
+      chart.render( data );
 
       // Update timestamp
       let _timestamp = results.timestamp;
@@ -284,26 +256,14 @@ function updateLanguage( totalVals ) {
   updateTerm();
 }
 
-
-/**
- * Get a list of counties from the API for the selected state.
- * @returns {Object} jQuery promise.
- */
-function getCounties() {
-  return $.get( config.countyAPI, {
-    state: params.getVal( 'location' )
-  } );
-
-}
-
 /**
  * Request a list of counties and bring them into the DOM.
  */
 function loadCounties() {
 
   // And request 'em.
-  const request = getCounties();
-  request.done( function( resp ) {
+  const request = getCounties( params.getVal( 'location' ) );
+  request.promise.then( resp => {
 
     if ( params.getVal( 'location' ) ) {
       /* Empty the current counties and cache the current state so we
@@ -311,7 +271,8 @@ function loadCounties() {
       $( '#county' ).html( '' ).data( 'state', params.getVal( 'location' ) );
 
       // Inject each county into the DOM.
-      $.each( resp.data, function( i, countyData ) {
+      const parseCountyData = resp.data.data;
+      $.each( parseCountyData, function( i, countyData ) {
         const countyOption = template.county( countyData );
         $( '#county' ).append( countyOption );
       } );
@@ -331,7 +292,8 @@ function loadCounties() {
       $( '#county' ).empty().append( countyOptions );
 
       // Don't select any options by default.
-      $( '#county' ).prop( 'selectedIndex', -1 );
+      const countyDropDownDom = document.querySelector( '#county' );
+      countyDropDownDom.selectedIndex = -1;
     } else {
       // If they haven't yet selected a state highlight the field.
       dropdown( 'location' ).showHighlight();
@@ -339,9 +301,7 @@ function loadCounties() {
   } );
 
   // Hide loading animation regardless of whether or not we're successful.
-  request.then( function() {
-    dropdown( 'county' ).hideLoadingAnimation();
-  } );
+  dropdown( 'county' ).hideLoadingAnimation();
 }
 
 /**
@@ -433,14 +393,13 @@ function processCounty() {
     'fha-hb': 'FHA high-balance',
     'va-hb':  'VA high-balance'
   };
-  let loan;
 
   // If the county field is u-hidden or they haven't selected a county, abort.
   if ( !$counties.is( ':visible' ) || !$counties.val() ) {
     return;
   }
 
-  loan = jumbo( {
+  const loan = jumbo( {
     loanType:       params.getVal( 'loan-type' ),
     loanAmount:     params.getVal( 'loan-amount' ),
     gseCountyLimit: parseInt( $county.data( 'gse' ), 10 ),
@@ -482,15 +441,16 @@ function processCounty() {
     dropdown( 'loan-type' ).enable( norms );
 
     document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
+    const loanTypeDom = document.querySelector( '#loan-type' );
     // Select appropriate loan type if loan was kicked out of jumbo
     if ( params.getVal( 'prevLoanType' ) === 'fha-hb' ) {
-      $( '#loan-type' ).val( 'fha' );
+      loanTypeDom.value = 'fha';
     } else if ( params.getVal( 'prevLoanType' ) === 'va-hb' ) {
-      $( '#loan-type' ).val( 'va' );
+      loanTypeDom.value = 'va';
     }
 
-    if ( $( '#loan-type' ).val === null ) {
-      $( '#loan-type' ).val( 'conf' );
+    if ( loanTypeDom.value === null ) {
+      loanTypeDom.value = 'conf';
     }
   }
 
@@ -539,7 +499,8 @@ function renderDownPayment() {
 
   if ( checkIfZero( params.getVal( 'house-price' ) ) ) {
     removeAlerts();
-    chart.stopLoading();
+    finishLoading();
+    hideSummary();
     downPaymentWarning();
   }
 
@@ -558,6 +519,17 @@ function renderDownPayment() {
 }
 
 /**
+ * Hides the rate checker summary above the chart.
+ */
+function hideSummary() {
+  if ( rcSummaryDom.classList.contains( 'clear' ) &&
+       chart.currentState !== RateCheckerChart.STATUS_ERROR ) {
+    rcSummaryDom.classList.remove( 'clear' );
+    rcDisclaimerDom.classList.remove( 'clear' );
+  }
+}
+
+/**
  * Update the values in the dropdowns in the comparison section
  * @param {Object} data - Data object created by the updateView method.
  */
@@ -570,7 +542,7 @@ function updateComparisons( data ) {
     $( '.compare select' ).append( option );
   } );
   // In the second comparison dropdown, select the last (largest) rate.
-  $( '#rate-compare-2' ).val( uniqueLabels[uniqueLabels.length - 1] );
+  rateCompare2Dom.value = uniqueLabels[uniqueLabels.length - 1];
 }
 
 /**
@@ -693,18 +665,14 @@ function scoreWarning() {
  * Overlays a warning/error message on the chart.
  */
 function resultWarning() {
-  chart.stopLoading( 'error' );
-  document.querySelector( '#chart-section' ).classList.add( 'warning' );
-  resultAlertDom.classList.remove( 'u-hidden' );
+  chart.finishLoading( RateCheckerChart.STATUS_WARNING );
 }
 
 /**
  * Show alert that data call to the API failed.
  */
 function resultFailWarning() {
-  chart.stopLoading( 'error' );
-  document.querySelector( '#chart-section' ).classList.add( 'warning' );
-  failAlertDom.classList.remove( 'u-hidden' );
+  chart.finishLoading( RateCheckerChart.STATUS_ERROR );
 }
 
 /**
@@ -718,12 +686,8 @@ function downPaymentWarning() {
  * Hide all alert messages that are showing.
  */
 function removeAlerts() {
-  if ( isVisible( resultAlertDom ) ||
-       isVisible( failAlertDom ) ||
-       isVisible( dpAlertDom ) ) {
-    $( '#chart' ).removeClass( 'warning' );
-    resultAlertDom.classList.add( 'u-hidden' );
-    failAlertDom.classList.add( 'u-hidden' );
+  if ( isVisible( dpAlertDom ) ) {
+    chart.setStatus( RateCheckerChart.STATUS_OKAY );
     dpAlertDom.classList.add( 'u-hidden' );
     removeCreditScoreAlert();
   }
@@ -737,128 +701,6 @@ function removeCreditScoreAlert() {
     slider.setState( Slider.STATUS_OKAY );
     creditAlertDom.classList.add( 'u-hidden' );
   }
-}
-
-/**
- * Render (or update) the Highcharts chart.
- * @param  {Object} data Data processed from the API.
- * @param  {Function} cb Optional callback.
- * @returns {*} Value of callback invocation or undefined.
- */
-function renderChart( data, cb ) {
-
-  if ( chart.isInitialized ) {
-
-    highChart.update( {
-      xAxis: {
-        categories: data.labels
-      },
-      series: {
-        data: data.vals
-      }
-    } );
-
-    chart.$wrapper.removeClass( 'geolocating' );
-  } else {
-
-    if ( chart.$el.length < 1 ) {
-      return;
-    }
-
-    chart.$wrapper.addClass( 'geolocating' );
-
-    highChart = new Highcharts.Chart( {
-      chart: {
-        renderTo: chart.$el[0],
-        type: 'column',
-        animation: false
-      },
-      title: {
-        text: ''
-      },
-      xAxis: {
-        categories: [ 1, 2, 3, 4, 5 ]
-      },
-      yAxis: [ {
-        title: {
-          text: ''
-        },
-        labels: {
-          formatter: function() {
-            return this.value > 9 ? this.value + '+' : this.value;
-          }
-        },
-        max: 10,
-        min: 0
-      }, {
-        title: {
-          text: 'Number of lenders offering rate'
-        }
-      } ],
-      series: [ {
-        name: 'Number of Lenders',
-        data: [ 1, 1, 1, 1, 1 ],
-        showInLegend: false,
-        dataLabels: {
-          enabled:   true,
-          useHTML:   true,
-          crop:      false,
-          overflow:  'none',
-          defer:     true,
-          color:     '#919395',
-          x:         2,
-          y:         2,
-          formatter: function() {
-            const point = this.point;
-            window.setTimeout( function() {
-              if ( point.y > 9 ) {
-                point.dataLabel.attr( {
-                  y: -32,
-                  x: point.plotX - 24
-                } );
-              }
-            } );
-            return '<div class="data-label"><span class="data-label_number">' + this.x + '</span><br>|</div>';
-          }
-        }
-      } ],
-      credits: {
-        text: ''
-      },
-      tooltip: {
-        useHTML: true,
-        formatter: function() {
-          if ( this.y === 1 ) {
-            return template.chartTooltipSingle( this );
-          }
-
-          return template.chartTooltipMultiple( this );
-        },
-        positioner: function( boxWidth, boxHeight, point ) {
-          let x, y;
-          if ( point.plotY < 0 ) {
-            x = point.plotX - 74;
-            y = this.chart.plotTop - 74;
-          } else {
-            x = point.plotX - 54;
-            y = point.plotY - 66;
-          }
-          return {
-            x: x,
-            y: y
-          };
-        }
-      }
-    } );
-
-    chart.isInitialized = true;
-  }
-
-  if ( cb ) {
-    return cb(); // eslint-disable-line consistent-return
-  }
-
-  // eslint-disable-line consistent-return
 }
 
 /**
@@ -886,13 +728,13 @@ function init() {
   }
 
   creditAlertDom = document.querySelector( '#credit-score-alert' );
-  resultAlertDom = document.querySelector( '#chart-result-alert' );
-  failAlertDom = document.querySelector( '#chart-fail-alert' );
   dpAlertDom = document.querySelector( '#dp-alert' );
 
   rateSelectsDom = document.querySelector( '#rate-selects' );
   rateCompare1Dom = document.querySelector( '#rate-compare-1' );
   rateCompare2Dom = document.querySelector( '#rate-compare-2' );
+
+  dataLoadedDomList = document.querySelectorAll( '#rate-results .data-enabled' );
 
   const sliderDom = document.querySelector( '#credit-score-range' );
   const creditScore = params.getVal( 'credit-score' );
@@ -907,6 +749,9 @@ function init() {
     }
   );
 
+  chart = new RateCheckerChart();
+  chart.init();
+
   // Record timestamp HTML element that's updated from date from API.
   timeStampDom = document.querySelector( '#timestamp' );
 
@@ -916,7 +761,10 @@ function init() {
   accessibleDataTableHeadDom = accessibleDataDom.querySelector( '.table-head' );
   accessibleDataTableBodyDom = accessibleDataDom.querySelector( '.table-body' );
 
-  renderChart();
+  rcSummaryDom = document.querySelector( '#rc-summary' );
+  rcDisclaimerDom = document.querySelector( '#timestamp-p' );
+
+  chart.render();
   renderLoanAmountResult();
   setSelections( params.getAllParams() );
   registerEvents();
@@ -934,6 +782,34 @@ function init() {
 */
   updateView();
   return true;
+}
+
+/**
+ * Add loading CSS class to all items with data-loaded class.
+ */
+function startLoading() {
+  chart.startLoading();
+  let item;
+  for ( let i = 0, len = dataLoadedDomList.length; i < len; i++ ) {
+    item = dataLoadedDomList[i];
+    item.classList.add( 'loading' );
+    item.classList.remove( 'loaded' );
+  }
+}
+
+/**
+ * Add loaded CSS class to all items with data-loaded class.
+ */
+function finishLoading() {
+  chart.finishLoading();
+  if ( chart.currentState !== RateCheckerChart.STATUS_ERROR ) {
+    let item;
+    for ( let i = 0, len = dataLoadedDomList.length; i < len; i++ ) {
+      item = dataLoadedDomList[i];
+      item.classList.remove( 'loading' );
+      item.classList.add( 'loaded' );
+    }
+  }
 }
 
 /**
@@ -998,7 +874,8 @@ function registerEvents() {
     const key = event.which;
     // on keyup (not tab or arrows), immediately gray chart
     if ( isKeyAllowed( key ) ) {
-      chart.startLoading();
+      removeAlerts();
+      startLoading();
     }
 
   } );

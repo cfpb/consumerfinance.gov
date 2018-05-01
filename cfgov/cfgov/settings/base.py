@@ -600,7 +600,7 @@ FLAGS = {
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
     'BETA_NOTICE': {
-        'site': 'beta.consumerfinance.gov',
+        'site': 'beta.consumerfinance.gov:443',
     },
 
     # When enabled, include a recruitment code comment in the base template.
@@ -633,10 +633,6 @@ FLAGS = {
     # To be enabled when owning-a-home/explore-rates is de-sheered.
     'OAH_EXPLORE_RATES': {},
 
-    # To be enabled when owning-a-home/closing-disclosure/
-    # and owning-a-home/loan-estimate/ are de-sheered.
-    'OAH_FORM_EXPLAINERS': {},
-
     # To be enabled when journey pages are released in Wagtail.
     'OAH_JOURNEY': {},
 
@@ -659,7 +655,9 @@ FLAGS = {
     'FINANCIAL_COACHING': {},
 
     # Teacher's Digital Platform
-    'TDP_RELEASE': {},
+    'TDP_RELEASE': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
 
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
@@ -703,7 +701,7 @@ SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
 # This value is read by v1.wagtail_hooks.
 SERVE_LATEST_DRAFT_PAGES = []
 if DEPLOY_ENVIRONMENT == 'beta':
-    SERVE_LATEST_DRAFT_PAGES = [1288,1286,3273]
+    SERVE_LATEST_DRAFT_PAGES = [1288,1286,3273,11432]
 
 # Email popup configuration. See v1.templatetags.email_popup.
 EMAIL_POPUP_URLS = {

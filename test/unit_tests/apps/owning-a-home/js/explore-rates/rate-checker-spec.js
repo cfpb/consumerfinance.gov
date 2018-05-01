@@ -3,6 +3,12 @@ const rateChecker = require( BASE_JS_PATH + 'js/explore-rates/rate-checker' );
 
 import { simulateEvent } from '../../../../../util/simulate-event';
 
+// Mock the XmlHttpRequest call from axios.
+import axios from '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios';
+jest.mock( '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios' );
+const mockResp = { data: 'mock data' };
+axios.get.mockImplementation( () => Promise.resolve( mockResp ) );
+
 const HTML_SNIPPET = `
   <div class="rate-checker">
     <div id="rate-results">
@@ -19,7 +25,21 @@ const HTML_SNIPPET = `
         </table>
       </div>
 
-      <section id="chart-section">
+      <section id="chart-section" class="chart">
+
+        <figure class="data-enabled loading">
+            <div id="chart" class="chart-area"></div>
+            <figcaption class="chart-caption">
+                <div class="caption-title">
+                    Interest rates for your situation
+                </div>
+                <div class="rc-data-link">
+                    <a href="#about" class="u-link-underline">
+                        About our data source
+                    </a>
+                </div>
+            </figcaption>
+        </figure>
 
         <div id="chart-result-alert"
              class="result-alert chart-alert u-hidden"
@@ -139,7 +159,6 @@ let rateStructureDom;
 let armTypeDom;
 
 describe( 'explore-rates/rate-checker', () => {
-
   describe( 'init()', () => {
     beforeEach( () => {
       document.body.innerHTML = HTML_SNIPPET;
