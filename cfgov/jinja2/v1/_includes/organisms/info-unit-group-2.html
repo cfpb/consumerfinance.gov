@@ -11,7 +11,7 @@
    value:                         Object defined from a StreamField block.
 
    value.format:                  The number and width of columns to output.
-   
+
    value.has_top_rule_line:       Boolean for whether or not to add top
                                   border to info-unit-group. Used in
                                   'render_block.html' to modify classes on
@@ -47,8 +47,7 @@
 {%- from 'molecules/info-unit-2.html' import info_unit with context %}
 
 <div class="o-info-unit-group"
-     {{- ' id="' ~ value.heading.text|slugify ~ '" ' if value.heading.text else ' ' -}}
-     data-qa-hook="@TODO: Find out if I need this!">
+     {{- ' id="' ~ value.heading.text|slugify ~ '" ' if value.heading.text else ' ' -}}>
 
 {% if value.heading and value.heading.text %}
     <{{ value.heading.level -}}
@@ -67,7 +66,7 @@
 {% for unit in value.info_units %}
     {% if ( loop.index == 1 ) or
           ( value.format == '50-50' and loop.index % 2 == 1 ) or
-          ( value.format == '33-33-33' and loop.index % 3 == 1 ) 
+          ( value.format == '33-33-33' and loop.index % 3 == 1 )
     %}
     <div class="content-l
                 {{- ' content-l__top-divider' if value.lines_between_items else '' -}}">
