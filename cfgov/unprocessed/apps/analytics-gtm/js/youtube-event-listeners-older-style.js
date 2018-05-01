@@ -18,11 +18,18 @@ import { analyticsLog } from './util/analytics-util';
       'There is already a function defined at window.onYouTubeIframeAPIReady;' +
       ' aborting LunaMetrics Google Analytics YouTube Tracking'
     );
+    return;
+  }
+
+  const iframes = document.getElementsByTagName( 'iframe' );
+
+  if ( iframes.length === 0 ) {
+    analyticsLog( 'There are no iframes on the page!' );
+    return;
   }
 
   // Invoked by the YouTube API once it has finished loading.
   window.onYouTubeIframeAPIReady = function() {
-    const iframes = document.getElementsByTagName( 'iframe' );
     const embeds = document.getElementsByTagName( 'embed' );
 
     digestPotentialVideos( iframes );
