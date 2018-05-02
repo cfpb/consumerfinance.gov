@@ -20,7 +20,6 @@ const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
 const paths = require( '../../config/environment' ).paths;
 const path = require( 'path' );
-const runBrowserSyncApp = require( '../utils/browser-sync' ).runBrowserSyncApp;
 const webpack = require( 'webpack' );
 const webpackConfig = require( '../../config/webpack-config.js' );
 const webpackStream = require( 'webpack-stream' );
@@ -42,8 +41,7 @@ function _processScript( localWebpackConfig, src, dest ) {
     .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
-    .pipe( gulp.dest( paths.processed + dest ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( paths.processed + dest ) );
 }
 
 /**
@@ -72,8 +70,7 @@ function scriptsPolyfill() {
       }
     } ) )
     .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.processed + '/js/' ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( paths.processed + '/js/' ) );
 }
 
 /**
@@ -157,8 +154,7 @@ function scriptsNonResponsive() {
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
-    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) );
 }
 
 /**
@@ -175,8 +171,7 @@ function scriptsNemo() {
     .on( 'error', handleErrors )
     .pipe( gulpUglify() )
     .pipe( gulpRename( 'scripts.min.js' ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) );
 }
 
 /**

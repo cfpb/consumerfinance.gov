@@ -2,7 +2,6 @@ const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
 const configCopy = require( '../config' ).copy;
 const handleErrors = require( '../utils/handle-errors' );
-const runBrowserSyncApp = require( '../utils/browser-sync' ).runBrowserSyncApp;
 const del = require( 'del' );
 
 /**
@@ -15,8 +14,7 @@ function _genericCopy( src, dest ) {
   return gulp.src( src )
     .pipe( gulpChanged( dest ) )
     .on( 'error', handleErrors )
-    .pipe( gulp.dest( dest ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( dest ) );
 }
 
 gulp.task( 'copy:icons', () => {

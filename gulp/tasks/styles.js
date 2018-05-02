@@ -19,7 +19,6 @@ const handleErrors = require( '../utils/handle-errors' );
 const mergeStream = require( 'merge-stream' );
 const paths = require( '../../config/environment' ).paths;
 const postcssUnmq = require( 'postcss-unmq' );
-const runBrowserSyncApp = require( '../utils/browser-sync' ).runBrowserSyncApp;
 
 /**
  * Process modern CSS.
@@ -39,8 +38,7 @@ function stylesModern() {
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
-    .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( configStyles.dest ) );
 }
 
 /**
@@ -67,8 +65,7 @@ function stylesIE() {
     } ) )
     .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( { compatibility: 'ie8', inline: false } ) )
-    .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( configStyles.dest ) );
 }
 
 /**
@@ -100,8 +97,7 @@ function stylesOnDemand() {
       suffix:  '.nonresponsive',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( configStyles.dest ) );
 }
 
 /**
@@ -121,8 +117,7 @@ function stylesFeatureFlags() {
     .pipe( gulpPostcss( [
       autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
     ] ) )
-    .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) );
 }
 
 /**
@@ -147,8 +142,7 @@ function stylesKnowledgebaseSpanishProd() {
       suffix:  '.min',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) );
 }
 
 /**
@@ -173,8 +167,7 @@ function stylesKnowledgebaseSpanishIE8() {
       suffix:  '.min',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) );
 }
 
 /**
@@ -198,8 +191,7 @@ function stylesNemoProd() {
       suffix:  '.min',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) );
 }
 
 /**
@@ -223,8 +215,7 @@ function stylesNemoIE8() {
       suffix:  '.min',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
-    .pipe( runBrowserSyncApp() );
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) );
 }
 
 /**
@@ -265,7 +256,6 @@ function stylesApps() {
         } ) )
         .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
         .pipe( gulp.dest( `${ paths.processed }/apps/${ app }/css` ) )
-        .pipe( runBrowserSyncApp() )
     );
   } );
 
