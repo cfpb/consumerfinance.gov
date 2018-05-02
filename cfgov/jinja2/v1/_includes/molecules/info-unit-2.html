@@ -63,11 +63,11 @@
     {% if link_image_and_heading %}
         <a href="{{ parse_links( value.links[0].url ) | safe }}">
     {% endif %}
-        {%- if value.image.alt %}
+        {%- if image_alt_value(value.image) %}
             <img class="m-info-unit_image
                         {{- ' m-info-unit_image__square' if img.is_square else '' }}"
                  src="{{ img.url }}"
-                 alt="{{ value.image.alt }}">
+                 alt="{{ image_alt_value(value.image) }}">
         {%- else %}
             <div class="m-info-unit_image
                         {{- ' m-info-unit_image__square' if img.is_square else '' }}"
