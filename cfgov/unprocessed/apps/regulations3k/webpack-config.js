@@ -14,10 +14,10 @@ const APP_NAME = 'regulations3k';
 // This'll need to be changed if the app doesn't live at cf.gov/regulations
 const APP_PATH = 'regulations';
 const SERVICE_WORKER_FILENAME = `${ APP_NAME }-service-worker.js`;
-const SERVICE_WORKER_DEST = `cfgov/regulations3k/jinja2/regulations3k/${ SERVICE_WORKER_FILENAME }`;
+const SERVICE_WORKER_DEST = `cfgov/${ APP_NAME }/jinja2/${ APP_NAME }/${ SERVICE_WORKER_FILENAME }`;
 const MANIFEST_FILENAME = `${ APP_NAME }-manifest.json`;
-const MANIFEST_SRC = `${ paths.unprocessed }/apps/regulations3k/${ MANIFEST_FILENAME }`;
-const MANIFEST_DEST = `${ paths.processed }/apps/regulations3k/${ MANIFEST_FILENAME }`;
+const MANIFEST_SRC = `${ paths.unprocessed }/apps/${ APP_NAME }/${ MANIFEST_FILENAME }`;
+const MANIFEST_DEST = `${ paths.processed }/apps/${ APP_NAME }/${ MANIFEST_FILENAME }`;
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
@@ -64,8 +64,8 @@ const STATS_CONFIG = {
 
 const SERVICE_WORKER_CONFIG = {
   staticFileGlobs: [
-    `${ paths.processed }/apps/regulations3k/css/main.css`,
-    `${ paths.processed }/apps/regulations3k/js/index.js`
+    `${ paths.processed }/apps/${ APP_NAME }/css/main.css`,
+    `${ paths.processed }/apps/${ APP_NAME }/js/index.js`
   ],
   stripPrefix: `${ paths.processed }/`,
   replacePrefix: /static/,
