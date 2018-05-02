@@ -1,10 +1,11 @@
 
+from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import (
+    routablepageurl  # noqa: E501
+)
+
 import jinja2
 from jinja2.ext import Extension
 from jinja2.filters import do_mark_safe
-
-from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import routablepageurl  # noqa: E501
-
 from regulations3k.regdown import regdown as regdown_func
 
 
