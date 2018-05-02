@@ -71,35 +71,35 @@ const SERVICE_WORKER_CONFIG = {
   replacePrefix: /static/,
   runtimeCaching: [
     {
-      urlPattern: new RegExp( `${ APP_PATH }` ),
+      urlPattern: new RegExp( `/${ APP_PATH }` ),
       handler: 'fastest',
       options: {
         cache: {
           name: `${ APP_NAME }-content`,
-          // Delete entries older than twelve hours
-          maxAgeSeconds: 60 * 60 * 12
+          // Delete entries older than three hours
+          maxAgeSeconds: 60 * 60 * 3
         }
       }
     },
     {
-      urlPattern: new RegExp( `static/apps/${ APP_NAME }` ),
+      urlPattern: new RegExp( `/static/apps/${ APP_NAME }` ),
       handler: 'fastest',
       options: {
         cache: {
           name: `${ APP_NAME }-assets`,
-          // Delete entries older than twelve hours
-          maxAgeSeconds: 60 * 60 * 12
+          // Delete entries older than three hours
+          maxAgeSeconds: 60 * 60 * 3
         }
       }
     },
     {
-      urlPattern: new RegExp( 'static/(css|js|fonts|img)' ),
+      urlPattern: new RegExp( '/static/(css|js|fonts|img)' ),
       handler: 'fastest',
       options: {
         cache: {
           name: 'cfpb-assets',
-          // Delete entries older than twelve hours
-          maxAgeSeconds: 60 * 60 * 12
+          // Delete entries older than three hours
+          maxAgeSeconds: 60 * 60 * 3
         }
       }
     }
