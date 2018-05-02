@@ -20,11 +20,12 @@ services:
             - "9200:9200"
             - "9300:9300"
     postgres:
-        image: postgres:9.6
+        image: postgres:10.3
         restart: always
         environment:
-            POSTGRES_USER: cfgov
-            POSTGRES_PASSWORD: cfgov
+            POSTGRES_USER: cfpb
+            POSTGRES_PASSWORD: cfpb
+            POSTGRES_DB: cfgov
     python:
         build: .
         ports:
