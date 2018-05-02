@@ -1,6 +1,6 @@
 
-from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import (
-    routablepageurl  # noqa: E501
+from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import (  # noqa: E501
+    routablepageurl
 )
 
 import jinja2
