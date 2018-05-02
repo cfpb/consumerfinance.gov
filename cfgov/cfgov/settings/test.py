@@ -1,23 +1,22 @@
 from .local import *
 
 
-# If a database wasn't defined in settings.base through the use of environment
-# variables, default to using an in-memory SQLite one for unit tests.
-#
-# If a database is configured through environment settings, the unit tests will
-# be run against a new test database on the same backend.
-#
-# See https://docs.djangoproject.com/en/dev/topics/testing/overview/#the-test-database
-if not DATABASES:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
+# A test database may be specified through use of the TEST_DATABASE_URL
+# environment variable. If not provided, unit tests will be run against an
+# in-memory SQLite database.
+TEST_DATABASE_URL = os.getenv('TEST_DATABASE_URL')
+if TEST_DATABASE_URL:
+    TEST_DATABASE = dj_database_url.parse(TEST_DATABASE_URL)
+else:
+    TEST_DATABASE = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+        'TEST': {
             'NAME': ':memory:',
-            'TEST': {
-                'NAME': ':memory:',
-            },
-        }
+        },
     }
+
+DATABASES = {'default': TEST_DATABASE}
 
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 

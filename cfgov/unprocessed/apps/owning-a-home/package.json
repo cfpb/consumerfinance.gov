@@ -16,6 +16,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "amortize": "0.2.2",
     "date-format": "0.0.2",
     "fastdom": "1.0.6",

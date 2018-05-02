@@ -44,7 +44,9 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
       xAxis: {
         categories: [ 'Jan', 'Feb' ]
       },
-      series: [ { data: [ 29.9, 71.5 ] } ]
+      series: [ {
+        data: [ 29.9, 71.5 ]
+      } ]
     } );
 
     highCharts.exportChart = jest.fn();
