@@ -407,7 +407,8 @@ urlpatterns = [
         'REGULATIONS3K',
         r'^regulations/$',
         lambda request: ServeView.as_view()(request, request.path),
-        fallback=RedirectView.as_view(url='/policy-compliance/rulemaking/'),
+        fallback=RedirectView.as_view(
+            url='/policy-compliance/rulemaking/', permanent=False),
         name='regulations'
     ),
     flagged_url(
