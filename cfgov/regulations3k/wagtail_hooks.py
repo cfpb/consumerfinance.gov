@@ -56,5 +56,5 @@ class Regulations3kModelAdminGroup(ModelAdminGroup):
     menu_label = 'Regulations3k'
     menu_icon = 'list-ul'
     items = (
-        PartModelAdmin, SubpartModelAdmin,
-        SectionModelAdmin, EffectiveVersionModelAdmin)
+        PartModelAdmin, EffectiveVersionModelAdmin,
+        SubpartModelAdmin, SectionModelAdmin)
