@@ -1,68 +1,144 @@
-// TODO: Remove $.
-import $ from 'jquery';
-
 import {
-  delay,
+  addEventListenerToElems,
+  closest,
   track
 } from './util/analytics-util';
 
-const OAHCDAnalytics = ( function( $ ) {
+// Owning a Home /owning-a-home/closing-disclosure/
 
-  $( '.tab-link' ).click( function() {
-    const text = $( this ).text().trim();
+const OAHCDAnalytics = ( () => {
+
+  const expandableStates = {};
+  let lastExpandable;
+
+  /**
+   * Record state (expanded or collapsed) of expandables.
+   * @param {string} id - The unique HTML ID of an expandable.
+   */
+  function recordExpandableState( id ) {
+    if ( !expandableStates[id] ) {
+      expandableStates[id] = true;
+    } else if ( lastExpandable === id ) {
+      expandableStates[id] = !expandableStates[id];
+    }
+    lastExpandable = id;
+  }
+
+  /**
+   * Record state (expanded or collapsed) of expandables.
+   * @param {string} expandable - An expandable HTML element.
+   */
+  function isAnimatingExpandable( expandable ) {
+    let isAnimating = false;
+
+    if ( expandable.classList.contains( 'o-expandable__expanding' ) ||
+         expandable.classList.contains( 'o-expandable__collapsing' ) ) {
+      isAnimating = true;
+    }
+
+    return isAnimating;
+  }
+
+  /**
+   * @param {MouseEvent} event - Mouse event from the click.
+   */
+  function trackTabLinkClick( event ) {
+    const target = event.target;
+    const text = target.textContent.trim();
     track( 'OAH Closing Disclosure Interaction', 'Tab click', text );
-  } );
+  }
 
-  $( '.form-explainer_page-link' ).click( function() {
-    const pageNumber = 'Page ' + $( this ).attr( 'data-page' );
+  /**
+   * @param {MouseEvent} event - Mouse event from the click.
+   */
+  function trackFormExplainerPageLinkClick( event ) {
+    const target = event.target;
+    const pageNumber = 'Page ' + target.getAttribute( 'data-page' );
     track(
       'OAH Closing Disclosure Interaction', 'Page link click', pageNumber
     );
-  } );
+  }
 
-  $( '.form-explainer_page-buttons button' ).click( function() {
-    const currentPage = 'Page ' + $( '.form-explainer_page-link.current-page' ).attr( 'data-page' );
+  /**
+   * @param {MouseEvent} event - Mouse event from the click.
+   */
+  function trackFormExplainerPageButtonClick( event ) {
+    const target = event.currentTarget;
+    const currentPageDom =
+      document.querySelector( '.form-explainer_page-link.current-page' );
+    const currentPage = 'Page ' + currentPageDom.getAttribute( 'data-page' );
     let action = 'Next Page button clicked';
-    if ( $( this ).hasClass( 'prev' ) ) {
+    if ( target.classList.contains( 'prev' ) ) {
       action = 'Previous Page button clicked';
     }
     track( 'OAH Closing Disclosure Interaction', action, currentPage );
+  }
 
-  } );
+  /**
+   * @param {MouseEvent} event - Mouse event from the click.
+   */
+  function trackExpandableTargetsClick( event ) {
+    const elem = event.currentTarget;
+    const expandable = elem.parentNode;
+    const expandableID = expandable.id;
+    if ( isAnimatingExpandable( expandable ) ) { return; }
+    recordExpandableState( expandableID );
 
-  $( '.o-expandable_target' ).click( function() {
-    const ele = $( this );
-    const tab = $( this ).closest( '.explain' ).find( '.active-tab' );
-    const tabText = tab.find( '.tab-label' ).text().trim();
-    delay(
-      function() {
-        const state = ele.attr( 'aria-pressed' );
-        let action = 'Expandable collapsed - ' + tabText;
-        const label = $( '<p>' + ele.find( '.o-expandable_label' ).html() + '</p>' );
-        let text = '';
+    const tab = closest( elem, '.explain' ).querySelector( '.active-tab' );
+    const tabText = tab.querySelector( '.tab-label' ).textContent.trim();
+    let action = 'Expandable collapsed - ' + tabText;
+    const label = elem.querySelector( '.o-expandable_label' );
+    let text = '';
+    text = label.textContent.trim();
+    if ( expandableStates[expandableID] === true ) {
+      action = 'Expandable expanded - ' + tabText;
+    }
+    track( 'OAH Closing Disclosure Interaction', action, text );
+  }
 
-        label.find( 'span' ).empty();
-        text = label.text().trim();
+  /**
+   * @param {MouseEvent} event - Mouse event from the click.
+   */
+  function trackImageMapOverlayClick( event ) {
+    const target = event.target;
+    const href = target.getAttribute( 'href' );
+    const text = target.textContent.trim();
 
-        if ( state === 'true' ) {
-          action = 'Expandable expanded - ' + tabText;
-        }
-        track( 'OAH Closing Disclosure Interaction', action, text );
-      }, 250 );
-  } );
+    let action = 'Image Overlay click - expandable collapsed';
+    const expandable = document.querySelector( href );
+    const expandableID = expandable.id;
+    if ( isAnimatingExpandable( expandable ) ) { return; }
+    recordExpandableState( expandableID );
+    if ( expandableStates[expandableID] === true ) {
+      action = 'Image Overlay click - expandable expanded';
+    }
+    track( 'OAH Closing Disclosure Interaction', action, text );
+  }
 
-  $( '.image-map_overlay' ).click( function() {
-    const href = $( this ).attr( 'href' );
-    const text = $( this ).text().trim();
-    delay(
-      function() {
-        let action = 'Image Overlay click - expandable collapsed';
-        const target = $( href );
-        if ( target.hasClass( 'o-expandable__expanded' ) ) {
-          action = 'Image Overlay click - expandable expanded';
-        }
-        track( 'OAH Closing Disclosure Interaction', action, text );
-      }, 250 );
-  } );
+  const tabLinksDom = document.querySelectorAll( '.tab-link' );
+  addEventListenerToElems( tabLinksDom, 'click', trackTabLinkClick );
 
-} )( $ );
+  const formExplainerPageLinksDom =
+    document.querySelectorAll( '.form-explainer_page-link' );
+  addEventListenerToElems(
+    formExplainerPageLinksDom, 'click', trackFormExplainerPageLinkClick
+  );
+
+  const formExplainerPageButtonsDom =
+    document.querySelectorAll( '.form-explainer_page-buttons button' );
+  addEventListenerToElems(
+    formExplainerPageButtonsDom, 'click', trackFormExplainerPageButtonClick
+  );
+
+  const expandableTargetsDom =
+    document.querySelectorAll( '.o-expandable_target' );
+  addEventListenerToElems(
+    expandableTargetsDom, 'mouseup', trackExpandableTargetsClick
+  );
+
+  const imageMapOverlaysDom =
+    document.querySelectorAll( '.image-map_overlay' );
+  addEventListenerToElems(
+    imageMapOverlaysDom, 'click', trackImageMapOverlayClick
+  );
+} )();

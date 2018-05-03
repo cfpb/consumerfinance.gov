@@ -1,6 +1,6 @@
 import {
   addEventListenerToElem,
-  delay,
+  Delay,
   track
 } from './util/analytics-util';
 
@@ -35,31 +35,34 @@ const OAHRCAnalytics = ( function() {
   } );
 
   // house price
+  const housePriceDelay = new Delay();
   const housePriceEl = document.querySelector( '#house-price' );
   addEventListenerToElem( housePriceEl, 'keyup', function( evt ) {
     const target = evt.target;
     const value = target.value;
-    delay( function() {
+    housePriceDelay( () => {
       track( 'OAH Rate Tool Interactions', 'House price', value );
     }, 5000 );
   } );
 
   // down payment percentage
+  let percentDownDelay = new Delay();
   const percentDownEl = document.querySelector( '#percent-down' );
   addEventListenerToElem( percentDownEl, 'keyup', function( evt ) {
     const target = evt.target;
     const value = target.value;
-    delay( function() {
+    percentDownDelay( () => {
       track( 'OAH Rate Tool Interactions', 'Down payment percent', value );
     }, 5000 );
   } );
 
   // down payment $
+  let downPaymentDelay = new Delay();
   const downPaymentEl = document.querySelector( '#down-payment' );
   addEventListenerToElem( downPaymentEl, 'keyup', function( evt ) {
     const target = evt.target;
     const value = target.value;
-    delay( function() {
+    downPaymentDelay( () => {
       track( 'OAH Rate Tool Interactions', 'Down payment amount', value );
     }, 5000 );
   } );

@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import {
   analyticsLog,
-  delay,
+  Delay,
   track
 } from './util/analytics-util';
 
@@ -40,9 +40,10 @@ const PFCAnalytics = ( function() {
   } );
 
   // Fire an event when Left to Pay = $0 and Costs > $0
+  const comparisonTablesDelay = new Delay();
   $( '#comparison-tables' ).on( 'keyup', 'input.school-data', function( ev ) {
     const columnNumber = $( this ).parents( '[data-column]' ).attr( 'data-column' );
-    delay( function() {
+    comparisonTablesDelay( () => {
       const totalCosts = $( '.breakdown [data-column="' + columnNumber + '"] .costs-value' ).html();
       const leftToPay = $( '.breakdown [data-column="' + columnNumber + '"] [data-nickname="gap"]' ).html();
       const schoolID = $( '#institution-row [data-column="' + columnNumber + '"]' ).attr( 'data-schoolid' );
@@ -59,10 +60,11 @@ const PFCAnalytics = ( function() {
   } );
 
   // Fire an event when GI Bill panel opens
+  const giBillDelay = new Delay();
   $( ".gibill-calculator, input[data-nickname='gibill']" ).click( function() {
     const columnNumber = $( this ).parents( '[data-column]' ).attr( 'data-column' );
     const schoolID = $( "#institution-row [data-column='" + columnNumber + "']" ).attr( 'data-schoolid' );
-    delay( function() {
+    giBillDelay( () => {
       const GIPanel = $( '[data-column="' + columnNumber + '"] .gibill-panel' );
       if ( GIPanel.is( ':visible' ) ) {
         track( 'School Interactions', 'GI Bill Calculator Opened', schoolID );
@@ -195,8 +197,9 @@ const PFCAnalytics = ( function() {
   }
 
   // Check for a new school added when .continue and .add-another-school are clicked
+  const introDelay = new Delay();
   $( '#introduction .continue, #introduction .add-another-school' ).click( function() {
-    delay( function() {
+    introDelay( () => {
       const newEmpty = findEmptyColumn();
       if ( newEmpty !== global.emptyColumn ) {
         newSchoolEvent();
