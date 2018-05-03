@@ -1,16 +1,9 @@
-const turbolinks = require( 'turbolinks' );
+import turbolinks from 'turbolinks';
 
-const Expandable = require( '../../../js/organisms/Expandable.js' );
+import Expandable from '../../../js/organisms/Expandable.js';
+import { instantiateAll } from '../../../js/modules/util/atomic-helpers';
 
-const expandableDom = document.querySelectorAll( '.block .o-expandable' );
-let expandable;
-
-if ( expandableDom ) {
-  for ( let i = 0, len = expandableDom.length; i < len; i++ ) {
-    expandable = new Expandable( expandableDom[i] );
-    expandable.init();
-  }
-}
+instantiateAll( '.o-expandable', Expandable );
 
 turbolinks.start();
 
