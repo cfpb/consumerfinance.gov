@@ -6,6 +6,7 @@ const envVars = require( '../../../../config/environment' ).envvars;
 const paths = require( '../../../../config/environment' ).paths;
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 const fs = require( 'fs' );
+const path = require( 'path' );
 const fancyLog = require( 'fancy-log' );
 const swPrecache = require( 'sw-precache' );
 
@@ -120,7 +121,17 @@ const conf = {
   stats: STATS_CONFIG.stats
 };
 
+const ensureDirectoryExistence = filePath => {
+  const dirname = path.dirname( filePath );
+  if ( fs.existsSync( dirname ) ) { // eslint-disable-line no-sync
+    return true;
+  }
+  ensureDirectoryExistence( dirname );
+  return fs.mkdirSync( dirname ); // eslint-disable-line no-sync
+};
+
 fancyLog( 'Started generating service worker file...' );
+ensureDirectoryExistence( SERVICE_WORKER_DEST );
 swPrecache.write( SERVICE_WORKER_DEST, SERVICE_WORKER_CONFIG, err => {
   if ( err ) {
     return fancyLog( `Error generating service worker file: ${ err }` );
@@ -129,6 +140,7 @@ swPrecache.write( SERVICE_WORKER_DEST, SERVICE_WORKER_CONFIG, err => {
 } );
 
 fancyLog( 'Copying eRegs\' manifest...' );
+ensureDirectoryExistence( MANIFEST_DEST );
 fs.copyFile( MANIFEST_SRC, MANIFEST_DEST, err => {
   if ( err ) {
     return fancyLog( `Error copying eRegs' manifest: ${ err }` );
