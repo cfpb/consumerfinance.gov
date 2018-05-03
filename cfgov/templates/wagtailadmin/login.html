@@ -3,19 +3,18 @@
 
 {% block furniture %}
     <div class="content-wrapper">
-        {% if messages or form.errors %}
+        {% if messages or form.non_field_errors %}
             <div class="messages">
                 <ul>
-                    {% if form.errors %}
-                        <li class="error">{% blocktrans %}Your {{ username_field }} and password didn't match. Please try again.{% endblocktrans %}</li>
-                    {% endif %}
                     {% for message in messages %}
                         <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message |safe }}</li>
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li class="error">{{ error |safe }}</li>
                     {% endfor %}
                 </ul>
             </div>
         {% endif %}
-
 
         {% block above_login %}
             {% if 'build' in request.site.hostname %}
