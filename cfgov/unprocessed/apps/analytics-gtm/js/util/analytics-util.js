@@ -1,4 +1,17 @@
 /**
+ * Query a selector and add listeners to returned elements.
+ * @param {string} selector - A dom selector.
+ * @param {string} event - An event string, probably a "MouseEvent."
+ * @param {Function} callback - The event handler.
+ */
+function addEventListenerToSelector( selector, event, callback ) {
+  const elems = document.querySelectorAll( selector );
+  for ( let i = 0, len = elems.length; i < len; i++ ) {
+    addEventListenerToElem( elems[i], event, callback );
+  }
+}
+
+/**
  * Check if an element exists on the page, and if it does, add listeners.
  * @param {[type]}   elem     [description]
  * @param {[type]}   event    [description]
@@ -12,13 +25,61 @@ function addEventListenerToElem( elem, event, callback ) {
   }
 }
 
-const delay = ( function() {
+/**
+ * Log a message to the console if the `debug-gtm` URL parameter is set.
+ * @param {string} msg - Message to load to the console.
+ */
+function analyticsLog( ...msg ) {
+  if ( getQueryParameter( 'debug-gtm' ) === true ) {
+    console.log( `ANALYTICS DEBUG MODE: ${ msg }` );
+  }
+}
+
+/* Search for support of the matches() method by looking at
+   browser prefixes.
+   @param {HTMLNode} elem
+   The element to check for support of matches() method.
+   @returns {Function} The appropriate matches() method of elem. */
+function _getMatchesMethod( elem ) {
+  return elem.matches ||
+         elem.webkitMatchesSelector ||
+         elem.mozMatchesSelector ||
+         elem.msMatchesSelector;
+}
+
+/**
+ * Get the nearest parent node of an element.
+ *
+ * @param {HTMLNode} elem - A DOM element.
+ * @param {string} selector - CSS selector.
+ * @returns {HTMLNode} Nearest parent node that matches the selector.
+ */
+function closest( elem, selector ) {
+  elem = elem.parentNode;
+
+  const matchesSelector = _getMatchesMethod( elem );
+  let match;
+
+  while ( elem ) {
+    if ( matchesSelector.bind( elem )( selector ) ) {
+      match = elem;
+    } else {
+      elem = elem.parentElement;
+    }
+
+    if ( match ) { return elem; }
+  }
+
+  return null;
+}
+
+function Delay() {
   let timer = 0;
   return function( callback, ms ) {
     clearTimeout( timer );
     timer = setTimeout( callback, ms );
   };
-} )();
+}
 
 /**
  * TODO: Merge with Analytics.js.
@@ -83,20 +144,12 @@ function getQueryParameter( key ) {
   return decoded;
 }
 
-/**
- * Log a message to the console if the `debug-gtm` URL parameter is set.
- * @param {string} msg - Message to load to the console.
- */
-function analyticsLog( msg ) {
-  if ( getQueryParameter( 'debug-gtm' ) === true ) {
-    console.log( `ANALYTICS DEBUG MODE: ${ msg }` );
-  }
-}
-
 module.exports = {
+  addEventListenerToSelector,
   addEventListenerToElem,
   analyticsLog,
-  delay,
+  closest,
+  Delay,
   getQueryParameter,
   hostsAreEqual,
   track
