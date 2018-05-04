@@ -701,8 +701,11 @@ SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
 # We want the ability to serve the latest drafts of some pages on beta.
 # This value is read by v1.wagtail_hooks.
 SERVE_LATEST_DRAFT_PAGES = []
+
+# To expose a previously-published page's latest draft version on beta,
+# add its primary key to the list below.
 if DEPLOY_ENVIRONMENT == 'beta':
-    SERVE_LATEST_DRAFT_PAGES = [1288,1286,3273]
+    SERVE_LATEST_DRAFT_PAGES = []
 
 # Email popup configuration. See v1.templatetags.email_popup.
 EMAIL_POPUP_URLS = {
