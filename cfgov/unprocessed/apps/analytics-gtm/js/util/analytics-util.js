@@ -82,7 +82,7 @@ function Delay() {
     clearTimeout( timer );
     timer = setTimeout( callback, ms );
   };
-};
+}
 
 /**
  * TODO: Merge with Analytics.js.

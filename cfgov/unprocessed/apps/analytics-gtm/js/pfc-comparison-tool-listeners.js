@@ -2,8 +2,8 @@
 import $ from 'jquery';
 
 import {
-  analyticsLog,
   Delay,
+  analyticsLog,
   track
 } from './util/analytics-util';
 

@@ -1,6 +1,6 @@
 import {
-  addEventListenerToElem,
   Delay,
+  addEventListenerToElem,
   track
 } from './util/analytics-util';
 
@@ -46,7 +46,7 @@ const OAHRCAnalytics = ( function() {
   } );
 
   // down payment percentage
-  let percentDownDelay = new Delay();
+  const percentDownDelay = new Delay();
   const percentDownEl = document.querySelector( '#percent-down' );
   addEventListenerToElem( percentDownEl, 'keyup', function( evt ) {
     const target = evt.target;
@@ -57,7 +57,7 @@ const OAHRCAnalytics = ( function() {
   } );
 
   // down payment $
-  let downPaymentDelay = new Delay();
+  const downPaymentDelay = new Delay();
   const downPaymentEl = document.querySelector( '#down-payment' );
   addEventListenerToElem( downPaymentEl, 'keyup', function( evt ) {
     const target = evt.target;

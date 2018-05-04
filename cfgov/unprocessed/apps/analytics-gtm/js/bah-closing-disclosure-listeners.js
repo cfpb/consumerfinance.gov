@@ -27,6 +27,7 @@ const OAHCDAnalytics = ( () => {
   /**
    * Record state (expanded or collapsed) of expandables.
    * @param {string} expandable - An expandable HTML element.
+   * @returns {boolean} True if the expandable is animating, false otherwise.
    */
   function isAnimatingExpandable( expandable ) {
     let isAnimating = false;
