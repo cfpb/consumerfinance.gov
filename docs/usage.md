@@ -12,9 +12,6 @@ If not using the Vagrant box, you will generally have four tabs
  3. **Django server**. Start and stop the web server.
     Server is started with `./runserver.sh`,
     but see more details [below](#3-load-indexes--launch-site).
- 4. **Gulp watch**.
-    Run the Gulp watch (`gulp watch`) task to automatically re-run the gulp
-    asset compilation tasks when their source files are changed.
 
 What follows are the specific steps for each of these tabs.
 
@@ -120,28 +117,8 @@ browse to: <http://localhost:8000/admin/login/>
 
     You'll need to ignore any browser certificate errors.
 
-### 4. Launch the Gulp watch task
-
-To watch for changes in the source code and automatically update the running site,
-open a terminal and run:
-
-``` bash
-gulp build
-gulp watch
-```
-
-!!! note
-    The watch task will only re-run the tasks that have changed files.
-    Also, you must run `gulp build` at least once before watching.
-
-!!! warning "Server error"
-    If you get this message on the page when running `gulp watch`:
-    "A server error occurred.  Please contact the administrator."
-    You likely need to delete files with the `.pyc` extension from the project with the following command:    
-    `find . -name \"*.pyc\" -delete`
-
 #### Available Gulp Tasks
-In addition to `gulp watch`, there are a number of other important gulp tasks,
+There are a number of important gulp tasks,
 particularly `gulp build` and `gulp test`,
 which will build the project and test it, respectively.
 Using the `gulp --tasks` command you can view all available tasks.
@@ -155,7 +132,7 @@ gulp docs            # Generate JSDocs from the scripts.
 gulp test            # Run linting, unit and acceptance tests (see below).
 gulp test:unit       # Run only unit tests on source code.
 gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
-gulp watch           # Watch for source code changes and auto-update a browser instance.
+gulp audit           # Run code quality audits.
 ```
 
 ## Usage: Docker

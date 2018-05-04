@@ -31,4 +31,5 @@ end="$1 environment"
 # Notify of environment that user is in.
 echo "$end: $cli_flag"
 
+export NODE_ENV=$cli_flag
 export cli_flag=$cli_flag
