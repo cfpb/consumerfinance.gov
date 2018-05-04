@@ -2,7 +2,7 @@
 import $ from 'jquery';
 
 import {
-  delay,
+  Delay,
   track
 } from './util/analytics-util';
 
@@ -30,9 +30,10 @@ const HMDAAnalytics = ( function() {
   } );
 
   // Chosen menu selections for Year filter
+  const selectAsOfYearDelay = new Delay();
   $( 'select#as_of_year' ).change( function() {
     const label = $( '#as_of_year_chzn .search-choice:last' ).text();
-    delay( function() {
+    selectAsOfYearDelay( () => {
       track( 'HMDA Explore Interactions', 'Year Dropdown', label );
     }, 250 );
   } );
@@ -87,14 +88,6 @@ function closest( elem, selector ) {
 
 var HMDAAnalytics = (function() {
 
-  var delay = (function(){
-    var timer = 0;
-    return function(callback, ms){
-      clearTimeout (timer);
-      timer = setTimeout(callback, ms);
-    };
-  })();
-
   var track = function(event, action, label) {
     window.dataLayer.push({
       "event": event,
@@ -131,11 +124,12 @@ var HMDAAnalytics = (function() {
   });
 
   // Chosen menu selections for Year filter
+  const selectAsOfYearDelay = new Delay();
   var selectAsOfYear = document.querySelector( 'select#as_of_year' );
   selectAsOfYear.addEventListener( 'change', function(evt) {
     var lastItem = document.querySelector( '#as_of_year_chzn .search-choice:last' );
     var label = lastItem.textContent;
-    delay(function() {
+    selectAsOfYearDelay( () => {
       track('HMDA Explore Interactions', 'Year Dropdown', label);
     }, 250);
   });
