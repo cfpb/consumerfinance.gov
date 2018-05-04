@@ -1,16 +1,13 @@
 /**
- * Check if an element exists on the page, and if it does, add listeners.
- * @param {NodeList} elems - A list of elements.
+ * Query a selector and add listeners to returned elements.
+ * @param {string} selector - A dom selector.
  * @param {string} event - An event string, probably a "MouseEvent."
  * @param {Function} callback - The event handler.
  */
-function addEventListenerToElems( elems, event, callback ) {
-  let elem;
-  for ( const i in elems ) {
-    elem = elems[i];
-    if ( elem.addEventListener ) {
-      addEventListenerToElem( elems[i], event, callback );
-    }
+function addEventListenerToSelector( selector, event, callback ) {
+  const elems = document.querySelectorAll( selector );
+  for ( let i = 0, len = elems.length; i < len; i++ ) {
+    addEventListenerToElem( elems[i], event, callback );
   }
 }
 
@@ -45,9 +42,9 @@ function analyticsLog( ...msg ) {
    @returns {Function} The appropriate matches() method of elem. */
 function _getMatchesMethod( elem ) {
   return elem.matches ||
-       elem.webkitMatchesSelector ||
-       elem.mozMatchesSelector ||
-       elem.msMatchesSelector;
+         elem.webkitMatchesSelector ||
+         elem.mozMatchesSelector ||
+         elem.msMatchesSelector;
 }
 
 /**
@@ -148,7 +145,7 @@ function getQueryParameter( key ) {
 }
 
 module.exports = {
-  addEventListenerToElems,
+  addEventListenerToSelector,
   addEventListenerToElem,
   analyticsLog,
   closest,
