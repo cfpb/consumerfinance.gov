@@ -96,7 +96,8 @@
     "protractor-retry": "1.1.9",
     "selenium-webdriver": "4.0.0-alpha.1",
     "snyk": "1.70.2",
-    "wcag": "0.3.0"
+    "wcag": "0.3.0",
+    "yargs": "11.0.0"
   },
   "scripts": {
     "test": "snyk test",
