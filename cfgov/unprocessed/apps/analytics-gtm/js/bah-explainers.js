@@ -135,4 +135,4 @@ export default function( label ) {
   addEventListenerToSelector(
     '.image-map_overlay', 'click', trackImageMapOverlayClick
   );
-};
+}
