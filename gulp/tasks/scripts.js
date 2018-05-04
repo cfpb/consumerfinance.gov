@@ -4,7 +4,6 @@
    This task is set up to generate multiple separate bundles,
    from different sources, and to use watch when run from the default task. */
 
-const browserSync = require( 'browser-sync' );
 const config = require( '../config.js' );
 const configLegacy = config.legacy;
 const configScripts = config.scripts;
@@ -42,10 +41,7 @@ function _processScript( localWebpackConfig, src, dest ) {
     .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
-    .pipe( gulp.dest( paths.processed + dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( paths.processed + dest ) );
 }
 
 /**
@@ -74,10 +70,7 @@ function scriptsPolyfill() {
       }
     } ) )
     .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.processed + '/js/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( paths.processed + '/js/' ) );
 }
 
 /**
@@ -161,10 +154,7 @@ function scriptsNonResponsive() {
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
-    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) );
 }
 
 /**
@@ -181,10 +171,7 @@ function scriptsNemo() {
     .on( 'error', handleErrors )
     .pipe( gulpUglify() )
     .pipe( gulpRename( 'scripts.min.js' ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) );
 }
 
 /**
