@@ -20,7 +20,9 @@
 # Required for Postgres dbshell in Django < 1.9.
 # PGPASSWORD=cfpb
 
-DATABASE_URL=mysql://v1:v1@mysql/v1
+# The use of storage_engine here assumes use of MySQL 5.1. For MySQL 5.6
+# or later, use default_storage_engine instead.
+DATABASE_URL=mysql://v1:v1@mysql/v1?init_command='SET storage_engine=MYISAM'
 # Required for existing MySQL-specific database scripts.
 MYSQL_HOST=mysql
 MYSQL_ROOT_PW=root
