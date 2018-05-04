@@ -3,7 +3,6 @@
     "fields": {
         "locked": false,
         "title": "Conference registration test",
-        "draft_title": "Conference registration test",
         "numchild": 0,
         "show_in_menus": false,
         "live": true,
