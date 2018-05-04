@@ -92,8 +92,7 @@ export default function( label ) {
     const tabText = tab.querySelector( '.tab-label' ).textContent.trim();
     let action = 'Expandable collapsed - ' + tabText;
     const label = elem.querySelector( '.o-expandable_label' );
-    let text = '';
-    text = label.textContent.trim();
+    let text = label.textContent.trim();
     if ( expandableStates[expandableID] === true ) {
       action = 'Expandable expanded - ' + tabText;
     }
