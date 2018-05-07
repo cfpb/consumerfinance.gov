@@ -1,8 +1,7 @@
 {% extends "wagtailadmin/admin_base.html" %}
-{% load static i18n %}
+{% load staticfiles i18n %}
 {% block titletag %}{% trans "Set your new password" %}{% endblock %}
 {% block bodyclass %}login{% endblock %}
-{% load wagtailadmin_tags %}
 
 {% block extra_css %}
     {{ block.super }}
@@ -12,30 +11,26 @@
 
 {% block furniture %}
     <div class="content-wrapper">
-
-    {% if validlink %}
-        {% if messages or form.errors %}
+        {% if form.errors %}
             <div class="messages">
                 <ul>
-                    {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message |safe }}</li>
-                    {% endfor %}
                     {% for key, value in form.errors.items %}
                         <li class="error">{{ value|striptags }}</li>
                     {% endfor %}
                 </ul>
             </div>
         {% endif %}
+
         <form method="post" novalidate>
             {% csrf_token %}
             <h1>{% trans "Set your new password" %}</h1>
             <ul class="fields">
                 {% for field in form %}
                     <li class="{% if field.field.required %}required{% endif %} {{ wrapper_classes }} {{ li_classes }} {% if field.errors %}error{% endif %}">
-                    <div class="field {{ field|fieldtype }} {{ field|widgettype }} {{ field_classes }}">
+                      <div class="field {{ field|fieldtype }} {{ field|widgettype }} {{ field_classes }}">
                             {{ field.label_tag }}
                             {{ field }}
-                    </div>
+                      </div>
                     </li>
                 {% endfor %}
                 <li class="submit">
@@ -43,17 +38,5 @@
                 </li>
             </ul>
         </form>
-    {% else %}
-        <h1>{% trans "Invalid password reset link" %}</h1>
-        <div class="messages">
-            <ul>
-                <li class="error">
-                    {% trans "The password reset link was invalid, possibly because it has already been used." %}
-                </li>
-            </ul>
-        </div>
-        <a href="{% url 'wagtailadmin_password_reset' %}" class="button">{% trans 'Request a new password reset' %}</a>
-    {% endif %}
-
     </div>
 {% endblock %}
