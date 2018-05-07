@@ -1,6 +1,5 @@
 import {
   addEventListenerToSelector,
-  closest,
   track
 } from './util/analytics-util';
 
@@ -88,7 +87,7 @@ export default function( label ) {
     if ( isAnimatingExpandable( expandable ) ) { return; }
     recordExpandableState( expandableID );
 
-    const tab = closest( elem, '.explain' ).querySelector( '.active-tab' );
+    const tab = document.querySelector( '.active-tab' );
     const tabText = tab.querySelector( '.tab-label' ).textContent.trim();
     let action = 'Expandable collapsed - ' + tabText;
     const label = elem.querySelector( '.o-expandable_label' );

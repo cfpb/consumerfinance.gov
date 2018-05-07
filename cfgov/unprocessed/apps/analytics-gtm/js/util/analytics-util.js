@@ -35,44 +35,10 @@ function analyticsLog( ...msg ) {
   }
 }
 
-/* Search for support of the matches() method by looking at
-   browser prefixes.
-   @param {HTMLNode} elem
-   The element to check for support of matches() method.
-   @returns {Function} The appropriate matches() method of elem. */
-function _getMatchesMethod( elem ) {
-  return elem.matches ||
-         elem.webkitMatchesSelector ||
-         elem.mozMatchesSelector ||
-         elem.msMatchesSelector;
-}
-
 /**
- * Get the nearest parent node of an element.
- *
- * @param {HTMLNode} elem - A DOM element.
- * @param {string} selector - CSS selector.
- * @returns {HTMLNode} Nearest parent node that matches the selector.
+ * Create a delay given a callback function and millisecond delay.
+ * @constructor
  */
-function closest( elem, selector ) {
-  elem = elem.parentNode;
-
-  const matchesSelector = _getMatchesMethod( elem );
-  let match;
-
-  while ( elem ) {
-    if ( matchesSelector.bind( elem )( selector ) ) {
-      match = elem;
-    } else {
-      elem = elem.parentElement;
-    }
-
-    if ( match ) { return elem; }
-  }
-
-  return null;
-}
-
 function Delay() {
   let timer = 0;
   return function( callback, ms ) {
@@ -148,7 +114,6 @@ module.exports = {
   addEventListenerToSelector,
   addEventListenerToElem,
   analyticsLog,
-  closest,
   Delay,
   getQueryParameter,
   hostsAreEqual,
