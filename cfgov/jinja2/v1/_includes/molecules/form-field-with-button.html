@@ -32,7 +32,6 @@
             {{ value.label }}
             {# TODO: Update required param name to is_required
                      to make clear it's a boolean. #}
-            {{ _('(required)') if value.required else '' }}
         </label>
 
         <input id="{{ form_id }}"
