@@ -25,6 +25,17 @@
     {{ self.desc() }}
 {%- endblock og_desc %}
 
+{% block preload %}
+    {{ super() }}
+    <link rel="manifest" href="{{ static('apps/regulations3k/regulations3k-manifest.json') }}">
+    <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}" >
+    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
+    <meta name="apple-mobile-web-app-title" content="Regs">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#20aa3f"/>
+{%- endblock %}
+
 {% block css -%}
     {{ super() }}
     <link rel="stylesheet" href="{{ static('apps/regulations3k/css/main.css') }}">
@@ -33,10 +44,27 @@
 
 {# BODY items #}
 
-{% block content_main scoped %}
-    <h1>Hello, world!</h1>
+{% block body_classes %}
+    {{ super() }}  data-turbolinks="false"
+{% endblock body_classes %}
 
-    <p>This is the <code>content_main</code> block.</p>
+{% block content_main scoped %}
+    <h1>A RegDown&copy; platform to read regulations </h1>
+
+    <h2>Title XII Banks and Banking<h2>
+    <ul>
+    {% for reg in regs %}
+    <li>
+        <a href="/regulations/{{reg.part_number}}" data-turbolinks="true">
+            <span class="title-num">{{reg.part_number}}</span>
+        </a>
+        <div class="reg-sub-title">
+            <span class="reg-letter">Regulation {{reg.letter_code}}</span><br>
+            <span class="reg-title">{{reg.title}}</span>
+        </div>
+    </li>
+    {% endfor %}
+    </ul>
 {% endblock content_main %}
 
 {% block content_sidebar scoped %}
@@ -50,7 +78,6 @@
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [
-            '{{ static('apps/regulations3k/js/common.js') }}',
             '{{ static('apps/regulations3k/js/index.js') }}'
           ];
           jsl(s);

@@ -9,7 +9,11 @@ services:
   - postgresql
 
 addons:
-  postgresql: "9.6"
+  postgresql: "10"
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
   chrome: stable
 
 cache:
@@ -33,7 +37,7 @@ branches:
     - master
 
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c "ALTER USER travis WITH PASSWORD 'travis';"
 
 script:
   - ./travis_run.sh
@@ -43,6 +47,7 @@ env:
     - DJANGO_SETTINGS_MODULE=cfgov.settings.test
     - DJANGO_STAGING_HOSTNAME=content.localhost
     - COVERALLS_PARALLEL=true
+    - PGPORT=5433
 
 jobs:
   fast_finish: true

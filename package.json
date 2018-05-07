@@ -20,7 +20,6 @@
     "babel-core": "7.0.0-beta.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^7.0.0-beta.3",
-    "browser-sync": "2.23.6",
     "cf-atomic-component": "1.5.4",
     "cf-buttons": "4.6.0",
     "cf-core": "4.6.4",
@@ -40,14 +39,13 @@
     "gulp": "4.0.0",
     "gulp-bless": "4.0.0",
     "gulp-changed": "3.2.0",
-    "gulp-clean-css": "3.9.3",
+    "gulp-clean-css": "3.9.4",
     "gulp-concat": "2.6.1",
     "gulp-eslint": "4.0.1",
     "gulp-header": "2.0.5",
     "gulp-imagemin": "4.1.0",
     "gulp-less": "4.0.0",
     "gulp-modernizr-build": "0.0.6",
-    "gulp-mq-remove": "0.0.2",
     "gulp-newer": "1.4.0",
     "gulp-notify": "3.2.0",
     "gulp-postcss": "7.0.1",
@@ -98,7 +96,8 @@
     "protractor-retry": "1.1.9",
     "selenium-webdriver": "4.0.0-alpha.1",
     "snyk": "1.70.2",
-    "wcag": "0.3.0"
+    "wcag": "0.3.0",
+    "yargs": "11.0.0"
   },
   "scripts": {
     "test": "snyk test",

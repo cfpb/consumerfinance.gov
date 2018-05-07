@@ -14,6 +14,42 @@
 
 <div id="{{ attrs.id }}-handsontable-input-container">
 
+<div class="field">
+    <label for="{{ attrs.id }}-handsontable-heading">Heading</label>
+
+    <div class="field-content">
+        <div class="heading-text-block">
+            <label for="{{ attrs.id }}-handsontable-heading-text">Text:</label>
+            <div class="input">
+                <input type="text"
+                       id="{{ attrs.id }}-handsontable-heading-text"
+                       name="handsontable-heading-text">
+            </div>
+        </div>
+        <div class="heading-level-block">
+            <label for="{{ attrs.id }}-handsontable-heading-level">Level:</label>
+            <div class="input">
+                <select id="{{ attrs.id }}-handsontable-heading-level"
+                        name="handsontable-heading-level"
+                        placeholder="Level">
+                    <option value="h2">H2</option>
+                    <option value="h3">H3</option>
+                    <option value="h4">H4</option>
+                </select>
+            </div>
+        </div>
+        <div class="heading-icon-block">
+            <label for="{{ attrs.id }}-handsontable-heading-icon">Icon:</label>
+            <div class="input">
+                <input type="text"
+                       id="{{ attrs.id }}-handsontable-heading-icon"
+                       name="handsontable-heading-icon">
+                <span class="help">Input the name of an icon to appear to the left of the heading. E.g., approved, help-round, etc. See full list of icons</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="field boolean_field widget-checkbox_input">
     <label for="{{ attrs.id }}-handsontable-striped-rows">Striped rows</label>
     <div class="field-content">
@@ -171,6 +207,8 @@
         <option value="">None</option>
         <option value="string">Alphabetical</option>
         <option value="number">Numerical</option>
+        <option value="string-default">Alphabetical - Default</option>
+        <option value="number-default">Numerical - Default</option>
       </select>
     </td>
     <td>
@@ -178,6 +216,8 @@
         <option value="">None</option>
         <option value="string">Alphabetical</option>
         <option value="number">Numerical</option>
+        <option value="string-default">Alphabetical - Default</option>
+        <option value="number-default">Numerical - Default</option>
       </select>
     </td>
     <td>
@@ -185,6 +225,8 @@
         <option value="">None</option>
         <option value="string">Alphabetical</option>
         <option value="number">Numerical</option>
+        <option value="string-default">Alphabetical - Default</option>
+        <option value="number-default">Numerical - Default</option>
       </select>
     </td>
   </tr>

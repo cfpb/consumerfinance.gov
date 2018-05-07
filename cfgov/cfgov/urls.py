@@ -234,10 +234,6 @@ urlpatterns = [
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
         include('agreements.urls')),
-    url(r'^hud-api-replace/', include_if_app_enabled(
-        'hud_api_replace',
-        'hud_api_replace.urls',
-        namespace='hud_api_replace')),
     url(r'^consumer-tools/retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
@@ -403,9 +399,23 @@ urlpatterns = [
                 include_if_app_enabled('teachers_digital_platform',
                                        'teachers_digital_platform.urls')),
 
-    flagged_url('REGULATIONS3K',
-                r'^regulations3k/',
-                include_if_app_enabled('regulations3k', 'regulations3k.urls')),
+    flagged_url(
+        'REGULATIONS3K',
+        r'^regulations/$',
+        lambda request: ServeView.as_view()(request, request.path),
+        fallback=RedirectView.as_view(
+            url='/policy-compliance/rulemaking/', permanent=False),
+        name='regulations'
+    ),
+    flagged_url(
+        'REGULATIONS3K',
+        r'^regulations3k-service-worker.js',
+        TemplateView.as_view(
+        template_name='regulations3k/regulations3k-service-worker.js',
+        content_type='application/javascript'),
+        name='regulations3k-service-worker.js'
+    ),
+
 ]
 
 if settings.ALLOW_ADMIN_URL:

@@ -89,7 +89,6 @@ OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
-    {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
      'complaintdatabase', 'complaint_common',)},
@@ -157,6 +156,7 @@ TEMPLATES = [
             'environment': 'v1.environment',
             'extensions': [
                 'core.jinja2tags.filters',
+                'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.filters',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
@@ -311,10 +311,6 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 
 STATIC_VERSION = ''
 
-# DJANGO HUD API
-DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
-# in seconds, 2592000 == 30 days. Google allows no more than a month of caching
-DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     'a/assets/hud/{format}s/{zipcode}.{format}'
@@ -600,7 +596,7 @@ FLAGS = {
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
     'BETA_NOTICE': {
-        'site': 'beta.consumerfinance.gov',
+        'site': 'beta.consumerfinance.gov:443',
     },
 
     # When enabled, include a recruitment code comment in the base template.
@@ -655,7 +651,9 @@ FLAGS = {
     'FINANCIAL_COACHING': {},
 
     # Teacher's Digital Platform
-    'TDP_RELEASE': {},
+    'TDP_RELEASE': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
 
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
@@ -698,8 +696,11 @@ SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
 # We want the ability to serve the latest drafts of some pages on beta.
 # This value is read by v1.wagtail_hooks.
 SERVE_LATEST_DRAFT_PAGES = []
+
+# To expose a previously-published page's latest draft version on beta,
+# add its primary key to the list below.
 if DEPLOY_ENVIRONMENT == 'beta':
-    SERVE_LATEST_DRAFT_PAGES = [1288,1286,3273]
+    SERVE_LATEST_DRAFT_PAGES = []
 
 # Email popup configuration. See v1.templatetags.email_popup.
 EMAIL_POPUP_URLS = {
@@ -714,3 +715,11 @@ EMAIL_POPUP_URLS = {
         '/owning-a-home/mortgage-estimate/',
     ],
 }
+
+REGULATIONS_REFERENCE_MAPPING = [
+    (
+        r'(?P<label>(?P<part>^[0-9]+)-(?P<section>[\w]+))-(?P<paragraph>[\w-]*-Interp)',
+        '{part}-Interp-{section}',
+        '{section}-{paragraph}'
+    ),
+]

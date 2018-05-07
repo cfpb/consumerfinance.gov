@@ -1,5 +1,5 @@
 {
-  "name": "cfpb-regulations-3000",
+  "name": "cfpb-regulations",
   "description": "The consumerfinance.gov/eregulations website.",
   "homepage": "https://www.consumerfinance.gov/eregulations/",
   "author": {
@@ -11,11 +11,12 @@
     "type": "git",
     "url": "https://github.com/cfpb/cfgov-refresh.git"
   },
+  "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "amortize": "0.2.2"
+    "sw-precache": "^5.2.1"
   }
 }
