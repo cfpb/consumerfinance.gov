@@ -2,6 +2,7 @@
 {% load staticfiles i18n %}
 {% block titletag %}{% trans "Set your new password" %}{% endblock %}
 {% block bodyclass %}login{% endblock %}
+{% load wagtailadmin_tags %}
 
 {% block extra_css %}
     {{ block.super }}
