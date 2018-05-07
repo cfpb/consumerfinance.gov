@@ -496,7 +496,7 @@
                                     '</header>',
                                     '<div class="row active nice-padding struct-block object">',
                                         '<input id="table-block-editor" maxlength="255" name="title" type="text">',
-                                    '</div></br>',
+                                    '</div><br>',
                                     '<div class="row active nice-padding m-t-10">',
                                         '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button" >',
                                             '<span class="icon"></span><em>Save</em>',

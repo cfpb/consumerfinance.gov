@@ -156,7 +156,7 @@ function FilterableListControls( element ) {
   function _buildErrorMessage( fields ) {
     let msg = '';
     fields.forEach( function( validation ) {
-      msg += validation.label + ' ' + validation.msg + '</br>';
+      msg += validation.label + ' ' + validation.msg + '<br>';
     } );
 
     return msg || ERROR_MESSAGES.DEFAULT;
