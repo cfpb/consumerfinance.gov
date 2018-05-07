@@ -55,7 +55,6 @@ INSTALLED_APPS = (
     'wagtail.contrib.wagtailroutablepage',
     'localflavor',
     'modelcluster',
-    'compressor',
     'taggit',
     'wagtailinventory',
     'wagtailsharing',
@@ -237,7 +236,6 @@ STATICFILES_FINDERS = (
     'sheerlike.finders.SheerlikeStaticFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
