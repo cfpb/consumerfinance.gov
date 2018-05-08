@@ -216,6 +216,14 @@ class PostPreviewSnapshot(blocks.StructBlock):
 
 class EmailSignUp(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
+    default_heading = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        label='Default heading style',
+        help_text=('If selected, heading will be styled as an H5 '
+                   'with green top rule. Deselect to style header as H3.'
+        )
+    )
     text = blocks.CharBlock(required=False)
     gd_code = blocks.CharBlock(required=False)
 
@@ -681,6 +689,7 @@ class FullWidthText(blocks.StreamBlock):
     table_block = AtomicTableBlock(table_options={'renderer': 'html'})
     image_inset = molecules.ImageInset()
     reusable_text = v1_blocks.ReusableTextChooserBlock('v1.ReusableText')
+    email_signup = EmailSignUp()
 
     class Meta:
         icon = 'edit'

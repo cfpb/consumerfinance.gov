@@ -30,11 +30,39 @@
   tags:
     - cfgov-molecules
 */
+
+.inline_info() {
+    margin-bottom: 0;
+    position: relative;
+    top: 5px;
+    float: right;
+}
+
 // TODO: Look into merging email-signup and form-field-with-button styles
 // Form field with button isn't used anywhere else
 .m-form-field-with-button {
     .m-form-field {
         margin-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+    }
+
+    // Note: inline info display breakpoints are set based on length of
+    // the default email signup disclaimer ('Privacy Act statement')
+     &_info {
+        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+        &__inline {
+            .respond-to-range( 400px, @bp-xs-max, {
+                .inline_info(); 
+            } );
+
+            .respond-to-range( 800px, @bp-sm-max, {
+                .inline_info();
+            } );
+
+            .respond-to-min( @bp-lg-min, {
+                .inline_info();
+            } );
+        }  
     }
 }
 
