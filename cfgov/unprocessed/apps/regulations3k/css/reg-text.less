@@ -3,18 +3,41 @@
    Regulation section text styling and type hierarchy
    ========================================================================== */
 
-p[id] em {
-   font-style: normal;
-   font-weight: bold;
+.regulations3k {
+
+    // Swap regdown paragraph italics with bold text
+    p[class^='level'] em {
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    // Inline interpretations
+    .o-expandable {
+        &_target,
+        &_content {
+            background-color: transparent;
+            border: 0;
+        }
+        &__expanded {
+            background-color: @gray-10;
+            &_content {
+                border-bottom: 1px solid @gray-40;
+            }
+            &:hover {
+                background-color: @gray-20;
+            }
+        }
+    }
+
 }
 
 .generateLevel(6);
 
 // Generate six indentation levels for reg text
 .generateLevel(@n, @i: 1) when (@i =< @n) {
-  .level-@{i} {
-    box-sizing: border-box;
-    padding-left: (@i * 2em);
-  }
-  .generateLevel(@n, (@i + 1));
+    .level-@{i} {
+        box-sizing: border-box;
+        padding-left: (@i * 2em);
+    }
+    .generateLevel(@n, (@i + 1));
 }
