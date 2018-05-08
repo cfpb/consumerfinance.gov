@@ -522,10 +522,6 @@
                 height: 110px;
 
             }
-
-            .chart-menu_btn:after {
-                transform: scaleY( -1 );
-            }
         }
     }
 
@@ -564,21 +560,22 @@
         margin-top: @grid_gutter-width;
     }
 
-    .note-ctr {
+    .credit-note-ctr {
         border-top: 1px solid @gray-10;
     }
 
-    .note {
-        .grid_column( 8 );
-        margin: 0;
-        padding: 0 0 0 25px;
+    .credit-note {
+        padding-top: 0;
+        padding-bottom: 0;
+        border: none;
+        background: none;
 
         .alert:before {
             color: @gold;
         }
 
-        p {
-            width: 100%;
+        .m-notification_icon {
+            top: 0;
         }
     }
 
@@ -645,6 +642,10 @@
     } );
 
     .respond-to-min( @bp-sm-max, {
+
+        .credit-note {
+            .grid_column( 8 );
+        }
 
         .page-intro_cols {
             display: table;
