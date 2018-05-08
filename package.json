@@ -52,7 +52,7 @@
     "gulp-rename": "1.2.2",
     "gulp-replace": "0.6.1",
     "gulp-sourcemaps": "2.6.4",
-    "gulp-uglify": "3.0.0",
+    "gulp-uglify-es": "1.0.1",
     "imagemin-gifsicle": "5.2.0",
     "imagemin-jpegtran": "5.0.2",
     "imagemin-optipng": "5.2.1",
