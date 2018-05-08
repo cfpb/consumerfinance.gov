@@ -194,8 +194,7 @@ class FormFieldWithButton(blocks.StructBlock):
         label='Inline disclaimer',
         help_text=('Show disclaimer on same line as button. Only select '
                    'this option if the disclaimer text is a few words (ie, '
-                   '"Privacy Act statement") rather than a full sentence.'
-        )
+                   '"Privacy Act statement") rather than a full sentence.')
     )
     label = blocks.CharBlock(required=True)
     type = blocks.ChoiceBlock(choices=[
