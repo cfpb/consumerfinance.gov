@@ -41,6 +41,9 @@
                class="a-text-input a-text-input__full"
                {{ 'required' if value.required else '' }}>
     </div>
-    {{ parse_links(value.info) | safe }}
+    <div class="m-form-field-with-button_info
+               {{' m-form-field-with-button_info__inline' if value.inline_info else '' }}">
+        {{ parse_links(value.info) | safe }}
+    </div>
     <input class="a-btn a-btn__full-on-xs" type="submit" value="{{ value.btn_text }}">
 </div>
