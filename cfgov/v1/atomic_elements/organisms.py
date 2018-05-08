@@ -221,8 +221,7 @@ class EmailSignUp(blocks.StructBlock):
         default=True,
         label='Default heading style',
         help_text=('If selected, heading will be styled as an H5 '
-                   'with green top rule. Deselect to style header as H3.'
-        )
+                   'with green top rule. Deselect to style header as H3.')
     )
     text = blocks.CharBlock(required=False)
     gd_code = blocks.CharBlock(required=False)
