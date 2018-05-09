@@ -648,23 +648,24 @@ FLAGS = {
     # The release of the new Financial Coaching pages
     'FINANCIAL_COACHING': {},
 
-    # Teacher's Digital Platform
-    'TDP_RELEASE': {
+    # Teacher's Digital Platform Customer Review Tool
+    'TDP_CRTOOL': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
+
+    # Teacher's Digital Platform Customer Review Tool Prototypes Pages
+    'TDP_CRTOOL_PROTOTYPES': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
+
+    # Teacher's Digital Platform Search Interface Tool
+    'TDP_SEARCH_INTERFACE': {
         'site': 'beta.consumerfinance.gov:443',
     },
 
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
     'TURBOLINKS': {},
-
-    # Teacher's Digital Platform Customer Review Tool
-    'TDP_CRTOOL': {},
-
-    # Teacher's Digital Platform Customer Review Tool Prototypes Pages
-    'TDP_CRTOOL_PROTOTYPES': {},
-
-    # Teacher's Digital Platform Search Interface Tool
-    'TDP_SEARCH_INTERFACE': {},
 
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': {
