@@ -409,6 +409,11 @@ urlpatterns = [
             include_if_app_enabled('teachers_digital_platform',
                                     'teachers_digital_platform.prototypes-urls')),  # noqa: E501
 
+    flagged_url('TDP_SEARCH_INTERFACE',
+            r'^practitioner-resources/youth-financial-education/curriculum-review/search/',  # noqa: E501
+            include_if_app_enabled('teachers_digital_platform',
+                                    'teachers_digital_platform.search-urls')),
+
     flagged_url(
         'REGULATIONS3K',
         r'^regulations/$',
