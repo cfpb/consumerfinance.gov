@@ -109,7 +109,12 @@ function renderAccessibleData( tableHead, tableBody, labels, vals ) {
  * @param {string} time - Timestamp from API.
  */
 function renderDatestamp( elem, time ) {
-  elem.textContent = formatTimestampMMddyyyy( time );
+  let formattedTime;
+  if ( time ) {
+    formattedTime = formatTimestampMMddyyyy( time );
+  }
+
+  elem.textContent = formattedTime;
 }
 
 /**
