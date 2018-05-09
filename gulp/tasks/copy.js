@@ -22,6 +22,11 @@ gulp.task( 'copy:icons', () => {
   return _genericCopy( icons.src, icons.dest );
 } );
 
+gulp.task( 'copy:iconsOld', () => {
+  const icons = configCopy.iconsOld;
+  return _genericCopy( icons.src, icons.dest );
+} );
+
 gulp.task( 'copy:jsonCode', () => {
   const jsonCode = configCopy.jsonCode;
   return _genericCopy( jsonCode.src, jsonCode.dest );
@@ -49,6 +54,7 @@ gulp.task( 'copy:lightbox2', () => {
 gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
+    'copy:iconsOld',
     'copy:jsonCode',
     'copy:jsonKBYO',
     'copy:timelinejs',
