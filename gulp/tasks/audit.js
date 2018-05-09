@@ -47,9 +47,11 @@ function _getWCAGParams() {
 
 /**
  * Run PageSpeed Insight tests.
+ * @returns {Promise}
+ *   Promise containing an array of command-line arguments for PSI binary.
  */
 function testPerf() {
-  _createPSITunnel()
+  return _createPSITunnel()
     .then( _runPSI )
     .catch( err => {
       fancyLog( err );
