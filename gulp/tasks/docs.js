@@ -7,7 +7,7 @@ const spawn = require( 'child_process' ).spawn;
  * Generate JS scripts documentation.
  */
 function docsScripts() {
-  spawn(
+  return spawn(
     paths.modules + '/.bin/jsdoc',
     [ paths.unprocessed + '/js',
       '--recurse',

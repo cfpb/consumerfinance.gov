@@ -49,7 +49,7 @@ function _getWCAGParams() {
  * Run PageSpeed Insight tests.
  */
 function testPerf() {
-  _createPSITunnel()
+  return _createPSITunnel()
     .then( _runPSI )
     .catch( err => {
       fancyLog( err );
