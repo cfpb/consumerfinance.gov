@@ -5,6 +5,7 @@ const spawn = require( 'child_process' ).spawn;
 
 /**
  * Generate JS scripts documentation.
+ * @returns {ChildProcess} A spawned process.
  */
 function docsScripts() {
   return spawn(
