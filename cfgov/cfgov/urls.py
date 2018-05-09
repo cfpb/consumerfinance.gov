@@ -395,9 +395,19 @@ urlpatterns = [
                 include('search.urls')),
 
     flagged_url('TDP_RELEASE',
-                r'^tdp/',
+                r'^practitioner-resources/youth-financial-education/curriculum-review/tool/',  # noqa: E501
                 include_if_app_enabled('teachers_digital_platform',
-                                       'teachers_digital_platform.urls')),
+                                       'teachers_digital_platform.tool-urls')),
+
+    flagged_url('TDP_RELEASE',
+            r'^practitioner-resources/youth-financial-education/curriculum-review/before-you-begin/',  # noqa: E501
+            include_if_app_enabled('teachers_digital_platform',
+                                    'teachers_digital_platform.begin-urls')),
+
+    flagged_url('TDP_RELEASE',
+            r'^practitioner-resources/youth-financial-education/curriculum-review/prototypes/',  # noqa: E501
+            include_if_app_enabled('teachers_digital_platform',
+                                    'teachers_digital_platform.prototypes-urls')),  # noqa: E501
 
     flagged_url(
         'REGULATIONS3K',
