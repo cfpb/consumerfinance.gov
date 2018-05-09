@@ -657,6 +657,15 @@ FLAGS = {
     # https://github.com/turbolinks/turbolinks
     'TURBOLINKS': {},
 
+    # Teacher's Digital Platform Customer Review Tool
+    'TDP_CRTOOL': {},
+
+    # Teacher's Digital Platform Customer Review Tool Prototypes Pages
+    'TDP_CRTOOL_PROTOTYPES': {},
+
+    # Teacher's Digital Platform Search Interface Tool
+    'TDP_SEARCH_INTERFACE': {},
+
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': {
         'boolean': DEPLOY_ENVIRONMENT == 'production'
