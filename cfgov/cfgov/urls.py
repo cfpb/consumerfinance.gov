@@ -395,7 +395,7 @@ urlpatterns = [
                 include('search.urls')),
 
     flagged_url('TDP_RELEASE',
-                r'^tdp/',
+                r'^practitioner-resources/youth-financial-education/curriculum-review/',
                 include_if_app_enabled('teachers_digital_platform',
                                        'teachers_digital_platform.urls')),
 
