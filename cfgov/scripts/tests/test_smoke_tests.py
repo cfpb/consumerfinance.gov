@@ -86,8 +86,9 @@ class HttpTests(unittest.TestCase):
         mock_ok_response = mock.Mock()
         mock_ok_response.status_code = 200
         short_run_remainder = len(http_smoke_test.SHORT_RUN) - allowed
+        allowed_list = [requests.exceptions.Timeout] * allowed
         ok_list = [mock_ok_response] * short_run_remainder
-        side_effect_list = [requests.exceptions.Timeout] + ok_list
+        side_effect_list = allowed_list + ok_list
         mock_get.side_effect = side_effect_list
         self.assertTrue(http_smoke_test.check_urls('pro1'))
 
