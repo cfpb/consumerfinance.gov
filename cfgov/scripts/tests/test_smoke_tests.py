@@ -81,7 +81,7 @@ class HttpTests(unittest.TestCase):
         self.assertEqual(mock_get.call_count, len(http_smoke_test.FULL_RUN))
 
     @mock.patch('scripts.http_smoke_test.requests.get')
-    def test_singleton_timeout_passes(self, mock_get):
+    def test_allowed_timeouts(self, mock_get):
         allowed = http_smoke_test.ALLOWED_TIMEOUTS
         mock_ok_response = mock.Mock()
         mock_ok_response.status_code = 200
