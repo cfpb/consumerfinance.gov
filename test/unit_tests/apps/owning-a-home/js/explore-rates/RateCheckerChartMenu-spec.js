@@ -24,7 +24,7 @@ const HTML_SNIPPET = `
       <button class="chart-menu_btn
                      cf-icon
                      cf-icon__after
-                     cf-icon-down">
+                     cf-icon-download">
         Download chart
       </button>
       <ul class="chart-menu_options">
