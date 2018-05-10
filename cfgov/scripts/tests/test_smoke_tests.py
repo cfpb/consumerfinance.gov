@@ -82,9 +82,10 @@ class HttpTests(unittest.TestCase):
 
     @mock.patch('scripts.http_smoke_test.requests.get')
     def test_singleton_timeout_passes(self, mock_get):
+        allowed = http_smoke_test.ALLOWED_TIMEOUTS
         mock_ok_response = mock.Mock()
         mock_ok_response.status_code = 200
-        short_run_remainder = len(http_smoke_test.SHORT_RUN) - 1
+        short_run_remainder = len(http_smoke_test.SHORT_RUN) - allowed
         ok_list = [mock_ok_response] * short_run_remainder
         side_effect_list = [requests.exceptions.Timeout] + ok_list
         mock_get.side_effect = side_effect_list
