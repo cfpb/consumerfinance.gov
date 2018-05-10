@@ -1,4 +1,3 @@
-const ansiColors = require( 'ansi-colors' );
 const environment = require( '../../config/environment' );
 const envvars = environment.envvars;
 const fancyLog = require( 'fancy-log' );
@@ -199,8 +198,9 @@ function _createSauceTunnel( ) {
   const SAUCE_TUNNEL_ID = envvars.SAUCE_TUNNEL;
 
   if ( !( SAUCE_USERNAME && SAUCE_ACCESS_KEY && SAUCE_TUNNEL_ID ) ) {
+    const RED_COLOR = '\x1b[31m%s\x1b[0m';
     const ERROR_MSG = 'Please ensure your SAUCE variables are set.';
-    fancyLog( ansiColors.red( ERROR_MSG ) );
+    fancyLog( RED_COLOR, ERROR_MSG );
 
     return Promise.reject( new Error( ERROR_MSG ) );
   }
