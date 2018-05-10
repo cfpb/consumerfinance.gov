@@ -105,6 +105,7 @@ module.exports = {
       src:  paths.modules + '/cf-icons/src/icons/*.svg',
       dest: paths.processed + '/icons/'
     },
+    // TODO: Remove when icon font is entirely deprecated.
     iconsOld: {
       src:  paths.modules + '/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'

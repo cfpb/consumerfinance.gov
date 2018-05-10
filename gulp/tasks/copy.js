@@ -22,6 +22,7 @@ gulp.task( 'copy:icons', () => {
   return _genericCopy( icons.src, icons.dest );
 } );
 
+// TODO: Remove when icon font is entirely deprecated.
 gulp.task( 'copy:iconsOld', () => {
   const icons = configCopy.iconsOld;
   return _genericCopy( icons.src, icons.dest );
@@ -54,6 +55,7 @@ gulp.task( 'copy:lightbox2', () => {
 gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
+    // TODO: Remove when icon font is entirely deprecated.
     'copy:iconsOld',
     'copy:jsonCode',
     'copy:jsonKBYO',
