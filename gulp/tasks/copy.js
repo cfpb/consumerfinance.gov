@@ -17,9 +17,21 @@ function _genericCopy( src, dest ) {
     .pipe( gulp.dest( dest ) );
 }
 
-gulp.task( 'copy:icons', () => {
+gulp.task( 'copy:iconsMain', () => {
   const icons = configCopy.icons;
   return _genericCopy( icons.src, icons.dest );
+} );
+
+gulp.task( 'copy:iconsOAH', () => {
+  const icons = configCopy.icons;
+  const iconsOAH = configCopy.iconsOAH;
+  return _genericCopy( icons.src, iconsOAH.dest );
+} );
+
+gulp.task( 'copy:iconsR3K', () => {
+  const icons = configCopy.icons;
+  const iconsR3K = configCopy.iconsR3K;
+  return _genericCopy( icons.src, iconsR3K.dest );
 } );
 
 // TODO: Remove when icon font is entirely deprecated.
@@ -51,6 +63,14 @@ gulp.task( 'copy:lightbox2', () => {
   return _genericCopy( lightbox2.src, lightbox2.dest );
 } );
 
+
+gulp.task( 'copy:icons',
+  gulp.parallel(
+    'copy:iconsMain',
+    'copy:iconsOAH',
+    'copy:iconsR3K'
+  )
+);
 
 gulp.task( 'copy',
   gulp.parallel(
