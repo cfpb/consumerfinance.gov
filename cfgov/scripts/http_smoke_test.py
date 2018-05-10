@@ -223,11 +223,11 @@ def check_urls(base, full=False):
 
     if failures:
         logger.error("These URLs failed: {}".format(failures))
-    if timeouts:
+    if len(timeouts) > 1:
         logger.error("These URLs timed out after {} seconds: "
                      "{}".format(TIMEOUT, timeouts))
 
-    if failures or timeouts:
+    if failures or len(timeouts) > 1:
         logger.error("FAIL")
         return False
 
