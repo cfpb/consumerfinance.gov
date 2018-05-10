@@ -227,6 +227,10 @@ def check_urls(base, full=False):
     if len(timeouts) > ALLOWED_TIMEOUTS:
         logger.error("These URLs timed out after {} seconds: "
                      "{}".format(TIMEOUT, timeouts))
+    elif timeouts:
+        logger.info(
+            "{} allowed timeouts occurred:\n"
+            "{}".format(len(timeouts), "\n".join(timeouts)))
 
     if failures or len(timeouts) > ALLOWED_TIMEOUTS:
         logger.error("FAIL")
