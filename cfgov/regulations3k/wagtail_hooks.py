@@ -47,7 +47,9 @@ class EffectiveVersionModelAdmin(ModelAdmin):
     menu_icon = 'list-ul'
     list_display = (
         'part',
-        'effective_date')
+        'effective_date',
+        'draft',
+        'acquired')
     list_filter = ('effective_date', 'part')
 
 

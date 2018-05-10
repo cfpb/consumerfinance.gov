@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<DLPSTEXTCLASS>
+
+
+<HEADER>
+<FILEDESC>
+<TITLESTMT>
+<TITLE>
+Title 12: Banks and Banking</TITLE>
+<AUTHOR TYPE="nameinv">
+</AUTHOR>
+</TITLESTMT>
+<PUBLICATIONSTMT>
+<PUBLISHER>
+</PUBLISHER>
+<PUBPLACE>
+</PUBPLACE>
+<IDNO TYPE="title">
+12</IDNO>
+<DATE></DATE>
+</PUBLICATIONSTMT>
+<SERIESSTMT>
+<TITLE>
+</TITLE>
+</SERIESSTMT>
+
+</FILEDESC>
+
+<PROFILEDESC>
+<TEXTCLASS>
+<KEYWORDS>
+</KEYWORDS>
+</TEXTCLASS>
+</PROFILEDESC>
+</HEADER>
+
+
+<TEXT>
+<BODY>
+<ECFRBRWS>
+<AMDDATE>Apr. 9, 2018
+</AMDDATE>
+
+<DIV1 N="1" NODE="12:1" TYPE="TITLE">
+
+<HEAD>Title 12 - Banks and Banking--Volume 1</HEAD>
+<CFRTOC>
+<PTHD>Part
+</PTHD>
+<CHAPTI>
+<SUBJECT><E T="04">chapter i</E> - Comptroller of the Currency, Department of the Treasury 
+</SUBJECT>
+<PG>1
+
+
+</PG></CHAPTI></CFRTOC>
+
+<DIV3 N="I" NODE="12:1.0.1" TYPE="CHAPTER">
+
+<HEAD> CHAPTER I - COMPTROLLER OF THE CURRENCY, DEPARTMENT OF THE TREASURY</HEAD>
+
+<DIV5 N="1" NODE="12:1.0.1.1.1" TYPE="PART">
+<HEAD>PART 1 - INVESTMENT SECURITIES
+</HEAD>
+<AUTH>
+<HED>Authority:</HED><PSPACE>12 U.S.C. 1 <I>et seq.,</I> 24 (Seventh), and 93a. 
+</PSPACE></AUTH>
+<SOURCE>
+<HED>Source:</HED><PSPACE>61 FR 63982, Dec. 2, 1996, unless otherwise noted.
+
+
+</PSPACE></SOURCE>
+
+<DIV8 N="§ 1.1" NODE="12:1.0.1.1.1.0.1.1" TYPE="SECTION">
+<HEAD>§ 1.1   Authority, purpose, scope, and reservation of authority.</HEAD>
+<P>(a) <I>Authority.</I> (1) This part is issued pursuant to 12 U.S.C. 1 <I>et seq.,</I> 12 U.S.C. 24 (Seventh), and 12 U.S.C. 93a, § 1. 
+</P>
+<P>(b) <I>Purpose</I> This part prescribes standards under which national banks may purchase, sell, deal in, underwrite, and hold securities, consistent with the authority contained in 12 U.S.C. 24 (Seventh) and safe and sound banking practices. 
+</P>
+<P>(A) Test graf for bad initial ID.</P>
+<P>(c) <I>Scope.</I> The standards set forth in this part apply to national banks and Federal branches of foreign banks.Further, pursuant to 12 U.S.C. 335, State banks that are members of the Federal Reserve System are subject to the same limitations and conditions that apply to national banks in connection with purchasing, selling, dealing in, and underwriting securities and stock. In addition to activities authorized under this part, foreign branches of national banks are authorized to conduct international activities and invest in securities pursuant to 12 CFR part 211. 
+</P>
+<P>(d) <I>Reservation of authority.</I> The OCC may determine, on a case-by-case basis, that a national bank may acquire an investment security other than an investment security of a type set forth in this part, provided the OCC determines that the bank's investment is consistent with 12 U.S.C. section 24 (Seventh) and with safe and sound banking practices. The OCC will consider all relevant factors, including the risk characteristics of the particular investment in comparison with the risk characteristics of investments that the OCC has previously authorized, and the bank's ability effectively to manage such risks. The OCC may impose limits or conditions in connection with approval of an investment security under this subsection. Investment securities that the OCC determines are permissible in accordance with this paragraph constitute eligible investments for purposes of 12 U.S.C. 24.
+</P>
+<P>6. <I>Small Business Investment Companies:</I> Associate Deputy Administrator for Capital Access, United States Small Business Administration, 409 Third Street SW., 8th Floor, Washington, DC 20416.
+</P>
+<P>7. <I>Brokers and Dealers:</I> Securities and Exchange Commission, Washington, DC 20549.
+</P>
+<P>8. <I>Federal Land Banks, Federal Land Bank Associations, Federal Intermediate Credit Banks, and Production Credit Associations:</I> Farm Credit Administration, 1501 Farm Credit Drive, McLean, VA 22102-5090.
+</P>
+<P>9. <I>Retailers, Finance Companies, and All Other Creditors Not Listed Above:</I> FTC Regional Office for region in which the creditor operates or Federal Trade Commission, Equal Credit Opportunity, Washington, DC 20580.
+</P>
+</DIV8>
+</DIV5>
+
+
+<DIV5 N="1003" NODE="12:8.0.2.6.4" TYPE="PART">
+<HEAD>PART 1003 - HOME MORTGAGE DISCLOSURE (REGULATION C)
+</HEAD>
+<AUTH>
+<HED>Authority:</HED><PSPACE>12 U.S.C. 2803, 2804, 2805, 5512, 5581.
+</PSPACE></AUTH>
+<SOURCE>
+<HED>Source:</HED><PSPACE>76 FR 78468, Dec. 19, 2011, unless otherwise noted.
+
+
+</PSPACE></SOURCE>
+
+<DIV6 N="A" NODE="12:8.0.2.6.6.1" TYPE="SUBPART">
+<HEAD>Subpart A - General</HEAD>
+
+<DIV8 N="§ 1003.1" NODE="12:8.0.2.6.4.0.1.1" TYPE="SECTION">
+<HEAD>§ 1003.1   Authority, purpose, and scope.</HEAD>
+<P>(a) <I>Authority.</I> This part, known as Regulation C, is issued by the Bureau of Consumer Financial Protection (Bureau) pursuant to the Home Mortgage Disclosure Act (HMDA) (12 U.S.C. 2801 <I>et seq.,</I>) as amended. The information-collection requirements have been approved by the U.S. Office of Management and Budget (OMB) under 44 U.S.C. 3501 <I>et seq.</I> and have been assigned OMB numbers for institutions reporting data to the Office of the Comptroller of the Currency (1557-0159), the Federal Deposit Insurance Corporation (3064-0046), the Federal Reserve System (7100-0247), the Department of Housing and Urban Development (HUD) (2502-0529), the National Credit Union Administration (3133-0166), and the Bureau of Consumer Financial Protection (3170-0008).
+</P>
+<P>(b) <I>Purpose.</I> (1) This part implements the Home Mortgage Disclosure Act, (i)which is intended to provide the public with loan data that can be used:
+</P>
+<P>(ii) To help determine whether financial institutions are serving the housing needs of their communities;
+</P>
+<P>(iii) To assist public officials in distributing public-sector investment so as to attract private investment to areas where it is needed; and
+</P>
+<P>(iv) To assist in identifying possible discriminatory lending patterns and enforcing antidiscrimination statutes.
+</P>
+<P>(2) Neither the act nor this part is intended to encourage unsound lending practices or the allocation of credit.
+</P>
+<P>(c) <I>Scope.</I> This part applies to financial institutions as defined in § 1003.2(g). This part requires a financial institution to submit data to the appropriate Federal agency for the financial institution as defined in § 1003.5(a)(4), and to disclose certain data to the public, about covered loans for which the financial institution receives applications, or that it originates or purchases, and that are secured by a dwelling located in a State of the United States of America, the District of Columbia, or the Commonwealth of Puerto Rico.
+</P>
+</DIV8>
+</DIV6>
+</DIV5>
+</DIV3>
+</DIV1>
+</ECFRBRWS>
+</BODY>
+</TEXT>
+</DLPSTEXTCLASS>
