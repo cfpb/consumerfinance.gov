@@ -1,5 +1,5 @@
 {% extends "wagtailadmin/admin_base.html" %}
-{% load compress static i18n %}
+{% load staticfiles i18n %}
 {% block titletag %}{% trans "Set your new password" %}{% endblock %}
 {% block bodyclass %}login{% endblock %}
 {% load wagtailadmin_tags %}
@@ -7,19 +7,14 @@
 {% block extra_css %}
     {{ block.super }}
 
-    {% compress css %}
-        <link rel="stylesheet" href="{% static 'wagtailadmin/css/layouts/login.css' %}" type="text/css" />
-    {% endcompress %}
+    <link rel="stylesheet" href="{% static 'wagtailadmin/css/layouts/login.css' %}" type="text/css" />
 {% endblock %}
 
 {% block furniture %}
     <div class="content-wrapper">
-        {% if messages or form.errors %}
+        {% if form.errors %}
             <div class="messages">
                 <ul>
-                    {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message |safe }}</li>
-                    {% endfor %}
                     {% for key, value in form.errors.items %}
                         <li class="error">{{ value|striptags }}</li>
                     {% endfor %}
@@ -27,7 +22,7 @@
             </div>
         {% endif %}
 
-        <form method="post">
+        <form method="post" novalidate>
             {% csrf_token %}
             <h1>{% trans "Set your new password" %}</h1>
             <ul class="fields">

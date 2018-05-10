@@ -20,7 +20,6 @@ from django.utils.translation import ugettext, ungettext
 from wagtail.wagtailcore.rich_text import RichText, expand_db_html
 
 from bs4 import BeautifulSoup, NavigableString
-from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_disabled, flag_enabled
 from jinja2 import Markup, contextfunction
 
@@ -55,7 +54,7 @@ def environment(**options):
     from v1.templatetags.activity_feed import get_latest_activities
     from v1.util import ref
 
-    options.setdefault('extensions', []).append(CompressorExtension)
+    options.setdefault('extensions', [])
     options['extensions'].append('jinja2.ext.loopcontrols')
     options['extensions'].append('jinja2.ext.i18n')
     options['extensions'].append(FragmentCacheExtension)
