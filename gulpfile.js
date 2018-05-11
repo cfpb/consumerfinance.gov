@@ -63,20 +63,10 @@ function fileExists( filePattern ) {
   return fileExists( newFile.join( '-' ) );
 }
 
-/*
-Check for command-line flag option (such as `lint` in `gulp lint`).
-If the option maps to a task in /gulp/tasks/, we can skip loading other tasks.
-*/
-const cliOption = process.argv.slice( 2 );
-let taskName;
-if ( cliOption.length > 0 ) {
-  taskName = cliOption[0].replace( /:/g, '-' );
-}
-const taskFile = fileExists( taskName );
-
-if ( taskFile ) {
-  requireTask( taskFile );
-} else {
+/**
+ * Load the default set of gulp tasks.
+ */
+function requireAllDefaultTasks() {
   // Automatically add tasks in the /tasks/ directory.
   glob.sync( `${ TASK_PATH }*.js`, {
     ignore: ignoreTasks
@@ -121,4 +111,21 @@ if ( taskFile ) {
       'build'
     )
   );
+}
+
+/*
+Check for command-line flag option (such as `lint` in `gulp lint`).
+If the option maps to a task in /gulp/tasks/, we can skip loading other tasks.
+*/
+const cliOption = process.argv.slice( 2 );
+let taskName;
+if ( cliOption.length > 0 ) {
+  taskName = cliOption[0].replace( /:/g, '-' );
+}
+const taskFile = fileExists( taskName );
+
+if ( taskFile ) {
+  requireTask( taskFile );
+} else {
+  requireAllDefaultTasks();
 }
