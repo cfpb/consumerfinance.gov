@@ -2,20 +2,19 @@ const domValues = require( './dom-values' );
 
 let UNDEFINED;
 
-// List all the parameters the user can change and set
-// their default values.
-// `verbotenKeys` are as follows:
-// 9 = tab
-// 37, 38, 39, 40 = arrow keys.
-// 13 = enter
-// 16 = shift
+/* List all the parameters the user can change and set
+   their default values.
+
+   dp-constant: track the down payment interactions
+   request: Keep the AJAX request accessible so we can terminate it if needed.
+*/
 const _params = {
   'credit-score':   700,
   'down-payment':   '20,000',
+  'dp-constant':    '',
   'house-price':    '200,000',
   'location':       'AL',
   'loan-amount':    UNDEFINED,
-  'location':       'AL',
   'rate-structure': 'fixed',
   'loan-term':      30,
   'loan-type':      'conf',
@@ -24,8 +23,24 @@ const _params = {
   'isJumbo':        false,
   'prevLoanType':   '',
   'prevLocation':   '',
-  'verbotenKeys':   [ 9, 37, 38, 39, 40, 13, 16 ]
+  'request':        UNDEFINED
 };
+
+/**
+ * @returns {Object} Underlying object of parameters.
+ */
+function getAllParams() {
+  return _params;
+}
+
+/**
+ * Retrieve a value from inside the params object.
+ * @param {string} key - The key for a property within the params object.
+ * @returns {string|number|Array|undefined} The key on the params object to get.
+ */
+function getVal( key ) {
+  return _params[key];
+}
 
 /**
  * Set a value inside the params object.
@@ -34,14 +49,6 @@ const _params = {
  */
 function setVal( key, val ) {
   _params[key] = val;
-}
-
-/**
- * Retrieve a value from inside the params object.
- * @returns {string|number|Array|undefined} The key on the params object to get.
- */
-function getVal( key ) {
-  return _params[key];
 }
 
 /**
@@ -64,7 +71,8 @@ function update() {
 }
 
 module.exports = {
-  setVal: setVal,
-  getVal: getVal,
-  update: update
+  getAllParams,
+  getVal,
+  setVal,
+  update
 };

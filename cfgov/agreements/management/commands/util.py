@@ -39,7 +39,7 @@ def get_issuer(name):
 
 def save_agreement(agreements_zip, raw_path, filename_encoding,
                    outfile, upload=False):
-    uri_hostname = 'http://files.consumerfinance.gov'
+    uri_hostname = 'https://files.consumerfinance.gov'
     s3_prefix = 'a/assets/credit-card-agreements/pdf/'
 
     zipinfo = agreements_zip.getinfo(raw_path)

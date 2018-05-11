@@ -4,7 +4,7 @@ const templateLoader = require( BASE_JS_PATH + 'js/explore-rates/template-loader
 describe( 'explore-rates/template-loader', () => {
 
   it( 'should be able to render county template', () => {
-    // eslint-disable-next-line camelcase
+    /* eslint-disable camelcase */
     const mockData = {
       complete_fips: 1,
       gse_limit: 1,
@@ -12,6 +12,8 @@ describe( 'explore-rates/template-loader', () => {
       va_limit: 1,
       county: 'Test'
     };
+    /* eslint-enable camelcase */
+
     const testTemplate = templateLoader.county( mockData );
     expect( testTemplate ).toBe(
       '<option value="1" data-gse="1" data-fha="1" data-va="1">Test</option>\n'
@@ -35,35 +37,6 @@ describe( 'explore-rates/template-loader', () => {
 
   it( 'should be able to render countyGenWarning template', () => {
     const testTemplate = templateLoader.countyGenWarning();
-    expect( typeof testTemplate ).toBe( 'string' );
-  } );
-
-  it( 'should be able to render sliderLabel template', () => {
-    const mockData = {
-      min: 1,
-      max: 360
-    };
-    const testTemplate = templateLoader.sliderLabel( mockData );
-    expect( testTemplate ).toBe( '1 - 360\n' );
-  } );
-
-  it( 'should be able to render creditAlert template', () => {
-    const testTemplate = templateLoader.creditAlert();
-    expect( typeof testTemplate ).toBe( 'string' );
-  } );
-
-  it( 'should be able to render resultAlert template', () => {
-    const testTemplate = templateLoader.resultAlert();
-    expect( typeof testTemplate ).toBe( 'string' );
-  } );
-
-  it( 'should be able to render failAlert template', () => {
-    const testTemplate = templateLoader.failAlert();
-    expect( typeof testTemplate ).toBe( 'string' );
-  } );
-
-  it( 'should be able to render dpWarning template', () => {
-    const testTemplate = templateLoader.dpWarning();
     expect( typeof testTemplate ).toBe( 'string' );
   } );
 

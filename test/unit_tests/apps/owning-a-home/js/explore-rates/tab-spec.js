@@ -1,6 +1,8 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
 const tab = require( BASE_JS_PATH + 'js/explore-rates/tab' );
 
+import { simulateEvent } from '../../../../../util/simulate-event';
+
 const HTML_SNIPPET = `
   <section class="next-steps tabs-layout">
     <ul class="tabs">
@@ -20,17 +22,6 @@ const HTML_SNIPPET = `
     </div>
   </section>
 `;
-
-// TODO: Move to shared utility function that all tests that handle clicks use.
-function triggerClick( target ) {
-  const clickEvent = new window.MouseEvent( 'click', {
-    bubbles: true,
-    cancelable: true,
-    view: window
-  } );
-
-  target.dispatchEvent( clickEvent );
-}
 
 let tabLink2;
 let tabContentDom1;
@@ -57,7 +48,7 @@ describe( 'explore-rates/params', () => {
 
   it( 'should move u-hidden class when tab is clicked.', () => {
     tab.init();
-    triggerClick( tabLink2 );
+    simulateEvent( 'click', tabLink2 );
     expect( tabContentDom1.classList.contains( 'u-hidden' ) ).toBe( true );
     expect( tabContentDom2.classList.contains( 'u-hidden' ) ).toBe( false );
   } );

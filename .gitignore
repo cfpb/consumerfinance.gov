@@ -7,7 +7,6 @@
 _site/
 _build/
 cfgov/static_built/*
-cfgov-refresh/
 
 # Packages #
 ############
@@ -35,14 +34,13 @@ cfgov-refresh/
 ._*
 .Spotlight-V100
 .Trashes
-Icon?
+Icon
 ehthumbs.db
 Thumbs.db
 
 # Environment vars #
 ####################
 .env
-.vagrant
 
 # npm packages #
 ####################
@@ -73,7 +71,6 @@ vendor/
 # Documentation #
 #################
 docs/scripts
-docs/*/slick.html
 
 # Django #
 ##########
@@ -89,10 +86,6 @@ collectstatic/*
 develop-apps/*
 static.in/*/
 
-# Ansible #
-###########
-ansible/roles/*
-
 # Unit test / coverage reports #
 ################################
 test/unit_test_coverage/
@@ -105,6 +98,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 .snyk
+protractorFailuresReport/
 
 # IDE Specifc #
 ###############
@@ -113,3 +107,7 @@ coverage.xml
 # Docker local development #
 ############################
 .python_env
+
+# Auto-generated service workers #
+##################################
+cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js

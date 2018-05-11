@@ -34,14 +34,11 @@ class MultiSelect {
     element.focus = _focus.bind( element );
   }
 
-  areTagSelected() {
+  async areTagSelected() {
     const tagsSelected = this._selectedTags.length;
+    const selectedTagsCount = await this.getDisplayedTagElements().count();
 
-    return this.getDisplayedTagElements()
-      .count()
-      .then( selectedTagsCount =>
-        tagsSelected !== 0 || selectedTagsCount !== 0
-      );
+    return tagsSelected !== 0 || selectedTagsCount !== 0;
   }
 
   clearTags() {
@@ -50,13 +47,11 @@ class MultiSelect {
     return this.selectedTags;
   }
 
-  dropDownHasValue( value ) {
+  async dropDownHasValue( value ) {
     const selector = `li[data-option="${ value }"].filter-match`;
-    const choicesWithValue = element.all( by.css( selector ) );
+    const selectedTagsCount = await element.all( by.css( selector ) ).count();
 
-    return choicesWithValue
-      .count()
-      .then( selectedTagsCount => selectedTagsCount > 0 );
+    return selectedTagsCount > 0;
   }
 
   getChoiceElements() {

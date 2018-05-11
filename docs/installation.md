@@ -45,7 +45,7 @@ This project uses a large number of environment variables.
 To automatically define environment variables and launch the virtualenv
 upon `cd`ing to the project folder,
 [install Autoenv](https://github.com/kennethreitz/autoenv#install).
-We recommend using [Homebrew](http://brew.sh):
+We recommend using [Homebrew](https://brew.sh):
 
 ```bash
 brew install autoenv
@@ -79,54 +79,11 @@ brew info autoenv
     [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
     but we can’t provide support for issues that may arise.
 
-#### MySQL
-
-If you're developing on OS X, this should be installed by default,
-and you shouldn't have to do anything else to get it working.
-You can optionally install a different version with Homebrew.
-
-#### Elasticsearch
-
-!!! warning
-    __These instructions are deprecated since Elasticsearch 1.7
-    is no longer supported by `brew`.__
-
-[Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
-however you’d like. We use [Homebrew](http://brew.sh) for developing on OS X):
-
-```bash
-brew tap homebrew/versions
-brew search elasticsearch
-brew install homebrew/versions/elasticsearch17
-```
-
-Just as with Autoenv, Homebrew will output similar instructions after installation:
-
-```bash
-# To have launchd start homebrew/versions/elasticsearch17 now and restart at login:
-  brew services start homebrew/versions/elasticsearch17
-# Or, if you don't want/need a background service you can just run:
-  elasticsearch --config=/Users/[YOUR USERNAME]/homebrew/opt/elasticsearch17/config/elasticsearch.yml
-```
-
-Any time you resume work on the project after restarting your machine,
-you’ll need to open a new tab and run that last line.
-If you’ll be working on the project consistently,
-we suggest using the first option, so you don't have to worry about that.
-Note that some older versions of Homebrew may suggest
-using `launchctl` instead of `brew services`.
-
-If you need to find this info again later, you can run:
-
-```bash
-brew info elasticsearch17
-```
-
 #### Front-end dependencies
 
 The cfgov-refresh front end currently uses the following frameworks / tools:
 
-- [Gulp](http://gulpjs.com): task management for pulling in assets,
+- [Gulp](https://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Less](http://lesscss.org): CSS pre-processor.
 - [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
@@ -136,10 +93,10 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
     If you’re new to Capital Framework, we encourage you to
     [start here](https://cfpb.github.io/capital-framework/getting-started).
 
-1. Install [Node.js](http://nodejs.org) however you’d like.
+1. Install [Node.js](https://nodejs.org) however you’d like.
    We recommend using [nvm](https://github.com/creationix/nvm), though.
 
-2. Install [Gulp](http://gulpjs.com):
+2. Install [Gulp](https://gulpjs.com):
 
 ```bash
 npm install -g gulp
@@ -334,11 +291,10 @@ You can get a database dump by:
 1. Going to [GHE]/CFGOV/platform/wiki/Database-downloads
 1. Selecting one of the extractions and downloading the
    `production_django.sql.gz` file
-1. Unzip it
 1. Run:
 
 ```bash
-./refresh-data.sh /path/to/dump.sql
+./refresh-data.sh /path/to/dump.sql.gz
 ```
 
 The `refresh-data.sh` script will apply the same changes as the
@@ -416,17 +372,11 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    It will then run a script to ensure that you're in a virtualenv.
    If not, the script will end, to prevent you from accidentally installing
    your Python dependencies globally.
+
 1. **Install project dependencies** (`install`)
 
    Python dependencies are installed into the virtualenv via pip.
    Dependencies vary slightly depending on whether we're in dev, test, or prod.
-1. **Setup MySQL server** (`db_setup`)
-
-   Finally, the script will start the MySQL server, if it's not already running,
-   run `create-mysql-db.sh` to create the database using
-   the variables given in `.env`, if it's not already there,
-   and will run `initial-data.sh` to create the first Wagtail user
-   and load some basic initial data.
 
 
 ## Troubleshooting

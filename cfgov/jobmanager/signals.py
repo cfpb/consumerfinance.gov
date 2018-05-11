@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 SITEMAP_URL = 'https://www.consumerfinance.gov/sitemap.xml'
-GOOGLE_URL = 'http://www.google.com/ping'
+GOOGLE_URL = 'https://www.google.com/ping'
 
 
 def request_site_recrawl(sender, **kwargs):

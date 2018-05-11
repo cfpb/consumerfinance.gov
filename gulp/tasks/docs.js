@@ -5,9 +5,10 @@ const spawn = require( 'child_process' ).spawn;
 
 /**
  * Generate JS scripts documentation.
+ * @returns {ChildProcess} A spawned process.
  */
 function docsScripts() {
-  spawn(
+  return spawn(
     paths.modules + '/.bin/jsdoc',
     [ paths.unprocessed + '/js',
       '--recurse',
@@ -22,7 +23,7 @@ function docsScripts() {
 gulp.task( 'docs:scripts', docsScripts );
 
 gulp.task( 'docs',
-  [
+  gulp.parallel(
     'docs:scripts'
-  ]
+  )
 );

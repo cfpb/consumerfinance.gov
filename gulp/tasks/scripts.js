@@ -4,7 +4,6 @@
    This task is set up to generate multiple separate bundles,
    from different sources, and to use watch when run from the default task. */
 
-const browserSync = require( 'browser-sync' );
 const config = require( '../config.js' );
 const configLegacy = config.legacy;
 const configScripts = config.scripts;
@@ -15,7 +14,7 @@ const gulpModernizrBuild = require( 'gulp-modernizr-build' );
 const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
-const gulpUglify = require( 'gulp-uglify' );
+const gulpUglifyEs = require( 'gulp-uglify-es' ).default;
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
@@ -42,10 +41,7 @@ function _processScript( localWebpackConfig, src, dest ) {
     .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
-    .pipe( gulp.dest( paths.processed + dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( paths.processed + dest ) );
 }
 
 /**
@@ -68,16 +64,13 @@ function scriptsPolyfill() {
       addFeatures: [ 'css/pointerevents', 'es5/specification' ],
       options: [ 'setClasses', 'html5printshiv' ]
     } ) )
-    .pipe( gulpUglify( {
+    .pipe( gulpUglifyEs( {
       compress: {
         properties: false
       }
     } ) )
     .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.processed + '/js/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( paths.processed + '/js/' ) );
 }
 
 /**
@@ -161,10 +154,7 @@ function scriptsNonResponsive() {
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
-    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) );
 }
 
 /**
@@ -179,12 +169,9 @@ function scriptsNemo() {
     } ) )
     .pipe( gulpConcat( 'scripts.js' ) )
     .on( 'error', handleErrors )
-    .pipe( gulpUglify() )
+    .pipe( gulpUglifyEs() )
     .pipe( gulpRename( 'scripts.min.js' ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) );
 }
 
 /**
@@ -250,26 +237,31 @@ function scriptsApps() {
   return singleStream;
 }
 
-gulp.task( 'scripts:polyfill', scriptsPolyfill );
-gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:external', scriptsExternal );
+gulp.task( 'scripts:modern', scriptsModern );
+gulp.task( 'scripts:nemo', scriptsNemo );
+gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:spanish', scriptsSpanish );
+
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
 gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
-gulp.task( 'scripts:ondemand', [
-  'scripts:ondemand:header',
-  'scripts:ondemand:footer',
-  'scripts:ondemand:nonresponsive'
-] );
-gulp.task( 'scripts:nemo', scriptsNemo );
+gulp.task( 'scripts:ondemand',
+  gulp.parallel(
+    'scripts:ondemand:header',
+    'scripts:ondemand:footer',
+    'scripts:ondemand:nonresponsive'
+  )
+);
 
-gulp.task( 'scripts', [
-  'scripts:polyfill',
-  'scripts:modern',
-  'scripts:apps',
-  'scripts:external',
-  'scripts:nemo',
-  'scripts:spanish'
-] );
+gulp.task( 'scripts',
+  gulp.parallel(
+    'scripts:polyfill',
+    'scripts:modern',
+    'scripts:apps',
+    'scripts:external',
+    'scripts:nemo',
+    'scripts:spanish'
+  )
+);

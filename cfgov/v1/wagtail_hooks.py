@@ -139,7 +139,7 @@ class RelativePageLinkHandler(PageLinkHandler):
 
     Pages rendered with this handler should never be rendered like this:
 
-        <a href="http://my.domain/path/to/page">foo</a>
+        <a href="https://my.domain/path/to/page">foo</a>
 
     In standard Wagtail behavior, pages will be rendered with an absolute URL
     if an installation has multiple Wagtail Sites. In our current custom usage

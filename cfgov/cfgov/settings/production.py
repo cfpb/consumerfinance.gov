@@ -6,7 +6,6 @@ from os.path import exists
 from django.core.exceptions import ImproperlyConfigured
 
 from cfgov.settings.base import *
-from cfgov.settings.database_mixin import *
 
 
 default_loggers = []

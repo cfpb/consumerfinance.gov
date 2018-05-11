@@ -1,57 +1,50 @@
+// TODO: Remove jquery.
+import $ from 'jquery';
+
+import {
+  Delay,
+  track
+} from './util/analytics-util';
+
 // HMDA Explore custom analytics file
 
-var HMDAAnalytics = (function() {
-
-  var delay = (function(){
-    var timer = 0;
-    return function(callback, ms){
-      clearTimeout (timer);
-      timer = setTimeout(callback, ms);
-    };
-  })();
-
-  var track = function(event, action, label) {
-    dataLayer.push({
-      "event": event,
-      "action": action,
-      "label": label
-    });
-  };
+const HMDAAnalytics = ( function() {
 
   // Collapsible open and close
-  $('#all div.filter').click( function() {
-    var action = "Filter Expandable Opened";
-    if ( $(this).hasClass('closed') ) {
-      action  = "Filter Expandable Closed";
+  $( '#all div.filter' ).click( function() {
+    let action = 'Filter Expandable Opened';
+    if ( $( this ).hasClass( 'closed' ) ) {
+      action = 'Filter Expandable Closed';
     }
-    var label = $(this).attr('id');
-    track('HMDA Explore Interactions', action, label);
-  });
+    const label = $( this ).attr( 'id' );
+    track( 'HMDA Explore Interactions', action, label );
+  } );
 
   // Chosen menu selections for Summary Table Variables
-  $('select.chzn-single').change(function() {
-    var label = $(this).parent().find('.chzn-container a.chzn-single').text();
-    var parent = $(this).closest('div');
-    var n = $( '.drop-downs > div' ).index( parent ) + 1;
-    var action = 'Variable Dropdown Menu #' + n;
-    track('HMDA Explore Interactions', action, label);
-  });
+  $( 'select.chzn-single' ).change( function() {
+    const label = $( this ).parent().find( '.chzn-container a.chzn-single' ).text();
+    const parent = $( this ).closest( 'div' );
+    const n = $( '.drop-downs > div' ).index( parent ) + 1;
+    const action = 'Variable Dropdown Menu #' + n;
+    track( 'HMDA Explore Interactions', action, label );
+  } );
 
   // Chosen menu selections for Year filter
-  $('select#as_of_year').change(function() {
-    var label = $('#as_of_year_chzn .search-choice:last').text();
-    delay(function() {
-      track('HMDA Explore Interactions', 'Year Dropdown', label);
-    }, 250);
-  });
+  const selectAsOfYearDelay = new Delay();
+  $( 'select#as_of_year' ).change( function() {
+    const label = $( '#as_of_year_chzn .search-choice:last' ).text();
+    selectAsOfYearDelay( () => {
+      track( 'HMDA Explore Interactions', 'Year Dropdown', label );
+    }, 250 );
+  } );
 
   // Chosen menu selections for suggested filters
-  $('select#suggested').change(function() {
-    var label = $(this).val();
-    track('HMDA Explore Interactions', 'Suggested Dropdown', label);
-  });
+  $( 'select#suggested' ).change( function() {
+    const label = $( this ).val();
+    track( 'HMDA Explore Interactions', 'Suggested Dropdown', label );
+  } );
 
-})(jQuery);
+} )( $ );
 
 /*
 // TODO: Verify the below works and then replace jQuery dependent block above.
@@ -95,16 +88,8 @@ function closest( elem, selector ) {
 
 var HMDAAnalytics = (function() {
 
-  var delay = (function(){
-    var timer = 0;
-    return function(callback, ms){
-      clearTimeout (timer);
-      timer = setTimeout(callback, ms);
-    };
-  })();
-
   var track = function(event, action, label) {
-    dataLayer.push({
+    window.dataLayer.push({
       "event": event,
       "action": action,
       "label": label
@@ -139,11 +124,12 @@ var HMDAAnalytics = (function() {
   });
 
   // Chosen menu selections for Year filter
+  const selectAsOfYearDelay = new Delay();
   var selectAsOfYear = document.querySelector( 'select#as_of_year' );
   selectAsOfYear.addEventListener( 'change', function(evt) {
     var lastItem = document.querySelector( '#as_of_year_chzn .search-choice:last' );
     var label = lastItem.textContent;
-    delay(function() {
+    selectAsOfYearDelay( () => {
       track('HMDA Explore Interactions', 'Year Dropdown', label);
     }, 250);
   });

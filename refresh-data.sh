@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==========================================================================
-# Import data from a dump. Provide the filename as the first arg.
+# Import data from a gzipped dump. Provide the filename as the first arg.
 # NOTE: Run this script while in the project root directory.
 #       It will not run correctly when run from another directory.
 # ==========================================================================
@@ -12,39 +12,45 @@ refresh_dump_name=$1
 
 download_data() {
 	echo 'Downloading fresh production Django database dump...'
-	prod_archive="$refresh_dump_name".gz
+	prod_archive="$refresh_dump_name"
 	curl -o $prod_archive $CFGOV_PROD_DB_LOCATION
-	gunzip -f $prod_archive
 }
 
 refresh_data(){
-	echo 'Dropping db'
-	./drop-db.sh
-	echo 'Creating db'
-	./create-mysql-db.sh
 	echo 'Importing refresh db'
-	mysql v1 --user='root' --password="$MYSQL_ROOT_PW" < $refresh_dump_name
+	gunzip < $refresh_dump_name | cfgov/manage.py dbshell
+	echo 'Running any necessary migrations'
+	./cfgov/manage.py migrate --noinput
 	echo 'Setting up initial data'
 	./cfgov/manage.py runscript initial_data
 }
 
-# If no argument was passed to the script and the db dump env variable is set
-if [[ -z "$1" && ! -z "$CFGOV_PROD_DB_LOCATION" ]]; then
-	refresh_dump_name='production_django.sql'
-	download_data
-fi
-
-# Only attempt to load data if a db dump file is provided
+# If dump name wasn't provided.
 if [[ -z "$refresh_dump_name" ]]; then
-	echo 'Please download a recent database dump before running this script:
+    # If URL to download from wasn't provided.
+    if [[ -z "$CFGOV_PROD_DB_LOCATION" ]]; then
+	    echo 'Please download a recent database dump before running this script:
 
 	./refresh-data.sh production_django.sql
 
 Or you can define the location of a dump and this script will download it for you:
 
-	export CFGOV_PROD_DB_LOCATION=http://some-bucket.s3.amazonaws.com/wherever/production_django.sql.gz
+	export CFGOV_PROD_DB_LOCATION=https://example.com/wherever/production_django.sql.gz
 	./refresh-data.sh
-	'
+'
+        exit 1;
+    fi
+
+    # URL was provided, so set dump name and download it.
+    refresh_dump_name='production_django.sql.gz'
+    download_data
 else
-	refresh_data
+    # Dump name was provided. Verify that it's in the expected format.
+    if [[ $refresh_dump_name != *.sql.gz ]]; then
+        echo 'Input dump "$refresh_dump_name" expected to end with .sql.gz.'
+        exit 2;
+    fi
 fi
+
+# We have a dump and it should be the right format. Load it.
+refresh_data

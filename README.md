@@ -17,37 +17,65 @@ Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
 and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions
 are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
 
-Ensure that Python, Node, Docker, Docker Machine, Docker Compose, and imagemagick are installed. If you are using a mac with homebrew, you can run `homebrew-deps.sh` as described below:
+This project requires Python 2.7, Node 8, and Gulp 4. We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/).
+
+Check out the repository:
+
+```sh
+$ git clone git@github.com:cfpb/cfgov-refresh.git
+```
+
+Create a virtual environment for Python dependencies:
+
+```sh
+$ cd cfgov-refresh
+$ mkvirtualenv --python=python2.7 cfgov-refresh
+```
+
+Create and load initial environment settings:
 
 ```
-git clone git@github.com:cfpb/cfgov-refresh.git
-cd cfgov-refresh
-sh homebrew-deps.sh
-pip install virtualenv virtualenvwrapper
-npm install -g gulp
-source load-env.sh
-source setup.sh
-workon cfgov-refresh
-./runserver.sh
+(cfgov-refresh) $ cp .env_SAMPLE .env
+(cfgov-refresh) $ source .env
 ```
+
+Install third-party dependencies and build frontend assets:
+
+```sh
+(cfgov-refresh) $ ./setup.sh
+```
+
+Create a local SQLite database and add some basic pages:
+
+```sh
+(cfgov-refresh) $ ./initial-data.sh
+```
+
+Start your local Django server:
+
+```sh
+(cfgov-refresh) $ ./runserver.sh
+```
+
+Your site will be available locally at [http://localhost:8000](http://localhost:8000).
+
+The site admin will be available at [http://localhost:8000/admin/](http://localhost:8000/admin/), using login `admin` / `admin`.
 
 
 ## Documentation
 
-Documentation for this project is available in the [docs](docs/) directory
+Full documentation for this project is available in the [docs](docs/) directory
 and [online](https://cfpb.github.io/cfgov-refresh/).
 
 If you would like to browse the documentation locally, you can do so
-with `mkdocs`:
+with [`mkdocs`](http://www.mkdocs.org/):
 
+```sh
+(cfgov-refresh) $ pip install -r requirements/manual.txt
+(cfgov-refresh) $ mkdocs serve
 ```
-git clone git@github.com:cfpb/cfgov-refresh.git
-cd cfgov-refresh
-pip install virtualenv virtualenvwrapper
-source activate-virtualenv.sh
-pip install mkdocs
-mkdocs serve
-```
+
+Documentation will be available locally at [http://localhost:8000](http://localhost:8000).
 
 
 ## Getting help

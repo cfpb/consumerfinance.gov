@@ -22,6 +22,7 @@ init() {
 
   if [[ "$(node -v)" != 'v8.'* ]]; then
     printf "\033[1;31mPlease install Node 8.x: 'nvm install 8'\033[0m\n"
+    exit 1;
   fi
 
   NODE_DIR=node_modules
@@ -54,7 +55,7 @@ install() {
     # directly from a GitHub.com URL which enforces rate-limiting. This can
     # cause installation failures when running automated testing. Currently
     # we don't rely on Gecko for testing.
-    ./$NODE_DIR/protractor/bin/webdriver-manager update --gecko false
+    ./$NODE_DIR/protractor/bin/webdriver-manager update --gecko false --standalone false
 
   else
     npm install --production --loglevel warn --no-optional

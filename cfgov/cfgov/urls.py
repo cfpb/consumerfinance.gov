@@ -68,16 +68,10 @@ urlpatterns = [
     url(r'^owning-a-home/resources/(?P<path>.*)$',
         RedirectView.as_view(
             url='/static/owning-a-home/resources/%(path)s', permanent=True)),
-    url(r'^owning-a-home/closing-disclosure/',
-        FlaggedTemplateView.as_view(
-            flag_name='OAH_FORM_EXPLAINERS',
-            template_name='owning-a-home/closing-disclosure/index.html',
-            fallback=SheerTemplateView.as_view(
-                template_engine='owning-a-home',
-                template_name='closing-disclosure/index.html'
-            )
-        ),
-        name='closing-disclosure'
+    url(r'^owning-a-home/closing-disclosure/$',
+        TemplateView.as_view(
+            template_name='owning-a-home/closing-disclosure/index.html'),
+            name='closing-disclosure'
     ),
     url(r'^owning-a-home/explore-rates/',
         FlaggedTemplateView.as_view(
@@ -90,49 +84,24 @@ urlpatterns = [
         ),
         name='explore-rates'
     ),
-    url(r'^owning-a-home/loan-estimate/',
-        FlaggedTemplateView.as_view(
-            flag_name='OAH_FORM_EXPLAINERS',
-            template_name='owning-a-home/loan-estimate/index.html',
-            fallback=SheerTemplateView.as_view(
-                template_engine='owning-a-home',
-                template_name='loan-estimate/index.html'
-            )
-        ),
-        name='loan-estimate'
-    ),
-    url(r'^owning-a-home/loan-options/',
-        include(oah.urls_for_prefix('loan-options'))),
-    url(r'^owning-a-home/loan-options/FHA-loans/',
-        include(oah.urls_for_prefix('loan-options/FHA-loans/'))),
-    url(r'^owning-a-home/loan-options/conventional-loans/',
-        include(oah.urls_for_prefix('loan-options/conventional-loans/'))),
-    url(r'^owning-a-home/loan-options/special-loan-programs/',
-        include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
-    url(r'^owning-a-home/mortgage-closing/',
+    url(r'^owning-a-home/loan-estimate/$',
         TemplateView.as_view(
-            template_name='owning-a-home/mortgage-closing/index.html'
-        ),
-        name='mortgage-closing'
+            template_name='owning-a-home/loan-estimate/index.html'),
+            name='loan-estimate'
     ),
-    url(r'^owning-a-home/mortgage-estimate/',
-        TemplateView.as_view(
-            template_name='owning-a-home/mortgage-estimate/index.html',
+
+    # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
+    # TODO: change to redirects after 2018 homebuying campaign.
+    flagged_url('OAH_JOURNEY', r'^owning-a-home/process/(?P<path>.*)$',
+        lambda req, path: ServeView.as_view()(
+            req, 'owning-a-home/{}'.format(path or 'prepare/')
         ),
-        name='mortgage-estimate'
+        fallback=lambda req, path: SheerTemplateView.as_view(
+            template_engine='owning-a-home',
+            template_name='process/{}/index.html'.format(path or 'prepare')
+        )(req)
     ),
-    url(r'^owning-a-home/process/',
-        include(oah.urls_for_prefix('process/prepare/'))),
-    url(r'^owning-a-home/process/prepare/',
-        include(oah.urls_for_prefix('process/prepare/'))),
-    url(r'^owning-a-home/process/explore/',
-        include(oah.urls_for_prefix('process/explore/'))),
-    url(r'^owning-a-home/process/compare/',
-        include(oah.urls_for_prefix('process/compare/'))),
-    url(r'^owning-a-home/process/close/',
-        include(oah.urls_for_prefix('process/close/'))),
-    url(r'^owning-a-home/process/sources/',
-        include(oah.urls_for_prefix('process/sources/'))),
+    # END TODO
 
     url(r'^know-before-you-owe/$',
         TemplateView.as_view(
@@ -429,14 +398,43 @@ urlpatterns = [
                 r'^search/',
                 include('search.urls')),
 
-    flagged_url('TDP_RELEASE',
-                r'^tdp/',
+    flagged_url('TDP_CRTOOL',
+                r'^practitioner-resources/youth-financial-education/curriculum-review/tool/',  # noqa: E501
                 include_if_app_enabled('teachers_digital_platform',
-                                       'teachers_digital_platform.urls')),
+                                       'teachers_digital_platform.tool-urls')),
 
-    flagged_url('REGULATIONS3K',
-                r'^regulations3k/',
-                include_if_app_enabled('regulations3k', 'regulations3k.urls')),
+    flagged_url('TDP_CRTOOL',
+            r'^practitioner-resources/youth-financial-education/curriculum-review/before-you-begin/',  # noqa: E501
+            include_if_app_enabled('teachers_digital_platform',
+                                    'teachers_digital_platform.begin-urls')),
+
+    flagged_url('TDP_CRTOOL_PROTOTYPES',
+            r'^practitioner-resources/youth-financial-education/curriculum-review/prototypes/',  # noqa: E501
+            include_if_app_enabled('teachers_digital_platform',
+                                    'teachers_digital_platform.prototypes-urls')),  # noqa: E501
+
+    # flagged_url('TDP_SEARCH_INTERFACE',
+    #         r'^practitioner-resources/youth-financial-education/curriculum-review/search/',  # noqa: E501
+    #         include_if_app_enabled('teachers_digital_platform',
+    #                                 'teachers_digital_platform.search-urls')),
+
+    flagged_url(
+        'REGULATIONS3K',
+        r'^regulations/$',
+        lambda request: ServeView.as_view()(request, request.path),
+        fallback=RedirectView.as_view(
+            url='/policy-compliance/rulemaking/', permanent=False),
+        name='regulations'
+    ),
+    flagged_url(
+        'REGULATIONS3K',
+        r'^regulations3k-service-worker.js',
+        TemplateView.as_view(
+        template_name='regulations3k/regulations3k-service-worker.js',
+        content_type='application/javascript'),
+        name='regulations3k-service-worker.js'
+    ),
+
 ]
 
 if settings.ALLOW_ADMIN_URL:

@@ -292,7 +292,7 @@ class TestFeedbackModel(TestCase):
             email='tester@example.com',
             comment="Sparks on the curb.",
             is_helpful=True,
-            referrer="http://www.consumerfinance.gov/owing-a-home/",
+            referrer="https://www.consumerfinance.gov/owing-a-home/",
             submitted_on=datetime.datetime.now()
         )
         self.test_feedback.save()

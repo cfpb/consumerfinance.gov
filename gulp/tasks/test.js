@@ -1,4 +1,3 @@
-const ansiColors = require( 'ansi-colors' );
 const environment = require( '../../config/environment' );
 const envvars = environment.envvars;
 const fancyLog = require( 'fancy-log' );
@@ -65,7 +64,7 @@ function testUnitScripts( cb ) {
   ];
 
   if ( params.travis ) {
-    jestOptions.push( '--runInBand' );
+    jestOptions.push( '--maxWorkers=2' );
   }
 
   spawn(
@@ -84,15 +83,15 @@ function testUnitScripts( cb ) {
 
 /**
  * Run tox Acceptance tests.
+ * @param {Function} cb - Callback function to call on completion.
  */
-function testAcceptanceBrowser() {
+function testAcceptanceBrowser( cb ) {
   const params = minimist( process.argv.slice( 3 ) ) || {};
-  const toxParams = [ '-e' ];
+  const toxParams = [ '-e', 'acceptance' ];
 
-  if ( params.fast ) {
-    toxParams.push( 'acceptance-fast' );
-  } else {
-    toxParams.push( 'acceptance' );
+  if ( params.recreate ) {
+    delete params.recreate;
+    toxParams.push( '-r' );
   }
 
   Object.keys( params ).forEach( key => {
@@ -105,9 +104,11 @@ function testAcceptanceBrowser() {
     .once( 'close', function( code ) {
       if ( code ) {
         fancyLog( 'Tox tests exited with code ' + code );
+        cb(); // eslint-disable-line callback-return, inline-comments
         process.exit( 1 );
       }
       fancyLog( 'Tox tests done!' );
+      cb(); // eslint-disable-line callback-return, inline-comments
     } );
 }
 
@@ -176,6 +177,9 @@ function _getProtractorParams( suite ) {
   // If --tags=@tagName flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'tags' );
 
+  // If --headless=false flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'headless' );
+
   /* If the --suite=suite1,suite2 flag is added on the command-line
      or, if not, if a suite is passed as part of the gulp task definition. */
   const suiteParam = { suite: commandLineParams.suite || suite };
@@ -194,8 +198,9 @@ function _createSauceTunnel( ) {
   const SAUCE_TUNNEL_ID = envvars.SAUCE_TUNNEL;
 
   if ( !( SAUCE_USERNAME && SAUCE_ACCESS_KEY && SAUCE_TUNNEL_ID ) ) {
+    const RED_COLOR = '\x1b[31m%s\x1b[0m';
     const ERROR_MSG = 'Please ensure your SAUCE variables are set.';
-    fancyLog( ansiColors.red( ERROR_MSG ) );
+    fancyLog( RED_COLOR, ERROR_MSG );
 
     return Promise.reject( new Error( ERROR_MSG ) );
   }
@@ -223,7 +228,7 @@ function _createSauceTunnel( ) {
 
       setTimeout( () => {
         resolve( sauceTunnelParam );
-      }, 5000 );
+      }, 1000 );
     } );
 
   } );
@@ -231,17 +236,18 @@ function _createSauceTunnel( ) {
 
 /**
  * Spawn the appropriate acceptance tests.
- * @param {string} args Protractor arguments.
+ * @param {Function} cb - Callback function to call on completion.
  */
-function spawnProtractor( ) {
+async function spawnProtractor( cb ) {
   const params = _getProtractorParams();
+  const commandLineParams = minimist( process.argv.slice( 2 ) ) || {};
+  let sauceTunnel;
 
   /**
    * Spawn the appropriate acceptance tests.
-   * @param {string} args Protractor arguments.
    * @returns {Promise} Promise which runs Protractor.
    */
-  function _runProtractor( args ) {
+  function _runProtractor( ) {
     fancyLog( 'Running Protractor with params: ' + params );
 
     return new Promise( ( resolve, reject ) => {
@@ -251,58 +257,74 @@ function spawnProtractor( ) {
         { stdio: 'inherit' }
       ).once( 'close', code => {
         if ( code ) {
-          fancyLog( 'Protractor tests exited with code ' + code );
-          reject( args );
+          reject( new Error( 'Protractor tests exited with code ' + code ) );
         }
         fancyLog( 'Protractor tests done!' );
-        resolve( args );
+        resolve();
       } );
     } );
   }
 
   /**
    * Acceptance tests error handler.
-   * @param {string} args Failure arguments.
+   * @param {Object} args Failure arguments.
    */
-  function _handleErrors( args = {} ) {
+  async function _handleErrors( args = {} ) {
+    const stopSauceTunnel = () => new Promise( resolve => {
+      args.sauceTunnel.stop( resolve );
+    } );
+
     if ( args.sauceTunnel ) {
-      args.sauceTunnel.stop( () => {
-        process.exit( 1 );
-      } );
-    } else {
-      process.exit( 1 );
+      await stopSauceTunnel();
     }
+
+    cb(); // eslint-disable-line callback-return, inline-comments
+    process.exit( 1 );
   }
 
   /**
    * Acceptance tests success handler.
-   * @param {string} args Success arguments.
+   * @param {Object} args Success arguments.
    */
-  function _handleSuccess( args = {} ) {
+  async function _handleSuccess( args = {} ) {
+    const stopSauceTunnel = () => new Promise( resolve => {
+      args.sauceTunnel.stop( resolve );
+    } );
+
     if ( args.sauceTunnel ) {
-      args.sauceTunnel.stop( () => {
-        process.exit( 0 );
-      } );
-    } else {
-      process.exit( 0 );
+      await stopSauceTunnel();
     }
+    cb(); // eslint-disable-line callback-return, inline-comments
+    process.exit( 0 );
   }
 
-  const commandLineParams = minimist( process.argv.slice( 2 ) ) || {};
-  if ( commandLineParams.sauce === 'true' ) {
-    _createSauceTunnel()
-      .then( _runProtractor )
-      .then( _handleSuccess )
-      .catch( _handleErrors );
-  } else {
-    _runProtractor()
-      .then( _handleSuccess )
-      .catch( _handleErrors );
+  try {
+    if ( commandLineParams.sauce === 'true' ) {
+      sauceTunnel = await _createSauceTunnel();
+    }
+    await _runProtractor( );
+    await _handleSuccess( sauceTunnel );
+  } catch ( error ) {
+    await _handleErrors( sauceTunnel );
   }
 }
 
-gulp.task( 'test', [ 'lint', 'test:unit' ] );
 gulp.task( 'test:acceptance', testAcceptanceBrowser );
 gulp.task( 'test:acceptance:protractor', spawnProtractor );
-gulp.task( 'test:unit', [ 'test:unit:scripts' ] );
 gulp.task( 'test:unit:scripts', testUnitScripts );
+
+gulp.task( 'test:unit',
+  gulp.parallel(
+    'test:unit:scripts'
+  )
+);
+
+gulp.task( 'test',
+  gulp.series(
+    gulp.parallel(
+      'lint',
+      'test:unit'
+    ),
+    'test:acceptance'
+  )
+);

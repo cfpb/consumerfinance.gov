@@ -201,8 +201,7 @@ class EventPage(AbstractFilterPage):
     live_stream_url = models.URLField(
         "URL",
         blank=True,
-        help_text="Format: https://www.ustream.tv/embed/video_id "
-                  "or https://www.youtube.com/embed/video_id."
+        help_text="Format: https://www.youtube.com/embed/video_id."
     )
     live_stream_date = models.DateTimeField(
         "Go Live Date",

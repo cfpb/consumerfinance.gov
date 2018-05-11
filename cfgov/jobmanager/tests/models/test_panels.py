@@ -1,13 +1,12 @@
-from unittest import TestCase
-
 from django.core.exceptions import ValidationError
+from django.test import TestCase
 
 from wagtail.wagtailcore.models import Page
 
 from mock import Mock
 from model_mommy import mommy
 
-from jobmanager.models.django import ApplicantType
+from jobmanager.models.django import ApplicantType, JobLocation
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import (
     EmailApplicationLink, USAJobsApplicationLink
@@ -19,10 +18,16 @@ class ApplicationLinkTestCaseMixin(object):
 
     @classmethod
     def setUpClass(cls):
+        super(ApplicationLinkTestCaseMixin, cls).setUpClass()
         cls.root = Page.objects.get(slug='root')
 
     def setUp(self):
-        self.job_listing = mommy.prepare(JobListingPage, description='foo')
+        location = JobLocation.objects.create(abbreviation='US', name='USA')
+        self.job_listing = mommy.prepare(
+            JobListingPage,
+            description='foo',
+            location=location
+        )
         self.job_listing.full_clean = Mock(return_value=None)
         self.root.add_child(instance=self.job_listing)
 

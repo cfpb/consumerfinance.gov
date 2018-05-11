@@ -5,6 +5,17 @@ dist: trusty
 python:
   - "2.7"
 
+services:
+  - postgresql
+
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
+  chrome: stable
+
 cache:
   pip: true
   directories:
@@ -16,6 +27,7 @@ cache:
     # which also installs app's node_modules.
     - cfgov/unprocessed/apps/owning-a-home/node_modules
     - cfgov/unprocessed/apps/regulations3k/node_modules
+    - cfgov/unprocessed/apps/analytics-gtm/node_modules
 
 install:
   - ./travis_install.sh
@@ -24,15 +36,18 @@ branches:
   only:
     - master
 
+before_script:
+  - psql -c "ALTER USER travis WITH PASSWORD 'travis';"
+
 script:
   - ./travis_run.sh
 
 env:
   global:
-    - TOXENV=py27
     - DJANGO_SETTINGS_MODULE=cfgov.settings.test
     - DJANGO_STAGING_HOSTNAME=content.localhost
     - COVERALLS_PARALLEL=true
+    - PGPORT=5433
 
 jobs:
   fast_finish: true
@@ -40,12 +55,6 @@ jobs:
     - stage: run tests
       env: RUNTEST=frontend
     - env: RUNTEST=backend
-    - stage: Update documentation
-      script:
-        - pip install virtualenv virtualenvwrapper
-        - source activate-virtualenv.sh
-        - pip install -r requirements/manual.txt
-        - mkdocs build
       deploy:
         provider: pages
         local_dir: site

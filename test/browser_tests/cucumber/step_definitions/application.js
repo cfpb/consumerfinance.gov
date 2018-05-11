@@ -4,10 +4,10 @@ const basePage = new BasePage();
 const { Then, When } = require( 'cucumber' );
 const { expect } = require( 'chai' );
 
-When( /I goto URL "(.*)"/, { timeout: 60 * 1000 }, function( url ) {
-  return basePage.gotoURL( url ).then( function() {
-    return expect( browser.getCurrentUrl() ).to.eventually.contain( url );
-  } );
+When( /I goto URL "(.*)"/, { timeout: 60 * 1000 }, async function( url ) {
+  await basePage.gotoURL( url );
+
+  return expect( browser.getCurrentUrl() ).to.eventually.contain( url );
 } );
 
 When( /I navigate back*/, function() {
@@ -17,13 +17,11 @@ When( /I navigate back*/, function() {
 
 When( /I click away*/, function() {
 
-  return element( by.css( 'body' ) ).click( );
+  return element( by.css( 'body' ) ).click();
 } );
 
-Then( /I should see page title "(.*)"/, function( pageTitle ) {
+Then( /I should see page title "(.*)"/, async function( pageTitle ) {
+  const title = await browser.getTitle();
 
-  return browser.getTitle().then( function( title ) {
-
-    return expect( title ).to.equal( pageTitle );
-  } );
+  return expect( title ).to.equal( pageTitle );
 } );

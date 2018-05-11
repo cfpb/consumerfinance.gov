@@ -5,17 +5,14 @@ set -ex
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
-    gulp test --travis
-    bash <(curl -s https://codecov.io/bash) -F frontend
+    gulp test --travis --headless
+    bash <(curl -s https://codecov.io/bash) -F frontend -X coveragepy
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e lint
-    tox -e fast
+    TEST_DATABASE_URL=postgres://travis:travis@localhost:5433/travis tox -e fast
     tox -e missing-migrations
     bash <(curl -s https://codecov.io/bash) -F backend
-elif [ "$RUNTEST" == "acceptance" ]; then
-    export DISPLAY=:99.0
-    sh -e /etc/init.d/xvfb start &
-    sleep 3
-    export HEADLESS_CHROME_BINARY=/usr/bin/google-chrome-beta
-    gulp test:acceptance
+
+    pip install -r requirements/manual.txt
+    mkdocs build
 fi

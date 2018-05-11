@@ -4,8 +4,7 @@
 
 
 const BROWSER_LIST = require( '../config/browser-list-config' );
-const envVars = require( '../config/environment' ).envvars;
-const NODE_ENV = envVars.NODE_ENV;
+const envvars = require( '../config/environment' ).envvars;
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
@@ -32,7 +31,7 @@ const COMMON_MODULE_CONFIG = {
           targets: {
             browsers: BROWSER_LIST.LAST_2_IE_9_UP
           },
-          debug: true
+          debug: false
         } ] ]
       }
     }
@@ -42,6 +41,7 @@ const COMMON_MODULE_CONFIG = {
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
+  cache: true,
   parallel: true,
   uglifyOptions: {
     ie8: false,
@@ -60,8 +60,14 @@ const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
   name: COMMON_BUNDLE_NAME
 } );
 
+const STATS_CONFIG = {
+  stats: {
+    entrypoints: false
+  }
+};
 
 const commonConf = {
+  cache: true,
   module: COMMON_MODULE_CONFIG,
   mode: 'production',
   output: {
@@ -69,10 +75,12 @@ const commonConf = {
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  stats: STATS_CONFIG.stats
 };
 
 const externalConf = {
+  cache: true,
   module: COMMON_MODULE_CONFIG,
   mode: 'production',
   output: {
@@ -80,7 +88,8 @@ const externalConf = {
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  stats: STATS_CONFIG.stats
 };
 
 const modernConf = {
@@ -93,7 +102,8 @@ const modernConf = {
   plugins: [
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  stats: STATS_CONFIG.stats
 };
 
 const onDemandHeaderRawConf = {
@@ -111,10 +121,12 @@ const appsConf = {
   plugins: [
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  stats: STATS_CONFIG.stats
 };
 
 const spanishConf = {
+  cache: true,
   module: COMMON_MODULE_CONFIG,
   mode: 'production',
   output: {
@@ -122,7 +134,8 @@ const spanishConf = {
   },
   plugins: [
     COMMON_UGLIFY_CONFIG
-  ]
+  ],
+  stats: STATS_CONFIG.stats
 };
 
 const devConf = {
@@ -142,7 +155,7 @@ const configExports = {
   spanishConf
 };
 
-if ( NODE_ENV === 'development' ) {
+if ( envvars.NODE_ENV === 'development' ) {
   // eslint-disable-next-line guard-for-in
   for ( const key in configExports ) {
     Object.assign( configExports[key], devConf );

@@ -1,15 +1,11 @@
 {% overextends "wagtailadmin/login.html" %}
-{% load compress static i18n %}
-
+{% load staticfiles i18n %}
 
 {% block furniture %}
     <div class="content-wrapper">
-        {% if messages  or form.non_field_errors %}
+        {% if form.non_field_errors %}
             <div class="messages">
                 <ul>
-                    {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message |safe }}</li>
-                    {% endfor %}
                     {% for error in form.non_field_errors %}
                         <li class="error">{{ error |safe }}</li>
                     {% endfor %}
@@ -17,12 +13,16 @@
             </div>
         {% endif %}
 
-        {% if 'build' in request.site.hostname %}
-            <h1>Log in to demo Wagtail</h1>
-        {% else %}
-            <h1>Log in to consumerfinance.gov</h1>
-        {% endif %}
-        <form action="{% url 'cfpb_login' %}" method="post" autocomplete="off">
+        {% block above_login %}
+            {% if 'build' in request.site.hostname %}
+                <h1>Log in to demo Wagtail</h1>
+            {% else %}
+                <h1>Log in to consumerfinance.gov</h1>
+            {% endif %}
+        {% endblock %}
+
+        <form action="{% url 'cfpb_login' %}" method="post" autocomplete="off" novalidate>
+            {% block login_form %}
             {% csrf_token %}
 
             {% url 'user_welcome' as home_url %}
@@ -30,6 +30,7 @@
 
 
             <ul class="fields">
+                {% block fields %}
                 <li class="full">
                     <div class="field iconfield">
                         {{ form.username.label_tag }}
@@ -44,13 +45,6 @@
                         <div class="input icon-password">
                             {{ form.password }}
                         </div>
-                        {% if form.password.errors %}
-                            <div class="error-message">
-                                {% for key, value in form.password.errors.items %}
-                                    <span>{{ value|escape }}</span>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
                     </div>
                     {% if show_password_reset %}
                         <p class="help"><a href="{% url 'wagtailadmin_password_reset' %}">{% trans "Forgotten it?" %}</a></p>
@@ -64,10 +58,14 @@
                         </div>
                     </li>
                 {% endcomment %}
+                {% endblock %}
                 <li class="submit">
+                    {% block submit_buttons %}
                     <button type="submit" class="button button-longrunning" tabindex="3" data-clicked-text="{% trans 'Signing in...' %}"><span class="icon icon-spinner"></span><em>{% trans 'Sign in' %}</em></button>
+                    {% endblock %}
                 </li>
             </ul>
+        {% endblock %}
         </form>
     </div>
 {% endblock %}

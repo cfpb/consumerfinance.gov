@@ -1,5 +1,7 @@
 const _searchFilter =
-  element( by.css( '.o-filterable-list-controls .o-expandable' ) );
+  element( by.css(
+    '.o-filterable-list-controls .o-expandable'
+  ) );
 
 function _getFilterElement( selector ) {
   return _searchFilter.element( by.css( selector ) );

@@ -45,7 +45,7 @@
 */
 .o-info-unit-group {
     // Set correct spacing for consecutive headings in the intro per DM specs:
-    // http://cfpb.github.io/design-manual/brand-guidelines/typography.html#heading-followed-by-a-heading
+    // https://cfpb.github.io/design-manual/brand-guidelines/typography.html#heading-followed-by-a-heading
     > h2 + .rich-text > h3:first-child {
         margin-top: unit( @grid_gutter-width / @size-iii, em );
     }
@@ -58,7 +58,7 @@
     .content-l {
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     }
-    
+
     > .content-l:first-child {
         margin-top: 0;
     }
@@ -67,20 +67,20 @@
         // Adds margin top to info units that follow another
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em ) !important;
     }
-    
+
     .content-l__top-divider {
         .content-l_col-1 + .content-l_col-1 {
             // Adds top divider between single-column info units
             .grid_column__top-divider;
         }
     }
-    
+
     .content-l__top-divider + .content-l__top-divider {
         // Adds top divider between multi-column info unit rows
         .grid_column__top-divider;
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     }
-    
+
     .respond-to-max( @bp-xs-max, {
         // Adds top divider between info unit cols on small screens
         .content-l__top-divider {
@@ -96,7 +96,7 @@
             // Matches top divider width to cols on larger screens
             &:before {
                 // Overrides .grid_column__top-divider margin-left !important rule
-                margin-left: 15px !important; 
+                margin-left: 15px !important;
                 margin-right: 15px;
                 width: auto;
             }

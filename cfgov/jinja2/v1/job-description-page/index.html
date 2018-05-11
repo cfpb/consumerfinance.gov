@@ -49,13 +49,13 @@
                 <strong>({{ page.ordered_grades | join(', ') }})</strong>
                 {% endif %}
                 ${{ '{:,.0f}'.format( page.salary_min ) }}–${{ '{:,.0f}'.format( page.salary_max ) }}
-                <a class="a-link 
+                <a class="a-link
                           a-link__icon
-                          cf-icon 
-                          cf-icon__after 
-                          cf-icon-download 
+                          cf-icon
+                          cf-icon__after
+                          cf-icon-download
                           pay-grade-link"
-                   href="http://files.consumerfinance.gov/f/documents/cfpb_pay_scales.pdf">
+                   href="https://files.consumerfinance.gov/f/documents/cfpb_pay_scales.pdf">
                     <span class="a-link_text">See information on grades and base pay ranges</span>
                 </a>
             </dd>
@@ -83,7 +83,7 @@
              class="o-expandable
                     o-expandable__read-more">
             <div class="o-expandable_content" id="job-description-expandable">
-                <div class="o-expandable_content-animated">  
+                <div class="o-expandable_content-animated">
                     <h4>Summary</h4>
                     {{ parse_links( page.description ) | safe }}
                     {% if page.responsibilities %}
@@ -92,7 +92,7 @@
                             {{ parse_links( page.responsibilities ) | safe }}
                         </div>
                     {% endif %}
-        
+
                     {% if page.travel_required %}
                         <div class="block block__sub">
                             <h4>Travel required</h4>
@@ -132,7 +132,7 @@
         </div>
 
     </section>
-    
+
     <section class="block
                     block__padded-top
                     block__border-top
@@ -143,7 +143,7 @@
                 <div class="content-l_col content-l_col-1-2">
                     <div class="u-flexible-container">
                         <iframe class="u-flexible-container_inner"
-                                src="https://www.youtube.com/embed/XCbZnTIeTOY" 
+                                src="https://www.youtube.com/embed/XCbZnTIeTOY"
                                 frameborder="0"
                                 allowfullscreen>
                         </iframe>
@@ -151,7 +151,7 @@
                 </div>
                 <div class="content-l_col content-l_col-1-2">
                     <p>Put simply, federal hiring rules prioritize fairness. Our video and resources explain how the application process works, important parts to pay attention to, and what to expect after you apply.</p>
-                    <a class="a-link 
+                    <a class="a-link
                               a-link__jump"
                         href="/about-us/careers/application-process/">
                         <span class="a-link_text">Learn about the job application process</span>
@@ -160,7 +160,7 @@
             </div>
         </div>
     </section>
-   
+
     <section class="block
                     block__padded-top
                     block__border-top">
@@ -168,7 +168,7 @@
         <div class="block block__sub">
             <div class="content-l">
                 {% for usajobs_link in usajobs_links %}
-                    <div class="content-l_col 
+                    <div class="content-l_col
                                 {{ 'content-l_col-1-2' if usajobs_links|length > 1 else 'content-l_col-1'}}">
                         {% set applicant_type = usajobs_link.applicant_type %}
                         <h4>{{ applicant_type.display_title if applicant_type.display_title else applicant_type }}</h4>
@@ -227,7 +227,7 @@
        opportunity employer and seeks to create and maintain a vibrant
        and diverse workforce. Women, minorities, veterans, and
        people with disabilities are encouraged to apply.
-    </p>   
+    </p>
 </div>
 <div class="block block__flush-top">
     <header class="m-slug-header">
@@ -269,11 +269,11 @@
 {% endblock %}
 
 {% block javascript %}
-{{ super() }} 
+{{ super() }}
 
 <script type="application/ld+json">
     {
-        "@context": "http://schema.org",
+        "@context": "https://schema.org",
         "@type": "JobPosting",
         "title": "{{ page.title }}",
         "datePosted": "{{ dt.format_datetime(page.open_date) if page.close_date else '' }}",

@@ -4,6 +4,7 @@ import sys
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import dj_database_url
 from unipath import Path
 
 from ..util import admin_emails
@@ -54,7 +55,6 @@ INSTALLED_APPS = (
     'wagtail.contrib.wagtailroutablepage',
     'localflavor',
     'modelcluster',
-    'compressor',
     'taggit',
     'wagtailinventory',
     'wagtailsharing',
@@ -155,6 +155,8 @@ TEMPLATES = [
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
+                'core.jinja2tags.filters',
+                'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.filters',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
@@ -170,7 +172,28 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
-DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
+
+# Databases
+DATABASES = {}
+
+# If DATABASE_URL is defined in the environment, use it to set the Django DB.
+if os.getenv('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config()
+# Otherwise, support the legacy use of MySQL-specific environment variables.
+elif os.getenv('MYSQL_NAME'):
+    DATABASES['default'] =  {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('MYSQL_NAME', ''),
+        'USER': os.environ.get('MYSQL_USER', ''),
+        'PASSWORD': os.environ.get('MYSQL_PW', ''),
+        'HOST': os.environ.get('MYSQL_HOST', ''),
+        'PORT': os.environ.get('MYSQL_PORT', ''),
+    }
+
+    if 'STORAGE_ENGINE' in os.environ:
+        DATABASES['default']['OPTIONS'] = {
+            'init_command': os.environ['STORAGE_ENGINE'],
+        }
 
 
 # Internationalization
@@ -210,12 +233,11 @@ MEDIA_URL = '/f/'
 
 # List of finder classes that know how to find static files in
 # various locations.
-STATICFILES_FINDERS = (
+STATICFILES_FINDERS = [
     'sheerlike.finders.SheerlikeStaticFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'compressor.finders.CompressorFinder',
-)
+]
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
@@ -577,7 +599,7 @@ FLAGS = {
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
     'BETA_NOTICE': {
-        'site': 'beta.consumerfinance.gov',
+        'site': 'beta.consumerfinance.gov:443',
     },
 
     # When enabled, include a recruitment code comment in the base template.
@@ -610,9 +632,8 @@ FLAGS = {
     # To be enabled when owning-a-home/explore-rates is de-sheered.
     'OAH_EXPLORE_RATES': {},
 
-    # To be enabled when owning-a-home/closing-disclosure/
-    # and owning-a-home/loan-estimate/ are de-sheered.
-    'OAH_FORM_EXPLAINERS': {},
+    # To be enabled when journey pages are released in Wagtail.
+    'OAH_JOURNEY': {},
 
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
@@ -632,8 +653,24 @@ FLAGS = {
     # The release of the new Financial Coaching pages
     'FINANCIAL_COACHING': {},
 
-    # Teacher's Digital Platform
-    'TDP_RELEASE': {},
+    # Teacher's Digital Platform Customer Review Tool
+    'TDP_CRTOOL': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
+
+    # Teacher's Digital Platform Customer Review Tool Prototypes Pages
+    'TDP_CRTOOL_PROTOTYPES': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
+
+    # Teacher's Digital Platform Search Interface Tool
+    'TDP_SEARCH_INTERFACE': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
+
+    # Turbolinks is a JS library that speeds up page loads
+    # https://github.com/turbolinks/turbolinks
+    'TURBOLINKS': {},
 
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': {
@@ -672,8 +709,11 @@ SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get('SEARCH_DOT_GOV_ACCESS_KEY')
 # We want the ability to serve the latest drafts of some pages on beta.
 # This value is read by v1.wagtail_hooks.
 SERVE_LATEST_DRAFT_PAGES = []
+
+# To expose a previously-published page's latest draft version on beta,
+# add its primary key to the list below.
 if DEPLOY_ENVIRONMENT == 'beta':
-    SERVE_LATEST_DRAFT_PAGES = [1288,1286,3273]
+    SERVE_LATEST_DRAFT_PAGES = []
 
 # Email popup configuration. See v1.templatetags.email_popup.
 EMAIL_POPUP_URLS = {
@@ -688,3 +728,11 @@ EMAIL_POPUP_URLS = {
         '/owning-a-home/mortgage-estimate/',
     ],
 }
+
+REGULATIONS_REFERENCE_MAPPING = [
+    (
+        r'(?P<label>(?P<part>^[0-9]+)-(?P<section>[\w]+))-(?P<paragraph>[\w-]*-Interp)',
+        '{part}-Interp-{section}',
+        '{section}-{paragraph}'
+    ),
+]

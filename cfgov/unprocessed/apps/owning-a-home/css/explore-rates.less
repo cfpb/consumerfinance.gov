@@ -3,6 +3,7 @@
    ========================================================================== */
 
 .rate-checker {
+    position: relative;
 
     .page-intro {
         border-bottom: 1px solid @gray-10;
@@ -21,15 +22,14 @@
     /*
         layout
         --------------------------- */
-
     .rc-results {
         .grid_column( 8 );
         .grid_pull( 4 );
     }
 
+    #credit-score-container,
     .loan-amt-total,
     .state-col,
-    .credit-score,
     .form-intro {
         .grid_column( 3, 3 );
 
@@ -137,8 +137,6 @@
     }
 
     .downpayment-warning {
-        .grid_column( 12 );
-
         padding-top: unit( 10px / @base-font-size-px, em );
         font-size: 0.875em;
     }
@@ -147,93 +145,6 @@
         margin-right: 1.25em; //align it nicely with the chart
         font-size: 0.875em;
         text-align: right;
-    }
-
-    /*
-        Range slider for credit score
-        --------------------------- */
-    .credit-score {
-        position: relative;
-
-        .labels {
-            margin: unit( 15px / @base-font-size-px, em ) 0 unit( 8px / @base-font-size-px, em );
-            font-size: 0.625em;
-            line-height: 0;
-        }
-
-        .max {
-            float: right;
-        }
-    }
-
-    .range {
-        margin-bottom: 1.5em;
-    }
-
-    .range-text {
-        position: absolute;
-        display: block;
-        margin-left: unit( -10px / @base-font-size-px, em );
-        font-size: 0.875em;
-        white-space: nowrap;
-    }
-
-    .rangeslider {
-        position: relative;
-        display: block;
-        width: 100%;
-        height: 20px;
-        background: transparent
-                    url( '@{image_path}/slider-bg.png' )
-                    scroll
-                    no-repeat
-                    center
-                    center;
-        background-size: 100%;
-    }
-
-    .rangeslider__fill {
-        position: absolute;
-        top: 0;
-        background: #0f0;
-    }
-
-    .rangeslider__handle {
-        position: absolute;
-        display: inline-block;
-        width: 22px;
-        height: 21px;
-        border: 0;
-        background: transparent
-                    url( '@{image_path}/slider-handle.png' )
-                    no-repeat
-                    0
-                    0;
-        background-size: 100%;
-
-        &.warning {
-            width: 22px;
-            height: 21px;
-            background: transparent
-                        url( '@{image_path}/slider-handle.png' )
-                        no-repeat
-                        0
-                        100%;
-            background-size: 100%;
-        }
-
-    }
-
-    #credit-score:focus + .rangeslider .rangeslider__handle {
-        border: 1px solid #0072ce;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-        outline: 1px solid #0072ce;
-        outline-offset: 0;
-    }
-
-    #slider-range {
-        text-align: center;
     }
 
     /*
@@ -253,6 +164,18 @@
     // highcharts to display overflowing tooltips
     .highcharts-container {
         overflow: visible !important;
+    }
+
+    .highcharts-tooltip > span {
+        z-index: 9999;
+        padding: unit( 4px / @base-font-size-px, em )
+                 unit( 10px / @base-font-size-px, em )
+                 unit( 4px / @base-font-size-px, em )
+                 unit( 8px / @base-font-size-px, em );
+        border: 2px solid @green-60;
+        margin: 0 2px;
+        background-color: @white;
+        color: @dark-gray;
     }
 
     .chart {
@@ -312,7 +235,7 @@
     }
 
     .data-label_number {
-        background-color: #fff;
+        background-color: @white;
 
         .respond-to-max( @bp-xs-max, {
             display: block;
@@ -329,30 +252,16 @@
     }
 
     .caption-title {
-        .u-webfont-regular();
-
-        color: @black;
+        text-align: center;
+        margin-top: 0;
     }
 
     .rc-data-link {
-        text-align: right;
-        .u-webfont-medium();
-
-        a {
-            border-bottom-width: 1px;
-        }
-    }
-
-    .highcharts-tooltip > span {
-        z-index: 9999;
-        padding: unit( 4px / @base-font-size-px, em )
-                 unit( 10px / @base-font-size-px, em )
-                 unit( 4px / @base-font-size-px, em )
-                 unit( 8px / @base-font-size-px, em );
-        border: 2px solid @green-60;
-        margin: 0 2px;
-        background-color: #fff;
-        color: @dark-gray;
+        text-align: left;
+        margin: unit( 20px / @base-font-size-px, em )
+                0
+                unit( 10px / @base-font-size-px, em )
+                0;
     }
 
     .chart-tooltip {
@@ -437,7 +346,6 @@
             width: 100%;
             box-sizing: border-box;
             padding-left: unit( 15px / @base-font-size-px, em );
-            border: solid 1px #d0d0ce;
         }
 
         .unit {
@@ -473,10 +381,6 @@
             display: inline-block;
             width: 32%;
         }
-
-        input {
-            border: solid 1px #d0d0ce;
-        }
     }
 
     .arm-info-comparison {
@@ -494,7 +398,7 @@
         --------------------------- */
     .next-steps {
         margin-top: 5em;
-        margin-bottom: 3.625em;
+        margin-bottom: unit( 45px / @base-font-size-px, em );
 
         .tabs {
             box-sizing: border-box;
@@ -547,30 +451,77 @@
     }
 
     /*
-        about
-        --------------------------- */
-    .about {
-        border-top: 1px solid @gray-10;
-        margin-top: 3.75em;
-    }
-
-    /*
         Alerts and warnings
         --------------------------- */
-    .result-alert {
-        border: 1px solid @red-60;
-        background: #fff;
-    }
 
     .chart-alert {
         position: absolute;
         top: 30%;
         padding: 1em 2em 1em 3em;
-        background: #fff;
+        background: @white;
         .u-webfont-regular();
 
         .point-right {
             font-size: 1.5em;
+        }
+    }
+
+    .chart-menu {
+        position: absolute;
+        z-index: 1000;
+        right: 0;
+        top: 0;
+        width: 145px;
+        border-left: 1px solid transparent;
+        border-right: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        background-color: @white;
+        font-size: 13px;
+
+        &_btn {
+            width: 100%;
+            padding: unit( 15px / @base-font-size-px, em )
+                     unit( 15px / @base-font-size-px, em )
+                     unit( 5px / @base-font-size-px, em )
+                     unit( 15px / @base-font-size-px, em );
+            border: none;
+            background-color: inherit;
+            color: @pacific;
+            font-weight: 500;
+            outline: none;
+            text-align: left;
+        }
+
+        &_options {
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            transition: border 300ms 301ms, height 300ms 100ms;
+            cursor: pointer;
+
+            li {
+                list-style: none;
+                padding: unit( 5px / @base-font-size-px, em )
+                         0
+                         unit( 5px / @base-font-size-px, em )
+                         unit( 15px / @base-font-size-px, em );
+                margin: 0;
+
+                &:hover {
+                    background-color: @pacific;
+                    color: @white;
+                }
+            }
+        }
+
+        &__open {
+            border-color: @gray-10;
+
+            .chart-menu_options {
+                height: 110px;
+
+            }
         }
     }
 
@@ -609,6 +560,29 @@
         margin-top: @grid_gutter-width;
     }
 
+    .credit-note-ctr {
+        border-top: 1px solid @gray-10;
+    }
+
+    .m-notification__borderless {
+        padding-top: 0;
+        padding-bottom: 0;
+        border: none;
+        background: none;
+
+        .alert:before {
+            color: @gold;
+        }
+
+        .m-notification_icon {
+            top: 0;
+        }
+    }
+
+    .oah-ratings-form {
+        margin-top: 0;
+    }
+
     /*
         Media queries
         --------------------------- */
@@ -620,10 +594,6 @@
             .grid_push( 0 );
         }
 
-        .rc-data-link {
-            display: none;
-        }
-
         .rc-home-illu {
             display: none;
         }
@@ -631,7 +601,6 @@
         .rc-illu-inner {
             padding: 0;
         }
-
 
         .next-steps-list li {
             position: relative;
@@ -674,6 +643,10 @@
 
     .respond-to-min( @bp-sm-max, {
 
+        .m-notification__borderless {
+            .grid_column( 8 );
+        }
+
         .page-intro_cols {
             display: table;
             .page-intro_col-left,
@@ -689,7 +662,6 @@
     } );
 
     .respond-to-min( 1000px, {
-
         .rate-checker-heading {
             width: 75%;
         }
@@ -706,55 +678,17 @@
         }
     } );
 
-    @media( -webkit-min-device-pixel-ratio: 2),
-        ( min-resolution: 192dpi ) {
-        .rangeslider__handle {
-            width: 22px;
-            height: 21px;
-            border: 0;
-            background: transparent
-                        url( '@{image_path}/slider-handle@2x.png' )
-                        no-repeat
-                        0
-                        0;
-            background-size: 100%;
-
-            &.warning {
-                width: 22px;
-                height: 21px;
-                background: transparent
-                            url( '@{image_path}/slider-handle@2x.png' )
-                            no-repeat
-                            0
-                            100%;
-                background-size: 100%;
-            }
-        }
-    }
-
-    // Print styles
-    @media print {
-        .rangeslider,
-        .credit-score .labels {
-            display: none;
-        }
-    }
-
     @media print {
         .rc-illu-inner {
             display: none;
         }
-    }
 
-    @media print {
         .calculator,
         .rc-results {
             .grid_column( 12 );
             .grid_push( 0 );
         }
-    }
 
-    @media print {
         .calculator section {
             display: inline-block;
             width: 100%;
