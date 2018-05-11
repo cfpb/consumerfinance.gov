@@ -1,7 +1,7 @@
 ## Usage: Stand Alone
 
-If not using the Vagrant box, you will generally have four tabs
-(or windows) open in your terminal, which will be used for:
+You will generally have three tabs (or windows) open in your terminal,
+which will be used for:
 
  1. **Git operations**.
     Perform Git operations and general development in the repository,
@@ -37,17 +37,20 @@ and rebuild the site's JavaScript and CSS assets.
 ### 2. Run Elasticsearch
 
 !!! note
-	This Elasticsearch tab (or window) might not be necessary if you opted for the `launchd` option when [installing Elasticsearch](installation#elasticsearch).
+	This Elasticsearch tab (or window) might not be necessary if you opted for the
+  `launchd` option when [installing Elasticsearch](installation#elasticsearch).
 
-To launch Elasticsearch, first find out where your Elasticsearch config file is located.
+To launch Elasticsearch, first find out where your Elasticsearch config file is
+located.
 You can do this with [Homebrew](https://brew.sh) using:
 
 ```bash
 brew info elasticsearch
 ```
 
-The last line of that output should be the command you need to launch Elasticsearch with the
-proper path to its configuration file. For example, it may look like:
+The last line of that output should be the command you need to launch
+Elasticsearch with the proper path to its configuration file.
+For example, it may look like:
 
 ```bash
 elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
@@ -266,5 +269,5 @@ import foobar
 ```
 #### runserver has crashed! How do I start it again
 
-In a seperate terminal window or tab, `docker-compose up python` should restart
-it.
+In a separate terminal window or tab, running `docker-compose up python` should
+restart the server.

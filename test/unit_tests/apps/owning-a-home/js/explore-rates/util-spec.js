@@ -149,6 +149,11 @@ describe( 'explore-rates/util', () => {
       util.renderDatestamp( timeStampDom, '2018-03-14T12:00:00Z' );
       expect( timeStampDom.textContent ).toBe( '03/14/2018' );
     } );
+
+    it( 'should format timestamp only if timestamp is passed.', () => {
+      util.renderDatestamp( timeStampDom );
+      expect( timeStampDom.textContent ).toBe( '' );
+    } );
   } );
 
   describe( 'renderLoanAmount()', () => {

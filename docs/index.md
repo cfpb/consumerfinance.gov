@@ -24,10 +24,3 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
   Used for full-text search capabilities and content indexing.
 - [Node](http://nodejs.org) and [npm (Node Package Manager)](https://www.npmjs.com):
   Used for downloading and managing front-end dependencies and assets.
-
-For Vagrant Virtualbox usage (:warning: The Vagrant box is not currently working.)
-
-- [VirtualBox](https://www.virtualbox.org)
-- [Vagrant](https://www.vagrantup.com)
-- python >=  2.6
-- ansible >= 1.9

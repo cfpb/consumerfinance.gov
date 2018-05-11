@@ -102,6 +102,17 @@ module.exports = {
       dest: `${ paths.processed }/apps/know-before-you-owe/js`
     },
     icons: {
+      src:  paths.modules + '/cf-icons/src/icons/*.svg',
+      dest: paths.processed + '/icons/'
+    },
+    iconsOAH: {
+      dest: paths.processed + '/apps/owning-a-home/icons/'
+    },
+    iconsR3K: {
+      dest: paths.processed + '/apps/regulations3k/icons/'
+    },
+    // TODO: Remove when icon font is entirely deprecated.
+    iconsOld: {
       src:  paths.modules + '/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
     },

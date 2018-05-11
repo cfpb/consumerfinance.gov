@@ -88,6 +88,7 @@ OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
+    {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
      'complaintdatabase', 'complaint_common',)},
@@ -232,11 +233,11 @@ MEDIA_URL = '/f/'
 
 # List of finder classes that know how to find static files in
 # various locations.
-STATICFILES_FINDERS = (
+STATICFILES_FINDERS = [
     'sheerlike.finders.SheerlikeStaticFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
-)
+]
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
@@ -309,6 +310,10 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 
 STATIC_VERSION = ''
 
+# DJANGO HUD API
+DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
+# in seconds, 2592000 == 30 days. Google allows no more than a month of caching
+DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     'a/assets/hud/{format}s/{zipcode}.{format}'
@@ -648,8 +653,18 @@ FLAGS = {
     # The release of the new Financial Coaching pages
     'FINANCIAL_COACHING': {},
 
-    # Teacher's Digital Platform
-    'TDP_RELEASE': {
+    # Teacher's Digital Platform Customer Review Tool
+    'TDP_CRTOOL': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
+
+    # Teacher's Digital Platform Customer Review Tool Prototypes Pages
+    'TDP_CRTOOL_PROTOTYPES': {
+        'site': 'beta.consumerfinance.gov:443',
+    },
+
+    # Teacher's Digital Platform Search Interface Tool
+    'TDP_SEARCH_INTERFACE': {
         'site': 'beta.consumerfinance.gov:443',
     },
 

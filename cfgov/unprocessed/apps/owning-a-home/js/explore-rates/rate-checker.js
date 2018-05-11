@@ -195,7 +195,8 @@ function updateView() {
       chart.render( data );
 
       // Update timestamp
-      let _timestamp = results.timestamp;
+      let _timestamp = rawResults.data.timestamp;
+
       try {
         /* Safari 8 seems to have a bug with date conversion:
            The following: new Date("2015-01-07T05:00:00Z")
@@ -273,6 +274,9 @@ function loadCounties() {
       // Inject each county into the DOM.
       const parseCountyData = resp.data.data;
       $.each( parseCountyData, function( i, countyData ) {
+        if ( countyData.county ) {
+          countyData.county = countyData.county.replace( ' County', '' );
+        }
         const countyOption = template.county( countyData );
         $( '#county' ).append( countyOption );
       } );
@@ -816,15 +820,6 @@ function finishLoading() {
  * Register event handlers.
  */
 function registerEvents() {
-
-  // Have the reset button clear selections.
-  $( '.defaults-link' ).click( function( evt ) {
-    evt.preventDefault();
-    setSelections( params.getAllParams() );
-    updateView();
-    removeCreditScoreAlert();
-  } );
-
   // ARM highlighting handler.
   const rateStructureDom = document.querySelector( '#rate-structure' );
   rateStructureDom.addEventListener( 'change', evt => {

@@ -35,6 +35,7 @@ parser.add_argument(
 )
 
 TIMEOUT = 30
+ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = 'https://www.consumerfinance.gov'
 
@@ -223,11 +224,15 @@ def check_urls(base, full=False):
 
     if failures:
         logger.error("These URLs failed: {}".format(failures))
-    if timeouts:
+    if len(timeouts) > ALLOWED_TIMEOUTS:
         logger.error("These URLs timed out after {} seconds: "
                      "{}".format(TIMEOUT, timeouts))
+    elif timeouts:
+        logger.info(
+            "{} allowed timeouts occurred:\n"
+            "{}".format(len(timeouts), "\n".join(timeouts)))
 
-    if failures or timeouts:
+    if failures or len(timeouts) > ALLOWED_TIMEOUTS:
         logger.error("FAIL")
         return False
 

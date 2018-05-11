@@ -4,6 +4,6 @@ import bahExplainers from './bah-explainers';
 
 const OAHCDAnalytics = ( () => {
 
-  bahExplainers( 'OAH Closing Disclosure Interaction' );
+  bahExplainers( 'OAH Closing Disclosure' );
 
 } )();

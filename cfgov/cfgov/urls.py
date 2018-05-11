@@ -234,6 +234,10 @@ urlpatterns = [
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
         include('agreements.urls')),
+    url(r'^hud-api-replace/', include_if_app_enabled(
+        'hud_api_replace',
+        'hud_api_replace.urls',
+        namespace='hud_api_replace')),
     url(r'^consumer-tools/retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
@@ -394,10 +398,25 @@ urlpatterns = [
                 r'^search/',
                 include('search.urls')),
 
-    flagged_url('TDP_RELEASE',
-                r'^tdp/',
+    flagged_url('TDP_CRTOOL',
+                r'^practitioner-resources/youth-financial-education/curriculum-review/tool/',  # noqa: E501
                 include_if_app_enabled('teachers_digital_platform',
-                                       'teachers_digital_platform.urls')),
+                                       'teachers_digital_platform.tool-urls')),
+
+    flagged_url('TDP_CRTOOL',
+            r'^practitioner-resources/youth-financial-education/curriculum-review/before-you-begin/',  # noqa: E501
+            include_if_app_enabled('teachers_digital_platform',
+                                    'teachers_digital_platform.begin-urls')),
+
+    flagged_url('TDP_CRTOOL_PROTOTYPES',
+            r'^practitioner-resources/youth-financial-education/curriculum-review/prototypes/',  # noqa: E501
+            include_if_app_enabled('teachers_digital_platform',
+                                    'teachers_digital_platform.prototypes-urls')),  # noqa: E501
+
+    # flagged_url('TDP_SEARCH_INTERFACE',
+    #         r'^practitioner-resources/youth-financial-education/curriculum-review/search/',  # noqa: E501
+    #         include_if_app_enabled('teachers_digital_platform',
+    #                                 'teachers_digital_platform.search-urls')),
 
     flagged_url(
         'REGULATIONS3K',
