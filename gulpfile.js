@@ -55,8 +55,7 @@ function fileExists( filePattern ) {
   }
   const checkFile = `${ TASK_PATH }${ filePattern }.js`;
   // eslint-disable-next-line no-sync
-  const doesFileExist = fs.existsSync( checkFile );
-  if ( doesFileExist ) {
+  if ( fs.existsSync( checkFile ) ) {
     return checkFile;
   }
   const newFile = filePattern.split( '-' );

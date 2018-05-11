@@ -71,8 +71,8 @@ write_checksum() {
 # Write file that says the node environment that we're in.
 # We can read this on next run to see if the checksum should be bashed.
 write_node_env() {
-    echo -n "${NODE_ENV}" > "node_modules/NODE_ENV"
-    echo "Wrote node_modules/NODE_ENV $NODE_ENV"
+  echo -n "${NODE_ENV}" > "node_modules/NODE_ENV"
+  echo "Wrote node_modules/NODE_ENV $NODE_ENV"
 }
 
 # Analyze setup and see if we need to install npm dependencies.
