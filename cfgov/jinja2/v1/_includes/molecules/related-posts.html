@@ -43,7 +43,7 @@
             </header>
         {% endif %}
         {% for post_type, post_type_list in posts.iteritems() %}
-            {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", "cf-icon-speech-bubble") %}
+            {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", category_icon.render('blog')) %}
             <div class="m-related-posts_list-container">
                 {% if block.value.show_heading %}
                     <h3 class="h4">
