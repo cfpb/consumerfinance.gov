@@ -28,5 +28,5 @@ dockerized() {
 if [ "$1" == "docker" ]; then
   dockerized
 else
-  standalone
+  standalone "$1"
 fi
