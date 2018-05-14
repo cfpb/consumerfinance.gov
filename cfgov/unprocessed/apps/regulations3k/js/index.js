@@ -1,7 +1,6 @@
-import turbolinks from 'turbolinks';
-
 import Expandable from '../../../js/organisms/Expandable.js';
 import { instantiateAll } from '../../../js/modules/util/atomic-helpers';
+import turbolinks from 'turbolinks';
 
 instantiateAll( '.o-expandable', Expandable );
 
