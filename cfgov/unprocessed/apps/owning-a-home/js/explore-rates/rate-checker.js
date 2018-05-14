@@ -214,7 +214,6 @@ function updateView() {
 
       updateComparisons( data );
       renderInterestAmounts();
-      tab.init();
     } );
   }
 }
