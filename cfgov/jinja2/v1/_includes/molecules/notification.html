@@ -31,9 +31,7 @@
       }
   %}
   {% set icon = type_lookup[type]  %}
-  {% set type = ('m-notification__' + type | string)
-     if type and type != 'default'
-     else '' %}
+  {% set type = ('m-notification__' + type | string) if type else '' %}
 
   <div class="m-notification
               {{ type }}
