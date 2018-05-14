@@ -24,19 +24,21 @@
 {% macro render(type, is_visible, message, explanation=none) %}
 
   {% set type_lookup  = {
-        'success' : 'approved',
-        'warning' : 'error',
-        'error'   : 'delete',
+        'default': 'information-round',
+        'success': 'approved-round',
+        'warning': 'warning-round',
+        'error':   'error-round',
       }
   %}
   {% set icon = type_lookup[type]  %}
-  {% set type = ('m-notification__' + type | string) if type else '' %}
+  {% set type = ('m-notification__' + type | string)
+     if type and type != 'default'
+     else '' %}
 
   <div class="m-notification
               {{ type }}
               {{ 'm-notification__visible' if is_visible else '' }}">
-      <span class="m-notification_icon
-                   cf-icon"></span>
+      {{ svg_icon(icon) }}
       <div class="m-notification_content"
            {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
           <div class="h4 m-notification_message">{{ message }}</div>
