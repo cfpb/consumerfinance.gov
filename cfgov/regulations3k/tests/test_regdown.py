@@ -42,6 +42,38 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             'This is a paragraph with a label.</p>'
         )
 
+    def test_inline_interp_label(self):
+        text = '{1-a-Interp-1}\nThis is a paragraph with a label.'
+        self.assertEqual(
+            regdown(text),
+            '<p class="level-1" id="1-a-Interp-1">'
+            'This is a paragraph with a label.</p>'
+        )
+
+    def test_deeper_inline_interp_label(self):
+        text = '{1-a-Interp-1-i}\nThis is a paragraph with a label.'
+        self.assertEqual(
+            regdown(text),
+            '<p class="level-2" id="1-a-Interp-1-i">'
+            'This is a paragraph with a label.</p>'
+        )
+
+    def test_even_deeper_inline_interp_label(self):
+        text = '{1-a-Interp-1-i-a}\nThis is a paragraph with a label.'
+        self.assertEqual(
+            regdown(text),
+            '<p class="level-3" id="1-a-Interp-1-i-a">'
+            'This is a paragraph with a label.</p>'
+        )
+
+    def test_complicated_inline_interp_label(self):
+        text = '{12-d-Interp-7-ii-c-A-7}\nThis is a paragraph with a label.'
+        self.assertEqual(
+            regdown(text),
+            '<p class="level-5" id="12-d-Interp-7-ii-c-A-7">'
+            'This is a paragraph with a label.</p>'
+        )
+
     def test_list_state(self):
         text = '- {my-label} This is a paragraph in a list.'
         self.assertEqual(
