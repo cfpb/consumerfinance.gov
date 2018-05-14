@@ -110,6 +110,7 @@ function Notification( element ) {
   function _setType( type ) {
     // If type hasn't changed, return.
     if ( _currentType === type ) {
+      console.log(this);
       return this;
     }
 
