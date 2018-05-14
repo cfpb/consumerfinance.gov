@@ -125,9 +125,10 @@ function Notification( element ) {
 
       // Replace <svg> element with contents of type_ICON
       const currentIcon = _dom.querySelector( '.cf-icon-svg' );
-      const newIcon = document.createRange().createContextualFragment(
-        ICON[type]
-      );
+      const newIconSetup = document.createElement('div');
+      newIconSetup.innerHTML = ICON[type];
+      const newIcon = newIconSetup.firstChild;
+
       _dom.replaceChild( newIcon, currentIcon );
     } else {
       throw new Error( type + ' is not a supported notification type!' );

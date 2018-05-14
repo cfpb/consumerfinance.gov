@@ -36,30 +36,65 @@ describe( 'Notification', () => {
     } );
 
     it( 'should return the Notification istance if it has a success class', () => {
-      notificationElem.classList.remove('m-notification__default');
-      notificationElem.classList.add('m-notification__success');
+      notificationElem.classList.remove( 'm-notification__default' );
+      notificationElem.classList.add( 'm-notification__success' );
 
       notification.init();
 
-      expect( notificationElem.dataset.jsHook).toEqual( 'state_atomic_init' );
+      expect( notificationElem.dataset.jsHook ).toEqual( 'state_atomic_init' );
     } );
 
     it( 'should return the Notification istance if it has a warning class', () => {
-      notificationElem.classList.remove('m-notification__default');
-      notificationElem.classList.add('m-notification__warning');
+      notificationElem.classList.remove( 'm-notification__default' );
+      notificationElem.classList.add( 'm-notification__warning' );
 
       notification.init();
 
-      expect( notificationElem.dataset.jsHook).toEqual( 'state_atomic_init' );
+      expect( notificationElem.dataset.jsHook ).toEqual( 'state_atomic_init' );
     } );
 
     it( 'should return the Notification istance if it has a error class', () => {
-      notificationElem.classList.remove('m-notification__default');
-      notificationElem.classList.add('m-notification__error');
+      notificationElem.classList.remove( 'm-notification__default' );
+      notificationElem.classList.add( 'm-notification__error' );
 
       notification.init();
 
-      expect( notificationElem.dataset.jsHook).toEqual( 'state_atomic_init' );
+      expect( notificationElem.dataset.jsHook ).toEqual( 'state_atomic_init' );
     } );
   } );
+
+  describe( 'setTypeAndContent()', () => {
+    it( 'should update the notification content for the success state', () => {
+      notification.init();
+
+      notification.setTypeAndContent(
+        notification.SUCCESS,
+        'Notification success content'
+      );
+
+      expect( notificationElem.classList ).toContain( 'm-notification__success' );
+    });
+
+    it( 'should update the notification content for the warning state', () => {
+      notification.init();
+
+      notification.setTypeAndContent(
+        notification.WARNING,
+        'Notification warning content'
+      );
+
+      expect( notificationElem.classList ).toContain( 'm-notification__warning' );
+    });
+
+    it( 'should update the notification content for the error state', () => {
+      notification.init();
+
+      notification.setTypeAndContent(
+        notification.ERROR,
+        'Notification error content'
+      );
+
+      expect( notificationElem.classList ).toContain( 'm-notification__error' );
+    });
+  });
 } );
