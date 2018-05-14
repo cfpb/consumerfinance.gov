@@ -51,11 +51,9 @@
                 ${{ '{:,.0f}'.format( page.salary_min ) }}–${{ '{:,.0f}'.format( page.salary_max ) }}
                 <a class="a-link
                           a-link__icon
-                          cf-icon
-                          cf-icon__after
-                          cf-icon-download
                           pay-grade-link"
                    href="https://files.consumerfinance.gov/f/documents/cfpb_pay_scales.pdf">
+                    {{ svg_icon('download') }}
                     <span class="a-link_text">See information on grades and base pay ranges</span>
                 </a>
             </dd>
