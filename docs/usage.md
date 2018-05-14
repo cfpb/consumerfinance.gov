@@ -146,7 +146,7 @@ is worth reviewing in full. Here are some things that might be different:
 - `docker-compose` takes care of running Elasticsearch for you, and all
 Elasticsearch, MySQL, and Python output will be shown in a single Terminal
 window or tab. (wherever you run `docker-compose up`)
-- `manage.py`commands can only be run after you've opened up a terminal in the
+- `manage.py` commands can only be run after you've opened up a terminal in the
 Python container, which you can do with `./shell.sh`
 - There is not *yet* a good way to use SSL/HTTPS, but that is in the works
 - You won't ever use these scripts: `setup.sh`, `backend.sh`, `runserver.sh`
