@@ -10,9 +10,11 @@
 set -e
 
 if [ "$1" == "ssl" ]; then
-  echo '\033[0;32mStarting SSL Django server on port' $DJANGO_HTTP_PORT '...'
+  echo -e '\033[0;32mStarting SSL Django server on port' $DJANGO_HTTP_PORT '...'
+  tput sgr0
   python cfgov/manage.py runsslserver $DJANGO_HTTP_PORT
 else
-  echo '\033[0;32mStarting the Django server on port' $DJANGO_HTTP_PORT '...'
+  echo -e '\033[0;32mStarting the Django server on port' $DJANGO_HTTP_PORT '...'
+  tput sgr0
   python cfgov/manage.py runserver $DJANGO_HTTP_PORT
 fi
