@@ -269,8 +269,7 @@ The `initial-data.sh` script can be used to initialize a new database to make
 it easy to get started working on Wagtail. This script first ensures that all
 migrations are applied to the database, and then does the following:
 
-- Creates an `admin` superuser with a password as specified in the
-`WAGTAIL_ADMIN_PW` environment variable, if set.
+- Creates an `admin` superuser with password `admin`.
 - If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
 with a slug of `cfgov`.
 - Updates the default Wagtail site to use the port defined by the

@@ -95,12 +95,6 @@ python cfgov/manage.py migrate
 ./runserver.sh
 ```
 
-To set up a superuser in order to access the Wagtail admin:
-
-```
-python cfgov/manage.py createsuperuser
-```
-
 To view the site browse to: <http://localhost:8000>
 
 !!! note "Using a different port"
@@ -111,7 +105,8 @@ To view the site browse to: <http://localhost:8000>
     Specify an alternate port number, e.g. `8001`.
 
 To view the Wagtail admin login,
-browse to: <http://localhost:8000/admin/login/>
+browse to <http://localhost:8000/admin> and login with username `admin`
+and password `admin` (created in `initial-data.sh` above).
 
 !!! note "Using HTTPS locally"
     To access a local server using HTTPS use
