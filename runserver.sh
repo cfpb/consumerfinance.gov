@@ -10,6 +10,8 @@
 set -e
 
 standalone() {
+  local DJANGO_HTTP_PORT=${DJANGO_HTTP_PORT:-8000}
+
   if [ "$1" == "ssl" ]; then
     echo -e '\033[0;32mStarting SSL Django server on port' $DJANGO_HTTP_PORT '...'
     tput sgr0
