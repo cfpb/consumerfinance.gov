@@ -193,5 +193,13 @@
     {# Create a root menu at depth one.
        This is the 1st level of a 3-level menu. #}
     {{ _nav( 1, vars.nav_groups ) }}
-    <button class="{{ base_class ~ '_tab-trigger' }}" aria-hidden="true"></button>
+    <button class="m-global-search_tab-trigger u-visually-hidden"
+            aria-hidden="true">
+      .
+      {# The tab trigger is hidden, but is used to listen for keyup events
+      when the tab key is pressed on it while it has focus, so that
+      the menu can be collapsed.
+      The period is because HTML validation requires the button
+      contain some content. #}
+    </button>
 </nav>
