@@ -74,6 +74,66 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             'This is a paragraph with a label.</p>'
         )
 
+    def test_appendix_label(self):
+        text = '{A-2-d}\nThis is a paragraph with a label.'
+        text2 = '{A-2-d-1}\nThis is another paragraph with a label.'
+        text3 = '{A-2-d-1-v}\nThis is yet another paragraph with a label.'
+        self.assertEqual(
+            regdown(text),
+            '<p class="level-0" id="A-2-d">'
+            'This is a paragraph with a label.</p>'
+        )
+        self.assertEqual(
+            regdown(text2),
+            '<p class="level-1" id="A-2-d-1">'
+            'This is another paragraph with a label.</p>'
+        )
+        self.assertEqual(
+            regdown(text3),
+            '<p class="level-2" id="A-2-d-1-v">'
+            'This is yet another paragraph with a label.</p>'
+        )
+
+    def test_multi_part_appendix_label(self):
+        text = '{M1-1-a}\nThis is a paragraph with a label.'
+        text2 = '{M1-1-a-1}\nThis is another paragraph with a label.'
+        text3 = '{M1-1-a-1-i}\nThis is yet another paragraph with a label.'
+        self.assertEqual(
+            regdown(text),
+            '<p class="level-0" id="M1-1-a">'
+            'This is a paragraph with a label.</p>'
+        )
+        self.assertEqual(
+            regdown(text2),
+            '<p class="level-1" id="M1-1-a-1">'
+            'This is another paragraph with a label.</p>'
+        )
+        self.assertEqual(
+            regdown(text3),
+            '<p class="level-2" id="M1-1-a-1-i">'
+            'This is yet another paragraph with a label.</p>'
+        )
+
+    def test_complex_appendix_label(self):
+        text = '{B-h2-p2}\nThis is a paragraph with a label.'
+        text2 = '{B-h2-p2-1}\nThis is another paragraph with a label.'
+        text3 = '{B-h2-p2-1-i}\nThis is yet another paragraph with a label.'
+        self.assertEqual(
+            regdown(text),
+            '<p class="level-0" id="B-h2-p2">'
+            'This is a paragraph with a label.</p>'
+        )
+        self.assertEqual(
+            regdown(text2),
+            '<p class="level-1" id="B-h2-p2-1">'
+            'This is another paragraph with a label.</p>'
+        )
+        self.assertEqual(
+            regdown(text3),
+            '<p class="level-2" id="B-h2-p2-1-i">'
+            'This is yet another paragraph with a label.</p>'
+        )
+
     def test_list_state(self):
         text = '- {my-label} This is a paragraph in a list.'
         self.assertEqual(
