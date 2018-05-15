@@ -39,6 +39,10 @@
                        if flag_enabled('INSET_TEST', request) else '' }}">
                 {{ block | safe }}
             </div>
+        {% elif block_type in ['email_signup'] %}
+            <div class="m-inset__email">
+                {{ block | safe }}
+            </div>
         {% else %}
             {{ block | safe }}
         {% endif %}

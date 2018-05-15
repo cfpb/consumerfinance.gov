@@ -28,14 +28,13 @@
                    m-list
                    m-list__unstyled">
             <li class="o-bureau-structure_branch_name">
-                <button class="o-bureau-structure_nav-item
-                               a-link
+                <button class="a-link
                                a-link__jump
-                               cf-icon
-                               cf-icon__before
-                               cf-icon-left
+                               a-link__icon-before-text
+                               o-bureau-structure_nav-item
                                u-show-on-mobile"
                         data-show-slide-index="0">
+                    {{ svg_icon('left') }}
                     {{ category.title }}
                 </button>
             </li>
@@ -73,14 +72,13 @@
         {% for category in categories %}
         <li>
             <button class="a-link
-                           a-link__jump
                            a-link__bg
-                           cf-icon
-                           cf-icon__after
-                           cf-icon-right
+                           a-link__jump
+                           a-link__icon-after-text
                            o-bureau-structure_nav-item"
                     data-show-slide-index="{{ loop.index }}">
                 {{ category.title }}
+                {{ svg_icon('right') }}
             </button>
         </li>
         {% endfor %}
@@ -283,13 +281,16 @@
                 Ask a Bureau employee to be involved in a forum, publication, discussion, or
                 other event; or to inquire about any Bureau events.
             </p>
-            <span class="cf-icon cf-icon-email m-list_icon"></span>
-            <span class="m-list_text">
-                <a class="m-list_link"
+            <p>
+                <a class="a-link
+                          a-link__icon"
                    href="mailto:invitations2cfpb@consumerfinance.gov">
-                    invitations2cfpb@consumerfinance.gov
+                   {{ svg_icon('mail') }}
+                    <span class="a-link_text">
+                        invitations2cfpb@consumerfinance.gov
+                    </span>
                 </a>
-            </span>
+            </p>
         </div>
     </div>
 </aside>

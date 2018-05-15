@@ -124,6 +124,13 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             label, text = match.group('label'), match.group('text')
             p = util.etree.SubElement(parent, 'p')
             p.set('id', label)
+            # We use CSS classes to indent paragraph text. To get the correct
+            # class, we count the number of dashes in the label to determine
+            # how deeply nested the paragraph is. Inline interps have special
+            # prefixes that are removed before counting the dashes.
+            # e.g. 6-a-Interp-1 becomes -1 and gets a `level-1` class
+            # e.g. 12-b-Interp-2-i becomes -2-i and gets a `level-2` class
+            label = re.sub('^\w+\-\w+\-interp', '', label, flags=re.IGNORECASE)
             level = label.count('-')
             class_name = 'level-{}'.format(level)
             p.set('class', class_name)
