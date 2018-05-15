@@ -6,7 +6,7 @@ const HTML_SNIPPET = `
 <div class="o-email-popup o-email-popup__visible" lang="en" data-popup-label="testPopup">
     <div class="o-email-popup_header">
         <div class="close">
-            <a>Close <span class="cf-icon cf-icon-delete-round"></span></a>
+            <a>Close</a>
         </div>
     </div>
     <div class="o-email-popup_body">
@@ -32,11 +32,8 @@ const HTML_SNIPPET = `
                 <div class="m-notification
                             m-notification__success
                             ">
-                    <span class="m-notification_icon
-                                 cf-icon"></span>
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message"></div>
-
                     </div>
                 </div>
             </div>
