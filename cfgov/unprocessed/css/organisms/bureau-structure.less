@@ -193,12 +193,6 @@
     .respond-to-max( @bp-xs-max, {
         display: inline-block;
 
-        .cf-icon,
-        &:before,
-        &:after {
-            color: @pacific;
-        }
-
         &:focus {
             outline: thin dotted;
         }
@@ -207,23 +201,11 @@
             color: @pacific-60;
             border-color: @pacific-60;
             z-index: 2;
-
-            .cf-icon,
-            &:before,
-            &:after {
-                color: @pacific-60;
-            }
         }
 
         &:active {
             color: @navy;
             border-color: @navy;
-
-            .cf-icon,
-            &:before,
-            &:after {
-                color: @navy;
-            }
         }
     } );
 }
