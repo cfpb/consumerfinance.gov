@@ -3,6 +3,9 @@
 # Fail if any command fails.
 set -ex
 
+# Set the NODE_ENV for this script.
+export NODE_ENV='development'
+
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
     gulp test --travis --headless
