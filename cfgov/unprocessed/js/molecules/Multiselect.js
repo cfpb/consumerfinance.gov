@@ -8,6 +8,10 @@ const standardType = require( '../modules/util/standard-type' );
 const strings = require( '../modules/util/strings' );
 const EventObserver = require( '../modules/util/EventObserver' );
 
+const closeIcon = require(
+  'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/close.svg'
+);
+
 /**
  * Multiselect
  * @class
@@ -311,13 +315,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         } );
 
         const _selectionsItemLabelDom = domCreate( 'label', {
+          'innerHTML': option.text + closeIcon,
           'for':       option.value,
           'inside':    _selectionsItemDom
-        } );
-
-        domCreate( 'span', {
-          innerHTML: option.text,
-          inside:    _selectionsItemLabelDom
         } );
 
         _selectionsDom.appendChild( _selectionsItemDom );
