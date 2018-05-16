@@ -105,7 +105,7 @@
         {% set flickr_info = {
             'name': 'Flickr',
             'homepage': unsigned_redirect('https://www.flickr.com/photos/cfpbphotos'),
-            'icon': 'youtube'
+            'icon': 'flickr'
         } %}
 
         {% if is_share_view %}
@@ -132,7 +132,7 @@
                     <a class="m-social-media_icon"
                        href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
                        {{ 'target="_blank" rel="noopener noreferrer"' if link.name != 'email' else '' }}>
-                        <span class="cf-icon {{ link.class }}"></span>
+                        {{ svg_icon(link.icon ~ '-square') }}
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
                     </a>
                 </li>
@@ -140,7 +140,7 @@
                 <li class="m-list_item">
                     <a class="m-social-media_icon"
                        href="{{ link.homepage | trim }}">
-                        <span class="cf-icon {{ link.class }}"></span>
+                        {{ svg_icon(link.icon ~ '-square') }}
                         <span class="u-visually-hidden">Visit us on {{ link.name }}</span>
                     </a>
                 </li>
