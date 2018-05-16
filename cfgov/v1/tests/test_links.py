@@ -23,29 +23,29 @@ class ParseLinksTests(TestCase):
         link = '<a href="https://wwww.google.com">external link/a>'
         output = str(parse_links(link))
         self.assertIn('external-site', output)
-        self.assertIn('cf-icon-external-link', output)
+        self.assertIn('cf-icon-svg', output)
 
     def test_cfpb_link(self):
         link = '<a href="https://www.consumerfinance.gov/foo">cfpb link</a>'
         output = str(parse_links(link))
         self.assertNotIn('external-site', output)
-        self.assertNotIn('cf-icon-external-link', output)
+        self.assertNotIn('cf-icon-svg', output)
 
     def test_gov_link(self):
         link = '<a href="https://www.fdic.gov/bar">gov link</a>'
         output = str(parse_links(link))
         self.assertNotIn('external-site', output)
-        self.assertIn('cf-icon-external-link', output)
+        self.assertIn('cf-icon-svg', output)
 
     def test_pdf_link_gets_download_icon(self):
         link = '<a href="/something.pdf">link</a>'
         parsed = str(parse_links(link))
-        self.assertIn('cf-icon-download', parsed)
+        self.assertIn('cf-icon-svg', parsed)
 
     def test_different_case_pdf_link_gets_download_icon(self):
         link = '<a href="/something.PDF">link</a>'
         parsed = str(parse_links(link))
-        self.assertIn('cf-icon-download', parsed)
+        self.assertIn('cf-icon-svg', parsed)
 
 
 class GetProtectedUrlTestCase(TestCase):

@@ -17,6 +17,7 @@
     <nav class="breadcrumbs" aria-label="Breadcrumbs">
         {% for crumb in breadcrumbs %}
         <a class="breadcrumbs_link" href="{{ crumb.href if crumb.href else get_protected_url(crumb) }}">
+            {{ svg_icon('left') }}
             {{ crumb.title | e }}
         </a>
         {% endfor %}

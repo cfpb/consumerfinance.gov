@@ -38,6 +38,6 @@ six==1.10.0
 unicodecsv==0.14.1
 unipath>=1.1,<=2.0
 wagtail-flags==2.0.8
-wagtail-inventory==0.4.1
+wagtail-inventory==0.4.2
 wagtail-sharing==0.6.1
 Wand==0.4.2
