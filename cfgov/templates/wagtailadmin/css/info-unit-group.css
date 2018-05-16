@@ -9,3 +9,11 @@
     font-size: 1.1em;
     font-style: italic;
 }
+
+/* Hide buttons to add the deprecated blocks that IUG replaces. */
+.action-add-block-image_text_50_50_group.icon-None,
+.action-add-block-image_text_25_75_group.icon-None,
+.action-add-block-half_width_link_blob_group.icon-None,
+.action-add-block-third_width_link_blob_group.icon-None {
+    display: none;
+}
