@@ -12,10 +12,12 @@ from v1.models.learn_page import AbstractFilterPage
 class BlogPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
-        ('image_text_50_50_group', organisms.ImageText5050Group()),
-        ('feedback', v1_blocks.Feedback()),
-        ('email_signup', organisms.EmailSignUp()),
+        ('info_unit_group', organisms.InfoUnitGroup()),
         ('expandable', organisms.Expandable()),
+        ('well', organisms.Well()),
+        ('email_signup', organisms.EmailSignUp()),
+        ('feedback', v1_blocks.Feedback()),
+        ('image_text_50_50_group', organisms.ImageText5050Group()),
     ])
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel('content')

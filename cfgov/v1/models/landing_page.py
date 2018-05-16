@@ -17,12 +17,12 @@ class LandingPage(CFGOVPage):
 
     content = StreamField([
         ('info_unit_group', organisms.InfoUnitGroup()),
+        ('well', organisms.Well()),
+        ('feedback', v1_blocks.Feedback()),
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
         ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
-        ('well', organisms.Well()),
-        ('feedback', v1_blocks.Feedback()),
     ], blank=True)
 
     # General content tab
