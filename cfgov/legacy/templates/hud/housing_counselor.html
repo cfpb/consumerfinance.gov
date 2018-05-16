@@ -111,8 +111,12 @@ Find a housing counselor
                             </div><!-- end .cfpb_hud_hca_api_more_info -->
                         </div><!-- end .hud_hca_api_form_container -->
 
-                        <div id="hud_hca_api_map_container" class="hud_hca_api_map col">
-                            <div id="hud_hca_api_map_canvas" ></div>
+                        <!-- Mapbox map is ignored during voiceover navigation
+                             as set by aria-hidden. -->
+                        <div id="hud_hca_api_map_container"
+                             class="hud_hca_api_map col"
+                             aria-hidden="true">
+                            <div id="hud_hca_api_map_canvas"></div>
                         </div><!-- end .hud_hca_api_map -->
                     </div><!-- end .hud_hca_api_grid_twothird -->
 
