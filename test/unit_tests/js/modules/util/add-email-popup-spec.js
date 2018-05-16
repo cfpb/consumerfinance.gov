@@ -1,8 +1,5 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/modules/util';
 const storageMock = require( '../../../../util/mock-web-storage' );
-const iconsPath = '../../../../node_modules/cf-icons/src/icons/';
-const closeIcon = require( iconsPath + 'close.svg' );
-const informationRoundIcon = require( iconsPath + 'information-round.svg' );
 let addEmailPopup;
 
 const HTML_SNIPPET = `
