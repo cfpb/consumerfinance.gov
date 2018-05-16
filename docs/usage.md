@@ -53,7 +53,7 @@ Elasticsearch with the proper path to its configuration file.
 For example, it may look like:
 
 ```bash
-elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
+elasticsearch --config=/Users/[YOUR MAC USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
 ```
 
 ### 3. Load Indexes & Launch Site

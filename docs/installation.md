@@ -22,7 +22,7 @@ There are two ways to install cfgov-refresh:
 
 ## Stand-alone installation
 
-These instructions are somewhat specific to developing on Mac OS X,
+These instructions are somewhat specific to developing on macOS,
 but if you're familiar with other Unix-based systems,
 it should be fairly easy to adapt them to your needs.
 
