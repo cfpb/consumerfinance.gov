@@ -136,44 +136,6 @@
             right: unit( 12px / @btn__super-font-size, em );
         }
     }
-
-
-    // Specific adjustments for particular icon/label combinations.
-
-    // Example of icon without label.
-    // Add magnifying glass icon to input field.
-    &_before__search {
-        &:before {
-            .cf-icon();
-            content: @cf-icon-search;
-        }
-    }
-
-    // Example of icon + label.
-    // Add "x Clear" button to input field.
-    // TODO: Reconcile this with the clear button in m-btn-inside-input in
-    //       cf-forms. Clear button may need to be a label in CF to support
-    //       accessibility of focusing input when clear is clicked and hides.
-    &_after__clear {
-        &:before {
-            .cf-icon();
-            content: @cf-icon-delete;
-        }
-
-        .respond-to-min( @bp-sm-min, {
-            &:after {
-                content: 'Clear';
-            }
-
-            & ~ .a-text-input {
-                padding-right: unit( 65px / @btn-font-size, em );
-
-                &.input__super {
-                    padding-right: unit( 80px / @btn__super-font-size, em );
-                }
-            }
-        } );
-    }
 }
 
 
