@@ -166,7 +166,8 @@ class ImageText5050Group(blocks.StructBlock):
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
-        icon = 'image'
+        icon = None
+        label = ' '
         template = '_includes/organisms/image-text-50-50-group.html'
 
 
@@ -181,7 +182,8 @@ class ImageText2575Group(blocks.StructBlock):
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
-        icon = 'image'
+        icon = None
+        label = ' '
         template = '_includes/organisms/image-text-25-75-group.html'
 
 
@@ -194,13 +196,15 @@ class LinkBlobGroup(blocks.StructBlock):
 
 class ThirdWidthLinkBlobGroup(LinkBlobGroup):
     class Meta:
-        icon = 'link'
+        icon = None
+        label = ' '
         template = '_includes/organisms/third-width-link-blob-group.html'
 
 
 class HalfWidthLinkBlobGroup(LinkBlobGroup):
     class Meta:
-        icon = 'link'
+        icon = None
+        label = ' '
         template = '_includes/organisms/half-width-link-blob-group.html'
 
 
@@ -342,21 +346,6 @@ class MainContactInfo(blocks.StructBlock):
 class SidebarContactInfo(MainContactInfo):
     class Meta:
         template = '_includes/organisms/sidebar-contact-info.html'
-
-
-class Table(blocks.StructBlock):
-    headers = blocks.ListBlock(blocks.CharBlock())
-    rows = blocks.ListBlock(blocks.StreamBlock([
-        ('hyperlink', atoms.Hyperlink(required=False)),
-        ('text', blocks.CharBlock()),
-        ('text_blob', blocks.TextBlock()),
-        ('rich_text_blob', blocks.RichTextBlock()),
-    ]))
-
-    class Meta:
-        icon = None
-        template = '_includes/organisms/table.html'
-        label = ' '
 
 
 class BureauStructurePosition(blocks.StructBlock):
@@ -684,7 +673,6 @@ class FullWidthText(blocks.StreamBlock):
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
-    table = Table(editable=False)
     table_block = AtomicTableBlock(table_options={'renderer': 'html'})
     image_inset = molecules.ImageInset()
     reusable_text = v1_blocks.ReusableTextChooserBlock('v1.ReusableText')

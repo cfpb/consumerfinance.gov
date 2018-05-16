@@ -124,7 +124,7 @@ function Notification( element ) {
 
       // Replace <svg> element with contents of type_ICON
       const currentIcon = _dom.querySelector( '.cf-icon-svg' );
-      const newIconSetup = document.createElement('div');
+      const newIconSetup = document.createElement( 'div' );
       newIconSetup.innerHTML = ICON[type];
       const newIcon = newIconSetup.firstChild;
 

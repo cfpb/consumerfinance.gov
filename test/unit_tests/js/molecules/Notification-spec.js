@@ -73,7 +73,7 @@ describe( 'Notification', () => {
       );
 
       expect( notificationElem.classList ).toContain( 'm-notification__success' );
-    });
+    } );
 
     it( 'should update the notification content for the warning state', () => {
       notification.init();
@@ -84,7 +84,7 @@ describe( 'Notification', () => {
       );
 
       expect( notificationElem.classList ).toContain( 'm-notification__warning' );
-    });
+    } );
 
     it( 'should update the notification content for the error state', () => {
       notification.init();
@@ -95,6 +95,6 @@ describe( 'Notification', () => {
       );
 
       expect( notificationElem.classList ).toContain( 'm-notification__error' );
-    });
-  });
+    } );
+  } );
 } );
