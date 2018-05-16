@@ -114,16 +114,6 @@ Then( /the search molecule (should|shouldn't) have a search trigger/,
   }
 );
 
-Then( /it (should|shouldn't) have search input content/,
-  async function( haveInput ) {
-    await browser.sleep( 300 );
-
-    return expect( _dom.content.isDisplayed() )
-      .to.eventually
-      .equal( isShould( haveInput ) );
-  }
-);
-
 Then( 'I should navigate to search portal',
   async function() {
     const portalUrl = 'https://search.consumerfinance.gov/' +
