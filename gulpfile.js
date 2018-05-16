@@ -23,6 +23,7 @@ if ( envvars.NODE_ENV === 'production' ) {
     TASK_PATH + 'audit.js',
     TASK_PATH + 'docs.js',
     TASK_PATH + 'lint.js',
+    TASK_PATH + 'test-acceptance.js',
     TASK_PATH + 'test-unit.js'
   ];
 }
@@ -86,14 +87,8 @@ function requireAllDefaultTasks() {
     )
   );
 
-  // Define the test task, but don't run linting or unit tests on production.
-  if ( envvars.NODE_ENV === 'production' ) {
-    gulp.task( 'test',
-      gulp.series(
-        'test:acceptance'
-      )
-    );
-  } else {
+  // Define the test task, but don't run tests on production.
+  if ( envvars.NODE_ENV === 'development' ) {
     gulp.task( 'test',
       gulp.series(
         gulp.parallel(
