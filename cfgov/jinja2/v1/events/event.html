@@ -39,7 +39,7 @@
 {#            <p class="event-footer_banner">#}
 {#                <span class="event-footer_banner-message h4">This event requires an RSVP. Reserve your spot here: </span>#}
 {#                <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:" class="a-btn">#}
-{#                    <span class="a-btn_icon__on-left cf-icon cf-icon-email-social"></span>#}
+{#                    {{ svg_icon('email-square') }}#}
 {#                     reserve@cfpb.gov</a>#}
 {#            </p>#}
 {#        {% endif %}#}
@@ -48,11 +48,11 @@
 {#            <section class="content-l_col content-l_col-1-2 event-footer_col">#}
 {#                <h3 class="h4 u-mb5">Downloads</h3>#}
 {#                <!-- TDOD: Replace with real download link -->#}
-{#                <a href="#" class="event-footer_link">Download event PDF <span class="cf-icon cf-icon-pdf"></span></a>#}
+{#                <a href="#" class="event-footer_link">Download event PDF {{ svg_icon('download') }}</a>#}
 {#            </section>#}
 {#            <section class="content-l_col content-l_col-1-2 event-footer_col">#}
 {#                <h3 class="h4 u-mb5">Do you have event questions?</h3>#}
-{#                <a href="mailto:reserve@cfpb.gov?subject=Event Question&body=Please include your question and fill in your first and last name below and send this email.%0D%0A%0D%0AQuestion:%0D%0AFirst name:%0D%0ALast name:" class="event-footer_link"><span class="cf-icon cf-icon-email-social"></span> reserve@cfpb.gov</a>#}
+{#                <a href="mailto:reserve@cfpb.gov?subject=Event Question&body=Please include your question and fill in your first and last name below and send this email.%0D%0A%0D%0AQuestion:%0D%0AFirst name:%0D%0ALast name:" class="event-footer_link">{{ svg_icon('email-square') }} reserve@cfpb.gov</a>#}
 {#            </section>#}
 {#        </div>#}
     </div>
