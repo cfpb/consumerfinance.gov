@@ -87,8 +87,8 @@ a:hover, a:focus {
 }
 
 #hud_hca_api_map_container {
-  /* Prevent map controls from appearing on top of mega menu. */
-  z-index: 0;
+    /* Prevent map controls from appearing on top of mega menu. */
+    z-index: 0;
 }
 
 #hud_hca_api_map_canvas {
