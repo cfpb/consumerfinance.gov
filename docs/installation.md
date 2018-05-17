@@ -179,9 +179,9 @@ Get any errors? [See our troubleshooting tips.](#troubleshooting)
 
 ### Tools we use for developing with Docker
 
-- **Docker**: You may not need to interact directly with Docker: but you
-  should know that it's a client/server application for managing "containers"
-  (a way of running software in an isolated environment) and "images" (a
+- **Docker**: You may not need to interact directly with Docker, but you
+  should know that it's a client/server application for managing _containers_
+  (a way of running software in an isolated environment) and _images_ (a
   snapshot of all of the files neccessary to run a container).
 - **Docker Compose**: Compose allows you to configure and run a collection of
   connected containers (like a web application and its database).
