@@ -53,7 +53,7 @@ Elasticsearch with the proper path to its configuration file.
 For example, it may look like:
 
 ```bash
-elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
+elasticsearch --config=/Users/[YOUR MAC USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
 ```
 
 ### 3. Load Indexes & Launch Site
@@ -95,12 +95,6 @@ python cfgov/manage.py migrate
 ./runserver.sh
 ```
 
-To set up a superuser in order to access the Wagtail admin:
-
-```
-python cfgov/manage.py createsuperuser
-```
-
 To view the site browse to: <http://localhost:8000>
 
 !!! note "Using a different port"
@@ -111,7 +105,9 @@ To view the site browse to: <http://localhost:8000>
     Specify an alternate port number, e.g. `8001`.
 
 To view the Wagtail admin login,
-browse to: <http://localhost:8000/admin/login/>
+browse to <http://localhost:8000/admin> and login with username `admin`
+and password `admin` (created in `initial-data.sh` above; note that this
+password will expire after 60 days).
 
 !!! note "Using HTTPS locally"
     To access a local server using HTTPS use
@@ -146,32 +142,33 @@ is worth reviewing in full. Here are some things that might be different:
 - `docker-compose` takes care of running Elasticsearch for you, and all
 Elasticsearch, MySQL, and Python output will be shown in a single Terminal
 window or tab. (wherever you run `docker-compose up`)
-- `manage.py`commands can only be run after you've opened up a terminal in the
+- `manage.py` commands can only be run after you've opened up a terminal in the
 Python container, which you can do with `./shell.sh`
 - There is not *yet* a good way to use SSL/HTTPS, but that is in the works
-- You won't ever use these scripts: `setup.sh`, `backend.sh`, `runserver.sh`
+- You won't ever need to use `backend.sh` or `runserver.sh`
 
 ### How do I...
 
 #### Use Docker Machine
 
-If you used `mac-virtualbox-init.sh` or `setup.sh docker`, then we used Docker
-Machine to create a virtualbox VM, running the docker server. Here are some
-useful docker machine commands:
+If you used `mac-virtualbox-init.sh`, then we used Docker Machine to create a
+VirtualBox VM, running the Docker server. Here are some useful `docker-machine`
+commands:
 
 - Start and stop the VM with  `docker-machine start` and `docker-machine stop`
 - get the current machine IP with `docker-machine ip`
 - if for some reason you want to start over, `docker-machine rm default`, and
   `source mac-virtualbox-init.sh`
 
-You'll need to run this command in any new terminal window or tab:
+To enable Docker and Docker Compose commands, you'll always first need to run
+this command in any new shell:
 
 `eval $(docker-machine env)`
 
 It may be helpful to run `docker-machine env` by itself, so you understand
-what's happening. Those variables are what allows docker-compose and the docker
-command line tool, running natively on your mac, to connect to the Docker
-server running inside virtualbox.
+what's happening. Those variables are what allows `docker-compose` and the
+`docker` command line tool, running natively on your Mac, to connect to the
+Docker server running inside VirtualBox.
 
 If you use autoenv (described in the stand-alone intructions) or something
 similar, you might consider adding `eval $(docker-machine env)` to your .env
@@ -187,7 +184,7 @@ where that's not neccessary.
 run `./shell.sh` to open up a shell *inside* the Python container. From there,
 commands like `cfgov/manage.py migrate` should run as expected.
 
-The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` --
+The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` –
 they will work as expected once you're inside the container.
 
 In addition you can run single commands by passing them as arguments to

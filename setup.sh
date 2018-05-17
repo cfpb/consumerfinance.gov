@@ -26,8 +26,6 @@ dockerized() {
         echo 'Creating default environment variables...'
         cp "$ENVVAR"_SAMPLE $ENVVAR
     fi
-
-    source mac-virtualbox-init.sh
 }
 
 # Execute requested (or all) functions.

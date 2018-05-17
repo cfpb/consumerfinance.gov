@@ -10,7 +10,7 @@ This is the documentation for the `cfgov-refresh` project, a redesign of the [ww
 
 The standard technology stack for development of cfgov-refresh within the CFPB consists of the following base:
 
-- Mac OSX
+- macOS
 - [Homebrew](https://brew.sh) - package manager for installing system software on OSX
 - Python and PIP (Python package manager)
 - WordPress API data source URL
