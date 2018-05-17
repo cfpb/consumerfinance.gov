@@ -66,10 +66,11 @@ function Slider( element ) {
    * Initialize the range slider. https://github.com/stbaer/rangeslider-js
    */
   function _render() {
-    const options = Object.assign( _options, {
-      onInit: () => _update(),
-      onSlide: ( position, value ) => _update()
-    } );
+    // This could use Object.assign, but it's not supported in IE11.
+    const options = _options;
+    options.onInit = () => _update();
+    options.onSlide = ( position, value ) => _update();
+
     rangesliderJs.create( _inputDom, options );
     _rangeSliderHandleDom = _dom.querySelector( '.rangeslider__handle' );
   }

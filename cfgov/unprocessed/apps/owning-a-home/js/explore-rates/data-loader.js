@@ -29,9 +29,13 @@ function getData( fieldToFetch ) {
     cancelFunc = newCancelFunc;
   } );
 
-  const params = Object.assign(
-    { decache: decache, cancelToken: _cancelToken }, fieldToFetch
-  );
+  const params = { decache: decache, cancelToken: _cancelToken };
+  // This could use Object.assign, but it's not supported in IE11.
+  for ( const key in fieldToFetch ) {
+    if ( Object.prototype.hasOwnProperty.call( fieldToFetch, key ) ) {
+      params[key] = fieldToFetch[key];
+    }
+  }
 
   return {
     promise: axios.get(
