@@ -227,6 +227,7 @@ function updateLanguage( totalVals ) {
     const stateDropDown = document.querySelector( '#location' );
     const state = stateDropDown.options[stateDropDown.selectedIndex].textContent;
     const locations = document.querySelectorAll( '.location' );
+    // forEach could be used here, but it's not supported in IE11.
     for ( let i = 0, len = locations.length; i < len; i++ ) {
       locations[i].innerText = state;
     }

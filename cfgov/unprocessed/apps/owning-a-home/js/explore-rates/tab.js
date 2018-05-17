@@ -6,6 +6,7 @@ function init() {
   let tabContents;
 
   let tabGroup;
+  // forEach could be used here, but it's not supported in IE11.
   for ( let i = 0, len = tabGroups.length; i < len; i++ ) {
     tabGroup = tabGroups[i];
     tabContents = tabGroup.querySelectorAll( '.tab-content' );

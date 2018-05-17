@@ -31,7 +31,7 @@ function getData( fieldToFetch ) {
 
   const params = { decache: decache, cancelToken: _cancelToken };
   // This could use Object.assign, but it's not supported in IE11.
-  for ( let key in fieldToFetch ) {
+  for ( const key in fieldToFetch ) {
     params[key] = fieldToFetch[key];
   }
 
