@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
-from functools import partial
 from collections import OrderedDict
+from functools import partial
 
 from django.db import models
 from django.template.loader import get_template
