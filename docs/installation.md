@@ -141,6 +141,44 @@ If you setup Autoenv earlier, this will happen for you automatically when you
 If you prefer not to use Autoenv, just be sure to `source .env` every time
 you start a new session of work on the project.
 
+#### Optional (but recommended): use Postgres instead of SQLite
+
+We default to SQLite for the Django backend to make it easy to get started, but
+Postgres is our preferred database, and we recommend you consider installing it
+if you are comfortable doing this.
+
+If you're on a Mac and use Homebrew, you can easily install Postgres:
+
+```bash
+brew install postgresql
+```
+
+Once it's installed, you can configure it to run as a service:
+
+```bash
+brew services start postgresql
+```
+
+Then create the database and associated user:
+
+```bash
+dropdb --if-exists cfgov && dropuser --if-exists cfpb
+createuser cfpb && createdb -O cfpb cfgov
+```
+
+You'll also need to update your `.env` file to comment out the line that
+specifies SQLite as the db:
+
+```bash
+# export DATABASE_URL=sqlite:///db.sqlite3
+```
+
+And then uncomment the line that tells Django to use Postgres:
+
+```bash
+export DATABASE_URL=postgres://cfpb@localhost/cfgov
+```
+
 #### Run the setup script
 
 At this point, your machine should have everything it needs to automate the
