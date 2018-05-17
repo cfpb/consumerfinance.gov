@@ -227,9 +227,9 @@ function updateLanguage( totalVals ) {
     const stateDropDown = document.querySelector( '#location' );
     const state = stateDropDown.options[stateDropDown.selectedIndex].textContent;
     const locations = document.querySelectorAll( '.location' );
-    locations.forEach( item => {
-      item.innerText = state;
-    } );
+    for ( let i = 0, len = locations.length; i < len; i++ ) {
+      locations[i].innerText = state;
+    }
   }
 
   function renderMedian( totalVals ) {
