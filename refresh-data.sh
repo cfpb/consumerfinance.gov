@@ -13,12 +13,12 @@ refresh_dump_name=$1
 download_data() {
 	echo 'Downloading fresh production Django database dump...'
 	prod_archive="$refresh_dump_name"
-	curl -o $prod_archive $CFGOV_PROD_DB_LOCATION
+	curl -o "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
 }
 
 refresh_data(){
 	echo 'Importing refresh db'
-	gunzip < $refresh_dump_name | cfgov/manage.py dbshell
+	gunzip < "$refresh_dump_name" | cfgov/manage.py dbshell
 	echo 'Running any necessary migrations'
 	./cfgov/manage.py migrate --noinput
 	echo 'Setting up initial data'
@@ -47,7 +47,7 @@ Or you can define the location of a dump and this script will download it for yo
 else
     # Dump name was provided. Verify that it's in the expected format.
     if [[ $refresh_dump_name != *.sql.gz ]]; then
-        echo 'Input dump "$refresh_dump_name" expected to end with .sql.gz.'
+        echo "Input dump '$refresh_dump_name' expected to end with .sql.gz."
         exit 2;
     fi
 fi
