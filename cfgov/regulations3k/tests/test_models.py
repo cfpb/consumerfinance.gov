@@ -129,8 +129,7 @@ class RegModelTests(DjangoTestCase):
         test_nav_items = get_reg_nav_items(request, self.reg_page)[0]
         self.assertEqual(
             len(test_nav_items),
-            Section.objects.filter(
-                label__startswith='1002').count())
+            Subpart.objects.count())
 
     def test_routable_page_view(self):
         response = self.reg_page.section_page(
