@@ -19,8 +19,21 @@
         <div class="wrapper
                     {{ 'wrapper__match-content' if is_horizontal else '' }}">
             <div class="m-global-eyebrow_tagline">
-                An official website of the
-                <span class="m-global-eyebrow_tagline-usa">United States Government</span>
+                {# NOTE:
+                   The tagline has spans so that "United States Government" is
+                   prevented from being split across two lines using
+                   `white-space: no wrap`.
+                   Consequently, the full tagline is read as two sentences
+                   by screenreaders. To prevent pausing we use aria-labelledby
+                   to present the tagline as a whole sentence.
+                #}
+                <span aria-hidden="true">
+                    An official website of the
+                </span>
+                <span class="m-global-eyebrow_tagline-usa"
+                      aria-label="An official website of the United States Government">
+                    United States Government
+                </span>
             </div>
             <div class="m-global-eyebrow_actions">
                 <ul class="m-list
