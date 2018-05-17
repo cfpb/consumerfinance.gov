@@ -140,7 +140,7 @@ Much of the guidance above for the "stand-alone" set-up still stands, and it
 is worth reviewing in full. Here are some things that might be different:
 
 - `docker-compose` takes care of running Elasticsearch for you, and all
-Elasticsearch, MySQL, and Python output will be shown in a single Terminal
+Elasticsearch, Postgres, and Python output will be shown in a single Terminal
 window or tab. (wherever you run `docker-compose up`)
 - `manage.py` commands can only be run after you've opened up a terminal in the
 Python container, which you can do with `./shell.sh`
@@ -221,7 +221,7 @@ See the [Docker Compose docs](https://docs.docker.com/compose/compose-file/#env_
 #### Get familiar with Docker Compose, and our configuration
 
 docker-compose.yml contains a sort of "recipe" for running the site. Each entry
-in the Compose file describes a component of our application stack (MySQL,
+in the Compose file describes a component of our application stack (Postgres,
 Elasticsearch, and Python), and either points to a public image on Dockerhub,
 or to a Dockerfile in cfgov-refresh. You can learn a lot more about Compose
 files in [the docs](https://docs.docker.com/compose/compose-file/)
