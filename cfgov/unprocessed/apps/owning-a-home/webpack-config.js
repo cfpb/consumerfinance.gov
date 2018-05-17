@@ -41,9 +41,10 @@ const COMMON_MODULE_CONFIG = {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ 'babel-preset-env', {
-          targets: {
-            browsers: BROWSER_LIST.LAST_2_IE_9_UP
-          },
+          configPath: __dirname,
+          /* Use useBuiltIns: 'usage' and set `debug: true` to see what
+             scripts require polyfilling. */
+          useBuiltIns: false,
           debug: false
         } ] ]
       }
