@@ -108,6 +108,9 @@ function MegaMenu( element ) {
    */
   function _populateTreeFromDom( dom, parentNode, callback ) {
     const children = dom.children;
+    if ( !children ) {
+      return;
+    }
     let child;
     for ( let i = 0, len = children.length; i < len; i++ ) {
       let newParentNode = parentNode;
