@@ -150,10 +150,12 @@ function renderLoanAmount( elem, loanAmount ) {
 function setSelections( fields ) {
   let val;
   for ( const key in fields ) {
-    val = fields[key];
-    const el = document.querySelector( '#' + key );
-    if ( el ) {
-      setSelection( el, val );
+    if ( Object.prototype.hasOwnProperty.call( fields, key ) ) {
+      val = fields[key];
+      const el = document.querySelector( '#' + key );
+      if ( el ) {
+        setSelection( el, val );
+      }
     }
   }
 }

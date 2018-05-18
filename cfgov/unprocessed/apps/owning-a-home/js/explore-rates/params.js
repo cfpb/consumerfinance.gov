@@ -60,12 +60,14 @@ function update() {
 
   let val;
   for ( const param in _params ) {
-    val = domValues.getSelection( param );
-    if ( param !== 'prevLoanType' &&
-         param !== 'prevLocation' &&
-         val !== UNDEFINED &&
-         val !== null ) {
-      _params[param] = domValues.getSelection( param );
+    if ( Object.prototype.hasOwnProperty.call( _params, param ) ) {
+      val = domValues.getSelection( param );
+      if ( param !== 'prevLoanType' &&
+           param !== 'prevLocation' &&
+           val !== UNDEFINED &&
+           val !== null ) {
+        _params[param] = domValues.getSelection( param );
+      }
     }
   }
 }

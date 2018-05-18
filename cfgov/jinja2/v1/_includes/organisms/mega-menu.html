@@ -76,6 +76,7 @@
            {{ 'data-js-hook=behavior_flyout-menu_trigger' if item.nav_groups | count > 0 else '' }}
            {{ 'aria-pressed=false' if item.nav_groups | count > 0 else '' }}>
             {{ item.text }}
+            {{ svg_icon('right') }}
         </a>
         {% if item.nav_groups | count > 0 %}
             {{ _nav( nav_depth | int + 1, item.nav_groups, item.text ~ ' Overview', item.url, vars.media_items, item.footer if item.footer else '' ) }}
@@ -121,6 +122,7 @@
             {% if nav_depth > 1 %}
             <button class="{{ _classes( nav_depth, '-alt-trigger' ) }}"
                     data-js-hook="behavior_flyout-menu_alt-trigger">
+                {{ svg_icon('left') }}
                 Back
             </button>
             {% endif %}
@@ -188,6 +190,12 @@
     <button class="{{ base_class ~ '_trigger' }}"
             data-js-hook="behavior_flyout-menu_trigger"
             aria-pressed="false">
+        <span class="{{ base_class ~ '_trigger-open' }}">
+            {{ svg_icon('menu') }}
+        </span>
+        <span class="{{ base_class ~ '_trigger-close' }}">
+            {{ svg_icon('close') }}
+        </span>
         <span class="u-visually-hidden">Menu</span>
     </button>
     {# Create a root menu at depth one.
