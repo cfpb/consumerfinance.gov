@@ -37,8 +37,6 @@ from v1.views import (
 from v1.views.documents import DocumentServeView
 
 
-oah = SheerSite('owning-a-home')
-
 
 def flagged_wagtail_template_view(flag_name, template_name):
     """View that serves Wagtail if a flag is set, and a template if not.
@@ -75,9 +73,9 @@ urlpatterns = [
     ),
     url(r'^owning-a-home/explore-rates/',
         TemplateView.as_view(
-            template_name='explore-rates/index.html'
-        ),
-        name='explore-rates'
+            template_name='explore-rates/index.html',
+            name='explore-rates'
+        )
     ),
     url(r'^owning-a-home/loan-estimate/$',
         TemplateView.as_view(
