@@ -11,8 +11,8 @@
 
    ========================================================================== #}
 
-{% macro render() %}
-<p class="a-tagline">
+{% macro render( is_large ) %}
+<div class="a-tagline{{ ' a-tagline__large' if is_large else '' }}">
     An official website of the United States government
-</p>
+</div>
 {% endmacro %}
