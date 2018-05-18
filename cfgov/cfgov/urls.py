@@ -75,7 +75,6 @@ urlpatterns = [
     ),
     url(r'^owning-a-home/explore-rates/',
         TemplateView.as_view(
-            template_engine='owning-a-home',
             template_name='explore-rates/index.html'
         ),
         name='explore-rates'
