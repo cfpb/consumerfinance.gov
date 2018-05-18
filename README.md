@@ -20,47 +20,48 @@ are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
 
 This project requires Python 2.7, Node 8, and Gulp 4. We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/).
 
-Check out the repository:
+Clone the repository:
 
 ```sh
-$ git clone git@github.com:cfpb/cfgov-refresh.git
+git clone git@github.com:cfpb/cfgov-refresh.git
 ```
 
 Create a virtual environment for Python dependencies:
 
 ```sh
-$ cd cfgov-refresh
-$ mkvirtualenv --python=python2.7 cfgov-refresh
+cd cfgov-refresh
+mkvirtualenv --python=python2.7 cfgov-refresh
 ```
 
 Create and load initial environment settings:
 
 ```
-(cfgov-refresh) $ cp .env_SAMPLE .env
-(cfgov-refresh) $ source .env
+cp -a .env_SAMPLE .env
+source .env
 ```
 
 Install third-party dependencies and build frontend assets:
 
 ```sh
-(cfgov-refresh) $ ./setup.sh
+./setup.sh
 ```
 
 Create a local SQLite database and add some basic pages:
 
 ```sh
-(cfgov-refresh) $ ./initial-data.sh
+./initial-data.sh
 ```
 
 Start your local Django server:
 
 ```sh
-(cfgov-refresh) $ ./runserver.sh
+./runserver.sh
 ```
 
-Your site will be available locally at [http://localhost:8000](http://localhost:8000).
+Your site will be available locally at <http://localhost:8000>.
 
-The site admin will be available at [http://localhost:8000/admin/](http://localhost:8000/admin/), using login `admin` / `admin`.
+The site admin will be available at <http://localhost:8000/admin/>, using login `admin` /
+`admin`.
 
 
 ## Documentation
@@ -72,8 +73,8 @@ If you would like to browse the documentation locally, you can do so
 with [`mkdocs`](http://www.mkdocs.org/):
 
 ```sh
-(cfgov-refresh) $ pip install -r requirements/manual.txt
-(cfgov-refresh) $ mkdocs serve
+pip install -r requirements/manual.txt
+mkdocs serve
 ```
 
 Documentation will be available locally at [http://localhost:8000](http://localhost:8000).
