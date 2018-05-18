@@ -629,9 +629,6 @@ FLAGS = {
     # To be enabled when mortgage-performance data visualizations go live
     'MORTGAGE_PERFORMANCE_RELEASE': {},
 
-    # To be enabled when owning-a-home/explore-rates is de-sheered.
-    'OAH_EXPLORE_RATES': {},
-
     # To be enabled when journey pages are released in Wagtail.
     'OAH_JOURNEY': {},
 
