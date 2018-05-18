@@ -26,8 +26,6 @@ from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from sheerlike.sites import SheerSite
-from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
