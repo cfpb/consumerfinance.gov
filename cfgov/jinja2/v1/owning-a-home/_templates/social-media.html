@@ -73,39 +73,39 @@
             'name': 'Facebook',
             'homepage': unsigned_redirect('https://facebook.com/cfpb'),
             'share_url': signed_redirect('https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ '&redirect_uri=' ~ parsed_url),
-            'class': 'cf-icon-facebook-square'
+            'icon': 'facebook'
         } %}
 
         {% set twitter_info = {
             'name': 'Twitter',
             'homepage': unsigned_redirect('https://twitter.com/cfpb'),
             'share_url': signed_redirect(_share_twitter_url(parsed_url, twitter_text, value)|trim),
-            'class': 'cf-icon-twitter-square'
+            'icon': 'twitter'
         } %}
 
         {% set linkedin_info = {
             'name': 'LinkedIn',
             'homepage': unsigned_redirect('https://www.linkedin.com/company/consumer-financial-protection-bureau'),
             'share_url': signed_redirect('https://www.linkedin.com/shareArticle?mini=true&url=' ~ parsed_url ~ '&title=' ~ linkedin_title ~ '&summary=' ~ linkedin_text),
-            'class': 'cf-icon-linkedin-square'
+            'icon': 'linkedin'
         } %}
 
         {% set email_info = {
             'name': 'email',
             'share_url': 'mailto:?subject=' ~ email_title ~ '&body=' ~ email_text ~ ' ' ~ parsed_url ~ email_signature,
-            'class': 'cf-icon-email-social-square'
+            'icon': 'email'
         } %}
 
         {% set youtube_info = {
             'name': 'YouTube',
             'homepage': unsigned_redirect('https://www.youtube.com/user/cfpbvideo'),
-            'class': 'cf-icon-youtube-square'
+            'icon': 'youtube'
         } %}
 
         {% set flickr_info = {
             'name': 'Flickr',
             'homepage': unsigned_redirect('https://www.flickr.com/photos/cfpbphotos'),
-            'class': 'cf-icon-flickr-square'
+            'icon': 'flickr'
         } %}
 
         {% if is_share_view %}
@@ -132,7 +132,7 @@
                     <a class="m-social-media_icon"
                        href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
                        {{ 'target="_blank" rel="noopener noreferrer"' if link.name != 'email' else '' }}>
-                        <span class="cf-icon {{ link.class }}"></span>
+                        {{ svg_icon(link.icon ~ '-square') }}
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
                     </a>
                 </li>
@@ -140,7 +140,7 @@
                 <li class="m-list_item">
                     <a class="m-social-media_icon"
                        href="{{ link.homepage | trim }}">
-                        <span class="cf-icon {{ link.class }}"></span>
+                        {{ svg_icon(link.icon ~ '-square') }}
                         <span class="u-visually-hidden">Visit us on {{ link.name }}</span>
                     </a>
                 </li>

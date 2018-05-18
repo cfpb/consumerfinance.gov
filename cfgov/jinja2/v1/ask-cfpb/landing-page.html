@@ -31,9 +31,9 @@
                                           cf-icon-right"
                                    href="{{ slugurl( 'category-' + category.slug ) }}">
                                     <span class="a-link_text">
-                                        {{ category_icon.render( category.name ) }}
                                         {{ category.name }}
                                     </span>
+                                    {{ category_icon.render( category.name ) }}
                                 </a>
                             </li>
                         {% endfor %}

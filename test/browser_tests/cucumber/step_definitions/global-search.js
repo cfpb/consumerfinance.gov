@@ -7,10 +7,9 @@ const { isShould } = require( '../../util/index.js' );
 const BASE_SEL = '.m-global-search';
 const TRIGGER_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_trigger"]';
 const CONTENT_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_content"]';
-const INPUT_SEL = BASE_SEL + ' input#query';
+const INPUT_SEL = BASE_SEL + ' input#m-global-search_query';
 const SEARCH_SEL = BASE_SEL +
   ' [data-js-hook="behavior_flyout-menu_content"] .a-btn';
-const CLEAR_SEL = BASE_SEL + ' .input-contains-label_after';
 const SUGGEST_SEL = BASE_SEL + ' .m-global-search_content-suggestions';
 const EC = protractor.ExpectedConditions;
 
@@ -26,7 +25,6 @@ Before( function() {
     content:   element( by.css( CONTENT_SEL ) ),
     input:     element( by.css( INPUT_SEL ) ),
     searchBtn: element( by.css( SEARCH_SEL ) ),
-    clearBtn:  element( by.css( CLEAR_SEL ) ),
     suggest:   element( by.css( SUGGEST_SEL ) )
   };
 } );
@@ -69,15 +67,6 @@ When( 'I perform tab actions on the search molecule',
     activeElement = await browser.driver.switchTo().activeElement();
 
     return activeElement.sendKeys( protractor.Key.TAB );
-  }
-);
-
-Then( /it (should|shouldn't) have a clear button label/,
-  function( haveLabel ) {
-
-    return expect( _dom.clearBtn.isDisplayed() )
-      .to.eventually
-      .equal( isShould( haveLabel ) );
   }
 );
 

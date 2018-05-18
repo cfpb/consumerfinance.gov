@@ -18,7 +18,8 @@ logger = logging.getLogger(__name__)
 def run():
     logger.info('Running script initial_data')
 
-    admin_password = os.environ.get('WAGTAIL_ADMIN_PW')
+    admin_username = 'admin'
+    admin_password = 'admin'
     staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME',
                                       'content.localhost')
     http_port = os.environ.get('DJANGO_HTTP_PORT', '80')
@@ -26,7 +27,7 @@ def run():
     # Create admin user if it doesn't exist already.
     # Update existing one with admin password and active state.
     User.objects.update_or_create(
-        username='admin',
+        username=admin_username,
         defaults={
             'password': make_password(admin_password),
             'is_superuser': True,

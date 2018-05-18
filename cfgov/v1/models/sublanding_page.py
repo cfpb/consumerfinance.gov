@@ -22,14 +22,9 @@ class SublandingPage(CFGOVPage):
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', molecules.FeaturedContent()),
         ('info_unit_group', organisms.InfoUnitGroup()),
-        ('image_text_25_75_group', organisms.ImageText2575Group()),
-        ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('full_width_text', organisms.FullWidthText()),
-        ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
-        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
         ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
-        ('table', organisms.Table(editable=False)),
         ('table_block', organisms.AtomicTableBlock(
             table_options={'renderer': 'html'})),
         ('contact', organisms.MainContactInfo()),
@@ -37,6 +32,10 @@ class SublandingPage(CFGOVPage):
         ('reg_comment', organisms.RegComment()),
         ('feedback', v1_blocks.Feedback()),
         ('snippet_list', organisms.SnippetList()),
+        ('image_text_25_75_group', organisms.ImageText2575Group()),
+        ('image_text_50_50_group', organisms.ImageText5050Group()),
+        ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),

@@ -27,12 +27,8 @@ const HTML_SNIPPET = `
           <span class="o-expandable_header-left o-expandable_label">
           </span>
           <span class="o-expandable_header-right o-expandable_link">
-            <span class="o-expandable_cue o-expandable_cue-open">
-              <span class="cf-icon cf-icon-plus-round"></span>
-            </span>
-            <span class="o-expandable_cue o-expandable_cue-close">
-              <span class="cf-icon cf-icon-minus-round"></span>
-            </span>
+            <span class="o-expandable_cue o-expandable_cue-open"></span>
+            <span class="o-expandable_cue o-expandable_cue-close"></span>
           </span>
         </div>
       </button>
@@ -124,17 +120,16 @@ describe( 'fwb-results', () => {
     );
     expandableContent = document.querySelector( '.o-expandable_content' );
     expandableTarget = document.querySelector( '.o-expandable_target' );
+    initFwbResults();
   } );
 
   it( 'initialize the expandables on page load', () => {
-    initFwbResults();
     expect( expandableTarget.getAttribute( 'aria-pressed' ) ).toBe( 'false' );
     expect( expandableContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
   } );
 
   it( 'should submit the correct analytics when a toggle button is clicked',
     () => {
-      initFwbResults();
       simulateEvent( 'click', toggleButtons[0] );
 
       expect( window.dataLayer[0] ).toEqual( dataLayerEvent );
@@ -142,7 +137,6 @@ describe( 'fwb-results', () => {
   );
 
   it( 'should show the initial category on page load', () => {
-    initFwbResults();
     expect( toggleButtons[0].classList.contains( SELECTED_CLASS ) )
       .toBe( true );
     expect( dataPoint[0].classList.contains( HIDDEN_CLASS ) ).toBe( false );
@@ -150,7 +144,6 @@ describe( 'fwb-results', () => {
   } );
 
   it( 'should hide the other categories on page load', () => {
-    initFwbResults();
     expect( toggleButtons[1].classList.contains( SELECTED_CLASS ) )
       .toBe( false );
     expect( dataPoint[4].classList.contains( HIDDEN_CLASS ) ).toBe( true );
@@ -159,7 +152,6 @@ describe( 'fwb-results', () => {
 
   it( 'should hide the initial category content ' +
        'when a differnt toggle is clicked', () => {
-    initFwbResults();
     simulateEvent( 'click', toggleButtons[1] );
     expect( toggleButtons[0].classList.contains( SELECTED_CLASS ) )
       .toBe( false );
@@ -169,7 +161,6 @@ describe( 'fwb-results', () => {
 
   it( 'should show the correct category content ' +
        'when the toggle is clicked', () => {
-    initFwbResults();
     simulateEvent( 'click', toggleButtons[1] );
     expect( toggleButtons[1].classList.contains( SELECTED_CLASS ) )
       .toBe( true );

@@ -1,6 +1,11 @@
 import config from '../../config.json';
 
-const axios = require( 'axios' );
+// Auto-polyfill Promise for IE10 and IE11.
+import es6Promise from 'es6-promise';
+es6Promise.polyfill();
+
+import axios from 'axios';
+
 const CancelToken = axios.CancelToken;
 
 let _cancelToken;
@@ -29,9 +34,13 @@ function getData( fieldToFetch ) {
     cancelFunc = newCancelFunc;
   } );
 
-  const params = Object.assign(
-    { decache: decache, cancelToken: _cancelToken }, fieldToFetch
-  );
+  const params = { decache: decache, cancelToken: _cancelToken };
+  // This could use Object.assign, but it's not supported in IE11.
+  for ( const key in fieldToFetch ) {
+    if ( Object.prototype.hasOwnProperty.call( fieldToFetch, key ) ) {
+      params[key] = fieldToFetch[key];
+    }
+  }
 
   return {
     promise: axios.get(
