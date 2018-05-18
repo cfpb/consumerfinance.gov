@@ -24,7 +24,7 @@
                 {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
             {% endfor %}
         {% else %}
-            {{ notification.render('success', false, '') }}
+            {{ notification.render('default', false, '') }}
         {% endif %}
     </div>
 

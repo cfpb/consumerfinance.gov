@@ -90,11 +90,11 @@ function Notification( element ) {
    * @returns {Notification} An instance.
    */
   function setContent( messageText, explanationText ) {
-    let content = '<p class="h4 m-notification_message">' +
+    let content = '<div class="h4 m-notification_message">' +
                     messageText +
-                    '</p>';
+                    '</div>';
     if ( typeof explanationText !== 'undefined' ) {
-      content += '<p class="h4 m-notification_explanation">' +
+      content += '<p class="m-notification_explanation">' +
                  explanationText +
                  '</p>';
     }

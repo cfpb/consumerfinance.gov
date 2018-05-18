@@ -106,25 +106,13 @@
   }
 
   .o-email-signup_footer {
-      display: table;
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 100%;
-      margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+      right: 0;
 
-      .respond-to-min( @bp-sm-min, {
-          margin-top: unit( @grid_gutter-width / @base-font-size-px, em);
-      } );
-
-    .m-notification {
-        width: 100%;
-        text-align: left;
-        vertical-align: middle;
-        border-width: 0;
-
-      &__visible {
-          display: table-cell;
+      .m-notification {
+          border: none;
           padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em)
                    unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
 
@@ -133,16 +121,5 @@
                        unit( @grid_gutter-width / @base-font-size-px, em);
           } );
       }
-
-      &_content {
-          padding-left: unit( @grid_gutter-width / @base-font-size-px, em);
-          font-weight: 500;
-          text-align: left;
-
-          p.h4 {
-              font-size: unit( @base-font-size-px / 16 * 100, % ) !important;
-          }
-      }
-    }
   }
 }

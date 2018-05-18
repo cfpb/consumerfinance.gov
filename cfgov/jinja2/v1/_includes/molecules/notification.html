@@ -31,18 +31,18 @@
       }
   %}
   {% set icon = type_lookup[type]  %}
-  {% set type = ('m-notification__' + type | string) if type else '' %}
+  {% set type = (' m-notification__' + type | string) if type else '' %}
 
   <div class="m-notification
-              {{ type }}
-              {{ 'm-notification__visible' if is_visible else '' }}">
+              {{- type -}}
+              {{- ' m-notification__visible' if is_visible else '' -}}">
       {{ svg_icon(icon) }}
       <div class="m-notification_content"
            {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
           <div class="h4 m-notification_message">{{ message }}</div>
-          {% if explanation %}
-              <p class="h4 m-notification_explanation">{{ explanation }}</p>
-          {% endif %}
+          {%- if explanation %}
+              <p class="m-notification_explanation">{{ explanation }}</p>
+          {% endif -%}
       </div>
   </div>
 

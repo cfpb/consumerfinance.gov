@@ -207,7 +207,7 @@
         {% if 'filterable-list' in controls.form_type and posts is defined %}
             {% set count = posts.paginator.count %}
             {% if not has_active_filters %}
-                {{ notification('success', false, count ~ ' filtered results') }}
+                {{ notification('default', false, '') }}
             {% elif count == 0 %}
                 {{ notification('warning', true,
                     'Sorry, there were no results based on your filter selections.',

@@ -40,8 +40,8 @@
           method="POST"
           enctype="application/x-www-form-urlencoded">
         <div class="u-mb15">
-        {% import 'molecules/notification.html' as notification with context %}
-        {{ notification.render('default', false, '') }}
+            {% import 'molecules/notification.html' as notification with context %}
+            {{ notification.render('default', false, '') }}
         </div>
         {% if value.text %}
         <p>
