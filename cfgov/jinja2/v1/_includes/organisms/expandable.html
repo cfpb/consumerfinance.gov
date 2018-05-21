@@ -18,7 +18,7 @@
    value.content:         Main content of the expandable.
 
    value.is_bordered:     Whether the Expandable has a bottom border or not.
-                          Default is true.
+                          Default is false.
 
    value.is_midtone:      Whether the Expandable is gray or not.
                           Default is false.
@@ -26,8 +26,8 @@
    value.is_expanded:     Whether the Expandable is expanded or not.
                           Default is false.
 
-   value.has_cue_label:   Whether the Expandable's cue label is shown or not.
-                          Default is true. The plus/minus icon is always shown.
+   value.hide_cue_label:  Whether the Expandable's cue label is hidden or not.
+                          Default is false. The plus/minus icon is always shown.
 
    ========================================================================== #}
 
@@ -51,22 +51,22 @@
                 <span class="o-expandable_cue
                              o-expandable_cue-open">
                     <span class="o-expandable_cue-label
-                                {{ '' if value.has_cue_label else 'u-hidden' }}">
+                                {{ 'u-hidden' if value.hide_cue_label else '' }}">
                                 Show {{expandable_cue_additional_text}}</span>
                     <span class="o-expandable_cue-label
                                  o-expandable_cue-label__es
-                                {{ '' if value.has_cue_label else 'u-hidden' }}">
+                                {{ 'u-hidden' if value.hide_cue_label else '' }}">
                                 Mostrar</span>
                     {{ svg_icon('plus-round') }}
                 </span>
                 <span class="o-expandable_cue
                              o-expandable_cue-close">
                     <span class="o-expandable_cue-label
-                                {{ '' if value.has_cue_label else 'u-hidden' }}">
+                                {{ 'u-hidden' if value.hide_cue_label else '' }}">
                                 Hide {{expandable_cue_additional_text}}</span>
                     <span class="o-expandable_cue-label
                                  o-expandable_cue-label__es
-                                {{ '' if value.has_cue_label else 'u-hidden' }}">
+                                {{ 'u-hidden' if value.hide_cue_label else '' }}">
                                 Ocultar</span>
                     {{ svg_icon('minus-round') }}
                 </span>
