@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+from collections import OrderedDict
 from functools import partial
 
 from django.db import models
@@ -160,19 +161,28 @@ def get_reg_nav_items(request, current_page):
     url_bits = [bit for bit in request.url.split('/') if bit]
     current_label = url_bits[-1]
     current_part = current_page.regulation.part_number
-    return [
-        {
-            'title': gathered_section.title,
-            'url': current_page.url + current_page.reverse_subpage(
-                'section',
-                args=([gathered_section.label.partition('-')[-1]])
-            ),
-            'active': gathered_section.label == '{}-{}'.format(
-                current_part,
-                current_label),
-            'expanded': True,
-            'section': gathered_section,
-        }
-        for gathered_section
-        in current_page.sorted_sections
-    ], True
+    subpart_list = set(
+        [section.subpart for section in current_page.sorted_sections])
+    subpart_dict = OrderedDict(
+        [(subpart, None) for subpart in subpart_list]
+    )
+    for subpart in subpart_dict:
+        sorted_sections = sorted(
+            subpart.sections.all(),
+            key=lambda s: sortable_label(s.label))
+        subpart_dict[subpart] = [
+            {
+                'title': section.title,
+                'url': current_page.url + current_page.reverse_subpage(
+                    'section',
+                    args=([section.label.partition('-')[-1]])
+                ),
+                'active': section.label == '{}-{}'.format(
+                    current_part,
+                    current_label),
+                'expanded': True,
+                'section': section,
+            }
+            for section in sorted_sections
+        ]
+    return subpart_dict, False
