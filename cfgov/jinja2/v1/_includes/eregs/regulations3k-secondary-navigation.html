@@ -38,27 +38,19 @@
 <nav class="o-secondary-navigation
             {{ '' if has_children else 'o-secondary-navigation__no-children' }}"
      aria-label="Section navigation">
-     <h4>TABLE OF CONTENTS</h4>
-    {% set sec_nav_settings = {
-        'label': 'In this section',
-        'is_bordered': false,
-        'is_midtone': true,
-        'is_expanded': false
-    } %}
+    {% import 'molecules/nav-link.html' as nav_link %}
     {% from 'organisms/expandable.html' import expandable with context %}
-    {% call() expandable(sec_nav_settings) %}
-        {% import 'molecules/nav-link.html' as nav_link %}
-        {%- for subpart in nav_items %}
-        <button>
-                {{ subpart.subpart_heading }} {{subpart.title}} {{subpart.section_range|safe}}
-        </button>
-        <div>
+    {%- for subpart in nav_items %}
+        {% set sec_nav_settings = {
+            'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,
+            'is_bordered': false,
+            'has_cue_label': false
+        } %}
+        {% call() expandable(sec_nav_settings) %}
         {% for section in nav_items[subpart] %}
             {{ nav_link.render(section.title, section.url, true, section.active, true) }}
         {%- endfor %}
-        </div>
-
-        {%- endfor %}
-    {% endcall %}
+        {% endcall %}
+    {%- endfor %}
 </nav>
 {% endmacro %}
