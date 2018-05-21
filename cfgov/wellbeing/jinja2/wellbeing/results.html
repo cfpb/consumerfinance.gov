@@ -223,7 +223,7 @@
 {% endif %}
 {% set avg_pct = avg_score.pct %}
 {% set avg_pct_spectrum = avg_pct if score_box_positioning == 'left' else 100 - avg_pct %}
-{% from 'molecules/notification.html' import render as notification with context %}
+{% import 'molecules/notification.html' as notification with context %}
 
 
 {% block content_main %}
@@ -234,9 +234,8 @@
         in understanding your financial picture.
     </p>
 {% else %}
-    {# TODO: Look into using the default notification macro #}
     <div class="u-mb15">
-        {{ notification(
+        {{ notification.render(
             'warning',
             true,
             'We never collect or store answers to the financial well-being questionnaire.',
@@ -504,7 +503,7 @@
 
     {% if not user_score %}
         <div class="u-mb15">
-        {{ notification(
+        {{ notification.render(
             'warning',
             true,
             'We never collect or store answers to the financial well-being questionnaire.',
