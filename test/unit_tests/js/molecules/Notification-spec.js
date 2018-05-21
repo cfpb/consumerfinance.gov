@@ -69,10 +69,16 @@ describe( 'Notification', () => {
 
       notification.setTypeAndContent(
         notification.SUCCESS,
-        'Notification success content'
+        'Notification success content',
+        'Notification explanation content'
       );
 
+      const message = notificationElem.querySelector( '.m-notification_message' );
+      const explanation = notificationElem.querySelector( '.m-notification_explanation' );
+
       expect( notificationElem.classList ).toContain( 'm-notification__success' );
+      expect( message.textContent ).toContain( 'Notification success content' );
+      expect( explanation.textContent ).toContain( 'Notification explanation content' );
     } );
 
     it( 'should update the notification content for the warning state', () => {
@@ -80,10 +86,16 @@ describe( 'Notification', () => {
 
       notification.setTypeAndContent(
         notification.WARNING,
-        'Notification warning content'
+        'Notification warning content',
+        'Notification explanation content'
       );
 
+      const message = notificationElem.querySelector( '.m-notification_message');
+      const explanation = notificationElem.querySelector( '.m-notification_explanation' );
+
       expect( notificationElem.classList ).toContain( 'm-notification__warning' );
+      expect( message.textContent ).toContain( 'Notification warning content' );
+      expect( explanation.textContent ).toContain( 'Notification explanation content' );
     } );
 
     it( 'should update the notification content for the error state', () => {
@@ -91,10 +103,16 @@ describe( 'Notification', () => {
 
       notification.setTypeAndContent(
         notification.ERROR,
-        'Notification error content'
+        'Notification error content',
+        'Notification explanation content'
       );
 
+      const message = notificationElem.querySelector( '.m-notification_message');
+      const explanation = notificationElem.querySelector( '.m-notification_explanation' );
+
       expect( notificationElem.classList ).toContain( 'm-notification__error' );
+      expect( message.textContent ).toContain( 'Notification error content' );
+      expect( explanation.textContent ).toContain( 'Notification explanation content' );
     } );
   } );
 } );
