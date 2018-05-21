@@ -19,7 +19,7 @@ let _nonLinkDom;
 chai.use( chaiAsPromised );
 
 Before( function() {
-  _nonLinkDom = element( by.css( '.o-footer_official-website' ) );
+  _nonLinkDom = element( by.css( '.o-footer .a-tagline' ) );
   _dom = {
     trigger:   element( by.css( TRIGGER_SEL ) ),
     content:   element( by.css( CONTENT_SEL ) ),
