@@ -8,7 +8,7 @@ const KEY_TAB = 9;
  * Dynamically creates an HTML element and attaches it to a DOM node.
  * @param  {string} type - The type of HTML node to create.
  * @param  {HTMLNode} target - An HTML element to insert the new node into.
- * @return {HTMLNode} The newly created HTML node.
+ * @returns {HTMLNode} The newly created HTML node.
  */
 function createElement( type, target ) {
   const elem = document.createElement( type );
