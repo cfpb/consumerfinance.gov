@@ -34,6 +34,7 @@ from v1.views import (
 )
 from v1.views.documents import DocumentServeView
 
+
 def flagged_wagtail_template_view(flag_name, template_name):
     """View that serves Wagtail if a flag is set, and a template if not.
 
