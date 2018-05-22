@@ -19,26 +19,18 @@
         role="banner">
 
     {% if flag_enabled('BETA_NOTICE', request) and show_banner %}
+    {% import 'molecules/notification.html' as notification with context %}
     <div class="m-global-banner">
       <div class="wrapper
                   wrapper__match-content">
-            <div class="m-notification
-                        m-notification__visible
-                        m-notification__warning
-                        wrapper
-                        wrapper__match-content">
-                <div class="m-notification_content">
-                    <div class="h4 m-notification_message">
-                        This beta site is a work in progress.
-                    </div>
-                    <p class="h4 m-notification_explanation">
-                        We’re prototyping new designs.
-                        Things may not work as expected.
-                        Our regular site continues to be at
-                        <a href="https://www.consumerfinance.gov/">www.consumerfinance.gov</a>.
-                    </p>
-                </div>
-            </div>
+            {{ notification.render(
+                'warning',
+                true,
+                'This beta site is a work in progress.',
+                'We’re prototyping new designs. Things may not work as expected.
+                Our regular site continues to be at
+                <a href="https://www.consumerfinance.gov/">www.consumerfinance.gov</a>.'
+            ) }}
         </div>
     </div>
     {% endif %}

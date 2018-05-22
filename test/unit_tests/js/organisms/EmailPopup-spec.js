@@ -32,8 +32,7 @@ const HTML_SNIPPET = `
             </form>
             <div class="o-email-signup_footer">
                 <div class="m-notification
-                            m-notification__success
-                            ">
+                            m-notification__success">
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message"></div>
                     </div>

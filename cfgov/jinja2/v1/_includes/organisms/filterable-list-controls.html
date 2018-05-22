@@ -177,7 +177,7 @@
 {% endmacro %}
 
 {% from 'molecules/info-unit.html' import info_unit with context %}
-{% from 'molecules/notification.html' import render as notification with context %}
+{% import 'molecules/notification.html' as notification with context %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 
 {% macro render(controls) %}
@@ -195,25 +195,32 @@
         {% for field in form %}
             {% if field.errors %}
                 {% for error in field.errors %}
-                    {{ notification('error', true, error) }}
+                    {{ notification.render('error', true, error) }}
                 {% endfor %}
             {% endif %}
         {% endfor %}
         {% if form.non_field_errors() %}
             {% for error in form.non_field_errors() %}
-                    {{ notification('error', true, error) }}
+                    {{ notification.render('error', true, error) }}
             {% endfor %}
         {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
             {% set count = posts.paginator.count %}
             {% if not has_active_filters %}
-                {{ notification('success', false, count ~ ' filtered results') }}
+                {{ notification.render('default', false, '') }}
             {% elif count == 0 %}
-                {{ notification('warning', true,
+                {{ notification.render(
+                    'warning',
+                    true,
                     'Sorry, there were no results based on your filter selections.',
-                    'Please reset the filter or change your selections and try again.') }}
+                    'Please reset the filter or change your selections and try again.'
+                ) }}
             {% else %}
-                {{ notification('success', true, count ~ ' filtered result' ~ count|pluralize('s')) }}
+                {{ notification.render(
+                    'success',
+                    true,
+                    count ~ ' filtered result' ~ count|pluralize('s')
+                ) }}
             {% endif %}
         {% endif %}
         {% if controls.categories.page_type == 'activity-log' %}
