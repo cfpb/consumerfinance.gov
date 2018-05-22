@@ -51,9 +51,9 @@
 
 {% if value.heading and value.heading.text %}
     <{{ value.heading.level }}>
-        {%- if value.heading.icon -%}
+        {%- if value.heading.icon %}
             {{ svg_icon(value.heading.icon) }}
-        {%- endif -%}
+        {% endif -%}
         {{ value.heading.text | safe }}
     </{{ value.heading.level }}>
 {% endif -%}

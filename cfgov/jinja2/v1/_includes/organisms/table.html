@@ -53,9 +53,9 @@
 {% endmacro %}
 {% if value.heading_text %}
     <{{ value.heading_level -}}>
-        {%- if value.heading_icon -%}
+        {%- if value.heading_icon %}
             {{ svg_icon(value.heading_icon) }}
-        {%- endif -%}
+        {% endif -%}
         {{ value.heading_text | safe }}
     </{{ value.heading_level}}>
 {% endif %}
