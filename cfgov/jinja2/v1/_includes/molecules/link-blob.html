@@ -15,7 +15,9 @@
    value.sub_heading:      (Optional) A string containing subtitle
                            of module.
 
-   value.sub_heading_icon: (Optional) A string containing cf-icon name.
+   value.sub_heading_icon: (Optional) A string containing cf-icon name
+                           that triggers the insertion of an icon before
+                           the heading.
 
    value.body:             A string containing the content to display
                            below the heading (typically a paragraph).
@@ -32,10 +34,7 @@
 {% from 'molecules/info-unit.html' import info_unit with context %}
 
 {% if value.sub_heading and value.sub_heading_icon %}
-    {% set sub_heading =
-        '<h4><span class="cf-icon cf-icon-{0}"></span>&nbsp;{1}</h4>'
-        .format(value.sub_heading_icon, value.sub_heading)
-    %}
+    {% set sub_heading = '<h4>' ~ svg_icon(value.sub_heading_icon) ~ ' ' ~ value.sub_heading ~ '</h4>' %}
 {% elif value.sub_heading %}
     {% set sub_heading = '<h4>' ~ value.sub_heading ~ '</h4>' %}
 {% else %}

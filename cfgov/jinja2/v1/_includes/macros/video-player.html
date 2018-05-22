@@ -50,7 +50,7 @@
     <div class="video-player
                 video-player__youtube
                 {{ 'o-featured-content-module_visual' if is_flexible == false else '' }}"
-         {{ "data-id=" ~ video_id  if video_id else '' }}
+         {{ 'data-id="' ~ video_id ~ '"' if video_id else '' }}
          data-src="{{ video_url }}"
          data-width="{{ options.video.width if options.video.width else '' }}"
          data-height="{{ options.video.height if options.video.height else '' }}">
@@ -63,10 +63,8 @@
                 <div class="video-player_video-actions">
                     <a class="a-btn video-player_close-btn" href="/">
                         <span class="a-btn_icon
-                                     a-btn_icon__on-left
-                                     cf-icon
-                                     cf-icon-delete-round
-                                     cf-icon-left">
+                                     a-btn_icon__on-left">
+                            {{ svg_icon('close-round') }}
                         </span>
                         close
                     </a>

@@ -90,13 +90,15 @@ function Notification( element ) {
    * @returns {Notification} An instance.
    */
   function setContent( messageText, explanationText ) {
-    let content = '<p class="h4 m-notification_message">' +
-                    messageText +
-                    '</p>';
+    let content = `
+      <div class="h4 m-notification_message">
+        ${messageText}
+      </div>`;
     if ( typeof explanationText !== 'undefined' ) {
-      content += '<p class="h4 m-notification_explanation">' +
-                 explanationText +
-                 '</p>';
+      content += `
+        <p class="m-notification_explanation">
+          ${explanationText}
+        </p>`;
     }
     _contentDom.innerHTML = content;
 

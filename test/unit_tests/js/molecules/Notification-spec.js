@@ -64,37 +64,70 @@ describe( 'Notification', () => {
   } );
 
   describe( 'setTypeAndContent()', () => {
-    it( 'should update the notification content for the success state', () => {
+    it( 'should update the notification type for the success state', () => {
       notification.init();
 
       notification.setTypeAndContent(
         notification.SUCCESS,
-        'Notification success content'
+        ''
       );
 
       expect( notificationElem.classList ).toContain( 'm-notification__success' );
     } );
 
-    it( 'should update the notification content for the warning state', () => {
+    it( 'should update the notification type for the warning state', () => {
       notification.init();
 
       notification.setTypeAndContent(
         notification.WARNING,
-        'Notification warning content'
+        ''
       );
 
       expect( notificationElem.classList ).toContain( 'm-notification__warning' );
     } );
 
-    it( 'should update the notification content for the error state', () => {
+    it( 'should update the notification type for the error state', () => {
       notification.init();
 
       notification.setTypeAndContent(
         notification.ERROR,
-        'Notification error content'
+        ''
       );
 
       expect( notificationElem.classList ).toContain( 'm-notification__error' );
+    } );
+
+    it( 'should update the the notification message', () => {
+      notification.init();
+
+      notification.setTypeAndContent(
+        notification.SUCCESS,
+        'Notification message content'
+      );
+
+      const message = notificationElem.querySelector( '.m-notification_message' );
+      const explanation = notificationElem.querySelector( '.m-notification_explanation' );
+
+      expect( notificationElem.classList ).toContain( 'm-notification__success' );
+      expect( message.textContent ).toContain( 'Notification message content' );
+      expect( explanation ).toBeUndefined;
+    } );
+
+    it( 'should update the the notification explanation', () => {
+      notification.init();
+
+      notification.setTypeAndContent(
+        notification.SUCCESS,
+        'Notification message content',
+        'Notification explanation content'
+      );
+
+      const message = notificationElem.querySelector( '.m-notification_message' );
+      const explanation = notificationElem.querySelector( '.m-notification_explanation' );
+
+      expect( notificationElem.classList ).toContain( 'm-notification__success' );
+      expect( message.textContent ).toContain( 'Notification message content' );
+      expect( explanation.textContent ).toContain( 'Notification explanation content' );
     } );
   } );
 } );

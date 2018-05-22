@@ -13,15 +13,13 @@
 
    ========================================================================== #}
 {% macro render( is_horizontal=false ) %}
+{% import 'atoms/tagline.html' as tagline with context %}
     <div class="m-global-eyebrow
                 m-global-eyebrow__{{ 'horizontal' if is_horizontal
                                       else 'list' }}">
         <div class="wrapper
                     {{ 'wrapper__match-content' if is_horizontal else '' }}">
-            <div class="m-global-eyebrow_tagline">
-                An official website of the
-                <span class="m-global-eyebrow_tagline-usa">United States Government</span>
-            </div>
+            {{ tagline.render() }}
             <div class="m-global-eyebrow_actions">
                 <ul class="m-list
                            m-list__horizontal
