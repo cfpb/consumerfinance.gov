@@ -88,7 +88,7 @@
             <header class="event-venue_header">
                 {% if ( event_state == 'present' ) %}
                 <button class="a-btn event-venue_live-btn">
-                    <span class="cf-icon cf-icon-livestream"></span>
+                    {{ svg_icon('broadcast') }}
                     <span class="event-venue_live-btn_text">Live</span>
                 </button>
                 {% endif %}
