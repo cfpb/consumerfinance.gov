@@ -341,7 +341,7 @@ class ContentImage(blocks.StructBlock):
 
     class Meta:
         icon = 'image'
-        template = '_includes/molecules/image-inset.html'
+        template = '_includes/molecules/content-image.html'
         label = 'Image'
 
 
