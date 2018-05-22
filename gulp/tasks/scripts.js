@@ -262,6 +262,7 @@ gulp.task( 'scripts',
     'scripts:apps',
     'scripts:external',
     'scripts:nemo',
-    'scripts:spanish'
+    'scripts:spanish',
+    'scripts:ondemand'
   )
 );
