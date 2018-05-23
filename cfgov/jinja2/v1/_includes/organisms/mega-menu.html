@@ -154,7 +154,7 @@
          {% endif %}
             </div>
             {% for parent_name, fmc in media_items %}
-                {% if parent_name + ' Overview' == nav_overview %}
+                {% if parent_name == nav_overview %}
                 {{ fmc }}
                 {% endif %}
             {% endfor %}
