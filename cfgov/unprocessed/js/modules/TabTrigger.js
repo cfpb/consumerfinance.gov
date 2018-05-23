@@ -28,7 +28,7 @@ function createElement( type, target ) {
  */
 function TabTrigger( element ) {
 
-  const _that = this;
+  const _this = this;
 
   /**
    * @returns {TabTrigger} An instance.
@@ -57,7 +57,7 @@ function TabTrigger( element ) {
    */
   function _handleTabPress( event ) {
     if ( event.keyCode === KEY_TAB ) {
-      _that.dispatchEvent( 'tabPressed' );
+      _this.dispatchEvent( 'tabPressed' );
     }
   }
   // Attach public events.
