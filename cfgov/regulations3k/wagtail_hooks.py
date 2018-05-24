@@ -36,7 +36,8 @@ class EffectiveVersionModelAdmin(TreeModelAdmin):
     menu_icon = 'list-ul'
     list_display = (
         'effective_date',
-    )
+        'draft',
+        'acquired')
     child_field = 'subparts'
     child_model_admin = SubpartModelAdmin
     parent_field = 'part'

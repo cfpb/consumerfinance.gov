@@ -64,15 +64,13 @@ class Part(models.Model):
     class Meta:
         ordering = ['part_number']
 
-    # def get_parts_with_effective_version(self):
-    #     pass
-
     @cached_property
     def effective_version(self):
         """ Return the current effective version of the regulation.
         This selects based on effective_date being less than or equal to
-        the current date. """
+        the current date and version is not a draft. """
         effective_version = self.versions.filter(
+            draft=False,
             effective_date__lte=datetime.now()
         ).order_by(
             '-effective_date'
@@ -85,6 +83,8 @@ class EffectiveVersion(models.Model):
     authority = models.CharField(max_length=255, blank=True)
     source = models.CharField(max_length=255, blank=True)
     effective_date = models.DateField(blank=True, null=True)
+    acquired = models.DateField(blank=True, null=True)
+    draft = models.BooleanField(default=False)
     part = models.ForeignKey(Part, related_name="versions")
 
     panels = [
@@ -92,6 +92,8 @@ class EffectiveVersion(models.Model):
         FieldPanel('source'),
         FieldPanel('effective_date'),
         FieldPanel('part'),
+        FieldPanel('draft'),
+        FieldPanel('acquired'),
     ]
 
     def __str__(self):
@@ -121,33 +123,27 @@ class Subpart(models.Model):
 
     @property
     def subpart_heading(self):
-        if 'ppend' in self.label:
-            return ''
-        if len(self.label.split('-')) > 1:
-            return ''
-        else:
-            return ''
+        """Keeping for now as possible hook into secondary nav"""
+        return ''
 
     @property
     def section_range(self):
-        if not self.sections:
+        if not self.sections.exists():
             return ''
-        if 'ppend' in self.sections.first().label:
+        if 'Interp' in self.label:
             return ''
-        if 'Interp' in self.sections.first().label:
-            return ''
-        if 'Appendices' in self.sections.first().label:
+        if 'Append' in self.title:
             return ''
         if self.sections.first().section_number.isdigit():
             sections = sorted(
                 self.sections.all(), key=lambda x: int(x.section_number))
             return "{}–{}".format(
                 sections[0].numeric_label, sections[-1].numeric_label)
-        else:
-            sections = sorted(
-                self.sections.all(), key=lambda x: x.section_number)
-            return "{}–{}".format(
-                sections[0].label, sections[-1].label)
+        # else:
+        #     sections = sorted(
+        #         self.sections.all(), key=lambda x: x.section_number)
+        #     return "{}–{}".format(
+        #         sections[0].label, sections[-1].label)
 
     class Meta:
         ordering = ['label']
@@ -178,8 +174,6 @@ class Section(models.Model):
         part, number = self.label.split('-')[:2]
         if number.isdigit():
             return '\xa7\xa0{}.{}'.format(part, number)
-        else:
-            return ''
 
     @property
     def section_number(self):
@@ -188,5 +182,4 @@ class Section(models.Model):
 
     @property
     def title_content(self):
-        part, number = self.label.split('-')[:2]
         return self.title.replace(self.numeric_label, '')
