@@ -102,6 +102,7 @@ class EffectiveVersion(models.Model):
 
     class Meta:
         ordering = ['effective_date']
+        default_related_name = 'version'
 
 
 @python_2_unicode_compatible
