@@ -96,7 +96,7 @@ OPTIONAL_APPS = [
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
     {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
-    {'import': 'regulations3k', 'apps': ('regulations3k',)},
+    {'import': 'regulations3k', 'apps': ('regulations3k', 'treemodeladmin')},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
     {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
@@ -449,13 +449,7 @@ LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
 LOGIN_REDIRECT_URL = '/login/welcome/'
 LOGIN_URL = "/login/"
 
-
-SHEER_SITES = {
-    'assets': V1_TEMPLATE_ROOT,
-    'owning-a-home':
-        Path(os.environ.get('OAH_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
-}
+SHEER_SITES = {}
 
 # The base URL for the API that we use to access layers and the regulation.
 API_BASE = os.environ.get('EREGS_API_BASE', '')

@@ -30,11 +30,9 @@ menu_items = [
             'type': 'nav_footer',
             'value': {
                 'content': '<p>Browse answers to hundreds of financial ' +
-                'questions. <a href="/ask-cfpb/" class="' +
-                'o-mega-menu_content-link">Ask CFPB</a></p>' +
+                'questions. <a href="/ask-cfpb/>Ask CFPB</a></p>' +
                 '<p>Have an issue with a financial product? ' +
-                '<a href="/complaint/" class="o-mega-menu_content-link">' +
-                'Submit a complaint</a></p>'
+                '<a href="/complaint/">Submit a complaint</a></p>'
             },
         },
         'nav_groups': [
@@ -243,9 +241,8 @@ menu_items = [
             'value': {
                 'content':
                     '<p>' +
-                    '<a href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php"' +
-                    ' class="o-mega-menu_content-link">Order free brochures' +
-                    '</a></p>'
+                    '<a href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php">' +
+                    'Order free brochures</a></p>'
             }
         },
         'nav_groups': [
