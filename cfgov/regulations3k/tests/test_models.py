@@ -12,9 +12,8 @@ from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart, sortable_label
 )
 from regulations3k.models.pages import (
-    RegulationLandingPage, RegulationPage,
-    get_next_section, get_previous_section,
-    get_reg_nav_items
+    RegulationLandingPage, RegulationPage, get_next_section,
+    get_previous_section, get_reg_nav_items
 )
 
 

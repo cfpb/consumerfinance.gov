@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-# from bs4 import BeautifulSoup as bS
-import mock
-from requests import Response
 import unittest
 
 from django.conf import settings
 from django.test import TestCase as DjangoTestCase
+
+# from bs4 import BeautifulSoup as bS
+import mock
 # import markdown
 # from regulations3k.regdown import extract_labeled_paragraph, regdown
 from regulations3k.models import EffectiveVersion, Part, Subpart
-from regulations3k.scripts.patterns import IdLevelState
 from regulations3k.scripts.ecfr_importer import ecfr_to_regdown, run
+from regulations3k.scripts.patterns import IdLevelState
 from regulations3k.scripts.roman import int_to_roman, roman_to_int
+from requests import Response
 
 
 class ImporterTestCase(DjangoTestCase):
