@@ -166,7 +166,8 @@ class ImageText5050Group(blocks.StructBlock):
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
-        icon = 'image'
+        icon = None
+        label = ' '
         template = '_includes/organisms/image-text-50-50-group.html'
 
 
@@ -181,7 +182,8 @@ class ImageText2575Group(blocks.StructBlock):
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
-        icon = 'image'
+        icon = None
+        label = ' '
         template = '_includes/organisms/image-text-25-75-group.html'
 
 
@@ -194,13 +196,15 @@ class LinkBlobGroup(blocks.StructBlock):
 
 class ThirdWidthLinkBlobGroup(LinkBlobGroup):
     class Meta:
-        icon = 'link'
+        icon = None
+        label = ' '
         template = '_includes/organisms/third-width-link-blob-group.html'
 
 
 class HalfWidthLinkBlobGroup(LinkBlobGroup):
     class Meta:
-        icon = 'link'
+        icon = None
+        label = ' '
         template = '_includes/organisms/half-width-link-blob-group.html'
 
 
@@ -216,6 +220,13 @@ class PostPreviewSnapshot(blocks.StructBlock):
 
 class EmailSignUp(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
+    default_heading = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        label='Default heading style',
+        help_text=('If selected, heading will be styled as an H5 '
+                   'with green top rule. Deselect to style header as H3.')
+    )
     text = blocks.CharBlock(required=False)
     gd_code = blocks.CharBlock(required=False)
 
@@ -337,21 +348,6 @@ class SidebarContactInfo(MainContactInfo):
         template = '_includes/organisms/sidebar-contact-info.html'
 
 
-class Table(blocks.StructBlock):
-    headers = blocks.ListBlock(blocks.CharBlock())
-    rows = blocks.ListBlock(blocks.StreamBlock([
-        ('hyperlink', atoms.Hyperlink(required=False)),
-        ('text', blocks.CharBlock()),
-        ('text_blob', blocks.TextBlock()),
-        ('rich_text_blob', blocks.RichTextBlock()),
-    ]))
-
-    class Meta:
-        icon = None
-        template = '_includes/organisms/table.html'
-        label = ' '
-
-
 class BureauStructurePosition(blocks.StructBlock):
     office_name = blocks.CharBlock()
     lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
@@ -365,13 +361,22 @@ class BureauStructurePosition(blocks.StructBlock):
 
 class BureauStructureDivision(blocks.StructBlock):
     division = v1_blocks.PlaceholderCharBlock(label='Division')
-    division_lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
+    division_lead = v1_blocks.PlaceholderCharBlock(placeholder='Name')
     title = blocks.StructBlock([
         ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 1")),
+                                                  placeholder='Title 1')),
         ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 2"))
+                                                  placeholder='Title 2'))
     ])
+    division_lead_1 = v1_blocks.PlaceholderCharBlock(required=False,
+                                                     placeholder='Name',
+                                                     label='Division Lead')
+    title_1 = blocks.StructBlock([
+        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
+                                                  placeholder='Title 1')),
+        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
+                                                  placeholder='Title 2'))
+    ], label='Title')
     link_to_division_page = atoms.Hyperlink(required=False)
     offices = blocks.ListBlock(BureauStructurePosition(required=False))
 
@@ -661,16 +666,17 @@ class ModelList(ModelBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
-    content_with_anchor = molecules.ContentWithAnchor()
     content = blocks.RichTextBlock(icon='edit')
+    content_with_anchor = molecules.ContentWithAnchor()
+    heading = v1_blocks.HeadingBlock(required=False)
     media = images_blocks.ImageChooserBlock(icon='image')
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
-    table = Table(editable=False)
     table_block = AtomicTableBlock(table_options={'renderer': 'html'})
     image_inset = molecules.ImageInset()
     reusable_text = v1_blocks.ReusableTextChooserBlock('v1.ReusableText')
+    email_signup = EmailSignUp()
 
     class Meta:
         icon = 'edit'
@@ -861,7 +867,7 @@ class ChartBlock(blocks.StructBlock):
     data_source = blocks.CharBlock(
         required=True,
         help_text='Location of the chart\'s data source relative to '
-                  '"http://files.consumerfinance.gov/data/". For example,'
+                  '"https://files.consumerfinance.gov/data/". For example,'
                   '"consumer-credit-trends/volume_data_Score_Level_AUT.csv".')
     date_published = blocks.DateBlock(
         help_text='Automatically generated when CCT cron job runs'

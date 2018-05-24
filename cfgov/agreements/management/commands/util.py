@@ -1,9 +1,9 @@
 import os
 
-from agreements.models import Issuer
-import boto3
+from django.utils.text import slugify
 
-from slugify import slugify
+import boto3
+from agreements.models import Issuer
 
 
 def s3_safe_key(path, prefix=''):
@@ -28,7 +28,7 @@ def upload_to_s3(pdf_obj, s3_key):
 
 
 def get_issuer(name):
-    slug = slugify(name, to_lower=True)
+    slug = slugify(name)
     try:
         issuer = Issuer.objects.get(slug=slug)
     except Issuer.DoesNotExist:
@@ -39,7 +39,7 @@ def get_issuer(name):
 
 def save_agreement(agreements_zip, raw_path, filename_encoding,
                    outfile, upload=False):
-    uri_hostname = 'http://files.consumerfinance.gov'
+    uri_hostname = 'https://files.consumerfinance.gov'
     s3_prefix = 'a/assets/credit-card-agreements/pdf/'
 
     zipinfo = agreements_zip.getinfo(raw_path)

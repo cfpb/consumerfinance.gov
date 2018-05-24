@@ -4,7 +4,8 @@ const paths = environment.paths;
 const globAll = require( 'glob-all' );
 
 module.exports = {
-  pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
+  // eslint-disable-next-line no-sync
+  pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ),
   banner:
       '/*!\n' +
       ' *               ad$$               $$\n' +
@@ -24,8 +25,13 @@ module.exports = {
       ' *  A public domain work of the Consumer Financial Protection Bureau\n' +
       ' */\n',
   lint: {
-    src: [ paths.unprocessed + '/js/**/*.js' ],
+    src: [
+      `${ paths.unprocessed }/js/**/*.js`,
+      `${ paths.unprocessed }/apps/**/js/**/*.js`,
+      `!${ paths.unprocessed }/apps/**/node_modules/**`
+    ],
     test:  [
+      paths.test + '/util/**/*.js',
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'
     ],
@@ -36,18 +42,6 @@ module.exports = {
       'scripts/npm/**/*.js',
       'jest.config.js'
     ]
-  },
-  test: {
-    src: [
-      paths.unprocessed + '/apps/**/js/**/*.js',
-      paths.unprocessed + '/js/**/*.js'
-    ],
-    reporter: environment.CONTINUOUS_INTEGRATION
-  },
-  clean: {
-    css: paths.processed + '/css',
-    js: paths.processed + '/js',
-    dest: paths.processed
   },
   scripts: {
     src: paths.unprocessed + '/js/**/*.js',
@@ -108,6 +102,17 @@ module.exports = {
       dest: `${ paths.processed }/apps/know-before-you-owe/js`
     },
     icons: {
+      src:  paths.modules + '/cf-icons/src/icons/*.svg',
+      dest: paths.processed + '/icons/'
+    },
+    iconsOAH: {
+      dest: paths.processed + '/apps/owning-a-home/icons/'
+    },
+    iconsR3K: {
+      dest: paths.processed + '/apps/regulations3k/icons/'
+    },
+    // TODO: Remove when icon font is entirely deprecated.
+    iconsOld: {
       src:  paths.modules + '/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
     },
@@ -122,12 +127,6 @@ module.exports = {
         paths.modules + '/lightbox2/dist/**/*'
       ],
       dest: paths.processed + '/lightbox2'
-    },
-    vendorJs: {
-      src: [
-        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js'
-      ],
-      dest: paths.processed + '/js/'
     }
   }
 };

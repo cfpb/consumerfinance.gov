@@ -1,0 +1,184 @@
+/* ==========================================================================
+   Helper Classes & Styles
+   ========================================================================== */
+
+.alert-positive {
+    color: @green;
+}
+
+.alert-warning {
+    color: @red;
+}
+
+.alert-neutral {
+    color:  @gray-40;
+}
+
+.alert {
+    &:before,
+    li&:before {
+        .cf-icon;
+
+        left: -21px;
+        color:  @red;
+        content: '\e103';
+        font-size: 17px;
+    }
+    li&.list_item__spaced:before {
+        top: 3px;
+    }
+    p&:before {
+        text-indent: -1.4em;
+    }
+    li& {
+        position: relative;
+        list-style: none;
+    }
+}
+
+.alert-alt:before {
+    .cf-icon;
+
+    color:  @gold;
+    content: '\e103';
+    text-indent: -1.4em;
+}
+
+// alert containers have a background color but no border
+.alert-container {
+     .u-webfont-regular();
+
+    padding: unit( 20px / @base-font-size-px, em );
+    background: @gray-5;
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.block__bg {
+    background-color: @block__bg;
+}
+
+.clear {
+    /* IE 8 */
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
+    opacity: 0;
+}
+
+.highlight-dropdown {
+    border-color: @gold;
+    border-width: 2px;
+}
+
+/* add a margin above an element */
+.l-bump {
+    margin-top: 2em;
+}
+
+/* lead paragrapgs are typically the first paragraph in a content area */
+.lead {
+    .u-webfont-regular();
+
+    margin-bottom: unit( 30px / @base-font-size-px, em );
+    font-size: 1.125em;
+}
+
+@keyframes fadein {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+
+.loaded {
+    animation: fadein 0.5s;
+}
+
+.loading {
+    /* IE 8 */
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=30)';
+    opacity: 0.3;
+}
+
+/* notes are subtle call out boxes with top and bottom borders */
+.note {
+    .u-webfont-regular();
+
+    color: @black;
+    padding: 20px 10px;
+    margin: 1em 0;
+    border-top: 1px solid @gray-10;
+    border-bottom: 1px solid @gray-10;
+
+    p:last-child {
+        .u-reset;
+    }
+
+    h4:first-child,
+    h5:first-child {
+        margin-top: 0;
+    }
+}
+
+.point-right:after {
+    .cf-icon;
+
+    margin-left: unit( 10px / @base-font-size-px, em );
+    content: '\e011';
+}
+
+.placeholder {
+    min-height: 200px;
+    background: @gray-10;
+    line-height: 200px;
+    text-align: center;
+}
+
+/* use sans-serif typeface */
+.sans {
+    .u-webfont-regular();
+
+    strong {
+        .u-webfont-demi();
+    }
+}
+
+.u-hidden {
+    display: none !important;
+}
+
+.u-no-bg {
+    background-color: transparent;
+}
+
+.u-pb0 {
+    padding-bottom: 0 !important;
+}
+
+.u-right-on-desktop {
+    .respond-to-min( 801px, {
+        text-align: right;
+    } );
+}
+
+.u-link-underline {
+    border-bottom: 1px dotted;
+}
+
+
+.respond-to-min( 620p, {
+    .note {
+        padding: unit( 20px / @base-font-size-px, em ) 12%;
+    }
+} );
+
+.respond-to-max( 800px, {
+    .mobi-no {
+        display: none;
+    }
+} );
+
+.respond-to-min( 800px, {
+    .mobi-yes {
+        display: none;
+    }
+} );

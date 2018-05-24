@@ -11,6 +11,14 @@
 
    value.data:            A multi-dimensional list representing table rows.
 
+   value.heading_text:    (Optional) The text of a heading.
+
+   value.heading_level:   The heading level (H2, H3, H4). Default: H2
+
+   value.heading_icon:    (Optional) A string containing cf-icon name
+                          that triggers the insertion of an icon before
+                          the heading.
+
    value.row_links:       Boolean indicating if the table contains row links.
 
    value.is_stacked:      Boolean indicating if the table columns
@@ -34,6 +42,8 @@
    value.column_widths:   A list of column width (classes) to be applied in
                           order to the table columns.
 
+   value.sortable:        Boolean indicating if the table is sortable.
+
    ========================================================================== #}
 
 
@@ -41,6 +51,14 @@
 {% macro _render_cell(cell) %}
     {{ parse_links(cell or '&nbsp;') | safe | trim | linebreaksbr }}
 {% endmacro %}
+{% if value.heading_text %}
+    <{{ value.heading_level -}}>
+        {%- if value.heading_icon %}
+            {{ svg_icon(value.heading_icon) }}
+        {% endif -%}
+        {{ value.heading_text | safe }}
+    </{{ value.heading_level}}>
+{% endif %}
 <table class="o-table
               {{- ' o-table__row-links' if value.row_links else '' -}}
               {{- ' o-table__stack-on-small' if value.is_stacked else '' -}}
@@ -62,8 +80,11 @@
                 {% endif %}
             <th scope="col"{{ width_class | default }}>
                 {% if value.is_sortable and value.sortable_types[loop.index0] != '' %}
-                    {% set data_sort = ' data-sort_type="' + value.sortable_types[loop.index0] + '"' %}
-                    <button class="sortable"{{ data_sort }}>
+                    {% set sort_value = value.sortable_types[loop.index0] %}
+                    {% set data_sort = sort_value | replace('-default', '') %}
+                    {% set sort_default = true if '-default' in sort_value else false %}
+                    <button class="sortable{{ ' sorted-up' if sort_default else '' }}"
+                            data-sort_type="{{ data_sort }}">
                         {{ _render_cell(cell) | striptags }}
                     </button>
                 {% else %}

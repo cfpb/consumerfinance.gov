@@ -115,6 +115,10 @@ function MegaMenuMobile( menus ) {
       }
     } else {
       // Submenu clicked.
+
+      // Scroll to top of page so menu is always at the top.
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+
       const siblings = _menus.getAllAtLevel( level );
       let siblingMenu;
       for ( let i = 0, len = siblings.length; i < len; i++ ) {

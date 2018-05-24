@@ -28,14 +28,13 @@
                    m-list
                    m-list__unstyled">
             <li class="o-bureau-structure_branch_name">
-                <button class="o-bureau-structure_nav-item
-                               a-link
+                <button class="a-link
                                a-link__jump
-                               cf-icon
-                               cf-icon__before
-                               cf-icon-left
+                               a-link__icon-before-text
+                               o-bureau-structure_nav-item
                                u-show-on-mobile"
                         data-show-slide-index="0">
+                    {{ svg_icon('left') }}
                     {{ category.title }}
                 </button>
             </li>
@@ -73,14 +72,13 @@
         {% for category in categories %}
         <li>
             <button class="a-link
-                           a-link__jump
                            a-link__bg
-                           cf-icon
-                           cf-icon__after
-                           cf-icon-right
+                           a-link__jump
+                           a-link__icon-after-text
                            o-bureau-structure_nav-item"
                     data-show-slide-index="{{ loop.index }}">
                 {{ category.title }}
+                {{ svg_icon('right') }}
             </button>
         </li>
         {% endfor %}
@@ -111,11 +109,15 @@
 {% set has_children = org.offices | list | length %}
 
 <{{ tagName }} class="o-bureau-structure_node
-       {{ 'o-expandable
-           o-expandable__expanded'
-          if has_children else '' }}">
+    {{ 'o-expandable o-expandable__expanded' if has_children else '' }}">
     {% if has_children %}
     {{ _role(org) }}
+    {% if org.division_lead_1 %}
+        {{ _role( {
+            'division_lead': org.division_lead_1,
+            'title':         org.title_1 } )
+        }}
+    {% endif %}
     <button class="o-expandable_target">
         <div class="o-expandable_header">
             <div class="o-bureau-structure_node_expander">
@@ -128,13 +130,15 @@
                              o-expandable_link">
                     <span class="o-expandable_cue
                                  o-expandable_cue-open">
-                        <span class="o-expandable_cue-label">Show</span>
-                        <span class="cf-icon cf-icon-plus-round"></span>
+                        <span class="o-expandable_cue-label">
+                            Show {{ svg_icon('plus-round') }}
+                        </span>
                     </span>
                     <span class="o-expandable_cue
                                  o-expandable_cue-close">
-                        <span class="o-expandable_cue-label">Hide</span>
-                        <span class="cf-icon cf-icon-minus-round"></span>
+                        <span class="o-expandable_cue-label">
+                            Hide {{ svg_icon('minus-round') }}
+                        </span>
                     </span>
                 </span>
             </div>
@@ -234,7 +238,7 @@
         <li class="m-list_item">
             <span class="o-bureau-structure_legend_symbol">***</span>
             <span class="o-bureau-structure_legend_definition">
-                Position is not part of the CFPB director’s office
+                Position is not part of the Bureau director’s office
             </span>
         </li>
 </section>
@@ -267,25 +271,28 @@
                 Download a printable, PDF copy of this organizational chart. This version
                 is expanded to show all offices.
             </p>
-            <a class="a-btn"
-               href="{{ download_image_url }}">
-                <span class="a-btn_icon__on-left cf-icon cf-icon-save"></span>
-                Download PDF
-            </a>
+            <b>
+                <i>
+                    Currently under revision
+                </i>
+            </b>
         </div>
         <div class="content-l_col content-l_col-1-2">
             <h2 class="h3">Request speaking info</h2>
             <p>
-                Ask a CFPB employee to be involved in a forum, publication, discussion, or
-                other event; or to inquire about any CFPB events.
+                Ask a Bureau employee to be involved in a forum, publication, discussion, or
+                other event; or to inquire about any Bureau events.
             </p>
-            <span class="cf-icon cf-icon-email m-list_icon"></span>
-            <span class="m-list_text">
-                <a class="m-list_link"
+            <p>
+                <a class="a-link
+                          a-link__icon"
                    href="mailto:invitations2cfpb@consumerfinance.gov">
-                    invitations2cfpb@consumerfinance.gov
+                   {{ svg_icon('mail') }}
+                    <span class="a-link_text">
+                        invitations2cfpb@consumerfinance.gov
+                    </span>
                 </a>
-            </span>
+            </p>
         </div>
     </div>
 </aside>

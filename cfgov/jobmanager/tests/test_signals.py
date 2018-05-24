@@ -1,11 +1,12 @@
-from django.test import TestCase
-from mock import patch
 from datetime import date
 
-from v1.tests.wagtail_pages import helpers
+from django.test import TestCase
+
+from mock import patch
 
 from jobmanager.models.django import JobCategory, Region
 from jobmanager.models.pages import JobListingPage
+from v1.tests.wagtail_pages import helpers
 
 
 class JobListingPagePublishedSignalCase(TestCase):
@@ -34,7 +35,7 @@ class JobListingPagePublishedSignalCase(TestCase):
         with patch('requests.get') as mock_request:
             helpers.publish_page(child=self.page)
             mock_request.assert_called_once_with(
-                'http://www.google.com/ping',
+                'https://www.google.com/ping',
                 {'sitemap': 'https://www.consumerfinance.gov/sitemap.xml'}
             )
 

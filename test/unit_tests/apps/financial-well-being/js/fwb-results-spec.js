@@ -2,6 +2,9 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 
 const SELECTED_CLASS = 'comparison-chart_toggle-button__selected';
 const HIDDEN_CLASS = 'u-hidden';
+
+import { simulateEvent } from '../../../../util/simulate-event';
+
 let expandableContent;
 let expandableTarget;
 let fwbResults;
@@ -24,12 +27,8 @@ const HTML_SNIPPET = `
           <span class="o-expandable_header-left o-expandable_label">
           </span>
           <span class="o-expandable_header-right o-expandable_link">
-            <span class="o-expandable_cue o-expandable_cue-open">
-              <span class="cf-icon cf-icon-plus-round"></span>
-            </span>
-            <span class="o-expandable_cue o-expandable_cue-close">
-              <span class="cf-icon cf-icon-minus-round"></span>
-            </span>
+            <span class="o-expandable_cue o-expandable_cue-open"></span>
+            <span class="o-expandable_cue o-expandable_cue-close"></span>
           </span>
         </div>
       </button>
@@ -100,13 +99,7 @@ const HTML_SNIPPET = `
   </div>
 `;
 
-function triggerClickEvent( target ) {
-  const event = document.createEvent( 'Event' );
-  event.initEvent( 'click', true, true );
-  return target.dispatchEvent( event );
-}
-
-function initFwbResults( ) {
+function initFwbResults() {
   fwbResults = require(
     BASE_JS_PATH + 'financial-well-being/js/fwb-results'
   );
@@ -127,25 +120,23 @@ describe( 'fwb-results', () => {
     );
     expandableContent = document.querySelector( '.o-expandable_content' );
     expandableTarget = document.querySelector( '.o-expandable_target' );
+    initFwbResults();
   } );
 
   it( 'initialize the expandables on page load', () => {
-    initFwbResults();
     expect( expandableTarget.getAttribute( 'aria-pressed' ) ).toBe( 'false' );
     expect( expandableContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
   } );
 
   it( 'should submit the correct analytics when a toggle button is clicked',
     () => {
-      initFwbResults();
-      triggerClickEvent( toggleButtons[0] );
+      simulateEvent( 'click', toggleButtons[0] );
 
       expect( window.dataLayer[0] ).toEqual( dataLayerEvent );
     }
   );
 
   it( 'should show the initial category on page load', () => {
-    initFwbResults();
     expect( toggleButtons[0].classList.contains( SELECTED_CLASS ) )
       .toBe( true );
     expect( dataPoint[0].classList.contains( HIDDEN_CLASS ) ).toBe( false );
@@ -153,7 +144,6 @@ describe( 'fwb-results', () => {
   } );
 
   it( 'should hide the other categories on page load', () => {
-    initFwbResults();
     expect( toggleButtons[1].classList.contains( SELECTED_CLASS ) )
       .toBe( false );
     expect( dataPoint[4].classList.contains( HIDDEN_CLASS ) ).toBe( true );
@@ -162,8 +152,7 @@ describe( 'fwb-results', () => {
 
   it( 'should hide the initial category content ' +
        'when a differnt toggle is clicked', () => {
-    initFwbResults();
-    triggerClickEvent( toggleButtons[1] );
+    simulateEvent( 'click', toggleButtons[1] );
     expect( toggleButtons[0].classList.contains( SELECTED_CLASS ) )
       .toBe( false );
     expect( dataPoint[0].classList.contains( HIDDEN_CLASS ) ).toBe( true );
@@ -172,8 +161,7 @@ describe( 'fwb-results', () => {
 
   it( 'should show the correct category content ' +
        'when the toggle is clicked', () => {
-    initFwbResults();
-    triggerClickEvent( toggleButtons[1] );
+    simulateEvent( 'click', toggleButtons[1] );
     expect( toggleButtons[1].classList.contains( SELECTED_CLASS ) )
       .toBe( true );
     expect( dataPoint[4].classList.contains( HIDDEN_CLASS ) ).toBe( false );

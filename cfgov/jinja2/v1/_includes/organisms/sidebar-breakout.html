@@ -52,7 +52,7 @@
                           block
                           block__flush-top
                           block__flush-bottom">
-                {% for block in page.sidebar_breakout recursive %}
+                {% for block in page.sidebar_breakout %}
                     {% if 'heading' in block.block_type %}
                         <h3 class="o-sidebar-breakout_heading">
                             {{ render_stream_child(block) }}
@@ -74,9 +74,9 @@
                                 <div class="o-sidebar-breakout_text-container">
                                 {% if blocks.heading.value %}
                                     <h4 class="o-sidebar-breakout_text-heading">
-                                        <span class="cf-icon
-                                                     cf-icon-{{ blocks.icon.render()
-                                                                if blocks.icon is defined else '' }}"></span>
+                                        {% if blocks.icon %}
+                                            {{ svg_icon(blocks.icon) }}
+                                        {% endif %}
                                         {{ blocks.heading.render() }}
                                     </h4>
                                 {% endif %}
@@ -94,10 +94,6 @@
                             <div class="block {{- 'block__flush-top' if loop.index == 1 else '' -}}">
                                 {{ related_posts.render(posts, block, half_width) }}
                             </div>
-                        {% else %}
-                            {% set blocks = streamfield|list %}
-                            {{ loop(blocks[loop.index:]) }}
-                            {% break %}
                         {% endif %}
                     {% elif 'slug' in block.block_type %}
                         <header class="m-slug-header">

@@ -27,14 +27,13 @@
 <div class="m-contact m-contact-phone" data-qa-hook="contact-phone">
     {# TODO: Update fax param name to is_fax to make clear it's a boolean. #}
     {% if value.fax == true %}
-        {% set icon = 'cf-icon-fax' %}
+        {% set icon = 'fax' %}
         {% set label = 'Fax' %}
     {% else %}
-        {% set icon = 'cf-icon-phone' %}
+        {% set icon = 'phone' %}
         {% set label = 'Phone' %}
     {% endif %}
-    <span class="cf-icon {{ icon }}"></span>
-    <span class="h5">{{ label }}</span>
+    <span class="h5">{{ svg_icon(icon) }} {{ label }}</span>
     {% for phone in value.phones %}
     <p>
         <b>

@@ -10,8 +10,6 @@
 
    options (optional):   An object used to customize the Video markup.
 
-   options.video.player: A String used to denote the type of video player.
-
    options.video.id:     A String used to denote the id of the video.
 
    options.video.url:    A String used to denote the url of the video.
@@ -27,8 +25,6 @@
 
 {% macro render(options={}) -%}
     {% set video_url    = options.video.url | default('/') %}
-    {% set video_player = ( video_url.find( 'youtube.com') > -1 and 'youtube' ) or
-                          ( video_url.find( 'ustream.tv') and 'ustream' ) %}
     {% set image_url = static('img/cfpb_video_cover_card_1380x776.png') %}
     {% set video_id = options.video.id | default('') %}
 
@@ -39,29 +35,22 @@
     {% if video_url.find( 'autoplay=' ) == -1 -%}
         {% set video_url = _buildParam( video_url, 'autoplay=1' )  %}
     {% endif %}
-    {% if video_player == 'youtube' -%}
-        {% set video_id =  video_url.split('?')[0].split('/') | last %}
-        {% if video_url.find( 'enablejsapi=' ) == -1 -%}
-            {% set video_url = _buildParam( video_url, 'enablejsapi=1' )  %}
-        {% endif -%}
-        {% if video_url.find( 'origin=' ) == -1 -%}
-            {% set video_url = _buildParam(
-                 video_url,
-                 'origin=' ~ request.scheme ~ '://' ~ request.META['HTTP_HOST']
-            ) %}
-        {% endif %}
-    {% elif video_player == 'ustream' %}
-        {% if video_url.find( 'html5ui' ) == -1 -%}
-            {% set video_url = _buildParam( video_url, 'html5ui=1' )  %}
-        {% endif %}
-        {% set image_loaded_class = 'video-player_image-loaded' %}
+    {% set video_id =  video_url.split('?')[0].split('/') | last %}
+    {% if video_url.find( 'enablejsapi=' ) == -1 -%}
+        {% set video_url = _buildParam( video_url, 'enablejsapi=1' )  %}
+    {% endif -%}
+    {% if video_url.find( 'origin=' ) == -1 -%}
+        {% set video_url = _buildParam(
+             video_url,
+             'origin=' ~ request.scheme ~ '://' ~ request.META['HTTP_HOST']
+        ) %}
     {% endif %}
     {% set button_pos   = options.button_pos or 'center' %}
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
     <div class="video-player
-                video-player__{{ video_player }}
+                video-player__youtube
                 {{ 'o-featured-content-module_visual' if is_flexible == false else '' }}"
-         {{ "data-id=" ~ video_id  if video_id else '' }}
+         {{ 'data-id="' ~ video_id ~ '"' if video_id else '' }}
          data-src="{{ video_url }}"
          data-width="{{ options.video.width if options.video.width else '' }}"
          data-height="{{ options.video.height if options.video.height else '' }}">
@@ -74,10 +63,8 @@
                 <div class="video-player_video-actions">
                     <a class="a-btn video-player_close-btn" href="/">
                         <span class="a-btn_icon
-                                     a-btn_icon__on-left
-                                     cf-icon
-                                     cf-icon-delete-round
-                                     cf-icon-left">
+                                     a-btn_icon__on-left">
+                            {{ svg_icon('close-round') }}
                         </span>
                         close
                     </a>

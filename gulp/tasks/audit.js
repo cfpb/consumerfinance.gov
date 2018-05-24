@@ -47,9 +47,11 @@ function _getWCAGParams() {
 
 /**
  * Run PageSpeed Insight tests.
+ * @returns {Promise}
+ *   Promise containing an array of command-line arguments for PSI binary.
  */
 function testPerf() {
-  _createPSITunnel()
+  return _createPSITunnel()
     .then( _runPSI )
     .catch( err => {
       fancyLog( err );
@@ -137,7 +139,7 @@ function _parsePath( urlPath ) {
  * @param {Object} params - url, options, and tunnel for running PSI.
  */
 function _runPSI( params ) {
-  fancyLog( 'PSI tests checking URL: http://' + params.url );
+  fancyLog( 'PSI tests checking URL: ' + params.url );
   psi.output( params.url, params.options )
     .then( () => {
       fancyLog( 'PSI tests done!' );

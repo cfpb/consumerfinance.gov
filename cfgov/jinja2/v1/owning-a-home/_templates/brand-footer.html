@@ -25,7 +25,7 @@
 <footer aria-label="Owning a Home footer" class="brand-footer content">
     <div class="content_wrapper">
         <h3 class="brand-footer_headline">
-            <span class="cf-icon cf-icon-owning-home" aria-hidden></span>
+            {{ svg_icon('house') }}
             Check out other tools and resources from
             <a href="/owning-a-home" class="title-link">Owning a Home</a>
         </h3>
@@ -73,11 +73,9 @@
 <a class="a-link
           a-link__jump
           a-link__icon
-          a-link__no-wrap
-          cf-icon
-          cf-icon__after
-          cf-icon-download" href="{{ link.url }}">
+          a-link__no-wrap" href="{{ link.url }}">
     <span class="a-link_text">{{ link.label | safe }}</span>
+    {{ svg_icon('download') }}
 </a>
 {% else %}
 <a class="a-link a-link__jump" href="{{ link.url }}">

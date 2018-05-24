@@ -146,17 +146,17 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   const currId = state.geo.id;
   let zoomLevel;
   if ( !utils.isDateValid( state.date, this.endDate ) ) {
-    utils.showEl( this.$notification );
+    this.$notification.classList.add( 'm-notification__visible' );
     return;
   }
-  utils.hideEl( this.$notification );
+  this.$notification.classList.remove( 'm-notification__visible' );
   if ( prevId && prevId !== currId ) {
     this.chart.highchart.chart.get( prevId ).select( false );
   }
   if ( prevState.date === state.date && prevType === currType && currId ) {
 
     /* Highcharts zooming is unreliable and difficult to customize :(
-       http://api.highcharts.com/highmaps/Chart.mapZoom
+       https://api.highcharts.com/class-reference/Highcharts.Chart.html#mapZoom
        If it's a state or non-metro, zoom in more than other location types */
     zoomLevel = currType === 'state' || utils.isNonMetro( currId ) ? 5 : 10;
     this.chart.highchart.chart.get( currId ).select( true );

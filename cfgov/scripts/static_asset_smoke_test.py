@@ -30,7 +30,7 @@ parser.add_argument(
     help="choose a server base other than www.consumerfinance.gov"
 )
 
-CFPB_BASE = 'http://www.consumerfinance.gov'
+CFPB_BASE = 'https://www.consumerfinance.gov'
 
 
 def check_static(url):
@@ -69,6 +69,7 @@ def check_static(url):
     else:
         return ("\x1B[32m{} static links passed "
                 "for {}\x1B[0m\n".format(count, url))
+
 
 if __name__ == '__main__':
     fail = False

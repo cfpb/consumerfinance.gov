@@ -23,12 +23,13 @@ from ask_cfpb.models.django import (
     NextStep, SubCategory, generate_short_slug
 )
 from ask_cfpb.models.pages import (
-    AnswerAudiencePage, AnswerCategoryPage, AnswerPage
+    JOURNEY_PATHS, AnswerAudiencePage, AnswerCategoryPage, AnswerPage
 )
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
-from v1.models import CFGOVImage
+from v1.models import BrowsePage, CFGOVImage, HomePage
+from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import get_free_path, get_or_create_page
 
 
@@ -135,7 +136,6 @@ class AnswerModelTestCase(TestCase):
         return AnswerAudiencePage.objects.create(**kwargs)
 
     def setUp(self):
-        from v1.models import HomePage
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.audience = mommy.make(Audience, name='stub_audience')
         self.category = mommy.make(Category, name='stub_cat', name_es='que')
@@ -270,19 +270,70 @@ class AnswerModelTestCase(TestCase):
             page.get_template(HttpRequest()),
             'ask-cfpb/answer-page.html')
 
-    def test_facet_map(self):
-        self.answer1234.category.add(self.category)
-        self.answer1234.audiences.add(self.audience)
-        self.answer1234.subcategory.add(self.subcategories[1])
-        facet_map = self.category.facet_map
+    def create_live_answer(self, answer_id=None, question=None):
+        kwargs = {}
+
+        if answer_id is not None:
+            kwargs['id'] = answer_id
+
+        if question is not None:
+            kwargs['question'] = question
+
+        answer = self.prepare_answer(update_english_page=True, **kwargs)
+        answer.save()
+
+        answer_english_page = answer.english_page
+        answer_english_page.live = True
+        answer_english_page.save()
+
+        return answer
+
+    def test_category_facet_map_includes_answer_and_question(self):
+        answer = self.create_live_answer(
+            answer_id=999,
+            question='test question'
+        )
+
+        category = mommy.make(Category)
+        answer.category.add(category)
+
+        category_facet_map = json.loads(category.facet_map)
         self.assertEqual(
-            json.loads(facet_map)['answers']['1234']['question'],
-            'Mock question1')
+            category_facet_map['answers']['999']['question'],
+            'test question'
+        )
+
+    def test_category_facet_map_includes_audience_name(self):
+        answer = self.create_live_answer()
+
+        audience = mommy.make(Audience, id=123, name='test audience')
+        answer.audiences.add(audience)
+
+        category = mommy.make(Category)
+        answer.category.add(category)
+
+        category_facet_map = json.loads(category.facet_map)
         self.assertEqual(
-            json.loads(facet_map)['audiences']['1']['name'],
-            'stub_audience')
-        self.assertEqual(
-            json.loads(facet_map)['subcategories']['1'], [])
+            category_facet_map['audiences']['123']['name'],
+            'test audience'
+        )
+
+    def test_category_facet_map_includes_subcategories_with_answer_ids(self):
+        category = mommy.make(Category)
+        subcategory = mommy.make(SubCategory, parent=category, id=7)
+        category.subcategories.add(subcategory)
+
+        answer1 = self.create_live_answer(answer_id=14)
+        answer1.subcategory.add(subcategory)
+
+        answer2 = self.create_live_answer(answer_id=21)
+        answer2.subcategory.add(subcategory)
+
+        category_facet_map = json.loads(category.facet_map)
+        self.assertItemsEqual(
+            category_facet_map['subcategories']['7'],
+            ['14', '21']
+        )
 
     def test_facet_map_skips_draft_page(self):
         self.answer1234.category.add(self.category)
@@ -1127,3 +1178,152 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(breadcrumbs[0]['href'], portal_path)
         self.assertEqual(context['category'], None)
         self.assertEqual(context['subcategories'], set())
+
+    def test_answer_context_with_journey_referrer_and_mortgages_category(self):
+        """ If the referrer is a Buying a House journey page and 'mortgages'
+        category appears on answer page, breadcrumbs should lead back to BAH &
+        referrer pages, and category should be 'mortgages'."""
+
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_path = JOURNEY_PATHS[0]
+        journey_page = BrowsePage(
+            title='Journey page',
+            slug=journey_path.strip('/').split('/')[-1]
+        )
+        helpers.save_new_page(journey_page, bah_page)
+        mortgage_category = mommy.make(
+            Category, name='mortgages', slug='mortgages'
+        )
+        answer = self.answer1234
+        answer.category.add(mortgage_category)
+        page = answer.english_page
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov' + journey_path
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Journey page')
+        self.assertEqual(context['category'], mortgage_category)
+
+    def test_answer_context_with_journey_referrer_and_default_category(self):
+        """ If the referrer is a Buying a House journey page and 'mortgages'
+        category does not appear on answer page, breadcrumbs should lead
+        back to BAH & referrer pages, and category should default to first
+        category on answer."""
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_path = JOURNEY_PATHS[0]
+        journey_page = BrowsePage(
+            title='Journey page',
+            slug=journey_path.strip('/').split('/')[-1]
+        )
+        helpers.save_new_page(journey_page, bah_page)
+        answer = self.answer1234
+        answer.category.add(self.category)
+        page = answer.english_page
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov' + journey_path
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Journey page')
+        self.assertEqual(context['category'], self.category)
+
+    def test_answer_context_with_nested_journey_referrer(self):
+        """If the referrer is a nested Buying a House journey page,
+        breadcrumbs should reflect the BAH page hierarchy."""
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_path = JOURNEY_PATHS[0]
+        journey_page = BrowsePage(
+            title='Journey page',
+            slug=journey_path.strip('/').split('/')[-1]
+        )
+        helpers.save_new_page(journey_page, bah_page)
+        journey_child_page = BrowsePage(
+            title='Journey child page',
+            slug='child'
+        )
+        helpers.save_new_page(journey_child_page, journey_page)
+        page = self.page1
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov' + journey_path + '/child'
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 3)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Journey page')
+        self.assertEqual(breadcrumbs[2]['title'], 'Journey child page')
+
+    def test_answer_context_with_process_as_journey_referrer(self):
+        """If the referrer is a nested Buying a House journey page,
+        breadcrumbs should reflect the BAH page hierarchy."""
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_page = BrowsePage(
+            title='Prepare page',
+            slug='prepare'
+        )
+        helpers.save_new_page(journey_page, bah_page)
+
+        page = self.page1
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov/owning-a-home/process/'
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Prepare page')
+
+    def test_answer_context_with_process_segment_in_journey_referrer(self):
+        """If the referrer is a nested Buying a House journey page,
+        breadcrumbs should reflect the BAH page hierarchy."""
+        bah_page = BrowsePage(title='Buying a House', slug='owning-a-home')
+        helpers.publish_page(child=bah_page)
+        journey_page = BrowsePage(
+            title='Compare page',
+            slug='compare'
+        )
+        helpers.save_new_page(journey_page, bah_page)
+
+        page = self.page1
+
+        mock_site = mock.Mock()
+        mock_site.root_page = HomePage.objects.get(slug='cfgov')
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov/owning-a-home/process/compare/'
+        request.site = mock_site
+
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
+        self.assertEqual(breadcrumbs[1]['title'], 'Compare page')

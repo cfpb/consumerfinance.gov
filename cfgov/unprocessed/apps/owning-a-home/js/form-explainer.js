@@ -6,7 +6,7 @@ import ExpandableGroup from './ExpandableGroup';
 import { assign } from '../../../js/modules/util/assign';
 import { closest } from '../../../js/modules/util/dom-traverse';
 import { instantiateAll } from '../../../js/modules/util/atomic-helpers';
-import { throttle } from '../../../js/modules/util/throttle';
+import throttle from 'lodash.throttle';
 
 const EXPLAIN_TYPES = {
   CHECKLIST:   'checklist',
@@ -23,6 +23,8 @@ const CSS = {
 const NO_OP = function( ) {
   // Placeholder function meant to be overridden.
 };
+
+let UNDEFINED;
 
 /**
  * FormExplainer
@@ -43,7 +45,7 @@ class FormExplainer {
     this.resized = false;
 
     this.setPageCount();
-    this.setCurrentPage( this.currentPage );
+    this.setCurrentPage( this.currentPage, UNDEFINED, false );
     this.setUIElements();
     this.setTabIndex();
     this.initializeUI( this.elements );
@@ -200,36 +202,17 @@ class FormExplainer {
    * current focus.
    */
   openAndScrollToExpandable( imageOverlay, targetExpandable ) {
-    let pos = window.scrollY;
-    let offset = 0;
-
-
-    targetExpandable.querySelector(
+    const targetExpandableTarget = targetExpandable.querySelector(
       '.o-expandable_target'
-    ).click();
+    );
 
     window.setTimeout( () => {
-      if ( elementInView( targetExpandable, true ) === false ) {
-        const prevExpanded = DT.getPreviousEls(
-          targetExpandable,
-          '.o-expandable__expanded'
-        )[0];
-
-        if ( prevExpanded ) {
-          offset = prevExpanded.querySelector(
-            '.o-expandable_content'
-          ).offsetHeight - 30;
-        }
-
-        pos = pos - offset + targetExpandable.getBoundingClientRect().top;
-
-        DT.nextFrame( () => {
-          scrollTo( pos, {
-            duration: 600
-          } );
-        } );
-      }
-    }, 600 );
+      scrollIntoView(
+        targetExpandableTarget,
+        { duration: 500, callback: () => targetExpandableTarget.focus() }
+      );
+    }, 150 );
+    window.setTimeout( () => targetExpandableTarget.click(), 0 );
   }
 
   /**
@@ -452,8 +435,9 @@ class FormExplainer {
    * Paginate through the various form pages.
    * @param {number} pageNum - Number of the current page.
    * @param {function} callback - Function to invode after scroll.
+   * @param {boolean} shouldScrollIntoView - Whether to scroll the page into view.
    */
-  setCurrentPage( pageNum, callback ) {
+  setCurrentPage( pageNum, callback, shouldScrollIntoView = true ) {
     const CURRENT_PAGE = 'current-page';
     const PAGE_LINK = '.form-explainer_page-link';
     const PAGINATION = '.explain_pagination';
@@ -468,12 +452,14 @@ class FormExplainer {
     DT.addClass( CURRENT_PAGE_LINK, CURRENT_PAGE );
     this.updatePaginationUI();
 
-    scrollIntoView(
-      DT.getEl( PAGINATION ),
-      { duration: 200,
-        callback: callback || NO_OP
-      }
-    );
+    if ( shouldScrollIntoView ) {
+      scrollIntoView(
+        DT.getEl( PAGINATION ),
+        { duration: 200,
+          callback: callback || NO_OP
+        }
+      );
+    }
   }
 
   /**

@@ -12,4 +12,5 @@ def strip_accents(value):
     only_ascii = nfkd_form.encode('ASCII', 'ignore')
     return only_ascii
 
+
 register.filter('stripaccents', strip_accents)

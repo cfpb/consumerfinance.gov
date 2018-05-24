@@ -56,14 +56,17 @@ const HIGHCHARTS_SETTINGS = {
     series: {
       groupPadding: 0.08
     }
+  },
+  exporting: {
+    enabled: false
   }
 };
 
 /**
  * Apply theme settings to a Highcharts instance.
- * @param  {Object} highcharts - A Highcharts instance.
+ * @param {Object} highcharts - A Highcharts instance.
  */
-function applyThemeTo( highcharts ) {
+function applyThemeTo( highcharts ) {
   highcharts.theme = HIGHCHARTS_SETTINGS;
 
   // Apply the theme

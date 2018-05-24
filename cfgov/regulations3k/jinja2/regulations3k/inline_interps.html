@@ -1,0 +1,37 @@
+<div data-qa-hook="expandable" class="o-expandable
+            o-expandable__expanded
+            o-expandable__borders
+            o-expandable__midtone">
+
+    <button class="o-expandable_target">
+        <div class="o-expandable_header">
+            <span class="o-expandable_header-left
+                         o-expandable_label">
+                Official interpretation
+            </span>
+            <span class="o-expandable_header-right
+                         o-expandable_link
+                         u-hidden">
+                <span class="o-expandable_cue
+                             o-expandable_cue-open">
+                    <span class="o-expandable_cue-label">Show</span>
+                    <span class="o-expandable_cue-label o-expandable_cue-label__es">Mostrar</span>
+                    <span class="cf-icon cf-icon-plus-round"></span>
+                </span>
+                <span class="o-expandable_cue
+                             o-expandable_cue-close">
+                    <span class="o-expandable_cue-label">Hide</span>
+                    <span class="o-expandable_cue-label o-expandable_cue-label__es">Ocultar</span>
+                    <span class="cf-icon cf-icon-minus-round"></span>
+                </span>
+            </span>
+        </div>
+    </button>
+    <div class="o-expandable_content">
+        <div class="o-expandable_content-animated">
+            {{ contents }}
+
+            <p><a href="{{ url }}" data-turbolinks="true">See this interpretation in Supplement I</a></p>
+        </div>
+    </div>
+</div>

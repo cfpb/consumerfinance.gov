@@ -1,4 +1,4 @@
-As a work of the United States Government, this package (excluding any
+As a work of the United States government, this package (excluding any
 exceptions listed below) is in the public domain within the United States.
 Additionally, we waive copyright and related rights in the work worldwide
 through the [CC0 1.0 Universal public domain dedication][CC0].
@@ -42,20 +42,16 @@ When using or citing the work, you should not imply endorsement by the
 author or the affirmer.
 
 [policy]: https://github.com/cfpb/source-code-policy/
-[CC0]: http://creativecommons.org/publicdomain/zero/1.0/legalcode
+[CC0]: https://creativecommons.org/publicdomain/zero/1.0/legalcode
 
 
 ## Exceptions
 
-- [box-sizing Polyfill](http://github.com/Schepp/box-sizing-polyfill) by
-  Christian Schepp Schaefer is licensed under LGPL 3.0.
 - [HTML5 Shiv](https://github.com/aFarkas/html5shiv) by Alexander Farkas,
   et al., is licensed under MIT/GPL2.
-- [jQuery](http://jquery.com/) by The jQuery Foundation is licensed under the
+- [jQuery](https://jquery.com) by The jQuery Foundation is licensed under the
   MIT License.
 - [Modernizr](https://github.com/Modernizr/Modernizr) by Faruk Ateş, et al.,
   is licensed under MIT License.
-- [Normalize](http://necolas.github.io/normalize.css/) by Nicolas Gallagher,
+- [Normalize](https://necolas.github.io/normalize.css/) by Nicolas Gallagher,
   co-created with Jonathan Neal, is licensed under the MIT License.
-- [Slick](http://kenwheeler.github.io/slick/) by Ken Wheeler is licensed under
-  the MIT License.

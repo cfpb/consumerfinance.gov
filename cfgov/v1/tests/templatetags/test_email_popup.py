@@ -14,7 +14,6 @@ class TestEmailPopupSettings(TestCase):
             self.assertIsInstance(k, str)
             self.assertIsInstance(v, list)
 
-
 class TestEmailPopupTag(TestCase):
     def render(self, path):
         request = RequestFactory().get(path)
@@ -36,7 +35,7 @@ class TestEmailPopupTag(TestCase):
 
     @override_settings(
         EMAIL_POPUP_URLS={'foo': ['/page/configured/']},
-        FLAGS={'EMAIL_POPUP_FOO': {'boolean': False}} 
+        FLAGS={'EMAIL_POPUP_FOO': {'boolean': False}}
     )
     def test_popup_configured_but_flag_false(self):
         response = self.render('/page/configured/')
@@ -44,7 +43,7 @@ class TestEmailPopupTag(TestCase):
 
     @override_settings(
         EMAIL_POPUP_URLS={'foo': ['/page/configured/']},
-        FLAGS={'EMAIL_POPUP_FOO': {'boolean': False}} 
+        FLAGS={'EMAIL_POPUP_FOO': {'boolean': False}}
     )
     def test_popup_configured_and_flag_true_but_path_doesnt_match(self):
         response = self.render('/page/not/configured/')
@@ -52,7 +51,7 @@ class TestEmailPopupTag(TestCase):
 
     @override_settings(
         EMAIL_POPUP_URLS={'oah': ['/page/configured/']},
-        FLAGS={'EMAIL_POPUP_OAH': {'boolean': True}} 
+        FLAGS={'EMAIL_POPUP_OAH': {'boolean': True}}
     )
     def test_popup_configured_and_flag_true_and_path_matches(self):
         response = self.render('/page/configured/')

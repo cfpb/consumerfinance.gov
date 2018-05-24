@@ -1,17 +1,18 @@
 import logging
-import requests
-
-from flags.state import flag_enabled
 
 from wagtail.wagtailcore.signals import page_published
 
+import requests
+from flags.state import flag_enabled
+
 from jobmanager.models.pages import JobListingPage
+
 
 logger = logging.getLogger(__name__)
 
 
 SITEMAP_URL = 'https://www.consumerfinance.gov/sitemap.xml'
-GOOGLE_URL = 'http://www.google.com/ping'
+GOOGLE_URL = 'https://www.google.com/ping'
 
 
 def request_site_recrawl(sender, **kwargs):

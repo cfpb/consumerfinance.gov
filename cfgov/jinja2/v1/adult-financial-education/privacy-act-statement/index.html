@@ -49,7 +49,7 @@
             5493
         </a>
         and
-        <a href="http://www.gpo.gov/fdsys/granule/USCODE-2011-title12/USCODE-2011-title12-chap53-subchapV-partB-sec5512">
+        <a href="https://www.gpo.gov/fdsys/granule/USCODE-2011-title12/USCODE-2011-title12-chap53-subchapV-partB-sec5512">
             5512
         </a>.
     </p>
@@ -62,27 +62,31 @@
 {% endblock %}
 
 {% block content_sidebar -%}
-<nav class="o-secondary-navigation" aria-label="Section navigation" data-js-hook="state_atomic_init">
-    <div data-qa-hook="expandable" class="o-expandable o-expandable__midtone" data-js-hook="state_atomic_init">
-        <button class="o-expandable_target" aria-pressed="false">
+<nav class="o-secondary-navigation" aria-label="Section navigation">
+    <div data-qa-hook="expandable" class="o-expandable o-expandable__midtone">
+        <button class="o-expandable_target">
             <div class="o-expandable_header">
                 <span class="o-expandable_header-left
-                    o-expandable_label">
-                In this section
+                             o-expandable_label">
+                    In this section
                 </span>
-                <span class="o-expandable_header-right o-expandable_link">
-                <span class="o-expandable_cue
-                    o-expandable_cue-open">
-                <span class="o-expandable_cue-label">Show</span>
-                <span class="o-expandable_cue-label o-expandable_cue-label__es">Mostrar</span>
-                <span class="cf-icon cf-icon-plus-round"></span>
-                </span>
-                <span class="o-expandable_cue
-                    o-expandable_cue-close">
-                <span class="o-expandable_cue-label">Hide</span>
-                <span class="o-expandable_cue-label o-expandable_cue-label__es">Ocultar</span>
-                <span class="cf-icon cf-icon-minus-round"></span>
-                </span>
+                <span class="o-expandable_header-right
+                             o-expandable_link
+                             u-hidden">
+                    <span class="o-expandable_cue
+                                 o-expandable_cue-open">
+                        <span class="o-expandable_cue-label">Show</span>
+                        <span class="o-expandable_cue-label
+                                     o-expandable_cue-label__es">Mostrar</span>
+                        {{ svg_icon('plus-round') }}
+                    </span>
+                    <span class="o-expandable_cue
+                                 o-expandable_cue-close">
+                        <span class="o-expandable_cue-label">Hide</span>
+                        <span class="o-expandable_cue-label
+                                     o-expandable_cue-label__es">Ocultar</span>
+                        {{ svg_icon('minus-round') }}
+                    </span>
                 </span>
             </div>
         </button>

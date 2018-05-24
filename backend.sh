@@ -29,25 +29,11 @@ install() {
   # Install requirements for Django Server or tox.
   if [ "$cli_flag" = "development" ]; then
     pip install -r ./requirements/local.txt
-  elif [ "$cli_flag" = "test" ]; then
-    pip install -r ./requirements/test.txt
   elif [ "$cli_flag" = "production" ]; then
     pip install -r ./requirements/deployment.txt
   fi
 }
 
-
-# Returns 1 if a global command-line program installed, else 0.
-# For example, echo "node: $(is_installed node)".
-is_installed() {
-  # Set to 1 initially.
-  local return_=1
-
-  # Set to 0 if program is not found.
-  type $1 >/dev/null 2>&1 || { local return_=0; }
-
-  echo "$return_"
-}
 
 init "$1"
 install

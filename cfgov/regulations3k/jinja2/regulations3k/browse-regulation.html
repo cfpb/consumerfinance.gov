@@ -1,0 +1,94 @@
+{% extends 'eregs/regulations3k-side-nav.html' %}
+
+{% import 'form_block.html' as form_block with context %}
+{% import 'organisms/featured-content.html' as featured_content %}
+{% import 'eregs/regulations3k-search-bar.html' as search_bar with context %}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block body_classes %}
+    {{ super() }}  data-turbolinks="false"
+{% endblock body_classes %}
+
+{% block content_modifiers -%}
+    {{ super() }} content__hide-horizontal-overflow
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom regulations3k
+{%- endblock %}
+
+{% block preload %}
+    {{ super() }}
+    {% if next_section %}
+    <link rel="prerender" href="{{ routablepageurl(page, "section", next_section.section_number) }}">
+    {% endif %}
+    <link rel="manifest" href="{{ static('apps/regulations3k/regulations3k-manifest.json') }}">
+    <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
+    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
+    <meta name="apple-mobile-web-app-title" content="Regs">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#20aa3f"/>
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/regulations3k/css/main.css') }}">
+{%- endblock css %}
+
+{% block content_main %}
+    {% if section %}
+    <h1>{{section.title}}</h1>
+
+    <section class="block block__flush-top">
+        {{content|safe}}
+    </section>
+    {% else %}
+    {% for block in page.header -%}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block
+                        block__flush-sides
+                        block__border">
+                {{ featured_content.render(block.value) }}
+            </div>
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+    {% endif %}
+    {% if section %}
+    <div class="block block__sub">
+        <nav class="section-nav" role="navigation">
+            <ul>
+                {% if previous_section %}
+                <li class="previous next-prev">
+                    <a href="{{ routablepageurl(page, "section", previous_section.section_number) }}" class="navigation-link backward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-left"></span><span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label}}</a> <span class="next-prev-title">{{previous_section.title_content}}</span>
+                </li>
+                {% endif %}
+                {% if next_section %}
+                <li class="next next-prev">
+                    <a href="{{ routablepageurl(page, "section", next_section.section_number) }}" class="navigation-link forward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-right"></span><span class="next-prev-label">Next section - </span>{{next_section.numeric_label}}</a> <span class="next-prev-title">{{next_section.title_content}}</span>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/regulations3k/js/index.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

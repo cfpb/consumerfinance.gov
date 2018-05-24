@@ -9,31 +9,27 @@
 # Set script to exit on any errors.
 set -e
 
-# Set label for front or back end
-end="$1 environment"
+if [ -z "$1" ]; then
+  echo "ERROR: cli-flag.sh should only be called from frontend.sh or backend.sh."
+  exit
+fi
 
 # Set default command-line environment flag, if user didn't supply one.
-if [ -z "$2" ]; then
-  cli_flag='development'
-else
-  cli_flag=$2
-fi
+cli_flag=$2
 
 # Warn if unsupported command-line flag was used.
 if [ "$cli_flag" != "development" ] &&
-   [ "$cli_flag" != "test" ] &&
    [ "$cli_flag" != "production" ]; then
-  echo "WARNING: '$cli_flag' flag not found, reverting to development environment."
+  supplied_cli_flag=$cli_flag
   cli_flag='development'
+  echo "WARNING: '$supplied_cli_flag' flag not found, reverting to $cli_flag environment."
 fi
+
+# Set label for front or back end
+end="$1 environment"
 
 # Notify of environment that user is in.
-if [ "$cli_flag" = "development" ]; then
-  echo "$end: development"
-elif [ "$cli_flag" = "test" ]; then
-  echo "$end: test"
-elif [ "$cli_flag" = "production" ]; then
-  echo "$end: production"
-fi
+echo "$end: $cli_flag"
 
+export NODE_ENV=$cli_flag
 export cli_flag=$cli_flag

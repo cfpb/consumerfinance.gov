@@ -1,5 +1,8 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const ClearableInput = require( BASE_JS_PATH + 'modules/ClearableInput' );
+
+import { simulateEvent } from '../../../util/simulate-event';
+
 let baseDom;
 let clearBtnDom;
 let inputDom;
@@ -22,15 +25,6 @@ const HTML_SNIPPET = `
        </div>
   </div>
 `;
-
-function triggerEvent( target, eventType, eventOption ) {
-  const event = document.createEvent( 'Event' );
-  if ( eventType === 'keyup' ) {
-    event.keyCode = eventOption || '';
-  }
-  event.initEvent( eventType, true, true );
-  target.dispatchEvent( event );
-}
 
 describe( 'ClearableInput', () => {
   beforeEach( () => {
@@ -58,14 +52,14 @@ describe( 'ClearableInput', () => {
       inputDom.value = 'testing clear button';
       new ClearableInput( baseDom ).init();
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( false );
-      triggerEvent( clearBtnDom, 'mousedown' );
+      simulateEvent( 'mousedown', clearBtnDom );
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( true );
     } );
 
     it( 'should clear the input value', () => {
       inputDom.value = 'testing clear button';
       new ClearableInput( baseDom ).init();
-      triggerEvent( clearBtnDom, 'mousedown' );
+      simulateEvent( 'mousedown', clearBtnDom );
       expect( inputDom.value ).toEqual( '' );
     } );
   } );
@@ -75,7 +69,7 @@ describe( 'ClearableInput', () => {
       new ClearableInput( baseDom ).init();
 
       // Event code 65 is the `a` character.
-      triggerEvent( inputDom, 'keyup', 65 );
+      simulateEvent( 'keyup', inputDom, { keyCode: 65 } );
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( false );
     } );
 
@@ -83,9 +77,9 @@ describe( 'ClearableInput', () => {
       new ClearableInput( baseDom ).init();
 
       // Event code 8 is backspace.
-      triggerEvent( inputDom, 'keyup', 65 );
+      simulateEvent( 'keyup', inputDom, { keyCode: 65 } );
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( false );
-      triggerEvent( inputDom, 'keyup', 8 );
+      simulateEvent( 'keyup', inputDom, { keyCode: 8 } );
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( true );
     } );
   } );

@@ -5,7 +5,7 @@ frontend() {
     npm install -g gulp-cli
 
     chmod +x ./frontend.sh
-    ./frontend.sh test
+    ./frontend.sh development
 }
 
 # Install backend dependencies
@@ -16,9 +16,7 @@ backend() {
 echo "installing $RUNTEST dependencies"
 if [ "$RUNTEST" == "frontend" ]; then
     frontend
-elif [ "$RUNTEST" == "backend" ] || [ "$RUNTEST" == "backend3" ]; then
     backend
-elif [ "$RUNTEST" == "acceptance" ]; then
-    frontend
+elif [ "$RUNTEST" == "backend" ]; then
     backend
 fi

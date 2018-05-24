@@ -183,6 +183,10 @@ body {
             .u-link__colors( @black );
 
             display: block;
+
+            .cf-icon-svg {
+                display: none;
+            }
         }
     }
 
@@ -192,6 +196,10 @@ body {
         &-overview {
             display: block;
             border-bottom: 1px solid @gray-40;
+
+            .u-link__disabled {
+                color: @gray !important;
+            }
         }
 
         &-link,
@@ -200,6 +208,10 @@ body {
             .u-link__colors( @pacific, @black );
 
             display: block;
+
+            .cf-icon-svg {
+                display: none;
+            }
         }
     }
 
@@ -250,10 +262,12 @@ body {
                 outline: 1px dotted @black;
             }
 
-            &:before {
-                .cf-icon();
-                content: @cf-icon-menu;
-                font-size: unit( 20px / 18px, em );
+            .o-mega-menu_trigger-close {
+                display: none;
+            }
+
+            .o-mega-menu_trigger-open {
+                display: block;
             }
 
             &[aria-expanded="true"] {
@@ -262,9 +276,12 @@ body {
                 border-right: 1px solid @gray-40;
                 color: @black;
 
-                &:before {
-                    .cf-icon();
-                    content: @cf-icon-delete;
+                .o-mega-menu_trigger-close {
+                    display: block;
+                }
+
+                .o-mega-menu_trigger-open {
+                    display: none;
                 }
             }
 
@@ -311,12 +328,8 @@ body {
                     outline: 1px dotted @black;
                 }
 
-                &:before {
-                    .cf-icon();
-
+                .cf-icon-svg {
                     margin-right: 0.6em;
-
-                    content: @cf-icon-left;
                 }
             }
 
@@ -347,16 +360,15 @@ body {
                 padding-bottom: @grid_gutter-width / 2;
 
                 .js & {
-                    &__has-children:after {
-                        .cf-icon();
+                    &__has-children .cf-icon-svg {
+                        display: block;
 
                         position: absolute;
                         right: 0;
                         top: 50%;
                         transform: translateY( -50% );
 
-                        color: @green;
-                        content: @cf-icon-right;
+                        fill: @green;
                     }
                 }
 
@@ -702,8 +714,8 @@ body {
 }
 
 .no-js .o-mega-menu {
-    // JS isn't available to remove u-hidden class, so override it.
-    &.u-hidden {
+    // JS isn't available to remove u-hide-on-mobile class, so override it.
+    &.u-hide-on-mobile {
       display: block;
     }
 }

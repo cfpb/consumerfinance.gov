@@ -110,24 +110,21 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
       return this;
     }
 
-    DT.nextFrame( () => {
-      _setExpandingState( );
-      _content.style[_transitionPrefix] = '';
-      _calcHeight();
-      duration = duration || _calculateExpandDuration( _contentHeight );
-      this.dispatchEvent( 'expandBegin', { target: _that } );
-      DT.nextFrame( () =>
-        _transitionHeight(
-          _expandComplete,
-          duration,
-          'cubic-bezier(0.190, 1.000, 0.220, 1.000)'
-        )
-      );
+    _setExpandingState( );
+    _calcHeight();
+    duration = duration || _calculateExpandDuration( _contentHeight );
+    this.dispatchEvent( 'expandBegin', { target: _that } );
+    DT.nextFrame( () =>
+      _transitionHeight(
+        _expandComplete,
+        duration,
+        'cubic-bezier(0.190, 1.000, 0.220, 1.000)'
+      )
+    );
 
-      /* on the next frame (as soon as the previous style change has taken effect),
-         have the element transition to it's maximum height. */
-      DT.nextFrame( _setMaxHeight );
-    } );
+    /* on the next frame (as soon as the previous style change has taken effect),
+       have the element transition to it's maximum height. */
+    DT.nextFrame( _setMaxHeight );
 
     return this;
   }
@@ -140,26 +137,22 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function collapse( duration ) {
     if ( _isCollapsed() || _isCollapsing() ) {
       return this;
-    } else if( _isExpanding() ) {
+    } else if ( _isExpanding() ) {
       DT.removeClass( _dom, BASE_CLASS + '__expanding' );
       _content.removeEventListener( _transitionEndEvent, _expandComplete );
     }
+    _setCollapsingState( );
+    _calcHeight();
+    _setMaxHeight();
+    duration = duration || _calculateCollapseDuration( _contentHeight );
+    this.dispatchEvent( 'collapseBegin', { target: _that } );
+    DT.nextFrame( () =>
+      _transitionHeight( _collapseComplete, duration, 'ease-in' )
+    );
 
-    DT.nextFrame( () => {
-      _setCollapsingState( );
-      _content.style[_transitionPrefix] = '';
-      _calcHeight();
-      _setMaxHeight();
-      duration = duration || _calculateCollapseDuration( _contentHeight );
-      this.dispatchEvent( 'collapseBegin', { target: _that } );
-      DT.nextFrame( () =>
-        _transitionHeight( _collapseComplete, duration, 'ease-in' )
-      );
-
-      /* on the next frame (as soon as the previous style change has taken effect),
-         have the element transition to height: 0 */
-      DT.nextFrame( _setMinHeight );
-    } );
+    /* on the next frame (as soon as the previous style change has taken effect),
+       have the element transition to height: 0 */
+    DT.nextFrame( _setMinHeight );
 
     return this;
   }
@@ -201,8 +194,10 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function _setExpandingState() {
     _setStateTo( EXPANDING );
-    DT.removeClass( _dom, BASE_CLASS + '__collapsed' );
-    DT.addClass( _dom, BASE_CLASS + '__expanding' );
+    DT.mutate( () => {
+      _dom.classList.remove( BASE_CLASS + '__collapsed' );
+      _dom.classList.add( BASE_CLASS + '__expanding' );
+    } );
   }
 
   /**
@@ -210,10 +205,13 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function _setExpandedState() {
     _setStateTo( EXPANDED );
-    DT.removeClass( _dom, BASE_CLASS + '__expanding' );
-    DT.addClass( _dom, BASE_CLASS + '__expanded' );
-    _content.setAttribute( 'aria-expanded', 'true' );
-    _target.setAttribute( 'aria-pressed', 'true' );
+    DT.mutate( () => {
+      _content.style.height = '';
+      _dom.classList.remove( BASE_CLASS + '__expanding' );
+      _dom.classList.add( BASE_CLASS + '__expanded' );
+      _content.setAttribute( 'aria-expanded', 'true' );
+      _target.setAttribute( 'aria-pressed', 'true' );
+    } );
   }
 
   /**
@@ -221,10 +219,12 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function _setCollapsedState() {
     _setStateTo( COLLAPSED );
-    DT.removeClass( _dom, BASE_CLASS + '__collapsing' );
-    DT.addClass( _dom, BASE_CLASS + '__collapsed' );
-    _content.setAttribute( 'aria-expanded', 'false' );
-    _target.setAttribute( 'aria-pressed', 'false' );
+    DT.mutate( () => {
+      _dom.classList.remove( BASE_CLASS + '__collapsing' );
+      _dom.classList.add( BASE_CLASS + '__collapsed' );
+      _content.setAttribute( 'aria-expanded', 'false' );
+      _target.setAttribute( 'aria-pressed', 'false' );
+    } );
   }
 
   /**
@@ -232,17 +232,19 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function _setCollapsingState() {
     _setStateTo( COLLAPSING );
-    DT.removeClass( _dom, BASE_CLASS + '__expanded' );
-    DT.addClass( _dom, BASE_CLASS + '__collapsing' );
+    DT.mutate( () => {
+      _dom.classList.remove( BASE_CLASS + '__expanded' );
+      _dom.classList.add( BASE_CLASS + '__collapsing' );
+    } );
   }
 
   /**
    * Expand animation has completed.
    */
   function _expandComplete() {
-    _content.style.height = '';
     _content.removeEventListener( _transitionEndEvent, _expandComplete );
     _setExpandedState();
+    DT.mutate( () => { _content.style[_transitionPrefix] = ''; } );
     _that.dispatchEvent( 'expandEnd', { target: _that } );
   }
 
@@ -402,7 +404,7 @@ function _calculateExpandDuration( height ) {
  * @returns {number} The amount of time over which to expand in seconds.
  */
 function _calculateCollapseDuration( height ) {
-  return _constrainValue( 250, 500, height * 2 ) / 1000;
+  return _constrainValue( 10, 100, height * 2 ) / 1000;
 }
 
 /**

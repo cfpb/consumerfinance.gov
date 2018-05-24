@@ -216,6 +216,11 @@
                   }
                 } );
 
+                // On change to Heading level, save data
+                $( id + '-handsontable-heading-level' ).on( 'change', function() {
+                    _this.saveDataToHiddenField( 'no data' );
+                } );
+
                 // On change of fixed width values, save data
                 $( id + '-fixed-width-column-input' ).on( 'change', '.column-width-input', function() {
                   _this.saveDataToHiddenField( 'no data' );
@@ -230,6 +235,9 @@
             ui: {
                 $container:                 id + '-handsontable-container',
                 $inputContainer:            id + '-handsontable-input-container',
+                $headingText:               id + '-handsontable-heading-text',
+                $headingLevel:              id + '-handsontable-heading-level',
+                $headingIcon:               id + '-handsontable-heading-icon',
                 $hasColHeaderCheckbox:      id + '-handsontable-col-header',
                 $hasRowHeaderCheckbox:      id + '-handsontable-header',
                 $hiddenField:               id,
@@ -247,10 +255,14 @@
             initializeForm: function initializeForm( hiddenFieldData ) {
                 var ui = this.ui;
                 var uiMap;
+                var elem;
                 var value;
 
                 if ( hiddenFieldData !== null ) {
-                    uiMap = { first_row_is_table_header:   ui.$hasRowHeaderCheckbox,
+                    uiMap = { heading_text:                ui.$headingText,
+                              heading_level:               ui.$headingLevel,
+                              heading_icon:                ui.$headingIcon,
+                              first_row_is_table_header:   ui.$hasRowHeaderCheckbox,
                               first_col_is_header:         ui.$hasColHeaderCheckbox,
                               is_full_width:               ui.$isFullWidthCheckbox,
                               is_striped:                  ui.$isTableStripedCheckbox,
@@ -260,8 +272,17 @@
                           };
 
                     Object.keys( uiMap ).forEach( function( key ) {
-                        if ( value = hiddenFieldData[key] ) {
+                        elem = uiMap[key][0];
+                        value = hiddenFieldData[key];
+
+                        if ( elem.tagName === 'INPUT' && elem.type === 'checkbox' && value ) {
                             uiMap[key].prop( 'checked', value );
+                        } else if ( elem.tagName === 'INPUT' && elem.type === 'text' && value ) {
+                            uiMap[key].prop( 'value', value );
+                        } else if ( elem.tagName === 'SELECT' && value ) {
+                            uiMap[key].prop( 'value', value );
+                        } else {
+                            return;
                         }
                     } );
                 }
@@ -398,6 +419,9 @@
                     data:                      this.handsonTable.instance.getData(),
                     column_widths:             this.getColumnWidths(),
                     sortable_types:            this.getSortableTypes(),
+                    heading_text:              ui.$headingText.prop( 'value' ),
+                    heading_level:             ui.$headingLevel.prop( 'value' ),
+                    heading_icon:              ui.$headingIcon.prop( 'value' ),
                     first_row_is_table_header: ui.$hasRowHeaderCheckbox.prop( 'checked' ),
                     first_col_is_header:       ui.$hasColHeaderCheckbox.prop( 'checked' ),
                     is_full_width:             ui.$isFullWidthCheckbox.prop( 'checked' ),
@@ -472,9 +496,9 @@
                                     '</header>',
                                     '<div class="row active nice-padding struct-block object">',
                                         '<input id="table-block-editor" maxlength="255" name="title" type="text">',
-                                    '</div></br>',
+                                    '</div><br>',
                                     '<div class="row active nice-padding m-t-10">',
-                                        '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button" >',
+                                        '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">',
                                             '<span class="icon"></span><em>Save</em>',
                                         '</button>',
                                     '</div>' ].join( '' );

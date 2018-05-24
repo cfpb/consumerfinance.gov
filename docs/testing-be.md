@@ -2,13 +2,16 @@
 
 ## Django and Python unit tests
 
-To run the the full suite of Python 2.7 unit tests using Tox, cd to the 
-project root, make sure the `TOXENV` variable is set in your `.env` file 
-and then run:
+To run the the full suite of unit tests using Tox, cd to the project root and
+then run:
 
 ```
 tox
 ```
+
+By default this uses a local SQLite database for tests. To override this, you
+can set the `DATABASE_URL` environment variable to a database connection
+sring as supported by [dj-database-url](https://github.com/kennethreitz/dj-database-url).
 
 If you haven't changed any installed packages and you don't need to test 
 all migrations, you can run a much faster Python code test using:

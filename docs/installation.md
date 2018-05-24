@@ -22,7 +22,7 @@ There are two ways to install cfgov-refresh:
 
 ## Stand-alone installation
 
-These instructions are somewhat specific to developing on Mac OS X,
+These instructions are somewhat specific to developing on macOS,
 but if you're familiar with other Unix-based systems,
 it should be fairly easy to adapt them to your needs.
 
@@ -45,7 +45,7 @@ This project uses a large number of environment variables.
 To automatically define environment variables and launch the virtualenv
 upon `cd`ing to the project folder,
 [install Autoenv](https://github.com/kennethreitz/autoenv#install).
-We recommend using [Homebrew](http://brew.sh):
+We recommend using [Homebrew](https://brew.sh):
 
 ```bash
 brew install autoenv
@@ -79,54 +79,11 @@ brew info autoenv
     [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
     but we can’t provide support for issues that may arise.
 
-#### MySQL
-
-If you're developing on OS X, this should be installed by default,
-and you shouldn't have to do anything else to get it working.
-You can optionally install a different version with Homebrew.
-
-#### Elasticsearch
-
-!!! warning
-    __These instructions are deprecated since Elasticsearch 1.7
-    is no longer supported by `brew`.__
-
-[Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
-however you’d like. We use [Homebrew](http://brew.sh) for developing on OS X):
-
-```bash
-brew tap homebrew/versions
-brew search elasticsearch
-brew install homebrew/versions/elasticsearch17
-```
-
-Just as with Autoenv, Homebrew will output similar instructions after installation:
-
-```bash
-# To have launchd start homebrew/versions/elasticsearch17 now and restart at login:
-  brew services start homebrew/versions/elasticsearch17
-# Or, if you don't want/need a background service you can just run:
-  elasticsearch --config=/Users/[YOUR USERNAME]/homebrew/opt/elasticsearch17/config/elasticsearch.yml
-```
-
-Any time you resume work on the project after restarting your machine,
-you’ll need to open a new tab and run that last line.
-If you’ll be working on the project consistently,
-we suggest using the first option, so you don't have to worry about that.
-Note that some older versions of Homebrew may suggest
-using `launchctl` instead of `brew services`.
-
-If you need to find this info again later, you can run:
-
-```bash
-brew info elasticsearch17
-```
-
 #### Front-end dependencies
 
 The cfgov-refresh front end currently uses the following frameworks / tools:
 
-- [Gulp](http://gulpjs.com): task management for pulling in assets,
+- [Gulp](https://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Less](http://lesscss.org): CSS pre-processor.
 - [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
@@ -136,10 +93,10 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
     If you’re new to Capital Framework, we encourage you to
     [start here](https://cfpb.github.io/capital-framework/getting-started).
 
-1. Install [Node.js](http://nodejs.org) however you’d like.
+1. Install [Node.js](https://nodejs.org) however you’d like.
    We recommend using [nvm](https://github.com/creationix/nvm), though.
 
-2. Install [Gulp](http://gulpjs.com):
+2. Install [Gulp](https://gulpjs.com):
 
 ```bash
 npm install -g gulp
@@ -166,16 +123,18 @@ Where `[GHE]` is our GitHub Enterprise URL.
 
 #### Set up your environment
 
-If this is the first time you're setting up the project, run the following
-script to copy `.env_SAMPLE` to `.env`, export your environment variables,
-and activate your virtualenv for the first time.
+The Django app relies on environment variables defined in a `.env` file. If this
+is your first time setting up the project, copy `.env_SAMPLE` to `.env` and then
+`source` that file:
 
 ```bash
-source load-env.sh
+cp -a .env_SAMPLE .env
+source .env
 ```
 
 Each time you start a new session for working on this project, you'll need to
 get those environment variables and get your virtualenv running again.
+
 If you setup Autoenv earlier, this will happen for you automatically when you
 `cd` into the project directory.
 
@@ -195,7 +154,7 @@ Once cloned, from the project root (`~/Projects/cf.gov/cfgov-refresh/`),
 run this command to complete the setup process:
 
 ```bash
-source setup.sh
+./setup.sh
 ```
 
 This will take several minutes, going through the steps in these scripts:
@@ -225,10 +184,11 @@ Get any errors? [See our troubleshooting tips.](#troubleshooting)
   (a way of running software in an isolated environment) and "images" (a
   snapshot of all of the files neccessary to run a container).
 - **Docker Compose**: Compose allows you to configure and run a collection of
-  connected containers (like a web application and it's database)
-- **Docker Machine**: Docker only runs natively on Linux and Windows. On OS X,
-  we'll use Docker Machine to start the Docker server in a virtual linux
-  environment (using Virtualbox)
+  connected containers (like a web application and its database).
+- **Docker Machine**: In environments where Docker Engine is not available,
+  Docker Machine can be used to create and manage Docker hosts on virtual
+  machines. For more information on Docker Machine, see the 'How do I use
+  Docker Machine' section in the [usage guide](usage#usage-docker).
 
 ### 1. Setup your Docker environment
 
@@ -241,13 +201,27 @@ If you are on a machine that is already set up to run Linux docker containers,
 please install [Docker Compose](https://docs.docker.com/compose/install/).
 If `docker-compose ps` runs without error, you can can go to step 2.
 
-#### Mac + Homebrew + Virtualbox quickstart
+#### Copy the `.python_env_SAMPLE` file over
 
-**Starting assumptions**: You already have homebrew and virtualbox installed.
+The Docker Compose setup (see `docker-compose.yml`) provides the environment
+variables defined in `.python_env` to the container running the Django app. If
+this is your first time setting up the project, copy `.python_env_SAMPLE` to
+`.python_env`:
+
+```bash
+cp -a .python_env_SAMPLE .python_env
+```
+
+#### Mac + Homebrew + Docker Machine + VirtualBox quickstart
+
+**Starting assumptions**: You already have Homebrew and VirtualBox installed.
 You can run `brew search docker` without error.
 
 Install Docker, Docker Machine, and Docker Compose:
 `brew install docker docker-compose docker-machine`
+
+Then run `source mac-virtualbox-init.sh` to initialize your Docker Machine
+setup.
 
 At this point, `docker-compose ps` should run without error.
 
@@ -262,9 +236,9 @@ in the [standalone installation instructions](#stand-alone-installation).
 
 This will install and build the frontend and set up the docker environment.
 
-### 4. Run the for the first time
+### 4. Run Docker Compose for the first time
 
-`./runserver.sh docker`
+`docker-compose up`
 
 This will download and/or build images, and then start the containers, as
 described in the docker-compose.yml file. This will take a few minutes, or
@@ -284,7 +258,7 @@ You could save some time and effort later (if you have access to the CFPB
 network), by configuring a URL for database dumps in the `.python_env` file.
 
 ```
-CFGOV_PROD_DB_LOCATION=https://(rest of the URL)
+CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ```
 
 You can get that URL at
@@ -312,8 +286,7 @@ The `initial-data.sh` script can be used to initialize a new database to make
 it easy to get started working on Wagtail. This script first ensures that all
 migrations are applied to the database, and then does the following:
 
-- Creates an `admin` superuser with a password as specified in the
-`WAGTAIL_ADMIN_PW` environment variable, if set.
+- Creates an `admin` superuser with password `admin`.
 - If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
 with a slug of `cfgov`.
 - Updates the default Wagtail site to use the port defined by the
@@ -334,11 +307,10 @@ You can get a database dump by:
 1. Going to [GHE]/CFGOV/platform/wiki/Database-downloads
 1. Selecting one of the extractions and downloading the
    `production_django.sql.gz` file
-1. Unzip it
 1. Run:
 
 ```bash
-./refresh-data.sh /path/to/dump.sql
+./refresh-data.sh /path/to/dump.sql.gz
 ```
 
 The `refresh-data.sh` script will apply the same changes as the
@@ -416,17 +388,11 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    It will then run a script to ensure that you're in a virtualenv.
    If not, the script will end, to prevent you from accidentally installing
    your Python dependencies globally.
+
 1. **Install project dependencies** (`install`)
 
    Python dependencies are installed into the virtualenv via pip.
    Dependencies vary slightly depending on whether we're in dev, test, or prod.
-1. **Setup MySQL server** (`db_setup`)
-
-   Finally, the script will start the MySQL server, if it's not already running,
-   run `create-mysql-db.sh` to create the database using
-   the variables given in `.env`, if it's not already there,
-   and will run `initial-data.sh` to create the first Wagtail user
-   and load some basic initial data.
 
 
 ## Troubleshooting

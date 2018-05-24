@@ -1,7 +1,32 @@
+{#
+    This is the base template for the English-language consumerfinance.gov.
+#}
 {% extends 'base-common.html' %}
 
 {% block preload %}
+<link rel="preload" href="{{ static('css/main.css') }}" as="style">
+<link rel="preload"
+      href="{{ static('fonts/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2') }}"
+      as="font"
+      type="font/woff2" crossorigin>
+<link rel="preload"
+      href="{{ static('fonts/cf-icons.woff') }}"
+      as="font"
+      type="font/woff2" crossorigin>
+<link rel="preload"
+      href="{{ static('fonts/627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2') }}"
+      as="font"
+      type="font/woff2" crossorigin>
 <link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
+
+<link rel="dns-prefetch" href="//consumerfinance.gov/">
+<link rel="dns-prefetch" href="//fast.fonts.net/">
+<link rel="dns-prefetch" href="//google-analytics.com/">
+<link rel="dns-prefetch" href="//googletagmanager.com/">
+<link rel="dns-prefetch" href="//js-agent.newrelic.com/">
+<link rel="dns-prefetch" href="//s.ytimg.com/">
+<link rel="dns-prefetch" href="//search.usa.gov/">
+<link rel="dns-prefetch" href="//stats.g.doubleclick.net/">
 {% endblock preload %}
 
 {% block body %}
@@ -46,22 +71,13 @@
     The number of scripts here must be kept to a minimum.
 #}
 
-{% block javascript_loader %}
-<script>
-  {# Minified dynamic JavaScript loader that injects a script tag in the head of the page #}
-  function jsl(a){
-    for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
-  }
-</script>
-{% endblock javascript_loader %}
-
 {% block javascript scoped %}
 
 {#
   Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
   available. Check for that CSS class here and act accordingly.
 #}
-<script async>
+<script>
   if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
     !function(){
       {# Include site-wide JavaScript. #}
@@ -102,6 +118,9 @@
       {% set js_source = page_js() | trim %}
       {% if js_source | length > 0 %}
         s.push( '{{ static('js/routes/' + request.path[1:] + 'index.js') }}' );
+      {% endif %}
+      {% if flag_enabled('TURBOLINKS', request) %}
+        s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
       {% endif %}
       {# Pass scripts to JavaScript loader. #}
       jsl(s);

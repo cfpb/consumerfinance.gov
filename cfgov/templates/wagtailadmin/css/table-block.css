@@ -4,6 +4,12 @@
     z-index: 10000;
 }
 
+.heading-text-block,
+.heading-level-block,
+.heading-icon-block {
+    vertical-align: top;
+}
+
 
 .table-block-modal {
     box-sizing: border-box;

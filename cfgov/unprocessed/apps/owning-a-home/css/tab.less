@@ -15,12 +15,13 @@
     a {
         position: relative;
         display: block;
-        width: 100%;
         padding: 28px 20px;
         .u-webfont-regular();
         font-size: unit( 22px / @base-font-size-px, em );
         text-align: left;
         z-index: 1;
+        box-sizing: border-box;
+        width: 100%;
     }
 
     button,
@@ -90,15 +91,4 @@
 
 .tab-content {
     margin-top: unit( 50px / @base-font-size-px, em );
-}
-
-// hide tabbed content when js is enabled
-.js {
-    .tab-content {
-        display: none;
-    }
-
-    & .default {
-        display: block;
-    }
 }

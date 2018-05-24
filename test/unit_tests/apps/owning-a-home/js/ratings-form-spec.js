@@ -1,5 +1,7 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 
+import { simulateEvent } from '../../../../util/simulate-event';
+
 let feedBackLinkElement;
 let ratingsInputs;
 
@@ -49,10 +51,9 @@ const HTML_SNIPPET = `
                   </li>
                   <li class="content-l_col content-l_col-1-3">
                       <div class="rating-message message-column">
-                          <span class="cf-icon cf-icon-approved-round
-                                       rating-message_icon"></span>
-                          <span class="rating-message_text">Thank you
-                                       for your feedback!</span>
+                          <span class="rating-message_text">
+                              Thank you for your feedback!
+                          </span>
                       </div>
                   </li>
               </ul>
@@ -65,19 +66,7 @@ const HTML_SNIPPET = `
   </form>
 `;
 
-function triggerClickEvent( target ) {
-  const event = document.createEvent( 'Event' );
-  event.initEvent( 'click', true, true );
-  target.dispatchEvent( event );
-
-  event.initEvent( 'change', true, false );
-  target.dispatchEvent( event );
-}
-
 describe( 'ratings-form', () => {
-  beforeAll( () => {
-    document.body.innerHTML = HTML_SNIPPET;
-  } );
 
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
@@ -90,20 +79,20 @@ describe( 'ratings-form', () => {
   } );
 
   it( 'should add the change event listener when init called', () => {
-    triggerClickEvent( ratingsInputs[0] );
+    simulateEvent( 'click', ratingsInputs[0] );
 
     expect( ratingsInputs[0].checked ).toBe( true );
     expect( ratingsInputs[1].checked ).toBe( false );
   } );
 
   it( 'should update the feeback link when an input is clicked', () => {
-    triggerClickEvent( ratingsInputs[1] );
+    simulateEvent( 'click', ratingsInputs[1] );
 
     expect( feedBackLinkElement.href ).toContain( '?is_helpful=1' );
   } );
 
   it( 'should disable the ratings inputs when an input is clicked', () => {
-    triggerClickEvent( ratingsInputs[0] );
+    simulateEvent( 'click', ratingsInputs[0] );
 
     expect( ratingsInputs[0].disabled ).toBe( true );
     expect( ratingsInputs[1].disabled ).toBe( true );

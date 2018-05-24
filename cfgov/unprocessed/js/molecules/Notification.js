@@ -1,6 +1,21 @@
 // Required modules.
 const atomicHelpers = require( '../modules/util/atomic-helpers' );
 const standardType = require( '../modules/util/standard-type' );
+const SUCCESS_ICON = require(
+  'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/check-round.svg'
+);
+const WARNING_ICON = require(
+  'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/warning-round.svg'
+);
+const ERROR_ICON = require(
+  'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/error-round.svg'
+);
+
+const ICON = {
+  success: SUCCESS_ICON,
+  warning: WARNING_ICON,
+  error:   ERROR_ICON
+};
 
 /**
  * Notification
@@ -12,11 +27,14 @@ const standardType = require( '../modules/util/standard-type' );
  *   The DOM element within which to search for the molecule.
  * @returns {Notification} An instance.
  */
-function Notification( element ) { // eslint-disable-line max-statements, inline-comments, max-len
+function Notification( element ) {
 
   const BASE_CLASS = 'm-notification';
 
-  // Constants for the state of this Notification.
+  /**
+   * Constants for the state of this Notification.
+   * If these change, the keys in the ICON object above must be updated to match
+   */
   const SUCCESS = 'success';
   const WARNING = 'warning';
   const ERROR = 'error';
@@ -72,13 +90,15 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
    * @returns {Notification} An instance.
    */
   function setContent( messageText, explanationText ) {
-    let content = '<p class="h4 m-notification_message">' +
-                    messageText +
-                    '</p>';
+    let content = `
+      <div class="h4 m-notification_message">
+        ${messageText}
+      </div>`;
     if ( typeof explanationText !== 'undefined' ) {
-      content += '<p class="h4 m-notification_explanation">' +
-                 explanationText +
-                 '</p>';
+      content += `
+        <p class="m-notification_explanation">
+          ${explanationText}
+        </p>`;
     }
     _contentDom.innerHTML = content;
 
@@ -103,10 +123,17 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
          type === ERROR ) {
       classList.add( BASE_CLASS + '__' + type );
       _currentType = type;
+
+      // Replace <svg> element with contents of type_ICON
+      const currentIcon = _dom.querySelector( '.cf-icon-svg' );
+      const newIconSetup = document.createElement( 'div' );
+      newIconSetup.innerHTML = ICON[type];
+      const newIcon = newIconSetup.firstChild;
+
+      _dom.replaceChild( newIcon, currentIcon );
     } else {
       throw new Error( type + ' is not a supported notification type!' );
     }
-
     return this;
   }
 

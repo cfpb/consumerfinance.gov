@@ -6,7 +6,9 @@
 const _assign = require( './util/assign' ).assign;
 const _noopFunct = require( './util/standard-type' ).noopFunct;
 const _jsLoader = require( './util/js-loader' );
-const _dataSet = require( './util/data-set' ).dataSet;
+
+// TODO: Remove data-set ponyfill when IE10 support is dropped in this.
+import elemDataset from 'elem-dataset';
 
 const DOM_INVALID = require( '../config/error-messages-config' ).DOM.INVALID;
 
@@ -40,8 +42,8 @@ function VideoPlayer( element, options ) {
   _this = this;
   options = options || {};
   this.baseElement = _ensureElement( element, options.createIFrame );
-  this.iFrameProperties = _assign( _dataSet( this.baseElement ) ||
-    {}, this.iFrameProperties );
+  const dataSet = _assign( {}, elemDataset( this.baseElement ) );
+  this.iFrameProperties = _assign( dataSet, this.iFrameProperties );
 
   _setChildElements( this.childElements );
   _initEvents();

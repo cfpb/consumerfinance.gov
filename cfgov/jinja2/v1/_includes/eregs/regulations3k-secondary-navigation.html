@@ -1,0 +1,55 @@
+{# ==========================================================================
+
+   secondary_navigation.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for Header organism within eregulations.
+
+   TODO: `active_nav_id` and `nav_items` parameters can be removed when
+         `_render_secondary_navigation_deprecated` is removed.
+
+   active_nav_id: Name of active navigation item.
+
+   nav_items:     The secondary navigation item structure.
+
+   ========================================================================== #}
+
+{% macro render(active_nav_id, nav_items) %}
+{% if page %}
+    {{ _render_secondary_navigation() }}
+{% else %}
+    {# TODO: Remove when non-wagtail pages have been migrated to wagtail. #}
+    {{ _render_secondary_navigation_deprecated(active_nav_id, nav_items) }}
+{% endif %}
+{% endmacro %}
+
+{# ==========================================================================
+
+   _render_secondary_navigation()
+
+   ========================================================================== #}
+{% macro _render_secondary_navigation() %}
+{% if nav_items is not defined and has_children is not defined %}
+    {% set nav_items, has_children = get_secondary_nav_items(request, page) %}
+{% endif %}
+<nav class="o-secondary-navigation
+            {{ '' if has_children else 'o-secondary-navigation__no-children' }}"
+     aria-label="Section navigation">
+    {% import 'molecules/nav-link.html' as nav_link %}
+    {% from 'organisms/expandable.html' import expandable with context %}
+    {%- for subpart in nav_items %}
+        {% set sec_nav_settings = {
+            'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,
+            'hide_cue_label': true
+        } %}
+        {% call() expandable(sec_nav_settings) %}
+        {% for section in nav_items[subpart] %}
+            {{ nav_link.render(section.title, section.url, true, section.active, true) }}
+        {%- endfor %}
+        {% endcall %}
+    {%- endfor %}
+</nav>
+{% endmacro %}

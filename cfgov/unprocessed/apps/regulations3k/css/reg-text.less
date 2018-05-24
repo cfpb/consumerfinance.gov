@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Regulations 3000
+   Regulation section text styling and type hierarchy
+   ========================================================================== */
+
+.regulations3k {
+
+    // Swap regdown paragraph italics with bold text
+    p[class^='level'] em {
+        font-style: normal;
+        font-weight: bold;
+    }
+
+}
+
+.generateLevel(6);
+
+// Generate six indentation levels for reg text
+.generateLevel(@n, @i: 1) when (@i =< @n) {
+    .level-@{i} {
+        box-sizing: border-box;
+        padding-left: (@i * 2em);
+    }
+    .generateLevel(@n, (@i + 1));
+}

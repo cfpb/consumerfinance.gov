@@ -1,6 +1,5 @@
 const autoprefixer = require( 'autoprefixer' );
 const BROWSER_LIST = require( '../../config/browser-list-config' );
-const browserSync = require( 'browser-sync' );
 const config = require( '../config' );
 const configPkg = config.pkg;
 const configBanner = config.banner;
@@ -39,10 +38,7 @@ function stylesModern() {
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
-    .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configStyles.dest ) );
 }
 
 /**
@@ -69,10 +65,7 @@ function stylesIE() {
     } ) )
     .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( { compatibility: 'ie8', inline: false } ) )
-    .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configStyles.dest ) );
 }
 
 /**
@@ -104,10 +97,7 @@ function stylesOnDemand() {
       suffix:  '.nonresponsive',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configStyles.dest ) );
 }
 
 /**
@@ -127,10 +117,7 @@ function stylesFeatureFlags() {
     .pipe( gulpPostcss( [
       autoprefixer( { browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
     ] ) )
-    .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) );
 }
 
 /**
@@ -155,10 +142,7 @@ function stylesKnowledgebaseSpanishProd() {
       suffix:  '.min',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) );
 }
 
 /**
@@ -183,10 +167,7 @@ function stylesKnowledgebaseSpanishIE8() {
       suffix:  '.min',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) );
 }
 
 /**
@@ -210,10 +191,7 @@ function stylesNemoProd() {
       suffix:  '.min',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) );
 }
 
 /**
@@ -237,10 +215,7 @@ function stylesNemoIE8() {
       suffix:  '.min',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) );
 }
 
 /**
@@ -260,7 +235,10 @@ function stylesApps() {
   const streams = [];
   apps.forEach( app => {
     streams.push(
-      gulp.src( `${ paths.unprocessed }/apps/${ app }/css/main.less` )
+      gulp.src(
+        `${ paths.unprocessed }/apps/${ app }/css/main.less`,
+        { allowEmpty: true }
+      )
         .pipe( gulpNewer( {
           dest:  `${ paths.processed }/apps/${ app }/css/main.css`,
           extra: configStyles.otherBuildTriggerFiles
@@ -278,9 +256,6 @@ function stylesApps() {
         } ) )
         .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
         .pipe( gulp.dest( `${ paths.processed }/apps/${ app }/css` ) )
-        .pipe( browserSync.reload( {
-          stream: true
-        } ) )
     );
   } );
 
@@ -288,32 +263,38 @@ function stylesApps() {
   return mergeStream( ...streams );
 }
 
-gulp.task( 'styles:modern', stylesModern );
-gulp.task( 'styles:ie', stylesIE );
 gulp.task( 'styles:apps', stylesApps );
-gulp.task( 'styles:ondemand', stylesOnDemand );
 gulp.task( 'styles:featureFlags', stylesFeatureFlags );
+gulp.task( 'styles:ie', stylesIE );
+gulp.task( 'styles:modern', stylesModern );
+gulp.task( 'styles:ondemand', stylesOnDemand );
+
 gulp.task( 'styles:knowledgebaseSpanishProd', stylesKnowledgebaseSpanishProd );
 gulp.task( 'styles:knowledgebaseSpanishIE8', stylesKnowledgebaseSpanishIE8 );
+gulp.task( 'styles:knowledgebaseSpanish',
+  gulp.parallel(
+    'styles:knowledgebaseSpanishProd',
+    'styles:knowledgebaseSpanishIE8'
+  )
+);
+
 gulp.task( 'styles:nemoProd', stylesNemoProd );
 gulp.task( 'styles:nemoIE8', stylesNemoIE8 );
+gulp.task( 'styles:nemo',
+  gulp.parallel(
+    'styles:nemoProd',
+    'styles:nemoIE8'
+  )
+);
 
-gulp.task( 'styles:knowledgebaseSpanish', [
-  'styles:knowledgebaseSpanishProd',
-  'styles:knowledgebaseSpanishIE8'
-] );
-
-gulp.task( 'styles:nemo', [
-  'styles:nemoProd',
-  'styles:nemoIE8'
-] );
-
-gulp.task( 'styles', [
-  'styles:modern',
-  'styles:ie',
-  'styles:apps',
-  'styles:ondemand',
-  'styles:featureFlags',
-  'styles:knowledgebaseSpanish',
-  'styles:nemo'
-] );
+gulp.task( 'styles',
+  gulp.parallel(
+    'styles:apps',
+    'styles:featureFlags',
+    'styles:ie',
+    'styles:knowledgebaseSpanish',
+    'styles:modern',
+    'styles:nemo',
+    'styles:ondemand'
+  )
+);

@@ -34,14 +34,13 @@ class TestAskHooks(TestCase):
         mock_admin = mock.Mock()
         mock_admin.is_page = True
         mock_admin.model = Answer
-        mock_answer = Answer()
-        mock_answer.save()
+        mock_answer = Answer.objects.create(id=98765)
         mock_user = User(username='Goliath')
         mock_user.save()
         mock_request = HttpRequest()
         mock_request.user = mock_user
         mock_request.method = "GET"
-        mock_edit_view = AnswerModelAdminSaveUserEditView(mock_admin, '1')
+        mock_edit_view = AnswerModelAdminSaveUserEditView(mock_admin, '98765')
         mock_edit_view.request = mock_request
         mock_edit_view.instance = mock_answer
         mock_edit_view.dispatch(mock_request)

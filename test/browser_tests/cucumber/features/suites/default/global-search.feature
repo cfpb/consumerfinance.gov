@@ -17,17 +17,14 @@ Feature: Global Search
     Then the search molecule shouldn't have a search trigger
     And it should have search input content
     And it should focus the search input field
-    And it shouldn't have a clear button label
 
   Scenario: Large Size, after entering Text
     When I enter "test" in the search molecule
-    Then it should have a clear button label
 
   Scenario: Large Size, should navigate to search portal
     When I enter "test" in the search molecule
     Then I should navigate to search portal
 
-  @skip
   Scenario: Large Size, after clicking off search
     And I click off the search molecule
     Then it shouldn't have search input content

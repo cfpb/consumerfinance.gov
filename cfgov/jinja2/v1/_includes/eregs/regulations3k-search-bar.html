@@ -1,0 +1,19 @@
+{% import 'organisms/search-bar.html' as search_bar with context %}
+
+{% set default_label = 'Looking for a specific part, section, subsection or line of text? <span class="break">Search eRegulations.</span>' %}
+{% set default_classes = 'block__bg-branded block__flush-top block__flush-bottom' %}
+{% set default_position = 'full' %}
+
+{% macro render( position=default_position, label=default_label, additional_classes=default_classes, q='' ) %}
+
+{% set search_opts = {
+    'label': label,
+    'position': position,
+    'action': '/regulations/search',
+    'additional_classes': additional_classes,
+    'autocomplete': 'true',
+    'q': q,
+  } %}
+{{ search_bar.render( search_opts ) }}
+
+{% endmacro %}

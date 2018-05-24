@@ -236,6 +236,28 @@ class CFGOVPage(Page):
         home_page_children = request.site.root_page.get_children()
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
+                # Add top level parent page and `/process/` url segments
+                # where necessary to OAH page breadcrumbs.
+                # TODO: Remove this when OAH moves under /consumer-tools
+                # and redirects are added after 2018 homebuying campaign.
+                if ancestor.slug == 'owning-a-home':
+                    breadcrumbs = []
+                    for ancestor in ancestors[i:]:
+                        ancestor_url = ancestor.relative_url(request.site)
+                        if ancestor_url.startswith((
+                                '/owning-a-home/prepare',
+                                '/owning-a-home/explore',
+                                '/owning-a-home/compare',
+                                '/owning-a-home/close',
+                                '/owning-a-home/sources')):
+                            ancestor_url = ancestor_url.replace(
+                                'owning-a-home', 'owning-a-home/process')
+                        breadcrumbs.append({
+                            'title': ancestor.title,
+                            'href': ancestor_url,
+                        })
+                    return breadcrumbs
+                # END TODO
                 return [ancestor for ancestor in ancestors[i + 1:]]
         return []
 

@@ -14,7 +14,7 @@ const VideoPlayer = {
   videoPlayerIframeContainer:
     _videoPlayerElement( '.video-player_iframe-container' ),
 
-  getVideoPlayerIframe: function getVideoPlayerIframe( ) {
+  getVideoPlayerIframe: function getVideoPlayerIframe() {
     return _videoPlayerElement( '.video-player_iframe' );
   },
 

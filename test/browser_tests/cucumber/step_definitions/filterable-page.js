@@ -4,7 +4,7 @@ const BrowseFilterablePage = require(
 const SublandingFilterablePage = require(
   '../../page_objects/sublanding-filterable-page.js'
 );
-const { defineSupportCode } = require( 'cucumber' );
+const { Then, When, After } = require( 'cucumber' );
 const { expect } = require( 'chai' );
 
 const browseFilterablePage = new BrowseFilterablePage();
@@ -17,41 +17,35 @@ let selectedFilterablePage;
 let UNDEFINED;
 
 
-defineSupportCode( function( { Then, When, After } ) {
-
-  After( function() {
-    selectedFilterablePage = UNDEFINED;
-  } );
-
-  When( /I goto a (.*) filterable page/, function( pageType ) {
-    selectedFilterablePage = filterablePages[pageType];
-
-    return filterablePages[pageType].gotoURL();
-  } );
-
-  When( /I do not select a filter/, function() {
-
-    return browser.getCurrentUrl().then( function( url ) {
-      expect( url ).not.to.contain( '?' );
-    } );
-  } );
-
-  Then( /I should see the (first|last) page result, (.*)/,
-    function( pagePosition, pageName ) {
-
-      return selectedFilterablePage.getResultText( pagePosition )
-        .then( function( resultText ) {
-          expect( resultText ).to.contain( pageName );
-        } );
-    }
-  );
-
-  Then( /I should see (.*) page results/, function( numPageResults ) {
-
-    return selectedFilterablePage.getResultsCount()
-      .then( function( resultsCount ) {
-        expect( resultsCount ).to.equal( numPageResults );
-      } );
-  } );
-
+After( function() {
+  selectedFilterablePage = UNDEFINED;
 } );
+
+When( /I goto a (.*) filterable page/, function( pageType ) {
+  selectedFilterablePage = filterablePages[pageType];
+
+  return filterablePages[pageType].gotoURL();
+} );
+
+When( /I do not select a filter/, async function() {
+  const url = await browser.getCurrentUrl();
+
+  return expect( url ).not.to.contain( '?' );
+} );
+
+Then( /I should see the (first|last) page result, (.*)/,
+  async function( pagePosition, pageName ) {
+    const resultText =
+      await selectedFilterablePage.getResultText( pagePosition );
+
+    return expect( resultText ).to.contain( pageName );
+  }
+);
+
+Then( /I should see (.*) page results/,
+  async function( numPageResults ) {
+    const resultsCount = await selectedFilterablePage.getResultsCount();
+
+    return expect( resultsCount ).to.equal( numPageResults );
+  }
+);

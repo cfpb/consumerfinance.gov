@@ -4,6 +4,19 @@
     Consumer Financial Protection Bureau
 {%- endblock %}
 
+{% block preload %}
+    {{ super() }}
+    <link rel="preload"
+          href="{{ static('img/home-hero_sm.jpg') }}"
+          as="image"
+          media="(max-width: 600px)">
+    <link rel="preload"
+          href="{{ static('img/home-hero_lg.jpg') }}"
+          as="image"
+          media="(min-width: 601px)">
+{%- endblock %}
+
+
 {% block desc -%}
     Our vision is a consumer finance marketplace that works for American consumers,
     responsible providers, and the economy as a whole.
@@ -117,7 +130,7 @@
         </div>
 
         <div class="o-well
-                    o-well__home" >
+                    o-well__home">
             <h2>Standing up for you</h2>
             <div class="content-l
                         content-l__large-gutters">
@@ -177,7 +190,8 @@
                                          It should either be a list or not. #}
                                 <div class="m-related-posts_list-container m-list">
                                     <h3 class="h4">
-                                         <span class="cf-icon cf-icon-{{ block.categories }}"></span>
+                                        {% set icon = 'open-quote' if block.categories == 'double-quote' else block.categories %}
+                                        {{ svg_icon(icon) }}
                                         {{ page.get_category_name(block.categories) }}
                                     </h3>
                                     <a class="m-list_link" href="{{ block.link.url }}">

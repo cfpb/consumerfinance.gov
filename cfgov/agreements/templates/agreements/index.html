@@ -19,12 +19,12 @@
 <h1>Credit card agreement database</h1>
 
 <div id="ccagrhome">
-		<p>
+    <p>
         The CFPB maintains a database of credit card agreements from hundreds of card issuers.
             Using the tool below, you can search for an agreement by the name of the issuer.
-		</p>
+    </p>
 
-	  <h5>Show agreements by card issuer</h5>
+    <h5>Show agreements by card issuer</h5>
     {% issuer_select %}
 
     <a href="#modIssuer" class="popl">Can't find an issuer?</a>
@@ -66,8 +66,13 @@
 
 
     <p id="dwnld">
+        <a href="https://s3.amazonaws.com/files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q4.zip">
+            Download all most recent agreements (Q4-2017)
+        </a>
+    </p>
+     <p>
         <a href="https://s3.amazonaws.com/files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q3.zip">
-            Download all most recent agreements (Q3-2017)
+            Archived Q3-2017 agreements
         </a>
     </p>
      <p>
@@ -95,7 +100,7 @@
             Archived Q2-2016 agreements
         </a>
     </p>
- <p>
+    <p>
         <a href="https://s3.amazonaws.com/files.consumerfinance.gov/a/assets/CCADB_Snapshot_2016_Q1.zip">
             Archived Q1-2016 agreements
         </a>
@@ -207,35 +212,35 @@
 
     <p><a href="#fadeclaim" class="faded">Database disclaimer</a></p>
     <div id="fadeclaim" style="display: none;">
-  	    <p>We will display the consumer credit card agreements in this database as the respective issuers submitted them. The CFPB is not responsible for the content of the agreements, including any discrepancies between an agreement as presented in this database and the agreement as offered to the public, or for any omissions or other errors in the agreement as submitted by the issuer.</p>
-  	    <p>The agreements on file will have general terms and conditions, pricing, and fee information. They are not specific to an individual's account information.</p>
-		    <p>If you have questions about the agreements themselves, contact the card issuer directly.</p>
-		</div>
+        <p>We will display the consumer credit card agreements in this database as the respective issuers submitted them. The CFPB is not responsible for the content of the agreements, including any discrepancies between an agreement as presented in this database and the agreement as offered to the public, or for any omissions or other errors in the agreement as submitted by the issuer.</p>
+        <p>The agreements on file will have general terms and conditions, pricing, and fee information. They are not specific to an individual's account information.</p>
+      <p>If you have questions about the agreements themselves, contact the card issuer directly.</p>
+  </div>
 </div> {# END #ccagrhome #}
 
 <div id="sidebar">
     <div id="needhelp">
-  	    <h3>Need help with your credit cards?</h3>
-  	    <p>
+        <h3>Need help with your credit cards?</h3>
+        <p>
             We'll forward your issue to your credit card company, give you a tracking
-  	        number, and keep you updated on the status of your complaint.
+            number, and keep you updated on the status of your complaint.
         </p>
-  	    <p>
+        <p>
             <a href="https://www.consumerfinance.gov/complaint/">
                 Submit a credit card complaint
             </a>
         </p>
 
-  	    <p>
+        <p>
             The CARD Act is often called the Credit Cardholders Bill of Rights.
-      	    President Obama signed the bill into law in May 2009. Many of the most
-      	    significant provisions of the law took effect in February 2010.
+            President Obama signed the bill into law in May 2009. Many of the most
+            significant provisions of the law took effect in February 2010.
         </p>
         <p>
             <a href="/credit-cards/credit-card-act/">Read more about the Credit CARD Act</a>
         </p>
 
-  	    <p>
+        <p>
             Find guides, your rights related to your credit score,
             and your credit card protections.
         </p>
@@ -245,7 +250,6 @@
     </div>
 </div>
 {% endblock %}
-
 
 {% block page_js %}
 {% endblock %}

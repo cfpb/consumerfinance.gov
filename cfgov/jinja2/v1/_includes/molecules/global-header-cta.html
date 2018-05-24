@@ -17,6 +17,9 @@
     {# TODO: Padding should be on link, not CTA itself #}
     <div class="m-global-header-cta
                 m-global-header-cta__{{ 'horizontal' if is_horizontal else 'list' }}">
-        <a href="/complaint/">Submit a Complaint</a>
+        <a href="/complaint/">
+            {{ svg_icon('complaint') }}
+            Submit a Complaint
+        </a>
     </div>
 {% endmacro %}

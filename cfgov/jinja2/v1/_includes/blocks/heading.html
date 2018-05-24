@@ -1,0 +1,6 @@
+<{{ value.level }}>
+    {%- if value.icon %}
+        {{ svg_icon(value.icon) }}
+    {% endif -%}
+    {{ value.text | safe }}
+</{{ value.level }}>

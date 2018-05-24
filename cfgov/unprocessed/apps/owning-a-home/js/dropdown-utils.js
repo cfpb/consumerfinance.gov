@@ -1,15 +1,13 @@
-'use strict';
-
-var $ = require( 'jquery' );
+const $ = require( 'jquery' );
 
 /**
  * Some dropdown utility methods.
  * @param  {string|Array} id - ID(s) of the HTML select elements.
  * @returns {Object} Methods to manipulate the requested elements.
  */
-var utils = function( id ) {
+const utils = function( id ) {
 
-  var $el;
+  let $el;
 
   if ( !id ) {
     throw new Error( 'You must specify the id of a dropdown.' );
@@ -17,8 +15,8 @@ var utils = function( id ) {
 
   // If they provided an array, select 'em all. Otherwise, just the one.
   $el = id instanceof Array ?
-      $( '#' + id.join( ', #' ) ) :
-      $el = $( '#' + id );
+    $( '#' + id.join( ', #' ) ) :
+    $el = $( '#' + id );
 
   /**
    * If optionVal is provided as an array, turn it into a string
@@ -29,9 +27,17 @@ var utils = function( id ) {
    * @returns {string}      Selector string of values.
    */
   function parseVals( optionVal ) {
-    return optionVal instanceof Array ?
-           '[value=' + optionVal.join( '],[value=' ) + ']' :
-           optionVal ? '[value=' + optionVal + ']' : '*';
+    let returnVal;
+
+    if ( optionVal instanceof Array ) {
+      returnVal = '[value=' + optionVal.join( '],[value=' ) + ']';
+    } else if ( optionVal ) {
+      returnVal = '[value=' + optionVal + ']';
+    } else {
+      returnVal = '*';
+    }
+
+    return returnVal;
   }
 
   /**
@@ -46,8 +52,8 @@ var utils = function( id ) {
       $el.attr( 'disabled', 'disabled' );
     }
     $el.find( 'option' )
-       .filter( parseVals( optionVal ) )
-       .attr( 'disabled', 'disabled' );
+      .filter( parseVals( optionVal ) )
+      .attr( 'disabled', 'disabled' );
 
     return this;
   }
@@ -64,20 +70,20 @@ var utils = function( id ) {
       $el.removeAttr( 'disabled' );
     }
     $el.find( 'option' )
-       .filter( parseVals( optionVal ) )
-       .removeAttr( 'disabled' );
+      .filter( parseVals( optionVal ) )
+      .removeAttr( 'disabled' );
 
     return this;
   }
 
 
   function addOption( values ) {
-    var opts = values || {},
+    let opts = values || {},
         label = opts.label || '',
         value = opts.value || '';
 
     $el.each( function() {
-      var option;
+      let option;
 
       // If the option already exists, abort.
       if ( $el.children( 'option[value=' + value + ']' ).length > 0 ) {
@@ -109,8 +115,8 @@ var utils = function( id ) {
       throw new Error( "You must provide the value of the option you'd like to remove." );
     }
     $el.find( 'option' )
-       .filter( parseVals( optionVal ) )
-       .remove();
+      .filter( parseVals( optionVal ) )
+      .remove();
 
     return this;
   }
@@ -142,7 +148,7 @@ var utils = function( id ) {
    */
   function show() {
     $el.each( function() {
-      var $container = $( '.' + $( this ).attr( 'id' ) );
+      const $container = $( '.' + $( this ).attr( 'id' ) );
       $container.removeClass( 'u-hidden' );
     } );
 
@@ -155,7 +161,7 @@ var utils = function( id ) {
    */
   function hide() {
     $el.each( function() {
-      var $container = $( '.' + $( this ).attr( 'id' ) );
+      const $container = $( '.' + $( this ).attr( 'id' ) );
       $container.addClass( 'u-hidden' );
     } );
 
@@ -168,7 +174,7 @@ var utils = function( id ) {
    */
   function showLoading() {
     $el.each( function() {
-      var $container = $( '.' + $( this ).attr( 'id' ) );
+      const $container = $( '.' + $( this ).attr( 'id' ) );
       $container.addClass( 'loading' );
     } );
 
@@ -181,7 +187,7 @@ var utils = function( id ) {
    */
   function hideLoading() {
     $el.each( function() {
-      var $container = $( '.' + $( this ).attr( 'id' ) );
+      const $container = $( '.' + $( this ).attr( 'id' ) );
       $container.removeClass( 'loading' );
     } );
 

@@ -2,10 +2,6 @@ const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
 const gulpImagemin = require( 'gulp-imagemin' );
 const handleErrors = require( '../utils/handle-errors' );
-const imageminGifsicle = require( 'imagemin-gifsicle' );
-const imageminJpegtran = require( 'imagemin-jpegtran' );
-const imageminOptipng = require( 'imagemin-optipng' );
-const imageminSvgo = require( 'imagemin-svgo' );
 const paths = require( '../../config/environment' ).paths;
 
 /**
@@ -17,12 +13,7 @@ const paths = require( '../../config/environment' ).paths;
 function _genericCopy( src, dest ) {
   return gulp.src( src )
     .pipe( gulpChanged( dest ) )
-    .pipe( gulpImagemin( [
-      imageminGifsicle(),
-      imageminJpegtran(),
-      imageminOptipng(),
-      imageminSvgo()
-    ] ) )
+    .pipe( gulpImagemin() )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( dest ) );
 }
@@ -49,4 +40,9 @@ function imagesGeneral() {
 
 gulp.task( 'images:apps', imagesApps );
 gulp.task( 'images:general', imagesGeneral );
-gulp.task( 'images', [ 'images:apps', 'images:general' ] );
+gulp.task( 'images',
+  gulp.parallel(
+    'images:apps',
+    'images:general'
+  )
+);
