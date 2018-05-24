@@ -6,10 +6,7 @@ import unittest
 from django.conf import settings
 from django.test import TestCase as DjangoTestCase
 
-# from bs4 import BeautifulSoup as bS
 import mock
-# import markdown
-# from regulations3k.regdown import extract_labeled_paragraph, regdown
 from regulations3k.models import EffectiveVersion, Part, Subpart
 from regulations3k.scripts.ecfr_importer import ecfr_to_regdown, run
 from regulations3k.scripts.patterns import IdLevelState
@@ -51,22 +48,18 @@ class ImporterTestCase(DjangoTestCase):
             ecfr_to_regdown(part_number, file_path=self.xml_fixture), None)
 
     def test_part_parser_use_existing(self):
-        part_number = '1003'
+        part_number = '1003'  # This part exists in the test fixture
         ecfr_to_regdown(part_number, file_path=self.xml_fixture)
         self.assertEqual(Part.objects.filter(
             part_number=part_number).count(), 1)
         self.assertEqual(Subpart.objects.count(), 3)
 
     def test_part_parser_create_new(self):
-        part_number = '1'
+        part_number = '1'  # This part does not exist in the test fixture
         ecfr_to_regdown(part_number, file_path=self.xml_fixture)
         self.assertEqual(Part.objects.filter(
             part_number=part_number).count(), 1)
         self.assertEqual(Subpart.objects.count(), 3)
-
-    def test_part_created(self):
-        ecfr_to_regdown('1', file_path=self.xml_fixture)
-        self.assertEqual(Part.objects.filter(part_number='1').count(), 1)
         self.assertEqual(EffectiveVersion.objects.count(), 1)
 
     def test_bad_file_path_returns_none(self):
@@ -82,7 +75,7 @@ class ImporterTestCase(DjangoTestCase):
         run('1', self.xml_fixture)
         self.assertEqual(Part.objects.filter(part_number='1').count(), 1)
 
-    def test_run_importer_bad_args(self):
+    def test_run_importer_no_args(self):
         with self.assertRaises(SystemExit):
             run()
 

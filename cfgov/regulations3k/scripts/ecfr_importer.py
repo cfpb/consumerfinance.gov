@@ -5,7 +5,6 @@ import logging
 import re
 import sys
 
-# from bs4 import UnicodeDammit
 import requests
 from bs4 import BeautifulSoup as bS
 from regulations3k.models.django import (
@@ -192,21 +191,6 @@ def parse_sections(section_list, part, subpart):
             contents=section_content
         )
         _section.save()
-        # try:  # try-except clause for initial troubleshooting
-        #     _section.save()
-        # except Exception as e:
-        #     LEVEL_STATE.section_error = section_content
-        #     error_file = (
-        #         "/Users/higginsw/Desktop/XML/section_error_{}-{}.txt".format(
-        #             part.part_number, section_number))
-        #     with open(error_file, 'a+') as f:
-        #         f.write(section_content.encode('utf-8', 'replace'))
-        #     print("Error saving section {}-{}:\n "
-        #           "{}\n See {} for details".format(
-        #               part.part_number,
-        #               section_number,
-        #               e,
-        #               error_file))
 
 
 def parse_appendices(appendices_list, part):
