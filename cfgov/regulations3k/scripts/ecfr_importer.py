@@ -121,7 +121,7 @@ def parse_subparts(part_soup, subpart_list, part):
             parse_sections(subpart_sections, part, _subpart)
 
 
-def ital_to_bold(soup):
+def italic_to_bold(soup):
     """Replace initial italics clauses with markdown-style bolding"""
     if soup.find('I'):
         ital_content = soup.find('I').text
@@ -157,7 +157,7 @@ def extract_level_one_ids(text):
 def parse_section_paragraphs(paragraph_soup):
     paragraph_content = ''
     for p in paragraph_soup:
-        p = ital_to_bold(p)
+        p = italic_to_bold(p)
         if LEVEL_STATE.level() == 1:
             new_pid = extract_level_one_ids(p.text) or ''
             if new_pid.count('-') > 0:
