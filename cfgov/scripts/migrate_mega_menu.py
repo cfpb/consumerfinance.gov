@@ -870,7 +870,7 @@ def get_page_from_path(page, path_components):
                 subpage = page.get_children().get(slug=child_slug)
                 return get_page_from_path(subpage.specific,
                                           remaining_components)
-            except:
+            except Exception:
                 pass
         elif page.live:
             # request is for this page
