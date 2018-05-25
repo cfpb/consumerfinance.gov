@@ -171,7 +171,7 @@
   "fields": {
     "title": "Subpart A - General",
     "version": 2,
-    "label": "1005-A"
+    "label": "1005-Subpart-A"
   },
   "model": "regulations3k.subpart",
   "pk": 4
@@ -180,7 +180,7 @@
   "fields": {
     "title": "Subpart B - Requirements for Remittance Transfers",
     "version": 2,
-    "label": "1005-B"
+    "label": "1005-Subpart-B"
   },
   "model": "regulations3k.subpart",
   "pk": 5

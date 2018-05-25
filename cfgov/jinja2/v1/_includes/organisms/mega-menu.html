@@ -46,12 +46,12 @@
 {%- for group in nav_groups %}
 <div class="{{ _classes( nav_depth, '-list' ) }}">
     {% if group.title %}
-    <h3 class="h5
+    <div class="h5
               {{ base_class ~ '_group-heading' }}
               {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_title else ''}} "
         {% if group.hide_title %} aria-hidden="true"{% endif %}>
         {{group.title | safe}}
-    </h3>
+    </div>
     {% endif %}
     <ul class="m-list
                m-list__unstyled">
@@ -154,7 +154,7 @@
          {% endif %}
             </div>
             {% for parent_name, fmc in media_items %}
-                {% if parent_name + ' Overview' == nav_overview %}
+                {% if parent_name == nav_overview %}
                 {{ fmc }}
                 {% endif %}
             {% endfor %}
