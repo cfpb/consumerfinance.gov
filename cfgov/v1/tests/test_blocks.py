@@ -7,9 +7,7 @@ from wagtail.wagtailcore.models import Page
 
 import mock
 
-from v1.blocks import (
-    AbstractFormBlock, AnchorLink, Link, PlaceholderCharBlock
-)
+from v1.blocks import AbstractFormBlock, AnchorLink, Link, PlaceholderCharBlock
 
 
 class TestAbstractFormBlock(TestCase):
