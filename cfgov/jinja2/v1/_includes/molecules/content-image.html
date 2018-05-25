@@ -57,43 +57,12 @@
                m-inset__{{ image_inset.orientation }}
                {{- ' m-inset__bottom-rule' if value.is_bottom_rule else '' }}">
     <div class="m-inset_image-container">
-    {%- if image_alt_value(value.image) %}
         <img class="m-inset_image"
              src="{{ image_inset.url }}"
              srcset="{{ image_inset.url }} {{ image_inset.width }}w,
                      {{ image_mobile.url }} {{ image_mobile.width }}w"
              sizes="(max-width: 600px) {{ image_mobile.width }}px, {{ image_inset.width }}px"
              alt="{{ image_alt_value(value.image) }}">
-    {% else %}
-        <div class="m-inset_image m-inset_image__decorative
-                    {{ 'm-inset_image__cover' if image_mobile.width > 600 else '' }}"
-             style="background-image: url( {{ image_mobile.url }} );">
-        </div>
-        <style>
-            /**
-             * Inline styles are needed in order to make calculations based on image dimensions.
-             * They need to be placed in a <style> element so that media queries can be used.
-             * Media queries need to be used to adjust the width of the 470px image to be narrower
-             * on smaller screens, so that the available area for text floating beside it does not
-             * become too narrow.
-             */
-
-            @media screen and (min-width: 601px) {
-                .m-inset__170 .m-inset_image.m-inset_image__decorative,
-                .m-inset__270 .m-inset_image.m-inset_image__decorative {
-                    height: {{ image_mobile.height * value.image_width | int / image_mobile.width }}px;
-                }
-                .m-inset__470 .m-inset_image.m-inset_image__decorative {
-                    height: {{ image_mobile.height * 270 | int / image_mobile.width }}px;
-                }
-            }
-            @media screen and (min-width: 1231px) {
-                .m-inset__470 .m-inset_image.m-inset_image__decorative {
-                    height: {{ image_mobile.height * value.image_width | int / image_mobile.width }}px;
-                }
-            }
-        </style>
-    {% endif %}
     </div>
 {% if value.text %}
     <figcaption class="m-inset_caption">

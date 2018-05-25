@@ -12,9 +12,6 @@
                         m-inset__portrait
                         m-inset__270">
                 <div class="m-inset_image-container">
-                    <div class="m-inset_image
-                                m-inset_image__cover
-                                m-inset_image__decorative"></div>
                     <img class="m-inset_image" />
                 </div>
                 <div class="m-inset_caption"></div>
@@ -36,9 +33,6 @@
             .m-inset__portrait
             .m-inset__270
                 .m-inset_image-container
-                    div.m-inset_image
-                    div.m-inset_image__cover
-                    div.m-inset_image__decorative
                     img.m-inset_image
                 .m-inset_caption
                 .m-quote
@@ -61,11 +55,6 @@
         border-bottom: 1px solid @horizontal-rule;
     }
 
-    .m-inset_image__decorative {
-        background-size: contain;
-        background-repeat: no-repeat;
-    }
-
     &_caption {
         margin-top: unit( 15px / @base-font-size-px, em );
     }
@@ -73,43 +62,6 @@
     .respond-to-min( @bp-sm-min, {
         float: right;
         width: unit( 270px / @base-font-size-px, em );
-    } );
-
-    .respond-to-max( @bp-xs-max, {
-
-        .m-inset_image {
-            .u-flexible-container_inner();
-            height: auto;
-            width: auto;
-        }
-
-        .m-inset_image__cover {
-            background-size: cover;
-        }
-
-        .m-inset_image__decorative {
-
-            // Important is necessary to override the inline height value;
-            height: 100% !important;
-            width: 100%;
-        }
-
-        .m-inset_image-container {
-            overflow: hidden;
-            .u-flexible-container();
-        }
-
-        &__portrait {
-            .m-inset_image-container {
-                padding-bottom: 75%;
-            }
-        }
-
-        &__square {
-            .m-inset_image-container {
-                padding-bottom: 100%;
-            }
-        }
     } );
 
     .respond-to-min( @bp-sm-min, {
