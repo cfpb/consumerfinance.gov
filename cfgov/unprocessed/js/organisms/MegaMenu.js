@@ -7,6 +7,7 @@ const FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
 const MegaMenuDesktop = require( '../organisms/MegaMenuDesktop' );
 const MegaMenuMobile = require( '../organisms/MegaMenuMobile' );
 const MoveTransition = require( '../modules/transition/MoveTransition' );
+const TabTrigger = require( '../modules/TabTrigger' );
 const Tree = require( '../modules/Tree' );
 const standardType = require( '../modules/util/standard-type' );
 
@@ -32,10 +33,9 @@ function MegaMenu( element ) {
   let _desktopNav;
   let _mobileNav;
 
-  // TODO: Move tab trigger to its own class.
-  const _tabTriggerDom = _dom.querySelector( '.' + BASE_CLASS + '_tab-trigger' );
-
-  const KEY_TAB = 9;
+  /* The tab trigger adds an element to the end of the element that handles
+     cleanup after tabbing out of the element. */
+  const _tabTrigger = new TabTrigger( _dom );
 
   /**
    * @returns {MegaMenu|undefined} An instance,
@@ -92,7 +92,8 @@ function MegaMenu( element ) {
 
     _dom.classList.remove( 'u-hide-on-mobile' );
 
-    _tabTriggerDom.addEventListener( 'keyup', _handleTabPress );
+    _tabTrigger.init();
+    _tabTrigger.addEventListener( 'tabPressed', _handleTabPress );
 
     return this;
   }
@@ -183,13 +184,9 @@ function MegaMenu( element ) {
 
   /**
    * Event handler for when the tab key is pressed.
-   * @param {KeyboardEvent} event
-   *   The event object for the keyboard key press.
    */
-  function _handleTabPress( event ) {
-    if ( event.keyCode === KEY_TAB ) {
-      collapse();
-    }
+  function _handleTabPress() {
+    collapse();
   }
 
   /**
