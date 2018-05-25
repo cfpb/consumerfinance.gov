@@ -1,7 +1,8 @@
 from wagtail.wagtailcore.blocks import StreamValue
 
-from v1.models.menu_item import MenuItem
 from v1.models.home_page import HomePage
+from v1.models.menu_item import MenuItem
+
 
 ROOT_PAGE = HomePage.objects.live().first()
 

@@ -2,7 +2,8 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, MultiFieldPanel, StreamFieldPanel, PageChooserPanel)
+    FieldPanel, MultiFieldPanel, PageChooserPanel, StreamFieldPanel
+)
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 

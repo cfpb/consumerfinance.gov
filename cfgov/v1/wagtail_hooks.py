@@ -7,14 +7,11 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.utils.html import escape, format_html_join
 
+from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.rich_text import PageLinkHandler
-
-from wagtail.contrib.modeladmin.options import (
-    ModelAdmin, modeladmin_register
-)
 
 from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.util import util
