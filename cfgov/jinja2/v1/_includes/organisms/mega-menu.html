@@ -229,13 +229,6 @@
    {# Create a root menu at depth one.
       This is the 1st level of a 3-level menu. #}
    {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]} ) }}
-   <button class="{{ base_class ~ '_tab-trigger' }} u-visually-hidden"
-           aria-hidden="true">
-      Collapse
-      {# The tab trigger is hidden, but is used to listen for keyup events
-      when the tab key is pressed on it while it has focus, so that
-      the menu can be collapsed. #}
-    </button>
 </nav>
 
 {% endmacro %}
