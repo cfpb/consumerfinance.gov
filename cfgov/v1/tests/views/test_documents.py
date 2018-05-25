@@ -31,14 +31,8 @@ class ServeViewTestCase(TestCase):
             p.assert_called_once_with(self.request, doc.pk, filename)
 
     @override_settings(
-        AWS_QUERYSTRING_AUTH=False,
-        AWS_STORAGE_BUCKET_NAME='test_s3_bucket',
-        AWS_S3_CALLING_FORMAT='boto.s3.connection.OrdinaryCallingFormat',
-        AWS_S3_SECURE_URLS=True,
-        DEFAULT_FILE_STORAGE='v1.s3utils.MediaRootS3BotoStorage',
+        DEFAULT_FILE_STORAGE='storages.backends.s3boto.S3BotoStorage',
         MEDIA_URL='https://test.s3.amazonaws.com/f/',
-        AWS_S3_ACCESS_KEY_ID='test-access-key',
-        AWS_S3_SECRET_ACCESS_KEY='test-secret-access-key'
     )
     def test_document_serve_view_s3(self):
         filename = 'test.txt'

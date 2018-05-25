@@ -393,15 +393,18 @@ ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
 # S3 Configuration
 AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
 AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
-AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
+AWS_S3_ROOT = 'f'
 AWS_S3_SECURE_URLS = True  # True = use https; False = use http
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_LOCATION = AWS_S3_ROOT
 
-if os.environ.get('S3_ENABLED', 'False') == 'True':
-    DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
-    AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
-    AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
-    MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
+if os.getenv('S3_ENABLED'):
+    DEFAULT_FILE_STORAGE = 'v1.storage.OverwritingS3Storage'
+    AWS_S3_ACCESS_KEY_ID = os.environ['AWS_S3_ACCESS_KEY_ID']
+    AWS_S3_SECRET_ACCESS_KEY = os.environ['AWS_S3_SECRET_ACCESS_KEY']
+
+    AWS_S3_URL = os.environ['AWS_S3_URL']
+    MEDIA_URL = os.path.join(AWS_S3_URL, AWS_S3_ROOT, '')
 
 # Govdelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
