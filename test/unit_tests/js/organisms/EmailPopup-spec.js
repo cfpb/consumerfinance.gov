@@ -66,7 +66,7 @@ describe( 'EmailPopup', () => {
   describe( 'getDom()', () => {
     it( 'should return the base element', () => {
       const baseElement = document.querySelector( '.o-email-popup' );
-      expect( baseElement ).toEqual( emailPopup.getDom() );
+      expect( baseElement ).toStrictEqual( emailPopup.getDom() );
     } );
   } );
 

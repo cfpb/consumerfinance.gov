@@ -17,7 +17,7 @@ describe( 'loadScript method', () => {
     } );
 
     return loaderPromise.then( result => {
-      expect( result ).toEqual( 'Callback called' );
+      expect( result ).toStrictEqual( 'Callback called' );
     } );
   } );
 
