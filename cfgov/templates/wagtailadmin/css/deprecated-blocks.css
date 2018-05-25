@@ -1,5 +1,5 @@
 /**
- * Hide buttons for the deprecated blocks that InfoUnitGroup replaces.
+ * Hide buttons for the deprecated blocks that InfoUnitGroup (IUG) replaces.
  * TODO: Remove when all data is migrated to IUGs and these blocks are totally
  * removed from the codebase.
  */
@@ -12,8 +12,8 @@
 
 /**
  * Hide button for the deprecated Media block that ContentImage replaces.
- * TODO: Remove when all data is migrated to IUGs and these blocks are totally
- * removed from the codebase.
+ * TODO: Remove when all Media blcosk are migrated to ContentImage and Media is
+ * totally removed from the codebase.
  */
 .action-add-block-media.icon-None {
     display: none;
