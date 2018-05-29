@@ -8,4 +8,3 @@
 
 > 0.5% in my stats # Sets a threshold to cut off extreme edge case browsers.
 > 5% in US         # Sets a threshold for possible future users.
-Explorer >= 8      # Sets IE8 support to address known New Relic errors.
