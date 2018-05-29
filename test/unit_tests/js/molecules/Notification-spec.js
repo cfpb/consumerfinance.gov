@@ -25,8 +25,8 @@ describe( 'Notification', () => {
   describe( 'init()', () => {
     it( 'should return the Notification instance when initialized', () => {
       thisNotification = notification.init();
-      expect( typeof thisNotification ).toEqual( 'object' );
-      expect( notificationElem.dataset.jsHook ).toEqual( 'state_atomic_init' );
+      expect( typeof thisNotification ).toStrictEqual( 'object' );
+      expect( notificationElem.dataset.jsHook ).toStrictEqual( 'state_atomic_init' );
     } );
 
     it( 'should return undefined if already initialized', () => {
@@ -41,7 +41,7 @@ describe( 'Notification', () => {
 
       notification.init();
 
-      expect( notificationElem.dataset.jsHook ).toEqual( 'state_atomic_init' );
+      expect( notificationElem.dataset.jsHook ).toStrictEqual( 'state_atomic_init' );
     } );
 
     it( 'should return the Notification istance if it has a warning class', () => {
@@ -50,7 +50,7 @@ describe( 'Notification', () => {
 
       notification.init();
 
-      expect( notificationElem.dataset.jsHook ).toEqual( 'state_atomic_init' );
+      expect( notificationElem.dataset.jsHook ).toStrictEqual( 'state_atomic_init' );
     } );
 
     it( 'should return the Notification istance if it has a error class', () => {
@@ -59,7 +59,7 @@ describe( 'Notification', () => {
 
       notification.init();
 
-      expect( notificationElem.dataset.jsHook ).toEqual( 'state_atomic_init' );
+      expect( notificationElem.dataset.jsHook ).toStrictEqual( 'state_atomic_init' );
     } );
   } );
 

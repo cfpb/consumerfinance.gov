@@ -15,7 +15,9 @@ describe( 'Mortgage Performance map store', () => {
   } );
 
   it( 'should inherit helper methods', () => {
+    let UNDEFINED;
     const mockData = {
+      date: UNDEFINED,
       geo: { type: 'state', id: null, name: null },
       isLoadingMetros: false,
       isLoadingCounties: false,
@@ -25,7 +27,7 @@ describe( 'Mortgage Performance map store', () => {
       metros: []
     };
 
-    expect( store.getState() ).toEqual( mockData );
+    expect( store.getState() ).toStrictEqual( mockData );
   } );
 
   it( 'should be able to add subscribers', () => {
@@ -43,7 +45,7 @@ describe( 'Mortgage Performance map store', () => {
   } );
 
   it( 'should default to having an empty previous state', () => {
-    expect( store.prevState ).toEqual( {} );
+    expect( store.prevState ).toStrictEqual( {} );
   } );
 
   it( 'should properly clear geos', () => {
@@ -108,7 +110,7 @@ describe( 'Mortgage Performance map store', () => {
       metros: { 12345: 'Akron, OH' }
     };
     store.dispatch( action );
-    expect( store.getState().metros ).toEqual( { 12345: 'Akron, OH' } );
+    expect( store.getState().metros ).toStrictEqual( { 12345: 'Akron, OH' } );
     action = {
       type: 'UPDATE_CHART',
       geo: {
@@ -119,7 +121,7 @@ describe( 'Mortgage Performance map store', () => {
       metros: { 67890: 'Boston, MA' }
     };
     store.dispatch( action );
-    expect( store.getState().metros ).toEqual( { 67890: 'Boston, MA' } );
+    expect( store.getState().metros ).toStrictEqual( { 67890: 'Boston, MA' } );
   } );
 
   it( 'should properly reduce counties', () => {
@@ -128,7 +130,7 @@ describe( 'Mortgage Performance map store', () => {
       counties: { 12345: 'Acme County' }
     };
     store.dispatch( action );
-    expect( store.getState().counties ).toEqual( { 12345: 'Acme County' } );
+    expect( store.getState().counties ).toStrictEqual( { 12345: 'Acme County' } );
     action = {
       type: 'UPDATE_CHART',
       geo: {
@@ -140,7 +142,7 @@ describe( 'Mortgage Performance map store', () => {
     };
     store.dispatch( action );
     expect( store.getState().counties )
-      .toEqual( { 67890: 'Some other county' } );
+      .toStrictEqual( { 67890: 'Some other county' } );
   } );
 
   it( 'should properly chart zooming', () => {

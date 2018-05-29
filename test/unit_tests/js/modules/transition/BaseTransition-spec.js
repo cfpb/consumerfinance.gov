@@ -22,9 +22,9 @@ describe( 'BaseTransition', () => {
 
   describe( '.init()', () => {
     it( 'should have public static methods', () => {
-      expect( BaseTransition.BEGIN_EVENT ).toEqual( 'transitionBegin' );
-      expect( BaseTransition.END_EVENT ).toEqual( 'transitionEnd' );
-      expect( BaseTransition.NO_ANIMATION_CLASS ).toEqual( 'u-no-animation' );
+      expect( BaseTransition.BEGIN_EVENT ).toStrictEqual( 'transitionBegin' );
+      expect( BaseTransition.END_EVENT ).toStrictEqual( 'transitionEnd' );
+      expect( BaseTransition.NO_ANIMATION_CLASS ).toStrictEqual( 'u-no-animation' );
     } );
 
     it( 'should have correct state before initializing', () => {

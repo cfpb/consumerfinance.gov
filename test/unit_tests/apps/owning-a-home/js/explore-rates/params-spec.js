@@ -80,7 +80,7 @@ describe( 'explore-rates/params', () => {
       'request':        UNDEFINED
     };
     const storedValues = params.getAllParams();
-    expect( storedValues ).toEqual( mockData );
+    expect( storedValues ).toStrictEqual( mockData );
   } );
 
   it( 'should be able to update a value from the HTML', () => {
