@@ -75,6 +75,20 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             'This is a paragraph with a label.</p>'
         )
 
+    def test_prefixed_inline_interp_label(self):
+        text = '{31-a-1-Interp-1}\nThis is a paragraph with a label.'
+        text2 = '{31-a-1-i-Interp-1}\nThis is a paragraph with a label.'
+        self.assertEqual(
+            regdown(text),
+            '<p class="level-1" id="31-a-1-Interp-1">'
+            'This is a paragraph with a label.</p>'
+        )
+        self.assertEqual(
+            regdown(text2),
+            '<p class="level-1" id="31-a-1-i-Interp-1">'
+            'This is a paragraph with a label.</p>'
+        )
+
     def test_empty_inline_interp_label(self):
         text = (
             '{30-Interp-1}\n'
