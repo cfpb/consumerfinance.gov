@@ -178,8 +178,12 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             # the paragraph tag, label id, and initial text, then process the
             # rest of the blocks normally.
             label, text = match.group('label'), match.group('text')
-            p = util.etree.SubElement(parent, 'p')
-            p.set('id', label)
+            # Labeled paragraphs without text should use a div element
+            if text == '':
+                el = util.etree.SubElement(parent, 'div')
+            else:
+                el = util.etree.SubElement(parent, 'p')
+            el.set('id', label)
 
             # We use CSS classes to indent paragraph text. To get the correct
             # class, we count the number of dashes in the label to determine
@@ -195,9 +199,9 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             label = re.sub('^[A-Z]\d?\-\w+\-?', '', label)
             level = label.count('-')
             class_name = 'level-{}'.format(level)
-            p.set('class', class_name)
+            el.set('class', class_name)
 
-            p.text = text.lstrip()
+            el.text = text.lstrip()
 
         elif block.strip():
             if self.parser.state.isstate('list'):
