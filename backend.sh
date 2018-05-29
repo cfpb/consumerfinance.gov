@@ -11,8 +11,22 @@ set -e
 
 # Confirm environment.
 init() {
-  # Set cli_flag variable.
-  source cli-flag.sh 'Back end' $1
+  # Set default command-line environment flag, if user didn't supply one.
+  cli_flag=$2
+
+  # Warn if unsupported command-line flag was used.
+  if [ "$cli_flag" != "development" ] &&
+     [ "$cli_flag" != "production" ]; then
+    supplied_cli_flag=$cli_flag
+    cli_flag='development'
+    echo "WARNING: '$supplied_cli_flag' flag not found, reverting to $cli_flag environment."
+  fi
+
+  # Notify of environment that user is in.
+  echo "Back end environment: $cli_flag"
+
+  # Set the cli_flag for this session.
+  export cli_flag=$cli_flag
 
   # Ensure that we're in a virtualenv
   python -c 'import sys; sys.real_prefix' 2>/dev/null || (
@@ -20,7 +34,6 @@ init() {
     exit 1
   )
 }
-
 
 # Install project dependencies.
 install() {
@@ -33,7 +46,6 @@ install() {
     pip install -r ./requirements/deployment.txt
   fi
 }
-
 
 init "$1"
 install
