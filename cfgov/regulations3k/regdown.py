@@ -214,6 +214,7 @@ def regdown(text, **kwargs):
     return markdown(
         text,
         extensions=[
+            'markdown.extensions.tables',
             RegulationsExtension(**kwargs)
         ],
         **kwargs

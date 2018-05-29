@@ -173,6 +173,17 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         self.assertIn('<h1>§FooBar</h1>',
                       regdown(text, contents_resolver=contents_resolver))
 
+    def test_tables_extension_exists(self):
+        text = (
+            'First Header  | Second Header\n'
+            '------------- | -------------\n'
+            'Content Cell  | Content Cell\n'
+            'Content Cell  | Content Cell\n'
+        )
+        self.assertIn('<table>', regdown(text))
+        self.assertIn('<th>First Header</th>', regdown(text))
+        self.assertIn('<td>Content Cell</td>', regdown(text))
+
 
 class RegdownUtilsTestCase(unittest.TestCase):
 
