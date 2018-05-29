@@ -323,7 +323,7 @@ class ContentImage(blocks.StructBlock):
         choices=[('full', 'full'),
                  (470, '470px'),
                  (270, '270px'),
-                 (170, '170px'),],
+                 (170, '170px')],
         default='full',)
     image_position = blocks.ChoiceBlock(
         choices=[('right', 'right'),
