@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
-        ('v1', '0110_add_modules_to_blog'),
+        ('v1', '0111_convert_imageinset_to_contentimage'),
     ]
 
     operations = [
