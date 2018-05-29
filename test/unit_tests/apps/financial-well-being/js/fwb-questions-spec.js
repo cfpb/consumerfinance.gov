@@ -195,7 +195,7 @@ describe( 'fwb-questions', () => {
       'when a radio button is clicked', () => {
     fwbQuestions.init();
     simulateEvent( 'click', radioButtonsDom[0] );
-    expect( window.dataLayer[0] ).toEqual( dataLayerEventRadio );
+    expect( window.dataLayer[0] ).toStrictEqual( dataLayerEventRadio );
   } );
 
   it( 'should send the correct analytics ' +
@@ -203,6 +203,6 @@ describe( 'fwb-questions', () => {
     fillOutForm();
     fwbQuestions.init();
     simulateEvent( 'click', submitBtnDom );
-    expect( window.dataLayer[0] ).toEqual( dataLayerEventSubmit );
+    expect( window.dataLayer[0] ).toStrictEqual( dataLayerEventSubmit );
   } );
 } );

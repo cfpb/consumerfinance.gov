@@ -132,7 +132,7 @@ describe( 'fwb-results', () => {
     () => {
       simulateEvent( 'click', toggleButtons[0] );
 
-      expect( window.dataLayer[0] ).toEqual( dataLayerEvent );
+      expect( window.dataLayer[0] ).toStrictEqual( dataLayerEvent );
     }
   );
 

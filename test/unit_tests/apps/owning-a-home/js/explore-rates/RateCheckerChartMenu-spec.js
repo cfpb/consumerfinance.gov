@@ -59,11 +59,11 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
 
   describe( 'new RateCheckerChartMenu()', () => {
     it( 'should set the state to closed', () => {
-      expect( chartMenu.state ).toEqual( { position: STATES.CLOSED } );
+      expect( chartMenu.state ).toStrictEqual( { position: STATES.CLOSED } );
     } );
 
     it( 'should set a reference to the highcharts instance', () => {
-      expect( highCharts ).toEqual( chartMenu.highCharts );
+      expect( highCharts ).toStrictEqual( chartMenu.highCharts );
     } );
 
     it( 'should set a reference to the base element', () => {
@@ -84,14 +84,14 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
   describe( 'open()', () => {
     it( 'should set the open state', () => {
       chartMenu.open();
-      expect( chartMenu.state ).toEqual( { position: STATES.OPEN } );
+      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
     } );
   } );
 
   describe( 'close()', () => {
     it( 'should set the closed state', () => {
       chartMenu.close();
-      expect( chartMenu.state ).toEqual( { position: STATES.CLOSED } );
+      expect( chartMenu.state ).toStrictEqual( { position: STATES.CLOSED } );
     } );
   } );
 
@@ -99,21 +99,21 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
     it( 'should set the proper classes on the menu DOM', () => {
       chartMenu.open();
       expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
-        .toEqual( true );
+        .toStrictEqual( true );
     } );
   } );
 
   describe( '_setState()', () => {
     it( 'should set the state when passed an object', () => {
       chartMenu._setState( { position: STATES.OPEN } );
-      expect( chartMenu.state ).toEqual( { position: STATES.OPEN } );
+      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
     } );
 
     it( 'should maintain the state when an object isn\'t passed', () => {
       chartMenu.open();
-      expect( chartMenu.state ).toEqual( { position: STATES.OPEN } );
+      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
       chartMenu._setState();
-      expect( chartMenu.state ).toEqual( { position: STATES.OPEN } );
+      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
     } );
   } );
 
@@ -121,17 +121,17 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
     it( 'should set the proper classes when the menu button is clicked', () => {
       simulateEvent( 'click', chartMenuBtnDOM );
       expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
-        .toEqual( true );
+        .toStrictEqual( true );
       simulateEvent( 'click', chartMenuBtnDOM );
       expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
-        .toEqual( false );
+        .toStrictEqual( false );
     } );
 
     it( 'should set the proper state when the menu button is clicked', () => {
       simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenu.state ).toEqual( { position: STATES.OPEN } );
+      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
       simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenu.state ).toEqual( { position: STATES.CLOSED } );
+      expect( chartMenu.state ).toStrictEqual( { position: STATES.CLOSED } );
     } );
 
     it( 'should call exportChart when a menu export option is clicked', () => {

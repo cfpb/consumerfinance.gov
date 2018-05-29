@@ -59,6 +59,10 @@ __pycache__/
 *.eggs/
 *.egg/
 
+# pyenv #
+#########
+.python-version
+
 # Front-End #
 #############
 bower_components/
