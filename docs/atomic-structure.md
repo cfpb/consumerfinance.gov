@@ -46,7 +46,7 @@ Prefixed with “m-” in CSS, JavaScript, and HTML files.
             m-notification__visible
             m-notification__error"
      data-js-hook="state_atomic_init">
-    <span class="m-notification_icon cf-icon"></span>
+    {{ svg_icon('error') }}
     <div class="m-notification_content" role="alert">
         <div class="h4 m-notification_message">Page not found.</div>
     </div>

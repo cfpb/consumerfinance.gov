@@ -223,6 +223,8 @@
 {% endif %}
 {% set avg_pct = avg_score.pct %}
 {% set avg_pct_spectrum = avg_pct if score_box_positioning == 'left' else 100 - avg_pct %}
+{% import 'molecules/notification.html' as notification with context %}
+
 
 {% block content_main %}
     <h1>Your financial well-being score</h1>
@@ -232,18 +234,14 @@
         in understanding your financial picture.
     </p>
 {% else %}
-    <div class="m-notification
-                m-notification__visible
-                m-notification__warning
-                u-mb15">
-        {{ svg_icon('warning-round') }}
-        <div class="m-notification_content">
-            <div class="h4 m-notification_message">
-                We never collect or store answers to the financial well-being questionnaire.
-                If you would like to see your score and answers on the page below,
-                please start with the <a href="../">questionnaire</a> and enter your responses.
-            </div>
-        </div>
+    <div class="u-mb15">
+        {{ notification.render(
+            'warning',
+            true,
+            'We never collect or store answers to the financial well-being questionnaire.',
+            'If you would like to see your score and answers on the page below,
+            please start with the <a href="../">questionnaire</a> and enter your responses.'
+        ) }}
     </div>
 {% endif %}
 
@@ -504,19 +502,15 @@
         <h2>See how your score compares to group averages</h2>
 
     {% if not user_score %}
-        <div class="m-notification
-                    m-notification__visible
-                    m-notification__warning
-                    u-mb15">
-            {{ svg_icon('warning-round') }}
-            <div class="m-notification_content">
-                <div class="h4 m-notification_message">
-                    We never collect or store answers to the financial well-being questionnaire.
-                    If you would like to see your score and answers on the page below,
-                    please start with the <a href="../">questionnaire</a> and enter your responses.
-                </div>
-            </div>
-        </div>
+        <div class="u-mb15">
+        {{ notification.render(
+            'warning',
+            true,
+            'We never collect or store answers to the financial well-being questionnaire.',
+            'If you would like to see your score and answers on the page below,
+            please start with the <a href="../">questionnaire</a> and enter your responses.'
+        ) }}
+    </div>
     {% endif %}
 
         <figure class="comparison-chart" id="comparison-chart">

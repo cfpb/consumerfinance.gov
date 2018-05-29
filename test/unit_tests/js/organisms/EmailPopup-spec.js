@@ -32,8 +32,7 @@ const HTML_SNIPPET = `
             </form>
             <div class="o-email-signup_footer">
                 <div class="m-notification
-                            m-notification__success
-                            ">
+                            m-notification__success">
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message"></div>
                     </div>
@@ -67,7 +66,7 @@ describe( 'EmailPopup', () => {
   describe( 'getDom()', () => {
     it( 'should return the base element', () => {
       const baseElement = document.querySelector( '.o-email-popup' );
-      expect( baseElement ).toEqual( emailPopup.getDom() );
+      expect( baseElement ).toStrictEqual( emailPopup.getDom() );
     } );
   } );
 

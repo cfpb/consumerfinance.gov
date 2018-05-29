@@ -109,7 +109,7 @@
     &_before,
     &_after {
         position: absolute;
-        top: unit( 7px / @btn-font-size, em );
+        top: unit( 8px / @btn-font-size, em );
         cursor: pointer;
         font-size: unit( @btn-font-size / @base-font-size-px, em );
     }
@@ -120,6 +120,10 @@
 
     &_after {
         right: unit( 14px / @btn-font-size, em );
+
+        .respond-to-min( @bp-sm-min, {
+            display: none;
+        } );
     }
 
     &.input__super {

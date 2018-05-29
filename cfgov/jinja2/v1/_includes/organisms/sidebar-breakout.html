@@ -74,9 +74,9 @@
                                 <div class="o-sidebar-breakout_text-container">
                                 {% if blocks.heading.value %}
                                     <h4 class="o-sidebar-breakout_text-heading">
-                                        <span class="cf-icon
-                                                     cf-icon-{{ blocks.icon.render()
-                                                                if blocks.icon is defined else '' }}"></span>
+                                        {% if blocks.icon %}
+                                            {{ svg_icon(blocks.icon) }}
+                                        {% endif %}
                                         {{ blocks.heading.render() }}
                                     </h4>
                                 {% endif %}

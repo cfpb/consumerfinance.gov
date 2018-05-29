@@ -16,8 +16,10 @@
    ========================================================================== #}
 
 <div class="m-contact m-contact-email" data-qa-hook="contact-email">
-    <span class="cf-icon cf-icon-email"></span>
-    <span class="h5">Email</span>
+    <span class="h5">
+        {{ svg_icon('email') }}
+        Email
+    </span>
     <p>
         {% for email in value.emails %}
             <a href="mailto:{{ email.url }}">

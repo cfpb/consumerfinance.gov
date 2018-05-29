@@ -258,9 +258,9 @@ describe( 'FlyoutMenu', () => {
       const transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
-      expect( flyoutMenu.getTransition() ).toEqual( transition );
+      expect( flyoutMenu.getTransition() ).toStrictEqual( transition );
       expect( flyoutMenu.getTransition( FlyoutMenu.COLLAPSE_TYPE ) )
-        .toEqual( transition );
+        .toStrictEqual( transition );
     } );
   } );
 
@@ -283,10 +283,10 @@ describe( 'FlyoutMenu', () => {
     it( 'should return references to full dom', () => {
       flyoutMenu.init();
       const dom = flyoutMenu.getDom();
-      expect( dom.container ).toEqual( containerDom );
-      expect( dom.trigger ).toEqual( triggerDom );
-      expect( dom.content ).toEqual( contentDom );
-      expect( dom.altTrigger ).toEqual( altTriggerDom );
+      expect( dom.container ).toStrictEqual( containerDom );
+      expect( dom.trigger ).toStrictEqual( triggerDom );
+      expect( dom.content ).toStrictEqual( contentDom );
+      expect( dom.altTrigger ).toStrictEqual( altTriggerDom );
     } );
   } );
 

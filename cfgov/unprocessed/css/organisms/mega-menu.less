@@ -196,6 +196,10 @@ body {
         &-overview {
             display: block;
             border-bottom: 1px solid @gray-40;
+
+            .u-link__disabled {
+                color: @gray !important;
+            }
         }
 
         &-link,
@@ -214,6 +218,11 @@ body {
     &_footer {
         border-top: 1px solid @gray-40;
         padding: @grid_gutter-width / 2 0;
+
+        a {
+            // Override "nav a" style in Capital Framework cf-core.
+            border-bottom-width: 1px;
+        }
     }
 
 

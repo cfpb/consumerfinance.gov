@@ -40,4 +40,5 @@ unipath>=1.1,<=2.0
 wagtail-flags==2.0.8
 wagtail-inventory==0.4.2
 wagtail-sharing==0.6.1
+wagtail-treemodeladmin==1.0.2
 Wand==0.4.2

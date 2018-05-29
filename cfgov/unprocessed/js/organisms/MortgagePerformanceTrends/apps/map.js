@@ -146,10 +146,10 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   const currId = state.geo.id;
   let zoomLevel;
   if ( !utils.isDateValid( state.date, this.endDate ) ) {
-    utils.showEl( this.$notification );
+    this.$notification.classList.add( 'm-notification__visible' );
     return;
   }
-  utils.hideEl( this.$notification );
+  this.$notification.classList.remove( 'm-notification__visible' );
   if ( prevId && prevId !== currId ) {
     this.chart.highchart.chart.get( prevId ).select( false );
   }

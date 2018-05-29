@@ -48,7 +48,7 @@ describe( 'Analytics', () => {
       expect( Analytics.tagManagerIsLoaded === false ).toBe( true );
       window['google_tag_manager'] = mockGTMObject;
       expect( Analytics.tagManagerIsLoaded === true ).toBe( true );
-      expect( window.google_tag_manager ).toEqual( mockGTMObject );
+      expect( window.google_tag_manager ).toStrictEqual( mockGTMObject );
     } );
   } );
 
@@ -64,7 +64,7 @@ describe( 'Analytics', () => {
       Analytics.init();
       Analytics.sendEvent( getDataLayerOptions( action, label ) );
       expect( window.dataLayer.length === 1 ).toBe( true );
-      expect( window.dataLayer[0] ).toEqual( options );
+      expect( window.dataLayer[0] ).toStrictEqual( options );
     } );
 
     it( 'shouldn\'t add objects to the dataLayer Array if GTM is undefined',

@@ -51,22 +51,22 @@ describe( 'Mortgage Performance utilities', () => {
 
   it( 'should get metro data', () => {
     const cb = jest.fn();
-    expect( utils.getMetroData( cb ) ).toEqual( { mock: 'data' } );
+    expect( utils.getMetroData( cb ) ).toStrictEqual( { mock: 'data' } );
   } );
 
   it( 'should get non-metro data', () => {
     const cb = jest.fn();
-    expect( utils.getNonMetroData( cb ) ).toEqual( { mock: 'data' } );
+    expect( utils.getNonMetroData( cb ) ).toStrictEqual( { mock: 'data' } );
   } );
 
   it( 'should get county data', () => {
     const cb = jest.fn();
-    expect( utils.getCountyData( cb ) ).toEqual( { mock: 'data' } );
+    expect( utils.getCountyData( cb ) ).toStrictEqual( { mock: 'data' } );
   } );
 
   it( 'should get state data', () => {
     const cb = jest.fn();
-    expect( utils.getStateData( cb ) ).toEqual( { mock: 'data' } );
+    expect( utils.getStateData( cb ) ).toStrictEqual( { mock: 'data' } );
   } );
 
   it( 'should be able to calculate zoom levels', () => {
