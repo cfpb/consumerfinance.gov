@@ -5,7 +5,7 @@
 
 // Theme variables
 
-@base-font-size-px:           @16px;
+@base-font-size-px:           16px;
 
 // Color variables
 
@@ -41,9 +41,12 @@
       position: absolute;
       top: @notification-padding__px;
       left: @notification-padding__px;
-      font-size: unit( 18px / 16px, em );
       float: left;
+      height: 1.1875em;
+      max-width: 1em;
       fill: @notification-icon;
+      font-size: unit( 18px / @base-font-size-px, em );
+      vertical-align: text-top;
    }
 
    &__success {
@@ -84,6 +87,7 @@
 
    &_message {
      margin-bottom: 0;
+     margin-top: 0;
    }
 
    &_explanation {

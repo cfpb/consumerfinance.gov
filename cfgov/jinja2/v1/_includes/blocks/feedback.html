@@ -14,24 +14,23 @@
                 block__border
                 block__padded-top
             {% endif %}">
-  <form class="o-form"
-      method="post"
-      action="."
-      novalidate>
     <div class="u-mb15">
         {% if get_messages(request) %}
-            {% for message in get_messages(request) %}
-                {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
-            {% endfor %}
+        {% for message in get_messages(request) %}
+            {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
+        {% endfor %}
         {% else %}
             {{ notification.render('success', false, '') }}
         {% endif %}
     </div>
-
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-    <input type="hidden" name="form_id" value="{{ form_id }}">
-    <input type="hidden" name="referrer" value="{{ settings.referrer }}">
-    <input type="hidden" name="language" value="{{ page.language }}">
+    <form class="o-form"
+          method="post"
+          action="."
+          novalidate>
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <input type="hidden" name="form_id" value="{{ form_id }}">
+        <input type="hidden" name="referrer" value="{{ settings.referrer }}">
+        <input type="hidden" name="language" value="{{ page.language }}">
 
     {% if value.was_it_helpful_text %}
     <div class="o-form_group">
@@ -185,7 +184,6 @@
             <p>{{ value.contact_advisory }}</p>
         </div>
     </div>
-
     {% endif %}
 
     <button class="a-btn" type="submit">{{ value.button_text }}</button>
