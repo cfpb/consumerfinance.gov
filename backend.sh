@@ -12,7 +12,7 @@ set -e
 # Confirm environment.
 init() {
   # Set default command-line environment flag, if user didn't supply one.
-  cli_flag=$2
+  cli_flag=$1
 
   # Warn if unsupported command-line flag was used.
   if [ "$cli_flag" != "development" ] &&

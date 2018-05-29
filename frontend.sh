@@ -13,7 +13,7 @@ set -e
 init() {
   # Set NODE_ENV variable.
   # Set default command-line environment flag, if user didn't supply one.
-  NODE_ENV=$2
+  NODE_ENV=$1
 
   # Warn if unsupported command-line flag was used.
   if [ "$NODE_ENV" != "development" ] &&
