@@ -100,14 +100,6 @@ clean_and_install() {
 build() {
   echo "Building project…"
   gulp build
-
-  if [ "$cli_flag" = "production" ]; then
-    echo "Running additional build steps for on-demand and Nemo assets."
-    gulp scripts:ondemand
-    gulp styles:ondemand
-    gulp scripts:nemo
-    gulp styles:nemo
-  fi
 }
 
 # Execute requested (or all) functions.
