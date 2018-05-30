@@ -96,9 +96,9 @@ class ParagraphParsingTestCase(unittest.TestCase):
     test_paragraph_xml_path = (
         "{}/test_graphs_with_multi_ids.xml".format(fixtures_dir))
     with open(test_paragraph_xml_path, 'r') as f:
-        test_xml = f.read().decode('utf-8')
+        test_xml = f.read()
     with open(expected_graph_path, 'r') as f:
-        expected_graphs = f.read().decode('utf-8')
+        expected_graphs = f.read()
 
     def test_multi_id_paragraph_parsing(self):
         soup = bS(self.test_xml, 'lxml-xml')
