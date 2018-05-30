@@ -43,7 +43,7 @@
                 'replaces four disclosure forms with two new ones. ' +
                 'We have resources to help you comply.',
     }
-    
+
 } %}
 
 {% set consumer_tools_content = {
@@ -200,9 +200,25 @@
     'footer': {
         'type': 'footer',
         'value': {
-            'content': 
-                '<p>Browse answers to hundreds of financial questions. <a href="/ask-cfpb/">Ask CFPB</a></p>
-                <p>Have an issue with a financial product? <a href="/complaint/">Submit a complaint</a></p>',
+            'content':
+                '<p>
+                    <span aria-hidden="true">
+                        Browse answers to hundreds of financial questions.
+                    </span>
+                    <a aria-label="Browse answers to hundreds of financial questions with Ask CFPB."
+                       href="/ask-cfpb/">
+                       Ask CFPB
+                    </a>
+                </p>
+                <p>
+                    <span aria-hidden="true">
+                        Have an issue with a financial product?
+                    </span>
+                    <a aria-label="Have an issue with a financial product? Submit a complaint."
+                       href="/complaint/">
+                       Submit a complaint
+                    </a>
+                </p>',
         }
     },
     'nav_groups': [
@@ -366,7 +382,7 @@
                 }},
           ]
       }
-    
+
   } %}
   {% set data_research_group_three = {
       'type': 'nav_group',
@@ -508,7 +524,7 @@
                     'external_link': '/policy-compliance/guidance/'
                 },
                 'nav_groups': [{
-                    'value': { 
+                    'value': {
                         'nav_items': [
                             {'link':{
                                 'link_text': 'Implementation & Guidance',
@@ -691,7 +707,7 @@
                         ]
                     }
                 }]
-        
+
             },
             {'link':{
                 'link_text': 'Doing Business With Us',
