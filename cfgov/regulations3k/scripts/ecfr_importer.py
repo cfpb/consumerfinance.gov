@@ -218,6 +218,7 @@ def multiple_id_test(ids):
       (lowercase)(1) - and the lowercase cannot be a roman_numeral increment
       (digit)(i)
       (roman)(A)
+      (uppercase)(1)
     """
     if len(ids) < 2:
         return
