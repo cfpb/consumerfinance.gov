@@ -22,7 +22,6 @@ from regulations3k.scripts.roman import roman_to_int
 # - insert interp refs
 # ODDITIES TO HANDLE
 # tables
-# dash-forms (forms with dash-extended entry fields)
 # gif graphics
 # pdf graphics
 
@@ -128,17 +127,37 @@ def parse_subparts(part_soup, subpart_list, part):
             parse_sections(subpart_sections, part, _subpart)
 
 
-def italic_to_bold(soup):
-    """Replace initial italics clauses with markdown-style bolding"""
+def process_italics(soup):
+    """
+    Convert initial italics-tagged text to markdown bold
+    and convert the rest to markdown italics.
+    """
     if soup.find('I'):
         ital_content = soup.find('I').text
         soup.find('I').replaceWith('**{}**'.format(ital_content))
+    remaining_italics = soup.find_all('I')
+    if remaining_italics:
+        for element in remaining_italics:
+            i_content = element.text
+            element.replaceWith('*{}*'.format(i_content))
     return soup
 
 
+def bold_first_italics(graph):
+    """For a newly broken-up graph, convert the first italics text to bold."""
+    if graph.count('*') > 1:
+        return graph.replace('*', '**', 2)
+    else:
+        return graph
+
+
 def combine_bolds(graph):
+    """
+    Make ID marker bold and remove redundant bold markup between bold elements.
+    """
     if graph.startswith('('):
         graph = graph.replace(
+            '  ', ' ').replace(
             '(', '**(', 1).replace(
             ')', ')**', 1).replace(
             '** **', ' ', 1)
@@ -171,7 +190,7 @@ def parse_multi_id_graph(graph, ids):
     split1 = graph.partition('({})'.format(ids[1]))
     text1 = combine_bolds(split1[0])
     pid2_marker = split1[1]
-    remainder = split1[2]
+    remainder = bold_first_italics(split1[2])
     new_graphs += "\n{" + pid1 + "}\n"
     new_graphs += text1 + '\n'
     LEVEL_STATE.next_token = ids[1]
@@ -184,7 +203,7 @@ def parse_multi_id_graph(graph, ids):
     else:
         split2 = remainder.partition('({})'.format(ids[2]))
         pid3_marker = split2[1]
-        remainder2 = split2[2]
+        remainder2 = bold_first_italics(split2[2])
         text2 = combine_bolds(" ".join([pid2_marker, split2[0]]))
         new_graphs += text2 + '\n'
         LEVEL_STATE.next_token = ids[2]
@@ -258,7 +277,7 @@ def parse_ids(graph):
 def parse_section_paragraphs(paragraph_soup):
     paragraph_content = ''
     for p in paragraph_soup:
-        p = italic_to_bold(p)
+        p = process_italics(p)
         graph = p.text
         paragraph_content += parse_ids(graph)
     return paragraph_content
