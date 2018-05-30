@@ -36,6 +36,9 @@ class IdLevelState(object):
     def current_token(self):
         return self.current_id.split('-')[-1]
 
+    def root_token(self):
+        return self.current_id.split('-')[0]
+
     def surf(self):
         tokens = self.current_id.split('-')
         tokens[-1] = self.next_token
@@ -64,6 +67,8 @@ class IdLevelState(object):
         For instance 'v' is a valid Roman numeral. But unless the
         current Roman evaluates to 4, the 'v' must be a level-1 alpha marker.
         """
+        if not token:
+            return False
         for each in [token, next_token]:
             if not roman_to_int(each):
                 return False
@@ -94,7 +99,7 @@ class IdLevelState(object):
         if self.level() == 3:  # roman level: a-1-i
             if _next == 'A':
                 return self.dive()
-            elif self.roman_surf_test(self.current_token(), _next):
+            if self.roman_surf_test(self.current_token(), _next):
                 return self.surf()
             elif _next.isdigit():
                 return self.rise(1)
@@ -152,8 +157,8 @@ class IdLevelState(object):
 title_pattern = re.compile(r'PART ([^\-]+) \- ([^\(]+) \(?([^\)]+)?')
 
 paren_id_patterns = {
-    'any': r'\(([^\)]{1,5})\)[^\(]+',
-    'initial': r'\(([^\)]{1,5})\)',
+    'any': r'\(([^\)]{1,7})\)[^\(]+',
+    'initial': r'\(([^\)]{1,7})\)',
     'level_1_multiple': r'\((?P<ID1>[a-z]{1,2})\)(?P<phrase1>[^\(]+)\((?P<ID2>1)\)(?P<phrase2>[^\(]+)\((?P<ID3>i)\)?(?P<remainder>[^\n]+)',  # noqa: E501
     'lower': r'\(([a-z]{1,2})\)',
     'digit': r'\((\d{1,2})\)',

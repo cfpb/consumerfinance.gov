@@ -127,7 +127,7 @@ def parse_subparts(part_soup, subpart_list, part):
             parse_sections(subpart_sections, part, _subpart)
 
 
-def process_italics(soup):
+def pre_process_tags(soup):
     """
     Convert initial italics-tagged text to markdown bold
     and convert the rest to markdown italics.
@@ -135,11 +135,9 @@ def process_italics(soup):
     if soup.find('I'):
         ital_content = soup.find('I').text
         soup.find('I').replaceWith('**{}**'.format(ital_content))
-    remaining_italics = soup.find_all('I')
-    if remaining_italics:
-        for element in remaining_italics:
-            i_content = element.text
-            element.replaceWith('*{}*'.format(i_content))
+    for element in soup.find_all('I'):
+        i_content = element.text
+        element.replaceWith('*{}*'.format(i_content))
     return soup
 
 
@@ -164,19 +162,40 @@ def combine_bolds(graph):
     return graph
 
 
+def graph_top(graph):
+    "Weed out the common sources of errant IDs"
+    return graph.partition(
+        'paragraph')[0].partition(
+        '12 CFR')[0].partition(
+        '\xa7')[0][:200]
+
+
 def parse_singleton_graph(graph):
     """Take a graph with a single ID and return styled with a braced ID"""
     new_graph = ''
-    id_match = re.search(paren_id_patterns['initial'], graph)
+    id_match = re.search(paren_id_patterns['initial'], graph_top(graph))
     if not id_match:
-        return combine_bolds(graph)
-    else:
-        id_token = id_match.group(1).strip('*')
+        return '\n' + combine_bolds(graph) + '\n'
+    id_token = id_match.group(1).strip('*')
+    if not token_validity_test(id_token):
+        return '\n' + combine_bolds(graph) + '\n'
     LEVEL_STATE.next_token = id_token
     pid = LEVEL_STATE.next_id()
     new_graph += "\n{" + pid + "}\n"
-    new_graph += combine_bolds(graph)
+    new_graph += combine_bolds(graph) + '\n'
     return new_graph
+
+
+def token_validity_test(token):
+    "Make sure a singleton token is some kind of valid ID."
+    if (
+            token.isdigit()
+            or roman_to_int(token)
+            or (token.isalpha() and len(token) == 1)
+            or (token.isalpha() and len(token) == 2 and token[0] == token[1])):
+        return True
+    else:
+        return False
 
 
 def parse_multi_id_graph(graph, ids):
@@ -242,7 +261,8 @@ def multiple_id_test(ids):
     if len(ids) < 2:
         return
     root_token = ids[0]
-    if (root_token.islower()
+    # levels 1 or 4
+    if (root_token.isalpha()
             and len(root_token) < 3
             and not roman_test(root_token)
             and ids[1] == '1'):
@@ -250,13 +270,19 @@ def multiple_id_test(ids):
         if len(ids) == 3 and ids[2] == 'i':
             good_ids = 3
         return ids[:good_ids]
-    if root_token.isdigit():
-        if ids[1] in ['i', 'A']:
-            return ids[:2]
+    # levels 2 or 5
+    if root_token.isdigit() and ids[1] == 'i':
+        good_ids = 2
+        if len(ids) == 3 and ids[2] == 'A' and LEVEL_STATE.level() != 5:
+            good_ids = 3
+        return ids[:good_ids]
+    # level 3
     if roman_to_int(root_token) and ids[1] == 'A':
-        return ids[:2]
-    if root_token.isupper() and ids[1] == '1':
-        return ids[:2]
+        good_ids = 2
+        if len(ids) == 3 and ids[2] == '1':
+            good_ids = 3
+        return ids[:good_ids]
+    # multiples not allowed at level 6
 
 
 def parse_ids(graph):
@@ -265,10 +291,14 @@ def parse_ids(graph):
     from a paragraph, and return a paragraph for each ID found.
     """
     raw_ids = re.findall(
-        paren_id_patterns['initial'], graph)
-    ids = [bit.strip('*') for bit in raw_ids if bit][:3]
-    valid_ids = multiple_id_test(ids)
-    if not valid_ids:
+        paren_id_patterns['initial'], graph_top(graph))
+    clean_ids = [bit.strip('*') for bit in raw_ids if bit][:3]
+    for clean_id in clean_ids:
+        #  clean up edge-case bolding caused by italicized IDs, such as
+        #  '(F)(<I>1</I>)' from reg 1026.7
+        graph = graph.replace("**{}**".format(clean_id), clean_id)
+    valid_ids = multiple_id_test(clean_ids)
+    if not valid_ids or LEVEL_STATE.level() == 6:
         return parse_singleton_graph(graph)
     else:
         return parse_multi_id_graph(graph, valid_ids)
@@ -277,8 +307,8 @@ def parse_ids(graph):
 def parse_section_paragraphs(paragraph_soup):
     paragraph_content = ''
     for p in paragraph_soup:
-        p = process_italics(p)
-        graph = p.text
+        p = pre_process_tags(p)
+        graph = p.text.replace('\n', '')
         paragraph_content += parse_ids(graph)
     return paragraph_content
 
