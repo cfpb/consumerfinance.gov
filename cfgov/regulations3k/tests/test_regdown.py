@@ -184,6 +184,40 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         self.assertIn('<th>First Header</th>', regdown(text))
         self.assertIn('<td>Content Cell</td>', regdown(text))
 
+    def test_no_underscore_emphasis(self):
+        self.assertIn('<em>foo</em>', regdown('*foo*'))
+        self.assertIn('<strong>foo</strong>', regdown('**foo**'))
+        self.assertIn('<strong><em>foo</em></strong>', regdown('***foo***'))
+        self.assertNotIn('<em>foo</em>', regdown('_foo_'))
+        self.assertNotIn('<strong>foo</strong>', regdown('__foo__'))
+        self.assertNotIn('<strong><em>foo</em></strong>', regdown('___foo___'))
+
+    def test_pseudo_form_field_end_of_line(self):
+        text = 'Form field: ___'
+        self.assertIn('Form field: '
+                      '<span class="regdown-form-extend">___</span>',
+                      regdown(text))
+
+    def test_pseudo_form_field_start_of_line(self):
+        text = '__Form Field'
+        self.assertIn('<span class="regdown-form">__</span>Form Field',
+                      regdown(text))
+
+    def test_pseudo_form_field_inside_line(self):
+        text = 'inline______fields______within paragraph'
+        self.assertIn(
+            'inline<span class="regdown-form">______</span>'
+            'fields<span class="regdown-form">______</span>'
+            'within paragraph',
+            regdown(text)
+        )
+
+    def test_pseudo_form_field_number_of_underscores(self):
+        self.assertIn('<span class="regdown-form-extend">__</span>',
+                      regdown('Field: __'))
+        self.assertIn('<span class="regdown-form-extend">_______</span>',
+                      regdown('Field: _______'))
+
 
 class RegdownUtilsTestCase(unittest.TestCase):
 
