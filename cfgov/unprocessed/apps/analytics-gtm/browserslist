@@ -8,3 +8,4 @@
 
 > 0.5% in my stats # Sets a threshold to cut off extreme edge case browsers.
 > 5% in US         # Sets a threshold for possible future users.
+Explorer >= 9      # Explicitly sets IE9 and above support.
