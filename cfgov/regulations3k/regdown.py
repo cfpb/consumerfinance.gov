@@ -80,7 +80,7 @@ STRONG_EM_RE = r'(\*)\2{2}(.+?)\2{2}(.*?)\2'
 # Form field: __
 # __Form Field
 # inline__fields__
-PSEUDO_FORM_RE = r'(?P<underscores>_{2,50})'
+PSEUDO_FORM_RE = r'(?P<underscores>_{2,50})(?P<line-ending>\s*$)?'
 
 
 class RegulationsExtension(Extension):
@@ -106,8 +106,8 @@ class RegulationsExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         md.registerExtension(self)
 
-        # Add inline pseudo form pattern. Replaace all inlinePatterns that
-        # include an underscore with emphasis patterns without underscores.
+        # Add inline pseudo form pattern. Replace all inlinePatterns that
+        # include an underscore with patterns that do not include underscores.
         md.inlinePatterns['em_strong'] = DoubleTagPattern(
             EM_STRONG_RE, 'strong,em'
         )
@@ -150,7 +150,10 @@ class PseudoFormPattern(Pattern):
 
     def handleMatch(self, m):
         el = util.etree.Element('span')
-        el.set('class', 'pseudo-form')
+        if m.group('line-ending') is not None:
+            el.set('class', 'regdown-form-extend')
+        else:
+            el.set('class', 'regdown-form')
         el.text = m.group('underscores')
         return el
 

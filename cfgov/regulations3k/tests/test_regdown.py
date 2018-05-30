@@ -194,27 +194,28 @@ class RegulationsExtensionTestCase(unittest.TestCase):
 
     def test_pseudo_form_field_end_of_line(self):
         text = 'Form field: ___'
-        self.assertIn('Form field: <span class="pseudo-form">___</span>',
+        self.assertIn('Form field: '
+                      '<span class="regdown-form-extend">___</span>',
                       regdown(text))
 
     def test_pseudo_form_field_start_of_line(self):
         text = '__Form Field'
-        self.assertIn('<span class="pseudo-form">__</span>Form Field',
+        self.assertIn('<span class="regdown-form">__</span>Form Field',
                       regdown(text))
 
     def test_pseudo_form_field_inside_line(self):
         text = 'inline______fields______within paragraph'
         self.assertIn(
-            'inline<span class="pseudo-form">______</span>'
-            'fields<span class="pseudo-form">______</span>'
+            'inline<span class="regdown-form">______</span>'
+            'fields<span class="regdown-form">______</span>'
             'within paragraph',
             regdown(text)
         )
 
     def test_pseudo_form_field_number_of_underscores(self):
-        self.assertIn('<span class="pseudo-form">__</span>',
+        self.assertIn('<span class="regdown-form-extend">__</span>',
                       regdown('Field: __'))
-        self.assertIn('<span class="pseudo-form">_______</span>',
+        self.assertIn('<span class="regdown-form-extend">_______</span>',
                       regdown('Field: _______'))
 
 
