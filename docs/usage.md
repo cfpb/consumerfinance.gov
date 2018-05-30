@@ -40,7 +40,7 @@ The `NODE_ENV` environment variable can be set in your `.env` file to either
 `development` or `production`, which will affect how the build is made and what
 gulp tasks are available. To install dependencies of one environment
 or the other run `./frontend.sh` (dependencies and devDependencies)
-or `./frontend.sh production` (non-devDependencies).
+or `./frontend.sh production` (dependencies but not devDependencies).
 
 ### 2. Run Elasticsearch
 
