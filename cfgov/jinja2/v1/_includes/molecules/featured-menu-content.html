@@ -28,8 +28,11 @@
 {% macro render( value ) %}
 {% if value.image and value.image.upload %}
     {% set featured_image = image(value.image.upload, 'width-270') %}
+    {% set img_src = featured_image.url if featured_image.url else '' %}
 {% else %}
     {% set featured_image = value.image %}
+    {% set img_src = static(featured_image.url) if featured_image.url else '' %}
+
 {% endif %}
 {% if value.link %}
     {% set link = value.link %}
@@ -39,8 +42,8 @@
 
 <aside class="m-featured-menu-content">
     <a class="m-featured-menu-content_link" href="{{ link_url }}">
-        {% if featured_image and featured_image.url %}
-        <img src="{{ featured_image.url }}"
+        {% if img_src %}
+        <img src="{{ img_src }}"
              alt=""
              height="150"
              width="270">
