@@ -80,7 +80,7 @@ STRONG_EM_RE = r'(\*)\2{2}(.+?)\2{2}(.*?)\2'
 # Form field: __
 # __Form Field
 # inline__fields__
-PSEUDO_FORM_RE = r'(?P<underscores>_{2,50})(?P<line-ending>\s*$)?'
+PSEUDO_FORM_RE = r'(?P<underscores>_{2,50})(?P<line_ending>\s*$)?'
 
 
 class RegulationsExtension(Extension):
@@ -150,7 +150,7 @@ class PseudoFormPattern(Pattern):
 
     def handleMatch(self, m):
         el = util.etree.Element('span')
-        if m.group('line-ending') is not None:
+        if m.group('line_ending') is not None:
             el.set('class', 'regdown-form-extend')
         else:
             el.set('class', 'regdown-form')
