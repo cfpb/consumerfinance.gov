@@ -8,6 +8,7 @@ from django.http import HttpRequest  # Http404, HttpResponse
 from django.test import TestCase as DjangoTestCase
 
 from model_mommy import mommy
+
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart, sortable_label
 )
