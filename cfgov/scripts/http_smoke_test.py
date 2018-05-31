@@ -86,7 +86,7 @@ FULL_RUN = [
     '/data-research/cfpb-research-conference/',
     '/data-research/consumer-complaints/',
     '/data-research/hmda/',
-    '/data-research/hmda/for-filers', # This URL 404s if it has a trailing slash
+    '/data-research/hmda/for-filers',
     '/data-research/consumer-credit-trends/',
     '/data-research/credit-card-data/',
     '/data-research/cfpb-researchers/',
@@ -99,7 +99,7 @@ FULL_RUN = [
     '/policy-compliance/amicus/',
     '/policy-compliance/guidance/implementation-guidance/hmda-implementation/',
     '/policy-compliance/guidance/implementation-guidance/mortserv/',
-    '/policy-compliance/guidance/implementation-guidance/tila-respa-disclosure-rule/',
+    '/policy-compliance/guidance/implementation-guidance/tila-respa-disclosure-rule/',  # noqa: E501
     '/about-us/',
     '/about-us/the-bureau/',
     '/about-us/budget-strategy/',
@@ -115,7 +115,7 @@ FULL_RUN = [
     '/about-us/project-catalyst/',
     '/about-us/contact-us/',
     '/eregulations/',
-    '/eregulations/1026', # This URL 404s if it has a trailing slash
+    '/eregulations/1026',
 ]
 
 # TODO: Document the logic for what gets included/excluded in short-run tests
