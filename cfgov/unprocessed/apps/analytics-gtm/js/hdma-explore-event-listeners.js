@@ -47,6 +47,11 @@ const HMDAAnalytics = ( function() {
   for ( let i = 0, len = divFilterEls.length; i < len; i++ ) {
     divFilterEls[i].addEventListener( 'click', _handleDivFilterClick );
   }
+
+  /**
+   * Handle clicks on filter divs.
+   * @param       {MouseEvent} evt - Event object.
+   */
   function _handleDivFilterClick( evt ) {
     const target = evt.target;
     let action = 'Filter Expandable Opened';
@@ -58,8 +63,16 @@ const HMDAAnalytics = ( function() {
   }
 
   // Chosen menu selections for Summary Table Variables
-  const selectChznSingleEl = document.querySelector( 'select.chzn-single' );
-  selectChznSingleEl.addEventListener( 'change', function( evt ) {
+  const selectChznSingleEls = document.querySelectorAll( 'select.chzn-single' );
+  for ( let j = 0, len = selectChznSingleEls.length; j < len; j++ ) {
+    selectChznSingleEls[j].addEventListener( 'change', _handleSelectChange );
+  }
+
+  /**
+   * Handle select menu changes.
+   * @param {Event} evt - Event object.
+   */
+  function _handleSelectChange( evt ) {
     const target = evt.target;
     const label = target.parentNode.querySelector( '.chzn-container a.chzn-single' ).textContent;
     const parent = closest( target, 'div' );
@@ -67,7 +80,7 @@ const HMDAAnalytics = ( function() {
     const n = divs.indexOf( parent ) + 1;
     const action = 'Variable Dropdown Menu #' + n;
     track( 'HMDA Explore Interactions', action, label );
-  } );
+  };
 
   // Chosen menu selections for Year filter
   const selectAsOfYearDelay = new Delay();
