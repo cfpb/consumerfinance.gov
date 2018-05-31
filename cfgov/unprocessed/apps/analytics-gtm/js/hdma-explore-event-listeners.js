@@ -63,9 +63,9 @@ const HMDAAnalytics = ( function() {
   }
 
   // Chosen menu selections for Summary Table Variables
-  const selectChznSingleEls = document.querySelectorAll( 'select.chzn-single' );
+  const selectChznSingleEls = document.querySelectorAll( 'select.chzn-single + .chzn-container' );
   for ( let j = 0, len = selectChznSingleEls.length; j < len; j++ ) {
-    selectChznSingleEls[j].addEventListener( 'change', _handleSelectChange );
+    selectChznSingleEls[j].addEventListener( 'mouseup', _handleSelectChange );
   }
 
   /**
@@ -73,20 +73,43 @@ const HMDAAnalytics = ( function() {
    * @param {Event} evt - Event object.
    */
   function _handleSelectChange( evt ) {
-    const target = evt.target;
-    const label = target.parentNode.querySelector( '.chzn-container a.chzn-single' ).textContent;
-    const parent = closest( target, 'div' );
-    const divs = document.querySelectorAll( '.drop-downs > div' );
-    const n = divs.indexOf( parent ) + 1;
+    const target = evt.currentTarget;
+
+    // If the drop-down isn't closed, we're still selecting an item.
+    if ( target.classList.contains( 'chzn-with-drop' ) ) {
+      return;
+    }
+
+    const label = target.querySelector( 'a.chzn-single' ).textContent;
+
+    // Find the number of this drop-down.
+    const id = target.id;
+    let n;
+    if ( id === 'calculate_by_chzn' ) {
+      n = 4
+    } else {
+      // This relies on the div's id in format variable[n]_chzn.
+      n = Number( target.id.substr(-6, 1) ) + 1;
+    }
+
     const action = 'Variable Dropdown Menu #' + n;
     track( 'HMDA Explore Interactions', action, label );
   };
 
   // Chosen menu selections for Year filter
   const selectAsOfYearDelay = new Delay();
-  const selectAsOfYear = document.querySelector( 'select#as_of_year' );
-  selectAsOfYear.addEventListener( 'change', function( evt ) {
-    const lastItem = document.querySelector( '#as_of_year_chzn .search-choice:last' );
+  const selectAsOfYear = document.querySelector( 'div#as_of_year_chzn' );
+  selectAsOfYear.addEventListener( 'mouseup', function( evt ) {
+    const target = evt.currentTarget;
+    const nodes = target.querySelectorAll( '.search-choice' );
+
+    // If the drop-down isn't closed, we're still selecting an item.
+    if ( target.classList.contains( 'chzn-with-drop' ) ||
+         nodes.length === 0 ) {
+      return;
+    }
+
+    const lastItem = nodes[nodes.length- 1];
     const label = lastItem.textContent;
     selectAsOfYearDelay( () => {
       track( 'HMDA Explore Interactions', 'Year Dropdown', label );
@@ -94,10 +117,15 @@ const HMDAAnalytics = ( function() {
   } );
 
   // Chosen menu selections for suggested filters
-  const selectSuggestedEl = document.querySelector( 'select#suggested' );
-  selectSuggestedEl.addEventListener( 'change', function( evt ) {
-    const target = evt.target;
-    const label = target.value;
+  const selectSuggestedEl = document.querySelector( '#suggested_chzn' );
+  selectSuggestedEl.addEventListener( 'mouseup', function( evt ) {
+
+    // If the drop-down isn't closed, we're still selecting an item.
+    if ( target.classList.contains( 'chzn-with-drop' ) ) {
+      return;
+    }
+
+    const label = target.querySelector( 'a.chzn-single' ).textContent;
     track( 'HMDA Explore Interactions', 'Suggested Dropdown', label );
   } );
 
