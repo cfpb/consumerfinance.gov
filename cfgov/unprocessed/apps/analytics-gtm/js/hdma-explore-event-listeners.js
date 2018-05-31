@@ -51,15 +51,15 @@ const HMDAAnalytics = ( function() {
     const id = target.id;
     let n;
     if ( id === 'calculate_by_chzn' ) {
-      n = 4
+      n = 4;
     } else {
       // This relies on the div's id in format variable[n]_chzn.
-      n = Number( target.id.substr(-6, 1) ) + 1;
+      n = Number( target.id.substr( -6, 1 ) ) + 1;
     }
 
     const action = 'Variable Dropdown Menu #' + n;
     track( 'HMDA Explore Interactions', action, label );
-  };
+  }
 
   // Chosen menu selections for Year filter
   const selectAsOfYearDelay = new Delay();
@@ -74,7 +74,7 @@ const HMDAAnalytics = ( function() {
       return;
     }
 
-    const lastItem = nodes[nodes.length- 1];
+    const lastItem = nodes[nodes.length - 1];
     const label = lastItem.textContent;
     selectAsOfYearDelay( () => {
       track( 'HMDA Explore Interactions', 'Year Dropdown', label );
