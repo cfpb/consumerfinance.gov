@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.5.0"
   },
   "dependencies": {
     "autoprefixer": "8.2.0",
@@ -55,6 +55,7 @@
     "lightbox2": "2.10.0",
     "lodash.throttle": "4.1.1",
     "postcss-unmq": "1.0.2",
+    "semver": "5.5.0",
     "svg-inline-loader": "0.8.0",
     "timelinejs": "2.35.6",
     "turbolinks": "5.1.1",
@@ -91,8 +92,9 @@
     "yargs": "11.0.0"
   },
   "scripts": {
-    "test": "snyk test",
-    "postinstall": "node scripts/npm/apps-install"
+    "postinstall": "node scripts/npm/apps-install",
+    "preinstall": "npm install semver && node scripts/npm/node-version-check",
+    "test": "snyk test"
   },
   "snyk": true
 }
