@@ -599,7 +599,7 @@ FLAGS = {
     # When enabled, include a recruitment code comment in the base template.
     'CFPB_RECRUITING': {},
 
-    # When enabled, display a "techical issues" banner on /complaintdatabase
+    # When enabled, display a "technical issues" banner on /complaintdatabase.
     'CCDB_TECHNICAL_ISSUES': {},
 
     # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)

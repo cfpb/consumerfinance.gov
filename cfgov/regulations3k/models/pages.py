@@ -15,13 +15,12 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 
-from regulations3k.models import Part, Section, sortable_label  # , Subpart
-from regulations3k.regdown import regdown
-from regulations3k.resolver import get_contents_resolver, get_url_resolver
-
 # Our RegDownTextField field doesn't generate a good widget yet
 # from regulations3k.models.fields import RegDownTextField
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
+from regulations3k.models import Part, Section, sortable_label  # , Subpart
+from regulations3k.regdown import regdown
+from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage, CFGOVPageManager
 
