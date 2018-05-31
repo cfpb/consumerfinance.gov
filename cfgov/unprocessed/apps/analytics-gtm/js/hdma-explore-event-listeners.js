@@ -3,41 +3,6 @@ import {
   track
 } from './util/analytics-util';
 
-/* Search for support of the matches() method by looking at
-   browser prefixes.
-   @param {HTMLNode} elem
-   The element to check for support of matches() method.
-   @returns {Function} The appropriate matches() method of elem. */
-function _getMatchesMethod( elem ) {
-  return elem.matches ||
-         elem.webkitMatchesSelector ||
-         elem.mozMatchesSelector ||
-         elem.msMatchesSelector;
-}
-
-/* Get the nearest parent node of an element.
-   @param {HTMLNode} elem - A DOM element.
-   @param {string} selector - CSS selector.
-   @returns {HTMLNode} Nearest parent node that matches the selector. */
-function closest( elem, selector ) {
-  elem = elem.parentNode;
-
-  const matchesSelector = _getMatchesMethod( elem );
-  let match;
-
-  while ( elem ) {
-    if ( matchesSelector.bind( elem )( selector ) ) {
-      match = elem;
-    } else {
-      elem = elem.parentElement;
-    }
-
-    if ( match ) { return elem; }
-  }
-
-  return null;
-}
-
 // HMDA Explore custom analytics file
 
 const HMDAAnalytics = ( function() {
@@ -50,7 +15,7 @@ const HMDAAnalytics = ( function() {
 
   /**
    * Handle clicks on filter divs.
-   * @param       {MouseEvent} evt - Event object.
+   * @param {MouseEvent} evt - Event object.
    */
   function _handleDivFilterClick( evt ) {
     const target = evt.target;
@@ -119,6 +84,7 @@ const HMDAAnalytics = ( function() {
   // Chosen menu selections for suggested filters
   const selectSuggestedEl = document.querySelector( '#suggested_chzn' );
   selectSuggestedEl.addEventListener( 'mouseup', function( evt ) {
+    const target = evt.currentTarget;
 
     // If the drop-down isn't closed, we're still selecting an item.
     if ( target.classList.contains( 'chzn-with-drop' ) ) {
