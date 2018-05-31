@@ -194,6 +194,7 @@ class RegModelTests(DjangoTestCase):
         self.assertIn('some contents', result)
 
     def test_section_ranges(self):
+        self.subpart.save()
         self.assertEqual(self.subpart_orphan.section_range, '')
         self.assertEqual(self.subpart_appendices.section_range, '')
         self.assertEqual(self.subpart_interps.section_range, '')
