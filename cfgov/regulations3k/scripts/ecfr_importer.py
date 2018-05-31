@@ -7,6 +7,7 @@ import sys
 
 import requests
 from bs4 import BeautifulSoup as bS
+
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart
 )
