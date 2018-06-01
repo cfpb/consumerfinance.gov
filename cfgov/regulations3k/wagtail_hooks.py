@@ -2,8 +2,9 @@ from __future__ import unicode_literals
 
 from wagtail.contrib.modeladmin.options import modeladmin_register
 
-from regulations3k.models import EffectiveVersion, Part, Section, Subpart
 from treemodeladmin.options import TreeModelAdmin
+
+from regulations3k.models import EffectiveVersion, Part, Section, Subpart
 
 
 class SectionModelAdmin(TreeModelAdmin):
@@ -24,6 +25,7 @@ class SubpartModelAdmin(TreeModelAdmin):
     menu_icon = 'list-ul'
     list_display = (
         'title',
+        'section_range'
     )
     child_field = 'sections'
     child_model_admin = SectionModelAdmin

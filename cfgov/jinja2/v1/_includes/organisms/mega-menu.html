@@ -24,7 +24,7 @@
 {%- macro _classes( nav_depth, suffix='', additional_suffix='' ) -%}
 {%- set general_class = base_class ~ '_content' -%}
 {%- set depth_class = general_class ~ '-' ~ nav_depth -%}
-{%- set additional_class = depth_class ~ '__' ~  additional_suffix if additional_suffix else '' -%}
+{%- set additional_class = depth_class ~ suffix ~ '__' ~  additional_suffix if additional_suffix else '' -%}
 
 {{ general_class ~ suffix ~ ' ' ~ depth_class ~ suffix ~ ' ' ~ additional_class }}
 {%- endmacro -%}

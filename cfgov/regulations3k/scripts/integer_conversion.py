@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import string
+
 
 def roman_to_int(roman):
     """
@@ -44,3 +46,34 @@ def int_to_roman(num):
         result.append(numerals[i] * count)
         num -= int_values[i] * count
     return ''.join(result)
+
+
+def alpha_to_int(alpha):
+    """
+    Return a letter's place in the alphabet, or None.
+    For double letters, return it's place in the double-letter alphabet,
+    which starts at 27.
+    """
+    letters = string.ascii_lowercase
+    if not isinstance(alpha, type('')):
+        return
+    if not (alpha.islower() or alpha.isupper()):
+        """Handle lowercase or uppercase double letters, but not a mix."""
+        return
+    alpha_map = {value: i + 1 for i, value in enumerate(letters)}
+    double_letters = ["{0}{0}".format(letter) for letter in letters]
+    double_range = list(range(27, 53))
+    double_map = dict(zip(double_letters, double_range))
+    alpha_map.update(double_map)
+    return alpha_map.get(alpha.lower(), None)
+
+
+def int_to_alpha(num):
+    """Return the lowercase letter(s) at a position in the alphabet, or None"""
+    letters = string.ascii_lowercase
+    int_map = {i + 1: value for i, value in enumerate(letters)}
+    double_letters = ["{0}{0}".format(letter) for letter in letters]
+    double_range = list(range(27, 53))
+    double_map = dict(zip(double_range, double_letters))
+    int_map.update(double_map)
+    return int_map.get(num, None)

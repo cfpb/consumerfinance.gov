@@ -1,6 +1,8 @@
+from __future__ import unicode_literals
+
 import re
 
-from regulations3k.scripts.roman import roman_to_int
+from regulations3k.scripts.integer_conversion import alpha_to_int, roman_to_int
 
 
 """
@@ -34,6 +36,9 @@ class IdLevelState(object):
     def current_token(self):
         return self.current_id.split('-')[-1]
 
+    def root_token(self):
+        return self.current_id.split('-')[0]
+
     def surf(self):
         tokens = self.current_id.split('-')
         tokens[-1] = self.next_token
@@ -47,61 +52,65 @@ class IdLevelState(object):
         return new_id
 
     def rise(self, levels_up):
-        tokens = self.current_id.split('-')[:-levels_up]
-        tokens[-1] = self.next_token
-        self.current_id = "-".join(tokens)
-        return self.current_id
+        new_level_tokens = self.current_id.split('-')[:-levels_up]
+        new_level_tokens[-1] = self.next_token
+        self.current_id = "-".join(new_level_tokens)
+        return "-".join(new_level_tokens)
 
-    def roman_surf_test(self):
+    def roman_surf_test(self, token, next_token):
         """
-        Surf test for Roman levels 3 and 6.
-        Only surf if the next token is both a valid roman numeral *and*
-        it's the next logical roman numeral.
-        For instance 'c' is a valid roman numeral, but we're probably not at
-        roman numeral level 99. It's more likely a rise to 'c' at level 1.
+        Determine whether a Roman token is the next logical Roman token.
 
-        TODO: Name one of these levels Etruscan.
+        This test is for Roman levels 3 or 6, and checks whether the next token
+        is both a Roman numeral and the next bigger Roman numeral.
+
+        For instance 'v' is a valid Roman numeral. But unless the
+        current Roman evaluates to 4, the 'v' must be a level-1 alpha marker.
         """
-        current_roman_int = roman_to_int(self.current_token())
-        if not current_roman_int:
+        if not token:
             return False
-        next_roman = current_roman_int + 1
-        if roman_to_int(self.next_token) == next_roman:
-            return True
-        else:
+        for each in [token, next_token]:
+            if not roman_to_int(each):
+                return False
+        return roman_to_int(next_token) == roman_to_int(token) + 1
+
+    def alpha_surf_test(self, token, next_token):
+        if not alpha_to_int(token):
             return False
+        """Determine whether an alpha token is the next logical alpha token"""
+        return alpha_to_int(next_token) == alpha_to_int(token) + 1
 
     def next_id(self):
         _next = self.next_token
-        if self.level() == 1:  # alpha-lower level
+        if self.level() == 1:  # lowercase-alpha level
             if not self.current_id:
                 self.current_id = _next
             if _next == '1':
                 return self.dive()
             else:
                 return self.surf()
-        if self.level() == 2:  # digit level
+        if self.level() == 2:  # digit level: a-1
             if _next.isdigit():
                 return self.surf()
             elif _next == 'i':
                 return self.dive()
             else:
                 return self.rise(1)
-        if self.level() == 3:  # roman level
+        if self.level() == 3:  # roman level: a-1-i
             if _next == 'A':
                 return self.dive()
-            elif self.roman_surf_test():
+            if self.roman_surf_test(self.current_token(), _next):
                 return self.surf()
             elif _next.isdigit():
                 return self.rise(1)
             else:
                 return self.rise(2)
-        if self.level() == 4:  # alpha-upper level
-            if _next.isupper():
-                return self.surf()
-            elif _next == '1':
+        if self.level() == 4:  # alpha-upper level: a-1-i-A
+            if _next == '1':
                 return self.dive()
-            elif roman_to_int(_next):
+            elif _next.isupper():
+                return self.surf()
+            elif self.roman_surf_test(self.current_id.split('-')[-2], _next):
                 return self.rise(1)
             elif _next.isdigit():
                 return self.rise(2)
@@ -128,7 +137,7 @@ class IdLevelState(object):
                 previous_digit = int(previous_token)
             else:
                 previous_digit = None
-            if self.roman_surf_test():
+            if self.roman_surf_test(self.current_token(), _next):
                 return self.surf()
             elif (previous_digit
                     and _next.isdigit()
@@ -148,8 +157,9 @@ class IdLevelState(object):
 title_pattern = re.compile(r'PART ([^\-]+) \- ([^\(]+) \(?([^\)]+)?')
 
 paren_id_patterns = {
-    'any': r'\(([^\)]{1,5})\)',
-    'initial': r'\(([^\)]{1})\)',
+    'any': r'\(([^\)]{1,7})\)[^\(]+',
+    'initial': r'\(([^\)]{1,7})\)',
+    'level_1_multiple': r'\((?P<ID1>[a-z]{1,2})\)(?P<phrase1>[^\(]+)\((?P<ID2>1)\)(?P<phrase2>[^\(]+)\((?P<ID3>i)\)?(?P<remainder>[^\n]+)',  # noqa: E501
     'lower': r'\(([a-z]{1,2})\)',
     'digit': r'\((\d{1,2})\)',
     'roman': r'\(([ivxlcdm]{1,5})\)',

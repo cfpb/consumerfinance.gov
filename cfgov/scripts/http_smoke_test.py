@@ -46,7 +46,15 @@ FULL_RUN = [
      '?selected_facets=category_exact:enviar-dinero'),
     '/learnmore/',
     '/complaint/',
+    '/complaint/getting-started/',
     '/ask-cfpb/',
+    '/askcfpb/1017/',
+    '/askcfpb/135/',
+    '/askcfpb/1447/',
+    '/askcfpb/1695/',
+    '/askcfpb/1791/',
+    '/askcfpb/316/',
+    '/askcfpb/44/',
     '/your-story/',
     '/students/',
     '/find-a-housing-counselor/',
@@ -78,6 +86,7 @@ FULL_RUN = [
     '/data-research/cfpb-research-conference/',
     '/data-research/consumer-complaints/',
     '/data-research/hmda/',
+    '/data-research/hmda/for-filers',
     '/data-research/consumer-credit-trends/',
     '/data-research/credit-card-data/',
     '/data-research/cfpb-researchers/',
@@ -88,6 +97,9 @@ FULL_RUN = [
     '/policy-compliance/enforcement/',
     '/policy-compliance/notice-opportunities-comment/',
     '/policy-compliance/amicus/',
+    '/policy-compliance/guidance/implementation-guidance/hmda-implementation/',
+    '/policy-compliance/guidance/implementation-guidance/mortserv/',
+    '/policy-compliance/guidance/implementation-guidance/tila-respa-disclosure-rule/',  # noqa: E501
     '/about-us/',
     '/about-us/the-bureau/',
     '/about-us/budget-strategy/',
@@ -102,6 +114,8 @@ FULL_RUN = [
     '/about-us/advisory-groups/',
     '/about-us/project-catalyst/',
     '/about-us/contact-us/',
+    '/eregulations/',
+    '/eregulations/1026',
 ]
 
 # TODO: Document the logic for what gets included/excluded in short-run tests

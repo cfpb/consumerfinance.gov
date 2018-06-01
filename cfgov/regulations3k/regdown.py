@@ -178,8 +178,12 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             # the paragraph tag, label id, and initial text, then process the
             # rest of the blocks normally.
             label, text = match.group('label'), match.group('text')
-            p = util.etree.SubElement(parent, 'p')
-            p.set('id', label)
+            # Labeled paragraphs without text should use a div element
+            if text == '':
+                el = util.etree.SubElement(parent, 'div')
+            else:
+                el = util.etree.SubElement(parent, 'p')
+            el.set('id', label)
 
             # We use CSS classes to indent paragraph text. To get the correct
             # class, we count the number of dashes in the label to determine
@@ -187,7 +191,7 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             # prefixes that are removed before counting the dashes.
             # e.g. 6-a-Interp-1 becomes -1 and gets a `level-1` class
             # e.g. 12-b-Interp-2-i becomes -2-i and gets a `level-2` class
-            label = re.sub('^\w+\-\w+\-interp', '', label, flags=re.IGNORECASE)
+            label = re.sub('^(\w+\-)+interp', '', label, flags=re.IGNORECASE)
 
             # Appendices also have special prefixes that need to be stripped.
             # e.g. A-1-a becomes a and gets a `level-0` class
@@ -195,9 +199,9 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             label = re.sub('^[A-Z]\d?\-\w+\-?', '', label)
             level = label.count('-')
             class_name = 'level-{}'.format(level)
-            p.set('class', class_name)
+            el.set('class', class_name)
 
-            p.text = text.lstrip()
+            el.text = text.lstrip()
 
         elif block.strip():
             if self.parser.state.isstate('list'):
