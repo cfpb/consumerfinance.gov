@@ -110,6 +110,7 @@ class Subpart(models.Model):
     label = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255, blank=True)
     version = models.ForeignKey(EffectiveVersion, related_name="subparts")
+    section_range = models.TextField(blank=True, null=True)
 
     panels = [
         FieldPanel('label'),
@@ -121,13 +122,16 @@ class Subpart(models.Model):
         return "{} {}, effective {}".format(
             self.label, self.title, self.version.effective_date)
 
+    def save(self, *args, **kwargs):
+            self.section_range = self.get_section_range()
+            super(Subpart, self).save(*args, **kwargs)
+
     @property
     def subpart_heading(self):
         """Keeping for now as possible hook into secondary nav"""
         return ''
 
-    @property
-    def section_range(self):
+    def get_section_range(self):
         if not self.sections.exists():
             return ''
         if 'Interp' in self.label:

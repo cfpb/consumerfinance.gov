@@ -25,6 +25,7 @@ class SubpartModelAdmin(TreeModelAdmin):
     menu_icon = 'list-ul'
     list_display = (
         'title',
+        'section_range',
     )
     child_field = 'sections'
     child_model_admin = SectionModelAdmin
