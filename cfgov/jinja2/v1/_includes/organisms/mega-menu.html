@@ -133,11 +133,13 @@
 
                         {% else %}
 
-                        <h3><a class="{{ _classes( nav_depth, '-overview-link' ) }}
+                        <h3 class="{{ _classes( nav_depth, '-overview-heading' ) }}">
+                            <a class="{{ _classes( nav_depth, '-overview-link' ) }}
                                   {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
                             {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
                             {{ nav_overview_text ~ ' Overview' }}
-                        </a></h3>
+                            </a>
+                        </h3>
 
                         {% endif %}
                 {% endif %}

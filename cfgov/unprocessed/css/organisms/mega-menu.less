@@ -176,6 +176,15 @@ body {
         margin-bottom: 0;
     }
 
+    &_content {
+        &-overview-heading {
+            padding: @grid_gutter-width / 2 0;
+            margin-bottom: 0;
+            font-size: @base-font-size-px;
+            font-weight: normal;
+        }
+    }
+
     // 1st-level menu.
     &_content-1 {
         &-link {
@@ -382,6 +391,11 @@ body {
                     cursor: pointer;
                 }
             }
+            &-overview-heading &-overview-link {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+
         }
 
         // 1st-level menu - Tablet/Mobile.
@@ -610,12 +624,16 @@ body {
                 font-size: 1em;
 
                 // ------------------------------------------------------------
-                // TODO: Remove when Consumer Tools and Education Resources
-                //       have overview pages post-launch.
+                // TODO: Remove when Consumer Tools and Practitioner Resources
+                //       have overview pages.
                 //       This is temporary code to hide the overview links
                 //       at desktop sizes.
-                .u-link__disabled {
+                &-heading {
                     visibility: hidden;
+                }
+
+                &-heading &-link {
+                    visibility: visible;
                 }
                 // ------------------------------------------------------------
             }
