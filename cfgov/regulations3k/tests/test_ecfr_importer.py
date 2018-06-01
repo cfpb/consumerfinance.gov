@@ -8,16 +8,17 @@ from django.test import TestCase as DjangoTestCase
 
 import mock
 from bs4 import BeautifulSoup as bS
+from requests import Response
+
 from regulations3k.models import Part, Subpart
 from regulations3k.scripts.ecfr_importer import (
     ecfr_to_regdown, multiple_id_test, parse_ids, parse_section_paragraphs,
-    run
+    parse_singleton_graph, run
 )
-from regulations3k.scripts.patterns import IdLevelState
-from regulations3k.scripts.roman import (
+from regulations3k.scripts.integer_conversion import (
     alpha_to_int, int_to_alpha, int_to_roman, roman_to_int
 )
-from requests import Response
+from regulations3k.scripts.patterns import IdLevelState
 
 
 class ImporterTestCase(DjangoTestCase):
@@ -100,6 +101,11 @@ class ParagraphParsingTestCase(unittest.TestCase):
     with open(expected_graph_path, 'r') as f:
         expected_graphs = f.read()
 
+    def test_singleton_parsing_invalid_tag(self):
+        graph = "A graf with (or) as a potential but invalid ID."
+        parsed_graph = parse_singleton_graph(graph)
+        self.assertEqual(parsed_graph, "\n" + graph + "\n")
+
     def test_multi_id_paragraph_parsing(self):
         soup = bS(self.test_xml, 'lxml-xml')
         graph_soup = soup.find_all('P')
@@ -131,6 +137,31 @@ class ParagraphParsingTestCase(unittest.TestCase):
         two_good_ids = ['a', '1']
         parse_ids(test_graph)
         mock_parser.assert_called_with(test_graph, two_good_ids)
+
+    def new_test(self):
+        pass
+
+
+class ParserIdTestCase(unittest.TestCase):
+
+    def test_roman_test_invalid_level(self):
+        from regulations3k.scripts.ecfr_importer import LEVEL_STATE, roman_test
+        LEVEL_STATE.current_id = 'a'
+        self.assertFalse(roman_test('ii'))
+
+    def test_multiple_id_test_level_2_passes(self):
+        from regulations3k.scripts.ecfr_importer import (
+            LEVEL_STATE, multiple_id_test)
+        LEVEL_STATE.current_id = 'a-1'
+        ids = ['2', 'i', 'A']
+        self.assertTrue(multiple_id_test(ids))
+
+    def test_multiple_id_test_level_3_passes(self):
+        from regulations3k.scripts.ecfr_importer import (
+            LEVEL_STATE, multiple_id_test)
+        LEVEL_STATE.current_id = 'a-1-i'
+        ids = ['ii', 'A', '1']
+        self.assertTrue(multiple_id_test(ids))
 
 
 class PatternsTestCase(unittest.TestCase):
@@ -334,6 +365,11 @@ class PatternsTestCase(unittest.TestCase):
         self.assertIs(self.levelstate.roman_surf_test(
             self.levelstate.current_token(), 'ii'), True)
 
+    def test_roman_surf_test_false_if_blank_token(self):
+        self.levelstate.current_id = ''
+        self.assertIs(self.levelstate.roman_surf_test(
+            self.levelstate.current_token(), 'ii'), False)
+
     def test_alpha_surf_test(self):
         self.assertIs(self.levelstate.alpha_surf_test('a', 'b'), True)
 
@@ -345,6 +381,10 @@ class PatternsTestCase(unittest.TestCase):
 
     def test_alpha_surf_test_not_same_case(self):
         self.assertIs(self.levelstate.alpha_surf_test('a', 'C'), False)
+
+    def test_root_token(self):
+        self.levelstate.current_id = 'a-1-i'
+        self.assertEqual(self.levelstate.root_token(), 'a')
 
 
 class EtruscanTestCase(unittest.TestCase):

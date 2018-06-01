@@ -7,13 +7,14 @@ import sys
 
 import requests
 from bs4 import BeautifulSoup as bS
+
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart
 )
+from regulations3k.scripts.integer_conversion import roman_to_int
 from regulations3k.scripts.patterns import (  # dot_id_patterns,
     IdLevelState, paren_id_patterns, title_pattern
 )
-from regulations3k.scripts.roman import roman_to_int
 
 
 # TODO

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import unittest
 
 import markdown
+
 from regulations3k.regdown import extract_labeled_paragraph, regdown
 
 

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import re
 
-from regulations3k.scripts.roman import alpha_to_int, roman_to_int
+from regulations3k.scripts.integer_conversion import alpha_to_int, roman_to_int
 
 
 """
