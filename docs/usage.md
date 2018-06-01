@@ -31,13 +31,21 @@ This setup script will remove and reinstall the project dependencies
 and rebuild the site's JavaScript and CSS assets.
 
 !!! note
-	You may also run `./backend.sh` or `./frontend.sh`
-	if you only want to re-build the backend or front-end, respectively.
+  You may also run `./backend.sh` or `./frontend.sh`
+  if you only want to re-build the backend or front-end, respectively.
+
+##### Setting environments
+
+The `NODE_ENV` environment variable can be set in your `.env` file to either
+`development` or `production`, which will affect how the build is made and what
+gulp tasks are available. To install dependencies of one environment
+or the other run `./frontend.sh` (dependencies and devDependencies)
+or `./frontend.sh production` (dependencies but not devDependencies).
 
 ### 2. Run Elasticsearch
 
 !!! note
-	This Elasticsearch tab (or window) might not be necessary if you opted for the
+  This Elasticsearch tab (or window) might not be necessary if you opted for the
   `launchd` option when [installing Elasticsearch](installation#elasticsearch).
 
 To launch Elasticsearch, first find out where your Elasticsearch config file is
@@ -76,8 +84,8 @@ python cfgov/manage.py sheer_index -r
 ```
 
 !!! note
-	To view the indexed content you can use a tool called
-	[elasticsearch-head](https://mobz.github.io/elasticsearch-head/).
+  To view the indexed content you can use a tool called
+  [elasticsearch-head](https://mobz.github.io/elasticsearch-head/).
 
 From the project root, start the Django server:
 
@@ -86,8 +94,8 @@ From the project root, start the Django server:
 ```
 
 !!! note
-	If prompted to migrate database changes,
-	stop the server with `ctrl` + `c` and run these commands:
+  If prompted to migrate database changes,
+  stop the server with `ctrl` + `c` and run these commands:
 
 ```bash
 python cfgov/manage.py migrate
@@ -98,7 +106,7 @@ python cfgov/manage.py migrate
 To view the site browse to: <http://localhost:8000>
 
 !!! note "Using a different port"
-	If you want to run the server at a port other than 8000 use
+  If you want to run the server at a port other than 8000 use
 
     `python cfgov/manage.py runserver <port number>`
 
