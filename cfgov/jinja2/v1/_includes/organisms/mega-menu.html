@@ -51,7 +51,7 @@
     {% for nav_group in nav_groups %}
     {% set group = nav_group.value %}
     <div class="{{ _classes( nav_depth, '-list' ) }}">
-        
+
         {% if group.group_title %}
         <div class="h5
                   {{ base_class ~ '_group-heading' }}
@@ -74,7 +74,7 @@
             {%- endfor %}
         </ul>
     </div>
-    
+
     {% endfor %}
 </div>
 
@@ -179,15 +179,16 @@
     {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
 
     <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
-        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
+        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}
+        {{ 'aria-haspopup=menu' if has_children else '' }}
+        role="menuitem">
         {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
         <a class="{{ 'u-link__disabled' if url == '' else '' }}
                   {{ _classes( nav_depth, '-link' ) }}
                   {{ _classes( nav_depth, '-link__has-children' ) if has_children else '' }}
                   {{ _classes( nav_depth, '-link__current' ) if url == request.path else '' }}"
            {{ '' if url == '' else 'href=' + url | e }}
-           {{ 'data-js-hook=behavior_flyout-menu_trigger' if has_children else '' }}
-           {{ 'aria-pressed=false' if has_children else '' }}>
+           {{ 'data-js-hook=behavior_flyout-menu_trigger' if has_children else '' }}>
               {{ text }}
               {{ svg_icon('right') }}
         </a>
@@ -217,7 +218,7 @@
     aria-label="main menu">
     <button class="{{ base_class ~ '_trigger' }}"
            data-js-hook="behavior_flyout-menu_trigger"
-           aria-pressed="false">
+           aria-haspopup="menu">
         <span class="{{ base_class ~ '_trigger-open' }}">
             {{ svg_icon('menu') }}
         </span>
