@@ -196,9 +196,17 @@ class RegulationsExtensionTestCase(unittest.TestCase):
 
     def test_block_reference(self):
         contents_resolver = lambda l: '{foo-bar}\n# §FooBar\n\n'
+        render_block_reference = lambda c, **kwargs: \
+            '<blockquote>{}</blockquote>'.format(regdown(c))
         text = 'see(foo-bar)'
-        self.assertIn('<h1>§FooBar</h1>',
-                      regdown(text, contents_resolver=contents_resolver))
+        self.assertIn(
+            '<h1>§FooBar</h1>',
+            regdown(
+                text,
+                contents_resolver=contents_resolver,
+                render_block_reference=render_block_reference
+            )
+        )
 
     def test_tables_extension_exists(self):
         text = (

@@ -98,7 +98,8 @@ class RegulationsExtension(Extension):
             'string.'
         ],
         'render_block_reference': [
-            lambda c, **kwargs: '<blockquote>{}</blockquote>'.format(c),
+            lambda c, **kwargs: '<blockquote>{}</blockquote>'.format(
+                regdown(c)),
             'Function that will render a block reference'
         ],
     }
@@ -257,7 +258,7 @@ class BlockReferenceProcessor(BlockProcessor):
                 return
 
             rendered_contents = self.render_block_reference(
-                regdown(contents),
+                contents,
                 url=url
             )
 
