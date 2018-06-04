@@ -11,8 +11,23 @@ set -e
 
 # Initialize project dependency directories.
 init() {
-  # Set cli_flag variable.
-  source cli-flag.sh "Front-end" $1
+  # Set NODE_ENV variable.
+  # Set default command-line environment flag, if user didn't supply one.
+  NODE_ENV=$1
+
+  # Warn if unsupported command-line flag was used.
+  if [ "$NODE_ENV" != "development" ] &&
+     [ "$NODE_ENV" != "production" ]; then
+    supplied_cli_flag=$NODE_ENV
+    NODE_ENV='development'
+    echo "WARNING: '$supplied_cli_flag' flag not found, reverting to $NODE_ENV environment."
+  fi
+
+  # Notify of environment that user is in.
+  echo "Front-end environment: $NODE_ENV"
+
+  # Set the NODE_ENV for this session.
+  export NODE_ENV=$NODE_ENV
 
   if [[ "$(node -v)" != "v8."* ]]; then
     echo "Please install Node 8.x: 'nvm install 8'"
@@ -36,7 +51,7 @@ clean() {
 install() {
   echo "Installing front-end dependencies…"
 
-  if [ "$cli_flag" = "development" ]; then
+  if [ "$NODE_ENV" = "development" ]; then
 
     npm install -d --loglevel warn
 
