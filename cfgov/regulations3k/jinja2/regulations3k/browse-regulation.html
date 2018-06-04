@@ -63,12 +63,12 @@
             <ul>
                 {% if previous_section %}
                 <li class="previous next-prev">
-                    <a href="{{ routablepageurl(page, "section", previous_section.section_number) }}" class="navigation-link backward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-left"></span><span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label}}</a> <span class="next-prev-title">{{previous_section.title_content}}</span>
+                    <a href="{{ routablepageurl(page, "section", previous_section.section_number) }}" class="navigation-link backward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-left"></span><span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label or previous_section.label}}</a> <span class="next-prev-title">{{previous_section.title_content}}</span>
                 </li>
                 {% endif %}
                 {% if next_section %}
                 <li class="next next-prev">
-                    <a href="{{ routablepageurl(page, "section", next_section.section_number) }}" class="navigation-link forward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-right"></span><span class="next-prev-label">Next section - </span>{{next_section.numeric_label}}</a> <span class="next-prev-title">{{next_section.title_content}}</span>
+                    <a href="{{ routablepageurl(page, "section", next_section.section_number) }}" class="navigation-link forward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-right"></span><span class="next-prev-label">Next section - </span>{{next_section.numeric_label or next_section.label}}</a> <span class="next-prev-title">{{next_section.title_content}}</span>
                 </li>
                 {% endif %}
             </ul>

@@ -11,9 +11,9 @@ from bs4 import BeautifulSoup as bS
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart
 )
-from regulations3k.scripts.integer_conversion import roman_to_int
-from regulations3k.scripts.patterns import (  # dot_id_patterns,
-    IdLevelState, paren_id_patterns, title_pattern
+from regulations3k.scripts.integer_conversion import int_to_alpha, roman_to_int
+from regulations3k.scripts.patterns import (
+    IdLevelState, dot_id_patterns, paren_id_patterns, title_pattern
 )
 
 
@@ -95,16 +95,16 @@ def parse_version(soup, part):
 
 def parse_subparts(part_soup, subpart_list, part):
     """Createa a mapping of subparts and the sections they contain."""
-    _appendices, cr = Subpart.objects.get_or_create(
+    appendix_husk = Subpart(
         title="Appendices",
         label="{}-Appendices".format(part.part_number),
         version=PAYLOAD.version)
-    PAYLOAD.subparts['appendix_subpart'] = _appendices
-    _interps, cr = Subpart.objects.get_or_create(
+    PAYLOAD.subparts['appendix_subpart'] = appendix_husk
+    interp_husk = Subpart(
         title="Supplement I to Part {}".format(part.part_number),
         label="Official Interpretations",
         version=PAYLOAD.version)
-    PAYLOAD.subparts['interp_subpart'] = _interps
+    PAYLOAD.subparts['interp_subpart'] = interp_husk
 
     labeled_subparts = [subp for subp in subpart_list
                         if subp.find('HEAD').text.strip()]
@@ -128,18 +128,19 @@ def parse_subparts(part_soup, subpart_list, part):
             parse_sections(subpart_sections, part, _subpart)
 
 
-def pre_process_tags(soup):
+def pre_process_tags(paragraph_element):
     """
     Convert initial italics-tagged text to markdown bold
-    and convert the rest to markdown italics.
+    and convert the rest of a paragraph's I tags to markdown italics.
     """
-    if soup.find('I'):
-        ital_content = soup.find('I').text
-        soup.find('I').replaceWith('**{}**'.format(ital_content))
-    for element in soup.find_all('I'):
+    first_tag = paragraph_element.find('I')
+    if first_tag:
+        bold_content = first_tag.text
+        first_tag.replaceWith('**{}**'.format(bold_content))
+    for element in paragraph_element.find_all('I'):
         i_content = element.text
         element.replaceWith('*{}*'.format(i_content))
-    return soup
+    return paragraph_element
 
 
 def bold_first_italics(graph):
@@ -314,6 +315,36 @@ def parse_section_paragraphs(paragraph_soup):
     return paragraph_content
 
 
+def parse_appendix_graph(p_element):
+    """Extract dot-based IDs, if any"""
+    graph_text = ''
+    id_match = re.match(dot_id_patterns['any'], p_element.text)
+    if id_match:
+        id_token = id_match.group(1)
+        LEVEL_STATE.next_token = id_token
+        pid = LEVEL_STATE.next_appendix_id()
+        graph_text += "\n{" + pid + "}\n"
+        graph = p_element.text.replace(
+            '{}.'.format(pid), '**{}.**'.format(pid), 1).replace(
+            '  ', ' ').replace(
+            '** **', ' ', 1)
+        graph_text += graph + "\n"
+    else:
+        graph_text += p_element.text + "\n"
+    return graph_text
+
+
+def parse_appendix_paragraphs(paragraph_elements, id_type):
+    for paragraph in paragraph_elements:
+        p = pre_process_tags(paragraph)
+        if id_type == 'section':
+            p_content = parse_ids(p)
+            p.replaceWith(p_content)
+        else:
+            p_content = parse_appendix_graph(p)
+            p.replaceWith(p_content)
+
+
 def parse_sections(section_list, part, subpart):
     for section_element in section_list:
         section_content = parse_section_paragraphs(
@@ -329,12 +360,85 @@ def parse_sections(section_list, part, subpart):
         _section.save()
 
 
-def parse_appendices(appendices_list, part):
+def sniff_appendix_id_type(paragraphs):
     """
-    Parse the list of appendices, tease out interps and send them along,
-    and then process the remaining appendices.
+    Detect whether an appendix follows the section paragraph indentation
+    scheme (a-1-i-A-1-i) or the appendix scheme (1-a)
+
+    The sniffer should return 'section', 'appendix', or None.
     """
-    PAYLOAD.appendices = {}
+    for graph in paragraphs[:10]:
+        if graph.text.startswith('(a)'):
+            return 'section'
+        if graph.text.startswith('1.'):
+            return 'appendix'
+
+
+def parse_appendix_elements(appendix_soup):
+    """
+    For appendices, we can't just parse paragraphs because
+    appendices can have embedded sub-headlines. So we need to parse
+    the section as a whole to keep the subheds in place.
+
+    eCFR XML doesn't have any HD4s.
+    """
+    paragraphs = appendix_soup.find_all('P')
+    if not paragraphs:
+        return ''
+    id_type = sniff_appendix_id_type(paragraphs)
+    headline_map = {
+        'HD1': "\n## {}\n",
+        'HD2': "\n### {}\n",
+        'HD3': "\n#### {}\n",
+    }
+    for citation in appendix_soup.find_all('CITA'):
+        citation.replaceWith('')
+    for tag in headline_map:
+        subheds = appendix_soup.find_all(tag)
+        for subhed in subheds:
+            hed_content = headline_map[tag].format(subhed.text.strip())
+            subhed.replaceWith(hed_content)
+    if id_type is None:
+        for p in paragraphs:
+            pre_process_tags(p)
+    else:
+        parse_appendix_paragraphs(paragraphs, id_type)
+    return appendix_soup.text
+
+
+def parse_appendices(appendices, part):
+    """
+    Parse the list of appendices (minus interps) and send them along.
+    """
+    if not appendices:
+        return
+    subpart = PAYLOAD.subparts['appendix_subpart']
+    subpart.save()
+    for i, _appendix in enumerate(appendices):
+        default_appendix_letter = int_to_alpha(i + 1).upper()
+        default_label = "{}-{}".format(
+            part.part_number, default_appendix_letter)
+        head_element = _appendix.find('HEAD')
+        if head_element:
+            _hed = head_element.text.strip()
+            head_element.replaceWith('')
+        else:
+            _hed = "Appendix {} to Part {}".format(
+                default_appendix_letter, part.part_number)
+        if _hed.startswith('Appendix MS '):
+            default_label = '{}-MS'.format(part.part_number)
+        elif _hed.startswith('Appendix MS'):
+            ms_number = re.match(r'Appendix MS[-]?(\d{1})', _hed).group(1)
+            default_label = "{}-MS{}".format(part.part_number, ms_number)
+        appendix = Section(
+            subpart=subpart,
+            label=default_label,
+            title=_hed,
+            contents=parse_appendix_elements(_appendix)
+        )
+        appendix.save()
+
+    PAYLOAD.appendices.append(appendix)
 
 
 def parse_interps(interp_list, part):
@@ -390,12 +494,12 @@ def ecfr_to_regdown(part_number, file_path=None):
     parse_version(part_soup, part)
     subpart_list = part_soup.find_all('DIV6')
     parse_subparts(part_soup, subpart_list, part)
-    appendices_list = part_soup.find_all('DIV9')
-    interps_list = [div for div in appendices_list
-                    if div.find('HEAD').text.startswith('Supplement I')]
-    parse_appendices(appendices_list, part)
-    parse_interps(interps_list, part)
-
+    appendices = part_soup.find_all('DIV9')
+    if appendices:
+        if appendices[-1].find('HEAD').text.startswith('Supplement I'):
+            interps = appendices.pop(-1)
+            parse_interps(interps, part)
+        parse_appendices(appendices, part)
     msg = (
         "Draft version of Part {} created.\n"
         "Parsing took {}".format(
