@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.5.0"
   },
   "dependencies": {
     "autoprefixer": "8.2.0",
@@ -91,8 +91,9 @@
     "yargs": "11.0.0"
   },
   "scripts": {
-    "test": "snyk test",
-    "postinstall": "node scripts/npm/apps-install"
+    "postinstall": "node scripts/npm/apps-install",
+    "preinstall": "npx enforce-node-version || (echo 'Please install npm v5.2 or greater' && exit 1)",
+    "test": "snyk test"
   },
   "snyk": true
 }

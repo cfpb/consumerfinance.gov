@@ -38,7 +38,7 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{my-label}\n\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="level-1" id="my-label"></p>\n'
+            '<div class="level-1" id="my-label"></div>\n'
             '<p id="725445113243d57f132b6408fa8583122d2641e591a9001f04fcde08">'
             'This is a paragraph with a label.</p>'
         )
@@ -73,6 +73,32 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             regdown(text),
             '<p class="level-5" id="12-d-Interp-7-ii-c-A-7">'
             'This is a paragraph with a label.</p>'
+        )
+
+    def test_prefixed_inline_interp_label(self):
+        text = '{31-a-1-Interp-1}\nThis is a paragraph with a label.'
+        text2 = '{31-a-1-i-Interp-1}\nThis is a paragraph with a label.'
+        self.assertEqual(
+            regdown(text),
+            '<p class="level-1" id="31-a-1-Interp-1">'
+            'This is a paragraph with a label.</p>'
+        )
+        self.assertEqual(
+            regdown(text2),
+            '<p class="level-1" id="31-a-1-i-Interp-1">'
+            'This is a paragraph with a label.</p>'
+        )
+
+    def test_empty_inline_interp_label(self):
+        text = (
+            '{30-Interp-1}\n'
+            '1. Applicability\n\n'
+            '{30-b-Interp}\n'
+            '#### 30(b) Business Day'
+        )
+        self.assertIn(
+            '<div class="level-0" id="30-b-Interp"></div>',
+            regdown(text)
         )
 
     def test_appendix_label(self):
