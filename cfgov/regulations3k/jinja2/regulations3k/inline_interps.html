@@ -7,7 +7,7 @@
         <div class="o-expandable_header">
             <span class="o-expandable_header-left
                          o-expandable_label">
-                Official interpretation
+                Official interpretation {% if section_title %}of {{ section_title }}{% endif %}
             </span>
             <span class="o-expandable_header-right
                          o-expandable_link
@@ -31,7 +31,7 @@
         <div class="o-expandable_content-animated">
             {{ contents }}
 
-            <p><a href="{{ url }}" data-turbolinks="true">See this interpretation in Supplement I</a></p>
+            <p><a href="{{ url }}" data-turbolinks="true">See interpretation of {% if section_title %}{{ section_title }}{% else %}this section{% endif %} in Supplement I</a></p>
         </div>
     </div>
 </div>
