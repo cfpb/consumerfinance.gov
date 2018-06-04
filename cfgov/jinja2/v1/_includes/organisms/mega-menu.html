@@ -109,7 +109,8 @@
         {# Open wrapper if needed #}
         {% if nav_depth > 1 %}
         <button class="{{ _classes( nav_depth, '-alt-trigger' ) }}"
-                data-js-hook="behavior_flyout-menu_alt-trigger">
+                data-js-hook="behavior_flyout-menu_alt-trigger"
+                role="menuitem">
             {{ svg_icon('left') }}
             Back
         </button>
