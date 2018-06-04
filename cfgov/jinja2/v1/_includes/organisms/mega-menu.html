@@ -118,30 +118,27 @@
 
             {% if nav_depth > 1 %}
             <span class="{{ _classes( nav_depth, '-overview' ) }}">
-              {# TODO: Remove the check for '#' when real overview pages
+                {# TODO: Remove the check for '#' when real overview pages
                        are added for the Consumer Resources and Education
                        pages. #}
                 {% if nav_overview_url %}
+                    {% if nav_overview_url == '#' %}
 
-                        {% if nav_overview_url == '#' %}
+                    {# only use a link element when there is an overview page to link to, otherwise we use regular heading text for context #}
 
-                        {# only use a link element when there is an overview page to link to, otherwise we use regular heading text for context #}
+                    <h3 class="{{ _classes( nav_depth, '-overview-heading' ) }}">{{ nav_overview_text }}</h3>
 
-                        <h3 class="{{ _classes( nav_depth, '-overview-heading' ) }}">{{ nav_overview_text }}</h3>
+                    {% else %}
 
-{# TODO: test on mobile and desktop and voiceover #}
+                    <h3 class="{{ _classes( nav_depth, '-overview-heading' ) }}">
+                        <a class="{{ _classes( nav_depth, '-overview-link' ) }}
+                              {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
+                        {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
+                        {{ nav_overview_text ~ ' Overview' }}
+                        </a>
+                    </h3>
 
-                        {% else %}
-
-                        <h3 class="{{ _classes( nav_depth, '-overview-heading' ) }}">
-                            <a class="{{ _classes( nav_depth, '-overview-link' ) }}
-                                  {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                            {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
-                            {{ nav_overview_text ~ ' Overview' }}
-                            </a>
-                        </h3>
-
-                        {% endif %}
+                    {% endif %}
                 {% endif %}
             </span>
             {% endif %}
