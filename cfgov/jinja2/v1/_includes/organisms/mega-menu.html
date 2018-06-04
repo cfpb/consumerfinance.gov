@@ -180,8 +180,11 @@
     {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
 
     <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
-        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}
-        {{ 'aria-haspopup=menu' if has_children else '' }}
+        {{-
+          'data-js-hook=behavior_flyout-menu
+           aria-haspopup=menu'
+          if has_children else ''
+        }}
         role="menuitem">
         {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
         <a class="{{ 'u-link__disabled' if url == '' else '' }}
