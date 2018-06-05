@@ -22,7 +22,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = 'This is a paragraph without a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block" id="e2cb7f25f263e65fc6737e03e0ecb90382398da3966b6da734b451be">'
+            '<p class="regdown-block" '
+            'id="e2cb7f25f263e65fc6737e03e0ecb90382398da3966b6da734b451be">'
             'This is a paragraph without a label.</p>'
         )
 
@@ -39,7 +40,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         self.assertEqual(
             regdown(text),
             '<div class="regdown-block level-1" id="my-label"></div>\n'
-            '<p class="regdown-block" id="725445113243d57f132b6408fa8583122d2641e591a9001f04fcde08">'
+            '<p class="regdown-block" '
+            'id="725445113243d57f132b6408fa8583122d2641e591a9001f04fcde08">'
             'This is a paragraph with a label.</p>'
         )
 

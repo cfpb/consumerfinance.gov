@@ -154,9 +154,10 @@ class PseudoFormPattern(Pattern):
         el.set('class', 'regdown-form')
         if m.group('line_ending') is not None:
             el.set('class', 'regdown-form_extend')
-            el_underline = util.etree.SubElement(el, 'span')
+            util.etree.SubElement(el, 'span')
         el.text = m.group('underscores')
         return el
+
 
 class LabeledParagraphProcessor(ParagraphProcessor):
     """ Process paragraph blocks, including those with labels.
