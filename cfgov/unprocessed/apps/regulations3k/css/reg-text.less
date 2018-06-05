@@ -13,3 +13,25 @@
     }
     .generateLevel(@n, (@i + 1));
 }
+
+.regdown-form_extend {
+    font-size: 0;
+    margin-right: @grid_gutter-width;
+    overflow: hidden; 
+    position: relative;
+    width: 100%;
+    span {
+        vertical-align: baseline;
+        zoom: 1;
+        &:after {
+            border-top: 1px solid #101820;
+            content: '';
+            display: block;
+            left: 100%;
+            position: absolute;
+            top: 1.2em;
+            width: 1000px;
+        }
+    }
+
+}
