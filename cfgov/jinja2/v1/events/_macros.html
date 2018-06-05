@@ -150,8 +150,9 @@
                     }
                 }) }}
             {% elif event_state == 'present' and request.path == '/about-us/events/town-hall-topeka-kan-fighting-elder-financial-exploitation-your-community/' %}
-                <iframe style="min-height:400px; width:100%" src="https://mediasite.yorkcast.com/webcast/Play/4f3f75532e824c519793852e5f0a0ab71d?autostart=true"></iframe>
-            {% else %}
+                <iframe alt="Fighting elder financial exploitation in your community."
+                        style="min-height:400px; width:100%" src="https://mediasite.yorkcast.com/webcast/Play/4f3f75532e824c519793852e5f0a0ab71d?autostart=true"></iframe>
+            {% else %}s
               <img src="{{ event.location_image_url(size='640x320') }}"
                    alt="Google Maps image of {{ event.venue_name }}">
             {% endif %}
