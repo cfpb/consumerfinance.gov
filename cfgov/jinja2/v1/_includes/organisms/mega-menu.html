@@ -117,7 +117,9 @@
         <div class="{{ _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) }}">
 
             {% if nav_depth > 1 %}
-            <span class="{{ _classes( nav_depth, '-overview' ) }}">
+            <h3 class="{{ _classes( nav_depth, '-overview' ) }}
+                       {{ _classes( nav_depth, '-overview-heading' ) }}
+            ">
                 {# TODO: Remove the check for '#' when real overview pages
                        are added for the Consumer Resources and Education
                        pages. #}
@@ -126,11 +128,11 @@
 
                     {# only use a link element when there is an overview page to link to, otherwise we use regular heading text for context #}
 
-                    <h3 class="{{ _classes( nav_depth, '-overview-heading' ) }}">{{ nav_overview_text }}</h3>
+                    <span class="{{ _classes( nav_depth, '-overview-heading-text' ) }}">{{ nav_overview_text }}</span>
 
                     {% else %}
 
-                    <h3 class="{{ _classes( nav_depth, '-overview-heading' ) }}
+                    <span class="{{ _classes( nav_depth, '-overview-heading' ) }}
                                {{ _classes( nav_depth, '-overview-heading-link' ) }}
                     ">
                         <a class="{{ _classes( nav_depth, '-overview-link' ) }}
@@ -138,11 +140,11 @@
                         {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
                         {{ nav_overview_text ~ ' Overview' }}
                         </a>
-                    </h3>
+                    </span>
 
                     {% endif %}
                 {% endif %}
-            </span>
+            </h3>
             {% endif %}
             {% if nav_item.nav_items %}
                 {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}

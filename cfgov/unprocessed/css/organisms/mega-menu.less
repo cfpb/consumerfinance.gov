@@ -627,7 +627,6 @@ body {
                 font-size: 1em;
 
                 &-heading {
-                    padding-bottom: 0;
                     padding-top: 0;
                 }
 
@@ -636,12 +635,8 @@ body {
                 //       have overview pages.
                 //       This is temporary code to hide the overview links
                 //       at desktop sizes.
-                &-heading {
-                    display: none;
-                }
-
-                &-heading-link {
-                    display: block;
+                &-heading-text {
+                    .u-visually-hidden;
                 }
                 // ------------------------------------------------------------
             }
