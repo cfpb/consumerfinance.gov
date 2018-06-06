@@ -37,6 +37,7 @@ sha3==0.2.1
 six==1.10.0
 unicodecsv==0.14.1
 unipath>=1.1,<=2.0
+# TODO: Remove explicit urllib3 requirement once requests is updated to support urllib3 1.23
 urllib3==1.22
 wagtail-flags==2.0.8
 wagtail-inventory==0.4.2
