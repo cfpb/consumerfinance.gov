@@ -181,11 +181,15 @@ def get_reg_nav_items(request, current_page):
         [(subpart, None) for subpart in subpart_list]
     )
     for subpart in subpart_dict:
+        subpart_dict[subpart] = {
+            'sections': [],
+            'expanded': False
+        }
         sorted_sections = sorted(
             subpart.sections.all(),
             key=lambda s: sortable_label(s.label))
-        subpart_dict[subpart] = [
-            {
+        for section in sorted_sections:
+            section_dict = {
                 'title': section.title,
                 'url': current_page.url + current_page.reverse_subpage(
                     'section',
@@ -197,6 +201,8 @@ def get_reg_nav_items(request, current_page):
                 'expanded': True,
                 'section': section,
             }
-            for section in sorted_sections
-        ]
+            subpart_dict[subpart]['sections'].append(section_dict)
+            subpart_dict[subpart]['expanded'] = (
+                subpart_dict[subpart]['expanded'] or section_dict['active']
+            )
     return subpart_dict, False

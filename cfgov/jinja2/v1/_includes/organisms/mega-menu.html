@@ -101,24 +101,24 @@
    ========================================================================== #}
 
 {% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text ) %}
-<div class="{{ _classes( nav_depth ) }} u-hidden-overflow"
+<div class="{{- _classes( nav_depth ) -}} u-hidden-overflow"
      aria-expanded="false"
      data-js-hook="behavior_flyout-menu_content">
-    <div class="{{ _classes( nav_depth, '-wrapper' ) }}">
+    <div class="{{- _classes( nav_depth, '-wrapper' ) -}}">
         {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
         {# Open wrapper if needed #}
         {% if nav_depth > 1 %}
-        <button class="{{ _classes( nav_depth, '-alt-trigger' ) }}"
+        <button class="{{- _classes( nav_depth, '-alt-trigger' ) -}}"
                 data-js-hook="behavior_flyout-menu_alt-trigger"
                 role="menuitem">
             {{ svg_icon('left') }}
             Back
         </button>
         {% endif %}
-        <div class="{{ _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) }}">
+        <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) -}}">
 
             {% if nav_depth > 1 %}
-            <span class="{{ _classes( nav_depth, '-overview' ) }}">
+            <span class="{{- _classes( nav_depth, '-overview' ) -}}">
               {# TODO: Remove the check for '#' when real overview pages
                        are added for the Consumer Resources and Education
                        pages. #}
@@ -180,19 +180,19 @@
     {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
 
     <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
-        {{-
-          'data-js-hook=behavior_flyout-menu
-           aria-haspopup=menu'
-          if has_children else ''
-        }}
-        role="menuitem">
+        {{- 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
         {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
-        <a class="{{ 'u-link__disabled' if url == '' else '' }}
-                  {{ _classes( nav_depth, '-link' ) }}
-                  {{ _classes( nav_depth, '-link__has-children' ) if has_children else '' }}
-                  {{ _classes( nav_depth, '-link__current' ) if url == request.path else '' }}"
-           {{ '' if url == '' else 'href=' + url | e }}
-           {{ 'data-js-hook=behavior_flyout-menu_trigger' if has_children else '' }}>
+        <a class="{{- 'u-link__disabled' if url == '' else '' -}}
+                  {{- _classes( nav_depth, '-link' ) -}}
+                  {{- _classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
+                  {{- _classes( nav_depth, '-link__current' ) if url == request.path else '' -}}"
+           {{- '' if url == '' else 'href=' + url | e }}
+           {{
+             'data-js-hook=behavior_flyout-menu_trigger
+              aria-haspopup=menu'
+             if has_children else ''
+           }}
+           role="menuitem">
               {{ text }}
               {{ svg_icon('right') }}
         </a>
