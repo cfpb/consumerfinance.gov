@@ -16,6 +16,7 @@
             <div class="block
                         block__border
                         {{ 'u-mt0' if loop.index == 1 }}">
+                        {# u-mt0 is used instead of block__flush-top to keep top border #}
                 {{ featured_content.render(block.value) }}
             </div>
         {% else %}

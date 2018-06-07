@@ -15,6 +15,7 @@
             <div class="block
                         block__border
                         {{ 'u-mt0' if loop.index == 1 }}">
+                        {# u-mt0 removes top margin without affecting top border #}
                 {{ featured_content.render(block.value) }}
             </div>
         {% else %}
