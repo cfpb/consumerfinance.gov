@@ -25,8 +25,8 @@
     {% for block in page.content -%}
         {% if 'featured_content' in block.block_type %}
             <div class="block
-                        block__flush-sides
-                        block__border">
+                        block__border
+                        {{ 'u-mt0' if loop.index == 1 }}">
                 {{ featured_content.render(block.value) }}
             </div>
         {% elif block.block_type == 'feedback' %}
