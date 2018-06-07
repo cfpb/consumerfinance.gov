@@ -92,12 +92,12 @@ function Notification( element ) {
   function setContent( messageText, explanationText ) {
     let content = `
       <div class="h4 m-notification_message">
-        ${messageText}
+        ${ messageText }
       </div>`;
     if ( typeof explanationText !== 'undefined' ) {
       content += `
         <p class="m-notification_explanation">
-          ${explanationText}
+          ${ explanationText }
         </p>`;
     }
     _contentDom.innerHTML = content;
