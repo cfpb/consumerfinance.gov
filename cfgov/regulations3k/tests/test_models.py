@@ -194,6 +194,14 @@ class RegModelTests(DjangoTestCase):
         result = self.reg_page.render_interp({}, 'some contents')
         self.assertIn('some contents', result)
 
+    def test_render_interp_with_title(self):
+        result = self.reg_page.render_interp(
+            {},
+            '# A title\n\nsome contents'
+        )
+        self.assertIn('Official interpretation of A title', result)
+        self.assertIn('some contents', result)
+
     def test_section_ranges(self):
         self.assertEqual(self.subpart_orphan.section_range, '')
         self.assertEqual(self.subpart_appendices.section_range, '')

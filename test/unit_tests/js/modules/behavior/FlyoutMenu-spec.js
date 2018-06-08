@@ -6,7 +6,7 @@ const MoveTransition =
 const HTML_SNIPPET = `
   <div data-js-hook="behavior_flyout-menu">
       <button data-js-hook="behavior_flyout-menu_trigger"
-              aria-pressed="false"
+              aria-haspopup="menu"
               aria-expanded="false"></button>
       <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
         <button data-js-hook="behavior_flyout-menu_alt-trigger"
@@ -54,10 +54,8 @@ describe( 'FlyoutMenu', () => {
     } );
 
     it( 'should have correct state before initializing', () => {
-      expect( triggerDom.getAttribute( 'aria-pressed' ) ).toBe( 'false' );
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).toBeNull();
       expect(
         altTriggerDom.getAttribute( 'aria-expanded' )
       ).toBe( 'false' );
@@ -143,10 +141,8 @@ describe( 'FlyoutMenu', () => {
       );
 
       // Check expected aria attributes state.
-      expect( triggerDom.getAttribute( 'aria-pressed' ) ).toBe( 'true' );
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).toBeNull();
       expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
     } );
 
@@ -191,10 +187,8 @@ describe( 'FlyoutMenu', () => {
       );
 
       // Check expected aria attribute states.
-      expect( triggerDom.getAttribute( 'aria-pressed' ) ).toBe( 'false' );
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).toBeNull();
       expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
     } );
 

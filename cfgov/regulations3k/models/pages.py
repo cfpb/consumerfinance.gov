@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+import re
 from collections import OrderedDict
 from functools import partial
 
@@ -135,10 +136,24 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             self.template,
             context)
 
-    def render_interp(self, context, contents, **kwargs):
+    def render_interp(self, context, raw_contents, **kwargs):
         template = get_template('regulations3k/inline_interps.html')
-        context.update({'contents': contents})
+
+        # Extract the title from the raw regdown
+        section_title_match = re.search(
+            r'#+\s?(?P<section_title>.*)\s',
+            raw_contents
+        )
+        if section_title_match is not None:
+            context.update({
+                'section_title': section_title_match.group(1)
+            })
+            span = section_title_match.span()
+            raw_contents = raw_contents[:span[0]] + raw_contents[span[1]:]
+
+        context.update({'contents': regdown(raw_contents)})
         context.update(kwargs)
+
         return template.render(context)
 
 
@@ -166,11 +181,15 @@ def get_reg_nav_items(request, current_page):
         [(subpart, None) for subpart in subpart_list]
     )
     for subpart in subpart_dict:
+        subpart_dict[subpart] = {
+            'sections': [],
+            'expanded': False
+        }
         sorted_sections = sorted(
             subpart.sections.all(),
             key=lambda s: sortable_label(s.label))
-        subpart_dict[subpart] = [
-            {
+        for section in sorted_sections:
+            section_dict = {
                 'title': section.title,
                 'url': current_page.url + current_page.reverse_subpage(
                     'section',
@@ -182,6 +201,8 @@ def get_reg_nav_items(request, current_page):
                 'expanded': True,
                 'section': section,
             }
-            for section in sorted_sections
-        ]
+            subpart_dict[subpart]['sections'].append(section_dict)
+            subpart_dict[subpart]['expanded'] = (
+                subpart_dict[subpart]['expanded'] or section_dict['active']
+            )
     return subpart_dict, False

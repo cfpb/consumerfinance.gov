@@ -20,7 +20,7 @@ DATABASES = {'default': TEST_DATABASE}
 
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
-TEST_RUNNER = 'cfgov.test.TestDataTestRunner'
+TEST_RUNNER = os.environ.get('TEST_RUNNER', 'cfgov.test.TestDataTestRunner')
 
 INSTALLED_APPS += (
     'wagtail.contrib.settings',

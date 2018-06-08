@@ -7,24 +7,31 @@ from django.conf import settings
 from django.test import TestCase as DjangoTestCase
 
 import mock
+from bs4 import BeautifulSoup as bS
 from requests import Response
 
-from regulations3k.models import EffectiveVersion, Part, Subpart
-from regulations3k.scripts.ecfr_importer import ecfr_to_regdown, run
+from regulations3k.models import Part, Subpart
+from regulations3k.scripts.ecfr_importer import (
+    ecfr_to_regdown, multiple_id_test, parse_ids, parse_section_paragraphs,
+    parse_singleton_graph, run
+)
+from regulations3k.scripts.integer_conversion import (
+    alpha_to_int, int_to_alpha, int_to_roman, roman_to_int
+)
 from regulations3k.scripts.patterns import IdLevelState
-from regulations3k.scripts.roman import int_to_roman, roman_to_int
 
 
 class ImporterTestCase(DjangoTestCase):
 
-    fixtures = ['test_parts.json']  # fixture has XML for regs 1 and 1005
+    fixtures = ['test_parts.json']
+    # xml_fixture has partial XML for regs 1002 and 1005
     xml_fixture = "{}/regulations3k/fixtures/graftest.xml".format(
         settings.PROJECT_ROOT)
 
     @mock.patch(
         'regulations3k.scripts.ecfr_importer.requests.get')
     def test_parser_good_request(self, mock_get):
-        part_number = '1'
+        part_number = '1002'
         with open(self.xml_fixture, 'r') as f:
             test_xml = f.read()
         mock_response = mock.Mock(
@@ -34,19 +41,14 @@ class ImporterTestCase(DjangoTestCase):
         self.assertEqual(mock_get.call_count, 1)
 
     @mock.patch('regulations3k.scripts.ecfr_importer.requests.get')
-    def test_bad_parser_request_returns_none(self, mock_get):
+    def test_failed_parser_request_returns_none(self, mock_get):
         mock_response = mock.Mock(
             Response,
             reason='REQUESTS FOR HUMANS MY EYE',
             status_code='404')
         mock_get.return_value = mock_response
-        self.assertIs(ecfr_to_regdown('1'), None)
+        self.assertIs(ecfr_to_regdown('1002'), None)
         self.assertEqual(mock_get.call_count, 1)
-
-    def test_nonexistent_part_number(self):
-        part_number = '9999'
-        self.assertIs(
-            ecfr_to_regdown(part_number, file_path=self.xml_fixture), None)
 
     def test_part_parser_use_existing(self):
         part_number = '1003'  # This part exists in the test fixture
@@ -56,29 +58,110 @@ class ImporterTestCase(DjangoTestCase):
         self.assertEqual(Subpart.objects.count(), 3)
 
     def test_part_parser_create_new(self):
-        part_number = '1'  # This part does not exist in the test fixture
+        part_number = '1002'  # This part does not exist in the test fixture
         ecfr_to_regdown(part_number, file_path=self.xml_fixture)
         self.assertEqual(Part.objects.filter(
             part_number=part_number).count(), 1)
-        self.assertEqual(Subpart.objects.count(), 3)
-        self.assertEqual(EffectiveVersion.objects.count(), 1)
 
     def test_bad_file_path_returns_none(self):
-        self.assertIs(ecfr_to_regdown('1', file_path='fake_file_path'), None)
-        self.assertEqual(Part.objects.filter(part_number='1').count(), 0)
+        self.assertIs(
+            ecfr_to_regdown('1002', file_path='fake_file_path'),
+            None)
+        self.assertEqual(Part.objects.filter(part_number='1002').count(), 0)
 
     @mock.patch('regulations3k.scripts.ecfr_importer.ecfr_to_regdown')
     def test_run_with_one_arg_calls_importer(self, mock_importer):
-        run('1')
+        run('1002')
         self.assertEqual(mock_importer.call_count, 1)
 
     def test_run_works_with_local_file(self):
-        run('1', self.xml_fixture)
-        self.assertEqual(Part.objects.filter(part_number='1').count(), 1)
+        run('1002', self.xml_fixture)
+        self.assertEqual(Part.objects.filter(part_number='1002').count(), 1)
 
     def test_run_importer_no_args(self):
         with self.assertRaises(SystemExit):
             run()
+
+    def test_run_importer_non_cfpb_part_args(self):
+        """The Part number must be on our whitelist"""
+        with self.assertRaises(ValueError):
+            run('9999')
+        with self.assertRaises(ValueError):
+            run('DROP TABLE')
+
+
+class ParagraphParsingTestCase(unittest.TestCase):
+    fixtures_dir = "{}/regulations3k/fixtures".format(settings.PROJECT_ROOT)
+    expected_graph_path = "{}/parsed_test_grafs.md".format(fixtures_dir)
+    # test paragraphs are from reg DD, section 1030.4
+    test_paragraph_xml_path = (
+        "{}/test_graphs_with_multi_ids.xml".format(fixtures_dir))
+    with open(test_paragraph_xml_path, 'r') as f:
+        test_xml = f.read()
+    with open(expected_graph_path, 'r') as f:
+        expected_graphs = f.read()
+
+    def test_singleton_parsing_invalid_tag(self):
+        graph = "A graf with (or) as a potential but invalid ID."
+        parsed_graph = parse_singleton_graph(graph)
+        self.assertEqual(parsed_graph, "\n" + graph + "\n")
+
+    def test_multi_id_paragraph_parsing(self):
+        soup = bS(self.test_xml, 'lxml-xml')
+        graph_soup = soup.find_all('P')
+        parsed_graphs = parse_section_paragraphs(graph_soup)
+        self.assertEqual(
+            parsed_graphs.replace('  ', ' ')[:100],
+            self.expected_graphs.replace('  ', ' ')[:100])
+
+    def test_multiple_id_test_true(self):
+        self.assertTrue(multiple_id_test(['a', '1']))
+        self.assertFalse(multiple_id_test(['a', 'i']))
+        self.assertTrue(multiple_id_test(['1', 'i']))
+        self.assertFalse(multiple_id_test(['1', 'b']))
+        self.assertTrue(multiple_id_test(['i', 'A']))
+        self.assertFalse(multiple_id_test(['ii', 'B']))
+        self.assertTrue(multiple_id_test(['A', '1']))
+        self.assertFalse(multiple_id_test(['B', '2']))
+
+    @mock.patch('regulations3k.scripts.ecfr_importer.parse_multi_id_graph')
+    def test_three_passing_ids(self, mock_parser):
+        test_graph = "(a) text (1) text (i) text."
+        three_good_ids = ['a', '1', 'i']
+        parse_ids(test_graph)
+        mock_parser.assert_called_with(test_graph, three_good_ids)
+
+    @mock.patch('regulations3k.scripts.ecfr_importer.parse_multi_id_graph')
+    def test_two_passing_ids(self, mock_parser):
+        test_graph = "(a) text (1) text (b) text."
+        two_good_ids = ['a', '1']
+        parse_ids(test_graph)
+        mock_parser.assert_called_with(test_graph, two_good_ids)
+
+    def new_test(self):
+        pass
+
+
+class ParserIdTestCase(unittest.TestCase):
+
+    def test_roman_test_invalid_level(self):
+        from regulations3k.scripts.ecfr_importer import LEVEL_STATE, roman_test
+        LEVEL_STATE.current_id = 'a'
+        self.assertFalse(roman_test('ii'))
+
+    def test_multiple_id_test_level_2_passes(self):
+        from regulations3k.scripts.ecfr_importer import (
+            LEVEL_STATE, multiple_id_test)
+        LEVEL_STATE.current_id = 'a-1'
+        ids = ['2', 'i', 'A']
+        self.assertTrue(multiple_id_test(ids))
+
+    def test_multiple_id_test_level_3_passes(self):
+        from regulations3k.scripts.ecfr_importer import (
+            LEVEL_STATE, multiple_id_test)
+        LEVEL_STATE.current_id = 'a-1-i'
+        ids = ['ii', 'A', '1']
+        self.assertTrue(multiple_id_test(ids))
 
 
 class PatternsTestCase(unittest.TestCase):
@@ -274,12 +357,34 @@ class PatternsTestCase(unittest.TestCase):
 
     def test_roman_surf_test_level_3_token_not_roman(self):
         self.levelstate.current_id = 'a-1-1'
-        self.assertIs(self.levelstate.roman_surf_test(), False)
+        self.assertIs(self.levelstate.roman_surf_test(
+            self.levelstate.current_token, 'ii'), False)
 
     def test_roman_surf_test_true(self):
         self.levelstate.current_id = 'a-1-i'
-        self.levelstate.next_token = 'ii'
-        self.assertIs(self.levelstate.roman_surf_test(), True)
+        self.assertIs(self.levelstate.roman_surf_test(
+            self.levelstate.current_token(), 'ii'), True)
+
+    def test_roman_surf_test_false_if_blank_token(self):
+        self.levelstate.current_id = ''
+        self.assertIs(self.levelstate.roman_surf_test(
+            self.levelstate.current_token(), 'ii'), False)
+
+    def test_alpha_surf_test(self):
+        self.assertIs(self.levelstate.alpha_surf_test('a', 'b'), True)
+
+    def test_alpha_surf_test_non_alpha(self):
+        self.assertIs(self.levelstate.alpha_surf_test('1', 'b'), False)
+
+    def test_alpha_surf_test_not_next_alpha(self):
+        self.assertIs(self.levelstate.alpha_surf_test('a', 'c'), False)
+
+    def test_alpha_surf_test_not_same_case(self):
+        self.assertIs(self.levelstate.alpha_surf_test('a', 'C'), False)
+
+    def test_root_token(self):
+        self.levelstate.current_id = 'a-1-i'
+        self.assertEqual(self.levelstate.root_token(), 'a')
 
 
 class EtruscanTestCase(unittest.TestCase):
@@ -323,3 +428,24 @@ class EtruscanTestCase(unittest.TestCase):
     def test_int_to_roman_out_of_range(self):
         with self.assertRaises(ValueError):
             int_to_roman(4000)
+
+    def test_alpha_to_int(self):
+        self.assertIs(alpha_to_int(1), None)
+        self.assertIs(alpha_to_int('a-3'), None)
+        self.assertIs(alpha_to_int(3.14), None)
+        self.assertIs(alpha_to_int('aA'), None)
+        self.assertEqual(alpha_to_int('a'), 1)
+        self.assertEqual(alpha_to_int('Z'), 26)
+        self.assertEqual(alpha_to_int('aa'), 27)
+        self.assertEqual(alpha_to_int('ZZ'), 52)
+
+    def test_int_to_alpha(self):
+        self.assertIs(int_to_alpha('a'), None)
+        self.assertIs(int_to_alpha(3.14), None)
+        self.assertIs(int_to_alpha(-1), None)
+        self.assertEqual(int_to_alpha(1), 'a')
+        self.assertEqual(int_to_alpha(26), 'z')
+        self.assertEqual(int_to_alpha(27), 'aa')
+        self.assertEqual(int_to_alpha(30), 'dd')
+        self.assertEqual(int_to_alpha(52), 'zz')
+        self.assertIs(int_to_alpha(53), None)
