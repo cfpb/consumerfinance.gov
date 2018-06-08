@@ -197,7 +197,7 @@
               {{ svg_icon('right') }}
         </a>
         {% if has_children %}
-            {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
+            {{ _nav_level( nav_depth | int + 1, nav_item, url | default('#'), text ) }}
         {% endif %}
     </li>
 {% endif %}

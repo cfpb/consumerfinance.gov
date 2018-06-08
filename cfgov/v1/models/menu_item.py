@@ -17,21 +17,13 @@ class MenuItem(models.Model):
         help_text='Display text for menu link',
         verbose_name="Menu label")
 
-    external_link = models.CharField(
-        null=True,
-        blank=True,
-        max_length=1000,
-        help_text='Enter url for page outside Wagtail. This will only '
-                  'be used if there is no page selected.',
-        default='#',
-        verbose_name='Direct URL (rare)')
-
     page_link = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
         related_name='+',
-        help_text='Link to a page in Wagtail.',
+        help_text=('Link to Wagtail overview page for this menu item '
+                   '(leave blank if there is no overview page).'),
         verbose_name='Overview page link'
     )
 
@@ -80,7 +72,6 @@ class MenuItem(models.Model):
         MultiFieldPanel([
             FieldPanel('link_text'),
             PageChooserPanel('page_link'),
-            FieldPanel('external_link'),
         ], heading='Menu Information'),
         FieldPanel('order'),
         StreamFieldPanel('column_1'),
