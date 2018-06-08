@@ -738,9 +738,10 @@ menu_items = [
                             'nav_items': []
                         },
                         {
-                            'link':{
+                            'link': {
                                 'link_text': 'Diversity & Inclusion',
-                                'external_link': '/about-us/diversity-and-inclusion/'
+                                'external_link':
+                                    '/about-us/diversity-and-inclusion/'
                             }
                         },
                     ]
