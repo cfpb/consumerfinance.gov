@@ -5,7 +5,6 @@ import importlib
 import logging
 import os
 import re
-import six
 import subprocess
 import sys
 from six import StringIO
@@ -22,15 +21,17 @@ from mock import Mock
 from scripts import initial_data, test_data
 
 
-# contextlib.redirect_stdout exists in Python 3 but not in Python 2.
-# This is an approximation.
-if six.PY2:
+try:
+    from contextlib import redirect_stdout
+except ImportError:
+    # contextlib.redirect_stdout exists in Python 3 but not in Python 2.
+    # This is an approximation.
     @contextlib.contextmanager
-    def redirect_stdout(stream):
-        sys.stdout = stream
+    def redirect_stdout(new_target):
+        sys.stdout = new_target
         try:
             yield
-        except:
+        except Exception:
             raise
         finally:
             sys.stdout = sys.__stdout__
@@ -195,11 +196,21 @@ class StdoutCapturingTestRunner(TestDataTestRunner):
     def run_suite(self, suite, **kwargs):
         stdout = StringIO()
         with redirect_stdout(stdout):
-            return_value = super(TestDataTestRunner, self).run_suite(
-                suite,
+            # This can be replaced with a call to super().run_suite() when
+            # we're past Django 1.8. 1.8 doesn't pass kwargs to the runner,
+            # which means we can't pass stream from our unittests.
+            resultclass = self.get_resultclass()
+            return_value = self.test_runner(
+                verbosity=self.verbosity,
+                failfast=self.failfast,
+                resultclass=resultclass,
                 **kwargs
-            )
+            ).run(suite)
+
         assert stdout.getvalue() == '', (
-            'there is content in stdout: {}'.format(stdout.getvalue())
+            'unit tests should avoid writing to stdout: {}'.format(
+                stdout.getvalue()
+            )
         )
+
         return return_value
