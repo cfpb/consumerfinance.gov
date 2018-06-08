@@ -566,7 +566,8 @@ CSP_FRAME_SRC = (
     '*.doubleclick.net',
     'universal.iperceptions.com',
     'www.facebook.com',
-    'staticxx.facebook.com')
+    'staticxx.facebook.com',
+    'mediasite.yorkcast.com')
 
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = ("'self'", "data:", "fast.fonts.net", "fonts.google.com", "fonts.gstatic.com")
@@ -587,7 +588,7 @@ FLAGS = {
     # Ask CFPB search spelling correction support
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results.
-	'ASK_SEARCH_TYPOS': {},
+    'ASK_SEARCH_TYPOS': {},
 
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -599,7 +600,7 @@ FLAGS = {
     # When enabled, include a recruitment code comment in the base template.
     'CFPB_RECRUITING': {},
 
-    # When enabled, display a "techical issues" banner on /complaintdatabase
+    # When enabled, display a "technical issues" banner on /complaintdatabase.
     'CCDB_TECHNICAL_ISSUES': {},
 
     # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)

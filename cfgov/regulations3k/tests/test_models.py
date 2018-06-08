@@ -8,6 +8,7 @@ from django.http import HttpRequest  # Http404, HttpResponse
 from django.test import TestCase as DjangoTestCase
 
 from model_mommy import mommy
+
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart, sortable_label
 )
@@ -191,6 +192,14 @@ class RegModelTests(DjangoTestCase):
 
     def test_render_interp(self):
         result = self.reg_page.render_interp({}, 'some contents')
+        self.assertIn('some contents', result)
+
+    def test_render_interp_with_title(self):
+        result = self.reg_page.render_interp(
+            {},
+            '# A title\n\nsome contents'
+        )
+        self.assertIn('Official interpretation of A title', result)
         self.assertIn('some contents', result)
 
     def test_section_ranges(self):

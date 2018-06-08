@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+import re
 from collections import OrderedDict
 from functools import partial
 
@@ -15,13 +16,12 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 
-from regulations3k.models import Part, Section, sortable_label  # , Subpart
-from regulations3k.regdown import regdown
-from regulations3k.resolver import get_contents_resolver, get_url_resolver
-
 # Our RegDownTextField field doesn't generate a good widget yet
 # from regulations3k.models.fields import RegDownTextField
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
+from regulations3k.models import Part, Section, sortable_label  # , Subpart
+from regulations3k.regdown import regdown
+from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage, CFGOVPageManager
 
@@ -136,10 +136,24 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             self.template,
             context)
 
-    def render_interp(self, context, contents, **kwargs):
+    def render_interp(self, context, raw_contents, **kwargs):
         template = get_template('regulations3k/inline_interps.html')
-        context.update({'contents': contents})
+
+        # Extract the title from the raw regdown
+        section_title_match = re.search(
+            r'#+\s?(?P<section_title>.*)\s',
+            raw_contents
+        )
+        if section_title_match is not None:
+            context.update({
+                'section_title': section_title_match.group(1)
+            })
+            span = section_title_match.span()
+            raw_contents = raw_contents[:span[0]] + raw_contents[span[1]:]
+
+        context.update({'contents': regdown(raw_contents)})
         context.update(kwargs)
+
         return template.render(context)
 
 
@@ -167,11 +181,15 @@ def get_reg_nav_items(request, current_page):
         [(subpart, None) for subpart in subpart_list]
     )
     for subpart in subpart_dict:
+        subpart_dict[subpart] = {
+            'sections': [],
+            'expanded': False
+        }
         sorted_sections = sorted(
             subpart.sections.all(),
             key=lambda s: sortable_label(s.label))
-        subpart_dict[subpart] = [
-            {
+        for section in sorted_sections:
+            section_dict = {
                 'title': section.title,
                 'url': current_page.url + current_page.reverse_subpage(
                     'section',
@@ -183,6 +201,8 @@ def get_reg_nav_items(request, current_page):
                 'expanded': True,
                 'section': section,
             }
-            for section in sorted_sections
-        ]
+            subpart_dict[subpart]['sections'].append(section_dict)
+            subpart_dict[subpart]['expanded'] = (
+                subpart_dict[subpart]['expanded'] or section_dict['active']
+            )
     return subpart_dict, False

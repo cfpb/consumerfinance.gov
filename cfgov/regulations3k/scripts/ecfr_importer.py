@@ -7,9 +7,11 @@ import sys
 
 import requests
 from bs4 import BeautifulSoup as bS
+
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart
 )
+from regulations3k.scripts.integer_conversion import roman_to_int
 from regulations3k.scripts.patterns import (  # dot_id_patterns,
     IdLevelState, paren_id_patterns, title_pattern
 )
@@ -21,14 +23,19 @@ from regulations3k.scripts.patterns import (  # dot_id_patterns,
 # - insert interp refs
 # ODDITIES TO HANDLE
 # tables
-# dash-forms (forms with dash-extended entry fields)
 # gif graphics
 # pdf graphics
 
 logger = logging.getLogger(__name__)
-# The latest ECFR version of title-12, updated every few days
+
+# eCFR globals
 CFR_TITLE = '12'
 CFR_CHAPTER = 'X'
+PART_WHITELIST = [
+    '1002', '1003', '1004', '1005', '1010', '1011',
+    '1012', '1013', '1024', '1026', '1030'
+]
+# The latest eCFR version of title-12, updated every few days
 LATEST_ECFR = ("https://www.gpo.gov/fdsys/bulkdata/ECFR/"
                "title-{0}/ECFR-title{0}.xml".format(CFR_TITLE))
 
@@ -121,60 +128,189 @@ def parse_subparts(part_soup, subpart_list, part):
             parse_sections(subpart_sections, part, _subpart)
 
 
-def italic_to_bold(soup):
-    """Replace initial italics clauses with markdown-style bolding"""
+def pre_process_tags(soup):
+    """
+    Convert initial italics-tagged text to markdown bold
+    and convert the rest to markdown italics.
+    """
     if soup.find('I'):
         ital_content = soup.find('I').text
-        soup.find('I').replaceWith('**{}** '.format(ital_content))
+        soup.find('I').replaceWith('**{}**'.format(ital_content))
+    for element in soup.find_all('I'):
+        i_content = element.text
+        element.replaceWith('*{}*'.format(i_content))
     return soup
 
 
-def extract_id(text):
-    match = re.search(paren_id_patterns['any'], text)
-    if match:
-        return re.search(paren_id_patterns['any'], text).group(1)
-
-
-def extract_level_one_ids(text):
-    """
-    Extract up to three valid element IDS from an initial paragraph.
-    """
-    ids = re.findall(paren_id_patterns['initial'], text)[:3]
-    if not ids:
-        return
-    if ids[0].islower():
-        good_ids = 1
+def bold_first_italics(graph):
+    """For a newly broken-up graph, convert the first italics text to bold."""
+    if graph.count('*') > 1:
+        return graph.replace('*', '**', 2)
     else:
-        return
-    if len(ids) > 1 and ids[1] == '1':
-        good_ids += 1
-        if len(ids) == 3 and ids[2] == 'i':
-            good_ids += 1
+        return graph
 
-    return "-".join([pid for pid in ids[:good_ids]])
+
+def combine_bolds(graph):
+    """
+    Make ID marker bold and remove redundant bold markup between bold elements.
+    """
+    if graph.startswith('('):
+        graph = graph.replace(
+            '  ', ' ').replace(
+            '(', '**(', 1).replace(
+            ')', ')**', 1).replace(
+            '** **', ' ', 1)
+    return graph
+
+
+def graph_top(graph):
+    "Weed out the common sources of errant IDs"
+    return graph.partition(
+        'paragraph')[0].partition(
+        '12 CFR')[0].partition(
+        '\xa7')[0][:200]
+
+
+def parse_singleton_graph(graph):
+    """Take a graph with a single ID and return styled with a braced ID"""
+    new_graph = ''
+    id_match = re.search(paren_id_patterns['initial'], graph_top(graph))
+    if not id_match:
+        return '\n' + combine_bolds(graph) + '\n'
+    id_token = id_match.group(1).strip('*')
+    if not token_validity_test(id_token):
+        return '\n' + combine_bolds(graph) + '\n'
+    LEVEL_STATE.next_token = id_token
+    pid = LEVEL_STATE.next_id()
+    new_graph += "\n{" + pid + "}\n"
+    new_graph += combine_bolds(graph) + '\n'
+    return new_graph
+
+
+def token_validity_test(token):
+    "Make sure a singleton token is some kind of valid ID."
+    if (
+            token.isdigit()
+            or roman_to_int(token)
+            or (token.isalpha() and len(token) == 1)
+            or (token.isalpha() and len(token) == 2 and token[0] == token[1])):
+        return True
+    else:
+        return False
+
+
+def parse_multi_id_graph(graph, ids):
+    """
+    Parse a graph with 1 to 3 ids and return
+    individual graphs with their own braced IDs.
+    """
+    new_graphs = ''
+    LEVEL_STATE.next_token = ids[0]
+    pid1 = LEVEL_STATE.next_id()
+    split1 = graph.partition('({})'.format(ids[1]))
+    text1 = combine_bolds(split1[0])
+    pid2_marker = split1[1]
+    remainder = bold_first_italics(split1[2])
+    new_graphs += "\n{" + pid1 + "}\n"
+    new_graphs += text1 + '\n'
+    LEVEL_STATE.next_token = ids[1]
+    pid2 = LEVEL_STATE.next_id()
+    new_graphs += "\n{" + pid2 + "}\n"
+    if len(ids) == 2:
+        text2 = combine_bolds(" ".join([pid2_marker, remainder]))
+        new_graphs += text2 + '\n'
+        return new_graphs
+    else:
+        split2 = remainder.partition('({})'.format(ids[2]))
+        pid3_marker = split2[1]
+        remainder2 = bold_first_italics(split2[2])
+        text2 = combine_bolds(" ".join([pid2_marker, split2[0]]))
+        new_graphs += text2 + '\n'
+        LEVEL_STATE.next_token = ids[2]
+        pid3 = LEVEL_STATE.next_id()
+        new_graphs += "\n{" + pid3 + "}\n"
+        text3 = combine_bolds(" ".join([pid3_marker, remainder2]))
+        new_graphs += text3 + '\n'
+        return new_graphs
+
+
+def roman_test(id_token):
+    """
+    Determine whether the root ID of a potential multi_ID paragraph is a roman
+    numeral increment surfing levels 3 or 6 (the roman levels of a-1-i-A-1-i)
+    """
+    roman_int = roman_to_int(id_token)
+    if not roman_int:
+        return False
+    if LEVEL_STATE.level() not in [3, 6]:
+        return False
+    if roman_int - 1 == roman_to_int(LEVEL_STATE.current_token()):
+        return True
+
+
+def multiple_id_test(ids):
+    """
+    Decide, based on the first two IDS,
+    whether to proceed with multi-ID processing.
+
+    Allowed multi-ID patterns are:
+      (lowercase)(1) - and the lowercase cannot be a roman_numeral increment
+      (digit)(i)
+      (roman)(A)
+      (uppercase)(1)
+    """
+    if len(ids) < 2:
+        return
+    root_token = ids[0]
+    # levels 1 or 4
+    if (root_token.isalpha()
+            and len(root_token) < 3
+            and not roman_test(root_token)
+            and ids[1] == '1'):
+        good_ids = 2
+        if len(ids) == 3 and ids[2] == 'i':
+            good_ids = 3
+        return ids[:good_ids]
+    # levels 2 or 5
+    if root_token.isdigit() and ids[1] == 'i':
+        good_ids = 2
+        if len(ids) == 3 and ids[2] == 'A' and LEVEL_STATE.level() != 5:
+            good_ids = 3
+        return ids[:good_ids]
+    # level 3
+    if roman_to_int(root_token) and ids[1] == 'A':
+        good_ids = 2
+        if len(ids) == 3 and ids[2] == '1':
+            good_ids = 3
+        return ids[:good_ids]
+    # multiples not allowed at level 6
+
+
+def parse_ids(graph):
+    """
+    Extract up to three valid element IDs (indentaion markers)
+    from a paragraph, and return a paragraph for each ID found.
+    """
+    raw_ids = re.findall(
+        paren_id_patterns['initial'], graph_top(graph))
+    clean_ids = [bit.strip('*') for bit in raw_ids if bit][:3]
+    for clean_id in clean_ids:
+        #  clean up edge-case bolding caused by italicized IDs, such as
+        #  '(F)(<I>1</I>)' from reg 1026.7
+        graph = graph.replace("**{}**".format(clean_id), clean_id)
+    valid_ids = multiple_id_test(clean_ids)
+    if not valid_ids or LEVEL_STATE.level() == 6:
+        return parse_singleton_graph(graph)
+    else:
+        return parse_multi_id_graph(graph, valid_ids)
 
 
 def parse_section_paragraphs(paragraph_soup):
     paragraph_content = ''
     for p in paragraph_soup:
-        p = italic_to_bold(p)
-        if LEVEL_STATE.level() == 1:
-            new_pid = extract_level_one_ids(p.text) or ''
-            if new_pid.count('-') > 0:
-                LEVEL_STATE.current_id = new_pid
-                pid = new_pid
-            else:
-                LEVEL_STATE.next_token = new_pid
-                pid = LEVEL_STATE.next_id()
-            if pid:
-                paragraph_content += "\n{" + pid + "}\n"
-        else:
-            id_token = extract_id(p.text)
-            if id_token:
-                LEVEL_STATE.next_token = id_token
-                pid = LEVEL_STATE.next_id()
-                paragraph_content += "{" + pid + "}\n"
-        paragraph_content += "{}\n\n".format(p.text.replace('\xc2', ''))
+        p = pre_process_tags(p)
+        graph = p.text.replace('\n', '')
+        paragraph_content += parse_ids(graph)
     return paragraph_content
 
 
@@ -225,7 +361,11 @@ def ecfr_to_regdown(part_number, file_path=None):
     DIV8 is a section
     DIV9 is an appendix
     DIV9 element whose HEAD starts with 'Supplement I' is an interpretation
+
+    To avoid mischief, we make sure the part number is on a whitelist.
     """
+    if part_number not in PART_WHITELIST:
+        raise ValueError('Provided Part number is not one we support.')
     starter = datetime.datetime.now()
     if file_path:
         try:
@@ -245,12 +385,7 @@ def ecfr_to_regdown(part_number, file_path=None):
         markup = ecfr_request.text
     soup = bS(markup, "lxml-xml")
     parts = soup.find_all('DIV5')
-    try:
-        part_soup = [div for div in parts if div['N'] == part_number][0]
-    except IndexError:
-        logger.info(
-            "Regulation could not be found for part {}".format(part_number))
-        return
+    part_soup = [div for div in parts if div['N'] == part_number][0]
     part = parse_part(part_soup, part_number)
     parse_version(part_soup, part)
     subpart_list = part_soup.find_all('DIV6')

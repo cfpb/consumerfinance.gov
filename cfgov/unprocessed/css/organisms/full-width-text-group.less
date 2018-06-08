@@ -24,6 +24,18 @@
 .o-full-width-text-group {
     overflow: auto;
 
+    /**
+     * Fix for Wagtail's default img markup that includes height attribute
+     * and for loss of margin on extant Media block images.
+     * TODO: Remove once data migration from Media to ContentImage is complete
+     */
+
+    > img {
+        height: auto;
+        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+
+
       .m-inset {
           margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
 
