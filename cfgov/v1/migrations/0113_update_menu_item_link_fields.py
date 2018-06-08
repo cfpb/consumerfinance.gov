@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='menuitem',
             name='page_link',
-            field=models.ForeignKey(related_name='+', blank=True, to='wagtailcore.Page', help_text=b'Link to Wagtail overview page for this menu item (if one exists).', null=True, verbose_name=b'Overview page link'),
+            field=models.ForeignKey(related_name='+', blank=True, to='wagtailcore.Page', help_text=b'Link to Wagtail overview page for this menu item (leave blank if there is no overview page).', null=True, verbose_name=b'Overview page link'),
         ),
     ]
