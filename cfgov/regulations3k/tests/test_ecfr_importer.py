@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import datetime
+import json
 import unittest
 
 from django.conf import settings
@@ -10,11 +12,12 @@ import mock
 from bs4 import BeautifulSoup as bS
 from requests import Response
 
-from regulations3k.models import Part
+from regulations3k.models import Part, Subpart
 from regulations3k.scripts.ecfr_importer import (
-    ecfr_to_regdown, multiple_id_test, parse_appendix_graph,
-    parse_appendix_paragraphs, parse_ids, parse_section_paragraphs,
-    parse_singleton_graph, run, sniff_appendix_id_type
+    ecfr_to_regdown, get_effective_date, multiple_id_test, parse_appendices,
+    parse_appendix_elements, parse_appendix_graph, parse_appendix_paragraphs,
+    parse_ids, parse_interps, parse_part, parse_section_paragraphs,
+    parse_singleton_graph, parse_version, run, sniff_appendix_id_type
 )
 from regulations3k.scripts.integer_conversion import (
     alpha_to_int, int_to_alpha, int_to_roman, roman_to_int
@@ -34,50 +37,113 @@ class ImporterTestCase(DjangoTestCase):
 
     def test_appendix_id_type_sniffer(self):
         p_soup = bS(self.test_xml, 'lxml-xml')
-        appendix_graphs = p_soup.find('DIV9').find_all('P')
-        appendix_type = sniff_appendix_id_type(appendix_graphs)
-        self.assertEqual('appendix', appendix_type)
-        section_graphs = p_soup.find('DIV8').find_all('P')
-        section_type = sniff_appendix_id_type(section_graphs)
-        self.assertEqual('section', section_type)
+        appendices = p_soup.find_all('DIV5')[1].find_all('DIV9')
+        appendix_0_graphs = appendices[0].find_all('P')
+        appendix_0_type = sniff_appendix_id_type(appendix_0_graphs)
+        self.assertEqual('appendix', appendix_0_type)
+        appendix_1_graphs = appendices[1].find_all('P')
+        appendix_1_type = sniff_appendix_id_type(appendix_1_graphs)
+        self.assertEqual('section', appendix_1_type)
+        appendix_2_graphs = appendices[2].find_all('P')
+        appendix_2_type = sniff_appendix_id_type(appendix_2_graphs)
+        self.assertIs(appendix_2_type, None)
 
     def test_appendix_graph_parsing(self):
         p_soup = bS(self.test_xml, 'lxml-xml')
-        graphs = p_soup.find('DIV9').find_all('P')
+        graphs = p_soup.find_all('DIV5')[1].find_all('DIV9')[1].find_all('P')
         parsed_graph2 = parse_appendix_graph(graphs[2])
         self.assertIn(
-            "{2}\n**2.** To the extent not included in item 1 above:",
+            "(2) To the extent not included in item 1 above:",
             parsed_graph2
         )
         parsed_graph3 = parse_appendix_graph(graphs[3])
         self.assertIn(
-            "{2-a}",
+            "(i) National banks",
             parsed_graph3
         )
         parse_appendix_paragraphs(graphs, 'appendix')
-        self.assertIn('{2-b}', p_soup.text)
+        self.assertIn('\n1(a)', p_soup.text)
+
+    def test_interp_graph_parsing(self):
+        soup = bS(self.test_xml, 'lxml-xml')
+        part_soup = soup.find('DIV5')
+        part = parse_part(part_soup, '1002')
+        version = parse_version(part_soup, part)
+        interp_subpart = Subpart(
+            title="Supplement I to Part {}".format(part.part_number),
+            label="Official Interpretations",
+            version=version)
+        interp_subpart.save()
+        interp = [div for div
+                  in part_soup.find_all('DIV9')
+                  if div.find('HEAD').text.startswith('Supplement I')][0]
+        parse_interps(interp, part, interp_subpart)
+        self.assertEqual(
+            Subpart.objects.filter(title__contains='Supplement I').count(),
+            1,
+        )
+
+    def test_parse_appendices_no_appendix(self):
+        self.assertIs(parse_appendices('', {}), None)
+
+    def test_parse_appendix_elements(self):
+        p_soup = bS(self.test_xml, 'lxml-xml')
+        appendices = p_soup.find_all('DIV5')[1].find_all('DIV9')
+        test_element = appendices[1]
+        parsed_appendix = parse_appendix_elements(test_element)
+        self.assertIn("**(a)**", parsed_appendix)
 
     @mock.patch(
         'regulations3k.scripts.ecfr_importer.requests.get')
     def test_parser_good_request(self, mock_get):
         part_number = '1002'
         mock_response = mock.Mock(
-            Response, reason='OK', text=self.test_xml, encoding='utf-8')
+            Response,
+            ok=True,
+            text=self.test_xml, encoding='utf-8')
         mock_get.return_value = mock_response
+        mock_response.json.return_value = json.loads(
+            '{"results": [{"effective_on": "2018-01-01"}]}')
         ecfr_to_regdown(part_number)
-        self.assertEqual(mock_get.call_count, 1)
+        self.assertEqual(mock_get.call_count, 2)
+
+    @mock.patch('regulations3k.scripts.ecfr_importer.requests.get')
+    def test_good_effective_date_request(self, mock_get):
+        mock_response = mock.Mock(
+            Response,
+            ok=True)
+        mock_response.json.return_value = json.loads(
+            '{"results": [{"effective_on": "2018-01-01"}]}')
+        mock_get.return_value = mock_response
+        self.assertEqual(get_effective_date('1002'), datetime.date(2018, 1, 1))
+
+    @mock.patch('regulations3k.scripts.ecfr_importer.requests.get')
+    def test_bad_effective_date_request_returns_none(self, mock_get):
+        mock_response = mock.Mock(
+            Response,
+            ok=False)
+        mock_get.return_value = mock_response
+        self.assertIs(get_effective_date('1002'), None)
 
     @mock.patch('regulations3k.scripts.ecfr_importer.requests.get')
     def test_failed_parser_request_returns_none(self, mock_get):
         mock_response = mock.Mock(
             Response,
             reason='REQUESTS FOR HUMANS MY EYE',
-            status_code='404')
+            status_code=404,
+            ok=False)
         mock_get.return_value = mock_response
         self.assertIs(ecfr_to_regdown('1002'), None)
         self.assertEqual(mock_get.call_count, 1)
 
-    def test_part_parser_use_existing(self):
+    @mock.patch('regulations3k.scripts.ecfr_importer.requests.get')
+    def test_part_parser_uses_existing(self, mock_get):
+        mock_response = mock.Mock(  # mock to skip the effective_date request
+            Response,
+            reason='REQUESTS FOR HUMANS MY EYE',
+            status_code=404,
+            ok=False)
+        mock_get.return_value = mock_response
         part_number = '1003'  # This part exists in the test fixture
         ecfr_to_regdown(part_number, file_path=self.xml_fixture)
         self.assertEqual(Part.objects.filter(

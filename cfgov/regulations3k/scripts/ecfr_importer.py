@@ -7,6 +7,7 @@ import sys
 
 import requests
 from bs4 import BeautifulSoup as bS
+from dateutil import parser
 
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart
@@ -18,7 +19,6 @@ from regulations3k.scripts.patterns import (
 
 
 # TODO
-# - Parse appendices
 # - parse interps
 # - insert interp refs
 # ODDITIES TO HANDLE
@@ -32,12 +32,45 @@ logger = logging.getLogger(__name__)
 CFR_TITLE = '12'
 CFR_CHAPTER = 'X'
 PART_WHITELIST = [
-    '1002', '1003', '1004', '1005', '1010', '1011',
-    '1012', '1013', '1024', '1026', '1030'
+    '1001', '1002', '1003', '1004', '1005', '1006', '1007', '1008', '1009',
+    '1010', '1011', '1012', '1013', '1014', '1015', '1016',
+    '1022', '1024', '1025', '1026', '1030', '1041',
+    '1070', '1071', '1072', '1073', '1074', '1075', '1076',
+    '1080', '1081', '1082', '1083', '1090', '1091',
 ]
 # The latest eCFR version of title-12, updated every few days
 LATEST_ECFR = ("https://www.gpo.gov/fdsys/bulkdata/ECFR/"
                "title-{0}/ECFR-title{0}.xml".format(CFR_TITLE))
+FR_date_query = (
+    "https://www.federalregister.gov/api/v1/documents.json?"
+    "fields[]=effective_on&"
+    "per_page=20&"
+    "order=relevance&"
+    "conditions[agencies][]=consumer-financial-protection-bureau&"
+    "conditions[type][]=RULE&"
+    "conditions[cfr][title]=12&"
+    "conditions[cfr][part]={}"
+)
+HEADLINE_MAP = {
+    'HD1': "\n## {}\n",
+    'HD2': "\n### {}\n",
+    'HD3': "\n#### {}\n",
+}
+LINK_FARM_TAGS = ['XREF', 'FP-1', 'FP-2']
+
+
+def get_effective_date(part_number):
+    today = datetime.date.today()
+    FR_query = FR_date_query.format(part_number)
+    FR_response = requests.get(FR_query)
+    if not FR_response.ok or not FR_response.json():
+        return
+    FR_json = FR_response.json()
+    date_strings = [result['effective_on'] for result in FR_json['results']]
+    dates = sorted(set(
+        [parser.parse(date).date() for date in date_strings if date]
+    ))
+    return [date for date in dates if date <= today][-1]
 
 
 class PayLoad(object):
@@ -53,6 +86,7 @@ class PayLoad(object):
     sections = []
     appendices = []
     interpretations = []
+    effective_date = None
 
 
 PAYLOAD = PayLoad()
@@ -79,50 +113,66 @@ def parse_part(part_soup, part_number):
 def parse_version(soup, part):
     auth = soup.find('AUTH').find('PSPACE').text.strip()
     source = soup.find('SOURCE').find('PSPACE').text.strip()
-    version, created = EffectiveVersion.objects.get_or_create(
+    version = EffectiveVersion(
         acquired=datetime.date.today(),
+        effective_date=PAYLOAD.effective_date,
         authority=auth,
         part=part,
         source=source,
+        draft=True,
     )
-    if created:
-        version.draft = True
-        version.save()
-        logger.info("Created new draft version for {}".format(part))
+    version.save()
     PAYLOAD.version = version
     return version
 
 
-def parse_subparts(part_soup, subpart_list, part):
-    """Createa a mapping of subparts and the sections they contain."""
-    appendix_husk = Subpart(
+def parse_subparts(part_soup, part):
+    """
+    Create subparts and the elements they contain.
+
+    We need to parse appendices first so that, if there are interpretations,
+    we have a mapping of interpretation references to insert into sections
+    during section parsing.
+    """
+    subpart_list = part_soup.find_all('DIV6')
+    appendix_subpart = Subpart(
         title="Appendices",
         label="{}-Appendices".format(part.part_number),
         version=PAYLOAD.version)
-    PAYLOAD.subparts['appendix_subpart'] = appendix_husk
-    interp_husk = Subpart(
-        title="Supplement I to Part {}".format(part.part_number),
-        label="Official Interpretations",
+    appendix_subpart.save()
+    PAYLOAD.subparts['appendix_subpart'] = appendix_subpart
+    interp_subpart = Subpart(
+        title="Supplement I to Part {} - Official Interpretations".format(
+            part.part_number),
+        label="{}-Interpretations".format(part.part_number),
         version=PAYLOAD.version)
-    PAYLOAD.subparts['interp_subpart'] = interp_husk
-
+    interp_subpart.save()
+    PAYLOAD.subparts['interp_subpart'] = interp_subpart
+    appendices = part_soup.find_all('DIV9')
+    if appendices:
+        if appendices[-1].find('HEAD').text.startswith('Supplement I'):
+            interp_div = appendices.pop(-1)
+            parse_interps(interp_div, part, PAYLOAD.subparts['interp_subpart'])
+        parse_appendices(appendices, part)
     labeled_subparts = [subp for subp in subpart_list
                         if subp.find('HEAD').text.strip()]
     if not labeled_subparts:
-        generic_subpart, cr = Subpart.objects.get_or_create(
+        generic_subpart = Subpart(
             label=part.part_number,
             title="General",
             version=PAYLOAD.version
         )
+        generic_subpart.save()
         PAYLOAD.subparts['section_subparts'].append(generic_subpart)
         parse_sections(part_soup.find_all('DIV8'), part, generic_subpart)
     else:
         for element in labeled_subparts:
-            _subpart, cr = Subpart.objects.get_or_create(
+            _subpart = Subpart(
                 title=element.find('HEAD').text.strip(),
                 label=part.part_number,
                 version=PAYLOAD.version
             )
+            _subpart.save()
             PAYLOAD.subparts['section_subparts'].append(_subpart)
             subpart_sections = element.find_all('DIV8')
             parse_sections(subpart_sections, part, _subpart)
@@ -334,14 +384,14 @@ def parse_appendix_graph(p_element):
     return graph_text
 
 
-def parse_appendix_paragraphs(paragraph_elements, id_type):
-    for paragraph in paragraph_elements:
-        p = pre_process_tags(paragraph)
+def parse_appendix_paragraphs(p_elements, id_type):
+    for p_element in p_elements:
+        p = pre_process_tags(p_element)
         if id_type == 'section':
-            p_content = parse_ids(p)
+            p_content = parse_ids(p.text) + "\n"
             p.replaceWith(p_content)
         else:
-            p_content = parse_appendix_graph(p)
+            p_content = parse_appendix_graph(p) + "\n"
             p.replaceWith(p_content)
 
 
@@ -383,24 +433,18 @@ def parse_appendix_elements(appendix_soup):
     eCFR XML doesn't have any HD4s.
     """
     paragraphs = appendix_soup.find_all('P')
-    if not paragraphs:
-        return ''
     id_type = sniff_appendix_id_type(paragraphs)
-    headline_map = {
-        'HD1': "\n## {}\n",
-        'HD2': "\n### {}\n",
-        'HD3': "\n#### {}\n",
-    }
     for citation in appendix_soup.find_all('CITA'):
         citation.replaceWith('')
-    for tag in headline_map:
+    for tag in HEADLINE_MAP:
         subheds = appendix_soup.find_all(tag)
         for subhed in subheds:
-            hed_content = headline_map[tag].format(subhed.text.strip())
+            hed_content = HEADLINE_MAP[tag].format(subhed.text.strip())
             subhed.replaceWith(hed_content)
     if id_type is None:
         for p in paragraphs:
             pre_process_tags(p)
+            p.replaceWith(p.text + "\n")
     else:
         parse_appendix_paragraphs(paragraphs, id_type)
     return appendix_soup.text
@@ -413,18 +457,18 @@ def parse_appendices(appendices, part):
     if not appendices:
         return
     subpart = PAYLOAD.subparts['appendix_subpart']
-    subpart.save()
     for i, _appendix in enumerate(appendices):
         default_appendix_letter = int_to_alpha(i + 1).upper()
         default_label = "{}-{}".format(
             part.part_number, default_appendix_letter)
+        if _appendix['N']:
+            default_label = "{}-{}".format(
+                part.part_number,
+                _appendix['N'].replace('Appendix ', ''),
+            )
         head_element = _appendix.find('HEAD')
-        if head_element:
-            _hed = head_element.text.strip()
-            head_element.replaceWith('')
-        else:
-            _hed = "Appendix {} to Part {}".format(
-                default_appendix_letter, part.part_number)
+        _hed = head_element.text.strip()
+        head_element.replaceWith('')
         if _hed.startswith('Appendix MS '):
             default_label = '{}-MS'.format(part.part_number)
         elif _hed.startswith('Appendix MS'):
@@ -441,12 +485,71 @@ def parse_appendices(appendices, part):
     PAYLOAD.appendices.append(appendix)
 
 
-def parse_interps(interp_list, part):
+def parse_interps(interp_div, part, subpart):
     """
-    Take the remaining list of interpretations, break them down into
-    individual section interpretations, and process them by subpart.
+    Break down interpretations into individual section interpretations,
+    and them process them by subpart, creating a mapping of references
+    to be inserted in the related sections.
     """
-    PAYLOAD.interpretations = {}
+    interp_numeric_pattern = r'Section \d{4}\.(\d{1,2}) '
+    interp_appendix_pattern = r'Appendix ([A-Z]{1,2}) -'
+    preamble = ''
+    for tag in interp_div.find('HEAD').findNextSiblings():
+        if tag.name == 'P':
+            preamble += pre_process_tags(tag).text + "\n"
+        else:
+            break
+    for citation in interp_div.find_all('CITA'):
+        citation.replaceWith('')
+    if len(interp_div.find_all('HD1')) > 2:
+        subheadings = interp_div.find_all('HD1')
+    else:
+        h1_elements = interp_div.find_all('HD1')
+        subheadings = interp_div.find_all('HD2')
+        if h1_elements:
+            subheadings = [h1_elements.pop(0)] + subheadings
+        if h1_elements:
+            subheadings += h1_elements
+    for i, heading in enumerate(reversed(subheadings)):
+        _hed = heading.text.strip()
+        if re.match(interp_numeric_pattern, _hed):
+            section_number = re.match(interp_numeric_pattern, _hed).group(1)
+        elif re.match(interp_appendix_pattern, _hed):
+            section_number = re.match(interp_appendix_pattern, _hed).group(1)
+        elif _hed == 'Introduction':
+            section_number = '0'
+        else:
+            section_number = 'X'
+        label = "{}-Interp-{}".format(part.part_number, section_number)
+        if i == len(subheadings) - 1:
+            content = preamble
+        else:
+            content = ''
+        sub_elements = heading.findNextSiblings()
+        for element in sub_elements:
+            if element.name == 'P':
+                content += pre_process_tags(element).text + "\n"
+            elif element.name == 'HD3':
+                content += "\n### {}\n".format(element.text.strip())
+            elif element.name == 'HD2':
+                if heading.name == 'HD2':
+                    element.replaceWith('')
+                    break
+                content += "\n## {}\n".format(element.text.strip())
+            elif element.name == 'HD1':
+                element.replaceWith('')
+                break
+            else:
+                content += "\n{}\n".format(element.text.strip())
+            element.replaceWith('')
+        interp = Section(
+            subpart=subpart,
+            label=label,
+            title=_hed,
+            contents=content
+        )
+        interp.save()
+        PAYLOAD.interpretations.append(interp)
 
 
 def ecfr_to_regdown(part_number, file_path=None):
@@ -469,7 +572,7 @@ def ecfr_to_regdown(part_number, file_path=None):
     To avoid mischief, we make sure the part number is on a whitelist.
     """
     if part_number not in PART_WHITELIST:
-        raise ValueError('Provided Part number is not one we support.')
+        raise ValueError('Provided Part number is not a CFPB regulation.')
     starter = datetime.datetime.now()
     if file_path:
         try:
@@ -480,7 +583,7 @@ def ecfr_to_regdown(part_number, file_path=None):
             return
     else:
         ecfr_request = requests.get(LATEST_ECFR)
-        if ecfr_request.reason != 'OK':
+        if not ecfr_request.ok:
             logger.info(
                 "ECFR request failed with code {} and reason {}".format(
                     ecfr_request.status_code, ecfr_request.reason))
@@ -490,16 +593,11 @@ def ecfr_to_regdown(part_number, file_path=None):
     soup = bS(markup, "lxml-xml")
     parts = soup.find_all('DIV5')
     part_soup = [div for div in parts if div['N'] == part_number][0]
+    PAYLOAD.effective_date = get_effective_date(part_number)
     part = parse_part(part_soup, part_number)
     parse_version(part_soup, part)
-    subpart_list = part_soup.find_all('DIV6')
-    parse_subparts(part_soup, subpart_list, part)
-    appendices = part_soup.find_all('DIV9')
-    if appendices:
-        if appendices[-1].find('HEAD').text.startswith('Supplement I'):
-            interps = appendices.pop(-1)
-            parse_interps(interps, part)
-        parse_appendices(appendices, part)
+    # parse_subparts will create and associate sections and appendices
+    parse_subparts(part_soup, part)
     msg = (
         "Draft version of Part {} created.\n"
         "Parsing took {}".format(

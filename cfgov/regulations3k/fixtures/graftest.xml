@@ -71,8 +71,8 @@ Title 12: Banks and Banking</TITLE>
 
 </PSPACE></SOURCE>
 
-<DIV8 N="§ 1.1" NODE="12:1.0.1.1.1.0.1.1" TYPE="SECTION">
-<HEAD>§ 1.1   Authority, purpose, scope, and reservation of authority.</HEAD>
+<DIV8 N="§ 1002.1" NODE="12:1.0.1.1.1.0.1.1" TYPE="SECTION">
+<HEAD>§ 1002.1   Authority, purpose, scope, and reservation of authority.</HEAD>
 <P>(a) <I>Authority.</I> (1) This part is issued pursuant to 12 U.S.C. 1 <I>et seq.,</I> 12 U.S.C. 24 (Seventh), and 12 U.S.C. 93a, § 1. 
 </P>
 <P>(b) <I>Purpose</I> This part prescribes standards under which national banks may purchase, sell, deal in, underwrite, and hold securities, consistent with the authority contained in 12 U.S.C. 24 (Seventh) and safe and sound banking practices. 
@@ -90,6 +90,37 @@ Title 12: Banks and Banking</TITLE>
 </P>
 <P>9. <I>Retailers, Finance Companies, and All Other Creditors Not Listed Above:</I> FTC Regional Office for region in which the creditor operates or Federal Trade Commission, Equal Credit Opportunity, Washington, DC 20580.
 </P>
+
+<DIV9 N="" NODE="12:8.0.2.6.3.2.1.1.6" TYPE="APPENDIX">
+<HEAD>Supplement I to Part 1002 - Official Interpretations
+</HEAD>
+<HD1>Introduction</HD1>
+<P>1.<I>Official status.</I> Section 706(e) of the Equal Credit Opportunity Act protects a creditor from civil liability for any act done or omitted in good faith in conformity with an interpretation issued by a duly authorized official of the Bureau. This commentary is the means by which the Bureau of Consumer Financial Protection issues official interpretations of Regulation B. Good-faith compliance with this commentary affords a creditor protection under section 706(e) of the Act.
+</P>
+<HD1>Section 1002.1 - Authority, Scope, and Purpose
+</HD1>
+<P><I>1(a) Authority and scope.</I>
+</P>
+<P>1. <I>Scope.</I> The Equal Credit Opportunity Act and Regulation B apply to all credit - commercial as well as personal - without regard to the nature or type of the credit or the creditor, except for an entity excluded from coverage of this part (but not the Act) by section 1029 of the Consumer Financial Protection Act of 2010 (12 U.S.C. 5519). If a transaction provides for the deferral of the payment of a debt, it is credit covered by Regulation B even though it may not be a credit transaction covered by Regulation Z (Truth in Lending) (12 CFR part 1026). Further, the definition of creditor is not restricted to the party or person to whom the obligation is initially payable, as is the case under Regulation Z. Moreover, the Act and regulation apply to all methods of credit evaluation, whether performed judgmentally or by use of a credit scoring system.
+</P>
+<HD2>1(a)(1)</HD2>
+<P>2. <I>Foreign applicability.</I> Regulation B generally does not apply to lending activities that occur outside the United States. The regulation does apply to lending activities that take place within the United States (as well as the Commonwealth of Puerto Rico and any territory or possession of the United States), whether or not the applicant is a citizen.
+</P>
+<HD1>Section 1002.2 - Definitions
+</HD1>
+<P><I>2(c) Adverse action.</I>
+</P>
+<P><I>Paragraph 2(c)(1)(i).</I>
+</P>
+<P>1. <I>Application for credit.</I> If the applicant applied in accordance with the creditor's procedures, a refusal to refinance or extend the term of a business or other loan is adverse action.
+</P>
+<P><I>Paragraph 2(c)(1)(ii).</I>
+</P>
+<CITA>Interp citation</CITA>
+
+</DIV9>
+
+
 </DIV8>
 </DIV5>
 
@@ -101,10 +132,9 @@ Title 12: Banks and Banking</TITLE>
 <HED>Authority:</HED><PSPACE>12 U.S.C. 2803, 2804, 2805, 5512, 5581.
 </PSPACE></AUTH>
 <SOURCE>
-<HED>Source:</HED><PSPACE>76 FR 78468, Dec. 19, 2011, unless otherwise noted.
-
-
-</PSPACE></SOURCE>
+<HED>Source:</HED>
+<PSPACE>76 FR 78468, Dec. 19, 2011, unless otherwise noted.</PSPACE>
+</SOURCE>
 
 <DIV6 N="A" NODE="12:8.0.2.6.6.1" TYPE="SUBPART">
 <HEAD>Subpart A - General</HEAD>
@@ -128,7 +158,7 @@ Title 12: Banks and Banking</TITLE>
 </DIV8>
 </DIV6>
 <DIV9 N="Appendix A" NODE="12:8.0.2.6.3.2.1.1.1" TYPE="APPENDIX">
-<HEAD>Appendix A to Part 1002 - Federal Agencies to be Listed in Adverse Action Notices
+<HEAD>Appendix A to Part 1003 - Federal Agencies to be Listed in Adverse Action Notices
 </HEAD>
 <P>The following list indicates the Federal agency or agencies that should be listed in notices provided by creditors pursuant to § 1002.9(b)(1). Any questions concerning a particular creditor may be directed to such agencies. This list is not intended to describe agencies' enforcement authority for ECOA and Regulation B. Terms that are not defined in the Federal Deposit Insurance Act (12 U.S.C. 1813(s)) shall have the meaning given to them in the International Banking Act of 1978 (12 U.S.C. 3101).
 </P>
@@ -160,19 +190,87 @@ Title 12: Banks and Banking</TITLE>
 </P>
 </DIV9>
 
+<DIV9 N="Appendix B" NODE="12:8.0.2.6.3.2.1.1.1" TYPE="APPENDIX">
+<HEAD>Appendix B to Part 1003 - Test Appendix
+</HEAD>
+<P>(a) The following list indicates the Federal agency or agencies that should be listed in notices provided by creditors pursuant to § 1002.9(b)(1). Any questions concerning a particular creditor may be directed to such agencies. This list is not intended to describe agencies' enforcement authority for ECOA and Regulation B. Terms that are not defined in the Federal Deposit Insurance Act (12 U.S.C. 1813(s)) shall have the meaning given to them in the International Banking Act of 1978 (12 U.S.C. 3101).
+</P>
+<HD1>Introduction</HD1>
+<P>(1) <I>Banks, savings associations, and credit unions with total assets of over $10 billion and their affiliates:</I> Bureau of Consumer Financial Protection, 1700 G Street NW., Washington DC 20006. Such affiliates that are not banks, savings associations, or credit unions also should list, in addition to the Bureau: FTC Regional Office for region in which the creditor operates or Federal Trade Commission, Equal Credit Opportunity, Washington, DC 20580.
+</P>
+<P>(2) To the extent not included in item 1 above:
+</P>
+<P>(i) <I>National banks, Federal savings associations, and Federal branches and Federal agencies of foreign banks:</I> Office of the Comptroller of the Currency, Customer Assistance Group, 1301 McKinney Street, Suite 3450, Houston, TX 77010-9050
+</P>
+<P>(ii) <I>State member banks, branches and agencies of foreign banks (other than Federal branches, Federal agencies, and insured state branches of foreign banks), commercial lending companies owned or controlled by foreign banks, and organizations operating under section 25 or 25A of the Federal Reserve Act:</I> Federal Reserve Consumer Help Center, P.O. Box 1200, Minneapolis, MN 55480.
+</P>
+<P>(iii) <I>Nonmember Insured Banks, Insured State Branches of Foreign Banks, and Insured State Savings Associations:</I> FDIC Consumer Response Center, 1100 Walnut Street, Box #11, Kansas City, MO 64106.
+</P>
+<P>(iv) <I>Federal Credit Unions:</I> National Credit Union Administration, Office of Consumer Protection, 1775 Duke Street, Alexandria, VA 22314.
+</P>
+<HD2>Fake subhed2</HD2>
+<P>(3) <I>Air carriers:</I> Assistant General Counsel for Aviation Enforcement and Proceedings, Department of Transportation, 400 Seventh Street SW., Washington, DC 20590.
+</P>
+<HD3>Fake subhed3</HD3>
+<P>(4) <I>Creditors Subject to Surface Transportation Board:</I> Office of Proceedings, Surface Transportation Board, Department of Transportation, 1925 K Street NW., Washington, DC 20423.
+</P>
+<CITA>Citation</CITA>
+</DIV9>
+
+<DIV9 N="Appendix C" NODE="12:8.0.2.6.3.2.1.1.1" TYPE="APPENDIX">
+<HEAD>Appendix C to Part 1003 - Appendix with no ID type
+</HEAD>
+<P>The following list indicates the Federal agency or agencies that should be listed in notices provided by creditors pursuant to § 1002.9(b)(1). Any questions concerning a particular creditor may be directed to such agencies. This list is not intended to describe agencies' enforcement authority for ECOA and Regulation B. Terms that are not defined in the Federal Deposit Insurance Act (12 U.S.C. 1813(s)) shall have the meaning given to them in the International Banking Act of 1978 (12 U.S.C. 3101).
+</P>
+<HD1>Introduction</HD1>
+<P><I>Banks, savings associations, and credit unions with total assets of over $10 billion and their affiliates:</I> Bureau of Consumer Financial Protection, 1700 G Street NW., Washington DC 20006. Such affiliates that are not banks, savings associations, or credit unions also should list, in addition to the Bureau: FTC Regional Office for region in which the creditor operates or Federal Trade Commission, Equal Credit Opportunity, Washington, DC 20580.
+</P>
+</DIV9>
+
+<DIV9 N="Appendix MS" NODE="12:8.0.2.6.19.5.1.1.53" TYPE="APPENDIX">
+<HEAD>Appendix MS to Part 1003 - Servicing
+</HEAD>
+<P> 
+Blank graph.
+</P>
+</DIV9>
+
+<DIV9 N="Appendix MS" NODE="12:8.0.2.6.19.5.1.1.54" TYPE="APPENDIX">
+<HEAD>Appendix MS-1 to Part 1003 - Example
+</HEAD>
+<P>[Sample language; use business stationery or similar heading]
+</P>
+</DIV9>
+
 <DIV9 N="" NODE="12:8.0.2.6.3.2.1.1.6" TYPE="APPENDIX">
-<HEAD>Supplement I to Part 1002 - Official Interpretations
+<HEAD>Supplement I to Part 1003 - Official Interpretations
 </HEAD>
 <P>Following is an official interpretation of Regulation B (12 CFR part 1002) issued by the Bureau of Consumer Financial Protection. References are to sections of the regulation or the Equal Credit Opportunity Act (15 U.S.C. 1601 <I>et seq.</I>).
 </P>
-<HD1>Introduction
-</HD1>
+<HD1>Introduction</HD1>
 <P>1.<I>Official status.</I> Section 706(e) of the Equal Credit Opportunity Act protects a creditor from civil liability for any act done or omitted in good faith in conformity with an interpretation issued by a duly authorized official of the Bureau. This commentary is the means by which the Bureau of Consumer Financial Protection issues official interpretations of Regulation B. Good-faith compliance with this commentary affords a creditor protection under section 706(e) of the Act.
 </P>
-<P>2. <I>Issuance of interpretations.</I> Under appendix D to the regulation, any person may request an official interpretation. Interpretations will be issued at the discretion of designated officials and incorporated in this commentary following publication for comment in the <E T="04">Federal Register.</E> Except in unusual circumstances, official interpretations will be issued only by means of this commentary.
+<HD2>Section 1002.1 - Authority, Scope, and Purpose
+</HD2>
+<P><I>1(a) Authority and scope.</I>
 </P>
-<P>3. <I>Comment designations.</I> The comments are designated with as much specificity as possible according to the particular regulatory provision addressed. Each comment in the commentary is identified by a number and the regulatory section or paragraph that it interprets. For example, comments to § 1002.2(c) are further divided by subparagraph, such as comment 2(c)(1)(ii)-1 and comment 2(c)(2)(ii-1.
+<P>1. <I>Scope.</I> The Equal Credit Opportunity Act and Regulation B apply to all credit - commercial as well as personal - without regard to the nature or type of the credit or the creditor, except for an entity excluded from coverage of this part (but not the Act) by section 1029 of the Consumer Financial Protection Act of 2010 (12 U.S.C. 5519). If a transaction provides for the deferral of the payment of a debt, it is credit covered by Regulation B even though it may not be a credit transaction covered by Regulation Z (Truth in Lending) (12 CFR part 1026). Further, the definition of creditor is not restricted to the party or person to whom the obligation is initially payable, as is the case under Regulation Z. Moreover, the Act and regulation apply to all methods of credit evaluation, whether performed judgmentally or by use of a credit scoring system.
 </P>
+<HD3>1(a)(1)</HD3>
+<P>2. <I>Foreign applicability.</I> Regulation B generally does not apply to lending activities that occur outside the United States. The regulation does apply to lending activities that take place within the United States (as well as the Commonwealth of Puerto Rico and any territory or possession of the United States), whether or not the applicant is a citizen.
+</P>
+<HD2>Section 1002.2 - Definitions
+</HD2>
+<P><I>2(c) Adverse action.</I>
+</P>
+<P><I>Paragraph 2(c)(1)(i).</I>
+</P>
+<P>1. <I>Application for credit.</I> If the applicant applied in accordance with the creditor's procedures, a refusal to refinance or extend the term of a business or other loan is adverse action.
+</P>
+<P><I>Paragraph 2(c)(1)(ii).</I>
+</P>
+<CITA>Interp citation</CITA>
+
 </DIV9>
 
 </DIV5>
