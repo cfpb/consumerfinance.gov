@@ -186,6 +186,12 @@ class Section(models.Model):
         return number
 
     @property
+    def url(self):
+        return "/regulations/{}/{}/".format(
+            self.part,
+            self.sortable_label[1])
+
+    @property
     def numeric_label(self):
         part, section = self.sortable_label.split('-')[:2]
         if section.isdigit():
