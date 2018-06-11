@@ -10,6 +10,7 @@ class RegDownExtensionTestCase(TestCase):
         result = template.render()
         self.assertEqual(
             result,
-            '<p id="be34deef8eb9a480514ed3b4a5ebdaea61c711d2b11d40e830cb0656">'
+            '<p class="regdown-block" '
+            'id="be34deef8eb9a480514ed3b4a5ebdaea61c711d2b11d40e830cb0656">'
             '<em>Hello</em></p>'
         )
