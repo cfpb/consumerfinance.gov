@@ -77,3 +77,9 @@ def int_to_alpha(num):
     double_map = dict(zip(double_range, double_letters))
     int_map.update(double_map)
     return int_map.get(num, None)
+
+
+LETTER_CODES = {
+    "{}".format(i + 1000): int_to_alpha(i).upper()
+    for i in list(range(1, 31))
+}
