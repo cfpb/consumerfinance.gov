@@ -1,8 +1,5 @@
-import $ from 'jquery';
-import {
-  getCounties,
-  getData
-} from './data-loader';
+import * as params from './params';
+import * as template from './template-loader';
 import {
   calcLoanAmount,
   checkIfZero,
@@ -15,19 +12,24 @@ import {
   renderLoanAmount,
   setSelections
 } from './util';
-import * as params from './params';
-import * as template from './template-loader';
-import RateCheckerChart from './RateCheckerChart';
-import Slider from './Slider';
+import {
+  getCounties,
+  getData
+} from './data-loader';
+import { getSelection } from './dom-values';
+import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
 import formatUSD from 'format-usd';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
+import RateCheckerChart from './RateCheckerChart';
+import Slider from './Slider';
 import tab from './tab';
 import unFormatUSD from 'unformat-usd';
-import { getSelection } from './dom-values';
-import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
+
+// TODO: remove jquery.
+import $ from 'jquery';
 
 // References to alert HTML.
 let creditAlertDom;
@@ -128,9 +130,6 @@ function updateView() {
       const sortedKeys = [];
       const sortedResults = {};
       let key;
-      let x;
-      let len;
-
       for ( key in results ) {
         if ( results.hasOwnProperty( key ) ) {
           sortedKeys.push( key );
@@ -138,9 +137,9 @@ function updateView() {
       }
 
       sortedKeys.sort();
-      len = sortedKeys.length;
 
-      for ( x = 0; x < len; x++ ) {
+      const len = sortedKeys.length;
+      for ( let x = 0; x < len; x++ ) {
         sortedResults[sortedKeys[x]] = results[sortedKeys[x]];
       }
 
@@ -233,12 +232,6 @@ function updateLanguage( totalVals ) {
     }
   }
 
-  function renderMedian( totalVals ) {
-    const loansMedian = median( totalVals ).toFixed( 3 );
-    const medianRate = document.querySelector( '#median-rate' );
-    medianRate.innerText = loansMedian + '%';
-  }
-
   function updateTerm() {
     const termVal = getSelection( 'loan-term' );
     $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
@@ -255,6 +248,16 @@ function updateLanguage( totalVals ) {
   renderLocation();
   renderMedian( totalVals );
   updateTerm();
+}
+
+/**
+ * Render the median percentage.
+ * @param {Array} totalVals - List of interest rates.
+ */
+function renderMedian( totalVals ) {
+  const loansMedian = median( totalVals ).toFixed( 3 );
+  const medianRate = document.querySelector( '#median-rate' );
+  medianRate.innerText = loansMedian + '%';
 }
 
 /**
@@ -312,7 +315,6 @@ function loadCounties() {
  * Check the loan amount and initiate the jumbo loan interactions if need be.
  */
 function checkForJumbo() {
-  let loan;
   const jumbos = [ 'jumbo', 'agency', 'fha-hb', 'va-hb' ];
   const norms = [ 'conf', 'fha', 'va' ];
   const warnings = {
@@ -321,9 +323,8 @@ function checkForJumbo() {
     va:   template.countyVAWarning
   };
   const bounces = { 'fha-hb': 'fha', 'va-hb': 'va' };
-  let request;
 
-  loan = jumbo( {
+  const loan = jumbo( {
     loanType:   params.getVal( 'loan-type' ),
     loanAmount: params.getVal( 'loan-amount' )
   } );
@@ -600,11 +601,9 @@ function renderInterestAmounts() {
  * @param {number} term - The term used in the HTML element's ID.
  */
 function renderInterestSummary( intVals, term ) {
-
-  let sortedRates;
   const id = '#rc-comparison-summary-' + term;
 
-  sortedRates = intVals.sort( function( a, b ) {
+  const sortedRates = intVals.sort( function( a, b ) {
     return a.rate - b.rate;
   } );
 
