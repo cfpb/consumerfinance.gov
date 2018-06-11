@@ -175,34 +175,37 @@ def get_reg_nav_items(request, current_page):
     url_bits = [bit for bit in request.url.split('/') if bit]
     current_label = url_bits[-1]
     current_part = current_page.regulation.part_number
-    subpart_list = set(
-        [section.subpart for section in current_page.sorted_sections])
-    subpart_dict = OrderedDict(
-        [(subpart, None) for subpart in subpart_list]
-    )
-    for subpart in subpart_dict:
-        subpart_dict[subpart] = {
-            'sections': [],
-            'expanded': False
+    sorted_sections = current_page.sorted_sections
+    nav_elements = {
+        section: {
+            'title': section.title,
+            'url': current_page.url + current_page.reverse_subpage(
+                'section',
+                args=([section.label.partition('-')[-1]])
+            ),
+            'active': section.label == '{}-{}'.format(
+                current_part,
+                current_label),
+            'expanded': True,
+            'section': section,
         }
-        sorted_sections = sorted(
-            subpart.sections.all(),
-            key=lambda s: sortable_label(s.label))
-        for section in sorted_sections:
-            section_dict = {
-                'title': section.title,
-                'url': current_page.url + current_page.reverse_subpage(
-                    'section',
-                    args=([section.label.partition('-')[-1]])
-                ),
-                'active': section.label == '{}-{}'.format(
-                    current_part,
-                    current_label),
-                'expanded': True,
-                'section': section,
+        for section in sorted_sections
+    }
+    subpart_dict = OrderedDict()
+    for section in sorted_sections:
+        if section.subpart in subpart_dict:
+            subpart_dict[section.subpart]['sections'].append(
+                nav_elements[section])
+        else:
+            subpart_dict[section.subpart] = {
+                'sections': [],
+                'expanded': False
             }
-            subpart_dict[subpart]['sections'].append(section_dict)
-            subpart_dict[subpart]['expanded'] = (
-                subpart_dict[subpart]['expanded'] or section_dict['active']
-            )
+            subpart_dict[section.subpart]['sections'].append(
+                nav_elements[section])
+    for subpart in subpart_dict:
+        nav_dict = subpart_dict[subpart]
+        for section_dict in nav_dict['sections']:
+            if section_dict['active']:
+                nav_dict['expanded'] = True
     return subpart_dict, False
