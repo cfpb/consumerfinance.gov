@@ -171,9 +171,9 @@ class Section(models.Model):
 
     @property
     def numeric_label(self):
-        part, number = self.label.split('-')[:2]
-        if number.isdigit():
-            return '\xa7\xa0{}.{}'.format(part, number)
+        part, section = sortable_label(self.label)[:2]
+        if section.isdigit():
+            return '\xa7\xa0{}.{}'.format(part, int(section))
         else:
             return ''
 
