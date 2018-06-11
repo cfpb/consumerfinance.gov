@@ -112,7 +112,7 @@ class ReferenceResolutionTestCase(TestCase):
                          contents_resolver=contents_resolver)
         self.assertEqual(
             result,
-            '<p class="level-0" id="b">Securities credit.</p>'
+            '<p class="regdown-block level-0" id="b">Securities credit.</p>'
         )
 
     def test_get_url_resolver(self):
