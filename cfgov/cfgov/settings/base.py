@@ -671,7 +671,11 @@ FLAGS = {
 
     'REGULATIONS3K': {
         'boolean': DEPLOY_ENVIRONMENT == 'build'
-    }
+    },
+
+    'LEGACY_HUD_API': {
+        'boolean': DEPLOY_ENVIRONMENT == 'production',
+    },
 }
 
 
