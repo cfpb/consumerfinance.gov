@@ -54,7 +54,9 @@ jobs:
   include:
     - stage: run tests
       env: RUNTEST=frontend
-    - env: RUNTEST=backend
+    - env: 
+      - RUNTEST=backend
+      - TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner
       deploy:
         provider: pages
         local_dir: site

@@ -171,9 +171,11 @@ class Section(models.Model):
 
     @property
     def numeric_label(self):
-        part, number = self.label.split('-')[:2]
-        if number.isdigit():
-            return '\xa7\xa0{}.{}'.format(part, number)
+        part, section = sortable_label(self.label)[:2]
+        if section.isdigit():
+            return '\xa7\xa0{}.{}'.format(part, int(section))
+        else:
+            return ''
 
     @property
     def section_number(self):
@@ -182,4 +184,7 @@ class Section(models.Model):
 
     @property
     def title_content(self):
-        return self.title.replace(self.numeric_label, '')
+        if self.numeric_label:
+            return self.title.replace(self.numeric_label, '')
+        else:
+            return self.title

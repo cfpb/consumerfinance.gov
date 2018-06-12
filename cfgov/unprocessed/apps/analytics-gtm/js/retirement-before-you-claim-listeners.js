@@ -31,11 +31,11 @@ const BYCAnalytics = ( function() {
 
   $( document ).ready( function() {
 
-    $( '#step-one-form' ).submit( function( e ) {
-      e.preventDefault();
+    $( '#step-one-form' ).submit( function( evt ) {
+      evt.preventDefault();
       stepOneSubmitted = true;
-      let month = $( '#bd-month' ).val(),
-          day = $( '#bd-day' ).val();
+      const month = $( '#bd-month' ).val();
+      const day = $( '#bd-day' ).val();
       track(
         'Before You Claim Interaction',
         'Get Your Estimates submit birthdate',
@@ -43,12 +43,12 @@ const BYCAnalytics = ( function() {
       );
     } );
 
-    $( '#step-one-form' ).submit( function( e ) {
-      e.preventDefault();
-      let month = $( '#bd-month' ).val(),
-          day = $( '#bd-day' ).val(),
-          year = $( '#bd-year' ).val(),
-          age = calculateAge( month, day, year );
+    $( '#step-one-form' ).submit( function( evt ) {
+      evt.preventDefault();
+      const month = $( '#bd-month' ).val();
+      const day = $( '#bd-day' ).val();
+      const year = $( '#bd-year' ).val();
+      const age = calculateAge( month, day, year );
       track(
         'Before You Claim Interaction',
         'Get Your Estimates submit age',
@@ -97,9 +97,9 @@ const BYCAnalytics = ( function() {
     } );
 
     $( 'button.lifestyle-btn' ).click( function() {
-      let $container = $( this ).closest( '.lifestyle-question_container' ),
-          question = $container.find( 'h3' ).text().trim(),
-          value = $( this ).val();
+      const $container = $( this ).closest( '.lifestyle-question_container' );
+      const question = $container.find( 'h3' ).text().trim();
+      const value = $( this ).val();
       if ( questionsAnswered.indexOf( question ) === -1 ) {
         questionsAnswered.push( question );
       }

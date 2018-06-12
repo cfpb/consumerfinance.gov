@@ -80,6 +80,21 @@ class IdLevelState(object):
         """Determine whether an alpha token is the next logical alpha token"""
         return alpha_to_int(next_token) == alpha_to_int(token) + 1
 
+    def next_appendix_id(self):
+        _next = self.next_token
+        if self.level() == 1:  # digit level
+            if not self.current_id:
+                self.current_id = _next
+            if _next == 'a':
+                return self.dive()
+            else:
+                return self.surf()
+        if self.level() == 2:  # lowercase-alpha level: 1-a
+            if _next.isalpha():
+                return self.surf()
+            elif _next.isdigit():
+                return self.rise(1)
+
     def next_id(self):
         _next = self.next_token
         if self.level() == 1:  # lowercase-alpha level

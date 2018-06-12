@@ -15,8 +15,8 @@ function init() {
     _bindTabLink( tabGroup, tabContents );
 
     // Hide all but the first tab.
-    for ( let i = 1; i < tabContents.length; i++ ) {
-      tabContents[i].classList.add( 'u-hidden' );
+    for ( let j = 1; j < tabContents.length; j++ ) {
+      tabContents[j].classList.add( 'u-hidden' );
     }
   }
 }
