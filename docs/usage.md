@@ -8,7 +8,7 @@ which will be used for:
     such as `git checkout master`.
  2. **Elasticsearch**.
     Run an Elasticsearch (ES) instance.
-    See instructions [below](#2-run-elasticsearch).
+    See instructions [below](#2-run-elasticsearch-optional).
  3. **Django server**. Start and stop the web server.
     Server is started with `./runserver.sh`,
     but see more details [below](#3-load-indexes--launch-site).
