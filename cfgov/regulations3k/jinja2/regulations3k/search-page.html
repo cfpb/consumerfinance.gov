@@ -1,0 +1,175 @@
+{% extends 'layout-full.html' %}
+{% import 'atoms/checkbox.html' as checkbox %}
+{% import 'eregs/regulations3k-search-bar.html' as search_bar with context %}
+
+{# HEAD items #}
+
+{% block title -%}
+    Page Title | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block desc -%}
+    Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.
+{%- endblock desc %}
+
+{% block og_image -%}
+    <meta property="og:image" content="{{ meta_image_url }}">
+    <meta property="twitter:image" content="{{ meta_image_url }}">
+    {# Optional property if you want to use Twitter's large card format
+       https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary-card-with-large-image
+    <meta name="twitter:card" content="summary_large_image">
+    #}
+{%- endblock og_image %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
+{% block preload %}
+    {{ super() }}
+    <link rel="manifest" href="{{ static('apps/regulations3k/regulations3k-manifest.json') }}">
+    <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
+    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
+    <meta name="apple-mobile-web-app-title" content="Regs">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#20aa3f"/>
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/regulations3k/css/main.css') }}">
+{%- endblock css %}
+
+
+{# BODY items #}
+
+{% block body_classes %}
+    {{ super() }} data-turbolinks="false"
+{% endblock body_classes %}
+
+{% block content_main_modifiers -%}
+    content__1-3
+{%- endblock %}
+
+{% block content_main scoped %}
+
+<h1>Search regulations</h1>
+
+<div class="content_wrapper search_results">
+    <div class="content_wrapper">
+        <div class="o-well search_wrapper u-mt30">
+            <form action="#" data-js-hook="submit-search">
+                {{ search_bar.render( 'left' ) }}
+            </form>
+            <p class="u-mt15">
+                <small class="a-label_helper">
+                    You can use
+                    <a href="#not-yet" data-js-hook="search-example-trigger">
+                        Boolean operators like AND, OR, and NOT
+                    </a>
+                    in your search.
+                </small>
+            </p>
+        </div>
+    </div>
+    <div class="content_wrapper">
+        <div class="block block__flush-top">
+            <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
+                <h3>Refine results</h3>
+                {% set expandable_settings = {
+                    'label': 'Regulation',
+                    'hide_cue_label': true,
+                    'is_expanded': true,
+                    'is_midtone': true
+                } %}
+                {% from 'organisms/expandable.html' import expandable with context %}
+                {% call() expandable(expandable_settings) %}
+                <form action="." method="get">
+                    <div class="o-form_group">
+                        <fieldset class="o-form_fieldset">
+                            <ul class="m-list m-list__unstyled">
+                            {% for reg in regs %}
+                                {{ checkbox.render({
+                                    'label': reg.name ~ ' ' ~ reg.num_results,
+                                    'el_wrapper': 'li'
+                                }) }}
+                            {% endfor %}
+                            </ul>
+                        </fieldset>
+                    </div>
+                </form>
+                {% endcall %}
+            </aside>
+            <div class="content_main content__flush-top-on-small content__flush-bottom">
+                <div class="results_header">
+                    <div class="results_count">
+                        <div class="has-results">
+                            <h3>
+                                Showing
+                                <span class="filtered-results-count">
+                                    <span class="filtered-results-count_number">
+                                        {{ results | length }}
+                                    </span>
+                                    matches out of
+                                </span>
+                                {{ total_results }} total
+                            </h3>
+                        </div>
+                        <!-- <div class="no-results-message">
+                            <h3>
+                                No results match your filters.
+                            </h3>
+                            <p>
+                                Try adjusting your filters or searching for different terms.
+                            </p>
+                        </div> -->
+                    </div>
+                    <!-- <div class="filters_applied">
+                        <span class="filters_applied-label">
+                            Filters applied:
+                        </span>
+                        <div id="filter-tag-container">
+
+                        </div>
+                        <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear">
+                            Clear all filters
+                        </button>
+                    </div> -->
+                </div>
+                <div class="results_list">
+                    <ul>
+                    {% for result in results %}
+                        <li>
+                            <h4>
+                              <a href="#somewhere">{{ result.label }}</a>
+                            </h4>
+                            <p>{{ result.snippet }}</p>
+                            <div>{{ result.reg }}</div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content_main %}
+
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/regulations3k/js/index.js') }}',
+            '{{ static('apps/regulations3k/js/search.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

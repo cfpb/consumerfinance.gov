@@ -1,10 +1,11 @@
 {% import 'organisms/search-bar.html' as search_bar with context %}
 
-{% set default_label = 'Looking for a specific part, section, subsection or line of text? <span class="break">Search eRegulations.</span>' %}
-{% set default_classes = 'block__bg-branded block__flush-top block__flush-bottom' %}
+{% set default_label = 'Search terms' %}
+{% set default_classes = 'block__flush-top block__flush-bottom' %}
 {% set default_position = 'full' %}
+{% set default_placeholder = 'Search terms' %}
 
-{% macro render( position=default_position, label=default_label, additional_classes=default_classes, q='' ) %}
+{% macro render( position=default_position, label=default_label, additional_classes=default_classes, q='', placeholder=default_placeholder ) %}
 
 {% set search_opts = {
     'label': label,
@@ -13,6 +14,7 @@
     'additional_classes': additional_classes,
     'autocomplete': 'true',
     'q': q,
+    'placeholder': placeholder
   } %}
 {{ search_bar.render( search_opts ) }}
 
