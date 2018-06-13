@@ -129,17 +129,17 @@ class RegModelTests(DjangoTestCase):
     def test_subpart_string_method(self):
         self.assertEqual(
             self.subpart.__str__(),
-            '1002 General, effective 2014-01-18')
+            'General')
 
     def test_section_string_method(self):
         if sys.version_info >= (3, 0):
             self.assertEqual(
                 self.section_num4.__str__(),
-                '1002-4 \xa7\xa01002.4 General rules.')
+                '\xa7\xa01002.4 General rules.')
         else:
             self.assertEqual(
                 self.section_num4.__str__(),
-                '1002-4 \xa7\xa01002.4 General rules.'.encode('utf8'))
+                '\xa7\xa01002.4 General rules.'.encode('utf8'))
 
     def test_subpart_headings(self):
         for each in Subpart.objects.all():
@@ -148,7 +148,7 @@ class RegModelTests(DjangoTestCase):
     def test_effective_version_string_method(self):
         self.assertEqual(
             self.effective_version.__str__(),
-            '12 CFR Part 1002 (Regulation B), effective 2014-01-18')
+            'Effective on 2014-01-18')
 
     def test_landing_page_get_context(self):
         test_context = self.landing_page.get_context(HttpRequest())

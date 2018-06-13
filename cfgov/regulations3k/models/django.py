@@ -97,8 +97,7 @@ class EffectiveVersion(models.Model):
     ]
 
     def __str__(self):
-        return "{}, effective {}".format(
-            self.part, self.effective_date)
+        return "Effective on {}".format(self.effective_date)
 
     class Meta:
         ordering = ['effective_date']
@@ -118,8 +117,7 @@ class Subpart(models.Model):
     ]
 
     def __str__(self):
-        return "{} {}, effective {}".format(
-            self.label, self.title, self.version.effective_date)
+        return self.title
 
     @property
     def subpart_heading(self):
@@ -164,7 +162,7 @@ class Section(models.Model):
     ]
 
     def __str__(self):
-        return "{} {}".format(self.label, self.title)
+        return self.title
 
     class Meta:
         ordering = ['label']
