@@ -30,6 +30,7 @@ class SubpartModelAdmin(TreeModelAdmin):
     child_field = 'sections'
     child_model_admin = SectionModelAdmin
     parent_field = 'version'
+    ordering = ['subpart_type', 'label']
 
 
 class EffectiveVersionModelAdmin(TreeModelAdmin):
