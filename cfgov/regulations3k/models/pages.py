@@ -35,8 +35,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
 
     parent_page_types = ['regulations3k.RegulationLandingPage']
     subpage_types = []
-    results = {'test': 'results'}
-
+    results = {}
     content_panels = CFGOVPage.content_panels
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
@@ -95,7 +94,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         #     context = super(RegulationsSearchPage, self).get_context(
         #         request, **kwargs)
         #     context.update(**kwargs)
-        #     paginator = Paginator(self.results, 25)
+        #     paginator = Paginator(payload['results'], 25)
         #     page_number = validate_page_number(request, paginator)
         #     paginated_page = paginator.page(page_number)
         #     context['current_page'] = page_number
