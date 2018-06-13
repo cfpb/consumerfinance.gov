@@ -28,11 +28,6 @@ init() {
 
   # Set the NODE_ENV for this session.
   export NODE_ENV=$NODE_ENV
-
-  if [[ "$(node -v)" != "v8."* ]]; then
-    echo "Please install Node 8.x: 'nvm install 8'"
-    exit 1;
-  fi
 }
 
 # Clean project dependencies.
