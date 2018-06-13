@@ -48,18 +48,21 @@ class RegModelTests(DjangoTestCase):
             Subpart,
             label='1002',
             title='General',
+            subpart_type=Subpart.BODY,
             version=self.effective_version
         )
         self.subpart_appendices = mommy.make(
             Subpart,
             label='1002-Appendices',
             title='Appendices',
+            subpart_type=Subpart.APPENDIX,
             version=self.effective_version
         )
         self.subpart_interps = mommy.make(
             Subpart,
             label='Official Interpretations',
             title='Supplement I to Part 1002',
+            subpart_type=Subpart.INTERPRETATION,
             version=self.effective_version
         )
         self.subpart_orphan = mommy.make(
@@ -183,10 +186,10 @@ class RegModelTests(DjangoTestCase):
     def test_sortable_label(self):
         self.assertEqual(sortable_label('1-A-Interp'), ('0001', 'A', 'interp'))
 
-    def test_sorted_sections(self):
-        sorted_sections = [s.label for s in self.reg_page.sorted_sections]
+    def test_sections(self):
+        sections = [s.label for s in self.reg_page.sections]
         self.assertEqual(
-            sorted_sections,
+            sections,
             ['1002-4', '1002-15', 'Appendix 1002-A',
              'Appendix 1002-B', 'Interpretations for Appendix 1002-A'])
 
@@ -212,8 +215,26 @@ class RegModelTests(DjangoTestCase):
 
     def test_section_title_content(self):
         self.assertEqual(
-            self.section_num15.title_content.strip(),
+            self.section_num15.title_content,
             'Rules concerning requests for information.')
+
+    def test_section_part(self):
+        self.assertEqual(self.section_num4.part, '1002')
+
+    def test_section_section_number(self):
+        self.assertEqual(self.section_num4.section_number, '4')
+
+    def test_section_numeric_label(self):
+        self.assertEqual(self.section_num4.numeric_label, '\xa7\xa01002.4')
+
+    def test_section_numeric_label_not_digits(self):
+        self.assertEqual(self.section_alpha.numeric_label, '')
+
+    def test_section_title_content_not_digits(self):
+        self.assertEqual(
+            self.section_beta.title_content,
+            'Appendix B to Part 1002-Errata'
+        )
 
 
 class SectionNavTests(unittest.TestCase):

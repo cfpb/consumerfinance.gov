@@ -110,9 +110,23 @@ class Subpart(models.Model):
     title = models.CharField(max_length=255, blank=True)
     version = models.ForeignKey(EffectiveVersion, related_name="subparts")
 
+    BODY = 0000
+    APPENDIX = 1000
+    INTERPRETATION = 2000
+    SUBPART_TYPE_CHOICES = (
+        (BODY, 'Regulation Body'),
+        (APPENDIX, 'Appendix'),
+        (INTERPRETATION, 'Interpretation'),
+    )
+    subpart_type = models.IntegerField(
+        choices=SUBPART_TYPE_CHOICES,
+        default=BODY,
+    )
+
     panels = [
         FieldPanel('label'),
         FieldPanel('title'),
+        FieldPanel('subpart_type'),
         FieldPanel('version'),
     ]
 
@@ -126,25 +140,15 @@ class Subpart(models.Model):
 
     @property
     def section_range(self):
-        if not self.sections.exists():
+        if self.subpart_type != Subpart.BODY or not self.sections.exists():
             return ''
-        if 'Interp' in self.label:
-            return ''
-        if 'Append' in self.title:
-            return ''
-        if self.sections.first().section_number.isdigit():
-            sections = sorted(
-                self.sections.all(), key=lambda x: int(x.section_number))
-            return "{}–{}".format(
-                sections[0].numeric_label, sections[-1].numeric_label)
-        # else:
-        #     sections = sorted(
-        #         self.sections.all(), key=lambda x: x.section_number)
-        #     return "{}–{}".format(
-        #         sections[0].label, sections[-1].label)
+
+        sections = self.sections.all()
+        return "{}–{}".format(
+            sections[0].numeric_label, sections.reverse()[0].numeric_label)
 
     class Meta:
-        ordering = ['label']
+        ordering = ['subpart_type', 'label']
 
 
 @python_2_unicode_compatible
@@ -153,6 +157,7 @@ class Section(models.Model):
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)
     subpart = models.ForeignKey(Subpart, related_name="sections")
+    sortable_label = models.CharField(max_length=255)
 
     panels = [
         FieldPanel('label'),
@@ -165,15 +170,15 @@ class Section(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['label']
+        ordering = ['sortable_label']
 
-    @property
-    def numeric_label(self):
-        part, section = sortable_label(self.label)[:2]
-        if section.isdigit():
-            return '\xa7\xa0{}.{}'.format(part, int(section))
-        else:
-            return ''
+    def save(self, **kwargs):
+        self.sortable_label = '-'.join(sortable_label(self.label))
+        super(Section, self).save(**kwargs)
+
+    @cached_property
+    def part(self):
+        return self.subpart.version.part.part_number
 
     @property
     def section_number(self):
@@ -181,8 +186,16 @@ class Section(models.Model):
         return number
 
     @property
+    def numeric_label(self):
+        part, section = self.sortable_label.split('-')[:2]
+        if section.isdigit():
+            return '\xa7\xa0{}.{}'.format(part, int(section))
+        else:
+            return ''
+
+    @property
     def title_content(self):
         if self.numeric_label:
-            return self.title.replace(self.numeric_label, '')
+            return self.title.replace(self.numeric_label, '').strip()
         else:
             return self.title
