@@ -19,7 +19,7 @@ from wagtail.wagtailcore.models import PageManager
 # Our RegDownTextField field doesn't generate a good widget yet
 # from regulations3k.models.fields import RegDownTextField
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
-from regulations3k.models import Part, Section, sortable_label  # , Subpart
+from regulations3k.models import Part, Section
 from regulations3k.regdown import regdown
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules
@@ -90,10 +90,8 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
 
     @cached_property
-    def sorted_sections(self):
-        """ Sort all sections within our section_query on sortable_label """
-        return sorted(self.section_query.all(),
-                      key=lambda s: sortable_label(s.label))
+    def sections(self):
+        return list(self.section_query.all())
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
@@ -110,7 +108,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             self.regulation.part_number, section)
 
         section = self.section_query.get(label=section_label)
-        current_index = self.sorted_sections.index(section)
+        current_index = self.sections.index(section)
         context = self.get_context(request)
 
         content = regdown(
@@ -125,9 +123,9 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             'content': content,
             'get_secondary_nav_items': get_reg_nav_items,
             'next_section': get_next_section(
-                self.sorted_sections, current_index),
+                self.sections, current_index),
             'previous_section': get_previous_section(
-                self.sorted_sections, current_index),
+                self.sections, current_index),
             'section': section,
         })
 
@@ -175,34 +173,38 @@ def get_reg_nav_items(request, current_page):
     url_bits = [bit for bit in request.url.split('/') if bit]
     current_label = url_bits[-1]
     current_part = current_page.regulation.part_number
-    subpart_list = set(
-        [section.subpart for section in current_page.sorted_sections])
-    subpart_dict = OrderedDict(
-        [(subpart, None) for subpart in subpart_list]
-    )
-    for subpart in subpart_dict:
-        subpart_dict[subpart] = {
-            'sections': [],
-            'expanded': False
-        }
-        sorted_sections = sorted(
-            subpart.sections.all(),
-            key=lambda s: sortable_label(s.label))
-        for section in sorted_sections:
-            section_dict = {
-                'title': section.title,
-                'url': current_page.url + current_page.reverse_subpage(
-                    'section',
-                    args=([section.label.partition('-')[-1]])
-                ),
-                'active': section.label == '{}-{}'.format(
-                    current_part,
-                    current_label),
-                'expanded': True,
-                'section': section,
+    sections = current_page.sections
+    subpart_dict = OrderedDict()
+
+    for section in sections:
+        # If the section's subpart isn't in the subpart dict yet, add it
+        if section.subpart not in subpart_dict:
+            subpart_dict[section.subpart] = {
+                'sections': [],
+                'expanded': False
             }
-            subpart_dict[subpart]['sections'].append(section_dict)
-            subpart_dict[subpart]['expanded'] = (
-                subpart_dict[subpart]['expanded'] or section_dict['active']
-            )
+
+        # Create the section dictionary for navigation
+        section_dict = {
+            'title': section.title,
+            'url': current_page.url + current_page.reverse_subpage(
+                'section',
+                args=([section.label.partition('-')[-1]])
+            ),
+            'active': section.label == '{}-{}'.format(
+                current_part,
+                current_label),
+            'expanded': True,
+            'section': section,
+        }
+
+        # Add it to the subpart
+        subpart_dict[section.subpart]['sections'].append(
+            section_dict
+        )
+
+        # Set the subpart to active if the section is active
+        if section_dict['active']:
+            subpart_dict[section.subpart]['expanded'] = True
+
     return subpart_dict, False

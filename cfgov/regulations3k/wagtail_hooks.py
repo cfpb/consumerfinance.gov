@@ -12,7 +12,7 @@ class SectionModelAdmin(TreeModelAdmin):
     menu_label = 'Regulation section content'
     menu_icon = 'list-ul'
     list_display = (
-        'title',
+        'label', 'title',
     )
     search_fields = (
         'label', 'title')
@@ -30,6 +30,7 @@ class SubpartModelAdmin(TreeModelAdmin):
     child_field = 'sections'
     child_model_admin = SectionModelAdmin
     parent_field = 'version'
+    ordering = ['subpart_type', 'label']
 
 
 class EffectiveVersionModelAdmin(TreeModelAdmin):

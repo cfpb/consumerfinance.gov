@@ -23,6 +23,7 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from v1.util.migrations import get_or_create_page
+from v1.util.util import validate_social_sharing_image
 
 
 html_parser = HTMLParser.HTMLParser()
@@ -376,7 +377,9 @@ class Answer(models.Model):
         help_text=(
             'Optionally select a custom image to appear when users share this '
             'page on social media websites. If no image is selected, this '
-            'page\'s category image will be used. Minimum size: 1200w x 630h.'
+            'page\'s category image will be used. '
+            'Recommended size: 1200w x 630h. '
+            'Maximum size: 4096w x 4096h.'
         )
     )
 
@@ -458,6 +461,10 @@ class Answer(models.Model):
             html_parser.unescape(self.snippet_es),
             html_parser.unescape(self.answer_es)))
         return html.strip_tags(unescaped).strip()
+
+    def clean(self):
+        super(Answer, self).clean()
+        validate_social_sharing_image(self.social_sharing_image)
 
     def cleaned_questions(self):
         cleaned_terms = html_parser.unescape(self.question)

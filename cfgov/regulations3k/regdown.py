@@ -151,10 +151,10 @@ class PseudoFormPattern(Pattern):
 
     def handleMatch(self, m):
         el = util.etree.Element('span')
+        el.set('class', 'regdown-form')
         if m.group('line_ending') is not None:
-            el.set('class', 'regdown-form-extend')
-        else:
-            el.set('class', 'regdown-form')
+            el.set('class', 'regdown-form_extend')
+            util.etree.SubElement(el, 'span')
         el.text = m.group('underscores')
         return el
 
@@ -199,7 +199,7 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             # e.g. A-2-d-1 becomes d-1 and gets a `level-1` class
             label = re.sub('^[A-Z]\d?\-\w+\-?', '', label)
             level = label.count('-')
-            class_name = 'level-{}'.format(level)
+            class_name = 'regdown-block level-{}'.format(level)
             el.set('class', class_name)
 
             el.text = text.lstrip()
@@ -213,8 +213,11 @@ class LabeledParagraphProcessor(ParagraphProcessor):
                 # way it won't change unless the rest of this block changes.
                 text = block.lstrip()
                 label = sha3_224(text.encode('utf-8')).hexdigest()
+                class_name = 'regdown-block'
                 p = util.etree.SubElement(parent, 'p')
                 p.set('id', label)
+                p.set('class', class_name)
+
                 p.text = text
 
 
