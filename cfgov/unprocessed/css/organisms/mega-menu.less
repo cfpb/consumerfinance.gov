@@ -45,12 +45,12 @@ body {
     - name: Default example
       markup: |
         <nav class="o-mega-menu"
-             aria-label="main navigation"
              role="navigation">
-            <h2 class="u-visually-hidden">Navigation menu</h2>
-            <button class="o-mega-menu_trigger" aria-expanded="false">
-                <span class="u-visually-hidden">Menu</span>
-            </button>
+            <h2>
+                <button class="o-mega-menu_trigger" aria-expanded="false">
+                    <span class="u-visually-hidden"><span class="o-mega-menu_trigger-text">Open</span> main menu</span>
+                </button>
+            </h2>
             <div class="o-mega-menu_content"
                  aria-expanded="false">
                 <div class="o-mega-menu_content-wrapper">
@@ -168,6 +168,12 @@ body {
 */
 
 .o-mega-menu {
+
+    &_label {
+        // Override h2 element styles.
+        margin: 0;
+        font-size: 1em;
+    }
 
     ul ul {
         // Override margin added by CF between lists.
