@@ -1,6 +1,7 @@
 from time import time
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
 
@@ -201,3 +202,11 @@ def extended_strftime(dt, format):
     format = format.replace('%_d', dt.strftime('%d').lstrip('0'))
     format = format.replace('%_m', _MONTH_ABBREVIATIONS[dt.month])
     return dt.strftime(format)
+
+
+def validate_social_sharing_image(image):
+    """Raises a validation error if the image is too large or too small."""
+    if image and (image.width > 4096 or image.height > 4096):
+        raise ValidationError(
+            'Social sharing image must be less than 4096w x 4096h'
+        )
