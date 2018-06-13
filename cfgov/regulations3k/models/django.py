@@ -196,6 +196,6 @@ class Section(models.Model):
     @property
     def title_content(self):
         if self.numeric_label:
-            return self.title.replace(self.numeric_label, '')
+            return self.title.replace(self.numeric_label, '').strip()
         else:
             return self.title

@@ -215,8 +215,26 @@ class RegModelTests(DjangoTestCase):
 
     def test_section_title_content(self):
         self.assertEqual(
-            self.section_num15.title_content.strip(),
+            self.section_num15.title_content,
             'Rules concerning requests for information.')
+
+    def test_section_part(self):
+        self.assertEqual(self.section_num4.part, '1002')
+
+    def test_section_section_number(self):
+        self.assertEqual(self.section_num4.section_number, '4')
+
+    def test_section_numeric_label(self):
+        self.assertEqual(self.section_num4.numeric_label, '\xa7\xa01002.4')
+
+    def test_section_numeric_label_not_digits(self):
+        self.assertEqual(self.section_alpha.numeric_label, '')
+
+    def test_section_title_content_not_digits(self):
+        self.assertEqual(
+            self.section_beta.title_content,
+            'Appendix B to Part 1002-Errata'
+        )
 
 
 class SectionNavTests(unittest.TestCase):
