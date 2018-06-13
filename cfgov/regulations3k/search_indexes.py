@@ -13,9 +13,6 @@ class RegulationSectionIndex(indexes.SearchIndex, indexes.Indexable):
     part = indexes.CharField(model_attr='subpart__version__part__part_number')
     date = indexes.DateField(model_attr='subpart__version__effective_date')
 
-    def prepare_part(self, obj):
-        return obj.subpart.version.part.__str__()
-
     def get_model(self):
         return Section
 

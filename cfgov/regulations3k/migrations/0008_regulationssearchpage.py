@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import wagtail.wagtailcore.fields
 import wagtail.contrib.wagtailroutablepage.models
 
 
@@ -18,7 +17,6 @@ class Migration(migrations.Migration):
             name='RegulationsSearchPage',
             fields=[
                 ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
-                ('content', wagtail.wagtailcore.fields.StreamField([], null=True)),
             ],
             options={
                 'abstract': False,
