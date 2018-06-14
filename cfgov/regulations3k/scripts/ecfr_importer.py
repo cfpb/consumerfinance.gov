@@ -615,21 +615,21 @@ def run(*args):
         logger.info(
             "Usage: ./cfgov/manage.py runscript "
             "ecfr_importer --script-args "
-            "[PART NUMBER] [OPTIONAL XML FILE PATH]")
+            "[PART NUMBER or 'ALL'] [OPTIONAL XML FILE PATH]")
         sys.exit(1)
     elif len(args) == 1:
         if args[0] == 'ALL':
             for part in LEGACY_PARTS:
-                logger.info("parsing {} from eCFR website".format(part))
+                logger.info("parsing {} from the latest eCFR XML".format(part))
                 logger.info(ecfr_to_regdown(part))
         else:
-            logger.info("parsing {} from eCFR website".format(args[0]))
+            logger.info("parsing {} from the latest eCFR XML".format(args[0]))
             logger.info(ecfr_to_regdown(args[0]))
     else:
         if args[0] == 'ALL':
             for part in LEGACY_PARTS:
-                logger.info('parsing {} from local file'.format(part))
+                logger.info('parsing {} from local XML file'.format(part))
                 logger.info(ecfr_to_regdown(part, file_path=args[1]))
         else:
-            logger.info('parsing {} from local file'.format(args[0]))
-            logger.info(ecfr_to_regdown(args[0]))
+            logger.info('parsing {} from local XML file'.format(args[0]))
+            logger.info(ecfr_to_regdown(args[0], file_path=args[1]))
