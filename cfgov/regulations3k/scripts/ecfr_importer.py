@@ -38,6 +38,10 @@ PART_WHITELIST = [
     '1070', '1071', '1072', '1073', '1074', '1075', '1076',
     '1080', '1081', '1082', '1083', '1090', '1091',
 ]
+LEGACY_PARTS = [
+    '1002', '1003', '1004', '1005', '1010', '1011', '1012', '1013',
+    '1024', '1026', '1030',
+]
 # The latest eCFR version of title-12, updated every few days
 LATEST_ECFR = ("https://www.gpo.gov/fdsys/bulkdata/ECFR/"
                "title-{0}/ECFR-title{0}.xml".format(CFR_TITLE))
@@ -611,9 +615,21 @@ def run(*args):
         logger.info(
             "Usage: ./cfgov/manage.py runscript "
             "ecfr_importer --script-args "
-            "[PART NUMBER] [OPTIONAL XML FILE PATH]")
+            "[PART NUMBER or 'ALL'] [OPTIONAL XML FILE PATH]")
         sys.exit(1)
     elif len(args) == 1:
-        ecfr_to_regdown(args[0])
+        if args[0] == 'ALL':
+            for part in LEGACY_PARTS:
+                logger.info("parsing {} from the latest eCFR XML".format(part))
+                logger.info(ecfr_to_regdown(part))
+        else:
+            logger.info("parsing {} from the latest eCFR XML".format(args[0]))
+            logger.info(ecfr_to_regdown(args[0]))
     else:
-        ecfr_to_regdown(args[0], file_path=args[1])
+        if args[0] == 'ALL':
+            for part in LEGACY_PARTS:
+                logger.info('parsing {} from local XML file'.format(part))
+                logger.info(ecfr_to_regdown(part, file_path=args[1]))
+        else:
+            logger.info('parsing {} from local XML file'.format(args[0]))
+            logger.info(ecfr_to_regdown(args[0], file_path=args[1]))

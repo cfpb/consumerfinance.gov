@@ -161,14 +161,29 @@ class ImporterTestCase(DjangoTestCase):
             None)
         self.assertEqual(Part.objects.filter(part_number='1002').count(), 0)
 
+
+class ImporterRunTestCase(unittest.TestCase):
+    """Tests for running the ecfr importer via commands."""
+
     @mock.patch('regulations3k.scripts.ecfr_importer.ecfr_to_regdown')
     def test_run_with_one_arg_calls_importer(self, mock_importer):
         run('1002')
         self.assertEqual(mock_importer.call_count, 1)
 
-    def test_run_works_with_local_file(self):
-        run('1002', self.xml_fixture)
-        self.assertEqual(Part.objects.filter(part_number='1002').count(), 1)
+    @mock.patch('regulations3k.scripts.ecfr_importer.ecfr_to_regdown')
+    def test_run_works_with_local_file(self, mock_importer):
+        run('1002', '/mock/local/file.xml')
+        self.assertEqual(mock_importer.call_count, 1)
+
+    @mock.patch('regulations3k.scripts.ecfr_importer.ecfr_to_regdown')
+    def test_run_all(self, mock_importer):
+        run('ALL')
+        self.assertEqual(mock_importer.call_count, 11)
+
+    @mock.patch('regulations3k.scripts.ecfr_importer.ecfr_to_regdown')
+    def test_run_all_with_local_file(self, mock_importer):
+        run('ALL', '/mock/local/file.xml')
+        self.assertEqual(mock_importer.call_count, 11)
 
     def test_run_importer_no_args(self):
         with self.assertRaises(SystemExit):
