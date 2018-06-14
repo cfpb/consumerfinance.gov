@@ -44,8 +44,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     def get_template(self, request):
         return 'regulations3k/search-regulations.html'
 
-    @route(r'^results/', name="regs_search_results")
-    def results_page(self, request):
+    @route(r'^results/')
+    def regulation_results_page(self, request):
         regs = []
         sqs = SearchQuerySet()
         if 'regs' in request.GET:
