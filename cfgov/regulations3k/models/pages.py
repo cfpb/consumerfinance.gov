@@ -52,9 +52,9 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         if 'regs' in request.GET:
             regs = [reg for reg in request.GET.get('regs').split(',')]
         if len(regs) == 1:
-            sqs = sqs.filter(part__contains=regs[0])
+            sqs = sqs.filter(part=regs[0])
         elif regs:
-            sqs = sqs.filter(part__part_number__in=regs)
+            sqs = sqs.filter(part__in=regs)
         search_query = request.GET.get('q', '')  # haystack cleans this string
         query_sqs = sqs.filter(content=search_query).models(Section)
         payload = {
@@ -63,18 +63,16 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             'regs': [{
                 'name': "Regulation {}".format(LETTER_CODES.get(reg)),
                 'id': reg,
-                'num_results': 0}
+                'num_results': query_sqs.filter(parg=reg).count()}
                 for reg in regs
             ],
         }
-        if regs:
-            reg_counts = {reg: 0 for reg in regs}
         for hit in query_sqs:
             label_bits = hit.object.label.partition('-')
             _part, _section = label_bits[0], label_bits[2]
             letter_code = LETTER_CODES.get(_part)
             snippet = Truncator(hit.text).words(40, truncate=' ...')
-            snippet = snippet.replace('*', '')
+            snippet = snippet.replace('*', '').replace('#', '')
             hit_payload = {
                 'id': hit.object.pk,
                 'reg': 'Regulation {}'.format(letter_code),
@@ -83,12 +81,9 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 'url': "/regulations/{}/{}/".format(_part, _section),
             }
             payload['results'].append(hit_payload)
-            if regs:
-                reg_counts[_part] += 1
-        for _reg in payload['regs']:
-            _reg['num_results'] = reg_counts[_reg['id']]
         self.results = payload
-        context = self.get_context(request)
+
+        # if we want to paginate results:
 
         # def get_context(self, request, **kwargs):
         #     context = super(RegulationsSearchPage, self).get_context(
@@ -102,6 +97,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         #     context['results'] = paginated_page
         #     return context
 
+        context = self.get_context(request)
         return TemplateResponse(
             request,
             self.get_template(request),
@@ -292,21 +288,22 @@ def get_reg_nav_items(request, current_page):
 
     return subpart_dict, False
 
+# if we paginate
 
-def validate_page_number(request, paginator):
-    """
-    A utility for parsing a pagination request.
+# def validate_page_number(request, paginator):
+#     """
+#     A utility for parsing a pagination request.
 
-    This should catch invalid page numbers and always return
-    a valid page number, defaulting to 1.
-    """
-    raw_page = request.GET.get('page', 1)
-    try:
-        page_number = int(raw_page)
-    except ValueError:
-        page_number = 1
-    try:
-        paginator.page(page_number)
-    except InvalidPage:
-        page_number = 1
-    return page_number
+#     This should catch invalid page numbers and always return
+#     a valid page number, defaulting to 1.
+#     """
+#     raw_page = request.GET.get('page', 1)
+#     try:
+#         page_number = int(raw_page)
+#     except ValueError:
+#         page_number = 1
+#     try:
+#         paginator.page(page_number)
+#     except InvalidPage:
+#         page_number = 1
+#     return page_number
