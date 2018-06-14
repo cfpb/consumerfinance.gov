@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 
 import datetime
 import json
 import unittest
+
 
 from django.conf import settings
 from django.test import TestCase as DjangoTestCase
@@ -161,14 +162,43 @@ class ImporterTestCase(DjangoTestCase):
             None)
         self.assertEqual(Part.objects.filter(part_number='1002').count(), 0)
 
+
+class ImporterRunTestCase(DjangoTestCase):
+    """Tests for running the ecfr importer via commands."""
+
+    fixtures = ['test_parts.json']
+    # xml_fixture has partial XML for regs 1002 and 1005
+    xml_fixture = "{}/regulations3k/fixtures/graftest.xml".format(
+        settings.PROJECT_ROOT)
+
+    def setUp(self):
+        # print_patch = mock.patch(
+        #     'regulations3k.scripts.ecfr_importer.print')
+        # print_patch.start()
+        # self.addCleanup(print_patch.stop)
+
+        with open(self.xml_fixture, 'r') as f:
+            self.test_xml = f.read()
+
     @mock.patch('regulations3k.scripts.ecfr_importer.ecfr_to_regdown')
     def test_run_with_one_arg_calls_importer(self, mock_importer):
         run('1002')
         self.assertEqual(mock_importer.call_count, 1)
 
-    def test_run_works_with_local_file(self):
+    @mock.patch('regulations3k.scripts.ecfr_importer.ecfr_to_regdown')
+    def test_run_works_with_local_file(self, mock_importer):
         run('1002', self.xml_fixture)
-        self.assertEqual(Part.objects.filter(part_number='1002').count(), 1)
+        self.assertEqual(mock_importer.call_count, 1)
+
+    @mock.patch('regulations3k.scripts.ecfr_importer.ecfr_to_regdown')
+    def test_run_all(self, mock_importer):
+        run('ALL')
+        self.assertEqual(mock_importer.call_count, 11)
+
+    @mock.patch('regulations3k.scripts.ecfr_importer.ecfr_to_regdown')
+    def test_run_all_with_local_file(self, mock_importer):
+        run('ALL', self.xml_fixture)
+        self.assertEqual(mock_importer.call_count, 11)
 
     def test_run_importer_no_args(self):
         with self.assertRaises(SystemExit):
