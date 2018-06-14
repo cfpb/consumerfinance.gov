@@ -62,7 +62,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             'regs': [{
                 'name': "Regulation {}".format(LETTER_CODES.get(reg)),
                 'id': reg,
-                'num_results': query_sqs.filter(parg=reg).count()}
+                'num_results': query_sqs.filter(part=reg).count()}
                 for reg in regs
             ],
         }
