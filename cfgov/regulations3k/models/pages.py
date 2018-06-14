@@ -4,7 +4,6 @@ import re
 from collections import OrderedDict
 from functools import partial
 
-from django.core.paginator import InvalidPage  # , Paginator
 from django.db import models
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
