@@ -73,7 +73,6 @@
     "gulp-eslint": "4.0.1",
     "is-reachable": "2.4.0",
     "jest": "23.1.0",
-    "jest-cli": "23.1.0",
     "jsdoc": "3.5.5",
     "localtunnel": "1.9.0",
     "merge-stream": "1.0.1",
