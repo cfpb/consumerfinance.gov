@@ -73,7 +73,7 @@ def editor_css():
     ]
     css_includes = format_html_join(
         '\n',
-        '<link rel="stylesheet" href="{0}{1}"><link>',
+        '<link rel="stylesheet" href="{0}{1}">',
         ((settings.STATIC_URL, filename) for filename in css_files)
     )
 
