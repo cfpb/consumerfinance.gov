@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0112_add_menu_item'),
+        ('v1', '0113_modify_help_text_social_sharing_image'),
     ]
 
     operations = [
