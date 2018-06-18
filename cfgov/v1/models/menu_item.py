@@ -4,7 +4,6 @@ from django.utils.encoding import python_2_unicode_compatible
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, MultiFieldPanel, PageChooserPanel, StreamFieldPanel
 )
-from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
@@ -56,16 +55,8 @@ class MenuItem(models.Model):
     ], blank=True)
 
     nav_footer = StreamField([
-        ('nav_footer', blocks.StructBlock([
-            ('draft', blocks.BooleanBlock(
-                required=False,
-                default=False,
-                help_text='If checked, this block will only show '
-                'on our sharing site (Content).',
-                label='Mark block as draft'
-            )),
-            ('content', blocks.RichTextBlock(required=False))
-        ], label='Menu footer'))
+        ('nav_footer', v1_blocks.NavFooter(
+            label='Menu footer'))
     ], blank=True)
 
     panels = [
