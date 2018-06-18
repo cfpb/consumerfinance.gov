@@ -55,7 +55,10 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         elif regs:
             sqs = sqs.filter(part__in=regs)
         search_query = request.GET.get('q', '')  # haystack cleans this string
-        query_sqs = sqs.filter(content=search_query).models(Section)
+        if search_query:
+            query_sqs = sqs.filter(content=search_query).models(Section)
+        else:
+            query_sqs = sqs.models(Section)
         payload = {
             'results': [],
             'total_results': query_sqs.count(),
