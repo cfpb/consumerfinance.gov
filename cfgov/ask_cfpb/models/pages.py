@@ -274,12 +274,13 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
     def get_context(self, request, *args, **kwargs):
         context = super(
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
-        sqs = SearchQuerySet().models(self.Category)
+        sqs = SearchQuerySet()
         if self.language == 'es':
             sqs = sqs.filter(content=self.ask_category.name_es)
         else:
             sqs = sqs.filter(content=self.ask_category.name)
-        if sqs:
+        sqs = sqs.models(self.Category)
+        if sqs.count() > 0:
             facet_map = sqs[0].facet_map
         else:
             facet_map = self.ask_category.facet_map

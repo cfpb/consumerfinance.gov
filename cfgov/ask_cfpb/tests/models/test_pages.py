@@ -10,9 +10,11 @@ from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpRequest, HttpResponse
 from django.template.defaultfilters import slugify
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from django.utils import html, timezone
 from django.utils.translation import ugettext as _
+from haystack.models import SearchResult
+from haystack.query import SearchQuerySet
 
 import mock
 from mock import mock_open, patch
@@ -136,9 +138,11 @@ class AnswerModelTestCase(TestCase):
         return AnswerAudiencePage.objects.create(**kwargs)
 
     def setUp(self):
+        self.factory = RequestFactory()
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.audience = mommy.make(Audience, name='stub_audience')
-        self.category = mommy.make(Category, name='stub_cat', name_es='que')
+        self.category = mommy.make(
+            Category, name='stub_cat', name_es='que', slug='stub-cat')
         self.subcategories = mommy.make(
             SubCategory, name='stub_subcat', parent=self.category, _quantity=3)
         self.category.subcategories.add(self.subcategories[0])
@@ -888,21 +892,30 @@ class AnswerModelTestCase(TestCase):
             test_context['choices'].count(),
             self.category.subcategories.count())
 
-    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
-    def test_category_page_context_no_es(self, mock_es_query):
+    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.models')
+    def test_category_page_context_no_elasticsearch_count(self, mock_es_query):
+        mock_es_query.return_value = SearchQuerySet().none()
+        request = self.factory.get('/ask-cfpb/category-stub-cat/')
+        cat_page = self.create_category_page(ask_category=self.category)
+        test_context = cat_page.get_context(request)
+        self.assertEqual(len(test_context['facets']), 3)
+
+    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.models')
+    def test_category_page_context_elasticsearch_count_1(
+            self, mock_sqs):
+        mock_return = mock.Mock(SearchResult)
         blank_facets = {'answers': {},
                         'audiences': {},
                         'subcategories': {}}
-        mock_return_value = mock.Mock()
-        mock_return_value.facet_map = json.dumps(blank_facets)
-        mock_es_query.return_value = [mock_return_value]
-        mock_site = mock.Mock()
-        mock_site.hostname = 'localhost'
-        mock_request = HttpRequest()
-        mock_request.site = mock_site
+        mock_return.facet_map = json.dumps(blank_facets)
+        mock_queryset = SearchQuerySet().all()
+        mock_queryset._result_count = 1
+        mock_queryset._result_cache = [mock_return]
+        mock_sqs.return_value = mock_queryset
+        request = self.factory.get('/ask-cfpb/category-stub-cat/')
         cat_page = self.create_category_page(ask_category=self.category)
-        test_context = cat_page.get_context(mock_request)
-        self.assertEqual(test_context['facets'], blank_facets)
+        test_context = cat_page.get_context(request)
+        self.assertEqual(len(test_context['facets']), 3)
 
     def test_category_page_get_english_template(self):
         mock_site = mock.Mock()
