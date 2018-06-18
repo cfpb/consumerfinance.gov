@@ -1,11 +1,12 @@
 {% extends 'layout-full.html' %}
 {% import 'atoms/checkbox.html' as checkbox %}
-{% import 'eregs/regulations3k-search-bar.html' as search_bar with context %}
+{% import 'eregs/regulations3k-search-bar.html' as search_bar %}
+{% import 'eregs/regulations3k-search-result-item.html' as search_item %}
 
 {# HEAD items #}
 
 {% block title -%}
-    Page Title | Consumer Financial Protection Bureau
+    Regulations Search | Consumer Financial Protection Bureau
 {%- endblock title %}
 
 {% block desc -%}
@@ -158,23 +159,7 @@
             </div>
             <div class="results_list">
                 {% for result in page.results.results %}
-                    <article class="results_item">
-                        <h4>
-                          <a href="{{ result.url }}">{{ result.label }}</a>
-                        </h4>
-                        <p>{{ result.snippet }}</p>
-                        <div class="tags tags__hide-heading">
-                            <span class="u-visually-hidden">Topics:</span>
-                            <ul class="tags_list">
-                                <li class="tags_tag">
-                                    <a href="#" class="tags_link">
-                                        <span class="tags_bullet" aria-hidden="true">•</span>
-                                        {{ result.reg }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </article>
+                    {{ search_item.render( result ) }}
                 {% endfor %}
             </div>
         </div>

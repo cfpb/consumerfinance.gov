@@ -23,13 +23,7 @@
 
    value.autocomplete         Whether autocomplete will be activated for search.
 
-   value.q                    The previous search query string.
-
-   value.placeholder          The placeholder text.
-
-   value.hidden_fields        List of key-value pairs to be converted into
-                              hidden input fields and included with the form
-                              submission.
+   value.q                    The previous search query string
 
    ========================================================================== #}
 
@@ -46,12 +40,7 @@
                 block__bg-extend-{{ value.position }}
               {% endif %}
               {{ value.additional_classes }}">
-    <form method="get" action="{{ value.action }}" class="content-l" data-js-hook="{{ value.hook }}">
-        {% for field in value.hidden_fields %}
-            {% for value in field.value.split(',') %}
-                <input type="hidden" name="{{ field.name }}" value="{{ value }}">
-            {% endfor %}
-        {% endfor %}
+    <form method="get" action="{{ value.action }}" class="content-l">
         {% if value.label %}
         <div class="o-search-bar_label o-search-bar_col">
             <h4 class="u-mb0">
@@ -62,15 +51,10 @@
         <div class="o-search-bar_input o-search-bar_col">
             <div class="input-with-btn input-with-btn__bar">
                 <div class="input-with-btn_input {% if value.autocomplete %} m-autocomplete{% endif %}">
-                    <input class="a-text-input"
-                           type="text"
-                           name="q"
-                           id="q"
-                           value="{{ value.q }}"
-                           placeholder="{{ value.placeholder }}">
+                    <input class="a-text-input" type="text" name="q" id="q" value="{{ value.q }}">
                 </div>
                 <div class="input-with-btn_btn">
-                    <button class="a-btn" id="btnSearch" type="submit">
+                    <button class="a-btn" name="btnSearch" id="btnSearch" type="submit">
                         Search
                     </button>
                 </div>
