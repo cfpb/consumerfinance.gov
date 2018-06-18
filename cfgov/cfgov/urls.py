@@ -214,16 +214,6 @@ urlpatterns = [
     url(r'^credit-cards/agreements/',
         include('agreements.urls')),
 
-    flagged_url(
-        'LEGACY_HUD_API',
-        r'^hud-api-replace/',
-        include_if_app_enabled(
-            'hud_api_replace',
-            'hud_api_replace.urls',
-            namespace='hud_api_replace'
-        )
-    ),
-
     url(r'^consumer-tools/retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
