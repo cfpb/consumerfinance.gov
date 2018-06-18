@@ -7,7 +7,10 @@ from wagtail.wagtailcore.models import Page
 
 import mock
 
-from v1.blocks import AbstractFormBlock, AnchorLink, Link, PlaceholderCharBlock
+from v1.blocks import (
+    AbstractFormBlock, AnchorLink, Link,
+    NavFooter, PlaceholderCharBlock
+)
 
 
 class TestAbstractFormBlock(TestCase):
@@ -168,3 +171,52 @@ class TestLink(TestCase):
         value = block.to_python({'link_text': 'Link'})
         with self.assertRaises(ValidationError):
             block.clean(value)
+
+
+class TestNavFooter(TestCase):
+    def test_aria_attributes_added_to_link_with_preceding_text(self):
+        test_input = '<p>Text with <a href="/">link</a></p>'
+        expected_output = (
+            '<p><span aria-hidden="true">Text with </span>'+
+            '<a aria-label="Text with link" href="/">link</a></p>'
+        )
+        self.assertEqual(
+            NavFooter.accessible_links(test_input),
+            expected_output
+        )
+
+    def test_aria_attributes_added_to_link_with_surrounding_text(self):
+        test_input = '<p>Text with <a href="/">link</a> and following text</p>'
+        expected_output = (
+            '<p><span aria-hidden="true">Text with </span>' +
+            '<a aria-label="Text with link and following text" ' +
+            'href="/">link</a>' +
+            '<span aria-hidden="true"> and following text</span></p>'
+        )
+        self.assertEqual(
+            NavFooter.accessible_links(test_input),
+            expected_output
+        )
+
+    def test_span_sibling_not_wrapped_in_span(self):
+        test_input = (
+            '<p><span>Text with </span><a href="/">link</a>' +
+            ' and following text</p>'
+        )
+        expected_output = (
+            '<p><span aria-hidden="true">Text with </span>' +
+            '<a aria-label="Text with link and following text" ' +
+            'href="/">link</a>' +
+            '<span aria-hidden="true"> and following text</span></p>'
+        )
+        self.assertEqual(
+            NavFooter.accessible_links(test_input),
+            expected_output
+        )
+
+    def test_no_aria_attributes_added_to_link_without_accompanying_text(self):
+        test_input = '<p><a href="/">Standalone link</a></p>'
+        self.assertEqual(
+            NavFooter.accessible_links(test_input),
+            test_input
+        )
