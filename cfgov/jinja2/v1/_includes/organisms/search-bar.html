@@ -27,6 +27,10 @@
 
    value.placeholder          The placeholder text.
 
+   value.hidden_fields        List of key-value pairs to be converted into
+                              hidden input fields and included with the form
+                              submission.
+
    ========================================================================== #}
 
 {% macro render( value ) %}
@@ -42,7 +46,12 @@
                 block__bg-extend-{{ value.position }}
               {% endif %}
               {{ value.additional_classes }}">
-    <form method="get" action="{{ value.action }}" class="content-l">
+    <form method="get" action="{{ value.action }}" class="content-l" data-js-hook="{{ value.hook }}">
+        {% for field in value.hidden_fields %}
+            {% for value in field.value.split(',') %}
+                <input type="hidden" name="{{ field.name }}" value="{{ value }}">
+            {% endfor %}
+        {% endfor %}
         {% if value.label %}
         <div class="o-search-bar_label o-search-bar_col">
             <h4 class="u-mb0">
@@ -61,7 +70,7 @@
                            placeholder="{{ value.placeholder }}">
                 </div>
                 <div class="input-with-btn_btn">
-                    <button class="a-btn" name="btnSearch" id="btnSearch" type="submit">
+                    <button class="a-btn" id="btnSearch" type="submit">
                         Search
                     </button>
                 </div>

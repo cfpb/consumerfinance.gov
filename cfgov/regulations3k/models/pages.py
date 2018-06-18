@@ -46,12 +46,13 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     def get_template(self, request):
         return 'regulations3k/search-regulations.html'
 
-    @route(r'^results/')
+    @route(r'^results/', name="regs_search_results")
     def regulation_results_page(self, request):
+        all_regs = Part.objects.order_by('part_number')
         regs = []
         sqs = SearchQuerySet()
         if 'regs' in request.GET:
-            regs = [reg for reg in request.GET.get('regs').split(',')]
+            regs = request.GET.getlist('regs')
         if len(regs) == 1:
             sqs = sqs.filter(part=regs[0])
         elif regs:
@@ -62,14 +63,17 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         else:
             query_sqs = sqs.models(Section)
         payload = {
+            'search_query': search_query,
             'results': [],
             'total_results': query_sqs.count(),
-            'regs': [{
-                'name': "Regulation {}".format(LETTER_CODES.get(reg)),
-                'id': reg,
-                'num_results': query_sqs.filter(part=reg).count()}
-                for reg in regs
-            ],
+            'regs': regs,
+            'all_regs': [{
+                'name': "Regulation {}".format(reg.letter_code),
+                'id': reg.part_number,
+                'num_results': query_sqs.filter(parg=reg.part_number).count(),
+                'selected': reg.part_number in regs}
+                for reg in all_regs
+            ]
         }
         for hit in query_sqs:
             label_bits = hit.object.label.partition('-')

@@ -15,7 +15,6 @@
     .content_sidebar {
         padding: 45px 15px;
         border: 1px solid #b4b5b6;
-        border-top: none;
         background-color: #f7f8f9;
         .o-expandable_content,
         .o-expandable_target {
@@ -31,6 +30,7 @@
             border: 0;
         }
         border: 0;
+        border-top: 1px solid #b4b5b6;
         padding-top: 0;
     }
     .results_count {
@@ -44,6 +44,16 @@
                  unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         li {
             list-style-type: none;
+        }
+    }
+    .results_item {
+        margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        &+ .results_item {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            h4 {
+                padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+                border-top: 1px solid #b4b5b6;
+            }
         }
     }
 }

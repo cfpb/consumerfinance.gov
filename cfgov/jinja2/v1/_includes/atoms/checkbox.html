@@ -23,16 +23,18 @@
 {% macro render(value) -%}
 
 {%- set id = value.id or get_unique_id('input_', '_') ~ slugify( value.label ) -%}
-{%- set ht_id = get_unique_id('input_ht_', '_') ~ slugify( value.label ) -%}
 {%- set el = value.el_wrapper if value.el_wrapper else 'div' -%}
 {%- set val = value.value if value.value else id -%}
+{%- set name = value.name if value.name else id -%}
+{%- set checked = 'checked' if value.selected else '' -%}
 
 <{{ el }} class="m-form-field m-form-field__checkbox">
     <input class="a-checkbox"
            type="checkbox"
-           value="{{ value.value }}"
+           value="{{ val }}"
            id="{{ id }}"
-           name="{{ id }}">
+           name="{{ name }}"
+           {{ checked }}>
     <label class="a-label"
            for="{{ id }}">
         {{ value.label }}
