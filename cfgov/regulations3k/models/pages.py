@@ -1,8 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-import os
 import re
-import json
 from collections import OrderedDict
 from functools import partial
 
@@ -46,7 +44,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     def get_template(self, request):
         return 'regulations3k/search-regulations.html'
 
-    @route(r'^results/', name="regs_search_results")
+    @route(r'^results/')
     def regulation_results_page(self, request):
         all_regs = Part.objects.order_by('part_number')
         regs = []
@@ -70,7 +68,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             'all_regs': [{
                 'name': "Regulation {}".format(reg.letter_code),
                 'id': reg.part_number,
-                'num_results': query_sqs.filter(parg=reg.part_number).count(),
+                'num_results': query_sqs.filter(part=reg.part_number).count(),
                 'selected': reg.part_number in regs}
                 for reg in all_regs
             ]
@@ -129,28 +127,6 @@ class RegulationLandingPage(CFGOVPage):
 
     def get_template(self, request):
         return 'regulations3k/base.html'
-
-
-class RegulationSearchPage(CFGOVPage):
-    """search page for eregs"""
-    objects = CFGOVPageManager()
-    parent_page_types = ['regulations3k.RegulationLandingPage']
-    subpage_types = []
-
-    def get_context(self, request, *args, **kwargs):
-
-        fixtures_dir = os.path.dirname(__file__)
-        search_json = os.path.join(fixtures_dir, '../fixtures/search_data.json')
-
-        with open(search_json) as json_file:
-            search_data = json.load(json_file)
-
-        context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
-        context.update(search_data)
-        return context
-
-    def get_template(self, request):
-        return 'regulations3k/search-page.html'
 
 
 class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
