@@ -117,7 +117,7 @@ def editor_css():
     return format_html(
         '<link rel="stylesheet" href="' +
         settings.STATIC_URL +
-        'css/question_tips.css">')
+        'css/question-tips.css">\n')
 
 
 def whitelister_element_rules():
