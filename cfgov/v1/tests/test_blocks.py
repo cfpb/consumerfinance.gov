@@ -8,8 +8,7 @@ from wagtail.wagtailcore.models import Page
 import mock
 
 from v1.blocks import (
-    AbstractFormBlock, AnchorLink, Link,
-    NavFooter, PlaceholderCharBlock
+    AbstractFormBlock, AnchorLink, Link, NavFooter, PlaceholderCharBlock
 )
 
 
