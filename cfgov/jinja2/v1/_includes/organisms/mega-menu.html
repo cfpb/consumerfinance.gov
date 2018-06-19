@@ -235,8 +235,8 @@
             u-hide-on-mobile"
     data-js-hook="behavior_flyout-menu"
     aria-labelledby="{{ base_class ~ '_label' }}">
-    <h2 id="{{ base_class ~ '_label' }}"
-        class="{{ base_class ~ '_label' }}"
+    <h2
+        class="{{ base_class ~ '_heading' }}"
     >
         <button class="{{ base_class ~ '_trigger' }}"
                data-js-hook="behavior_flyout-menu_trigger"
@@ -248,7 +248,10 @@
                 {{ svg_icon('close') }}
             </span>
             <span class="u-visually-hidden">
-                <span class="{{ base_class ~ '_trigger-text' }}">Open</span> main menu
+                <span 
+                class="{{ base_class ~ '_trigger-text' }}"
+                 id="{{ base_class ~ '_label' }}"
+                >Open</span> main menu
             </span>
         </button>
     </h2>
