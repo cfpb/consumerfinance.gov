@@ -18,7 +18,7 @@
     <div class="m-global-header-cta
                 m-global-header-cta__{{ 'horizontal' if is_horizontal else 'list' }}">
         <a href="/complaint/"
-           {{- '' if is_horizontal else 'aria-role=menuitem' }}>
+           {{- '' if is_horizontal else ' role=menuitem' }}>
             {{ svg_icon('complaint') }}
             Submit a Complaint
         </a>
