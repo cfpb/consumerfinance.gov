@@ -15,8 +15,7 @@
 
 {% macro render( show_banner=false ) %}
 
-<header class="o-header"
-        role="banner">
+<header class="o-header">
 
     {% if flag_enabled('BETA_NOTICE', request) and show_banner %}
     {% import 'molecules/notification.html' as notification with context %}
@@ -68,7 +67,7 @@
                     {% import '_vars-mega-menu.html' as vars with context %}
                     {{ mega_menu(vars.menu_items) }}
                 {% endif %}
-                
+
             {% endblock primary_nav %}
         </div>
 
