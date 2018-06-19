@@ -8,6 +8,8 @@ from django.db import models
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from django.utils.functional import cached_property
+from django.utils.text import Truncator
+from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
@@ -16,20 +18,99 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 
-# Our RegDownTextField field doesn't generate a good widget yet
-# from regulations3k.models.fields import RegDownTextField
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.models import Part, Section
 from regulations3k.regdown import regdown
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
+from regulations3k.scripts.integer_conversion import LETTER_CODES
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage, CFGOVPageManager
 
 
+class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
+    """A page for the custom search interface for regulations."""
+
+    objects = PageManager()
+
+    parent_page_types = ['regulations3k.RegulationLandingPage']
+    subpage_types = []
+    results = {}
+    content_panels = CFGOVPage.content_panels
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+
+    def get_template(self, request):
+        return 'regulations3k/search-regulations.html'
+
+    @route(r'^results/')
+    def regulation_results_page(self, request):
+        regs = []
+        sqs = SearchQuerySet()
+        if 'regs' in request.GET:
+            regs = [reg for reg in request.GET.get('regs').split(',')]
+        if len(regs) == 1:
+            sqs = sqs.filter(part=regs[0])
+        elif regs:
+            sqs = sqs.filter(part__in=regs)
+        search_query = request.GET.get('q', '')  # haystack cleans this string
+        if search_query:
+            query_sqs = sqs.filter(content=search_query).models(Section)
+        else:
+            query_sqs = sqs.models(Section)
+        payload = {
+            'results': [],
+            'total_results': query_sqs.count(),
+            'regs': [{
+                'name': "Regulation {}".format(LETTER_CODES.get(reg)),
+                'id': reg,
+                'num_results': query_sqs.filter(part=reg).count()}
+                for reg in regs
+            ],
+        }
+        for hit in query_sqs:
+            label_bits = hit.object.label.partition('-')
+            _part, _section = label_bits[0], label_bits[2]
+            letter_code = LETTER_CODES.get(_part)
+            snippet = Truncator(hit.text).words(40, truncate=' ...')
+            snippet = snippet.replace('*', '').replace('#', '')
+            hit_payload = {
+                'id': hit.object.pk,
+                'reg': 'Regulation {}'.format(letter_code),
+                'label': hit.title,
+                'snippet': snippet,
+                'url': "/regulations/{}/{}/".format(_part, _section),
+            }
+            payload['results'].append(hit_payload)
+        self.results = payload
+
+        # if we want to paginate results:
+
+        # def get_context(self, request, **kwargs):
+        #     context = super(RegulationsSearchPage, self).get_context(
+        #         request, **kwargs)
+        #     context.update(**kwargs)
+        #     paginator = Paginator(payload['results'], 25)
+        #     page_number = validate_page_number(request, paginator)
+        #     paginated_page = paginator.page(page_number)
+        #     context['current_page'] = page_number
+        #     context['paginator'] = paginator
+        #     context['results'] = paginated_page
+        #     return context
+
+        context = self.get_context(request)
+        return TemplateResponse(
+            request,
+            self.get_template(request),
+            context)
+
+
 class RegulationLandingPage(CFGOVPage):
-    """landing page for eregs"""
+    """Landing page for eregs."""
+
     objects = CFGOVPageManager()
-    subpage_types = ['regulations3k.RegulationPage']
+    subpage_types = ['regulations3k.RegulationPage', 'RegulationsSearchPage']
     regs = Part.objects.order_by('part_number')
 
     def get_context(self, request, *args, **kwargs):
@@ -45,7 +126,7 @@ class RegulationLandingPage(CFGOVPage):
 
 
 class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
-    """A routable page for serving an eregulations page by Section ID"""
+    """A routable page for serving an eregulations page by Section ID."""
 
     objects = PageManager()
     parent_page_types = ['regulations3k.RegulationLandingPage']
@@ -84,7 +165,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
     @cached_property
     def section_query(self):
-        """ Query set for Sections in this regulation's effective version """
+        """Query set for Sections in this regulation's effective version."""
         return Section.objects.filter(
             subpart__version=self.regulation.effective_version,
         )
@@ -208,3 +289,23 @@ def get_reg_nav_items(request, current_page):
             subpart_dict[section.subpart]['expanded'] = True
 
     return subpart_dict, False
+
+# if we paginate
+
+# def validate_page_number(request, paginator):
+#     """
+#     A utility for parsing a pagination request.
+
+#     This should catch invalid page numbers and always return
+#     a valid page number, defaulting to 1.
+#     """
+#     raw_page = request.GET.get('page', 1)
+#     try:
+#         page_number = int(raw_page)
+#     except ValueError:
+#         page_number = 1
+#     try:
+#         paginator.page(page_number)
+#     except InvalidPage:
+#         page_number = 1
+#     return page_number
