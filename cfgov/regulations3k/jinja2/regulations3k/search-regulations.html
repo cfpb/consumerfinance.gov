@@ -100,14 +100,17 @@
                         <p> </p>
                         <ul class="m-list m-list__unstyled">
                         {% for reg in page.results.all_regs %}
-                            {{ checkbox.render({
-                                'label': reg.id ~ ' (' ~ reg.name ~ ')',
-                                'value': reg.id,
-                                'id': 'regulation-' ~ reg.id,
-                                'name': 'regs',
-                                'selected': reg.selected,
-                                'el_wrapper': 'li'
-                            }) }}
+                            <li>
+                                {{ checkbox.render({
+                                    'label': reg.id ~ ' (' ~ reg.name ~ ')',
+                                    'value': reg.id,
+                                    'id': 'regulation-' ~ reg.id,
+                                    'class': 'reg-checkbox',
+                                    'name': 'regs',
+                                    'selected': reg.selected
+                                }) }}
+                                <div class="num-results">{{ reg.num_results }}</div>
+                            </li>
                         {% endfor %}
                         </ul>
                     </fieldset>
