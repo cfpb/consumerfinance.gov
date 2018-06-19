@@ -12,9 +12,10 @@ from dateutil import parser
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart
 )
-from regulations3k.scripts.integer_conversion import int_to_alpha, roman_to_int
+from regulations3k.scripts.integer_conversion import int_to_alpha
 from regulations3k.scripts.patterns import (
-    IdLevelState, dot_id_patterns, paren_id_patterns, title_pattern
+    IdLevelState, dot_id_patterns, interp_reference_pattern,
+    paren_id_patterns, title_pattern
 )
 
 
@@ -90,6 +91,7 @@ class PayLoad(object):
     sections = []
     appendices = []
     interpretations = []
+    interp_refs = {}
     effective_date = None
 
 
@@ -197,69 +199,61 @@ def pre_process_tags(paragraph_element):
     return paragraph_element
 
 
-def bold_first_italics(graph):
+def bold_first_italics(graph_text):
     """For a newly broken-up graph, convert the first italics text to bold."""
-    if graph.count('*') > 1:
-        return graph.replace('*', '**', 2)
+    if graph_text.count('*') > 1:
+        return graph_text.replace('*', '**', 2)
     else:
-        return graph
+        return graph_text
 
 
-def combine_bolds(graph):
+def combine_bolds(graph_text):
     """
     Make ID marker bold and remove redundant bold markup between bold elements.
     """
-    if graph.startswith('('):
-        graph = graph.replace(
+    if graph_text.startswith('('):
+        graph_text = graph_text.replace(
             '  ', ' ').replace(
             '(', '**(', 1).replace(
             ')', ')**', 1).replace(
             '** **', ' ', 1)
-    return graph
+    return graph_text
 
 
-def graph_top(graph):
+def graph_top(graph_text):
     "Weed out the common sources of errant IDs"
-    return graph.partition(
+    return graph_text.partition(
         'paragraph')[0].partition(
         '12 CFR')[0].partition(
         '\xa7')[0][:200]
 
 
-def parse_singleton_graph(graph):
-    """Take a graph with a single ID and return styled with a braced ID"""
+def parse_singleton_graph(graph_text, label):
+    """Take a paragraph with a single ID and return styled with a braced ID"""
     new_graph = ''
-    id_match = re.search(paren_id_patterns['initial'], graph_top(graph))
+    id_refs = PAYLOAD.interp_refs.get(label)
+    id_match = re.search(paren_id_patterns['initial'], graph_top(graph_text))
     if not id_match:
-        return '\n' + combine_bolds(graph) + '\n'
+        return '\n' + combine_bolds(graph_text) + '\n'
     id_token = id_match.group(1).strip('*')
-    if not token_validity_test(id_token):
-        return '\n' + combine_bolds(graph) + '\n'
+    if not LEVEL_STATE.token_validity_test(id_token):
+        return '\n' + combine_bolds(graph_text) + '\n'
     LEVEL_STATE.next_token = id_token
     pid = LEVEL_STATE.next_id()
     new_graph += "\n{" + pid + "}\n"
-    new_graph += combine_bolds(graph) + '\n'
+    new_graph += combine_bolds(graph_text) + '\n'
+    if id_refs and pid in id_refs:
+        new_graph += '\n' + id_refs[pid] + '\n'
     return new_graph
 
 
-def token_validity_test(token):
-    "Make sure a singleton token is some kind of valid ID."
-    if (
-            token.isdigit()
-            or roman_to_int(token)
-            or (token.isalpha() and len(token) == 1)
-            or (token.isalpha() and len(token) == 2 and token[0] == token[1])):
-        return True
-    else:
-        return False
-
-
-def parse_multi_id_graph(graph, ids):
+def parse_multi_id_graph(graph, ids, label):
     """
     Parse a graph with 1 to 3 ids and return
     individual graphs with their own braced IDs.
     """
     new_graphs = ''
+    id_refs = PAYLOAD.interp_refs.get(label)
     LEVEL_STATE.next_token = ids[0]
     pid1 = LEVEL_STATE.next_id()
     split1 = graph.partition('({})'.format(ids[1]))
@@ -268,12 +262,16 @@ def parse_multi_id_graph(graph, ids):
     remainder = bold_first_italics(split1[2])
     new_graphs += "\n{" + pid1 + "}\n"
     new_graphs += text1 + '\n'
+    if id_refs and pid1 in id_refs:
+        new_graphs += '\n' + id_refs[pid1] + '\n'
     LEVEL_STATE.next_token = ids[1]
     pid2 = LEVEL_STATE.next_id()
     new_graphs += "\n{" + pid2 + "}\n"
     if len(ids) == 2:
         text2 = combine_bolds(" ".join([pid2_marker, remainder]))
         new_graphs += text2 + '\n'
+        if id_refs and pid2 in id_refs:
+            new_graphs += '\n' + id_refs[pid2] + '\n'
         return new_graphs
     else:
         split2 = remainder.partition('({})'.format(ids[2]))
@@ -286,62 +284,12 @@ def parse_multi_id_graph(graph, ids):
         new_graphs += "\n{" + pid3 + "}\n"
         text3 = combine_bolds(" ".join([pid3_marker, remainder2]))
         new_graphs += text3 + '\n'
+        if id_refs and pid3 in id_refs:
+            new_graphs += '\n' + id_refs[pid3] + '\n'
         return new_graphs
 
 
-def roman_test(id_token):
-    """
-    Determine whether the root ID of a potential multi_ID paragraph is a roman
-    numeral increment surfing levels 3 or 6 (the roman levels of a-1-i-A-1-i)
-    """
-    roman_int = roman_to_int(id_token)
-    if not roman_int:
-        return False
-    if LEVEL_STATE.level() not in [3, 6]:
-        return False
-    if roman_int - 1 == roman_to_int(LEVEL_STATE.current_token()):
-        return True
-
-
-def multiple_id_test(ids):
-    """
-    Decide, based on the first two IDS,
-    whether to proceed with multi-ID processing.
-
-    Allowed multi-ID patterns are:
-      (lowercase)(1) - and the lowercase cannot be a roman_numeral increment
-      (digit)(i)
-      (roman)(A)
-      (uppercase)(1)
-    """
-    if len(ids) < 2:
-        return
-    root_token = ids[0]
-    # levels 1 or 4
-    if (root_token.isalpha()
-            and len(root_token) < 3
-            and not roman_test(root_token)
-            and ids[1] == '1'):
-        good_ids = 2
-        if len(ids) == 3 and ids[2] == 'i':
-            good_ids = 3
-        return ids[:good_ids]
-    # levels 2 or 5
-    if root_token.isdigit() and ids[1] == 'i':
-        good_ids = 2
-        if len(ids) == 3 and ids[2] == 'A' and LEVEL_STATE.level() != 5:
-            good_ids = 3
-        return ids[:good_ids]
-    # level 3
-    if roman_to_int(root_token) and ids[1] == 'A':
-        good_ids = 2
-        if len(ids) == 3 and ids[2] == '1':
-            good_ids = 3
-        return ids[:good_ids]
-    # multiples not allowed at level 6
-
-
-def parse_ids(graph):
+def parse_ids(graph, label):
     """
     Extract up to three valid element IDs (indentaion markers)
     from a paragraph, and return a paragraph for each ID found.
@@ -353,23 +301,23 @@ def parse_ids(graph):
         #  clean up edge-case bolding caused by italicized IDs, such as
         #  '(F)(<I>1</I>)' from reg 1026.7
         graph = graph.replace("**{}**".format(clean_id), clean_id)
-    valid_ids = multiple_id_test(clean_ids)
+    valid_ids = LEVEL_STATE.multiple_id_test(clean_ids)
     if not valid_ids or LEVEL_STATE.level() == 6:
-        return parse_singleton_graph(graph)
+        return parse_singleton_graph(graph, label)
     else:
-        return parse_multi_id_graph(graph, valid_ids)
+        return parse_multi_id_graph(graph, valid_ids, label)
 
 
-def parse_section_paragraphs(paragraph_soup):
+def parse_section_paragraphs(paragraph_soup, label):
     paragraph_content = ''
     for p in paragraph_soup:
         p = pre_process_tags(p)
         graph = p.text.replace('\n', '')
-        paragraph_content += parse_ids(graph)
+        paragraph_content += parse_ids(graph, label)
     return paragraph_content
 
 
-def parse_appendix_graph(p_element):
+def parse_appendix_graph(p_element, label):
     """Extract dot-based IDs, if any"""
     graph_text = ''
     id_match = re.match(dot_id_patterns['any'], p_element.text)
@@ -385,28 +333,32 @@ def parse_appendix_graph(p_element):
         graph_text += graph + "\n"
     else:
         graph_text += p_element.text + "\n"
+        if label in PAYLOAD.interp_refs and PAYLOAD.interp_refs[label]:
+            graph_text += '\n' + PAYLOAD.interp_refs[label].values()[0] + '\n'
     return graph_text
 
 
-def parse_appendix_paragraphs(p_elements, id_type):
+def parse_appendix_paragraphs(p_elements, id_type, label):
     for p_element in p_elements:
         p = pre_process_tags(p_element)
         if id_type == 'section':
-            p_content = parse_ids(p.text) + "\n"
+            p_content = parse_ids(p.text, label) + "\n"
             p.replaceWith(p_content)
         else:
-            p_content = parse_appendix_graph(p) + "\n"
+            p_content = parse_appendix_graph(p, label) + "\n"
             p.replaceWith(p_content)
 
 
 def parse_sections(section_list, part, subpart):
     for section_element in section_list:
-        section_content = parse_section_paragraphs(
-            section_element.find_all('P'))
         section_number = section_element['N'].rsplit('.')[-1]
+        label = "{}-{}".format(part.part_number, section_number)
+        PAYLOAD.interp_refs.update({label: {}})
+        section_content = parse_section_paragraphs(
+            section_element.find_all('P'), label)
         _section = Section(
             subpart=subpart,
-            label="{}-{}".format(part.part_number, section_number),
+            label=label,
             title=section_element.find(
                 'HEAD').text.strip().replace('\xc2', ''),
             contents=section_content
@@ -414,21 +366,7 @@ def parse_sections(section_list, part, subpart):
         _section.save()
 
 
-def sniff_appendix_id_type(paragraphs):
-    """
-    Detect whether an appendix follows the section paragraph indentation
-    scheme (a-1-i-A-1-i) or the appendix scheme (1-a)
-
-    The sniffer should return 'section', 'appendix', or None.
-    """
-    for graph in paragraphs[:10]:
-        if graph.text.startswith('(a)'):
-            return 'section'
-        if graph.text.startswith('1.'):
-            return 'appendix'
-
-
-def parse_appendix_elements(appendix_soup):
+def parse_appendix_elements(appendix_soup, label):
     """
     For appendices, we can't just parse paragraphs because
     appendices can have embedded sub-headlines. So we need to parse
@@ -437,7 +375,7 @@ def parse_appendix_elements(appendix_soup):
     eCFR XML doesn't have any HD4s.
     """
     paragraphs = appendix_soup.find_all('P')
-    id_type = sniff_appendix_id_type(paragraphs)
+    id_type = LEVEL_STATE.sniff_appendix_id_type(paragraphs)
     for citation in appendix_soup.find_all('CITA'):
         citation.replaceWith('')
     for tag in HEADLINE_MAP:
@@ -450,7 +388,7 @@ def parse_appendix_elements(appendix_soup):
             pre_process_tags(p)
             p.replaceWith(p.text + "\n")
     else:
-        parse_appendix_paragraphs(paragraphs, id_type)
+        parse_appendix_paragraphs(paragraphs, id_type, label)
     return appendix_soup.text
 
 
@@ -478,77 +416,159 @@ def parse_appendices(appendices, part):
         elif _hed.startswith('Appendix MS'):
             ms_number = re.match(r'Appendix MS[-]?(\d{1})', _hed).group(1)
             default_label = "{}-MS{}".format(part.part_number, ms_number)
+        PAYLOAD.interp_refs.update({default_label: {}})
         appendix = Section(
             subpart=subpart,
             label=default_label,
             title=_hed,
-            contents=parse_appendix_elements(_appendix)
+            contents=parse_appendix_elements(_appendix, default_label)
         )
         appendix.save()
 
     PAYLOAD.appendices.append(appendix)
 
 
+def divine_interp_hd_use(element):
+    """
+    Best guess at what an interp element is being used for.
+    It might be announcing an intro, a subpart, a section,
+    an appendix or appendices, or a paragraph reference.
+
+    - H1 elements might denote intros, sections, or subparts
+    - H2 elements might denote sections or paragraph references
+    - H3 elements, if used, denote paragraph references
+
+    Paragraph references might also be contained in P or I tags.
+
+    Returns one of these values:
+    - intro
+    - subpart
+    - section
+    - appendix
+    - appendices
+    - graph_id
+    - '' (Denoting no use found -- render as a bare paragraph)
+    """
+    if element.name == 'HD3':
+        if element.text.startswith('Section'):
+            return 'section'
+        else:
+            return 'graph_id'
+    if element.name == 'HD1':
+        if 'INTRODUCTION' in element.text.upper():
+            return 'intro'
+        if element.text.startswith('Appendix'):
+            return 'appendix'
+        if element.text.startswith('Appendices'):
+            return 'appendices'
+        if element.text.startswith('Section'):
+            return 'section'
+        return ''
+    if element.name == 'HD2':
+        if element.text.startswith('Section'):
+            return 'section'
+        else:
+            return 'graph_id'
+
+
+def parse_interp_graph_reference(element):
+    id_text = element.text.replace('Paragraph', '').strip()
+    id_match = re.match(interp_reference_pattern, id_text)
+    if id_match:
+        tokens = [token.strip('()') for token in id_match.groups() if token]
+        return '{' + "-".join(tokens) + '}'
+
+
 def parse_interps(interp_div, part, subpart):
     """
     Break down interpretations into individual section interpretations,
-    and them process them by subpart, creating a mapping of references
+    and them process them and create a mapping of references
     to be inserted in the related sections.
     """
-    interp_numeric_pattern = r'Section \d{4}\.(\d{1,2}) '
+    interp_numeric_pattern = r'Section \d{4}\.(\d{1,3}) '
     interp_appendix_pattern = r'Appendix ([A-Z]{1,2}) -'
+    interp_appendices_pattern = r'Appendices ([^\-]+)-'
+    LEVEL_STATE.current_id = ''
     preamble = ''
     for tag in interp_div.find('HEAD').findNextSiblings():
         if tag.name == 'P':
-            preamble += pre_process_tags(tag).text + "\n"
+            tag = pre_process_tags(tag)
+            preamble += parse_appendix_graph(tag, 'preamble')
+            tag.replaceWith('')
         else:
             break
     for citation in interp_div.find_all('CITA'):
         citation.replaceWith('')
-    if len(interp_div.find_all('HD1')) > 2:
-        subheadings = interp_div.find_all('HD1')
-    else:
-        h1_elements = interp_div.find_all('HD1')
-        subheadings = interp_div.find_all('HD2')
-        if h1_elements:
-            subheadings = [h1_elements.pop(0)] + subheadings
-        if h1_elements:
-            subheadings += h1_elements
+    subheadings = []
+    for element in interp_div.find('HEAD').findNextSiblings():
+        if (element.name in ['HD1', 'HD2', 'HD3']
+                and divine_interp_hd_use(element)
+                in ['intro', 'section', 'appendix', 'appendices']):
+            subheadings.append(element)
     for i, heading in enumerate(reversed(subheadings)):
+        LEVEL_STATE.current_id = ''
         _hed = heading.text.strip()
         if re.match(interp_numeric_pattern, _hed):
-            section_number = re.match(interp_numeric_pattern, _hed).group(1)
+            section = re.match(
+                interp_numeric_pattern, _hed).group(1)
         elif re.match(interp_appendix_pattern, _hed):
-            section_number = re.match(interp_appendix_pattern, _hed).group(1)
-        elif _hed == 'Introduction':
-            section_number = '0'
+            section = re.match(interp_appendix_pattern, _hed).group(1)
+        elif re.match(interp_appendices_pattern, _hed):
+            section = re.match(interp_appendices_pattern, _hed).group(1)
+        elif _hed.upper() == 'INTRODUCTION':
+            section = '0'
         else:
-            section_number = 'X'
-        label = "{}-Interp-{}".format(part.part_number, section_number)
+            section = _hed.partition('-')[0]
+        interp_label = "{}-Interp-{}".format(part.part_number, section)
+        section_label = "{}-{}".format(part.part_number, section)
+        if section_label not in PAYLOAD.interp_refs:
+            PAYLOAD.interp_refs.update({section_label: {}})
+        refs = PAYLOAD.interp_refs[section_label]  # a blank dict initially
         if i == len(subheadings) - 1:
             content = preamble
         else:
             content = ''
+        content += "\n### {}\n".format(heading.text)
         sub_elements = heading.findNextSiblings()
         for element in sub_elements:
             if element.name == 'P':
-                content += pre_process_tags(element).text + "\n"
-            elif element.name == 'HD3':
+                p = pre_process_tags(element)
+                content += parse_appendix_graph(p, section_label)
+                element.replaceWith('')
+            elif (element.name == 'HD3'
+                    and divine_interp_hd_use(element) == 'graph_id'):
+                bracketed_ref = parse_interp_graph_reference(element)
+                if bracketed_ref:
+                    content += "\n{}\n".format(bracketed_ref)
+                    ref = bracketed_ref.strip('}{')
+                    pid = ref.partition('-')[2]
+                    refs.update(
+                        {pid: "See({}-{}-Interp)".format(
+                            part.part_number, ref)
+                         })
                 content += "\n### {}\n".format(element.text.strip())
-            elif element.name == 'HD2':
-                if heading.name == 'HD2':
-                    element.replaceWith('')
-                    break
-                content += "\n## {}\n".format(element.text.strip())
+                element.replaceWith('')
+            elif (element.name == 'HD2'
+                    and divine_interp_hd_use(element) == 'graph_id'):
+                bracketed_ref = parse_interp_graph_reference(element)
+                if bracketed_ref:
+                    content += "\n{}\n".format(bracketed_ref)
+                    ref = bracketed_ref.strip('}{')
+                    pid = ref.partition('-')[2]
+                    PAYLOAD.interp_refs.update(
+                        {pid: "See({}-{}-Interp)".format(
+                            part.part_number, ref)
+                         })
+                element.replaceWith('')
             elif element.name == 'HD1':
                 element.replaceWith('')
                 break
             else:
                 content += "\n{}\n".format(element.text.strip())
-            element.replaceWith('')
+                element.replaceWith('')
         interp = Section(
             subpart=subpart,
-            label=label,
+            label=interp_label,
             title=_hed,
             contents=content
         )

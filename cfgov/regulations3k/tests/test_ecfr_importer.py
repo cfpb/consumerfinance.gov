@@ -15,10 +15,10 @@ from requests import Response
 
 from regulations3k.models import Part, Subpart
 from regulations3k.scripts.ecfr_importer import (
-    ecfr_to_regdown, get_effective_date, multiple_id_test, parse_appendices,
+    ecfr_to_regdown, get_effective_date, parse_appendices,
     parse_appendix_elements, parse_appendix_graph, parse_appendix_paragraphs,
     parse_ids, parse_interps, parse_part, parse_section_paragraphs,
-    parse_singleton_graph, parse_version, run, sniff_appendix_id_type
+    parse_singleton_graph, parse_version, run
 )
 from regulations3k.scripts.integer_conversion import (
     alpha_to_int, int_to_alpha, int_to_roman, roman_to_int
@@ -37,32 +37,33 @@ class ImporterTestCase(DjangoTestCase):
         test_xml = f.read()
 
     def test_appendix_id_type_sniffer(self):
+        ls = IdLevelState()
         p_soup = bS(self.test_xml, 'lxml-xml')
         appendices = p_soup.find_all('DIV5')[1].find_all('DIV9')
         appendix_0_graphs = appendices[0].find_all('P')
-        appendix_0_type = sniff_appendix_id_type(appendix_0_graphs)
+        appendix_0_type = ls.sniff_appendix_id_type(appendix_0_graphs)
         self.assertEqual('appendix', appendix_0_type)
         appendix_1_graphs = appendices[1].find_all('P')
-        appendix_1_type = sniff_appendix_id_type(appendix_1_graphs)
+        appendix_1_type = ls.sniff_appendix_id_type(appendix_1_graphs)
         self.assertEqual('section', appendix_1_type)
         appendix_2_graphs = appendices[2].find_all('P')
-        appendix_2_type = sniff_appendix_id_type(appendix_2_graphs)
+        appendix_2_type = ls.sniff_appendix_id_type(appendix_2_graphs)
         self.assertIs(appendix_2_type, None)
 
     def test_appendix_graph_parsing(self):
         p_soup = bS(self.test_xml, 'lxml-xml')
         graphs = p_soup.find_all('DIV5')[1].find_all('DIV9')[1].find_all('P')
-        parsed_graph2 = parse_appendix_graph(graphs[2])
+        parsed_graph2 = parse_appendix_graph(graphs[2], '1002-A')
         self.assertIn(
             "(2) To the extent not included in item 1 above:",
             parsed_graph2
         )
-        parsed_graph3 = parse_appendix_graph(graphs[3])
+        parsed_graph3 = parse_appendix_graph(graphs[3], '1002-A')
         self.assertIn(
             "(i) National banks",
             parsed_graph3
         )
-        parse_appendix_paragraphs(graphs, 'appendix')
+        parse_appendix_paragraphs(graphs, 'appendix', '1002-A')
         self.assertIn('\n1(a)', p_soup.text)
 
     def test_interp_graph_parsing(self):
@@ -91,7 +92,7 @@ class ImporterTestCase(DjangoTestCase):
         p_soup = bS(self.test_xml, 'lxml-xml')
         appendices = p_soup.find_all('DIV5')[1].find_all('DIV9')
         test_element = appendices[1]
-        parsed_appendix = parse_appendix_elements(test_element)
+        parsed_appendix = parse_appendix_elements(test_element, '1002-A')
         self.assertIn("**(a)**", parsed_appendix)
 
     @mock.patch(
@@ -208,65 +209,133 @@ class ParagraphParsingTestCase(unittest.TestCase):
         test_xml = f.read()
     with open(expected_graph_path, 'r') as f:
         expected_graphs = f.read()
+    LEVEL_STATE = IdLevelState()
 
     def test_singleton_parsing_invalid_tag(self):
         graph = "A graf with (or) as a potential but invalid ID."
-        parsed_graph = parse_singleton_graph(graph)
+        parsed_graph = parse_singleton_graph(graph, '1002-1')
         self.assertEqual(parsed_graph, "\n" + graph + "\n")
 
     def test_multi_id_paragraph_parsing(self):
         soup = bS(self.test_xml, 'lxml-xml')
         graph_soup = soup.find_all('P')
-        parsed_graphs = parse_section_paragraphs(graph_soup)
+        parsed_graphs = parse_section_paragraphs(graph_soup, '1002-1')
         self.assertEqual(
             parsed_graphs.replace('  ', ' ')[:100],
             self.expected_graphs.replace('  ', ' ')[:100])
 
     def test_multiple_id_test_true(self):
-        self.assertTrue(multiple_id_test(['a', '1']))
-        self.assertFalse(multiple_id_test(['a', 'i']))
-        self.assertTrue(multiple_id_test(['1', 'i']))
-        self.assertFalse(multiple_id_test(['1', 'b']))
-        self.assertTrue(multiple_id_test(['i', 'A']))
-        self.assertFalse(multiple_id_test(['ii', 'B']))
-        self.assertTrue(multiple_id_test(['A', '1']))
-        self.assertFalse(multiple_id_test(['B', '2']))
+        ls = self.LEVEL_STATE
+        self.assertTrue(ls.multiple_id_test(['a', '1']))
+        self.assertFalse(ls.multiple_id_test(['a', 'i']))
+        self.assertTrue(ls.multiple_id_test(['1', 'i']))
+        self.assertFalse(ls.multiple_id_test(['1', 'b']))
+        self.assertTrue(ls.multiple_id_test(['i', 'A']))
+        self.assertFalse(ls.multiple_id_test(['ii', 'B']))
+        self.assertTrue(ls.multiple_id_test(['A', '1']))
+        self.assertFalse(ls.multiple_id_test(['B', '2']))
 
     @mock.patch('regulations3k.scripts.ecfr_importer.parse_multi_id_graph')
     def test_three_passing_ids(self, mock_parser):
         test_graph = "(a) text (1) text (i) text."
         three_good_ids = ['a', '1', 'i']
-        parse_ids(test_graph)
-        mock_parser.assert_called_with(test_graph, three_good_ids)
+        parse_ids(test_graph, '1002-1')
+        mock_parser.assert_called_with(test_graph, three_good_ids, '1002-1')
 
     @mock.patch('regulations3k.scripts.ecfr_importer.parse_multi_id_graph')
     def test_two_passing_ids(self, mock_parser):
         test_graph = "(a) text (1) text (b) text."
         two_good_ids = ['a', '1']
-        parse_ids(test_graph)
-        mock_parser.assert_called_with(test_graph, two_good_ids)
+        parse_ids(test_graph, '1002-1')
+        mock_parser.assert_called_with(test_graph, two_good_ids, '1002-1')
 
 
 class ParserIdTestCase(unittest.TestCase):
 
+    LEVEL_STATE = IdLevelState()
+
     def test_roman_test_invalid_level(self):
-        from regulations3k.scripts.ecfr_importer import LEVEL_STATE, roman_test
-        LEVEL_STATE.current_id = 'a'
-        self.assertFalse(roman_test('ii'))
+        self.LEVEL_STATE.current_id = 'a'
+        self.assertFalse(self.LEVEL_STATE.roman_test('ii'))
 
     def test_multiple_id_test_level_2_passes(self):
-        from regulations3k.scripts.ecfr_importer import (
-            LEVEL_STATE, multiple_id_test)
-        LEVEL_STATE.current_id = 'a-1'
+        self.LEVEL_STATE.current_id = 'a-1'
         ids = ['2', 'i', 'A']
-        self.assertTrue(multiple_id_test(ids))
+        self.assertTrue(self.LEVEL_STATE.multiple_id_test(ids))
 
     def test_multiple_id_test_level_3_passes(self):
-        from regulations3k.scripts.ecfr_importer import (
-            LEVEL_STATE, multiple_id_test)
-        LEVEL_STATE.current_id = 'a-1-i'
+        self.LEVEL_STATE.current_id = 'a-1-i'
         ids = ['ii', 'A', '1']
-        self.assertTrue(multiple_id_test(ids))
+        self.assertTrue(self.LEVEL_STATE.multiple_id_test(ids))
+
+    def test_token_validity_test_true(self):
+        self.assertTrue(self.LEVEL_STATE.token_validity_test('a'))
+        self.assertTrue(self.LEVEL_STATE.token_validity_test('aa'))
+        self.assertTrue(self.LEVEL_STATE.token_validity_test('1'))
+        self.assertTrue(self.LEVEL_STATE.token_validity_test('i'))
+        self.assertTrue(self.LEVEL_STATE.token_validity_test('iv'))
+        self.assertTrue(self.LEVEL_STATE.token_validity_test('B'))
+        self.assertTrue(self.LEVEL_STATE.token_validity_test('BB'))
+
+    def test_token_validity_test_false(self):
+        self.assertFalse(self.LEVEL_STATE.token_validity_test('ab'))
+        self.assertFalse(self.LEVEL_STATE.token_validity_test('<'))
+        self.assertFalse(self.LEVEL_STATE.token_validity_test('.'))
+
+    def test_next_appendix_ids(self):
+        """Testing the appendix/interp pattern 1-i-A"""
+        ls = self.LEVEL_STATE
+        # initializes with next token
+        ls.current_id = ''
+        ls.next_token = '1'
+        self.assertEqual(ls.next_appendix_id(), '1')
+        # surf level 1
+        ls.current_id = '1'
+        ls.next_token = '2'
+        self.assertEqual(ls.next_appendix_id(), '2')
+        # dive
+        ls.next_token = 'i'
+        self.assertEqual(ls.next_appendix_id(), '2-i')
+        # surf level 2
+        ls.next_token = 'ii'
+        self.assertEqual(ls.next_appendix_id(), '2-ii')
+        # dive
+        ls.next_token = 'A'
+        self.assertEqual(ls.next_appendix_id(), '2-ii-A')
+        # surf level 3
+        ls.next_token = 'B'
+        self.assertEqual(ls.next_appendix_id(), '2-ii-B')
+        # rise
+        ls.next_token = 'iii'
+        self.assertEqual(ls.next_appendix_id(), '2-iii')
+        # rise
+        ls.next_token = '3'
+        self.assertEqual(ls.next_appendix_id(), '3')
+        # rise 2
+        ls.current_id = '1-i-A'
+        ls.next_token = '2'
+        self.assertEqual(ls.next_appendix_id(), '2')
+
+    def test_next_appendix_id_1a(self):
+        """Testing the appendix/interp-intro pattern 1-a."""
+        ls = self.LEVEL_STATE
+        # initializes with next token
+        ls.current_id = ''
+        ls.next_token = '1'
+        self.assertEqual(ls.next_appendix_id_1a(), '1')
+        # surf level 1
+        ls.current_id = '1'
+        ls.next_token = '2'
+        self.assertEqual(ls.next_appendix_id_1a(), '2')
+        # dive
+        ls.next_token = 'a'
+        self.assertEqual(ls.next_appendix_id_1a(), '2-a')
+        # surf level 2
+        ls.next_token = 'b'
+        self.assertEqual(ls.next_appendix_id_1a(), '2-b')
+        # rise
+        ls.next_token = '3'
+        self.assertEqual(ls.next_appendix_id_1a(), '3')
 
 
 class PatternsTestCase(unittest.TestCase):
@@ -274,6 +343,7 @@ class PatternsTestCase(unittest.TestCase):
     levelstate = IdLevelState()
 
     def test_appendix_level_1_initial(self):
+        """Testing the appendix indentation pattern 1-i-A"""
         self.levelstate.current_id = ''
         self.levelstate.next_token = '1'
         self.assertEqual(self.levelstate.next_appendix_id(), '1')
@@ -289,20 +359,20 @@ class PatternsTestCase(unittest.TestCase):
 
     def test_appendix_level_1_dive(self):
         self.levelstate.current_id = '1'
-        self.levelstate.next_token = 'a'
-        self.assertEqual(self.levelstate.next_appendix_id(), '1-a')
+        self.levelstate.next_token = 'i'
+        self.assertEqual(self.levelstate.next_appendix_id(), '1-i')
         self.assertEqual(self.levelstate.level(), 2)
-        self.assertEqual(self.levelstate.current_token(), 'a')
+        self.assertEqual(self.levelstate.current_token(), 'i')
 
     def test_appendix_level_2_surf(self):
-        self.levelstate.current_id = '1-a'
-        self.levelstate.next_token = 'b'
-        self.assertEqual(self.levelstate.next_appendix_id(), '1-b')
+        self.levelstate.current_id = '1-i'
+        self.levelstate.next_token = 'ii'
+        self.assertEqual(self.levelstate.next_appendix_id(), '1-ii')
         self.assertEqual(self.levelstate.level(), 2)
-        self.assertEqual(self.levelstate.current_token(), 'b')
+        self.assertEqual(self.levelstate.current_token(), 'ii')
 
     def test_appendix_level_2_rise(self):
-        self.levelstate.current_id = '1-b'
+        self.levelstate.current_id = '1-i'
         self.levelstate.next_token = '2'
         self.assertEqual(self.levelstate.next_appendix_id(), '2')
         self.assertEqual(self.levelstate.level(), 1)
