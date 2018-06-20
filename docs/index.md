@@ -13,7 +13,6 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 - macOS
 - [Homebrew](https://brew.sh) - package manager for installing system software on OSX
 - Python and PIP (Python package manager)
-- WordPress API data source URL
 - [Jinja templates](http://jinja.pocoo.org) for front-end rendering
 - [Wagtail CMS](https://wagtail.io) for content administration
 - Dependencies, listed below

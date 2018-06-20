@@ -191,13 +191,13 @@
     {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
 
     <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
-        {{- 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
+        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
         {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
         <a class="{{- 'u-link__disabled' if url == '' else '' -}}
                   {{- _classes( nav_depth, '-link' ) -}}
                   {{- _classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
                   {{- _classes( nav_depth, '-link__current' ) if url == request.path else '' -}}"
-           {{- '' if url == '' else 'href=' + url | e }}
+           {{ '' if url == '' else 'href=' + url | e }}
            {{
              'data-js-hook=behavior_flyout-menu_trigger
               aria-haspopup=menu'

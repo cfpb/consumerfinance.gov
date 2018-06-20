@@ -88,7 +88,6 @@ OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
-    {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
      'complaintdatabase', 'complaint_common',)},
@@ -310,10 +309,6 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 
 STATIC_VERSION = ''
 
-# DJANGO HUD API
-DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
-# in seconds, 2592000 == 30 days. Google allows no more than a month of caching
-DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     'a/assets/hud/{format}s/{zipcode}.{format}'
@@ -671,7 +666,11 @@ FLAGS = {
 
     'REGULATIONS3K': {
         'boolean': DEPLOY_ENVIRONMENT == 'build'
-    }
+    },
+
+    'LEGACY_HUD_API': {
+        'boolean': DEPLOY_ENVIRONMENT == 'production',
+    },
 }
 
 
