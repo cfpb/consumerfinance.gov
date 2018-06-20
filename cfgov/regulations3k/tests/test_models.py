@@ -4,17 +4,19 @@ import datetime
 import sys
 import unittest
 
+# from django.core.urlresolvers import reverse
 from django.http import HttpRequest  # Http404, HttpResponse
 from django.test import TestCase as DjangoTestCase
 
+import mock
 from model_mommy import mommy
 
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart, sortable_label
 )
 from regulations3k.models.pages import (
-    RegulationLandingPage, RegulationPage, get_next_section,
-    get_previous_section, get_reg_nav_items
+    RegulationLandingPage, RegulationPage, RegulationsSearchPage,
+    get_next_section, get_previous_section, get_reg_nav_items
 )
 
 
@@ -112,7 +114,13 @@ class RegModelTests(DjangoTestCase):
             title='Reg B',
             slug='1002')
 
+        self.reg_search_page = RegulationsSearchPage(
+            title="Regulation search",
+            slug='reg-search')
+
         self.landing_page.add_child(instance=self.reg_page)
+        self.landing_page.add_child(instance=self.reg_search_page)
+        self.reg_search_page.save()
 
     def test_part_string_method(self):
         self.assertEqual(
@@ -162,7 +170,12 @@ class RegModelTests(DjangoTestCase):
             self.landing_page.get_template(HttpRequest()),
             'regulations3k/base.html')
 
-    def test_routable_page_get_context(self):
+    def test_search_page_get_template(self):
+        self.assertEqual(
+            self.reg_search_page.get_template(HttpRequest()),
+            'regulations3k/search-regulations.html')
+
+    def test_routable_reg_page_get_context(self):
         test_context = self.reg_page.get_context(HttpRequest())
         self.assertEqual(
             test_context['regulation'],
@@ -235,6 +248,20 @@ class RegModelTests(DjangoTestCase):
             self.section_beta.title_content,
             'Appendix B to Part 1002-Errata'
         )
+
+    @mock.patch('regulations3k.models.pages.SearchQuerySet')
+    def test_routable_search_page_calls_elasticsearch(self, mock_ES):
+        mock_return = mock.Mock()
+        mock_queryset = mock.Mock()
+        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
+        mock_sqs_instance = mock_ES()
+        mock_sqs_instance.filter.return_value.models.return_value = (
+            mock_queryset)
+        response = self.client.get(self.reg_search_page.reverse_subpage(
+            'regulation_results_page'),
+            {'q': 'disclosure', 'regs': '1002,1003'})
+        self.assertEqual(mock_ES.call_count, 1)
+        self.assertEqual(response.status_code, 404)
 
 
 class SectionNavTests(unittest.TestCase):
