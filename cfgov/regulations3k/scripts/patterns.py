@@ -56,6 +56,10 @@ class IdLevelState(object):
     def level(self):
         return self.current_id.count('-') + 1
 
+    def interp_level(self):
+        return self.current_id.partition(
+            'Interp')[-1].strip('-').count('-') + 1
+
     def current_token(self):
         return self.current_id.split('-')[-1]
 
@@ -125,7 +129,7 @@ class IdLevelState(object):
                 return self.rise(1)
 
     def next_appendix_id(self):
-        """Appendices or interpretations that follow a 1-i-A pattern."""
+        """Appendices that follow a 1-i-A pattern."""
         _next = self.next_token
         if self.level() == 1:  # digit level
             if not self.current_id:
@@ -142,6 +146,34 @@ class IdLevelState(object):
             else:
                 return self.rise(1)
         if self.level() == 3:  # uppercase level: 1-i-A
+            if _next.isupper():
+                return self.surf()
+            elif self.roman_surf_test(self.current_id.split('-')[-2], _next):
+                return self.rise(1)
+            else:
+                return self.rise(2)
+
+    def next_interp_id(self):
+        """Interpretations that follow a [pid]-Interp-1-i-A pattern."""
+        _next = self.next_token
+        if not self.current_id:
+            self.current_id = _next
+            return _next
+        if self.interp_level() == 1:  # digit level: [pid]-Interp-1
+            if self.current_token() == 'Interp':
+                return self.dive()
+            if _next == 'i':
+                return self.dive()
+            else:
+                return self.surf()
+        if self.interp_level() == 2:  # roman level: [pid]-Interp-1-i
+            if _next == 'A':
+                return self.dive()
+            if self.roman_surf_test(self.current_token(), _next):
+                return self.surf()
+            else:
+                return self.rise(1)
+        if self.interp_level() == 3:  # uppercase level: [pid]-Interp-1-i-A
             if _next.isupper():
                 return self.surf()
             elif self.roman_surf_test(self.current_id.split('-')[-2], _next):

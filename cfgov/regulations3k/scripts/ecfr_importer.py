@@ -324,7 +324,7 @@ def parse_appendix_graph(p_element, label):
     if id_match:
         id_token = id_match.group(1)
         LEVEL_STATE.next_token = id_token
-        pid = LEVEL_STATE.next_appendix_id()
+        pid = LEVEL_STATE.next_appendix_id() or ''
         graph_text += "\n{" + pid + "}\n"
         graph = p_element.text.replace(
             '{}.'.format(pid), '**{}.**'.format(pid), 1).replace(
@@ -333,8 +333,28 @@ def parse_appendix_graph(p_element, label):
         graph_text += graph + "\n"
     else:
         graph_text += p_element.text + "\n"
-        if label in PAYLOAD.interp_refs and PAYLOAD.interp_refs[label]:
-            graph_text += '\n' + PAYLOAD.interp_refs[label].values()[0] + '\n'
+    if id_match and PAYLOAD.interp_refs.get(label):
+        interp_ref = PAYLOAD.interp_refs.get(label).get(pid)
+        graph_text += '\n' + interp_ref + '\n'
+    return graph_text
+
+
+def parse_interp_graph(p_element):
+    """Extract dot-based IDs, if any"""
+    graph_text = ''
+    id_match = re.match(dot_id_patterns['any'], p_element.text)
+    if id_match:
+        id_token = id_match.group(1)
+        LEVEL_STATE.next_token = id_token
+        pid = LEVEL_STATE.next_interp_id()
+        graph_text += "\n{" + pid + "}\n"
+        graph = p_element.text.replace(
+            '{}.'.format(pid), '**{}.**'.format(pid), 1).replace(
+            '  ', ' ').replace(
+            '** **', ' ', 1)
+        graph_text += graph + "\n"
+    else:
+        graph_text += p_element.text + "\n"
     return graph_text
 
 
@@ -430,13 +450,14 @@ def parse_appendices(appendices, part):
 
 def divine_interp_hd_use(element):
     """
-    Best guess at what an interp element is being used for.
-    It might be announcing an intro, a subpart, a section,
+    HD elements wear many hats. This tries to guess the hat.
+
+    The HD might be announcing an intro, a subpart, a section,
     an appendix or appendices, or a paragraph reference.
 
     - H1 elements might denote intros, sections, or subparts
     - H2 elements might denote sections or paragraph references
-    - H3 elements, if used, denote paragraph references
+    - H3 elements might denote sections or paragraph references
 
     Paragraph references might also be contained in P or I tags.
 
@@ -472,108 +493,108 @@ def divine_interp_hd_use(element):
 
 
 def parse_interp_graph_reference(element):
+    """Extract and return a graph reference from an element"""
     id_text = element.text.replace('Paragraph', '').strip()
     id_match = re.match(interp_reference_pattern, id_text)
     if id_match:
         tokens = [token.strip('()') for token in id_match.groups() if token]
-        return '{' + "-".join(tokens) + '}'
+        tokens.append('Interp')
+        return "-".join(tokens)
+    else:
+        return ''
+
+
+def get_interp_section(headline):
+    """"Derive an interp section name, using patterns and fall-backs."""
+
+    interp_numeric_pattern = r'Section \d{4}\.(\d{1,3}) '
+    interp_appendix_pattern = r'Appendix ([A-Z]{1,2}) -'
+    interp_appendices_pattern = r'Appendices ([^\-]+)-'
+    if headline.strip().upper() == 'INTRODUCTION':
+        return '0'
+    if re.match(interp_numeric_pattern, headline):
+        return re.match(interp_numeric_pattern, headline).group(1)
+    if re.match(interp_appendix_pattern, headline):
+        return re.match(interp_appendix_pattern, headline).group(1)
+    if re.match(interp_appendices_pattern, headline):
+        return re.match(interp_appendices_pattern, headline).group(1).strip()
+    else:
+        return headline.partition('-')[0].strip()
 
 
 def parse_interps(interp_div, part, subpart):
     """
-    Break down interpretations into individual section interpretations,
-    and them process them and create a mapping of references
-    to be inserted in the related sections.
+    Break up interpretations by reg section, and then create a mapping
+    of interp references to be inserted in the related regdown.
+
+    Example: Reg B section 1002.2, paragraph {c-1-ii}
+
+    If that paragraph had an interpretation, the interp reference would be:
+
+    see(1002-2-c-1-ii-Interp)
+
+    This would refer to a part of interpretation section 1002-Interp-2
+
+    In that file, the related content would need to be marked with this ID:
+
+    {2-c-1-ii-Interp}
+
+    Any interp subgraphs would get picked up too. Subgraph 1 would get this ID:
+
+    {2-a-1-ii-Interp-1}
     """
-    interp_numeric_pattern = r'Section \d{4}\.(\d{1,3}) '
-    interp_appendix_pattern = r'Appendix ([A-Z]{1,2}) -'
-    interp_appendices_pattern = r'Appendices ([^\-]+)-'
-    LEVEL_STATE.current_id = ''
-    preamble = ''
-    for tag in interp_div.find('HEAD').findNextSiblings():
-        if tag.name == 'P':
-            tag = pre_process_tags(tag)
-            preamble += parse_appendix_graph(tag, 'preamble')
-            tag.replaceWith('')
-        else:
-            break
-    for citation in interp_div.find_all('CITA'):
-        citation.replaceWith('')
-    subheadings = []
+
+    def process_interp_reference(interp_id, section):
+        section_label = "{}-{}".format(part.part_number, section)
+        graph_id = '-'.join(interp_id.split('-')[1:-1])
+        LEVEL_STATE.current_id = interp_id
+        refs = PAYLOAD.interp_refs.get(section_label)
+        if refs:
+            refs.update({graph_id: 'See({}-{}-{}-Interp)'.format(
+                part.part_number, section, graph_id)})
+    current_section = None
     for element in interp_div.find('HEAD').findNextSiblings():
         if (element.name in ['HD1', 'HD2', 'HD3']
                 and divine_interp_hd_use(element)
                 in ['intro', 'section', 'appendix', 'appendices']):
-            subheadings.append(element)
-    for i, heading in enumerate(reversed(subheadings)):
-        LEVEL_STATE.current_id = ''
-        _hed = heading.text.strip()
-        if re.match(interp_numeric_pattern, _hed):
-            section = re.match(
-                interp_numeric_pattern, _hed).group(1)
-        elif re.match(interp_appendix_pattern, _hed):
-            section = re.match(interp_appendix_pattern, _hed).group(1)
-        elif re.match(interp_appendices_pattern, _hed):
-            section = re.match(interp_appendices_pattern, _hed).group(1)
-        elif _hed.upper() == 'INTRODUCTION':
-            section = '0'
-        else:
-            section = _hed.partition('-')[0]
-        interp_label = "{}-Interp-{}".format(part.part_number, section)
-        section_label = "{}-{}".format(part.part_number, section)
-        if section_label not in PAYLOAD.interp_refs:
-            PAYLOAD.interp_refs.update({section_label: {}})
-        refs = PAYLOAD.interp_refs[section_label]  # a blank dict initially
-        if i == len(subheadings) - 1:
-            content = preamble
-        else:
-            content = ''
-        content += "\n### {}\n".format(heading.text)
-        sub_elements = heading.findNextSiblings()
-        for element in sub_elements:
-            if element.name == 'P':
-                p = pre_process_tags(element)
-                content += parse_appendix_graph(p, section_label)
-                element.replaceWith('')
-            elif (element.name == 'HD3'
-                    and divine_interp_hd_use(element) == 'graph_id'):
-                bracketed_ref = parse_interp_graph_reference(element)
-                if bracketed_ref:
-                    content += "\n{}\n".format(bracketed_ref)
-                    ref = bracketed_ref.strip('}{')
-                    pid = ref.partition('-')[2]
-                    refs.update(
-                        {pid: "See({}-{}-Interp)".format(
-                            part.part_number, ref)
-                         })
-                content += "\n### {}\n".format(element.text.strip())
-                element.replaceWith('')
-            elif (element.name == 'HD2'
-                    and divine_interp_hd_use(element) == 'graph_id'):
-                bracketed_ref = parse_interp_graph_reference(element)
-                if bracketed_ref:
-                    content += "\n{}\n".format(bracketed_ref)
-                    ref = bracketed_ref.strip('}{')
-                    pid = ref.partition('-')[2]
-                    PAYLOAD.interp_refs.update(
-                        {pid: "See({}-{}-Interp)".format(
-                            part.part_number, ref)
-                         })
-                element.replaceWith('')
-            elif element.name == 'HD1':
-                element.replaceWith('')
-                break
+            if current_section:
+                current_section.save()
+                PAYLOAD.sections.append(current_section)
+            _hed = element.text.strip()
+            section = get_interp_section(_hed)
+            if _hed.upper == 'INTRODUCTION':
+                section_label = '0'
             else:
-                content += "\n{}\n".format(element.text.strip())
-                element.replaceWith('')
-        interp = Section(
-            subpart=subpart,
-            label=interp_label,
-            title=_hed,
-            contents=content
-        )
-        interp.save()
-        PAYLOAD.interpretations.append(interp)
+                section_label = "{}-{}".format(part, section)
+            current_section = Section(
+                subpart=subpart,
+                label=section_label,
+                title=_hed,
+                contents=''
+            )
+            current_section.save()
+            if (section_label not in PAYLOAD.interp_refs
+                    and section_label != '0'):
+                PAYLOAD.interp_refs.update({section_label: {}})
+        elif (element.name in ['HD2', 'HD3']
+                and divine_interp_hd_use(element) == 'graph_id'):
+            interp_id = parse_interp_graph_reference(element)
+            section = interp_id.partition('-')[0]
+            process_interp_reference(interp_id, section)
+            if current_section:
+                current_section.contents += '\n{' + interp_id + '}\n'
+                current_section.contents += "### {}\n".format(element.text)
+        elif element.name == 'P':
+            p = pre_process_tags(element)
+            if current_section:
+                current_section.contents += parse_interp_graph(p)
+        elif element.name in ['HD1', 'XREF']:
+            pass
+        else:
+            current_section.contents += "\n{}\n".format(element.text.strip())
+    current_section.save()
+    if current_section not in PAYLOAD.sections:
+        PAYLOAD.sections.append(current_section)
 
 
 def ecfr_to_regdown(part_number, file_path=None):

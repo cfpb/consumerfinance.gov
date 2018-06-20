@@ -15,10 +15,11 @@ from requests import Response
 
 from regulations3k.models import Part, Subpart
 from regulations3k.scripts.ecfr_importer import (
-    ecfr_to_regdown, get_effective_date, parse_appendices,
-    parse_appendix_elements, parse_appendix_graph, parse_appendix_paragraphs,
-    parse_ids, parse_interps, parse_part, parse_section_paragraphs,
-    parse_singleton_graph, parse_version, run
+    divine_interp_hd_use, ecfr_to_regdown, get_effective_date,
+    get_interp_section, parse_appendices, parse_appendix_elements,
+    parse_appendix_graph, parse_appendix_paragraphs, parse_ids,
+    parse_interp_graph_reference, parse_interps, parse_part,
+    parse_section_paragraphs, parse_singleton_graph, parse_version, run
 )
 from regulations3k.scripts.integer_conversion import (
     alpha_to_int, int_to_alpha, int_to_roman, roman_to_int
@@ -249,10 +250,63 @@ class ParagraphParsingTestCase(unittest.TestCase):
         parse_ids(test_graph, '1002-1')
         mock_parser.assert_called_with(test_graph, two_good_ids, '1002-1')
 
+    def test_parse_interp_graph_reference(self):
+        valid_graph_element = bS("<HD3>Paragraph 2(c)(1)</HD3>", 'lxml-xml')
+        self.assertEqual(
+            parse_interp_graph_reference(valid_graph_element),
+            "2-c-1-Interp")
+        invalid_graph_element = bS("<HD3>Paragraph X(5)(a)</HD3>", 'lxml-xml')
+        self.assertEqual(
+            parse_interp_graph_reference(invalid_graph_element),
+            "")
+
+    def test_get_interp_section(self):
+        headline = 'Section 1003.2 - Definitions'
+        self.assertEqual(get_interp_section(headline), '2')
+        headline = 'Appendix A - Model Disclosure Clauses and Forms'
+        self.assertEqual(get_interp_section(headline), 'A')
+        headline = 'Appendices G and H - A dreaded Combo Appendix Section'
+        self.assertEqual(get_interp_section(headline), 'G and H')
+        headline = 'Introduction'
+        self.assertEqual(get_interp_section(headline), '0')
+        headline = 'Inevitable - Random Section Name'
+        self.assertEqual(get_interp_section(headline), 'Inevitable')
+
+    def test_divine_interp_hd(self):
+
+        # HD1 elements
+        HD = bS('<HD1>Introduction\n</HD1>', 'lxml-xml').find('HD1')
+        self.assertEqual(divine_interp_hd_use(HD), 'intro')
+        HD = bS('<HD1>Appendix X - X-rays\n</HD1>', 'lxml-xml').find('HD1')
+        self.assertEqual(divine_interp_hd_use(HD), 'appendix')
+        HD = bS('<HD1>Appendices G & H - Cane\n</HD1>', 'lxml-xml').find('HD1')
+        self.assertEqual(divine_interp_hd_use(HD), 'appendices')
+        HD = bS('<HD1>Section 1002.4 - Known\n</HD1>', 'lxml-xml').find('HD1')
+        self.assertEqual(divine_interp_hd_use(HD), 'section')
+        HD = bS('<HD1>Inevitable Random HD1\n</HD1>', 'lxml-xml').find('HD1')
+        self.assertEqual(divine_interp_hd_use(HD), '')
+        # HD2 elements
+        HD = bS('<HD2>Section 1002.4 - Known\n</HD2>', 'lxml-xml').find('HD2')
+        self.assertEqual(divine_interp_hd_use(HD), 'section')
+        HD = bS('<HD2>2(b) Application\n</HD2>', 'lxml-xml').find('HD2')
+        self.assertEqual(divine_interp_hd_use(HD), 'graph_id')
+        # HD3 elements
+        HD = bS('<HD3>Section 1002.4 - Known\n</HD3>', 'lxml-xml').find('HD3')
+        self.assertEqual(divine_interp_hd_use(HD), 'section')
+        HD = bS('<HD3>2(b) Application\n</HD3>', 'lxml-xml').find('HD3')
+        self.assertEqual(divine_interp_hd_use(HD), 'graph_id')
+
 
 class ParserIdTestCase(unittest.TestCase):
 
     LEVEL_STATE = IdLevelState()
+
+    def test_current_token(self):
+        ls = self.LEVEL_STATE
+        ls.current_id = '2-a-1-i-Interp-2-ii'
+        self.assertEqual(ls.current_token(), 'ii')
+        ls.current_id = 'a-5-ii-A'
+        self.assertEqual(ls.current_token(), 'A')
 
     def test_roman_test_invalid_level(self):
         self.LEVEL_STATE.current_id = 'a'
@@ -269,21 +323,64 @@ class ParserIdTestCase(unittest.TestCase):
         self.assertTrue(self.LEVEL_STATE.multiple_id_test(ids))
 
     def test_token_validity_test_true(self):
-        self.assertTrue(self.LEVEL_STATE.token_validity_test('a'))
-        self.assertTrue(self.LEVEL_STATE.token_validity_test('aa'))
-        self.assertTrue(self.LEVEL_STATE.token_validity_test('1'))
-        self.assertTrue(self.LEVEL_STATE.token_validity_test('i'))
-        self.assertTrue(self.LEVEL_STATE.token_validity_test('iv'))
-        self.assertTrue(self.LEVEL_STATE.token_validity_test('B'))
-        self.assertTrue(self.LEVEL_STATE.token_validity_test('BB'))
+        ls = self.LEVEL_STATE
+        self.assertTrue(ls.token_validity_test('a'))
+        self.assertTrue(ls.token_validity_test('aa'))
+        self.assertTrue(ls.token_validity_test('1'))
+        self.assertTrue(ls.token_validity_test('i'))
+        self.assertTrue(ls.token_validity_test('iv'))
+        self.assertTrue(ls.token_validity_test('B'))
+        self.assertTrue(ls.token_validity_test('BB'))
 
     def test_token_validity_test_false(self):
-        self.assertFalse(self.LEVEL_STATE.token_validity_test('ab'))
-        self.assertFalse(self.LEVEL_STATE.token_validity_test('<'))
-        self.assertFalse(self.LEVEL_STATE.token_validity_test('.'))
+        ls = self.LEVEL_STATE
+        self.assertFalse(ls.token_validity_test('ab'))
+        self.assertFalse(ls.token_validity_test('<'))
+        self.assertFalse(ls.token_validity_test('.'))
+
+    def test_next_interp_ids(self):
+        """Testing the interp pattern [pid]-Interp-1-i-A"""
+        ls = self.LEVEL_STATE
+        # initializes with next token
+        ls.current_id = ''
+        ls.next_token = '2-a-1-i-Interp'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp')
+        self.assertEqual(ls.interp_level(), 1)
+
+        # surf level 1
+        ls.current_id = '2-a-1-i-Interp'
+        ls.next_token = '1'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp-1')
+        self.assertEqual(ls.interp_level(), 1)
+        # surf
+        ls.next_token = '2'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp-2')
+        # dive
+        ls.next_token = 'i'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp-2-i')
+        # dive
+        ls.next_token = 'A'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp-2-i-A')
+        # surf level 3
+        ls.next_token = 'B'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp-2-i-B')
+        # rise
+        ls.next_token = 'ii'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp-2-ii')
+        # rise
+        ls.next_token = '3'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp-3')
+        # rise 2
+        ls.current_id = '2-a-1-i-Interp-2-ii-A'
+        ls.next_token = '3'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp-3')
+        # roman surf
+        ls.current_id = '2-a-1-i-Interp-2-iii'
+        ls.next_token = 'iv'
+        self.assertEqual(ls.next_interp_id(), '2-a-1-i-Interp-2-iv')
 
     def test_next_appendix_ids(self):
-        """Testing the appendix/interp pattern 1-i-A"""
+        """Testing the appendix pattern 1-i-A"""
         ls = self.LEVEL_STATE
         # initializes with next token
         ls.current_id = ''
