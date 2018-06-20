@@ -522,6 +522,22 @@ def get_interp_section(headline):
         return headline.partition('-')[0].strip()
 
 
+def register_interp_reference(interp_id, section, part):
+    """
+    Registers an interp reference mapping that can be consulted when parsing
+    section paragraphs, in order to insert a regdown interp reference.
+    """
+
+    section_label = "{}-{}".format(part.part_number, section)
+    graph_id = '-'.join(interp_id.split('-')[1:-1])
+    LEVEL_STATE.current_id = interp_id
+    if section_label not in PAYLOAD.interp_refs:
+        PAYLOAD.interp_refs[section_label] = {}
+    PAYLOAD.interp_refs[section_label].update(
+        {graph_id: 'See({}-{}-{}-Interp)'.format(
+            part.part_number, section, graph_id)})
+
+
 def parse_interps(interp_div, part, subpart):
     """
     Break up interpretations by reg section, and then create a mapping
@@ -544,14 +560,6 @@ def parse_interps(interp_div, part, subpart):
     {2-a-1-ii-Interp-1}
     """
 
-    def process_interp_reference(interp_id, section):
-        section_label = "{}-{}".format(part.part_number, section)
-        graph_id = '-'.join(interp_id.split('-')[1:-1])
-        LEVEL_STATE.current_id = interp_id
-        refs = PAYLOAD.interp_refs.get(section_label)
-        if refs:
-            refs.update({graph_id: 'See({}-{}-{}-Interp)'.format(
-                part.part_number, section, graph_id)})
     current_section = None
     for element in interp_div.find('HEAD').findNextSiblings():
         if (element.name in ['HD1', 'HD2', 'HD3']
@@ -580,7 +588,7 @@ def parse_interps(interp_div, part, subpart):
                 and divine_interp_hd_use(element) == 'graph_id'):
             interp_id = parse_interp_graph_reference(element)
             section = interp_id.partition('-')[0]
-            process_interp_reference(interp_id, section)
+            register_interp_reference(interp_id, section, part)
             if current_section:
                 current_section.contents += '\n{' + interp_id + '}\n'
                 current_section.contents += "### {}\n".format(element.text)
