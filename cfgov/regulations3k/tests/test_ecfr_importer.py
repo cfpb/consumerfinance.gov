@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals
 
 import datetime
 import json
 import unittest
-
 
 from django.conf import settings
 from django.test import TestCase as DjangoTestCase
@@ -16,7 +15,7 @@ from requests import Response
 from regulations3k.models import Part, Subpart
 from regulations3k.scripts.ecfr_importer import (
     divine_interp_hd_use, ecfr_to_regdown, get_effective_date,
-    get_interp_section, parse_appendices, parse_appendix_elements,
+    get_interp_section_tag, parse_appendices, parse_appendix_elements,
     parse_appendix_graph, parse_appendix_paragraphs, parse_ids,
     parse_interp_graph_reference, parse_interps, parse_part,
     parse_section_paragraphs, parse_singleton_graph, parse_version, run
@@ -260,17 +259,17 @@ class ParagraphParsingTestCase(unittest.TestCase):
             parse_interp_graph_reference(invalid_graph_element),
             "")
 
-    def test_get_interp_section(self):
+    def test_get_interp_section_tag(self):
         headline = 'Section 1003.2 - Definitions'
-        self.assertEqual(get_interp_section(headline), '2')
+        self.assertEqual(get_interp_section_tag(headline), '2')
         headline = 'Appendix A - Model Disclosure Clauses and Forms'
-        self.assertEqual(get_interp_section(headline), 'A')
+        self.assertEqual(get_interp_section_tag(headline), 'A')
         headline = 'Appendices G and H - A dreaded Combo Appendix Section'
-        self.assertEqual(get_interp_section(headline), 'G and H')
+        self.assertEqual(get_interp_section_tag(headline), 'G and H')
         headline = 'Introduction'
-        self.assertEqual(get_interp_section(headline), '0')
+        self.assertEqual(get_interp_section_tag(headline), '0')
         headline = 'Inevitable - Random Section Name'
-        self.assertEqual(get_interp_section(headline), 'Inevitable')
+        self.assertEqual(get_interp_section_tag(headline), 'Inevitable')
 
     def test_divine_interp_hd(self):
 
