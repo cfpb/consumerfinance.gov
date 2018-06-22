@@ -153,7 +153,7 @@ class Subpart(models.Model):
 
 @python_2_unicode_compatible
 class Section(models.Model):
-    label = models.CharField(max_length=255, blank=True)
+    label = models.CharField(max_length=255, blank=True, verbose_name="Section")
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)
     subpart = models.ForeignKey(Subpart, related_name="sections")
@@ -182,14 +182,12 @@ class Section(models.Model):
 
     @property
     def section_number(self):
-        part, number = self.label.split('-')[:2]
-        return number
+        return self.label
 
     @property
     def numeric_label(self):
-        part, section = self.sortable_label.split('-')[:2]
-        if section.isdigit():
-            return '\xa7\xa0{}.{}'.format(part, int(section))
+        if self.label.isdigit():
+            return '\xa7\xa0{}.{}'.format(self.part, int(self.label))
         else:
             return ''
 

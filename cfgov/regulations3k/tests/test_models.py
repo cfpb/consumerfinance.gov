@@ -48,48 +48,48 @@ class RegModelTests(DjangoTestCase):
         )
         self.subpart = mommy.make(
             Subpart,
-            label='1002',
+            label='Subpart-General',
             title='General',
             subpart_type=Subpart.BODY,
             version=self.effective_version
         )
         self.subpart_appendices = mommy.make(
             Subpart,
-            label='1002-Appendices',
+            label='Appendices',
             title='Appendices',
             subpart_type=Subpart.APPENDIX,
             version=self.effective_version
         )
         self.subpart_interps = mommy.make(
             Subpart,
-            label='Official Interpretations',
+            label='Official-Interpretations',
             title='Supplement I to Part 1002',
             subpart_type=Subpart.INTERPRETATION,
             version=self.effective_version
         )
         self.subpart_orphan = mommy.make(
             Subpart,
-            label='General Mistake',
+            label='General-Mistake',
             title='An orphan subpart with no sections for testing',
             version=self.effective_version
         )
         self.section_num4 = mommy.make(
             Section,
-            label='1002-4',
+            label='4',
             title='\xa7\xa01002.4 General rules.',
             contents='regdown content.',
             subpart=self.subpart,
         )
         self.section_num15 = mommy.make(
             Section,
-            label='1002-15',
+            label='15',
             title='\xa7\xa01002.15 Rules concerning requests for information.',
             contents='regdown content.',
             subpart=self.subpart,
         )
         self.section_alpha = mommy.make(
             Section,
-            label='Appendix 1002-A',
+            label='A',
             title=('Appendix A to Part 1002-Federal Agencies '
                    'To Be Listed in Adverse Action Notices'),
             contents='regdown content.',
@@ -97,14 +97,14 @@ class RegModelTests(DjangoTestCase):
         )
         self.section_beta = mommy.make(
             Section,
-            label='Appendix 1002-B',
+            label='B',
             title=('Appendix B to Part 1002-Errata'),
             contents='regdown content.',
             subpart=self.subpart_appendices,
         )
         self.section_interps = mommy.make(
             Section,
-            label='Interpretations for Appendix 1002-A',
+            label='Interp-A',
             title=('Official interpretations for Appendix A to Part 1002'),
             contents='interp content.',
             subpart=self.subpart_interps,
@@ -193,7 +193,7 @@ class RegModelTests(DjangoTestCase):
 
     def test_routable_page_view(self):
         response = self.reg_page.section_page(
-            HttpRequest(), section='4')
+            HttpRequest(), section_label='4')
         self.assertEqual(response.status_code, 200)
 
     def test_sortable_label(self):
@@ -203,8 +203,8 @@ class RegModelTests(DjangoTestCase):
         sections = [s.label for s in self.reg_page.sections]
         self.assertEqual(
             sections,
-            ['1002-4', '1002-15', 'Appendix 1002-A',
-             'Appendix 1002-B', 'Interpretations for Appendix 1002-A'])
+            ['4', '15', 'A', 'B', 'Interp-A']
+        )
 
     def test_render_interp(self):
         result = self.reg_page.render_interp({}, 'some contents')
