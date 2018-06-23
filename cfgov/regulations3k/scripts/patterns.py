@@ -4,8 +4,9 @@ Patterns for handling sections and paragraph levels in eCFR XML
 ## Paragraphs
 - In most reg sections, IDs are wrapped in parentheses.
 - In some, IDs bare, followed by a period.
-- In all cases, ID level should equal ID hyphen count + 1
-- The standard indentation marker scheme is a-1-i-A-1-i
+- Except for interpretations, ID level should equal ID hyphen count + 1
+- For interpretations, hyphen count starts after the 'Interp' token
+- The standard indentation token scheme is a-1-i-A-1-i
 
 What the parser needs to know:
 
