@@ -295,23 +295,26 @@ body {
         // Menu flyout.
         // All menus - Tablet/Mobile.
         &_content {
+            .u-drop-shadow-after();
+
             display: none;
             box-sizing: border-box;
             width: 100%;
 
+            background-color: @gray-5;
+            border-top: 1px solid @gray-40;
+            border-bottom: 1px solid @gray-40;
+
             .js & {
-                display: block;
                 position: absolute;
                 left: 0;
                 top: -1px;
                 z-index: 10;
             }
 
-            background-color: @gray-5;
-            border-top: 1px solid @gray-40;
-            border-bottom: 1px solid @gray-40;
-
-            .u-drop-shadow-after();
+            .js .u-is-animating & {
+                display: block;
+            }
 
             &[aria-expanded="true"] {
                 display: block;

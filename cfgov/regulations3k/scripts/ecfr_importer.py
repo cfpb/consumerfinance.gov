@@ -153,7 +153,7 @@ def parse_subparts(part_soup, part):
     subpart_list = part_soup.find_all('DIV6')
     appendix_subpart = Subpart(
         title="Appendices",
-        label="{}-Appendices".format(part.part_number),
+        label="Appendices",
         subpart_type=Subpart.APPENDIX,
         version=PAYLOAD.version)
     appendix_subpart.save()
@@ -161,7 +161,7 @@ def parse_subparts(part_soup, part):
     interp_subpart = Subpart(
         title="Supplement I to Part {} - Official Interpretations".format(
             part.part_number),
-        label="{}-Interpretations".format(part.part_number),
+        label="Interpretations",
         subpart_type=Subpart.INTERPRETATION,
         version=PAYLOAD.version)
     interp_subpart.save()
@@ -390,8 +390,7 @@ def parse_appendix_paragraphs(p_elements, id_type, label):
 
 def parse_sections(section_list, part, subpart):
     for section_element in section_list:
-        section_number = section_element['N'].rsplit('.')[-1]
-        label = "{}-{}".format(part.part_number, section_number)
+        label = section_element['N'].rsplit('.')[-1]
         section_content = parse_section_paragraphs(
             section_element.find_all('P'), label)
         _section = Section(
@@ -440,21 +439,17 @@ def parse_appendices(appendices, part):
     subpart = PAYLOAD.subparts['appendix_subpart']
     for i, _appendix in enumerate(appendices):
         default_appendix_letter = int_to_alpha(i + 1).upper()
-        default_label = "{}-{}".format(
-            part.part_number, default_appendix_letter)
+        default_label = default_appendix_letter
         if _appendix['N']:
-            default_label = "{}-{}".format(
-                part.part_number,
-                _appendix['N'].replace('Appendix ', ''),
-            )
+            default_label = _appendix['N'].replace('Appendix ', '')
         head_element = _appendix.find('HEAD')
         _hed = head_element.text.strip()
         head_element.replaceWith('')
         if _hed.startswith('Appendix MS '):
-            default_label = '{}-MS'.format(part.part_number)
+            default_label = 'MS'
         elif _hed.startswith('Appendix MS'):
             ms_number = re.match(r'Appendix MS[-]?(\d{1})', _hed).group(1)
-            default_label = "{}-MS{}".format(part.part_number, ms_number)
+            default_label = "MS{}".format(ms_number)
         if PAYLOAD.interp_refs and default_label in PAYLOAD.interp_refs:
             prefix = PAYLOAD.interp_refs[default_label]['1'] + '\n'
         else:
@@ -544,14 +539,14 @@ def register_interp_reference(interp_id, section_tag, part):
     This also resets LEVEL_STATE.current_id for parsing the current section.
     """
 
-    section_label = "{}-{}".format(part.part_number, section_tag)
+    section_label = section_tag
     graph_id = '-'.join(interp_id.split('-')[1:-1])
     LEVEL_STATE.current_id = interp_id
     if section_label not in PAYLOAD.interp_refs:
         PAYLOAD.interp_refs[section_label] = {}
     PAYLOAD.interp_refs[section_label].update(
-        {graph_id: 'see({}-{}-{}-Interp)'.format(
-            part.part_number, section_tag, graph_id)})
+        {graph_id: 'see({}-{}-Interp)'.format(
+            section_tag, graph_id)})
 
 
 def parse_interps(interp_div, part, subpart):
@@ -586,9 +581,8 @@ def parse_interps(interp_div, part, subpart):
         LEVEL_STATE.current_id = ''
         section_hed = section_heading.text.strip()
         section_tag = get_interp_section_tag(section_hed)
-        section_label = "{}-{}".format(part.part_number, section_tag)
-        interp_section_label = "{}-Interp-{}".format(
-            part.part_number, section_tag)
+        section_label = section_tag
+        interp_section_label = "Interp-{}".format(section_tag)
         section = Section(
             subpart=subpart,
             label=interp_section_label,
