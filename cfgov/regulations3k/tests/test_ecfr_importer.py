@@ -230,7 +230,7 @@ class ParagraphParsingTestCase(unittest.TestCase):
         soup = bS(self.test_xml, 'lxml-xml')
         graph_soup = soup.find_all('P')
         parsed_graphs = parse_section_paragraphs(graph_soup, '1002-1')
-        self.assertIn('see(1002-1-a-Interp)', parsed_graphs)
+        self.assertIn('**(a) Delivery of account disclosures**', parsed_graphs)
 
     def test_multi_id_paragraph_parsing_with_interp_reference(self):
         from regulations3k.scripts.ecfr_importer import PAYLOAD

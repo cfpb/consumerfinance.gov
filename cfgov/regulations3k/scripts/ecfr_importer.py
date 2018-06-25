@@ -79,8 +79,6 @@ def get_effective_date(part_number):
 
 
 class PayLoad(object):
-    """Container for regulation components."""
-
     part = None
     version = None
     subparts = {
@@ -93,6 +91,18 @@ class PayLoad(object):
     interpretations = []
     interp_refs = {}
     effective_date = None
+
+    def reset(self):
+        self.interp_refs = {}
+        for each in [self.part, self.version, self.effective_date,
+                     self.subparts['appendix_subpart'],
+                     self.subparts['interp_subpart']]:
+            each = None
+        for each in [self.subparts['section_subparts'],
+                     self.sections,
+                     self.appendices,
+                     self.interpretations]:
+            each = []
 
 
 PAYLOAD = PayLoad()
@@ -169,7 +179,7 @@ def parse_subparts(part_soup, part):
     if not labeled_subparts:
         generic_subpart = Subpart(
             label=part.part_number,
-            subpart_type=0000,
+            subpart_type=Subpart.BODY,
             title="General",
             version=PAYLOAD.version
         )
@@ -181,7 +191,7 @@ def parse_subparts(part_soup, part):
             _subpart = Subpart(
                 title=element.find('HEAD').text.strip(),
                 label=part.part_number,
-                subpart_type=0000,
+                subpart_type=Subpart.BODY,
                 version=PAYLOAD.version
             )
             _subpart.save()
@@ -677,6 +687,7 @@ def ecfr_to_regdown(part_number, file_path=None):
 
 
 def run(*args):
+    PAYLOAD.reset()
     if len(args) not in [1, 2]:
         logger.info(
             "Usage: ./cfgov/manage.py runscript "
