@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <title>Usage - cfgov-refresh</title>
+    
+    
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    
+
+    <style type="text/css">
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a:focus,
+        .sidebar-nav a:active,
+        .sidebar-nav a.sidebar-nav-active {
+            border-left-color: #2CB34A;
+        }
+        header {
+            border-bottom-color: #2CB34A;
+        }
+        
+        
+
+        
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body>
+
+    <div class="container">
+        <header role="banner">
+            <div class="wrap">
+                
+                <img class="logo" src="https://cfpb.github.io/img/logo_210.png" alt="Consumer Financial Protection Bureau">
+                
+                <h1 class="site-title"><a class="title-link" href="../">cfgov-refresh</a></h1>
+            </div>
+        </header>
+
+        <div class="wrap content">
+            <aside>
+                <nav class="sidebar-nav" role="navigation">
+                    <ul>
+                        
+                        <li>
+                            
+                            <a href=".." class="">Introduction</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../installation/" class="">Installation</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="./" class="sidebar-nav-active">Usage</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Building and Deploying for cf.gov</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../new-projects/" class="">New projects</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../branching-merging/" class="">Branching and merging</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../feature-flags/" class="">Feature flags</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Back-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../wagtail-migrations/" class="">Wagtail and Django migrations</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../django-to-wagtail/" class="">Wagtail Pages vs Django views</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../forms-in-wagtail/" class="">Forms in Wagtail page context</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-be/" class="">Testing</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../translation/" class="">Translation</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../caching/" class="">Caching</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Front-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../atomic-structure/" class="">Atomic structure and design</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-fe/" class="">Testing</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../development-tips/" class="">Development tips</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>APIs</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../ask-cfpb/" class="">Ask CFPB</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../consumer-complaint-database/" class="">Consumer complaints</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../hmda/" class="">HMDA data</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main" class="main-content" role="main">
+                <h2 id="usage-stand-alone">Usage: Stand Alone<a class="headerlink" href="#usage-stand-alone" title="Permanent link">¶</a></h2>
+<p>You will generally have three tabs (or windows) open in your terminal,
+which will be used for:</p>
+<ol>
+<li><strong>Git operations</strong>.
+    Perform Git operations and general development in the repository,
+    such as <code>git checkout master</code>.</li>
+<li><strong>Elasticsearch</strong>.
+    Run an Elasticsearch (ES) instance.
+    See instructions <a href="#2-run-elasticsearch-optional">below</a>.</li>
+<li><strong>Django server</strong>. Start and stop the web server.
+    Server is started with <code>./runserver.sh</code>,
+    but see more details <a href="#3-load-indexes--launch-site">below</a>.</li>
+</ol>
+<p>What follows are the specific steps for each of these tabs.</p>
+<h3 id="1-git-operations">1. Git operations<a class="headerlink" href="#1-git-operations" title="Permanent link">¶</a></h3>
+<p>From this tab you can do Git operations,
+such as checking out our master branch:</p>
+<pre class="highlight"><code class="language-bash linenums">git checkout master</code></pre>
+
+<h4 id="updating-all-dependencies">Updating all dependencies<a class="headerlink" href="#updating-all-dependencies" title="Permanent link">¶</a></h4>
+<p>Each time you fetch from the upstream repository (this repo), run <code>./setup.sh</code>.
+This setup script will remove and reinstall the project dependencies
+and rebuild the site's JavaScript and CSS assets.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may also run <code>./backend.sh</code> or <code>./frontend.sh</code>
+if you only want to re-build the backend or front-end, respectively.</p>
+</div>
+<h5 id="setting-environments">Setting environments<a class="headerlink" href="#setting-environments" title="Permanent link">¶</a></h5>
+<p>The <code>NODE_ENV</code> environment variable can be set in your <code>.env</code> file to either
+<code>development</code> or <code>production</code>, which will affect how the build is made and what
+gulp tasks are available. To install dependencies of one environment
+or the other run <code>./frontend.sh</code> (dependencies and devDependencies)
+or <code>./frontend.sh production</code> (dependencies but not devDependencies).</p>
+<h3 id="2-run-elasticsearch-optional">2. Run Elasticsearch (optional)<a class="headerlink" href="#2-run-elasticsearch-optional" title="Permanent link">¶</a></h3>
+<p>Elasticsearch is needed for certain pieces of this project but is not a
+requirement for basic functionality.</p>
+<p>If Elasticsearch is installed via <a href="https://brew.sh">Homebrew</a>, you can see
+instructions for running manually or as a background service using:</p>
+<pre class="highlight"><code class="language-bash linenums">brew info elasticsearch</code></pre>
+
+<p>Typically to run Elasticsearch as a background service you can run:</p>
+<pre class="highlight"><code class="language-bash linenums">brew services start elasticsearch</code></pre>
+
+<h3 id="3-launch-site">3. Launch Site<a class="headerlink" href="#3-launch-site" title="Permanent link">¶</a></h3>
+<p>First, move into the <code>cfgov-refresh</code> project directory
+and ready your environment:</p>
+<pre class="highlight"><code class="language-bash linenums"># Use the cfgov-refresh virtualenv.
+workon cfgov-refresh
+
+# cd into this directory (if you aren't already there)
+cd cfgov-refresh</code></pre>
+
+<p>From the project root, start the Django server:</p>
+<pre class="highlight"><code class="language-bash linenums">./runserver.sh</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If prompted to migrate database changes,
+stop the server with <code>ctrl</code> + <code>c</code> and run these commands:</p>
+</div>
+<pre class="highlight"><code class="language-bash linenums">python cfgov/manage.py migrate
+./initial-data.sh
+./runserver.sh</code></pre>
+
+<p>To view the site browse to: <a href="http://localhost:8000">http://localhost:8000</a></p>
+<div class="admonition note">
+<p class="admonition-title">Using a different port</p>
+<p>If you want to run the server at a port other than 8000 use</p>
+<p><code>python cfgov/manage.py runserver &lt;port number&gt;</code></p>
+<p>Specify an alternate port number, e.g. <code>8001</code>.</p>
+</div>
+<p>To view the Wagtail admin login,
+browse to <a href="http://localhost:8000/admin">http://localhost:8000/admin</a> and login with username <code>admin</code>
+and password <code>admin</code> (created in <code>initial-data.sh</code> above; note that this
+password will expire after 60 days).</p>
+<div class="admonition note">
+<p class="admonition-title">Using HTTPS locally</p>
+<p>To access a local server using HTTPS use</p>
+<p><code>./runserver.sh ssl</code></p>
+<p>You'll need to ignore any browser certificate errors.</p>
+</div>
+<h4 id="available-gulp-tasks">Available Gulp Tasks<a class="headerlink" href="#available-gulp-tasks" title="Permanent link">¶</a></h4>
+<p>There are a number of important gulp tasks,
+particularly <code>gulp build</code> and <code>gulp test</code>,
+which will build the project and test it, respectively.
+Using the <code>gulp --tasks</code> command you can view all available tasks.
+The important ones are listed below:</p>
+<pre class="highlight"><code class="linenums">gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
+gulp clean           # Remove the contents of the production /dist/ directory.
+gulp lint            # Lint the scripts and build files.
+gulp docs            # Generate JSDocs from the scripts.
+gulp test            # Run linting, unit and acceptance tests (see below).
+gulp test:unit       # Run only unit tests on source code.
+gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
+gulp audit           # Run code quality audits.</code></pre>
+
+<h2 id="usage-docker">Usage: Docker<a class="headerlink" href="#usage-docker" title="Permanent link">¶</a></h2>
+<p>Much of the guidance above for the "stand-alone" set-up still stands, and it
+is worth reviewing in full. Here are some things that might be different:</p>
+<ul>
+<li><code>docker-compose</code> takes care of running Elasticsearch for you, and all
+Elasticsearch, Postgres, and Python output will be shown in a single Terminal
+window or tab. (wherever you run <code>docker-compose up</code>)</li>
+<li><code>manage.py</code> commands can only be run after you've opened up a terminal in the
+Python container, which you can do with <code>./shell.sh</code></li>
+<li>There is not <em>yet</em> a good way to use SSL/HTTPS, but that is in the works</li>
+<li>You won't ever need to use <code>backend.sh</code> or <code>runserver.sh</code></li>
+</ul>
+<h3 id="how-do-i">How do I...<a class="headerlink" href="#how-do-i" title="Permanent link">¶</a></h3>
+<h4 id="use-docker-machine">Use Docker Machine<a class="headerlink" href="#use-docker-machine" title="Permanent link">¶</a></h4>
+<p>If you used <code>mac-virtualbox-init.sh</code>, then we used Docker Machine to create a
+VirtualBox VM, running the Docker server. Here are some useful <code>docker-machine</code>
+commands:</p>
+<ul>
+<li>Start and stop the VM with  <code>docker-machine start</code> and <code>docker-machine stop</code></li>
+<li>get the current machine IP with <code>docker-machine ip</code></li>
+<li>if for some reason you want to start over, <code>docker-machine rm default</code>, and
+  <code>source mac-virtualbox-init.sh</code></li>
+</ul>
+<p>To enable Docker and Docker Compose commands, you'll always first need to run
+this command in any new shell:</p>
+<p><code>eval $(docker-machine env)</code></p>
+<p>It may be helpful to run <code>docker-machine env</code> by itself, so you understand
+what's happening. Those variables are what allows <code>docker-compose</code> and the
+<code>docker</code> command line tool, running natively on your Mac, to connect to the
+Docker server running inside VirtualBox.</p>
+<p>If you use autoenv (described in the stand-alone intructions) or something
+similar, you might consider adding <code>eval $(docker-machine env)</code> to your .env
+file. You could also achieve the same results (and start the VM if it's not
+running yet) with <code>source mac-virtualbox-init.sh</code></p>
+<p>Any further Docker documentation will assume you are either in a shell where
+you have already run <code>eval $(docker-machine env)</code>, or you are in an environment
+where that's not neccessary.</p>
+<h4 id="run-managepy-commands-like-migrate-shell-and-dbshell-and-shell-scripts-like-refresh-datash">Run manage.py commands like migrate, shell, and dbshell, and shell scripts like refresh-data.sh<a class="headerlink" href="#run-managepy-commands-like-migrate-shell-and-dbshell-and-shell-scripts-like-refresh-datash" title="Permanent link">¶</a></h4>
+<p>run <code>./shell.sh</code> to open up a shell <em>inside</em> the Python container. From there,
+commands like <code>cfgov/manage.py migrate</code> should run as expected.</p>
+<p>The same goes for scripts like <code>./refresh-data.sh</code> and <code>./initial-data.sh</code> –
+they will work as expected once you're inside the container.</p>
+<p>In addition you can run single commands by passing them as arguments to
+<code>shell.sh</code>, for example:</p>
+<p><code>./shell.sh cfgov/manage.py migrate</code></p>
+<h4 id="use-pdb">Use PDB<a class="headerlink" href="#use-pdb" title="Permanent link">¶</a></h4>
+<p>Run <code>./attach.sh</code> to connect to the TTY session where <code>manage.py runserver</code> is
+running. If the app is paused at a PDB prompt, this is where you can access it.</p>
+<h4 id="handle-updates-to-python-requirements">Handle updates to Python requirements<a class="headerlink" href="#handle-updates-to-python-requirements" title="Permanent link">¶</a></h4>
+<p>If Compose is running, stop it with CTRL-C. Run:</p>
+<p><code>docker-compose build python</code></p>
+<p>This will update your Python image. The next time you run <code>docker-compose up</code>,
+the new requirements will be in place.</p>
+<h4 id="set-environment-variables">Set environment variables<a class="headerlink" href="#set-environment-variables" title="Permanent link">¶</a></h4>
+<p>Your shell environment variables (and the variables in your .env file, if you
+are using one) are not visible to applications running in Docker. If you need
+to set variables that will be visible to Django, and in <code>./shell.sh</code>, you'll
+need to set them in the .python_env file, and restart the python container (it
+might be simpler to simple stop compose with ctrl-c, and start it again with
+<code>docker-compose up</code>)</p>
+<p>.python_env is <em>not</em> a shell script, like your .env file, ~/.bash_profile, etc.
+See the <a href="https://docs.docker.com/compose/compose-file/#env_file">Docker Compose docs</a></p>
+<h4 id="get-familiar-with-docker-compose-and-our-configuration">Get familiar with Docker Compose, and our configuration<a class="headerlink" href="#get-familiar-with-docker-compose-and-our-configuration" title="Permanent link">¶</a></h4>
+<p>docker-compose.yml contains a sort of "recipe" for running the site. Each entry
+in the Compose file describes a component of our application stack (Postgres,
+Elasticsearch, and Python), and either points to a public image on Dockerhub,
+or to a Dockerfile in cfgov-refresh. You can learn a lot more about Compose
+files in <a href="https://docs.docker.com/compose/compose-file/">the docs</a></p>
+<p>Similarly, a Dockerfile contains instructions for transforming some base image,
+to one that suits our needs. The Dockerfile sitting in the top level of
+cfgov-refresh is probably the most interesting. It starts with
+<a href="https://hub.docker.com/_/centos/">the public CentOS:7 image</a>, and installs
+everything else neccessary to run our Python dependencies and the Django app
+itself.  This file will only be executed:</p>
+<ul>
+<li>the first time you run <code>docker-compose up</code> (or the first time after you
+re-create the Docker Machine VM)</li>
+<li>any time you run <code>docker-compose build</code></li>
+</ul>
+<p>That's why you need to run <code>docker-compose build</code> after any changes to
+/requirements/</p>
+<p>There are other compose subcommands you might be interested in. Consider
+<a href="https://docs.docker.com/compose/reference/overview/">learning about</a>
+<code>build</code>, <code>restarts</code>, <code>logs</code>, <code>ps</code>, <code>top</code>, and the <code>-d</code> option for <code>up</code>.</p>
+<h4 id="develop-satellite-apps">Develop satellite apps<a class="headerlink" href="#develop-satellite-apps" title="Permanent link">¶</a></h4>
+<p>Check out any apps you are developing into the develop-apps directory. These
+will automatically be added to the
+<a href="https://docs.python.org/2/using/cmdline.html#envvar-PYTHONPATH">PYTHONPATH</a>,
+and apps contained within will be importable from Python running in the
+container.</p>
+<p>For example, if your app is called 'foobar', in a repo called foobar-project,
+you could clone foobar-project in to develop apps:</p>
+<p><code>git clone https://github.com/myorg/foobar-project</code></p>
+<p>... which will create a directory at develop-apps/foobar-project. Assuming
+'foobar' is at the top-level of 'foobar-project', you should be able to
+import it from your python code:</p>
+<pre class="highlight"><code class="language-python linenums">import foobar</code></pre>
+
+<h4 id="runserver-has-crashed-how-do-i-start-it-again">runserver has crashed! How do I start it again<a class="headerlink" href="#runserver-has-crashed-how-do-i-start-it-again" title="Permanent link">¶</a></h4>
+<p>In a separate terminal window or tab, running <code>docker-compose up python</code> should
+restart the server.</p>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="wrap">
+                This project is maintained by <a href="https://cfpb.github.io">The Consumer Financial Protection Bureau</a>.
+
+                <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

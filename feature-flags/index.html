@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <title>Feature flags - cfgov-refresh</title>
+    
+    
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    
+
+    <style type="text/css">
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a:focus,
+        .sidebar-nav a:active,
+        .sidebar-nav a.sidebar-nav-active {
+            border-left-color: #2CB34A;
+        }
+        header {
+            border-bottom-color: #2CB34A;
+        }
+        
+        
+
+        
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body>
+
+    <div class="container">
+        <header role="banner">
+            <div class="wrap">
+                
+                <img class="logo" src="https://cfpb.github.io/img/logo_210.png" alt="Consumer Financial Protection Bureau">
+                
+                <h1 class="site-title"><a class="title-link" href="../">cfgov-refresh</a></h1>
+            </div>
+        </header>
+
+        <div class="wrap content">
+            <aside>
+                <nav class="sidebar-nav" role="navigation">
+                    <ul>
+                        
+                        <li>
+                            
+                            <a href=".." class="">Introduction</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../installation/" class="">Installation</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../usage/" class="">Usage</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Building and Deploying for cf.gov</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../new-projects/" class="">New projects</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../branching-merging/" class="">Branching and merging</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="./" class="sidebar-nav-active">Feature flags</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Back-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../wagtail-migrations/" class="">Wagtail and Django migrations</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../django-to-wagtail/" class="">Wagtail Pages vs Django views</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../forms-in-wagtail/" class="">Forms in Wagtail page context</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-be/" class="">Testing</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../translation/" class="">Translation</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../caching/" class="">Caching</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Front-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../atomic-structure/" class="">Atomic structure and design</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-fe/" class="">Testing</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../development-tips/" class="">Development tips</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>APIs</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../ask-cfpb/" class="">Ask CFPB</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../consumer-complaint-database/" class="">Consumer complaints</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../hmda/" class="">HMDA data</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main" class="main-content" role="main">
+                <h1 id="feature-flags">Feature flags<a class="headerlink" href="#feature-flags" title="Permanent link">¶</a></h1>
+<p>Feature flags are implemented using our <a href="https://github.com/cfpb/wagtail-flags">Wagtail-Flags</a> app. The <a href="https://github.com/cfpb/wagtail-flags/blob/master/README.md">README</a> contains an overview and examples of how to use feature flags in Wagtail.</p>
+<p>This document covers how to add and use feature flags with cfgov-refresh and the conventions we have around their use.</p>
+<ul>
+<li><a href="#adding-a-flag">Adding a flag</a></li>
+<li><a href="#checking-a-flag">Checking a flag</a><ul>
+<li><a href="#in-templates">In templates</a><ul>
+<li><a href="#jinja2">Jinja2</a></li>
+<li><a href="#django">Django</a></li>
+</ul>
+</li>
+<li><a href="#in-code">In code</a></li>
+<li><a href="#in-urls">In URLs</a></li>
+</ul>
+</li>
+<li><a href="#enabling-a-flag">Enabling a flag</a><ul>
+<li><a href="#hard-coded-conditions">Hard-coded conditions</a></li>
+<li><a href="#database-conditions">Database conditions</a></li>
+</ul>
+</li>
+<li><a href="#satellite-apps">Satellite apps</a></li>
+<li><a href="#hygiene">Hygiene</a></li>
+</ul>
+<h2 id="adding-a-flag">Adding a flag<a class="headerlink" href="#adding-a-flag" title="Permanent link">¶</a></h2>
+<p>Feature flags are defined in code in the <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/cfgov/settings/base.py#L562"><code>cfgov/settings/base.py</code></a> file as part of the <code>FLAGS</code> setting. Each flag consists of a single string and a Python dictionary (<code>{}</code>) of its hard-coded conditions (see <a href="#enabling-a-flag">Enabling a flag</a> below).</p>
+<pre class="highlight"><code class="language-python linenums">FLAGS = {
+    # Beta banner, seen on beta.consumerfinance.gov
+    # When enabled, a banner appears across the top of the site proclaiming
+    # &quot;This beta site is a work in progress.&quot;
+    'BETA_NOTICE': {},
+}</code></pre>
+
+<p>By convention our flag names are all uppercase, with underscores instead of whitespace. A comment is expected above each flag with a short description fo what happens when it is enabled.</p>
+<h2 id="checking-a-flag">Checking a flag<a class="headerlink" href="#checking-a-flag" title="Permanent link">¶</a></h2>
+<p>Flags can be checked either in Python code or in Django or Jinja2 template files. See the full <a href="https://github.com/cfpb/wagtail-flags/blob/master/README.md#api">Wagtail Flags API is documented </a> for more information.</p>
+<h3 id="in-templates">In templates<a class="headerlink" href="#in-templates" title="Permanent link">¶</a></h3>
+<h4 id="jinja2">Jinja2<a class="headerlink" href="#jinja2" title="Permanent link">¶</a></h4>
+<p>Most of cfgov-refresh's templates are Jinja2. In these templates, two template functions are provided, <code>flag_enabled</code> and <code>flag_disabled</code>. Each takes a flag name as its first argument and request` object as the second.</p>
+<p><code>flag_enabled('MY_FLAG', request)</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are</strong> met.</p>
+<p><code>flag_disabled('MY_FLAG', request)</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are not</strong> met.</p>
+<p>See <a href="#enabling-a-flag">Enabling a flag</a> below for more on flag conditions.</p>
+<p>An example is <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56">the <code>BETA_NOTICE flag</code> as implemented in <code>header.html</code></a>:</p>
+<pre class="highlight"><code class="language-jinja linenums">{% if flag_enabled('BETA_NOTICE', request) and show_banner %}
+&lt;div class=&quot;m-global-banner&quot;&gt;
+    &lt;div class=&quot;wrapper
+                wrapper__match-content
+                o-expandable
+                o-expandable__expanded&quot;&gt;
+        &lt;div class=&quot;m-global-banner_head&quot;&gt;
+            &lt;span class=&quot;cf-icon
+                         cf-icon-error-round
+                         m-global-banner_icon&quot;&gt;&lt;/span&gt;
+            This beta site is a work in progress.
+        &lt;/div&gt;
+        …
+    &lt;/div&gt;
+&lt;/div&gt;
+{% endif %}</code></pre>
+
+<h4 id="django">Django<a class="headerlink" href="#django" title="Permanent link">¶</a></h4>
+<p>In Django templates (used in Satellite apps and the Wagtail admin), two template functions are provided <code>flag_enabled</code> and <code>flag_disabled</code> once the <code>feature_flags</code> template tag library is loaded.</p>
+<p><code>flag_enabled 'MY_FLAG'</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are</strong> met.</p>
+<p><code>flag_disabled 'MY_FLAG'</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are not</strong> met.</p>
+<p>See <a href="#enabling-a-flag">Enabling a flag</a> below for more on flag conditions.</p>
+<p>The <code>BETA_NOTICE</code> <a href="#jinja2">Jinja2</a> example above when implemented with Django templates would look like this:</p>
+<pre class="highlight"><code class="language-django linenums">{% load feature_flags %}
+
+{% flag_enabled 'BETA_NOTICE' as beta_flag %}
+{% if beta_flag and show_banner %}
+&lt;div class=&quot;m-global-banner&quot;&gt;
+    &lt;div class=&quot;wrapper
+                wrapper__match-content
+                o-expandable
+                o-expandable__expanded&quot;&gt;
+        &lt;div class=&quot;m-global-banner_head&quot;&gt;
+            &lt;span class=&quot;cf-icon
+                         cf-icon-error-round
+                         m-global-banner_icon&quot;&gt;&lt;/span&gt;
+            This beta site is a work in progress.
+        &lt;/div&gt;
+        …
+    &lt;/div&gt;
+&lt;/div&gt;
+{% endif %}</code></pre>
+
+<h3 id="in-code">In code<a class="headerlink" href="#in-code" title="Permanent link">¶</a></h3>
+<p>In Python code three functions are available for checking feature flags, <code>flag_state</code>, <code>flag_enabled</code>, and <code>flag_disabled</code>. The Python API is slightly different from the <a href="#jinja2">Jinja2</a> or <a href="#django">Django template</a> API, in that flag conditions can take more potential arguments than requests, and thus flags are more flexible when checked in Python (in and outside a request cycle).</p>
+<p>See the <a href="https://github.com/cfpb/wagtail-flags/blob/master/README.md#flag-state">Wagtail Flags flag state API documentation for more</a>.</p>
+<p>Additionally two decorators, <code>flag_check</code> and <code>flag_required</code>, are provided for wrapping views (and another functions) in a feature flag check.  See the <a href="https://github.com/cfpb/wagtail-flags/blob/master/README.md#flag-decorators">Wagtail Flags flag decorators API documentation for more</a>.</p>
+<h3 id="in-urls">In URLs<a class="headerlink" href="#in-urls" title="Permanent link">¶</a></h3>
+<p>There are two ways to flag Django URL patterns in <code>urls.py</code>: with <code>flagged_url()</code> in place of <code>url()</code> for a single pattern, or with the <code>flagged_urls()</code> context manager for multiple URLs.</p>
+<p><code>flagged_url(flag_name, regex, view, kwargs=None, name=None, state=True, fallback=None)</code> works exactly like <code>url()</code> except it takes a flag name as its first argument. If the flag's state matches the given <code>state</code>, the URL pattern will be served from the given <code>view</code>; if not, and <code>fallback</code> is given, the <code>fallback</code> will be used.</p>
+<p>An example is <a href="https://github.com/cfpb/cfgov-refresh/blob/4c3521e967abc5a35fc42566ae409d6ba008f81e/cfgov/cfgov/urls.py#L204-L210">our <code>WAGTAIL_ABOUT_US</code> flag</a>:</p>
+<pre class="highlight"><code class="language-python linenums">flagged_url('WAGTAIL_ABOUT_US',
+            r'^about-us/$',
+            lambda req: ServeView.as_view()(req, req.path),
+            fallback=SheerTemplateView.as_view(
+                template_name='about-us/index.html'),
+            name='about-us'),</code></pre>
+
+<p>Ignoring the <code>view</code> being a <code>lambda</code> for now (see <a href="#flagging-wagtail-urls">Flagging Wagtail URLs below</a>), this URL will be served via Wagtail if <code>WAGTAIL_ABOUT_US</code>'s conditions are <code>True</code>, and from a <code>TemplateView</code> if its conditions are <code>False</code>.</p>
+<p>If you need to flag multiple URLs with the same flag, you can use the <code>flagged_urls()</code> context manager.</p>
+<p><code>with flagged_urls(flag_name, state=True, fallback=None) as url</code> provides a context in which the returned <code>url()</code> function can be used in place of the Django <code>url()</code> function in patterns and those patterns will share the same feature flag, state, and fallback.</p>
+<p>An example is <a href="https://github.com/cfpb/cfgov-refresh/blob/3cd79689aac7e22e3c2f07373a7db7f2fbbed304/cfgov/cfgov/urls.py#L405-L433">our <code>WAGTAIL_ASK_CFPB</code> flag</a>:</p>
+<pre class="highlight"><code class="language-python linenums">with flagged_urls('WAGTAIL_ASK_CFPB') as url:
+    ask_patterns = [
+        url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+            view_answer,
+            name='ask-english-answer'),
+        url(r'^(?i)obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+            view_answer,
+            name='ask-spanish-answer'),
+        …
+    ]
+
+urlpatterns += ask_patterns</code></pre>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not attempt to use <code>flag_check</code> or any flag state-checking functions in <code>urls.py</code>. Because they will be evaluated on import of <code>urls.py</code> they will attempt to access the Django FlagState model before it is ready and will error.</p>
+</div>
+<h4 id="flagging-wagtail-urls">Flagging Wagtail URLs<a class="headerlink" href="#flagging-wagtail-urls" title="Permanent link">¶</a></h4>
+<p>Wagtail views in <code>flagged_url</code> with a Django view as fallback (or vice-versa) can be a bit awkward. Django views are typically called with <code>request</code> as the first argument, and Wagtail's <code>serve</code> view takes both the request and the path. To get around this, in <code>flagged_url</code> we typically use a <code>lambda</code> for the view:</p>
+<pre class="highlight"><code class="language-python linenums">lambda req: ServeView.as_view()(req, req.path)</code></pre>
+
+<p>This lambda takes the request and calls the <a href="https://github.com/cfpb/wagtail-sharing">Wagtail-Sharing</a> <code>ServeView</code> (which we're using in place of <code>wagtail.wagtailcore.views.serve</code>).</p>
+<h2 id="enabling-a-flag">Enabling a flag<a class="headerlink" href="#enabling-a-flag" title="Permanent link">¶</a></h2>
+<p>Feature flags are enabled based on a set of conditions that are given either in the Django settings files (in <code>cfgov/cfgov/settings/</code>) or in the Django or Wagtail admin. Multiple conditions can be given, both in settings and in the admin, and if any condition is satisfied a flag is enabled.</p>
+<p><a href="https://github.com/cfpb/wagtail-flags/blob/master/README.md#built-in-conditions">A list of available conditions and how to use them is available in the Wagtail-Flags documentation</a>.</p>
+<h3 id="hard-coded-conditions">Hard-coded conditions<a class="headerlink" href="#hard-coded-conditions" title="Permanent link">¶</a></h3>
+<p>Conditions that are defined in the Django settings are hard-coded, and require a change to files in cfgov-refresh, a new tagged release, and new deployment to change. These conditions should be used for flags that are relatively long-lasting and that can require a round-trip through the release and deployment process to change.</p>
+<p>When <a href="#adding-a-flag">adding a flag</a> to the Django settings the flag's dictionary of conditions can contain a condition name and value that must be satisfied for the flag to be enabled. The nature of that value changes depending on the condition type. <a href="https://github.com/cfpb/wagtail-flags/blob/master/README.md#built-in-conditions">See the Wagtail-Flags conditions documentation</a> for more on individual conditions.</p>
+<p>There is a simple <code>boolean</code> condition that is either <code>True</code> or <code>False</code>, and if it is <code>True</code> the flag is enabled and if it is <code>False</code> the flag is disabled. If we want to always turn the <code>BETA_NOTICE</code> flag on in settings with a <code>boolean</code> condition, that would look like this:</p>
+<pre class="highlight"><code class="language-python linenums">FLAGS = {
+    # Beta banner, seen on beta.consumerfinance.gov
+    # When enabled, a banner appears across the top of the site proclaiming
+    # &quot;This beta site is a work in progress.&quot;
+    'BETA_NOTICE': {
+        'boolean': True,
+    },
+}</code></pre>
+
+<h3 id="database-conditions">Database conditions<a class="headerlink" href="#database-conditions" title="Permanent link">¶</a></h3>
+<p>Conditions that are managed via the Wagtail or Django admin are stored in the database. These conditions can be changed in real-time and do not require any code changes or release and deployment to change (presuming the code that uses the feature flag is in place).</p>
+<p>To view, delete, and add database conditions, navigate to "Settings &gt; Flags" in the Wagtail admin.</p>
+<p><img alt="settings, flags" src="../img/settings_flags.gif" /></p>
+<p>Once in the flag settings, you'll have a list of all flags and their conditions..</p>
+<p><img alt="flag list" src="../img/flags_list.png" /></p>
+<p>Database conditions can be deleted with the trash can button on the right.</p>
+<p>To create a new database condition, select "Add a condition". As with <a href="#hard-coded-conditions">hard-coded conditions</a>, to create a database condition you must select which condition type you would like to use and give it a value that must be satisfied for the flag to be enabled.</p>
+<p><img alt="creating a condition" src="../img/flag_conditions.gif" /></p>
+<p>Database conditions can only be set for flags that exist in the Django settings.</p>
+<h2 id="satellite-apps">Satellite apps<a class="headerlink" href="#satellite-apps" title="Permanent link">¶</a></h2>
+<p>Feature flags can be used in satellite apps in exactly the same way they are used in cfgov-refresh. An example is <a href="https://github.com/cfpb/complaint/blob/9985b4ea4ce5c6e9b55d57228520a92a26152565/complaintdatabase/views.py#L31-L36">the use of a feature flagged template choice in the complaintdatabase app</a>.</p>
+<h2 id="hygiene">Hygiene<a class="headerlink" href="#hygiene" title="Permanent link">¶</a></h2>
+<p>Feature flags should be rare and ephemeral. Changes should be small and frequent, and not big-bang releases, and flags that are no longer used and their conditions should be cleaned up and removed from code and the database.</p>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="wrap">
+                This project is maintained by <a href="https://cfpb.github.io">The Consumer Financial Protection Bureau</a>.
+
+                <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <title>Wagtail and Django migrations - cfgov-refresh</title>
+    
+    
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    
+
+    <style type="text/css">
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a:focus,
+        .sidebar-nav a:active,
+        .sidebar-nav a.sidebar-nav-active {
+            border-left-color: #2CB34A;
+        }
+        header {
+            border-bottom-color: #2CB34A;
+        }
+        
+        
+
+        
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body>
+
+    <div class="container">
+        <header role="banner">
+            <div class="wrap">
+                
+                <img class="logo" src="https://cfpb.github.io/img/logo_210.png" alt="Consumer Financial Protection Bureau">
+                
+                <h1 class="site-title"><a class="title-link" href="../">cfgov-refresh</a></h1>
+            </div>
+        </header>
+
+        <div class="wrap content">
+            <aside>
+                <nav class="sidebar-nav" role="navigation">
+                    <ul>
+                        
+                        <li>
+                            
+                            <a href=".." class="">Introduction</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../installation/" class="">Installation</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../usage/" class="">Usage</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Building and Deploying for cf.gov</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../new-projects/" class="">New projects</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../branching-merging/" class="">Branching and merging</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../feature-flags/" class="">Feature flags</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Back-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="./" class="sidebar-nav-active">Wagtail and Django migrations</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../django-to-wagtail/" class="">Wagtail Pages vs Django views</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../forms-in-wagtail/" class="">Forms in Wagtail page context</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-be/" class="">Testing</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../translation/" class="">Translation</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../caching/" class="">Caching</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Front-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../atomic-structure/" class="">Atomic structure and design</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-fe/" class="">Testing</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../development-tips/" class="">Development tips</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>APIs</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../ask-cfpb/" class="">Ask CFPB</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../consumer-complaint-database/" class="">Consumer complaints</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../hmda/" class="">HMDA data</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main" class="main-content" role="main">
+                <h1 id="wagtail-and-django-data-migrations">Wagtail and Django data migrations<a class="headerlink" href="#wagtail-and-django-data-migrations" title="Permanent link">¶</a></h1>
+<p>Django data migrations with Wagtail can be challenging because programmatic editing of Wagtail pages <a href="https://github.com/torchbox/wagtail/issues/1101">is difficult</a>, and pages have both revisions and StreamFields. This document is intended to describe ways we try to address these challenges in cfgov-refresh.</p>
+<h2 id="migrating-streamfields">Migrating StreamFields<a class="headerlink" href="#migrating-streamfields" title="Permanent link">¶</a></h2>
+<p>StreamFields do not follow a fixed structure, rather they're a freeform sequences of blocks. Making a change to a StreamField involves both creating a <a href="https://docs.djangoproject.com/en/1.8/topics/migrations/#workflow">Django schema migration</a> and a custom <a href="https://docs.djangoproject.com/en/1.8/topics/migrations/#data-migrations">Django data migration</a>. The data migration needs to modify both the existing Wagtail pages that correspond to the changed model and all revisions of that page. It also needs to be able to manipulate the StreamField contents.</p>
+<p>To this end, there are some utility functions in cfgov-refresh that make this easier. Using these utilities, a Django data migration that modifies a StreamField would use the following format:</p>
+<pre class="highlight"><code class="language-python linenums">from django.db import migrations
+
+from v1.util.migrations import migrate_page_types_and_fields
+
+
+def forward_mapper(page_or_revision, data):
+    data = dict(data)
+    # Manipulate the stream block data forwards
+    return data
+
+
+def backward_mapper(page_or_revision, data):
+    data = dict(data)
+    # Manipulate the stream block data backwards
+    return data
+
+
+def forwards(apps, schema_editor):
+    page_types_and_fields = [
+        ('myapp', 'MyPage', 'streamfield_name', 'streamblock_type'),
+    ]
+    migrate_page_types_and_fields(apps,
+                                  page_types_and_fields,
+                                  forward_mapper)
+
+
+def backwards(apps, schema_editor):
+    page_types_and_fields = [
+        ('myapp', 'MyPage', 'streamfield_name', 'streamblock_type'),
+    ]
+    migrate_page_types_and_fields(apps,
+                                  page_types_and_fields,
+                                  backward_mapper)
+
+
+class Migration(migrations.Migration):
+    dependencies = []
+    operations = [
+        migrations.RunPython(forwards, backwards),
+    ]</code></pre>
+
+<h3 id="utility-functions">Utility functions<a class="headerlink" href="#utility-functions" title="Permanent link">¶</a></h3>
+<p>These functions are available in <code>v1.util.migrations</code>.</p>
+<h5 id="migrate_page_types_and_fieldsapps-page_types_and_fields-mapper"><code>migrate_page_types_and_fields(apps, page_types_and_fields, mapper)</code><a class="headerlink" href="#migrate_page_types_and_fieldsapps-page_types_and_fields-mapper" title="Permanent link">¶</a></h5>
+<p>Migrate the fields of a wagtail page type using the given mapper function. page_types_and_fields should be a list of 4-tuples providing ('app', 'PageType', 'field_name', 'block type').</p>
+<p>The mapper function should take <code>page_or_revision</code> and the stream block value.</p>
+<h5 id="migrate_stream_fieldpage_or_revision-field_name-block_type-mapper"><code>migrate_stream_field(page_or_revision, field_name, block_type, mapper)</code><a class="headerlink" href="#migrate_stream_fieldpage_or_revision-field_name-block_type-mapper" title="Permanent link">¶</a></h5>
+<p>Migrate a block of the type within a StreamField of the name belonging to the page or revision using the mapper function.</p>
+<p>The mapper function should take <code>page_or_revision</code> and the stream block value.</p>
+<h5 id="get_stream_datapage_or_revision-field_name"><code>get_stream_data(page_or_revision, field_name)</code><a class="headerlink" href="#get_stream_datapage_or_revision-field_name" title="Permanent link">¶</a></h5>
+<p>Get the stream field data for a given field name on a page or a revision.</p>
+<p>This function will return a list of <code>dict</code>-like objects containing the blocks within the given StreamField.</p>
+<h5 id="set_stream_datapage_or_revision-field_name-stream_data-committrue"><code>set_stream_data(page_or_revision, field_name, stream_data, commit=True)</code><a class="headerlink" href="#set_stream_datapage_or_revision-field_name-stream_data-committrue" title="Permanent link">¶</a></h5>
+<p>Set the stream field data for a given field name on a page or a revision. If commit is True (default) <code>save()</code> is called on the <code>page_or_revision</code> object.</p>
+<p><code>stream_data</code> must be a list of <code>dict</code>-like objects containing the blocks within the given StreamField.</p>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="wrap">
+                This project is maintained by <a href="https://cfpb.github.io">The Consumer Financial Protection Bureau</a>.
+
+                <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <title>Atomic structure and design - cfgov-refresh</title>
+    
+    
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    
+
+    <style type="text/css">
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a:focus,
+        .sidebar-nav a:active,
+        .sidebar-nav a.sidebar-nav-active {
+            border-left-color: #2CB34A;
+        }
+        header {
+            border-bottom-color: #2CB34A;
+        }
+        
+        
+
+        
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body>
+
+    <div class="container">
+        <header role="banner">
+            <div class="wrap">
+                
+                <img class="logo" src="https://cfpb.github.io/img/logo_210.png" alt="Consumer Financial Protection Bureau">
+                
+                <h1 class="site-title"><a class="title-link" href="../">cfgov-refresh</a></h1>
+            </div>
+        </header>
+
+        <div class="wrap content">
+            <aside>
+                <nav class="sidebar-nav" role="navigation">
+                    <ul>
+                        
+                        <li>
+                            
+                            <a href=".." class="">Introduction</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../installation/" class="">Installation</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../usage/" class="">Usage</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Building and Deploying for cf.gov</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../new-projects/" class="">New projects</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../branching-merging/" class="">Branching and merging</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../feature-flags/" class="">Feature flags</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Back-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../wagtail-migrations/" class="">Wagtail and Django migrations</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../django-to-wagtail/" class="">Wagtail Pages vs Django views</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../forms-in-wagtail/" class="">Forms in Wagtail page context</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-be/" class="">Testing</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../translation/" class="">Translation</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../caching/" class="">Caching</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Front-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="./" class="sidebar-nav-active">Atomic structure and design</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-fe/" class="">Testing</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../development-tips/" class="">Development tips</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>APIs</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../ask-cfpb/" class="">Ask CFPB</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../consumer-complaint-database/" class="">Consumer complaints</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../hmda/" class="">HMDA data</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main" class="main-content" role="main">
+                <h1 id="notes-on-atomic-design">Notes on Atomic Design<a class="headerlink" href="#notes-on-atomic-design" title="Permanent link">¶</a></h1>
+<p>Check out <a href="https://www.ebaytechblog.com/?p=3113">Don't Build Pages, Build Modules</a>.
+It encompasses exactly what we are trying to achieve by building components
+using atomic design.
+It's important to note that our front-end atomic architecture is still evolving.</p>
+<p>Our components are broken down into templates, organisms, molecules, and atoms.
+We opted not to use the page component, although it exists in atomic design.
+Our components are composed of HTML, CSS, and JS (JavaScript).
+If a component doesn’t have user interactions or require styling,
+then it won’t have an associated JS and/or CSS file.</p>
+<p>We compose our atomic components as follows:</p>
+<h3 id="atoms">Atoms<a class="headerlink" href="#atoms" title="Permanent link">¶</a></h3>
+<p>Prefixed with “a-” in CSS, JavaScript, and HTML files.</p>
+<h4 id="html">HTML<a class="headerlink" href="#html" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="language-html linenums">&lt;div class=&quot;a-overlay u-hidden&quot;&gt;&lt;/div&gt;</code></pre>
+
+<h4 id="css">CSS<a class="headerlink" href="#css" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="language-css linenums"> .a-overlay {
+    // Only show overlay at mobile/tablet size.
+    .respond-to-max( @bp-sm-max, {
+        height: 100%;
+        width: 100%;
+ …</code></pre>
+
+<h3 id="molecules">Molecules<a class="headerlink" href="#molecules" title="Permanent link">¶</a></h3>
+<p>Prefixed with “m-” in CSS, JavaScript, and HTML files.</p>
+<h4 id="html_1">HTML<a class="headerlink" href="#html_1" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="language-html linenums">&lt;div class=&quot;m-notification
+            m-notification__visible
+            m-notification__error&quot;
+     data-js-hook=&quot;state_atomic_init&quot;&gt;
+    {{ svg_icon('error') }}
+    &lt;div class=&quot;m-notification_content&quot; role=&quot;alert&quot;&gt;
+        &lt;div class=&quot;h4 m-notification_message&quot;&gt;Page not found.&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+<h4 id="css_1">CSS<a class="headerlink" href="#css_1" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="language-css linenums">.m-notification {
+    display: none;
+    position: relative;
+    padding: @notification-padding__px;
+    …</code></pre>
+
+<h4 id="javascript">JavaScript<a class="headerlink" href="#javascript" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="language-javascript linenums">function Notification( element ) {
+   const BASE_CLASS = 'm-notification';
+
+   // Constants for the state of this Notification.
+   const SUCCESS = 'success';
+   const WARNING = 'warning';
+   const ERROR = 'error';
+
+   // Constants for the Notification modifiers.
+   const MODIFIER_VISIBLE = BASE_CLASS + '__visible';
+   const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+   const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+   …</code></pre>
+
+<p>The notification molecule can be instantiated with the following code:</p>
+<pre class="highlight"><code class="language-javascript linenums">const notification = new Notification( _dom );
+notification.init();</code></pre>
+
+<h3 id="organisms">Organisms<a class="headerlink" href="#organisms" title="Permanent link">¶</a></h3>
+<p>Prefixed with “o-” in CSS, JavaScript, and HTML.</p>
+<h4 id="html_2">HTML<a class="headerlink" href="#html_2" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="language-html linenums">&lt;div class=&quot;o-expandable
+            o-expandable__borders
+            o-expandable__midtone
+            o-expandable__expanded&quot;
+     data-js-hook=&quot;state_atomic_init&quot;&gt;
+    &lt;button class=&quot;o-expandable_target&quot; aria-pressed=&quot;true&quot;&gt;
+        &lt;div class=&quot;o-expandable_header&quot;&gt;
+        …</code></pre>
+
+<p>JavaScript:</p>
+<pre class="highlight"><code class="language-javascript linenums"> function Expandable( element ) {
+  const BASE_CLASS = 'o-expandable';
+
+  // Bitwise flags for the state of this Expandable.
+  const COLLAPSED = 0;
+  const COLLAPSING = 1;
+  const EXPANDING = 2;
+  const EXPANDED = 3;
+
+  // The Expandable element will directly be the Expandable
+  // when used in an ExpandableGroup, otherwise it can be the parent container.
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
+  const _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  …</code></pre>
+
+<p>The Expandable organism can be instantiated with the following code:</p>
+<pre class="highlight"><code class="language-javascript linenums">const expandable = new Expandable( _dom.querySelector( '.o-expandable' ) );
+expandable.init( _expandable.EXPANDED );</code></pre>
+
+<p>or</p>
+<pre class="highlight"><code class="language-javascript linenums">const atomicHelpers = require( '../../modules/util/atomic-helpers' );
+const Expandable = require( '../../organisms/Expandable' );
+atomicHelpers.instantiateAll( '.o-expandable', Expandable );</code></pre>
+
+<h3 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">¶</a></h3>
+<p>Prefixed with “t-” in CSS, JavaScript, and HTML. <a href="https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/jinja2/v1">View all available templates</a> that can be extended or reused to create pages.</p>
+<h4 id="css_2">CSS<a class="headerlink" href="#css_2" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="language-css linenums">.t-careers {
+    &amp;_social .m-social-media {
+        float: right;
+    }
+    …</code></pre>
+
+<h3 id="folder-structure">Folder structure<a class="headerlink" href="#folder-structure" title="Permanent link">¶</a></h3>
+<p>Our atomic components are separated and named based on asset type. HTML, CSS, and JavaScript for each component are in separate directories.</p>
+<h4 id="current-structure">Current structure<a class="headerlink" href="#current-structure" title="Permanent link">¶</a></h4>
+<h4 id="html_3">HTML<a class="headerlink" href="#html_3" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="linenums">cfgov-refresh/cfgov/jinja2/v1/_includes/atoms/
+cfgov-refresh/cfgov/jinja2/v1/_includes/molecules/
+cfgov-refresh/cfgov/jinja2/v1/_includes/organisms/</code></pre>
+
+<h4 id="css_3">CSS<a class="headerlink" href="#css_3" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="linenums">cfgov-refresh/cfgov/unprocessed/css/atoms/
+cfgov-refresh/cfgov/unprocessed/css/molecules/
+cfgov-refresh/cfgov/unprocessed/css/organisms/</code></pre>
+
+<h4 id="javascript_1">JavaScript<a class="headerlink" href="#javascript_1" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="linenums">cfgov-refresh/cfgov/unprocessed/js/atoms/
+cfgov-refresh/cfgov/unprocessed/js/molecules/
+cfgov-refresh/cfgov/unprocessed/js/organisms/</code></pre>
+
+<h4 id="test">Test<a class="headerlink" href="#test" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="linenums">cfgov-refresh/test/unit_tests/atoms/
+cfgov-refresh/test/unit_tests/molecules/
+cfgov-refresh/test/unit_tests/organisms/</code></pre>
+
+<h3 id="javascript-architecture">JavaScript architecture<a class="headerlink" href="#javascript-architecture" title="Permanent link">¶</a></h3>
+<p>JavaScript components are built to be rendered on the server and then enhanced via JavaScript on the client. The basic interface for the components is as follows:</p>
+<pre class="highlight"><code class="language-javascript linenums">function AtomicComponent( domElement ) {
+    // Ensure the passed in Element is in the DOM.
+    // Query and store references to sub-elements.
+    // Instantiate child atomic components.
+    // Bind necessary events for referenced DOM elements.
+    // Perform other initialization related tasks.
+    this.init = function init(){}
+
+    // General teardown function
+    // We don't remove the element from the DOM so
+    // we need to unbind the events.
+    this.destroy = function destroy(){}
+}</code></pre>
+
+<p>We generally favor composition over inheritance.
+You can get more information by reading the following:</p>
+<h4 id="articles">Articles<a class="headerlink" href="#articles" title="Permanent link">¶</a></h4>
+<p><a href="https://medium.com/javascript-scene/a-simple-challenge-to-classical-inheritance-fans-e78c2cf5eead#.mtrvhcjiw">A Simple Challenge to Classical Inheritance Fans</a>
+<a href="https://www.youtube.com/watch?v=wfMtDGfHWpA">Composition over Inheritance (Youtube)</a></p>
+<h2 id="component-build-pipeline">Component build pipeline<a class="headerlink" href="#component-build-pipeline" title="Permanent link">¶</a></h2>
+<h4 id="gulp">Gulp<a class="headerlink" href="#gulp" title="Permanent link">¶</a></h4>
+<p>Gulp is used as a task automation tool. Tasks include compiling CSS, creating a standard webpack workflow for bundling scripts, minifying code, linting, image optimizing, running unit tests, and <a href="https://github.com/cfpb/cfgov-refresh/tree/master/gulp">more</a>.</p>
+<h4 id="webpack">Webpack<a class="headerlink" href="#webpack" title="Permanent link">¶</a></h4>
+<p>Wepback is used as a module bundler although it's capable of more.
+We create page, global, and atomic specific bundles.
+The configuration for the bundles is contained in config/webpack-config.js.
+An explanation for the usage of each bundle is contained in scripts.js.</p>
+<h4 id="routes">Routes<a class="headerlink" href="#routes" title="Permanent link">¶</a></h4>
+<p>Routes are used to serve JavaScript bundles to the browser based
+on the requested URL or Wagtail page Media property.
+This happens via code contained in <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html#L236-L285">base.html</a>. This file serves as the base HTML template for serving up assets and content. <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html">View base.html on Github</a>.</p>
+<h4 id="wagtail-page-media-property">Wagtail page media property<a class="headerlink" href="#wagtail-page-media-property" title="Permanent link">¶</a></h4>
+<p>Each atomic component has a media property that list the JavaScript files
+that should be rendered via base.html.
+When a page is requested via the browser, code contained in base.html will
+loop all atomic components for the requested page and render
+the appropriate atomic JavaScript bundles.</p>
+<p>Here is an example of the media property on a component from the <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/atomic_elements/organisms.py#L223-L224">Email signup organism</a>:</p>
+<pre class="highlight"><code class="linenums">class Media:
+    js = ['email-signup.js']</code></pre>
+
+<p>This will load the <code>email-signup.js</code> script on any page that includes the Email Signup organism in its template.</p>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="wrap">
+                This project is maintained by <a href="https://cfpb.github.io">The Consumer Financial Protection Bureau</a>.
+
+                <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

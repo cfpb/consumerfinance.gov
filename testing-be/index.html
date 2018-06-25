@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <title>Testing - cfgov-refresh</title>
+    
+    
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    
+
+    <style type="text/css">
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a:focus,
+        .sidebar-nav a:active,
+        .sidebar-nav a.sidebar-nav-active {
+            border-left-color: #2CB34A;
+        }
+        header {
+            border-bottom-color: #2CB34A;
+        }
+        
+        
+
+        
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body>
+
+    <div class="container">
+        <header role="banner">
+            <div class="wrap">
+                
+                <img class="logo" src="https://cfpb.github.io/img/logo_210.png" alt="Consumer Financial Protection Bureau">
+                
+                <h1 class="site-title"><a class="title-link" href="../">cfgov-refresh</a></h1>
+            </div>
+        </header>
+
+        <div class="wrap content">
+            <aside>
+                <nav class="sidebar-nav" role="navigation">
+                    <ul>
+                        
+                        <li>
+                            
+                            <a href=".." class="">Introduction</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../installation/" class="">Installation</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../usage/" class="">Usage</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Building and Deploying for cf.gov</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../new-projects/" class="">New projects</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../branching-merging/" class="">Branching and merging</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../feature-flags/" class="">Feature flags</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Back-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../wagtail-migrations/" class="">Wagtail and Django migrations</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../django-to-wagtail/" class="">Wagtail Pages vs Django views</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../forms-in-wagtail/" class="">Forms in Wagtail page context</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="./" class="sidebar-nav-active">Testing</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../translation/" class="">Translation</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../caching/" class="">Caching</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Front-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../atomic-structure/" class="">Atomic structure and design</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-fe/" class="">Testing</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../development-tips/" class="">Development tips</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>APIs</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../ask-cfpb/" class="">Ask CFPB</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../consumer-complaint-database/" class="">Consumer complaints</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../hmda/" class="">HMDA data</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main" class="main-content" role="main">
+                <h1 id="backend-testing">Backend testing<a class="headerlink" href="#backend-testing" title="Permanent link">¶</a></h1>
+<h2 id="django-and-python-unit-tests">Django and Python unit tests<a class="headerlink" href="#django-and-python-unit-tests" title="Permanent link">¶</a></h2>
+<p>To run the the full suite of unit tests using Tox, cd to the project root and
+then run:</p>
+<pre class="highlight"><code class="linenums">tox</code></pre>
+
+<p>By default this uses a local SQLite database for tests. To override this, you
+can set the <code>DATABASE_URL</code> environment variable to a database connection
+sring as supported by <a href="https://github.com/kennethreitz/dj-database-url">dj-database-url</a>.</p>
+<p>If you haven't changed any installed packages and you don't need to test 
+all migrations, you can run a much faster Python code test using:
+<pre class="highlight"><code class="linenums">tox -e fast</code></pre></p>
+<p>To see Python code coverage information, run
+<pre class="highlight"><code class="linenums">./show_coverage.sh</code></pre></p>
+<h2 id="source-code-linting">Source code linting<a class="headerlink" href="#source-code-linting" title="Permanent link">¶</a></h2>
+<p>We use the <code>flake8</code> and <code>isort</code> tools to ensure compliance with 
+<a href="https://www.python.org/dev/peps/pep-0008/">PEP8 style guide</a> and the 
+<a href="https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/">Django coding style guidelines</a>. 
+We do make two exceptions to PEP8 that are ignored in our flake8 
+configuration:</p>
+<ul>
+<li><code>E731</code>, we allow assignment of lambda expressions</li>
+<li><code>W503</code>, we allow line breaks after binary operators</li>
+</ul>
+<p>Both <code>flake8</code> and <code>isort</code> can be run using the Tox <code>lint</code> environment:</p>
+<pre class="highlight"><code class="linenums">tox -e lint</code></pre>
+
+<p>This will run <code>isort</code> in check-only mode and it will print diffs for imports 
+that need to be fixed. To automatically fix import sort issues, run:</p>
+<pre class="highlight"><code class="linenums">isort --recursive cfgov/</code></pre>
+
+<p>From the root of <code>cfgov-refresh</code>.</p>
+<h2 id="python-3">Python 3<a class="headerlink" href="#python-3" title="Permanent link">¶</a></h2>
+<p>Both unit tests and linting can be run with Python 3 to aid in our transition. To run with all Django migrations, </p>
+<pre class="highlight"><code class="linenums">tox -e py36</code></pre>
+
+<p>or without Django migrations,</p>
+<pre class="highlight"><code class="linenums">tox -e fast-py3</code></pre>
+
+<p>Existing unit tests that run on code that has not been made compatible with Python 3 may error or fail, but it is possible to run new tests individually with</p>
+<pre class="highlight"><code class="linenums">tox -e fast-py3 package.tests.test_my_code</code></pre>
+
+<p>To run both <code>flake8</code> and <code>isort</code> with Python 3, run</p>
+<pre class="highlight"><code class="linenums">tox -e lint-py3</code></pre>
+
+<h2 id="govdelivery">GovDelivery<a class="headerlink" href="#govdelivery" title="Permanent link">¶</a></h2>
+<p>If you write Python code that interacts with the GovDelivery subscription API, you can use the functionality provided in <code>core.govdelivery.MockGovDelivery</code> as a mock interface to avoid the use of <code>patch</code> in unit tests.</p>
+<p>This object behaves similarly to the real <code>govdelivery.api.GovDelivery</code> class in that it handles all requests and returns a valid (200) <code>requests.Response</code> instance.</p>
+<p>Conveniently for unit testing, all calls are stored in a class-level list that can be retrieved at <code>MockGovDelivery.calls</code>. This allows for testing of code that interacts with GovDelivery by checking the contents of this list to ensure that the right methods were called.</p>
+<p>This pattern is modeled after Django's <a href="https://docs.djangoproject.com/en/2.0/topics/testing/tools/#email-services"><code>django.core.mail.outbox</code></a> which provides similar functionality for testing sending of emails.</p>
+<p>The related classes <code>ExceptionMockGovDelivery</code> and <code>ServerErrorMockGovDelivery</code> can similarly be used in unit tests to test for cases where a call to the GovDelivery API raises an exception and returns an HTTP status code of 500, respectively.</p>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="wrap">
+                This project is maintained by <a href="https://cfpb.github.io">The Consumer Financial Protection Bureau</a>.
+
+                <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

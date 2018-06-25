@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <title>Development tips - cfgov-refresh</title>
+    
+    
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    
+
+    <style type="text/css">
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a:focus,
+        .sidebar-nav a:active,
+        .sidebar-nav a.sidebar-nav-active {
+            border-left-color: #2CB34A;
+        }
+        header {
+            border-bottom-color: #2CB34A;
+        }
+        
+        
+
+        
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body>
+
+    <div class="container">
+        <header role="banner">
+            <div class="wrap">
+                
+                <img class="logo" src="https://cfpb.github.io/img/logo_210.png" alt="Consumer Financial Protection Bureau">
+                
+                <h1 class="site-title"><a class="title-link" href="../">cfgov-refresh</a></h1>
+            </div>
+        </header>
+
+        <div class="wrap content">
+            <aside>
+                <nav class="sidebar-nav" role="navigation">
+                    <ul>
+                        
+                        <li>
+                            
+                            <a href=".." class="">Introduction</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../installation/" class="">Installation</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../usage/" class="">Usage</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Building and Deploying for cf.gov</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../new-projects/" class="">New projects</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../branching-merging/" class="">Branching and merging</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../feature-flags/" class="">Feature flags</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Back-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../wagtail-migrations/" class="">Wagtail and Django migrations</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../django-to-wagtail/" class="">Wagtail Pages vs Django views</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../forms-in-wagtail/" class="">Forms in Wagtail page context</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-be/" class="">Testing</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../translation/" class="">Translation</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../caching/" class="">Caching</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Front-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../atomic-structure/" class="">Atomic structure and design</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-fe/" class="">Testing</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="./" class="sidebar-nav-active">Development tips</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>APIs</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../ask-cfpb/" class="">Ask CFPB</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../consumer-complaint-database/" class="">Consumer complaints</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../hmda/" class="">HMDA data</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main" class="main-content" role="main">
+                <h2 id="development-tips">Development tips<a class="headerlink" href="#development-tips" title="Permanent link">¶</a></h2>
+<h3 id="tip-developing-on-nested-satellite-apps">TIP: Developing on nested satellite apps<a class="headerlink" href="#tip-developing-on-nested-satellite-apps" title="Permanent link">¶</a></h3>
+<p>Some projects can sit inside cfgov-refresh, but manage their own asset
+dependencies. These projects have their own package.json and base templates.</p>
+<p>The structure looks like this:</p>
+<h4 id="npm-modules">npm modules<a class="headerlink" href="#npm-modules" title="Permanent link">¶</a></h4>
+<ul>
+<li>App's own dependency list is in
+  <code>cfgov/unprocessed/apps/[project namespace]/package.json</code></li>
+<li>App's <code>node_modules</code> path is listed in the Travis config
+  <a href="https://github.com/cfpb/cfgov-refresh/blob/master/.travis.yml#L10">https://github.com/cfpb/cfgov-refresh/blob/master/.travis.yml#L10</a>
+  so that their dependencies will be available when Travis runs.</li>
+</ul>
+<h4 id="webpack">Webpack<a class="headerlink" href="#webpack" title="Permanent link">¶</a></h4>
+<ul>
+<li>Apps may include their own webpack-config.js configuration that adjusts how
+  their app-specific assets should be built. This configuration appears in
+  <code>cfgov/unprocessed/apps/[project namespace]/webpack-config.js</code></li>
+</ul>
+<h4 id="browserlist">Browserlist<a class="headerlink" href="#browserlist" title="Permanent link">¶</a></h4>
+<ul>
+<li>Apps may include a
+  <a href="https://github.com/browserslist/browserslist#config-file">browserlist config</a>
+  file, which is automatically picked up by <code>babel-preset-env</code> inside the
+  webpack config, if no <code>browsers</code> option is supplied.</li>
+</ul>
+<h4 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">¶</a></h4>
+<ul>
+<li>Apps use a jinja template that extends the <code>base.html</code>
+  template used by the rest of the site.
+  This template would reside in <code>cfgov/jinja2/v1/[project namespace]/index.html</code>
+  or similar (for example, <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/owning-a-home/explore-rates/index.html">owning-a-home</a>).</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A template may support a non-standard browser, like an older IE version,
+by including the required dependencies, polyfills, etc. in its
+template's <code>{% block css %}</code> or <code>{% block javascript scoped %}</code> blocks.</p>
+</div>
+<h3 id="tip-loading-satellite-apps">TIP: Loading satellite apps<a class="headerlink" href="#tip-loading-satellite-apps" title="Permanent link">¶</a></h3>
+<p>Some projects fit within the cfgov-refresh architecture,
+but are not fully incorporated into the project.
+These are known as "satellite apps."</p>
+<p>Satellite apps are listed in the
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt">optional-public.txt</a>
+requirements file.</p>
+<p>In addition to the aforementioned list,
+<a href="https://github.com/cfpb/hmda-explorer">HMDA Explorer</a> and
+<a href="https://github.com/cfpb/rural-or-underserved-test">Rural or Underserved</a>,
+have their own installation requirements.</p>
+<p>If using Docker, follow
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/docs/usage.md#develop-satellite-apps">these guidelines</a>.</p>
+<p>Otherwise, if not using Docker, follow these guidelines:</p>
+<ol>
+<li>Build the third-party projects per their directions</li>
+<li>Stop the web server and return to <code>cfgov-refresh</code></li>
+<li>Run <code>pip install -e ../&lt;sibling&gt;</code> to load the projects' dependencies</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Do not install the projects directly into the <code>cfgov-refresh</code> directory.
+Clone and install the projects as siblings to <code>cfgov-refresh</code>,
+so that they share the same parent directory (<code>~/Projects</code> or similar).</p>
+</div>
+<h3 id="tip-working-with-the-templates">TIP: Working with the templates<a class="headerlink" href="#tip-working-with-the-templates" title="Permanent link">¶</a></h3>
+<h4 id="front-end-templateasset-locations">Front-End Template/Asset Locations<a class="headerlink" href="#front-end-templateasset-locations" title="Permanent link">¶</a></h4>
+<p><strong>Templates</strong> that are served by the Django server: <code>cfgov\jinja2\v1</code></p>
+<p><strong>Static assets</strong> prior to processing (minifying etc.): <code>cfgov\unprocessed</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After running <code>gulp build</code> the site's assets are copied over to <code>cfgov\static_built</code>,
+ready to be served by Django.</p>
+</div>
+<h4 id="simple-static-template-setup">Simple static template setup<a class="headerlink" href="#simple-static-template-setup" title="Permanent link">¶</a></h4>
+<p>By default, Django will render pages with accordance to the URL pattern defined
+for it. For example, going to <code>http://localhost:8000/the-bureau/index.html</code>
+(or <code>http://localhost:8000/the-bureau/</code>) renders <code>/the-bureau/index.html</code> from
+the <code>cfgov</code> app folder's <code>jinja2/v1</code> templates folder as processed
+by the <a href="http://jinja.pocoo.org/docs">Jinja2</a> templating engine.</p>
+<h3 id="tip-debugging-site-performance">TIP: Debugging site performance<a class="headerlink" href="#tip-debugging-site-performance" title="Permanent link">¶</a></h3>
+<p>When running locally it is possible to enable the
+<a href="https://django-debug-toolbar.readthedocs.io/en/stable/">Django Debug Toolbar</a>
+by defining the <code>ENABLE_DEBUG_TOOLBAR</code> environment variable:</p>
+<pre class="highlight"><code class="language-sh linenums">$ ENABLE_DEBUG_TOOLBAR=1 ./runserver.sh</code></pre>
+
+<p>This tool exposes various useful pieces of information about things like HTTP headers,
+Django settings, SQL queries, and template variables. Note that running with the toolbar on
+may have an impact on local server performance.</p>
+<h3 id="tip-updating-the-documentation">TIP: Updating the documentation<a class="headerlink" href="#tip-updating-the-documentation" title="Permanent link">¶</a></h3>
+<p>Our documentation is written as Markdown files and served in GitHub pages
+by <a href="https://www.mkdocs.org/user-guide/deploying-your-docs/">mkdocs</a>.</p>
+<p>To update the docs in GitHub Pages once a pull request has been merged,
+mkdocs provides <a href="https://www.mkdocs.org/user-guide/deploying-your-docs/">a helpful command</a>:</p>
+<pre class="highlight"><code class="linenums">mkdocs gh-deploy --clean</code></pre>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="wrap">
+                This project is maintained by <a href="https://cfpb.github.io">The Consumer Financial Protection Bureau</a>.
+
+                <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

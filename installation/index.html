@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <title>Installation - cfgov-refresh</title>
+    
+    
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    
+
+    <style type="text/css">
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a:focus,
+        .sidebar-nav a:active,
+        .sidebar-nav a.sidebar-nav-active {
+            border-left-color: #2CB34A;
+        }
+        header {
+            border-bottom-color: #2CB34A;
+        }
+        
+        
+
+        
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body>
+
+    <div class="container">
+        <header role="banner">
+            <div class="wrap">
+                
+                <img class="logo" src="https://cfpb.github.io/img/logo_210.png" alt="Consumer Financial Protection Bureau">
+                
+                <h1 class="site-title"><a class="title-link" href="../">cfgov-refresh</a></h1>
+            </div>
+        </header>
+
+        <div class="wrap content">
+            <aside>
+                <nav class="sidebar-nav" role="navigation">
+                    <ul>
+                        
+                        <li>
+                            
+                            <a href=".." class="">Introduction</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="./" class="sidebar-nav-active">Installation</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../usage/" class="">Usage</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Building and Deploying for cf.gov</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../new-projects/" class="">New projects</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../branching-merging/" class="">Branching and merging</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../feature-flags/" class="">Feature flags</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Back-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../wagtail-migrations/" class="">Wagtail and Django migrations</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../django-to-wagtail/" class="">Wagtail Pages vs Django views</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../forms-in-wagtail/" class="">Forms in Wagtail page context</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-be/" class="">Testing</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../translation/" class="">Translation</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../caching/" class="">Caching</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Front-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../atomic-structure/" class="">Atomic structure and design</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-fe/" class="">Testing</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../development-tips/" class="">Development tips</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>APIs</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../ask-cfpb/" class="">Ask CFPB</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../consumer-complaint-database/" class="">Consumer complaints</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../hmda/" class="">HMDA data</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main" class="main-content" role="main">
+                <h1 id="installation-and-configuration-for-cfgov-refresh">Installation and configuration for cfgov-refresh<a class="headerlink" href="#installation-and-configuration-for-cfgov-refresh" title="Permanent link">¶</a></h1>
+<h2 id="clone-the-repository">Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permanent link">¶</a></h2>
+<p>Using the console, navigate to the root directory in which your projects
+live and clone this project's repository:</p>
+<pre class="highlight"><code class="language-bash linenums">git clone git@github.com:cfpb/cfgov-refresh.git
+cd cfgov-refresh</code></pre>
+
+<p>You may also wish to fork the repository on GitHub and clone the resultant
+personal fork. This is advised if you are going to be doing development on
+<code>cfgov-refresh</code> and contributing to the project.</p>
+<p>There are two ways to install cfgov-refresh:</p>
+<ul>
+<li><a href="#stand-alone-installation">Stand-alone installation</a></li>
+<li><a href="#docker-compose-installation">Docker-compose installation</a></li>
+</ul>
+<h2 id="stand-alone-installation">Stand-alone installation<a class="headerlink" href="#stand-alone-installation" title="Permanent link">¶</a></h2>
+<p>These instructions are somewhat specific to developing on macOS,
+but if you're familiar with other Unix-based systems,
+it should be fairly easy to adapt them to your needs.</p>
+<h3 id="install-system-level-requirements">Install system-level requirements<a class="headerlink" href="#install-system-level-requirements" title="Permanent link">¶</a></h3>
+<h4 id="virtualenv-virtualenvwrapper-python-modules">virtualenv &amp; virtualenvwrapper Python modules<a class="headerlink" href="#virtualenv-virtualenvwrapper-python-modules" title="Permanent link">¶</a></h4>
+<p>Install <a href="https://virtualenv.pypa.io/en/latest/index.html">virtualenv</a>
+and <a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a>
+to be able to create a local environment for your server:</p>
+<pre class="highlight"><code class="language-bash linenums">pip install virtualenv virtualenvwrapper</code></pre>
+
+<h4 id="autoenv-module">Autoenv module<a class="headerlink" href="#autoenv-module" title="Permanent link">¶</a></h4>
+<p>This project uses a large number of environment variables.</p>
+<p>To automatically define environment variables and launch the virtualenv
+upon <code>cd</code>ing to the project folder,
+<a href="https://github.com/kennethreitz/autoenv#install">install Autoenv</a>.
+We recommend using <a href="https://brew.sh">Homebrew</a>:</p>
+<pre class="highlight"><code class="language-bash linenums">brew install autoenv</code></pre>
+
+<p>After installation, Homebrew will output instructions similar to:</p>
+<pre class="highlight"><code class="language-bash linenums">To finish the installation, source activate.sh in your shell:
+  source /Users/[YOUR USERNAME]/homebrew/opt/autoenv/activate.sh</code></pre>
+
+<p>Run that now for your initial setup.
+Any time you run the project you’ll need to run that last line, so
+if you’ll be working with the project consistently,
+we suggest adding it to your Bash profile by running:</p>
+<pre class="highlight"><code class="language-bash linenums">echo 'source /Users/[YOUR USERNAME]/homebrew/opt/autoenv/activate.sh' &gt;&gt; ~/.bash_profile</code></pre>
+
+<p>If you need to find this info again later, you can run:</p>
+<pre class="highlight"><code class="language-bash linenums">brew info autoenv</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use Zsh you’ll need to use
+<a href="https://github.com/Tarrasch/zsh-autoenv">zsh-autoenv</a>,
+but we can’t provide support for issues that may arise.</p>
+</div>
+<h4 id="front-end-dependencies">Front-end dependencies<a class="headerlink" href="#front-end-dependencies" title="Permanent link">¶</a></h4>
+<p>The cfgov-refresh front end currently uses the following frameworks / tools:</p>
+<ul>
+<li><a href="https://gulpjs.com">Gulp</a>: task management for pulling in assets,
+  linting and concatenating code, etc.</li>
+<li><a href="http://lesscss.org">Less</a>: CSS pre-processor.</li>
+<li><a href="https://cfpb.github.io/capital-framework/getting-started">Capital Framework</a>:
+  User interface pattern-library produced by the CFPB.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you’re new to Capital Framework, we encourage you to
+<a href="https://cfpb.github.io/capital-framework/getting-started">start here</a>.</p>
+</div>
+<ol>
+<li>
+<p>Install <a href="https://nodejs.org">Node.js</a> however you’d like.
+   We recommend using <a href="https://github.com/creationix/nvm">nvm</a>, though.</p>
+</li>
+<li>
+<p>Install <a href="https://gulpjs.com">Gulp</a>:</p>
+</li>
+</ol>
+<pre class="highlight"><code class="language-bash linenums">npm install -g gulp</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This project requires Node.js v8 or higher, and npm v5 or higher.</p>
+</div>
+<h4 id="webfonts">Webfonts<a class="headerlink" href="#webfonts" title="Permanent link">¶</a></h4>
+<p>The site uses a proprietary licensed font, Avenir.
+If you want to pull this from a content delivery network (CDN),
+you can set the
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/css/main.less#L30"><code>@use-font-cdn</code></a>
+to <code>true</code> and rebuild the assets with <code>gulp build</code>.
+If you want to install self-hosted fonts locally, you can place the font files
+in <code>static.in/cfgov-fonts/fonts/</code> and restart the local web server.
+If you are a CFPB employee, you can perform this step with:</p>
+<p><pre class="highlight"><code class="linenums">cd static.in/ &amp;&amp; git clone https://[GHE]/CFGOV/cfgov-fonts/</code></pre>
+Where <code>[GHE]</code> is our GitHub Enterprise URL.</p>
+<h4 id="set-up-your-environment">Set up your environment<a class="headerlink" href="#set-up-your-environment" title="Permanent link">¶</a></h4>
+<p>The Django app relies on environment variables defined in a <code>.env</code> file. If this
+is your first time setting up the project, copy <code>.env_SAMPLE</code> to <code>.env</code> and then
+<code>source</code> that file:</p>
+<pre class="highlight"><code class="language-bash linenums">cp -a .env_SAMPLE .env
+source .env</code></pre>
+
+<p>Each time you start a new session for working on this project, you'll need to
+get those environment variables and get your virtualenv running again.</p>
+<p>If you setup Autoenv earlier, this will happen for you automatically when you
+<code>cd</code> into the project directory.</p>
+<p>If you prefer not to use Autoenv, just be sure to <code>source .env</code> every time
+you start a new session of work on the project.</p>
+<h4 id="optional-but-recommended-use-postgres-instead-of-sqlite">Optional (but recommended): use Postgres instead of SQLite<a class="headerlink" href="#optional-but-recommended-use-postgres-instead-of-sqlite" title="Permanent link">¶</a></h4>
+<p>We default to SQLite for the Django backend to make it easy to get started, but
+Postgres is our preferred database, and we recommend you consider installing it
+if you are comfortable doing this.</p>
+<p>If you're on a Mac and use Homebrew, you can easily install Postgres:</p>
+<pre class="highlight"><code class="language-bash linenums">brew install postgresql</code></pre>
+
+<p>Once it's installed, you can configure it to run as a service:</p>
+<pre class="highlight"><code class="language-bash linenums">brew services start postgresql</code></pre>
+
+<p>Then create the database and associated user:</p>
+<pre class="highlight"><code class="language-bash linenums">dropdb --if-exists cfgov &amp;&amp; dropuser --if-exists cfpb
+createuser cfpb &amp;&amp; createdb -O cfpb cfgov</code></pre>
+
+<p>You'll also need to update your <code>.env</code> file to comment out the line that
+specifies SQLite as the db:</p>
+<pre class="highlight"><code class="language-bash linenums"># export DATABASE_URL=sqlite:///db.sqlite3</code></pre>
+
+<p>And then uncomment the line that tells Django to use Postgres:</p>
+<pre class="highlight"><code class="language-bash linenums">export DATABASE_URL=postgres://cfpb@localhost/cfgov</code></pre>
+
+<h4 id="run-the-setup-script">Run the setup script<a class="headerlink" href="#run-the-setup-script" title="Permanent link">¶</a></h4>
+<p>At this point, your machine should have everything it needs to automate the
+rest of the setup process.</p>
+<p>If you haven't cloned this repo yet, clone it to a local folder.
+Because related projects will need to be installed as siblings to this project,
+we recommend putting them all in their own folder, e.g., <code>~/Projects/cf.gov</code>.</p>
+<p>Once cloned, from the project root (<code>~/Projects/cf.gov/cfgov-refresh/</code>),
+run this command to complete the setup process:</p>
+<pre class="highlight"><code class="language-bash linenums">./setup.sh</code></pre>
+
+<p>This will take several minutes, going through the steps in these scripts:</p>
+<ol>
+<li><code>frontend.sh</code></li>
+<li><code>backend.sh</code></li>
+</ol>
+<p>Once complete, you should have a fully functioning local environment,
+ready for you to develop against!</p>
+<p>There are some <a href="#optional-steps">optional setup steps</a>
+that you may want to perform before continuing.</p>
+<p>Want to know more about what the setup scripts are doing?
+<a href="#curious-about-what-the-setup-scripts-are-doing">Read the detailed rundown.</a></p>
+<p>Get any errors? <a href="#troubleshooting">See our troubleshooting tips.</a></p>
+<p><strong>Continue following the <a href="../usage">usage instructions</a>.</strong></p>
+<h2 id="docker-compose-installation">Docker-compose installation<a class="headerlink" href="#docker-compose-installation" title="Permanent link">¶</a></h2>
+<h3 id="tools-we-use-for-developing-with-docker">Tools we use for developing with Docker<a class="headerlink" href="#tools-we-use-for-developing-with-docker" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Docker</strong>: You may not need to interact directly with Docker, but you
+  should know that it's a client/server application for managing <em>containers</em>
+  (a way of running software in an isolated environment) and <em>images</em> (a
+  snapshot of all of the files neccessary to run a container).</li>
+<li><strong>Docker Compose</strong>: Compose allows you to configure and run a collection of
+  connected containers (like a web application and its database).</li>
+<li><strong>Docker Machine</strong>: In environments where Docker Engine is not available,
+  Docker Machine can be used to create and manage Docker hosts on virtual
+  machines. For more information on Docker Machine, see the 'How do I use
+  Docker Machine' section in the <a href="../usage#usage-docker">usage guide</a>.</li>
+</ul>
+<h3 id="1-setup-your-docker-environment">1. Setup your Docker environment<a class="headerlink" href="#1-setup-your-docker-environment" title="Permanent link">¶</a></h3>
+<p>If you have never installed Docker before, follow the instructions
+<a href="https://docs.docker.com/engine/installation/">here</a> or from your operating
+system vendor. If you are on a mac and are unable to install the official
+"Docker for Mac" package, the quickstart instructions below might help.</p>
+<p>If you are on a machine that is already set up to run Linux docker containers,
+please install <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.
+If <code>docker-compose ps</code> runs without error, you can can go to step 2.</p>
+<h4 id="copy-the-python_env_sample-file-over">Copy the <code>.python_env_SAMPLE</code> file over<a class="headerlink" href="#copy-the-python_env_sample-file-over" title="Permanent link">¶</a></h4>
+<p>The Docker Compose setup (see <code>docker-compose.yml</code>) provides the environment
+variables defined in <code>.python_env</code> to the container running the Django app. If
+this is your first time setting up the project, copy <code>.python_env_SAMPLE</code> to
+<code>.python_env</code>:</p>
+<pre class="highlight"><code class="language-bash linenums">cp -a .python_env_SAMPLE .python_env</code></pre>
+
+<h4 id="mac-homebrew-docker-machine-virtualbox-quickstart">Mac + Homebrew + Docker Machine + VirtualBox quickstart<a class="headerlink" href="#mac-homebrew-docker-machine-virtualbox-quickstart" title="Permanent link">¶</a></h4>
+<p><strong>Starting assumptions</strong>: You already have Homebrew and VirtualBox installed.
+You can run <code>brew search docker</code> without error.</p>
+<p>Install Docker, Docker Machine, and Docker Compose:
+<code>brew install docker docker-compose docker-machine</code></p>
+<p>Then run <code>source mac-virtualbox-init.sh</code> to initialize your Docker Machine
+setup.</p>
+<p>At this point, <code>docker-compose ps</code> should run without error.</p>
+<h3 id="2-setup-your-frontend-environment">2. Setup your frontend environment<a class="headerlink" href="#2-setup-your-frontend-environment" title="Permanent link">¶</a></h3>
+<p>Refer to the <a href="#front-end-dependencies">front-end dependencies</a> described above
+in the <a href="#stand-alone-installation">standalone installation instructions</a>.</p>
+<h3 id="3-run-setup">3. Run setup<a class="headerlink" href="#3-run-setup" title="Permanent link">¶</a></h3>
+<p><code>./setup.sh docker</code></p>
+<p>This will install and build the frontend and set up the docker environment.</p>
+<h3 id="4-run-docker-compose-for-the-first-time">4. Run Docker Compose for the first time<a class="headerlink" href="#4-run-docker-compose-for-the-first-time" title="Permanent link">¶</a></h3>
+<p><code>docker-compose up</code></p>
+<p>This will download and/or build images, and then start the containers, as
+described in the docker-compose.yml file. This will take a few minutes, or
+longer if you are on a slow internet connection.</p>
+<p>When it's all done, you should be able to load <a href="http://localhost:8000">http://localhost:8000</a> in your
+browser, and see a database error.</p>
+<h3 id="3-setup-the-database">3. Setup the database<a class="headerlink" href="#3-setup-the-database" title="Permanent link">¶</a></h3>
+<p>Run <code>./shell.sh</code>. This opens a bash shell inside your Python container.</p>
+<p>You can either <a href="#load-initial-data-into-database">load initial data</a> per the
+instructions below, or load a database dump.</p>
+<p>You could save some time and effort later (if you have access to the CFPB
+network), by configuring a URL for database dumps in the <code>.python_env</code> file.</p>
+<pre class="highlight"><code class="linenums">CFGOV_PROD_DB_LOCATION=http://(rest of the URL)</code></pre>
+
+<p>You can get that URL at
+[GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3</p>
+<p>With <code>CFGOV_PROD_DB_LOCATION</code> in <code>.python_env</code> you should be able to run:</p>
+<p><code>./refresh-data.sh</code></p>
+<p>Otherwise, <a href="#load-a-database-dump">the instructions to load a database dump</a>
+below should be enough to get you started.</p>
+<p>Once you have a database loaded, you should have a functioning copy of site
+working at <a href="http://localhost:8000"><a href="http://localhost:8000">http://localhost:8000</a></a></p>
+<h3 id="4-next-steps">4. Next Steps<a class="headerlink" href="#4-next-steps" title="Permanent link">¶</a></h3>
+<p>See the Docker section of the <a href="../usage">usage</a> page to continue after that.</p>
+<h2 id="optional-steps">Optional steps<a class="headerlink" href="#optional-steps" title="Permanent link">¶</a></h2>
+<h3 id="load-initial-data-into-database">Load initial data into database<a class="headerlink" href="#load-initial-data-into-database" title="Permanent link">¶</a></h3>
+<p>The <code>initial-data.sh</code> script can be used to initialize a new database to make
+it easy to get started working on Wagtail. This script first ensures that all
+migrations are applied to the database, and then does the following:</p>
+<ul>
+<li>Creates an <code>admin</code> superuser with password <code>admin</code>.</li>
+<li>If it doesn't already exist, creates a new Wagtail home page named <code>CFGOV</code>,
+with a slug of <code>cfgov</code>.</li>
+<li>Updates the default Wagtail site to use the port defined by the
+<code>DJANGO_HTTP_PORT</code> environment variable, if defined; otherwise this port is
+set to 80.</li>
+<li>If it doesn't already exist, creates a new
+<a href="https://github.com/cfpb/wagtail-sharing">wagtail-sharing</a> <code>SharingSite</code> with
+a hostname and port defined by the <code>DJANGO_STAGING_HOSTNAME</code> and
+<code>DJANGO_HTTP_PORT</code> environment variables.</li>
+</ul>
+<h3 id="load-a-database-dump">Load a database dump<a class="headerlink" href="#load-a-database-dump" title="Permanent link">¶</a></h3>
+<p>If you're installing this fresh, the initial data you receive will not be
+as extensive as you'd probably like it to be.</p>
+<p>You can get a database dump by:</p>
+<ol>
+<li>Going to [GHE]/CFGOV/platform/wiki/Database-downloads</li>
+<li>Selecting one of the extractions and downloading the
+   <code>production_django.sql.gz</code> file</li>
+<li>Run:</li>
+</ol>
+<pre class="highlight"><code class="language-bash linenums">./refresh-data.sh /path/to/dump.sql.gz</code></pre>
+
+<p>The <code>refresh-data.sh</code> script will apply the same changes as the
+<code>initial-data.sh</code> script described above (including setting up the <code>admin</code>
+superuser), but will not apply migrations.</p>
+<p>To apply any unapplied migrations to a database created from a dump, run:</p>
+<pre class="highlight"><code class="language-bash linenums">python cfgov/manage.py migrate</code></pre>
+
+<h3 id="set-variables-for-working-with-the-govdelivery-api">Set variables for working with the GovDelivery API<a class="headerlink" href="#set-variables-for-working-with-the-govdelivery-api" title="Permanent link">¶</a></h3>
+<p>Uncomment and set the GovDelivery environment variables in your <code>.env</code> file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GovDelivery is a third-party web service that powers our emails.
+The API is used by subscribe forms on our website.
+Users may decide to swap this tool out for another third-party service.</p>
+</div>
+<h2 id="curious-about-what-the-setup-scripts-are-doing">Curious about what the setup scripts are doing?<a class="headerlink" href="#curious-about-what-the-setup-scripts-are-doing" title="Permanent link">¶</a></h2>
+<p>Here's a rundown of each of the scripts called by <code>setup.sh</code> and what they do.</p>
+<h3 id="1-frontendsh">1. <code>frontend.sh</code><a class="headerlink" href="#1-frontendsh" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Initialize project dependency directories</strong> (<code>init</code>)</li>
+</ol>
+<p>This script first checks for an argument passed from the command line
+   that can trigger different options for different environments.
+   Since you ran it with no arguments, it will set up the dev environment.</p>
+<p>It then creates a checksum for <code>package-lock.json</code> (if it exists) and
+   <code>package.json</code>.
+   This will be used later to determine if dependencies need to be installed.</p>
+<p>It will then set some env vars for the Node dependency directories.
+1. <strong>Clean and install project dependencies</strong> (<code>clean_and_install</code>)</p>
+<p>The script will now compare the checksums to see if it needs to install
+   dependencies, or if they are already up-to-date.</p>
+<p>If the checksums do not match, the script will empty out all installed
+   dependencies (<code>clean</code>) so the new installation can start fresh,
+   then install the latest requested dependencies (<code>install</code>).</p>
+<p>The <code>devDependencies</code> from <code>package.json</code> are not installed
+   if the environment is production, and if it's the dev or test environment,
+   it checks to see if Protractor is globally installed.</p>
+<p>Finally, it creates a new checksum for future comparisons.
+1. <strong>Run tasks to build the project for distribution</strong> (<code>build</code>)</p>
+<p>Finally, the script runs <code>gulp build</code> to rebuild the front-end assets.
+   It no longer cleans first, because the gulp-changed plugin prevents
+   rebuilding assets that haven't changed since the last build.</p>
+<p>If this is the production environment, it also triggers style and script
+   builds for <code>ondemand</code> and <code>nemo</code>, which aren't part of a standard
+   <code>gulp build</code>.</p>
+<h3 id="2-backendsh">2. <code>backend.sh</code><a class="headerlink" href="#2-backendsh" title="Permanent link">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>backend.sh</code> is not used for our Docker setup.</p>
+</div>
+<ol>
+<li><strong>Confirm environment</strong> (<code>init</code>)</li>
+</ol>
+<p>This script first checks for an argument passed from the command line
+   that can trigger different options for different environments.
+   Since you ran it with no arguments, it will set up the dev environment.</p>
+<p>It will then run a script to ensure that you're in a virtualenv.
+   If not, the script will end, to prevent you from accidentally installing
+   your Python dependencies globally.</p>
+<ol>
+<li><strong>Install project dependencies</strong> (<code>install</code>)</li>
+</ol>
+<p>Python dependencies are installed into the virtualenv via pip.
+   Dependencies vary slightly depending on whether we're in dev, test, or prod.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<p>Here are some common issues and how you can fix them:</p>
+<h3 id="errors-referencing-south-or-other-python-errors">Errors referencing South, or other Python errors:<a class="headerlink" href="#errors-referencing-south-or-other-python-errors" title="Permanent link">¶</a></h3>
+<p>Since moving to Django 1.8, we use Django's built-in migration engine,
+and we no longer use South.
+If you're getting South errors, you probably have it installed globally.
+To solve this, from outside the virtual environment, run <code>pip uninstall south</code>.</p>
+<p>If you're getting other kinds of Python errors (for example, when running tox),
+you may even want to go as far as uninstalling all globally-installed
+Python packages: <code>pip freeze | grep -v "^-e" | xargs pip uninstall -y</code>.
+After doing that, you'll need to reinstall virtualenv:
+<code>pip install virtualenv virtualenvwrapper</code>.</p>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="wrap">
+                This project is maintained by <a href="https://cfpb.github.io">The Consumer Financial Protection Bureau</a>.
+
+                <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

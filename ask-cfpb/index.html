@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <title>Ask CFPB - cfgov-refresh</title>
+    
+    
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    
+
+    <style type="text/css">
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a:focus,
+        .sidebar-nav a:active,
+        .sidebar-nav a.sidebar-nav-active {
+            border-left-color: #2CB34A;
+        }
+        header {
+            border-bottom-color: #2CB34A;
+        }
+        
+        
+
+        
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body>
+
+    <div class="container">
+        <header role="banner">
+            <div class="wrap">
+                
+                <img class="logo" src="https://cfpb.github.io/img/logo_210.png" alt="Consumer Financial Protection Bureau">
+                
+                <h1 class="site-title"><a class="title-link" href="../">cfgov-refresh</a></h1>
+            </div>
+        </header>
+
+        <div class="wrap content">
+            <aside>
+                <nav class="sidebar-nav" role="navigation">
+                    <ul>
+                        
+                        <li>
+                            
+                            <a href=".." class="">Introduction</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../installation/" class="">Installation</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../usage/" class="">Usage</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Building and Deploying for cf.gov</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../new-projects/" class="">New projects</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../branching-merging/" class="">Branching and merging</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../feature-flags/" class="">Feature flags</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Back-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../wagtail-migrations/" class="">Wagtail and Django migrations</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../django-to-wagtail/" class="">Wagtail Pages vs Django views</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../forms-in-wagtail/" class="">Forms in Wagtail page context</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-be/" class="">Testing</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../translation/" class="">Translation</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../caching/" class="">Caching</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Front-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../atomic-structure/" class="">Atomic structure and design</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-fe/" class="">Testing</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../development-tips/" class="">Development tips</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>APIs</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="./" class="sidebar-nav-active">Ask CFPB</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../consumer-complaint-database/" class="">Consumer complaints</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../hmda/" class="">HMDA data</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main" class="main-content" role="main">
+                <h1 id="ask-cfpb-api">Ask CFPB API<a class="headerlink" href="#ask-cfpb-api" title="Permanent link">¶</a></h1>
+<p>This API provides search access to the English and Spanish content behind <a href="https://www.consumerfinance.gov/ask-cfpb/">Ask CFPB</a> and <a href="https://www.consumerfinance.gov/es/obtener-respuestas/">Obtener respuestas</a>.</p>
+<p>The financial topics covered include:</p>
+<ul>
+<li>Auto loans</li>
+<li>Bank accounts and services</li>
+<li>Credit cards</li>
+<li>Credit reports and scores</li>
+<li>Debt collection</li>
+<li>Families and money</li>
+<li>Money transfers</li>
+<li>Mortgages</li>
+<li>Payday loans</li>
+<li>Prepaid cards</li>
+<li>Student loans</li>
+</ul>
+<h2 id="usage"><code>Usage</code><a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
+<p>The API is a read-only resource that delivers search results in <a href="https://www.json.org/">json</a> format.</p>
+<p>Requests follow this pattern:</p>
+<ul>
+<li><code>https://www.consumerfinance.gov/ask-cfpb/search/json/?q=[SEARCH TERMS]</code></li>
+</ul>
+<p>The json response will includes a list of results, each with a question, an answer, and a URL for the related CFPB page.
+If no results are found, the "suggestion" field will offer a more promising search term if one can be found.</p>
+<p>The payload for the search term "tuition" would look like this, but with more result entries:</p>
+<pre class="highlight"><code class="language-json linenums">{
+  query: &quot;tuition&quot;,
+  suggestion: null,
+  result_query: &quot;tuition&quot;,
+  results: [
+    {
+      url: &quot;https://www.consumerfinance.gov/ask-cfpb/what-is-a-tuition-payment-plan-en-563/&quot;,
+      text: &quot;Tuition payment plans, also called tuition installment plans, are short-term (12 months or less) payment plans that split your college bills into equal monthly payments. Tuition installment plans can be an alternative to student loans if you can afford to pay tuition, just not in a lump sum at the start of the semester or quarter. These payment plans do not generally charge interest, but they may have up-front fees. What is a tuition payment plan?&quot;,
+      question: &quot;What is a tuition payment plan?&quot;
+    }
+  ]
+}</code></pre>
+
+<h2 id="spanish-content">Spanish content<a class="headerlink" href="#spanish-content" title="Permanent link">¶</a></h2>
+<p>For questions and answers in Spanish, requests should follow this pattern:</p>
+<ul>
+<li><code>https://www.consumerfinance.gov/es/obtener-respuestas/buscar/json/?q=[SPANISH SEARCH TERMS]</code></li>
+</ul>
+<p>The payload for the Spanish search term "vehiculo" would look like this, but with more result entries:</p>
+<pre class="highlight"><code class="language-json linenums">{
+  query: &quot;vehiculo&quot;,
+  suggestion: null,
+  result_query: &quot;vehiculo&quot;,
+  results: [
+    {
+      url: &quot;https://www.consumerfinance.gov/es/obtener-respuestas/como-puedo-averiguar-el-significado-de-los-terminos-de-mi-contrato-de-leasing-es-2047/&quot;,
+      text: &quot; Bajo la Ley de Arrendamientos del Consumidor (CLA, por sus siglas en inglés), la persona o compañía de quien usted hace el leasing de un vehículo, conocida como el &quot;arrendador&quot;, deberá informar por escrito ciertos costos y plazos si el leasing es de más de cuatro meses y si cumple con otros requisitos. La mayoría de los arrendamientos de vehículos está sujeta a la CLA. Los siguientes materiales le pueden ayudar a entender los términos de su contrato de leasing. En el sitio web Comprenda cómo funciona la financiación de vehículos de la Comisión Federal de Comercio se ofrece la siguiente información en español: Antes de comprar un vehículo o hacer un leasing ¿Debería hacer un leasing para un vehículo? Glosario de términos específicos Más información en español de GobiernoUSA.gov: Consejos para comprar un auto usado: Arrendamiento con derecho a compra o “leasing”     Bajo la Ley de Arrendamientos del Consumidor (CLA, por sus siglas en ingles), la persona o compania de quien usted hace el leasing de un vehiculo, conocida como el &quot;arrendador&quot;, debera informar por escrito ciertos costos y plazos si el leasing es de mas de cuatro meses y si cumple con otros requisitos. La mayoria de los arrendamientos de vehiculos esta sujeta a la CLA. Los siguientes materiales le pueden ayudar a entender los terminos de su contrato de leasing. En el sitio web Comprenda como funciona la financiacion de vehiculos de la Comision Federal de Comercio se ofrece la siguiente informacion en espanol: Antes de comprar un vehiculo o hacer un leasing Deberia hacer un leasing para un vehiculo? Glosario de terminos especificos Mas informacion en espanol de GobiernoUSA.gov: Consejos para comprar un auto usado: Arrendamiento con derecho a compra o leasing ¿Cómo puedo averiguar el significado de los términos de mi contrato de leasing? Como puedo averiguar el significado de los terminos de mi contrato de leasing?&quot;,
+      question: &quot;¿Cómo puedo averiguar el significado de los términos de mi contrato de leasing?&quot;
+    }
+  ]
+}</code></pre>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="wrap">
+                This project is maintained by <a href="https://cfpb.github.io">The Consumer Financial Protection Bureau</a>.
+
+                <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

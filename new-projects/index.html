@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <title>New projects - cfgov-refresh</title>
+    
+    
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    
+
+    <style type="text/css">
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a:focus,
+        .sidebar-nav a:active,
+        .sidebar-nav a.sidebar-nav-active {
+            border-left-color: #2CB34A;
+        }
+        header {
+            border-bottom-color: #2CB34A;
+        }
+        
+        
+
+        
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]--> 
+</head>
+
+<body>
+
+    <div class="container">
+        <header role="banner">
+            <div class="wrap">
+                
+                <img class="logo" src="https://cfpb.github.io/img/logo_210.png" alt="Consumer Financial Protection Bureau">
+                
+                <h1 class="site-title"><a class="title-link" href="../">cfgov-refresh</a></h1>
+            </div>
+        </header>
+
+        <div class="wrap content">
+            <aside>
+                <nav class="sidebar-nav" role="navigation">
+                    <ul>
+                        
+                        <li>
+                            
+                            <a href=".." class="">Introduction</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../installation/" class="">Installation</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../usage/" class="">Usage</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Building and Deploying for cf.gov</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="./" class="sidebar-nav-active">New projects</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../branching-merging/" class="">Branching and merging</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../feature-flags/" class="">Feature flags</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Back-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../wagtail-migrations/" class="">Wagtail and Django migrations</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../django-to-wagtail/" class="">Wagtail Pages vs Django views</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../forms-in-wagtail/" class="">Forms in Wagtail page context</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-be/" class="">Testing</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../translation/" class="">Translation</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../caching/" class="">Caching</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>Front-end guidelines</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../atomic-structure/" class="">Atomic structure and design</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../testing-fe/" class="">Testing</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="../development-tips/" class="">Development tips</a>
+
+                            
+                        </li>
+                        
+                        <li>
+                            
+                            <span>APIs</span>
+                            <ul class="secondary-nav">
+                                
+                                <li>
+                                    <a href="../ask-cfpb/" class="">Ask CFPB</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../consumer-complaint-database/" class="">Consumer complaints</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../hmda/" class="">HMDA data</a>
+                                </li>
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main" class="main-content" role="main">
+                <h1 id="setting-up-new-projects">Setting up new projects<a class="headerlink" href="#setting-up-new-projects" title="Permanent link">¶</a></h1>
+<p>All new code should start in the <a href="https://github.com/cfpb/cfgov-refresh">cfgov-refresh repository</a> unless the following is true:</p>
+<ul>
+<li>It does not require integration with CMS</li>
+<li>It is not expected to match the look and feel of the larger site (in fact "very different" is preferable to "almost the same")</li>
+<li>It must be pip installable like any other dependency. </li>
+</ul>
+<p>If a project meets this criteria, it is important to note that while the app itself is not necessarily tied to the cf.gov platform’s release cadence, its dependencies are. Such projects must also maintain it's own continuous integration pipeline and build server.</p>
+<p>For everything else, all code in the master branch is subject to a regular release cadence. Features that must go live on a certain date should be hidden by feature flags. Deployments should not be timed to coincide with announcements, press releases, speeches, or other events. The code should be already deployed and waiting for the feature to be turned on by a site manager. See “Feature Flags”.</p>
+<p>Rather than using “classic” Django views added to urls.py, when feasible an app should provide singleton Wagtail Page. See “Wagtail Pages”.</p>
+<h2 id="decision-matrix">Decision Matrix<a class="headerlink" href="#decision-matrix" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Content Pages</th>
+<th>APIs</th>
+<th>HTML5 API Clients ("single page apps")</th>
+<th>Traditional Web Apps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What to build</td>
+<td>Wagtail page types and templates</td>
+<td>Django app using Django REST Framework</td>
+<td>The API (if needed) and Wagtail page type and template to host the client</td>
+<td>A standard models / forms / views-based Django app. Often calling internal/external APIs</td>
+</tr>
+<tr>
+<td>Where does the code live</td>
+<td>cfgov-refresh</td>
+<td>cfgov-refresh (see exceptions)</td>
+<td>cfgov-refresh</td>
+<td>cfgov-refresh (see exceptions)</td>
+</tr>
+<tr>
+<td>How to start</td>
+<td>Extend our existing library of page types and molecules</td>
+<td>create a Django app in the "api's" namespace</td>
+<td>Build the API first, then create a wagtail page to host the tool</td>
+<td>Create a Django app at the top level of the repo. When feasible, consider providing Wagtail page-types instead of traditional views</td>
+</tr>
+<tr>
+<td>How to ship</td>
+<td>With release cycle</td>
+<td>With release cycle</td>
+<td>Consider getting APIs deployed well in advance</td>
+<td>with release cycle</td>
+</tr>
+<tr>
+<td>How to change</td>
+<td>See below</td>
+<td>With the release cycle</td>
+<td>Use <a href="http://www.django-rest-framework.org/api-guide/versioning/">API versioning</a> to avoid breaking existing code</td>
+<td>See below</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-handle-wagtail-changes">How to handle Wagtail changes<a class="headerlink" href="#how-to-handle-wagtail-changes" title="Permanent link">¶</a></h2>
+<h3 id="minor-visual-updates-to-a-page">Minor visual updates to a page<a class="headerlink" href="#minor-visual-updates-to-a-page" title="Permanent link">¶</a></h3>
+<ul>
+<li>make the changes as part of the release cadence</li>
+</ul>
+<h3 id="extensive-visual-changes-to-a-page">Extensive visual changes to a page<a class="headerlink" href="#extensive-visual-changes-to-a-page" title="Permanent link">¶</a></h3>
+<ul>
+<li>create a new template to reflect the new design</li>
+<li>edit the page type to allow for switching between old and new templates.</li>
+<li>on build and staging servers, feel free to switch back and forth between the designs</li>
+</ul>
+<h3 id="visual-and-minor-data-model-changes">Visual and minor data model changes<a class="headerlink" href="#visual-and-minor-data-model-changes" title="Permanent link">¶</a></h3>
+<ul>
+<li>make the data model changes in such a way that doesn't break the current template</li>
+<li>follow the "extensive visual changes to a page" guidance above to make the visual changes</li>
+</ul>
+<h3 id="major-data-model-changes">Major data model changes<a class="headerlink" href="#major-data-model-changes" title="Permanent link">¶</a></h3>
+<ul>
+<li>create a new page type, and the corresponding template</li>
+<li>Editors can then replace the old page with the new one, at will</li>
+</ul>
+<h2 id="front-end-resources">Front-end Resources<a class="headerlink" href="#front-end-resources" title="Permanent link">¶</a></h2>
+<p>Front-end resources should conform to <a href="https://github.com/cfpb/development">CFPB development standards</a> and should use atomic elements, organisms, existing structure and convention. When applicable, front-end components should be added to Capital Framework using atomic design principles.</p>
+<p>Projects that will be part of cfgov but live in their own repositories should:</p>
+<ul>
+<li>follow file-naming conventions for their front-end resources to avoid collisions (eg, project_name.js rather than main.js) OR follow resource folder structure conventions</li>
+<li>where possible, follow front-end guidelines/templates for new projects, including build processes and testing setup</li>
+<li>where necessary, follow a suggested approach for sharing resources (JavaScript/CSS) that are internal to cfgov-refresh</li>
+</ul>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="wrap">
+                This project is maintained by <a href="https://cfpb.github.io">The Consumer Financial Protection Bureau</a>.
+
+                <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
