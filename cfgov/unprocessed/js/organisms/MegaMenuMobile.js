@@ -101,6 +101,9 @@ function MegaMenuMobile( menus ) {
       _activeMenu.getTransition().halt();
     }
 
+    // Scroll to top of page so menu is always at the top.
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+
     if ( menu === rootMenu ) {
       // Root menu clicked.
 
@@ -115,9 +118,6 @@ function MegaMenuMobile( menus ) {
       }
     } else {
       // Submenu clicked.
-
-      // Scroll to top of page so menu is always at the top.
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
 
       const siblings = _menus.getAllAtLevel( level );
       let siblingMenu;
@@ -172,7 +172,6 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleExpandBegin( event ) {
-    window.scrollTo( 0, 0 );
     const menu = event.target;
     _handleToggle( menu );
     if ( menu === _rootMenu ) {
