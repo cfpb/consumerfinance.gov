@@ -153,7 +153,9 @@ class Subpart(models.Model):
 
 @python_2_unicode_compatible
 class Section(models.Model):
-    label = models.CharField(max_length=255, blank=True, verbose_name="Section")
+    label = models.CharField(max_length=255,
+                             blank=True,
+                             verbose_name="Section")
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)
     subpart = models.ForeignKey(Subpart, related_name="sections")

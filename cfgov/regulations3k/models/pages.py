@@ -254,7 +254,6 @@ def get_previous_section(section_list, current_index):
 def get_reg_nav_items(request, current_page):
     url_bits = [bit for bit in request.url.split('/') if bit]
     current_label = url_bits[-1]
-    current_part = current_page.regulation.part_number
     sections = current_page.sections
     subpart_dict = OrderedDict()
 
