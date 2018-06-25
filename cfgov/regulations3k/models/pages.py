@@ -184,8 +184,29 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             'get_secondary_nav_items': get_reg_nav_items,
             'regulation': self.regulation,
             'section': None,
+            'breadcrumb_items': self.get_breadcrumbs(request)
         })
         return context
+
+    def get_breadcrumbs(self, request, section=None):
+        landing_page = self.get_parent()
+        crumbs = [{
+            'href': landing_page.url,
+            'title': landing_page.title,
+        }]
+
+        if section is not None:
+            crumbs = crumbs + [
+                {
+                    'href': self.url,
+                    'title': str(section.subpart.version.part),
+                },
+                {
+                    'title': section.subpart.title,
+                },
+            ]
+
+        return crumbs
 
     @route(r'^(?P<section_label>[0-9A-Za-z-]+)/$', name="section")
     def section_page(self, request, section_label):
@@ -209,6 +230,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             'previous_section': get_previous_section(
                 self.sections, current_index),
             'section': section,
+            'breadcrumb_items': self.get_breadcrumbs(request, section),
         })
 
         return TemplateResponse(
