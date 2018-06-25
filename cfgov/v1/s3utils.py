@@ -1,11 +1,4 @@
-"""Custom S3 storage backends to store files in subfolders."""
-
 from django.conf import settings
-
-
-def MediaRootS3BotoStorage():
-    from storages.backends.s3boto import S3BotoStorage
-    return S3BotoStorage(location=settings.AWS_S3_ROOT)
 
 
 def get_s3_url_prefix(https):

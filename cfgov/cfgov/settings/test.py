@@ -49,3 +49,7 @@ STATICFILES_DIRS += [
 MOCK_STATICFILES_PATTERNS = {
     'icons/*.svg': 'icons/placeholder.svg',
 }
+
+AWS_STORAGE_BUCKET_NAME = 'test_s3_bucket'
+AWS_S3_ACCESS_KEY_ID = 'test_s3_access_key_id'
+AWS_S3_SECRET_ACCESS_KEY = 'test_s3_secret_access_key'

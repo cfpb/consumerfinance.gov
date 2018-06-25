@@ -100,14 +100,7 @@ class TestMetaImage(TestCase):
         self.check_template_meta_image_url(expected_root="http://localhost")
 
     @override_settings(
-        AWS_QUERYSTRING_AUTH=False,
-        AWS_S3_ACCESS_KEY_ID='test',
-        AWS_S3_CALLING_FORMAT='boto.s3.connection.OrdinaryCallingFormat',
-        AWS_S3_ROOT='root',
-        AWS_S3_SECRET_ACCESS_KEY='test',
-        AWS_S3_SECURE_URLS=True,
-        AWS_STORAGE_BUCKET_NAME='test_s3_bucket',
-        DEFAULT_FILE_STORAGE='v1.s3utils.MediaRootS3BotoStorage'
+        DEFAULT_FILE_STORAGE='storages.backends.s3boto.S3BotoStorage'
     )
     def test_template_image_image_url_s3(self):
         """Meta image links should work if using S3 storage."""
