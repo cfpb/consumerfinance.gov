@@ -469,14 +469,14 @@ def divine_interp_tag_use(element):
     """
     Interp elements wear many hats. This tries to guess the hat.
 
-    The HD might be announcing an intro, a subpart, a section,
+    HD elements might be announcing an intro, a subpart, a section,
     an appendix or appendices, or a paragraph reference.
 
     - H1 elements might denote intros, sections, or subparts
     - H2 elements might denote sections or paragraph references
     - H3 elements might denote sections or paragraph references
 
-    Paragraph references might also be contained in P or I tags.
+    P and I elements might denote paragraph references
 
     Returns one of these values:
     - intro
