@@ -48,7 +48,7 @@ class RegModelTests(DjangoTestCase):
         )
         self.subpart = mommy.make(
             Subpart,
-            label='Subpart-General',
+            label='Subpart General',
             title='General',
             subpart_type=Subpart.BODY,
             version=self.effective_version
@@ -62,14 +62,14 @@ class RegModelTests(DjangoTestCase):
         )
         self.subpart_interps = mommy.make(
             Subpart,
-            label='Official-Interpretations',
+            label='Official Interpretations',
             title='Supplement I to Part 1002',
             subpart_type=Subpart.INTERPRETATION,
             version=self.effective_version
         )
         self.subpart_orphan = mommy.make(
             Subpart,
-            label='General-Mistake',
+            label='General Mistake',
             title='An orphan subpart with no sections for testing',
             version=self.effective_version
         )
