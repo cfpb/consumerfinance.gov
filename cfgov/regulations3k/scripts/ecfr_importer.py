@@ -94,15 +94,15 @@ class PayLoad(object):
 
     def reset(self):
         self.interp_refs = {}
-        for each in [self.part, self.version, self.effective_date,
-                     self.subparts['appendix_subpart'],
-                     self.subparts['interp_subpart']]:
-            each = None
-        for each in [self.subparts['section_subparts'],
-                     self.sections,
-                     self.appendices,
-                     self.interpretations]:
-            each = []
+        for element in [self.part, self.version, self.effective_date,
+                        self.subparts['appendix_subpart'],
+                        self.subparts['interp_subpart']]:
+            element = None  # noqa: F841
+        for list_element in [self.subparts['section_subparts'],
+                             self.sections,
+                             self.appendices,
+                             self.interpretations]:
+            list_element = []  # noqa: F841
 
 
 PAYLOAD = PayLoad()
