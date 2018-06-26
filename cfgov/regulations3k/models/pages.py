@@ -4,6 +4,7 @@ import re
 from collections import OrderedDict
 from functools import partial
 
+from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
@@ -89,21 +90,20 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             payload['results'].append(hit_payload)
         self.results = payload
 
-        # if we want to paginate results:
-
-        # def get_context(self, request, **kwargs):
-        #     context = super(RegulationsSearchPage, self).get_context(
-        #         request, **kwargs)
-        #     context.update(**kwargs)
-        #     paginator = Paginator(payload['results'], 25)
-        #     page_number = validate_page_number(request, paginator)
-        #     paginated_page = paginator.page(page_number)
-        #     context['current_page'] = page_number
-        #     context['paginator'] = paginator
-        #     context['results'] = paginated_page
-        #     return context
-
         context = self.get_context(request)
+        num_results = validate_num_results(request)
+        order = validate_results_order(request)
+        paginator = Paginator(payload['results'], num_results)
+        page_number = validate_page_number(request, paginator)
+        paginated_page = paginator.page(page_number)
+        context.update({
+            'paginator': paginator,
+            'current_page': page_number,
+            'num_results': num_results,
+            'order': order,
+            'results': paginated_page,
+        })
+
         return TemplateResponse(
             request,
             self.get_template(request),
@@ -310,22 +310,47 @@ def get_reg_nav_items(request, current_page):
 
     return subpart_dict, False
 
-# if we paginate
+def validate_num_results(request):
+    """
+    A utility for parsing the requested number of results per page.
 
-# def validate_page_number(request, paginator):
-#     """
-#     A utility for parsing a pagination request.
+    This should catch an invalid number of results and always return
+    a valid number of results, defaulting to 25.
+    """
+    raw_results = request.GET.get('results', 25)
+    try:
+        num_results = int(raw_results)
+    except ValueError:
+        num_results = 25
+    return num_results
 
-#     This should catch invalid page numbers and always return
-#     a valid page number, defaulting to 1.
-#     """
-#     raw_page = request.GET.get('page', 1)
-#     try:
-#         page_number = int(raw_page)
-#     except ValueError:
-#         page_number = 1
-#     try:
-#         paginator.page(page_number)
-#     except InvalidPage:
-#         page_number = 1
-#     return page_number
+def validate_page_number(request, paginator):
+    """
+    A utility for parsing a pagination request.
+
+    This should catch invalid page numbers and always return
+    a valid page number, defaulting to 1.
+    """
+    raw_page = request.GET.get('page', 1)
+    try:
+        page_number = int(raw_page)
+    except ValueError:
+        page_number = 1
+    try:
+        paginator.page(page_number)
+    except InvalidPage:
+        page_number = 1
+    return page_number
+
+def validate_results_order(request):
+    """
+    A utility for parsing the requested order of results.
+    """
+    valid_orders = [
+        'relevance',
+        'regulation'
+    ]
+    order = request.GET.get('order')
+    if order not in valid_orders:
+        order = valid_orders[0]
+    return order
