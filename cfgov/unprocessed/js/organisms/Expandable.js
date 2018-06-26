@@ -300,7 +300,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function _setMaxHeight() {
     _calcHeight();
-    _content.style.height = _contentHeight + 'px';
+    // !important is added to override secondary-navigation !important rules
+    _content.style.setProperty( 'height', _contentHeight + 'px', 'important' );
   }
 
   /**

@@ -42,9 +42,9 @@
                   a-btn__disabled
                   m-pagination_btn-prev">
         {% endif %}
-            <span class="a-btn_icon__on-left
-                         cf-icon
-                         cf-icon-left"></span>
+            <span class="a-btn_icon a-btn_icon__on-left">
+                {{- svg_icon('left') -}}
+            </span>
             {{ prev_text }}
         </a>
         {%- if current_page < total_pages %}
@@ -59,9 +59,9 @@
                   m-pagination_btn-next">
         {% endif -%}
             {{ next_text }}
-            <span class="a-btn_icon__on-right
-                         cf-icon
-                         cf-icon-right"></span>
+            <span class="a-btn_icon a-btn_icon__on-right">
+                {{- svg_icon('right') -}}
+            </span>
         </a>
         <form class="m-pagination_form" action="{{ fragment_id }}">
             <label for="m-pagination_current-page-{{ index | string }}">

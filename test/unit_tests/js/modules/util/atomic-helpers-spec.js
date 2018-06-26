@@ -43,14 +43,14 @@ describe( 'atomic-helpers', () => {
     it( 'should return the correct HTMLElement when direct element is searched',
       () => {
         const dom = atomicHelpers.checkDom( componentDom, testClass );
-        expect( dom ).toEqual( componentDom );
+        expect( dom ).toStrictEqual( componentDom );
       }
     );
 
     it( 'should return the correct HTMLElement when parent element is searched',
       () => {
         const dom = atomicHelpers.checkDom( containerDom, testClass );
-        expect( dom ).toEqual( componentDom );
+        expect( dom ).toStrictEqual( componentDom );
       }
     );
   } );

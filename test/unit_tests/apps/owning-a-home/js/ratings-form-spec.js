@@ -51,10 +51,9 @@ const HTML_SNIPPET = `
                   </li>
                   <li class="content-l_col content-l_col-1-3">
                       <div class="rating-message message-column">
-                          <span class="cf-icon cf-icon-approved-round
-                                       rating-message_icon"></span>
-                          <span class="rating-message_text">Thank you
-                                       for your feedback!</span>
+                          <span class="rating-message_text">
+                              Thank you for your feedback!
+                          </span>
                       </div>
                   </li>
               </ul>

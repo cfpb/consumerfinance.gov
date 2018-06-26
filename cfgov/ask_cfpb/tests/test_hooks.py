@@ -26,7 +26,7 @@ class TestAskHooks(TestCase):
 
     def test_js_functions(self):
         self.assertIn("registerHalloPlugin('editHtmlButton')", editor_js())
-        self.assertIn("css/question_tips.css", editor_css())
+        self.assertIn("css/question-tips.css", editor_css())
         self.assertIn('aside', whitelister_element_rules().keys())
         self.assertIn('table', whitelister_element_rules().keys())
 

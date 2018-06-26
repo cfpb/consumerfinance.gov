@@ -317,27 +317,32 @@ class ContactPhone(blocks.StructBlock):
         label = 'Phone'
 
 
-class ImageInset(blocks.StructBlock):
+class ContentImage(blocks.StructBlock):
     image = atoms.ImageBasic()
-    image_position = blocks.ChoiceBlock(choices=[('right', 'right'),
-                                                 ('left', 'left')],
-                                        default='right')
-    is_image_decorative = blocks.BooleanBlock(required=False,
-                                              label='Image decorative')
-    image_width = blocks.ChoiceBlock(choices=[(170, '170px'),
-                                              (270, '270px')],
-                                     default=270,
-                                     label='Image Width',
-                                     help_text='Default is 270px.')
-    text = blocks.RichTextBlock(required=False)
-    is_bottom_rule = blocks.BooleanBlock(required=False,
-                                         default=True,
-                                         label='Bottom Rule')
+    image_width = blocks.ChoiceBlock(
+        choices=[('full', 'full'),
+                 (470, '470px'),
+                 (270, '270px'),
+                 (170, '170px')],
+        default='full',)
+    image_position = blocks.ChoiceBlock(
+        choices=[('right', 'right'),
+                 ('left', 'left')],
+        default='right',
+        help_text='Does not apply if the image is full-width',
+    )
+    text = blocks.RichTextBlock(required=False, label='Caption')
+    is_bottom_rule = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        label='Has bottom rule line',
+        help_text='Check to add a horizontal rule line to bottom of inset.'
+    )
 
     class Meta:
         icon = 'image'
-        template = '_includes/molecules/image-inset.html'
-        label = 'Image inset'
+        template = '_includes/molecules/content-image.html'
+        label = 'Image'
 
 
 class RelatedLinks(blocks.StructBlock):

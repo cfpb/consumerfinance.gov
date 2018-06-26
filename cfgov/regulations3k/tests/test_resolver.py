@@ -6,6 +6,7 @@ import datetime
 from django.test import TestCase, override_settings
 
 from model_mommy import mommy
+
 from regulations3k.models import (
     EffectiveVersion, Part, RegulationLandingPage, RegulationPage, Section,
     Subpart
@@ -111,7 +112,7 @@ class ReferenceResolutionTestCase(TestCase):
                          contents_resolver=contents_resolver)
         self.assertEqual(
             result,
-            '<p class="level-0" id="b">Securities credit.</p>'
+            '<p class="regdown-block level-0" id="b">Securities credit.</p>'
         )
 
     def test_get_url_resolver(self):

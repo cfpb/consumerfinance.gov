@@ -31,6 +31,7 @@ from v1 import blocks as v1_blocks, get_protected_url
 from v1.atomic_elements import molecules, organisms
 from v1.models.snippets import ReusableText
 from v1.util import ref
+from v1.util.util import validate_social_sharing_image
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -78,7 +79,8 @@ class CFGOVPage(Page):
         related_name='+',
         help_text=(
             'Optionally select a custom image to appear when users share this '
-            'page on social media websites. Minimum size: 1200w x 630h.'
+            'page on social media websites. Recommended size: 1200w x 630h. '
+            'Maximum size: 4096w x 4096h.'
         )
     )
 
@@ -125,6 +127,10 @@ class CFGOVPage(Page):
         ObjectList(sidefoot_panels, heading='Sidebar/Footer'),
         ObjectList(settings_panels, heading='Configuration'),
     ])
+
+    def clean(self):
+        super(CFGOVPage, self).clean()
+        validate_social_sharing_image(self.social_sharing_image)
 
     def get_authors(self):
         """ Returns a sorted list of authors. Default is alphabetical """

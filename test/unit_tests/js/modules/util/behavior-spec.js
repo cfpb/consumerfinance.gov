@@ -94,14 +94,14 @@ describe( 'behavior', () => {
         'when direct element is searched', () => {
       const dom = behavior.checkBehaviorDom( containerDom,
         'behavior_flyout-menu' );
-      expect( dom ).toEqual( containerDom );
+      expect( dom ).toStrictEqual( containerDom );
     } );
 
     it( 'should return the correct HTMLElement ' +
         'when child element is searched', () => {
       const dom = behavior.checkBehaviorDom( behaviorElmDom,
         'behavior_flyout-menu_content' );
-      expect( dom ).toEqual( behaviorElmDom );
+      expect( dom ).toStrictEqual( behaviorElmDom );
     } );
   } );
 

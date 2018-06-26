@@ -7,11 +7,13 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.utils.html import escape, format_html_join
 
+from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.rich_text import PageLinkHandler
 
+from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.util import util
 
 
@@ -62,15 +64,16 @@ def editor_js():
 @hooks.register('insert_editor_css')
 def editor_css():
     css_files = [
-        'css/general-enhancements.css',
-        'css/table-block.css',
         'css/bureau-structure.css',
+        'css/deprecated-blocks.css',
+        'css/general-enhancements.css',
         'css/heading-block.css',
         'css/info-unit-group.css',
+        'css/table-block.css',
     ]
     css_includes = format_html_join(
         '\n',
-        '<link rel="stylesheet" href="{0}{1}"><link>',
+        '<link rel="stylesheet" href="{0}{1}">',
         ((settings.STATIC_URL, filename) for filename in css_files)
     )
 
@@ -201,3 +204,18 @@ def serve_latest_draft_page(page, request, args, kwargs):
         response = latest_draft.serve(request, *args, **kwargs)
         response['Serving-Wagtail-Draft'] = '1'
         return response
+
+
+@hooks.register('before_serve_shared_page')
+def before_serve_shared_page(page, request, args, kwargs):
+    request.show_draft_megamenu = True
+
+
+class MegaMenuModelAdmin(ModelAdmin):
+    model = MegaMenuItem
+    menu_label = 'Mega Menu'
+    menu_icon = 'cog'
+    list_display = ('link_text', 'order')
+
+
+modeladmin_register(MegaMenuModelAdmin)

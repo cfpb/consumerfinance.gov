@@ -21,6 +21,13 @@ cfgov/static_built/*
 *.tar
 *.zip
 
+# Desired .zip files #
+######################
+
+!cfgov/agreements/tests/empty-folder-agreements.zip
+!cfgov/agreements/tests/UTF_agreements.zip
+
+
 # Logs and databases #
 ######################
 *.sql
@@ -34,7 +41,8 @@ cfgov/static_built/*
 ._*
 .Spotlight-V100
 .Trashes
-Icon
+Icon
+
 ehthumbs.db
 Thumbs.db
 
@@ -58,6 +66,10 @@ npm-debug.log
 __pycache__/
 *.eggs/
 *.egg/
+
+# pyenv #
+#########
+.python-version
 
 # Front-End #
 #############

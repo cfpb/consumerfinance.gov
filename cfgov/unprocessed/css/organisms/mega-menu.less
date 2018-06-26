@@ -196,6 +196,10 @@ body {
         &-overview {
             display: block;
             border-bottom: 1px solid @gray-40;
+
+            .u-link__disabled {
+                color: @gray !important;
+            }
         }
 
         &-link,
@@ -214,6 +218,11 @@ body {
     &_footer {
         border-top: 1px solid @gray-40;
         padding: @grid_gutter-width / 2 0;
+
+        a {
+            // Override "nav a" style in Capital Framework cf-core.
+            border-bottom-width: 1px;
+        }
     }
 
 
@@ -286,23 +295,26 @@ body {
         // Menu flyout.
         // All menus - Tablet/Mobile.
         &_content {
+            .u-drop-shadow-after();
+
             display: none;
             box-sizing: border-box;
             width: 100%;
 
+            background-color: @gray-5;
+            border-top: 1px solid @gray-40;
+            border-bottom: 1px solid @gray-40;
+
             .js & {
-                display: block;
                 position: absolute;
                 left: 0;
                 top: -1px;
                 z-index: 10;
             }
 
-            background-color: @gray-5;
-            border-top: 1px solid @gray-40;
-            border-bottom: 1px solid @gray-40;
-
-            .u-drop-shadow-after();
+            .js .u-is-animating & {
+                display: block;
+            }
 
             &[aria-expanded="true"] {
                 display: block;
@@ -616,6 +628,10 @@ body {
             }
 
             &-list {
+                .grid_column(3);
+            }
+
+            &-grid__three-col .o-mega-menu_content-2-list {
                 .grid_column(4);
             }
 
@@ -662,7 +678,7 @@ body {
         }
         // 2nd-level menu - Large desktop.
          &_content-2 {
-            &-grid {
+            &-grid__three-col {
                 .grid_column( 8 );
                 // TODO: Check if .grid_nested-col-group()
                 //       can be used here when implementing Featured Menu Content.

@@ -8,6 +8,7 @@ These features include:
 
 - Labeled paragraphs
 - Block references
+- Inline pseudo forms
 
 ## Labeled Paragraphs
 
@@ -39,6 +40,15 @@ Callbacks:
 - `render_block_reference(contents, url=None)`: render the contents of a block
   reference to HTML. The url to the reference may be give as a keyword argument
   if `url_resolver` is provided.
+
+## Pseudo Forms
+
+`Form field: __`
+`__Form Field`
+`inline__fields__
+
+Example print forms, where the `__` indicate a space for hand-written input.
+Can be any number of underscores between 2 and 50.
 """
 from __future__ import unicode_literals
 
@@ -47,6 +57,7 @@ import re
 from markdown import markdown, util
 from markdown.blockprocessors import BlockProcessor, ParagraphProcessor
 from markdown.extensions import Extension
+from markdown.inlinepatterns import DoubleTagPattern, Pattern, SimpleTagPattern
 
 
 # If we're on Python 3.6+ we have SHA3 built-in, otherwise use the back-ported
@@ -55,6 +66,21 @@ try:
     from hashlib import sha3_224
 except ImportError:
     from sha3 import sha3_224
+
+
+# **strong**
+STRONG_RE = r'(\*{2})(.+?)\2'
+
+# ***strongem*** or ***em*strong**
+EM_STRONG_RE = r'(\*)\2{2}(.+?)\2(.*?)\2{2}'
+
+# ***strong**em*
+STRONG_EM_RE = r'(\*)\2{2}(.+?)\2{2}(.*?)\2'
+
+# Form field: __
+# __Form Field
+# inline__fields__
+PSEUDO_FORM_RE = r'(?P<underscores>_{2,50})(?P<line_ending>\s*$)?'
 
 
 class RegulationsExtension(Extension):
@@ -72,13 +98,30 @@ class RegulationsExtension(Extension):
             'string.'
         ],
         'render_block_reference': [
-            lambda c, **kwargs: '<blockquote>{}</blockquote>'.format(c),
+            lambda c, **kwargs: '<blockquote>{}</blockquote>'.format(
+                regdown(c)),
             'Function that will render a block reference'
         ],
     }
 
     def extendMarkdown(self, md, md_globals):
         md.registerExtension(self)
+
+        # Add inline pseudo form pattern. Replace all inlinePatterns that
+        # include an underscore with patterns that do not include underscores.
+        md.inlinePatterns['em_strong'] = DoubleTagPattern(
+            EM_STRONG_RE, 'strong,em'
+        )
+        md.inlinePatterns['strong_em'] = DoubleTagPattern(
+            STRONG_EM_RE, 'em,strong'
+        )
+        md.inlinePatterns['strong'] = SimpleTagPattern(
+            STRONG_RE, 'strong'
+        )
+        md.inlinePatterns['pseudo-form'] = PseudoFormPattern(
+            PSEUDO_FORM_RE
+        )
+        del md.inlinePatterns['emphasis2']
 
         # Add block reference processor for `see(label)` syntax
         md.parser.blockprocessors.add(
@@ -102,6 +145,20 @@ class RegulationsExtension(Extension):
         del md.parser.blockprocessors['olist']
 
 
+class PseudoFormPattern(Pattern):
+    """ Return a <span class="pseudo-form"></span> element for matches of the
+    given pseudo-form pattern. """
+
+    def handleMatch(self, m):
+        el = util.etree.Element('span')
+        el.set('class', 'regdown-form')
+        if m.group('line_ending') is not None:
+            el.set('class', 'regdown-form_extend')
+            util.etree.SubElement(el, 'span')
+        el.text = m.group('underscores')
+        return el
+
+
 class LabeledParagraphProcessor(ParagraphProcessor):
     """ Process paragraph blocks, including those with labels.
     This processor entirely replaces the standard ParagraphProcessor in
@@ -122,19 +179,30 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             # the paragraph tag, label id, and initial text, then process the
             # rest of the blocks normally.
             label, text = match.group('label'), match.group('text')
-            p = util.etree.SubElement(parent, 'p')
-            p.set('id', label)
+            # Labeled paragraphs without text should use a div element
+            if text == '':
+                el = util.etree.SubElement(parent, 'div')
+            else:
+                el = util.etree.SubElement(parent, 'p')
+            el.set('id', label)
+
             # We use CSS classes to indent paragraph text. To get the correct
             # class, we count the number of dashes in the label to determine
             # how deeply nested the paragraph is. Inline interps have special
             # prefixes that are removed before counting the dashes.
             # e.g. 6-a-Interp-1 becomes -1 and gets a `level-1` class
             # e.g. 12-b-Interp-2-i becomes -2-i and gets a `level-2` class
-            label = re.sub('^\w+\-\w+\-interp', '', label, flags=re.IGNORECASE)
+            label = re.sub('^(\w+\-)+interp', '', label, flags=re.IGNORECASE)
+
+            # Appendices also have special prefixes that need to be stripped.
+            # e.g. A-1-a becomes a and gets a `level-0` class
+            # e.g. A-2-d-1 becomes d-1 and gets a `level-1` class
+            label = re.sub('^[A-Z]\d?\-\w+\-?', '', label)
             level = label.count('-')
-            class_name = 'level-{}'.format(level)
-            p.set('class', class_name)
-            p.text = text.lstrip()
+            class_name = 'regdown-block level-{}'.format(level)
+            el.set('class', class_name)
+
+            el.text = text.lstrip()
 
         elif block.strip():
             if self.parser.state.isstate('list'):
@@ -145,8 +213,11 @@ class LabeledParagraphProcessor(ParagraphProcessor):
                 # way it won't change unless the rest of this block changes.
                 text = block.lstrip()
                 label = sha3_224(text.encode('utf-8')).hexdigest()
+                class_name = 'regdown-block'
                 p = util.etree.SubElement(parent, 'p')
                 p.set('id', label)
+                p.set('class', class_name)
+
                 p.text = text
 
 
@@ -190,7 +261,7 @@ class BlockReferenceProcessor(BlockProcessor):
                 return
 
             rendered_contents = self.render_block_reference(
-                regdown(contents),
+                contents,
                 url=url
             )
 
@@ -210,6 +281,7 @@ def regdown(text, **kwargs):
     return markdown(
         text,
         extensions=[
+            'markdown.extensions.tables',
             RegulationsExtension(**kwargs)
         ],
         **kwargs

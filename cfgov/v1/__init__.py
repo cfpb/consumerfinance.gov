@@ -53,6 +53,7 @@ def strip_accents(value):
 def environment(**options):
     from v1.models import CFGOVPage
     from v1.templatetags.activity_feed import get_latest_activities
+    from v1.templatetags.mega_menu import get_menu_items
     from v1.util import ref
 
     options.setdefault('extensions', [])
@@ -82,6 +83,7 @@ def environment(**options):
         'unsigned_redirect': unsigned_redirect,
         'get_protected_url': get_protected_url,
         'get_latest_activities': get_latest_activities,
+        'get_menu_items': get_menu_items,
         'get_snippets': get_snippets,
         'localtime': template_localtime,
         'strip_accents': strip_accents,

@@ -26,8 +26,6 @@ from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from sheerlike.sites import SheerSite
-from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
@@ -35,9 +33,6 @@ from v1.views import (
     password_reset_confirm, welcome
 )
 from v1.views.documents import DocumentServeView
-
-
-oah = SheerSite('owning-a-home')
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -74,15 +69,9 @@ urlpatterns = [
             name='closing-disclosure'
     ),
     url(r'^owning-a-home/explore-rates/',
-        FlaggedTemplateView.as_view(
-            flag_name='OAH_EXPLORE_RATES',
-            template_name='owning-a-home/explore-rates/index.html',
-            fallback=SheerTemplateView.as_view(
-                template_engine='owning-a-home',
-                template_name='explore-rates/index.html'
-            )
-        ),
-        name='explore-rates'
+        TemplateView.as_view(
+            template_name='owning-a-home/explore-rates/index.html'),
+            name='explore-rates'
     ),
     url(r'^owning-a-home/loan-estimate/$',
         TemplateView.as_view(
@@ -92,14 +81,10 @@ urlpatterns = [
 
     # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
     # TODO: change to redirects after 2018 homebuying campaign.
-    flagged_url('OAH_JOURNEY', r'^owning-a-home/process/(?P<path>.*)$',
+    url(r'^owning-a-home/process/(?P<path>.*)$',
         lambda req, path: ServeView.as_view()(
             req, 'owning-a-home/{}'.format(path or 'prepare/')
         ),
-        fallback=lambda req, path: SheerTemplateView.as_view(
-            template_engine='owning-a-home',
-            template_name='process/{}/index.html'.format(path or 'prepare')
-        )(req)
     ),
     # END TODO
 
@@ -203,12 +188,6 @@ urlpatterns = [
             name='server_error')],
         namespace='reg_comment')),
 
-    # Testing reg comment form
-    url(r'^reg-comment-form-test/$',
-        SheerTemplateView.as_view(
-            template_name='regulation-comment/reg-comment-form-test.html'),
-        name='reg-comment-form-test'),
-
     url(r'^feed/$',
         RedirectView.as_view(url='/about-us/blog/feed/', permanent=True)),
     url(r'^feed/blog/$',
@@ -223,7 +202,7 @@ urlpatterns = [
 
     url(r'^transcripts/', include([
         url(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$',
-            SheerTemplateView.as_view(
+            TemplateView.as_view(
                 template_name='transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/index.html'),  # noqa: E501
                 name='how-to-apply-for-a-federal-job-with-the-cfpb'), ],
         namespace='transcripts')),
@@ -234,10 +213,7 @@ urlpatterns = [
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
         include('agreements.urls')),
-    url(r'^hud-api-replace/', include_if_app_enabled(
-        'hud_api_replace',
-        'hud_api_replace.urls',
-        namespace='hud_api_replace')),
+
     url(r'^consumer-tools/retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 

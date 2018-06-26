@@ -64,15 +64,13 @@ class Part(models.Model):
     class Meta:
         ordering = ['part_number']
 
-    # def get_parts_with_effective_version(self):
-    #     pass
-
     @cached_property
     def effective_version(self):
         """ Return the current effective version of the regulation.
         This selects based on effective_date being less than or equal to
-        the current date. """
+        the current date and version is not a draft. """
         effective_version = self.versions.filter(
+            draft=False,
             effective_date__lte=datetime.now()
         ).order_by(
             '-effective_date'
@@ -85,6 +83,8 @@ class EffectiveVersion(models.Model):
     authority = models.CharField(max_length=255, blank=True)
     source = models.CharField(max_length=255, blank=True)
     effective_date = models.DateField(blank=True, null=True)
+    acquired = models.DateField(blank=True, null=True)
+    draft = models.BooleanField(default=False)
     part = models.ForeignKey(Part, related_name="versions")
 
     panels = [
@@ -92,14 +92,16 @@ class EffectiveVersion(models.Model):
         FieldPanel('source'),
         FieldPanel('effective_date'),
         FieldPanel('part'),
+        FieldPanel('draft'),
+        FieldPanel('acquired'),
     ]
 
     def __str__(self):
-        return "{}, effective {}".format(
-            self.part, self.effective_date)
+        return "Effective on {}".format(self.effective_date)
 
     class Meta:
         ordering = ['effective_date']
+        default_related_name = 'version'
 
 
 @python_2_unicode_compatible
@@ -108,48 +110,45 @@ class Subpart(models.Model):
     title = models.CharField(max_length=255, blank=True)
     version = models.ForeignKey(EffectiveVersion, related_name="subparts")
 
+    BODY = 0000
+    APPENDIX = 1000
+    INTERPRETATION = 2000
+    SUBPART_TYPE_CHOICES = (
+        (BODY, 'Regulation Body'),
+        (APPENDIX, 'Appendix'),
+        (INTERPRETATION, 'Interpretation'),
+    )
+    subpart_type = models.IntegerField(
+        choices=SUBPART_TYPE_CHOICES,
+        default=BODY,
+    )
+
     panels = [
         FieldPanel('label'),
         FieldPanel('title'),
+        FieldPanel('subpart_type'),
         FieldPanel('version'),
     ]
 
     def __str__(self):
-        return "{} {}, effective {}".format(
-            self.label, self.title, self.version.effective_date)
+        return self.title
 
     @property
     def subpart_heading(self):
-        if 'ppend' in self.label:
-            return ''
-        if len(self.label.split('-')) > 1:
-            return ''
-        else:
-            return ''
+        """Keeping for now as possible hook into secondary nav"""
+        return ''
 
     @property
     def section_range(self):
-        if not self.sections:
+        if self.subpart_type != Subpart.BODY or not self.sections.exists():
             return ''
-        if 'ppend' in self.sections.first().label:
-            return ''
-        if 'Interp' in self.sections.first().label:
-            return ''
-        if 'Appendices' in self.sections.first().label:
-            return ''
-        if self.sections.first().section_number.isdigit():
-            sections = sorted(
-                self.sections.all(), key=lambda x: int(x.section_number))
-            return "{}–{}".format(
-                sections[0].numeric_label, sections[-1].numeric_label)
-        else:
-            sections = sorted(
-                self.sections.all(), key=lambda x: x.section_number)
-            return "{}–{}".format(
-                sections[0].label, sections[-1].label)
+
+        sections = self.sections.all()
+        return "{}–{}".format(
+            sections[0].numeric_label, sections.reverse()[0].numeric_label)
 
     class Meta:
-        ordering = ['label']
+        ordering = ['subpart_type', 'label']
 
 
 @python_2_unicode_compatible
@@ -158,6 +157,7 @@ class Section(models.Model):
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)
     subpart = models.ForeignKey(Subpart, related_name="sections")
+    sortable_label = models.CharField(max_length=255)
 
     panels = [
         FieldPanel('label'),
@@ -167,25 +167,33 @@ class Section(models.Model):
     ]
 
     def __str__(self):
-        return "{} {}".format(self.label, self.title)
+        return self.title
 
     class Meta:
-        ordering = ['label']
+        ordering = ['sortable_label']
+
+    def save(self, **kwargs):
+        self.sortable_label = '-'.join(sortable_label(self.label))
+        super(Section, self).save(**kwargs)
+
+    @cached_property
+    def part(self):
+        return self.subpart.version.part.part_number
+
+    @property
+    def section_number(self):
+        return self.label
 
     @property
     def numeric_label(self):
-        part, number = self.label.split('-')[:2]
-        if number.isdigit():
-            return '\xa7\xa0{}.{}'.format(part, number)
+        if self.label.isdigit():
+            return '\xa7\xa0{}.{}'.format(self.part, int(self.label))
         else:
             return ''
 
     @property
-    def section_number(self):
-        part, number = self.label.split('-')[:2]
-        return number
-
-    @property
     def title_content(self):
-        part, number = self.label.split('-')[:2]
-        return self.title.replace(self.numeric_label, '')
+        if self.numeric_label:
+            return self.title.replace(self.numeric_label, '').strip()
+        else:
+            return self.title

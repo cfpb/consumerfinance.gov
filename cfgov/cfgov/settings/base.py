@@ -88,7 +88,6 @@ OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
-    {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
      'complaintdatabase', 'complaint_common',)},
@@ -96,7 +95,7 @@ OPTIONAL_APPS = [
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
     {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
-    {'import': 'regulations3k', 'apps': ('regulations3k',)},
+    {'import': 'regulations3k', 'apps': ('regulations3k', 'treemodeladmin')},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
     {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
@@ -310,10 +309,6 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 
 STATIC_VERSION = ''
 
-# DJANGO HUD API
-DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
-# in seconds, 2592000 == 30 days. Google allows no more than a month of caching
-DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     'a/assets/hud/{format}s/{zipcode}.{format}'
@@ -449,13 +444,7 @@ LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
 LOGIN_REDIRECT_URL = '/login/welcome/'
 LOGIN_URL = "/login/"
 
-
-SHEER_SITES = {
-    'assets': V1_TEMPLATE_ROOT,
-    'owning-a-home':
-        Path(os.environ.get('OAH_SHEER_PATH') or
-             Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
-}
+SHEER_SITES = {}
 
 # The base URL for the API that we use to access layers and the regulation.
 API_BASE = os.environ.get('EREGS_API_BASE', '')
@@ -572,7 +561,8 @@ CSP_FRAME_SRC = (
     '*.doubleclick.net',
     'universal.iperceptions.com',
     'www.facebook.com',
-    'staticxx.facebook.com')
+    'staticxx.facebook.com',
+    'mediasite.yorkcast.com')
 
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = ("'self'", "data:", "fast.fonts.net", "fonts.google.com", "fonts.gstatic.com")
@@ -593,7 +583,7 @@ FLAGS = {
     # Ask CFPB search spelling correction support
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results.
-	'ASK_SEARCH_TYPOS': {},
+    'ASK_SEARCH_TYPOS': {},
 
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -605,7 +595,7 @@ FLAGS = {
     # When enabled, include a recruitment code comment in the base template.
     'CFPB_RECRUITING': {},
 
-    # When enabled, display a "techical issues" banner on /complaintdatabase
+    # When enabled, display a "technical issues" banner on /complaintdatabase.
     'CCDB_TECHNICAL_ISSUES': {},
 
     # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
@@ -629,12 +619,6 @@ FLAGS = {
     # To be enabled when mortgage-performance data visualizations go live
     'MORTGAGE_PERFORMANCE_RELEASE': {},
 
-    # To be enabled when owning-a-home/explore-rates is de-sheered.
-    'OAH_EXPLORE_RATES': {},
-
-    # To be enabled when journey pages are released in Wagtail.
-    'OAH_JOURNEY': {},
-
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
@@ -643,6 +627,9 @@ FLAGS = {
     # Email popups.
     'EMAIL_POPUP_OAH': {'boolean': True},
     'EMAIL_POPUP_DEBT': {'boolean': True},
+
+    # Wagtail menu
+    'WAGTAIL_MENU': {},
 
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': {},
@@ -679,7 +666,11 @@ FLAGS = {
 
     'REGULATIONS3K': {
         'boolean': DEPLOY_ENVIRONMENT == 'build'
-    }
+    },
+
+    'LEGACY_HUD_API': {
+        'boolean': DEPLOY_ENVIRONMENT == 'production',
+    },
 }
 
 
@@ -731,8 +722,8 @@ EMAIL_POPUP_URLS = {
 
 REGULATIONS_REFERENCE_MAPPING = [
     (
-        r'(?P<label>(?P<part>^[0-9]+)-(?P<section>[\w]+))-(?P<paragraph>[\w-]*-Interp)',
-        '{part}-Interp-{section}',
+        r'(?P<section>[\w]+)-(?P<paragraph>[\w-]*-Interp)',
+        'Interp-{section}',
         '{section}-{paragraph}'
     ),
 ]

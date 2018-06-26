@@ -49,14 +49,14 @@ describe( 'BreakpointHandler', () => {
   it( 'should allow responsive breakpoints as arguments', () => {
     args.breakpoint = 'bpXS';
     let breakpointHandler = new BreakpointHandler( args );
-    expect( breakpointHandler.breakpoint ).toEqual( 600 );
+    expect( breakpointHandler.breakpoint ).toStrictEqual( 600 );
     expect( breakpointHandler.type === 'max' ).toBe( true );
     expect( breakpointHandler.testBreakpoint( 300 ) ).toBe( true );
 
     args.breakpoint = 'bpSM';
     args.type = 'min';
     breakpointHandler = new BreakpointHandler( args );
-    expect( breakpointHandler.breakpoint ).toEqual( 601 );
+    expect( breakpointHandler.breakpoint ).toStrictEqual( 601 );
     expect( breakpointHandler.type === 'min' ).toBe( true );
     expect( breakpointHandler.testBreakpoint( 601 ) ).toBe( true );
   } );

@@ -25,13 +25,6 @@
             <div class="m-full-width-text">
                 {{ render_stream_child(block) | safe}}
             </div>
-        {% elif 'media' in block_type %}
-            <div class="m-full-width-media">
-                {% set media = image(block.value, 'original') %}
-                <img class="m-full-width-media_image"
-                     src="{{ media.url }}"
-                     alt="{{ image_alt_value(media) }}">
-            </div>
         {% elif block_type in ['quote', 'related_links']
            or 'cta' in block_type and block.value.is_inset %}
             <div class="m-inset

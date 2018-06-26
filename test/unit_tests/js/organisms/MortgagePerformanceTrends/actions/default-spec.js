@@ -20,7 +20,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to set a geo', () => {
     const action = actions.setGeo( 12345, 'Alabama', 'state' );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'SET_GEO',
       geo: {
         type: 'state',
@@ -32,14 +32,14 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to clear geos', () => {
     const action = actions.clearGeo();
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'CLEAR_GEO'
     } );
   } );
 
   it( 'should create actions to update charts', () => {
     let action = actions.updateChart( 12345, 'Alabama', 'state', false );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'UPDATE_CHART',
       geo: {
         type: 'state',
@@ -49,7 +49,7 @@ describe( 'Mortgage Performance default action creators', () => {
       includeComparison: false
     } );
     action = actions.updateChart( null, null, null, false );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'UPDATE_CHART',
       geo: {
         id: null,
@@ -61,7 +61,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to update the national comparison', () => {
     const action = actions.updateNational( false );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'UPDATE_CHART',
       includeComparison: false
     } );
@@ -69,7 +69,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to update the date', () => {
     const action = actions.updateDate( '2010-01' );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'UPDATE_DATE',
       date: '2010-01'
     } );
@@ -77,7 +77,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to request counties', () => {
     const action = actions.requestCounties();
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'REQUEST_COUNTIES',
       isLoadingCounties: true
     } );
@@ -85,7 +85,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to request metros', () => {
     const action = actions.requestMetros();
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'REQUEST_METROS',
       isLoadingMetros: true
     } );
@@ -93,7 +93,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to request non-metros', () => {
     const action = actions.requestNonMetros();
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'REQUEST_NON_METROS',
       isLoadingNonMetros: true
     } );
@@ -113,7 +113,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to set metros', () => {
     const action = actions.setMetros( [ { name: 'Akron, OH' } ] );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'SET_METROS',
       metros: [ { name: 'Akron, OH' } ]
     } );
@@ -121,7 +121,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to set non-metros', () => {
     const action = actions.setNonMetros( [ { name: 'Tampa, FL' } ] );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'SET_NON_METROS',
       nonMetros: [ { name: 'Tampa, FL' } ]
     } );
@@ -129,7 +129,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to set counties', () => {
     const action = actions.setCounties( [ { name: 'Acme County' } ] );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'SET_COUNTIES',
       counties: [ { name: 'Acme County' } ]
     } );
@@ -137,7 +137,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to start loading', () => {
     const action = actions.startLoading();
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'START_LOADING',
       isLoading: true
     } );
@@ -145,7 +145,7 @@ describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to stop loading', () => {
     const action = actions.stopLoading();
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'STOP_LOADING',
       isLoading: false
     } );
