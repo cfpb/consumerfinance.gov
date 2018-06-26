@@ -496,14 +496,15 @@ def divine_interp_tag_use(element):
         return 'appendix'
     if text.startswith('Appendices'):
         return 'appendices'
-    if re.match(r'\d{1,3}\([a-z]{1,2}\)', text):
+    if re.match(r'\d{1,3}\([a-z]{1,2}\)', text.replace(
+            'Paragraph', '', 1).strip()):
         return 'graph_id'
     return ''
 
 
 def parse_interp_graph_reference(element):
     """Extract and return a graph reference from an element"""
-    id_text = element.text.replace('Paragraph', '').strip()
+    id_text = element.text.replace('Paragraph', '', 1).strip()
     id_match = re.match(interp_reference_pattern, id_text)
     if id_match:
         tokens = [token.strip('()') for token in id_match.groups() if token]
