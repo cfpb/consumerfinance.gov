@@ -109,7 +109,7 @@ clean_and_install() {
 # Run tasks to build the project for distribution.
 build() {
   echo "Building project…"
-  gulp build
+  npm run gulp build
 }
 
 # Execute requested (or all) functions.
