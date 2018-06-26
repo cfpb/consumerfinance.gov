@@ -1,16 +1,39 @@
 import os.path
+import unittest
 import zipfile
 from cStringIO import StringIO
+from zipfile import ZipFile
 
 from django.core import management
+from django.core.management.base import CommandError
 from django.test import TestCase
 
 import mock
 from agreements.management.commands import util
+from agreements.management.commands.import_agreements import empty_folder_test
 from agreements.models import Issuer
 
 
 sample_zip = os.path.dirname(__file__) + '/sample-agreements.zip'
+empty_folder_zip = os.path.dirname(__file__) + '/empty-folder-agreements.zip'
+utf8_zip = os.path.dirname(__file__) + '/UTF_agreements.zip'
+
+
+class EmptyFolderTest(unittest.TestCase):
+
+    def test_empty_folder_test(self):
+        agreements_zip = ZipFile(empty_folder_zip)
+        all_pdfs = [name for name in agreements_zip.namelist()
+                    if name.upper().endswith('.PDF')]
+        blanks = empty_folder_test(agreements_zip, all_pdfs)
+        self.assertEqual(blanks, ['Blank Folder/'])
+
+    def test_import_agreements_raises_error(self):
+        with self.assertRaises(CommandError):
+            management.call_command(
+                'import_agreements',
+                '--path=' + empty_folder_zip,
+                verbosity=0)
 
 
 class TestDataLoad(TestCase):
@@ -18,9 +41,18 @@ class TestDataLoad(TestCase):
         management.call_command(
             'import_agreements',
             '--path=' + sample_zip,
+            '--windows',
             verbosity=0
         )
         self.assertEqual(Issuer.objects.all().count(), 2)
+
+    def test_import_no_s3_utf8(self):
+        management.call_command(
+            'import_agreements',
+            '--path=' + utf8_zip,
+            verbosity=0
+        )
+        self.assertEqual(Issuer.objects.all().count(), 1)
 
     @mock.patch.dict(os.environ, {'AGREEMENTS_S3_UPLOAD_ENABLED': 'yes'})
     @mock.patch('agreements.management.commands.' +
@@ -29,6 +61,7 @@ class TestDataLoad(TestCase):
         management.call_command(
             'import_agreements',
             '--path=' + sample_zip,
+            '--windows',
             verbosity=0
         )
 
@@ -45,6 +78,7 @@ class TestDataLoad(TestCase):
         management.call_command(
             'import_agreements',
             '--path=' + sample_zip,
+            '--windows',
             stdout=buf
         )
         self.assertIn('uploaded', buf.getvalue())
@@ -56,6 +90,7 @@ class TestManagementUtils(TestCase):
         management.call_command(
             'import_agreements',
             '--path=' + sample_zip,
+            '--windows',
             verbosity=0
         )
         issuer = util.get_issuer(u'Bankers\u2019 Bank of Kansas')
@@ -73,8 +108,8 @@ class TestManagementUtils(TestCase):
         agreement = util.save_agreement(
             agreements_zip,
             raw_path,
-            'windows-1252',
-            outfile=buf,
+            buf,
+            windows=True,
             upload=False)
 
         self.assertEqual(agreement.file_name, '1.pdf')

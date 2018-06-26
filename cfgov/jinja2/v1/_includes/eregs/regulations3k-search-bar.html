@@ -1,19 +1,29 @@
-{% import 'organisms/search-bar.html' as search_bar with context %}
+{% macro render(q='', hidden_fields) %}
 
-{% set default_label = 'Looking for a specific part, section, subsection or line of text? <span class="break">Search eRegulations.</span>' %}
-{% set default_classes = 'block__bg-branded block__flush-top block__flush-bottom' %}
-{% set default_position = 'full' %}
-
-{% macro render( position=default_position, label=default_label, additional_classes=default_classes, q='' ) %}
-
-{% set search_opts = {
-    'label': label,
-    'position': position,
-    'action': '/regulations/search',
-    'additional_classes': additional_classes,
-    'autocomplete': 'true',
-    'q': q,
-  } %}
-{{ search_bar.render( search_opts ) }}
+<form action="." data-js-hook="behavior_submit-search">
+    <label class="a-label a-label__heading" for="query">
+        Search term
+        <small class="a-label_helper a-label_helper__block">
+            Boolean operators (AND, OR, and NOT) are supported
+        </small>
+    </label>
+    <div class="o-form__input-w-btn">
+        {% for field in hidden_fields %}
+            {% for value in field.value.split(',') %}
+                <input type="hidden" name="{{ field.name }}" value="{{ value }}">
+            {% endfor %}
+        {% endfor %}
+        <div class="o-form__input-w-btn_input-container">
+            <div class="m-btn-inside-input input-contains-label">
+                <label for="query" class="input-contains-label_before input-contains-label_before__search">{{ svg_icon('search') }}</label>
+                <label for="query" class="input-contains-label_after input-contains-label_after__clear u-hidden">{{ svg_icon('search') }}</label>
+                <input id="query" name="q" type="text" title="Search terms" class="a-text-input" value="{{ q }}" placeholder="Search terms">
+            </div>
+        </div>
+        <div class="o-form__input-w-btn_btn-container">
+            <button class="a-btn">Search</button>
+        </div>
+    </div>
+</form>
 
 {% endmacro %}
