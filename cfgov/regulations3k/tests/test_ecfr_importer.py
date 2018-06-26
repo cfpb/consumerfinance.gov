@@ -90,9 +90,6 @@ class ImporterTestCase(DjangoTestCase):
             1,
         )
 
-    def test_parse_appendices_no_appendix(self):
-        self.assertIs(parse_appendices('', {}), None)
-
     def test_parse_appendix_elements(self):
         p_soup = bS(self.test_xml, 'lxml-xml')
         appendix = p_soup.find('DIV5').find('DIV9')
@@ -176,6 +173,52 @@ class ImporterTestCase(DjangoTestCase):
             None)
         self.assertEqual(Part.objects.filter(part_number='1002').count(), 0)
 
+    def test_interp_inferred_section_graph_parsing(self):
+        from regulations3k.scripts.ecfr_importer import PAYLOAD
+        PAYLOAD.reset()
+        self.assertEqual(PAYLOAD.interp_refs, {})
+        soup = bS(self.interp_xml, 'lxml-xml')
+        parts = soup.find_all('DIV5')
+        part_soup = [div for div in parts if div['N'] == '1030'][0]
+        part = parse_part(part_soup, '1030')
+        version = parse_version(part_soup, part)
+        interp_subpart = Subpart(
+            title="Supplement I to Part {}".format(part.part_number),
+            label="Official Interpretations",
+            version=version)
+        interp_subpart.save()
+        interp = [div for div
+                  in part_soup.find_all('DIV9')
+                  if div.find('HEAD').text.startswith('Supplement I')][0]
+        parse_interps(interp, part, interp_subpart)
+        self.assertEqual(PAYLOAD.interp_refs['1']['c'], 'see(1-c-Interp)')
+
+
+class AppendixCreationTestCase(DjangoTestCase):
+    """Checks that parse_appendices() creates objects as expected."""
+
+    fixtures = ['tree_limb.json']
+    xml_fixture = "{}/regulations3k/fixtures/graftest.xml".format(
+        settings.PROJECT_ROOT)
+    with open(xml_fixture, 'r') as f:
+        test_xml = f.read()
+
+    def test_parse_appendices_no_appendix(self):
+        self.assertIs(parse_appendices('', {}), None)
+
+    def test_parse_appendices_creation(self):
+        from regulations3k.scripts.ecfr_importer import PAYLOAD
+        PAYLOAD.reset()
+        self.assertEqual(len(PAYLOAD.appendices), 0)
+        test_part = Part.objects.first()
+        test_subpart = Subpart.objects.first()
+        PAYLOAD.subparts['appendix_subpart'] = test_subpart
+        PAYLOAD.interp_refs.update({'A': {'1': 'see(A-1-Interp)'}})
+        soup = bS(self.test_xml, 'lxml-xml')
+        test_appendices = [soup.find('DIV5').find('DIV9')]
+        parse_appendices(test_appendices, test_part)
+        self.assertEqual(len(PAYLOAD.appendices), 1)
+
 
 class ImporterRunTestCase(unittest.TestCase):
     """Tests for running the ecfr importer via commands."""
@@ -223,24 +266,28 @@ class ParagraphParsingTestCase(unittest.TestCase):
 
     def test_singleton_parsing_invalid_tag(self):
         graph = "A graf with (or) as a potential but invalid ID."
-        parsed_graph = parse_singleton_graph(graph, '1002-1')
+        parsed_graph = parse_singleton_graph(graph, '1')
         self.assertEqual(parsed_graph, "\n" + graph + "\n")
 
     def test_multi_id_paragraph_parsing(self):
         soup = bS(self.test_xml, 'lxml-xml')
         graph_soup = soup.find_all('P')
-        parsed_graphs = parse_section_paragraphs(graph_soup, '1002-1')
+        parsed_graphs = parse_section_paragraphs(graph_soup, '1')
         self.assertIn('**(a) Delivery of account disclosures**', parsed_graphs)
 
     def test_multi_id_paragraph_parsing_with_interp_reference(self):
         from regulations3k.scripts.ecfr_importer import PAYLOAD
-        PAYLOAD.interp_refs['1002-2'] = {'p-1-i': 'see(1002-2-p-1-i-Interp)'}
+        PAYLOAD.interp_refs.update({'2': {
+            'p': 'see(2-p-Interp)',
+            'p-1': 'see(2-p-1-Interp)',
+            'p-1-i': 'see(2-p-1-i-Interp)'}
+        })
         graph = (
             "<P>(p) <I>Empirically derived scoring systems</I> - "
             "(1) <I>Credit scoring systems</I> (i) Credit scoring systems "
             "evaluate an applicant's creditworthiness mechanically.\n</P>")
-        result = parse_multi_id_graph(graph, ['p', '1', 'i'], '1002-2')
-        self.assertIn('see(1002-2-p-1-i-Interp)', result)
+        result = parse_multi_id_graph(graph, ['p', '1', 'i'], '2')
+        self.assertIn('see(2-p-1-i-Interp)', result)
 
     def test_multiple_id_test_true(self):
         ls = self.LEVEL_STATE
@@ -270,12 +317,18 @@ class ParagraphParsingTestCase(unittest.TestCase):
     def test_parse_interp_graph_reference(self):
         valid_graph_element = bS("<HD3>Paragraph 2(c)(1)</HD3>", 'lxml-xml')
         self.assertEqual(
-            parse_interp_graph_reference(valid_graph_element),
+            parse_interp_graph_reference(valid_graph_element, '1002', '2'),
             "2-c-1-Interp")
         invalid_graph_element = bS("<HD3>Paragraph X(5)(a)</HD3>", 'lxml-xml')
         self.assertEqual(
-            parse_interp_graph_reference(invalid_graph_element),
+            parse_interp_graph_reference(invalid_graph_element, '1002', '2'),
             "")
+        valid_inferred_section_graph_element = bS(
+            "<HD3>Paragraph (c)(1)</HD3>", 'lxml-xml')
+        self.assertEqual(
+            parse_interp_graph_reference(
+                valid_inferred_section_graph_element, '1030', '2'),
+            "2-c-1-Interp")
 
     def test_get_interp_section_tag(self):
         headline = 'Section 1003.2 - Definitions'
@@ -293,25 +346,29 @@ class ParagraphParsingTestCase(unittest.TestCase):
 
         # HD1 elements
         HD = bS('<HD1>Introduction\n</HD1>', 'lxml-xml').find('HD1')
-        self.assertEqual(divine_interp_tag_use(HD), 'intro')
+        self.assertEqual(divine_interp_tag_use(HD, '1002'), 'intro')
         HD = bS('<HD1>Appendix X - X-rays\n</HD1>', 'lxml-xml').find('HD1')
-        self.assertEqual(divine_interp_tag_use(HD), 'appendix')
+        self.assertEqual(divine_interp_tag_use(HD, '1002'), 'appendix')
         HD = bS('<HD1>Appendices G & H - Cane\n</HD1>', 'lxml-xml').find('HD1')
-        self.assertEqual(divine_interp_tag_use(HD), 'appendices')
+        self.assertEqual(divine_interp_tag_use(HD, '1002'), 'appendices')
         HD = bS('<HD1>Section 1002.4 - Known\n</HD1>', 'lxml-xml').find('HD1')
-        self.assertEqual(divine_interp_tag_use(HD), 'section')
+        self.assertEqual(divine_interp_tag_use(HD, '1002'), 'section')
         HD = bS('<HD1>Inevitable Random HD1\n</HD1>', 'lxml-xml').find('HD1')
-        self.assertEqual(divine_interp_tag_use(HD), '')
+        self.assertEqual(divine_interp_tag_use(HD, '1002'), '')
         # HD2 elements
         HD = bS('<HD2>Section 1002.4 - Known\n</HD2>', 'lxml-xml').find('HD2')
-        self.assertEqual(divine_interp_tag_use(HD), 'section')
+        self.assertEqual(divine_interp_tag_use(HD, '1002'), 'section')
         HD = bS('<HD2>2(b) Application\n</HD2>', 'lxml-xml').find('HD2')
-        self.assertEqual(divine_interp_tag_use(HD), 'graph_id')
+        self.assertEqual(divine_interp_tag_use(HD, '1002'), 'graph_id')
         # HD3 elements
         HD = bS('<HD3>Section 1002.4 - Known\n</HD3>', 'lxml-xml').find('HD3')
-        self.assertEqual(divine_interp_tag_use(HD), 'section')
+        self.assertEqual(divine_interp_tag_use(HD, '1002'), 'section')
         HD = bS('<HD3>2(b) Application\n</HD3>', 'lxml-xml').find('HD3')
-        self.assertEqual(divine_interp_tag_use(HD), 'graph_id')
+        self.assertEqual(divine_interp_tag_use(HD, '1002'), 'graph_id')
+        HD = bS('<HD3>(b) Application\n</HD3>', 'lxml-xml').find('HD3')
+        self.assertEqual(
+            divine_interp_tag_use(HD, '1030'),
+            'graph_id_inferred_section')
 
 
 class ParserIdTestCase(unittest.TestCase):
