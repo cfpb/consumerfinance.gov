@@ -93,7 +93,8 @@
   "scripts": {
     "postinstall": "node scripts/npm/apps-install",
     "preinstall": "npx enforce-node-version || (echo 'Please install npm v5.2 or greater' && exit 1)",
-    "test": "snyk test"
+    "test": "snyk test",
+    "gulp": "gulp"
   },
   "snyk": true
 }

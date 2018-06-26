@@ -187,11 +187,8 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         })
         return context
 
-    @route(r'^(?P<section>[0-9A-Za-z-]+)/$', name="section")
-    def section_page(self, request, section):
-        section_label = "{}-{}".format(
-            self.regulation.part_number, section)
-
+    @route(r'^(?P<section_label>[0-9A-Za-z-]+)/$', name="section")
+    def section_page(self, request, section_label):
         section = self.section_query.get(label=section_label)
         current_index = self.sections.index(section)
         context = self.get_context(request)
@@ -257,7 +254,6 @@ def get_previous_section(section_list, current_index):
 def get_reg_nav_items(request, current_page):
     url_bits = [bit for bit in request.url.split('/') if bit]
     current_label = url_bits[-1]
-    current_part = current_page.regulation.part_number
     sections = current_page.sections
     subpart_dict = OrderedDict()
 
@@ -274,11 +270,9 @@ def get_reg_nav_items(request, current_page):
             'title': section.title,
             'url': current_page.url + current_page.reverse_subpage(
                 'section',
-                args=([section.label.partition('-')[-1]])
+                args=([section.label])
             ),
-            'active': section.label == '{}-{}'.format(
-                current_part,
-                current_label),
+            'active': section.label == current_label,
             'expanded': True,
             'section': section,
         }

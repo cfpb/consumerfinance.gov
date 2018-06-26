@@ -37,14 +37,16 @@ def get_issuer(name):
     return issuer
 
 
-def save_agreement(agreements_zip, raw_path, filename_encoding,
-                   outfile, upload=False):
+def save_agreement(agreements_zip, pdf_path, outfile,
+                   windows=False, upload=False):
     uri_hostname = 'https://files.consumerfinance.gov'
     s3_prefix = 'a/assets/credit-card-agreements/pdf/'
 
-    zipinfo = agreements_zip.getinfo(raw_path)
-    path = raw_path.decode(filename_encoding)
-
+    zipinfo = agreements_zip.getinfo(pdf_path)
+    if windows:
+        path = pdf_path.decode('windows-1252')
+    else:
+        path = pdf_path
     try:
         issuer_name, filename = path.split('/')
     except ValueError:
