@@ -114,7 +114,7 @@ There are a number of important gulp tasks,
 particularly `build` and `test`,
 which will build the project and test it, respectively.
 Tasks are invoked via an `npm run` command so that the local gulp-cli can be used.
-Using the `npm run gulp --tasks` command you can view all available tasks.
+Using the `npm run gulp -- --tasks` command you can view all available tasks.
 The important ones are listed below:
 
 ```
