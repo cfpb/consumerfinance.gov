@@ -178,22 +178,6 @@ DATABASES = {}
 # If DATABASE_URL is defined in the environment, use it to set the Django DB.
 if os.getenv('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config()
-# Otherwise, support the legacy use of MySQL-specific environment variables.
-elif os.getenv('MYSQL_NAME'):
-    DATABASES['default'] =  {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_NAME', ''),
-        'USER': os.environ.get('MYSQL_USER', ''),
-        'PASSWORD': os.environ.get('MYSQL_PW', ''),
-        'HOST': os.environ.get('MYSQL_HOST', ''),
-        'PORT': os.environ.get('MYSQL_PORT', ''),
-    }
-
-    if 'STORAGE_ENGINE' in os.environ:
-        DATABASES['default']['OPTIONS'] = {
-            'init_command': os.environ['STORAGE_ENGINE'],
-        }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
