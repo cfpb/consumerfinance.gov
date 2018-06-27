@@ -263,6 +263,28 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(mock_ES.call_count, 1)
         self.assertEqual(response.status_code, 404)
 
+    def test_get_breadcrumbs_reg_page(self):
+        crumbs = self.reg_page.get_breadcrumbs(HttpRequest())
+        self.assertEqual(
+            crumbs,
+            [{'href': '/reg-landing/', 'title': 'Reg Landing'}]
+        )
+
+    def test_get_breadcrumbs_section(self):
+        crumbs = self.reg_page.get_breadcrumbs(
+            HttpRequest(),
+            section=self.section_num4
+        )
+        self.assertEqual(
+            crumbs,
+            [
+                {'href': '/reg-landing/', 'title': 'Reg Landing'},
+                {'href': '/reg-landing/1002/',
+                 'title': '12 CFR Part 1002 (Regulation B)'},
+                {'title': 'General'}
+            ]
+        )
+
 
 class SectionNavTests(unittest.TestCase):
 
