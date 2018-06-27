@@ -50,17 +50,20 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         all_regs = Part.objects.order_by('part_number')
         regs = []
         sqs = SearchQuerySet()
+        search_query = request.GET.get('q', '')
+        order = validate_results_order(request)
         if 'regs' in request.GET:
             regs = request.GET.getlist('regs')
         if len(regs) == 1:
             sqs = sqs.filter(part=regs[0])
         elif regs:
             sqs = sqs.filter(part__in=regs)
-        search_query = request.GET.get('q', '')  # haystack cleans this string
         if search_query:
             query_sqs = sqs.filter(content=search_query).models(Section)
         else:
             query_sqs = sqs.models(Section)
+        if order == 'regulation':
+            query_sqs = query_sqs.order_by('part')
         payload = {
             'search_query': search_query,
             'results': [],
@@ -92,7 +95,6 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
 
         context = self.get_context(request)
         num_results = validate_num_results(request)
-        order = validate_results_order(request)
         paginator = Paginator(payload['results'], num_results)
         page_number = validate_page_number(request, paginator)
         paginated_page = paginator.page(page_number)
