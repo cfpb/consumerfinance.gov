@@ -219,3 +219,10 @@ class TestNavFooter(TestCase):
             NavFooter.accessible_links(test_input),
             test_input
         )
+
+    def test_no_aria_attributes_added_to_text_without_accompanying_link(self):
+        test_input = '<p>Standalone text</p>'
+        self.assertEqual(
+            NavFooter.accessible_links(test_input),
+            test_input
+        )
