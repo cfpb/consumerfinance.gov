@@ -3,7 +3,7 @@ from zipfile import ZipFile
 
 from django.core.management.base import BaseCommand, CommandError
 
-from agreements.management.commands import util
+from agreements.management.commands import _util
 from agreements.models import Agreement, Issuer
 
 
@@ -65,7 +65,7 @@ class Command(BaseCommand):
             output_file = open(os.devnull, 'a')
 
         for pdf_path in all_pdfs:
-            util.save_agreement(
+            _util.save_agreement(
                 agreements_zip,
                 pdf_path,
                 output_file,
