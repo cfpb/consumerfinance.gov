@@ -14,8 +14,8 @@ from regulations3k.models.django import (
 )
 from regulations3k.scripts.integer_conversion import int_to_alpha
 from regulations3k.scripts.patterns import (
-    IdLevelState, dot_id_patterns, interp_reference_pattern, paren_id_patterns,
-    title_pattern
+    IdLevelState, dot_id_patterns, interp_inferred_section_pattern,
+    interp_reference_pattern, paren_id_patterns, title_pattern
 )
 
 
@@ -43,6 +43,7 @@ LEGACY_PARTS = [
     '1002', '1003', '1004', '1005', '1010', '1011', '1012', '1013',
     '1024', '1026', '1030',
 ]
+INFERRED_SECTION_IDS = ['1030']
 # The latest eCFR version of title-12, updated every few days
 LATEST_ECFR = ("https://www.gpo.gov/fdsys/bulkdata/ECFR/"
                "title-{0}/ECFR-title{0}.xml".format(CFR_TITLE))
@@ -180,7 +181,7 @@ def parse_subparts(part_soup, part):
         generic_subpart = Subpart(
             label=part.part_number,
             subpart_type=Subpart.BODY,
-            title="General",
+            title="Sections",
             version=PAYLOAD.version
         )
         generic_subpart.save()
@@ -359,7 +360,7 @@ def parse_appendix_graph(p_element, label):
 
 
 def parse_interp_graph(p_element):
-    """Extract dot-based IDs, if any"""
+    """Extract dot-based IDs, if any."""
     graph_text = ''
     id_match = re.match(dot_id_patterns['any'], p_element.text)
     if id_match:
@@ -430,34 +431,50 @@ def parse_appendix_elements(appendix_soup, label):
     return appendix_soup.text
 
 
+def get_appendix_label(n_value, head, default_label):
+    """
+    Avoid the pitfalls of non-standard appendix labels.
+
+    Most DIV9 appendices have "N" values that reveal an appendix label.
+    The default assures that we at least have a unique, sequential letter label
+    so that the importer doesn't introduce runtime errors with a blank label.
+    """
+    def clean_label(label, term):
+        return label.replace(term, '').replace(
+            ' and ', '').replace(
+            '-', '').replace(
+            ' ', '')
+
+    if n_value and ' MS' not in n_value:
+        return clean_label(n_value, 'Appendix')
+    if ' to ' in head or ' - ' in head:
+        label_base = head.partition(' to ')[0].partition(' - ')[0]
+        for term in ['Appendixes', 'Appendix', 'Appendices']:
+            if term in label_base:
+                return clean_label(label_base, term)
+    return default_label
+
+
 def parse_appendices(appendices, part):
     """
-    Parse the list of appendices (minus interps) and send them along.
+    Process the list of appendices (minus interps) and send them along.
     """
     if not appendices:
         return
     subpart = PAYLOAD.subparts['appendix_subpart']
     for i, _appendix in enumerate(appendices):
-        default_appendix_letter = int_to_alpha(i + 1).upper()
-        default_label = default_appendix_letter
-        if _appendix['N']:
-            default_label = _appendix['N'].replace('Appendix ', '')
-        head_element = _appendix.find('HEAD')
-        _hed = head_element.text.strip()
-        head_element.replaceWith('')
-        if _hed.startswith('Appendix MS '):
-            default_label = 'MS'
-        elif _hed.startswith('Appendix MS'):
-            ms_number = re.match(r'Appendix MS[-]?(\d{1})', _hed).group(1)
-            default_label = "MS{}".format(ms_number)
-        if PAYLOAD.interp_refs and default_label in PAYLOAD.interp_refs:
-            prefix = PAYLOAD.interp_refs[default_label]['1'] + '\n'
+        n_value = _appendix['N']
+        head = _appendix.find('HEAD').text.strip()
+        default_label = int_to_alpha(i + 1).upper()
+        label = get_appendix_label(n_value, head, default_label)
+        if PAYLOAD.interp_refs and label in PAYLOAD.interp_refs:
+            prefix = PAYLOAD.interp_refs[label]['1'] + '\n'
         else:
             prefix = ''
         appendix = Section(
             subpart=subpart,
-            label=default_label,
-            title=_hed,
+            label=label,
+            title=head,
             contents=prefix + parse_appendix_elements(_appendix, default_label)
         )
         appendix.save()
@@ -465,27 +482,29 @@ def parse_appendices(appendices, part):
     PAYLOAD.appendices.append(appendix)
 
 
-def divine_interp_tag_use(element):
+def divine_interp_tag_use(element, part_num):
     """
-    Interp elements wear many hats. This tries to guess the hat.
+    Try to determine what an interpretation element is delivering.
 
-    The HD might be announcing an intro, a subpart, a section,
+    Interp elements wear many hats.
+    HD elements might be announcing an intro, a subpart, a section,
     an appendix or appendices, or a paragraph reference.
 
-    - H1 elements might denote intros, sections, or subparts
-    - H2 elements might denote sections or paragraph references
-    - H3 elements might denote sections or paragraph references
+    - HD1 elements might denote intros, sections, or subparts
+    - HD2 elements might denote sections or paragraph references
+    - HD3 elements might denote sections or paragraph references
 
-    Paragraph references might also be contained in P or I tags.
+    P elements might be paragraph references or plain interp paragraphs.
 
-    Returns one of these values:
+    The function will return one of these values:
     - intro
     - subpart
     - section
     - appendix
     - appendices
     - graph_id
-    - '' (Denoting no use found -- render as a bare paragraph)
+    - graph_id_inferred_section -- a treat found in Reg DD
+    - '' (Denoting no use found -- render as an interp paragraph)
     """
     text = element.text.strip()
     if 'INTRODUCTION' in text.upper():
@@ -494,44 +513,52 @@ def divine_interp_tag_use(element):
         return 'section'
     if text.startswith('Appendix'):
         return 'appendix'
-    if text.startswith('Appendices'):
+    if text.startswith('Appendices') or text.startswith('Appendixes'):
         return 'appendices'
-    if re.match(r'\d{1,3}\([a-z]{1,2}\)', text):
+    if re.match(r'\d{1,3}\([a-z]{1,2}\)', text.replace(
+            'Paragraph', '', 1).strip()):
         return 'graph_id'
+    if (re.match(r'\([a-z]{1,2}\)', text.replace(
+            'Paragraph', '', 1).strip())
+            and part_num in INFERRED_SECTION_IDS):
+        return 'graph_id_inferred_section'
     return ''
 
 
-def parse_interp_graph_reference(element):
-    """Extract and return a graph reference from an element"""
-    id_text = element.text.replace('Paragraph', '').strip()
+def parse_interp_graph_reference(element, part_num, section_tag):
+    """Extract and return a graph reference from an element."""
+    id_text = element.text.replace('Paragraph', '', 1).strip()
     id_match = re.match(interp_reference_pattern, id_text)
     if id_match:
         tokens = [token.strip('()') for token in id_match.groups() if token]
         tokens.append('Interp')
+        return "-".join(tokens)
+    elif (re.match(interp_inferred_section_pattern, id_text)
+          and part_num in INFERRED_SECTION_IDS):
+        id_match = re.match(interp_inferred_section_pattern, id_text)
+        tokens = (
+            [section_tag]
+            + [token.strip('()') for token in id_match.groups() if token]
+            + ['Interp']
+        )
         return "-".join(tokens)
     else:
         return ''
 
 
 def get_interp_section_tag(headline):
-    """"Derive an interp section tag, using patterns and fall-backs."""
+    """"Derive an interp section tag from the HD content."""
 
     interp_numeric_pattern = r'Section \d{4}\.(\d{1,3}) '
-    interp_appendix_pattern = r'Appendix ([A-Z]{1,2}) -'
-    interp_appendices_pattern = r'Appendices ([^\-]+)-'
     if headline.upper() == 'INTRODUCTION':
         return '0'
     if re.match(interp_numeric_pattern, headline):
         return re.match(interp_numeric_pattern, headline).group(1)
-    if re.match(interp_appendix_pattern, headline):
-        return re.match(interp_appendix_pattern, headline).group(1)
-    if re.match(interp_appendices_pattern, headline):
-        return re.match(interp_appendices_pattern, headline).group(1).strip()
     else:
-        return headline.partition('-')[0].strip()
+        return get_appendix_label('', headline, headline.partition(' ')[0])
 
 
-def register_interp_reference(interp_id, section_tag, part):
+def register_interp_reference(interp_id, section_tag):
     """
     Registers an interp reference mapping that can be used, when parsing
     section paragraphs, to insert a regdown interp reference.
@@ -574,7 +601,7 @@ def parse_interps(interp_div, part, subpart):
     section_headings = [
         tag for tag in interp_div.find('HEAD').findNextSiblings()
         if (tag.name in ['HD1', 'HD2', 'HD3']
-            and divine_interp_tag_use(tag)
+            and divine_interp_tag_use(tag, part.part_number)
             in ['intro', 'section', 'appendix', 'appendices'])
     ]
     for section_heading in section_headings:
@@ -589,7 +616,8 @@ def parse_interps(interp_div, part, subpart):
             title=section_hed,
             contents=''
         )
-        if divine_interp_tag_use(section_heading) == 'appendix':
+        if divine_interp_tag_use(
+                section_heading, part.part_number) == 'appendix':
             interp_id = '{}-1-Interp'.format(section_tag)
             LEVEL_STATE.current_id = interp_id
             see = "see({}-1-Interp)".format(section_label)
@@ -603,17 +631,23 @@ def parse_interps(interp_div, part, subpart):
                 PAYLOAD.interpretations.append(section)
                 break
             elif (element.name in ['HD2', 'HD3']
-                    and divine_interp_tag_use(element) == 'graph_id'):
+                    and divine_interp_tag_use(element, part.part_number)
+                    in ['graph_id', 'graph_id_inferred_section']):
                 _hed = element.text.strip()
-                interp_id = parse_interp_graph_reference(element)
-                register_interp_reference(interp_id, section_tag, part)
+                interp_id = parse_interp_graph_reference(
+                    element, part.part_number, section_tag)
+                register_interp_reference(interp_id, section_tag)
                 section.contents += '\n{' + interp_id + '}\n'
                 section.contents += "### {}\n".format(_hed)
             elif element.name == 'P':
-                if divine_interp_tag_use(element) == 'graph_id':
-                    interp_id = parse_interp_graph_reference(element)
-                    register_interp_reference(interp_id, section_tag, part)
+                tag_use = divine_interp_tag_use(element, part.part_number)
+                if tag_use in ['graph_id', 'graph_id_inferred_section']:
+                    interp_id = parse_interp_graph_reference(
+                        element, part.part_number, section_tag)
+                    register_interp_reference(interp_id, section_tag)
                     section.contents += '\n{' + interp_id + '}\n'
+                    if tag_use == 'graph_id_inferred_section':
+                        element.insert(0, section_tag)
                     p = pre_process_tags(element)
                     section.contents += p.text.strip() + "\n"
                 else:
@@ -645,6 +679,7 @@ def ecfr_to_regdown(part_number, file_path=None):
 
     To avoid mischief, we make sure the part number is on a whitelist.
     """
+    PAYLOAD.reset()
     if part_number not in PART_WHITELIST:
         raise ValueError('Provided Part number is not a CFPB regulation.')
     starter = datetime.datetime.now()
@@ -681,7 +716,6 @@ def ecfr_to_regdown(part_number, file_path=None):
 
 
 def run(*args):
-    PAYLOAD.reset()
     if len(args) not in [1, 2]:
         logger.info(
             "Usage: ./cfgov/manage.py runscript "
