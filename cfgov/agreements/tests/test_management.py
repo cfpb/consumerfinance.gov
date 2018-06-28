@@ -9,7 +9,7 @@ from django.core.management.base import CommandError
 from django.test import TestCase
 
 import mock
-from agreements.management.commands import util
+from agreements.management.commands import _util
 from agreements.management.commands.import_agreements import empty_folder_test
 from agreements.models import Issuer
 
@@ -56,7 +56,7 @@ class TestDataLoad(TestCase):
 
     @mock.patch.dict(os.environ, {'AGREEMENTS_S3_UPLOAD_ENABLED': 'yes'})
     @mock.patch('agreements.management.commands.' +
-                'util.upload_to_s3')
+                '_util.upload_to_s3')
     def test_import_with_s3(self, upload_func):
         management.call_command(
             'import_agreements',
@@ -71,7 +71,7 @@ class TestDataLoad(TestCase):
 
     @mock.patch.dict(os.environ, {'AGREEMENTS_S3_UPLOAD_ENABLED': 'yes'})
     @mock.patch(
-        'agreements.management.commands.util.upload_to_s3'
+        'agreements.management.commands._util.upload_to_s3'
     )
     def test_import_with_s3_calls_print_statement(self, _):
         buf = StringIO()
@@ -93,11 +93,11 @@ class TestManagementUtils(TestCase):
             '--windows',
             verbosity=0
         )
-        issuer = util.get_issuer(u'Bankers\u2019 Bank of Kansas')
+        issuer = _util.get_issuer(u'Bankers\u2019 Bank of Kansas')
         self.assertEqual(issuer.slug, u'bankers-bank-of-kansas')
 
     def test_get_new_issuer(self):
-        issuer = util.get_issuer('2nd Fake Bank USA')
+        issuer = _util.get_issuer('2nd Fake Bank USA')
         self.assertEqual(issuer.slug, '2nd-fake-bank-usa')
 
     def test_save_agreement(self):
@@ -105,7 +105,7 @@ class TestManagementUtils(TestCase):
         # windows-1252 encoded:
         raw_path = 'Bankers\x92 Bank of Kansas/1.pdf'
         buf = StringIO()
-        agreement = util.save_agreement(
+        agreement = _util.save_agreement(
             agreements_zip,
             raw_path,
             buf,
@@ -120,5 +120,5 @@ class TestManagementUtils(TestCase):
     @mock.patch('boto3.client')
     def test_upload_to_s3(self, mock_upload):
         fake_pdf = StringIO("Not a real PDF")
-        util.upload_to_s3(fake_pdf, 'bank/agreement.pdf')
+        _util.upload_to_s3(fake_pdf, 'bank/agreement.pdf')
         mock_upload.assert_called_once()
