@@ -181,7 +181,7 @@ def parse_subparts(part_soup, part):
         generic_subpart = Subpart(
             label=part.part_number,
             subpart_type=Subpart.BODY,
-            title="General",
+            title="Sections",
             version=PAYLOAD.version
         )
         generic_subpart.save()
