@@ -303,14 +303,15 @@ class NavFooter(blocks.StructBlock):
     def accessible_links(html):
         soup = BeautifulSoup(html, 'html.parser')
         for p in soup.find_all('p'):
-            for child in p.children:
-                if child.name == 'a':
-                    if child.string != p.text:
-                        child['aria-label'] = p.text
-                else:
-                    if child.name != 'span':
-                        child = child.wrap(soup.new_tag('span'))
-                    child['aria-hidden'] = 'true'
+            if p.find_all('a'):
+                for child in p.children:
+                    if child.name == 'a':
+                        if child.string != p.text:
+                            child['aria-label'] = p.text
+                    else:
+                        if child.name != 'span':
+                            child = child.wrap(soup.new_tag('span'))
+                        child['aria-hidden'] = 'true'
         return str(soup).decode('utf-8').replace(u'\xa0', ' ')
 
 
