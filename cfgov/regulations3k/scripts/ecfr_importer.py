@@ -431,6 +431,30 @@ def parse_appendix_elements(appendix_soup, label):
     return appendix_soup.text
 
 
+def get_appendix_label(n_value, head, default_label):
+    """
+    Avoid the pitfalls of non-standard appendix labels.
+
+    Most DIV9 appendices have "N" values that reveal an appendix label.
+    The default assures that we at least have a unique, sequential letter label
+    so that the importer doesn't introduce runtime errors with a blank label.
+    """
+    def clean_label(label, term):
+        return label.replace(term, '').replace(
+            ' and ', '').replace(
+            '-', '').replace(
+            ' ', '')
+
+    if n_value and ' MS' not in n_value:
+        return clean_label(n_value, 'Appendix')
+    if ' to ' in head or ' - ' in head:
+        label_base = head.partition(' to ')[0].partition(' - ')[0]
+        for term in ['Appendixes', 'Appendix', 'Appendices']:
+            if term in label_base:
+                return clean_label(label_base, term)
+    return default_label
+
+
 def parse_appendices(appendices, part):
     """
     Process the list of appendices (minus interps) and send them along.
@@ -439,26 +463,18 @@ def parse_appendices(appendices, part):
         return
     subpart = PAYLOAD.subparts['appendix_subpart']
     for i, _appendix in enumerate(appendices):
-        default_appendix_letter = int_to_alpha(i + 1).upper()
-        default_label = default_appendix_letter
-        if _appendix['N']:
-            default_label = _appendix['N'].replace('Appendix ', '')
-        head_element = _appendix.find('HEAD')
-        _hed = head_element.text.strip()
-        head_element.replaceWith('')
-        if _hed.startswith('Appendix MS '):
-            default_label = 'MS'
-        elif _hed.startswith('Appendix MS'):
-            ms_number = re.match(r'Appendix MS[-]?(\d{1})', _hed).group(1)
-            default_label = "MS{}".format(ms_number)
-        if PAYLOAD.interp_refs and default_label in PAYLOAD.interp_refs:
-            prefix = PAYLOAD.interp_refs[default_label]['1'] + '\n'
+        n_value = _appendix['N']
+        head = _appendix.find('HEAD').text.strip()
+        default_label = int_to_alpha(i + 1).upper()
+        label = get_appendix_label(n_value, head, default_label)
+        if PAYLOAD.interp_refs and label in PAYLOAD.interp_refs:
+            prefix = PAYLOAD.interp_refs[label]['1'] + '\n'
         else:
             prefix = ''
         appendix = Section(
             subpart=subpart,
-            label=default_label,
-            title=_hed,
+            label=label,
+            title=head,
             contents=prefix + parse_appendix_elements(_appendix, default_label)
         )
         appendix.save()
@@ -497,7 +513,7 @@ def divine_interp_tag_use(element, part_num):
         return 'section'
     if text.startswith('Appendix'):
         return 'appendix'
-    if text.startswith('Appendices'):
+    if text.startswith('Appendices') or text.startswith('Appendixes'):
         return 'appendices'
     if re.match(r'\d{1,3}\([a-z]{1,2}\)', text.replace(
             'Paragraph', '', 1).strip()):
@@ -531,21 +547,15 @@ def parse_interp_graph_reference(element, part_num, section_tag):
 
 
 def get_interp_section_tag(headline):
-    """"Derive an interp section tag, using patterns and fall-backs."""
+    """"Derive an interp section tag from the HD content."""
 
     interp_numeric_pattern = r'Section \d{4}\.(\d{1,3}) '
-    interp_appendix_pattern = r'Appendix ([A-Z]{1,2}) -'
-    interp_appendices_pattern = r'Appendices ([^\-]+)-'
     if headline.upper() == 'INTRODUCTION':
         return '0'
     if re.match(interp_numeric_pattern, headline):
         return re.match(interp_numeric_pattern, headline).group(1)
-    if re.match(interp_appendix_pattern, headline):
-        return re.match(interp_appendix_pattern, headline).group(1)
-    if re.match(interp_appendices_pattern, headline):
-        return re.match(interp_appendices_pattern, headline).group(1).strip()
     else:
-        return headline.partition('-')[0].strip()
+        return get_appendix_label('', headline, headline.partition(' ')[0])
 
 
 def register_interp_reference(interp_id, section_tag):

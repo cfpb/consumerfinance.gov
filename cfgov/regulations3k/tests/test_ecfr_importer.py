@@ -14,12 +14,12 @@ from requests import Response
 
 from regulations3k.models import Part, Subpart
 from regulations3k.scripts.ecfr_importer import (
-    divine_interp_tag_use, ecfr_to_regdown, get_effective_date,
-    get_interp_section_tag, parse_appendices, parse_appendix_elements,
-    parse_appendix_graph, parse_appendix_paragraphs, parse_ids,
-    parse_interp_graph_reference, parse_interps, parse_multi_id_graph,
-    parse_part, parse_section_paragraphs, parse_singleton_graph, parse_version,
-    run
+    divine_interp_tag_use, ecfr_to_regdown, get_appendix_label,
+    get_effective_date, get_interp_section_tag, parse_appendices,
+    parse_appendix_elements, parse_appendix_graph, parse_appendix_paragraphs,
+    parse_ids, parse_interp_graph_reference, parse_interps,
+    parse_multi_id_graph, parse_part, parse_section_paragraphs,
+    parse_singleton_graph, parse_version, run
 )
 from regulations3k.scripts.integer_conversion import (
     alpha_to_int, int_to_alpha, int_to_roman, roman_to_int
@@ -220,6 +220,40 @@ class AppendixCreationTestCase(DjangoTestCase):
         self.assertEqual(len(PAYLOAD.appendices), 1)
 
 
+class AppendixNamingTestCase(unittest.TestCase):
+    """Tests for the naming of appendices."""
+
+    def test_get_appendix_label_default(self):
+        self.assertEqual(
+            get_appendix_label('', 'unhelpful head', 'Z'),
+            'Z'
+        )
+
+    def test_get_appendix_label_good_N_value(self):
+        self.assertEqual(
+            get_appendix_label('Appendix X', 'unhelpful head', 'Z'),
+            'X'
+        )
+
+    def test_get_appendix_label_no_N_value(self):
+        self.assertEqual(
+            get_appendix_label('', 'Appendix X to Reg 1030', 'Z'),
+            'X'
+        )
+
+    def test_get_appendix_label_appendices(self):
+        self.assertEqual(
+            get_appendix_label('', 'Appendices G and H to Reg 1030', 'Z'),
+            'GH'
+        )
+
+    def test_get_appendix_label_appendixes(self):
+        self.assertEqual(
+            get_appendix_label('', 'Appendixes G and H to Reg 1030', 'Z'),
+            'GH'
+        )
+
+
 class ImporterRunTestCase(unittest.TestCase):
     """Tests for running the ecfr importer via commands."""
 
@@ -336,9 +370,11 @@ class ParagraphParsingTestCase(unittest.TestCase):
         headline = 'Appendix A - Model Disclosure Clauses and Forms'
         self.assertEqual(get_interp_section_tag(headline), 'A')
         headline = 'Appendices G and H - A dreaded Combo Appendix Section'
-        self.assertEqual(get_interp_section_tag(headline), 'G and H')
+        self.assertEqual(get_interp_section_tag(headline), 'GH')
         headline = 'Introduction'
         self.assertEqual(get_interp_section_tag(headline), '0')
+        headline = 'Appendix MS-3 - Model Force-Placed Insurance Notice Forms'
+        self.assertEqual(get_interp_section_tag(headline), 'MS3')
         headline = 'Inevitable - Random Section Name'
         self.assertEqual(get_interp_section_tag(headline), 'Inevitable')
 
