@@ -111,20 +111,21 @@ password will expire after 60 days).
 
 #### Available Gulp Tasks
 There are a number of important gulp tasks,
-particularly `gulp build` and `gulp test`,
+particularly `build` and `test`,
 which will build the project and test it, respectively.
-Using the `gulp --tasks` command you can view all available tasks.
+Tasks are invoked via an `npm run` command so that the local gulp-cli can be used.
+Using the `npm run gulp -- --tasks` command you can view all available tasks.
 The important ones are listed below:
 
 ```
-gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
-gulp clean           # Remove the contents of the production /dist/ directory.
-gulp lint            # Lint the scripts and build files.
-gulp docs            # Generate JSDocs from the scripts.
-gulp test            # Run linting, unit and acceptance tests (see below).
-gulp test:unit       # Run only unit tests on source code.
-gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
-gulp audit           # Run code quality audits.
+npm run gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
+npm run gulp clean           # Remove the contents of the production /dist/ directory.
+npm run gulp lint            # Lint the scripts and build files.
+npm run gulp docs            # Generate JSDocs from the scripts.
+npm run gulp test            # Run linting, unit and acceptance tests (see below).
+npm run gulp test:unit       # Run only unit tests on source code.
+npm run gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
+npm run gulp audit           # Run code quality audits.
 ```
 
 ## Usage: Docker

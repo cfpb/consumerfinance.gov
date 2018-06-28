@@ -178,22 +178,6 @@ DATABASES = {}
 # If DATABASE_URL is defined in the environment, use it to set the Django DB.
 if os.getenv('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config()
-# Otherwise, support the legacy use of MySQL-specific environment variables.
-elif os.getenv('MYSQL_NAME'):
-    DATABASES['default'] =  {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_NAME', ''),
-        'USER': os.environ.get('MYSQL_USER', ''),
-        'PASSWORD': os.environ.get('MYSQL_PW', ''),
-        'HOST': os.environ.get('MYSQL_HOST', ''),
-        'PORT': os.environ.get('MYSQL_PORT', ''),
-    }
-
-    if 'STORAGE_ENGINE' in os.environ:
-        DATABASES['default']['OPTIONS'] = {
-            'init_command': os.environ['STORAGE_ENGINE'],
-        }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -505,13 +489,12 @@ CSP_SCRIPT_SRC = ("'self'",
                   'api.mapbox.com',
                   'js-agent.newrelic.com',
                   'dnn506yrbagrg.cloudfront.net',
-                  '*.doubleclick.net',
                   'bam.nr-data.net',
                   '*.youtube.com',
                   '*.ytimg.com',
                   'trk.cetrk.com',
                   'universal.iperceptions.com',
-                  'sample.crazyegg.com',
+                  'cdn.mouseflow.com',
                   'about:',
                   'connect.facebook.net',
                   'www.federalregister.gov',
@@ -722,8 +705,8 @@ EMAIL_POPUP_URLS = {
 
 REGULATIONS_REFERENCE_MAPPING = [
     (
-        r'(?P<label>(?P<part>^[0-9]+)-(?P<section>[\w]+))-(?P<paragraph>[\w-]*-Interp)',
-        '{part}-Interp-{section}',
+        r'(?P<section>[\w]+)-(?P<paragraph>[\w-]*-Interp)',
+        'Interp-{section}',
         '{section}-{paragraph}'
     ),
 ]
