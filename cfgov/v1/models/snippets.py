@@ -80,7 +80,7 @@ class TaggableSnippetManager(models.Manager):
     def filter_by_tags(self, tags):
         snippets = self.all()
         for tag in tags or []:
-            snippets = snippets.filter(tags__name=tag)
+            snippets = snippets.filter(tags__name__iexact=tag)
 
         return snippets
 
