@@ -46,9 +46,9 @@ body {
       markup: |
         <nav class="o-mega-menu"
              role="navigation">
-            <h2>
+            <h2 class="o-mega-menu_heading">
                 <button class="o-mega-menu_trigger" aria-expanded="false">
-                    <span class="u-visually-hidden"><span class="o-mega-menu_trigger-text">Open</span> main menu</span>
+                    <span class="u-visually-hidden">Main menu</span>
                 </button>
             </h2>
             <div class="o-mega-menu_content"
@@ -132,11 +132,15 @@ body {
           Structural cheat sheet:
           -----------------------
           nav.o-mega-menu
-            .o-mega-menu_trigger
+            .o-mega-menu_heading
+                .o-mega-menu_trigger
             .o-mega-menu_content
                 .o-mega-menu_content-wrapper
                     .wrapper
                         .o-mega-menu-content-grid
+                            .o-mega-menu_content-overview
+                                .o-mega-menu_content-overview-heading
+                                    .o-mega-menu_content-overview-link
                             .o-mega-menu_content-title
                                 a.o-mega-menu_content-link
                             .o-mega-menu_content-lists
