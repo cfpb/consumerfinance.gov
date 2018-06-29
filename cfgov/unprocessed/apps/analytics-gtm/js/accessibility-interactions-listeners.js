@@ -3,7 +3,7 @@ import {
   track
 } from './util/analytics-util';
 
-const AccessibleInteractionsListeners = ( function() {
+const AccessibleInteractionsListeners = ( () => {
 
   // Listen for focus on the "skip link" button.
   const skipLinkButton = document.querySelector( '#skip-nav' );
