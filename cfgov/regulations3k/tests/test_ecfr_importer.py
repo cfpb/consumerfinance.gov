@@ -17,7 +17,7 @@ from regulations3k.scripts.ecfr_importer import (
     divine_interp_tag_use, ecfr_to_regdown, get_appendix_label,
     get_effective_date, get_interp_section_tag, parse_appendices,
     parse_appendix_elements, parse_appendix_graph, parse_appendix_paragraphs,
-    parse_ids, parse_interp_graph_reference, parse_interps,
+    parse_ids, parse_interp_graph, parse_interp_graph_reference, parse_interps,
     parse_multi_id_graph, parse_part, parse_section_paragraphs,
     parse_singleton_graph, parse_version, run
 )
@@ -363,6 +363,13 @@ class ParagraphParsingTestCase(unittest.TestCase):
             parse_interp_graph_reference(
                 valid_inferred_section_graph_element, '1030', '2'),
             "2-c-1-Interp")
+
+    def test_parse_interp_graph_no_id(self):
+        section_graph_element_no_id = bS(
+            "<P>This is a bare interp paragraph with no ID.</P>", 'lxml-xml')
+        parsed_graph = parse_interp_graph(section_graph_element_no_id)
+        # import pdb; pdb.set_trace()
+        self.assertTrue(parsed_graph.startswith('This is a bare interp'))
 
     def test_get_interp_section_tag(self):
         headline = 'Section 1003.2 - Definitions'
