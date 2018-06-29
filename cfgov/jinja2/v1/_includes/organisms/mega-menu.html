@@ -134,7 +134,7 @@
                     {% else %}
 
                     <a class="{{ _classes( nav_depth, '-overview-link' ) }}
-                          {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
+                              {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
                     {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
                     {{ nav_overview_text ~ ' Overview' }}
                     </a>
@@ -231,9 +231,7 @@
             u-hide-on-mobile"
     data-js-hook="behavior_flyout-menu"
     aria-labelledby="{{ base_class ~ '_label' }}">
-    <h2
-        class="{{ base_class ~ '_heading' }}"
-    >
+    <h2 class="{{ base_class ~ '_heading' }}">
         <button class="{{ base_class ~ '_trigger' }}"
                data-js-hook="behavior_flyout-menu_trigger"
                aria-haspopup="menu">

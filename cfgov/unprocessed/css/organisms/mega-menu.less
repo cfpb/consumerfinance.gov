@@ -189,7 +189,7 @@ body {
         &-overview-heading {
             padding: @grid_gutter-width / 2 0;
             margin-bottom: 0;
-            font-size: @base-font-size-px;
+            font-size: unit( @base-font-size-px / @base-font-size-px, em );
             font-weight: normal;
         }
     }
@@ -645,7 +645,7 @@ body {
                 //       This is temporary code to hide the overview links
                 //       at desktop sizes.
                 &-heading-text {
-                    .u-visually-hidden;
+                    .u-visually-hidden();
                 }
                 // ------------------------------------------------------------
             }
