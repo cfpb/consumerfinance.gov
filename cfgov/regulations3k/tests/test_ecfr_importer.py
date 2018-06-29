@@ -103,7 +103,7 @@ class ImporterTestCase(DjangoTestCase):
         p_soup = bS(self.test_xml, 'lxml-xml')
         appendix = p_soup.find('DIV5').find('DIV9')
         parsed_appendix = parse_appendix_elements(appendix, '1002-A')
-        self.assertIn("see(1002-A-1-Interp)", parsed_appendix)
+        self.assertIn("{1}", parsed_appendix)
 
     @mock.patch(
         'regulations3k.scripts.ecfr_importer.requests.get')

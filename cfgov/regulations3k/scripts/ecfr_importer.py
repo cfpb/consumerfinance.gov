@@ -352,10 +352,6 @@ def parse_appendix_graph(p_element, label):
         graph_text += graph + "\n"
     else:
         graph_text += p_element.text + "\n"
-    if pid and PAYLOAD.interp_refs and PAYLOAD.interp_refs.get(label):
-        interp_ref = PAYLOAD.interp_refs.get(label).get(pid)
-        if interp_ref:
-            graph_text += '\n' + interp_ref + '\n'
     return graph_text
 
 
