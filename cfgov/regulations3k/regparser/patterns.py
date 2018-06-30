@@ -42,7 +42,9 @@ from __future__ import unicode_literals
 
 import re
 
-from regulations3k.scripts.integer_conversion import alpha_to_int, roman_to_int
+from regulations3k.regparser.integer_conversion import (
+    alpha_to_int, roman_to_int
+)
 
 
 class IdLevelState(object):
@@ -51,8 +53,9 @@ class IdLevelState(object):
 
     IDs swim like dolphins through a reg: surfing, diving, and rising.
     """
-    current_id = ''
-    next_token = ''
+    def __init__(self):
+        self.current_id = ''
+        self.next_token = ''
 
     def level(self):
         return self.current_id.count('-') + 1
@@ -332,6 +335,25 @@ class IdLevelState(object):
             return ids[:good_ids]
         # multiples not allowed at level 6
 
+    def parse_appendix_graph(self, p_element, label):
+        """Extract dot-based IDs, if any"""
+        pid = ''
+        graph_text = ''
+        id_match = re.match(dot_id_patterns['any'], p_element.text)
+        if id_match:
+            id_token = id_match.group(1).replace('*', '')
+            self.next_token = id_token
+            pid = self.next_appendix_id() or ''
+            graph_text += "\n{" + pid + "}\n"
+            graph = p_element.text.replace(
+                '{}.'.format(pid), '**{}.**'.format(pid), 1).replace(
+                '  ', ' ').replace(
+                '** **', ' ', 1)
+            graph_text += graph + "\n"
+        else:
+            graph_text += p_element.text + "\n"
+        return graph_text
+
 
 # search patterns; not all are currently used
 title_pattern = re.compile(r'PART ([^\-]+) \- ([^\(]+) \(?([^\)]+)?')
@@ -357,31 +379,4 @@ dot_id_patterns = {
 interp_reference_pattern = r'(\d{1,3})(\([a-z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?(\([A-Z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?'  # noqa: E501
 interp_inferred_section_pattern = r'(\([a-z]{1,2}\))(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?(\([A-Z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?'  # noqa: E501'
 
-# A place to document level patterns found in regulations
-level_patterns = {
-    'standard': {
-        'pattern': 'a-1-i-A-1-i',
-        'marker': 'parentheses',
-        'regs': ['B', 'C'],
-        'type_sequence': [
-            'lower', 'digit', 'roman', 'upper', 'digit', 'roman']
-    },
-    'definitions': {
-        'pattern': '1-i-A',
-        'marker': 'period',
-        'regs': ['appendices'],
-        'type_sequence': ['digit', 'roman', 'upper'],
-    },
-    'appendices': {
-        'pattern': '1-i-A',
-        'marker': 'period',
-        'regs': ['B'],
-        'type_sequence': ['digit', 'roman', 'upper'],
-    },
-    'interpretations': {
-        'pattern': '1-i-A',
-        'marker': 'period',
-        'regs': [''],
-        'type_sequence': ['digit', 'roman', 'upper'],
-    },
-}
+LEVEL_STATE = IdLevelState()

@@ -7,21 +7,20 @@ import sys
 
 import requests
 from bs4 import BeautifulSoup as bS
-from dateutil import parser
 
-from regulations3k.models.django import (
-    EffectiveVersion, Part, Section, Subpart
+from regulations3k.models.django import Section, Subpart
+from regulations3k.regparser.integer_conversion import int_to_alpha
+from regulations3k.regparser.paragraphs import (
+    bold_first_italics, combine_bolds, graph_top, pre_process_tags
 )
-from regulations3k.scripts.integer_conversion import int_to_alpha
-from regulations3k.scripts.patterns import (
+from regulations3k.regparser.patterns import (
     IdLevelState, dot_id_patterns, interp_inferred_section_pattern,
-    interp_reference_pattern, paren_id_patterns, title_pattern
+    interp_reference_pattern, paren_id_patterns
 )
+from regulations3k.regparser.payload import CFR_TITLE, PayLoad
+from regulations3k.regparser.regtable import RegTable
 
 
-# TODO
-# - parse interps
-# - insert interp refs
 # ODDITIES TO HANDLE
 # tables
 # gif graphics
@@ -30,8 +29,6 @@ from regulations3k.scripts.patterns import (
 logger = logging.getLogger(__name__)
 
 # eCFR globals
-CFR_TITLE = '12'
-CFR_CHAPTER = 'X'
 PART_WHITELIST = [
     '1001', '1002', '1003', '1004', '1005', '1006', '1007', '1008', '1009',
     '1010', '1011', '1012', '1013', '1014', '1015', '1016',
@@ -47,100 +44,14 @@ INFERRED_SECTION_IDS = ['1030']
 # The latest eCFR version of title-12, updated every few days
 LATEST_ECFR = ("https://www.gpo.gov/fdsys/bulkdata/ECFR/"
                "title-{0}/ECFR-title{0}.xml".format(CFR_TITLE))
-FR_date_query = (
-    "https://www.federalregister.gov/api/v1/documents.json?"
-    "fields[]=effective_on&"
-    "per_page=20&"
-    "order=relevance&"
-    "conditions[agencies][]=consumer-financial-protection-bureau&"
-    "conditions[type][]=RULE&"
-    "conditions[cfr][title]=12&"
-    "conditions[cfr][part]={}"
-)
 HEADLINE_MAP = {
     'HD1': "\n## {}\n",
     'HD2': "\n### {}\n",
     'HD3': "\n#### {}\n",
 }
 LINK_FARM_TAGS = ['XREF', 'FP-1', 'FP-2']
-
-
-def get_effective_date(part_number):
-    today = datetime.date.today()
-    FR_query = FR_date_query.format(part_number)
-    FR_response = requests.get(FR_query)
-    if not FR_response.ok or not FR_response.json():
-        return
-    FR_json = FR_response.json()
-    date_strings = [result['effective_on'] for result in FR_json['results']]
-    dates = sorted(set(
-        [parser.parse(date).date() for date in date_strings if date]
-    ))
-    return [date for date in dates if date <= today][-1]
-
-
-class PayLoad(object):
-    part = None
-    version = None
-    subparts = {
-        'section_subparts': [],
-        'appendix_subpart': None,
-        'interp_subpart': None,
-    }
-    sections = []
-    appendices = []
-    interpretations = []
-    interp_refs = {}
-    effective_date = None
-
-    def reset(self):
-        self.interp_refs = {}
-        for element in [self.part, self.version, self.effective_date,
-                        self.subparts['appendix_subpart'],
-                        self.subparts['interp_subpart']]:
-            element = None  # noqa: F841
-        for list_element in [self.subparts['section_subparts'],
-                             self.sections,
-                             self.appendices,
-                             self.interpretations]:
-            list_element = []  # noqa: F841
-
-
 PAYLOAD = PayLoad()
 LEVEL_STATE = IdLevelState()
-
-
-def parse_part(part_soup, part_number):
-    part, created = Part.objects.get_or_create(
-        part_number=part_number,
-        chapter=CFR_CHAPTER,
-        cfr_title_number=CFR_TITLE)
-    if created:
-        raw_title = part_soup.find('HEAD').text
-        parsed_title = title_pattern.match(raw_title)
-        part.title = parsed_title.group(2).title()
-        part.letter_code = parsed_title.group(3).replace(
-            'REGULATION', '').strip()
-        part.save()
-        logger.info("Created Part {}, {}".format(part_number, part.title))
-    PAYLOAD.part = part
-    return part
-
-
-def parse_version(soup, part):
-    auth = soup.find('AUTH').find('PSPACE').text.strip()
-    source = soup.find('SOURCE').find('PSPACE').text.strip()
-    version = EffectiveVersion(
-        acquired=datetime.date.today(),
-        effective_date=PAYLOAD.effective_date,
-        authority=auth,
-        part=part,
-        source=source,
-        draft=True,
-    )
-    version.save()
-    PAYLOAD.version = version
-    return version
 
 
 def parse_subparts(part_soup, part):
@@ -199,50 +110,6 @@ def parse_subparts(part_soup, part):
             PAYLOAD.subparts['section_subparts'].append(_subpart)
             subpart_sections = element.find_all('DIV8')
             parse_sections(subpart_sections, part, _subpart)
-
-
-def pre_process_tags(paragraph_element):
-    """
-    Convert initial italics-tagged text to markdown bold
-    and convert the rest of a paragraph's I tags to markdown italics.
-    """
-    first_tag = paragraph_element.find('I')
-    if first_tag:
-        bold_content = first_tag.text
-        first_tag.replaceWith('**{}**'.format(bold_content))
-    for element in paragraph_element.find_all('I'):
-        i_content = element.text
-        element.replaceWith('*{}*'.format(i_content))
-    return paragraph_element
-
-
-def bold_first_italics(graph_text):
-    """For a newly broken-up graph, convert the first italics text to bold."""
-    if graph_text.count('*') > 1:
-        return graph_text.replace('*', '**', 2)
-    else:
-        return graph_text
-
-
-def combine_bolds(graph_text):
-    """
-    Make ID marker bold and remove redundant bold markup between bold elements.
-    """
-    if graph_text.startswith('('):
-        graph_text = graph_text.replace(
-            '  ', ' ').replace(
-            '(', '**(', 1).replace(
-            ')', ')**', 1).replace(
-            '** **', ' ', 1)
-    return graph_text
-
-
-def graph_top(graph_text):
-    "Weed out the common sources of errant IDs"
-    return graph_text.partition(
-        'paragraph')[0].partition(
-        '12 CFR')[0].partition(
-        '\xa7')[0][:200]
 
 
 def parse_singleton_graph(graph_text, label):
@@ -335,26 +202,6 @@ def parse_section_paragraphs(paragraph_soup, label):
     return paragraph_content
 
 
-def parse_appendix_graph(p_element, label):
-    """Extract dot-based IDs, if any"""
-    pid = ''
-    graph_text = ''
-    id_match = re.match(dot_id_patterns['any'], p_element.text)
-    if id_match:
-        id_token = id_match.group(1).replace('*', '')
-        LEVEL_STATE.next_token = id_token
-        pid = LEVEL_STATE.next_appendix_id() or ''
-        graph_text += "\n{" + pid + "}\n"
-        graph = p_element.text.replace(
-            '{}.'.format(pid), '**{}.**'.format(pid), 1).replace(
-            '  ', ' ').replace(
-            '** **', ' ', 1)
-        graph_text += graph + "\n"
-    else:
-        graph_text += p_element.text + "\n"
-    return graph_text
-
-
 def parse_interp_graph(p_element):
     """Extract dot-based IDs, if any."""
     graph_text = ''
@@ -381,7 +228,7 @@ def parse_appendix_paragraphs(p_elements, id_type, label):
             p_content = parse_ids(p.text, label) + "\n"
             p.replaceWith(p_content)
         else:
-            p_content = parse_appendix_graph(p, label) + "\n"
+            p_content = LEVEL_STATE.parse_appendix_graph(p, label) + "\n"
             p.replaceWith(p_content)
 
 
@@ -400,6 +247,14 @@ def parse_sections(section_list, part, subpart):
         _section.save()
 
 
+def set_table(table_soup, label):
+    table = RegTable(label=label)
+    msg = table.parse_xml_table(table_soup)
+    if msg:
+        PAYLOAD.tables.update({label: table})
+    return msg
+
+
 def parse_appendix_elements(appendix_soup, label):
     """
     For appendices, we can't just parse paragraphs because
@@ -409,6 +264,17 @@ def parse_appendix_elements(appendix_soup, label):
     eCFR XML doesn't have any HD4s.
     """
     paragraphs = appendix_soup.find_all('P')
+    tables = appendix_soup.find_all('TABLE')
+    for i, table_soup in enumerate(tables):
+        table_label = "{{table-{}-{}}}".format(label, i)
+        if set_table(table_soup, table_label):
+            table_soup.replaceWith('\n{}\n'.format(table_label))
+    for form_line in appendix_soup.find_all('FP-DASH'):
+        form_line.string = form_line.text.replace('\n', '') + '__\n'
+    for i, image in enumerate(appendix_soup.find_all('img')):
+        ref = "![image-{}-{}]({})".format(
+            label, i + 1, image.get('src'))
+        image.replaceWith("\n{}\n".format(ref))
     LEVEL_STATE.current_id = ''
     id_type = LEVEL_STATE.sniff_appendix_id_type(paragraphs)
     for citation in appendix_soup.find_all('CITA'):
@@ -424,7 +290,10 @@ def parse_appendix_elements(appendix_soup, label):
             p.replaceWith(p.text + "\n")
     else:
         parse_appendix_paragraphs(paragraphs, id_type, label)
-    return appendix_soup.text
+    result = appendix_soup.text
+    for table_id in PAYLOAD.tables:
+        result = result.replace(table_id, PAYLOAD.tables[table_id].table())
+    return result
 
 
 def get_appendix_label(n_value, head, default_label):
@@ -581,7 +450,7 @@ def parse_interps(interp_div, part, subpart):
 
     If that paragraph had an interpretation, the interp reference would be:
 
-    see(1002-2-c-1-ii-Interp)
+    see(2-c-1-ii-Interp)
 
     This would refer to a part of interpretation section 1002-Interp-2
 
@@ -591,7 +460,7 @@ def parse_interps(interp_div, part, subpart):
 
     Any interp subgraphs would get picked up too. Subgraph 1 would get this ID:
 
-    {2-a-1-ii-Interp-1}
+    {2-c-1-ii-Interp-1}
     """
 
     section_headings = [
@@ -697,9 +566,10 @@ def ecfr_to_regdown(part_number, file_path=None):
     soup = bS(markup, "lxml-xml")
     parts = soup.find_all('DIV5')
     part_soup = [div for div in parts if div['N'] == part_number][0]
-    PAYLOAD.effective_date = get_effective_date(part_number)
-    part = parse_part(part_soup, part_number)
-    parse_version(part_soup, part)
+    PAYLOAD.get_effective_date(part_number)
+    PAYLOAD.parse_part(part_soup, part_number)
+    part = PAYLOAD.part
+    PAYLOAD.parse_version(part_soup, part)
     # parse_subparts will create and associate sections and appendices
     parse_subparts(part_soup, part)
     msg = (
@@ -719,17 +589,23 @@ def run(*args):
         sys.exit(1)
     elif len(args) == 1:
         if args[0] == 'ALL':
+            starter = datetime.datetime.now()
             for part in LEGACY_PARTS:
                 logger.info("parsing {} from the latest eCFR XML".format(part))
                 logger.info(ecfr_to_regdown(part))
+            logger.info("Overall, parsing took {}".format(
+                datetime.datetime.now() - starter))
         else:
             logger.info("parsing {} from the latest eCFR XML".format(args[0]))
             logger.info(ecfr_to_regdown(args[0]))
     else:
         if args[0] == 'ALL':
+            starter = datetime.datetime.now()
             for part in LEGACY_PARTS:
                 logger.info('parsing {} from local XML file'.format(part))
                 logger.info(ecfr_to_regdown(part, file_path=args[1]))
+            logger.info("Overall, parsing took {}".format(
+                datetime.datetime.now() - starter))
         else:
             logger.info('parsing {} from local XML file'.format(args[0]))
             logger.info(ecfr_to_regdown(args[0], file_path=args[1]))
