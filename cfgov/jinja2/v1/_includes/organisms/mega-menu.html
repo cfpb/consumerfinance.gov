@@ -103,7 +103,8 @@
 {% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text ) %}
 <div class="{{- _classes( nav_depth ) -}} u-hidden-overflow"
      aria-expanded="false"
-     data-js-hook="behavior_flyout-menu_content">
+     data-js-hook="behavior_flyout-menu_content"
+     role="menu">
     <div class="{{- _classes( nav_depth, '-wrapper' ) -}}">
         {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
         {# Open wrapper if needed #}
