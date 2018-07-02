@@ -53,12 +53,12 @@
     <div class="{{ _classes( nav_depth, '-list' ) }}">
 
         {% if group.group_title %}
-        <div class="h5
+        <h4 class="h5
                   {{ base_class ~ '_group-heading' }}
                   {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_group_title else ''}}"
             {% if group.hide_group_title %} aria-hidden="true" {% endif %}>
             {{ group.group_title | safe }}
-        </div>
+        </h4>
         {% endif %}
         <ul class="m-list m-list__unstyled">
             {% if nav_depth == 1 -%}
@@ -118,19 +118,30 @@
         <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) -}}">
 
             {% if nav_depth > 1 %}
-            <span class="{{- _classes( nav_depth, '-overview' ) -}}">
-              {# TODO: Remove the check for '#' when real overview pages
+            <h3 class="{{ _classes( nav_depth, '-overview' ) }}
+                       {{ _classes( nav_depth, '-overview-heading' ) }}
+            ">
+                {# TODO: Remove the check for '#' when real overview pages
                        are added for the Consumer Resources and Education
                        pages. #}
                 {% if nav_overview_url %}
-                <a class="{{ 'u-link__disabled' if nav_overview_url == '#' else '' }}
-                          {{ _classes( nav_depth, '-overview-link' ) }}
-                          {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                    {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
-                    {{ nav_overview_text if nav_overview_url == '#' else nav_overview_text ~ ' Overview' }}
-                </a>
+                    {% if nav_overview_url == '#' %}
+
+                    {# only use a link element when there is an overview page to link to, otherwise we use regular heading text for context #}
+
+                    <span class="{{ _classes( nav_depth, '-overview-heading-text' ) }}">{{ nav_overview_text }}</span>
+
+                    {% else %}
+
+                    <a class="{{ _classes( nav_depth, '-overview-link' ) }}
+                              {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
+                              {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
+                        {{ nav_overview_text ~ ' Overview' }}
+                    </a>
+
+                    {% endif %}
                 {% endif %}
-            </span>
+            </h3>
             {% endif %}
             {% if nav_item.nav_items %}
                 {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}
@@ -219,18 +230,22 @@
 <nav class="{{ base_class }}
             u-hide-on-mobile"
     data-js-hook="behavior_flyout-menu"
-    aria-label="main menu">
-    <button class="{{ base_class ~ '_trigger' }}"
-           data-js-hook="behavior_flyout-menu_trigger"
-           aria-haspopup="menu">
-        <span class="{{ base_class ~ '_trigger-open' }}">
-            {{ svg_icon('menu') }}
-        </span>
-        <span class="{{ base_class ~ '_trigger-close' }}">
-            {{ svg_icon('close') }}
-        </span>
-        <span class="u-visually-hidden">Menu</span>
-   </button>
+    aria-labelledby="{{ base_class ~ '_label' }}">
+    <h2 class="{{ base_class ~ '_heading' }}">
+        <button class="{{ base_class ~ '_trigger' }}"
+               data-js-hook="behavior_flyout-menu_trigger"
+               aria-haspopup="menu">
+            <span class="{{ base_class ~ '_trigger-open' }}">
+                {{ svg_icon('menu') }}
+            </span>
+            <span class="{{ base_class ~ '_trigger-close' }}">
+                {{ svg_icon('close') }}
+            </span>
+            <span class="u-visually-hidden">
+                Main menu
+            </span>
+        </button>
+    </h2>
    {# Create a root menu at depth one.
       This is the 1st level of a 3-level menu. #}
    {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]} ) }}
