@@ -49,17 +49,20 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     def regulation_results_page(self, request):
         all_regs = Part.objects.order_by('part_number')
         regs = []
-        sqs = SearchQuerySet()
-        search_query = request.GET.get('q', '')
-        order = validate_results_order(request)
         if 'regs' in request.GET:
             regs = request.GET.getlist('regs')
+        search_query = request.GET.get('q', '')
+        order = request.GET.get('order', '')
+        sqs = SearchQuerySet()
         if search_query:
-            sqs = sqs.filter(content=search_query).models(Section)
-        else:
-            sqs = sqs.models(Section)
-        if order == 'regulation':
-            sqs = sqs.order_by('part')
+            sqs = sqs.filter(content=search_query)
+        if len(regs) == 1:
+            sqs = sqs.filter(part=regs[0])
+        elif regs:
+            sqs = sqs.filter(part__in=regs)
+            if order == 'regulation':
+                sqs = sqs.order_by('part')
+        sqs = sqs.models(Section)
         payload = {
             'search_query': search_query,
             'results': [],
@@ -73,13 +76,9 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 for reg in all_regs
             ]
         }
-        if len(regs) == 1:
-            sqs = sqs.filter(part=regs[0])
-        elif regs:
-            sqs = sqs.filter(part__in=regs)
         for hit in sqs:
-            label_bits = hit.object.label.partition('-')
-            _part, _section = label_bits[0], label_bits[2]
+            _part = hit.part
+            _section = hit.object.label
             letter_code = LETTER_CODES.get(_part)
             snippet = Truncator(hit.text).words(40, truncate=' ...')
             snippet = snippet.replace('*', '').replace('#', '')
@@ -345,17 +344,3 @@ def validate_page_number(request, paginator):
     except InvalidPage:
         page_number = 1
     return page_number
-
-
-def validate_results_order(request):
-    """
-    A utility for parsing the requested order of results.
-    """
-    valid_orders = [
-        'relevance',
-        'regulation'
-    ]
-    order = request.GET.get('order')
-    if order not in valid_orders:
-        order = valid_orders[0]
-    return order
