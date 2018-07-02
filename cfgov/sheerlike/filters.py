@@ -4,8 +4,6 @@ import re
 
 from dateutil.parser import parse
 
-from .middleware import get_request
-
 
 def generate_term_filters(multidict, filter_keys):
     '''
@@ -108,18 +106,3 @@ def filter_dsl_from_multidict(multidict):
         range_clause = generate_range_filters(multidict, range_filter_keys)
         final_filters.append(range_clause)
     return final_filters
-
-
-def selected_filters_from_multidict(multidict, field):
-    return [k for k in multidict.getlist(field) +
-            multidict.getlist('filter_' + field) if k]
-
-
-def selected_filters_for_field(fieldname):
-    multidict = get_request().GET
-    return selected_filters_from_multidict(multidict, fieldname)
-
-
-def is_filter_selected(fieldname, value):
-    multidict = get_request().GET
-    return value in selected_filters_from_multidict(multidict, fieldname)
