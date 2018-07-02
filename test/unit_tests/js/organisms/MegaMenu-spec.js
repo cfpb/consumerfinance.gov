@@ -52,13 +52,9 @@ const HTML_SNIPPET = `
                                             </button>
 
                                             <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid o-mega-menu_content-2-grid__three-col">
-                                                <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview ">
-                                                    <a class="u-link__disabled
-                                                              o-mega-menu_content-overview-link o-mega-menu_content-2-overview-link
-                                                              ">
-                                                        Consumer Tools
-                                                    </a>
-                                                </span>
+                                                <h3 class="o-mega-menu_content-overview o-mega-menu_content-2-overview o-mega-menu_content-overview-heading o-mega-menu_content-2-overview-heading">
+                                                    <span class="o-mega-menu_content-overview-heading-text o-mega-menu_content-2-overview-heading-text ">Consumer Tools</span>
+                                                </h3>
 
                                                 <div class="o-mega-menu_content-lists o-mega-menu_content-2-lists ">
 
@@ -174,13 +170,9 @@ const HTML_SNIPPET = `
 
                                             <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid o-mega-menu_content-2-grid__three-col">
 
-                                                <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview ">
-                                                    <a class="o-mega-menu_content-overview-link
-                                                              o-mega-menu_content-2-overview-link"
-                                                       href="/data-research/">
-                                                        Data &amp; Research Overview
-                                                    </a>
-                                                </span>
+                                                <h3 class="o-mega-menu_content-overview o-mega-menu_content-2-overview o-mega-menu_content-overview-heading o-mega-menu_content-2-overview-heading">
+                                                    <a class="o-mega-menu_content-overview-link o-mega-menu_content-2-overview-link" href="http://content.consumerfinance.gov/data-research/">Data &amp; Research Overview</a>
+                                                </h3>
 
                                                 <div class="o-mega-menu_content-lists o-mega-menu_content-2-lists ">
 
