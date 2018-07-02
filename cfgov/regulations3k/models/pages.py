@@ -42,8 +42,11 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    def get_template(self, request):
-        return 'regulations3k/search-regulations.html'
+    def get_template(self, request, partial=False):
+        template = 'regulations3k/search-regulations.html'
+        if partial:
+            template = 'regulations3k/search-regulations-results.html'
+        return template
 
     @route(r'^results/')
     def regulation_results_page(self, request):
@@ -106,7 +109,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
 
         return TemplateResponse(
             request,
-            self.get_template(request),
+            self.get_template(request, 'partial' in request.GET),
             context)
 
 

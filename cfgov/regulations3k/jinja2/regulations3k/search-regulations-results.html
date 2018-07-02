@@ -1,0 +1,7 @@
+{% import 'eregs/regulations3k-search-result-item.html' as search_item %}
+
+<div class="results_list">
+    {% for result in results %}
+        {{ search_item.render( result ) }}
+    {% endfor %}
+</div>
