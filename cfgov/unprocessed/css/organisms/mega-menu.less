@@ -45,11 +45,12 @@ body {
     - name: Default example
       markup: |
         <nav class="o-mega-menu"
-             aria-label="main navigation"
              role="navigation">
-            <button class="o-mega-menu_trigger" aria-expanded="false">
-                <span class="u-visually-hidden">Menu</span>
-            </button>
+            <h2 class="o-mega-menu_heading">
+                <button class="o-mega-menu_trigger" aria-expanded="false">
+                    <span class="u-visually-hidden">Main menu</span>
+                </button>
+            </h2>
             <div class="o-mega-menu_content"
                  aria-expanded="false">
                 <div class="o-mega-menu_content-wrapper">
@@ -75,10 +76,12 @@ body {
                                                     </button>
                                                     <div class="o-mega-menu_content-grid">
                                                         <span class="o-mega-menu_content-overview">
-                                                            <a class="o-mega-menu_content-overview-link"
-                                                               href="/about-us/">
-                                                                About Us Overview
-                                                            </a>
+                                                            <h3 class="o-mega-menu_content-overview-heading">
+                                                                <a class="o-mega-menu_content-overview-link"
+                                                                   href="/about-us/">
+                                                                    About Us Overview
+                                                                </a>
+                                                            </h3>
                                                         </span>
                                                         <div class="o-mega-menu_content-lists">
                                                             <ul class="m-list
@@ -129,11 +132,15 @@ body {
           Structural cheat sheet:
           -----------------------
           nav.o-mega-menu
-            .o-mega-menu_trigger
+            .o-mega-menu_heading
+                .o-mega-menu_trigger
             .o-mega-menu_content
                 .o-mega-menu_content-wrapper
                     .wrapper
                         .o-mega-menu-content-grid
+                            .o-mega-menu_content-overview
+                                .o-mega-menu_content-overview-heading
+                                    .o-mega-menu_content-overview-link
                             .o-mega-menu_content-title
                                 a.o-mega-menu_content-link
                             .o-mega-menu_content-lists
@@ -166,6 +173,12 @@ body {
 
 .o-mega-menu {
 
+    &_heading {
+        // Override h2 element styles.
+        margin: 0;
+        font-size: 1em;
+    }
+
     ul ul {
         // Override margin added by CF between lists.
         margin-top: 0;
@@ -174,6 +187,14 @@ body {
     &_content-item {
         // Override margin added by CF to list items.
         margin-bottom: 0;
+    }
+
+    &_content {
+        &-overview-heading {
+            margin-bottom: 0;
+            font-size: unit( @base-font-size-px / @base-font-size-px, em );
+            font-weight: normal;
+        }
     }
 
     // 1st-level menu.
@@ -360,9 +381,9 @@ body {
                 // Colors for :link, :visited, :hover, :focus, :active.
                 .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
 
-                padding-top: @grid_gutter-width / 2;
-                padding-right: @grid_gutter-width / 2;
-                padding-bottom: @grid_gutter-width / 2;
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
                 .js & {
                     &__has-children .cf-icon-svg {
@@ -382,6 +403,13 @@ body {
                     cursor: pointer;
                 }
             }
+
+            &-overview-heading-text {
+                display: block;
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            }
+
         }
 
         // 1st-level menu - Tablet/Mobile.
@@ -609,13 +637,17 @@ body {
                 margin-bottom: @grid_gutter-width * 2 / 3 ;
                 font-size: 1em;
 
+                &-heading {
+                    padding-top: 0;
+                }
+
                 // ------------------------------------------------------------
-                // TODO: Remove when Consumer Tools and Education Resources
-                //       have overview pages post-launch.
+                // TODO: Remove when Consumer Tools and Practitioner Resources
+                //       have overview pages.
                 //       This is temporary code to hide the overview links
                 //       at desktop sizes.
-                .u-link__disabled {
-                    visibility: hidden;
+                &-heading-text {
+                    .u-visually-hidden();
                 }
                 // ------------------------------------------------------------
             }
