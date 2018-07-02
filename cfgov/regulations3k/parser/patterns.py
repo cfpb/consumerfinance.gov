@@ -42,9 +42,7 @@ from __future__ import unicode_literals
 
 import re
 
-from regulations3k.regparser.integer_conversion import (
-    alpha_to_int, roman_to_int
-)
+from regulations3k.parser.integer_conversion import alpha_to_int, roman_to_int
 
 
 class IdLevelState(object):

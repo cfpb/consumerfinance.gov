@@ -9,16 +9,16 @@ import requests
 from bs4 import BeautifulSoup as bS
 
 from regulations3k.models.django import Section, Subpart
-from regulations3k.regparser.integer_conversion import int_to_alpha
-from regulations3k.regparser.paragraphs import (
+from regulations3k.parser.integer_conversion import int_to_alpha
+from regulations3k.parser.paragraphs import (
     bold_first_italics, combine_bolds, graph_top, pre_process_tags
 )
-from regulations3k.regparser.patterns import (
+from regulations3k.parser.patterns import (
     IdLevelState, dot_id_patterns, interp_inferred_section_pattern,
     interp_reference_pattern, paren_id_patterns
 )
-from regulations3k.regparser.payload import CFR_TITLE, PayLoad
-from regulations3k.regparser.regtable import RegTable
+from regulations3k.parser.payload import CFR_TITLE, PayLoad
+from regulations3k.parser.regtable import RegTable
 
 
 logger = logging.getLogger(__name__)

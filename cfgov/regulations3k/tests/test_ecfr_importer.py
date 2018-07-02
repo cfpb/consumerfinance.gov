@@ -13,11 +13,11 @@ from bs4 import BeautifulSoup as bS
 from requests import Response
 
 from regulations3k.models import Part, Subpart
-from regulations3k.regparser.integer_conversion import (
+from regulations3k.parser.integer_conversion import (
     alpha_to_int, int_to_alpha, int_to_roman, roman_to_int
 )
-from regulations3k.regparser.patterns import IdLevelState
-from regulations3k.regparser.regtable import RegTable
+from regulations3k.parser.patterns import IdLevelState
+from regulations3k.parser.regtable import RegTable
 from regulations3k.scripts import ecfr_importer
 from regulations3k.scripts.ecfr_importer import PAYLOAD, divine_interp_tag_use
 
@@ -157,7 +157,7 @@ class ImporterTestCase(DjangoTestCase):
         ecfr_importer.ecfr_to_regdown(part_number)
         self.assertEqual(mock_get.call_count, 2)
 
-    @mock.patch('regulations3k.regparser.payload.requests.get')
+    @mock.patch('regulations3k.parser.payload.requests.get')
     def test_good_effective_date_request(self, mock_get):
         mock_response = mock.Mock(
             Response,
@@ -170,7 +170,7 @@ class ImporterTestCase(DjangoTestCase):
             PAYLOAD.effective_date,
             datetime.date(2018, 1, 1))
 
-    @mock.patch('regulations3k.regparser.payload.requests.get')
+    @mock.patch('regulations3k.parser.payload.requests.get')
     def test_bad_effective_date_request_returns_none(self, mock_get):
         mock_response = mock.Mock(
             Response,

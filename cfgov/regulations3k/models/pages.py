@@ -20,8 +20,8 @@ from wagtail.wagtailcore.models import PageManager
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.models import Part, Section
+from regulations3k.parser.integer_conversion import LETTER_CODES
 from regulations3k.regdown import regdown
-from regulations3k.regparser.integer_conversion import LETTER_CODES
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage, CFGOVPageManager
