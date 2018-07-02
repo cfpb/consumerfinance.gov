@@ -352,10 +352,6 @@ def parse_appendix_graph(p_element, label):
         graph_text += graph + "\n"
     else:
         graph_text += p_element.text + "\n"
-    if pid and PAYLOAD.interp_refs and PAYLOAD.interp_refs.get(label):
-        interp_ref = PAYLOAD.interp_refs.get(label).get(pid)
-        if interp_ref:
-            graph_text += '\n' + interp_ref + '\n'
     return graph_text
 
 
@@ -607,9 +603,8 @@ def parse_interps(interp_div, part, subpart):
     for section_heading in section_headings:
         LEVEL_STATE.current_id = ''
         section_hed = section_heading.text.strip()
-        section_tag = get_interp_section_tag(section_hed)
-        section_label = section_tag
-        interp_section_label = "Interp-{}".format(section_tag)
+        section_label = get_interp_section_tag(section_hed)
+        interp_section_label = "Interp-{}".format(section_label)
         section = Section(
             subpart=subpart,
             label=interp_section_label,
@@ -618,36 +613,36 @@ def parse_interps(interp_div, part, subpart):
         )
         if divine_interp_tag_use(
                 section_heading, part.part_number) == 'appendix':
-            interp_id = '{}-1-Interp'.format(section_tag)
+            interp_id = '{}-1-Interp'.format(section_label)
             LEVEL_STATE.current_id = interp_id
             see = "see({}-1-Interp)".format(section_label)
             ref = {section_label: {'1': see}}
             PAYLOAD.interp_refs.update(ref)
         for element in section_heading.findNextSiblings():
-            if element.name in ['HD1', 'XREF', 'CITA']:
-                continue
             if element in section_headings:
                 section.save()
                 PAYLOAD.interpretations.append(section)
                 break
-            elif (element.name in ['HD2', 'HD3']
+            if element.name in ['HD1', 'XREF', 'CITA']:
+                continue
+            if (element.name in ['HD2', 'HD3']
                     and divine_interp_tag_use(element, part.part_number)
                     in ['graph_id', 'graph_id_inferred_section']):
                 _hed = element.text.strip()
                 interp_id = parse_interp_graph_reference(
-                    element, part.part_number, section_tag)
-                register_interp_reference(interp_id, section_tag)
+                    element, part.part_number, section_label)
+                register_interp_reference(interp_id, section_label)
                 section.contents += '\n{' + interp_id + '}\n'
                 section.contents += "### {}\n".format(_hed)
             elif element.name == 'P':
                 tag_use = divine_interp_tag_use(element, part.part_number)
                 if tag_use in ['graph_id', 'graph_id_inferred_section']:
                     interp_id = parse_interp_graph_reference(
-                        element, part.part_number, section_tag)
-                    register_interp_reference(interp_id, section_tag)
+                        element, part.part_number, section_label)
+                    register_interp_reference(interp_id, section_label)
                     section.contents += '\n{' + interp_id + '}\n'
                     if tag_use == 'graph_id_inferred_section':
-                        element.insert(0, section_tag)
+                        element.insert(0, section_label)
                     p = pre_process_tags(element)
                     section.contents += p.text.strip() + "\n"
                 else:
