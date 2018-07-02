@@ -54,30 +54,30 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         order = validate_results_order(request)
         if 'regs' in request.GET:
             regs = request.GET.getlist('regs')
-        if len(regs) == 1:
-            sqs = sqs.filter(part=regs[0])
-        elif regs:
-            sqs = sqs.filter(part__in=regs)
         if search_query:
-            query_sqs = sqs.filter(content=search_query).models(Section)
+            sqs = sqs.filter(content=search_query).models(Section)
         else:
-            query_sqs = sqs.models(Section)
+            sqs = sqs.models(Section)
         if order == 'regulation':
-            query_sqs = query_sqs.order_by('part')
+            sqs = sqs.order_by('part')
         payload = {
             'search_query': search_query,
             'results': [],
-            'total_results': query_sqs.count(),
+            'total_results': sqs.count(),
             'regs': regs,
             'all_regs': [{
                 'name': "Regulation {}".format(reg.letter_code),
                 'id': reg.part_number,
-                'num_results': query_sqs.filter(part=reg.part_number).count(),
+                'num_results': sqs.filter(part=reg.part_number).count(),
                 'selected': reg.part_number in regs}
                 for reg in all_regs
             ]
         }
-        for hit in query_sqs:
+        if len(regs) == 1:
+            sqs = sqs.filter(part=regs[0])
+        elif regs:
+            sqs = sqs.filter(part__in=regs)
+        for hit in sqs:
             label_bits = hit.object.label.partition('-')
             _part, _section = label_bits[0], label_bits[2]
             letter_code = LETTER_CODES.get(_part)
@@ -312,6 +312,7 @@ def get_reg_nav_items(request, current_page):
 
     return subpart_dict, False
 
+
 def validate_num_results(request):
     """
     A utility for parsing the requested number of results per page.
@@ -325,6 +326,7 @@ def validate_num_results(request):
     except ValueError:
         num_results = 25
     return num_results
+
 
 def validate_page_number(request, paginator):
     """
@@ -343,6 +345,7 @@ def validate_page_number(request, paginator):
     except InvalidPage:
         page_number = 1
     return page_number
+
 
 def validate_results_order(request):
     """
