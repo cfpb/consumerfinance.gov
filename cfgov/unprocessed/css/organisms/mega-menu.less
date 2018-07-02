@@ -191,7 +191,6 @@ body {
 
     &_content {
         &-overview-heading {
-            padding: @grid_gutter-width / 2 0;
             margin-bottom: 0;
             font-size: unit( @base-font-size-px / @base-font-size-px, em );
             font-weight: normal;
@@ -385,9 +384,9 @@ body {
                 // Colors for :link, :visited, :hover, :focus, :active.
                 .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
 
-                padding-top: @grid_gutter-width / 2;
-                padding-right: @grid_gutter-width / 2;
-                padding-bottom: @grid_gutter-width / 2;
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
                 .js & {
                     &__has-children .cf-icon-svg {
@@ -407,9 +406,11 @@ body {
                     cursor: pointer;
                 }
             }
-            &-overview-heading &-overview-link {
-                padding-top: 0;
-                padding-bottom: 0;
+
+            &-overview-heading-text {
+                display: block;
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
             }
 
         }
