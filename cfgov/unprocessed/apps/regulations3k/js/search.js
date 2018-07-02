@@ -9,7 +9,14 @@ function init() {
     event.preventDefault();
     const filters = document.querySelectorAll( 'input:checked' );
     const search = document.querySelector('[name=q]');
-    console.log( utils.getSearchValues( search, filters ) );
+    const searchTerms = utils.getSearchValues( search, filters );
+    const baseUrl = window.location.href.split('?')[0];
+    const searchParams = utils.serializeFormFields( searchTerms );
+    const searchUrl = utils.buildSearchResultsURL( baseUrl, searchParams );
+    utils.fetchSearchResults( searchUrl, ( err, data ) => {
+      console.log( err );
+      console.log( data );
+    } );
   } );
 }
 

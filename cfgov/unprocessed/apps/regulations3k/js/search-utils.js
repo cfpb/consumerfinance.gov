@@ -28,15 +28,13 @@ function getSearchValues( searchEl, filterEls ) {
  * @returns {String} xhr
  */
 function serializeFormFields( fields ) {
-  let params;
-  fields.forEach( field => {
+  fields = fields.map( field => {
     for ( const key in field ) {
-      if ( Object.prototype.hasOwnProperty.call( field, key ) ) {
-        params += `&${ key }=${ field[key] }`;
-      }
+      field = `${ key }=${ field[key] }`;
     }
+    return field;
   } );
-  return encodeURIComponent( params );
+  return fields.join( '&' );
 }
 
 /**
@@ -47,16 +45,21 @@ function serializeFormFields( fields ) {
  * @returns {String} Encoded URL.
  */
 function buildSearchResultsURL( base, params ) {
-  const url = `${ base }${ params }&partial`;
-  return encodeURIComponent( url );
+  return `${ base }?${ params }&partial`;
 }
 
-function fetchSearchResults() {
-  return xhr(
-    'GET',
-    '.',
-    {}
-  );
+/**
+ * Fetches search results partial
+ *
+ * @param {String} url URL's of search results.
+ * @param {Function} cb Function called with the HTML search results partial.
+ * @returns {String} Encoded URL.
+ */
+function fetchSearchResults( url, cb ) {
+  return xhr( 'GET', url, {
+    success: data => cb( null, data ),
+    fail: err => cb( err )
+  } );
 }
 
 module.exports = {
