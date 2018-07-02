@@ -20,6 +20,7 @@ from regulations3k.regparser.patterns import (
 from regulations3k.regparser.payload import CFR_TITLE, PayLoad
 from regulations3k.regparser.regtable import RegTable
 
+
 logger = logging.getLogger(__name__)
 
 # eCFR globals
