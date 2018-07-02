@@ -513,6 +513,7 @@ CSP_STYLE_SRC = (
 # These specify valid image sources
 CSP_IMG_SRC = (
     "'self'",
+    'www.ecfr.gov',
     's3.amazonaws.com',
     'www.gstatic.com',
     'ssl.gstatic.com',
