@@ -1,7 +1,45 @@
 {% import 'eregs/regulations3k-search-result-item.html' as search_item %}
+{% import 'molecules/pagination.html' as pagination with context %}
 
+<div class="results_header">
+    <div class="results_count">
+        <div class="has-results">
+            <h3>
+                Showing
+                <span class="filtered-results-count">
+                    <span class="filtered-results-count_number">
+                        {{ page.results.results | length }}
+                    </span>
+                    results
+                </span>
+            </h3>
+        </div>
+        <!-- <div class="no-results-message">
+            <h3>
+                No results match your filters.
+            </h3>
+            <p>
+                Try adjusting your filters or searching for different terms.
+            </p>
+        </div> -->
+    </div>
+    <!-- <div class="filters_applied">
+        <span class="filters_applied-label">
+            Filters applied:
+        </span>
+        <div id="filter-tag-container">
+
+        </div>
+        <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear">
+            Clear all filters
+        </button>
+    </div> -->
+</div>
 <div class="results_list">
     {% for result in results %}
         {{ search_item.render( result ) }}
     {% endfor %}
+</div>
+<div class="results_paginator">
+    {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
 </div>
