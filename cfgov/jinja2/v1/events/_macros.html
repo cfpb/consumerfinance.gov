@@ -241,31 +241,6 @@
 
 {# ==========================================================================
 
-   event_filter_args()
-
-   ==========================================================================
-
-   Description:
-
-   Create an event agenda table when given
-
-   post: A post from a query result.
-
-   ========================================================================== #}
-
-{% macro event_filter_args(filters) %}
-{%- for filter in filters -%}
-   {%- set selected_filters = selected_filters_for_field(filter) -%}
-   {%- for value in selected_filters -%}
-       {%- if value -%}
-          &{{ filter }}={{ value }}
-       {%- endif -%}
-   {%- endfor -%}
-{%- endfor -%}
-{% endmacro %}
-
-{# ==========================================================================
-
    event_media()
 
    ==========================================================================
