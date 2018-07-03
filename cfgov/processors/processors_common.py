@@ -1,6 +1,3 @@
-from six.moves.urllib.parse import urlsplit, urlunsplit
-
-
 replacements = (
     ('/blog/', '/about-us/blog/'),
     ('/pressrelease/', '/about-us/newsroom/'),
@@ -15,10 +12,3 @@ def update_path(path):
             new_path = path.replace(pattern, substitute)
             return new_path
     return path
-
-
-def fix_link(link):
-    urldata = urlsplit(link['href'])
-    new_href = urlunsplit((urldata.scheme, urldata.netloc, urldata.path,
-                           urldata.query, urldata.fragment))
-    link['href'] = new_href
