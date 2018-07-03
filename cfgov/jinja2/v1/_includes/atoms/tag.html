@@ -1,0 +1,24 @@
+
+{# ==========================================================================
+
+   tag.render()
+
+   ==========================================================================
+
+   Description:
+
+   Renders a small visual tag with an X icon.
+
+   ========================================================================== #}
+
+{% macro render( options ) %}
+<button class="a-tag"
+        type="button"
+        value="{{ options.value }}"
+        {% if options.behavior %}
+        data-js-hook="behavior_{{ options.behavior }}"
+        {% endif %}
+        >
+    {{ options.label }} {{ svg_icon('error') }}
+</button>
+{% endmacro %}

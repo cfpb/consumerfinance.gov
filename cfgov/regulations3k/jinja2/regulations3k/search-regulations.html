@@ -1,6 +1,7 @@
 {% extends 'layout-full.html' %}
 {% import 'atoms/checkbox.html' as checkbox %}
 {% import 'atoms/radio-button.html' as radio %}
+{% import 'atoms/tag.html' as tag %}
 {% import 'eregs/regulations3k-search-bar.html' as search_bar %}
 {% import 'eregs/regulations3k-search-result-item.html' as search_item %}
 {% import 'molecules/pagination.html' as pagination with context %}
@@ -218,17 +219,26 @@
                         </p>
                     </div> -->
                 </div>
-                <!-- <div class="filters_applied">
+                <div class="filters_applied">
                     <span class="filters_applied-label">
                         Filters applied:
                     </span>
-                    <div id="filter-tag-container">
-
+                    <div class="filters_tags">
+                        {% for reg in page.results.all_regs %}
+                            {% if reg.selected %}
+                                {{ tag.render({
+                                    'label': reg.id ~ ' (' ~ reg.name ~ ')',
+                                    'value': reg.id,
+                                    'behavior': 'clear-filter'
+                                }) }}
+                            {% endif %}
+                        {% endfor %}
                     </div>
-                    <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear">
+                    <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear"
+                            data-js-hook="behavior_clear-all">
                         Clear all filters
                     </button>
-                </div> -->
+                </div>
             </div>
             <div class="results_list">
                 {% for result in results %}

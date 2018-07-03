@@ -9,6 +9,16 @@ const searchContainer = find( '#regs3k-results' );
  */
 function init() {
   behavior.attach( 'submit-search', 'submit', handleSubmit );
+  behavior.attach( 'clear-filter', 'click', clearFilter );
+  behavior.attach( 'clear-all', 'click', clearFilters );
+}
+
+function clearFilter( event ) {
+  console.log('cleared!');
+}
+
+function clearFilters( event ) {
+  console.log('cleared all!');
 }
 
 function handleSubmit( event ) {
