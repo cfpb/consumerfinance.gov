@@ -56,7 +56,7 @@ function handleSubmit( event ) {
 }
 
 function showLoading( ) {
-  searchContainer.style.opacity = .3;
+  searchContainer.style.opacity = .5;
 }
 
 function hideLoading( ) {

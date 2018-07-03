@@ -198,59 +198,7 @@
             </form>
         </aside>
         <div id="regs3k-results" class="content_main content__flush-top-on-small content__flush-bottom">
-            <div class="results_header">
-                <div class="results_count">
-                    <div class="has-results">
-                        <h3>
-                            Showing
-                            <span class="filtered-results-count">
-                                <span class="filtered-results-count_number">
-                                    {{ page.results.results | length }}
-                                </span>
-                                results
-                            </span>
-                        </h3>
-                    </div>
-                    <!-- <div class="no-results-message">
-                        <h3>
-                            No results match your filters.
-                        </h3>
-                        <p>
-                            Try adjusting your filters or searching for different terms.
-                        </p>
-                    </div> -->
-                </div>
-                {% if show_filters %}
-                <div class="filters_applied">
-                    <span class="filters_applied-label">
-                        Filters applied:
-                    </span>
-                    <div class="filters_tags">
-                        {% for reg in page.results.all_regs %}
-                            {% if reg.selected %}
-                                {{ tag.render({
-                                    'label': reg.id ~ ' (' ~ reg.name ~ ')',
-                                    'value': reg.id,
-                                    'behavior': 'clear-filter'
-                                }) }}
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear"
-                            data-js-hook="behavior_clear-all">
-                        Clear all filters
-                    </button>
-                </div>
-                {% endif %}
-            </div>
-            <div class="results_list">
-                {% for result in results %}
-                    {{ search_item.render( result ) }}
-                {% endfor %}
-            </div>
-            <div class="results_paginator">
-                {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
-            </div>
+            {% include 'search-regulations-results.html' %}
         </div>
     </div>
 </div>
