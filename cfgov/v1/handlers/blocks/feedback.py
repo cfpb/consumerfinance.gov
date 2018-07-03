@@ -80,7 +80,20 @@ class FeedbackHandler(Handler):
                 )
             except (ValueError, TypeError):
                 pass
-            feedback.referrer = self.request.POST.get('referrer', '')
+
+            # The referrer is set manually here instead of being set on the
+            # ModelForm. Whereas MySQL silently truncates varchar fields that
+            # exceed the column length, Postgres does not and will raise a
+            # "value too long for type character varying" error if an
+            # excessively long referrer is saved.
+            #
+            # This code grabs the referrer from the request and truncates it
+            # to at most the length of the feedback model referrer field.
+            referrer = self.request.POST.get('referrer', '')
+            referrer_field = feedback._meta.get_field('referrer')
+            referrer_max_length = referrer_field.max_length
+            feedback.referrer = referrer[:referrer_max_length]
+
             feedback.page = self.page
             feedback.save()
             return self.success()
