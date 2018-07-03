@@ -1,3 +1,4 @@
+from jinja2 import contextfunction
 from jinja2.ext import Extension
 
 from v1.models import CFGOVRendition
@@ -37,14 +38,28 @@ def image_alt_value(image):
     return ''
 
 
+def is_filter_selected(context, fieldname, value):
+    request_get = context['request'].GET
+
+    query_string_values = [
+        k for k in
+        request_get.getlist(fieldname) +
+        request_get.getlist('filter_' + fieldname)
+        if k
+    ]
+
+    return value in query_string_values
+
+
 class V1FiltersExtension(Extension):
     def __init__(self, environment):
         super(V1FiltersExtension, self).__init__(environment)
 
         self.environment.globals.update({
-            'image_alt_value': image_alt_value,
             'date_formatter': date_formatter,
             'email_popup': email_popup,
+            'image_alt_value': image_alt_value,
+            'is_filter_selected': contextfunction(is_filter_selected),
         })
 
 

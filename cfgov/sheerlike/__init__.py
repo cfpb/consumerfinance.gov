@@ -15,7 +15,6 @@ from flags.template_functions import flag_disabled, flag_enabled
 from jinja2 import Environment
 from jinja2.runtime import Context
 
-from .filters import is_filter_selected, selected_filters_for_field
 from .middleware import get_request
 from .query import QueryFinder, get_document, more_like_this, when
 from .templates import get_date_obj, get_date_string
@@ -101,8 +100,6 @@ def environment(**options):
         'queries': queryfinder,
         'more_like_this': more_like_this,
         'get_document': get_document,
-        'selected_filters_for_field': selected_filters_for_field,
-        'is_filter_selected': is_filter_selected,
         'when': when,
         'flag_enabled': flag_enabled,
         'flag_disabled': flag_disabled,
