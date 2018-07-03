@@ -5,6 +5,7 @@ from django.test import RequestFactory, TestCase
 import mock
 
 from v1.handlers.blocks.feedback import FeedbackHandler, get_feedback_type
+from v1.models import CFGOVPage, Feedback
 
 
 class TestFeedbackHandler(TestCase):
@@ -81,25 +82,6 @@ class TestFeedbackHandler(TestCase):
         form.is_valid.return_value = False
         self.handler.get_response(form)
         mock_fail.assert_called_with(form)
-
-    @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.success')
-    def test_get_response_sets_attrs(self, mock_success):
-        form = mock.Mock()
-        self.handler.get_response(form)
-        self.assertTrue(form.save().is_helpful)
-        self.assertEqual(form.save().page, self.handler.page)
-
-    @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.success')
-    def test_get_response_saves_feedback(self, mock_success):
-        form = mock.Mock()
-        self.handler.get_response(form)
-        self.assertTrue(form.save.called)
-
-    @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.success')
-    def test_get_response_calls_sucess_for_valid(self, mock_success):
-        form = mock.Mock()
-        self.handler.get_response(form)
-        self.assertTrue(mock_success.called)
 
     @mock.patch('v1.handlers.blocks.feedback.HttpResponseRedirect')
     @mock.patch('v1.handlers.blocks.feedback.JsonResponse')
@@ -223,3 +205,46 @@ class TestFeedbackHandler(TestCase):
     def test_get_feedback_type_no_block_value(self):
         block_value = None
         self.assertEqual(get_feedback_type(block_value), 'helpful')
+
+    def _post_feedback(self, page=None, referrer=None, is_helpful=None):
+        page = page or CFGOVPage.objects.first()
+
+        request = self.factory.post(
+            '/',
+            {
+                'referrer': referrer,
+                'is_helpful': is_helpful,
+            },
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+        # Create a block that will use the standard FeedbackForm.
+        block_value = {'was_it_helpful_text': 'Was this helpful?'}
+        handler = FeedbackHandler(page, request, block_value=block_value)
+        response = handler.process(is_submitted=True)
+        self.assertEqual(response.status_code, 200)
+
+        return Feedback.objects.last()
+
+    def test_page_gets_saved_with_feedback(self):
+        page = CFGOVPage.objects.last()
+        feedback = self._post_feedback(page=page)
+        self.assertEqual(feedback.page.pk, page.pk)
+
+    def test_is_helpful_gets_saved_with_feedback(self):
+        feedback = self._post_feedback(is_helpful=True)
+        self.assertTrue(feedback.is_helpful)
+
+        feedback = self._post_feedback(is_helpful=False)
+        self.assertFalse(feedback.is_helpful)
+
+        feedback = self._post_feedback(is_helpful=None)
+        self.assertIsNone(feedback.is_helpful)
+
+    def test_referrer_gets_saved_with_feedback(self):
+        feedback = self._post_feedback(referrer='foo')
+        self.assertEqual(feedback.referrer, 'foo')
+
+    def test_referrer_gets_truncated_if_excessively_long(self):
+        feedback = self._post_feedback(referrer='x' * 1000)
+        self.assertEqual(feedback.referrer, 'x' * 255)

@@ -27,6 +27,12 @@ class TestFilterByTags(TestCase):
             [self.snippet1, self.snippet2]
         )
 
+    def test_case_insensitive_matching(self):
+        self.assertSequenceEqual(
+            Resource.objects.filter_by_tags(['TaGa']),
+            [self.snippet1, self.snippet2]
+        )
+
     def test_nothing_returned_when_tag_is_unused(self):
         self.assertSequenceEqual(
             Resource.objects.filter_by_tags(['tagC']),

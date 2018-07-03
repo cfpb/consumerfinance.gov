@@ -5,6 +5,7 @@
 {% import 'eregs/regulations3k-search-bar.html' as search_bar with context %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'macros/time.html' as time %}
 
 {% block body_classes %}
     {{ super() }}  data-turbolinks="false"
@@ -39,7 +40,17 @@
 
 {% block content_main %}
     {% if section %}
+    <div class="search-this-regulation">
+        <a href="#">
+            {% include 'icons/search.svg' %}
+            Search {{ regulation }}
+        </a>
+    </div>
     <h1>{{section.title}}</h1>
+    <div class="a-date effective-date">
+        Effective date:
+        {{ time.render(section.subpart.version.effective_date, {'date':true, 'time':false, 'timezone':false}) }}
+    </div>
 
     <section class="block block__flush-top">
         {{content|safe}}
