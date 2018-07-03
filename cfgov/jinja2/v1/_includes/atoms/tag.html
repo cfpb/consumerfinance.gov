@@ -9,16 +9,23 @@
 
    Renders a small visual tag with an X icon.
 
+   label:       The tag's text content.
+
+   value:       The tag's underlying value. Optional.
+
+   behavior:    The checkbox's JS behavior. Optional.
+
    ========================================================================== #}
 
 {% macro render( options ) %}
+
+{%- set behavior = 'data-js-hook=behavior_' ~ options.behavior if options.behavior else '' -%}
+{%- set value = 'value=' ~ options.value if options.value else '' -%}
+
 <button class="a-tag"
         type="button"
-        value="{{ options.value }}"
-        {% if options.behavior %}
-        data-js-hook="behavior_{{ options.behavior }}"
-        {% endif %}
-        >
+        {{ value }}
+        {{ behavior }}>
     {{ options.label }} {{ svg_icon('error') }}
 </button>
 {% endmacro %}

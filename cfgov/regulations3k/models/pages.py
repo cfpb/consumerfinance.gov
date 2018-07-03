@@ -105,6 +105,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             'num_results': num_results,
             'order': order,
             'results': paginated_page,
+            'show_filters': any(reg['selected'] is True for reg in payload['all_regs'])
         })
 
         return TemplateResponse(

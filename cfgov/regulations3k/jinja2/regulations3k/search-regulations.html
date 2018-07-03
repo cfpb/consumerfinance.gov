@@ -110,6 +110,7 @@
                                     'id': 'regulation-' ~ reg.id,
                                     'class': 'reg-checkbox',
                                     'name': 'regs',
+                                    'behavior': 'submit-search',
                                     'selected': reg.selected
                                 }) }}
                                 <div class="num-results">{{ reg.num_results }}</div>
@@ -185,7 +186,7 @@
                     </fieldset>
                 </div>
                 {% endcall %}
-                <div class="o-form_group">
+                <div class="o-form_group regs3k-js">
                     <fieldset class="o-form_fieldset u-mt20">
                         <div class="input-with-btn_btn">
                             <button class="a-btn" type="submit">
@@ -219,6 +220,7 @@
                         </p>
                     </div> -->
                 </div>
+                {% if show_filters %}
                 <div class="filters_applied">
                     <span class="filters_applied-label">
                         Filters applied:
@@ -239,6 +241,7 @@
                         Clear all filters
                     </button>
                 </div>
+                {% endif %}
             </div>
             <div class="results_list">
                 {% for result in results %}

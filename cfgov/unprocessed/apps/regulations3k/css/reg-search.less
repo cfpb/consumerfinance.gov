@@ -13,7 +13,7 @@
 
 .filters_applied {
     padding: 30px 15px;
-    border-bottom: 1px solid #b4b5b6;
+    border-bottom: 1px solid @gray-40;
     &-label {
         display: inline-block;
         margin-right: 15px;
@@ -27,7 +27,7 @@
 
 .search_results {
     .content_sidebar {
-        padding: 45px 15px;
+        padding: 45px 15px 0;
         border: 1px solid #b4b5b6;
         background-color: #f7f8f9;
         .o-expandable_content,
@@ -49,7 +49,7 @@
             border-bottom: 1px solid @gray-40;
             margin-bottom: 15px;
             &:last-child {
-                border: 0;
+                border-bottom: none;
             }
         }
     }
@@ -88,6 +88,18 @@
         margin: 0 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         padding: 0 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         max-width: 41.875rem;
+    }
+}
+
+/* PWA */
+
+.regs3k-js {
+    display: none;
+}
+
+.no-js {
+    .regs3k-js {
+        display: block;
     }
 }
 

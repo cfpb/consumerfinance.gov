@@ -1,20 +1,33 @@
 import * as behavior from '../../../js/modules/util/behavior';
 import * as utils from './search-utils';
-import { queryOne as find } from '../../../js/modules/util/dom-traverse';
+import { closest, queryOne as find } from '../../../js/modules/util/dom-traverse';
 
+// Container that holds search results
 const searchContainer = find( '#regs3k-results' );
 
-/**
- * Set up event handler to override search form submission.
- */
 function init() {
+  // Override search form submission
   behavior.attach( 'submit-search', 'submit', handleSubmit );
+  behavior.attach( 'submit-search', 'change', handleSubmit );
+  // Attach search results handlers
+  attachHandlers();
+}
+
+function attachHandlers() {
   behavior.attach( 'clear-filter', 'click', clearFilter );
   behavior.attach( 'clear-all', 'click', clearFilters );
 }
 
 function clearFilter( event ) {
-  console.log('cleared!');
+  // Continue only if the X icon was clicked
+  if ( event.target.tagName === 'BUTTON' ) {
+    return;
+  }
+  const target = closest( event.target, 'button' );
+  const checkbox = find( `#regulation-${ target.value }` );
+  target.remove();
+  checkbox.checked = false;
+  handleSubmit( event );
 }
 
 function clearFilters( event ) {
@@ -36,6 +49,8 @@ function handleSubmit( event ) {
       return handleError( 'search' );
     }
     searchContainer.innerHTML = data;
+    // Reattach event handlers after tags are reloaded
+    attachHandlers();
     return data;
   } );
 }
