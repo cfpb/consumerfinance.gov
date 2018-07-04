@@ -8,7 +8,7 @@ const MegaMenuDesktop = require( '../organisms/MegaMenuDesktop' );
 const MegaMenuMobile = require( '../organisms/MegaMenuMobile' );
 const MoveTransition = require( '../modules/transition/MoveTransition' );
 const TabTrigger = require( '../modules/TabTrigger' );
-const Tree = require( '../modules/Tree' );
+const TreeDomModel = require( '../modules/TreeDomModel' );
 const standardType = require( '../modules/util/standard-type' );
 
 /**
@@ -27,7 +27,7 @@ function MegaMenu( element ) {
   const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   // Tree data model.
-  let _menus;
+  let _model;
 
   // Screen-size specific behaviors.
   let _desktopNav;
@@ -50,9 +50,6 @@ function MegaMenu( element ) {
     const rootMenuDom = _dom;
     const rootContentDom = rootMenuDom.querySelector( '.' + BASE_CLASS + '_content' );
 
-    // Create model.
-    _menus = new Tree();
-
     // Create root menu.
     const transition = new MoveTransition( rootContentDom ).init();
     const rootMenu = new FlyoutMenu( rootMenuDom ).init();
@@ -61,14 +58,16 @@ function MegaMenu( element ) {
     rootMenu.setCollapseTransition( transition, transition.moveLeft );
     _addEvents( rootMenu );
 
-    // Populate tree model with menus.
-    const rootNode = _menus.init( rootMenu ).getRoot();
-    rootMenu.setData( rootNode );
-    _populateTreeFromDom( rootMenuDom, rootNode, _addMenu );
+    // Create a tree-dom model and populate with menus.
+    const model = new TreeDomModel();
+    const selector = `[${ standardType.JS_HOOK }=${ FlyoutMenu.BASE_CLASS }]`;
+    model.init( _dom, rootMenu, selector, _addMenu );
+    const menusTree = model.getTree();
+    rootMenu.setData( menusTree.getRoot() );
 
     // Initialize screen-size specific behaviors.
-    _desktopNav = new MegaMenuDesktop( _menus ).init();
-    _mobileNav = new MegaMenuMobile( _menus ).init();
+    _desktopNav = new MegaMenuDesktop( menusTree ).init();
+    _mobileNav = new MegaMenuMobile( menusTree ).init();
     _mobileNav.addEventListener(
       'rootExpandBegin',
       _handleRootExpandBegin.bind( this )
@@ -99,50 +98,23 @@ function MegaMenu( element ) {
   }
 
   /**
-   * Perform a recursive depth-first search of the DOM
-   * and call a function for each node.
-   * @param {HTMLNode} dom - A DOM element to search from.
-   * @param {TreeNode} parentNode
-   *   Node in a tree from which to attach new nodes.
-   * @param {Function} callback - Function to call on each node.
-   *   Must return a TreeNode.
-   */
-  function _populateTreeFromDom( dom, parentNode, callback ) {
-    const children = dom.children;
-    if ( !children ) {
-      return;
-    }
-    let child;
-    for ( let i = 0, len = children.length; i < len; i++ ) {
-      let newParentNode = parentNode;
-      child = children[i];
-      newParentNode = callback.call( this, child, newParentNode );
-      _populateTreeFromDom( child, newParentNode, callback );
-    }
-  }
-
-  /**
    * Create a new FlyoutMenu and attach it to a new tree node.
    * @param {HTMLNode} dom
-   *   A DOM element to check for a js data-* attribute hook.
-   * @param {TreeNode} parentNode
-   *   The parent node in a tree on which to attach a new menu.
+   *   The dom element on which to initialize the FlyoutMenu behavior.
+   * @param {TreeNode} treeNode
+   *   The node in a tree on which to attach a new menu.
    * @returns {TreeNode} Return the processed tree node.
    */
-  function _addMenu( dom, parentNode ) {
-    let newParentNode = parentNode;
-    let transition;
-    if ( dataHook.contains( dom, FlyoutMenu.BASE_CLASS ) ) {
-      const menu = new FlyoutMenu( dom ).init();
-      transition = new MoveTransition( menu.getDom().content ).init();
-      menu.setExpandTransition( transition, transition.moveToOrigin );
-      menu.setCollapseTransition( transition, transition.moveLeft );
-      _addEvents( menu );
-      newParentNode = newParentNode.tree.add( menu, newParentNode );
-      menu.setData( newParentNode );
-    }
+  function _addMenu( dom, treeNode ) {
+    const menu = new FlyoutMenu( dom ).init();
+    let transition = new MoveTransition( menu.getDom().content ).init();
+    menu.setExpandTransition( transition, transition.moveToOrigin );
+    menu.setCollapseTransition( transition, transition.moveLeft );
+    _addEvents( menu );
+    treeNode.data = menu;
+    menu.setData( treeNode );
 
-    return newParentNode;
+    return treeNode;
   }
 
   /**
