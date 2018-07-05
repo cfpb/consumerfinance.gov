@@ -9,7 +9,9 @@ django-csp==3.1
 django-braces==1.0.0
 django-extensions==1.5.5
 django-haystack==2.6.0
+django-js-asset==1.1.0
 django-localflavor==1.1
+django-mptt==0.9.0
 django-overextends==0.4.1
 django-storages==1.1.8
 django-treebeard==3.0

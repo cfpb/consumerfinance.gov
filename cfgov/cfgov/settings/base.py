@@ -99,7 +99,7 @@ OPTIONAL_APPS = [
     {'import': 'regulations3k', 'apps': ('regulations3k', 'treemodeladmin')},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
-    {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', )},
+    {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', 'mptt')},
 ]
 
 POSTGRES_APPS = []
