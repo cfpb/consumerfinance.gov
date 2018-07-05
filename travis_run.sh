@@ -16,6 +16,6 @@ elif [ "$RUNTEST" == "backend" ]; then
     tox -e missing-migrations
     bash <(curl -s https://codecov.io/bash) -F backend
 
-    pip install -r requirements/manual.txt
-    mkdocs build
+    # pip install -r requirements/manual.txt
+    # mkdocs build
 fi

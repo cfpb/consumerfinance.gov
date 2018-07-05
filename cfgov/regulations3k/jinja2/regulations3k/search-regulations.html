@@ -1,7 +1,10 @@
 {% extends 'layout-full.html' %}
 {% import 'atoms/checkbox.html' as checkbox %}
+{% import 'atoms/radio-button.html' as radio %}
 {% import 'eregs/regulations3k-search-bar.html' as search_bar %}
 {% import 'eregs/regulations3k-search-result-item.html' as search_item %}
+{% import 'molecules/pagination.html' as pagination with context %}
+{% from 'organisms/expandable.html' import expandable with context %}
 
 {# HEAD items #}
 
@@ -66,7 +69,7 @@
         <div class="lead-paragraph">
             <p>
                 <span class="search_intro__all">
-                    Search for terms in the sections, interpretations, and appendices across the 12 Bureau regulations we currently have online.
+                    Search for terms in the sections, interpretations, and appendices in the Bureau regulations we currently have online.
                 </span>
             </p>
         </div>
@@ -83,15 +86,14 @@
     <div class="block block__flush-top">
         <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
             <h3>Refine results</h3>
-            {% set expandable_settings = {
-                'label': 'Regulation',
-                'is_expanded': true,
-                'is_midtone': true,
-                'hide_cue_label': true
-            } %}
-            {% from 'organisms/expandable.html' import expandable with context %}
-            {% call() expandable(expandable_settings) %}
             <form action="." method="get" data-js-hook="behavior_submit-search">
+                {% set expandable_settings = {
+                    'label': 'Regulation',
+                    'is_expanded': true,
+                    'is_midtone': true,
+                    'hide_cue_label': true
+                } %}
+                {% call() expandable(expandable_settings) %}
                 <div class="o-form_group">
                     <fieldset class="o-form_fieldset">
                         {% if page.results.search_query %}
@@ -114,6 +116,75 @@
                         {% endfor %}
                         </ul>
                     </fieldset>
+                </div>
+                {% endcall %}
+                {% set expandable_settings = {
+                    'label': 'Results per page',
+                    'is_expanded': false,
+                    'is_midtone': true,
+                    'hide_cue_label': true
+                } %}
+                {% call() expandable(expandable_settings) %}
+                <div class="o-form_group">
+                    <fieldset class="o-form_fieldset">
+                        <p> </p>
+                        {{ radio.render({
+                            'label': '25 per page',
+                            'value': '25',
+                            'id': 'results_25',
+                            'class': 'reg-radio',
+                            'name': 'results',
+                            'selected': true if (num_results == 25)
+                        }) }}
+                        {{ radio.render({
+                            'label': '50 per page',
+                            'value': '50',
+                            'id': 'results_50',
+                            'class': 'reg-radio',
+                            'name': 'results',
+                            'selected': true if (num_results == 50)
+                        }) }}
+                        {{ radio.render({
+                            'label': '100 per page',
+                            'value': '100',
+                            'id': 'results_100',
+                            'class': 'reg-radio',
+                            'name': 'results',
+                            'selected': true if (num_results == 100)
+                        }) }}
+                    </fieldset>
+                </div>
+                {% endcall %}
+                {% set expandable_settings = {
+                    'label': 'Order',
+                    'is_expanded': false,
+                    'is_midtone': true,
+                    'hide_cue_label': true
+                } %}
+                {% call() expandable(expandable_settings) %}
+                <div class="o-form_group">
+                    <fieldset class="o-form_fieldset">
+                        <p> </p>
+                        {{ radio.render({
+                            'label': 'By relevance',
+                            'value': 'relevance',
+                            'id': 'sort_rel',
+                            'class': 'reg-radio',
+                            'name': 'order',
+                            'selected': true if (order == 'relevance')
+                        }) }}
+                        {{ radio.render({
+                            'label': 'By regulation',
+                            'value': 'regulation',
+                            'id': 'sort_reg',
+                            'class': 'reg-radio',
+                            'name': 'order',
+                            'selected': true if (order == 'regulation')
+                        }) }}
+                    </fieldset>
+                </div>
+                {% endcall %}
+                <div class="o-form_group">
                     <fieldset class="o-form_fieldset u-mt20">
                         <div class="input-with-btn_btn">
                             <button class="a-btn" type="submit">
@@ -123,7 +194,6 @@
                     </fieldset>
                 </div>
             </form>
-            {% endcall %}
         </aside>
         <div class="content_main content__flush-top-on-small content__flush-bottom">
             <div class="results_header">
@@ -161,9 +231,12 @@
                 </div> -->
             </div>
             <div class="results_list">
-                {% for result in page.results.results %}
+                {% for result in results %}
                     {{ search_item.render( result ) }}
                 {% endfor %}
+            </div>
+            <div class="results_paginator">
+                {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
             </div>
         </div>
     </div>
