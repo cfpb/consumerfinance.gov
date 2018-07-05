@@ -1,0 +1,175 @@
+    
+<?xml version="1.0" encoding="UTF-8" ?>
+<DLPSTEXTCLASS>
+
+
+<HEADER>
+<FILEDESC>
+<TITLESTMT>
+<TITLE>
+Title 12: Banks and Banking</TITLE>
+<AUTHOR TYPE="nameinv">
+</AUTHOR>
+</TITLESTMT>
+<PUBLICATIONSTMT>
+<PUBLISHER>
+</PUBLISHER>
+<PUBPLACE>
+</PUBPLACE>
+<IDNO TYPE="title">
+12</IDNO>
+<DATE></DATE>
+</PUBLICATIONSTMT>
+<SERIESSTMT>
+<TITLE>
+</TITLE>
+</SERIESSTMT>
+
+</FILEDESC>
+
+<PROFILEDESC>
+<TEXTCLASS>
+<KEYWORDS>
+</KEYWORDS>
+</TEXTCLASS>
+</PROFILEDESC>
+</HEADER>
+
+
+<TEXT>
+<BODY>
+<ECFRBRWS>
+<AMDDATE>Apr. 9, 2018
+</AMDDATE>
+
+<DIV1 N="1" NODE="12:1" TYPE="TITLE">
+
+<HEAD>Title 12 - Banks and Banking--Volume 1</HEAD>
+<CFRTOC>
+<PTHD>Part
+</PTHD>
+<CHAPTI>
+<SUBJECT><E T="04">chapter i</E> - Comptroller of the Currency, Department of the Treasury 
+</SUBJECT>
+<PG>1
+
+
+</PG></CHAPTI></CFRTOC>
+
+<DIV3 N="I" NODE="12:1.0.1" TYPE="CHAPTER">
+
+<HEAD> CHAPTER I - COMPTROLLER OF THE CURRENCY, DEPARTMENT OF THE TREASURY</HEAD>
+
+<DIV5 N="1002" NODE="12:1.0.1.1.1" TYPE="PART">
+<HEAD>PART 1002 - INVESTMENT SECURITIES
+</HEAD>
+<AUTH>
+<HED>Authority:</HED><PSPACE>12 U.S.C. 1 <I>et seq.,</I> 24 (Seventh), and 93a. 
+</PSPACE></AUTH>
+<SOURCE>
+<HED>Source:</HED><PSPACE>61 FR 63982, Dec. 2, 1996, unless otherwise noted.
+
+
+</PSPACE></SOURCE>
+
+<DIV9 N="" NODE="12:8.0.2.6.3.2.1.1.6" TYPE="APPENDIX">
+<HEAD>Supplement I to Part 1002 - Official Interpretations
+</HEAD>
+<P>Following is an official interpretation of Regulation B (12 CFR part 1002) issued by the Bureau of Consumer Financial Protection. References are to sections of the regulation or the Equal Credit Opportunity Act (15 U.S.C. 1601 <I>et seq.</I>).
+</P>
+<HD1>Introduction
+</HD1>
+<P>1.<I>Official status.</I> Section 706(e) of the Equal Credit Opportunity Act protects a creditor from civil liability for any act done or omitted in good faith in conformity with an interpretation issued by a duly authorized official of the Bureau. This commentary is the means by which the Bureau of Consumer Financial Protection issues official interpretations of Regulation B. Good-faith compliance with this commentary affords a creditor protection under section 706(e) of the Act.
+</P>
+<P>2. <I>Issuance of interpretations.</I> Under appendix D to the regulation, any person may request an official interpretation. Interpretations will be issued at the discretion of designated officials and incorporated in this commentary following publication for comment in the <E T="04">Federal Register.</E> Except in unusual circumstances, official interpretations will be issued only by means of this commentary.
+</P>
+<P>3. <I>Comment designations.</I> The comments are designated with as much specificity as possible according to the particular regulatory provision addressed. Each comment in the commentary is identified by a number and the regulatory section or paragraph that it interprets. For example, comments to § 1002.2(c) are further divided by subparagraph, such as comment 2(c)(1)(ii)-1 and comment 2(c)(2)(ii-1.
+</P>
+<HD2>Section 1002.1 - Authority, Scope, and Purpose
+</HD2>
+<P><I>1(a) Authority and scope.</I>
+</P>
+<P>1. <I>Scope.</I> The Equal Credit Opportunity Act and Regulation B apply to all credit - commercial as well as personal - without regard to the nature or type of the credit or the creditor, except for an entity excluded from coverage of this part (but not the Act) by section 1029 of the Consumer Financial Protection Act of 2010 (12 U.S.C. 5519). If a transaction provides for the deferral of the payment of a debt, it is credit covered by Regulation B even though it may not be a credit transaction covered by Regulation Z (Truth in Lending) (12 CFR part 1026). Further, the definition of creditor is not restricted to the party or person to whom the obligation is initially payable, as is the case under Regulation Z. Moreover, the Act and regulation apply to all methods of credit evaluation, whether performed judgmentally or by use of a credit scoring system.
+</P>
+<P>2. <I>Foreign applicability.</I> Regulation B generally does not apply to lending activities that occur outside the United States. The regulation does apply to lending activities that take place within the United States (as well as the Commonwealth of Puerto Rico and any territory or possession of the United States), whether or not the applicant is a citizen.
+</P>
+<P>3. <I>Bureau.</I> The term <I>Bureau,</I> as used in this part, means the Bureau of Consumer Financial Protection.
+</P>
+<HD1>Appendix C - Sample Notification Forms
+</HD1>
+<P>1. <I>Form C-9.</I> If not otherwise provided under other applicable disclosure requirements, creditors may design their own form, add to, or modify the model form to reflect their individual policies and procedures. For example, a creditor may want to add:
+</P>
+<P>i. A telephone number that applicants may call to leave their name and the address to which a copy of the appraisal or other written valuation should be sent.
+</P>
+<P>ii. A notice of the cost the applicant will be required to pay the creditor for the appraisal or other valuation
+</P>
+<D>A test non-paragraph.
+</D>
+<CITA TYPE="N">[76 FR 79445, Dec. 21, 2011, as amended at 78 FR 7248, Jan. 31, 2013; 82 FR 45695, Oct. 2, 2017]
+</CITA>
+</DIV9>
+</DIV5>
+
+
+
+<DIV5 N="1030" NODE="12:9.0.1.1.2" TYPE="PART">
+<HEAD>PART 1030 - TRUTH IN SAVINGS (REGULATION DD)
+</HEAD>
+<AUTH>
+<HED>Authority:</HED><PSPACE>12 U.S.C. 4302-4304, 4308, 5512, 5581.
+</PSPACE></AUTH>
+<SOURCE>
+<HED>Source:</HED><PSPACE>76 FR 79278, Dec. 21, 2011, unless otherwise noted.
+</PSPACE></SOURCE>
+
+<DIV9 N="" NODE="12:9.0.1.1.2.0.1.12.26" TYPE="APPENDIX">
+<HEAD>Supplement I to Part 1030 - Official Interpretations
+</HEAD>
+<HD1>Introduction
+</HD1>
+<P>1. <I>Official status.</I> This commentary is the means by which the Bureau of Consumer Financial Protection issues official interpretations of Regulation DD.
+</P>
+<HD2>Section 1030.1 Authority, purpose, coverage, and effect on state laws
+</HD2>
+<HD3>(c) Coverage
+</HD3>
+<P>1. <I>Foreign applicability.</I> Regulation DD applies to all depository institutions, except credit unions, that offer deposit accounts to residents (including resident aliens) of any state as defined in § 1030.2(r). Accounts held in an institution located in a state are covered, even if funds are transferred periodically to a location outside the United States. Accounts held in an institution located outside the United States are not covered, even if held by a U.S. resident.
+</P>
+<P>2. <I>Persons who advertise accounts.</I> Persons who advertise accounts are subject to the advertising rules. For example, if a deposit broker places an advertisement offering consumers an interest in an account at a depository institution, the advertising rules apply to the advertisement, whether the account is to be held by the broker or directly by the consumer.
+</P>
+<HD2>Section 1030.2 - Definitions
+</HD2>
+<P>(a) Account.
+</P>
+<P>1. <I>Covered accounts.</I> Examples of accounts subject to the regulation are:
+</P>
+<P>i. Interest-bearing and noninterest-bearing accounts.
+</P>
+<P>ii. Deposit accounts opened as a condition of obtaining a credit card.
+</P>
+<P>(b) Advertisement.
+</P>
+<P>1. <I>Covered messages.</I> Advertisements include commercial messages in visual, oral, or print media that invite, offer, or otherwise announce generally to prospective customers the availability of consumer accounts - such as:
+</P>
+<P>i. Telephone solicitations.
+</P>
+<P>ii. Messages on automated teller machine (ATM) screens.
+</P>
+<P><I>(f) Bonus.</I>
+</P>
+<P>1. <I>Examples.</I> Bonuses include items of value, other than interest, offered as incentives to consumers, such as an offer to pay the final installment deposit for a holiday club account. Items that are not a bonus include discount coupons for goods or services at restaurants or stores.
+</P>
+<P>2. <I>De minimis rule.</I> Items with a <I>de minimis</I> value of $10 or less are not bonuses. Institutions may rely on the valuation standard used by the Internal Revenue Service to determine if the value of the item is <I>de minimis.</I> Examples of items of <I>de minimis</I> value are:
+</P>
+</DIV9>
+</DIV5>
+
+</DIV3>
+</DIV1>
+</ECFRBRWS>
+</BODY>
+</TEXT>
+</DLPSTEXTCLASS>
+
+
+

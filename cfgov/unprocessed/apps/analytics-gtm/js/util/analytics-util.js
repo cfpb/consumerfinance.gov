@@ -50,9 +50,9 @@ function Delay() {
 /**
  * TODO: Merge with Analytics.js.
  * Track an analytics event and log the event.
- * @param {string} event Type of event.
- * @param {string} action Name of event.
- * @param {string} label DOM element label.
+ * @param {string} event - Type of event.
+ * @param {string} action - Name of event.
+ * @param {string} label - DOM element label.
  */
 function track( event, action, label ) {
   window.dataLayer.push( {

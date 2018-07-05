@@ -111,6 +111,7 @@ function BaseTransition( element, classes ) {
    * complete handler immediately if transition not supported.
    */
   function _addEventListener() {
+    _dom.classList.add( BaseTransition.ANIMATING_CLASS );
     _isAnimating = true;
     // If transition is not supported, call handler directly (IE9/OperaMini).
     if ( _transitionEndEvent ) {
@@ -137,6 +138,7 @@ function BaseTransition( element, classes ) {
    */
   function _transitionComplete() {
     _removeEventListener();
+    _dom.classList.remove( BaseTransition.ANIMATING_CLASS );
     this.dispatchEvent( BaseTransition.END_EVENT, { target: this } );
     _isAnimating = false;
   }
@@ -249,5 +251,6 @@ function BaseTransition( element, classes ) {
 BaseTransition.BEGIN_EVENT = 'transitionBegin';
 BaseTransition.END_EVENT = 'transitionEnd';
 BaseTransition.NO_ANIMATION_CLASS = 'u-no-animation';
+BaseTransition.ANIMATING_CLASS = 'u-is-animating';
 
 module.exports = BaseTransition;

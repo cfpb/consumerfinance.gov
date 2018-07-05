@@ -9,7 +9,7 @@ ROOT_PAGE = HomePage.objects.live().first()
 menu_items = [
     {
         'link_text': 'Consumer Tools',
-        'external_link': '#',
+        'external_link': '',
         'order': 1,
         'featured_content': {
             'type': 'featured_content',
@@ -214,7 +214,7 @@ menu_items = [
     },
     {
         'link_text': 'Practitioner Resources',
-        'external_link': '#',
+        'external_link': '',
         'order': 2,
         'featured_content': {
             'type': 'featured_content',
@@ -737,7 +737,13 @@ menu_items = [
                             },
                             'nav_items': []
                         },
-
+                        {
+                            'link': {
+                                'link_text': 'Diversity & Inclusion',
+                                'external_link':
+                                    '/about-us/diversity-and-inclusion/'
+                            }
+                        },
                     ]
                 }
             },
@@ -911,8 +917,6 @@ def migrate_menu():
         wagtail_page = get_wagtail_page(item)
         if wagtail_page:
             menu_item.page_link = wagtail_page
-        else:
-            menu_item.external_link = str(item['external_link'])
         for i, group in enumerate(item['nav_groups']):
             replace_external_links(group['value'])
             column_block = getattr(menu_item, 'column_{}'.format(i + 1))

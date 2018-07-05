@@ -3,6 +3,67 @@
    Regulations search
    ========================================================================== */
 
+/* Search page */
+
+.search_wrapper {
+    &.o-well {
+        max-width: 100%;
+    }
+}
+
+.search_results {
+    .content_sidebar {
+        padding: 45px 15px;
+        border: 1px solid #b4b5b6;
+        background-color: #f7f8f9;
+        .o-expandable_content,
+        .o-expandable_target {
+            border: 0;
+            padding: 0;
+            &-animated {
+                padding: 0;
+            }
+        }
+        .reg-checkbox {
+            display: inline-block;
+        }
+        .num-results {
+            float: right;
+        }
+    }
+    .content_main {
+        &:after {
+            border: 0;
+        }
+        border: 0;
+        border-top: 1px solid #b4b5b6;
+        padding-top: 0;
+    }
+    .results_count {
+        padding: 15px 15px 0 15px;
+        border-right: 1px solid #b4b5b6;
+        border-bottom: 1px solid #b4b5b6;
+        background-color: #e2efd8;
+    }
+    .results_list {
+        padding: unit( @grid_gutter-width / @base-font-size-px, em )
+                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        li {
+            list-style-type: none;
+        }
+    }
+    .results_item {
+        margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        &+ .results_item {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            h4 {
+                padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+                border-top: 1px solid #b4b5b6;
+            }
+        }
+    }
+}
+
 /* Footer search bar */
 
 .o-search-bar {

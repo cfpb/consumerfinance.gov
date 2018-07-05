@@ -88,7 +88,6 @@ OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
-    {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
      'complaintdatabase', 'complaint_common',)},
@@ -179,22 +178,6 @@ DATABASES = {}
 # If DATABASE_URL is defined in the environment, use it to set the Django DB.
 if os.getenv('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config()
-# Otherwise, support the legacy use of MySQL-specific environment variables.
-elif os.getenv('MYSQL_NAME'):
-    DATABASES['default'] =  {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_NAME', ''),
-        'USER': os.environ.get('MYSQL_USER', ''),
-        'PASSWORD': os.environ.get('MYSQL_PW', ''),
-        'HOST': os.environ.get('MYSQL_HOST', ''),
-        'PORT': os.environ.get('MYSQL_PORT', ''),
-    }
-
-    if 'STORAGE_ENGINE' in os.environ:
-        DATABASES['default']['OPTIONS'] = {
-            'init_command': os.environ['STORAGE_ENGINE'],
-        }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -310,10 +293,6 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 
 STATIC_VERSION = ''
 
-# DJANGO HUD API
-DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
-# in seconds, 2592000 == 30 days. Google allows no more than a month of caching
-DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     'a/assets/hud/{format}s/{zipcode}.{format}'
@@ -510,13 +489,12 @@ CSP_SCRIPT_SRC = ("'self'",
                   'api.mapbox.com',
                   'js-agent.newrelic.com',
                   'dnn506yrbagrg.cloudfront.net',
-                  '*.doubleclick.net',
                   'bam.nr-data.net',
                   '*.youtube.com',
                   '*.ytimg.com',
                   'trk.cetrk.com',
                   'universal.iperceptions.com',
-                  'sample.crazyegg.com',
+                  'cdn.mouseflow.com',
                   'about:',
                   'connect.facebook.net',
                   'www.federalregister.gov',
@@ -535,6 +513,7 @@ CSP_STYLE_SRC = (
 # These specify valid image sources
 CSP_IMG_SRC = (
     "'self'",
+    'www.ecfr.gov',
     's3.amazonaws.com',
     'www.gstatic.com',
     'ssl.gstatic.com',
@@ -727,8 +706,8 @@ EMAIL_POPUP_URLS = {
 
 REGULATIONS_REFERENCE_MAPPING = [
     (
-        r'(?P<label>(?P<part>^[0-9]+)-(?P<section>[\w]+))-(?P<paragraph>[\w-]*-Interp)',
-        '{part}-Interp-{section}',
+        r'(?P<section>[\w]+)-(?P<paragraph>[\w-]*-Interp)',
+        'Interp-{section}',
         '{section}-{paragraph}'
     ),
 ]

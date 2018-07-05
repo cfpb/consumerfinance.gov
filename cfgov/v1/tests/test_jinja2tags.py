@@ -1,6 +1,7 @@
 from datetime import date
 
-from django.test import RequestFactory, TestCase
+from django.template import engines
+from django.test import RequestFactory, TestCase, override_settings
 
 from model_mommy import mommy
 
@@ -69,3 +70,47 @@ class TestEmailPopup(TestCase):
     def test_email_popup_defined_and_returns_empty_for_no_popup(self):
         request = RequestFactory().get('/page/without/a/popup')
         self.assertEqual(email_popup(request), '')
+
+
+@override_settings(
+    TEMPLATES=[
+        {
+            'NAME': 'test',
+            'BACKEND': 'django.template.backends.jinja2.Jinja2',
+            'OPTIONS': {
+                'extensions': [
+                    'v1.jinja2tags.filters',
+                ],
+            },
+        },
+    ]
+)
+class TestIsFilterSelected(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.jinja_engine = engines['test']
+
+    def _render_template_with_request(self, request):
+        s = '{{ is_filter_selected("foo", "bar") }}'
+        template = self.jinja_engine.from_string(s)
+        return template.render({'request': request})
+
+    def test_query_parameter_undefined_not_selected(self):
+        request = self.factory.get('/')
+        self.assertEqual(self._render_template_with_request(request), 'False')
+
+    def test_query_parameter_defined_with_expected_value(self):
+        request = self.factory.get('/?foo=bar')
+        self.assertEqual(self._render_template_with_request(request), 'True')
+
+    def test_query_parameter_defined_with_unexpected_value(self):
+        request = self.factory.get('/?foo=baz')
+        self.assertEqual(self._render_template_with_request(request), 'False')
+
+    def test_query_parameter_defined_multiple_times(self):
+        request = self.factory.get('/?foo=bar&foo=baz')
+        self.assertEqual(self._render_template_with_request(request), 'True')
+
+    def test_query_parameter_also_works_with_filter_prefix(self):
+        request = self.factory.get('/?filter_foo=bar')
+        self.assertEqual(self._render_template_with_request(request), 'True')

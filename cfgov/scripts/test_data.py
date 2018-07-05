@@ -132,8 +132,7 @@ def add_menu_item_snippet():
     }
     for i in range(1, 6):
         menu_item = MenuItem(
-            link_text='Menu Item {}'.format(i),
-            external_link='#',
+            link_text='Menu Item {}'.format(i)
         )
         menu_item.column_1 = StreamValue(
             menu_item.column_1.stream_block,

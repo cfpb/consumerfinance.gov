@@ -32,12 +32,6 @@ class TestArgParsing(TestCase):
         assert('2014-6-1' == filter_dsl[1]['range']['date']['lte'])
         assert('100' == filter_dsl[1]['range']['comment_count']['gt'])
 
-    def test_filters_for_field(self):
-        selected = filters.selected_filters_from_multidict(
-            self.args, 'category')
-        assert (('cats') in selected)
-        assert (('dogs') in selected)
-
 
 class TestDateValidation(TestCase):
 

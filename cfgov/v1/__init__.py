@@ -25,7 +25,6 @@ from jinja2 import Markup, contextfunction
 
 from core.templatetags.svg_icon import svg_icon
 from core.utils import signed_redirect, unsigned_redirect
-from processors.processors_common import fix_link
 from sheerlike import environment as sheerlike_environment
 from v1.fragment_cache_extension import FragmentCacheExtension
 from v1.routing import get_protected_url
@@ -183,8 +182,6 @@ def add_link_markup(tags):
             tag.contents = [span, NavigableString(' ')]
             # Appends the SVG icon
             tag.contents.append(BeautifulSoup(svg_icon(icon), 'html.parser'))
-        elif not FILES_LINK_PATTERN.match(tag['href']):
-            fix_link(tag)
 
 
 @contextfunction
