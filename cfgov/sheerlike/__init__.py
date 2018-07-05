@@ -6,8 +6,6 @@ import os.path
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.template import RequestContext, loader
-from django.utils.html import mark_safe
 
 import jinja2.runtime
 from flags.template_functions import flag_disabled, flag_enabled
@@ -20,14 +18,6 @@ from .templates import get_date_obj, get_date_string
 
 
 default_app_config = 'sheerlike.apps.SheerlikeConfig'
-
-
-def global_render_template(name, **kwargs):
-    request = get_request()
-    context = RequestContext(request, kwargs or None)
-    context['request'] = request
-    template = loader.get_template(name, using='wagtail-env')
-    return mark_safe(template.render(context.flatten()))
 
 
 class SheerlikeContext(Context):
@@ -89,7 +79,6 @@ def environment(**options):
         'when': when,
         'flag_enabled': flag_enabled,
         'flag_disabled': flag_disabled,
-        'global_include': global_render_template,
     })
     env.filters.update({
         'date': get_date_string,

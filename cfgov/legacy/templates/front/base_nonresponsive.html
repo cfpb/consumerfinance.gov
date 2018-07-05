@@ -1,7 +1,6 @@
-{% load static from staticfiles %}
-{% load global_include %}
-
+{% load header_footer %}
 {% load i18n %}
+{% load static from staticfiles %}
 {% load staticversions %}
 {% load remit_var %}
 
@@ -128,7 +127,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <![endif]-->
 
 <!--[if IE 9]><script src="{% static 'js/ie/common.ie9.js'  %}"></script><![endif]-->
-        {% global_include "on-demand/header.html" %}
+        {% include_header %}
     <div id="page">
         {% block app_notification %}
         {% endblock %}
@@ -148,7 +147,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     </div><!-- /#page -->
-        {% global_include "on-demand/footer.html" %}
+        {% include_footer %}
 
     {% block app_modal %}
     {% endblock %}
