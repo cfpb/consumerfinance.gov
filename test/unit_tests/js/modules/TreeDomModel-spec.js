@@ -17,7 +17,7 @@ const HTML_SNIPPET = `
 describe( 'TreeDomModel', () => {
   let model;
   let rootDomNode;
-  let rootMockData = {};
+  const rootMockData = {};
 
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
@@ -32,7 +32,9 @@ describe( 'TreeDomModel', () => {
     } );
 
     it( 'should have a properly initialized', () => {
-      model.init( rootDomNode, rootMockData, 'div', () => {} );
+      model.init( rootDomNode, rootMockData, 'div', () => {
+        // Empty node process function.
+      } );
       expect( model.getTree() instanceof Tree ).toBe( true );
     } );
   } );
@@ -46,22 +48,22 @@ describe( 'TreeDomModel', () => {
      *    /
      *   C
      */
-     it( 'should have a properly initialized tree', () => {
-       let id = 0;
-       model.init( rootDomNode, rootMockData, '[data-js-hook=test-node]',
-       ( dom, node ) => {
-         // This is mock data that's checked in the expectations below.
-         node.data = ++id;
-       } );
-       let tree = model.getTree();
-       let root = tree.getRoot();
-       let A = root.children[0];
-       let B = root.children[1];
-       let C = A.children[0];
-       expect( root.data ).toBe( rootMockData );
-       expect( A.data ).toBe( 1 );
-       expect( B.data ).toBe( 3 );
-       expect( C.data ).toBe( 2 );
-     } );
+    it( 'should have a properly initialized tree', () => {
+      let id = 0;
+      model.init( rootDomNode, rootMockData, '[data-js-hook=test-node]',
+        ( dom, node ) => {
+          // This is mock data that's checked in the expectations below.
+          node.data = ++id;
+        } );
+      const tree = model.getTree();
+      const root = tree.getRoot();
+      const A = root.children[0];
+      const B = root.children[1];
+      const C = A.children[0];
+      expect( root.data ).toBe( rootMockData );
+      expect( A.data ).toBe( 1 );
+      expect( B.data ).toBe( 3 );
+      expect( C.data ).toBe( 2 );
+    } );
   } );
 } );

@@ -107,7 +107,7 @@ function MegaMenu( element ) {
    */
   function _addMenu( dom, treeNode ) {
     const menu = new FlyoutMenu( dom ).init();
-    let transition = new MoveTransition( menu.getDom().content ).init();
+    const transition = new MoveTransition( menu.getDom().content ).init();
     menu.setExpandTransition( transition, transition.moveToOrigin );
     menu.setCollapseTransition( transition, transition.moveLeft );
     _addEvents( menu );

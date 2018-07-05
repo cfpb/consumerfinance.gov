@@ -16,13 +16,16 @@ function TreeDomModel() {
   /**
    * @param {HTMLNode} dom - A dom tree to copy into a tree model.
    * @param {Object} data - Data to attach to the root node.
-   * @param {Function} procFunc - Function to call on each dom node.
+   * @param {string} selector
+   *   A CSS selector to check that DOM nodes match against,
+   *   if they match, include the node in the tree.
+   * @param {Function} nodeProcessFunc - Function to call on each dom node.
    * @returns {TreeDomModel} An instance.
    */
-  function init( dom, data, selector, procFunc ) {
+  function init( dom, data, selector, nodeProcessFunc ) {
     _tree = new Tree();
     _tree.init( data );
-    _populateTreeFromDom( dom, _tree.getRoot(), selector, procFunc );
+    _populateTreeFromDom( dom, _tree.getRoot(), selector, nodeProcessFunc );
 
     return this;
   }
@@ -33,12 +36,12 @@ function TreeDomModel() {
    * @param {HTMLNode} dom - A DOM element to search from.
    * @param {TreeNode} parentNode
    *   Node in a tree from which to attach new nodes.
-   * @param {TreeNode} selector
+   * @param {string} selector
    *   A CSS selector to check that DOM nodes match against,
    *   if they match, include the node in the tree.
-   * @param {Function} callback - Function to call on each node.
+   * @param {Function} nodeProcessFunc - Function to call on each node.
    */
-  function _populateTreeFromDom( dom, parentNode, selector, callback ) {
+  function _populateTreeFromDom( dom, parentNode, selector, nodeProcessFunc ) {
     const children = dom.children;
     // IE11 does not have children on SVG nodes.
     if ( !children ) {
@@ -52,16 +55,16 @@ function TreeDomModel() {
       const matchesSelector = _getMatchesMethod( child );
       if ( matchesSelector.bind( child )( selector ) ) {
         childNode = parentNode.tree.add( null, parentNode );
-        callback( child, childNode );
+        nodeProcessFunc( child, childNode );
       }
-      _populateTreeFromDom( child, childNode, selector, callback );
+      _populateTreeFromDom( child, childNode, selector, nodeProcessFunc );
     }
   }
 
   /**
    * Retrieve the correct Element.matches function.
    * @param {HTMLNode} elem - A DOM element.
-   * @return {Function} The Element.matches function available in this browser.
+   * @returns {Function} The Element.matches function available in this browser.
    */
   function _getMatchesMethod( elem ) {
     return elem.matches ||
@@ -71,7 +74,7 @@ function TreeDomModel() {
   }
 
   /**
-   * @return {Tree} Tree data structure of dom structure.
+   * @returns {Tree} Tree data structure of dom structure.
    */
   function getTree() {
     return _tree;
