@@ -55,15 +55,16 @@ env:
 jobs:
   fast_finish: true
   include:
-    - stage: run tests
+    - stage: Run Tests
       env: RUNTEST=frontend
     - env:
-      - RUNTEST=backend
-      - TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner
+        - RUNTEST=backend
+        - TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner
+    - stage: Docs Deploy
+      if: tag IS present
+      env: RUNTEST=docs
       deploy:
         provider: pages
         local_dir: site
         skip-cleanup: true
         github_token: $GITHUB_TOKEN
-        on:
-          branch: master
