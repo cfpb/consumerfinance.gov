@@ -62,13 +62,13 @@
                 -}}
             {%- endblock -%}
           ">
-    <link rel="canonical" href="{{ request.url | lower }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri() | lower }}">
 
 {# Open Graph properties #}
     {# Required Open Graph properties #}
     <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:url" content="{{ request.url | lower }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri() | lower }}">
 {% block og_image %}
 {% if page and page.meta_image %}
     {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}

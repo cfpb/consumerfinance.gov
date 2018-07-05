@@ -9,7 +9,7 @@ from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpRequest, HttpResponse
 from django.template.defaultfilters import slugify
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from django.utils import html, timezone
 from django.utils.translation import ugettext as _
 
@@ -544,7 +544,8 @@ class AnswerModelTestCase(TestCase):
             update_spanish_page=True)
         spanish_answer.save()
         spanish_page = spanish_answer.spanish_page
-        soup = bs(spanish_page.serve(HttpRequest()).rendered_content)
+        request = RequestFactory().get('/')
+        soup = bs(spanish_page.serve(request).rendered_content)
         self.assertIn('Oficina', soup.title.string)
 
     def test_spanish_answer_page_handles_referrer_with_unicode_accents(self):
