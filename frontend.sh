@@ -98,7 +98,6 @@ should_rebuild() {
     echo 'Rebuilding due to CHECKSUM not matching'
     echo "$DEP_CHECKSUM"
     cat node_modules/CHECKSUM
-    cat package*.json cfgov/unprocessed/apps/**/package*.json
   fi
   [ ! -f node_modules/NODE_ENV ] ||
   [ ! -f node_modules/CHECKSUM ] ||
