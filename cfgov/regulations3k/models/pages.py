@@ -20,7 +20,7 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
-from regulations3k.models import Part, Section
+from regulations3k.models import Part, Section, SectionParagraph
 from regulations3k.parser.integer_conversion import LETTER_CODES
 from regulations3k.regdown import regdown
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
@@ -49,10 +49,11 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     def regulation_results_page(self, request):
         all_regs = Part.objects.order_by('part_number')
         regs = []
-        if 'regs' in request.GET:
-            regs = request.GET.getlist('regs')
-        search_query = request.GET.get('q', '')
         order = request.GET.get('order', '')
+        sqs = SearchQuerySet()
+        if 'regs' in request.GET and request.GET.get('regs'):
+            regs = request.GET.getlist('regs')
+        search_query = request.GET.get('q', '')  # haystack cleans this string
         sqs = SearchQuerySet()
         if search_query:
             sqs = sqs.filter(content=search_query)
@@ -60,9 +61,9 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             sqs = sqs.filter(part=regs[0])
         elif regs:
             sqs = sqs.filter(part__in=regs)
-            if order == 'regulation':
-                sqs = sqs.order_by('part')
-        sqs = sqs.models(Section)
+        if order == 'regulation':
+            sqs = sqs.order_by('part', 'section_order')
+        sqs = sqs.models(SectionParagraph)
         payload = {
             'search_query': search_query,
             'results': [],
@@ -77,17 +78,15 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             ]
         }
         for hit in sqs:
-            _part = hit.part
-            _section = hit.object.label
-            letter_code = LETTER_CODES.get(_part)
-            snippet = Truncator(hit.text).words(40, truncate=' ...')
-            snippet = snippet.replace('*', '').replace('#', '')
+            letter_code = LETTER_CODES.get(hit.part)
+            snippet = Truncator(hit.text).words(50, truncate=' ...')
             hit_payload = {
-                'id': hit.object.pk,
+                'id': hit.paragraph_id,
                 'reg': 'Regulation {}'.format(letter_code),
                 'label': hit.title,
                 'snippet': snippet,
-                'url': "/regulations/{}/{}/".format(_part, _section),
+                'url': "/regulations/{}/{}/#{}".format(
+                    hit.part, hit.section_label, hit.paragraph_id),
             }
             payload['results'].append(hit_payload)
         self.results = payload
@@ -319,12 +318,11 @@ def validate_num_results(request):
     This should catch an invalid number of results and always return
     a valid number of results, defaulting to 25.
     """
-    raw_results = request.GET.get('results', 25)
-    try:
-        num_results = int(raw_results)
-    except ValueError:
-        num_results = 25
-    return num_results
+    raw_results = request.GET.get('results')
+    if raw_results in ['50', '100']:
+        return int(raw_results)
+    else:
+        return 25
 
 
 def validate_page_number(request, paginator):

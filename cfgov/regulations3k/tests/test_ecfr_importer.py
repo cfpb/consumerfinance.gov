@@ -198,13 +198,22 @@ class ImporterTestCase(DjangoTestCase):
             status_code=404,
             ok=False)
         mock_get.return_value = mock_response
-        part_number = '1003'  # This part exists in the test fixture
+        part_number = '1003'  # This part exists in the loaded fixture
         ecfr_importer.ecfr_to_regdown(part_number, file_path=self.xml_fixture)
         self.assertEqual(Part.objects.filter(
             part_number=part_number).count(), 1)
 
-    def test_part_parser_create_new(self):
-        part_number = '1002'  # This part does not exist in the test fixture
+    @mock.patch('regulations3k.scripts.ecfr_importer.requests.get')
+    def test_part_parser_create_new(self, mock_get):
+        """Check that a regulation part that isn't loaded gets created."""
+        part_number = '1002'  # This part does not exist in the loaded fixture
+        mock_response = mock.Mock(  # mock the effective_date request
+            Response,
+            reason='REQUESTS FOR HUMANS MY EYE',
+            ok=True)
+        mock_response.json.return_value = {'results':
+                                           [{'effective_on': '2018-06-01'}]}
+        mock_get.return_value = mock_response
         ecfr_importer.ecfr_to_regdown(part_number, file_path=self.xml_fixture)
         self.assertEqual(Part.objects.filter(
             part_number=part_number).count(), 1)
