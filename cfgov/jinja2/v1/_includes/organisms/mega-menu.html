@@ -101,17 +101,15 @@
    ========================================================================== #}
 
 {% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text ) %}
-<div class="{{- _classes( nav_depth ) -}} u-hidden-overflow"
+<section class="{{- _classes( nav_depth ) -}} u-hidden-overflow"
      aria-expanded="false"
-     data-js-hook="behavior_flyout-menu_content"
-     role="menu">
+     data-js-hook="behavior_flyout-menu_content">
     <div class="{{- _classes( nav_depth, '-wrapper' ) -}}">
         {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
         {# Open wrapper if needed #}
         {% if nav_depth > 1 %}
         <button class="{{- _classes( nav_depth, '-alt-trigger' ) -}}"
-                data-js-hook="behavior_flyout-menu_alt-trigger"
-                role="menuitem">
+                data-js-hook="behavior_flyout-menu_alt-trigger">
             {{ svg_icon('left') }}
             Back
         </button>
@@ -165,7 +163,7 @@
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render() }}
     {% endif %}
-</div>
+</section>
 {% endmacro %}
 
 {# ==========================================================================
@@ -203,8 +201,7 @@
              'data-js-hook=behavior_flyout-menu_trigger
               aria-haspopup=menu'
              if has_children else ''
-           }}
-           role="menuitem">
+           }}>
               {{ text }}
               {{ svg_icon('right') }}
         </a>
