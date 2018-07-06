@@ -138,9 +138,9 @@ function MegaMenuMobile( menus ) {
         );
       }
 
-      // TODO: Investigate helper functions to mask these crazy long lookups!
-      // Do we really want to remove the overflow here? We're also adding it
-      // in the collapse end.
+      /* TODO: Investigate helper functions to mask these crazy long lookups!
+         Do we really want to remove the overflow here? We're also adding it
+         in the collapse end. */
       menuNode.parent.data.getDom()
         .content.classList.remove( 'u-hidden-overflow' );
     }
@@ -177,7 +177,7 @@ function MegaMenuMobile( menus ) {
       _bodyDom.addEventListener( 'click', _handleBodyClick );
     }
 
-    menuDom.content.classList.add('u-is-animating');
+    menuDom.content.classList.add( 'u-is-animating' );
   }
 
   /**
@@ -195,7 +195,7 @@ function MegaMenuMobile( menus ) {
       menuDom.altTrigger.focus();
     }
 
-    menuDom.content.classList.remove('u-is-animating');
+    menuDom.content.classList.remove( 'u-is-animating' );
   }
 
   /**
@@ -212,7 +212,7 @@ function MegaMenuMobile( menus ) {
       _bodyDom.removeEventListener( 'click', _handleBodyClick );
     }
 
-    menuDom.content.classList.add('u-is-animating');
+    menuDom.content.classList.add( 'u-is-animating' );
   }
 
   /**
@@ -241,7 +241,7 @@ function MegaMenuMobile( menus ) {
       menuDom.trigger.focus();
     }
 
-    menuDom.content.classList.remove('u-is-animating');
+    menuDom.content.classList.remove( 'u-is-animating' );
   }
 
   /**

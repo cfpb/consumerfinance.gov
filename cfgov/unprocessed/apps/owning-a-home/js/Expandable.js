@@ -114,12 +114,11 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     _calcHeight();
     duration = duration || _calculateExpandDuration( _contentHeight );
     this.dispatchEvent( 'expandBegin', { target: _that } );
-    DT.nextFrame( () =>
-      _transitionHeight(
-        _expandComplete,
-        duration,
-        'cubic-bezier(0.190, 1.000, 0.220, 1.000)'
-      )
+    DT.nextFrame( () => _transitionHeight(
+      _expandComplete,
+      duration,
+      'cubic-bezier(0.190, 1.000, 0.220, 1.000)'
+    )
     );
 
     /* on the next frame (as soon as the previous style change has taken effect),
@@ -146,8 +145,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     _setMaxHeight();
     duration = duration || _calculateCollapseDuration( _contentHeight );
     this.dispatchEvent( 'collapseBegin', { target: _that } );
-    DT.nextFrame( () =>
-      _transitionHeight( _collapseComplete, duration, 'ease-in' )
+    DT.nextFrame( () => _transitionHeight( _collapseComplete, duration, 'ease-in' )
     );
 
     /* on the next frame (as soon as the previous style change has taken effect),

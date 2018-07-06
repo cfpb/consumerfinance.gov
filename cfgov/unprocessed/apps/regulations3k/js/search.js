@@ -5,8 +5,8 @@ import * as behavior from '../../../js/modules/util/behavior';
  */
 function init() {
   behavior.attach( 'submit-search', 'submit', event => {
-    // event.preventDefault();
-    // console.log('submitted!');
+    /* event.preventDefault();
+       console.log('submitted!'); */
   } );
 }
 

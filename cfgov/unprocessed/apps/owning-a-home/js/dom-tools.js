@@ -64,8 +64,7 @@ function removeClass( selector, className ) {
   applyAll(
     getEls( selector ),
     element => {
-      fastDom.mutate( () =>
-        element.classList.remove( ...className )
+      fastDom.mutate( () => element.classList.remove( ...className )
       );
     } );
 }
@@ -79,10 +78,8 @@ function addClass( selector, className ) {
 
   applyAll(
     getEls( selector ),
-    element =>
-      fastDom.mutate( () =>
-        element.classList.add( ...className )
-      )
+    element => fastDom.mutate( () => element.classList.add( ...className )
+    )
   );
 }
 
