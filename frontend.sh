@@ -65,7 +65,9 @@ install() {
 
 # Calculate checksum value.
 calc_checksum() {
-  DEP_CHECKSUM=$(cat package*.json cfgov/unprocessed/apps/*/package*.json | shasum -a 256)
+  ls package*.json cfgov/unprocessed/apps/*/package*.json
+  ls package*.json cfgov/unprocessed/apps/*/package*.json | sort
+  DEP_CHECKSUM=$(cat $(ls package*.json cfgov/unprocessed/apps/*/package*.json | sort) | shasum -a 256)
 }
 
 # Add a checksum file
