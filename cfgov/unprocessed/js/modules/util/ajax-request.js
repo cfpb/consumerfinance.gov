@@ -34,7 +34,7 @@ function ajaxRequest( type, url, opts ) {
           opts.success( xhr.responseText );
         }
       } else if ( typeof opts.fail === 'function' ) {
-        opts.fail( xhr.statusText );
+        opts.fail( xhr.status );
       }
       if ( typeof opts.done === 'function' ) opts.done();
     }
