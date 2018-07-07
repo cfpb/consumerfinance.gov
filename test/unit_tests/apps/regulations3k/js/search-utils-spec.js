@@ -32,6 +32,25 @@ describe( 'The Regs3K search utils', () => {
     expect( URL ).toEqual( 'foo?bar&partial' );
   } );
 
+  it( 'should show an element loading', () => {
+    let el = { style: { opacity: 1 }};
+    el = utils.showLoading( el );
+    expect( el.style.opacity ).toEqual( 0.5 );
+  } );
+
+  it( 'should stop an element loading', () => {
+    let el = { style: { opacity: 0.5 }};
+    el = utils.hideLoading( el );
+    expect( el.style.opacity ).toEqual( 1 );
+  } );
+
+  it( 'should handle errors', () => {
+    const searchError = utils.handleError( 'no-results' );
+    expect( searchError.msg ).toEqual( 'Your query returned zero results.' );
+    const unknownError = utils.handleError();
+    expect( unknownError.msg ).toEqual( 'Sorry, our search engine is temporarily down.' );
+  } );
+
   it( 'should fetch search results', done => {
     const mockXHR = {
       open: jest.fn(),

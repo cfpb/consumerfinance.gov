@@ -37,44 +37,22 @@ function clearFilters( event ) {
 function handleSubmit( event ) {
   event.preventDefault();
   const filters = document.querySelectorAll( 'input:checked' );
-  const searchField = find( '[name=q]' );
+  const searchField = find( 'input[name=q]' );
   const searchTerms = utils.getSearchValues( searchField, filters );
   const baseUrl = window.location.href.split( '?' )[0];
   const searchParams = utils.serializeFormFields( searchTerms );
   const searchUrl = utils.buildSearchResultsURL( baseUrl, searchParams );
-  showLoading();
+  utils.showLoading( searchContainer );
   utils.fetchSearchResults( searchUrl, ( err, data ) => {
-    hideLoading();
+    utils.hideLoading( searchContainer );
     if ( err ) {
-      return handleError( 'search' );
+      console.error( utils.handleError( 'search' ).msg );
     }
     searchContainer.innerHTML = data;
     // Reattach event handlers after tags are reloaded
     attachHandlers();
     return data;
   } );
-}
-
-function showLoading( ) {
-  searchContainer.style.opacity = .5;
-}
-
-function hideLoading( ) {
-  searchContainer.style.opacity = 1;
-}
-
-function handleError( err ) {
-  switch ( err ) {
-    case 'no-results':
-      console.log('Your query returned zero results.');
-      break;
-    case 'search':
-      console.log('Sorry, our search engine is temporarily down.');
-      break;
-    default:
-      console.log('Sorry, an error occurred.');
-      break;
-  }
 }
 
 window.addEventListener( 'load', () => {
