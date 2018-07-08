@@ -220,8 +220,10 @@
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [
-            '{{ static('apps/regulations3k/js/index.js') }}',
-            '{{ static('apps/regulations3k/js/search.js') }}'
+            '{{ static('apps/regulations3k/js/index.js') }}'
+            {% if page.results.search_query %}
+            ,'{{ static('apps/regulations3k/js/search.js') }}'
+            {% endif %}
           ];
           jsl(s);
         }()
