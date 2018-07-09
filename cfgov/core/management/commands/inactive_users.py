@@ -142,7 +142,7 @@ class Command(BaseCommand):
             prefix=settings.EMAIL_SUBJECT_PREFIX)
         msg = "Hello,\n\n" + \
             "Your consumerfinance.gov Wagtail account has not been " + \
-            " accessedfor more than {} days. In accordance with " + \
+            "accessed for more than {} days. In accordance with " + \
             "information security policies, if you take no action, your " + \
             "account will be deactivated after 90 days of inactivity.\n\n" + \
             "To keep your account active, please log in at " + \
