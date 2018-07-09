@@ -5,18 +5,20 @@ import sys
 import unittest
 
 # from django.core.urlresolvers import reverse
-from django.http import HttpRequest  # Http404, HttpResponse
+from django.core.paginator import Paginator
+from django.http import HttpRequest, QueryDict  # Http404, HttpResponse
 from django.test import TestCase as DjangoTestCase
 
 import mock
 from model_mommy import mommy
 
 from regulations3k.models.django import (
-    EffectiveVersion, Part, Section, Subpart, sortable_label
+    EffectiveVersion, Part, Section, SectionParagraph, Subpart, sortable_label
 )
 from regulations3k.models.pages import (
     RegulationLandingPage, RegulationPage, RegulationsSearchPage,
-    get_next_section, get_previous_section, get_reg_nav_items
+    get_next_section, get_previous_section, get_reg_nav_items,
+    validate_num_results, validate_page_number
 )
 
 
@@ -77,8 +79,26 @@ class RegModelTests(DjangoTestCase):
             Section,
             label='4',
             title='\xa7\xa01002.4 General rules.',
-            contents='regdown content.',
+            contents=(
+                '{a}\n(a) Regdown paragraph a.\n'
+                '{b}\n(b) Paragraph b\n'
+                '{c}\n(c) Paragraph c.\n'
+                '{d}\n(1) General rule. A creditor that provides in writing.\n'
+            ),
             subpart=self.subpart,
+        )
+        self.graph_to_keep = mommy.make(
+            SectionParagraph,
+            section=self.section_num4,
+            paragraph_id='d',
+            paragraph=(
+                '(1) General rule. A creditor that provides in writing.')
+        )
+        self.graph_to_delete = mommy.make(
+            SectionParagraph,
+            section=self.section_num4,
+            paragraph_id='x',
+            paragraph='(x) Non-existent graph that should get deleted.'
         )
         self.section_num15 = mommy.make(
             Section,
@@ -151,6 +171,18 @@ class RegModelTests(DjangoTestCase):
             self.assertEqual(
                 self.section_num4.__str__(),
                 '\xa7\xa01002.4 General rules.'.encode('utf8'))
+
+    def test_section_export_graphs(self):
+        test_counts = self.section_num4.extract_graphs()
+        self.assertEqual(test_counts['section'], self.section_num4.title)
+        self.assertEqual(test_counts['created'], 3)
+        self.assertEqual(test_counts['deleted'], 1)
+        self.assertEqual(test_counts['kept'], 1)
+
+    def test_section_paragraph_str(self):
+        self.assertEqual(
+            self.graph_to_keep.__str__(),
+            "Section 1002-4 paragraph d")
 
     def test_subpart_headings(self):
         for each in Subpart.objects.all():
@@ -249,19 +281,32 @@ class RegModelTests(DjangoTestCase):
             'Appendix B to Part 1002-Errata'
         )
 
-    @mock.patch('regulations3k.models.pages.SearchQuerySet')
-    def test_routable_search_page_calls_elasticsearch(self, mock_ES):
+    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
+    def test_routable_search_page_calls_elasticsearch(self, mock_sqs):
         mock_return = mock.Mock()
+        mock_return.part = '1002'
+        mock_return.text = ('Now is the time for all good men to come to the '
+                            'aid of their country.')
+        mock_return.paragraph_id = 'a'
+        mock_return.title = 'Section 1002.1 Now is the time.'
+        mock_return.section_label = '1'
         mock_queryset = mock.Mock()
         mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_sqs_instance = mock_ES()
-        mock_sqs_instance.filter.return_value.models.return_value = (
-            mock_queryset)
-        response = self.client.get(self.reg_search_page.reverse_subpage(
-            'regulation_results_page'),
-            {'q': 'disclosure', 'regs': '1002,1003'})
-        self.assertEqual(mock_ES.call_count, 1)
-        self.assertEqual(response.status_code, 404)
+        mock_queryset.count.return_value = 1
+        mock_sqs.return_value = mock_queryset
+        response = self.client.get(
+            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+                'regulation_results_page'),
+            {'q': 'disclosure', 'regs': '1002', 'order': 'regulation'})
+        self.assertEqual(mock_sqs.call_count, 1)
+        self.assertEqual(response.status_code, 200)
+        response2 = self.client.get(
+            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+                'regulation_results_page'),
+            QueryDict(query_string=(
+                '?q=disclosure&regs=1002&regs=1003&order=regulation')))
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(mock_sqs.call_count, 2)
 
     def test_get_breadcrumbs_reg_page(self):
         crumbs = self.reg_page.get_breadcrumbs(HttpRequest())
@@ -311,3 +356,34 @@ class SectionNavTests(unittest.TestCase):
         current_index = 0
         self.assertIs(
             get_previous_section(section_list, current_index), None)
+
+    def test_validate_page_number(self):
+        paginator = Paginator([{'fake': 'results'}] * 30, 25)
+        request = HttpRequest()
+        self.assertEqual(validate_page_number(request, paginator), 1)
+        request.GET.update({'page': '2'})
+        self.assertEqual(validate_page_number(request, paginator), 2)
+        request = HttpRequest()
+        request.GET.update({'page': '1000'})
+        self.assertEqual(validate_page_number(request, paginator), 1)
+        request = HttpRequest()
+        request.GET.update({'page': '<script>Boo</script>'})
+        self.assertEqual(validate_page_number(request, paginator), 1)
+
+    def test_validate_num_results(self):
+        request = HttpRequest()
+        self.assertEqual(validate_num_results(request), 25)
+        request.GET.update({'results': '50'})
+        self.assertEqual(validate_num_results(request), 50)
+        request = HttpRequest()
+        request.GET.update({'results': '100'})
+        self.assertEqual(validate_num_results(request), 100)
+        request = HttpRequest()
+        request.GET.update({'results': '25'})
+        self.assertEqual(validate_num_results(request), 25)
+        request = HttpRequest()
+        request.GET.update({'results': '<script>'})
+        self.assertEqual(validate_num_results(request), 25)
+        request = HttpRequest()
+        request.GET.update({'results': '10'})
+        self.assertEqual(validate_num_results(request), 25)
