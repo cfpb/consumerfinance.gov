@@ -472,7 +472,9 @@ def parse_interps(interp_div, part, subpart):
         section = Section(
             subpart=subpart,
             label=interp_section_label,
-            title=section_hed,
+            title=section_hed.replace(
+                'Section ', 'Comment for ').replace(
+                'Appendix ', 'Comment for Appendix '),
             contents=''
         )
         if divine_interp_tag_use(
