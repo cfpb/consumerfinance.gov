@@ -1,10 +1,11 @@
-{% load static from staticfiles %}
-{% load global_include %}
+{% load header_footer %}
 {% load i18n %}
-{% load staticversions %}
-{% get_static_version as STATIC_VERSION %}
 {% load remit_var %}
+{% load static from staticfiles %}
+{% load staticversions %}
+
 {% is_remit as IS_REMIT %}
+{% get_static_version as STATIC_VERSION %}
 
 <!DOCTYPE html>
 <!--
@@ -176,7 +177,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 {% endblock %}
 
-    {% global_include "on-demand/header.html" %}
+    {% include_header %}
     <div id="page">
         {% block app_notification %}
         {% endblock %}
@@ -196,7 +197,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     </div><!-- /#page -->
-    {% global_include "on-demand/footer.html" %}
+    {% include_footer %}
 
     {% block app_modal %}
     {% endblock %}
