@@ -56,10 +56,10 @@ describe( 'Analytics', () => {
     it( 'should properly add objects to the dataLayer Array', () => {
       const action = 'inbox:clicked';
       const label = 'text:null';
-      const options = Object.assign( {}, dataLayerOptions, {
+      const options = { ...dataLayerOptions,
         action: action,
         label:  label
-      } );
+      };
       window['google_tag_manager'] = {};
       Analytics.init();
       Analytics.sendEvent( getDataLayerOptions( action, label ) );
@@ -104,16 +104,16 @@ describe( 'Analytics', () => {
   describe( '.sendEvents()', () => {
     it( 'should properly add objects to the dataLayer Array', () => {
       const options1 = getDataLayerOptions(
-        Object.assign( {}, dataLayerOptions, {
+        { ...dataLayerOptions,
           action: 'inbox:clicked',
           label:  'text:label_1'
-        } )
+        }
       );
       const options2 = getDataLayerOptions(
-        Object.assign( {}, dataLayerOptions, {
+        { ...dataLayerOptions,
           action: 'checbox:clicked',
           label:  'text:label_2'
-        } )
+        }
       );
       window['google_tag_manager'] = {};
       Analytics.init();
@@ -124,16 +124,16 @@ describe( 'Analytics', () => {
     it( 'shouldn\'t add objects to the dataLayer Array if an array isn\'t passed',
       () => {
         const options1 = getDataLayerOptions(
-          Object.assign( {}, dataLayerOptions, {
+          { ...dataLayerOptions,
             action: 'inbox:clicked',
             label:  'text:label_1'
-          } )
+          }
         );
         const options2 = getDataLayerOptions(
-          Object.assign( {}, dataLayerOptions, {
+          { ...dataLayerOptions,
             action: 'checbox:clicked',
             label:  'text:label_2'
-          } )
+          }
         );
         window['google_tag_manager'] = {};
         Analytics.init();
