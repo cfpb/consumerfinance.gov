@@ -1,7 +1,6 @@
 # Python 2 only
 from __future__ import absolute_import
 
-import functools
 import os
 import os.path
 
@@ -29,15 +28,6 @@ def global_render_template(name, **kwargs):
     context['request'] = request
     template = loader.get_template(name, using='wagtail-env')
     return mark_safe(template.render(context.flatten()))
-
-
-def url_for(app, filename, site_slug=None):
-    if app == 'static' and not site_slug:
-        return staticfiles_storage.url(filename)
-    elif app == 'static':
-        return staticfiles_storage.url(site_slug + '/static/' + filename)
-    else:
-        raise ValueError("url_for doesn't know about %s" % app)
 
 
 class SheerlikeContext(Context):
@@ -89,13 +79,9 @@ def environment(**options):
 
     options.setdefault('extensions', []).append('jinja2.ext.do')
 
-    site_slug = options.get('site_slug')
-    if site_slug:
-        del options['site_slug']
     env = SheerlikeEnvironment(**options)
     env.globals.update({
         'static': staticfiles_storage.url,
-        'url_for': functools.partial(url_for, site_slug=site_slug),
         'url': reverse,
         'queries': queryfinder,
         'more_like_this': more_like_this,
