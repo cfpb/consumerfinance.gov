@@ -48,7 +48,7 @@
 
 {% set blurb = (value.blurb or (page.seo_title if page) or value.title or
                 'Look what I found on the CFPB’s site!') | urlencode %}
-{% set parsed_url = request.url | urlencode %}
+{% set parsed_url = request.build_absolute_uri() | urlencode %}
 {% set is_share_view = value.is_share_view | default( true ) %}
 {% set email_title = value.email_title | urlencode or blurb %}
 {% set email_text = value.email_text | urlencode or 'Check out this page from the CFPB - ' %}

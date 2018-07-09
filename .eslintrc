@@ -1,7 +1,7 @@
 # Environments.
 
 parserOptions:
-  ecmaVersion: 6
+  ecmaVersion: 2018
   sourceType: module
 
   # Enable ecmascript 6 features.
@@ -9,7 +9,6 @@ parserOptions:
     globalReturn: false
     impliedStrict: true
     jsx: true
-    experimentalObjectRestSpread: true
 
 parser: espree
 
@@ -188,7 +187,10 @@ rules:
       getWithoutSet: false
 
   # Enforces return statements in callbacks of array's methods.
-  array-callback-return: 2
+  array-callback-return:
+    - 2
+    -
+      allowImplicit: false
 
   # Enforces treating var statements as if they were block scoped.
   block-scoped-var: 1
@@ -235,6 +237,11 @@ rules:
 
   # Enforces necessary if statements in for-in loops.
   guard-for-in: 1
+
+  # Enforce a maximum number of classes per file.
+  max-classes-per-file:
+    - 2
+    - 1
 
   # Disallows use of alert, confirm, and prompt.
   no-alert: 2
@@ -697,6 +704,11 @@ rules:
     -
       properties: false
 
+  # Enforce the location of arrow function bodies.
+  implicit-arrow-linebreak:
+    - 2
+    - beside
+
   # Set a specific tab width for your code.
   indent:
     - 2
@@ -722,6 +734,7 @@ rules:
       ImportDeclaration: 1
       flatTernaryExpressions: false
       ignoredNodes: []
+      ignoreComments: false
 
   # Enforce whether double or single quotes should be used in JSX attributes.
   jsx-quotes:
@@ -795,6 +808,15 @@ rules:
       max: 300
       skipBlankLines: true
       skipComments: true
+
+  # Enforce a maximum number of line of code in a function.
+  max-lines-per-function:
+    - 1
+    -
+      max: 50
+      skipBlankLines: true
+      skipComments: true
+      IIFEs: true
 
   # Specify the maximum depth callbacks can be nested.
   max-nested-callbacks:
@@ -982,6 +1004,9 @@ rules:
       blankLine: always
       prev: "*"
       next: return
+
+  # Prefer the use of object spread when using Object.assign.
+  prefer-object-spread: 2
 
   # Requires quotes around object literal property names.
   quote-props:

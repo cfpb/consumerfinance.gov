@@ -573,7 +573,7 @@ FLAGS = {
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
     'BETA_NOTICE': {
-        'site': 'beta.consumerfinance.gov:443',
+        'boolean': DEPLOY_ENVIRONMENT == 'beta',
     },
 
     # When enabled, include a recruitment code comment in the base template.
@@ -626,17 +626,17 @@ FLAGS = {
 
     # Teacher's Digital Platform Customer Review Tool
     'TDP_CRTOOL': {
-        'site': 'beta.consumerfinance.gov:443',
+        'boolean': DEPLOY_ENVIRONMENT == 'beta',
     },
 
     # Teacher's Digital Platform Customer Review Tool Prototypes Pages
     'TDP_CRTOOL_PROTOTYPES': {
-        'site': 'beta.consumerfinance.gov:443',
+        'boolean': DEPLOY_ENVIRONMENT == 'beta',
     },
 
     # Teacher's Digital Platform Search Interface Tool
     'TDP_SEARCH_INTERFACE': {
-        'site': 'beta.consumerfinance.gov:443',
+        'boolean': DEPLOY_ENVIRONMENT == 'beta',
     },
 
     # Turbolinks is a JS library that speeds up page loads

@@ -26,8 +26,4 @@ class GlobalRequestMiddleware(object):
     def process_view(self, request, view_func, view_args, view_kwargs):
         _active.request = request
         request.headers = FlaskyHeaderGetter(request)
-        request.url = "%s://%s%s" % (request.scheme, request.get_host(),
-                                     request.get_full_path())
-        request.url_rule = request.resolver_match
-        request.url_rule.endpoint = request.resolver_match.url_name
         return None
