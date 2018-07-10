@@ -10,6 +10,7 @@ from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from django.utils.functional import cached_property
 from django.utils.text import Truncator
+# from haystack.utils import Highlighter
 from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
@@ -50,6 +51,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
 
     @route(r'^results/')
     def regulation_results_page(self, request):
+        # highlight = ''
         all_regs = Part.objects.order_by('part_number')
         regs = []
         order = request.GET.get('order', 'relevance')
@@ -59,7 +61,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         search_query = request.GET.get('q', '')  # haystack cleans this string
         sqs = SearchQuerySet()
         if search_query:
-            sqs = sqs.filter(content=search_query)
+            sqs = sqs.filter(content=search_query).highlight()
+            # highlight = Highlighter(search_query)
         if len(regs) == 1:
             sqs = sqs.filter(part=regs[0])
         elif regs:
@@ -82,7 +85,9 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         }
         for hit in sqs:
             letter_code = LETTER_CODES.get(hit.part)
-            snippet = Truncator(hit.text).words(50, truncate=' ...')
+            snippet = Truncator(hit.text).words(60, truncate=' ...')
+            # if highlight:
+            #     snippet = highlight.highlight(snippet)
             hit_payload = {
                 'id': hit.paragraph_id,
                 'reg': 'Regulation {}'.format(letter_code),
