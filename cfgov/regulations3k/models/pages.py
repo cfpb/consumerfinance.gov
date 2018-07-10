@@ -52,7 +52,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     def regulation_results_page(self, request):
         all_regs = Part.objects.order_by('part_number')
         regs = []
-        order = request.GET.get('order', '')
+        order = request.GET.get('order', 'relevance')
         sqs = SearchQuerySet()
         if 'regs' in request.GET and request.GET.get('regs'):
             regs = request.GET.getlist('regs')
