@@ -20,7 +20,7 @@
   nav_item:                        Properties of a nav_item.
   nav_item.text:                   Nav item link text.
   nav_item.url:                    Nav item link URL.
-  nav_item.footer:                 Array of nav item footer content.
+  nav_item.footer:                 Nav item footer content.
   nav_item.nav_groups:             Array of nav item submenus,
                                    recursively repeats nav_group structure.
 #}
@@ -197,17 +197,13 @@
     'link_text': 'Consumer Tools',
     'external_link': '#',
     'featured_content': consumer_tools_content,
-    'footer': {
-        'type': 'footer',
-        'value': {
-            'content':
-                '<p>
+    'footer': '<p>
                     <span aria-hidden="true">
                         Browse answers to hundreds of financial questions with 
                     </span>
                     <a aria-label="Browse answers to hundreds of financial questions with Ask CFPB."
                        href="/ask-cfpb/">
-                       Ask CFPB.
+                        Ask CFPB.
                     </a>
                 </p>
                 <p>
@@ -216,11 +212,9 @@
                     </span>
                     <a aria-label="Have an issue with a financial product? Submit a complaint."
                        href="/complaint/">
-                       Submit a complaint
-                    </a>
+                        Submit a complaint
+                     </a>
                 </p>',
-        }
-    },
     'nav_groups': [
         consumer_tools_group_one,
         consumer_tools_group_two,
@@ -332,12 +326,7 @@
     'link_text': 'Practitioner Resources',
     'external_link': '#',
     'featured_content': resources_content,
-    'footer': {
-        'type': 'footer',
-        'value': {
-            'content':'<p><a href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php">Order free brochures</a></p>'
-        }
-    },
+    'footer': '<p><a href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php">Order free brochures</a></p>',
     'nav_groups': [
         practitioner_resources_group_one,
         practitioner_resources_group_two,

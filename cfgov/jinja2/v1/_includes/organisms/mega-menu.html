@@ -150,9 +150,9 @@
             {% if nav_item.nav_groups %}
                 {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
             {% endif %}
-            {% if nav_item.footer and nav_item.footer.value %}
+            {% if nav_item.footer %}
             <div class="{{ base_class ~ '_footer' }}">
-                {{ nav_item.footer.value.content | safe }}
+                {{ nav_item.footer | safe }}
             </div>
             {% endif %}
         </div>

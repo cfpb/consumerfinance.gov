@@ -6,6 +6,8 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailcore.fields import StreamField
 
+from bs4 import BeautifulSoup
+
 from v1 import blocks as v1_blocks
 
 
@@ -88,7 +90,9 @@ class MenuItem(models.Model):
                                         for col in cols])
         self.featured_content = self.nav_groups.pop() if len(self.nav_groups) \
             and self.nav_groups[-1].block_type == 'featured_content' else None
-        self.footer = self.get_active_block(self.nav_footer, draft)
+        footer = self.get_active_block(self.nav_footer, draft)
+        if footer:
+            self.footer = self.accessible_links(footer.value['content'].source)
         return self
 
     @staticmethod
@@ -101,3 +105,23 @@ class MenuItem(models.Model):
         return next((block for i, block in enumerate(blocks) if
                     block.value.get('draft', '') == draft or
                     (draft and i == len(blocks) - 1)), None)
+
+    @staticmethod
+    def accessible_links(html):
+        """
+        Makes footer links with surrounding text accessible
+        to screen readers by adding an aria-label attribute
+        containing the full text of the footer item to the link.
+        """
+        soup = BeautifulSoup(html, 'html.parser')
+        for p in soup.find_all('p'):
+            if p.find_all('a'):
+                for child in p.children:
+                    if child.name == 'a':
+                        if child.string != p.text:
+                            child['aria-label'] = p.text
+                    else:
+                        if child.name != 'span':
+                            child = child.wrap(soup.new_tag('span'))
+                        child['aria-hidden'] = 'true'
+        return str(soup).decode('utf-8').replace(u'\xa0', ' ')

@@ -9,7 +9,7 @@ import wagtail.wagtailcore.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0113_modify_help_text_social_sharing_image'),
+        ('v1', '0114_update_menu_item_link_fields'),
     ]
 
     operations = [

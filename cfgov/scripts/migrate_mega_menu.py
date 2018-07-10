@@ -31,7 +31,7 @@ menu_items = [
             'type': 'nav_footer',
             'value': {
                 'content': '<p>Browse answers to hundreds of financial ' +
-                'questions with <a href="/ask-cfpb/">Ask CFPB</a></p>' +
+                'questions with <a href="/ask-cfpb/">Ask CFPB</a>.</p>' +
                 '<p>Have an issue with a financial product? ' +
                 '<a href="/complaint/">Submit a complaint</a></p>'
             },

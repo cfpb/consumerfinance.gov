@@ -8,5 +8,6 @@ def get_menu_items(request):
     for sharing sites in 'before_serve_shared_page' hook.
     '''
     show_draft = hasattr(request, 'show_draft_megamenu')
+
     return [item.get_content(show_draft)
             for item in MenuItem.objects.all().order_by('order')]
