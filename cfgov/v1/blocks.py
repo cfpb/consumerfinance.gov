@@ -4,7 +4,6 @@ from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
 
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.rich_text import RichText, expand_db_html
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from bs4 import BeautifulSoup
@@ -289,30 +288,6 @@ class NavFooter(blocks.StructBlock):
         required=False,
         features=['link']
     )
-
-    def clean(self, value):
-        cleaned = super(NavFooter, self).clean(value)
-        if cleaned['content']:
-            html = expand_db_html(cleaned['content'].source)
-            cleaned['content'] = RichText(
-                self.accessible_links(html)
-            )
-        return cleaned
-
-    @staticmethod
-    def accessible_links(html):
-        soup = BeautifulSoup(html, 'html.parser')
-        for p in soup.find_all('p'):
-            if p.find_all('a'):
-                for child in p.children:
-                    if child.name == 'a':
-                        if child.string != p.text:
-                            child['aria-label'] = p.text
-                    else:
-                        if child.name != 'span':
-                            child = child.wrap(soup.new_tag('span'))
-                        child['aria-hidden'] = 'true'
-        return str(soup).decode('utf-8').replace(u'\xa0', ' ')
 
 
 class FeaturedMenuContent(blocks.StructBlock):
