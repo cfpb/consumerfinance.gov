@@ -241,9 +241,6 @@ EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
                           r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
                           r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
                           )
-EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
-NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
-DOWNLOAD_LINK_PATTERN = r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 
 # Wagtail settings
 

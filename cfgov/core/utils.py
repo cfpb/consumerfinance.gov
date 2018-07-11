@@ -1,7 +1,6 @@
 import os
 import re
 
-from django.conf import settings
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
 
@@ -10,14 +9,25 @@ from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
 from core.templatetags.svg_icon import svg_icon
 
-EXTERNAL_LINK_PATTERN = re.compile(settings.EXTERNAL_LINK_PATTERN)
-NONCFPB_LINK_PATTERN = re.compile(settings.NONCFPB_LINK_PATTERN)
-FILES_LINK_PATTERN = re.compile(settings.FILES_LINK_PATTERN)
-DOWNLOAD_LINK_PATTERN = re.compile(settings.DOWNLOAD_LINK_PATTERN)
-LINK_ICON_CLASSES = os.environ.get('LINK_ICON_CLASSES',
-                                   'a-link a-link__icon')
-LINK_ICON_TEXT_CLASSES = os.environ.get('LINK_ICON_TEXT_CLASSES',
-                                        'a-link_text')
+
+NON_GOV_LINKS = re.compile(
+    r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
+)
+NON_CFPB_LINKS = re.compile(
+    r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)'
+    '(?!(content\.)?localhost).*)'
+)
+DOWNLOAD_LINKS = re.compile(
+    r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
+)
+LINK_ICON_CLASSES = os.environ.get(
+    'LINK_ICON_CLASSES',
+    'a-link a-link__icon'
+)
+LINK_ICON_TEXT_CLASSES = os.environ.get(
+    'LINK_ICON_TEXT_CLASSES',
+    'a-link_text'
+)
 
 
 def append_query_args_to_url(base_url, args_dict):
@@ -110,14 +120,16 @@ def add_link_markup(tags):
             arguments = parse_qs(components.query)
             if 'ext_url' in arguments:
                 external_url = arguments['ext_url'][0]
+                # Add the redirect notice as well
                 tag['href'] = signed_redirect(external_url)
 
-        elif NONCFPB_LINK_PATTERN.match(tag['href']):
+        elif NON_CFPB_LINKS.match(tag['href']):
             # Sets the icon to indicate you're leaving consumerfinance.gov
             icon = 'external-link'
-            if EXTERNAL_LINK_PATTERN.match(tag['href']):
+            if NON_GOV_LINKS.match(tag['href']):
+                # Add the redirect notice as well
                 tag['href'] = signed_redirect(tag['href'])
-        elif DOWNLOAD_LINK_PATTERN.search(tag['href']):
+        elif DOWNLOAD_LINKS.search(tag['href']):
             # Sets the icon to indicate you're downloading a file
             icon = 'download'
         if icon:
