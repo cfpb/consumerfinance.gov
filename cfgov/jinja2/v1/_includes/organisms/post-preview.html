@@ -158,7 +158,7 @@
             {% endif %}
             {% if post.preview_description %}
                 <div class="o-post-preview_description">
-                    {{ parse_links(post.preview_description) | safe }}
+                    {{ post.preview_description | safe }}
                 </div>
             {% endif %}
             <div class="o-post-preview_byline-group">

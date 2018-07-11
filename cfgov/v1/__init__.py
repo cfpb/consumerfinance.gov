@@ -68,7 +68,6 @@ def environment(**options):
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
         'is_report': ref.is_report,
-        'parse_links': parse_links,
         'cfgovpage_objects': CFGOVPage.objects,
         'signed_redirect': signed_redirect,
         'unsigned_redirect': unsigned_redirect,
@@ -88,10 +87,6 @@ def environment(**options):
     })
     env.fragment_cache = caches['post_preview']
     return env
-
-
-def parse_links(value):
-    return value
 
 
 @contextfunction

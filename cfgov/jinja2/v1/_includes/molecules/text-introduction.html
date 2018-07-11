@@ -40,11 +40,11 @@
 
 {% if value.intro.source %}
     <div class="lead-paragraph">
-        {{ parse_links(value.intro) | safe }}
+        {{ value.intro | safe }}
     </div>
 {% endif %}
 {% if value.body %}
-    {{ parse_links(value.body) | safe }}
+    {{ value.body | safe }}
 {% endif %}
 {% for link in value.links %}
     {% if link.text %}

@@ -83,11 +83,11 @@
             <div class="o-expandable_content" id="job-description-expandable">
                 <div class="o-expandable_content-animated">
                     <h4>Summary</h4>
-                    {{ parse_links( page.description ) | safe }}
+                    {{ page.description | safe }}
                     {% if page.responsibilities %}
                         <div class="block block__sub">
                             <h4>Responsibilities</h4>
-                            {{ parse_links( page.responsibilities ) | safe }}
+                            {{ page.responsibilities | safe }}
                         </div>
                     {% endif %}
 
@@ -95,7 +95,7 @@
                         <div class="block block__sub">
                             <h4>Travel required</h4>
                             {% if page.travel_details %}
-                            {{ parse_links( page.travel_details ) | safe }}
+                            {{ page.travel_details | safe }}
                             {% else %}
                             Yes
                             {% endif %}
@@ -105,7 +105,7 @@
                     {% if page.additional_section_title and page.additional_section_content %}
                         <div class="block block__sub">
                             <h4>{{ page.additional_section_title }}</h4>
-                            {{ parse_links( page.additional_section_content ) | safe }}
+                            {{ page.additional_section_content | safe }}
                         </div>
                     {% endif %}
 
@@ -198,7 +198,7 @@
 {% block content_sidebar scoped  %}
 {% if about_us %}
     <div class="block block__flush-top">
-        {{ parse_links( about_us.text ) | safe }}
+        {{ about_us.text | safe }}
     </div>
 {% endif %}
 <div class="block block__flush-top">

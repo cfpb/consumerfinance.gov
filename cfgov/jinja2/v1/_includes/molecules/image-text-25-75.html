@@ -48,7 +48,7 @@
         'is_decorative': image_alt_value(value.image) == ''
     },
     'heading': heading,
-    'body': parse_links(value.body) | safe,
+    'body': value.body | safe,
     'links': value.links,
     'link_image_and_heading': value.link_image_and_heading or false
 } ) }}
