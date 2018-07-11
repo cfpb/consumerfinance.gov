@@ -43,13 +43,16 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     ])
 
     def get_template(self, request):
-        return 'regulations3k/search-regulations.html'
+        template = 'regulations3k/search-regulations.html'
+        if 'partial' in request.GET:
+            template = 'regulations3k/search-regulations-results.html'
+        return template
 
     @route(r'^results/')
     def regulation_results_page(self, request):
         all_regs = Part.objects.order_by('part_number')
         regs = []
-        order = request.GET.get('order', '')
+        order = request.GET.get('order', 'relevance')
         sqs = SearchQuerySet()
         if 'regs' in request.GET and request.GET.get('regs'):
             regs = request.GET.getlist('regs')
@@ -102,6 +105,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             'num_results': num_results,
             'order': order,
             'results': paginated_page,
+            'show_filters': any(
+                reg['selected'] is True for reg in payload['all_regs'])
         })
 
         return TemplateResponse(

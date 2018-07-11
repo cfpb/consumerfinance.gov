@@ -207,6 +207,18 @@ class RegModelTests(DjangoTestCase):
             self.reg_search_page.get_template(HttpRequest()),
             'regulations3k/search-regulations.html')
 
+    def test_search_results_page_get_template(self):
+        request = HttpRequest()
+        request.GET.update({'partial': 'true'})
+        self.assertEqual(
+            self.reg_search_page.get_template(request),
+            'regulations3k/search-regulations-results.html')
+        # Should return partial results even if no value is provided
+        request.GET.update({'partial': ''})
+        self.assertEqual(
+            self.reg_search_page.get_template(request),
+            'regulations3k/search-regulations-results.html')
+
     def test_routable_reg_page_get_context(self):
         test_context = self.reg_page.get_context(HttpRequest())
         self.assertEqual(
