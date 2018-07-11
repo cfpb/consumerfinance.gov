@@ -116,6 +116,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'core.middleware.AddExternalLinkRedirectsMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
