@@ -7,42 +7,14 @@ import os.path
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
 
-import jinja2.runtime
 from flags.template_functions import flag_disabled, flag_enabled
 from jinja2 import Environment
-from jinja2.runtime import Context
 
-from .middleware import get_request
 from .query import QueryFinder, get_document, more_like_this, when
 from .templates import get_date_obj, get_date_string
 
 
 default_app_config = 'sheerlike.apps.SheerlikeConfig'
-
-
-class SheerlikeContext(Context):
-
-    def __init__(self, environment, parent, name, blocks):
-        super(
-            SheerlikeContext,
-            self).__init__(
-            environment,
-            parent,
-            name,
-            blocks)
-
-        # Don't overwrite an existing request already coming into the context,
-        # for example one provided during Wagtail rendering.
-        if 'request' not in self.vars and 'request' not in self.keys():
-            try:
-                self.vars['request'] = get_request()
-            except Exception:
-                pass
-
-
-# Monkey patch not needed in master version of Jinja2
-# https://github.com/mitsuhiko/jinja2/commit/f22fdd5ffe81aab743f78290071b0aa506705533
-jinja2.runtime.Context = SheerlikeContext
 
 
 class SheerlikeEnvironment(Environment):
