@@ -3,7 +3,7 @@ const domTools = require( BASE_JS_PATH + 'js/dom-tools.js' ).default;
 
 const HTML_SNIPPET = `
   <div id="test"></div>
-  <div class="test"></div>
+  <div id="test2" class="test"></div>
   <div class="test"></div>
   <div class="test"></div>
 `;
@@ -33,6 +33,22 @@ describe( 'dom-tools', () => {
       expect( domTools.createElement( HTML_SNIPPET ).outerHTML ).toBe(
         '<div id="test"></div>'
       );
+    } );
+  } );
+
+  describe( 'hasClass()', () => {
+    it( 'should return true when element has class', () => {
+      const dom = document.querySelector( '.test' );
+      expect( domTools.hasClass( dom, 'test' ) ).toBe( true );
+      // hasClass takes both a selector and a dom node.
+      expect( domTools.hasClass( '#test2', 'test' ) ).toBe( true );
+    } );
+
+    it( 'should return false when element does not have class', () => {
+      const dom = document.querySelector( '.test' );
+      expect( domTools.hasClass( dom, 'example' ) ).toBe( false );
+      // hasClass takes both a selector and a dom node.
+      expect( domTools.hasClass( '#test2', 'example' ) ).toBe( false );
     } );
   } );
 } );
