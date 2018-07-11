@@ -104,6 +104,8 @@ def add_link_markup(tags):
         if not tag.attrs.get('class', None):
             tag.attrs.update({'class': []})
         if tag['href'].startswith('/external-site/?'):
+            # Sets the icon to indicate you're leaving consumerfinance.gov
+            icon = 'external-link'
             components = urlparse(tag['href'])
             arguments = parse_qs(components.query)
             if 'ext_url' in arguments:
@@ -112,17 +114,14 @@ def add_link_markup(tags):
 
         elif NONCFPB_LINK_PATTERN.match(tag['href']):
             # Sets the icon to indicate you're leaving consumerfinance.gov
-            tag.attrs['class'].append(LINK_ICON_CLASSES)
-
+            icon = 'external-link'
             if EXTERNAL_LINK_PATTERN.match(tag['href']):
                 tag['href'] = signed_redirect(tag['href'])
-
-            icon = 'external-link'
         elif DOWNLOAD_LINK_PATTERN.search(tag['href']):
             # Sets the icon to indicate you're downloading a file
-            tag.attrs['class'].append(LINK_ICON_CLASSES)
             icon = 'download'
         if icon:
+            tag.attrs['class'].append(LINK_ICON_CLASSES)
             # Wraps the link text in a span that provides the underline
             contents = tag.contents
             span = BeautifulSoup('', 'html.parser').new_tag('span')
