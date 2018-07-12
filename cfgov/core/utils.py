@@ -1,11 +1,11 @@
 import os
 import re
+from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
 
 from bs4 import BeautifulSoup, NavigableString
-from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
 from core.templatetags.svg_icon import svg_icon
 
