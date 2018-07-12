@@ -87,10 +87,11 @@ def parse_links(html):
             # 'NavigableString' object has does not have attr's
             pass
 
-    # This adds the link markup
     link_tags = get_link_tags(soup)
-    add_link_markup(link_tags)
-    return soup.prettify()
+    # Only return the beautiful soup modified html if changes were made
+    if add_link_markup(link_tags):
+        return soup.prettify()
+    return html
 
 
 def get_link_tags(soup):
@@ -109,6 +110,7 @@ def is_image_tag(tag):
 
 
 def add_link_markup(tags):
+    modified = False
     for tag in tags:
         icon = False
         if not tag.attrs.get('class', None):
@@ -133,6 +135,7 @@ def add_link_markup(tags):
             # Sets the icon to indicate you're downloading a file
             icon = 'download'
         if icon:
+            modified = True
             tag.attrs['class'].append(LINK_ICON_CLASSES)
             # Wraps the link text in a span that provides the underline
             contents = tag.contents
@@ -142,6 +145,7 @@ def add_link_markup(tags):
             tag.contents = [span, NavigableString(' ')]
             # Appends the SVG icon
             tag.contents.append(BeautifulSoup(svg_icon(icon), 'html.parser'))
+    return modified
 
 
 class NoMigrations(object):
