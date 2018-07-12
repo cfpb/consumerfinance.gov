@@ -65,7 +65,9 @@ install() {
 
 # Calculate checksum value.
 calc_checksum() {
-  DEP_CHECKSUM=$(cat package*.json cfgov/unprocessed/apps/**/package*.json | shasum -a 256)
+  ls package*.json cfgov/unprocessed/apps/*/package*.json
+  ls package*.json cfgov/unprocessed/apps/*/package*.json | sort
+  DEP_CHECKSUM=$(cat $(ls package*.json cfgov/unprocessed/apps/*/package*.json | sort) | shasum -a 256)
 }
 
 # Add a checksum file
@@ -83,6 +85,22 @@ write_node_env() {
 
 # Analyze setup and see if we need to install npm dependencies.
 should_rebuild() {
+  if [ ! -f node_modules/NODE_ENV ]; then
+    echo 'Rebuilding due to lack of NODE_ENV file'
+  fi
+  if [ ! -f node_modules/CHECKSUM ]; then
+    echo 'Rebuilding due to lack of CHECKSUM file'
+  fi
+  if [ "$NODE_ENV" != "$(cat node_modules/NODE_ENV)" ]; then
+    echo 'Rebuilding due to NODE_ENV not matching'
+    echo "$NODE_ENV"
+    cat node_modules/NODE_ENV
+  fi
+  if [ "$DEP_CHECKSUM" != "$(cat node_modules/CHECKSUM)" ]; then
+    echo 'Rebuilding due to CHECKSUM not matching'
+    echo "$DEP_CHECKSUM"
+    cat node_modules/CHECKSUM
+  fi
   [ ! -f node_modules/NODE_ENV ] ||
   [ ! -f node_modules/CHECKSUM ] ||
   [ "$NODE_ENV" != "$(cat node_modules/NODE_ENV)" ] ||
