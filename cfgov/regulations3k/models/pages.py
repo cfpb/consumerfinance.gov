@@ -12,6 +12,7 @@ from django.utils.functional import cached_property
 from django.utils.text import Truncator
 # from haystack.utils import Highlighter
 from haystack.query import SearchQuerySet
+from jinja2 import Markup
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
@@ -61,7 +62,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         search_query = request.GET.get('q', '')  # haystack cleans this string
         sqs = SearchQuerySet()
         if search_query:
-            sqs = sqs.filter(content=search_query).highlight()
+            sqs = sqs.filter(content=search_query).highlight(
+                pre_tags=['<strong>'], post_tags=['</strong>'])
             # highlight = Highlighter(search_query)
         if len(regs) == 1:
             sqs = sqs.filter(part=regs[0])
@@ -85,9 +87,14 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         }
         for hit in sqs:
             letter_code = LETTER_CODES.get(hit.part)
-            snippet = Truncator(hit.text).words(60, truncate=' ...')
             # if highlight:
-            #     snippet = highlight.highlight(snippet)
+            #     snippet = Markup(highlight.highlight(hit.text))
+            # else:
+            #     snippet = Truncator(hit.text).words(60, truncate=' ...')
+            if search_query:
+                snippet = Markup(" ".join(hit.highlighted))
+            else:
+                snippet = Truncator(hit.text).words(60, truncate=' ...')
             hit_payload = {
                 'id': hit.paragraph_id,
                 'reg': 'Regulation {}'.format(letter_code),
