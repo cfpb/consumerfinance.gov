@@ -655,6 +655,9 @@ FLAGS = {
     'LEGACY_HUD_API': {
         'boolean': DEPLOY_ENVIRONMENT == 'production',
     },
+
+    # To be enabled when switching the site to use the BCFP logo
+    'BCFP_LOGO': {},
 }
 
 
