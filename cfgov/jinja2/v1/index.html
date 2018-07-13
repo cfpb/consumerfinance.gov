@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block title -%}
+    {%- if flag_enabled('BCFP_LOGO', request) -%}
+        Bureau of Consumer Financial Protection
+    {%- else -%}
+        Consumer Financial Protection Bureau
+    {%- endif -%}
+{%- endblock %}
+
 {% block preload %}
     {{ super() }}
     {% if flag_enabled('BCFP_LOGO', request) %}

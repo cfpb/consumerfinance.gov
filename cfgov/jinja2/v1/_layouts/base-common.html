@@ -81,6 +81,11 @@
     {% if page.meta_image.should_display_summary_large_image %}
     <meta name="twitter:card" content="summary_large_image">
     {% endif %}
+{% elif flag_enabled('BCFP_LOGO', request) %}
+    <meta property="og:image"
+          content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/bcfp-logo_open-graph_facebook.png') }}">
+    <meta property="twitter:image"
+          content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/bcfp-logo_open-graph_twitter.png') }}">
 {% else %}
     <meta property="og:image"
           content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
