@@ -1,7 +1,6 @@
 
 {% extends 'layout-2-1-bleedbar.html' %}
 
-
 {# HEAD items #}
 
 {% block title -%}
@@ -55,7 +54,7 @@
     <ul>
     {% for reg in regs %}
     <li>
-        <a href="/regulations/{{reg.part_number}}" data-turbolinks="true">
+        <a href="{{ slugurl("regulations") }}{{reg.part_number}}/" data-turbolinks="true">
             <span class="title-num">{{reg.part_number}}</span>
         </a>
         <div class="reg-sub-title">
