@@ -1,25 +1,18 @@
-/***** PRINT STYLES FOR HUD HCA API LANDING PAGE *****/
-/***** File: page-hud-hca-api.php *****/
+/***** PRINT STYLES FOR FIND A HOUSING COUNSELOR *****/
 
 @media print {
-    .page-template-page-hud-hca-api-php {
+    body {
         background: transparent !important;
         color: #000 !important; /* Black prints faster: h5bp.com/s */
-        font-family: Arial, Helvetica, "Helvetica Neue" sans-serif;
-        font-size: 12pt;
-        line-height: 1.4;
         box-shadow: none !important;
         text-shadow: none !important;
     }
 
-	.page-template-page-hud-hca-api-php p {
-		font-family: Georgia, Times, "Times New Roman", serif;
-	}
-
     a,
+    a:link,
     a:visited {
         border: 0;
-		color: #000 !important; /* Black prints faster: h5bp.com/s */
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
         text-decoration: underline;
     }
 
@@ -56,9 +49,9 @@
     }
 
     @page {
-    	size: letter;
-		margin: .5in .5in .5in .5in;
-		padding: 0;
+        size: letter;
+        margin: .5in .5in .5in .5in;
+        padding: 0;
     }
 
     p,
@@ -78,24 +71,20 @@
     }
 
     /* Hide unneeded content */
-    /* From top of page to bottom */
-    .wrapper-banner,
-    #header,
-    #subnav, /* Hide nav menu on PDFs when JS doesn't render */
+    .o-header,
     .bread,
     .share,
-    #footer,
-    #hud_hca_api_row_template,
+    .o-footer,
     .hud_hca_api_print_hide {
         display: none !important;
     }
 
     /* Some adjustments */
     table, thead, tbody, tfoot, tr, td, th, caption {
-    	border: 0 !important;
-    	display: block !important;
-    	margin: 0 !important;
-    	padding: 0 !important;
+        border: 0 !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .pagetitle > h1 {
@@ -107,70 +96,71 @@
         max-width: 20% !important;
     }
 
+    .cfpb_hud_hca_api_print_text {
+        border-bottom: 4px solid #101820;
+        padding-bottom: 1em;
+    }
+
     .hud_hca_api_the_results {
         font-weight: bold;
         text-transform: uppercase;
     }
 
-    .hud_hca_api_print.border {
-        border-top: 4px solid #101820;
-    }
-
     /* Grid adjustments */
     tr.hud_hca_api_result:before,
-	tr.hud_hca_api_result:after {
-		content: " ";
-		display: table;
-	}
+    tr.hud_hca_api_result:after {
+        content: " ";
+        display: table;
+    }
 
-	tr.hud_hca_api_result:after {
-		clear: both;
-	}
-
-	tr.hud_hca_api_result {
-		*zoom: 1;
-	}
+    tr.hud_hca_api_result:after {
+        clear: both;
+    }
 
     tr.hud_hca_api_result {
-    	border-bottom: 1px solid #babbbd !important;
-    	padding: 1.5em 0 !important;
+        *zoom: 1;
+    }
+
+    tr.hud_hca_api_result {
+        border-bottom: 1px solid #babbbd !important;
+        padding: 1.5em 0 !important;
     }
 
     .hud_hca_api_counselors_td,
     .hud_hca_api_services_td {
-    	float: left;
-    	width: 88%;
+        float: left;
+        width: 88%;
     }
 
     .hud_hca_api_distances_td {
-    	float: right;
-    	margin-left: 2% !important;
-    	margin-top: -255px !important;
-    	text-align: right;
-    	width: 10%;
+        float: right;
+        margin-left: 2% !important;
+        margin-top: -255px !important;
+        text-align: right;
+        width: 10%;
     }
 
     .hud_hca_api_counselor_address,
-	.hud_hca_api_site,
-	.hud_hca_api_tel,
-	.hud_hca_api_lang,
-	.hud_hca_api_serv,
-	.hud_hca_api_distance {
-		page-break-inside: avoid;
-	}
+    .hud_hca_api_site,
+    .hud_hca_api_tel,
+    .hud_hca_api_lang,
+    .hud_hca_api_serv,
+    .hud_hca_api_distance {
+        page-break-inside: avoid;
+    }
 
     .hud_hca_api_print_show {
         display: block !important;
         visibility: visible;
     }
 
-	.hud_hca_api_results_listing_title {
-		margin-top: 1em;
-	}
+    .hud_hca_api_results_listing_title {
+        margin-top: 1em;
+    }
 
-	.hud_hca_api_services {
-		padding-left: 7.04918%;
-	}
+    .hud_hca_api_services {
+        padding-left: 7.04918%;
+    }
 
     .hud_hca_api_serv_item {
         display: inline;
@@ -184,16 +174,16 @@
         content: "";
     }
 
-	.hud_hca_api_distances_td .hud_hca_api_results_listing_title {
-		margin-top: 0;
-	}
+    .hud_hca_api_distances_td .hud_hca_api_results_listing_title {
+        margin-top: 0;
+    }
 
-	.hud_hca_api_site > .hud_hca_api_results_listing_title,
-	.hud_hca_api_tel > .hud_hca_api_results_listing_title {
-		display: inline;
-	}
+    .hud_hca_api_site > .hud_hca_api_results_listing_title,
+    .hud_hca_api_tel > .hud_hca_api_results_listing_title {
+        display: inline;
+    }
 
-	.hud_hca_api_lang {
-		display: block;
-	}
+    .hud_hca_api_lang {
+        display: block;
+    }
 }
