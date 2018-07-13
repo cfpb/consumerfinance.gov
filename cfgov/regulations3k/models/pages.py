@@ -236,9 +236,9 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                 self.sections, current_index),
             'section': section,
             'breadcrumb_items': self.get_breadcrumbs(request, section),
-            'search_url': self.get_parent().url +
-                'search-regulations/results/?regs=' +
-                self.regulation.part_number,
+            'search_url': (self.get_parent().url +
+                           'search-regulations/results/?regs=' +
+                           self.regulation.part_number)
         })
 
         return TemplateResponse(
