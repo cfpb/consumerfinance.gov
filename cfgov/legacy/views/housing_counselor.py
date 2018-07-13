@@ -31,11 +31,7 @@ class HousingCounselorS3URLMixin(object):
 
 
 class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
-    def get_template_names(self):
-        if 'pdf' in self.request.GET:
-            return 'hud/housing_counselor_pdf.html'
-        else:
-            return 'hud/housing_counselor.html'
+    template_name = 'hud/housing_counselor.html'
 
     def get_context_data(self, **kwargs):
         context = super(HousingCounselorView, self).get_context_data(**kwargs)

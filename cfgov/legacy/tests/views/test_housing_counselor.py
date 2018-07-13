@@ -45,12 +45,6 @@ class HousingCounselorViewTestCase(TestCase):
         self.assertTrue(response.context['zipcode_valid'])
         self.assertIn('12345.pdf', response.context['pdf_url'])
 
-    @mock.patch('requests.get')
-    def test_get_counselors_pdf_template(self, mock_requests_get):
-        mock_requests_get.return_value.json.return_value = {}
-        response = self.client.get('/find-a-housing-counselor/', {'pdf': ''})
-        self.assertIn('pdf', response.templates[0].name)
-
 
 @override_settings(AWS_STORAGE_BUCKET_NAME='foo.bucket')
 class HousingCounselorPDFViewTestCase(TestCase):
