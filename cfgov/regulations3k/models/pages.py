@@ -19,6 +19,8 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 
+from jinja2 import Markup
+
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.models import Part, Section, SectionParagraph
 from regulations3k.parser.integer_conversion import LETTER_CODES
@@ -59,7 +61,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         search_query = request.GET.get('q', '')  # haystack cleans this string
         sqs = SearchQuerySet()
         if search_query:
-            sqs = sqs.filter(content=search_query)
+            sqs = sqs.filter(content=search_query).highlight(
+                pre_tags=['<strong>'], post_tags=['</strong>'])
         if len(regs) == 1:
             sqs = sqs.filter(part=regs[0])
         elif regs:
@@ -82,14 +85,18 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         }
         for hit in sqs:
             letter_code = LETTER_CODES.get(hit.part)
-            snippet = Truncator(hit.text).words(50, truncate=' ...')
+            if search_query:
+                snippet = Markup(" ".join(hit.highlighted))
+            else:
+                snippet = Truncator(hit.text).words(60, truncate=' ...')
             hit_payload = {
                 'id': hit.paragraph_id,
                 'reg': 'Regulation {}'.format(letter_code),
                 'label': hit.title,
                 'snippet': snippet,
-                'url': "/regulations/{}/{}/#{}".format(
-                    hit.part, hit.section_label, hit.paragraph_id),
+                'url': "{}{}/{}/#{}".format(
+                    self.parent().url, hit.part,
+                    hit.section_label, hit.paragraph_id),
             }
             payload['results'].append(hit_payload)
         self.results = payload
