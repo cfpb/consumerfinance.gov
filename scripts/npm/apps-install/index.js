@@ -20,21 +20,21 @@ apps = apps.filter( dir => dir.charAt( 0 ) !== '.' );
 // Install each application's dependencies.
 apps.forEach( app => {
   /* Check if package.json exists in a particular app's folder.
-     If it does, run npm install on that directory. */
+     If it does, run yarn install on that directory. */
   const appsPath = `${ paths.unprocessed }/apps/${ app }`;
   // eslint-disable-next-line no-sync
   if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
     try {
       // eslint-disable-next-line no-sync
       const stdOut = execSync(
-        `npm --prefix ${ appsPath } install ${ appsPath }`
+        `yarn --cwd ${ appsPath } install`
       );
       // eslint-disable-next-line no-console
-      console.log( `${ appsPath }'s npm output: ${ stdOut.toString() }` );
+      console.log( `${ appsPath }'s yarn output: ${ stdOut.toString() }` );
     } catch ( error ) {
       if ( error.stderr ) {
         // eslint-disable-next-line no-console
-        console.log( `npm output from ${ appsPath }: ${ error.stderr }` );
+        console.log( `yarn output from ${ appsPath }: ${ error.stderr }` );
       }
 
       // eslint-disable-next-line no-console

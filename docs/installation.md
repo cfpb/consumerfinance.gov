@@ -98,6 +98,7 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 
 !!! note
     This project requires Node.js v8.5 or higher, and npm v5.2 or higher.
+2. Install [yarn](https://yarnpkg.com/en/docs/install)
 
 #### Webfonts
 
@@ -105,7 +106,7 @@ The site uses a proprietary licensed font, Avenir.
 If you want to pull this from a content delivery network (CDN),
 you can set the
 [`@use-font-cdn`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/css/main.less#L30)
-to `true` and rebuild the assets with `npm run gulp build`.
+to `true` and rebuild the assets with `yarn run gulp build`.
 If you want to install self-hosted fonts locally, you can place the font files
 in `static.in/cfgov-fonts/fonts/` and restart the local web server.
 If you are a CFPB employee, you can perform this step with:
@@ -394,7 +395,7 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    Finally, it creates a new checksum for future comparisons.
 1. **Run tasks to build the project for distribution** (`build`)
 
-   Finally, the script runs `npm run gulp build` to rebuild the front-end assets.
+   Finally, the script runs `yarn run gulp build` to rebuild the front-end assets.
    It no longer cleans first, because the gulp-changed plugin prevents
    rebuilding assets that haven't changed since the last build.
 

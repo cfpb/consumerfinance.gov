@@ -56,6 +56,7 @@ Thumbs.db
 node_modules/
 cfgov/unprocessed/apps/*/node_modules/
 npm-debug.log
+yarn-error.log
 
 # Vim swap files #
 ##################

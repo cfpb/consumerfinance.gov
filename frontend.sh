@@ -48,7 +48,7 @@ install() {
 
   if [ "$NODE_ENV" = "development" ]; then
 
-    npm install -d --loglevel warn
+    yarn install --ignore-engines
 
     # Protractor = JavaScript acceptance testing framework.
     echo "Installing Protractor dependencies locally…"
@@ -59,13 +59,13 @@ install() {
     ./node_modules/protractor/bin/webdriver-manager update --gecko false --standalone false
 
   else
-    npm install --production --loglevel warn --no-optional
+    yarn install --production --ignore-optional
   fi
 }
 
 # Calculate checksum value.
 calc_checksum() {
-  DEP_CHECKSUM=$(cat package*.json cfgov/unprocessed/apps/**/package*.json | shasum -a 256)
+  DEP_CHECKSUM=$(cat yarn.lock cfgov/unprocessed/apps/**/package*.json | shasum -a 256)
 }
 
 # Add a checksum file
@@ -81,7 +81,7 @@ write_node_env() {
   echo "Wrote node_modules/NODE_ENV $NODE_ENV"
 }
 
-# Analyze setup and see if we need to install npm dependencies.
+# Analyze setup and see if we need to install dependencies.
 should_rebuild() {
   [ ! -f node_modules/NODE_ENV ] ||
   [ ! -f node_modules/CHECKSUM ] ||
@@ -109,7 +109,7 @@ clean_and_install() {
 # Run tasks to build the project for distribution.
 build() {
   echo "Building project…"
-  npm run gulp build
+  yarn run gulp build
 }
 
 # Execute requested (or all) functions.
