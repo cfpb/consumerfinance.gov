@@ -5,6 +5,6 @@ https://github.com/cfpb/regulations-core/releases/download/1.2.6/regcore-1.2.6-p
 https://github.com/cfpb/regulations-site/releases/download/2.2.5/regulations-2.2.5-py2-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.6.2/retirement-0.6.2-py2-none-any.whl
 git+https://github.com/cfpb/ccdb5-api.git@v1.0.6#egg=ccdb5-api
-git+https://github.com/cfpb/ccdb5-ui.git@v1.0.10#egg=ccdb5_ui
+git+https://github.com/cfpb/ccdb5-ui.git@v1.0.11#egg=ccdb5_ui
 https://github.com/cfpb/django-college-costs-comparison/releases/download/1.7/comparisontool-1.7-py2-none-any.whl
-https://github.com/cfpb/teachers-digital-platform/releases/download/1.0.0/teachers_digital_platform-1.0.0-py2-none-any.whl
+https://github.com/cfpb/teachers-digital-platform/releases/download/1.0.2/teachers_digital_platform-1.0.2-py2-none-any.whl
