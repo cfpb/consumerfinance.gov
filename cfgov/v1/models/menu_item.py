@@ -7,7 +7,6 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.rich_text import expand_db_html
 
-
 from bs4 import BeautifulSoup
 
 from v1 import blocks as v1_blocks
