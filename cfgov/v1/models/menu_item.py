@@ -5,6 +5,8 @@ from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, MultiFieldPanel, PageChooserPanel, StreamFieldPanel
 )
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.rich_text import expand_db_html
+
 
 from bs4 import BeautifulSoup
 
@@ -113,7 +115,7 @@ class MenuItem(models.Model):
         to screen readers by adding an aria-label attribute
         containing the full text of the footer item to the link.
         """
-        soup = BeautifulSoup(html, 'html.parser')
+        soup = BeautifulSoup(expand_db_html(html), 'html.parser')
         for p in soup.find_all('p'):
             if p.find_all('a'):
                 for child in p.children:
