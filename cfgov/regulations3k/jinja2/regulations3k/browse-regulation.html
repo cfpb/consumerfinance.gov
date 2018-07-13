@@ -40,16 +40,19 @@
 
 {% block content_main %}
     {% if section %}
-    <div class="search-this-regulation">
-        <a href="#">
-            {% include 'icons/search.svg' %}
-            Search {{ regulation }}
-        </a>
-    </div>
     <h1>{{section.title}}</h1>
-    <div class="a-date effective-date">
-        Most recently amended
-        {{ time.render(section.subpart.version.effective_date, {'date':true, 'time':false, 'timezone':false}) }}
+    <div class="regulation-meta">
+        <div class="a-date">
+            Most recently amended
+            {{ time.render(section.subpart.version.effective_date, {'date':true, 'time':false, 'timezone':false}) }}
+        </div>
+        <ul class="m-list m-list__links">
+            <li class="m-list_item">
+                <a class="m-list_link" href="{{ search_url }}">
+                    Search {{ regulation }}
+                </a>
+            </li>
+        </ul>
     </div>
 
     <section class="block block__flush-top">
