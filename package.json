@@ -52,7 +52,7 @@
     "gulp-replace": "1.0.0",
     "gulp-sourcemaps": "2.6.4",
     "gulp-uglify-es": "1.0.4",
-    "less": "3.0.4",
+    "less": "3.5.0",
     "lightbox2": "2.10.0",
     "lodash.throttle": "4.1.1",
     "postcss-unmq": "1.0.2",
