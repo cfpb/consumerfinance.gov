@@ -96,6 +96,19 @@ function fetchSearchResults( url, cb ) {
 }
 
 /**
+ * Update the page's URL via replaceState
+ *
+ * @param {String} base URL's base.
+ * @param {String} params URL's GET parameters.
+ * @returns {String} New URL.
+ */
+function updateUrl( base, params ) {
+  const url = `${ base }?${ params }`;
+  window.history.replaceState( null, null, url );
+  return url;
+}
+
+/**
  * Check error and do something with it
  *
  * @param {String} err Error code
@@ -125,5 +138,6 @@ module.exports = {
   hideLoading: hideLoading,
   clearCheckbox: clearCheckbox,
   handleError: handleError,
-  fetchSearchResults: fetchSearchResults
+  fetchSearchResults: fetchSearchResults,
+  updateUrl: updateUrl
 };

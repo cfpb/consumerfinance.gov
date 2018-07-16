@@ -96,4 +96,17 @@ describe( 'The Regs3K search utils', () => {
     mockXHR.onreadystatechange();
   } );
 
+  it( 'should replace the browser history', () => {
+    const rs = global.history.replaceState = jest.fn();
+    expect( rs.mock.calls.length ).toEqual( 0 );
+
+    utils.updateUrl( 'foo', 'bar' );
+    expect( rs.mock.calls.length ).toEqual( 1 );
+    expect( rs.mock.calls[0] ).toEqual( [ null, null, 'foo?bar' ] );
+
+    utils.updateUrl( '/regulations/search/', 'regs=1002&regs=1010&q=funding' );
+    expect( rs.mock.calls.length ).toEqual( 2 );
+    expect( rs.mock.calls[1] ).toEqual( [ null, null, '/regulations/search/?regs=1002&regs=1010&q=funding' ] );
+  } );
+
 } );

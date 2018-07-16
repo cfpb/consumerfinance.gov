@@ -82,6 +82,8 @@ function handleSubmit( event ) {
       return console.error( utils.handleError( 'no-results' ).msg );
     }
     searchContainer.innerHTML = data;
+    // Update the query params in the URL
+    utils.updateUrl( baseUrl, searchParams );
     // Reattach event handlers after tags are reloaded
     attachHandlers();
     return data;
