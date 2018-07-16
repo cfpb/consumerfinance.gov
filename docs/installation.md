@@ -98,7 +98,14 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 
 !!! note
     This project requires Node.js v8.5 or higher, and npm v5.2 or higher.
-2. Install [yarn](https://yarnpkg.com/en/docs/install)
+2. Install [yarn](https://yarnpkg.com/en/docs/install). We recommend using [Homebrew](https://brew.sh):
+
+
+```bash
+# Use --without-node to use your system installed node version
+brew install yarn --without-node
+```
+
 
 #### Webfonts
 

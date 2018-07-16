@@ -55,3 +55,5 @@ author or the affirmer.
   is licensed under MIT License.
 - [Normalize](https://necolas.github.io/normalize.css/) by Nicolas Gallagher,
   co-created with Jonathan Neal, is licensed under the MIT License.
+- Build depedencies packaged in `npm-packages-offline-cache` are individually licensed.
+  Once installed, specific licenses can be viewed in the `node_modules` folder.
