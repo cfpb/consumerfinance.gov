@@ -28,8 +28,10 @@ describe( 'The Regs3K search utils', () => {
   } );
 
   it( 'should build a search results URL', () => {
-    const URL = utils.buildSearchResultsURL( 'foo', 'bar' );
-    expect( URL ).toEqual( 'foo?bar&partial' );
+    let url = utils.buildSearchResultsURL( 'foo', 'bar' );
+    expect( url ).toEqual( 'foo?bar' );
+    url = utils.buildSearchResultsURL( 'foo', 'bar', { partial: true } );
+    expect( url ).toEqual( 'foo?bar&partial' );
   } );
 
   it( 'should show an element loading', () => {

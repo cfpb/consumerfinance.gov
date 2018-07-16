@@ -8,7 +8,7 @@ import { closest, queryOne as find } from '../../../js/modules/util/dom-traverse
 function init() {
   // Override search form submission
   behavior.attach( 'submit-search', 'submit', handleSubmit );
-  behavior.attach( 'submit-search', 'change', handleSubmit );
+  behavior.attach( 'change-filter', 'change', handleFilter );
   attachHandlers();
 }
 
@@ -37,7 +37,7 @@ function clearFilter( event ) {
   // Uncheck the filter checkbox
   checkbox.checked = false;
   if ( event instanceof Event ) {
-    handleSubmit( event );
+    handleFilter( event );
   }
 }
 
@@ -59,11 +59,31 @@ function clearFilters( event ) {
 }
 
 /**
- * Remove all filters from the search results page.
+ * Handle keyword search form submission.
+ *
+ * @param {Event} event Click event
+ * @returns {String} New page URL with search terms.
+ */
+function handleSubmit( event ) {
+  if ( event instanceof Event ) {
+    event.preventDefault();
+  }
+  const filters = document.querySelectorAll( 'input:checked' );
+  const searchField = find( 'input[name=q]' );
+  const searchTerms = utils.getSearchValues( searchField, filters );
+  const baseUrl = window.location.href.split( '?' )[0];
+  const searchParams = utils.serializeFormFields( searchTerms );
+  const searchUrl = utils.buildSearchResultsURL( baseUrl, searchParams );
+  window.location.assign( searchUrl );
+  return searchUrl;
+}
+
+/**
+ * Handle filter change events.
  *
  * @param {Event} event Click event
  */
-function handleSubmit( event ) {
+function handleFilter( event ) {
   if ( event instanceof Event ) {
     event.preventDefault();
   }
@@ -73,7 +93,11 @@ function handleSubmit( event ) {
   const searchTerms = utils.getSearchValues( searchField, filters );
   const baseUrl = window.location.href.split( '?' )[0];
   const searchParams = utils.serializeFormFields( searchTerms );
-  const searchUrl = utils.buildSearchResultsURL( baseUrl, searchParams );
+  const searchUrl = utils.buildSearchResultsURL(
+    baseUrl, searchParams, { partial: true }
+  );
+  // Update the filter query params in the URL
+  utils.updateUrl( baseUrl, searchParams );
   utils.showLoading( searchContainer );
   utils.fetchSearchResults( searchUrl, ( err, data ) => {
     utils.hideLoading( searchContainer );

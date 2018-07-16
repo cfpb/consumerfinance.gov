@@ -42,10 +42,13 @@ function serializeFormFields( fields ) {
  *
  * @param {String} base URL's base.
  * @param {String} params URL's GET parameters.
+ * @param {Object} opts Object of additional options for the URL.
  * @returns {String} Encoded URL.
  */
-function buildSearchResultsURL( base, params ) {
-  return `${ base }?${ params }&partial`;
+function buildSearchResultsURL( base, params, opts ) {
+  // Currently the only option is for a partial search results template
+  opts = opts && opts.partial ? '&partial' : '';
+  return `${ base }?${ params }${ opts }`;
 }
 
 /**
