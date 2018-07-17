@@ -54,6 +54,8 @@ describe( 'The Regs3K search utils', () => {
   it( 'should handle errors', () => {
     const searchError = utils.handleError( 'no-results' );
     expect( searchError.msg ).toEqual( 'Your query returned zero results.' );
+    const cancelError = utils.handleError( 0 );
+    expect( cancelError.msg ).toEqual( 'Search request was cancelled.' );
     const unknownError = utils.handleError();
     expect( unknownError.msg ).toEqual( 'Sorry, our search engine is temporarily down.' );
   } );

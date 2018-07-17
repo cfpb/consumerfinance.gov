@@ -2,6 +2,9 @@ import * as behavior from '../../../js/modules/util/behavior';
 import * as utils from './search-utils';
 import { closest, queryOne as find } from '../../../js/modules/util/dom-traverse';
 
+// Keep track of the most recent XHR request so that we can cancel it if need be
+let searchRequest = {};
+
 /**
  * Initialize search functionality.
  */
@@ -87,6 +90,11 @@ function handleFilter( event ) {
   if ( event instanceof Event ) {
     event.preventDefault();
   }
+  // Abort the previous search request if it's still active
+  /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
+  try {
+    searchRequest.abort();
+  } catch ( err ) { }
   const searchContainer = find( '#regs3k-results' );
   const filters = document.querySelectorAll( 'input:checked' );
   const searchField = find( 'input[name=q]' );
@@ -99,11 +107,11 @@ function handleFilter( event ) {
   // Update the filter query params in the URL
   utils.updateUrl( baseUrl, searchParams );
   utils.showLoading( searchContainer );
-  utils.fetchSearchResults( searchUrl, ( err, data ) => {
+  searchRequest = utils.fetchSearchResults( searchUrl, ( err, data ) => {
     utils.hideLoading( searchContainer );
-    if ( err ) {
+    if ( err !== null ) {
       // TODO: Add message banner above search results
-      return console.error( utils.handleError( 'no-results' ).msg );
+      return console.error( utils.handleError( err ).msg );
     }
     searchContainer.innerHTML = data;
     // Update the query params in the URL
