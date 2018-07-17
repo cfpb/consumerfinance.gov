@@ -79,7 +79,7 @@ describe( 'The Regs3K search page', () => {
     expect( numFilters ).toEqual( 1 );
   } );
 
-  it( 'should clear all filters the `clear all` link is clicked', () => {
+  it( 'should clear all filters when the `clear all` link is clicked', () => {
     const mockXHR = {
       open: jest.fn(),
       send: jest.fn(),
@@ -96,7 +96,7 @@ describe( 'The Regs3K search page', () => {
 
     simulateEvent( 'click', clearAllLink );
     numFilters = document.querySelectorAll( 'button.a-tag' ).length;
-    expect( console.log ).toBeCalled();
+    expect( numFilters ).toEqual( 0 );
 
     mockXHR.onreadystatechange();
   } );

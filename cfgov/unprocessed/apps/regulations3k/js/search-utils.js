@@ -71,6 +71,17 @@ function hideLoading( el ) {
 }
 
 /**
+ * Uncheck checkbox.
+ *
+ * @param {HTMLNode} el Input element to uncheck.
+ * @returns {HTMLNode} Input element.
+ */
+function clearCheckbox( el ) {
+  el.checked = false;
+  return el;
+}
+
+/**
  * Fetches search results partial
  *
  * @param {String} url URL's of search results.
@@ -112,6 +123,7 @@ module.exports = {
   buildSearchResultsURL: buildSearchResultsURL,
   showLoading: showLoading,
   hideLoading: hideLoading,
+  clearCheckbox: clearCheckbox,
   handleError: handleError,
   fetchSearchResults: fetchSearchResults
 };

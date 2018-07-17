@@ -26,7 +26,7 @@ function attachHandlers() {
  * @param {Event} event Click event
  */
 function clearFilter( event ) {
-  // Continue only if the X icon was clicked
+  // Continue only if the X icon was clicked and not the parent button
   if ( event.target.tagName === 'BUTTON' ) {
     return;
   }
@@ -36,7 +36,9 @@ function clearFilter( event ) {
   target.remove();
   // Uncheck the filter checkbox
   checkbox.checked = false;
-  handleSubmit( event );
+  if ( event instanceof Event ) {
+    handleSubmit( event );
+  }
 }
 
 /**
@@ -45,8 +47,15 @@ function clearFilter( event ) {
  * @param {Event} event Click event
  */
 function clearFilters( event ) {
-  // TODO: Implement this.
-  console.log( 'cleared all!' );
+  const filterIcons = document.querySelectorAll( '.a-tag svg' );
+  filterIcons.forEach( filterIcon => {
+    const target = closest( filterIcon, 'button' );
+    clearFilter( {
+      target: filterIcon,
+      value: target
+    } );
+  } );
+  handleSubmit();
 }
 
 /**
@@ -55,7 +64,9 @@ function clearFilters( event ) {
  * @param {Event} event Click event
  */
 function handleSubmit( event ) {
-  event.preventDefault();
+  if ( event instanceof Event ) {
+    event.preventDefault();
+  }
   const searchContainer = find( '#regs3k-results' );
   const filters = document.querySelectorAll( 'input:checked' );
   const searchField = find( 'input[name=q]' );
