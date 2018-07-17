@@ -74,24 +74,8 @@ def format_file_size(bytecount, suffix='B'):
 
 def parse_links(html):
     soup = BeautifulSoup(html, 'html.parser')
-
-    # This removes style tags <style>
-    for s in soup('style'):
-        s.decompose()
-
-    # This removes all inline style attr's
-    for tag in soup.recursiveChildGenerator():
-        try:
-            del tag['style']
-        except TypeError:
-            # 'NavigableString' object has does not have attr's
-            pass
-
     link_tags = get_link_tags(soup)
-    # Only return the beautiful soup modified html if changes were made
-    if add_link_markup(link_tags):
-        return soup.prettify()
-    return html
+    return add_link_markup(link_tags, html)
 
 
 def get_link_tags(soup):
@@ -109,9 +93,9 @@ def is_image_tag(tag):
     return False
 
 
-def add_link_markup(tags):
-    modified = False
+def add_link_markup(tags, html):
     for tag in tags:
+        original_link = str(tag)
         icon = False
         if not tag.attrs.get('class', None):
             tag.attrs.update({'class': []})
@@ -135,7 +119,6 @@ def add_link_markup(tags):
             # Sets the icon to indicate you're downloading a file
             icon = 'download'
         if icon:
-            modified = True
             tag.attrs['class'].append(LINK_ICON_CLASSES)
             # Wraps the link text in a span that provides the underline
             contents = tag.contents
@@ -145,7 +128,8 @@ def add_link_markup(tags):
             tag.contents = [span, NavigableString(' ')]
             # Appends the SVG icon
             tag.contents.append(BeautifulSoup(svg_icon(icon), 'html.parser'))
-    return modified
+            html = html.replace(original_link, str(tag))
+    return html
 
 
 class NoMigrations(object):
