@@ -274,6 +274,9 @@ class CFGOVPage(Page):
     def get_appropriate_siblings(self, inclusive=True):
         return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
+    def get_relative_path(self):
+        return self.relative_url(self.get_site())
+
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
         for hook in hooks.get_hooks('cfgovpage_context_handlers'):
