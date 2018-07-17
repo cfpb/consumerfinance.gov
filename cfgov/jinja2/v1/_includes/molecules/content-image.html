@@ -44,7 +44,7 @@
          alt="{{ image_alt_value(value.image) }}">
 {%- if value.text %}
     <figcaption class="m-inset_caption">
-        {{ parse_links(value.text) | safe }}
+        {{ value.text | safe }}
     </figcaption>
 {%- endif %}
 </figure>
@@ -67,7 +67,7 @@
     </div>
 {% if value.text %}
     <figcaption class="m-inset_caption">
-        {{ parse_links(value.text) | safe }}
+        {{ value.text | safe }}
     </figcaption>
 {% endif %}
 </figure>

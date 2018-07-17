@@ -82,7 +82,7 @@
                                 {% endif %}
                                 {% if blocks.body.value %}
                                     <p class="o-sidebar-breakout_text-body">
-                                        {{ parse_links(blocks.body.render()) | safe }}
+                                        {{ blocks.body.render() | safe }}
                                     </p>
                                 {% endif %}
                                 </div>
@@ -103,7 +103,7 @@
                         </header>
                     {% elif 'paragraph' in block.block_type %}
                         <p class="o-sidebar-breakout_text-body">
-                            {{ parse_links(block.value) | safe }}
+                            {{ block.value | safe }}
                         </p>
                     {% else %}
                         {% import 'templates/render_block.html' as render_block with context %}

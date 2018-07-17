@@ -52,7 +52,7 @@
             <h3>{{ value.contact.heading }}</h3>
         {% endif %}
 
-        {{ parse_links(value.contact.body) |safe }}
+        {{ value.contact.body | safe }}
     </div>
 
     <div class="o-sidebar-contact-info_contacts">
