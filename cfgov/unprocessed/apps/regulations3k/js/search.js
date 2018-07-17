@@ -58,7 +58,7 @@ function clearFilters( event ) {
       value: target
     } );
   } );
-  handleSubmit();
+  handleFilter( event );
 }
 
 /**
@@ -122,6 +122,11 @@ function handleFilter( event ) {
   } );
 }
 
-window.addEventListener( 'load', () => {
-  init();
-} );
+// Provide the no-JS experience to browsers without `replaceState`
+if ( 'replaceState' in window.history ) {
+  window.addEventListener( 'load', () => {
+    init();
+  } );
+} else {
+  document.getElementById( 'main' ).className += ' no-js';
+}
