@@ -98,20 +98,24 @@ home price, down payment, and more can affect mortgage interest rates.
                             {#
                               Credit alert for when low credit score is chosen.
                             #}
-                            <div id="credit-score-alert"
-                                 class="result-alert credit-alert u-hidden"
-                                 role="alert">
-                                {# NOTE: Text needs to appear on same line as
-                                   paragraph tag, otherwise there is a space
-                                   in front of the notification text. #}
-                                <p class="alert">Many lenders do not accept
-                                    borrowers with credit scores less than 620.
-                                    Even if your score is low, you may still have options.
-                                    <a href="https://www.consumerfinance.gov/mortgagehelp/">
-                                        Contact a housing counselor
-                                    </a>
-                                    to learn more.
-                                </p>
+
+                            <div class="result-alert
+                                        credit-alert
+                                        u-hidden"
+                             id="credit-score-alert"
+                             role="alert">
+                                <div class="a-form-alert a-form-alert__error">
+                                    {{ svg_icon('warning-round') }}
+                                    <span class="a-form-alert_text">
+                                        Many lenders do not accept
+                                        borrowers with credit scores less than 620.
+                                        Even if your score is low, you may still have options.
+                                        <a href="https://www.consumerfinance.gov/mortgagehelp/">
+                                            Contact a housing counselor
+                                        </a>
+                                        to learn more.
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <p class="form-sub">Credit score has a big impact on the rate you’ll receive. <a href="/askcfpb/319/how-does-my-credit-score-affect-my-ability-to-get-a-mortgage-loan.html" id="ask-cfpb-credit" target="_blank" rel="noopener noreferrer">Learn more</a></p>
@@ -228,14 +232,25 @@ home price, down payment, and more can affect mortgage interest rates.
                         {#
                           Alert when down payment is greater than house price.
                         #}
-                        <div id="dp-alert"
-                             class="downpayment-warning alert-alt half-width-gt-1230 u-hidden"
+                        <div class="downpayment-warning
+                                    half-width-gt-1230
+                                    u-hidden"
+                             id="dp-alert"
                              role="alert">
-                          Your down payment cannot be more than your house price.
+                            <div class="a-form-alert a-form-alert__warning">
+                                {{ svg_icon('warning-round') }}
+                                <span class="a-form-alert_text">
+                                    Your down payment cannot be more than your
+                                    house price.
+                                </span>
+                            </div>
                         </div>
                     </section>
                     <section class="form-sub warning u-hidden" id="county-warning">
-                        <p class="warning-text"></p>
+                        <div class="a-form-alert a-form-alert__warning">
+                            {{ svg_icon('warning-round') }}
+                            <span class="a-form-alert_text"></span>
+                        </div>
                     </section>
                     <section class="calc-loan-details wrapper">
                         <div class="upper rate-structure half-width-gt-1230">
@@ -279,10 +294,18 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                     </section>
                     <section class="form-sub warning u-hidden" id="arm-warning">
-                        <p class="warning-text">While some lenders may offer FHA, VA, or 15-year adjustable-rate mortgages, they are rare. We don’t have enough data to display results for these combinations. Choose a fixed rate if you’d like to try these options.</p>
+                        <div class="a-form-alert a-form-alert__warning">
+                            {{ svg_icon('warning-round') }}
+                            <span class="a-form-alert_text">
+                                While some lenders may offer FHA, VA, or 15-year adjustable-rate mortgages, they are rare. We don’t have enough data to display results for these combinations. Choose a fixed rate if you’d like to try these options.
+                            </span>
+                        </div>
                     </section>
                     <section class="form-sub warning u-hidden" id="hb-warning">
-                        <p class="warning-text"></p>
+                        <div class="a-form-alert a-form-alert__warning">
+                            {{ svg_icon('warning-round') }}
+                            <span class="a-form-alert_text"></span>
+                        </div>
                     </section>
                     <section class="form-sub calc-subsection">
                         <p><a href="../loan-options/" target="_blank" rel="noopener noreferrer">Learn about loan term, rate type, and loan type</a></p>
@@ -355,13 +378,19 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                         {# Alert Shown when there was an API failure. #}
                         <div id="chart-fail-alert"
-                             class="result-alert chart-alert u-hidden"
+                             class="result-alert
+                                    m-notification
+                                    m-notification__error"
                              role="alert">
-                              <p class="alert">
-                                <strong>We're sorry!</strong>
-                                We're having trouble connecting to our data.<br>
-                                Try again another time.
-                              </p>
+                            {{ svg_icon('error-round') }}
+                            <div class="m-notification_content">
+                                <div class="h4 m-notification_message">We're sorry!</div>
+                                <p class="m-notification_explanation">
+                                    <strong>We're sorry!</strong>
+                                    We're having trouble connecting to our data.<br>
+                                    Try again another time.
+                                </p>
+                            </div>
                         </div>
                     </section>
                     <p id="timestamp-p" class="data-enabled timestamp-message clear">These rates are current as of <strong id="timestamp">…</strong>.</p>

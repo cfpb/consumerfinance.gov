@@ -14,34 +14,9 @@
     color:  @gray-40;
 }
 
-.alert {
-    &:before,
-    li&:before {
-        .cf-icon;
-
-        left: -21px;
-        color:  @red;
-        content: '\e103';
-        font-size: 17px;
-    }
-    li&.list_item__spaced:before {
-        top: 3px;
-    }
-    p&:before {
-        text-indent: -1.4em;
-    }
-    li& {
-        position: relative;
-        list-style: none;
-    }
-}
-
-.alert-alt:before {
-    .cf-icon;
-
-    color:  @gold;
-    content: '\e103';
-    text-indent: -1.4em;
+.a-form-alert {
+    color: @dark-gray;
+    font-size: 0.75em;
 }
 
 // alert containers have a background color but no border
@@ -117,13 +92,6 @@
     h5:first-child {
         margin-top: 0;
     }
-}
-
-.point-right:after {
-    .cf-icon;
-
-    margin-left: unit( 10px / @base-font-size-px, em );
-    content: '\e011';
 }
 
 .placeholder {
