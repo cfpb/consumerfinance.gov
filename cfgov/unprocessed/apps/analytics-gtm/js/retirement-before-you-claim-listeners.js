@@ -58,8 +58,8 @@ const BYCAnalytics = ( function() {
 
       // Start mouseflow screencapture.
       if ( window.mouseflow ) {
-        analyticsLog( 'Mouseflow capture started!' );
         window.mouseflow.start();
+        analyticsLog( 'Mouseflow capture started!' );
       }
     }
 
