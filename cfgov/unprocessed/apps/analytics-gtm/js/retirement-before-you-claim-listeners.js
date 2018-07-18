@@ -1,7 +1,10 @@
 // TODO: Remove jquery.
 import $ from 'jquery';
 
-import { track } from './util/analytics-util';
+import {
+  analyticsLog,
+  track
+} from './util/analytics-util';
 
 // Retirement - Before You Claim custom analytics file
 
@@ -56,8 +59,11 @@ const BYCAnalytics = ( function() {
         'Age ' + age
       );
 
-      // Start mouseflow screencapture.
+      // Start mouseflow screen capture.
       if ( window.mouseflow ) {
+        // Stop any in-progression recordings.
+        window.mouseflow.stop();
+        // Start a new recording.
         window.mouseflow.start();
         analyticsLog( 'Mouseflow capture started!' );
       }
