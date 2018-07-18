@@ -199,6 +199,7 @@ class Section(models.Model):
         deleted = 0
         kept = 0
         exclude_from_deletion = []
+        dupes = []
         for pid in paragraph_ids:
             raw_graph = extractor(pid, self.contents, exact=True)
             re.sub(r'(See\([^\)]+\))', '', raw_graph)
@@ -212,6 +213,10 @@ class Section(models.Model):
                 if cr:
                     created += 1
                 else:
+                    dupes.append("{}_{}_{}".format(
+                        part.part_number,
+                        self.label,
+                        pid))
                     kept += 1
                 exclude_from_deletion.append(graph.pk)
         to_delete = SectionParagraph.objects.filter(
@@ -221,11 +226,13 @@ class Section(models.Model):
         deleted += to_delete.count()
         for graph in to_delete:
             graph.delete()
+        dupes = sorted(set(dupes))
         return {
             'section': self.title,
             'created': created,
             'deleted': deleted,
             'kept': kept,
+            'dupes': dupes,
         }
 
     def save(self, **kwargs):

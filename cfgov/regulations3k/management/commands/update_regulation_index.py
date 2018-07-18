@@ -24,19 +24,24 @@ class Command(BaseCommand):
             'created': 0,
             'deleted': 0,
             'kept': 0,
+            'dupes': [],
         }
         regulations = Part.objects.all()
         versions = [part.effective_version for part in regulations]
         sections = Section.objects.filter(subpart__version__in=versions)
         for section in sections:
             section_count = section.extract_graphs()
-            for key in counter:
+            for key in ['created', 'deleted', 'kept']:
                 counter[key] += section_count.get(key, 0)
+            counter['dupes'] += section_count['dupes']
+        dupes = sorted(counter['dupes'])
         logger.info(
             "Section paragraphs have been extracted for {} regulations.\n"
-            "{} were created, {} were unchanged, and {} were deleted.".format(
+            "{} were created, {} were unchanged, {} were deleted, and"
+            "{} dupes were found".format(
                 regulations.count(),
                 counter['created'],
                 counter['kept'],
-                counter['deleted']))
+                counter['deleted'],
+                len(dupes)))
         _run_haystack_update()
