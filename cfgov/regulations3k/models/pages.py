@@ -9,7 +9,6 @@ from django.db import models
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from django.utils.functional import cached_property
-from django.utils.text import Truncator
 from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
@@ -59,10 +58,31 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         if 'regs' in request.GET and request.GET.get('regs'):
             regs = request.GET.getlist('regs')
         search_query = request.GET.get('q', '')  # haystack cleans this string
+        payload = {
+            'search_query': search_query,
+            'results': [],
+            'total_results': 0,
+            'regs': regs,
+            'all_regs': [],
+        }
+        if not search_query:
+            self.results = payload
+            return TemplateResponse(
+                request,
+                self.get_template(request),
+                self.get_context(request))
         sqs = SearchQuerySet()
-        if search_query:
-            sqs = sqs.filter(content=search_query).highlight(
-                pre_tags=['<strong>'], post_tags=['</strong>'])
+        sqs = sqs.filter(content=search_query).highlight(
+            pre_tags=['<strong>'], post_tags=['</strong>'])
+        payload.update({
+            'total_results': sqs.count(),
+            'all_regs': [{
+                'name': "Regulation {}".format(reg.letter_code),
+                'id': reg.part_number,
+                'num_results': sqs.filter(part=reg.part_number).count(),
+                'selected': reg.part_number in regs}
+                for reg in all_regs]
+        })
         if len(regs) == 1:
             sqs = sqs.filter(part=regs[0])
         elif regs:
@@ -70,25 +90,9 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         if order == 'regulation':
             sqs = sqs.order_by('part', 'section_order')
         sqs = sqs.models(SectionParagraph)
-        payload = {
-            'search_query': search_query,
-            'results': [],
-            'total_results': sqs.count(),
-            'regs': regs,
-            'all_regs': [{
-                'name': "Regulation {}".format(reg.letter_code),
-                'id': reg.part_number,
-                'num_results': sqs.filter(part=reg.part_number).count(),
-                'selected': reg.part_number in regs}
-                for reg in all_regs
-            ]
-        }
         for hit in sqs:
             letter_code = LETTER_CODES.get(hit.part)
-            if search_query:
-                snippet = Markup(" ".join(hit.highlighted))
-            else:
-                snippet = Truncator(hit.text).words(60, truncate=' ...')
+            snippet = Markup(" ".join(hit.highlighted))
             hit_payload = {
                 'id': hit.paragraph_id,
                 'reg': 'Regulation {}'.format(letter_code),
@@ -115,7 +119,6 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             'show_filters': any(
                 reg['selected'] is True for reg in payload['all_regs'])
         })
-
         return TemplateResponse(
             request,
             self.get_template(request),

@@ -319,29 +319,18 @@ class RegModelTests(DjangoTestCase):
             self.reg_search_page.url + self.reg_search_page.reverse_subpage(
                 'regulation_results_page'),
             QueryDict(query_string=(
-                '?q=disclosure&regs=1002&regs=1003&order=regulation')))
+                'q=disclosure&regs=1002&regs=1003&order=regulation')))
         self.assertEqual(response2.status_code, 200)
         self.assertEqual(mock_sqs.call_count, 2)
 
     @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
     def test_routable_search_page_reg_only(self, mock_sqs):
-        mock_return = mock.Mock()
-        mock_return.part = '1002'
-        mock_return.text = ('Now is the time for all good men to come to the '
-                            'aid of their country.')
-        mock_return.paragraph_id = 'a'
-        mock_return.title = 'Section 1002.1 Now is the time.'
-        mock_return.section_label = '1'
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        mock_sqs.return_value = mock_queryset
         response = self.client.get(
             self.reg_search_page.url + self.reg_search_page.reverse_subpage(
                 'regulation_results_page'),
-            QueryDict(query_string='?regs=1002'))
+            QueryDict(query_string='regs=1002'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(mock_sqs.call_count, 1)
+        self.assertEqual(mock_sqs.call_count, 0)
 
     def test_get_breadcrumbs_reg_page(self):
         crumbs = self.reg_page.get_breadcrumbs(HttpRequest())
