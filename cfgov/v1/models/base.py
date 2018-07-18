@@ -275,6 +275,10 @@ class CFGOVPage(Page):
         return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
     def get_relative_path(self):
+        """
+        Returns the relative path for the page even if the
+        current site does not match the page's site.
+        """
         return self.relative_url(self.get_site())
 
     def get_context(self, request, *args, **kwargs):
