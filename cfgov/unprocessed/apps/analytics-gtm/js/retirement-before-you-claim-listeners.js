@@ -31,30 +31,37 @@ const BYCAnalytics = ( function() {
 
   $( document ).ready( function() {
 
-    $( '#step-one-form' ).submit( function( evt ) {
+    const stepOneForm = document.querySelector( '#step-one-form' );
+    stepOneForm.addEventListener( 'submit', formSubmitted );
+
+    function formSubmitted( evt ) {
       evt.preventDefault();
       stepOneSubmitted = true;
-      const month = $( '#bd-month' ).val();
-      const day = $( '#bd-day' ).val();
+
+      // Track birthdate.
+      const month = document.querySelector( '#bd-month' ).value;
+      const day = document.querySelector( '#bd-day' ).value;
       track(
         'Before You Claim Interaction',
         'Get Your Estimates submit birthdate',
         'Birthdate Month and Day - ' + month + '/' + day
       );
-    } );
 
-    $( '#step-one-form' ).submit( function( evt ) {
-      evt.preventDefault();
-      const month = $( '#bd-month' ).val();
-      const day = $( '#bd-day' ).val();
-      const year = $( '#bd-year' ).val();
+      // Track age.
+      const year = document.querySelector( '#bd-year' ).value;
       const age = calculateAge( month, day, year );
       track(
         'Before You Claim Interaction',
         'Get Your Estimates submit age',
         'Age ' + age
       );
-    } );
+
+      // Start mouseflow screencapture.
+      if ( window.mouseflow ) {
+        analyticsLog( 'Mouseflow capture started!' );
+        window.mouseflow.start();
+      }
+    }
 
     $( '#claim-canvas' ).on( 'mousedown', 'rect', function() {
       const age = $( this ).attr( 'data-age' );
