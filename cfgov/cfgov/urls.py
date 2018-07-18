@@ -214,8 +214,11 @@ urlpatterns = [
     url(r'^credit-cards/agreements/',
         include('agreements.urls')),
 
-    url(r'^consumer-tools/retirement/',
-        include_if_app_enabled('retirement_api', 'retirement_api.urls')),
+    url(r'^consumer-tools/retirement/', include_if_app_enabled(
+        'retirement_api',
+        'retirement_api.urls',
+        namespace='retirement_api'
+    )),
 
     url(r'^data-research/consumer-complaints/',
         include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
