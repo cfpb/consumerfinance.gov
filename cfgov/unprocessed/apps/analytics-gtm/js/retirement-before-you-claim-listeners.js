@@ -59,11 +59,11 @@ const BYCAnalytics = ( function() {
         'Age ' + age
       );
 
-      // Start mouseflow screen capture.
+      // Start mouseflow heatmap capture.
       if ( window.mouseflow ) {
-        // Stop any in-progression recordings.
+        // Stop any in-progress heatmap capturing.
         window.mouseflow.stop();
-        // Start a new recording.
+        // Start a new heatmap recording.
         window.mouseflow.start();
         analyticsLog( 'Mouseflow capture started!' );
       }
