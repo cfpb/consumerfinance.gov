@@ -116,7 +116,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'core.middleware.AddExternalLinkRedirectsMiddleware',
+    'core.middleware.ParseLinksMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
@@ -698,4 +698,9 @@ REGULATIONS_REFERENCE_MAPPING = [
         'Interp-{section}',
         '{section}-{paragraph}'
     ),
+]
+
+PARSE_LINKS_BLACKLIST = [
+    '/admin/',
+    '/django-admin/'
 ]
