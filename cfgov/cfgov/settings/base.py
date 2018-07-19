@@ -572,9 +572,7 @@ FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
-    'BETA_NOTICE': {
-        'boolean': DEPLOY_ENVIRONMENT == 'beta',
-    },
+    'BETA_NOTICE': {'environment is': 'beta'},
 
     # When enabled, include a recruitment code comment in the base template.
     'CFPB_RECRUITING': {},
@@ -625,36 +623,24 @@ FLAGS = {
     'FINANCIAL_COACHING': {},
 
     # Teacher's Digital Platform Customer Review Tool
-    'TDP_CRTOOL': {
-        'boolean': DEPLOY_ENVIRONMENT == 'beta',
-    },
+    'TDP_CRTOOL': {'environment is': 'beta'},
 
     # Teacher's Digital Platform Customer Review Tool Prototypes Pages
-    'TDP_CRTOOL_PROTOTYPES': {
-        'boolean': DEPLOY_ENVIRONMENT == 'beta',
-    },
+    'TDP_CRTOOL_PROTOTYPES': {'environment is': 'beta'},
 
     # Teacher's Digital Platform Search Interface Tool
-    'TDP_SEARCH_INTERFACE': {
-        'boolean': DEPLOY_ENVIRONMENT == 'beta',
-    },
+    'TDP_SEARCH_INTERFACE': {'environment is': 'beta'},
 
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
     'TURBOLINKS': {},
 
     # Ping google on page publication in production only
-    'PING_GOOGLE_ON_PUBLISH': {
-        'boolean': DEPLOY_ENVIRONMENT == 'production'
-    },
+    'PING_GOOGLE_ON_PUBLISH': {'environment is': 'production'},
 
-    'REGULATIONS3K': {
-        'boolean': DEPLOY_ENVIRONMENT == 'build'
-    },
+    'REGULATIONS3K': {'environment is': 'build'},
 
-    'LEGACY_HUD_API': {
-        'boolean': DEPLOY_ENVIRONMENT == 'production',
-    },
+    'LEGACY_HUD_API': {'environment is': 'production'},
 
     # To be enabled when switching the site to use the BCFP logo
     'BCFP_LOGO': {},
