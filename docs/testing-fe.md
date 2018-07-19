@@ -175,7 +175,7 @@ To audit if the site complies with performance best practices and guidelines,
 run `gulp audit:perf`.
 
 The audit will run against
-[Google's PageSpeed Insights](https://github.com/addyosmani/psi).
+[Google's Lighthouse](https://github.com/GoogleChrome/lighthouse).
 
 
 # Unit testing
