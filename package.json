@@ -76,7 +76,7 @@
     "jest": "23.4.1",
     "jest-cli": "23.4.1",
     "jsdoc": "3.5.5",
-    "localtunnel": "1.9.0",
+    "lighthouse": "3.0.3",
     "merge-stream": "1.0.1",
     "minimist": "1.2.0",
     "protractor": "5.3.2",
