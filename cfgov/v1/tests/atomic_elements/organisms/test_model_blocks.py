@@ -133,8 +133,8 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
         self.assertHtmlRegexpMatches(html, (
             '<tbody>'
             '<tr>'
-            '<td>Username</td>'
-            '<td>First Name</td>'
+            '<td><div class="rich-text">Username</div></td>'
+            '<td><div class="rich-text">First Name</div></td>'
             '</tr>'
         ))
 
@@ -143,8 +143,8 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
         self.assertHtmlRegexpMatches(html, (
             '<thead>'
             '<tr>'
-            '<th scope="col">Username</th>'
-            '<th scope="col">First Name</th>'
+            '<th scope="col"><div class="rich-text">Username</div></th>'
+            '<th scope="col"><div class="rich-text">First Name</div></th>'
             '</tr>'
             '</thead>'
         ))
@@ -153,8 +153,8 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
         html = self.get_table_html(first_col_is_header=False)
         self.assertHtmlRegexpMatches(html, (
             '<tr>'
-            '<td data-label="Username">chico</td>'
-            '<td data-label="First Name">leonard</td>'
+            '<td data-label="Username"><div class="rich-text">chico</div></td>'
+            '<td data-label="First Name"><div class="rich-text">leonard</div></td>'
             '</tr>'
         ))
 
@@ -162,8 +162,8 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
         html = self.get_table_html(first_col_is_header=True)
         self.assertHtmlRegexpMatches(html, (
             '<tr>'
-            '<th scope="row" data-label="Username">chico</th>'
-            '<td data-label="First Name">leonard</td>'
+            '<th scope="row" data-label="Username"><div class="rich-text">chico</div></th>'
+            '<td data-label="First Name"><div class="rich-text">leonard</div></td>'
             '</tr>'
         ))
 
