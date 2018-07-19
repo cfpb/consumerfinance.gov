@@ -108,8 +108,7 @@
 {% macro _node(tagName="div", org, sub_title="text") -%}
 {% set has_children = org.offices | list | length %}
 
-<{{ tagName }} class="o-bureau-structure_node
-    {{ 'o-expandable o-expandable__expanded' if has_children else '' }}">
+<{{ tagName }} class="o-bureau-structure_node">
     {% if has_children %}
     {{ _role(org) }}
     {% if org.division_lead_1 %}
@@ -118,38 +117,28 @@
             'title':         org.title_1 } )
         }}
     {% endif %}
-    <button class="o-expandable_target">
-        <div class="o-expandable_header">
-            <div class="o-bureau-structure_node_expander">
-                <span class="o-expandable_header-left
-                             o-expandable_label
-                             o-bureau-structure_node_label">
-                    {{ sub_title }}
-                </span>
-                <span class="o-expandable_header-right
-                             o-expandable_link">
-                    <span class="o-expandable_cue
-                                 o-expandable_cue-open">
-                        <span class="o-expandable_cue-label">
-                            Show {{ svg_icon('plus-round') }}
-                        </span>
-                    </span>
-                    <span class="o-expandable_cue
-                                 o-expandable_cue-close">
-                        <span class="o-expandable_cue-label">
-                            Hide {{ svg_icon('minus-round') }}
-                        </span>
-                    </span>
-                </span>
-            </div>
-        </div>
+  <div class="o-expandable">
+    <button class="o-expandable_header o-expandable_target">
+        <span class="h4
+                     o-expandable_header-left
+                     o-expandable_label">
+            {{ sub_title }}
+        </span>
+        <span class="o-expandable_header-right
+                     o-expandable_link">
+            <span class="o-expandable_cue
+                         o-expandable_cue-open">
+                Show {{ svg_icon('plus-round') }}
+            </span>
+            <span class="o-expandable_cue
+                         o-expandable_cue-close">
+                Hide {{ svg_icon('minus-round') }}
+            </span>
+        </span>
     </button>
-    <div class="o-bureau-structure_nodes
-                o-expandable_content">
-        <ul class="o-expandable_content-animated
-                   m-list
-                   m-list__unstyled
-                   m-list__spaced">
+    <div class="o-expandable_content">
+        <ul class="m-list
+                   m-list__unstyled">
             {% for child_org in org.offices %}
             <li class="o-bureau-structure_node">
                 {{ _role(child_org) }}
@@ -164,6 +153,7 @@
             {% endfor %}
         </ul>
     </div>
+  </div>
     {% else %}
     {{ _role(org) }}
     {% endif %}

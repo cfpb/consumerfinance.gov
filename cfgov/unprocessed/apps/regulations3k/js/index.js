@@ -1,7 +1,6 @@
-import Expandable from '../../../js/organisms/Expandable.js';
-import { instantiateAll } from '../../../js/modules/util/atomic-helpers';
+import Expandable from 'cf-expandables/src/Expandable';
 
-instantiateAll( '.o-expandable', Expandable );
+Expandable.init();
 
 if ( 'serviceWorker' in navigator ) {
   /* Delay registration until after the page has loaded, to ensure that our

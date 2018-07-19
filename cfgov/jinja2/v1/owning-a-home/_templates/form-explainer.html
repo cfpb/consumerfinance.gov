@@ -65,7 +65,7 @@
         <figcaption class="terms explain_terms">
             <div class="o-expandable-group
                         o-expandable-group__form-explainer
-                        o-expandable-group__accordion">
+                        {{ 'o-expandable-group__accordion' if true else '' }}">
                 {{ render_terms( page.terms, loop.index ) }}
             </div>
         </figcaption>
@@ -156,6 +156,7 @@
 
 {% macro render_term( item, index, page_num ) %}
 {% if item.definition == '' %}
+{#
 <div class="o-expandable o-expandable__padded
             o-expandable__form-explainer
             o-expandable__form-explainer-{{ item.category }}"
@@ -170,16 +171,18 @@
         </span>
     </span>
 </div>
+#}
 {% else %}
-  <div class="o-expandable o-expandable__padded
-              o-expandable__form-explainer
-              o-expandable__form-explainer-{{ item.category }}"
-       id="{{ 'page-' + page_num|string + '-' + item.category + '-' + item.id }}">
-    <button class="o-expandable_header o-expandable_target" tabindex="0">
-        <span class="o-expandable_header-left o-expandable_label">
-            <span class="o-expandable_category o-expandable_category__{{ item.category }}">
-                <span class="u-visually-hidden">{{ item.category }}</span>
-            </span>
+<div class="o-expandable
+            o-expandable__padded
+            o-expandable__form-explainer
+            o-expandable__form-explainer-{{ item.category }}"
+     id="{{ 'page-' + page_num|string + '-' + item.category + '-' + item.id }}">
+    <button class="o-expandable_header o-expandable_target"
+            tabindex="0">
+        <span class="h4 o-expandable_header-left o-expandable_label">
+            {{ svg_icon( 'check-round' if item.category == 'checklist'
+                          else 'question-round') }}
             {{ item.term }}
         </span>
         <span class="o-expandable_header-right o-expandable_link">
