@@ -5,14 +5,13 @@
 
 
 const BreakpointHandler = require( '../modules/BreakpointHandler' );
-const Expandable = require( '../organisms/Expandable' );
+require( 'cf-expandables' );
+
 let BS;
 
 const BureauStructure = BS = {
 
   elements: {},
-
-  expandables: [],
 
   isMobile: false,
 
@@ -29,7 +28,6 @@ const BureauStructure = BS = {
    */
   initialize: function initialize() {
     BS.setElements();
-    BS.initializeExpandables();
     BS.slideCount = BS.elements.branches.length;
 
     new BreakpointHandler( {
@@ -41,7 +39,7 @@ const BureauStructure = BS = {
   },
 
   /**
-   * Remove the event listeners and destroy the expandables.
+   * Remove the event listeners and destroy the slider navigation.
    */
   destroy: function destroy() {
     BS.elements.branch.removeAttribute( 'style' );
@@ -84,40 +82,6 @@ const BureauStructure = BS = {
     }
 
     return BS.vendorPrefixes[style] || style;
-  },
-
-  /**
-   * Initialize the expandables and the expand / collapse event listeners.
-   */
-  initializeExpandables: function initializeExpandables() {
-    // Initialize the Expandable.
-    const expandablesDom = document.querySelectorAll( '.o-expandable' );
-    let expandable;
-    for ( let i = 0, len = expandablesDom.length; i < len; i++ ) {
-      expandable = new Expandable( expandablesDom[i] );
-      // Ensure Expandable isn't coming from cloned DOM nodes.
-      expandable.destroy();
-      expandable.addEventListener( 'expandEnd',
-        BS.eventListeners.heightChange );
-      expandable.addEventListener( 'collapseEnd',
-        BS.eventListeners.heightChange );
-      expandable.init();
-      BS.expandables.push( expandable );
-    }
-  },
-
-  /**
-   * Remove the event listeners from the expandables and destroy the
-   * Expandables instances.
-   */
-  destroyExpandables: function destroyExpandables() {
-    for ( let i = 0, len = BS.expandables.length; i < len; i++ ) {
-      BS.expandables[i].removeEventListener( 'expandEnd',
-        BS.eventListeners.heightChange );
-      BS.expandables[i].removeEventListener( 'collapseEnd',
-        BS.eventListeners.heightChange );
-      BS.expandables[i].destroy();
-    }
   },
 
   /**
@@ -190,7 +154,7 @@ const BureauStructure = BS = {
   },
 
   /**
-   * Remove the event listeners from the expandables and the slider navigation.
+   * Remove the event listeners from the slider navigation.
    */
   removeEventListeners: function removeEventListeners() {
     window.removeEventListener( 'resize', BS.eventListeners.resize );
