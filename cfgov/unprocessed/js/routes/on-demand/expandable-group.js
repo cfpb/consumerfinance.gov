@@ -3,7 +3,9 @@
    ========================================================================== */
 
 
-const atomicHelpers = require( '../../modules/util/atomic-helpers' );
-const ExpandableGroup = require( '../../organisms/ExpandableGroup' );
+// const atomicHelpers = require( '../../modules/util/atomic-helpers' );
+// const ExpandableGroup = require( '../../organisms/ExpandableGroup' );
 
-atomicHelpers.instantiateAll( '.o-expandable-group', ExpandableGroup );
+// atomicHelpers.instantiateAll( '.o-expandable-group', ExpandableGroup );
+
+require( 'cf-expandables' );
