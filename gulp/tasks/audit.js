@@ -85,10 +85,11 @@ function _getLighthouseParams() {
   const host = envvars.TEST_HTTP_HOST;
   const port = envvars.TEST_HTTP_PORT;
 
-  // Create log directory if none exists.
+  // eslint-disable-next-line no-sync
   if ( !fs.existsSync( './logs' ) ) {
     // eslint-disable-next-line no-sync
     fs.mkdirSync( './logs' );
+    // Create log directory if none exists.
   }
 
   return [
