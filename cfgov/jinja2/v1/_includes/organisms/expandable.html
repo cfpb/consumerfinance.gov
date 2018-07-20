@@ -40,20 +40,16 @@
             {{ 'o-expandable__border' if value.is_bordered else '' }}">
 
     <button class="o-expandable_header o-expandable_target">
-        <span class="h4
-                     o-expandable_header-left
-                     o-expandable_label">
+        <span class="h4 o-expandable_header-left o-expandable_label">
             {{ value.label }}
         </span>
         <span class="o-expandable_header-right o-expandable_link">
-            <span class="o-expandable_cue
-                         o-expandable_cue-open">
+            <span class="o-expandable_cue o-expandable_cue-open">
                 {{ 'Show' if true else 'Mostrar' }}
                 {{ expandable_cue_additional_text }}
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue
-                         o-expandable_cue-close">
+            <span class="o-expandable_cue o-expandable_cue-close">
                 {{ 'Hide' if true else 'Ocultar' }}
                 {{ expandable_cue_additional_text }}
                 {{ svg_icon('minus-round') }}
@@ -62,7 +58,8 @@
     </button>
 
     <div class="o-expandable_content
-                {{ 'o-expandable_content__onload-open' if value.is_expanded else '' }}">
+                {{ 'o-expandable_content__onload-open'
+                    if value.is_expanded else '' }}">
         {% if caller is defined %}
             {{ caller() }}
         {% else %}
