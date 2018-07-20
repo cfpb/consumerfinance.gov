@@ -36,11 +36,13 @@
 <div data-qa-hook="expandable"
      class="o-expandable
             o-expandable__padded
-            {{ 'o-expandable__background o-expandable__border'
-                if value.is_bordered else '' }}">
+            {{ 'o-expandable__background' if value.is_midtone else '' }}
+            {{ 'o-expandable__border' if value.is_bordered else '' }}">
 
     <button class="o-expandable_header o-expandable_target">
-        <span class="o-expandable_header-left o-expandable_label">
+        <span class="h4
+                     o-expandable_header-left
+                     o-expandable_label">
             {{ value.label }}
         </span>
         <span class="o-expandable_header-right o-expandable_link">
