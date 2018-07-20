@@ -6,6 +6,8 @@ by the patterns.IdLevelState class.
 """
 from __future__ import unicode_literals
 
+import re
+
 
 def bold_first_italics(graph_text):
     """For a newly broken-up graph, convert the first italics text to bold."""
@@ -34,6 +36,32 @@ def graph_top(graph_text):
         'paragraph')[0].partition(
         '12 CFR')[0].partition(
         '\xa7')[0][:200]
+
+
+def lint_paragraph(graph_text):
+    """Clean formatting anomalies.
+
+    - Missing em dashes
+    - restoring italics
+    """
+    fix1 = restore_emdash(graph_text)
+    fix2 = restore_italics(fix1)
+    return fix2
+
+
+def restore_italics(graph_text):
+    fix1 = re.sub(
+        r'\*\*(see)\*\*', '*\g<1>*', graph_text, flags=re.IGNORECASE)
+    fix2 = re.sub(
+        r'\*\*(et[.]? seq[. ]?)\*\*?', '*\g<1>*', fix1, flags=re.IGNORECASE)
+    return fix2
+
+
+def restore_emdash(graph_text):
+    stripped = graph_text.rstrip()
+    if stripped.endswith('-'):
+        return stripped + '--\n'
+    return graph_text
 
 
 def pre_process_tags(paragraph_element):

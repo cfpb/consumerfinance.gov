@@ -11,7 +11,8 @@ from bs4 import BeautifulSoup as bS
 from regulations3k.models.django import Section, Subpart
 from regulations3k.parser.integer_conversion import int_to_alpha
 from regulations3k.parser.paragraphs import (
-    bold_first_italics, combine_bolds, graph_top, pre_process_tags
+    bold_first_italics, combine_bolds, graph_top, lint_paragraph,
+    pre_process_tags
 )
 from regulations3k.parser.patterns import (
     IdLevelState, dot_id_patterns, interp_inferred_section_pattern,
@@ -71,11 +72,11 @@ def parse_subparts(part_soup, part):
         label="Interpretations",
         subpart_type=Subpart.INTERPRETATION,
         version=PAYLOAD.version)
-    interp_subpart.save()
-    PAYLOAD.subparts['interp_subpart'] = interp_subpart
     appendices = part_soup.find_all('DIV9')
     if appendices:
         if appendices[-1].find('HEAD').text.startswith('Supplement I'):
+            interp_subpart.save()
+            PAYLOAD.subparts['interp_subpart'] = interp_subpart
             interp_div = appendices.pop(-1)
             parse_interps(interp_div, part, interp_subpart)
             LEVEL_STATE.current_id = ''
@@ -112,16 +113,17 @@ def parse_singleton_graph(graph_text, label):
     new_graph = ''
     id_refs = PAYLOAD.interp_refs.get(label)
     id_match = re.search(paren_id_patterns['initial'], graph_top(graph_text))
+    linted = lint_paragraph(combine_bolds(graph_text))
     if not id_match:
-        return '\n' + combine_bolds(graph_text) + '\n'
+        return '\n' + linted + '\n'
     id_token = id_match.group(1).strip('*')
     if not LEVEL_STATE.token_validity_test(id_token):
-        return '\n' + combine_bolds(graph_text) + '\n'
+        return '\n' + linted + '\n'
     LEVEL_STATE.next_token = id_token
     pid = LEVEL_STATE.next_id()
     if pid:
         new_graph += "\n{" + pid + "}\n"
-    new_graph += combine_bolds(graph_text) + '\n'
+    new_graph += linted + '\n'
     if id_refs and pid in id_refs:
         new_graph += '\n' + id_refs[pid] + '\n'
     return new_graph
@@ -137,7 +139,7 @@ def parse_multi_id_graph(graph, ids, label):
     LEVEL_STATE.next_token = ids[0]
     pid1 = LEVEL_STATE.next_id()
     split1 = graph.partition('({})'.format(ids[1]))
-    text1 = combine_bolds(split1[0])
+    text1 = lint_paragraph(combine_bolds(split1[0]))
     pid2_marker = split1[1]
     remainder = bold_first_italics(split1[2])
     new_graphs += "\n{" + pid1 + "}\n"
@@ -148,7 +150,8 @@ def parse_multi_id_graph(graph, ids, label):
     pid2 = LEVEL_STATE.next_id()
     new_graphs += "\n{" + pid2 + "}\n"
     if len(ids) == 2:
-        text2 = combine_bolds(" ".join([pid2_marker, remainder]))
+        text2 = lint_paragraph(
+            combine_bolds(" ".join([pid2_marker, remainder])))
         new_graphs += text2 + '\n'
         if id_refs and pid2 in id_refs:
             new_graphs += '\n' + id_refs[pid2] + '\n'
@@ -157,12 +160,14 @@ def parse_multi_id_graph(graph, ids, label):
         split2 = remainder.partition('({})'.format(ids[2]))
         pid3_marker = split2[1]
         remainder2 = bold_first_italics(split2[2])
-        text2 = combine_bolds(" ".join([pid2_marker, split2[0]]))
+        text2 = lint_paragraph(
+            combine_bolds(" ".join([pid2_marker, split2[0]])))
         new_graphs += text2 + '\n'
         LEVEL_STATE.next_token = ids[2]
         pid3 = LEVEL_STATE.next_id()
         new_graphs += "\n{" + pid3 + "}\n"
-        text3 = combine_bolds(" ".join([pid3_marker, remainder2]))
+        text3 = lint_paragraph(
+            combine_bolds(" ".join([pid3_marker, remainder2])))
         new_graphs += text3 + '\n'
         if id_refs and pid3 in id_refs:
             new_graphs += '\n' + id_refs[pid3] + '\n'
@@ -221,15 +226,16 @@ def parse_appendix_paragraphs(p_elements, id_type, label):
         p = pre_process_tags(p_element)
         if id_type == 'section':
             p_content = parse_ids(p.text, label) + "\n"
-            p.replaceWith(p_content)
+            p.replaceWith(lint_paragraph(p_content))
         else:
             p_content = LEVEL_STATE.parse_appendix_graph(p, label) + "\n"
-            p.replaceWith(p_content)
+            p.replaceWith(lint_paragraph(p_content))
 
 
 def parse_sections(section_list, part, subpart):
     for section_element in section_list:
         label = section_element['N'].rsplit('.')[-1]
+        LEVEL_STATE.current_id = 'a'
         section_content = parse_section_paragraphs(
             section_element.find_all('P'), label)
         _section = Section(
@@ -369,7 +375,7 @@ def divine_interp_tag_use(element, part_num):
     text = element.text.strip()
     if 'INTRODUCTION' in text.upper():
         return 'intro'
-    if text.startswith('Section'):
+    if text.startswith('Section') or text.startswith('\N{SECTION SIGN}'):
         return 'section'
     if text.startswith('Appendix'):
         return 'appendix'
@@ -409,7 +415,7 @@ def parse_interp_graph_reference(element, part_num, section_tag):
 def get_interp_section_tag(headline):
     """"Derive an interp section tag from the HD content."""
 
-    interp_numeric_pattern = r'Section \d{4}\.(\d{1,3}) '
+    interp_numeric_pattern = ur'(?:Section|\xa7) \d{4}\.(\d{1,3}) '
     if headline.upper() == 'INTRODUCTION':
         return '0'
     if re.match(interp_numeric_pattern, headline):
@@ -474,6 +480,7 @@ def parse_interps(interp_div, part, subpart):
             label=interp_section_label,
             title=section_hed.replace(
                 'Section ', 'Comment for ').replace(
+                '\xa7', 'Comment for ').replace(
                 'Appendix ', 'Comment for Appendix '),
             contents=''
         )
@@ -509,8 +516,7 @@ def parse_interps(interp_div, part, subpart):
                     section.contents += '\n{' + interp_id + '}\n'
                     if tag_use == 'graph_id_inferred_section':
                         element.insert(0, section_label)
-                    p = pre_process_tags(element)
-                    section.contents += p.text.strip() + "\n"
+                    section.contents += "### {}\n".format(element.text.strip())
                 else:
                     p = pre_process_tags(element)
                     section.contents += parse_interp_graph(p)

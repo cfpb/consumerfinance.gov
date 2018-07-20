@@ -58,6 +58,7 @@ from markdown import markdown, util
 from markdown.blockprocessors import BlockProcessor, ParagraphProcessor
 from markdown.extensions import Extension
 from markdown.inlinepatterns import DoubleTagPattern, Pattern, SimpleTagPattern
+from mdx_emdash import EmDashExtension
 
 
 # If we're on Python 3.6+ we have SHA3 built-in, otherwise use the back-ported
@@ -282,7 +283,8 @@ def regdown(text, **kwargs):
         text,
         extensions=[
             'markdown.extensions.tables',
-            RegulationsExtension(**kwargs)
+            RegulationsExtension(**kwargs),
+            EmDashExtension(),
         ],
         **kwargs
     )
