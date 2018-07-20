@@ -1,7 +1,6 @@
 const pagination = require( '../../shared_objects/pagination.js' );
-const { Then, When } = require( 'cucumber' );
+const { When } = require( 'cucumber' );
 const chai = require( 'chai' );
-const expect = chai.expect;
 const chaiAsPromised = require( 'chai-as-promised' );
 
 chai.use( chaiAsPromised );
@@ -17,14 +16,5 @@ When( /I enter "(\d)" in the page input field/,
   function( pageNumber ) {
 
     return pagination.pageInput.sendKeys( pageNumber );
-  }
-);
-
-Then( /the page url should contain "(.*)"/,
-  function( urlComponent ) {
-
-    return expect( browser.getCurrentUrl() )
-      .to.eventually
-      .contain( urlComponent );
   }
 );

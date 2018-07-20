@@ -248,7 +248,7 @@ function _onPrepare() {
 const config = {
   baseUrl:                  environmentTest.baseUrl,
   cucumberOpts: {
-    'require':   'cucumber/step_definitions/*.js',
+    'require':   'cucumber/step_definitions/**/*.js',
     'tags':      [ '~@mobile', '~@skip', '~@undefined' ],
     'profile':   false,
     'no-source': true,
