@@ -331,6 +331,7 @@ def parse_appendices(appendices, part):
     for i, _appendix in enumerate(appendices):
         n_value = _appendix['N']
         head = _appendix.find('HEAD').text.strip()
+        _appendix.find('HEAD').replaceWith('')
         default_label = int_to_alpha(i + 1).upper()
         label = get_appendix_label(n_value, head, default_label)
         if PAYLOAD.interp_refs and label in PAYLOAD.interp_refs:
@@ -415,7 +416,7 @@ def parse_interp_graph_reference(element, part_num, section_tag):
 def get_interp_section_tag(headline):
     """"Derive an interp section tag from the HD content."""
 
-    interp_numeric_pattern = ur'(?:Section|\xa7) \d{4}\.(\d{1,3}) '
+    interp_numeric_pattern = r'(?:Section|\xa7) \d{4}\.(\d{1,3}) '
     if headline.upper() == 'INTRODUCTION':
         return '0'
     if re.match(interp_numeric_pattern, headline):
