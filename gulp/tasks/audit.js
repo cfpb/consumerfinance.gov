@@ -99,7 +99,7 @@ function _getLighthouseParams() {
     '--only-categories=performance',
     '--only-categories=pwa',
     '--only-categories=best-practices',
-    '--only-categories=seo',
+    '--only-categories=seo'
   ];
 }
 
