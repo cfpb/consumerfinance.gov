@@ -2,7 +2,6 @@
 const Analytics = require( '../modules/Analytics' );
 const atomicHelpers = require( '../modules/util/atomic-helpers' );
 const ERROR_MESSAGES = require( '../config/error-messages-config' );
-//const Expandable = require( '../organisms/Expandable' );
 const getClosestElement = require( '../modules/util/dom-traverse' ).closest;
 const Multiselect = require( '../molecules/Multiselect' );
 const Notification = require( '../molecules/Notification' );
@@ -22,7 +21,6 @@ const validators = require( '../modules/util/validators' );
 function FilterableListControls( element ) {
   const BASE_CLASS = 'o-filterable-list-controls';
   const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  //let _expandable;
   const _form = _dom.querySelector( 'form' );
   let _notification;
   let _fieldGroups;
@@ -60,9 +58,7 @@ function FilterableListControls( element ) {
 
     /* TODO: FilterableListControls should use expandable
        behavior (FlyoutMenu), not an expandable directly. */
-    // _expandable = new Expandable( _dom );
-    // _expandable.init();
-
+    // eslint-disable-next-line global-require
     require( 'cf-expandables' );
 
     if ( _dom.classList.contains( 'o-filterable-list-controls' ) ) {
