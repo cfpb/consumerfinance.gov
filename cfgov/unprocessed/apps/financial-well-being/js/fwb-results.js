@@ -1,15 +1,6 @@
 const Analytics = require( '../../../js/modules/Analytics' );
-const Expandable = require( '../../../js/organisms/Expandable' );
 
-const expandableDom = document.querySelectorAll( '.content .o-expandable' );
-let expandable;
-
-if ( expandableDom ) {
-  for ( let i = 0, len = expandableDom.length; i < len; i++ ) {
-    expandable = new Expandable( expandableDom[i] );
-    expandable.init();
-  }
-}
+require( 'cf-expandables' );
 
 /**
  * Initialize the results interactions
