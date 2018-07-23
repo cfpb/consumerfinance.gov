@@ -23,9 +23,8 @@ function getSearchValues( searchEl, filterEls ) {
 /**
  * Serializes form fields into GET-friendly string.
  *
- * @param {Array} fields Array of objects of form field
- * key-value pairs.
- * @returns {String} xhr
+ * @param {Array} fields Array of objects of form field key-value pairs.
+ * @returns {String} Serialized form fields.
  */
 function serializeFormFields( fields ) {
   fields = fields.map( field => {
@@ -42,10 +41,13 @@ function serializeFormFields( fields ) {
  *
  * @param {String} base URL's base.
  * @param {String} params URL's GET parameters.
+ * @param {Object} opts Object of additional options for the URL.
  * @returns {String} Encoded URL.
  */
-function buildSearchResultsURL( base, params ) {
-  return `${ base }?${ params }&partial`;
+function buildSearchResultsURL( base, params, opts ) {
+  // Currently the only option is for a partial search results template
+  opts = opts && opts.partial ? '&partial' : '';
+  return `${ base }?${ params }${ opts }`;
 }
 
 /**
@@ -96,19 +98,35 @@ function fetchSearchResults( url, cb ) {
 }
 
 /**
+ * Update the page's URL via replaceState
+ *
+ * @param {String} base URL's base.
+ * @param {String} params URL's GET parameters.
+ * @returns {String} New URL.
+ */
+function updateUrl( base, params ) {
+  const url = `${ base }?${ params }`;
+  window.history.replaceState( null, null, url );
+  return url;
+}
+
+/**
  * Check error and do something with it
  *
- * @param {String} err Error code
+ * @param {String} code Error code
  * @returns {Object} Error object to be handled by DOM.
  */
-function handleError( err ) {
+function handleError( code ) {
   const error = {
     message: null,
-    type: err || 'unknown'
+    code: code || 0
   };
-  switch ( err ) {
+  switch ( code ) {
     case 'no-results':
       error.msg = 'Your query returned zero results.';
+      break;
+    case 0:
+      error.msg = 'Search request was cancelled.';
       break;
     default:
       error.msg = 'Sorry, our search engine is temporarily down.';
@@ -125,5 +143,6 @@ module.exports = {
   hideLoading: hideLoading,
   clearCheckbox: clearCheckbox,
   handleError: handleError,
-  fetchSearchResults: fetchSearchResults
+  fetchSearchResults: fetchSearchResults,
+  updateUrl: updateUrl
 };

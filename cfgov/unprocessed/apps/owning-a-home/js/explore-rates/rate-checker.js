@@ -367,9 +367,9 @@ function checkForJumbo() {
   // Hide any existing message, then show a message if appropriate.
   document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
   if ( warnings.hasOwnProperty( params.getVal( 'loan-type' ) ) ) {
-    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'p' ).text( warnings[params.getVal( 'loan-type' )].call() );
+    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( warnings[params.getVal( 'loan-type' )].call() );
   } else {
-    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'p' ).text( template.countyGenWarning() );
+    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( template.countyGenWarning() );
   }
 
   // If the state hasn't changed, we also cool. No need to load new counties.
@@ -438,7 +438,7 @@ function processCounty() {
     // Add links to loan messages.
     loan.msg = loan.msg.replace( 'jumbo (non-conforming)', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">jumbo (non-conforming)</a>' );
     loan.msg = loan.msg.replace( 'conforming jumbo', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">conforming jumbo</a>' );
-    $( '#hb-warning' ).removeClass( 'u-hidden' ).find( 'p' ).html( loan.msg );
+    $( '#hb-warning' ).removeClass( 'u-hidden' ).find( 'span' ).html( loan.msg );
 
   } else {
     params.setVal( 'isJumbo', false );

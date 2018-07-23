@@ -8,7 +8,6 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
 
 import jinja2.runtime
-from flags.template_functions import flag_disabled, flag_enabled
 from jinja2 import Environment
 from jinja2.runtime import Context
 
@@ -77,8 +76,6 @@ def environment(**options):
         'more_like_this': more_like_this,
         'get_document': get_document,
         'when': when,
-        'flag_enabled': flag_enabled,
-        'flag_disabled': flag_disabled,
     })
     env.filters.update({
         'date': get_date_string,
