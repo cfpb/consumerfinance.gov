@@ -95,7 +95,11 @@ function _getLighthouseParams() {
   return [
     `http://${ host }:${ port }`,
     '--chrome-flags=--headless',
-    '--output-path=./logs/lighthouse_report.html'
+    '--output-path=./logs/lighthouse_report.html',
+    '--only-categories=performance',
+    '--only-categories=pwa',
+    '--only-categories=best-practices',
+    '--only-categories=seo',
   ];
 }
 
