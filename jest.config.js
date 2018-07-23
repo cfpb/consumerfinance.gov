@@ -21,5 +21,6 @@ module.exports = {
   coverageDirectory: '<rootDir>/test/unit_test_coverage',
   moduleNameMapper: {
     '\\.(svg)$': '<rootDir>/test/unit_tests/mocks/fileMock.js'
-  }
+  },
+  testURL: 'http://localhost'
 };

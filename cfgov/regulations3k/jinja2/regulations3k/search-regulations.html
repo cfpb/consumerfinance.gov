@@ -87,7 +87,7 @@
     <div class="block block__flush-top">
         <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
             <h3>Refine results</h3>
-            <form action="." method="get" data-js-hook="behavior_submit-search">
+            <form action="." method="get" data-js-hook="behavior_change-filter">
                 {% set expandable_settings = {
                     'label': 'Regulation',
                     'is_expanded': true,
@@ -110,7 +110,6 @@
                                     'id': 'regulation-' ~ reg.id,
                                     'class': 'reg-checkbox',
                                     'name': 'regs',
-                                    'behavior': 'submit-search',
                                     'selected': reg.selected
                                 }) }}
                                 <div class="num-results">{{ reg.num_results }}</div>

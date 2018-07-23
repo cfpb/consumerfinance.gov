@@ -28,8 +28,10 @@ describe( 'The Regs3K search utils', () => {
   } );
 
   it( 'should build a search results URL', () => {
-    const URL = utils.buildSearchResultsURL( 'foo', 'bar' );
-    expect( URL ).toEqual( 'foo?bar&partial' );
+    let url = utils.buildSearchResultsURL( 'foo', 'bar' );
+    expect( url ).toEqual( 'foo?bar' );
+    url = utils.buildSearchResultsURL( 'foo', 'bar', { partial: true } );
+    expect( url ).toEqual( 'foo?bar&partial' );
   } );
 
   it( 'should show an element loading', () => {
@@ -52,6 +54,8 @@ describe( 'The Regs3K search utils', () => {
   it( 'should handle errors', () => {
     const searchError = utils.handleError( 'no-results' );
     expect( searchError.msg ).toEqual( 'Your query returned zero results.' );
+    const cancelError = utils.handleError( 0 );
+    expect( cancelError.msg ).toEqual( 'Search request was cancelled.' );
     const unknownError = utils.handleError();
     expect( unknownError.msg ).toEqual( 'Sorry, our search engine is temporarily down.' );
   } );
@@ -94,6 +98,19 @@ describe( 'The Regs3K search utils', () => {
       done();
     } );
     mockXHR.onreadystatechange();
+  } );
+
+  it( 'should replace the browser history', () => {
+    const rs = global.history.replaceState = jest.fn();
+    expect( rs.mock.calls.length ).toEqual( 0 );
+
+    utils.updateUrl( 'foo', 'bar' );
+    expect( rs.mock.calls.length ).toEqual( 1 );
+    expect( rs.mock.calls[0] ).toEqual( [ null, null, 'foo?bar' ] );
+
+    utils.updateUrl( '/regulations/search/', 'regs=1002&regs=1010&q=funding' );
+    expect( rs.mock.calls.length ).toEqual( 2 );
+    expect( rs.mock.calls[1] ).toEqual( [ null, null, '/regulations/search/?regs=1002&regs=1010&q=funding' ] );
   } );
 
 } );

@@ -4,10 +4,13 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 const app = require( `${ BASE_JS_PATH }/js/search.js` );
 
 const HTML_SNIPPET = `
-  <input id="query" name="q" type="text" title="Search terms" class="a-text-input" value="money" placeholder="Search terms">
+  <form action="/search" data-js-hook="behavior_submit-search">
+    <input id="query" name="q" type="text" title="Search terms" class="a-text-input" value="money" placeholder="Search terms">
+    <button id="submit">Submit</button>
+  </form>
   <div>
     <div class="m-form-field m-form-field__checkbox reg-checkbox">
-      <input class="a-checkbox" type="checkbox" value="1002" id="regulation-1002" name="regs">
+      <input class="a-checkbox" type="checkbox" value="1002" id="regulation-1002" name="regs" checked>
       <label class="a-label" for="regulation-1002">
           1002 (Regulation B)
       </label>
@@ -44,6 +47,15 @@ describe( 'The Regs3K search page', () => {
 
   it( 'should not throw any errors on init', () => {
     expect( () => app ).not.toThrow();
+  } );
+
+  it( 'should handle search form submissions', () => {
+    global.location.assign = jest.fn();
+    const form = document.querySelector( 'form' );
+
+    simulateEvent( 'submit', form );
+
+    expect( global.location.assign ).toBeCalledWith( 'http://localhost/?q=money&regs=1002' );
   } );
 
   it( 'should clear a filter when its X icon is clicked', () => {
