@@ -1,10 +1,7 @@
 import Expandable from '../../../js/organisms/Expandable.js';
 import { instantiateAll } from '../../../js/modules/util/atomic-helpers';
-import turbolinks from 'turbolinks';
 
 instantiateAll( '.o-expandable', Expandable );
-
-turbolinks.start();
 
 if ( 'serviceWorker' in navigator ) {
   /* Delay registration until after the page has loaded, to ensure that our
