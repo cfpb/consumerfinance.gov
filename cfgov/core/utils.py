@@ -1,4 +1,3 @@
-import os
 import re
 from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
@@ -21,14 +20,9 @@ NON_CFPB_LINKS = re.compile(
 DOWNLOAD_LINKS = re.compile(
     r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 )
-LINK_ICON_CLASSES = os.environ.get(
-    'LINK_ICON_CLASSES',
-    'a-link a-link__icon'
-)
-LINK_ICON_TEXT_CLASSES = os.environ.get(
-    'LINK_ICON_TEXT_CLASSES',
-    'a-link_text'
-)
+LINK_ICON_CLASSES = 'a-link a-link__icon'
+
+LINK_ICON_TEXT_CLASSES = 'a-link_text'
 
 
 def append_query_args_to_url(base_url, args_dict):
