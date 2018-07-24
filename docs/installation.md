@@ -308,7 +308,7 @@ working at [http://localhost:8000](http://localhost:8000)
 
 ### 4. Next Steps
 
-See the Docker section of the [usage](usage) page to continue after that.
+See the Docker section of the [usage](usage.md) page to continue after that.
 
 ## Optional steps
 
