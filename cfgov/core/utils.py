@@ -116,8 +116,10 @@ def add_link_markup(tag):
     Otherwise (internal link), returns None.
     """
     icon = False
+
     if not tag.attrs.get('class', None):
         tag.attrs.update({'class': []})
+
     if tag['href'].startswith('/external-site/?'):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = 'external-link'
@@ -134,9 +136,11 @@ def add_link_markup(tag):
         if NON_GOV_LINKS.match(tag['href']):
             # Add the redirect notice as well
             tag['href'] = signed_redirect(tag['href'])
+
     elif DOWNLOAD_LINKS.search(tag['href']):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
+
     if icon:
         tag.attrs['class'].append(LINK_ICON_CLASSES)
         # Wraps the link text in a span that provides the underline
@@ -148,6 +152,7 @@ def add_link_markup(tag):
         # Appends the SVG icon
         tag.contents.append(BeautifulSoup(svg_icon(icon), 'html.parser'))
         return str(tag)
+
     return None
 
 
