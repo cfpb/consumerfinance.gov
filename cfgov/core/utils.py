@@ -68,15 +68,14 @@ def format_file_size(bytecount, suffix='B'):
 
 
 def parse_links(html):
-    """Modifies any external links in the html with external link markup."""
+    """Process all links in given html and replace them if markup is added."""
     soup = BeautifulSoup(html, 'html.parser')
     link_tags = get_link_tags(soup)
     for tag in link_tags:
         original_link = str(tag)
-        external_link = add_link_markup(tag)
-        # Rewrite the html only for external links or file download links
-        if external_link:
-            html = html.replace(original_link, external_link)
+        link_with_markup = add_link_markup(tag)
+        if link_with_markup:
+            html = html.replace(original_link, link_with_markup)
     return html
 
 
@@ -110,10 +109,12 @@ def is_image_tag(tag):
 
 
 def add_link_markup(tag):
-    """Adds an external link icon if the input is not a CFPB (internal) link.
-    Adds an external link redirect if the input is not a gov link.
-    Adds a download icon if the input is a file.
-    Otherwise (internal link), returns None.
+    """Add necessary markup to the given link and return if modified.
+
+    Add an external link icon if the input is not a CFPB (internal) link.
+    Add an external link redirect if the input is not a gov link.
+    Add a download icon if the input is a file.
+    Otherwise (internal link that is not a file), return None.
     """
     icon = False
 
