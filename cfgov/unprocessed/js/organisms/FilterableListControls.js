@@ -7,6 +7,7 @@ const Multiselect = require( '../molecules/Multiselect' );
 const Notification = require( '../molecules/Notification' );
 const standardType = require( '../modules/util/standard-type' );
 const validators = require( '../modules/util/validators' );
+let _expandable;
 
 /**
  * FilterableListControls
@@ -59,17 +60,18 @@ function FilterableListControls( element ) {
     /* TODO: FilterableListControls should use expandable
        behavior (FlyoutMenu), not an expandable directly. */
     // eslint-disable-next-line global-require
-    require( 'cf-expandables' );
+    const _expandables = require( 'cf-expandables' );
+    _expandable = _expandables.components[0];
 
     if ( _dom.classList.contains( 'o-filterable-list-controls' ) ) {
       multiSelects.forEach( function( multiSelect ) {
         multiSelect.addEventListener( 'expandBegin', function refresh() {
-          console.log( 'expand begin' );
-          // window.setTimeout( _expandable.refreshHeight, 250 );
+          // console.log( 'expand begin' );
+          // window.setTimeout( expandalbes[0].refreshHeight, 250 );
         } );
 
         multiSelect.addEventListener( 'expandEnd', function refresh() {
-          console.log( 'expand end' );
+          // console.log( 'expand end' );
           // window.setTimeout( _expandable.refreshHeight, 250 );
         } );
       } );
@@ -97,13 +99,33 @@ function FilterableListControls( element ) {
       label = labelDom.textContent.trim();
     }
 
-    // _expandable.addEventListener( 'expandBegin', function sendEvent() {
-    //   Analytics.sendEvent( 'Filter:open', label );
+    // _expandable.transition.addEventListener( 'transitionEnd', () => {
+    //   console.log( 'it transitioned!!!' );
     // } );
 
-    // _expandable.addEventListener( 'collapseBegin', function sendEvent() {
-    //   Analytics.sendEvent( 'Filter:close', label );
+    // _expandable.transition.addEventListener( 'expandBegin', () => {
+    //   console.log( 'its expanding!!!' );
     // } );
+
+    // _expandable.transition.addEventListener( 'collapseBegin', () => {
+    //   console.log( 'its collapsing!!!' );
+    // } );
+
+    // _expandable.transition.addEventListener( 'expandEnd', () => {
+    //   console.log( 'its done expanding!!!' );
+    // } );
+
+    // _expandable.transition.addEventListener( 'collapseEnd', () => {
+    //   console.log( 'its done collapsing!!!' );
+    // } );
+
+    _expandable.addEventListener( 'expandBegin', function sendEvent() {
+      Analytics.sendEvent( 'Filter:open', label );
+    } );
+
+    _expandable.addEventListener( 'collapseBegin', function sendEvent() {
+      Analytics.sendEvent( 'Filter:close', label );
+    } );
 
     _form.addEventListener( 'change', function sendEvent( event ) {
       const field = event.target;
