@@ -1,6 +1,4 @@
-from django.conf import settings
-
-from core.utils import parse_links
+from core.utils import parse_links, should_parse_links
 
 
 class DownstreamCacheControlMiddleware(object):
@@ -12,10 +10,6 @@ class DownstreamCacheControlMiddleware(object):
 
 class ParseLinksMiddleware(object):
     def process_response(self, request, response):
-        # Do not parse links for paths in the blacklist
-        for path in settings.PARSE_LINKS_BLACKLIST:
-            if request.path.startswith(path):
-                return response
-
-        response.content = parse_links(response.content)
+        if should_parse_links(request.path, response['content-type']):
+            response.content = parse_links(response.content)
         return response

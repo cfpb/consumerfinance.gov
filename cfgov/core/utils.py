@@ -2,6 +2,7 @@ import os
 import re
 from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
+from django.conf import settings
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
 
@@ -83,6 +84,20 @@ def parse_links(html):
         if external_link:
             html = html.replace(original_link, external_link)
     return html
+
+
+def should_parse_links(request_path, content_type):
+    """ Do not parse links for paths in the blacklist,
+    or for content that is not html
+    """
+    for path in settings.PARSE_LINKS_BLACKLIST:
+        if request_path.startswith(path):
+            return False
+
+    if settings.DEFAULT_CONTENT_TYPE not in content_type:
+        return False
+
+    return True
 
 
 def get_link_tags(soup):
