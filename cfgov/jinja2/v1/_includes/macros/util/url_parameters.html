@@ -13,8 +13,9 @@
    ========================================================================== #}
 
 {% macro url_parameters(parameters) %}
+    {%- set ignored_params = ('page', 'partial') -%}
     {%- for key in parameters.keys() -%}
-        {% if parameters.getlist(key) and 'page' not in key -%}
+        {% if parameters.getlist(key) and key not in ignored_params -%}
             {%- for value in parameters.getlist(key, []) -%}
                 &{{ key }}={{ value }}
             {%- endfor -%}
