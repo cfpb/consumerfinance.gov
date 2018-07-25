@@ -28,7 +28,7 @@
 .search_results {
     .content_sidebar {
         padding: 45px 15px 0;
-        border: 1px solid #b4b5b6;
+        border: 1px solid @gray-40;
         background-color: #f7f8f9;
         .o-expandable_content,
         .o-expandable_target {
@@ -62,14 +62,18 @@
             border: 0;
         }
         border: 0;
-        border-top: 1px solid #b4b5b6;
+        border-top: 1px solid @gray-40;
         padding-top: 0;
     }
     .results_count {
         padding: 15px 15px 0 15px;
-        border-right: 1px solid #b4b5b6;
-        border-bottom: 1px solid #b4b5b6;
-        background-color: #e2efd8;
+        border-right: 1px solid @gray-40;
+        border-bottom: 1px solid @gray-40;
+        background-color: @green-20;
+        &.no-results {
+            background-color: @red-20;
+            padding-bottom: 15px;
+        }
     }
     .results_list {
         padding: unit( @grid_gutter-width / @base-font-size-px, em )
@@ -84,7 +88,7 @@
             margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
             h4 {
                 padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
-                border-top: 1px solid #b4b5b6;
+                border-top: 1px solid @gray-40;
             }
         }
     }
