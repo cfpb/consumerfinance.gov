@@ -313,7 +313,7 @@ class RegModelTests(DjangoTestCase):
             self.reg_search_page.url + self.reg_search_page.reverse_subpage(
                 'regulation_results_page'),
             {'q': 'disclosure', 'regs': '1002', 'order': 'regulation'})
-        self.assertEqual(mock_sqs.call_count, 1)
+        self.assertEqual(mock_sqs.call_count, 3)
         self.assertEqual(response.status_code, 200)
         response2 = self.client.get(
             self.reg_search_page.url + self.reg_search_page.reverse_subpage(
@@ -321,7 +321,7 @@ class RegModelTests(DjangoTestCase):
             QueryDict(query_string=(
                 'q=disclosure&regs=1002&regs=1003&order=regulation')))
         self.assertEqual(response2.status_code, 200)
-        self.assertEqual(mock_sqs.call_count, 2)
+        self.assertEqual(mock_sqs.call_count, 6)
 
     @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
     def test_routable_search_page_reg_only(self, mock_sqs):
