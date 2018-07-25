@@ -652,9 +652,6 @@ FLAGS = {
     # Teacher's Digital Platform Customer Review Tool
     'TDP_CRTOOL': {'environment is': 'beta'},
 
-    # Teacher's Digital Platform Customer Review Tool Prototypes Pages
-    'TDP_CRTOOL_PROTOTYPES': {'environment is': 'beta'},
-
     # Teacher's Digital Platform Search Interface Tool
     'TDP_SEARCH_INTERFACE': {'environment is': 'beta'},
 

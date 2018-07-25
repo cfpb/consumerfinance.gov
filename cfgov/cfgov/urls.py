@@ -420,11 +420,6 @@ urlpatterns = [
         include_if_app_enabled('teachers_digital_platform',
                                 'teachers_digital_platform.begin_urls')),
 
-    flagged_url('TDP_CRTOOL_PROTOTYPES',
-        r'^practitioner-resources/youth-financial-education/curriculum-review/prototypes/',  # noqa: E501
-        include_if_app_enabled('teachers_digital_platform',
-                                'teachers_digital_platform.prototypes_urls')),  # noqa: E501
-
     flagged_wagtail_only_view(
         'TDP_CRTOOL',
         r'^practitioner-resources/youth-financial-education/curriculum-review/'),  # noqa: E501
