@@ -397,6 +397,11 @@ urlpatterns = [
     #         include_if_app_enabled('teachers_digital_platform',
     #                                 'teachers_digital_platform.search-urls')),
 
+    flagged_url('TDP_BB_TOOL',
+            r'^practitioner-resources/youth-financial-education/learn-about-the-building-blocks/take-a-tour',  # noqa: E501
+            include_if_app_enabled('teachers_digital_platform',
+                                    'teachers_digital_platform.bb-urls')),
+
     flagged_url(
         'REGULATIONS3K',
         r'^regulations/$',
