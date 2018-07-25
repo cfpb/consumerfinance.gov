@@ -24,6 +24,7 @@ jsonfield==2.0.2
 jsonschema==2.0.0
 lxml==4.1.0
 Markdown==2.6.11
+markdown-emdash==0.1.0
 ntplib==0.3.3
 openpyxl==2.5.0
 pyelasticsearch==0.6.1

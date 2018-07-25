@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup as bS
 from requests import Response
 
 from regulations3k.models import Part, Subpart
+from regulations3k.parser import paragraphs
 from regulations3k.parser.integer_conversion import (
     alpha_to_int, int_to_alpha, int_to_roman, roman_to_int
 )
@@ -344,6 +345,24 @@ class ParagraphParsingTestCase(unittest.TestCase):
         test_xml = f.read()
     LEVEL_STATE = IdLevelState()
 
+    def test_paragraph_bold_linting(self):
+        test_graph = 'Now is the time to **See** the best **et seq.** ever.'
+        expected_result = 'Now is the time to *See* the best *et seq.* ever.'
+        result = paragraphs.lint_paragraph(test_graph)
+        self.assertEqual(result, expected_result)
+
+    def test_paragraph_bold_linting_insensitive_sic(self):
+        test_graph = 'Now is the time to **see** the best **Et. seq.** ever.'
+        expected_result = 'Now is the time to *see* the best *Et. seq.* ever.'
+        result = paragraphs.lint_paragraph(test_graph)
+        self.assertEqual(result, expected_result)
+
+    def test_paragraph_emdash_linting(self):
+        test_graph = 'Now is the time -\n'
+        expected_result = 'Now is the time ---\n'
+        result = paragraphs.lint_paragraph(test_graph)
+        self.assertEqual(result, expected_result)
+
     def test_singleton_parsing_invalid_tag(self):
         graph = "A graf with (or) as a potential but invalid ID."
         parsed_graph = ecfr_importer.parse_singleton_graph(graph, '1')
@@ -419,6 +438,9 @@ class ParagraphParsingTestCase(unittest.TestCase):
 
     def test_get_interp_section_tag(self):
         headline = 'Section 1003.2 - Definitions'
+        self.assertEqual(
+            ecfr_importer.get_interp_section_tag(headline), '2')
+        headline = '\xa7 1003.2 - Definitions'
         self.assertEqual(
             ecfr_importer.get_interp_section_tag(headline), '2')
         headline = 'Appendix A - Model Disclosure Clauses and Forms'
