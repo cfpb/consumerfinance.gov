@@ -54,7 +54,6 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         all_regs = Part.objects.order_by('part_number')
         regs = []
         order = request.GET.get('order', 'relevance')
-        sqs = SearchQuerySet()
         if 'regs' in request.GET and request.GET.get('regs'):
             regs = request.GET.getlist('regs')
         search_query = request.GET.get('q', '')  # haystack cleans this string
@@ -71,15 +70,13 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 request,
                 self.get_template(request),
                 self.get_context(request))
-        sqs = SearchQuerySet()
-        sqs = sqs.filter(content=search_query).highlight(
-            pre_tags=['<strong>'], post_tags=['</strong>'])
+        sqs = SearchQuerySet().filter(content=search_query)
         payload.update({
-            'total_results': sqs.count(),
             'all_regs': [{
                 'name': "Regulation {}".format(reg.letter_code),
                 'id': reg.part_number,
-                'num_results': sqs.filter(part=reg.part_number).count(),
+                'num_results': sqs.filter(
+                    part=reg.part_number).models(SectionParagraph).count(),
                 'selected': reg.part_number in regs}
                 for reg in all_regs]
         })
@@ -89,7 +86,9 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             sqs = sqs.filter(part__in=regs)
         if order == 'regulation':
             sqs = sqs.order_by('part', 'section_order')
-        sqs = sqs.models(SectionParagraph)
+        sqs = sqs.highlight(
+            pre_tags=['<strong>'],
+            post_tags=['</strong>']).models(SectionParagraph)
         for hit in sqs:
             letter_code = LETTER_CODES.get(hit.part)
             snippet = Markup(" ".join(hit.highlighted))
@@ -103,8 +102,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                     hit.section_label, hit.paragraph_id),
             }
             payload['results'].append(hit_payload)
+        payload.update({'total_results': sqs.count()})
         self.results = payload
-
         context = self.get_context(request)
         num_results = validate_num_results(request)
         paginator = Paginator(payload['results'], num_results)
