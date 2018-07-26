@@ -66,13 +66,11 @@ function FilterableListControls( element ) {
     if ( _dom.classList.contains( 'o-filterable-list-controls' ) ) {
       multiSelects.forEach( function( multiSelect ) {
         multiSelect.addEventListener( 'expandBegin', function refresh() {
-          // console.log( 'expand begin' );
-          // window.setTimeout( expandalbes[0].refreshHeight, 250 );
+          window.setTimeout( _expandable.transition.expand, 250 );
         } );
 
         multiSelect.addEventListener( 'expandEnd', function refresh() {
-          // console.log( 'expand end' );
-          // window.setTimeout( _expandable.refreshHeight, 250 );
+          window.setTimeout( _expandable.transition.expand, 250 );
         } );
       } );
     }
@@ -119,11 +117,11 @@ function FilterableListControls( element ) {
     //   console.log( 'its done collapsing!!!' );
     // } );
 
-    _expandable.addEventListener( 'expandBegin', function sendEvent() {
+    _expandable.transition.addEventListener( 'expandBegin', function sendEvent() {
       Analytics.sendEvent( 'Filter:open', label );
     } );
 
-    _expandable.addEventListener( 'collapseBegin', function sendEvent() {
+    _expandable.transition.addEventListener( 'collapseBegin', function sendEvent() {
       Analytics.sendEvent( 'Filter:close', label );
     } );
 
