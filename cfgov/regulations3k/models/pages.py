@@ -73,7 +73,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         sqs = SearchQuerySet().filter(content=search_query)
         payload.update({
             'all_regs': [{
-                'name': "Regulation {}".format(reg.letter_code),
+                'letter_code': reg.letter_code,
                 'id': reg.part_number,
                 'num_results': sqs.filter(
                     part=reg.part_number).models(SectionParagraph).count(),

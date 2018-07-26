@@ -116,6 +116,14 @@
     }
 });
 
+// We have an awkward state where text in the filters sidebar is too long on
+// mid-size screens but is fine on desktop and mobile
+.u-hide-on-tablet {
+    .respond-to-range( @bp-sm-max, 1100px, {
+        display: none;
+    } );
+}
+
 /* PWA */
 
 .regs3k-js {
