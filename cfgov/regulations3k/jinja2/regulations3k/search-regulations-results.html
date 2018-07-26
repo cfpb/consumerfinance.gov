@@ -2,8 +2,6 @@
 {% import 'eregs/regulations3k-search-result-item.html' as search_item %}
 {% import 'molecules/pagination.html' as pagination with context %}
 
-{% set current_count = page.results.results | length %}
-
 <div class="results_header">
     {% if current_count > 0 %}
     <div class="results_count"> 
