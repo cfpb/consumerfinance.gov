@@ -96,6 +96,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             snippet = Markup(" ".join(hit.highlighted))
             hit_payload = {
                 'id': hit.paragraph_id,
+                'part': hit.part,
                 'reg': 'Regulation {}'.format(letter_code),
                 'label': hit.title,
                 'snippet': snippet,
