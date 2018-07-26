@@ -80,6 +80,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 'selected': reg.part_number in regs}
                 for reg in all_regs]
         })
+        payload.update({'total_count': sum(
+            [reg['num_results'] for reg in payload['all_regs']])})
         if len(regs) == 1:
             sqs = sqs.filter(part=regs[0])
         elif regs:
@@ -102,7 +104,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                     hit.section_label, hit.paragraph_id),
             }
             payload['results'].append(hit_payload)
-        payload.update({'total_results': sqs.count()})
+        payload.update({'current_count': sqs.count()})
         self.results = payload
         context = self.get_context(request)
         num_results = validate_num_results(request)
@@ -110,6 +112,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         page_number = validate_page_number(request, paginator)
         paginated_page = paginator.page(page_number)
         context.update({
+            'current_count': payload['current_count'],
+            'total_count': payload['total_count'],
             'paginator': paginator,
             'current_page': page_number,
             'num_results': num_results,

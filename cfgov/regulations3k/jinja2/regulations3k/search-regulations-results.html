@@ -2,12 +2,11 @@
 {% import 'eregs/regulations3k-search-result-item.html' as search_item %}
 {% import 'molecules/pagination.html' as pagination with context %}
 
-{% set total_count = page.results.total_results %}
 {% set current_count = page.results.results | length %}
 
 <div class="results_header">
     {% if current_count > 0 %}
-    <div class="results_count">
+    <div class="results_count"> 
         <h3>
             Showing {{ current_count }}
             match{% if current_count > 1 %}es{% endif %}
