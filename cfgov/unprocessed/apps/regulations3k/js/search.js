@@ -36,7 +36,6 @@ function clearFilter( event ) {
   }
   target = closest( event.target, '.a-tag' );
   const checkbox = find( `#regulation-${ target.dataset.value }` );
-  window.find = find;
   // Remove the filter tag
   target.remove();
   // Uncheck the filter checkbox
