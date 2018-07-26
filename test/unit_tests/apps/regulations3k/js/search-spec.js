@@ -17,11 +17,11 @@ const HTML_SNIPPET = `
     </div>
   </div>
   <div>
-    <button class="a-tag" type="button" value="1002" data-js-hook="behavior_clear-filter">
+    <div class="a-tag" data-value="1002" data-js-hook="behavior_clear-filter">
     1002 (Regulation B)
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg">
       </svg>
-    </button>
+    </div>
   </div>
   <button id="clear-all" data-js-hook="behavior_clear-all">
       Clear all filters
@@ -70,24 +70,24 @@ describe( 'The Regs3K search page', () => {
     global.XMLHttpRequest = jest.fn( () => mockXHR );
     const clearIcon = document.querySelector( 'svg' );
 
-    let numFilters = document.querySelectorAll( 'button.a-tag' ).length;
+    let numFilters = document.querySelectorAll( 'div.a-tag' ).length;
     expect( numFilters ).toEqual( 1 );
 
     simulateEvent( 'click', clearIcon );
-    numFilters = document.querySelectorAll( 'button.a-tag' ).length;
+    numFilters = document.querySelectorAll( 'div.a-tag' ).length;
     expect( numFilters ).toEqual( 0 );
 
     mockXHR.onreadystatechange();
   } );
 
   it( 'should not clear a filter when its tag is clicked', () => {
-    const button = document.querySelector( 'button.a-tag' );
+    const div = document.querySelector( 'div.a-tag' );
 
-    let numFilters = document.querySelectorAll( 'button.a-tag' ).length;
+    let numFilters = document.querySelectorAll( 'div.a-tag' ).length;
     expect( numFilters ).toEqual( 1 );
 
-    simulateEvent( 'click', button );
-    numFilters = document.querySelectorAll( 'button.a-tag' ).length;
+    simulateEvent( 'click', div );
+    numFilters = document.querySelectorAll( 'div.a-tag' ).length;
     expect( numFilters ).toEqual( 1 );
   } );
 
@@ -103,11 +103,11 @@ describe( 'The Regs3K search page', () => {
     global.XMLHttpRequest = jest.fn( () => mockXHR );
     const clearAllLink = document.querySelector( '#clear-all' );
 
-    let numFilters = document.querySelectorAll( 'button.a-tag' ).length;
+    let numFilters = document.querySelectorAll( 'div.a-tag' ).length;
     expect( numFilters ).toEqual( 1 );
 
     simulateEvent( 'click', clearAllLink );
-    numFilters = document.querySelectorAll( 'button.a-tag' ).length;
+    numFilters = document.querySelectorAll( 'div.a-tag' ).length;
     expect( numFilters ).toEqual( 0 );
 
     mockXHR.onreadystatechange();
