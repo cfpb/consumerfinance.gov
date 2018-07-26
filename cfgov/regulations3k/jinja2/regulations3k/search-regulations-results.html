@@ -4,7 +4,7 @@
 
 <div class="results_header">
     {% if current_count > 0 %}
-    <div class="results_count"> 
+    <div class="results_count">
         <h3>
             Showing {{ current_count }}
             match{% if current_count > 1 %}es{% endif %}
@@ -27,8 +27,9 @@
         <div class="filters_tags">
             {% for reg in page.results.all_regs %}
                 {% if reg.selected %}
+                    {%- set reg_name = '(Reg<span class="u-hide-on-mobile">ulation</span> ' ~ reg.letter_code ~ ')' -%}
                     {{ tag.render({
-                        'label': reg.id ~ ' (' ~ reg.name ~ ')',
+                        'label': reg.id ~ ' ' ~ reg_name | safe,
                         'value': reg.id,
                         'behavior': 'clear-filter'
                     }) }}
