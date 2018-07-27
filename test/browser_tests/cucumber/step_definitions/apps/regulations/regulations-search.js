@@ -13,8 +13,12 @@ When( 'I submit the search form',
   () => element( by.css( '.search_form button' ) ).click()
 );
 
-When( 'I filter by regulation {int}',
+When( 'I select the regulation {int} filter',
   reg => element( by.css( `label[for="regulation-${ reg }"]` ) ).click()
+);
+
+When( 'I remove the regulation {int} filter tag',
+  reg => element( by.css( `.a-tag[value="${ reg }"] svg` ) ).click()
 );
 
 When( 'I wait for the search results to load',
@@ -28,5 +32,17 @@ When( 'I wait for the search results to load',
 Then( 'regulation {int} filter tag should appear',
   reg => element( by.css( `.a-tag[value="${ reg }"]` ) ).isPresent().then(
     present => expect( present ).to.be.true
+  )
+);
+
+Then( 'regulation {int} filter tag should disappear',
+  reg => element( by.css( `.a-tag[value="${ reg }"]` ) ).isPresent().then(
+    present => expect( present ).to.be.false
+  )
+);
+
+Then( 'regulation {int} filter should not be selected',
+  reg => element( by.css( `.a-checkbox[value="${ reg }"]` ) ).isSelected().then(
+    selected => expect( selected ).to.be.false
   )
 );
