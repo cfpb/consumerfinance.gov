@@ -498,6 +498,7 @@ CSP_SCRIPT_SRC = ("'self'",
                   'about:',
                   'connect.facebook.net',
                   'www.federalregister.gov',
+                  'storage.googleapis.com'
                   )
 
 # These specify valid sources of CSS code
