@@ -1,4 +1,4 @@
-import Expandable from 'cf-expandables/src/Expandable'
+import Expandable from 'cf-expandables/src/Expandable';
 
 Expandable.init();
 

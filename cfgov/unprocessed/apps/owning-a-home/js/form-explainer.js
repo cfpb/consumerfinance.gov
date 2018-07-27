@@ -72,7 +72,7 @@ class FormExplainer {
     );
 
     // eslint-disable-next-line global-require
-    require( 'cf-expandables' );
+    require( 'cf-expandables/src/Expandable' ).init();
   }
 
   /**

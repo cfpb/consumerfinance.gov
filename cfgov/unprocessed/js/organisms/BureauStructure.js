@@ -5,7 +5,7 @@
 
 
 const BreakpointHandler = require( '../modules/BreakpointHandler' );
-require( 'cf-expandables' );
+require( 'cf-expandables/src/Expandable' ).init();
 
 let BS;
 

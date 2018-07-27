@@ -60,8 +60,8 @@ function FilterableListControls( element ) {
     /* TODO: FilterableListControls should use expandable
        behavior (FlyoutMenu), not an expandable directly. */
     // eslint-disable-next-line global-require
-    const _expandables = require( 'cf-expandables' );
-    _expandable = _expandables.components[0];
+    const _expandables = require( 'cf-expandables/src/Expandable' );
+    _expandable = _expandables.init();
 
     if ( _dom.classList.contains( 'o-filterable-list-controls' ) ) {
       multiSelects.forEach( function( multiSelect ) {

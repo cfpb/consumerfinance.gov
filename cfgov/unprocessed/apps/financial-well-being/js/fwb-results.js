@@ -1,6 +1,7 @@
 const Analytics = require( '../../../js/modules/Analytics' );
 
-require( 'cf-expandables' );
+require( 'cf-expandables/src/Expandable' ).init();
+
 
 /**
  * Initialize the results interactions

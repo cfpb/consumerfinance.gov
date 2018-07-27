@@ -1,1 +1,1 @@
-require( 'cf-expandables' );
+require( 'cf-expandables/src/Expandable' ).init();
