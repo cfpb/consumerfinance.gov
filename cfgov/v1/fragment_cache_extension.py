@@ -1,4 +1,6 @@
-# Taken from http://jinja.pocoo.org/docs/2.10/extensions/
+# Based off of http://jinja.pocoo.org/docs/2.10/extensions/
+from django.core.cache import caches
+
 from jinja2 import nodes
 from jinja2.ext import Extension
 
@@ -23,11 +25,15 @@ class FragmentCacheExtension(Extension):
         # that line number to the nodes we create by hand.
         lineno = next(parser.stream).lineno
 
-        # now we parse a single expression that is used as cache key.
+        # The first argument is the cache key
         args = [parser.parse_expression()]
 
-        # if there is a comma, the user provided a timeout.  If not use
-        # None as second parameter.
+        # The second argument is the cache's name
+        if parser.stream.skip_if('comma'):
+            args.append(parser.parse_expression())
+
+        # If there is a third argument, the user provided a timeout.
+        # If not use None
         if parser.stream.skip_if('comma'):
             args.append(parser.parse_expression())
         else:
@@ -42,16 +48,15 @@ class FragmentCacheExtension(Extension):
         return nodes.CallBlock(self.call_method('_cache_support', args),
                                [], [], body).set_lineno(lineno)
 
-    def _cache_support(self, name, timeout, caller):
+    def _cache_support(self, key, cache_name, timeout, caller):
         """Helper callback."""
-        key = self.environment.fragment_cache_prefix + name
-
+        fragment_cache = caches[cache_name]
         # try to load the block from the cache
         # if there is no fragment in the cache, render it and store
         # it in the cache.
-        rv = self.environment.fragment_cache.get(key)
+        rv = fragment_cache.get(key)
         if rv is not None:
             return rv
         rv = caller()
-        self.environment.fragment_cache.add(key, rv, timeout)
+        fragment_cache.add(key, rv, timeout)
         return rv
