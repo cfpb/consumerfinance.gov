@@ -380,22 +380,27 @@ urlpatterns = [
     flagged_url('TDP_CRTOOL',
                 r'^practitioner-resources/youth-financial-education/curriculum-review/tool/',  # noqa: E501
                 include_if_app_enabled('teachers_digital_platform',
-                                       'teachers_digital_platform.tool-urls')),
+                                       'teachers_digital_platform.tool_urls')),
 
     flagged_url('TDP_CRTOOL',
             r'^practitioner-resources/youth-financial-education/curriculum-review/before-you-begin/',  # noqa: E501
             include_if_app_enabled('teachers_digital_platform',
-                                    'teachers_digital_platform.begin-urls')),
+                                    'teachers_digital_platform.begin_urls')),
 
     flagged_url('TDP_CRTOOL_PROTOTYPES',
             r'^practitioner-resources/youth-financial-education/curriculum-review/prototypes/',  # noqa: E501
             include_if_app_enabled('teachers_digital_platform',
-                                    'teachers_digital_platform.prototypes-urls')),  # noqa: E501
+                                    'teachers_digital_platform.prototypes_urls')),  # noqa: E501
 
     # flagged_url('TDP_SEARCH_INTERFACE',
     #         r'^practitioner-resources/youth-financial-education/curriculum-review/search/',  # noqa: E501
     #         include_if_app_enabled('teachers_digital_platform',
-    #                                 'teachers_digital_platform.search-urls')),
+    #                                 'teachers_digital_platform.search_urls')),
+
+    flagged_url('TDP_BB_TOOL',
+            r'^practitioner-resources/youth-financial-education/learn-about-the-building-blocks/take-a-tour',  # noqa: E501
+            include_if_app_enabled('teachers_digital_platform',
+                                    'teachers_digital_platform.bb_urls')),
 
     flagged_url(
         'REGULATIONS3K',
