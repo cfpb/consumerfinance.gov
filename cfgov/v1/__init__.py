@@ -10,7 +10,6 @@ from six.moves.urllib.parse import parse_qs, urlparse
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.cache import caches
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.utils.module_loading import import_string
@@ -94,7 +93,6 @@ def environment(**options):
         'pluralize': pluralize,
         'slugify': slugify,
     })
-    env.fragment_cache = caches['post_preview']
     return env
 
 
