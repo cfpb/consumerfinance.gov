@@ -193,32 +193,33 @@ class Section(models.Model):
     def extract_graphs(self):
         """Break out and store a section's paragraphs for indexing."""
         part = self.subpart.version.part
+        section_tag = "{}-{}".format(part.part_number, self.label)
         extractor = regdown.extract_labeled_paragraph
         paragraph_ids = re.findall(r'[^{]*{(?P<label>[\w\-]+)}', self.contents)
         created = 0
         deleted = 0
         kept = 0
         exclude_from_deletion = []
+        known_ids = []
         dupes = []
         for pid in paragraph_ids:
             raw_graph = extractor(pid, self.contents, exact=True)
-            re.sub(r'(See\([^\)]+\))', '', raw_graph)
             markup_graph = regdown.regdown(raw_graph)
             index_graph = strip_tags(markup_graph).strip()
-            if index_graph:
-                graph, cr = SectionParagraph.objects.get_or_create(
-                    paragraph=index_graph,
-                    paragraph_id=pid,
-                    section=self)
-                if cr:
-                    created += 1
+            full_id = "{}-{}".format(section_tag, pid)
+            graph, cr = SectionParagraph.objects.get_or_create(
+                paragraph=index_graph,
+                paragraph_id=pid,
+                section=self)
+            if cr:
+                created += 1
+            else:
+                if full_id in known_ids:
+                    dupes.append(full_id)
                 else:
-                    dupes.append("{}_{}_{}".format(
-                        part.part_number,
-                        self.label,
-                        pid))
+                    known_ids.append(full_id)
                     kept += 1
-                exclude_from_deletion.append(graph.pk)
+            exclude_from_deletion.append(graph.pk)
         to_delete = SectionParagraph.objects.filter(
             section__subpart__version__part=part,
             section__label=self.label).exclude(
@@ -228,7 +229,7 @@ class Section(models.Model):
             graph.delete()
         dupes = sorted(set(dupes))
         return {
-            'section': self.title,
+            'section': section_tag,
             'created': created,
             'deleted': deleted,
             'kept': kept,

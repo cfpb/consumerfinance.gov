@@ -87,7 +87,9 @@ class RegModelTests(DjangoTestCase):
             contents=(
                 '{a}\n(a) Regdown paragraph a.\n'
                 '{b}\n(b) Paragraph b\n'
+                '\nsee(4-b-Interp)\n'
                 '{c}\n(c) Paragraph c.\n'
+                '{c-1}\n \n'
                 '{d}\n(1) General rule. A creditor that provides in writing.\n'
             ),
             subpart=self.subpart,
@@ -180,8 +182,8 @@ class RegModelTests(DjangoTestCase):
 
     def test_section_export_graphs(self):
         test_counts = self.section_num4.extract_graphs()
-        self.assertEqual(test_counts['section'], self.section_num4.title)
-        self.assertEqual(test_counts['created'], 3)
+        self.assertEqual(test_counts['section'], "1002-4")
+        self.assertEqual(test_counts['created'], 4)
         self.assertEqual(test_counts['deleted'], 1)
         self.assertEqual(test_counts['kept'], 1)
 
