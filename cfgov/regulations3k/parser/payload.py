@@ -90,7 +90,7 @@ class PayLoad(object):
         auth = soup.find('AUTH').find('PSPACE').text.strip()
         source = soup.find('SOURCE').find('PSPACE').text.strip()
         version = EffectiveVersion(
-            acquired=datetime.date.today(),
+            created=datetime.date.today(),
             effective_date=self.effective_date,
             authority=auth,
             part=part,

@@ -87,7 +87,7 @@ class EffectiveVersion(models.Model):
     authority = models.CharField(max_length=255, blank=True)
     source = models.CharField(max_length=255, blank=True)
     effective_date = models.DateField(blank=True, null=True)
-    acquired = models.DateField(blank=True, null=True)
+    created = models.DateField(blank=True, null=True)
     draft = models.BooleanField(default=False)
     part = models.ForeignKey(Part, related_name="versions")
 
@@ -97,11 +97,25 @@ class EffectiveVersion(models.Model):
         FieldPanel('effective_date'),
         FieldPanel('part'),
         FieldPanel('draft'),
-        FieldPanel('acquired'),
+        FieldPanel('created'),
     ]
 
     def __str__(self):
         return "Effective on {}".format(self.effective_date)
+
+    @property
+    def live_version(self):
+        return self.part.effective_version == self
+
+    @property
+    def status(self):
+        if self.live_version:
+            return 'LIVE'
+        if self.draft is True:
+            return 'Unapproved draft'
+        if self.effective_date >= datetime.today().date():
+            return 'Future version'
+        return 'Previous version'
 
     class Meta:
         ordering = ['effective_date']

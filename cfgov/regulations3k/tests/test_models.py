@@ -48,6 +48,11 @@ class RegModelTests(DjangoTestCase):
             effective_date=datetime.date(2014, 1, 18),
             part=self.part_1002
         )
+        self.old_effective_version = mommy.make(
+            EffectiveVersion,
+            effective_date=datetime.date(2011, 1, 1),
+            part=self.part_1002,
+        )
         self.subpart = mommy.make(
             Subpart,
             label='Subpart General',
@@ -193,6 +198,27 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(
             self.effective_version.__str__(),
             'Effective on 2014-01-18')
+
+    def test_live_version_true(self):
+        self.assertTrue(self.effective_version.live_version)
+
+    def test_status_is_live(self):
+        self.assertEqual(self.effective_version.status, 'LIVE')
+
+    def test_status_is_draft(self):
+        self.effective_version.draft = True
+        self.effective_version.save()
+        self.assertEqual(self.effective_version.status, 'Unapproved draft')
+        self.effective_version.draft = False
+        self.effective_version.effective_date = (
+            datetime.datetime.today().date() + datetime.timedelta(days=5))
+        self.effective_version.save()
+        self.assertEqual(self.effective_version.status, 'Future version')
+        self.effective_version.effective_date = datetime.date(2014, 1, 18)
+        self.effective_version.save()
+
+    def test_status_is_previous_version(self):
+        self.assertEqual(self.old_effective_version.status, 'Previous version')
 
     def test_landing_page_get_context(self):
         test_context = self.landing_page.get_context(HttpRequest())
