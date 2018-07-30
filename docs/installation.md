@@ -135,11 +135,7 @@ If you setup Autoenv earlier, this will happen for you automatically when you
 If you prefer not to use Autoenv, just be sure to `source .env` every time
 you start a new session of work on the project.
 
-#### Optional (but recommended): use Postgres instead of SQLite
-
-We default to SQLite for the Django backend to make it easy to get started, but
-Postgres is our preferred database, and we recommend you consider installing it
-if you are comfortable doing this.
+#### Install Postgres
 
 If you're on a Mac and use Homebrew, you can easily install Postgres:
 
@@ -160,17 +156,17 @@ dropdb --if-exists cfgov && dropuser --if-exists cfpb
 createuser cfpb && createdb -O cfpb cfgov
 ```
 
-You'll also need to update your `.env` file to comment out the line that
-specifies SQLite as the db:
+If you absolutely need to use SQLite, you'll need to update your `.env` file
+to comment out the line that specifies Postgres as the db:
 
 ```bash
-# export DATABASE_URL=sqlite:///db.sqlite3
+# export DATABASE_URL=postgres://cfpb@localhost/cfgov
 ```
 
 And then uncomment the line that tells Django to use Postgres:
 
 ```bash
-export DATABASE_URL=postgres://cfpb@localhost/cfgov
+export DATABASE_URL=sqlite:///db.sqlite3
 ```
 
 #### Run the setup script
@@ -233,15 +229,15 @@ If you are on a machine that is already set up to run Linux docker containers,
 please install [Docker Compose](https://docs.docker.com/compose/install/).
 If `docker-compose ps` runs without error, you can can go to step 2.
 
-#### Copy the `.python_env_SAMPLE` file over
+#### Copy the `.env_SAMPLE` file over
 
 The Docker Compose setup (see `docker-compose.yml`) provides the environment
-variables defined in `.python_env` to the container running the Django app. If
-this is your first time setting up the project, copy `.python_env_SAMPLE` to
-`.python_env`:
+variables defined in `.env` to the container running the Django app. If
+this is your first time setting up the project, copy `.env_SAMPLE` to
+`.env`:
 
 ```bash
-cp -a .python_env_SAMPLE .python_env
+cp -a .env_SAMPLE .env
 ```
 
 #### Mac + Homebrew + Docker Machine + VirtualBox quickstart
@@ -287,7 +283,7 @@ You can either [load initial data](#load-initial-data-into-database) per the
 instructions below, or load a database dump.
 
 You could save some time and effort later (if you have access to the CFPB
-network), by configuring a URL for database dumps in the `.python_env` file.
+network), by configuring a URL for database dumps in the `.env` file.
 
 ```
 CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
@@ -296,7 +292,7 @@ CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 You can get that URL at
 [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
 
-With `CFGOV_PROD_DB_LOCATION` in `.python_env` you should be able to run:
+With `CFGOV_PROD_DB_LOCATION` in `.env` you should be able to run:
 
 `./refresh-data.sh`
 
