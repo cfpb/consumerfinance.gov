@@ -16,7 +16,7 @@ from treemodeladmin.views import TreeViewParentMixin
 class CopyButtonHelper(TreeButtonHelper):
 
     def copy_button(self, pk):
-        cn = self.edit_button_classnames
+        cn = 'button button-small button-secondary'
         return {
             'url': self.url_helper.get_action_url('copy', quote(pk)),
             'label': 'Copy',
