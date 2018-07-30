@@ -152,6 +152,9 @@ TEMPLATES = [
         ],
         'APP_DIRS': True,
         'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+            ],
             'environment': 'v1.environment',
             'extensions': [
                 'core.jinja2tags.filters',
