@@ -77,6 +77,7 @@ class TestOrderedResources(TestCase):
             [self.snippetBBC, self.snippetAbc, self.snippetZebra]
         )
 
+
 class TestUnicodeCompatibility(TestCase):
     def test_unicode_contact_heading_str(self):
         contact = Contact(heading=u'Unicod\xeb')
@@ -113,3 +114,27 @@ class TestReusableTextRendering(TestCase):
         html = '<a linktype="page" id="12345">Link</a>'
         block = ReusableTextChooserBlock(ReusableText)
         self.assertIn('<a>', block.render({'text': html}))
+
+    def test_presence_of_heading(self):
+        sidefoot_heading = 'Reusable text snippet heading'
+        html = '<p>This is the text of the reusable snippet.</p>'
+        block = ReusableTextChooserBlock(ReusableText)
+        self.assertIn(
+            '<h2 class="a-heading">',
+            block.render({
+                'sidefoot_heading': sidefoot_heading,
+                'text': html
+            })
+        )
+
+    def test_lack_of_heading(self):
+        sidefoot_heading = None
+        html = '<p>This is the text of the reusable snippet.</p>'
+        block = ReusableTextChooserBlock(ReusableText)
+        self.assertNotIn(
+            '<h2 class="a-heading">',
+            block.render({
+                'sidefoot_heading': sidefoot_heading,
+                'text': html
+            })
+        )

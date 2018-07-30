@@ -4,7 +4,7 @@ Feature: MultiSelect Tags
   I should be able to select using the multi-select
 
   Background:
-    Given I goto a browse filterable page
+    Given I goto URL "/about-us/blog/"
     And I open the filterable list control
 
   Scenario: State on page load
@@ -27,17 +27,17 @@ Feature: MultiSelect Tags
     And the multi-select dropdown length should be 0
 
   Scenario: Typing in search input, returning matched results
-    When I enter "tag0" in the search input
-    Then the multi-select dropdown should display "tag0"
+    When I enter "students" in the search input
+    Then the multi-select dropdown should display "students"
     And the multi-select dropdown length should be 1
 
   Scenario: Typing in search input, not returning unmatched results
-    When I enter "tag0" in the search input
-    Then the multi-select dropdown shouldn't display "tag2"
+    When I enter "students" in the search input
+    Then the multi-select dropdown shouldn't display "mortgages"
     And the multi-select dropdown length should be 1
 
   Scenario: Typing in search input, clearing the input and closing results
-    When I enter "tag0" in the search input
+    When I enter "students" in the search input
     And I hit the escape button on the search input
     Then the multi-select dropdown shouldn't be visible
     And the multi-select dropdown length should be 0

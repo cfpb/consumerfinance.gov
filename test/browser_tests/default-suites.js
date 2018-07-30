@@ -15,7 +15,9 @@ const defaultSuites = {
       browserName:      'chrome',
       extendedDebugging: true,
       maxDuration:      10800,
+      maxInstances:     4,
       platform:         'Windows',
+      shardTestFiles:   true,
       tunnelIdentifier: tunnelIdentifier,
       version:          ''
     }

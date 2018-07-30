@@ -134,7 +134,7 @@ Then( 'the first option should be highlighted',
 
       return multiSelect.getDropDownLabelElements()
         .first()
-        .getText();
+        .getAttribute( 'for' );
     }
 
     function _getActiveElementValue() {
