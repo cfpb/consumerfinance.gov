@@ -49,26 +49,26 @@ class EffectiveVersionModelAdmin(CopyableModelAdmin):
     parent_field = 'part'
 
     def copy(self, instance):
-        # Create a new instance
-        new_version = EffectiveVersion(
-            authority=instance.authority,
-            source=instance.source,
-            part=instance.part,
-            effective_date=date.today(),
-            acquired=date.today(),
-            draft=True,
-        )
+        subparts = instance.subparts.all()
+
+        # Copy the instance
+        new_version = instance
+        new_version.pk = None
+        new_version.created = date.today()
+        new_version.draft = True
         new_version.save()
 
-        # Copy subparts and sections
-        for subpart in instance.subparts.all():
+        for subpart in subparts:
             sections = subpart.sections.all()
+
+            # Copy the subpart
             new_subpart = subpart
             new_subpart.pk = None
             new_subpart.version = new_version
             new_subpart.save()
 
             for section in sections:
+                # Copy the section
                 new_section = section
                 new_section.pk = None
                 new_section.subpart = new_subpart
