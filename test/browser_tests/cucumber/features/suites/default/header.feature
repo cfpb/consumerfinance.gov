@@ -4,7 +4,7 @@ Feature: Header
   I should be able to use the Header
 
   Background:
-    Given I goto a browse filterable page
+    Given I goto URL "/"
 
   Scenario: Desktop, at page load
     Then the header organism should display the header
@@ -39,5 +39,3 @@ Feature: Header
     When I click on the mega-menu search trigger
     Then the mega-menu search form should be displayed
     And the mega-menu shouldn't be displayed
-
-
