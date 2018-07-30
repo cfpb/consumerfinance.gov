@@ -31,6 +31,5 @@ services:
             - elasticsearch
             - postgres
         working_dir: /src/cfgov-refresh
-        env_file: .python_env
         stdin_open: true
         tty: true
