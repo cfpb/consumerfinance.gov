@@ -13,12 +13,16 @@
                      o-expandable_link">
             <span class="o-expandable_cue
                          o-expandable_cue-open">
-                {{ _('Show') }}
+                <span class="u-visually-hidden-on-mobile">
+                    {{ _('Show') }}
+                </span>
                 {{ svg_icon( 'plus-round' ) }}
             </span>
             <span class="o-expandable_cue
                          o-expandable_cue-close">
-                {{ _('Hide') }}
+                <span class="u-visually-hidden-on-mobile">
+                    {{ _('Hide') }}
+                </span>
                 {{ svg_icon( 'minus-round' ) }}
             </span>
         </span>

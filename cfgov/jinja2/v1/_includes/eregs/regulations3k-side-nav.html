@@ -25,6 +25,8 @@
 
 {# Extra classes needed for .content_sidebar #}
 {% block content_sidebar_modifiers -%}
+    o-regs3k-sidebar
+    content__flush-bottom
     content__flush-top-on-small
     content__flush-sides-on-small
     {{ 'content__half-top-on-desk' if breadcrumb_items | length > 0 else '' }}
