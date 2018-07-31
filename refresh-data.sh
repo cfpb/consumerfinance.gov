@@ -33,7 +33,7 @@ refresh_data() {
     echo 'Importing refresh db'
     gunzip < "$refresh_dump_name" | cfgov/manage.py dbshell > /dev/null
     echo 'Running any necessary migrations'
-    ./cfgov/manage.py migrate --noinput
+    ./cfgov/manage.py migrate --noinput --fake-initial
     echo 'Setting up initial data'
     ./cfgov/manage.py runscript initial_data
 }
