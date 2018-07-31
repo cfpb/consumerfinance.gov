@@ -163,7 +163,7 @@ to comment out the line that specifies Postgres as the db:
 # export DATABASE_URL=postgres://cfpb@localhost/cfgov
 ```
 
-And then uncomment the line that tells Django to use Postgres:
+And then uncomment the line that tells Django to use SQLite:
 
 ```bash
 export DATABASE_URL=sqlite:///db.sqlite3
