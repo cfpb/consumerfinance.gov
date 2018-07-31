@@ -217,7 +217,6 @@ MEDIA_URL = '/f/'
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = [
-    'sheerlike.finders.SheerlikeStaticFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
 ]
@@ -427,8 +426,6 @@ LOGIN_FAIL_TIME_PERIOD = os.environ.get('LOGIN_FAIL_TIME_PERIOD', 120 * 60)
 LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
 LOGIN_REDIRECT_URL = '/login/welcome/'
 LOGIN_URL = "/login/"
-
-SHEER_SITES = {}
 
 # The base URL for the API that we use to access layers and the regulation.
 API_BASE = os.environ.get('EREGS_API_BASE', '')
