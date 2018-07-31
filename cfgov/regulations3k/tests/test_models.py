@@ -224,12 +224,7 @@ class RegModelTests(DjangoTestCase):
 
     def test_landing_page_get_context(self):
         test_context = self.landing_page.get_context(HttpRequest())
-        self.assertIn(self.part_1002, test_context['regs'])
-
-    def test_landing_page_get_template(self):
-        self.assertEqual(
-            self.landing_page.get_template(HttpRequest()),
-            'regulations3k/base.html')
+        self.assertIn('get_secondary_nav_items', test_context)
 
     def test_search_page_get_template(self):
         self.assertEqual(

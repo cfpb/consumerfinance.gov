@@ -1,0 +1,51 @@
+{# ==========================================================================
+
+   Regulation listing
+
+   ==========================================================================
+
+   Description:
+
+   Creates a table of regulations when given:
+
+   regulations:    List of regulation part objects
+
+   heading:        The heading of the regulations list.
+
+   more_regs_url:  A string for the URL of the more regulations link.
+
+   more_regs_text: A string for the text of the more regulations link.
+
+   ========================================================================== #}
+{% if regulations.exists() %}
+<table class="o-table" data-bound="true">
+    <tbody>
+        <tr>
+            <td>
+                <h4>{{ heading or 'Table of contents' }}</h4>
+            </td>
+        </tr>
+
+        {% for regulation in regulations %}
+        <tr>
+            <td>
+                <h4>
+                    <a href="{{ regulation.url }}" data-turbolinks="true">
+                        <span class="title-num">{{ regulation.title }}</span>
+                    </a>
+                </h4>
+                <!--
+                  <ul>
+                  <li>New amendment effective 1/1/2019.&nbsp;<a class="" href="">View on Electronic Code of Federal Regulations</a><br></li>
+                  <li>New amendment effective 1/1/2020.&nbsp;<a class="" href="">View on Electronic Code of Federal Regulations</a></li>
+                  </ul>
+                -->
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+<p>
+    <a class="" href="{{ get_protected_url(more_regs_url) }}">{{ more_regs_text or 'View more CFPB regulations' }}</a>
+</p>

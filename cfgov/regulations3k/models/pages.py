@@ -21,6 +21,7 @@ from wagtail.wagtailcore.models import PageManager
 from jinja2 import Markup
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
+from regulations3k.blocks import RegulationsFullWidthText
 from regulations3k.models import Part, Section, SectionParagraph
 from regulations3k.parser.integer_conversion import LETTER_CODES
 from regulations3k.regdown import regdown
@@ -132,20 +133,36 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
 class RegulationLandingPage(CFGOVPage):
     """Landing page for eregs."""
 
+    header = StreamField([
+        ('hero', molecules.Hero()),
+    ], blank=True)
+    content = StreamField([
+        ('full_width_text', RegulationsFullWidthText()),
+    ], blank=True)
+
+    # General content tab
+    content_panels = CFGOVPage.content_panels + [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
+    ]
+
+    # Tab handler interface
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='General Content'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+
     objects = CFGOVPageManager()
     subpage_types = ['regulations3k.RegulationPage', 'RegulationsSearchPage']
-    regs = Part.objects.order_by('part_number')
+    template = 'regulations3k/landing-page.html'
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
         context.update({
             'get_secondary_nav_items': get_reg_nav_items,
-            'regs': self.regs,
         })
         return context
-
-    def get_template(self, request):
-        return 'regulations3k/base.html'
 
 
 class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
