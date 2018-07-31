@@ -17,6 +17,6 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "sw-precache": "^5.2.1"
+    "workbox-build": "^3.4.1"
   }
 }

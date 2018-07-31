@@ -1,5 +1,7 @@
 {% macro render(result) %}
 
+{%- set reg_name = result.part ~ ' (' ~ result.reg ~ ')' -%}
+
 <article class="results_item">
     <h4>
       <a href="{{ result.url }}">{{ result.label }}</a>
@@ -9,10 +11,10 @@
         <span class="u-visually-hidden">Topics:</span>
         <ul class="tags_list">
             <li class="tags_tag">
-                <a href="#" class="tags_link">
+                <span class="tags_link">
                     <span class="tags_bullet" aria-hidden="true">•</span>
-                    {{ result.reg }}
-                </a>
+                    {{ reg_name }}
+                </span>
             </li>
         </ul>
     </div>

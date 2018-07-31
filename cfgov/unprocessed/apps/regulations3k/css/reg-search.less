@@ -28,7 +28,7 @@
 .search_results {
     .content_sidebar {
         padding: 45px 15px 0;
-        border: 1px solid #b4b5b6;
+        border: 1px solid @gray-40;
         background-color: #f7f8f9;
         .o-expandable_content,
         .o-expandable_target {
@@ -62,14 +62,21 @@
             border: 0;
         }
         border: 0;
-        border-top: 1px solid #b4b5b6;
+        border-top: 1px solid @gray-40;
         padding-top: 0;
     }
     .results_count {
-        padding: 15px 15px 0 15px;
-        border-right: 1px solid #b4b5b6;
-        border-bottom: 1px solid #b4b5b6;
-        background-color: #e2efd8;
+        padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em )
+                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em )
+                 0
+                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        border-right: 1px solid @gray-40;
+        border-bottom: 1px solid @gray-40;
+        background-color: @green-20;
+        &.no-results {
+            background-color: @red-20;
+            padding-bottom: 15px;
+        }
     }
     .results_list {
         padding: unit( @grid_gutter-width / @base-font-size-px, em )
@@ -84,7 +91,7 @@
             margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
             h4 {
                 padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
-                border-top: 1px solid #b4b5b6;
+                border-top: 1px solid @gray-40;
             }
         }
     }
@@ -93,6 +100,28 @@
         padding: 0 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         max-width: 41.875rem;
     }
+}
+
+.respond-to-max( @bp-sm-max {
+    .search_results {
+        .content_sidebar {
+            padding-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        }
+        .content_main {
+            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        }
+        .results_count {
+            border-left: 1px solid @gray-40;
+        }
+    }
+});
+
+// We have an awkward state where text in the filters sidebar is too long on
+// mid-size screens but is fine on desktop and mobile
+.u-hide-on-tablet {
+    .respond-to-range( @bp-sm-max, 1100px, {
+        display: none;
+    } );
 }
 
 /* PWA */

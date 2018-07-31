@@ -30,11 +30,12 @@ function attachHandlers() {
  */
 function clearFilter( event ) {
   // Continue only if the X icon was clicked and not the parent button
-  if ( event.target.tagName === 'BUTTON' ) {
+  let target = event.target.tagName.toLowerCase();
+  if ( target !== 'svg' && target !== 'path' ) {
     return;
   }
-  const target = closest( event.target, 'button' );
-  const checkbox = find( `#regulation-${ target.value }` );
+  target = closest( event.target, '.a-tag' );
+  const checkbox = find( `#regulation-${ target.dataset.value }` );
   // Remove the filter tag
   target.remove();
   // Uncheck the filter checkbox

@@ -14,7 +14,7 @@
    value.link:                  A link object, containing:
 
    value.link.page_link:        A Wagtail page link.
-   
+
    value.link.external_link:    URL for page outside Wagtail.
 
    value.link.link_text:        A string for the text of the link.
@@ -27,7 +27,7 @@
 
 {% macro render( value ) %}
 {% if value.image and value.image.upload %}
-    {% set featured_image = image(value.image.upload, 'width-270') %}
+    {% set featured_image = image(value.image.upload, 'original') %}
     {% set img_src = featured_image.url if featured_image.url else '' %}
 {% else %}
     {% set featured_image = value.image %}

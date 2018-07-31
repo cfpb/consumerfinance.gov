@@ -499,6 +499,7 @@ CSP_SCRIPT_SRC = ("'self'",
                   'about:',
                   'connect.facebook.net',
                   'www.federalregister.gov',
+                  'storage.googleapis.com'
                   )
 
 # These specify valid sources of CSS code
@@ -631,6 +632,9 @@ FLAGS = {
 
     # Teacher's Digital Platform Search Interface Tool
     'TDP_SEARCH_INTERFACE': {'environment is': 'beta'},
+
+    # Teacher's Digital Platform Building Blocks Tool
+    'TDP_BB_TOOL': {'environment is': 'beta'},
 
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
