@@ -5,11 +5,17 @@
 
 // Regs3K sidebar
 .o-regs3k-sidebar {
+    // TODO: If secondary navigation is overriding o-expandables appearance,
+    //       they aren't atomic expandables anymore per the design spec.
+    //       Secondary navigation should use FlyoutMenu for expandable-like
+    //       behavior and handle its own styling
+    //       (possibly shared with expandables).
+
     .respond-to-max( @bp-sm-max {
         background-color: @gray-5;
         border-bottom: 1px solid @gray-40;
         border-top: 1px solid @gray-40;
-        margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
     } );
 }
 
@@ -19,7 +25,7 @@
     .o-expandable_target {
         .respond-to-min( @bp-med-min, {
             display: block;
-            padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
+            padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
         } );
         border: 0;
         padding-right: 0;
@@ -65,7 +71,7 @@
     } );
 
     .o-regs3k-navigation_header {
-        .u-show-on-stacked;
+        .u-show-on-stacked();
         padding: unit( 10px / @base-font-size-px, em );
         .o-expandable_label {
             text-transform: uppercase;
