@@ -4,4 +4,4 @@
 
 
 // See https://github.com/cfpb/capital-framework/
-require( 'cf-tables' );
+require( 'cf-tables/src/Table' ).init();

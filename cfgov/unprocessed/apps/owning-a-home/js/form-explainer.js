@@ -1,7 +1,6 @@
 import { elementInView, scrollIntoView, scrollTo }
   from '../../../js/modules/util/scroll';
 import DT from './dom-tools';
-import ExpandableGroup from './ExpandableGroup';
 
 import { assign } from '../../../js/modules/util/assign';
 import { closest } from '../../../js/modules/util/dom-traverse';
@@ -72,7 +71,8 @@ class FormExplainer {
       }
     );
 
-    instantiateAll( '.o-expandable-group', ExpandableGroup );
+    // eslint-disable-next-line global-require
+    require( 'cf-expandables/src/Expandable' ).init();
   }
 
   /**
@@ -686,13 +686,12 @@ class FormExplainer {
       '.o-expandable__form-explainer .o-expandable_target',
       [ 'click', 'keypress' ],
       event => {
-        event.preventDefault();
-        event.stopPropagation();
         if ( event.which === 13 || event.type === 'click' ) {
           const target = event.target;
           const closestFormExplainer = closest(
             target, '.o-expandable__form-explainer'
           );
+
           this.updateAttention( closestFormExplainer, CSS.HAS_ATTENTION );
           this.updateImagePositionAfterAnimation( 600 );
         }

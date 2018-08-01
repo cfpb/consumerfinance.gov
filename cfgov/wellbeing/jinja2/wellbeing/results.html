@@ -144,8 +144,10 @@
         .u-left {
             float: left;
         }
-        .no-js .o-expandable_link {
-            display: none;
+
+        .o-expandable {
+            border-top: 1px solid #b4b5b6;
+            border-bottom: 1px solid #b4b5b6;
         }
 
         @media all and (max-width: 37.5em) {
@@ -207,6 +209,7 @@
     <div class="content_wrapper">
         <nav class="breadcrumbs" aria-label="Breadcrumbs">
             <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home') }}">
+                {{ svg_icon( 'left' ) }}
                 Back to the questionnaire
             </a>
         </nav>
@@ -324,43 +327,44 @@
             next time, see our suggestions and next steps.
         </p>
     {% if user_score %}
-        <div class="o-expandable">
-            <button class="o-expandable_target">
-                <div class="o-expandable_header">
-                    <span class="o-expandable_header-left o-expandable_label">
-                        Review your answers
-                    </span>
-                    <span class="o-expandable_header-right o-expandable_link">
-                        <span class="o-expandable_cue o-expandable_cue-open">
+        <div class="o-expandable
+                    o-expandable__padded">
+            <button class="o-expandable_header o-expandable_target">
+                <span class="o-expandable_header-left o-expandable_label">
+                    Review your answers
+                </span>
+                <span class="o-expandable_header-right o-expandable_link">
+                    <span class="o-expandable_cue o-expandable_cue-open">
+                        <span class="u-visually-hidden-on-mobile">
                             Show
-                            {{ svg_icon('plus-round') }}
                         </span>
-                        <span class="o-expandable_cue o-expandable_cue-close">
-                            Hide
-                            {{ svg_icon('minus-round') }}
-                        </span>
+                        {{ svg_icon('plus-round') }}
                     </span>
-                </div>
+                    <span class="o-expandable_cue o-expandable_cue-close">
+                        <span class="u-visually-hidden-on-mobile">
+                            Hide
+                        </span>
+                        {{ svg_icon('minus-round') }}
+                    </span>
+                </span>
             </button>
             <div class="o-expandable_content">
-                <div class="o-expandable_content-animated">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Question</th>
-                                <th>Your answer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for question in questions %}
-                            <tr>
-                                <td>{{ question['question'] }}</td>
-                                <td>{{ question['answers'][answers[loop.index - 1]] }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Your answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for question in questions %}
+                        <tr>
+                            <td>{{ question['question'] }}</td>
+                            <td>{{ question['answers'][answers[loop.index - 1]] }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     {% endif %}

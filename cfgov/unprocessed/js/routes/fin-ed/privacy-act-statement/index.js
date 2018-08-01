@@ -2,9 +2,12 @@
    Scripts for `/fin-ed/privacy-act-statement/.
    ========================================================================== */
 
-const atomicHelpers = require( '../../../modules/util/atomic-helpers' );
-const Expandable = require( '../../../organisms/Expandable' );
-const expandable = new Expandable( document.querySelector(
-  '.o-secondary-navigation .o-expandable'
-) );
-expandable.init();
+const dom = document.querySelector( '.o-secondary-navigation' );
+
+/* Check that this script has been delivered to a page that actually
+   has secondary navigation markup. */
+if ( dom ) {
+  // eslint-disable-next-line global-require
+  require( 'cf-expandables/src/Expandable' ).init();
+}
+
