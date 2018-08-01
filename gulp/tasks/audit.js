@@ -3,7 +3,6 @@ const fancyLog = require( 'fancy-log' );
 const fs = require( 'fs' );
 const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
-const lighthouse = require( 'lighthouse' );
 const minimist = require( 'minimist' );
 const spawn = require( 'child_process' ).spawn;
 
