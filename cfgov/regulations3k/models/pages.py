@@ -21,11 +21,12 @@ from wagtail.wagtailcore.models import PageManager
 from jinja2 import Markup
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
+from regulations3k.blocks import RegulationsFullWidthText
 from regulations3k.models import Part, Section, SectionParagraph
 from regulations3k.parser.integer_conversion import LETTER_CODES
 from regulations3k.regdown import regdown
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
-from v1.atomic_elements import molecules
+from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
 
 
@@ -54,7 +55,6 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         all_regs = Part.objects.order_by('part_number')
         regs = []
         order = request.GET.get('order', 'relevance')
-        sqs = SearchQuerySet()
         if 'regs' in request.GET and request.GET.get('regs'):
             regs = request.GET.getlist('regs')
         search_query = request.GET.get('q', '')  # haystack cleans this string
@@ -71,30 +71,33 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 request,
                 self.get_template(request),
                 self.get_context(request))
-        sqs = SearchQuerySet()
-        sqs = sqs.filter(content=search_query).highlight(
-            pre_tags=['<strong>'], post_tags=['</strong>'])
+        sqs = SearchQuerySet().filter(content=search_query)
         payload.update({
-            'total_results': sqs.count(),
             'all_regs': [{
-                'name': "Regulation {}".format(reg.letter_code),
+                'letter_code': reg.letter_code,
                 'id': reg.part_number,
-                'num_results': sqs.filter(part=reg.part_number).count(),
+                'num_results': sqs.filter(
+                    part=reg.part_number).models(SectionParagraph).count(),
                 'selected': reg.part_number in regs}
                 for reg in all_regs]
         })
+        payload.update({'total_count': sum(
+            [reg['num_results'] for reg in payload['all_regs']])})
         if len(regs) == 1:
             sqs = sqs.filter(part=regs[0])
         elif regs:
             sqs = sqs.filter(part__in=regs)
         if order == 'regulation':
             sqs = sqs.order_by('part', 'section_order')
-        sqs = sqs.models(SectionParagraph)
+        sqs = sqs.highlight(
+            pre_tags=['<strong>'],
+            post_tags=['</strong>']).models(SectionParagraph)
         for hit in sqs:
             letter_code = LETTER_CODES.get(hit.part)
             snippet = Markup(" ".join(hit.highlighted))
             hit_payload = {
                 'id': hit.paragraph_id,
+                'part': hit.part,
                 'reg': 'Regulation {}'.format(letter_code),
                 'label': hit.title,
                 'snippet': snippet,
@@ -103,14 +106,16 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                     hit.section_label, hit.paragraph_id),
             }
             payload['results'].append(hit_payload)
+        payload.update({'current_count': sqs.count()})
         self.results = payload
-
         context = self.get_context(request)
         num_results = validate_num_results(request)
         paginator = Paginator(payload['results'], num_results)
         page_number = validate_page_number(request, paginator)
         paginated_page = paginator.page(page_number)
         context.update({
+            'current_count': payload['current_count'],
+            'total_count': payload['total_count'],
             'paginator': paginator,
             'current_page': page_number,
             'num_results': num_results,
@@ -128,20 +133,36 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
 class RegulationLandingPage(CFGOVPage):
     """Landing page for eregs."""
 
+    header = StreamField([
+        ('hero', molecules.Hero()),
+    ], blank=True)
+    content = StreamField([
+        ('full_width_text', RegulationsFullWidthText()),
+    ], blank=True)
+
+    # General content tab
+    content_panels = CFGOVPage.content_panels + [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
+    ]
+
+    # Tab handler interface
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='General Content'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+
     objects = CFGOVPageManager()
     subpage_types = ['regulations3k.RegulationPage', 'RegulationsSearchPage']
-    regs = Part.objects.order_by('part_number')
+    template = 'regulations3k/landing-page.html'
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
         context.update({
             'get_secondary_nav_items': get_reg_nav_items,
-            'regs': self.regs,
         })
         return context
-
-    def get_template(self, request):
-        return 'regulations3k/base.html'
 
 
 class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
@@ -157,16 +178,22 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         ('text_introduction', molecules.TextIntroduction()),
     ], blank=True)
 
-    content = StreamField([], null=True)
+    content = StreamField([
+        ('info_unit_group', organisms.InfoUnitGroup()),
+        ('full_width_text', organisms.FullWidthText()),
+    ], null=True, blank=True)
+
     regulation = models.ForeignKey(
         Part,
         blank=True,
         null=True,
         on_delete=models.PROTECT,
-        related_name='eregs3k_page')
+        related_name='eregs3k_page'
+    )
 
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
         FieldPanel('regulation', Part),
     ]
 

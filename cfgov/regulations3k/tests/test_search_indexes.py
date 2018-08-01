@@ -20,11 +20,11 @@ class RegulationIndexTestCase(TestCase):
         Section.objects.first().extract_graphs()
 
     def test_extract_paragraphs(self):
-        self.assertEqual(SectionParagraph.objects.count(), 6)
+        self.assertEqual(SectionParagraph.objects.count(), 13)
 
     def test_index(self):
         self.assertEqual(self.index.get_model(), SectionParagraph)
-        self.assertEqual(self.index.index_queryset().count(), 6)
+        self.assertEqual(self.index.index_queryset().count(), 13)
         self.assertIs(
             self.index.index_queryset().first().section.subpart.version.draft,
             False)
@@ -35,7 +35,7 @@ class RegulationIndexTestCase(TestCase):
         SectionParagraph.objects.all().delete()
         self.assertEqual(SectionParagraph.objects.count(), 0)
         call_command('update_regulation_index')
-        self.assertEqual(SectionParagraph.objects.count(), 39)
+        self.assertEqual(SectionParagraph.objects.count(), 113)
         self.assertEqual(mock_haystack.call_count, 1)
 
     @mock.patch('regulations3k.management.commands'

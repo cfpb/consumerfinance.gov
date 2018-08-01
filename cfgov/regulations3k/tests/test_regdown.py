@@ -176,7 +176,7 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         """ Test that Markdown can load our extension from a string """
         try:
             markdown.Markdown(extensions=['regulations3k.regdown'])
-        except AttributeError as e:
+        except AttributeError as e:  # pragma: no cover
             self.fail('Markdown failed to load regdown extension: '
                       '{}'.format(e.message))
 

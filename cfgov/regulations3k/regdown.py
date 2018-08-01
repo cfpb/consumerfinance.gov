@@ -58,13 +58,14 @@ from markdown import markdown, util
 from markdown.blockprocessors import BlockProcessor, ParagraphProcessor
 from markdown.extensions import Extension
 from markdown.inlinepatterns import DoubleTagPattern, Pattern, SimpleTagPattern
+from mdx_emdash import EmDashExtension
 
 
 # If we're on Python 3.6+ we have SHA3 built-in, otherwise use the back-ported
 # sha3 library.
 try:
     from hashlib import sha3_224
-except ImportError:
+except ImportError:  # pragma: no cover
     from sha3 import sha3_224
 
 
@@ -207,7 +208,9 @@ class LabeledParagraphProcessor(ParagraphProcessor):
         elif block.strip():
             if self.parser.state.isstate('list'):
                 # Pass off to the ParagraphProcessor for lists
-                super(ParagraphProcessor, self).run(parent, blocks)
+                super(ParagraphProcessor, self).run(
+                    parent, blocks
+                )  # pragma: no cover
             else:
                 # Generate a label that is a hash of the block contents. This
                 # way it won't change unless the rest of this block changes.
@@ -282,7 +285,8 @@ def regdown(text, **kwargs):
         text,
         extensions=[
             'markdown.extensions.tables',
-            RegulationsExtension(**kwargs)
+            RegulationsExtension(**kwargs),
+            EmDashExtension(),
         ],
         **kwargs
     )

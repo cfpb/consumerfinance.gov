@@ -40,56 +40,57 @@
 
 {% block content_main %}
     {% if section %}
-    <h1>{{section.title}}</h1>
-    <div class="regulation-meta">
-        <div class="a-date">
-            Most recently amended
-            {{ time.render(section.subpart.version.effective_date, {'date':true, 'time':false, 'timezone':false}) }}
-        </div>
-        <ul class="m-list m-list__links">
-            <li class="m-list_item">
-                <a class="m-list_link" href="{{ search_url }}">
-                    Search {{ regulation }}
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <section class="block block__flush-top">
-        {{content|safe}}
-    </section>
-    {% else %}
-    {% for block in page.header -%}
-        {% if 'featured_content' in block.block_type %}
-            <div class="block
-                        block__flush-sides
-                        block__border">
-                {{ featured_content.render(block.value) }}
+        <h1>{{section.title}}</h1>
+        <div class="regulation-meta">
+            <div class="a-date">
+                Most recently amended
+                {{ time.render(section.subpart.version.effective_date, {'date':true, 'time':false, 'timezone':false}) }}
             </div>
-        {% else %}
+            <ul class="m-list m-list__links">
+                <li class="m-list_item">
+                    <a class="m-list_link" href="{{ search_url }}">
+                        Search {{ regulation }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <section class="block block__flush-top">
+            {{content|safe}}
+        </section>
+    {% else %}
+        {% for block in page.header -%}
             {{ render_block.render(block, loop.index) }}
-        {% endif %}
-    {%- endfor %}
+        {%- endfor %}
+
+        {% for block in page.content -%}
+            {{ render_block.render(block, loop.index) }}
+        {%- endfor %}
     {% endif %}
     {% if section %}
-    <div class="block block__sub">
-        <nav class="section-nav" role="navigation">
-            <ul>
-                {% if previous_section %}
-                <li class="previous next-prev">
-                    <a href="{{ routablepageurl(page, "section", previous_section.section_number) }}" class="navigation-link backward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-left"></span><span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label or previous_section.label}}</a> <span class="next-prev-title">{{previous_section.title_content}}</span>
-                </li>
-                {% endif %}
-                {% if next_section %}
-                <li class="next next-prev">
-                    <a href="{{ routablepageurl(page, "section", next_section.section_number) }}" class="navigation-link forward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-right"></span><span class="next-prev-label">Next section - </span>{{next_section.numeric_label or next_section.label}}</a> <span class="next-prev-title">{{next_section.title_content}}</span>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
-    </div>
+        <div class="block block__sub">
+            <nav class="section-nav" role="navigation">
+                <ul>
+                    {% if previous_section %}
+                    <li class="previous next-prev">
+                        <a href="{{ routablepageurl(page, "section", previous_section.section_number) }}" class="navigation-link backward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-left"></span><span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label or previous_section.label}}</a> <span class="next-prev-title">{{previous_section.title_content}}</span>
+                    </li>
+                    {% endif %}
+                    {% if next_section %}
+                    <li class="next next-prev">
+                        <a href="{{ routablepageurl(page, "section", next_section.section_number) }}" class="navigation-link forward next-prev-link" data-turbolinks="true"><span class="cf-icon cf-icon-right"></span><span class="next-prev-label">Next section - </span>{{next_section.numeric_label or next_section.label}}</a> <span class="next-prev-title">{{next_section.title_content}}</span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    {% else %}
+        {% if page.sidefoot %}
+            <aside class="o-prefooter">
+                {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+            </aside>
+        {% endif %}
     {% endif %}
-
 {% endblock %}
 
 {% block javascript scoped %}

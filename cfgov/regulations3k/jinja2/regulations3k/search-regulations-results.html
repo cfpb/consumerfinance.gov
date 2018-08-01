@@ -3,27 +3,22 @@
 {% import 'molecules/pagination.html' as pagination with context %}
 
 <div class="results_header">
+    {% if current_count > 0 %}
     <div class="results_count">
-        <div class="has-results">
-            <h3>
-                Showing
-                <span class="filtered-results-count">
-                    <span class="filtered-results-count_number">
-                        {{ page.results.results | length }}
-                    </span>
-                    results
-                </span>
-            </h3>
-        </div>
-        <!-- <div class="no-results-message">
-            <h3>
-                No results match your filters.
-            </h3>
-            <p>
-                Try adjusting your filters or searching for different terms.
-            </p>
-        </div> -->
+        <h3>
+            Showing {{ current_count }}
+            match{% if current_count > 1 %}es{% endif %}
+            {% if total_count > current_count %}
+                out of {{ total_count }} total results
+            {% endif %}
+        </h3>
     </div>
+    {% else %}
+    <div class="results_count no-results">
+        <h3>No results match your filters.</h3>
+        <p>Try adjusting your filters or searching for different terms.</p>
+    </div>
+    {% endif %}
     {% if show_filters %}
     <div class="filters_applied">
         <span class="filters_applied-label">
@@ -32,8 +27,9 @@
         <div class="filters_tags">
             {% for reg in page.results.all_regs %}
                 {% if reg.selected %}
+                    {%- set reg_name = '(Reg<span class="u-hide-on-mobile">ulation</span> ' ~ reg.letter_code ~ ')' -%}
                     {{ tag.render({
-                        'label': reg.id ~ ' (' ~ reg.name ~ ')',
+                        'label': reg.id ~ ' ' ~ reg_name | safe,
                         'value': reg.id,
                         'behavior': 'clear-filter'
                     }) }}

@@ -20,12 +20,11 @@
 {% macro render( options ) %}
 
 {%- set behavior = 'data-js-hook=behavior_' ~ options.behavior if options.behavior else '' -%}
-{%- set value = 'value=' ~ options.value if options.value else '' -%}
+{%- set value = 'data-value=' ~ options.value if options.value else '' -%}
 
-<button class="a-tag"
-        type="button"
-        {{ value }}
-        {{ behavior }}>
+<div class="a-tag"
+     {{ value }}
+     {{ behavior }}>
     {{ options.label }} {{ svg_icon('error') }}
-</button>
+</div>
 {% endmacro %}

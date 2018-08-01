@@ -24,6 +24,7 @@ jsonfield==2.0.2
 jsonschema==2.0.0
 lxml==4.1.0
 Markdown==2.6.11
+markdown-emdash==0.1.0
 ntplib==0.3.3
 openpyxl==2.5.0
 pyelasticsearch==0.6.1
@@ -39,7 +40,7 @@ unipath>=1.1,<=2.0
 # TODO: Remove explicit urllib3 requirement once requests is updated to support urllib3 1.23
 urllib3==1.22
 wagtail-flags==2.0.8
-wagtail-inventory==0.4.2
+wagtail-inventory==0.5
 wagtail-sharing==0.6.1
 wagtail-treemodeladmin==1.0.3
 Wand==0.4.2

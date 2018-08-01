@@ -48,6 +48,11 @@ class RegModelTests(DjangoTestCase):
             effective_date=datetime.date(2014, 1, 18),
             part=self.part_1002
         )
+        self.old_effective_version = mommy.make(
+            EffectiveVersion,
+            effective_date=datetime.date(2011, 1, 1),
+            part=self.part_1002,
+        )
         self.subpart = mommy.make(
             Subpart,
             label='Subpart General',
@@ -82,7 +87,9 @@ class RegModelTests(DjangoTestCase):
             contents=(
                 '{a}\n(a) Regdown paragraph a.\n'
                 '{b}\n(b) Paragraph b\n'
+                '\nsee(4-b-Interp)\n'
                 '{c}\n(c) Paragraph c.\n'
+                '{c-1}\n \n'
                 '{d}\n(1) General rule. A creditor that provides in writing.\n'
             ),
             subpart=self.subpart,
@@ -164,19 +171,19 @@ class RegModelTests(DjangoTestCase):
             'General')
 
     def test_section_string_method(self):
-        if sys.version_info >= (3, 0):
+        if sys.version_info >= (3, 0):  # pragma: no cover
             self.assertEqual(
                 self.section_num4.__str__(),
                 '\xa7\xa01002.4 General rules.')
-        else:
+        else:  # pragma: no cover
             self.assertEqual(
                 self.section_num4.__str__(),
                 '\xa7\xa01002.4 General rules.'.encode('utf8'))
 
     def test_section_export_graphs(self):
         test_counts = self.section_num4.extract_graphs()
-        self.assertEqual(test_counts['section'], self.section_num4.title)
-        self.assertEqual(test_counts['created'], 3)
+        self.assertEqual(test_counts['section'], "1002-4")
+        self.assertEqual(test_counts['created'], 4)
         self.assertEqual(test_counts['deleted'], 1)
         self.assertEqual(test_counts['kept'], 1)
 
@@ -194,14 +201,30 @@ class RegModelTests(DjangoTestCase):
             self.effective_version.__str__(),
             'Effective on 2014-01-18')
 
+    def test_live_version_true(self):
+        self.assertTrue(self.effective_version.live_version)
+
+    def test_status_is_live(self):
+        self.assertEqual(self.effective_version.status, 'LIVE')
+
+    def test_status_is_draft(self):
+        self.effective_version.draft = True
+        self.effective_version.save()
+        self.assertEqual(self.effective_version.status, 'Unapproved draft')
+        self.effective_version.draft = False
+        self.effective_version.effective_date = (
+            datetime.datetime.today().date() + datetime.timedelta(days=5))
+        self.effective_version.save()
+        self.assertEqual(self.effective_version.status, 'Future version')
+        self.effective_version.effective_date = datetime.date(2014, 1, 18)
+        self.effective_version.save()
+
+    def test_status_is_previous_version(self):
+        self.assertEqual(self.old_effective_version.status, 'Previous version')
+
     def test_landing_page_get_context(self):
         test_context = self.landing_page.get_context(HttpRequest())
-        self.assertIn(self.part_1002, test_context['regs'])
-
-    def test_landing_page_get_template(self):
-        self.assertEqual(
-            self.landing_page.get_template(HttpRequest()),
-            'regulations3k/base.html')
+        self.assertIn('get_secondary_nav_items', test_context)
 
     def test_search_page_get_template(self):
         self.assertEqual(
@@ -313,7 +336,7 @@ class RegModelTests(DjangoTestCase):
             self.reg_search_page.url + self.reg_search_page.reverse_subpage(
                 'regulation_results_page'),
             {'q': 'disclosure', 'regs': '1002', 'order': 'regulation'})
-        self.assertEqual(mock_sqs.call_count, 1)
+        self.assertEqual(mock_sqs.call_count, 3)
         self.assertEqual(response.status_code, 200)
         response2 = self.client.get(
             self.reg_search_page.url + self.reg_search_page.reverse_subpage(
@@ -321,7 +344,7 @@ class RegModelTests(DjangoTestCase):
             QueryDict(query_string=(
                 'q=disclosure&regs=1002&regs=1003&order=regulation')))
         self.assertEqual(response2.status_code, 200)
-        self.assertEqual(mock_sqs.call_count, 2)
+        self.assertEqual(mock_sqs.call_count, 6)
 
     @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
     def test_routable_search_page_reg_only(self, mock_sqs):

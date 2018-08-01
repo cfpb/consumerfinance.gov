@@ -62,29 +62,28 @@
              class="o-expandable
                     o-expandable__read-more">
             <div class="o-expandable_content" id="answer-content">
-                <div class="o-expandable_content-animated">
-                    <div class="answer-text">
-                        {{ page.answer | richtext | safe }}
-                    </div>
-                    {% if audiences %}
-                    <div class="u-mt15">
-                        {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
-                    </div>
-                    {% endif %}
-
-                    {# This brings in the feedback module #}
-                    {% for block in page.content %}
-                        {{- form_block.render(block, 'content', loop.index0) -}}
-                    {% endfor %}
-                    {% if disclaimer %}
-                    <div class="block block__flush-bottom ask-disclaimer">
-                        {{ disclaimer.text | safe }}
-                    </div>
-                    {% endif %}
+                <div class="answer-text">
+                    {{ page.answer | richtext | safe }}
                 </div>
+                {% if audiences %}
+                <div class="u-mt15">
+                    {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
+                </div>
+                {% endif %}
+
+                {# This brings in the feedback module #}
+                {% for block in page.content %}
+                    {{- form_block.render(block, 'content', loop.index0) -}}
+                {% endfor %}
+                {% if disclaimer %}
+                <div class="block block__flush-bottom ask-disclaimer">
+                    {{ disclaimer.text | safe }}
+                </div>
+                {% endif %}
             </div>
-            <a class="o-expandable_target o-expandable_link a-link" title="Expand content">
-                <span class="a-link_text">
+            <button class="o-expandable_header o-expandable_target"
+                    title="Expand content">
+                <span class="o-expandable_link">
                     <span class="o-expandable_cue o-expandable_cue-open">
                         Read full answer
                         {{ svg_icon('plus-round') }}
@@ -94,9 +93,8 @@
                         {{ svg_icon('minus-round') }}
                    </span>
                 </span>
-            </a>
+            </button>
         </div>
-
 
     </div>
     {{ ask_search_bar.render( 'left' ) }}
