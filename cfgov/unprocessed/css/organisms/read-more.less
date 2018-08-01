@@ -60,7 +60,7 @@
 
     .o-expandable_content__collapsed {
         // shows approx. 4 lines of content
-        max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em );
+        max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
         overflow: hidden;
         position: relative;
 
@@ -77,4 +77,18 @@
             content: '';
         }
     }
+
+    .respond-to-min( @bp-med-min, {
+        .o-expandable_target__collapsed {
+            display: none;
+        }
+
+        .o-expandable_content__collapsed {
+            max-height: 100% !important;
+
+            &:after {
+              display: none;
+            }
+        }
+    } );
 }
