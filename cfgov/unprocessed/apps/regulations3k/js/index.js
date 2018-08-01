@@ -23,7 +23,8 @@ const init = () => {
       console.error( 'Error during service worker registration:', err );
     } );
   }
-  navItems.classList.toggle( 'u-hide-on-stacked' );
+  navHeader.classList.add( 'o-expandable_target__collapsed' );
+  navItems.classList.add( 'u-hide-on-stacked' );
   bindSecondaryNav();
 };
 

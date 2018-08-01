@@ -16,23 +16,12 @@
 // Regs3K secondary nav sections
 .o-regs3k-sections {
 
-    .o-expandable {
-        margin-bottom: 0;
-    }
-
     .o-expandable_target {
         .respond-to-min( @bp-med-min, {
             display: block;
             padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
         } );
         border: 0;
-    }
-
-    .o-expandable_label {
-        .heading-4();
-        letter-spacing: inherit;
-        margin-bottom: 0;
-        text-transform: none;
     }
 
     .o-expandable_header {
@@ -77,9 +66,6 @@
 
     .o-regs3k-navigation_header {
         .u-show-on-stacked;
-        .h4 {
-            text-transform: uppercase;
-        }
     }
 
     .o-expandable_header-left {

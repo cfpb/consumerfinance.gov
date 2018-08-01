@@ -38,7 +38,7 @@
 {% from 'organisms/expandable.html' import expandable with context %}
 <nav class="o-regs3k-navigation o-expandable__padded"
      aria-label="Section navigation">
-    <button class="o-regs3k-navigation_header o-expandable_header o-expandable_target o-expandable_target__collapsed">
+    <button class="o-regs3k-navigation_header o-expandable_header o-expandable_target">
         <span class="h4 o-expandable_header-left o-expandable_label">
             Table of Contents
         </span>
@@ -59,7 +59,7 @@
             </span>
         </span>
     </button>
-    <div class="o-regs3k-sections u-hide-on-stacked">
+    <div class="o-regs3k-sections">
         {% import 'molecules/nav-link.html' as nav_link %}
         {%- for subpart in nav_items %}
             {% set sec_nav_settings = {
