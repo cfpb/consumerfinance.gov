@@ -171,11 +171,11 @@ class RegModelTests(DjangoTestCase):
             'General')
 
     def test_section_string_method(self):
-        if sys.version_info >= (3, 0):
+        if sys.version_info >= (3, 0):  # pragma: no cover
             self.assertEqual(
                 self.section_num4.__str__(),
                 '\xa7\xa01002.4 General rules.')
-        else:
+        else:  # pragma: no cover
             self.assertEqual(
                 self.section_num4.__str__(),
                 '\xa7\xa01002.4 General rules.'.encode('utf8'))
@@ -224,12 +224,7 @@ class RegModelTests(DjangoTestCase):
 
     def test_landing_page_get_context(self):
         test_context = self.landing_page.get_context(HttpRequest())
-        self.assertIn(self.part_1002, test_context['regs'])
-
-    def test_landing_page_get_template(self):
-        self.assertEqual(
-            self.landing_page.get_template(HttpRequest()),
-            'regulations3k/base.html')
+        self.assertIn('get_secondary_nav_items', test_context)
 
     def test_search_page_get_template(self):
         self.assertEqual(
