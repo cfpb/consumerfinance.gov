@@ -12,7 +12,7 @@ from jinja2 import Environment
 from jinja2.runtime import Context
 
 from .middleware import get_request
-from .query import QueryFinder, get_document, more_like_this, when
+from .query import when
 from .templates import get_date_obj, get_date_string
 
 
@@ -64,17 +64,12 @@ class SheerlikeEnvironment(Environment):
 
 
 def environment(**options):
-    queryfinder = QueryFinder()
-
     options.setdefault('extensions', []).append('jinja2.ext.do')
 
     env = SheerlikeEnvironment(**options)
     env.globals.update({
         'static': staticfiles_storage.url,
         'url': reverse,
-        'queries': queryfinder,
-        'more_like_this': more_like_this,
-        'get_document': get_document,
         'when': when,
     })
     env.filters.update({
