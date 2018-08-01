@@ -26,7 +26,7 @@ from regulations3k.models import Part, Section, SectionParagraph
 from regulations3k.parser.integer_conversion import LETTER_CODES
 from regulations3k.regdown import regdown
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
-from v1.atomic_elements import molecules
+from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
 
 
@@ -178,16 +178,22 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         ('text_introduction', molecules.TextIntroduction()),
     ], blank=True)
 
-    content = StreamField([], null=True)
+    content = StreamField([
+        ('info_unit_group', organisms.InfoUnitGroup()),
+        ('full_width_text', organisms.FullWidthText()),
+    ], null=True, blank=True)
+
     regulation = models.ForeignKey(
         Part,
         blank=True,
         null=True,
         on_delete=models.PROTECT,
-        related_name='eregs3k_page')
+        related_name='eregs3k_page'
+    )
 
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
         FieldPanel('regulation', Part),
     ]
 
