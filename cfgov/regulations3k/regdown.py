@@ -84,23 +84,28 @@ STRONG_EM_RE = r'(\*)\2{2}(.+?)\2{2}(.*?)\2'
 PSEUDO_FORM_RE = r'(?P<underscores>_{2,50})(?P<line_ending>\s*$)?'
 
 
+DEFAULT_URL_RESOLVER = lambda l: ''
+DEFAULT_CONTENTS_RESOLVER = lambda l: ''
+DEFAULT_RENDER_BLOCK_REFERENCE = lambda c, **kwargs: \
+    '<blockquote>{}</blockquote>'.format(regdown(c))
+
+
 class RegulationsExtension(Extension):
 
     config = {
         'url_resolver': [
-            lambda l: '',
+            DEFAULT_URL_RESOLVER,
             'Function to resolve the URL of a reference. '
             'Should return (title, url).'
         ],
         'contents_resolver': [
-            lambda l: '',
+            DEFAULT_CONTENTS_RESOLVER,
             'Function to resolve the contents of a reference. '
             'Should return markdown contents of the reference or an empty '
             'string.'
         ],
         'render_block_reference': [
-            lambda c, **kwargs: '<blockquote>{}</blockquote>'.format(
-                regdown(c)),
+            DEFAULT_RENDER_BLOCK_REFERENCE,
             'Function that will render a block reference'
         ],
     }

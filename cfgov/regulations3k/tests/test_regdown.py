@@ -5,7 +5,9 @@ import unittest
 
 import markdown
 
-from regulations3k.regdown import extract_labeled_paragraph, regdown
+from regulations3k.regdown import (
+    DEFAULT_RENDER_BLOCK_REFERENCE, extract_labeled_paragraph, regdown
+)
 
 
 class RegulationsExtensionTestCase(unittest.TestCase):
@@ -182,7 +184,14 @@ class RegulationsExtensionTestCase(unittest.TestCase):
 
     def test_block_reference_resolver_not_callable(self):
         text = 'see(foo-bar)'
-        self.assertEqual(regdown(text, contents_resolver=None), '')
+        self.assertEqual(
+            regdown(
+                text,
+                contents_resolver=None,
+                render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
+            ),
+            ''
+        )
 
     def test_block_reference_renderer_not_callable(self):
         text = 'see(foo-bar)'
@@ -192,21 +201,23 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         contents_resolver = lambda l: ''
         text = 'see(foo-bar)'
         self.assertEqual(
-            regdown(text, contents_resolver=contents_resolver),
+            regdown(
+                text,
+                contents_resolver=contents_resolver,
+                render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
+            ),
             ''
         )
 
     def test_block_reference(self):
         contents_resolver = lambda l: '{foo-bar}\n# §FooBar\n\n'
-        render_block_reference = lambda c, **kwargs: \
-            '<blockquote>{}</blockquote>'.format(regdown(c))
         text = 'see(foo-bar)'
         self.assertIn(
             '<h1>§FooBar</h1>',
             regdown(
                 text,
                 contents_resolver=contents_resolver,
-                render_block_reference=render_block_reference
+                render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
             )
         )
 
