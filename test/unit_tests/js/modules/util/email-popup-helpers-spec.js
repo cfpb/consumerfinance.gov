@@ -2,15 +2,7 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 const emailPopupsHelpers = require(
   BASE_JS_PATH + 'modules/util/email-popup-helpers'
 );
-const storageMock = require( '../../../../util/mock-web-storage' );
-
 describe( 'email-popup-helpers', () => {
-  beforeEach( () => {
-    // Mock the window's web storage APIs.
-    window.localStorage = storageMock( {} );
-    window.sessionStorage = storageMock( {} );
-  } );
-
   describe( 'showEmailPopup()', () => {
     it( 'should return true if no date is in storage', () => {
       expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( true );

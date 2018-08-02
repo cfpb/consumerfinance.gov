@@ -1,5 +1,4 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/modules/util';
-const storageMock = require( '../../../../util/mock-web-storage' );
 let addEmailPopup;
 
 const HTML_SNIPPET = `
@@ -44,12 +43,6 @@ const HTML_SNIPPET = `
 `;
 
 describe( 'add-email-popup', () => {
-  beforeAll( () => {
-    // Mock the window's web storage APIs.
-    window.localStorage = storageMock( {} );
-    window.sessionStorage = storageMock( {} );
-  } );
-
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
   } );
