@@ -69,7 +69,7 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
         'TIMEOUT': None,
     }
 
-# Optionally enable cache for mega_menu
+# Optionally enable cache for general template fragments, including mega menu
 if os.environ.get('ENABLE_TEMPLATE_FRAGMENTS_CACHE'):
     CACHES['template_fragments'] = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
