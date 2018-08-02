@@ -9,15 +9,6 @@ class FragmentCacheExtension(Extension):
     # a set of names that trigger the extension.
     tags = set(['cache'])
 
-    def __init__(self, environment):
-        super(FragmentCacheExtension, self).__init__(environment)
-
-        # add the defaults to the environment
-        environment.extend(
-            fragment_cache_prefix='',
-            fragment_cache=None
-        )
-
     def parse(self, parser):
         # the first token is the token that started the tag.  In our case
         # we only listen to ``'cache'`` so this will be a name token with
