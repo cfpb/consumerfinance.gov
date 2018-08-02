@@ -9,7 +9,7 @@ function storageMock() {
       storage[key] = value || '';
     },
     getItem: function( key ) {
-      return storage[key];
+      return String.valueOf( storage[key] );
     },
     removeItem: function( key ) {
       delete storage[key];
@@ -19,7 +19,7 @@ function storageMock() {
     },
     key: function( i ) {
       const keys = Object.keys( storage );
-      return keys[i] || null;
+      return String.valueOf( keys[i] ) || null;
     }
   };
 }

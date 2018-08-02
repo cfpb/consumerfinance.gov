@@ -20,31 +20,31 @@ describe( 'web-storage-proxy', () => {
     it( 'should set an item of "bar" for the key "foo" in sessionStorage', () => {
       setItem( 'foo', 'bar', window.sessionStorage );
       expect( window.sessionStorage.getItem( 'foo' ) ).toBe( 'bar' );
-      expect( window.localStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should set an item of "baz" for the key "foo" in localStorage', () => {
       setItem( 'foo', 'baz', window.localStorage );
       expect( window.localStorage.getItem( 'foo' ) ).toBe( 'baz' );
-      expect( window.sessionStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.sessionStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should default to sessionStorage is storage arg is omitted', () => {
       setItem( 'foo', 'bar' );
       expect( window.sessionStorage.getItem( 'foo' ) ).toBe( 'bar' );
-      expect( window.localStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should default to sessionStorage if storage arg is a string', () => {
       setItem( 'foo', 'baz', 'bar' );
       expect( window.sessionStorage.getItem( 'foo' ) ).toBe( 'baz' );
-      expect( window.localStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should default to sessionStorage if storage arg is a boolean', () => {
       setItem( 'foo', 'baz', true );
       expect( window.sessionStorage.getItem( 'foo' ) ).toBe( 'baz' );
-      expect( window.localStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
     } );
   } );
 
@@ -93,27 +93,27 @@ describe( 'web-storage-proxy', () => {
 
     it( 'should remove the key "foo" in sessionStorage', () => {
       removeItem( 'foo', window.sessionStorage );
-      expect( window.sessionStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.sessionStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should remove the key "foo" in localStorage', () => {
       removeItem( 'foo', window.localStorage );
-      expect( window.localStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should default to sessionStorage if storage arg is omitted', () => {
       removeItem( 'foo' );
-      expect( window.sessionStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.sessionStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should default to sessionStorage if storage arg is a string', () => {
       removeItem( 'foo', 'baz' );
-      expect( window.sessionStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.sessionStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should default to sessionStorage if storage arg is a boolean', () => {
       removeItem( 'foo', true );
-      expect( window.sessionStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.sessionStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should do nothing if passed key does not exist', () => {
@@ -132,7 +132,7 @@ describe( 'web-storage-proxy', () => {
         'if storage arg is omitted in setItem', () => {
       setItem( 'foo', 'bar' );
       expect( window.localStorage.getItem( 'foo' ) ).toBe( 'bar' );
-      expect( window.sessionStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.sessionStorage.getItem( 'foo' ) ).toBeNull();
     } );
 
     it( 'should default to storage set in setStorage ' +
@@ -146,13 +146,13 @@ describe( 'web-storage-proxy', () => {
       expect( item ).not.toBe( 'baz' );
     } );
 
-    it( 'should default to storage set in setStorage' +
+    it( 'should default to storage set in setStorage ' +
         'if storage arg is omitted in removeItem', () => {
       window.localStorage.setItem( 'foo', 'bar' );
       window.sessionStorage.setItem( 'foo', 'baz' );
 
       removeItem( 'foo', window.localStorage );
-      expect( window.localStorage.getItem( 'foo' ) ).toBeUndefined();
+      expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
       expect( window.sessionStorage.getItem( 'foo' ) ).toBe( 'baz' );
     } );
 
