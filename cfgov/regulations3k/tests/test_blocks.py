@@ -2,9 +2,10 @@ from __future__ import unicode_literals
 
 import datetime
 
-from django.test import Client, TestCase, override_settings
+from django.test import TestCase, override_settings
 
 from wagtail.wagtailcore.blocks import StreamValue
+from wagtail.wagtailcore.models import Page
 
 from model_mommy import mommy
 
@@ -48,11 +49,13 @@ class RegulationsListTestCase(TestCase):
         self.landing_page.save_revision().publish()
         self.reg_page.save_revision().publish()
 
-        self.client = Client()
+        self.more_regs_page = Page.objects.first()
 
     def test_regulations_list_has_regs(self):
         block = RegulationsList()
-        result = block.render(block.to_python({}))
+        result = block.render(block.to_python({
+            'more_regs_page': self.more_regs_page.pk,
+        }))
         self.assertIn('Reg B', result)
         self.assertIn('/regulations/1002/', result)
 
@@ -70,7 +73,8 @@ class RegulationsListTestCase(TestCase):
                         'type': 'regulations_list',
                         'value': {
                             'body': 'this is a quote',
-                            'citation': 'a citation'
+                            'citation': 'a citation',
+                            'more_regs_page': self.more_regs_page.pk,
                         }
                     },
                 ]
