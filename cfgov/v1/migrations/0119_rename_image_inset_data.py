@@ -55,7 +55,7 @@ def backwards(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('v1', '0118_rename_image_inset')
+        ('v1', '0118_add_image_to_fullwidthtext')
     ]
     operations = [
         migrations.RunPython(forwards, backwards),
