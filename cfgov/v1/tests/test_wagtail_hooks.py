@@ -1,5 +1,4 @@
 from django.core.cache import cache, caches
-
 from django.test import TestCase, override_settings
 
 from wagtail.tests.testapp.models import SimplePage
@@ -8,8 +7,6 @@ from wagtail.wagtailcore.models import Site
 import mock
 
 from v1.models.menu_item import MenuItem
-
-
 from v1.wagtail_hooks import (
     RelativePageLinkHandler, check_permissions, form_module_handlers
 )
