@@ -109,6 +109,11 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'post_preview_cache',
         'TIMEOUT': None,
+    },
+    'template_fragments': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'template_fragments_cache',
+        'TIMEOUT': None,
     }
 }
 

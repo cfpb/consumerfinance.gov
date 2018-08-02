@@ -1,9 +1,14 @@
+from django.core.cache import cache, caches
+
 from django.test import TestCase, override_settings
 
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.wagtailcore.models import Site
 
 import mock
+
+from v1.models.menu_item import MenuItem
+
 
 from v1.wagtail_hooks import (
     RelativePageLinkHandler, check_permissions, form_module_handlers
@@ -185,3 +190,23 @@ class TestServeLatestDraftPage(TestCase):
             response = self.client.get('/test/')
             self.assertContains(response, 'draft')
             self.assertEqual(response['Serving-Wagtail-Draft'], '1')
+
+class TestMenuItemSave(TestCase):
+    @override_settings(
+        CACHES = {
+            'template_fragments': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            }
+        })
+    def test_mega_menu_cache_cleared(self):
+        caches['template_fragments'].set('mega_menu', 'menu_content')
+        self.assertEqual(
+            caches['template_fragments'].get('mega_menu'),
+            'menu_content'
+        )
+        menu_item = MenuItem()
+        menu_item.save()
+        self.assertEqual(
+            caches['template_fragments'].get('mega_menu'),
+            None
+        )

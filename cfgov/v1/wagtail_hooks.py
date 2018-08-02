@@ -5,6 +5,8 @@ from django.conf import settings
 from django.conf.urls import url
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.html import escape, format_html_join
 
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
@@ -219,3 +221,14 @@ class MegaMenuModelAdmin(ModelAdmin):
 
 
 modeladmin_register(MegaMenuModelAdmin)
+
+
+@receiver(post_save, sender=MegaMenuItem)
+def clear_mega_menu_cache(sender, instance, **kwargs):
+    from django.core.cache import caches
+    try:
+        caches['template_fragments'].delete('mega_menu')
+    except Exception:
+        logger.exception(
+            'There was a problem clearing the mega menu cache.'
+        )

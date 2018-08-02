@@ -55,7 +55,10 @@ CACHES = {
     k: {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'TIMEOUT': 0,
-    } for k in ('default', 'eregs_longterm_cache', 'api_cache', 'post_preview')
+    } for k in (
+        'default', 'eregs_longterm_cache', 'api_cache',
+        'post_preview', 'template_fragments'
+    )
 }
 
 # Optionally enable cache for post_preview
@@ -63,6 +66,14 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
     CACHES['post_preview'] = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'post_preview_cache',
+        'TIMEOUT': None,
+    }
+
+# Optionally enable cache for mega_menu
+if os.environ.get('ENABLE_TEMPLATE_FRAGMENTS_CACHE'):
+    CACHES['template_fragments'] = {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'template_fragments_cache',
         'TIMEOUT': None,
     }
 
