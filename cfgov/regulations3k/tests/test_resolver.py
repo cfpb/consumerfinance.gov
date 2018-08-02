@@ -11,7 +11,7 @@ from regulations3k.models import (
     EffectiveVersion, Part, RegulationLandingPage, RegulationPage, Section,
     Subpart
 )
-from regulations3k.regdown import regdown
+from regulations3k.regdown import DEFAULT_RENDER_BLOCK_REFERENCE, regdown
 from regulations3k.resolver import (
     get_contents_resolver, get_url_resolver, resolve_reference
 )
@@ -102,14 +102,20 @@ class ReferenceResolutionTestCase(TestCase):
 
     def test_get_contents_resolver(self):
         contents_resolver = get_contents_resolver(self.reg_page)
-        result = regdown(self.section_2.contents,
-                         contents_resolver=contents_resolver)
+        result = regdown(
+            self.section_2.contents,
+            contents_resolver=contents_resolver,
+            render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
+        )
         self.assertIn('Interpreting adverse action', result)
 
     def test_get_contents_resolver_reference_doesnt_exist(self):
         contents_resolver = get_contents_resolver(self.reg_page)
-        result = regdown(self.section_3.contents,
-                         contents_resolver=contents_resolver)
+        result = regdown(
+            self.section_3.contents,
+            contents_resolver=contents_resolver,
+            render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
+        )
         self.assertEqual(
             result,
             '<p class="regdown-block level-0" id="b">Securities credit.</p>'
