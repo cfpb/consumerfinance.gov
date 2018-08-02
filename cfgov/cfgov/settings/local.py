@@ -57,7 +57,7 @@ CACHES = {
         'TIMEOUT': 0,
     } for k in (
         'default', 'eregs_longterm_cache', 'api_cache',
-        'post_preview', 'template_fragments'
+        'post_preview', 'default_fragment_cache'
     )
 }
 
@@ -70,10 +70,10 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
     }
 
 # Optionally enable cache for general template fragments, including mega menu
-if os.environ.get('ENABLE_TEMPLATE_FRAGMENTS_CACHE'):
-    CACHES['template_fragments'] = {
+if os.environ.get('ENABLE_DEFAULT_FRAGMENT_CACHE'):
+    CACHES['default_fragment_cache'] = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'template_fragments_cache',
+        'LOCATION': 'default_fragment_cache',
         'TIMEOUT': None,
     }
 

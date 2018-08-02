@@ -196,14 +196,14 @@ class TestMenuItemSave(TestCase):
             }
         })
     def test_mega_menu_cache_cleared(self):
-        caches['template_fragments'].set('mega_menu', 'menu_content')
+        caches['default_fragment_cache'].set('mega_menu', 'menu_content')
         self.assertEqual(
-            caches['template_fragments'].get('mega_menu'),
+            caches['default_fragment_cache'].get('mega_menu'),
             'menu_content'
         )
         menu_item = MenuItem()
         menu_item.save()
         self.assertEqual(
-            caches['template_fragments'].get('mega_menu'),
+            caches['default_fragment_cache'].get('mega_menu'),
             None
         )

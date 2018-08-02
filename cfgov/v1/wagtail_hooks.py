@@ -226,9 +226,4 @@ modeladmin_register(MegaMenuModelAdmin)
 @receiver(post_save, sender=MegaMenuItem)
 def clear_mega_menu_cache(sender, instance, **kwargs):
     from django.core.cache import caches
-    try:
-        caches['template_fragments'].delete('mega_menu')
-    except Exception:
-        logger.exception(
-            'There was a problem clearing the mega menu cache.'
-        )
+    caches['default_fragment_cache'].delete('mega_menu')
