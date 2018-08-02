@@ -25,6 +25,7 @@ def backward_mapper(page_or_revision, data):
 
 def forwards(apps, schema_editor):
     page_types_and_fields = [
+        ('regulations3k', 'RegulationPage', 'content', 'full_width_text'),
         ('v1', 'BlogPage', 'content', 'full_width_text'),
         ('v1', 'BrowseFilterablePage', 'content', 'full_width_text'),
         ('v1', 'BrowsePage', 'content', 'full_width_text'),
@@ -40,6 +41,7 @@ def forwards(apps, schema_editor):
 
 def backwards(apps, schema_editor):
     page_types_and_fields = [
+        ('regulations3k', 'RegulationPage', 'content', 'full_width_text'),
         ('v1', 'BlogPage', 'content', 'full_width_text'),
         ('v1', 'BrowseFilterablePage', 'content', 'full_width_text'),
         ('v1', 'BrowsePage', 'content', 'full_width_text'),
