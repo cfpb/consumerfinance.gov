@@ -191,7 +191,7 @@ class TestServeLatestDraftPage(TestCase):
 class TestMenuItemSave(TestCase):
     @override_settings(
         CACHES = {
-            'template_fragments': {
+            'default_fragment_cache': {
                 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
             }
         })
