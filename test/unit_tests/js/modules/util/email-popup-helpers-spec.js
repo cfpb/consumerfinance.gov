@@ -56,7 +56,7 @@ describe( 'email-popup-helpers', () => {
       /* To avoid being off by a millisecond, we need to convert to a decimal
          and check using toBeCloseTo matcher instead of toBe. */
       const valueStore = localStorage.getItem( 'testPopupPopupShowNext' );
-      expect( Number.parseInt( valueStore ) / 10000 )
+      expect( Number.parseInt( valueStore, 10 ) / 10000 )
         .toBeCloseTo( testDate / 10000 );
     } );
   } );
