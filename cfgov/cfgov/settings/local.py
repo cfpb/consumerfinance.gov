@@ -51,29 +51,20 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
 MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
 # Disable caching when working locally.
-CACHES = {
+CACHES.update({
     k: {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'TIMEOUT': 0,
     } for k in (
-        'default', 'eregs_longterm_cache', 'api_cache',
-        'post_preview', 'default_fragment_cache'
+        'default', 'eregs_longterm_cache', 'api_cache', 'post_preview'
     )
-}
+})
 
 # Optionally enable cache for post_preview
 if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
     CACHES['post_preview'] = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'post_preview_cache',
-        'TIMEOUT': None,
-    }
-
-# Optionally enable cache for general template fragments, including mega menu
-if os.environ.get('ENABLE_DEFAULT_FRAGMENT_CACHE'):
-    CACHES['default_fragment_cache'] = {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'default_fragment_cache',
         'TIMEOUT': None,
     }
 

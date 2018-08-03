@@ -84,7 +84,7 @@ EMAIL_HOST = os.getenv('EMAIL_HOST')
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-CACHES = {
+CACHES.update({
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/eregs_cache',
@@ -109,13 +109,8 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'post_preview_cache',
         'TIMEOUT': None,
-    },
-    'default_fragment_cache': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'default_fragment_cache',
-        'TIMEOUT': None,
     }
-}
+})
 
 # ALLOWED_HOSTS should be defined as a JSON list in the ALLOWED_HOSTS
 # environment variable.
