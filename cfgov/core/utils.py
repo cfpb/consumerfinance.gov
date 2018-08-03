@@ -1,7 +1,6 @@
 import re
 from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
-from django.conf import settings
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
 
@@ -65,32 +64,6 @@ def format_file_size(bytecount, suffix='B'):
             return "{:1.0f} {}{}".format(bytecount, unit, suffix)
         bytecount /= 1024.0
     return "{:.0f} {}{}".format(bytecount, 'T', suffix)
-
-
-def parse_links(html):
-    """Process all links in given html and replace them if markup is added."""
-    soup = BeautifulSoup(html, 'html.parser')
-    link_tags = get_link_tags(soup)
-    for tag in link_tags:
-        original_link = str(tag)
-        link_with_markup = add_link_markup(tag)
-        if link_with_markup:
-            html = html.replace(original_link, link_with_markup)
-    return html
-
-
-def should_parse_links(request_path, content_type):
-    """ Do not parse links for paths in the blacklist,
-    or for content that is not html
-    """
-    for path in settings.PARSE_LINKS_BLACKLIST:
-        if request_path.startswith(path):
-            return False
-
-    if settings.DEFAULT_CONTENT_TYPE not in content_type:
-        return False
-
-    return True
 
 
 def get_link_tags(soup):

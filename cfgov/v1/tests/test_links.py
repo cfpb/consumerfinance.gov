@@ -7,46 +7,9 @@ from wagtail.wagtailcore.models import Site
 
 from bs4 import BeautifulSoup
 
-from core.utils import parse_links
 from v1 import get_protected_url
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages.helpers import save_new_page
-
-
-class ParseLinksTests(TestCase):
-    def test_relative_link_remains_unmodified(self):
-        self.assertEqual(
-            parse_links('<a href="/something">text</a>'),
-            '<a href="/something">text</a>'
-        )
-
-    def test_external_link(self):
-        link = '<a href="https://wwww.google.com">external link</a>'
-        output = parse_links(link)
-        self.assertIn('external-site', output)
-        self.assertIn('cf-icon-svg', output)
-
-    def test_cfpb_link(self):
-        link = '<a href="https://www.consumerfinance.gov/foo">cfpb link</a>'
-        output = parse_links(link)
-        self.assertNotIn('external-site', output)
-        self.assertNotIn('cf-icon-svg', output)
-
-    def test_gov_link(self):
-        link = '<a href="https://www.fdic.gov/bar">gov link</a>'
-        output = parse_links(link)
-        self.assertNotIn('external-site', output)
-        self.assertIn('cf-icon-svg', output)
-
-    def test_pdf_link_gets_download_icon(self):
-        link = '<a href="/something.pdf">link</a>'
-        parsed = parse_links(link)
-        self.assertIn('cf-icon-svg', parsed)
-
-    def test_different_case_pdf_link_gets_download_icon(self):
-        link = '<a href="/something.PDF">link</a>'
-        parsed = parse_links(link)
-        self.assertIn('cf-icon-svg', parsed)
 
 
 class GetProtectedUrlTestCase(TestCase):
