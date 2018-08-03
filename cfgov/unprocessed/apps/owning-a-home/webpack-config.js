@@ -34,9 +34,9 @@ const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
 
-    /* The below regex will capture all node modules that start with `cf`
-      or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/. */
-    exclude: /node_modules\/(?:cf.+|atomic-component)/,
+    /* The below regex will capture all node modules that start with `cf-`.
+       Regex test: https://regex101.com/r/zizz3V/4. */
+    exclude: /node_modules\/(?:cf\-.+)/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
