@@ -24,6 +24,7 @@ from ask_cfpb.views import (
 )
 from core.views import ExternalURLNoticeView
 from legacy.views import token_provider
+from legacy.views.complaint import ComplaintLandingView
 from legacy.views.housing_counselor import (
     HousingCounselorPDFView, HousingCounselorView
 )
@@ -221,8 +222,9 @@ urlpatterns = [
         namespace='retirement_api'
     )),
 
-    url(r'^data-research/consumer-complaints/',
-        include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+    url(r'^data-research/consumer-complaints/$',
+        ComplaintLandingView.as_view(),
+        name='complaint-landing'),
 
     # CCDB5-API
     flagged_url('CCDB5_RELEASE',
