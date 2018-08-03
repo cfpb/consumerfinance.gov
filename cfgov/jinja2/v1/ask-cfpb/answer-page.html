@@ -113,7 +113,7 @@
             <h3 >
                 Explore related resources
             </h3>
-            {{ parse_links(page.answer_base.next_step.text) | safe }}
+            {{ page.answer_base.next_step.text | safe }}
         </div>
     {% endif %}
     {% if page.sidebar_panels %}

@@ -71,7 +71,7 @@
         {% else %}
             {% for block in value.content %}
                 {% if 'paragraph' in block.block_type %}
-                    {{ parse_links(block.value) |safe}}
+                    {{ block.value | safe }}
                 {% else %}
                     {{ render_stream_child(block) }}
                 {% endif %}

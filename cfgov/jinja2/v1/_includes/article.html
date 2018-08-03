@@ -58,7 +58,7 @@
     <div class="post_body">
         {% for block in page.content %}
             {% if block.block_type == 'content' %}
-                {{ parse_links(block.value) | safe }}
+                {{ block.value | safe }}
             {% elif block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
             {% elif block.block_type == 'full_width_text' %}

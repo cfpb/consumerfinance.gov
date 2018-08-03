@@ -116,6 +116,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'core.middleware.ParseLinksMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
@@ -239,10 +240,6 @@ EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
                           r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
                           r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
                           )
-EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
-NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
-FILES_LINK_PATTERN = r'https?:\/\/files\.consumerfinance.gov\/f\/\S+\.[a-z]+'
-DOWNLOAD_LINK_PATTERN = r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 
 # Wagtail settings
 
@@ -703,7 +700,6 @@ REGULATIONS_REFERENCE_MAPPING = [
     ),
 ]
 
-
 # Optionally enable cache for general template fragments
 if os.environ.get('ENABLE_DEFAULT_FRAGMENT_CACHE'):
     CACHES = {
@@ -720,3 +716,8 @@ else:
             'TIMEOUT': 0,
         } 
     }
+
+PARSE_LINKS_BLACKLIST = [
+    '/admin/',
+    '/django-admin/'
+]
