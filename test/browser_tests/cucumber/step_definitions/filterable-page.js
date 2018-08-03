@@ -9,9 +9,6 @@ When( /I do not select a filter/, async function() {
 } );
 
 Then( 'I should not see filtered results', function() {
-  const notification = element(
-    by.css( '.o-filterable-list-controls .m-notification' )
-  );
-
-  return expect( notification ).to.not.contain( 'filtered results' );
+  () => element( by.css( '.o-filterable-list-controls .m-notification' ) )
+    .isDisplayed().then( displayed => expect( displayed ).to.be.false );
 } );
