@@ -1,25 +1,22 @@
 <div data-qa-hook="expandable"
      class="o-expandable
-            o-expandable__border
+            o-expandable__padded
             o-expandable__background
+            o-expandable__border
             inline-interpretation">
 
     <button class="o-expandable_header o-expandable_target">
-        <span class="o-expandable_header-left
-                     o-expandable_label">
+        <span class="h4 o-expandable_header-left o-expandable_label">
             Official interpretation {% if section_title %}of {{ section_title }}{% endif %}
         </span>
-        <span class="o-expandable_header-right
-                     o-expandable_link">
-            <span class="o-expandable_cue
-                         o-expandable_cue-open">
+        <span class="o-expandable_header-right o-expandable_link">
+            <span class="o-expandable_cue o-expandable_cue-open">
                 <span class="u-visually-hidden-on-mobile">
                     {{ _('Show') }}
                 </span>
                 {{ svg_icon( 'plus-round' ) }}
             </span>
-            <span class="o-expandable_cue
-                         o-expandable_cue-close">
+            <span class="o-expandable_cue o-expandable_cue-close">
                 <span class="u-visually-hidden-on-mobile">
                     {{ _('Hide') }}
                 </span>
@@ -27,6 +24,7 @@
             </span>
         </span>
     </button>
+
     <div class="o-expandable_content">
         {{ contents }}
 
