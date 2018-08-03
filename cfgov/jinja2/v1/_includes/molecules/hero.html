@@ -69,7 +69,7 @@
         <div class="m-hero_text">
             <h1 class="m-hero_heading">{{ value.heading | safe }}</h1>
             <div class="m-hero_subhead">
-                {{ parse_links( value.body ) | safe }}
+                {{ value.body | safe }}
             </div>
         </div>
         <div class="m-hero_image-wrapper">

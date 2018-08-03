@@ -19,7 +19,7 @@
                 {{ render_stream_child(block) | safe }}
         {% elif 'content' in block_type %}
             <div class="m-full-width-text">
-                {{ parse_links(block.value) | safe }}
+                {{ block.value | safe }}
             </div>
         {% elif 'table' in block_type %}
             <div class="m-full-width-text">

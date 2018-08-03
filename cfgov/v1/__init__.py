@@ -1,13 +1,9 @@
 from __future__ import absolute_import
 
-import os
-import re
 import unicodedata
 from six import text_type as unicode
 from six.moves import html_parser as HTMLParser
-from six.moves.urllib.parse import parse_qs, urlparse
 
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
@@ -16,13 +12,9 @@ from django.utils.module_loading import import_string
 from django.utils.timezone import template_localtime
 from django.utils.translation import ugettext, ungettext
 
-from wagtail.wagtailcore.rich_text import RichText, expand_db_html
-
-from bs4 import BeautifulSoup, NavigableString
 from flags.template_functions import flag_disabled, flag_enabled
 from jinja2 import Markup, contextfunction
 
-from core.templatetags.svg_icon import svg_icon
 from core.utils import signed_redirect, unsigned_redirect
 from sheerlike import environment as sheerlike_environment
 from v1.fragment_cache_extension import FragmentCacheExtension
@@ -75,7 +67,6 @@ def environment(**options):
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
         'is_report': ref.is_report,
-        'parse_links': parse_links,
         'cfgovpage_objects': CFGOVPage.objects,
         'signed_redirect': signed_redirect,
         'unsigned_redirect': unsigned_redirect,
@@ -94,92 +85,6 @@ def environment(**options):
         'slugify': slugify,
     })
     return env
-
-
-def parse_links(value):
-    if isinstance(value, RichText):
-        soup = BeautifulSoup(expand_db_html(value.source), 'html.parser')
-    else:
-        soup = BeautifulSoup(expand_db_html(value), 'html.parser')
-
-    # This removes style tags <style>
-    for s in soup('style'):
-        s.decompose()
-
-    # This removes all inline style attr's
-    for tag in soup.recursiveChildGenerator():
-        try:
-            del tag['style']
-        except TypeError:
-            # 'NavigableString' object has does not have attr's
-            pass
-
-    # This adds the link markup
-    link_tags = get_link_tags(soup)
-    add_link_markup(link_tags)
-
-    return soup
-
-
-def get_link_tags(soup):
-    tags = []
-    for a in soup.find_all('a', href=True):
-        if not is_image_tag(a):
-            tags.append(a)
-    return tags
-
-
-def is_image_tag(tag):
-    for child in tag.children:
-        if child.name in ['img', 'svg']:
-            return True
-    return False
-
-
-EXTERNAL_LINK_PATTERN = re.compile(settings.EXTERNAL_LINK_PATTERN)
-NONCFPB_LINK_PATTERN = re.compile(settings.NONCFPB_LINK_PATTERN)
-FILES_LINK_PATTERN = re.compile(settings.FILES_LINK_PATTERN)
-DOWNLOAD_LINK_PATTERN = re.compile(settings.DOWNLOAD_LINK_PATTERN)
-LINK_ICON_CLASSES = os.environ.get('LINK_ICON_CLASSES',
-                                   'a-link a-link__icon')
-LINK_ICON_TEXT_CLASSES = os.environ.get('LINK_ICON_TEXT_CLASSES',
-                                        'a-link_text')
-
-
-def add_link_markup(tags):
-
-    for tag in tags:
-        icon = False
-        if not tag.attrs.get('class', None):
-            tag.attrs.update({'class': []})
-        if tag['href'].startswith('/external-site/?'):
-            components = urlparse(tag['href'])
-            arguments = parse_qs(components.query)
-            if 'ext_url' in arguments:
-                external_url = arguments['ext_url'][0]
-                tag['href'] = signed_redirect(external_url)
-
-        elif NONCFPB_LINK_PATTERN.match(tag['href']):
-            # Sets the icon to indicate you're leaving consumerfinance.gov
-            tag.attrs['class'].append(LINK_ICON_CLASSES)
-
-            if EXTERNAL_LINK_PATTERN.match(tag['href']):
-                tag['href'] = signed_redirect(tag['href'])
-
-            icon = 'external-link'
-        elif DOWNLOAD_LINK_PATTERN.search(tag['href']):
-            # Sets the icon to indicate you're downloading a file
-            tag.attrs['class'].append(LINK_ICON_CLASSES)
-            icon = 'download'
-        if icon:
-            # Wraps the link text in a span that provides the underline
-            contents = tag.contents
-            span = BeautifulSoup('', 'html.parser').new_tag('span')
-            span['class'] = LINK_ICON_TEXT_CLASSES
-            span.contents = contents
-            tag.contents = [span, NavigableString(' ')]
-            # Appends the SVG icon
-            tag.contents.append(BeautifulSoup(svg_icon(icon), 'html.parser'))
 
 
 @contextfunction
