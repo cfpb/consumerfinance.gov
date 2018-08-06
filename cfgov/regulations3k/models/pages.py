@@ -6,6 +6,7 @@ from functools import partial
 
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from django.utils.functional import cached_property
@@ -18,6 +19,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 
+import requests
 from jinja2 import Markup
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
@@ -130,7 +132,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             context)
 
 
-class RegulationLandingPage(CFGOVPage):
+class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
     """Landing page for eregs."""
 
     header = StreamField([
@@ -163,6 +165,25 @@ class RegulationLandingPage(CFGOVPage):
             'get_secondary_nav_items': get_reg_nav_items,
         })
         return context
+
+    @route(r'^recent-notices-json/$', name='recent_notices')
+    def recent_notices(self, request):
+        fr_api_url = 'https://www.federalregister.gov/api/v1/'
+        fr_documents_url = fr_api_url + 'documents.json'
+        params = {
+            'fields_list': ['html_url', 'title'],
+            'per_page': '10',
+            'order': 'newest',
+            'conditions[agencies][]': 'consumer-financial-protection-bureau',
+            'conditions[type][]': 'RULE',
+            'conditions[cfr][title]': '12',
+        }
+        response = requests.get(fr_documents_url, params=params)
+
+        if response.status_code != 200:
+            return HttpResponse(status=response.status_code)
+
+        return JsonResponse(response.json())
 
 
 class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
