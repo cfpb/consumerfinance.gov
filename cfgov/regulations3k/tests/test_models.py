@@ -377,6 +377,30 @@ class RegModelTests(DjangoTestCase):
             ]
         )
 
+    @mock.patch('regulations3k.models.pages.requests.get')
+    def test_landing_page_recent_notices(self, mock_requests_get):
+        mock_response = mock.Mock()
+        mock_response.json.return_value = {'some': 'json'}
+        mock_response.status_code = 200
+        mock_requests_get.return_value = mock_response
+        response = self.client.get(
+            self.landing_page.url +
+            self.landing_page.reverse_subpage('recent_notices')
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, '{"some": "json"}')
+
+    @mock.patch('regulations3k.models.pages.requests.get')
+    def test_landing_page_recent_notices_error(self, mock_requests_get):
+        mock_response = mock.Mock()
+        mock_response.status_code = 500
+        mock_requests_get.return_value = mock_response
+        response = self.client.get(
+            self.landing_page.url +
+            self.landing_page.reverse_subpage('recent_notices')
+        )
+        self.assertEqual(response.status_code, 500)
+
 
 class SectionNavTests(unittest.TestCase):
 
