@@ -553,6 +553,7 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'files.consumerfinance.gov',
                    's3.amazonaws.com',
+                   'public.govdelivery.com',
                    'api.iperceptions.com')
 
 # Feature flags
@@ -714,7 +715,7 @@ else:
         'default_fragment_cache': {
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
             'TIMEOUT': 0,
-        } 
+        }
     }
 
 PARSE_LINKS_BLACKLIST = [
