@@ -129,10 +129,17 @@ if ('CSP_ENFORCE' in os.environ):
 
 ROOT_URLCONF = 'cfgov.urls'
 
+# We support two different template engines: Django templates and Jinja2
+# templates. See https://docs.djangoproject.com/en/dev/topics/templates/
+# for an overview of how Django templates work.
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [PROJECT_ROOT.child('templates')],
+        # Look for Django templates in these directories.
+        'DIRS': [
+            PROJECT_ROOT.child('templates'),
+        ],
+        # Look for Django templates in each app under a templates subdirectory.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -146,22 +153,31 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        # Look for Jinja2 templates in these directories.
         'DIRS': [
             V1_TEMPLATE_ROOT,
             V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
             PROJECT_ROOT.child('static_built'),
         ],
+        # Look for Jinja2 templates in each app under a jinja2 subdirectory.
         'APP_DIRS': True,
         'OPTIONS': {
-            'environment': 'v1.environment',
+            'environment': 'v1.jinja2_environment.environment',
             'extensions': [
-                'core.jinja2tags.filters',
-                'regulations3k.jinja2tags.regulations',
-                'v1.jinja2tags.filters',
+                'jinja2.ext.do',
+                'jinja2.ext.i18n',
+                'jinja2.ext.loopcontrols',
+
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
+
+                'core.jinja2tags.filters',
+                'regulations3k.jinja2tags.regulations',
+                'v1.jinja2tags.datetimes_extension',
+                'v1.jinja2tags.fragment_cache_extension',
+                'v1.jinja2tags.v1_extension',
             ],
         }
     },

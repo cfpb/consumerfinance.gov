@@ -12,8 +12,6 @@ from jinja2 import Environment
 from jinja2.runtime import Context
 
 from .middleware import get_request
-from .query import when
-from .templates import get_date_obj, get_date_string
 
 
 default_app_config = 'sheerlike.apps.SheerlikeConfig'

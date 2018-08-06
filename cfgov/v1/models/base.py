@@ -27,9 +27,10 @@ from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
-from v1 import blocks as v1_blocks, get_protected_url
+from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.snippets import ReusableText
+from v1.routing import get_protected_url
 from v1.util import ref
 from v1.util.util import validate_social_sharing_image
 
