@@ -26,8 +26,12 @@ def should_parse_links(request_path, content_type):
     return True
 
 
-def parse_links(html):
+def parse_links(html, encoding=None):
     """Process all links in given html and replace them if markup is added."""
+    if encoding is None:
+        encoding = settings.DEFAULT_CHARSET
+    html = html.decode(encoding)
+
     soup = BeautifulSoup(html, 'html.parser')
     link_tags = get_link_tags(soup)
     for tag in link_tags:
@@ -35,11 +39,15 @@ def parse_links(html):
         link_with_markup = add_link_markup(tag)
         if link_with_markup:
             html = html.replace(original_link, link_with_markup)
-    return html
+
+    return html.encode(encoding)
 
 
 class ParseLinksMiddleware(object):
     def process_response(self, request, response):
         if should_parse_links(request.path, response['content-type']):
-            response.content = parse_links(response.content)
+            response.content = parse_links(
+                response.content,
+                encoding=response.charset
+            )
         return response
