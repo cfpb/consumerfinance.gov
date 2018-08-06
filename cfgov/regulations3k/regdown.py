@@ -54,7 +54,7 @@ from __future__ import unicode_literals
 
 import re
 
-from markdown import Markdown, util
+from markdown import markdown, util
 from markdown.blockprocessors import BlockProcessor, ParagraphProcessor
 from markdown.extensions import Extension
 from markdown.inlinepatterns import DoubleTagPattern, Pattern, SimpleTagPattern
@@ -286,7 +286,8 @@ def regdown(text, **kwargs):
     """ Regdown convenience function
     Takes text and parses it with the RegulationsExtention configured with
     the given keyword arguments. """
-    md = Markdown(
+    return markdown(
+        text,
         extensions=[
             'markdown.extensions.tables',
             RegulationsExtension(**kwargs),
@@ -294,8 +295,6 @@ def regdown(text, **kwargs):
         ],
         **kwargs
     )
-    md.stripTopLevelTags = False
-    return md.convert(text)
 
 
 def extract_labeled_paragraph(label, text, exact=True):
