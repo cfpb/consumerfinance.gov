@@ -54,7 +54,7 @@ from __future__ import unicode_literals
 
 import re
 
-from markdown import Markdown, markdown, util
+from markdown import Markdown, util
 from markdown.blockprocessors import BlockProcessor, ParagraphProcessor
 from markdown.extensions import Extension
 from markdown.inlinepatterns import DoubleTagPattern, Pattern, SimpleTagPattern
@@ -296,7 +296,6 @@ def regdown(text, **kwargs):
     )
     md.stripTopLevelTags = False
     return md.convert(text)
-
 
 
 def extract_labeled_paragraph(label, text, exact=True):
