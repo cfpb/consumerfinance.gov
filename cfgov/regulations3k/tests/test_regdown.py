@@ -101,7 +101,7 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             '#### 30(b) Business Day'
         )
         self.assertIn(
-            '<div class="regdown-block level-0" id="30-b-Interp"></div>',
+            '<div class="regdown-block level-2" id="30-b-Interp"></div>',
             regdown(text)
         )
 
