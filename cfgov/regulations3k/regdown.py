@@ -196,9 +196,9 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             # class, we count the number of dashes in the label to determine
             # how deeply nested the paragraph is. Inline interps have special
             # prefixes that are removed before counting the dashes.
-            # e.g. 6-a-Interp-1 becomes -1 and gets a `level-1` class
-            # e.g. 12-b-Interp-2-i becomes -2-i and gets a `level-2` class
-            label = re.sub('^(\w+\-)+interp', '', label, flags=re.IGNORECASE)
+            # e.g. 6-a-Interp-1 becomes 1 and gets a `level-0` class
+            # e.g. 12-b-Interp-2-i becomes 2-i and gets a `level-1` class
+            label = re.sub('^(\w+\-)+interp\-', '', label, flags=re.IGNORECASE)
 
             # Appendices also have special prefixes that need to be stripped.
             # e.g. A-1-a becomes a and gets a `level-0` class
