@@ -6,11 +6,21 @@ import unittest
 import markdown
 
 from regulations3k.regdown import (
-    DEFAULT_RENDER_BLOCK_REFERENCE, extract_labeled_paragraph, regdown
+    DEFAULT_CONTENTS_RESOLVER, DEFAULT_RENDER_BLOCK_REFERENCE,
+    DEFAULT_URL_RESOLVER, RegulationsExtension, extract_labeled_paragraph,
+    regdown
 )
 
 
 class RegulationsExtensionTestCase(unittest.TestCase):
+
+    def setUp(self):
+        # Ensure that each test gets the default RegsExtension config
+        RegulationsExtension.config['url_resolver'][0] = DEFAULT_URL_RESOLVER
+        RegulationsExtension.config['contents_resolver'][0] = \
+            DEFAULT_CONTENTS_RESOLVER
+        RegulationsExtension.config['render_block_reference'][0] = \
+            DEFAULT_RENDER_BLOCK_REFERENCE
 
     def test_label(self):
         text = '{my-label} This is a paragraph with a label.'
