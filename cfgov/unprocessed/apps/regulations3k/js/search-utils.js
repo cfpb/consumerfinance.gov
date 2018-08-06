@@ -1,5 +1,3 @@
-import { ajaxRequest as xhr } from '../../../js/modules/util/ajax-request';
-
 /**
  * Get the search form field's values.
  *
@@ -84,20 +82,6 @@ function clearCheckbox( el ) {
 }
 
 /**
- * Fetches search results partial
- *
- * @param {String} url URL's of search results.
- * @param {Function} cb Function called with the HTML search results partial.
- * @returns {String} Encoded URL.
- */
-function fetchSearchResults( url, cb ) {
-  return xhr( 'GET', url, {
-    success: data => cb( null, data ),
-    fail: err => cb( err )
-  } );
-}
-
-/**
  * Update the page's URL via replaceState
  *
  * @param {String} base URL's base.
@@ -143,6 +127,5 @@ module.exports = {
   hideLoading: hideLoading,
   clearCheckbox: clearCheckbox,
   handleError: handleError,
-  fetchSearchResults: fetchSearchResults,
   updateUrl: updateUrl
 };

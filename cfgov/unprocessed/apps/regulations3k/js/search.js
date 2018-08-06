@@ -1,6 +1,7 @@
 import * as behavior from '../../../js/modules/util/behavior';
 import * as utils from './search-utils';
 import { closest, queryOne as find } from '../../../js/modules/util/dom-traverse';
+import { fetch } from './regs3k-utils';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
 let searchRequest = {};
@@ -108,7 +109,7 @@ function handleFilter( event ) {
   // Update the filter query params in the URL
   utils.updateUrl( baseUrl, searchParams );
   utils.showLoading( searchContainer );
-  searchRequest = utils.fetchSearchResults( searchUrl, ( err, data ) => {
+  searchRequest = fetch( searchUrl, ( err, data ) => {
     utils.hideLoading( searchContainer );
     if ( err !== null ) {
       // TODO: Add message banner above search results

@@ -23,9 +23,11 @@ const init = () => {
       console.error( 'Error during service worker registration:', err );
     } );
   }
-  navHeader.classList.add( 'o-expandable_target__collapsed' );
-  navItems.classList.add( 'u-hide-on-stacked' );
-  bindSecondaryNav();
+  if ( navHeader ) {
+    navHeader.classList.add( 'o-expandable_target__collapsed' );
+    navItems.classList.add( 'u-hide-on-stacked' );
+    bindSecondaryNav();
+  }
 };
 
 Expandable.init();
