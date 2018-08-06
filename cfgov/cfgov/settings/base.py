@@ -82,6 +82,8 @@ INSTALLED_APPS = (
     'jobmanager',
     'wellbeing',
     'search',
+    'regulations3k',
+    'treemodeladmin',
 )
 
 OPTIONAL_APPS = [
@@ -95,7 +97,6 @@ OPTIONAL_APPS = [
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
     {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
-    {'import': 'regulations3k', 'apps': ('regulations3k', 'treemodeladmin')},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
     {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', 'mptt', 'haystack')},
