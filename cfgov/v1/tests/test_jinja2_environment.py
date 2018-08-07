@@ -2,7 +2,7 @@ import os.path
 
 from django.template import engines
 from django.template.loader import get_template
-from django.test import override_settings, TestCase
+from django.test import TestCase, override_settings
 
 
 @override_settings(TEMPLATES=[{

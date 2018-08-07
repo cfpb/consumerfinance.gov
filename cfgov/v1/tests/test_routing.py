@@ -7,8 +7,8 @@ from wagtail.wagtailcore.models import Site
 
 from bs4 import BeautifulSoup
 
-from v1.routing import get_protected_url
 from v1.models import CFGOVPage
+from v1.routing import get_protected_url
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 

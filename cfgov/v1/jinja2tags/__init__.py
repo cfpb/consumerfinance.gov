@@ -5,12 +5,12 @@ from django.utils.module_loading import import_string
 from jinja2 import Markup, contextfunction
 from jinja2.ext import Extension
 
-from .datetimes import DatetimesExtension
-from .fragment_cache import FragmentCacheExtension
+from v1.jinja2tags.datetimes import DatetimesExtension
+from v1.jinja2tags.fragment_cache import FragmentCacheExtension
 from v1.models import CFGOVRendition
+from v1.routing import get_protected_url
 from v1.templatetags.email_popup import email_popup
 from v1.templatetags.mega_menu import get_menu_items
-from v1.routing import get_protected_url
 from v1.util import ref
 from v1.util.util import get_unique_id
 

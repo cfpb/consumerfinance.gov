@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.utils.translation import ugettext, ungettext
 
-from jinja2 import Environment, Markup
+from jinja2 import Environment
 
 
 class RelativeTemplatePathEnvironment(Environment):
@@ -84,4 +84,3 @@ def environment(**options):
     })
 
     return env
-
