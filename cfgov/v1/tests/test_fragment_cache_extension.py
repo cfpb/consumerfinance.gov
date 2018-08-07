@@ -13,13 +13,8 @@ from v1.tests.wagtail_pages.helpers import (
 )
 
 
-django_client = Client()
-cache = caches['post_preview']
-
 class TestFragmentCacheExtension(TestCase):
-
-    @patch.object(cache, 'add')
-    def test_cache_gets_called_when_visiting_filterable_page(self, add_to_cache):
+    def test_cache_gets_called_when_visiting_filterable_page(self):
         # Create a filterable page
         page = BrowseFilterablePage(
             title='test browse filterable page',
@@ -39,7 +34,9 @@ class TestFragmentCacheExtension(TestCase):
         )
         page.add_child(instance=child_page)
 
-        # Navigate to the filterable page so that `post-preview.html` loads
-        django_client.get('/test-browse-filterable-page/')
+        cache = caches['post_preview']
+        with patch.object(cache, 'add') as add_to_cache:
+            # Navigate to the filterable page so that `post-preview.html` loads
+            self.client.get('/test-browse-filterable-page/')
 
-        self.assertTrue(add_to_cache.called)
+            self.assertTrue(add_to_cache.called)
