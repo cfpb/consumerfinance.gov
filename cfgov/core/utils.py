@@ -1,4 +1,5 @@
 import re
+from six import text_type as str
 from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
