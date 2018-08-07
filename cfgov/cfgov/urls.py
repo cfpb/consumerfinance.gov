@@ -7,6 +7,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.defaults import page_not_found
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.contrib.wagtailsitemaps.views import sitemap
@@ -404,10 +405,9 @@ urlpatterns = [
 
     flagged_url(
         'REGULATIONS3K',
-        r'^regulations/$',
+        r'^policy-compliance/rulemaking/regulations/',
         lambda request: ServeView.as_view()(request, request.path),
-        fallback=RedirectView.as_view(
-            url='/policy-compliance/rulemaking/', permanent=False),
+        fallback=page_not_found,
         name='regulations'
     ),
     flagged_url(
