@@ -93,7 +93,7 @@
             </div>
         </div>
         {% cache post.post_preview_cache_key, 'post_preview' %}
-        {% set post_url = get_protected_url(post) %}
+        {% set post_url = pageurl(post) %}
         {% if 'EventPage' in post.specific_class.__name__ %}
             {% set event = post.specific %}
             {% if event.start_dt %}
