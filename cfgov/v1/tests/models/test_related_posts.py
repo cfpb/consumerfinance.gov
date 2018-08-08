@@ -1,6 +1,8 @@
 import datetime as dt
 
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
+
+from wagtail.wagtailcore.models import Page, Site
 
 import mock
 
@@ -272,3 +274,44 @@ class RelatedPostsTestCase(TestCase):
         self.assertEqual(related_posts['Blog'][1], self.blog_child1)
         self.assertEqual(related_posts['Events'][0], self.events_child1)
         self.assertEqual(related_posts['Newsroom'][0], self.newsroom_child1)
+
+
+class TestGenerateViewMoreUrl(TestCase):
+    def setUp(self):
+        self.request = RequestFactory().get('/')
+        self.root = Site.objects.first().root_page
+
+    def _create_activity_log_page(self):
+        activity_log = CFGOVPage(title='Activity log', slug='activity-log')
+        self.root.add_child(instance=activity_log)
+
+    def test_no_activity_log_page_raises_does_not_exist(self):
+        page = CFGOVPage(title='test')
+        self.root.add_child(instance=page)
+
+        with self.assertRaises(Page.DoesNotExist):
+            page.generate_view_more_url(self.request)
+
+    def test_no_tags_url_has_no_query_string(self):
+        self._create_activity_log_page()
+
+        page = CFGOVPage(title='test')
+        self.root.add_child(instance=page)
+
+        self.assertEqual(
+            page.generate_view_more_url(self.request),
+            '/activity-log/'
+        )
+
+    def test_tags_get_appended_as_query_string(self):
+        self._create_activity_log_page()
+
+        page = CFGOVPage(title='test')
+        self.root.add_child(instance=page)
+        page.tags.add('bar')
+        page.tags.add('foo')
+
+        self.assertEqual(
+            page.generate_view_more_url(self.request),
+            '/activity-log/?topics=bar&topics=foo'
+        )
