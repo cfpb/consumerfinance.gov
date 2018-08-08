@@ -12,6 +12,11 @@ django-haystack==2.6.0
 django-localflavor==1.1
 django-overextends==0.4.1
 django-storages==1.1.8
+# django-taggit 0.23.0 requires Django 1.11. Normally django-taggit is pulled
+# in by Wagtail's setup.py, but Wagtail 1.13 specifies >0.20,<1.0, which
+# unfortunately includes this version. This line can be removed once we are
+# on Django 1.11.
+django-taggit==0.22.2
 django-treebeard==3.0
 django-watchman==0.13.1
 edgegrid-python==1.0.10
