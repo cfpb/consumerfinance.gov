@@ -1,11 +1,10 @@
 from datetime import date
 
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from django.utils import timezone
 
-from wagtail.wagtailcore.models import Page, Site
+from wagtail.wagtailcore.models import Page
 
-from mock import Mock
 from model_mommy import mommy
 from scripts._atomic_helpers import job_listing_list
 
@@ -42,13 +41,17 @@ def make_job_listing_page(title, close_date=None, grades=[], **kwargs):
 
 class JobListingListTestCase(HtmlMixin, TestCase):
     def setUp(self):
-        self.request = Mock(site=Site.objects.get(is_default_site=True))
+        self.request = RequestFactory().get('/')
+        self.more_jobs_page = Page.objects.first()
+
+    def _render_block_to_html(self):
+        block = JobListingList()
+        return block.render(block.to_python({
+            'more_jobs_page': self.more_jobs_page.pk,
+        }))
 
     def test_html_has_aside(self):
-        block = JobListingList()
-        html = block.render(block.to_python({}))
-
-        self.assertHtmlRegexpMatches(html, (
+        self.assertHtmlRegexpMatches(self._render_block_to_html(), (
             '^<aside class="m-jobs-list" data-qa-hook="openings-section">'
             '.*'
             '</aside>$'
@@ -61,13 +64,7 @@ class JobListingListTestCase(HtmlMixin, TestCase):
             close_date=date(2099, 8, 5)
         )
 
-        block = JobListingList()
-        html = block.render(
-            block.to_python({}),
-            context={'request': self.request}
-        )
-
-        self.assertHtmlRegexpMatches(html, (
+        self.assertHtmlRegexpMatches(self._render_block_to_html(), (
             '<ul class="m-list m-list__unstyled m-list__links">.*</ul>'
         ))
 
@@ -83,13 +80,7 @@ class JobListingListTestCase(HtmlMixin, TestCase):
             close_date=date(2099, 4, 21)
         )
 
-        block = JobListingList()
-        html = block.render(
-            block.to_python({}),
-            context={'request': self.request}
-        )
-
-        self.assertHtmlRegexpMatches(html, (
+        self.assertHtmlRegexpMatches(self._render_block_to_html(), (
             '<li class="m-list_item">'
             '<a class="m-list_link" href=".*">Assistant' +
             '<span class="m-list_link-subtext">Closing' +
