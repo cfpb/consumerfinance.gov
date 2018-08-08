@@ -655,7 +655,7 @@ FLAGS = {
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': {'environment is': 'production'},
 
-    'REGULATIONS3K': {'environment is': 'build'},
+    'REGULATIONS3K': {},
 
     'LEGACY_HUD_API': {'environment is': 'production'},
 
