@@ -8,7 +8,6 @@ from jinja2.ext import Extension
 from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
 from v1.models import CFGOVRendition
-from v1.routing import get_protected_url
 from v1.templatetags.email_popup import email_popup
 from v1.templatetags.mega_menu import get_menu_items
 from v1.util import ref
@@ -95,7 +94,6 @@ class V1Extension(Extension):
             'email_popup': email_popup,
             'fcm_label': ref.fcm_label,
             'get_menu_items': get_menu_items,
-            'get_protected_url': get_protected_url,
             'get_snippets': get_snippets,
             'get_unique_id': get_unique_id,
             'image_alt_value': image_alt_value,

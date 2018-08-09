@@ -72,7 +72,7 @@
         <ul class="m-list m-list__links">
             {% if value.show_post_link and value.post %}
                 <li class="m-list_item">
-                    <a class="m-list_link" href="{{ get_protected_url(value.post) }}">
+                    <a class="m-list_link" href="{{ pageurl(value.post) }}">
                         {{ value.post_link_text }}
                     </a>
                 </li>
