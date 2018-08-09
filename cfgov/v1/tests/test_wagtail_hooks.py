@@ -7,9 +7,7 @@ from wagtail.wagtailcore.models import Site
 import mock
 
 from v1.models.menu_item import MenuItem
-from v1.wagtail_hooks import (
-    RelativePageLinkHandler, check_permissions, form_module_handlers
-)
+from v1.wagtail_hooks import check_permissions, form_module_handlers
 
 
 class TestCheckPermissions(TestCase):
@@ -119,53 +117,6 @@ class TestFormModuleHandlers(TestCase):
         mock_hasattr.return_value = True
         form_module_handlers(self.page, self.request, self.context)
         child.block.is_submitted.assert_called_with(self.request, 'name', 0)
-
-
-class TestRelativePageLinkHandler(TestCase):
-    def setUp(self):
-        self.default_site = Site.objects.get(is_default_site=True)
-
-    def test_nonexisting_page_returns_empty_link(self):
-        self.assertEqual(
-            RelativePageLinkHandler.expand_db_attributes(
-                attrs={'id': 0},
-                for_editor=False
-            ),
-            '<a>',
-        )
-
-    def test_page_not_in_site_root_returns_none_link(self):
-        self.assertEqual(
-            RelativePageLinkHandler.expand_db_attributes(
-                attrs={'id': 1},
-                for_editor=False
-            ),
-            '<a href="None">',
-        )
-
-    def check_page_renders_as_relative_link(self):
-        page = SimplePage(title='title', slug='slug', content='content')
-        self.default_site.root_page.add_child(instance=page)
-
-        self.assertEqual(
-            RelativePageLinkHandler.expand_db_attributes(
-                attrs={'id': page.pk},
-                for_editor=False
-            ),
-            '<a href="/slug/">',
-        )
-
-    def test_single_site_returns_relative_link(self):
-        self.assertEqual(Site.objects.count(), 1)
-        self.check_page_renders_as_relative_link()
-
-    def test_multiple_sites_still_returns_relative_link(self):
-        Site.objects.create(
-            hostname='other',
-            root_page=self.default_site.root_page,
-            is_default_site=False
-        )
-        self.check_page_renders_as_relative_link()
 
 
 class TestServeLatestDraftPage(TestCase):
