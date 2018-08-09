@@ -97,7 +97,7 @@
     {% if value.video and
           value.video.url and
           value.video.id %}
-        {% import 'macros/video-player.html' as video_player %}
+        {% import 'macros/video-player.html' as video_player with context %}
         {{ video_player.render(value) }}
     {% elif value.image %}
         <div class="o-featured-content-module_visual">
