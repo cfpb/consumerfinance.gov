@@ -1,4 +1,5 @@
 import datetime
+from six import string_types as basestring
 
 from django.utils.timezone import template_localtime
 
