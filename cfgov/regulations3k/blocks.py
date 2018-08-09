@@ -20,6 +20,9 @@ class RegulationsList(organisms.ModelBlock):
         help_text='Text to show on link to more regulations'
     )
 
+    def filter_queryset(self, qs, value):
+        return qs.live()
+
     def get_context(self, value, parent_context=None):
         context = super(RegulationsList, self).get_context(
             value, parent_context=parent_context

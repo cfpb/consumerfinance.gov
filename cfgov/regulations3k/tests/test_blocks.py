@@ -35,19 +35,35 @@ class RegulationsListTestCase(TestCase):
             letter_code='B',
             chapter='X'
         )
+        self.part_1003 = mommy.make(
+            Part,
+            part_number='1003',
+            title='Home Mortgage Disclosure',
+            letter_code='C',
+            chapter='X'
+        )
         self.effective_version = mommy.make(
             EffectiveVersion,
             effective_date=datetime.date(2014, 1, 18),
             part=self.part_1002
         )
-        self.reg_page = RegulationPage(
+        self.reg_page_1002 = RegulationPage(
             regulation=self.part_1002,
             title='Reg B',
-            slug='1002')
+            slug='1002'
+        )
+        self.reg_page_1003 = RegulationPage(
+            regulation=self.part_1003,
+            title='Reg C',
+            slug='1003',
+            live=False,
+        )
 
-        self.landing_page.add_child(instance=self.reg_page)
+        self.landing_page.add_child(instance=self.reg_page_1002)
+        self.landing_page.add_child(instance=self.reg_page_1003)
         self.landing_page.save_revision().publish()
-        self.reg_page.save_revision().publish()
+        self.reg_page_1002.save_revision().publish()
+        self.reg_page_1003.save_revision()
 
         self.more_regs_page = Page.objects.first()
 
@@ -58,6 +74,8 @@ class RegulationsListTestCase(TestCase):
         }))
         self.assertIn('Reg B', result)
         self.assertIn('/regulations/1002/', result)
+        self.assertNotIn('Reg C', result)
+        self.assertNotIn('/regulations/1003/', result)
 
     def test_regulations_full_width_text(self):
         self.landing_page.content = StreamValue(
