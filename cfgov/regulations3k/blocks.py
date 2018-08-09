@@ -6,7 +6,7 @@ from v1.atomic_elements import organisms
 
 class RegulationsList(organisms.ModelBlock):
     model = 'regulations3k.RegulationPage'
-    ordering = ('regulation')
+    ordering = 'title'
 
     heading = blocks.CharBlock(
         required=False,
