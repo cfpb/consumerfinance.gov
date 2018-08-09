@@ -6,7 +6,7 @@ from v1.atomic_elements import organisms
 
 class RegulationsList(organisms.ModelBlock):
     model = 'regulations3k.RegulationPage'
-    ordering = ('regulation')
+    ordering = 'title'
 
     heading = blocks.CharBlock(
         required=False,
@@ -19,6 +19,9 @@ class RegulationsList(organisms.ModelBlock):
         required=False,
         help_text='Text to show on link to more regulations'
     )
+
+    def filter_queryset(self, qs, value):
+        return qs.live()
 
     def get_context(self, value, parent_context=None):
         context = super(RegulationsList, self).get_context(
