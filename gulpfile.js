@@ -88,7 +88,7 @@ function requireAllDefaultTasks() {
   );
 
   // Define the test task, but don't run tests on production.
-  if ( envvars.NODE_ENV === 'development' ) {
+  if ( envvars.NODE_ENV !== 'production' ) {
     gulp.task( 'test',
       gulp.series(
         gulp.parallel(
