@@ -5,7 +5,7 @@
             o-expandable__border
             inline-interpretation">
 
-    <button class="o-expandable_header o-expandable_target">
+    <button class="o-expandable_header o-expandable_target"{% if section_title %} data-section="{{ section_title }}"{% endif %}>
         <span class="o-expandable_header-left o-expandable_label">
             Official interpretation {% if section_title %}of {{ section_title }}{% endif %}
         </span>
