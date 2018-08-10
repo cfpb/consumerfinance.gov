@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'wagtailinventory',
     'wagtailsharing',
     'flags',
+    'wagtailflags',
     'watchman',
     'haystack',
     'ask_cfpb',
