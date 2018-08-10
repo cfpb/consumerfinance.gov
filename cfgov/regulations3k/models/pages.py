@@ -242,7 +242,9 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         return list(self.section_query.all())
 
     def get_context(self, request, *args, **kwargs):
-        context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+        context = super(RegulationPage, self).get_context(
+            request, *args, **kwargs
+        )
         context.update({
             'get_secondary_nav_items': get_reg_nav_items,
             'regulation': self.regulation,
@@ -252,20 +254,13 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         return context
 
     def get_breadcrumbs(self, request, section=None):
-        landing_page = self.get_parent()
-        crumbs = [{
-            'href': landing_page.url,
-            'title': landing_page.title,
-        }]
+        crumbs = super(RegulationPage, self).get_breadcrumbs(request)
 
         if section is not None:
             crumbs = crumbs + [
                 {
                     'href': self.url,
                     'title': str(section.subpart.version.part),
-                },
-                {
-                    'title': section.subpart.title,
                 },
             ]
 

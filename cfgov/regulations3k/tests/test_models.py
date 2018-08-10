@@ -7,7 +7,9 @@ import unittest
 # from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.http import HttpRequest, QueryDict  # Http404, HttpResponse
-from django.test import TestCase as DjangoTestCase
+from django.test import RequestFactory, TestCase as DjangoTestCase
+
+from wagtail.wagtailcore.models import Site
 
 import mock
 from model_mommy import mommy
@@ -25,6 +27,9 @@ from regulations3k.models.pages import (
 class RegModelTests(DjangoTestCase):
     def setUp(self):
         from v1.models import HomePage
+        self.factory = RequestFactory()
+        self.site = Site.objects.get(is_default_site=True)
+
         self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.landing_page = RegulationLandingPage(
             title='Reg Landing', slug='reg-landing')
@@ -56,7 +61,7 @@ class RegModelTests(DjangoTestCase):
         self.subpart = mommy.make(
             Subpart,
             label='Subpart General',
-            title='General',
+            title='Subpart A - General',
             subpart_type=Subpart.BODY,
             version=self.effective_version
         )
@@ -150,6 +155,11 @@ class RegModelTests(DjangoTestCase):
         self.reg_page.save()
         self.reg_search_page.save()
 
+    def get_request(self, path='', data={}):
+        request = self.factory.get(path, data=data)
+        request.site = self.site
+        return request
+
     def test_part_string_method(self):
         self.assertEqual(
             self.part_1002.__str__(),
@@ -168,7 +178,7 @@ class RegModelTests(DjangoTestCase):
     def test_subpart_string_method(self):
         self.assertEqual(
             self.subpart.__str__(),
-            'General')
+            'Subpart A - General')
 
     def test_section_string_method(self):
         if sys.version_info >= (3, 0):  # pragma: no cover
@@ -223,34 +233,33 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(self.old_effective_version.status, 'Previous version')
 
     def test_landing_page_get_context(self):
-        test_context = self.landing_page.get_context(HttpRequest())
+        test_context = self.landing_page.get_context(self.get_request())
         self.assertIn('get_secondary_nav_items', test_context)
 
     def test_search_page_get_template(self):
         self.assertEqual(
-            self.reg_search_page.get_template(HttpRequest()),
+            self.reg_search_page.get_template(self.get_request()),
             'regulations3k/search-regulations.html')
 
     def test_search_results_page_get_template(self):
-        request = HttpRequest()
-        request.GET.update({'partial': 'true'})
+        request = self.get_request(data={'partial': 'true'})
         self.assertEqual(
             self.reg_search_page.get_template(request),
             'regulations3k/search-regulations-results.html')
         # Should return partial results even if no value is provided
-        request.GET.update({'partial': ''})
+        request = self.get_request(data={'partial': ''})
         self.assertEqual(
             self.reg_search_page.get_template(request),
             'regulations3k/search-regulations-results.html')
 
     def test_routable_reg_page_get_context(self):
-        test_context = self.reg_page.get_context(HttpRequest())
+        test_context = self.reg_page.get_context(self.get_request())
         self.assertEqual(
             test_context['regulation'],
             self.reg_page.regulation)
 
     def test_get_reg_nav_items(self):
-        request = HttpRequest()
+        request = self.get_request()
         request.path = '/regulations/1002/4/'
         test_nav_items = get_reg_nav_items(request, self.reg_page)[0]
         self.assertEqual(
@@ -261,7 +270,7 @@ class RegModelTests(DjangoTestCase):
 
     def test_routable_page_view(self):
         response = self.reg_page.section_page(
-            HttpRequest(), section_label='4')
+            self.get_request(), section_label='4')
         self.assertEqual(response.status_code, 200)
 
     def test_sortable_label(self):
@@ -355,25 +364,18 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_sqs.call_count, 0)
 
-    def test_get_breadcrumbs_reg_page(self):
-        crumbs = self.reg_page.get_breadcrumbs(HttpRequest())
-        self.assertEqual(
-            crumbs,
-            [{'href': '/reg-landing/', 'title': 'Reg Landing'}]
-        )
-
     def test_get_breadcrumbs_section(self):
         crumbs = self.reg_page.get_breadcrumbs(
-            HttpRequest(),
+            self.get_request(),
             section=self.section_num4
         )
         self.assertEqual(
             crumbs,
             [
-                {'href': '/reg-landing/', 'title': 'Reg Landing'},
-                {'href': '/reg-landing/1002/',
-                 'title': '12 CFR Part 1002 (Regulation B)'},
-                {'title': 'General'}
+                {
+                    'href': '/reg-landing/1002/',
+                    'title': '12 CFR Part 1002 (Regulation B)'
+                },
             ]
         )
 
@@ -388,7 +390,7 @@ class RegModelTests(DjangoTestCase):
             self.landing_page.reverse_subpage('recent_notices')
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, '{"some": "json"}')
+        self.assertEqual(response.content, b'{"some": "json"}')
 
     @mock.patch('regulations3k.models.pages.requests.get')
     def test_landing_page_recent_notices_error(self, mock_requests_get):
