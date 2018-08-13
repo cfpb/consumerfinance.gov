@@ -8,9 +8,9 @@ function SkipNav() {
 	const mainContent = document.getElementById( 'main' );
 
 	skip.addEventListener( 'click', function( e ) {
-	    e.preventDefault();
-	    mainContent.setAttribute( 'tabindex', '-1' );
-	    mainContent.focus();
+    e.preventDefault();
+    mainContent.setAttribute( 'tabindex', '-1' );
+    mainContent.focus();
 	}, false );
 }
 
