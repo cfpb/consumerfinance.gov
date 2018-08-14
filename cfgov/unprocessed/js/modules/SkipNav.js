@@ -1,16 +1,16 @@
 /**
- * Applies a focus state to the main content when a user clicks the skip navigation link
- * Improves the usability of the skip navigation link across browsers & devices
+ * Applies a focus state to the main content when a user clicks the skip navigation link.
+ * Improves the usability of the skip navigation link across browsers & devices.
  */
 
 function SkipNav() {
 	const skip = document.getElementById( 'skip-nav' );
 	const mainContent = document.getElementById( 'main' );
 
-	skip.addEventListener( 'click', function( e ) {
-    e.preventDefault();
-    mainContent.setAttribute( 'tabindex', '-1' );
-    mainContent.focus();
+	skip.addEventListener( 'click', function( evt ) {
+		evt.preventDefault();
+		mainContent.setAttribute( 'tabindex', '-1' );
+		mainContent.focus();
 	}, false );
 }
 
