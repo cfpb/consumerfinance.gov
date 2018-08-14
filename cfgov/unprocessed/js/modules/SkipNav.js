@@ -4,14 +4,14 @@
  */
 
 function SkipNav() {
-	const skip = document.getElementById( 'skip-nav' );
-	const mainContent = document.getElementById( 'main' );
+  const skip = document.getElementById( 'skip-nav' );
+  const mainContent = document.getElementById( 'main' );
 
-	skip.addEventListener( 'click', function( evt ) {
-		evt.preventDefault();
-		mainContent.setAttribute( 'tabindex', '-1' );
-		mainContent.focus();
-	}, false );
+  skip.addEventListener( 'click', function( evt ) {
+    evt.preventDefault();
+    mainContent.setAttribute( 'tabindex', '-1' );
+    mainContent.focus();
+  }, false );
 }
 
 module.exports = SkipNav;
