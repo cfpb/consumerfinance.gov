@@ -6,9 +6,9 @@
     {% trans "Your username (in case you've forgotten):" %} {{ user.get_username }}
     {% endif %}
 
-    Note: Please change 'http' to 'https' and remove ':443' if these appear in the password reset link above.
+    Note: If you see a ':443' in the URL above, please remove it before navigating to the password reset page.
 
-    
+
     Thanks for using our site!
 
     The {{ site_name }} team.
