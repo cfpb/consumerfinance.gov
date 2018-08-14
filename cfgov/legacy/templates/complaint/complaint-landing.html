@@ -13,9 +13,6 @@
 
 {% block content %}
 <div id="ccdb-landing">
-  <!--
-    If the data has not been updated, add class 'show-data-notification' to cf-notification
-    If narratives have not been updated, add class 'show-narratives-notification'-->
     <div class="cf-notification cf-notification__warning {% if data_down %} show-data-notification {% elif narratives_down %} show-narratives-notification  {% endif %}">
     <div class="wrapper wrapper__match-content cf-notification_wrapper">
       <span class="cf-notification_icon cf-notification_icon__warning cf-icon cf-icon-error-round"></span>
