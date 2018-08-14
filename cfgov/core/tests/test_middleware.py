@@ -3,6 +3,8 @@ from django.test import TestCase, override_settings
 import mock
 
 from core.middleware import parse_links, should_parse_links
+from v1.models import CFGOVPage
+from v1.tests.wagtail_pages.helpers import publish_page
 
 
 class TestParseLinksMiddleware(TestCase):
@@ -74,3 +76,10 @@ class TestParseLinks(TestCase):
         link = b'<a href="/something.PDF">link</a>'
         output = parse_links(link)
         self.assertIn(b'cf-icon-svg', output)
+
+    def test_rich_text_links_get_expanded(self):
+        page = CFGOVPage(title='foo bar', slug='foo-bar')
+        publish_page(page)
+        link = b'<a id="{}" linktype="page">foo bar</a>'.format(page.id)
+        output = parse_links(link)
+        self.assertEqual(b'<a href="/foo-bar/">foo bar</a>', output)

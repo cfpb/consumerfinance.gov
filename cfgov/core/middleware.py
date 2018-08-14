@@ -2,6 +2,8 @@ from six import text_type as str
 
 from django.conf import settings
 
+from wagtail.wagtailcore.rich_text import expand_db_html
+
 from bs4 import BeautifulSoup
 
 from core.utils import add_link_markup, get_link_tags
@@ -33,7 +35,7 @@ def parse_links(html, encoding=None):
     if encoding is None:
         encoding = settings.DEFAULT_CHARSET
     html = html.decode(encoding)
-
+    html = expand_db_html(html)
     soup = BeautifulSoup(html, 'html.parser')
     link_tags = get_link_tags(soup)
     for tag in link_tags:
