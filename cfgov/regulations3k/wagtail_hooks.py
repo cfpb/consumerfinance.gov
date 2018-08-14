@@ -5,9 +5,37 @@ from datetime import date
 from wagtail.contrib.modeladmin.options import modeladmin_register
 
 from treemodeladmin.options import TreeModelAdmin
+from treemodeladmin.views import TreeIndexView
 
 from regulations3k.copyable_modeladmin import CopyableModelAdmin
 from regulations3k.models import EffectiveVersion, Part, Section, Subpart
+
+
+class SectionPreviewIndexView(TreeIndexView):
+
+    def get_buttons_for_obj(self, obj):
+        btns = self.button_helper.get_buttons_for_obj(
+            obj, classnames_add=['button-small', 'button-secondary'])
+
+        effective_version = obj.subpart.version
+        date_str = effective_version.effective_date.isoformat()
+        part = obj.subpart.version.part
+        page = part.page.first()
+
+        if page is not None:
+            preview_url = page.url + page.reverse_subpage(
+                'section',
+                kwargs={'date_str': date_str, 'section_label': obj.label}
+            )
+            preview_button = {
+                'url': preview_url,
+                'label': 'Preview',
+                'classname': 'button button-small button-secondary',
+                'title': 'Preview this {}'.format(self.verbose_name),
+            }
+            btns.insert(-1, preview_button)
+
+        return btns
 
 
 class SectionModelAdmin(TreeModelAdmin):
@@ -20,6 +48,7 @@ class SectionModelAdmin(TreeModelAdmin):
     search_fields = (
         'label', 'title')
     parent_field = 'subpart'
+    index_view_class = SectionPreviewIndexView
 
 
 class SubpartModelAdmin(TreeModelAdmin):
