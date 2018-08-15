@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 
 from django.conf import settings
@@ -5,6 +6,9 @@ from django.views.generic import TemplateView
 
 import requests
 from flags.state import flag_enabled
+
+
+logger = logging.getLogger(__name__)
 
 
 class ComplaintLandingView(TemplateView):
@@ -42,16 +46,11 @@ class ComplaintLandingView(TemplateView):
         """Retrieve JSON describing the CCDB's status from a given URL."""
         try:
             res_json = requests.get(complaint_source).json()
-        except requests.exceptions.RequestException as e:
-            print("get_narratives_json:requests.exceptions.RequestException")
-            print("There is a problem with getting data from the URL")
-            print(e)
+        except requests.exceptions.RequestException:
+            logger.exception("CCDB status data fetch failed.")
             res_json = {}
-        except ValueError as e:
-            print("get_narratives_json:ValueError")
-            print("The text from the response doesn't follow "
-                  "the correct format to be parse as json")
-            print(e)
+        except ValueError:
+            logger.exception("CCDB status data not valid JSON.")
             res_json = {}
 
         return res_json
@@ -80,11 +79,8 @@ class ComplaintLandingView(TemplateView):
             elif (res_json['stats']['last_updated_narratives'] <
                     four_business_days_ago):
                 narratives_down = True
-        except KeyError as e:
-            print("is_data_not_updated:KeyError")
-            print("There is problem accessing with the given key, "
-                  "which probably means the json has missing data")
-            print(e)
+        except KeyError:
+            logger.exception("CCDB JSON status not in expected format.")
 
         return {
             'data_down': data_down,
