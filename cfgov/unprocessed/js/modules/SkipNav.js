@@ -7,7 +7,7 @@ function SkipNav() {
   const skip = document.getElementById( 'skip-nav' );
   const mainContent = document.getElementById( 'main' );
 
-  skip.addEventListener( 'click', function( evt ) {
+  skip.addEventListener( 'click', evt => {
     evt.preventDefault();
     mainContent.setAttribute( 'tabindex', '-1' );
     mainContent.focus();
