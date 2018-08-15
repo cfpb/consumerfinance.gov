@@ -1,5 +1,5 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const SkipNav = require( BASE_JS_PATH + 'modules/SkipNav' );
+const skipNav = require( BASE_JS_PATH + 'modules/SkipNav' );
 
 import { simulateEvent } from '../../../util/simulate-event';
 
@@ -10,7 +10,7 @@ let mainEl;
 const HTML_SNIPPET = `
   <a href="#main" id="skip-nav">Skip to main content</a>
   <main class="content" id="main">
-  	<p>Main content area</p>
+    <p>Main content area</p>
   </main>
 `;
 
@@ -20,7 +20,7 @@ describe( 'SkpNav', () => {
     document.body.innerHTML = HTML_SNIPPET;
     skipLink = document.querySelector( '#skip-nav' );
     mainEl = document.querySelector( '#main' );
-    SkipNav();
+    skipNav();
     simulateEvent( 'click', skipLink );
   } );
 
@@ -31,7 +31,7 @@ describe( 'SkpNav', () => {
 
     it( 'should apply focus to the main element', () => {
       const focusedElement = document.activeElement;
-   		expect( mainEl ).toStrictEqual( focusedElement );
+      expect( mainEl ).toStrictEqual( focusedElement );
     } );
   } );
 
