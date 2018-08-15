@@ -36,7 +36,6 @@ class ConferenceRegistrationHandler(Handler):
         # successful submission, go ahead with the registration flow.
         if (
             is_submitted and
-            not is_at_capacity and
             not is_successful_submission
         ):
             form = self.form_cls(
@@ -45,7 +44,13 @@ class ConferenceRegistrationHandler(Handler):
             )
 
             try:
-                if form.is_valid():
+                if (
+                    form.is_valid() and
+                    (
+                        not is_at_capacity or
+                        form.data['attendee_type'] == "Virtually"
+                    )
+                ):
                     form.save()
 
                     return HttpResponseRedirect('{}?{}'.format(
@@ -66,9 +71,15 @@ class ConferenceRegistrationHandler(Handler):
 
     def _is_at_capacity(self):
         attendees = ConferenceRegistration.objects.filter(
-            govdelivery_code=self.govdelivery_code
+            govdelivery_code=self.govdelivery_code,
         )
-        return attendees.count() >= self.capacity
+
+        in_person_attendees = filter(
+            lambda a: a.details['attendee_type'] == 'In person',
+            attendees
+        )
+
+        return len(in_person_attendees) >= self.capacity
 
     def _is_successful_submission(self):
         return self.SUCCESS_QUERY_STRING_PARAMETER in self.request.GET

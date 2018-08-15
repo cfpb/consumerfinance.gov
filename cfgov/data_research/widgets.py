@@ -64,6 +64,53 @@ class Textarea(TextInputAttrsMixin, widgets.Textarea):
     ]
 
 
+class RadioChoiceInput(SubWidgetExtraAttrsMixin, widgets.RadioChoiceInput):
+    extra_attrs = [
+        ('class', 'a-radio'),
+    ]
+
+    def render(self, name=None, value=None, attrs=None, choices=()):
+        """Override the render function to add proper CF styling.
+
+        By default Django renders radio choice inputs where the <label>
+        tag wraps the <input> tag. Capital Framework instead specifies
+        that the <input> tag come first, followed by the <label>.
+        """
+        if self.id_for_label:
+            label_for = format_html(' for="{}"', self.id_for_label)
+        else:
+            label_for = ''
+
+        attrs = dict(self.attrs, **attrs) if attrs else self.attrs
+
+        return format_html(
+            (
+                '<div class="m-form-field m-form-field__radio">'
+                '{} <label class="a-label" {}>{}</label>'
+                '</div>'
+            ),
+            self.tag(attrs),
+            label_for,
+            self.choice_label
+        )
+
+
+class RadioFieldRenderer(widgets.RadioFieldRenderer):
+    """Custom renderer that outputs subwidgets with no wrapping.
+
+    By default the renderer used to display checkbox choice inputs wraps the
+    list in a <ul></ul> tag and wraps each element in <li><li>. Capital
+    Framework specifies no such wrapping, so this class removes them.
+    """
+    choice_input_class = RadioChoiceInput
+    outer_html = '{content}'
+    inner_html = '{choice_value}{sub_widgets}'
+
+
+class RadioSelect(widgets.RadioSelect):
+    renderer = RadioFieldRenderer
+
+
 class CheckboxChoiceInput(SubWidgetExtraAttrsMixin,
                           widgets.CheckboxChoiceInput):
     extra_attrs = [

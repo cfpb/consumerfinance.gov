@@ -5,7 +5,7 @@ from django import forms
 from core.govdelivery import get_govdelivery_api
 from data_research.models import ConferenceRegistration
 from data_research.widgets import (
-    CheckboxSelectMultiple, EmailInput, Textarea, TextInput
+    CheckboxSelectMultiple, EmailInput, RadioSelect, Textarea, TextInput
 )
 
 
@@ -19,6 +19,11 @@ class ConferenceRegistrationForm(forms.Form):
     If save(commit=False) is used, a model instance is created but not
     persisted to the database, and GovDelivery subscription is skipped.
     """
+    ATTENDEE_TYPES = tuple((t, t) for t in (
+        'In person',
+        'Virtually',
+    ))
+
     SESSIONS = tuple((s, s) for s in (
         'Thursday morning',
         'Thursday lunch',
@@ -40,18 +45,24 @@ class ConferenceRegistrationForm(forms.Form):
         'Nursing Space',
     ))
 
+    attendee_type = forms.ChoiceField(
+        widget=RadioSelect,
+        choices=ATTENDEE_TYPES,
+        required=True,
+        label='Do you plan to attend in person or virtually?',
+    )
     name = forms.CharField(max_length=250, widget=TextInput(required=True))
     organization = forms.CharField(max_length=250, required=False,
                                    widget=TextInput)
     email = forms.EmailField(max_length=250, widget=EmailInput(required=True))
-    sessions = forms.MultipleChoiceField(
-        widget=CheckboxSelectMultiple,
-        choices=SESSIONS,
-        label="Which sessions will you be attending?",
-        error_messages={
-            'required': "You must select at least one session to attend.",
-        }
-    )
+    # sessions = forms.MultipleChoiceField(
+    #     widget=CheckboxSelectMultiple,
+    #     choices=SESSIONS,
+    #     label="Which sessions will you be attending?",
+    #     error_messages={
+    #         'required': "You must select at least one session to attend.",
+    #     }
+    # )
     dietary_restrictions = forms.MultipleChoiceField(
         widget=CheckboxSelectMultiple,
         choices=DIETARY_RESTRICTIONS,

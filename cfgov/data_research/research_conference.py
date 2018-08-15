@@ -88,7 +88,7 @@ class ConferenceNotifier(object):
 
     Looks up conference attendees by GovDelivery code.
     """
-    conference_name = '2018 CFPB Research Conference'
+    conference_name = '2018 CFPB FinEx Conference'
     subject_template_name = 'data_research/conference_notify_subject.txt'
     email_template_name = 'data_research/conference_notify_email.txt'
     attachment_filename = 'conference_registrations.xlsx'
