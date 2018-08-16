@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'wagtailinventory',
     'wagtailsharing',
     'flags',
+    'wagtailflags',
     'watchman',
     'haystack',
     'ask_cfpb',
@@ -386,6 +387,7 @@ AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
 AWS_S3_SECURE_URLS = True  # True = use https; False = use http
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_FILE_OVERWRITE = False
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
