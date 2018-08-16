@@ -12,6 +12,7 @@ from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 
+from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.util import util
 
@@ -131,8 +132,7 @@ def register_frank_menu_item():
 
 @hooks.register('register_admin_urls')
 def register_flag_admin_urls():
-    handler = 'v1.admin_views.manage_cdn'
-    return [url(r'^cdn/$', handler, name='manage-cdn'), ]
+    return [url(r'^cdn/$', manage_cdn, name='manage-cdn'), ]
 
 
 @hooks.register('before_serve_page')
