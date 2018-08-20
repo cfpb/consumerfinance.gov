@@ -22,7 +22,9 @@ from ask_cfpb.views import (
     ask_autocomplete, ask_search, print_answer, redirect_ask_search,
     view_answer
 )
-from core.views import ExternalURLNoticeView
+from core.views import (
+    ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
+)
 from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorPDFView, HousingCounselorView
@@ -150,9 +152,7 @@ urlpatterns = [
     url(r'^external-site/$', ExternalURLNoticeView.as_view(),
         name='external-site'),
 
-    url(r'^subscriptions/new/$',
-        'core.views.govdelivery_subscribe',
-        name='govdelivery'),
+    url(r'^subscriptions/new/$', govdelivery_subscribe, name='govdelivery'),
 
     url(r'^govdelivery-subscribe/', include([
         url(r'^success/$',
@@ -169,9 +169,7 @@ urlpatterns = [
             name='server_error')],
         namespace='govdelivery')),
 
-    url(r'^regulation-comment/new/$',
-        'core.views.regsgov_comment',
-        name='reg_comment'),
+    url(r'^regulation-comment/new/$', regsgov_comment, name='reg_comment'),
 
     url(r'^regulation-comment/', include([
         url(r'^success/$',
@@ -452,7 +450,7 @@ if settings.ALLOW_ADMIN_URL:
                 name='password_reset_confirm')
         ])),
         url(r'^django-admin/password_change',
-            'django.contrib.auth.views.password_change',
+            auth_views.password_change,
             {'password_change_form': CFGOVPasswordChangeForm}),
         url(r'^password/change/done/$',
             auth_views.password_change_done,
