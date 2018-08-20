@@ -68,6 +68,7 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
         'TIMEOUT': None,
     }
 
-# Use a mock GovDelivery API instead of the real thing.
-# Remove this line to use the real API instead.
-GOVDELIVERY_API = 'core.govdelivery.LoggingMockGovDelivery'
+# Use a mock GovDelivery API instead of the real thing,
+# unless the GOVDELIVERY_BASE_URL environment variable is set.
+if not os.environ.get('GOVDELIVERY_BASE_URL'):
+    GOVDELIVERY_API = 'core.govdelivery.LoggingMockGovDelivery'
