@@ -21,10 +21,11 @@ class ConferenceRegistrationFormTests(TestCase):
         return ConferenceRegistrationForm(
             govdelivery_code=self.govdelivery_code,
             data={
+                'attendee_type': 'In person',
                 'name': 'A User',
                 'organization': 'An Organization',
                 'email': 'user@domain.com',
-                'sessions': ['Thursday morning', 'Thursday lunch'],
+                # 'sessions': ['Thursday morning', 'Thursday lunch'],
             }
         )
 
@@ -52,10 +53,11 @@ class ConferenceRegistrationFormTests(TestCase):
 
         self.assertEqual(registrant.govdelivery_code, 'TEST-CODE')
         self.assertEqual(registrant.details, {
+            'attendee_type': 'In person',
             'name': 'A User',
             'organization': 'An Organization',
             'email': 'user@domain.com',
-            'sessions': ['Thursday morning', 'Thursday lunch'],
+            # 'sessions': ['Thursday morning', 'Thursday lunch'],
             'dietary_restrictions': [],
             'other_dietary_restrictions': '',
             'accommodations': [],

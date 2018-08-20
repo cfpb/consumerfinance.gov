@@ -59,7 +59,12 @@ class TestConferenceRegistrationHandler(TestCase):
         self.assertFalse(response['is_at_capacity'])
 
     def make_capacity_registrants(self, govdelivery_code):
-        registrant = ConferenceRegistration(govdelivery_code=govdelivery_code)
+        registrant = ConferenceRegistration(
+            govdelivery_code=govdelivery_code,
+            details={
+                'attendee_type': 'In person'
+            }
+        )
         ConferenceRegistration.objects.bulk_create(
             [registrant] * self.capacity
         )
