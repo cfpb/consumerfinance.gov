@@ -570,6 +570,9 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'files.consumerfinance.gov',
                    's3.amazonaws.com',
+                   # Todo: Take the following URL out as it's only
+                   # for http access to chart data for CCT
+                   'files.consumerfinance.gov.s3.amazonaws.com',
                    'public.govdelivery.com',
                    'api.iperceptions.com')
 
