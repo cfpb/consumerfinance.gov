@@ -8,10 +8,12 @@ from data_research.models import ConferenceRegistration
 
 
 class ConferenceRegistrationFormTests(TestCase):
+    capacity = 100
     govdelivery_code = 'TEST-CODE'
 
     def test_invalid_form_if_fields_are_missing(self):
         form = ConferenceRegistrationForm(
+            capacity=self.capacity,
             govdelivery_code=self.govdelivery_code,
             data={'foo': 'bar'}
         )
@@ -19,13 +21,13 @@ class ConferenceRegistrationFormTests(TestCase):
 
     def get_valid_form(self):
         return ConferenceRegistrationForm(
+            capacity=self.capacity,
             govdelivery_code=self.govdelivery_code,
             data={
-                'attendee_type': 'In person',
+                'attendee_type': ConferenceRegistrationForm.ATTENDEE_IN_PERSON,
                 'name': 'A User',
                 'organization': 'An Organization',
                 'email': 'user@domain.com',
-                # 'sessions': ['Thursday morning', 'Thursday lunch'],
             }
         )
 
@@ -53,11 +55,10 @@ class ConferenceRegistrationFormTests(TestCase):
 
         self.assertEqual(registrant.govdelivery_code, 'TEST-CODE')
         self.assertEqual(registrant.details, {
-            'attendee_type': 'In person',
+            'attendee_type': ConferenceRegistrationForm.ATTENDEE_IN_PERSON,
             'name': 'A User',
             'organization': 'An Organization',
             'email': 'user@domain.com',
-            # 'sessions': ['Thursday morning', 'Thursday lunch'],
             'dietary_restrictions': [],
             'other_dietary_restrictions': '',
             'accommodations': [],
@@ -88,3 +89,44 @@ class ConferenceRegistrationFormTests(TestCase):
                 }
             )]
         )
+
+    def make_capacity_registrants(self, govdelivery_code, attendee_type):
+        registrant = ConferenceRegistration(
+            govdelivery_code=govdelivery_code,
+            details={'attendee_type': attendee_type}
+        )
+        ConferenceRegistration.objects.bulk_create(
+            [registrant] * self.capacity
+        )
+
+    def test_form_not_at_capacity(self):
+        self.assertFalse(self.get_valid_form().at_capacity)
+
+    def test_form_at_capacity(self):
+        self.make_capacity_registrants(
+            self.govdelivery_code,
+            ConferenceRegistrationForm.ATTENDEE_IN_PERSON
+        )
+        self.assertTrue(self.get_valid_form().at_capacity)
+
+    def test_form_at_capacity_for_some_other_code(self):
+        self.make_capacity_registrants(
+            'some-other-code',
+            ConferenceRegistrationForm.ATTENDEE_IN_PERSON
+        )
+        self.assertFalse(self.get_valid_form().at_capacity)
+
+    def test_form_at_capacity_invalid(self):
+        self.make_capacity_registrants(
+            self.govdelivery_code,
+            ConferenceRegistrationForm.ATTENDEE_IN_PERSON
+        )
+        form = self.get_valid_form()
+        self.assertFalse(form.is_valid())
+
+    def test_form_virtual_attendees_dont_count_against_capacity(self):
+        self.make_capacity_registrants(
+            self.govdelivery_code,
+            ConferenceRegistrationForm.ATTENDEE_VIRTUALLY
+        )
+        self.assertFalse(self.get_valid_form().at_capacity)

@@ -19,9 +19,11 @@ class ConferenceRegistrationForm(forms.Form):
     If save(commit=False) is used, a model instance is created but not
     persisted to the database, and GovDelivery subscription is skipped.
     """
+    ATTENDEE_IN_PERSON = 'In person'
+    ATTENDEE_VIRTUALLY = 'Virtually'
     ATTENDEE_TYPES = tuple((t, t) for t in (
-        'In person',
-        'Virtually',
+        ATTENDEE_IN_PERSON,
+        ATTENDEE_VIRTUALLY,
     ))
 
     SESSIONS = tuple((s, s) for s in (
@@ -90,8 +92,41 @@ class ConferenceRegistrationForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
+        self.capacity = kwargs.pop('capacity')
         self.govdelivery_code = kwargs.pop('govdelivery_code')
         super(ConferenceRegistrationForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(ConferenceRegistrationForm, self).clean()
+
+        if (
+            cleaned_data.get('attendee_type') == self.ATTENDEE_IN_PERSON and
+            self.at_capacity
+        ):
+            raise forms.ValidationError('at capacity')
+
+    @property
+    def at_capacity(self):
+        attendees = ConferenceRegistration.objects.filter(
+            govdelivery_code=self.govdelivery_code
+        )
+
+        # TODO: In Django 1.9+, this logic can be optimized through use of
+        # Django's built-in Postgres JSONFields. This will require migrating
+        # the details field of the ConferenceRegistration model.
+        #
+        # attendees = ConferenceRegistrationForm.objects.filter(
+        #     govdelivery_code=self.govdelivery_code,
+        #     details__attendee_type=self.ATTENDEE_IN_PERSON
+        # )
+        in_person_attendees = filter(
+            lambda a: (
+                a.details.get('attendee_type') == self.ATTENDEE_IN_PERSON
+            ),
+            attendees
+        )
+
+        return len(in_person_attendees) >= self.capacity
 
     def save(self, commit=True):
         registration = ConferenceRegistration(

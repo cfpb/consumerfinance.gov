@@ -12,4 +12,4 @@ class ConferenceRegistrationFormTests(TestCase):
         page = BrowsePage.objects.get(pk=99999)
         request = self.client.get('/').wsgi_request
         response = page.serve(request)
-        self.assertContains(response, 'accommodations needed to attend?')
+        self.assertContains(response, 'other accommodations needed to attend?')

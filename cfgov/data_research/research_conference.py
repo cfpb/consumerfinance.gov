@@ -52,7 +52,8 @@ class ConferenceExporter(object):
     @cached_property
     def fields(self):
         form = ConferenceRegistrationForm(
-            govdelivery_code=self.govdelivery_code
+            govdelivery_code=self.govdelivery_code,
+            capacity=0
         )
 
         return ['created'] + form.fields.keys()
