@@ -4,9 +4,7 @@ from django import forms
 
 from core.govdelivery import get_govdelivery_api
 from data_research.models import ConferenceRegistration
-from data_research.widgets import (
-    CheckboxSelectMultiple, EmailInput, RadioSelect, Textarea, TextInput
-)
+from data_research.widgets import EmailInput, Textarea, TextInput
 
 
 class ConferenceRegistrationForm(forms.Form):
@@ -48,7 +46,7 @@ class ConferenceRegistrationForm(forms.Form):
     ))
 
     attendee_type = forms.ChoiceField(
-        widget=RadioSelect,
+        widget=forms.RadioSelect,
         choices=ATTENDEE_TYPES,
         required=True,
         label='Do you plan to attend in person or virtually?',
@@ -66,7 +64,7 @@ class ConferenceRegistrationForm(forms.Form):
     #     }
     # )
     dietary_restrictions = forms.MultipleChoiceField(
-        widget=CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple,
         choices=DIETARY_RESTRICTIONS,
         required=False,
         label="Please let us know about any food allergies or restrictions."
@@ -77,7 +75,7 @@ class ConferenceRegistrationForm(forms.Form):
         label="Any other food allergies or restrictions?"
     )
     accommodations = forms.MultipleChoiceField(
-        widget=CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple,
         choices=ACCOMMODATIONS,
         required=False,
         label=(
