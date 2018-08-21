@@ -19,12 +19,15 @@ class ConferenceRegistrationFormTests(TestCase):
         )
         self.assertFalse(form.is_valid())
 
-    def get_valid_form(self):
+    def get_valid_form(
+        self,
+        attendee_type=ConferenceRegistrationForm.ATTENDEE_IN_PERSON
+    ):
         return ConferenceRegistrationForm(
             capacity=self.capacity,
             govdelivery_code=self.govdelivery_code,
             data={
-                'attendee_type': ConferenceRegistrationForm.ATTENDEE_IN_PERSON,
+                'attendee_type': attendee_type,
                 'name': 'A User',
                 'organization': 'An Organization',
                 'email': 'user@domain.com',
@@ -123,6 +126,16 @@ class ConferenceRegistrationFormTests(TestCase):
         )
         form = self.get_valid_form()
         self.assertFalse(form.is_valid())
+
+    def test_form_at_capacity_still_valid_for_virtual_attendees(self):
+        self.make_capacity_registrants(
+            self.govdelivery_code,
+            ConferenceRegistrationForm.ATTENDEE_IN_PERSON
+        )
+        form = self.get_valid_form(
+            attendee_type=ConferenceRegistrationForm.ATTENDEE_VIRTUALLY
+        )
+        self.assertTrue(form.is_valid())
 
     def test_form_virtual_attendees_dont_count_against_capacity(self):
         self.make_capacity_registrants(
