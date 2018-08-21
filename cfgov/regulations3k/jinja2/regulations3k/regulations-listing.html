@@ -18,34 +18,19 @@
 
    ========================================================================== #}
 {% if regulations.exists() %}
-<table class="o-table" data-bound="true">
-    <tbody>
-        <tr>
-            <td>
-                <h4>{{ value.heading or 'Table of contents' }}</h4>
-            </td>
-        </tr>
-
+<div id="regulations-listing">
+    <h4>{{ value.heading or 'Table of contents' }}</h4>
+    <ul>
         {% for regulation in regulations %}
-        <tr>
-            <td>
-                <h4>
-                    <a href="{{ regulation.url }}" data-turbolinks="true">
-                        <span class="title-num">{{ regulation.title }}</span>
-                    </a>
-                </h4>
-                <!--
-                  <ul>
-                  <li>New amendment effective 1/1/2019.&nbsp;<a class="" href="">View on Electronic Code of Federal Regulations</a><br></li>
-                  <li>New amendment effective 1/1/2020.&nbsp;<a class="" href="">View on Electronic Code of Federal Regulations</a></li>
-                  </ul>
-                -->
-            </td>
-        </tr>
+        <li class="h4">
+            <a href="{{ regulation.url }}">
+                <span class="title-num">{{ regulation.title }}</span>
+            </a>
+        </li>
         {% endfor %}
-    </tbody>
-</table>
-{% endif %}
-<p>
-    <a class="" href="{{ pageurl(value.more_regs_page) }}">{{ value.more_regs_text or 'View more CFPB regulations' }}</a>
-</p>
+    </ul>
+    {% endif %}
+    <p>
+        <a class="" href="{{ pageurl(value.more_regs_page) }}">{{ value.more_regs_text or 'View more CFPB regulations' }}</a>
+    </p>
+</div>
