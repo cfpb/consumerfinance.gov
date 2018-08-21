@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'wagtailinventory',
     'wagtailsharing',
     'flags',
+    'wagtailflags',
     'watchman',
     'haystack',
     'ask_cfpb',
@@ -76,12 +77,13 @@ INSTALLED_APPS = (
     'data_research',
     'v1',
     'core',
-    'sheerlike',
     'legacy',
     'django_extensions',
     'jobmanager',
     'wellbeing',
     'search',
+    'regulations3k',
+    'treemodeladmin',
 )
 
 OPTIONAL_APPS = [
@@ -95,7 +97,6 @@ OPTIONAL_APPS = [
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
     {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},
     {'import': 'regulations', 'apps': ('regulations',)},
-    {'import': 'regulations3k', 'apps': ('regulations3k', 'treemodeladmin')},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
     {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', 'mptt', 'haystack')},
@@ -104,7 +105,6 @@ OPTIONAL_APPS = [
 POSTGRES_APPS = []
 
 MIDDLEWARE_CLASSES = (
-    'sheerlike.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -116,6 +116,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'core.middleware.ParseLinksMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
@@ -127,10 +128,17 @@ if ('CSP_ENFORCE' in os.environ):
 
 ROOT_URLCONF = 'cfgov.urls'
 
+# We support two different template engines: Django templates and Jinja2
+# templates. See https://docs.djangoproject.com/en/dev/topics/templates/
+# for an overview of how Django templates work.
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [PROJECT_ROOT.child('templates')],
+        # Look for Django templates in these directories.
+        'DIRS': [
+            PROJECT_ROOT.child('templates'),
+        ],
+        # Look for Django templates in each app under a templates subdirectory.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,22 +152,31 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        # Look for Jinja2 templates in these directories.
         'DIRS': [
             V1_TEMPLATE_ROOT,
             V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
             PROJECT_ROOT.child('static_built'),
         ],
+        # Look for Jinja2 templates in each app under a jinja2 subdirectory.
         'APP_DIRS': True,
         'OPTIONS': {
-            'environment': 'v1.environment',
+            'environment': 'v1.jinja2_environment.environment',
             'extensions': [
-                'core.jinja2tags.filters',
-                'regulations3k.jinja2tags.regulations',
-                'v1.jinja2tags.filters',
+                'jinja2.ext.do',
+                'jinja2.ext.i18n',
+                'jinja2.ext.loopcontrols',
+
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
+
+                'core.jinja2tags.filters',
+                'regulations3k.jinja2tags.regulations',
+                'v1.jinja2tags.datetimes_extension',
+                'v1.jinja2tags.fragment_cache_extension',
+                'v1.jinja2tags.v1_extension',
             ],
         }
     },
@@ -239,10 +256,6 @@ EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
                           r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
                           r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
                           )
-EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
-NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
-FILES_LINK_PATTERN = r'https?:\/\/files\.consumerfinance.gov\/f\/\S+\.[a-z]+'
-DOWNLOAD_LINK_PATTERN = r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 
 # Wagtail settings
 
@@ -374,6 +387,7 @@ AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
 AWS_S3_SECURE_URLS = True  # True = use https; False = use http
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_FILE_OVERWRITE = False
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
@@ -556,6 +570,12 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'files.consumerfinance.gov',
                    's3.amazonaws.com',
+                   # Todo: Take the following URL out as it's only
+                   # for http access to chart data for CCT
+                   # Remove when build moves to https or when
+                   # cfpb-chart-builder#126 PR gets merged
+                   'files.consumerfinance.gov.s3.amazonaws.com',
+                   'public.govdelivery.com',
                    'api.iperceptions.com')
 
 # Feature flags
@@ -640,7 +660,7 @@ FLAGS = {
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': {'environment is': 'production'},
 
-    'REGULATIONS3K': {'environment is': 'build'},
+    'REGULATIONS3K': {},
 
     'LEGACY_HUD_API': {'environment is': 'production'},
 
@@ -702,3 +722,30 @@ REGULATIONS_REFERENCE_MAPPING = [
         '{section}-{paragraph}'
     ),
 ]
+
+# Optionally enable cache for general template fragments
+if os.environ.get('ENABLE_DEFAULT_FRAGMENT_CACHE'):
+    CACHES = {
+        'default_fragment_cache': {
+            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+            'LOCATION': 'default_fragment_cache',
+            'TIMEOUT': None,
+        }
+    }
+else:
+    CACHES = {
+        'default_fragment_cache': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+            'TIMEOUT': 0,
+        }
+    }
+
+PARSE_LINKS_BLACKLIST = [
+    '/admin/',
+    '/django-admin/'
+]
+
+# Required by django-extensions to determine the execution directory used by
+# scripts executed with the "runscript" management command.
+# See https://django-extensions.readthedocs.io/en/latest/runscript.html.
+BASE_DIR = 'scripts'

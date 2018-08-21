@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import six
 from datetime import timedelta
-from StringIO import StringIO
+from six.moves import cStringIO as StringIO
 
 from django.contrib.auth import get_user_model
 from django.core import mail
@@ -26,36 +27,45 @@ class InactiveUsersTestCase(TestCase):
 
         # This user is clearly inactive at 91 days
         self.user_1 = User.objects.create(username='user_1',
+                                          email='user_1@test.test',
                                           last_login=days_91,
                                           date_joined=days_91)
 
         # This user is inactive because it's the 90th day
         self.user_2 = User.objects.create(username='user_2',
+                                          email='user_2@test.test',
                                           last_login=days_90,
                                           date_joined=days_91)
 
         # This user is not inactive because it's been 89 days
         # This user will receive a warning email
         self.user_3 = User.objects.create(username='üser_3',
+                                          email='üser_3@test.test',
                                           last_login=days_89,
                                           date_joined=days_91)
 
         # This user has never logged in, joined 91 days ago
         self.user_4 = User.objects.create(username='user_4',
+                                          email='user_4@test.test',
                                           date_joined=days_91)
 
         # This user has never logged in, joined today.
-        self.user_5 = User.objects.create(username='user_5')
+        self.user_5 = User.objects.create(username='user_5',
+                                          email='user_5@test.test')
 
         # This user last logged on 61 days ago, will be warned.
         self.user_6 = User.objects.create(username='user_6',
+                                          email='user_6@test.test',
                                           last_login=days_61,
                                           date_joined=days_91)
 
         self.stdout = StringIO()
 
     def get_stdout(self):
-        return self.stdout.getvalue().decode('utf-8')
+        if six.PY2:  # pragma: no cover
+            return self.stdout.getvalue().decode('utf-8')
+        else:  # pragma: no cover
+            return self.stdout.getvalue()
 
     def test_format_inactive_users_last_login(self):
         short_date = date_format(self.user_1.last_login,

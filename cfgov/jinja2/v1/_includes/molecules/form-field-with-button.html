@@ -45,7 +45,7 @@
     </div>
     <div class="m-form-field-with-button_wrapper">
       <div class="m-form-field-with-button_info">
-          {{ parse_links(value.info) | safe }}
+          {{ value.info | safe }}
       </div>
       <input class="a-btn a-btn__full-on-xs" type="submit" value="{{ value.btn_text }}">
     </div>

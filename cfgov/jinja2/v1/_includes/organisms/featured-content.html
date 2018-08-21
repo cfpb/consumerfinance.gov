@@ -68,11 +68,11 @@
             {{ fcm_label( value.category ) }}
         </div>
         <h2>{{ value.heading }}</h2>
-        {{ parse_links(value.body) | safe }}
+        {{ value.body | safe }}
         <ul class="m-list m-list__links">
             {% if value.show_post_link and value.post %}
                 <li class="m-list_item">
-                    <a class="m-list_link" href="{{ get_protected_url(value.post) }}">
+                    <a class="m-list_link" href="{{ pageurl(value.post) }}">
                         {{ value.post_link_text }}
                     </a>
                 </li>
@@ -97,7 +97,7 @@
     {% if value.video and
           value.video.url and
           value.video.id %}
-        {% import 'macros/video-player.html' as video_player %}
+        {% import 'macros/video-player.html' as video_player with context %}
         {{ video_player.render(value) }}
     {% elif value.image %}
         <div class="o-featured-content-module_visual">

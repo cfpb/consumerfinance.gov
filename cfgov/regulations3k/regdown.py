@@ -65,7 +65,7 @@ from mdx_emdash import EmDashExtension
 # sha3 library.
 try:
     from hashlib import sha3_224
-except ImportError:
+except ImportError:  # pragma: no cover
     from sha3 import sha3_224
 
 
@@ -84,23 +84,28 @@ STRONG_EM_RE = r'(\*)\2{2}(.+?)\2{2}(.*?)\2'
 PSEUDO_FORM_RE = r'(?P<underscores>_{2,50})(?P<line_ending>\s*$)?'
 
 
+DEFAULT_URL_RESOLVER = lambda l: ''
+DEFAULT_CONTENTS_RESOLVER = lambda l: ''
+DEFAULT_RENDER_BLOCK_REFERENCE = lambda c, **kwargs: \
+    '<blockquote>{}</blockquote>'.format(regdown(c))
+
+
 class RegulationsExtension(Extension):
 
     config = {
         'url_resolver': [
-            lambda l: '',
+            DEFAULT_URL_RESOLVER,
             'Function to resolve the URL of a reference. '
             'Should return (title, url).'
         ],
         'contents_resolver': [
-            lambda l: '',
+            DEFAULT_CONTENTS_RESOLVER,
             'Function to resolve the contents of a reference. '
             'Should return markdown contents of the reference or an empty '
             'string.'
         ],
         'render_block_reference': [
-            lambda c, **kwargs: '<blockquote>{}</blockquote>'.format(
-                regdown(c)),
+            DEFAULT_RENDER_BLOCK_REFERENCE,
             'Function that will render a block reference'
         ],
     }
@@ -191,9 +196,9 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             # class, we count the number of dashes in the label to determine
             # how deeply nested the paragraph is. Inline interps have special
             # prefixes that are removed before counting the dashes.
-            # e.g. 6-a-Interp-1 becomes -1 and gets a `level-1` class
-            # e.g. 12-b-Interp-2-i becomes -2-i and gets a `level-2` class
-            label = re.sub('^(\w+\-)+interp', '', label, flags=re.IGNORECASE)
+            # e.g. 6-a-Interp-1 becomes 1 and gets a `level-0` class
+            # e.g. 12-b-Interp-2-i becomes 2-i and gets a `level-1` class
+            label = re.sub('^(\w+\-)+interp\-', '', label, flags=re.IGNORECASE)
 
             # Appendices also have special prefixes that need to be stripped.
             # e.g. A-1-a becomes a and gets a `level-0` class
@@ -208,7 +213,9 @@ class LabeledParagraphProcessor(ParagraphProcessor):
         elif block.strip():
             if self.parser.state.isstate('list'):
                 # Pass off to the ParagraphProcessor for lists
-                super(ParagraphProcessor, self).run(parent, blocks)
+                super(ParagraphProcessor, self).run(
+                    parent, blocks
+                )  # pragma: no cover
             else:
                 # Generate a label that is a hash of the block contents. This
                 # way it won't change unless the rest of this block changes.

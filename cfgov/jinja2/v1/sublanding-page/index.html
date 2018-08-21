@@ -1,7 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'form_block.html' as form_block with context %}
-{% import 'organisms/featured-content.html' as featured_content %}
+{% import 'organisms/featured-content.html' as featured_content with context %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -38,7 +38,7 @@
                 {% set limit = block.value.limit | int %}
                 {% set posts = page.get_browsefilterable_posts(limit) %}
                 {% for post in posts %}
-                    {{ post_preview.render(post, controls=none, url=get_protected_url(post.parent()), post_date_description=block.value.post_date_description) }}
+                    {{ post_preview.render(post, controls=none, url=pageurl(post.parent()), post_date_description=block.value.post_date_description) }}
                 {% endfor %}
              </div>
         {% elif 'filter_controls' in block.block_type %}

@@ -30,14 +30,18 @@
         padding: 45px 15px 0;
         border: 1px solid @gray-40;
         background-color: #f7f8f9;
+
         .o-expandable_content,
         .o-expandable_target {
             border: 0;
             padding: 0;
-            &-animated {
+            &:before,
+            &:after {
+                border: 0;
                 padding: 0;
             }
         }
+
         .reg-checkbox {
             display: inline-block;
         }
@@ -55,6 +59,9 @@
                 .h4;
                 margin-bottom: 0;
             }
+        }
+        .o-form_group {
+            margin-bottom: 0;
         }
     }
     .content_main {

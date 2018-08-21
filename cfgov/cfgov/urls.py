@@ -7,6 +7,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.defaults import page_not_found
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.contrib.wagtailsitemaps.views import sitemap
@@ -21,7 +22,9 @@ from ask_cfpb.views import (
     ask_autocomplete, ask_search, print_answer, redirect_ask_search,
     view_answer
 )
-from core.views import ExternalURLNoticeView
+from core.views import (
+    ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
+)
 from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorPDFView, HousingCounselorView
@@ -149,9 +152,7 @@ urlpatterns = [
     url(r'^external-site/$', ExternalURLNoticeView.as_view(),
         name='external-site'),
 
-    url(r'^subscriptions/new/$',
-        'core.views.govdelivery_subscribe',
-        name='govdelivery'),
+    url(r'^subscriptions/new/$', govdelivery_subscribe, name='govdelivery'),
 
     url(r'^govdelivery-subscribe/', include([
         url(r'^success/$',
@@ -168,9 +169,7 @@ urlpatterns = [
             name='server_error')],
         namespace='govdelivery')),
 
-    url(r'^regulation-comment/new/$',
-        'core.views.regsgov_comment',
-        name='reg_comment'),
+    url(r'^regulation-comment/new/$', regsgov_comment, name='reg_comment'),
 
     url(r'^regulation-comment/', include([
         url(r'^success/$',
@@ -392,11 +391,6 @@ urlpatterns = [
             include_if_app_enabled('teachers_digital_platform',
                                     'teachers_digital_platform.prototypes_urls')),  # noqa: E501
 
-    # flagged_url('TDP_SEARCH_INTERFACE',
-    #         r'^practitioner-resources/youth-financial-education/curriculum-review/search/',  # noqa: E501
-    #         include_if_app_enabled('teachers_digital_platform',
-    #                                 'teachers_digital_platform.search_urls')),
-
     flagged_url('TDP_BB_TOOL',
             r'^practitioner-resources/youth-financial-education/learn-about-the-building-blocks/take-a-tour',  # noqa: E501
             include_if_app_enabled('teachers_digital_platform',
@@ -404,10 +398,9 @@ urlpatterns = [
 
     flagged_url(
         'REGULATIONS3K',
-        r'^regulations/$',
+        r'^policy-compliance/rulemaking/regulations/',
         lambda request: ServeView.as_view()(request, request.path),
-        fallback=RedirectView.as_view(
-            url='/policy-compliance/rulemaking/', permanent=False),
+        fallback=page_not_found,
         name='regulations'
     ),
     flagged_url(
@@ -457,7 +450,7 @@ if settings.ALLOW_ADMIN_URL:
                 name='password_reset_confirm')
         ])),
         url(r'^django-admin/password_change',
-            'django.contrib.auth.views.password_change',
+            auth_views.password_change,
             {'password_change_form': CFGOVPasswordChangeForm}),
         url(r'^password/change/done/$',
             auth_views.password_change_done,

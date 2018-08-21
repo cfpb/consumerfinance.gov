@@ -33,7 +33,7 @@
         </header>
     {% endif %}
 
-    {{ parse_links(value.paragraph) | safe }}
+    {{ value.paragraph | safe }}
 
     {% if value.links %}
         <ul class="m-list m-list__links">

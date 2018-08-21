@@ -52,7 +52,8 @@ class ConferenceExporter(object):
     @cached_property
     def fields(self):
         form = ConferenceRegistrationForm(
-            govdelivery_code=self.govdelivery_code
+            govdelivery_code=self.govdelivery_code,
+            capacity=0
         )
 
         return ['created'] + form.fields.keys()
@@ -88,7 +89,7 @@ class ConferenceNotifier(object):
 
     Looks up conference attendees by GovDelivery code.
     """
-    conference_name = '2018 CFPB Research Conference'
+    conference_name = '2018 CFPB FinEx Conference'
     subject_template_name = 'data_research/conference_notify_subject.txt'
     email_template_name = 'data_research/conference_notify_email.txt'
     attachment_filename = 'conference_registrations.xlsx'

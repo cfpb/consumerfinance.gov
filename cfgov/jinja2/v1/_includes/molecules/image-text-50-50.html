@@ -54,7 +54,7 @@
         'is_decorative': image_alt_value(value.image) == ''
     },
     'heading': '<h3>' ~ value.heading ~ '</h3>',
-    'body': parse_links(value.body) | safe,
+    'body': value.body | safe,
     'is_button': value.is_button,
     'links': value.links,
     'link_image_and_heading': value.link_image_and_heading or false

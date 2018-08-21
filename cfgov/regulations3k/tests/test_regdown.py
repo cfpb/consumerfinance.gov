@@ -5,7 +5,9 @@ import unittest
 
 import markdown
 
-from regulations3k.regdown import extract_labeled_paragraph, regdown
+from regulations3k.regdown import (
+    DEFAULT_RENDER_BLOCK_REFERENCE, extract_labeled_paragraph, regdown
+)
 
 
 class RegulationsExtensionTestCase(unittest.TestCase):
@@ -49,7 +51,7 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{1-a-Interp-1}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-1" id="1-a-Interp-1">'
+            '<p class="regdown-block level-0" id="1-a-Interp-1">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -57,7 +59,7 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{1-a-Interp-1-i}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-2" id="1-a-Interp-1-i">'
+            '<p class="regdown-block level-1" id="1-a-Interp-1-i">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -65,7 +67,7 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{1-a-Interp-1-i-a}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-3" id="1-a-Interp-1-i-a">'
+            '<p class="regdown-block level-2" id="1-a-Interp-1-i-a">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -73,7 +75,7 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{12-d-Interp-7-ii-c-A-7}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-5" id="12-d-Interp-7-ii-c-A-7">'
+            '<p class="regdown-block level-4" id="12-d-Interp-7-ii-c-A-7">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -82,12 +84,12 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text2 = '{31-a-1-i-Interp-1}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-1" id="31-a-1-Interp-1">'
+            '<p class="regdown-block level-0" id="31-a-1-Interp-1">'
             'This is a paragraph with a label.</p>'
         )
         self.assertEqual(
             regdown(text2),
-            '<p class="regdown-block level-1" id="31-a-1-i-Interp-1">'
+            '<p class="regdown-block level-0" id="31-a-1-i-Interp-1">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -99,7 +101,7 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             '#### 30(b) Business Day'
         )
         self.assertIn(
-            '<div class="regdown-block level-0" id="30-b-Interp"></div>',
+            '<div class="regdown-block level-2" id="30-b-Interp"></div>',
             regdown(text)
         )
 
@@ -176,13 +178,20 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         """ Test that Markdown can load our extension from a string """
         try:
             markdown.Markdown(extensions=['regulations3k.regdown'])
-        except AttributeError as e:
+        except AttributeError as e:  # pragma: no cover
             self.fail('Markdown failed to load regdown extension: '
                       '{}'.format(e.message))
 
     def test_block_reference_resolver_not_callable(self):
         text = 'see(foo-bar)'
-        self.assertEqual(regdown(text, contents_resolver=None), '')
+        self.assertEqual(
+            regdown(
+                text,
+                contents_resolver=None,
+                render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
+            ),
+            ''
+        )
 
     def test_block_reference_renderer_not_callable(self):
         text = 'see(foo-bar)'
@@ -192,21 +201,23 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         contents_resolver = lambda l: ''
         text = 'see(foo-bar)'
         self.assertEqual(
-            regdown(text, contents_resolver=contents_resolver),
+            regdown(
+                text,
+                contents_resolver=contents_resolver,
+                render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
+            ),
             ''
         )
 
     def test_block_reference(self):
         contents_resolver = lambda l: '{foo-bar}\n# §FooBar\n\n'
-        render_block_reference = lambda c, **kwargs: \
-            '<blockquote>{}</blockquote>'.format(regdown(c))
         text = 'see(foo-bar)'
         self.assertIn(
             '<h1>§FooBar</h1>',
             regdown(
                 text,
                 contents_resolver=contents_resolver,
-                render_block_reference=render_block_reference
+                render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
             )
         )
 

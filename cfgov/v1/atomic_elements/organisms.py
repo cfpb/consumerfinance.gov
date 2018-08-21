@@ -669,14 +669,13 @@ class FullWidthText(blocks.StreamBlock):
     content = blocks.RichTextBlock(icon='edit')
     content_with_anchor = molecules.ContentWithAnchor()
     heading = v1_blocks.HeadingBlock(required=False)
-    image_inset = molecules.ContentImage()
+    image = molecules.ContentImage()
     table_block = AtomicTableBlock(table_options={'renderer': 'html'})
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
     reusable_text = v1_blocks.ReusableTextChooserBlock('v1.ReusableText')
     email_signup = EmailSignUp()
-    media = images_blocks.ImageChooserBlock(icon=None, label=' ')
 
     class Meta:
         icon = 'edit'

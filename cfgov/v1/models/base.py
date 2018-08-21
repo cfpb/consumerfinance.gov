@@ -27,7 +27,7 @@ from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
-from v1 import blocks as v1_blocks, get_protected_url
+from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.snippets import ReusableText
 from v1.util import ref
@@ -147,11 +147,25 @@ class CFGOVPage(Page):
         return sorted(author_names, key=lambda x: x.name.split()[-1])
 
     def generate_view_more_url(self, request):
-        activity_log = CFGOVPage.objects.get(slug='activity-log').specific
-        tags = []
+        """Generate a URL to see more pages like this one.
+
+        This method generates a link to the Activity Log page (which must
+        exist and must have a unique site-wide slug of "activity-log") with
+        filters set by the tags assigned to this page, like this:
+
+        /activity-log/?topics=foo&topics=bar&topics=baz
+
+        If for some reason a page with slug "activity-log" does not exist,
+        this method will raise Page.DoesNotExist.
+        """
+        activity_log = Page.objects.get(slug='activity-log')
+        url = activity_log.get_url(request)
+
         tags = urlencode([('topics', tag) for tag in self.tags.slugs()])
-        return (get_protected_url({'request': request}, activity_log)
-                + '?' + tags)
+        if tags:
+            url += '?' + tags
+
+        return url
 
     def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage

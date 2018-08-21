@@ -27,29 +27,29 @@
 
 {% macro render(value) %}
 
-{% set ancestor = page.get_filter_data() %}
-{% set page_url = get_protected_url(ancestor) %}
+{% set filter_page = page.get_filter_data() %}
+{% set filter_page_url = pageurl(filter_page) if filter_page else none %}
 {% set published_date = value.date %}
 {% set has_authors = page.authors.exists() %}
 
 <div class="o-item-introduction">
-    {% if page.categories.count() > 0 and value.show_category %}
-        {{ category_slug.render(page.categories.first().name, page_url) }}
+    {% if filter_page_url and page.categories.count() > 0 and value.show_category %}
+        {{ category_slug.render(category=page.categories.first().name, href=page_url) }}
     {% endif %}
     <h1>{{ value.heading | safe }}</h1>
 
     {% if value.paragraph %}
-        <div class="lead-paragraph">{{ parse_links(value.paragraph) | safe }}</div>
+        <div class="lead-paragraph">{{ value.paragraph | safe }}</div>
     {% endif %}
 
     {% if published_date or has_authors %}
         <div class="meta">
     {% endif %}
-        {% if has_authors %}
+        {% if filter_page_url and has_authors %}
             <span class="byline">
             {%- for author in page.get_authors() -%}
                 {{- 'By ' if loop.index == 1 else ' and ' }}
-                <a href="{{ page_url }}?authors={{ author.slug }}">
+                <a href="{{ filter_page_url }}?authors={{ author.slug }}">
                     {{ author.name }}
                 </a>
             {%- endfor -%}

@@ -51,12 +51,14 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
 MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
 # Disable caching when working locally.
-CACHES = {
+CACHES.update({
     k: {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'TIMEOUT': 0,
-    } for k in ('default', 'eregs_longterm_cache', 'api_cache', 'post_preview')
-}
+    } for k in (
+        'default', 'eregs_longterm_cache', 'api_cache', 'post_preview'
+    )
+})
 
 # Optionally enable cache for post_preview
 if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
@@ -66,6 +68,7 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
         'TIMEOUT': None,
     }
 
-# Use a mock GovDelivery API instead of the real thing.
-# Remove this line to use the real API instead.
-GOVDELIVERY_API = 'core.govdelivery.LoggingMockGovDelivery'
+# Use a mock GovDelivery API instead of the real thing,
+# unless the GOVDELIVERY_BASE_URL environment variable is set.
+if not os.environ.get('GOVDELIVERY_BASE_URL'):
+    GOVDELIVERY_API = 'core.govdelivery.LoggingMockGovDelivery'

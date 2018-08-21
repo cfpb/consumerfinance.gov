@@ -214,10 +214,10 @@ def parse_interp_graph(p_element):
         graph = p_element.text.replace(
             '{}.'.format(pid), '**{}.**'.format(pid), 1).replace(
             '  ', ' ').replace(
-            '** **', ' ', 1)
+            '** **', ' ', 1).replace('\n', '')
         graph_text += graph + "\n"
     else:
-        graph_text += p_element.text + "\n"
+        graph_text += p_element.text.replace('\n', '') + "\n"
     return graph_text
 
 

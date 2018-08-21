@@ -4,11 +4,12 @@ import re
 from collections import OrderedDict
 from functools import partial
 
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
-from django.utils.functional import cached_property
 from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
@@ -18,14 +19,16 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 
+import requests
 from jinja2 import Markup
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
+from regulations3k.blocks import RegulationsFullWidthText
 from regulations3k.models import Part, Section, SectionParagraph
 from regulations3k.parser.integer_conversion import LETTER_CODES
 from regulations3k.regdown import regdown
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
-from v1.atomic_elements import molecules
+from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
 
 
@@ -129,23 +132,58 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             context)
 
 
-class RegulationLandingPage(CFGOVPage):
+class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
     """Landing page for eregs."""
+
+    header = StreamField([
+        ('hero', molecules.Hero()),
+    ], blank=True)
+    content = StreamField([
+        ('full_width_text', RegulationsFullWidthText()),
+    ], blank=True)
+
+    # General content tab
+    content_panels = CFGOVPage.content_panels + [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
+    ]
+
+    # Tab handler interface
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='General Content'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
 
     objects = CFGOVPageManager()
     subpage_types = ['regulations3k.RegulationPage', 'RegulationsSearchPage']
-    regs = Part.objects.order_by('part_number')
+    template = 'regulations3k/landing-page.html'
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
         context.update({
             'get_secondary_nav_items': get_reg_nav_items,
-            'regs': self.regs,
         })
         return context
 
-    def get_template(self, request):
-        return 'regulations3k/base.html'
+    @route(r'^recent-notices-json/$', name='recent_notices')
+    def recent_notices(self, request):
+        fr_api_url = 'https://www.federalregister.gov/api/v1/'
+        fr_documents_url = fr_api_url + 'documents.json'
+        params = {
+            'fields_list': ['html_url', 'title'],
+            'per_page': '3',
+            'order': 'newest',
+            'conditions[agencies][]': 'consumer-financial-protection-bureau',
+            'conditions[type][]': 'RULE',
+            'conditions[cfr][title]': '12',
+        }
+        response = requests.get(fr_documents_url, params=params)
+
+        if response.status_code != 200:
+            return HttpResponse(status=response.status_code)
+
+        return JsonResponse(response.json())
 
 
 class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
@@ -161,16 +199,22 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         ('text_introduction', molecules.TextIntroduction()),
     ], blank=True)
 
-    content = StreamField([], null=True)
+    content = StreamField([
+        ('info_unit_group', organisms.InfoUnitGroup()),
+        ('full_width_text', organisms.FullWidthText()),
+    ], null=True, blank=True)
+
     regulation = models.ForeignKey(
         Part,
         blank=True,
         null=True,
         on_delete=models.PROTECT,
-        related_name='eregs3k_page')
+        related_name='eregs3k_page'
+    )
 
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
         FieldPanel('regulation', Part),
     ]
 
@@ -186,33 +230,39 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    @cached_property
-    def section_query(self):
-        """Query set for Sections in this regulation's effective version."""
-        return Section.objects.filter(
-            subpart__version=self.regulation.effective_version,
+    def get_effective_version(self, request, date_str):
+        """ Get the requested effective version if the user has permission """
+        effective_version = self.regulation.versions.get(
+            effective_date=date_str
         )
 
-    @cached_property
-    def sections(self):
-        return list(self.section_query.all())
+        if effective_version.draft:
+            page_perms = self.permissions_for_user(request.user)
+            if not page_perms.can_edit():
+                raise PermissionDenied
+
+        return effective_version
+
+    def get_section_query(self, effective_version=None):
+        """Query set for Sections in this regulation's effective version."""
+        if effective_version is None:
+            effective_version = self.regulation.effective_version
+        return Section.objects.filter(
+            subpart__version=effective_version
+        )
 
     def get_context(self, request, *args, **kwargs):
-        context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+        context = super(RegulationPage, self).get_context(
+            request, *args, **kwargs
+        )
         context.update({
-            'get_secondary_nav_items': get_reg_nav_items,
             'regulation': self.regulation,
-            'section': None,
             'breadcrumb_items': self.get_breadcrumbs(request)
         })
         return context
 
     def get_breadcrumbs(self, request, section=None):
-        landing_page = self.get_parent()
-        crumbs = [{
-            'href': landing_page.url,
-            'title': landing_page.title,
-        }]
+        crumbs = super(RegulationPage, self).get_breadcrumbs(request)
 
         if section is not None:
             crumbs = crumbs + [
@@ -220,45 +270,9 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                     'href': self.url,
                     'title': str(section.subpart.version.part),
                 },
-                {
-                    'title': section.subpart.title,
-                },
             ]
 
         return crumbs
-
-    @route(r'^(?P<section_label>[0-9A-Za-z-]+)/$', name="section")
-    def section_page(self, request, section_label):
-        section = self.section_query.get(label=section_label)
-        current_index = self.sections.index(section)
-        context = self.get_context(request)
-
-        content = regdown(
-            section.contents,
-            url_resolver=get_url_resolver(self),
-            contents_resolver=get_contents_resolver(self),
-            render_block_reference=partial(self.render_interp, context)
-        )
-
-        context.update({
-            'version': self.regulation.effective_version,
-            'content': content,
-            'get_secondary_nav_items': get_reg_nav_items,
-            'next_section': get_next_section(
-                self.sections, current_index),
-            'previous_section': get_previous_section(
-                self.sections, current_index),
-            'section': section,
-            'breadcrumb_items': self.get_breadcrumbs(request, section),
-            'search_url': (self.get_parent().url +
-                           'search-regulations/results/?regs=' +
-                           self.regulation.part_number)
-        })
-
-        return TemplateResponse(
-            request,
-            self.template,
-            context)
 
     def render_interp(self, context, raw_contents, **kwargs):
         template = get_template('regulations3k/inline_interps.html')
@@ -280,6 +294,81 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
         return template.render(context)
 
+    @route(r'^((?P<date_str>[0-9]{4}-[0-9]{2}-[0-9]{2})/)?$')
+    def index_route(self, request, date_str=None, *args, **kwargs):
+        request.is_preview = getattr(request, 'is_preview', False)
+
+        if date_str is not None:
+            effective_version = self.get_effective_version(request, date_str)
+            section_query = self.get_section_query(
+                effective_version=effective_version
+            )
+        else:
+            section_query = self.get_section_query()
+
+        sections = list(section_query.all())
+
+        context = self.get_context(request, *args, **kwargs)
+        context.update({
+            'get_secondary_nav_items': partial(
+                get_reg_nav_items, sections=sections, date_str=date_str
+            ),
+        })
+
+        return TemplateResponse(
+            request,
+            self.get_template(request, *args, **kwargs),
+            context
+        )
+
+    @route(r'^(?:(?P<date_str>[0-9]{4}-[0-9]{2}-[0-9]{2})/)?'
+           r'(?P<section_label>[0-9A-Za-z-]+)/$',
+           name="section")
+    def section_page(self, request, date_str=None, section_label=None):
+        """ Render a section of the currently effective regulation """
+
+        if date_str is not None:
+            effective_version = self.get_effective_version(request, date_str)
+            section_query = self.get_section_query(
+                effective_version=effective_version
+            )
+        else:
+            section_query = self.get_section_query()
+
+        sections = list(section_query.all())
+        section = section_query.get(label=section_label)
+        current_index = sections.index(section)
+        context = self.get_context(request, sections=sections)
+
+        content = regdown(
+            section.contents,
+            url_resolver=get_url_resolver(self),
+            contents_resolver=get_contents_resolver(self),
+            render_block_reference=partial(self.render_interp, context)
+        )
+
+        context.update({
+            'version': self.regulation.effective_version,
+            'content': content,
+            'get_secondary_nav_items': partial(
+                get_reg_nav_items, sections=sections, date_str=date_str
+            ),
+            'next_section': get_next_section(
+                sections, current_index),
+            'previous_section': get_previous_section(
+                sections, current_index),
+            'section': section,
+            'breadcrumb_items': self.get_breadcrumbs(request, section),
+            'search_url': (self.get_parent().url +
+                           'search-regulations/results/?regs=' +
+                           self.regulation.part_number)
+        })
+
+        return TemplateResponse(
+            request,
+            self.template,
+            context)
+
 
 def get_next_section(section_list, current_index):
     if current_index == len(section_list) - 1:
@@ -295,11 +384,14 @@ def get_previous_section(section_list, current_index):
         return section_list[current_index - 1]
 
 
-def get_reg_nav_items(request, current_page):
+def get_reg_nav_items(request, current_page, sections=[], date_str=None):
     url_bits = [bit for bit in request.path.split('/') if bit]
     current_label = url_bits[-1]
-    sections = current_page.sections
     subpart_dict = OrderedDict()
+
+    section_kwargs = {}
+    if date_str is not None:
+        section_kwargs['date_str'] = date_str
 
     for section in sections:
         # If the section's subpart isn't in the subpart dict yet, add it
@@ -308,13 +400,14 @@ def get_reg_nav_items(request, current_page):
                 'sections': [],
                 'expanded': False
             }
+        section_kwargs['section_label'] = section.label
 
         # Create the section dictionary for navigation
         section_dict = {
             'title': section.title,
             'url': current_page.url + current_page.reverse_subpage(
                 'section',
-                args=([section.label])
+                kwargs=section_kwargs
             ),
             'active': section.label == current_label,
             'expanded': True,

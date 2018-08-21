@@ -6,7 +6,7 @@
             {{ page.title | safe }}
         </h1>
         <p class="post_dek">
-            {{ parse_links(page.body) | safe }}
+            {{ page.body | safe }}
         </p>
         <div class="t-event_details">
             <div class="modification-date date">
@@ -65,17 +65,17 @@
         </aside>
         {% endif %}
         {% if (event_state == 'past') %}
-            {{ parse_links(page.archive_body) | safe }}
+            {{ page.archive_body | safe }}
         {% elif (event_state == 'present') %}
-            {{ parse_links(page.live_body) | safe }}
+            {{ page.live_body | safe }}
         {% elif (event_state == 'future') %}
-            {{ parse_links(page.future_body) | safe }}
+            {{ page.future_body | safe }}
         {% endif %}
     </div>
     {% if page.tags.names() | length %}
     <footer>
         {%- import 'tags.html' as tags %}
-        {{ tags.render( page.related_metadata_tags(), '', is_wagtail=True) }}
+        {{ tags.render( page.related_metadata_tags(), is_wagtail=True) }}
     </footer>
     {% endif %}
 </article>

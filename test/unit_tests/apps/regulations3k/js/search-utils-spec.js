@@ -60,46 +60,6 @@ describe( 'The Regs3K search utils', () => {
     expect( unknownError.msg ).toEqual( 'Sorry, our search engine is temporarily down.' );
   } );
 
-  it( 'should fetch search results', done => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 200,
-      onreadystatechange: jest.fn(),
-      responseText: [
-        { searchResult: 'one' },
-        { anotherSearchResult: 'two' }
-      ]
-    };
-    global.XMLHttpRequest = jest.fn( () => mockXHR );
-    utils.fetchSearchResults( 'api/search', ( err, data ) => {
-      expect( err ).toEqual( null );
-      expect( data ).toEqual(
-        [ { searchResult: 'one' }, { anotherSearchResult: 'two' } ]
-      );
-      done();
-    } );
-    mockXHR.onreadystatechange();
-  } );
-
-  it( 'should fail to fetch search results', done => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 404,
-      onreadystatechange: jest.fn(),
-      responseText: 'Server error!'
-    };
-    global.XMLHttpRequest = jest.fn( () => mockXHR );
-    utils.fetchSearchResults( 'api/search', err => {
-      expect( err ).toEqual( 404 );
-      done();
-    } );
-    mockXHR.onreadystatechange();
-  } );
-
   it( 'should replace the browser history', () => {
     const rs = global.history.replaceState = jest.fn();
     expect( rs.mock.calls.length ).toEqual( 0 );

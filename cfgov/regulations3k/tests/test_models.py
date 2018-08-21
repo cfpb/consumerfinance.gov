@@ -5,9 +5,13 @@ import sys
 import unittest
 
 # from django.core.urlresolvers import reverse
+from django.contrib.auth.models import AnonymousUser, User
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.http import HttpRequest, QueryDict  # Http404, HttpResponse
-from django.test import TestCase as DjangoTestCase
+from django.test import RequestFactory, TestCase as DjangoTestCase
+
+from wagtail.wagtailcore.models import Site
 
 import mock
 from model_mommy import mommy
@@ -25,6 +29,13 @@ from regulations3k.models.pages import (
 class RegModelTests(DjangoTestCase):
     def setUp(self):
         from v1.models import HomePage
+        self.factory = RequestFactory()
+        self.superuser = User.objects.create_superuser(
+            username='supertest', password='test', email='test@email.com'
+        )
+
+        self.site = Site.objects.get(is_default_site=True)
+
         self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.landing_page = RegulationLandingPage(
             title='Reg Landing', slug='reg-landing')
@@ -53,10 +64,16 @@ class RegModelTests(DjangoTestCase):
             effective_date=datetime.date(2011, 1, 1),
             part=self.part_1002,
         )
+        self.draft_effective_version = mommy.make(
+            EffectiveVersion,
+            effective_date=datetime.date(2020, 1, 1),
+            part=self.part_1002,
+            draft=True,
+        )
         self.subpart = mommy.make(
             Subpart,
             label='Subpart General',
-            title='General',
+            title='Subpart A - General',
             subpart_type=Subpart.BODY,
             version=self.effective_version
         )
@@ -80,6 +97,13 @@ class RegModelTests(DjangoTestCase):
             title='An orphan subpart with no sections for testing',
             version=self.effective_version
         )
+        self.old_subpart = mommy.make(
+            Subpart,
+            label='Subpart General',
+            title='General',
+            subpart_type=Subpart.BODY,
+            version=self.old_effective_version
+        )
         self.section_num4 = mommy.make(
             Section,
             label='4',
@@ -87,7 +111,9 @@ class RegModelTests(DjangoTestCase):
             contents=(
                 '{a}\n(a) Regdown paragraph a.\n'
                 '{b}\n(b) Paragraph b\n'
+                '\nsee(4-b-Interp)\n'
                 '{c}\n(c) Paragraph c.\n'
+                '{c-1}\n \n'
                 '{d}\n(1) General rule. A creditor that provides in writing.\n'
             ),
             subpart=self.subpart,
@@ -134,6 +160,14 @@ class RegModelTests(DjangoTestCase):
             contents='interp content.',
             subpart=self.subpart_interps,
         )
+        self.old_section_num4 = mommy.make(
+            Section,
+            label='4',
+            title='\xa7\xa01002.4 General rules.',
+            contents='regdown contents',
+            subpart=self.old_subpart,
+        )
+
         self.reg_page = RegulationPage(
             regulation=self.part_1002,
             title='Reg B',
@@ -147,6 +181,11 @@ class RegModelTests(DjangoTestCase):
         self.landing_page.add_child(instance=self.reg_search_page)
         self.reg_page.save()
         self.reg_search_page.save()
+
+    def get_request(self, path='', data={}):
+        request = self.factory.get(path, data=data)
+        request.site = self.site
+        return request
 
     def test_part_string_method(self):
         self.assertEqual(
@@ -166,22 +205,22 @@ class RegModelTests(DjangoTestCase):
     def test_subpart_string_method(self):
         self.assertEqual(
             self.subpart.__str__(),
-            'General')
+            'Subpart A - General')
 
     def test_section_string_method(self):
-        if sys.version_info >= (3, 0):
+        if sys.version_info >= (3, 0):  # pragma: no cover
             self.assertEqual(
                 self.section_num4.__str__(),
                 '\xa7\xa01002.4 General rules.')
-        else:
+        else:  # pragma: no cover
             self.assertEqual(
                 self.section_num4.__str__(),
                 '\xa7\xa01002.4 General rules.'.encode('utf8'))
 
     def test_section_export_graphs(self):
         test_counts = self.section_num4.extract_graphs()
-        self.assertEqual(test_counts['section'], self.section_num4.title)
-        self.assertEqual(test_counts['created'], 3)
+        self.assertEqual(test_counts['section'], "1002-4")
+        self.assertEqual(test_counts['created'], 4)
         self.assertEqual(test_counts['deleted'], 1)
         self.assertEqual(test_counts['kept'], 1)
 
@@ -221,61 +260,52 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(self.old_effective_version.status, 'Previous version')
 
     def test_landing_page_get_context(self):
-        test_context = self.landing_page.get_context(HttpRequest())
-        self.assertIn(self.part_1002, test_context['regs'])
-
-    def test_landing_page_get_template(self):
-        self.assertEqual(
-            self.landing_page.get_template(HttpRequest()),
-            'regulations3k/base.html')
+        test_context = self.landing_page.get_context(self.get_request())
+        self.assertIn('get_secondary_nav_items', test_context)
 
     def test_search_page_get_template(self):
         self.assertEqual(
-            self.reg_search_page.get_template(HttpRequest()),
+            self.reg_search_page.get_template(self.get_request()),
             'regulations3k/search-regulations.html')
 
     def test_search_results_page_get_template(self):
-        request = HttpRequest()
-        request.GET.update({'partial': 'true'})
+        request = self.get_request(data={'partial': 'true'})
         self.assertEqual(
             self.reg_search_page.get_template(request),
             'regulations3k/search-regulations-results.html')
         # Should return partial results even if no value is provided
-        request.GET.update({'partial': ''})
+        request = self.get_request(data={'partial': ''})
         self.assertEqual(
             self.reg_search_page.get_template(request),
             'regulations3k/search-regulations-results.html')
 
     def test_routable_reg_page_get_context(self):
-        test_context = self.reg_page.get_context(HttpRequest())
+        test_context = self.reg_page.get_context(self.get_request())
         self.assertEqual(
             test_context['regulation'],
             self.reg_page.regulation)
 
     def test_get_reg_nav_items(self):
-        request = HttpRequest()
+        request = self.get_request()
         request.path = '/regulations/1002/4/'
-        test_nav_items = get_reg_nav_items(request, self.reg_page)[0]
+        sections = list(self.reg_page.get_section_query().all())
+        test_nav_items = get_reg_nav_items(request, self.reg_page, sections)[0]
         self.assertEqual(
             len(test_nav_items),
             Subpart.objects.filter(
-                version__part__part_number='1002').exclude(
-                sections=None).count())
+                version=self.effective_version
+            ).exclude(
+                sections=None
+            ).count()
+        )
 
     def test_routable_page_view(self):
         response = self.reg_page.section_page(
-            HttpRequest(), section_label='4')
+            self.get_request(), section_label='4')
         self.assertEqual(response.status_code, 200)
 
     def test_sortable_label(self):
         self.assertEqual(sortable_label('1-A-Interp'), ('0001', 'A', 'interp'))
-
-    def test_sections(self):
-        sections = [s.label for s in self.reg_page.sections]
-        self.assertEqual(
-            sections,
-            ['4', '15', 'A', 'B', 'Interp-A']
-        )
 
     def test_render_interp(self):
         result = self.reg_page.render_interp({}, 'some contents')
@@ -358,26 +388,90 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_sqs.call_count, 0)
 
-    def test_get_breadcrumbs_reg_page(self):
-        crumbs = self.reg_page.get_breadcrumbs(HttpRequest())
-        self.assertEqual(
-            crumbs,
-            [{'href': '/reg-landing/', 'title': 'Reg Landing'}]
-        )
-
     def test_get_breadcrumbs_section(self):
         crumbs = self.reg_page.get_breadcrumbs(
-            HttpRequest(),
+            self.get_request(),
             section=self.section_num4
         )
         self.assertEqual(
             crumbs,
             [
-                {'href': '/reg-landing/', 'title': 'Reg Landing'},
-                {'href': '/reg-landing/1002/',
-                 'title': '12 CFR Part 1002 (Regulation B)'},
-                {'title': 'General'}
+                {
+                    'href': '/reg-landing/1002/',
+                    'title': '12 CFR Part 1002 (Regulation B)'
+                },
             ]
+        )
+
+    @mock.patch('regulations3k.models.pages.requests.get')
+    def test_landing_page_recent_notices(self, mock_requests_get):
+        mock_response = mock.Mock()
+        mock_response.json.return_value = {'some': 'json'}
+        mock_response.status_code = 200
+        mock_requests_get.return_value = mock_response
+        response = self.client.get(
+            self.landing_page.url +
+            self.landing_page.reverse_subpage('recent_notices')
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b'{"some": "json"}')
+
+    @mock.patch('regulations3k.models.pages.requests.get')
+    def test_landing_page_recent_notices_error(self, mock_requests_get):
+        mock_response = mock.Mock()
+        mock_response.status_code = 500
+        mock_requests_get.return_value = mock_response
+        response = self.client.get(
+            self.landing_page.url +
+            self.landing_page.reverse_subpage('recent_notices')
+        )
+        self.assertEqual(response.status_code, 500)
+
+    def test_get_effective_version_not_draft(self):
+        request = self.get_request()
+        effective_version = self.reg_page.get_effective_version(
+            request, '2014-01-18'
+        )
+        self.assertEqual(effective_version, self.effective_version)
+
+    def test_get_effective_version_draft_with_perm(self):
+        request = self.get_request()
+        request.user = self.superuser
+        effective_version = self.reg_page.get_effective_version(
+            request, '2020-01-01'
+        )
+        self.assertEqual(effective_version, self.draft_effective_version)
+
+    def test_get_effective_version_draft_without_perm(self):
+        request = self.get_request()
+        request.user = AnonymousUser()
+        with self.assertRaises(PermissionDenied):
+            self.reg_page.get_effective_version(
+                request, '2020-01-01'
+            )
+
+    def test_index_page_with_effective_date(self):
+        response = self.client.get('/reg-landing/1002/2011-01-01/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_index_page_without_effective_date(self):
+        response = self.client.get('/reg-landing/1002/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_section_page_with_effective_date(self):
+        response = self.client.get('/reg-landing/1002/2011-01-01/4/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            b'JAN 01, 2011',
+            response.content,
+        )
+
+    def test_section_page_without_effective_date(self):
+        response = self.client.get('/reg-landing/1002/4/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            b'JAN 18, 2014',
+            response.content
         )
 
 

@@ -2,13 +2,16 @@
 const Analytics = require( '../modules/Analytics' );
 const atomicHelpers = require( '../modules/util/atomic-helpers' );
 const ERROR_MESSAGES = require( '../config/error-messages-config' );
-const Expandable = require( '../organisms/Expandable' );
 const getClosestElement = require( '../modules/util/dom-traverse' ).closest;
 const Multiselect = require( '../molecules/Multiselect' );
 const Notification = require( '../molecules/Notification' );
 const standardType = require( '../modules/util/standard-type' );
 const validators = require( '../modules/util/validators' );
+const Expandable = require( 'cf-expandables/src/Expandable' );
+let _expandable;
 
+/* eslint-disable max-lines-per-function */
+// TODO: Reduce lines in FilterableListControls
 /**
  * FilterableListControls
  * @class
@@ -22,7 +25,6 @@ const validators = require( '../modules/util/validators' );
 function FilterableListControls( element ) {
   const BASE_CLASS = 'o-filterable-list-controls';
   const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  let _expandable;
   const _form = _dom.querySelector( 'form' );
   let _notification;
   let _fieldGroups;
@@ -58,19 +60,17 @@ function FilterableListControls( element ) {
       Multiselect
     );
 
-    /* TODO: FilterableListControls should use expandable
-       behavior (FlyoutMenu), not an expandable directly. */
-    _expandable = new Expandable( _dom );
-    _expandable.init();
+    const _expandables = Expandable.init();
+    _expandable = _expandables[0];
 
     if ( _dom.classList.contains( 'o-filterable-list-controls' ) ) {
       multiSelects.forEach( function( multiSelect ) {
         multiSelect.addEventListener( 'expandBegin', function refresh() {
-          window.setTimeout( _expandable.refreshHeight, 250 );
+          window.setTimeout( _expandable.transition.expand, 250 );
         } );
 
         multiSelect.addEventListener( 'expandEnd', function refresh() {
-          window.setTimeout( _expandable.refreshHeight, 250 );
+          window.setTimeout( _expandable.transition.expand, 250 );
         } );
       } );
     }
@@ -97,13 +97,15 @@ function FilterableListControls( element ) {
       label = labelDom.textContent.trim();
     }
 
-    _expandable.addEventListener( 'expandBegin', function sendEvent() {
-      Analytics.sendEvent( 'Filter:open', label );
-    } );
+    _expandable.transition.addEventListener(
+      'expandBegin',
+      function sendEvent() { Analytics.sendEvent( 'Filter:open', label ); }
+    );
 
-    _expandable.addEventListener( 'collapseBegin', function sendEvent() {
-      Analytics.sendEvent( 'Filter:close', label );
-    } );
+    _expandable.transition.addEventListener(
+      'collapseBegin',
+      function sendEvent() { Analytics.sendEvent( 'Filter:close', label ); }
+    );
 
     _form.addEventListener( 'change', function sendEvent( event ) {
       const field = event.target;
@@ -162,6 +164,8 @@ function FilterableListControls( element ) {
     return msg || ERROR_MESSAGES.DEFAULT;
   }
 
+  /* eslint-disable complexity */
+  // TODO: Reduce complexity
   /**
    * Validate the fields of our form.
    * @param {HTMLNode} field A form field.
@@ -186,6 +190,7 @@ function FilterableListControls( element ) {
 
     return labelText;
   }
+  /* eslint-enable complexity */
 
   /**
    * Set the notification type, msg, and visibility.
@@ -200,6 +205,8 @@ function FilterableListControls( element ) {
     _notification[methodName]();
   }
 
+  /* eslint-disable complexity */
+  // TODO: Reduce complexity
   /**
    * Determines if you should validate a field.
    * @param {HTMLNode} field A form field.
@@ -226,6 +233,7 @@ function FilterableListControls( element ) {
 
     return shouldValidate;
   }
+  /* eslint-enable complexity */
 
   /**
    * Validate the fields of our form.
@@ -242,6 +250,8 @@ function FilterableListControls( element ) {
 
     _fieldGroups = [];
 
+    /* eslint-disable complexity */
+    // TODO: Reduce complexity
     fields.forEach( function loopFields( field ) {
       let fieldIsValid = true;
       const type = field.getAttribute( 'data-type' ) ||
@@ -263,10 +273,13 @@ function FilterableListControls( element ) {
         validatedFields.invalid.push( validatedField );
       }
     } );
+    /* eslint-enable complexity */
 
     return validatedFields;
   }
 
+  /* eslint-disable complexity */
+  // TODO: Reduce complexity
   /**
    * Validate the specific field types.
    * @param {HTMLNode} field A form field.
@@ -298,10 +311,12 @@ function FilterableListControls( element ) {
 
     return validators.empty( field, validation );
   }
+  /* eslint-enable complexity */
 
   this.init = init;
   this.destroy = destroy;
   return this;
 }
+/* eslint-enable max-lines-per-function */
 
 module.exports = FilterableListControls;

@@ -66,7 +66,7 @@
         'modifier': modifier,
         'image': info_unit_image,
         'heading': heading,
-        'body': parse_links(value.body) | safe
+        'body': value.body | safe
     } ) }}
 
     {% set snippets = get_snippets(value.snippet_type) %}
@@ -115,7 +115,7 @@
                                 else snippet[action.snippet_field] -%}
                             {% set link = '<a href="' ~ href ~ '">' ~ action.link_label ~ '</a>' %}
                             <li class="m-list_item">
-                               {{ parse_links(link) | safe }}
+                               {{ link | safe }}
                             </li>
                         {% endif %}
                     {% endfor %}
