@@ -12,11 +12,20 @@ except ImportError:
     from io import StringIO
 
 
-# Django 1.10+ includes makemigrations --check, making this unnecessary
+# Django 1.10+ includes makemigrations --check, which we can run
+#  directly from tox, Travis, or the command line. So, after we
+#  upgrade to Django 1.11, we will remove this file entirely.
 is_django_110_plus = (1 <= VERSION[0]) and (10 <= VERSION[1])
 
 
-def check_missing_migrations(out=sys.stdout):
+def migrations_are_missing(out=sys.stdout):
+    if is_django_110_plus:
+        return migrations_missing_dj110(out)
+    else:
+        return migrations_missing_dj18(out)
+
+
+def migrations_missing_dj18(out=sys.stdout):
     try:
         call_command(
             'makemigrations',
@@ -25,24 +34,34 @@ def check_missing_migrations(out=sys.stdout):
             stdout=out
         )
     except SystemExit:
-        # makemigrations calls sys.exit if there are no migrations to be
-        # made. We want to detect the inverse, and fail if there are any
-        # migrations that need to be generated.
+        # No missing migrations
         return False
     else:
+        # Some missing migrations
         return True
 
 
-def run():
-    if is_django_110_plus:
-        print(
-            'makemigrations --exit deprecated in Django 1.10: '
-            'https://docs.djangoproject.com/en/1.10/ref/django-admin/'
-            '#cmdoption-makemigrations--exit'
+def migrations_missing_dj110(out=sys.stdout):
+    try:
+        call_command(
+            'makemigrations',
+            dry_run=True,
+            check=True,
+            stdout=out
         )
+    except SystemExit:
+        # Some missing migrations
+        return True
+    else:
+        # No missing migrations
+        return False
 
+
+def run():
     out = StringIO()
-    if check_missing_migrations(out):
+    if migrations_are_missing(out):
         print("Missing migrations found:")
         print(out.getvalue())
         sys.exit(1)
+    else:
+        sys.exit(0)
