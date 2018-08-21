@@ -172,7 +172,7 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
         fr_documents_url = fr_api_url + 'documents.json'
         params = {
             'fields_list': ['html_url', 'title'],
-            'per_page': '10',
+            'per_page': '3',
             'order': 'newest',
             'conditions[agencies][]': 'consumer-financial-protection-bureau',
             'conditions[type][]': 'RULE',
