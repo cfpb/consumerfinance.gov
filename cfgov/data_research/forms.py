@@ -5,7 +5,7 @@ from django import forms
 from core.govdelivery import get_govdelivery_api
 from data_research.models import ConferenceRegistration
 from data_research.widgets import (
-    CheckboxSelectMultiple, EmailInput, Textarea, TextInput
+    CheckboxSelectMultiple, EmailInput, RadioSelect, Textarea, TextInput
 )
 
 
@@ -19,6 +19,13 @@ class ConferenceRegistrationForm(forms.Form):
     If save(commit=False) is used, a model instance is created but not
     persisted to the database, and GovDelivery subscription is skipped.
     """
+    ATTENDEE_IN_PERSON = 'In person'
+    ATTENDEE_VIRTUALLY = 'Virtually'
+    ATTENDEE_TYPES = tuple((t, t) for t in (
+        ATTENDEE_IN_PERSON,
+        ATTENDEE_VIRTUALLY,
+    ))
+
     SESSIONS = tuple((s, s) for s in (
         'Thursday morning',
         'Thursday lunch',
@@ -40,18 +47,24 @@ class ConferenceRegistrationForm(forms.Form):
         'Nursing Space',
     ))
 
+    attendee_type = forms.ChoiceField(
+        widget=RadioSelect,
+        choices=ATTENDEE_TYPES,
+        required=True,
+        label='Do you plan to attend in person or virtually?',
+    )
     name = forms.CharField(max_length=250, widget=TextInput(required=True))
     organization = forms.CharField(max_length=250, required=False,
                                    widget=TextInput)
     email = forms.EmailField(max_length=250, widget=EmailInput(required=True))
-    sessions = forms.MultipleChoiceField(
-        widget=CheckboxSelectMultiple,
-        choices=SESSIONS,
-        label="Which sessions will you be attending?",
-        error_messages={
-            'required': "You must select at least one session to attend.",
-        }
-    )
+    # sessions = forms.MultipleChoiceField(
+    #     widget=CheckboxSelectMultiple,
+    #     choices=SESSIONS,
+    #     label="Which sessions will you be attending?",
+    #     error_messages={
+    #         'required': "You must select at least one session to attend.",
+    #     }
+    # )
     dietary_restrictions = forms.MultipleChoiceField(
         widget=CheckboxSelectMultiple,
         choices=DIETARY_RESTRICTIONS,
@@ -79,8 +92,41 @@ class ConferenceRegistrationForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
+        self.capacity = kwargs.pop('capacity')
         self.govdelivery_code = kwargs.pop('govdelivery_code')
         super(ConferenceRegistrationForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(ConferenceRegistrationForm, self).clean()
+
+        if (
+            cleaned_data.get('attendee_type') == self.ATTENDEE_IN_PERSON and
+            self.at_capacity
+        ):
+            raise forms.ValidationError('at capacity')
+
+    @property
+    def at_capacity(self):
+        attendees = ConferenceRegistration.objects.filter(
+            govdelivery_code=self.govdelivery_code
+        )
+
+        # TODO: In Django 1.9+, this logic can be optimized through use of
+        # Django's built-in Postgres JSONFields. This will require migrating
+        # the details field of the ConferenceRegistration model.
+        #
+        # attendees = ConferenceRegistrationForm.objects.filter(
+        #     govdelivery_code=self.govdelivery_code,
+        #     details__attendee_type=self.ATTENDEE_IN_PERSON
+        # )
+        in_person_attendees = filter(
+            lambda a: (
+                a.details.get('attendee_type') == self.ATTENDEE_IN_PERSON
+            ),
+            attendees
+        )
+
+        return len(in_person_attendees) >= self.capacity
 
     def save(self, commit=True):
         registration = ConferenceRegistration(
