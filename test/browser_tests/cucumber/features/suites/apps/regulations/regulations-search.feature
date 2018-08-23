@@ -5,7 +5,7 @@ Feature: Regs3K search page
 
   Background:
     # This assumes you have Regs3K search set up at the below URL
-    Given I goto URL "/policy-compliance/rulemaking/regulations/search/results/"
+    Given I goto URL "/policy-compliance/rulemaking/regulations/search-regulations/results/"
 
   Scenario: Search for a term
     When I enter "automobile" in the regulations search field
