@@ -2,7 +2,7 @@ from django.test import TestCase, override_settings
 
 from wagtail.wagtailimages.tests.utils import get_test_image_file
 
-import boto
+import boto3
 import moto
 from model_mommy import mommy
 
@@ -100,22 +100,19 @@ class TestMetaImage(TestCase):
         self.check_template_meta_image_url(expected_root="http://localhost")
 
     @override_settings(
-        AWS_QUERYSTRING_AUTH=False,
+        AWS_LOCATION='root',
         AWS_S3_ACCESS_KEY_ID='test',
-        AWS_S3_CALLING_FORMAT='boto.s3.connection.OrdinaryCallingFormat',
-        AWS_S3_ROOT='root',
         AWS_S3_SECRET_ACCESS_KEY='test',
-        AWS_S3_SECURE_URLS=True,
         AWS_STORAGE_BUCKET_NAME='test_s3_bucket',
-        DEFAULT_FILE_STORAGE='v1.s3utils.MediaRootS3BotoStorage'
+        DEFAULT_FILE_STORAGE='storages.backends.s3boto3.S3Boto3Storage'
     )
     def test_template_image_image_url_s3(self):
         """Meta image links should work if using S3 storage."""
-        mock_s3 = moto.mock_s3_deprecated()
+        mock_s3 = moto.mock_s3()
         mock_s3.start()
 
-        s3 = boto.connect_s3()
-        s3.create_bucket('test_s3_bucket')
+        s3 = boto3.client('s3')
+        s3.create_bucket(Bucket='test_s3_bucket')
 
         try:
             # There should be no root required as the image rendition URL

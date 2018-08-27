@@ -382,18 +382,18 @@ ELASTICSEARCH_INDEX_SETTINGS = {
 ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
 
 # S3 Configuration
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_LOCATION = 'f'  # A path prefix that will be prepended to all uploads
 AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
-AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
-AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
+AWS_S3_FILE_OVERWRITE = False
 AWS_S3_SECURE_URLS = True  # True = use https; False = use http
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_FILE_OVERWRITE = False
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
-    DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
-    AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
-    AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
-    MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
+    AWS_S3_ACCESS_KEY_ID = os.environ['AWS_S3_ACCESS_KEY_ID']
+    AWS_S3_SECRET_ACCESS_KEY = os.environ['AWS_S3_SECRET_ACCESS_KEY']
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_LOCATION, '')
 
 # Govdelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
