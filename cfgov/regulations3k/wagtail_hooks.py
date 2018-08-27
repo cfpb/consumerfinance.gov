@@ -23,13 +23,18 @@ class SectionPreviewIndexView(TreeIndexView):
         page = part.page.first()
 
         if page is not None:
+            if effective_version.draft:
+                label = 'View draft'
+            else:
+                label = 'View live'
+
             preview_url = page.url + page.reverse_subpage(
                 'section',
                 kwargs={'date_str': date_str, 'section_label': obj.label}
             )
             preview_button = {
                 'url': preview_url,
-                'label': 'Preview',
+                'label': label,
                 'classname': 'button button-small button-secondary',
                 'title': 'Preview this {}'.format(self.verbose_name),
             }

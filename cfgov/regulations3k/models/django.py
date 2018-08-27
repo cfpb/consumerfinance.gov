@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import re
-from datetime import datetime, date
+from datetime import date
 
 from django.core.exceptions import ValidationError
 from django.db import models
