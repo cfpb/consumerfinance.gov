@@ -175,12 +175,8 @@ class FilterableListForm(forms.Form):
         allowing for a custom field name (new_name).
         """
         old_render = field.widget.render
-        if isinstance(field.widget, widgets.SelectMultiple):
-            field.widget.render = lambda name, value, attrs=None, choices=(): \
-                old_render(new_name, value, attrs, choices)
-        else:
-            field.widget.render = lambda name, value, attrs=None: \
-                old_render(new_name, value, attrs)
+        field.widget.render = lambda name, value, **kwargs: \
+            old_render(new_name, value, **kwargs)
 
     # Generates a query by iterating over the zipped collection of
     # tuples.
