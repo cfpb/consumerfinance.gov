@@ -865,7 +865,8 @@ class ChartBlock(blocks.StructBlock):
         ],
         required=False,
         help_text='Chart\'s color scheme. See '
-                  '"https://github.com/cfpb/cfpb-chart-builder#createchart-options-."')
+                  '"https://github.com/cfpb/cfpb-chart-builder'
+                  '#createchart-options-".')
     data_source = blocks.CharBlock(
         required=True,
         help_text='Location of the chart\'s data source relative to '
