@@ -50,6 +50,27 @@ class TestRegs3kHooks(TestCase, WagtailTestUtils):
             subpart=self.subpart,
         )
 
+        self.draft_effective_version = mommy.make(
+            EffectiveVersion,
+            effective_date=date(2020, 1, 18),
+            part=self.part_1002,
+            draft=True,
+        )
+        self.draft_subpart = mommy.make(
+            Subpart,
+            label='Subpart General',
+            title='General',
+            subpart_type=Subpart.BODY,
+            version=self.draft_effective_version
+        )
+        self.draft_section_num4 = mommy.make(
+            Section,
+            label='4',
+            title='\xa7\xa01002.4 General rules.',
+            contents='{a}\n(a) Regdown paragraph a.\n',
+            subpart=self.draft_subpart,
+        )
+
         self.login()
 
     def test_part_model_admin(self):
@@ -71,7 +92,8 @@ class TestRegs3kHooks(TestCase, WagtailTestUtils):
     def test_section_model_admin_no_preview_button(self):
         response = self.client.get('/admin/regulations3k/section/')
         self.assertEqual(response.status_code, 200)
-        self.assertNotIn(b'Preview', response.content)
+        self.assertNotIn(b'View live', response.content)
+        self.assertNotIn(b'View draft', response.content)
 
     def test_section_model_admin_has_preview_button(self):
         reg_page = RegulationPage(
@@ -83,4 +105,5 @@ class TestRegs3kHooks(TestCase, WagtailTestUtils):
 
         response = self.client.get('/admin/regulations3k/section/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Preview', response.content)
+        self.assertIn(b'View live', response.content)
+        self.assertIn(b'View draft', response.content)
