@@ -16,16 +16,16 @@ def site_str(site):
     methods (like __str__). This logic is copied from Wagtail.
     """
     if site.site_name:
-	return(
-	    site.site_name +
-	    (" [default]" if site.is_default_site else "")
-	)
+        return(
+            site.site_name +
+            (" [default]" if site.is_default_site else "")
+        )
     else:
-	return(
-	    site.hostname +
-	    ("" if site.port == 80 else (":%d" % site.port)) +
-	    (" [default]" if site.is_default_site else "")
-	)
+        return(
+            site.hostname +
+            ("" if site.port == 80 else (":%d" % site.port)) +
+            (" [default]" if site.is_default_site else "")
+        )
 
 
 def delete_non_default_wagtail_sites(apps, schema_editor):

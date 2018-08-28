@@ -2,8 +2,9 @@
 from __future__ import absolute_import, unicode_literals
 
 import re
-from datetime import datetime
+from datetime import date
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
@@ -75,7 +76,7 @@ class Part(models.Model):
         the current date and version is not a draft. """
         effective_version = self.versions.filter(
             draft=False,
-            effective_date__lte=datetime.now()
+            effective_date__lte=date.today()
         ).order_by(
             '-effective_date'
         ).first()
@@ -86,7 +87,7 @@ class Part(models.Model):
 class EffectiveVersion(models.Model):
     authority = models.CharField(max_length=255, blank=True)
     source = models.CharField(max_length=255, blank=True)
-    effective_date = models.DateField(blank=True, null=True)
+    effective_date = models.DateField(default=date.today)
     created = models.DateField(blank=True, null=True)
     draft = models.BooleanField(default=False)
     part = models.ForeignKey(Part, related_name="versions")
@@ -113,9 +114,32 @@ class EffectiveVersion(models.Model):
             return 'LIVE'
         if self.draft is True:
             return 'Unapproved draft'
-        if self.effective_date >= datetime.today().date():
+        if self.effective_date >= date.today():
             return 'Future version'
         return 'Previous version'
+
+    def validate_unique(self, exclude=None):
+        super(EffectiveVersion, self).validate_unique(exclude=exclude)
+
+        # Enforce some uniqueness on the effective-date. It will need to be
+        # unique within a part, so if this part has a date the same as this
+        # one, we throw a validation error.
+        versions_with_this_date = self.part.versions.filter(
+            effective_date=self.effective_date
+        )
+
+        if self.pk:
+            versions_with_this_date = versions_with_this_date.exclude(
+                pk=self.pk
+            )
+
+        if versions_with_this_date.count() > 0:
+            raise ValidationError({
+                'effective_date': [
+                    'The part selected below already has an effective version '
+                    'with this date.'
+                ]
+            })
 
     class Meta:
         ordering = ['effective_date']

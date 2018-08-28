@@ -6,7 +6,7 @@ import unittest
 
 # from django.core.urlresolvers import reverse
 from django.contrib.auth.models import AnonymousUser, User
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator
 from django.http import HttpRequest, QueryDict  # Http404, HttpResponse
 from django.test import RequestFactory, TestCase as DjangoTestCase
@@ -473,6 +473,16 @@ class RegModelTests(DjangoTestCase):
             b'JAN 18, 2014',
             response.content
         )
+
+    def test_effective_version_date_unique(self):
+        new_effective_version = mommy.make(
+            EffectiveVersion,
+            effective_date=datetime.date(2020, 1, 1),
+            part=self.part_1002,
+            draft=True,
+        )
+        with self.assertRaises(ValidationError):
+            new_effective_version.validate_unique()
 
 
 class SectionNavTests(unittest.TestCase):
