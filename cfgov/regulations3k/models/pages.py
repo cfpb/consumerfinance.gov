@@ -209,7 +209,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         blank=True,
         null=True,
         on_delete=models.PROTECT,
-        related_name='eregs3k_page'
+        related_name='page'
     )
 
     content_panels = CFGOVPage.content_panels + [
