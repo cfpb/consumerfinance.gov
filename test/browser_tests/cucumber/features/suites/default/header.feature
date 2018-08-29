@@ -4,7 +4,7 @@ Feature: Header
   I should be able to use the Header
 
   Background:
-    Given I goto URL "/"
+    Given I goto a browse filterable page
 
   Scenario: Desktop, at page load
     Then the header organism should display the header

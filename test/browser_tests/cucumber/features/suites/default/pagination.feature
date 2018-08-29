@@ -5,7 +5,7 @@ Feature: Pagination
   to navigate on the filterable pages
 
   Background:
-    Given I goto URL "/about-us/blog/"
+    Given I goto a browse filterable page
 
   @skip
   Scenario: Navigate to the next page

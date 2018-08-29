@@ -9,7 +9,8 @@ Feature: Filterable list controls
 # The posts should also have several different authors, including at least one with the author "CFPB Web Team".
 
 Background:
-	Given I goto URL "/about-us/blog/"
+	Given I load test blog post data		Given I goto URL "/about-us/blog/"
+	And I goto URL "about-us/blog/"
 	And I open the filterable list control
 
 @undefined
