@@ -4,6 +4,7 @@ import logging
 import os
 
 from django.conf import settings
+from django.http import QueryDict
 from django.test import RequestFactory, TestCase
 
 from mock import patch
@@ -84,9 +85,50 @@ class TestLoggingHandlers(TestCase):
         args, kwargs = sqs_queue_post.call_args
         self.assertIn('ValueError: raising an exception', kwargs['message'])
 
-    def test_body_includes_request(self, sqs_queue_post):
+    def test_body_includes_request_if_provided(self, sqs_queue_post):
         request = RequestFactory().get('/')
         self.logger.error('something', extra={'request': request})
 
         args, kwargs = sqs_queue_post.call_args
-        self.assertIn('<WSGIRequest\npath:/', kwargs['message'])
+        self.assertIn(
+            'Request repr(): \n<WSGIRequest\npath:/',
+            kwargs['message']
+        )
+
+    def test_body_shows_none_if_no_request_available(self, sqs_queue_post):
+        self.logger.error('something')
+
+        args, kwargs = sqs_queue_post.call_args
+        self.assertIn('Request repr(): \nNone', kwargs['message'])
+
+    def test_body_handles_unparseable_querydict(self, sqs_queue_post):
+        """Handle when calls to format request.GET or POST fail."""
+        with patch.object(QueryDict, '__repr__', side_effect=Exception):
+            request = RequestFactory().get('/')
+            self.logger.error('something', extra={'request': request})
+
+        args, kwargs = sqs_queue_post.call_args
+        self.assertIn('<could not parse>', kwargs['message'])
+
+    def test_body_handles_unparseable_dict(self, sqs_queue_post):
+        """Handle when calls to format request.COOKIES or META fail."""
+        class ObjectThatCantBeRepresented(object):
+            def __repr__(self):
+                raise Exception
+
+        request = RequestFactory().get('/')
+        request.COOKIES = {'test': ObjectThatCantBeRepresented()}
+        request.META = {'test': ObjectThatCantBeRepresented()}
+        self.logger.error('something', extra={'request': request})
+
+        args, kwargs = sqs_queue_post.call_args
+        self.assertIn('<could not parse>', kwargs['message'])
+
+    def test_body_handles_request_with_invalid_post(self, sqs_queue_post):
+        """Handle case when a request was generated with an invalid POST."""
+        request = RequestFactory().post('/')
+        request._mark_post_parse_error()
+        self.logger.error('something', extra={'request': request})
+
+        args, kwargs = sqs_queue_post.call_args
+        self.assertIn('<could not parse>', kwargs['message'])
