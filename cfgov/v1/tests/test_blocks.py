@@ -97,7 +97,7 @@ class TestPlaceholderBlock(TestCase):
     def test_render_no_placeholder_provided(self):
         block = PlaceholderCharBlock()
         html = block.render_form('Hello world!')
-        self.assertIn(
+        self.assertInHTML(
             (
                 '<input id="" name="" placeholder="" '
                 'type="text" value="Hello world!" />'
