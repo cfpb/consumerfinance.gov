@@ -202,15 +202,11 @@ the new requirements will be in place.
 
 #### Set environment variables
 
-Your shell environment variables (and the variables in your .env file, if you
-are using one) are not visible to applications running in Docker. If you need
-to set variables that will be visible to Django, and in `./shell.sh`, you'll
-need to set them in the .python_env file, and restart the python container (it
-might be simpler to simple stop compose with ctrl-c, and start it again with
-`docker-compose up`)
-
-.python_env is *not* a shell script, like your .env file, ~/.bash_profile, etc.
-See the [Docker Compose docs](https://docs.docker.com/compose/compose-file/#env_file)
+Environment variables from your `.env` file are sourced when the python container
+starts and when you access a running container with `./shell.sh` Your shell
+environment variables, however, are not visible to applications running in Docker.
+To add new environment variables, simply add them to the `.env` file, stop compose
+with ctrl-c, and start it again with `docker-compose up`.
 
 #### Get familiar with Docker Compose, and our configuration
 

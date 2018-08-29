@@ -46,7 +46,7 @@ Install third-party dependencies and build frontend assets:
 ./setup.sh
 ```
 
-Create a local SQLite database and add some basic pages:
+Create a local database and add some basic pages:
 
 ```sh
 ./initial-data.sh
