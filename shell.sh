@@ -25,7 +25,7 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ -z "$*" ]; then
-    docker-compose exec python bash
+    docker-compose exec python bash -c "source .env && bash"
 else
-    docker-compose exec python bash -c "$*"
+    docker-compose exec python bash -c "source .env && bash -c $*"
 fi
