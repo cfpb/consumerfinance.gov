@@ -2,11 +2,13 @@ import logging
 
 from django.conf import settings
 from django.conf.urls import url
+from django.contrib import admin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.html import format_html_join
+from django.views.generic import RedirectView
 
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.wagtailadmin.menu import MenuItem
@@ -14,6 +16,7 @@ from wagtail.wagtailcore import hooks
 
 from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
+from v1.models.snippets import Resource
 from v1.util import util
 
 
@@ -163,3 +166,67 @@ modeladmin_register(MegaMenuModelAdmin)
 def clear_mega_menu_cache(sender, instance, **kwargs):
     from django.core.cache import caches
     caches['default_fragment_cache'].delete('mega_menu')
+
+
+def get_resource_tags():
+    tag_list = []
+
+    for resource in Resource.objects.all():
+        for tag in resource.tags.all():
+            tuple = (tag.slug, tag.name)
+            if tuple not in tag_list:
+                tag_list.append(tuple)
+
+    return sorted(tag_list, key=lambda tup: tup[0])
+
+
+class ResourceTagsFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = 'tags'
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'tag'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        return get_resource_tags()
+
+    def queryset(self, request, queryset):
+        """
+        Returns the filtered queryset based on the value
+        provided in the query string and retrievable via
+        `self.value()`.
+        """
+        for tag in get_resource_tags():
+            if self.value() == tag[0]:
+                return queryset.filter(tags__slug__iexact=tag[0])
+
+
+class ResourceModelAdmin(ModelAdmin):
+    model = Resource
+    menu_label = 'Resources'
+    menu_icon = 'snippet'
+    list_display = ('title', 'desc', 'order', 'thumbnail')
+    list_filter = (ResourceTagsFilter,)
+    search_fields = ('title',)
+
+
+modeladmin_register(ResourceModelAdmin)
+
+
+# Below hook isn't working
+@hooks.register('register_admin_urls')
+def register_resource_snippet_redirect_url():
+    return [
+        url(
+            r'^snippets/v1/resource/$',
+            RedirectView.as_view(url='v1/resource/', permanent=False)
+        ),
+    ]

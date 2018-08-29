@@ -167,4 +167,4 @@ class Resource(ClusterableModel):
         return self.title
 
     class Meta:
-        ordering = ('order', 'title')
+        ordering = ('title',)
