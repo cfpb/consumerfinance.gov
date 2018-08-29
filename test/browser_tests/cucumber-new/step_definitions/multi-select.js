@@ -1,4 +1,4 @@
-const MultiSelect = require( '../../shared_objects/multiselect' );
+const MultiSelect = require( '../../shared_objects/multi-select.js' );
 const { Then, When, Before } = require( 'cucumber' );
 const chai = require( 'chai' );
 const expect = chai.expect;
@@ -13,7 +13,7 @@ Before( function() {
   multiSelect = new MultiSelect();
 } );
 
-When( /I (.*) on the multiselect search input/,
+When( /I (.*) on the multi-select search input/,
   async function( searchInputAction ) {
     await browser.wait( EC.visibilityOf( multiSelect.elements.search ) );
     await multiSelect.elements.search[searchInputAction]();
@@ -32,7 +32,7 @@ When( 'I hit the escape button on the search input', function() {
   return multiSelect.elements.search.sendKeys( protractor.Key.ESCAPE );
 } );
 
-When( /I hit the (.*) arrow on the multiselect/,
+When( /I hit the (.*) arrow on the multi-select/,
   function( arrowDirection ) {
     const directionConstant = protractor.Key[arrowDirection.toUpperCase()];
 
@@ -60,7 +60,7 @@ When( /I click on the first option in the dropdown(?:\s)?(?:again)?/,
   }
 );
 
-Then( 'the multiselect should be rendered', function() {
+Then( 'the multi-select should be rendered', function() {
 
   return expect( multiSelect.isRendered() )
     .to.eventually
@@ -74,7 +74,7 @@ Then( 'no tags should be selected', function() {
     .equal( false );
 } );
 
-Then( /the multiselect dropdown (should|shouldn't) be visible/,
+Then( /the multi-select dropdown (should|shouldn't) be visible/,
   function( shouldBeVisible ) {
     let dropdownIsDisplayed = true;
 
@@ -88,7 +88,7 @@ Then( /the multiselect dropdown (should|shouldn't) be visible/,
   }
 );
 
-Then( /the multiselect dropdown (should|shouldn't) display "(.*)"/,
+Then( /the multi-select dropdown (should|shouldn't) display "(.*)"/,
   function( shouldBeDisplayed, dropdownValue ) {
     let valueIsDisplayed = true;
 
@@ -102,7 +102,7 @@ Then( /the multiselect dropdown (should|shouldn't) display "(.*)"/,
   }
 );
 
-Then( /the multiselect dropdown length should be (.*)/,
+Then( /the multi-select dropdown length should be (.*)/,
   function( dropDownLength ) {
 
     return expect( multiSelect.getDropDownCount() )
@@ -134,7 +134,7 @@ Then( 'the first option should be highlighted',
 
       return multiSelect.getDropDownLabelElements()
         .first()
-        .getText();
+        .getAttribute( 'for' );
     }
 
     function _getActiveElementValue() {
