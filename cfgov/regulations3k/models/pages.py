@@ -333,6 +333,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                 effective_version=effective_version
             )
         else:
+            effective_version = self.regulation.effective_version
             section_query = self.get_section_query()
 
         sections = list(section_query.all())
@@ -342,8 +343,8 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
         content = regdown(
             section.contents,
-            url_resolver=get_url_resolver(self),
-            contents_resolver=get_contents_resolver(self),
+            url_resolver=get_url_resolver(self, date_str=date_str),
+            contents_resolver=get_contents_resolver(effective_version),
             render_block_reference=partial(self.render_interp, context)
         )
 
