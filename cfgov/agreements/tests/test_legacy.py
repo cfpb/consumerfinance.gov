@@ -7,7 +7,6 @@ from django.template import Context, Template
 from django.test import TestCase
 
 from agreements import models
-from bs4 import BeautifulSoup
 from mock import patch
 
 
@@ -225,11 +224,18 @@ class TemplateTags(TestCase):
             issuer = models.Issuer.objects.create(name=name, slug=name)
             models.Agreement.objects.create(issuer=issuer, size=1234)
 
-        selected = models.Issuer.objects.order_by('?').first()
-
         t = Template("{% load agreements_extras %}" +
                      "{% issuer_select id %}")
-        soup = BeautifulSoup(t.render(Context({'id': selected.slug})))
-        option = soup.find_all('option', selected=True)
-        self.assertTrue(len(option) == 1)
-        self.assertTrue(selected.name in option[0])
+        html = t.render(Context({'id': 'BBB'}))
+        self.assertHTMLEqual(html, """
+<select
+    data-placeholder="Choose an issuer"
+    class="chzn-select"
+    tabindex="2"
+    id="issuer_select"
+>
+    <option value="AAA">AAA</option>
+    <option value="BBB" selected>BBB</option>
+    <option value="CCC">CCC</option>
+</select>
+        """)

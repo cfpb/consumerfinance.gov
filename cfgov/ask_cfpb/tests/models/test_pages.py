@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import datetime
@@ -9,12 +10,11 @@ from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpRequest, HttpResponse
 from django.template.defaultfilters import slugify
-from django.test import RequestFactory, TestCase
+from django.test import TestCase
 from django.utils import html, timezone
 from django.utils.translation import ugettext as _
 
 import mock
-from bs4 import BeautifulSoup as bs
 from mock import mock_open, patch
 from model_mommy import mommy
 
@@ -538,15 +538,20 @@ class AnswerModelTestCase(TestCase):
         self.assertFalse(test_page.page_js)
 
     def test_spanish_template_used(self):
-        spanish_answer = self.prepare_answer(
-            answer_es='Spanish answer',
-            slug_es='spanish-answer',
-            update_spanish_page=True)
-        spanish_answer.save()
-        spanish_page = spanish_answer.spanish_page
-        request = RequestFactory().get('/')
-        soup = bs(spanish_page.serve(request).rendered_content)
-        self.assertIn('Oficina', soup.title.string)
+        path = reverse(
+            'ask-spanish-answer',
+            args=['mock-spanish-question1', 'es', '1234']
+        )
+        response = self.client.get(path)
+        self.assertContains(
+            response,
+            (
+                '<title>'
+                '> Oficina para la Protección Financiera del Consumidor'
+                '</title>'
+            ),
+            html=True
+        )
 
     def test_spanish_answer_page_handles_referrer_with_unicode_accents(self):
         referrer_unicode = (
