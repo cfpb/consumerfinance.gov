@@ -88,7 +88,7 @@ class EffectiveVersion(models.Model):
     authority = models.CharField(max_length=255, blank=True)
     source = models.CharField(max_length=255, blank=True)
     effective_date = models.DateField(default=date.today)
-    created = models.DateField(blank=True, null=True)
+    created = models.DateField(default=date.today)
     draft = models.BooleanField(default=False)
     part = models.ForeignKey(Part, related_name="versions")
 
