@@ -10,10 +10,10 @@ from v1.models.snippets import Contact, Resource, ReusableText
 class TestFilterByTags(TestCase):
     def setUp(self):
         self.snippet1 = Resource.objects.create(title='Test snippet 1')
-        self.snippet1.tags.add('tagA')
+        self.snippet1.tags.add(u'tagA')
         self.snippet2 = Resource.objects.create(title='Test snippet 2')
-        self.snippet2.tags.add('tagA')
-        self.snippet2.tags.add('tagB')
+        self.snippet2.tags.add(u'tagA')
+        self.snippet2.tags.add(u'tagB')
 
     def test_empty_list_argument_returns_all(self):
         self.assertSequenceEqual(
