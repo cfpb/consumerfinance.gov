@@ -17,12 +17,12 @@ const COMMON_BUNDLE_NAME = 'common.js';
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
+    /* The `exclude` rule is a double negative.
+       It excludes all of `node_modules/` but it then un-excludes modules that
+       start with `cf-` and `cfpb-` (CF components and cfpb-chart-builder).
+       Regex test: https://regex101.com/r/zizz3V/5 */
     exclude: {
       test: /node_modules/,
-
-      /* The below regex will capture all node modules
-         that start with `cf-` or `cfpb-`.
-         Regex test: https://regex101.com/r/zizz3V/5 */
       exclude: /node_modules\/(?:cf\-.+|cfpb\-.+)/
     },
     use: {
