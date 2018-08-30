@@ -41,11 +41,6 @@ const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
-
-    /* The below regex will capture all node modules
-       that start with `cf-` or `cfpb-`.
-       Regex test: https://regex101.com/r/zizz3V/5 */
-    exclude: /node_modules\/(?:cf\-.+|cfpb\-.+)/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
