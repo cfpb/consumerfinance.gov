@@ -855,13 +855,13 @@ class ChartBlock(blocks.StructBlock):
     ], required=True)
     color_scheme = blocks.ChoiceBlock(
         choices=[
-            ('green', 'Green'),
             ('blue', 'Blue'),
-            ('teal', 'Teal'),
-            ('navy', 'Navy'),
-            ('purple', 'Purple'),
-            ('neutral', 'Neutral'),
             ('gold', 'Gold'),
+            ('green', 'Green'),
+            ('navy', 'Navy'),
+            ('neutral', 'Neutral'),
+            ('purple', 'Purple'),
+            ('teal', 'Teal'),
         ],
         required=False,
         help_text='Chart\'s color scheme. See '
