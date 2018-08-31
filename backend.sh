@@ -25,5 +25,8 @@ install() {
   pip install -r ./requirements/local.txt
 }
 
-init "$1"
+if [ "$1" != "docker" ]; then
+  init "$1"
+fi
+
 install

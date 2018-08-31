@@ -28,6 +28,13 @@ init() {
 
   # Set the NODE_ENV for this session.
   export NODE_ENV=$NODE_ENV
+
+  # Set SUM variable based on presence of shasum command
+  if command -v shasum >/dev/null 2>&1; then
+    SUM="shasum"
+  else
+    SUM="sha1sum"
+  fi
 }
 
 # Clean project dependencies.
@@ -65,7 +72,7 @@ install() {
 
 # Calculate checksum value.
 calc_checksum() {
-  DEP_CHECKSUM=$(cat package*.json cfgov/unprocessed/apps/**/package*.json | shasum -a 256)
+  DEP_CHECKSUM=$(cat package*.json cfgov/unprocessed/apps/**/package*.json | $SUM)
 }
 
 # Add a checksum file
