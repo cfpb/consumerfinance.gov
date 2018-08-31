@@ -44,51 +44,53 @@
 
 .o-expandable__read-more {
     .o-expandable_target__collapsed {
-        .o-expandable_link {
-            display: block;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            border: dotted @link-text;
-            border-width: 1px 0;
-            text-align: center;
-        }
-    }
-
-    .o-expandable_target__expanded {
         display: none;
     }
 
     .o-expandable_content__collapsed {
-        // shows approx. 4 lines of content
-        max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
-        overflow: hidden;
-        position: relative;
+        max-height: 100% !important;
 
         &:after {
-            // fades content out over approx. 2 lines
-            display: block;
-            height: unit( @base-line-height-px * 2 / @base-font-size-px, em );
-            margin: 0;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100% );
-            content: '';
+            display: none;
         }
     }
 
-    .respond-to-min( @bp-med-min, {
+    @media only screen and (max-width:56.25em) {
         .o-expandable_target__collapsed {
+            display: block;
+
+            .o-expandable_link {
+                display: block;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                border: dotted @link-text;
+                border-width: 1px 0;
+                text-align: center;
+            }
+        }
+
+        .o-expandable_target__expanded {
             display: none;
         }
 
         .o-expandable_content__collapsed {
-            max-height: 100% !important;
+            // shows approx. 4 lines of content
+            max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
+            overflow: hidden;
+            position: relative;
 
             &:after {
-              display: none;
+                // fades content out over approx. 2 lines
+                display: block;
+                height: unit( @base-line-height-px * 2 / @base-font-size-px, em );
+                margin: 0;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100% );
+                content: '';
             }
         }
-    } );
+    }
 }
