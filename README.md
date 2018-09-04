@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=master)](https://travis-ci.org/cfpb/cfgov-refresh?branch=master)
 [![codecov](https://codecov.io/gh/cfpb/cfgov-refresh/branch/master/graph/badge.svg)](https://codecov.io/gh/cfpb/cfgov-refresh)
+[![Code Quality: Python](https://img.shields.io/lgtm/grade/python/g/cfpb/cfgov-refresh.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cfpb/cfgov-refresh/context:python)
+[![Total Alerts](https://img.shields.io/lgtm/alerts/g/cfpb/cfgov-refresh.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cfpb/cfgov-refresh/alerts)
 
 The redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website.
 This Django project includes the front-end assets and build tools,
