@@ -330,6 +330,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           _optionsDom.classList.add( 'max-selections' );
         }
       }
+
+      _instance.dispatchEvent( 'selectionsUpdated', { target: _instance } );
     }
 
     _index = -1;
