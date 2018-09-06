@@ -117,10 +117,6 @@ protractorFailuresReport/
 ###############
 *.idea
 
-# Docker local development #
-############################
-.python_env
-
 # Auto-generated service workers #
 ##################################
 cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js
