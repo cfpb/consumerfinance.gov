@@ -294,8 +294,8 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
         return template.render(context)
 
-    @route(r'^((?P<date_str>[0-9]{4}-[0-9]{2}-[0-9]{2})/)?$')
-    def index_route(self, request, date_str=None, *args, **kwargs):
+    @route(r'^(?:(?P<date_str>[0-9]{4}-[0-9]{2}-[0-9]{2})/)?$', name="index")
+    def index_route(self, request, date_str=None):
         request.is_preview = getattr(request, 'is_preview', False)
 
         if date_str is not None:
@@ -311,7 +311,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         context = self.get_context(request, *args, **kwargs)
         context.update({
             'get_secondary_nav_items': partial(
-                get_reg_nav_items, sections=sections, date_str=date_str
+                get_secondary_nav_items, sections=sections, date_str=date_str
             ),
         })
 
@@ -348,17 +348,21 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             render_block_reference=partial(self.render_interp, context)
         )
 
+        next_section = get_next_section(sections, current_index)
+        previous_section = get_previous_section(sections, current_index)
+
         context.update({
-            'version': self.regulation.effective_version,
+            'version': effective_version,
+            'section': section,
             'content': content,
             'get_secondary_nav_items': partial(
-                get_reg_nav_items, sections=sections, date_str=date_str
+                get_secondary_nav_items, sections=sections, date_str=date_str
             ),
-            'next_section': get_next_section(
-                sections, current_index),
-            'previous_section': get_previous_section(
-                sections, current_index),
-            'section': section,
+            'next_section': next_section,
+            'next_url': get_section_url(self, next_section, date_str=date_str),
+            'previous_section': previous_section,
+            'previous_url': get_section_url(self, previous_section,
+                                            date_str=date_str),
             'breadcrumb_items': self.get_breadcrumbs(request, section),
             'search_url': (self.get_parent().url +
                            'search-regulations/results/?regs=' +
@@ -368,7 +372,8 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         return TemplateResponse(
             request,
             self.template,
-            context)
+            context
+        )
 
 
 def get_next_section(section_list, current_index):
@@ -385,7 +390,19 @@ def get_previous_section(section_list, current_index):
         return section_list[current_index - 1]
 
 
-def get_reg_nav_items(request, current_page, sections=[], date_str=None):
+def get_section_url(page, section, date_str=None):
+    section_kwargs = {}
+    if date_str is not None:
+        section_kwargs['date_str'] = date_str
+
+    section_kwargs['section_label'] = section.label
+    return page.url + page.reverse_subpage(
+        'section',
+        kwargs=section_kwargs
+    )
+
+
+def get_secondary_nav_items(request, current_page, sections=[], date_str=None):
     url_bits = [bit for bit in request.path.split('/') if bit]
     current_label = url_bits[-1]
     subpart_dict = OrderedDict()
@@ -401,15 +418,13 @@ def get_reg_nav_items(request, current_page, sections=[], date_str=None):
                 'sections': [],
                 'expanded': False
             }
+
         section_kwargs['section_label'] = section.label
 
         # Create the section dictionary for navigation
         section_dict = {
             'title': section.title,
-            'url': current_page.url + current_page.reverse_subpage(
-                'section',
-                kwargs=section_kwargs
-            ),
+            'url': get_section_url(current_page, section, date_str=date_str),
             'active': section.label == current_label,
             'expanded': True,
             'section': section,
