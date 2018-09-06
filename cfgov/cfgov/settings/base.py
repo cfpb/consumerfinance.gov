@@ -668,6 +668,7 @@ FLAGS = {
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': {'environment is': 'production'},
 
+    # Feature flag to enable our replacement for eRegs and disable eRegs
     'REGULATIONS3K': {},
 
     'LEGACY_HUD_API': {'environment is': 'production'},

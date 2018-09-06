@@ -240,11 +240,6 @@ urlpatterns = [
     url(r'^oah-api/county/',
         include_if_app_enabled('countylimits', 'countylimits.urls')),
 
-    url(r'^eregs-api/',
-        include_if_app_enabled('regcore', 'regcore.urls')),
-    url(r'^eregulations/',
-        include_if_app_enabled('regulations', 'regulations.urls')),
-
     url(r'^find-a-housing-counselor/$',
         HousingCounselorView.as_view(),
         name='housing-counselor'),
@@ -410,6 +405,24 @@ urlpatterns = [
         template_name='regulations3k/regulations3k-service-worker.js',
         content_type='application/javascript'),
         name='regulations3k-service-worker.js'
+    ),
+
+    # Include eRegulations URLs only if the REGULATIONS3K flag state is False
+    flagged_url(
+        'REGULATIONS3K',
+        r'^eregs-api/',
+        include_if_app_enabled('regcore', 'regcore.urls'),
+        fallback=lambda request: ServeView.as_view()(request, request.path),
+        state=False
+    ),
+    flagged_url(
+        'REGULATIONS3K',
+        r'^eregulations/',
+        include_if_app_enabled('regulations', 'regulations.urls'),
+        fallback=lambda request, **kwargs: ServeView.as_view()(
+            request, request.path
+        ),
+        state=False
     ),
 
 ]
