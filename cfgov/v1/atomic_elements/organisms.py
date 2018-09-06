@@ -848,11 +848,15 @@ class HTMLBlock(blocks.StructBlock):
 class ChartBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=True)
     # todo: make radio buttons
-    chart_type = blocks.ChoiceBlock(choices=[
-        ('bar', 'Bar'),
-        ('line', 'Line'),
-        ('tile_map', 'Tile Map'),
-    ], required=True)
+    chart_type = blocks.ChoiceBlock(
+        choices=[
+            ('bar', 'Bar | % y-axis values'),
+            ('line', 'Line | millions/billions y-axis values'),
+            ('line-index', 'Line-Index | integer y-axis values'),
+            ('tile_map', 'Tile Map | grid-like USA map'),
+        ],
+        required=True
+    )
     color_scheme = blocks.ChoiceBlock(
         choices=[
             ('blue', 'Blue'),
