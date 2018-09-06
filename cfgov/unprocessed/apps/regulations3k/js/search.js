@@ -52,7 +52,9 @@ function clearFilter( event ) {
  * @param {Event} event Click event
  */
 function clearFilters( event ) {
-  const filterIcons = document.querySelectorAll( '.a-tag svg' );
+  let filterIcons = document.querySelectorAll( '.a-tag svg' );
+  // IE doesn't support forEach w/ node lists so convert it to an array.
+  filterIcons = Array.prototype.slice.call( filterIcons );
   filterIcons.forEach( filterIcon => {
     const target = closest( filterIcon, 'button' );
     clearFilter( {
