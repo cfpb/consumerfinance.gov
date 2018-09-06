@@ -5,17 +5,17 @@
 <div class="results_header">
     {% if current_count > 0 %}
     <div class="results_count">
-        <h3>
+        <h2 class="h3">
             Showing {{ current_count }}
             match{% if current_count > 1 %}es{% endif %}
             {% if total_count > current_count %}
                 out of {{ total_count }} total results
             {% endif %}
-        </h3>
+        </h2>
     </div>
     {% else %}
     <div class="results_count no-results">
-        <h3>No results match your filters.</h3>
+        <h2 class="h3">No results match your filters.</h2>
         <p>Try adjusting your filters or searching for different terms.</p>
     </div>
     {% endif %}
