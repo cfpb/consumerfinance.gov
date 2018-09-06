@@ -904,7 +904,10 @@ class ChartBlock(blocks.StructBlock):
                   '"Data from the last six months are not final."')
     y_axis_label = blocks.CharBlock(
         required=False,
-        help_text='Custom y-axis label')
+        help_text='Custom y-axis label. '
+                  'NOTE: Line-Index chart y-axis '
+                  'is not overridable with this field!'
+    )
 
     class Meta:
         label = 'Chart Block'
