@@ -84,6 +84,9 @@ const conf = {
     },
     mainFields: [ 'loader', 'main' ]
   },
+  resolve: {
+    symlinks: false
+  },
   plugins: [
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG

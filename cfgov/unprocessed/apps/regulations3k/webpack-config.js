@@ -117,6 +117,9 @@ const conf = {
   plugins: [
     COMMON_UGLIFY_CONFIG
   ],
+  resolve: {
+    symlinks: false
+  },
   stats: STATS_CONFIG.stats
 };
 
