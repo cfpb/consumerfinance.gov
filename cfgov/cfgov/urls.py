@@ -29,6 +29,7 @@ from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorPDFView, HousingCounselorView
 )
+from regulations3k.views import redirect_eregs
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
@@ -454,16 +455,14 @@ urlpatterns = [
         'REGULATIONS3K',
         r'^eregs-api/',
         include_if_app_enabled('regcore', 'regcore.urls'),
-        fallback=lambda request: ServeView.as_view()(request, request.path),
+        fallback=page_not_found,
         state=False
     ),
     flagged_url(
         'REGULATIONS3K',
         r'^eregulations/',
         include_if_app_enabled('regulations', 'regulations.urls'),
-        fallback=lambda request, **kwargs: ServeView.as_view()(
-            request, request.path
-        ),
+        fallback=lambda request, **kwargs: redirect_eregs(request),
         state=False
     ),
 

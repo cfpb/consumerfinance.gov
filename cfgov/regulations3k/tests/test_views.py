@@ -59,3 +59,11 @@ class RedirectRegulations3kTestCase(TestCase):
         self.assertEqual(
             response.get('location'),
             '/policy-compliance/rulemaking/regulations/1002/2016-07-11/1/')
+
+    def test_version_redirect_no_version(self):
+        request = self.factory.get(
+            '/eregulations/1002-1/2011-31714#1002-1')
+        response = redirect_eregs(request)
+        self.assertEqual(
+            response.get('location'),
+            '/policy-compliance/rulemaking/regulations/1002/1/')
