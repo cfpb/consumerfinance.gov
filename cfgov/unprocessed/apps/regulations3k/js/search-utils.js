@@ -6,6 +6,8 @@
  * @returns {Array} Array of objects of form field names and values.
  */
 function getSearchValues( searchEl, filterEls ) {
+  // IE doesn't support forEach w/ node lists so convert it to an array.
+  filterEls = Array.prototype.slice.call( filterEls );
   const fields = [];
   const field = {};
   field[searchEl.name] = searchEl.value;
