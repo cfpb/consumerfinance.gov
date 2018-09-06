@@ -240,11 +240,6 @@ urlpatterns = [
     url(r'^oah-api/county/',
         include_if_app_enabled('countylimits', 'countylimits.urls')),
 
-    url(r'^eregs-api/',
-        include_if_app_enabled('regcore', 'regcore.urls')),
-    url(r'^eregulations/',
-        include_if_app_enabled('regulations', 'regulations.urls')),
-
     url(r'^find-a-housing-counselor/$',
         HousingCounselorView.as_view(),
         name='housing-counselor'),
@@ -412,6 +407,24 @@ urlpatterns = [
         name='regulations3k-service-worker.js'
     ),
 
+    # Include eRegulations URLs only if the REGULATIONS3K flag state is False
+    flagged_url(
+        'REGULATIONS3K',
+        r'^eregs-api/',
+        include_if_app_enabled('regcore', 'regcore.urls'),
+        fallback=lambda request: ServeView.as_view()(request, request.path),
+        state=False
+    ),
+    flagged_url(
+        'REGULATIONS3K',
+        r'^eregulations/',
+        include_if_app_enabled('regulations', 'regulations.urls'),
+        fallback=lambda request, **kwargs: ServeView.as_view()(
+            request, request.path
+        ),
+        state=False
+    ),
+
 ]
 
 if settings.ALLOW_ADMIN_URL:
@@ -458,7 +471,6 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^admin/account/change_password/$',
             change_password,
             name='wagtailadmin_account_change_password'),
-        url(r'^django-admin/', include(admin.site.urls)),
         url(r'^admin/', include(wagtailadmin_urls)),
 
     ]
