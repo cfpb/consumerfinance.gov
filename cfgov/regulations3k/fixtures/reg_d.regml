@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<regulation xmlns="eregs">
+  <preamble>
+    <cfr>
+      <title>12</title>
+      <section>1004</section>
+    </cfr>
+    <effectiveDate>2011-07-22</effectiveDate>
+  </preamble>
+  <part label="1004">
+    <content>
+      <subpart label="General">
+        <content>
+          <section label="1004-1" sectionNum="1">
+            <subject>§ 1004.1 Authority, purpose, and scope.</subject>
+            <paragraph label="1004-1-a" marker="(a)">
+              <title type="keyterm">Authority.</title>
+              <content>Authority. This regulation, known as Regulation D, is issued by the Bureau of Consumer Financial Protection to implement the Alternative Mortgage Transaction Parity Act, <ref target="USC:12-3801" reftype="external">12 U.S.C. 3801</ref> et seq., as amended by title X, Section 1083 of the Dodd-Frank Wall Street Reform and Consumer Protection Act (Pub. L. 111-203, <ref target="STATUTES_AT_LARGE:124-Stat.-1376" reftype="external">124 Stat. 1376</ref>). Section <ref target="1004-4" reftype="internal">1004.4</ref> is issued pursuant to the Alternative Mortgage Transaction Parity Act (as amended) and the Truth in Lending Act, <ref target="USC:15-1601" reftype="external">15 U.S.C. 1601</ref> et seq.</content>
+            </paragraph>
+          </section>
+        </content>
+      </subpart>
+      <appendix appendixLetter="A" label="1004-A">
+        <appendixTitle>Appendix A to Part 1004—Official Commentary on Regulation D</appendixTitle>
+        <appendixSection appendixSecNum="1" label="1004-A-h1">
+          <subject>§ 1004.1 Authority, Purpose, and Scope</subject>
+          <paragraph label="1004-A-h1-h2" marker="">
+            <title>1(c) Scope.</title>
+            <content/>
+            <paragraph label="1004-A-h1-h2-1" marker="1.">
+              <title type="keyterm">Application received before July 22, 2011.</title>
+              <content>Application received before July 22, 2011. This Part does not apply to a transaction if the <ref target="1004-2-b" reftype="term">creditor</ref> received the application for that transaction before July 22, 2011, even if the transaction was consummated or completed on or after July 22, 2011. Whether <ref target="USC:12-3803" reftype="external">12 U.S.C. 3803</ref>(c) preempts <ref target="1004-2-e" reftype="term">State law</ref> with respect to such a transaction depends on whether: (1) The transaction was an <ref target="1004-2-a" reftype="term">alternative mortgage transaction</ref> as defined by the version of <ref target="USC:12-3802" reftype="external">12 U.S.C. 3802</ref>(1) in effect at the time of application; and (2) the <ref target="1004-2-d" reftype="term">State</ref> <ref target="1004-2-c" reftype="term">housing creditor</ref> complied with applicable federal regulations issued by the Office of the Comptroller of the Currency, the National Credit Union Administration, the Office of Thrift Supervision, or the Federal Home Loan Bank Board in effect at the time of application.</content>
+            </paragraph>
+          </paragraph>
+        </appendixSection>
+      </appendix>
+    </content>
+  </part>
+</regulation>
