@@ -135,7 +135,7 @@ def get_version_date(part_number, doc_number):
         return version_date
 
 
-def redirect_eregs(request):
+def redirect_eregs(request, **kwargs):
     """
     Redirect legacy eregulations pages to the relevant regulations3k page.
 
