@@ -658,6 +658,9 @@ FLAGS = {
     # Teacher's Digital Platform Search Interface Tool
     'TDP_SEARCH_INTERFACE': {'environment is': 'beta'},
 
+    # Teacher's Digital Platform Static Pages
+    'TDP_STATIC_PAGE': {'environment is': 'beta'},
+
     # Teacher's Digital Platform Building Blocks Tool
     'TDP_BB_TOOL': {'environment is': 'beta'},
 
