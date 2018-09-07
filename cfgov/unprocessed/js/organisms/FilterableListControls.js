@@ -78,13 +78,6 @@ function FilterableListControls( element ) {
             300
           );
         } );
-
-        multiSelect.addEventListener( 'selectionsUpdated', function refresh() {
-          window.setTimeout(
-            _expandable.transition.expand.bind( _expandable.transition ),
-            300
-          );
-        } );
       } );
     }
 
