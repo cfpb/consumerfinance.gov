@@ -395,14 +395,14 @@ urlpatterns = [
 
     flagged_url(
         'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/glossary-financial-terms/',
+        r'^practitioner-resources/youth-financial-education/glossary-financial-terms/',  # noqa: E501
         lambda request: ServeView.as_view()(request, request.path),
         fallback=page_not_found,
     ),
 
     flagged_url(
         'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/resources-research/',
+        r'^practitioner-resources/youth-financial-education/resources-research/',  # noqa: E501
         lambda request: ServeView.as_view()(request, request.path),
         fallback=page_not_found,
     ),
@@ -424,7 +424,7 @@ urlpatterns = [
 
     flagged_url(
         'TDP_CRTOOL',
-        r'^practitioner-resources/youth-financial-education/curriculum-review/',
+        r'^practitioner-resources/youth-financial-education/curriculum-review/',  # noqa: E501
         lambda request: ServeView.as_view()(request, request.path),
         fallback=page_not_found,
     ),
