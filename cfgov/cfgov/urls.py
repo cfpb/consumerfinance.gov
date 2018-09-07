@@ -463,6 +463,7 @@ urlpatterns = [
         r'^eregulations/',
         include_if_app_enabled('regulations', 'regulations.urls'),
         fallback=lambda request, **kwargs: redirect_eregs(request),
+        name='eregs-redirect',
         state=False
     ),
 
