@@ -77,6 +77,9 @@ const commonConf = {
   plugins: [
     COMMON_UGLIFY_CONFIG
   ],
+  resolve: {
+    symlinks: false
+  },
   stats: STATS_CONFIG.stats
 };
 
@@ -90,6 +93,9 @@ const externalConf = {
   plugins: [
     COMMON_UGLIFY_CONFIG
   ],
+  resolve: {
+    symlinks: false
+  },
   stats: STATS_CONFIG.stats
 };
 
@@ -104,11 +110,17 @@ const modernConf = {
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
   ],
+  resolve: {
+    symlinks: false
+  },
   stats: STATS_CONFIG.stats
 };
 
 const onDemandHeaderRawConf = {
-  module: COMMON_MODULE_CONFIG
+  module: COMMON_MODULE_CONFIG,
+  resolve: {
+    symlinks: false
+  }
 };
 
 const appsConf = {
@@ -123,6 +135,9 @@ const appsConf = {
     COMMON_CHUNK_CONFIG,
     COMMON_UGLIFY_CONFIG
   ],
+  resolve: {
+    symlinks: false
+  },
   stats: STATS_CONFIG.stats
 };
 
@@ -136,6 +151,9 @@ const spanishConf = {
   plugins: [
     COMMON_UGLIFY_CONFIG
   ],
+  resolve: {
+    symlinks: false
+  },
   stats: STATS_CONFIG.stats
 };
 
@@ -143,7 +161,10 @@ const devConf = {
   devtool: 'inline-source-map',
   mode: 'development',
   module: COMMON_MODULE_CONFIG,
-  plugins: []
+  plugins: [],
+  resolve: {
+    symlinks: false
+  }
 };
 
 const configExports = {
