@@ -36,13 +36,25 @@ function clearFilter( event ) {
     return;
   }
   target = closest( event.target, '.a-tag' );
-  const checkbox = find( `#regulation-${ target.dataset.value }` );
+  const checkbox = find( `#regulation-${ target.getAttribute( 'data-value' ) }` );
   // Remove the filter tag
-  target.remove();
+  removeTag( target );
   // Uncheck the filter checkbox
   checkbox.checked = false;
   if ( event instanceof Event ) {
     handleFilter( event );
+  }
+}
+
+/**
+ * Remove a filter tag from the search results page.
+ * node.remove() isn't supported by IE so we have to removeChild();
+ *
+ * @param {Node} tag Filter tag HTML element
+ */
+function removeTag( tag ) {
+  if ( tag.parentNode !== null ) {
+    tag.parentNode.removeChild( tag );
   }
 }
 
