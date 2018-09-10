@@ -51,6 +51,16 @@ def flagged_wagtail_template_view(flag_name, template_name):
         condition=False
     )
 
+def tdp_static_flagged(regex_path):
+    """ Teachers Digital Platform static pages are very similar so 
+    in the name of DRY we are implementing them with this method.
+    """
+    return flagged_url(
+        'TDP_STATIC_PAGE',
+        regex_path,
+        lambda request: ServeView.as_view()(request, request.path),
+        fallback=page_not_found,
+    )
 
 urlpatterns = [
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
@@ -376,36 +386,22 @@ urlpatterns = [
         r'^practitioner-resources/youth-financial-education/teach/activities/',
         lambda request: ServeView.as_view()(request, request.path),
         fallback=page_not_found,
-        name='tdp_search'
-    ),
+        name='tdp_search'),
 
-    flagged_url(
-        'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/teach/',
-        lambda request: ServeView.as_view()(request, request.path),
-        fallback=page_not_found,
-    ),
+    tdp_static_flagged(
+        r'^practitioner-resources/youth-financial-education/teach/'),
 
-    flagged_url(
-        'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/learn/',
-        lambda request: ServeView.as_view()(request, request.path),
-        fallback=page_not_found,
-    ),
+    tdp_static_flagged(
+        r'^practitioner-resources/youth-financial-education/learn/'),
 
-    flagged_url(
-        'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/glossary-financial-terms/',  # noqa: E501
-        lambda request: ServeView.as_view()(request, request.path),
-        fallback=page_not_found,
-    ),
+    tdp_static_flagged(
+        r'practitioner-resources/youth-financial-education2/'),
 
-    flagged_url(
-        'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/resources-research/',  # noqa: E501
-        lambda request: ServeView.as_view()(request, request.path),
-        fallback=page_not_found,
-    ),
+    tdp_static_flagged(
+        r'^practitioner-resources/youth-financial-education/glossary-financial-terms/'),  # noqa: E501
+
+    tdp_static_flagged(
+        r'^practitioner-resources/youth-financial-education/resources-research/'),  # noqa: E501
 
     flagged_url('TDP_CRTOOL',
         r'^practitioner-resources/youth-financial-education/curriculum-review/tool/',  # noqa: E501
@@ -426,8 +422,7 @@ urlpatterns = [
         'TDP_CRTOOL',
         r'^practitioner-resources/youth-financial-education/curriculum-review/',  # noqa: E501
         lambda request: ServeView.as_view()(request, request.path),
-        fallback=page_not_found,
-    ),
+        fallback=page_not_found),
 
     flagged_url('TDP_BB_TOOL',
         r'^practitioner-resources/youth-financial-education/tour',  # noqa: E501
