@@ -90,12 +90,15 @@ VideoPlayer.init = function init( selector ) {
   if ( videoPlayerElement ) {
     videoPlayer = new this( videoPlayerElement );
   }
+  _attachIFrame();
 
   return videoPlayer;
 };
 
 // Private Methods.
 
+// TODO Fix complexity issue
+/* eslint-disable complexity */
 /**
  * Function used to attach the video iframe.
  * @throws Will throw an error if no iframe element is found.
@@ -111,8 +114,9 @@ function _attachIFrame() {
     iFrameElement.classList.add( CLASSES.IFRAME_CLASS_NAME );
     iFrameElement.setAttribute( 'frameborder', 0 );
     _this.state.isIframeLoading = true;
-    iFrameElement.onload =
-      function oniFrameLoad() { _this.state.setIsIframeLoaded( true ); };
+    iFrameElement.onload = function onload() {
+      _this.state.setIsIframeLoaded( true );
+    };
     iFrameContainerElement.appendChild( iFrameElement );
   } else if ( _this.childElements.iframeContainer === null ) {
     throw new Error( 'No iframe container element found.' );
@@ -276,9 +280,6 @@ const API = {
    * Function used to play the video player.
    */
   play: function play( ) {
-    if ( _isIframeLoaded === false ) {
-      _attachIFrame();
-    }
     this.baseElement.classList.add( CLASSES.VIDEO_PLAYING_STATE );
     this.state.setIsVideoPlaying( true );
   },

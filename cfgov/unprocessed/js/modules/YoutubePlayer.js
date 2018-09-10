@@ -52,6 +52,7 @@ const API = {
     this.videoId = this.baseElement &&
       this.baseElement.getAttribute( 'data-id' );
     this.loadImage();
+    this.initPlayer();
   },
 
 
