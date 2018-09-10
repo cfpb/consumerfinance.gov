@@ -267,7 +267,7 @@ urlpatterns = [
         template_name='knowbeforeyouowe/creditcards/tool.html'),
         name='cckbyo'),
     # Form csrf token provider for JS form submission
-    url(r'^token-provider/', token_provider),
+    url(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
     # data-research-api
     url(r'^data-research/mortgages/api/v1/',
