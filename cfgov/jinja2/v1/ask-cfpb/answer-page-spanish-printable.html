@@ -12,9 +12,6 @@
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Custom modernizr for touch detection and svg support only, see the .js file for the build link -->
-<script src="{{ static('nemo/_/js/modernizr.custom.js') }}"></script>
-
 <!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles-ie.min.css') }}"> <![endif]-->
     <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles.min.css') }}"> <!--<![endif]-->
 
@@ -22,6 +19,8 @@
     <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('knowledgebase/es-ask-styles.min.css') }}"> <!--<![endif]-->
 
 <!--[if lt IE 9]> <script src="{{ static('nemo/_/js/html5shim.js') }}"></script> <![endif]-->
+
+{% include "v1/modernizr.html" %}
 
 </head>
 <body class="s-printable">
