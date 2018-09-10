@@ -52,7 +52,7 @@ def flagged_wagtail_template_view(flag_name, template_name):
     )
 
 
-def flagged_static(flag_name, regex_path):
+def flagged_wagtail_only_view(flag_name, regex_path, url_name=None):
     """ Teachers Digital Platform static pages are very similar so
     in the name of DRY we are implementing them with this method.
     """
@@ -61,6 +61,7 @@ def flagged_static(flag_name, regex_path):
         regex_path,
         lambda request: ServeView.as_view()(request, request.path),
         fallback=page_not_found,
+        name=url_name,
     )
 
 
@@ -383,31 +384,29 @@ urlpatterns = [
                 r'^search/',
                 include('search.urls')),
 
-    flagged_url(
+    flagged_wagtail_only_view(
         'TDP_SEARCH_INTERFACE',
         r'^practitioner-resources/youth-financial-education/teach/activities/',
-        lambda request: ServeView.as_view()(request, request.path),
-        fallback=page_not_found,
-        name='tdp_search'),
+        'tdp_search'),
 
-    flagged_static(
-        'TDP_SEARCH_INTERFACE',
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
         r'^practitioner-resources/youth-financial-education/teach/'),
 
-    flagged_static(
-        'TDP_SEARCH_INTERFACE',
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
         r'^practitioner-resources/youth-financial-education/learn/'),
 
-    flagged_static(
-        'TDP_SEARCH_INTERFACE',
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
         r'practitioner-resources/youth-financial-education2/'),
 
-    flagged_static(
-        'TDP_SEARCH_INTERFACE',
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
         r'^practitioner-resources/youth-financial-education/glossary-financial-terms/'),  # noqa: E501
 
-    flagged_static(
-        'TDP_SEARCH_INTERFACE',
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
         r'^practitioner-resources/youth-financial-education/resources-research/'),  # noqa: E501
 
     flagged_url('TDP_CRTOOL',
@@ -425,11 +424,9 @@ urlpatterns = [
         include_if_app_enabled('teachers_digital_platform',
                                 'teachers_digital_platform.prototypes_urls')),  # noqa: E501
 
-    flagged_url(
+    flagged_wagtail_only_view(
         'TDP_CRTOOL',
-        r'^practitioner-resources/youth-financial-education/curriculum-review/',  # noqa: E501
-        lambda request: ServeView.as_view()(request, request.path),
-        fallback=page_not_found),
+        r'^practitioner-resources/youth-financial-education/curriculum-review/'),  # noqa: E501
 
     flagged_url('TDP_BB_TOOL',
         r'^practitioner-resources/youth-financial-education/tour',  # noqa: E501
