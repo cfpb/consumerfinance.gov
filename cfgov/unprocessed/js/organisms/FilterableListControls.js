@@ -66,11 +66,17 @@ function FilterableListControls( element ) {
     if ( _dom.classList.contains( 'o-filterable-list-controls' ) ) {
       multiSelects.forEach( function( multiSelect ) {
         multiSelect.addEventListener( 'expandBegin', function refresh() {
-          window.setTimeout( _expandable.transition.expand, 250 );
+          window.setTimeout(
+            _expandable.transition.expand.bind( _expandable.transition ),
+            250
+          );
         } );
 
         multiSelect.addEventListener( 'expandEnd', function refresh() {
-          window.setTimeout( _expandable.transition.expand, 250 );
+          window.setTimeout(
+            _expandable.transition.expand.bind( _expandable.transition ),
+            250
+          );
         } );
       } );
     }
