@@ -51,16 +51,18 @@ def flagged_wagtail_template_view(flag_name, template_name):
         condition=False
     )
 
-def tdp_static_flagged(regex_path):
-    """ Teachers Digital Platform static pages are very similar so 
+
+def flagged_static(flag_name, regex_path):
+    """ Teachers Digital Platform static pages are very similar so
     in the name of DRY we are implementing them with this method.
     """
     return flagged_url(
-        'TDP_STATIC_PAGE',
+        flag_name,
         regex_path,
         lambda request: ServeView.as_view()(request, request.path),
         fallback=page_not_found,
     )
+
 
 urlpatterns = [
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
@@ -388,19 +390,24 @@ urlpatterns = [
         fallback=page_not_found,
         name='tdp_search'),
 
-    tdp_static_flagged(
+    flagged_static(
+        'TDP_SEARCH_INTERFACE',
         r'^practitioner-resources/youth-financial-education/teach/'),
 
-    tdp_static_flagged(
+    flagged_static(
+        'TDP_SEARCH_INTERFACE',
         r'^practitioner-resources/youth-financial-education/learn/'),
 
-    tdp_static_flagged(
+    flagged_static(
+        'TDP_SEARCH_INTERFACE',
         r'practitioner-resources/youth-financial-education2/'),
 
-    tdp_static_flagged(
+    flagged_static(
+        'TDP_SEARCH_INTERFACE',
         r'^practitioner-resources/youth-financial-education/glossary-financial-terms/'),  # noqa: E501
 
-    tdp_static_flagged(
+    flagged_static(
+        'TDP_SEARCH_INTERFACE',
         r'^practitioner-resources/youth-financial-education/resources-research/'),  # noqa: E501
 
     flagged_url('TDP_CRTOOL',
