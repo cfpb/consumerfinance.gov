@@ -16,14 +16,15 @@ const HTML_SNIPPET = `
       </label>
     </div>
   </div>
-  <div>
+  <div class="filters_tags">
     <div class="a-tag" data-value="1002" data-js-hook="behavior_clear-filter">
     1002 (Regulation B)
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.9 1200" class="cf-icon-svg">
       </svg>
     </div>
   </div>
-  <button id="clear-all" data-js-hook="behavior_clear-all">
+  <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear"
+          data-js-hook="behavior_clear-all">
       Clear all filters
   </button>
   <div id="regs3k-results"></div>
@@ -101,7 +102,7 @@ describe( 'The Regs3K search page', () => {
       responseText: []
     };
     global.XMLHttpRequest = jest.fn( () => mockXHR );
-    const clearAllLink = document.querySelector( '#clear-all' );
+    const clearAllLink = document.querySelector( '.filters_clear' );
 
     let numFilters = document.querySelectorAll( 'div.a-tag' ).length;
     expect( numFilters ).toEqual( 1 );
