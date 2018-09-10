@@ -52,6 +52,19 @@ def flagged_wagtail_template_view(flag_name, template_name):
     )
 
 
+def flagged_wagtail_only_view(flag_name, regex_path, url_name=None):
+    """ Teachers Digital Platform static pages are very similar so
+    in the name of DRY we are implementing them with this method.
+    """
+    return flagged_url(
+        flag_name,
+        regex_path,
+        lambda request: ServeView.as_view()(request, request.path),
+        fallback=page_not_found,
+        name=url_name,
+    )
+
+
 urlpatterns = [
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
@@ -371,24 +384,53 @@ urlpatterns = [
                 r'^search/',
                 include('search.urls')),
 
-    flagged_url('TDP_CRTOOL',
-                r'^practitioner-resources/youth-financial-education/curriculum-review/tool/',  # noqa: E501
-                include_if_app_enabled('teachers_digital_platform',
-                                       'teachers_digital_platform.tool_urls')),
+    flagged_wagtail_only_view(
+        'TDP_SEARCH_INTERFACE',
+        r'^practitioner-resources/youth-financial-education/teach/activities/',
+        'tdp_search'),
+
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
+        r'^practitioner-resources/youth-financial-education/teach/'),
+
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
+        r'^practitioner-resources/youth-financial-education/learn/'),
+
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
+        r'practitioner-resources/youth-financial-education2/'),
+
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
+        r'^practitioner-resources/youth-financial-education/glossary-financial-terms/'),  # noqa: E501
+
+    flagged_wagtail_only_view(
+        'TDP_STATIC_PAGE',
+        r'^practitioner-resources/youth-financial-education/resources-research/'),  # noqa: E501
 
     flagged_url('TDP_CRTOOL',
-            r'^practitioner-resources/youth-financial-education/curriculum-review/before-you-begin/',  # noqa: E501
-            include_if_app_enabled('teachers_digital_platform',
-                                    'teachers_digital_platform.begin_urls')),
+        r'^practitioner-resources/youth-financial-education/curriculum-review/tool/',  # noqa: E501
+        include_if_app_enabled('teachers_digital_platform',
+                               'teachers_digital_platform.tool_urls')),
+
+    flagged_url('TDP_CRTOOL',
+        r'^practitioner-resources/youth-financial-education/curriculum-review/before-you-begin/',  # noqa: E501
+        include_if_app_enabled('teachers_digital_platform',
+                                'teachers_digital_platform.begin_urls')),
 
     flagged_url('TDP_CRTOOL_PROTOTYPES',
-            r'^practitioner-resources/youth-financial-education/curriculum-review/prototypes/',  # noqa: E501
-            include_if_app_enabled('teachers_digital_platform',
-                                    'teachers_digital_platform.prototypes_urls')),  # noqa: E501
+        r'^practitioner-resources/youth-financial-education/curriculum-review/prototypes/',  # noqa: E501
+        include_if_app_enabled('teachers_digital_platform',
+                                'teachers_digital_platform.prototypes_urls')),  # noqa: E501
+
+    flagged_wagtail_only_view(
+        'TDP_CRTOOL',
+        r'^practitioner-resources/youth-financial-education/curriculum-review/'),  # noqa: E501
 
     flagged_url('TDP_BB_TOOL',
-            r'^practitioner-resources/youth-financial-education/learn-about-the-building-blocks/take-a-tour',  # noqa: E501
-            include_if_app_enabled('teachers_digital_platform',
+        r'^practitioner-resources/youth-financial-education/tour',  # noqa: E501
+        include_if_app_enabled('teachers_digital_platform',
                                     'teachers_digital_platform.bb_urls')),
 
     flagged_url(
