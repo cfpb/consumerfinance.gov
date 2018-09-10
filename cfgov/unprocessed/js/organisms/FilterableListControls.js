@@ -68,14 +68,14 @@ function FilterableListControls( element ) {
         multiSelect.addEventListener( 'expandBegin', function refresh() {
           window.setTimeout(
             _expandable.transition.expand.bind( _expandable.transition ),
-            300
+            250
           );
         } );
 
         multiSelect.addEventListener( 'expandEnd', function refresh() {
           window.setTimeout(
             _expandable.transition.expand.bind( _expandable.transition ),
-            300
+            250
           );
         } );
       } );
