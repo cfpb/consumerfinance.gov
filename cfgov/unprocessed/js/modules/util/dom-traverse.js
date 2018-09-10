@@ -69,14 +69,18 @@ function closest( elem, selector ) {
   const matchesSelector = _getMatchesMethod( elem );
   let match;
 
-  while ( elem ) {
-    if ( matchesSelector.bind( elem )( selector ) ) {
-      match = elem;
-    } else {
-      elem = elem.parentElement;
-    }
+  try {
+    while ( elem ) {
+      if ( matchesSelector.bind( elem )( selector ) ) {
+        match = elem;
+      } else {
+        elem = elem.parentNode;
+      }
 
-    if ( match ) { return elem; }
+      if ( match ) { return elem; }
+    }
+  } catch ( err ) {
+    return null;
   }
 
   return null;

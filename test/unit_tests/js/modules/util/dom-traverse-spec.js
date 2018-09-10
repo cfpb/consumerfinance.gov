@@ -91,7 +91,7 @@ describe( 'Dom Traverse', () => {
       expect( parent ).toBeNull();
     } );
 
-    it( 'should return the parent HTMLNode even if the selector wasn’t found',
+    it( 'should return null if the selector wasn’t found',
       () => {
         const child = document.querySelector( '.child' );
         const parent = domTraverse.closest( child, 'greatgrandparent' );
