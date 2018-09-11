@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from haystack.query import SearchQuerySet
@@ -162,7 +163,7 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
         context.update({
-            'get_secondary_nav_items': get_reg_nav_items,
+            'get_secondary_nav_items': get_secondary_nav_items,
         })
         return context
 
@@ -257,7 +258,14 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
         context.update({
             'regulation': self.regulation,
-            'breadcrumb_items': self.get_breadcrumbs(request)
+            'breadcrumb_items': self.get_breadcrumbs(request),
+            'search_url': (
+                self.get_parent().url +
+                'search-regulations/results/?regs=' +
+                self.regulation.part_number
+            ),
+            'num_versions': self.regulation.versions.filter(
+                draft=False).count(),
         })
         return context
 
@@ -304,20 +312,57 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                 effective_version=effective_version
             )
         else:
+            effective_version = self.regulation.effective_version
             section_query = self.get_section_query()
 
         sections = list(section_query.all())
 
-        context = self.get_context(request, *args, **kwargs)
+        context = self.get_context(request)
         context.update({
+            'version': effective_version,
+            'sections': sections,
             'get_secondary_nav_items': partial(
                 get_secondary_nav_items, sections=sections, date_str=date_str
             ),
         })
 
+        if date_str is not None:
+            context['date_str'] = date_str
+
         return TemplateResponse(
             request,
-            self.get_template(request, *args, **kwargs),
+            self.get_template(request),
+            context
+        )
+
+    @route(r'^versions/(?:(?P<section_label>[0-9A-Za-z-]+)/)?$',
+           name="versions")
+    def versions_page(self, request, section_label=None):
+        section_query = self.get_section_query()
+        sections = list(section_query.all())
+        context = self.get_context(request, sections=sections)
+
+        versions = [
+            {
+                'effective_date': v.effective_date,
+                'date_str': str(v.effective_date),
+                'sections': self.get_section_query(effective_version=v).all(),
+            }
+            for v in self.regulation.versions.filter(
+                draft=False).order_by('-effective_date')
+        ]
+
+        context.update({
+            'versions': versions,
+            'section_label': section_label,
+            'get_secondary_nav_items': partial(
+                get_secondary_nav_items, sections=sections
+            ),
+        })
+
+        return TemplateResponse(
+            request,
+            self.template,
             context
         )
 
@@ -336,8 +381,20 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             effective_version = self.regulation.effective_version
             section_query = self.get_section_query()
 
+        try:
+            section = section_query.get(label=section_label)
+        except Section.DoesNotExist:
+            kwargs = {}
+            if date_str is not None:
+                kwargs['date_str'] = date_str
+
+            return redirect(
+                self.url + self.reverse_subpage(
+                    "index", kwargs=kwargs
+                )
+            )
+
         sections = list(section_query.all())
-        section = section_query.get(label=section_label)
         current_index = sections.index(section)
         context = self.get_context(request, sections=sections)
 
@@ -364,9 +421,6 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             'previous_url': get_section_url(self, previous_section,
                                             date_str=date_str),
             'breadcrumb_items': self.get_breadcrumbs(request, section),
-            'search_url': (self.get_parent().url +
-                           'search-regulations/results/?regs=' +
-                           self.regulation.part_number)
         })
 
         return TemplateResponse(
@@ -391,6 +445,9 @@ def get_previous_section(section_list, current_index):
 
 
 def get_section_url(page, section, date_str=None):
+    if section is None:
+        return None
+
     section_kwargs = {}
     if date_str is not None:
         section_kwargs['date_str'] = date_str

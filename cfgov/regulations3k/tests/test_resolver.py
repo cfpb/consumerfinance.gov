@@ -101,7 +101,9 @@ class ReferenceResolutionTestCase(TestCase):
         self.assertIsNone(paragraph)
 
     def test_get_contents_resolver(self):
-        contents_resolver = get_contents_resolver(self.reg_page)
+        contents_resolver = get_contents_resolver(
+            self.reg_page.regulation.effective_version
+        )
         result = regdown(
             self.section_2.contents,
             contents_resolver=contents_resolver,
@@ -110,7 +112,9 @@ class ReferenceResolutionTestCase(TestCase):
         self.assertIn('Interpreting adverse action', result)
 
     def test_get_contents_resolver_reference_doesnt_exist(self):
-        contents_resolver = get_contents_resolver(self.reg_page)
+        contents_resolver = get_contents_resolver(
+            self.reg_page.regulation.effective_version
+        )
         result = regdown(
             self.section_3.contents,
             contents_resolver=contents_resolver,
