@@ -50,14 +50,14 @@
                     {% if num_versions > 1 %}
                     <li class="m-list_item">
                         <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">
-                            {% include 'icons/date.svg' %}
+                            {{ svg_icon('date') }}
                             View all versions of this regulation
                         </a>
                     </li>
                     {% endif %}
                     <li class="m-list_item">
                         <a class="m-list_link" href="{{ search_url }}">
-                            {% include 'icons/search.svg' %}
+                            {{ svg_icon('search') }}
                             Search this regulation
                         </a>
                     </li>
@@ -67,7 +67,7 @@
                             m-notification
                             m-notification__visible
                             m-notification__warning">
-                    {% include 'icons/warning-round.svg' %}
+                    {{ svg_icon('warning-round') }}
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message">This version is not current law.</div>
                         <p class="m-notification_explanation">
@@ -137,7 +137,7 @@
                         m-notification
                         m-notification__visible
                         m-notification__warning">
-                {% include 'icons/warning-round.svg' %}
+                {{ svg_icon('warning-round') }}
                 <div class="m-notification_content">
                     <div class="h4 m-notification_message">This version is not current law.</div>
                     <p class="m-notification_explanation">
