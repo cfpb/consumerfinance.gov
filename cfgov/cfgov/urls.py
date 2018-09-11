@@ -422,7 +422,7 @@ urlpatterns = [
 
     flagged_wagtail_only_view(
         'TDP_CRTOOL',
-        r'^practitioner-resources/youth-financial-education/curriculum-review/'),  # noqa: E501
+        r'^practitioner-resources/youth-financial-education/curriculum-review/$'),  # noqa: E501
 
     flagged_url('TDP_BB_TOOL',
         r'^practitioner-resources/youth-financial-education/tour',  # noqa: E501
