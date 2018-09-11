@@ -513,6 +513,22 @@ class RegModelTests(DjangoTestCase):
             response.content
         )
 
+    def test_get_breadcrumbs_section_with_date(self):
+        crumbs = self.reg_page.get_breadcrumbs(
+            self.get_request(),
+            section=self.section_num4,
+            date_str='2011-01-01'
+        )
+        self.assertEqual(
+            crumbs,
+            [
+                {
+                    'href': '/reg-landing/1002/2011-01-01/',
+                    'title': '12 CFR Part 1002 (Regulation B)'
+                },
+            ]
+        )
+
     def test_effective_version_date_unique(self):
         new_effective_version = mommy.make(
             EffectiveVersion,

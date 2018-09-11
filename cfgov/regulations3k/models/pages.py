@@ -258,7 +258,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
         context.update({
             'regulation': self.regulation,
-            'breadcrumb_items': self.get_breadcrumbs(request),
+            'breadcrumb_items': self.get_breadcrumbs(request, *args, **kwargs),
             'search_url': (
                 self.get_parent().url +
                 'search-regulations/results/?regs=' +
@@ -269,13 +269,17 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         })
         return context
 
-    def get_breadcrumbs(self, request, section=None):
+    def get_breadcrumbs(self, request, section=None, **kwargs):
         crumbs = super(RegulationPage, self).get_breadcrumbs(request)
 
         if section is not None:
             crumbs = crumbs + [
                 {
-                    'href': self.url,
+                    'href': self.url + self.reverse_subpage(
+                        'index', kwargs={
+                            k: v for k, v in kwargs.items() if k == 'date_str'
+                        }
+                    ),
                     'title': str(section.subpart.version.part),
                 },
             ]
@@ -381,13 +385,13 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             effective_version = self.regulation.effective_version
             section_query = self.get_section_query()
 
+        kwargs = {}
+        if date_str is not None:
+            kwargs['date_str'] = date_str
+
         try:
             section = section_query.get(label=section_label)
         except Section.DoesNotExist:
-            kwargs = {}
-            if date_str is not None:
-                kwargs['date_str'] = date_str
-
             return redirect(
                 self.url + self.reverse_subpage(
                     "index", kwargs=kwargs
@@ -396,7 +400,9 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
         sections = list(section_query.all())
         current_index = sections.index(section)
-        context = self.get_context(request, sections=sections)
+        context = self.get_context(
+            request, section, sections=sections, **kwargs
+        )
 
         content = regdown(
             section.contents,
@@ -420,7 +426,6 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             'previous_section': previous_section,
             'previous_url': get_section_url(self, previous_section,
                                             date_str=date_str),
-            'breadcrumb_items': self.get_breadcrumbs(request, section),
         })
 
         return TemplateResponse(
