@@ -18,7 +18,7 @@ const processNotices = notices => {
   const html = document.createDocumentFragment();
   const lastNotice = {
     html_url: CFPB_NOTICES,
-    title: 'More BCFP notices'
+    title: 'More Bureau notices'
   };
   notices.forEach( notice => {
     html.appendChild( processNotice( notice ) );
