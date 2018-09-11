@@ -44,7 +44,7 @@
         <div class="regulation-meta">
             {% if section.subpart.version == regulation.effective_version %}
                 <div class="a-date">
-                    This version is current law.
+                    This version is current law
                 </div>
                 <ul class="m-list m-list__links">
                     {% if num_versions > 1 %}
@@ -84,7 +84,9 @@
             {% endif %}
         </div>
 
-        <div class="a-rule-break m-full-width-text"></div>
+        {% if section.subpart.version == regulation.effective_version %}
+            <div class="a-rule-break m-full-width-text"></div>
+        {% endif %}
 
         <section class="block block__flush-top">
             {{content|safe}}
@@ -156,32 +158,34 @@
         <div class="block block__flush-top">
                 <ul class="m-list m-list__links m-full-width-text">
                     {% if version == regulation.effective_version %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label) }}">
-                            View current law
-                        </a>
-                    </li>
+                        <li class="m-list_item">
+                            <a class="m-list_link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label) }}">
+                                View current law
+                            </a>
+                        </li>
                     {% else %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="{{ routablepageurl(page, 'section', date_str=date_str, section_label=sections[0].label) }}">
-                            View this version
-                        </a>
-                    </li>
+                        <li class="m-list_item">
+                            <a class="m-list_link" href="{{ routablepageurl(page, 'section', date_str=date_str, section_label=sections[0].label) }}">
+                                View this version
+                            </a>
+                        </li>
                     {% endif %}
 
                     {% if num_versions > 1 %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="{{ routablepageurl(page, 'versions') }}">
-                            View all versions of this regulation
-                        </a>
-                    </li>
+                        <li class="m-list_item">
+                            <a class="m-list_link" href="{{ routablepageurl(page, 'versions') }}">
+                                View all versions of this regulation
+                            </a>
+                        </li>
                     {% endif %}
 
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="{{ search_url }}">
-                            Search this regulation
-                        </a>
-                    </li>
+                    {% if version == regulation.effective_version %}
+                        <li class="m-list_item">
+                            <a class="m-list_link" href="{{ search_url }}">
+                                Search this regulation
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
         </div>
 
