@@ -23,12 +23,13 @@ class ConferenceRegistrationFormTests(TestCase):
 
     def get_valid_form(
         self,
-        attendee_type=ConferenceRegistrationForm.ATTENDEE_IN_PERSON
+        attendee_type=ConferenceRegistrationForm.ATTENDEE_IN_PERSON,
+        govdelivery_question_id=None
     ):
         return ConferenceRegistrationForm(
             capacity=self.capacity,
             govdelivery_code=self.govdelivery_code,
-            govdelivery_question_id=self.govdelivery_question_id,
+            govdelivery_question_id=govdelivery_question_id,
             data={
                 'attendee_type': attendee_type,
                 'name': 'A User',
@@ -95,9 +96,23 @@ class ConferenceRegistrationFormTests(TestCase):
                 }
             )]
         )
-        self.assertEqual(
-            MockGovDelivery.calls,
-            [(
+
+    def test_form_save_commit_true_subscribes_and_sets_question(self):
+        form = self.get_valid_form(govdelivery_question_id=12345)
+        form.is_valid()
+        form.save()
+
+        self.assertEqual(MockGovDelivery.calls, [
+            (
+                'set_subscriber_topics',
+                (),
+                {
+                    'contact_details': 'user@domain.com',
+                    'topic_codes': ['TEST-CODE'],
+                    'send_notifications': True,
+                }
+            ),
+            (
                 'set_subscriber_answers_to_question',
                 (),
                 {
@@ -105,8 +120,8 @@ class ConferenceRegistrationFormTests(TestCase):
                     'question_id': 12345,
                     'answer_text': 'yes',
                 }
-            )]
-        )
+            ),
+        ])
 
     def make_capacity_registrants(self, govdelivery_code, attendee_type):
         registrant = ConferenceRegistration(

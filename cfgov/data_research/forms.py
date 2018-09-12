@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django import forms
+from django.utils.functional import cached_property
 
 from core.govdelivery import get_govdelivery_api
 from data_research.models import ConferenceRegistration
@@ -141,20 +142,24 @@ class ConferenceRegistrationForm(forms.Form):
             # Subscribe this registrant to GovDelivery.
             self.govdelivery_subscribe(code=self.govdelivery_code, email=email)
 
-            # Update their question response.
-            self.govdelivery_question_response(
-                email=email,
-                question_id=self.govdelivery_question_id
-            )
+            # Update their question response, if appropriate.
+            if self.govdelivery_question_id:
+                self.govdelivery_question_response(
+                    email=email,
+                    question_id=self.govdelivery_question_id
+                )
 
             # Persist the registration to the database.
             registration.save()
 
         return registration
 
+    @cached_property
+    def govdelivery_api(self):
+        return get_govdelivery_api()
+
     def govdelivery_subscribe(self, email, code):
-        govdelivery = get_govdelivery_api()
-        subscription_response = govdelivery.set_subscriber_topics(
+        subscription_response = self.govdelivery_api.set_subscriber_topics(
             contact_details=email,
             topic_codes=[code],
             send_notifications=True
@@ -163,11 +168,12 @@ class ConferenceRegistrationForm(forms.Form):
         subscription_response.raise_for_status()
 
     def govdelivery_question_response(self, email, question_id):
-        govdelivery = get_govdelivery_api()
-        question_response = govdelivery.set_subscriber_answers_to_question(
-            contact_details=email,
-            question_id=question_id,
-            answer_text='yes'
+        question_response = (
+            self.govdelivery_api.set_subscriber_answers_to_question(
+                contact_details=email,
+                question_id=question_id,
+                answer_text='yes'
+            )
         )
 
         question_response.raise_for_status()

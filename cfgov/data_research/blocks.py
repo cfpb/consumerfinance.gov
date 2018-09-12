@@ -17,6 +17,7 @@ class ConferenceRegistrationForm(AbstractFormBlock):
     )
     govdelivery_question_id = blocks.CharBlock(
         label='GovDelivery question ID',
+        required=False,
         help_text=mark_safe(
             'Enter the ID of the question in GovDelivery that is being used '
             'to track registration for this conference. It is the number in '
