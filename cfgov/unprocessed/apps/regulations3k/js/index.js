@@ -2,6 +2,7 @@ import Expandable from 'cf-expandables/src/Expandable';
 import { bindEvent } from '../../../js/modules/util/dom-events';
 import { queryOne as find } from '../../../js/modules/util/dom-traverse';
 import { handleContentClick, handleNavClick } from './analytics';
+import utils from './regs3k-utils';
 
 const navHeader = find( '.o-regs3k-navigation_header' );
 const navItems = find( '.o-regs3k-sections' );
@@ -52,6 +53,9 @@ const init = () => {
     navItems.classList.add( 'u-hide-on-stacked' );
     bindSecondaryNav();
     bindAnalytics();
+  }
+  if ( utils.isOldHash( window.location.hash ) ) {
+    window.location.hash = utils.getNewHash( window.location.hash );
   }
 };
 
