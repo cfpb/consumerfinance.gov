@@ -21,8 +21,8 @@ from regulations3k.models.django import (
 )
 from regulations3k.models.pages import (
     RegulationLandingPage, RegulationPage, RegulationsSearchPage,
-    get_next_section, get_previous_section, get_reg_nav_items,
-    validate_num_results, validate_page_number
+    get_next_section, get_previous_section, get_secondary_nav_items,
+    get_section_url, validate_num_results, validate_page_number
 )
 
 
@@ -285,11 +285,13 @@ class RegModelTests(DjangoTestCase):
             test_context['regulation'],
             self.reg_page.regulation)
 
-    def test_get_reg_nav_items(self):
+    def test_get_secondary_nav_items(self):
         request = self.get_request()
         request.path = '/regulations/1002/4/'
         sections = list(self.reg_page.get_section_query().all())
-        test_nav_items = get_reg_nav_items(request, self.reg_page, sections)[0]
+        test_nav_items = get_secondary_nav_items(
+            request, self.reg_page, sections
+        )[0]
         self.assertEqual(
             len(test_nav_items),
             Subpart.objects.filter(
@@ -299,10 +301,33 @@ class RegModelTests(DjangoTestCase):
             ).count()
         )
 
-    def test_routable_page_view(self):
-        response = self.reg_page.section_page(
-            self.get_request(), section_label='4')
+    def test_get_section_url(self):
+        url = get_section_url(self.reg_page, self.section_num4)
+        self.assertEqual(url, '/reg-landing/1002/4/')
+
+    def test_get_section_url_no_section(self):
+        url = get_section_url(self.reg_page, None)
+        self.assertIsNone(url)
+
+    def test_section_page_view(self):
+        response = self.client.get('/reg-landing/1002/4/')
         self.assertEqual(response.status_code, 200)
+
+    def test_section_page_view_section_does_not_exist(self):
+        response = self.client.get('/reg-landing/1002/82/')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.get('location'),
+            'http://testserver/reg-landing/1002/'
+        )
+
+    def test_section_page_view_section_does_not_exist_with_date(self):
+        response = self.client.get('/reg-landing/1002/2011-01-01/82/')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.get('location'),
+            'http://testserver/reg-landing/1002/2011-01-01/'
+        )
 
     def test_sortable_label(self):
         self.assertEqual(sortable_label('1-A-Interp'), ('0001', 'A', 'interp'))
@@ -453,25 +478,55 @@ class RegModelTests(DjangoTestCase):
     def test_index_page_with_effective_date(self):
         response = self.client.get('/reg-landing/1002/2011-01-01/')
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b'This version is not current law', response.content)
+        self.assertIn(b'Jan. 1, 2011', response.content)
 
     def test_index_page_without_effective_date(self):
         response = self.client.get('/reg-landing/1002/')
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Most recently amended Jan. 18, 2014', response.content)
 
     def test_section_page_with_effective_date(self):
         response = self.client.get('/reg-landing/1002/2011-01-01/4/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(
-            b'JAN 01, 2011',
-            response.content,
-        )
+        self.assertIn(b'This version is not current law', response.content)
 
     def test_section_page_without_effective_date(self):
         response = self.client.get('/reg-landing/1002/4/')
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b'This version is current law', response.content)
+        self.assertIn(b'Search this regulation', response.content)
+
+    def test_versions_page_view_without_section(self):
+        response = self.client.get('/reg-landing/1002/versions/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Jan. 18, 2014', response.content)
+        self.assertIn(b'(current law)', response.content)
+        self.assertIn(b'Jan. 1, 2011', response.content)
+        self.assertNotIn(b'Jan. 1, 2020', response.content)
+
+    def test_versions_page_view_with_section(self):
+        response = self.client.get('/reg-landing/1002/versions/4/')
+        self.assertEqual(response.status_code, 200)
         self.assertIn(
-            b'JAN 18, 2014',
+            b'href="/reg-landing/1002/2011-01-01/4/"',
             response.content
+        )
+
+    def test_get_breadcrumbs_section_with_date(self):
+        crumbs = self.reg_page.get_breadcrumbs(
+            self.get_request(),
+            section=self.section_num4,
+            date_str='2011-01-01'
+        )
+        self.assertEqual(
+            crumbs,
+            [
+                {
+                    'href': '/reg-landing/1002/2011-01-01/',
+                    'title': '12 CFR Part 1002 (Regulation B)'
+                },
+            ]
         )
 
     def test_effective_version_date_unique(self):
