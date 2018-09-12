@@ -22,6 +22,7 @@ class ConferenceRegistrationHandler(Handler):
     def __init__(self, page, request, block_value, form_cls=None):
         super(ConferenceRegistrationHandler, self).__init__(page, request)
         self.govdelivery_code = block_value['govdelivery_code']
+        self.govdelivery_question_id = block_value['govdelivery_question_id']
         self.capacity = block_value['capacity']
         self.failure_message = block_value['failure_message']
         self.form_cls = form_cls or ConferenceRegistrationForm
@@ -32,6 +33,7 @@ class ConferenceRegistrationHandler(Handler):
         form_kwargs = {
             'capacity': self.capacity,
             'govdelivery_code': self.govdelivery_code,
+            'govdelivery_question_id': self.govdelivery_question_id
         }
 
         # If the form was submitted, and there's still room in the conference,

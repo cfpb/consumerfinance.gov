@@ -9,6 +9,7 @@ class MockConferenceRegistrationForm(forms.Form):
     def __init__(self, *args, **kwargs):
         kwargs.pop('capacity')
         kwargs.pop('govdelivery_code')
+        kwargs.pop('govdelivery_question_id')
         super(MockConferenceRegistrationForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=False):
@@ -41,6 +42,7 @@ class TestConferenceRegistrationHandler(TestCase):
         self.block_value = {
             'capacity': '100',
             'govdelivery_code': 'ABC123',
+            'govdelivery_question_id': '12345',
             'failure_message': "Something went wrong in a test.",
         }
 

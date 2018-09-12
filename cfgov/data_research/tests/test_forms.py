@@ -10,11 +10,13 @@ from data_research.models import ConferenceRegistration
 class ConferenceRegistrationFormTests(TestCase):
     capacity = 100
     govdelivery_code = 'TEST-CODE'
+    govdelivery_question_id = 12345
 
     def test_invalid_form_if_fields_are_missing(self):
         form = ConferenceRegistrationForm(
             capacity=self.capacity,
             govdelivery_code=self.govdelivery_code,
+            govdelivery_question_id=self.govdelivery_question_id,
             data={'foo': 'bar'}
         )
         self.assertFalse(form.is_valid())
@@ -26,6 +28,7 @@ class ConferenceRegistrationFormTests(TestCase):
         return ConferenceRegistrationForm(
             capacity=self.capacity,
             govdelivery_code=self.govdelivery_code,
+            govdelivery_question_id=self.govdelivery_question_id,
             data={
                 'attendee_type': attendee_type,
                 'name': 'A User',
@@ -89,6 +92,18 @@ class ConferenceRegistrationFormTests(TestCase):
                     'contact_details': 'user@domain.com',
                     'topic_codes': ['TEST-CODE'],
                     'send_notifications': True,
+                }
+            )]
+        )
+        self.assertEqual(
+            MockGovDelivery.calls,
+            [(
+                'set_subscriber_answers_to_question',
+                (),
+                {
+                    'contact_details': 'user@domain.com',
+                    'question_id': 12345,
+                    'answer_text': 'yes',
                 }
             )]
         )

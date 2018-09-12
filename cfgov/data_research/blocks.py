@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+from django.utils.safestring import mark_safe
+
 from wagtail.wagtailcore import blocks
 
 from v1.blocks import AbstractFormBlock
@@ -7,30 +9,40 @@ from v1.blocks import AbstractFormBlock
 
 class ConferenceRegistrationForm(AbstractFormBlock):
     govdelivery_code = blocks.CharBlock(
+        label='GovDelivery code',
         help_text=(
-            "Conference registrants will be subscribed to this GovDelivery "
-            "list."
+            'Conference registrants will be subscribed to this GovDelivery '
+            'topic.'
+        )
+    )
+    govdelivery_question_id = blocks.CharBlock(
+        label='GovDelivery question ID',
+        help_text=mark_safe(
+            'Enter the ID of the question in GovDelivery that is being used '
+            'to track registration for this conference. It is the number in '
+            'the question URL, e.g., the <code>12345</code> in '
+            '<code>https://admin.govdelivery.com/questions/12345/edit</code>.'
         )
     )
     capacity = blocks.IntegerBlock(
         help_text=(
-            "Enter an integer that will be the conference attendance limit."
+            'Enter the (physical) conference attendance limit as a number.'
         )
     )
     success_message = blocks.RichTextBlock(
         help_text=(
-            "Enter a message that will be shown on successful registration."
+            'Enter a message that will be shown on successful registration.'
         )
     )
     at_capacity_message = blocks.RichTextBlock(
         help_text=(
-            "Enter a message that will be shown when the event is at capacity."
+            'Enter a message that will be shown when the event is at capacity.'
         )
     )
     failure_message = blocks.RichTextBlock(
         help_text=(
-            "Enter a message that will be shown if the GovDelivery "
-            "subscription fails."
+            'Enter a message that will be shown if the GovDelivery '
+            'subscription fails.'
         )
     )
 
