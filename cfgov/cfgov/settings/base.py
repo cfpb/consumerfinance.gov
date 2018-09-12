@@ -92,8 +92,6 @@ OPTIONAL_APPS = [
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
-    {'import': 'complaint', 'apps': ('complaint',
-     'complaintdatabase', 'complaint_common',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
     {'import': 'regcore', 'apps': ('regcore', 'regcore_read')},

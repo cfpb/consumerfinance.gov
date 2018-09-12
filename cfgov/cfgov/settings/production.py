@@ -121,3 +121,6 @@ except (TypeError, ValueError):
         "Environment variable ALLOWED_HOSTS is either not defined or is "
         "not valid JSON. Expected a JSON array of allowed hostnames."
     )
+
+# Used in legacy.views.complaint.ComplaintLandingView
+COMPLAINT_LANDING_STATS_SOURCE = "http://files.consumerfinance.gov/ccdb/narratives.json"
