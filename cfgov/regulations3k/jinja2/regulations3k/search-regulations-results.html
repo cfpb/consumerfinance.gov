@@ -3,7 +3,7 @@
 {% import 'molecules/pagination.html' as pagination with context %}
 
 <div class="results_header">
-    {% if current_count > 0 %}
+    {% if current_count and current_count > 0 %}
     <div class="results_count">
         <h2 class="h3">
             Showing {{ current_count }}
@@ -43,6 +43,7 @@
     </div>
     {% endif %}
 </div>
+{% if current_count %}
 <div class="results_list">
     {% for result in results %}
         {{ search_item.render( result ) }}
@@ -51,3 +52,4 @@
 <div class="results_paginator">
     {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
 </div>
+{% endif %}
