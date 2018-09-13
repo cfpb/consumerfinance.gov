@@ -56,7 +56,7 @@ CACHES.update({
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'TIMEOUT': 0,
     } for k in (
-        'default', 'eregs_longterm_cache', 'api_cache', 'post_preview'
+        'default', 'post_preview'
     )
 })
 

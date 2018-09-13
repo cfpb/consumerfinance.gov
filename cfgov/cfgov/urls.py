@@ -431,15 +431,7 @@ urlpatterns = [
         include_if_app_enabled('teachers_digital_platform',
                                     'teachers_digital_platform.bb_urls')),
 
-    flagged_url(
-        'REGULATIONS3K',
-        r'^policy-compliance/rulemaking/regulations/',
-        lambda request: ServeView.as_view()(request, request.path),
-        fallback=page_not_found,
-        name='regulations'
-    ),
-    flagged_url(
-        'REGULATIONS3K',
+    url(
         r'^regulations3k-service-worker.js',
         TemplateView.as_view(
         template_name='regulations3k/regulations3k-service-worker.js',
@@ -447,22 +439,8 @@ urlpatterns = [
         name='regulations3k-service-worker.js'
     ),
 
-    # Include eRegulations URLs only if the REGULATIONS3K flag state is False
-    flagged_url(
-        'REGULATIONS3K',
-        r'^eregs-api/.*',
-        include_if_app_enabled('regcore', 'regcore.urls'),
-        fallback=page_not_found,
-        state=False
-    ),
-    flagged_url(
-        'REGULATIONS3K',
-        r'^eregulations/.*',
-        include_if_app_enabled('regulations', 'regulations.urls'),
-        fallback=redirect_eregs,
-        name='eregs-redirect',
-        state=False
-    ),
+    # Explicitly redirect eRegulations URLs to Regulations3000
+    url(r'^eregulations/.*', redirect_eregs, name='eregs-redirect'),
 
 ]
 
