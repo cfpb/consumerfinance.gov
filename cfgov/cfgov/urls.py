@@ -450,14 +450,14 @@ urlpatterns = [
     # Include eRegulations URLs only if the REGULATIONS3K flag state is False
     flagged_url(
         'REGULATIONS3K',
-        r'^eregs-api/',
+        r'^eregs-api/.*',
         include_if_app_enabled('regcore', 'regcore.urls'),
         fallback=page_not_found,
         state=False
     ),
     flagged_url(
         'REGULATIONS3K',
-        r'^eregulations/',
+        r'^eregulations/.*',
         include_if_app_enabled('regulations', 'regulations.urls'),
         fallback=redirect_eregs,
         name='eregs-redirect',

@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 import datetime
 
-from django.http import Http404
 from django.test import RequestFactory, TestCase, override_settings
 
 from model_mommy import mommy
@@ -49,8 +48,10 @@ class RedirectRegulations3kTestCase(TestCase):
     def test_redirect_invalid_part(self):
         request = self.factory.get(
             '/eregulations/1020-1/2017-20417_20180101#1002-1')
-        with self.assertRaises(Http404):
-            redirect_eregs(request)
+        response = redirect_eregs(request)
+        self.assertEqual(
+            response.get('location'),
+            '/policy-compliance/rulemaking/regulations/')
 
     def test_version_redirect(self):
         request = self.factory.get(
@@ -85,8 +86,7 @@ class RedirectRegulations3kTestCase(TestCase):
         response = redirect_eregs(request)
         self.assertEqual(
             response.get('location'),
-            '/policy-compliance/rulemaking/regulations/1002/'
-            '2016-07-11/Interp-C/')
+            '/policy-compliance/rulemaking/regulations/1002/')
 
     def test_interp_appendix_invalid_date(self):
         request = self.factory.get(
@@ -95,7 +95,7 @@ class RedirectRegulations3kTestCase(TestCase):
         response = redirect_eregs(request)
         self.assertEqual(
             response.get('location'),
-            '/policy-compliance/rulemaking/regulations/1024/Interp-MS/')
+            '/policy-compliance/rulemaking/regulations/1024/')
 
     def test_interp_intro(self):
         request = self.factory.get(
@@ -120,8 +120,7 @@ class RedirectRegulations3kTestCase(TestCase):
         response = redirect_eregs(request)
         self.assertEqual(
             response.get('location'),
-            '/policy-compliance/rulemaking/regulations/1002/'
-            '2016-07-11/Interp-1/')
+            '/policy-compliance/rulemaking/regulations/1002/')
 
     def test_interp_section_current(self):
         request = self.factory.get(
@@ -130,7 +129,7 @@ class RedirectRegulations3kTestCase(TestCase):
         response = redirect_eregs(request)
         self.assertEqual(
             response.get('location'),
-            '/policy-compliance/rulemaking/regulations/1002/Interp-1/')
+            '/policy-compliance/rulemaking/regulations/1002/')
 
     def test_get_version_date_bad_doc_number(self):
         part = '1002'
