@@ -15,9 +15,13 @@ class ConferenceRegistrationForm(AbstractFormBlock):
             'topic.'
         )
     )
-    govdelivery_question_id = blocks.CharBlock(
-        label='GovDelivery question ID',
+    govdelivery_question_id = blocks.RegexBlock(
         required=False,
+        regex=r'^\d{5,}$',
+        error_messages={
+            'invalid': 'GovDelivery question ID must be 5 digits.'
+        },
+        label='GovDelivery question ID',
         help_text=mark_safe(
             'Enter the ID of the question in GovDelivery that is being used '
             'to track registration for this conference. It is the number in '
