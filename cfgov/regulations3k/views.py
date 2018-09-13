@@ -214,4 +214,4 @@ def redirect_eregs(request, **kwargs):
                             new_base, part, section), permanent=True)
             else:
                 return redirect("{}{}/".format(new_base, part), permanent=True)
-    return redirect("{}{}/".format(new_base, part), permanent=True)
+    return redirect(new_base)
