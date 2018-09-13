@@ -457,7 +457,7 @@ urlpatterns = [
     ),
     flagged_url(
         'REGULATIONS3K',
-        r'^eregulations/',
+        r'^eregulations/.*',
         include_if_app_enabled('regulations', 'regulations.urls'),
         fallback=redirect_eregs,
         name='eregs-redirect',
