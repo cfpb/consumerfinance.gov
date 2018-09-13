@@ -156,62 +156,62 @@ def redirect_eregs(request, **kwargs):
         return redirect("{}search-regulations/results/?regs={}&q={}".format(
             new_base, part, query), permanent=True)
     part_match = re.match(r'/eregulations/(\d{4})', original_url)
-    if part_match:
-        if part_match.group(1) in VERSION_MAP:
-            part = part_match.group(1)
+    if not part_match:
+        return redirect(new_base)
+    if part_match.group(1) in VERSION_MAP:
+        part = part_match.group(1)
+    else:
+        return redirect(new_base, permanent=True)
+    if original_url == "{}{}".format(original_base, part):
+        return redirect("{}{}/".format(new_base, part), permanent=True)
+    for pattern in [SECTION_RE, APPENDIX_RE]:
+        match_base = pattern.match(original_url)
+        if match_base:
+            (section, doc) = (match_base.group(1), match_base.group(2))
+            # permanently redirect current or unknown versions
+            if doc not in VERSION_MAP[part]:
+                return redirect("{}{}/{}/".format(
+                    new_base, part, section, permanent=True))
+            version_date = get_version_date(part, doc)
+            # if known version is not ready, temp redirect to current
+            if not version_date:
+                return redirect("{}{}/{}/".format(
+                    new_base, part, section))
+            # permanently redirect known, ready versions
+            return redirect("{}{}/{}/{}/".format(
+                new_base, part, version_date, section),
+                permanent=True)
+    for pattern in [INTERP_INTRO_RE,
+                    INTERP_APPENDIX_RE,
+                    INTERP_SECTION_RE]:
+        match_base = pattern.match(original_url)
+        if match_base:
+            doc = match_base.group(1)
+            version_date = get_version_date(part, doc)
+            if pattern == INTERP_INTRO_RE:
+                if version_date:
+                    return redirect("{}{}/{}/h1-Interp/".format(
+                        new_base, part, version_date), permanent=True)
+                else:
+                    return redirect("{}{}/Interp-0/".format(
+                        new_base, part), permanent=True)
+            if pattern == INTERP_APPENDIX_RE:
+                appendix = INTERP_APPENDIX_DEFAULTS.get(part, 'A')
+                if version_date:
+                    return redirect("{}{}/{}/Interp-{}/".format(
+                        new_base, part, version_date,
+                        appendix), permanent=True)
+                else:
+                    return redirect("{}{}/Interp-{}/".format(
+                        new_base, part, appendix), permanent=True)
+            if pattern == INTERP_SECTION_RE:
+                section = INTERP_SECTION_DEFAULTS.get(part, '1')
+                if version_date:
+                    return redirect("{}{}/{}/Interp-{}/".format(
+                        new_base, part, version_date,
+                        section), permanent=True)
+                else:
+                    return redirect("{}{}/Interp-{}/".format(
+                        new_base, part, section), permanent=True)
         else:
-            return redirect(new_base, permanent=True)
-        if original_url == "{}{}".format(original_base, part):
             return redirect("{}{}/".format(new_base, part), permanent=True)
-        for pattern in [SECTION_RE, APPENDIX_RE]:
-            match_base = pattern.match(original_url)
-            if match_base:
-                (section, doc) = (match_base.group(1), match_base.group(2))
-                # permanently redirect current or unknown versions
-                if doc not in VERSION_MAP[part]:
-                    return redirect("{}{}/{}/".format(
-                        new_base, part, section, permanent=True))
-                version_date = get_version_date(part, doc)
-                # if known version is not ready, temp redirect to current
-                if not version_date:
-                    return redirect("{}{}/{}/".format(
-                        new_base, part, section))
-                # permanently redirect known, ready versions
-                return redirect("{}{}/{}/{}/".format(
-                    new_base, part, version_date, section),
-                    permanent=True)
-        for pattern in [INTERP_INTRO_RE,
-                        INTERP_APPENDIX_RE,
-                        INTERP_SECTION_RE]:
-            match_base = pattern.match(original_url)
-            if match_base:
-                doc = match_base.group(1)
-                version_date = get_version_date(part, doc)
-                if pattern == INTERP_INTRO_RE:
-                    if version_date:
-                        return redirect("{}{}/{}/h1-Interp/".format(
-                            new_base, part, version_date), permanent=True)
-                    else:
-                        return redirect("{}{}/Interp-0/".format(
-                            new_base, part), permanent=True)
-                if pattern == INTERP_APPENDIX_RE:
-                    appendix = INTERP_APPENDIX_DEFAULTS.get(part, 'A')
-                    if version_date:
-                        return redirect("{}{}/{}/Interp-{}/".format(
-                            new_base, part, version_date,
-                            appendix), permanent=True)
-                    else:
-                        return redirect("{}{}/Interp-{}/".format(
-                            new_base, part, appendix), permanent=True)
-                if pattern == INTERP_SECTION_RE:
-                    section = INTERP_SECTION_DEFAULTS.get(part, '1')
-                    if version_date:
-                        return redirect("{}{}/{}/Interp-{}/".format(
-                            new_base, part, version_date,
-                            section), permanent=True)
-                    else:
-                        return redirect("{}{}/Interp-{}/".format(
-                            new_base, part, section), permanent=True)
-            else:
-                return redirect("{}{}/".format(new_base, part), permanent=True)
-    return redirect(new_base)
