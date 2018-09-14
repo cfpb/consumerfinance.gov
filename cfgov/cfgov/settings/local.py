@@ -40,7 +40,8 @@ LOGGING = {
 if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
     INSTALLED_APPS += ('debug_toolbar',)
 
-    INTERNAL_IPS = ('127.0.0.1',)
+    INTERNAL_IPS = ('127.0.0.1', '10.0.2.2')
+
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
     DEBUG_TOOLBAR_CONFIG = {
