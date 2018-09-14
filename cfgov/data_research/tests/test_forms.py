@@ -10,7 +10,7 @@ from data_research.models import ConferenceRegistration
 class ConferenceRegistrationFormTests(TestCase):
     capacity = 100
     govdelivery_code = 'TEST-CODE'
-    govdelivery_question_id = 12345
+    govdelivery_question_id = '12345'
 
     def test_invalid_form_if_fields_are_missing(self):
         form = ConferenceRegistrationForm(
@@ -98,7 +98,7 @@ class ConferenceRegistrationFormTests(TestCase):
         )
 
     def test_form_save_commit_true_subscribes_and_sets_question(self):
-        form = self.get_valid_form(govdelivery_question_id=12345)
+        form = self.get_valid_form(govdelivery_question_id='12345')
         form.is_valid()
         form.save()
 
@@ -117,7 +117,7 @@ class ConferenceRegistrationFormTests(TestCase):
                 (),
                 {
                     'contact_details': 'user@domain.com',
-                    'question_id': 12345,
+                    'question_id': '12345',
                     'answer_text': 'yes',
                 }
             ),
