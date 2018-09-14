@@ -53,6 +53,7 @@ class ConferenceExporter(object):
     def fields(self):
         form = ConferenceRegistrationForm(
             govdelivery_code=self.govdelivery_code,
+            govdelivery_question_id=None,
             capacity=0
         )
 
