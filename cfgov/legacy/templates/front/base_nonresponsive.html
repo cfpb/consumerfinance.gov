@@ -1,4 +1,4 @@
-{% load header_footer %}
+{% load base_elements %}
 {% load i18n %}
 {% load static from staticfiles %}
 {% load staticversions %}
@@ -105,6 +105,8 @@ please send an email with your full name to tech@cfpb.gov.
 
     {% block analytics_js %}
     {% endblock %}
+
+    {% include_modernizr %}
 </head>
 
 <body class="{% block body_class %}page{% endblock %}" data-lang="{% trans "en" %}">
@@ -114,19 +116,7 @@ please send an email with your full name to tech@cfpb.gov.
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 {% endblock %}
-<script src="{% static 'js/modernizr.min.js'  %}"></script>
 
-
-
-<!--[if lt IE 9]>
-    <script>
-    // If in IE8 reverse no-js/js class change made by modernizr.
-    var docElement = document.documentElement;
-    docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-    </script>
-<![endif]-->
-
-<!--[if IE 9]><script src="{% static 'js/ie/common.ie9.js'  %}"></script><![endif]-->
         {% include_header %}
     <div id="page">
         {% block app_notification %}

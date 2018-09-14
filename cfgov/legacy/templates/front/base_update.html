@@ -1,4 +1,4 @@
-{% load header_footer %}
+{% load base_elements %}
 {% load i18n %}
 {% load remit_var %}
 {% load static from staticfiles %}
@@ -148,25 +148,16 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
 
-    <script src="{% static 'js/modernizr.min.js' %}"></script>
     <!--[if lt IE 9]>
     <script src="{% static 'nemo/_/js/html5shim.js' %}"></script>
     <![endif]-->
-
-    <!--[if lt IE 9]>
-    <script>
-        // If in IE8 reverse no-js/js class change made by modernizr.
-        var docElement = document.documentElement;
-        docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-    </script>
-    <![endif]-->
-
-    <!--[if IE 9]><script src="{% static 'js/ie/common.ie9.js' %}"></script><![endif]-->
 
     <script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
 
     {% block analytics_js %}
     {% endblock %}
+
+    {% include_modernizr %}
 </head>
 
 <body class="{% block body_class %}page{% endblock %}" data-lang="{% trans "en" %}">
