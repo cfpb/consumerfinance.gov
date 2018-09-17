@@ -1,5 +1,6 @@
 from imp import reload
 
+from django.conf.urls import url
 from django.test import TestCase, override_settings
 
 from cfgov import urls
@@ -71,3 +72,36 @@ class AdminURLSTestCase(TestCase):
     def tearDown(self):
         # Reload cfgov.urls with the default ALLOW_ADMIN_URLs
         reload(urls)
+
+
+def dummy_external_site_view(request):
+    pass  # pragma: no cover
+
+
+urlpatterns = [
+    # Needed for rendering of base template that calls reverse('external-site')
+    url(r'^external-site/$', dummy_external_site_view, name='external-site'),
+
+    urls.flagged_wagtail_only_view('MY_TEST_FLAG', r'^$'),
+]
+
+
+@override_settings(ROOT_URLCONF=__name__)
+class FlaggedWagtailOnlyViewTests(TestCase):
+    @override_settings(FLAGS={'MY_TEST_FLAG': {'boolean': True}})
+    def test_flag_set_returns_view_that_calls_wagtail_serve_view(self):
+        """When flag is set, request should be routed to Wagtail.
+
+        This test checks for text that is known to exist in the template for
+        the Wagtail page that gets served from the site root.
+        """
+        response = self.client.get('/')
+        self.assertContains(
+            response,
+            'U.S. government agency that makes sure banks'
+        )
+
+    @override_settings(FLAGS={'MY_TEST_FLAG': {'boolean': False}})
+    def test_flag_not_set_returns_view_that_raises_http404(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 404)
