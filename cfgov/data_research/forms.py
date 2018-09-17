@@ -94,6 +94,7 @@ class ConferenceRegistrationForm(forms.Form):
         self.capacity = kwargs.pop('capacity')
         self.govdelivery_code = kwargs.pop('govdelivery_code')
         self.govdelivery_question_id = kwargs.pop('govdelivery_question_id')
+        self.govdelivery_answer_id = kwargs.pop('govdelivery_answer_id')
         super(ConferenceRegistrationForm, self).__init__(*args, **kwargs)
 
     def clean(self):
@@ -143,10 +144,11 @@ class ConferenceRegistrationForm(forms.Form):
             self.govdelivery_subscribe(code=self.govdelivery_code, email=email)
 
             # Update their question response, if appropriate.
-            if self.govdelivery_question_id:
+            if self.govdelivery_question_id and self.govdelivery_answer_id:
                 self.govdelivery_question_response(
                     email=email,
-                    question_id=self.govdelivery_question_id
+                    question_id=self.govdelivery_question_id,
+                    answer_id=self.govdelivery_answer_id
                 )
 
             # Persist the registration to the database.
@@ -167,12 +169,12 @@ class ConferenceRegistrationForm(forms.Form):
 
         subscription_response.raise_for_status()
 
-    def govdelivery_question_response(self, email, question_id):
+    def govdelivery_question_response(self, email, question_id, answer_id):
         question_response = (
-            self.govdelivery_api.set_subscriber_answers_to_question(
+            self.govdelivery_api.set_subscriber_answer_to_select_question(
                 contact_details=email,
                 question_id=question_id,
-                answer_text='yes'
+                answer_id=answer_id
             )
         )
 

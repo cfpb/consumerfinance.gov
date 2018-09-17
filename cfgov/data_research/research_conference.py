@@ -54,6 +54,7 @@ class ConferenceExporter(object):
         form = ConferenceRegistrationForm(
             govdelivery_code=self.govdelivery_code,
             govdelivery_question_id=None,
+            govdelivery_answer_id=None,
             capacity=0
         )
 
