@@ -29,6 +29,22 @@ class ConferenceRegistrationForm(AbstractFormBlock):
             '<code>https://admin.govdelivery.com/questions/12345/edit</code>.'
         )
     )
+    govdelivery_answer_id = blocks.RegexBlock(
+        required=False,
+        regex=r'^\d{5,}$',
+        error_messages={
+            'invalid': 'GovDelivery answer ID must be 5 digits.'
+        },
+        label='GovDelivery answer ID',
+        help_text=mark_safe(
+            'Enter the ID of the affrimative answer for the above question. '
+            'To find it, right-click on the answer in the listing on a page '
+            'like <code>https://admin.govdelivery.com/questions/12345/answers'
+            '</code>, inspect the element, and look around in the source for '
+            'a five-digit ID associated with that answer. <strong>Required '
+            'if Govdelivery question ID is set.</strong>'
+        )
+    )
     capacity = blocks.IntegerBlock(
         help_text=(
             'Enter the (physical) conference attendance limit as a number.'
@@ -54,6 +70,8 @@ class ConferenceRegistrationForm(AbstractFormBlock):
     class Meta:
         handler = 'data_research.handlers.ConferenceRegistrationHandler'
         template = 'data_research/conference-registration-form.html'
+
+    # Custom clean to check for both question ID and answer ID
 
 
 class MortgageDataDownloads(blocks.StructBlock):
