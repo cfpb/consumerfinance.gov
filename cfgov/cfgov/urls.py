@@ -5,9 +5,8 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
-from django.views.defaults import page_not_found
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.contrib.wagtailsitemaps.views import sitemap
@@ -55,14 +54,15 @@ def flagged_wagtail_template_view(flag_name, template_name):
 
 
 def flagged_wagtail_only_view(flag_name, regex_path, url_name=None):
-    """ Teachers Digital Platform static pages are very similar so
-    in the name of DRY we are implementing them with this method.
-    """
+    """If flag is set, serve page from Wagtail, otherwise raise 404."""
+    def this_view_always_raises_http404(request, *args, **kwargs):
+        raise Http404('flag {} not set'.format(flag_name))
+
     return flagged_url(
         flag_name,
         regex_path,
         lambda request: ServeView.as_view()(request, request.path),
-        fallback=page_not_found,
+        fallback=this_view_always_raises_http404,
         name=url_name,
     )
 
