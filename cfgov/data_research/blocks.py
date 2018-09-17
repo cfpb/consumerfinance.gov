@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+from django.core.exceptions import ValidationError
+from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
 from wagtail.wagtailcore import blocks
@@ -67,11 +69,34 @@ class ConferenceRegistrationForm(AbstractFormBlock):
         )
     )
 
+    def clean(self, value):
+        cleaned = super(ConferenceRegistrationForm, self).clean(value)
+        question = cleaned.get('govdelivery_question_id')
+        answer = cleaned.get('govdelivery_answer_id')
+
+        # Question and answer values must both exist or neither exist
+        if question and not answer:
+            raise ValidationError(
+                'Validation error in Conference Registration Form: '
+                'GovDelivery question ID requires answer ID, and vice versa.',
+                params={'govdelivery_answer_id': ErrorList([
+                    'Required if a GovDelivery question ID is entered.'
+                ])}
+            )
+        if answer and not question:
+            raise ValidationError(
+                'Validation error in Conference Registration Form: '
+                'GovDelivery question ID requires answer ID, and vice versa.',
+                params={'govdelivery_question_id': ErrorList([
+                    'Required if a GovDelivery answer ID is entered.'
+                ])}
+            )
+
+        return cleaned
+
     class Meta:
         handler = 'data_research.handlers.ConferenceRegistrationHandler'
         template = 'data_research/conference-registration-form.html'
-
-    # Custom clean to check for both question ID and answer ID
 
 
 class MortgageDataDownloads(blocks.StructBlock):
