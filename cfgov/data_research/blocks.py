@@ -39,7 +39,7 @@ class ConferenceRegistrationForm(AbstractFormBlock):
         },
         label='GovDelivery answer ID',
         help_text=mark_safe(
-            'Enter the ID of the affrimative answer for the above question. '
+            'Enter the ID of the affirmative answer for the above question. '
             'To find it, right-click on the answer in the listing on a page '
             'like <code>https://admin.govdelivery.com/questions/12345/answers'
             '</code>, inspect the element, and look around in the source for '
