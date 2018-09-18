@@ -315,18 +315,18 @@ class RegModelTests(DjangoTestCase):
 
     def test_section_page_view_section_does_not_exist(self):
         response = self.client.get('/reg-landing/1002/82/')
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response.get('location'),
-            'http://testserver/reg-landing/1002/'
+        self.assertRedirects(
+            response,
+            '/reg-landing/1002/',
+            fetch_redirect_response=False
         )
 
     def test_section_page_view_section_does_not_exist_with_date(self):
         response = self.client.get('/reg-landing/1002/2011-01-01/82/')
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response.get('location'),
-            'http://testserver/reg-landing/1002/2011-01-01/'
+        self.assertRedirects(
+            response,
+            '/reg-landing/1002/2011-01-01/',
+            fetch_redirect_response=False
         )
 
     def test_sortable_label(self):
