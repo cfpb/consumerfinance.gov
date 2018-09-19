@@ -6,9 +6,7 @@ from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 from scripts import _atomic_helpers as atomic
 
-from v1.atomic_elements.organisms import (
-    InfoUnitGroup, TableBlock
-)
+from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock
 from v1.models.browse_page import BrowsePage
 from v1.models.images import CFGOVImage
 from v1.models.landing_page import LandingPage
