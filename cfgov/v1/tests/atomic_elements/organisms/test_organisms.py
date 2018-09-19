@@ -400,7 +400,7 @@ class OrganismsTestCase(TestCase):
         self.create_resource()
 
         response = self.client.get('/no-thumbnails/')
-        self.assertNotContains(response, 'o-snippet-list_list-thumbnail')
+        self.assertNotContains(response, 'o-resource-list_list-thumbnail')
 
     def test_resource_list_show_thumbnails_true(self):
         """ Resource List shows thumbnails when show_thumbnails is True"""
@@ -418,7 +418,7 @@ class OrganismsTestCase(TestCase):
         self.create_resource()
 
         response = self.client.get('/thumbnails/')
-        self.assertContains(response, 'o-snippet-list_list-thumbnail')
+        self.assertContains(response, 'o-resource-list_list-thumbnail')
 
     def test_resource_list_set_col_width(self):
         """ Resource List Assets column width is fixed when set"""

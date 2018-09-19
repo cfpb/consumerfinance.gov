@@ -11,7 +11,7 @@
    value:                           Object defined from a StreamField block.
 
    valure.has_top_rule_line:        Boolean for whether or not to add top
-                                    border to snippet-list. Used in
+                                    border to resource-list. Used in
                                     'render_block.html' to modify classes on
                                     wrapping 'div.block'.
 
@@ -46,7 +46,7 @@
 
 {% from 'molecules/info-unit.html' import info_unit with context %}
 
-<div class="o-snippet-list"{{ ' id="' ~ value.heading|slugify ~ '"' if value.heading else '' }}>
+<div class="o-resource-list"{{ ' id="' ~ value.heading|slugify ~ '"' if value.heading else '' }}>
     {% set img = image(value.image.upload, 'original')
        if value.image.upload
        else '/' %}
@@ -74,15 +74,15 @@
        if resources.objects.filter_by_tags
        else resources.objects.all() %}
     {% if filtered_resources.exists() %}
-        <div class="o-table__stack-on-small o-snippet-list_list" data-display-table="table">
+        <div class="o-table__stack-on-small o-resource-list_list" data-display-table="table">
             <header data-display-table="thead">
-                <div class="o-snippet-list_list-heading" data-display-table="cell">
+                <div class="o-resource-list_list-heading" data-display-table="cell">
                     Description
                  </div>
             {% if value.show_thumbnails %}
-                <div class="o-snippet-list_list-heading" data-display-table="cell"></div>
+                <div class="o-resource-list_list-heading" data-display-table="cell"></div>
             {% endif %}
-                <div class="o-snippet-list_list-heading
+                <div class="o-resource-list_list-heading
                            {{- ' u-w' ~ value.actions_column_width ~ 'pct' if value.actions_column_width else '' -}}"
                      data-display-table="cell">
                     Actions
@@ -92,7 +92,7 @@
             {% for snippet in filtered_resources %}
                 <li data-display-table="row">
                 {% if value.show_thumbnails %}
-                    <div class="o-snippet-list_list-thumbnail" data-display-table="cell">
+                    <div class="o-resource-list_list-thumbnail" data-display-table="cell">
                     {% if snippet.thumbnail %}
                         {% set tmp_thumb = image(snippet.thumbnail, 'width-300') %}
                         <img src="{{ tmp_thumb.url }}"
@@ -101,11 +101,11 @@
                     </div>
                 {% endif %}
                     <div data-display-table="cell">
-                        <div class="o-snippet-list_list-item-title">{{ snippet }}</div>
+                        <div class="o-resource-list_list-item-title">{{ snippet }}</div>
                         {{ snippet.desc if snippet.desc else '' }}
                     </div>
                     <div data-display-table="cell">
-                        <ul class="o-snippet-list_list-action-list
+                        <ul class="o-resource-list_list-action-list
                                    m-list
                                    m-list__horizontal">
                     {% for action in value.actions %}
