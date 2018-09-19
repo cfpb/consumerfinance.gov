@@ -1,4 +1,4 @@
-https://github.com/cfpb/college-costs/releases/download/2.4.1/college_costs-2.4.1-py2-none-any.whl
+https://github.com/cfpb/college-costs/releases/download/2.4.2/college_costs-2.4.2-py2-none-any.whl
 https://github.com/cfpb/owning-a-home-api/releases/download/0.11.0/owning_a_home_api-0.11.0-py2-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.7.1/retirement-0.7.1-py2-none-any.whl
 git+https://github.com/cfpb/ccdb5-api.git@v1.0.6#egg=ccdb5-api
