@@ -8,4 +8,5 @@ WORKDIR /src
 ADD . /src
 ADD  https://bootstrap.pypa.io/get-pip.py /src/get-pip.py
 RUN python /src/get-pip.py && \
+  npm set unsafe-perm true && \
   /src/setup.sh docker
