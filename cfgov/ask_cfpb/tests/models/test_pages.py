@@ -894,6 +894,7 @@ class AnswerModelTestCase(TestCase):
 
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.models')
     def test_category_page_context_no_elasticsearch_count(self, mock_es_query):
+        """Ensure we fall back to the slower model method if ES returns 0."""
         mock_es_query.return_value = SearchQuerySet().none()
         request = self.factory.get('/ask-cfpb/category-stub-cat/')
         cat_page = self.create_category_page(ask_category=self.category)
