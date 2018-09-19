@@ -16,7 +16,7 @@ from wagtail.wagtailcore import hooks
 
 from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
-from v1.models.snippets import Resource
+from v1.models.resources import Resource
 from v1.util import util
 
 

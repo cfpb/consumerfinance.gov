@@ -69,7 +69,7 @@
         'body': value.body | safe
     } ) }}
 
-    {% set resources = get_model('v1.models.snippets.Resource') %}
+    {% set resources = get_model('v1.models.resources.Resource') %}
     {% set filtered_resources = resources.objects.filter_by_tags(value.tags)
        if resources.objects.filter_by_tags
        else resources.objects.all() %}
