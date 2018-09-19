@@ -7,13 +7,14 @@ from wagtail.wagtailimages.tests.utils import get_test_image_file
 from scripts import _atomic_helpers as atomic
 
 from v1.atomic_elements.organisms import (
-    InfoUnitGroup, ResourceList, TableBlock
+    InfoUnitGroup, TableBlock
 )
 from v1.models.browse_page import BrowsePage
 from v1.models.images import CFGOVImage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import LearnPage
-from v1.models.snippets import Contact, Resource
+from v1.models.resources import Resource
+from v1.models.snippets import Contact
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
@@ -372,7 +373,7 @@ class OrganismsTestCase(TestCase):
         )
         browse_page.content = StreamValue(
             browse_page.content.stream_block,
-            [atomic.resource_list_show_thumbnails_false],
+            [atomic.snippet_list_show_thumbnails_false],
             True
         )
         publish_page(child=browse_page)
@@ -391,7 +392,7 @@ class OrganismsTestCase(TestCase):
         )
         no_thumbnails_page.content = StreamValue(
             no_thumbnails_page.content.stream_block,
-            [atomic.resource_list_show_thumbnails_false],
+            [atomic.snippet_list_show_thumbnails_false],
             True
         )
         publish_page(child=no_thumbnails_page)
@@ -409,7 +410,7 @@ class OrganismsTestCase(TestCase):
         )
         thumbnails_page.content = StreamValue(
             thumbnails_page.content.stream_block,
-            [atomic.resource_list_show_thumbnails_true],
+            [atomic.snippet_list_show_thumbnails_true],
             True
         )
         publish_page(child=thumbnails_page)
@@ -427,7 +428,7 @@ class OrganismsTestCase(TestCase):
         )
         assets_width_page.content = StreamValue(
             assets_width_page.content.stream_block,
-            [atomic.resource_list_actions_column_width_40],
+            [atomic.snippet_list_actions_column_width_40],
             True
         )
         publish_page(child=assets_width_page)

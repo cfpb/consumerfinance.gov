@@ -306,8 +306,8 @@ reg_comment = {
     }
 }
 
-resource_list_show_thumbnails_false = {
-    "type": "resource_list",
+snippet_list_show_thumbnails_false = {
+    "type": "snippet_list",
     "value": {
         "heading": "Test Resource List",
         "snippet_type": "v1.models.resources.Resource",
@@ -315,8 +315,8 @@ resource_list_show_thumbnails_false = {
     }
 }
 
-resource_list_show_thumbnails_true = {
-    "type": "resource_list",
+snippet_list_show_thumbnails_true = {
+    "type": "snippet_list",
     "value": {
         "heading": "Test Resource List",
         "snippet_type": "v1.models.resources.Resource",
@@ -324,8 +324,8 @@ resource_list_show_thumbnails_true = {
     }
 }
 
-resource_list_actions_column_width_40 = {
-    "type": "resource_list",
+snippet_list_actions_column_width_40 = {
+    "type": "snippet_list",
     "value": {
         "heading": "Test Resource List",
         "snippet_type": "v1.models.resources.Resource",
