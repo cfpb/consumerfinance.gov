@@ -18,7 +18,6 @@ from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-from wagtail.wagtailsnippets.models import get_snippet_models
 
 import requests
 from jinja2 import Markup
@@ -954,39 +953,20 @@ class MortgageMapBlock(MortgageChartBlock):
         js = ['mortgage-performance-trends.js']
 
 
-def get_snippet_type_choices():
-    return [
-        (
-            m.__module__ + '.' + m.__name__,
-            m._meta.verbose_name_plural.capitalize()
-        ) for m in get_snippet_models()
-    ]
-
-
-def get_snippet_field_choices():
-    return [
-        (
-            m._meta.verbose_name_plural.capitalize(),
-            getattr(m, 'snippet_list_field_choices', [])
-        ) for m in get_snippet_models()
-    ]
-
-
-class SnippetList(blocks.StructBlock):
+class ResourceList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     has_top_rule_line = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text=('Check this to add a horizontal rule line to top of '
-                   'snippet list.')
+        help_text='Check this to add a horizontal rule line above this block.'
     )
     image = atoms.ImageBasic(required=False)
     actions_column_width = blocks.ChoiceBlock(
         label='Width of "Actions" column',
         required=False,
         help_text='Choose the width in % that you wish to set '
-                  'the Actions column in a snippet list.',
+                  'the Actions column in a resource list.',
         choices=[
             ('70', '70%'),
             ('66', '66%'),
@@ -997,27 +977,25 @@ class SnippetList(blocks.StructBlock):
             ('30', '30%'),
         ],
     )
-
-    snippet_type = blocks.ChoiceBlock(
-        choices=get_snippet_type_choices,
-        required=True
-    )
     show_thumbnails = blocks.BooleanBlock(
         required=False,
-        help_text='If selected, each snippet in the list will include a 150px-'
-                  'wide image from the snippet\'s thumbnail field.'
+        help_text='If selected, each resource in the list will include a '
+                  '150px-wide image from the resource\'s thumbnail field.'
     )
     actions = blocks.ListBlock(blocks.StructBlock([
         ('link_label', blocks.CharBlock(
             help_text='E.g., "Download" or "Order free prints"'
         )),
         ('snippet_field', blocks.ChoiceBlock(
-            choices=get_snippet_field_choices,
-            help_text='Corresponds to the available fields for the selected '
-                      'snippet type.'
+            choices=[
+                ('related_file', 'Related file'),
+                ('alternate_file', 'Alternate file'),
+                ('link', 'Link'),
+                ('alternate_link', 'Alternate link'),
+            ],
+            help_text='The field that the action link should point to'
         )),
     ]))
-
     tags = blocks.ListBlock(
         blocks.CharBlock(label='Tag'),
         help_text='Enter tag names to filter the snippets. For a snippet to '
@@ -1028,7 +1006,7 @@ class SnippetList(blocks.StructBlock):
 
     class Meta:
         icon = 'table'
-        template = '_includes/organisms/snippet-list.html'
+        template = '_includes/organisms/resource-list.html'
 
 
 class AskCategoryCard(ModelList):

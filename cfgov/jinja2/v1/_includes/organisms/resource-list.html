@@ -1,26 +1,26 @@
 {# ==========================================================================
 
-   snippet_list.render(value)
+   resource_list.render(value)
 
    ==========================================================================
 
    Description:
 
-   Outputs a snippet list when given:
+   Outputs a resource list when given:
 
    value:                           Object defined from a StreamField block.
-   
+
    valure.has_top_rule_line:        Boolean for whether or not to add top
                                     border to snippet-list. Used in
                                     'render_block.html' to modify classes on
                                     wrapping 'div.block'.
 
-   value.heading:                   The heading for the snippet list intro.
+   value.heading:                   The heading for the resource list intro.
 
-   value.body:                      A description for the snippet list intro.
+   value.body:                      A description for the resource list intro.
 
-   value.image:                     An image for the snippet list intro.
-                                    If set, the snippet list intro will
+   value.image:                     An image for the resource list intro.
+                                    If set, the resource list intro will
                                     format as a 25/75 Image and Text module.
 
    value.snippet_type:              The type of snippet being listed.
@@ -39,7 +39,7 @@
                                     will link. Options defined in ref.py.
 
    value.tags:                      A list of tag names by which the snippet
-                                    list will be filtered. Returned snippets
+                                    list will be filtered. Returned resources
                                     must match all tag names in this list.
 
    ========================================================================== #}
@@ -69,11 +69,11 @@
         'body': value.body | safe
     } ) }}
 
-    {% set snippets = get_snippets(value.snippet_type) %}
-    {% set filtered_snippets = snippets.objects.filter_by_tags(value.tags)
-       if snippets.objects.filter_by_tags
-       else snippets.objects.all() %}
-    {% if filtered_snippets.exists() %}
+    {% set resources = get_model('v1.models.snippets.Resource') %}
+    {% set filtered_resources = resources.objects.filter_by_tags(value.tags)
+       if resources.objects.filter_by_tags
+       else resources.objects.all() %}
+    {% if filtered_resources.exists() %}
         <div class="o-table__stack-on-small o-snippet-list_list" data-display-table="table">
             <header data-display-table="thead">
                 <div class="o-snippet-list_list-heading" data-display-table="cell">
@@ -89,7 +89,7 @@
                 </div>
             </header>
             <ul data-display-table="row-group">
-            {% for snippet in filtered_snippets %}
+            {% for snippet in filtered_resources %}
                 <li data-display-table="row">
                 {% if value.show_thumbnails %}
                     <div class="o-snippet-list_list-thumbnail" data-display-table="cell">

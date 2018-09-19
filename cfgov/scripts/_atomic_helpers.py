@@ -306,28 +306,28 @@ reg_comment = {
     }
 }
 
-snippet_list_show_thumbnails_false = {
-    "type": "snippet_list",
+resource_list_show_thumbnails_false = {
+    "type": "resource_list",
     "value": {
-        "heading": "Test Snippet List",
+        "heading": "Test Resource List",
         "snippet_type": "v1.models.snippets.Resource",
         "show_thumbnails": False,
     }
 }
 
-snippet_list_show_thumbnails_true = {
-    "type": "snippet_list",
+resource_list_show_thumbnails_true = {
+    "type": "resource_list",
     "value": {
-        "heading": "Test Snippet List",
+        "heading": "Test Resource List",
         "snippet_type": "v1.models.snippets.Resource",
         "show_thumbnails": True,
     }
 }
 
-snippet_list_actions_column_width_40 = {
-    "type": "snippet_list",
+resource_list_actions_column_width_40 = {
+    "type": "resource_list",
     "value": {
-        "heading": "Test Snippet List",
+        "heading": "Test Resource List",
         "snippet_type": "v1.models.snippets.Resource",
         "actions_column_width": "40",
     }

@@ -14,9 +14,9 @@ from v1.util import ref
 from v1.util.util import get_unique_id
 
 
-def get_snippets(snippet_type):
-    snippet_class = import_string(snippet_type)
-    return snippet_class
+def get_model(model_name):
+    model_class = import_string(model_name)
+    return model_class
 
 
 def image_alt_value(image):
@@ -94,7 +94,7 @@ class V1Extension(Extension):
             'email_popup': email_popup,
             'fcm_label': ref.fcm_label,
             'get_menu_items': get_menu_items,
-            'get_snippets': get_snippets,
+            'get_model': get_model,
             'get_unique_id': get_unique_id,
             'image_alt_value': image_alt_value,
             'is_blog': ref.is_blog,

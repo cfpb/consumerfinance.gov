@@ -86,7 +86,6 @@ class TaggableSnippetManager(models.Manager):
 
 
 @python_2_unicode_compatible
-@register_snippet
 class Resource(ClusterableModel):
     title = models.CharField(max_length=255)
     desc = RichTextField(verbose_name='Description', blank=True)
@@ -130,15 +129,15 @@ class Resource(ClusterableModel):
     order = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
-        help_text='Snippets will be listed alphabetically by title in a '
-        'Snippet List module, unless any in the list have a number in this '
+        help_text='Resources will be listed alphabetically by title in a '
+        'Resource List module, unless any in the list have a number in this '
         'field; those with an order value will appear in ascending order.'
     )
 
     tags = TaggableManager(
         through=ResourceTag,
         blank=True,
-        help_text='Tags can be used to filter snippets in a Snippet List.'
+        help_text='Tags can be used to filter resources in a Resource List.'
     )
 
     objects = TaggableSnippetManager()
@@ -155,8 +154,8 @@ class Resource(ClusterableModel):
         FieldPanel('tags'),
     ]
 
-    # Makes fields available to the Actions chooser in a Snippet List module
-    snippet_list_field_choices = [
+    # Makes fields available to the Actions chooser in a Resource List module
+    resource_list_field_choices = [
         ('related_file', 'Related file'),
         ('alternate_file', 'Alternate file'),
         ('link', 'Link'),
@@ -167,4 +166,4 @@ class Resource(ClusterableModel):
         return self.title
 
     class Meta:
-        ordering = ('title',)
+        ordering = ('order', 'title',)
