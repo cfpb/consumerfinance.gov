@@ -1005,6 +1005,7 @@ class ResourceList(blocks.StructBlock):
     )
 
     class Meta:
+        label = 'Resource List'
         icon = 'table'
         template = '_includes/organisms/resource-list.html'
 
