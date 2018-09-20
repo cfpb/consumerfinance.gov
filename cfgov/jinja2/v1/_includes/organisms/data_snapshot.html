@@ -42,11 +42,11 @@
         <br/>
         {{ value.year_over_year_change_text }}</h3>
 
-        {% if value.inquiry_yoy_change %}
+        {% if value.inquiry_year_over_year_change %}
         <br/>
-        <h3><b>{{ value.inquiry_yoy_change }}</b>
+        <h3><b>{{ value.inquiry_year_over_year_change }}</b>
         <br/>
-        {{ value.inquiry_yoy_change_text }}</h3>
+        {{ value.inquiry_year_over_year_change_text }}</h3>
         {% endif %}
 
     {% if value.image %}
@@ -61,19 +61,19 @@
                  alt="{{ image_alt_value(media) }}">
         </div>
 
-        {% if value.denial_yoy_change %}
+        {% if value.denial_year_over_year_change %}
         <br/>
-        <h3><b>{{ value.denial_yoy_change }}</b>
+        <h3><b>{{ value.denial_year_over_year_change }}</b>
         <br/>
-        {{ value.denial_yoy_change_text }}</h3>
+        {{ value.denial_year_over_year_change_text }}</h3>
         {% endif %}
 
     {% else %}
-        {% if value.denial_yoy_change %}
+        {% if value.denial_year_over_year_change %}
         <br/>
-        <h3><b>{{ value.denial_yoy_change }}</b>
+        <h3><b>{{ value.denial_year_over_year_change }}</b>
         <br/>
-        {{ value.denial_yoy_change_text }} </h3>
+        {{ value.denial_year_over_year_change_text }} </h3>
         {% endif %}
     {% endif %}
 
