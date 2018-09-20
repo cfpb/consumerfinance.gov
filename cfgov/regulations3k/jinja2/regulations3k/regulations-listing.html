@@ -29,7 +29,7 @@
             {% if regulation.regulation.future_versions %}
             <ul>
             {% for version in regulation.regulation.future_versions %}
-                <li>New amendment effective 
+                <li class="new-version">New amendment effective 
                     <a href="{{ regulation.url }}{{ version.effective_date|string }}/">
                     {{ ap_date(version.effective_date) }}
                     </a>
