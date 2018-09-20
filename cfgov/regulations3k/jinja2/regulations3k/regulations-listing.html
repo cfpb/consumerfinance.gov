@@ -26,6 +26,18 @@
             <a href="{{ regulation.url }}">
                 <span class="title-num">{{ regulation.title }}</span>
             </a>
+            {% if regulation.regulation.future_versions %}
+            <ul>
+            {% for version in regulation.regulation.future_versions %}
+                <li class="new-version">New amendment effective 
+                    <a href="{{ regulation.url }}{{ version.effective_date|string }}/">
+                    {{ ap_date(version.effective_date) }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+
         </li>
         {% endfor %}
     </ul>

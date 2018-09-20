@@ -47,6 +47,11 @@ class RegulationsListTestCase(TestCase):
             effective_date=datetime.date(2014, 1, 18),
             part=self.part_1002
         )
+        self.future_effective_version = mommy.make(
+            EffectiveVersion,
+            effective_date=datetime.date(2022, 1, 1),
+            part=self.part_1002
+        )
         self.reg_page_1002 = RegulationPage(
             regulation=self.part_1002,
             title='Reg B',
@@ -74,6 +79,7 @@ class RegulationsListTestCase(TestCase):
         }))
         self.assertIn('Reg B', result)
         self.assertIn('/regulations/1002/', result)
+        self.assertIn('New amendment effective', result)
         self.assertNotIn('Reg C', result)
         self.assertNotIn('/regulations/1003/', result)
 

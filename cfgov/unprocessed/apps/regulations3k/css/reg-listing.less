@@ -7,17 +7,22 @@
     margin: unit( 45px / @base-font-size-px, em )
             0
             unit( 60px / @base-font-size-px, em );
-    ul {
+    > ul {
         margin-bottom: unit( 30px / @base-font-size-px, em );
         padding-left: 0;
-    }
-    li {
-        border-bottom: 1px solid @gray;
-        list-style-type: none;
-        padding-bottom: unit( 15px / @base-font-size-px, em );
-        &:first-child {
-            border-top: 1px solid @gray;
-            padding-top: unit( 15px / @base-font-size-px, em );
+        > li {
+            border-bottom: 1px solid @gray;
+            list-style-type: none;
+            padding-bottom: unit( 15px / @base-font-size-px, em );
+            &:first-child {
+                border-top: 1px solid @gray;
+                padding-top: unit( 15px / @base-font-size-px, em );
+            }
+        }
+        .new-version {
+            font-size: unit( @size-v / @base-font-size-px, em );
+            font-weight: normal;
+            list-style-type: square;
         }
     }
     a {
