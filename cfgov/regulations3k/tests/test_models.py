@@ -478,7 +478,8 @@ class RegModelTests(DjangoTestCase):
     def test_index_page_with_effective_date(self):
         response = self.client.get('/reg-landing/1002/2011-01-01/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'This version is not current law', response.content)
+        self.assertIn(b'This version is not the current regulation',
+                      response.content)
         self.assertIn(b'Jan. 1, 2011', response.content)
 
     def test_index_page_without_effective_date(self):
@@ -489,19 +490,21 @@ class RegModelTests(DjangoTestCase):
     def test_section_page_with_effective_date(self):
         response = self.client.get('/reg-landing/1002/2011-01-01/4/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'This version is not current law', response.content)
+        self.assertIn(b'This version is not the current regulation',
+                      response.content)
 
     def test_section_page_without_effective_date(self):
         response = self.client.get('/reg-landing/1002/4/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'This version is current law', response.content)
+        self.assertIn(b'This version is the current regulation',
+                      response.content)
         self.assertIn(b'Search this regulation', response.content)
 
     def test_versions_page_view_without_section(self):
         response = self.client.get('/reg-landing/1002/versions/')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Jan. 18, 2014', response.content)
-        self.assertIn(b'(current law)', response.content)
+        self.assertIn(b'(current regulation)', response.content)
         self.assertIn(b'Jan. 1, 2011', response.content)
         self.assertNotIn(b'Jan. 1, 2020', response.content)
 
