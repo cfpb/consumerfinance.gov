@@ -1079,6 +1079,38 @@ class DataSnapshot(blocks.StructBlock):
         help_text='Descriptive sentence, e.g. In year-over-year originations'
     )
 
+    # Inquiry/Denial Indices
+    inquiry_month = blocks.CharBlock(
+        required=False,
+        max_length=20,
+        help_text='Month of latest entry in dataset for inquiry data'
+    )
+    inquiry_yoy_change = blocks.CharBlock(
+        required=False,
+        max_length=20,
+        help_text='Percentage change, e.g. 5.6% increase'
+    )
+    inquiry_yoy_change_text = blocks.CharBlock(
+        required=False,
+        max_length=100,
+        help_text='Descriptive sentence, e.g. In year-over-year applications'
+    )
+    denial_month = blocks.CharBlock(
+        required=False,
+        max_length=20,
+        help_text='Month of latest entry in dataset for denial data'
+    )
+    denial_yoy_change = blocks.CharBlock(
+        required=False,
+        max_length=20,
+        help_text='Percentage change, e.g. 5.6% increase'
+    )
+    denial_yoy_change_text = blocks.CharBlock(
+        required=False,
+        max_length=100,
+        help_text='Descriptive sentence, e.g. In year-over-year unsuccessful applications'
+    )
+
     # Select an image
     image = images_blocks.ImageChooserBlock(required=False, icon='image')
 

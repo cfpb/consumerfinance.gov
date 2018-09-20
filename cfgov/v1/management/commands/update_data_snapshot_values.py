@@ -30,7 +30,7 @@ class Command(BaseCommand):
 
     def get_data_snapshots(self):
         """ Gets all data snapshots from browse pages
-        Assumes there is one data snapshot per page
+        Assumes there is a maximum of one data snapshot per page
         """
         snapshots = []
         for page in BrowsePage.objects.all():
@@ -71,6 +71,22 @@ class Command(BaseCommand):
             snapshot['num_originations'] = market['num_originations']
             snapshot['value_originations'] = market['value_originations']
             snapshot['year_over_year_change'] = market['year_over_year_change']
+
+            # Update inquiry index info if it exists for this market
+            if "inquiry_yoy_change" in market:
+                snapshot['inquiry_month'] = market['inquiry_month']
+                snapshot['inquiry_yoy_change'] = market['inquiry_yoy_change']
+            else:
+                snapshot['inquiry_month'] = ""
+                snapshot['inquiry_yoy_change'] = ""
+
+            # Update denial index info if it exists for this market
+            if "denial_yoy_change" in market:
+                snapshot['denial_month'] = market['denial_month']
+                snapshot['denial_yoy_change'] = market['denial_yoy_change']
+            else:
+                snapshot['denial_month'] = ""
+                snapshot['denial_yoy_change'] = ""
 
             # Publish changes to the browse page the data snapshot lives on
             page = snapshot['page']

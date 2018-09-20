@@ -41,9 +41,17 @@
         <h3><b>{{ value.year_over_year_change }}</b>
         <br/>
         {{ value.year_over_year_change_text }}</h3>
-    </div>
+
+        {% if value.inquiry_yoy_change %}
+        <br/>
+        <h3><b>{{ value.inquiry_yoy_change }}</b>
+        <br/>
+        {{ value.inquiry_yoy_change_text }}</h3>
+        {% endif %}
 
     {% if value.image %}
+    </div>
+
     <div class="content-l_col
                 content-l_col-1-2">
         <div class="m-full-width-media">
@@ -52,6 +60,22 @@
                  src="{{ media.url }}"
                  alt="{{ image_alt_value(media) }}">
         </div>
-    </div>
+
+        {% if value.denial_yoy_change %}
+        <br/>
+        <h3><b>{{ value.denial_yoy_change }}</b>
+        <br/>
+        {{ value.denial_yoy_change_text }}</h3>
+        {% endif %}
+
+    {% else %}
+        {% if value.denial_yoy_change %}
+        <br/>
+        <h3><b>{{ value.denial_yoy_change }}</b>
+        <br/>
+        {{ value.denial_yoy_change_text }} </h3>
+        {% endif %}
     {% endif %}
+
+    </div>
 </div>
