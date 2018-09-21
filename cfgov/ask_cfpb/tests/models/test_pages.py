@@ -1347,3 +1347,24 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(len(breadcrumbs), 2)
         self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
         self.assertEqual(breadcrumbs[1]['title'], 'Compare page')
+
+    def test_answer_context_in_split_testing_cluster(self):
+        """If the answer ID is found in a split testing cluster,
+        the corresponding context variable is set to True."""
+        from ask_cfpb.split_testing_clusters import CLUSTERS
+        # Add answer ID 1234 to the CLUSTERS data
+        CLUSTERS[0]['answer_ids'][0] = 1234
+        answer = self.answer1234
+        page = answer.english_page
+        request = HttpRequest()
+        context = page.get_context(request)
+        self.assertTrue(context['in_cluster'])
+
+    def test_answer_context_not_in_split_testing_cluster(self):
+        """If the answer ID is not found in a split testing cluster,
+        the corresponding context variable is set to False."""
+        answer = self.answer5678
+        page = answer.english_page
+        request = HttpRequest()
+        context = page.get_context(request)
+        self.assertFalse(context['in_cluster'])
