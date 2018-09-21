@@ -115,12 +115,12 @@ INTERP_SECTION_DEFAULTS = {
 SEARCH_RE = re.compile(r'/eregulations/search/(\d{4})')
 SECTION_RE = re.compile(r'/eregulations/\d{4}-(\d{1,3})/([0-9_-]+)')
 APPENDIX_RE = re.compile(r'/eregulations/\d{4}-([A-Z1-2]{1,3})/([0-9_-]+)')
-INTERP_INTRO_RE = re.compile(r'/eregulations/\d{4}-Interp-h1/([0-9_-]+)')
+INTERP_INTRO_RE = re.compile(
+    r'/eregulations/\d{4}-Interp-h1/([0-9_-]+)', re.IGNORECASE)
 INTERP_APPENDIX_RE = re.compile(
-    r'/eregulations/\d{4}-Appendices-Interp/([0-9_-]+)')
+    r'/eregulations/\d{4}-Appendices-Interp/([0-9_-]+)', re.IGNORECASE)
 INTERP_SECTION_RE = re.compile(
-    r'/eregulations/(?:\d{4}-)(?:Subpart-)?(?:[A-Z-]+)?'
-    r'Interp(?:-[A-Z0-9]{1,2})?/([0-9_-]+)')
+    r'/eregulations/(?:\d{4}-)(?:Subpart-)?(?:[A-Z-]+)?Interp(?:-[A-Z0-9]{1,2})?/([0-9_-]+)', re.IGNORECASE)  # noqa
 
 
 def get_version_date(part_number, doc_number):
@@ -213,6 +213,5 @@ def redirect_eregs(request, **kwargs):
                 else:
                     return redirect("{}{}/Interp-{}/".format(
                         new_base, part, section), permanent=True)
-        else:
-            return redirect("{}{}/".format(new_base, part), permanent=True)
-    return redirect(new_base)
+    # catch-all: we have a valid part, but we can't decipher more than that
+    return redirect("{}{}/".format(new_base, part), permanent=True)
