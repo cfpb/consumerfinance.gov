@@ -14,7 +14,7 @@ from regulations3k.models import EffectiveVersion
 VERSION_MAP = {
     '1002': {
         '2017-20417_20220101': '2022-01-01',
-        # '2017-20417_20180101': '2018-01-01',  # current law
+        # '2017-20417_20180101': '2018-01-01',  # current regulation
         '2016-16301': '2016-07-11',
         '2013-22752_20140110': '2014-01-10',
         '2013-22752_20140101': '2014-01-01',
@@ -23,7 +23,7 @@ VERSION_MAP = {
     '1003': {
         '2015-26607_20200101': '2020-01-01',
         '2015-26607_20190101': '2019-01-01',
-        # '2017-18284_20180101': '2018-01-01',  # current law
+        # '2017-18284_20180101': '2018-01-01',  # current regulation
         '2015-26607_20170101': '2017-01-01',
         '2016-30731': '2016-01-01',
         '2014-30404': '2015-01-01',
@@ -33,29 +33,29 @@ VERSION_MAP = {
         '2011-31712': '2011-12-30',
     },
     '1004': {
-        # '2011-18676': '2011-07-22',  # current law
+        # '2011-18676': '2011-07-22',  # current regulation
     },
     '1005': {
         '2018-01305': '2019-01-01',
-        # '2016-24506': '2016-11-14',  # current law
+        # '2016-24506': '2016-11-14',  # current regulation
         '2014-20681': '2014-11-17',
         '2013-19503': '2013-10-28',
         '2013-06861': '2013-03-26',
         '2011-31725': '2011-12-30',
     },
     '1010': {
-        # '2016-10715': '2016-06-10',  # current law
+        # '2016-10715': '2016-06-10',  # current regulation
         '2011-31713': '2011-12-30',
     },
     '1011': {
-        # '2011-31713': '2011-12-30',  # current law
+        # '2011-31713': '2011-12-30',  # current regulation
     },
     '1012': {
-        # '2012-10602': '2012-05-03',  # current law
+        # '2012-10602': '2012-05-03',  # current regulation
         '2011-31713': '2011-12-30',
     },
     '1013': {
-        # '2017-24411': '2018-01-01',  # current law
+        # '2017-24411': '2018-01-01',  # current regulation
         '2016-28710': '2017-01-01',
         '2015-30071': '2016-01-01',
         '2014-21847': '2015-01-01',
@@ -64,7 +64,7 @@ VERSION_MAP = {
         '2011-31723': '2011-12-30',
     },
     '1024': {
-        # '2017-21912': '2017-10-19',  # current law
+        # '2017-21912': '2017-10-19',  # current regulation
         '2015-18239': '2015-10-03',
         '2013-15466': '2014-02-14',
         '2013-24521': '2014-01-10',
@@ -73,7 +73,7 @@ VERSION_MAP = {
     },
     '1026': {
         '2018-01305': '2019-04-01',
-        # '2018-09243': '2018-06-01',  # current law
+        # '2018-09243': '2018-06-01',  # current regulation
         '2018-04823': '2018-04-19',
         '2017-24445': '2018-01-01',
         '2017-15764': '2017-10-10',
@@ -100,7 +100,7 @@ VERSION_MAP = {
         '2011-31715': '2011-12-30',
     },
     '1030': {
-        # '2011-31727': '2011-12-30',  # current law
+        # '2011-31727': '2011-12-30',  # current regulation
     },
 }
 INTERP_APPENDIX_DEFAULTS = {
@@ -141,8 +141,8 @@ def redirect_eregs(request, **kwargs):
     Redirect legacy eregulations pages to the relevant regulations3k page.
 
     If a regulation version doesn't exist in regs3k or isn't approved yet,
-    requests for that version will be redirected to the current-law version
-    in regulations3k.
+    requests for that version will be redirected to the current regulation
+    version in regulations3k.
     """
     original_url = request.path
     original_base = '/eregulations/'

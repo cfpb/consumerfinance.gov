@@ -44,7 +44,7 @@
         <div class="regulation-meta">
             {% if section.subpart.version == regulation.effective_version %}
                 <div class="a-date">
-                    This version is current law
+                    This version is the current regulation
                 </div>
                 <ul class="m-list m-list__links">
                     {% if num_versions > 1 %}
@@ -69,7 +69,7 @@
                             m-notification__warning">
                     {{ svg_icon('warning-round') }}
                     <div class="m-notification_content">
-                        <div class="h4 m-notification_message">This version is not current law.</div>
+                        <div class="h4 m-notification_message">This version is not the current regulation.</div>
                         <p class="m-notification_explanation">
                         {% if section.subpart.version.effective_date < regulation.effective_version.effective_date %}
                             You are viewing a previous version of this regulation with ammendments that went into effect on
@@ -111,7 +111,7 @@
                 </a>
 
                 {% if version.effective_date == page.regulation.effective_version.effective_date %}
-                (current law)
+                (current regulation)
                 {% endif %}
             </li>
         {% endfor %}
@@ -141,7 +141,7 @@
                         m-notification__warning">
                 {{ svg_icon('warning-round') }}
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message">This version is not current law.</div>
+                    <div class="h4 m-notification_message">This version is not the current regulation.</div>
                     <p class="m-notification_explanation">
                         {% if version.effective_date < regulation.effective_version.effective_date %}
                             You are viewing a previous version of this regulation with ammendments that went into effect on {{ ap_date(version.effective_date) }}.
@@ -160,7 +160,7 @@
                     {% if version == regulation.effective_version %}
                         <li class="m-list_item">
                             <a class="m-list_link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label) }}">
-                                View current law
+                                View current regulation
                             </a>
                         </li>
                     {% else %}
