@@ -44,7 +44,11 @@
         <time datetime='{{ last_edited }}' class="answer-edited-date">updated {{ dt.format_date(last_edited) }}</time>
         {% endif %}
 
+    {% if in_cluster %}
+        <h1>{{ page.question | striptags }}</h1>
+    {% else %}
         <h2>{{ page.question | striptags }}</h2>
+    {% endif %}
     </div>
 
     <div class="block
