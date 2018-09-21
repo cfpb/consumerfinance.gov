@@ -409,14 +409,40 @@ job_listing_table = {
 data_snapshot = {
     'type': u'data_snapshot',
     'value': {
+        'market_key': u'STU',
+        'num_originations': u'5 million',
+        'value_originations': u'$64 billion',
+        'year_over_year_change': u'5% increase',
+        'last_updated_projected_data': u'2015-01-01',
+        'num_originations_text': u'Loans originated',
+        'value_originations_text': u'Dollar value of new loans',
+        'year_over_year_change_text': u'In year-over-year originations',
+        'inquiry_month': u'',
+        'inquiry_year_over_year_change': u'',
+        'inquiry_year_over_year_change_text': u'',
+        'denial_month': u'',
+        'denial_year_over_year_change': u'',
+        'denial_year_over_year_change_text': u'',
+    }
+}
+
+data_snapshot_with_optional_fields = {
+    'type': u'data_snapshot',
+    'value': {
         'market_key': u'AUT',
         'num_originations': u'5 million',
         'value_originations': u'$64 billion',
         'year_over_year_change': u'5% increase',
         'last_updated_projected_data': u'2015-01-01',
-        'num_originations_text': u'Auto loans originated',
+        'num_originations_text': u'Loans originated',
         'value_originations_text': u'Dollar value of new loans',
         'year_over_year_change_text': u'In year-over-year originations',
+        'inquiry_month': u'2015-01-01',
+        'inquiry_year_over_year_change': u'7.4% decrease',
+        'inquiry_year_over_year_change_text': u'In year-over-year applications',
+        'denial_month': u'2015-01-01',
+        'denial_year_over_year_change': u'2.8% increase',
+        'denial_year_over_year_change_text': u'In year-over-year unsuccessful applications',
     }
 }
 
