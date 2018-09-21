@@ -1108,7 +1108,7 @@ class DataSnapshot(blocks.StructBlock):
     denial_year_over_year_change_text = blocks.CharBlock(
         required=False,
         max_length=100,
-        help_text='Descriptive sentence, e.g. In year-over-year credit tightness'
+        help_text='Descriptive sentence, e.g. In year-over-year credit tightness'  # noqa
     )
 
     # Select an image

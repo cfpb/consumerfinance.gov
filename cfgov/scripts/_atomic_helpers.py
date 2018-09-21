@@ -442,7 +442,7 @@ data_snapshot_with_optional_fields = {
         'inquiry_year_over_year_change_text': u'In year-over-year inquiries',
         'denial_month': u'2015-01-01',
         'denial_year_over_year_change': u'2.8% increase',
-        'denial_year_over_year_change_text': u'In year-over-year credit tightness',
+        'denial_year_over_year_change_text': u'In year-over-year credit tightness',  # noqa
     }
 }
 
