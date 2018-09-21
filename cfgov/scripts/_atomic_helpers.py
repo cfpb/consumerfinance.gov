@@ -439,10 +439,10 @@ data_snapshot_with_optional_fields = {
         'year_over_year_change_text': u'In year-over-year originations',
         'inquiry_month': u'2015-01-01',
         'inquiry_year_over_year_change': u'7.4% decrease',
-        'inquiry_year_over_year_change_text': u'In year-over-year applications',
+        'inquiry_year_over_year_change_text': u'In year-over-year inquiries',
         'denial_month': u'2015-01-01',
         'denial_year_over_year_change': u'2.8% increase',
-        'denial_year_over_year_change_text': u'In year-over-year unsuccessful applications',
+        'denial_year_over_year_change_text': u'In year-over-year credit tightness',
     }
 }
 

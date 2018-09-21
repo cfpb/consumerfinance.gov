@@ -1080,7 +1080,7 @@ class DataSnapshot(blocks.StructBlock):
     )
 
     # Inquiry/Denial Indices
-    inquiry_month = blocks.CharBlock(
+    inquiry_month = blocks.DateBlock(
         required=False,
         max_length=20,
         help_text='Month of latest entry in dataset for inquiry data'
@@ -1093,9 +1093,9 @@ class DataSnapshot(blocks.StructBlock):
     inquiry_year_over_year_change_text = blocks.CharBlock(
         required=False,
         max_length=100,
-        help_text='Descriptive sentence, e.g. In year-over-year applications'
+        help_text='Descriptive sentence, e.g. In year-over-year inquiries'
     )
-    denial_month = blocks.CharBlock(
+    denial_month = blocks.DateBlock(
         required=False,
         max_length=20,
         help_text='Month of latest entry in dataset for denial data'
@@ -1108,7 +1108,7 @@ class DataSnapshot(blocks.StructBlock):
     denial_year_over_year_change_text = blocks.CharBlock(
         required=False,
         max_length=100,
-        help_text='Descriptive sentence, e.g. In year-over-year unsuccessful applications'
+        help_text='Descriptive sentence, e.g. In year-over-year credit tightness'
     )
 
     # Select an image

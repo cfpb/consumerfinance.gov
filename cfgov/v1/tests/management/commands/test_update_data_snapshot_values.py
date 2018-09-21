@@ -48,10 +48,10 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
             # Should not contain inquiry and denial values
             self.assertNotContains(response, '3.2% increase')
             self.assertNotContains(response, '7.0% increase')
-            self.assertNotContains(response, 'In year-over-year applications')
+            self.assertNotContains(response, 'In year-over-year inquiries')
             self.assertNotContains(
                 response,
-                'In year-over-year unsuccessful applications'
+                'In year-over-year credit tightness'
             )
 
         def test_data_snapshot_with_inquiry_and_denial(self):
@@ -90,8 +90,8 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
             # Inquiry and denial values
             self.assertContains(response, '3.2% increase')
             self.assertContains(response, '7.0% increase')
-            self.assertContains(response, 'In year-over-year applications')
+            self.assertContains(response, 'In year-over-year inquiries')
             self.assertContains(
                 response,
-                'In year-over-year unsuccessful applications'
+                'In year-over-year credit tightness'
             )

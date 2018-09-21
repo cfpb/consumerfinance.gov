@@ -303,9 +303,9 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'In year-over-year originations')
         # Should not include inquiry or denial information
         self.assertNotContains(response, '7.4% decrease')
-        self.assertNotContains(response, 'In year-over-year applications')
+        self.assertNotContains(response, 'In year-over-year inquiries')
         self.assertNotContains(response, '2.8% increase')
-        self.assertNotContains(response, 'In year-over-year unsuccessful applications')
+        self.assertNotContains(response, 'In year-over-year credit tightness')
 
     def test_data_snapshot_with_optional_fields(self):
         """ Data Snapshot with inquiry and denial information correctly renders
@@ -333,9 +333,9 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'In year-over-year originations')
         # Should  include inquiry or denial information
         self.assertContains(response, '7.4% decrease')
-        self.assertContains(response, 'In year-over-year applications')
+        self.assertContains(response, 'In year-over-year inquiries')
         self.assertContains(response, '2.8% increase')
-        self.assertContains(response, 'In year-over-year unsuccessful applications')
+        self.assertContains(response, 'In year-over-year credit tightness')
 
     def test_chart_block(self):
         """ Chart Block correctly renders fields on a Browse Page"""

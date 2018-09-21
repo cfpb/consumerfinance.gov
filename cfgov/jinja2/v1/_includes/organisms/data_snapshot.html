@@ -23,30 +23,34 @@
 
    ========================================================================== #}
 
-<h2>Data snapshot for {{ value.last_updated_projected_data.strftime('%B %Y') }}</h2>
+<h2>Data snapshot</h2>
 <div class="o-info-unit-group"
     data-qa-hook="half-width-link-blob">
     <div class="content-l_col
                 content-l_col-1-2">
         <h3><b>{{ value.num_originations }}</b>
         <br/>
-        {{ value.num_originations_text }}</h3>
+        {{ value.num_originations_text }}
+        ({{ value.last_updated_projected_data.strftime('%B&nbsp;%Y') }})</h3>
 
         <br/>
         <h3><b>{{ value.value_originations }}</b>
         <br/>
-        {{ value.value_originations_text }}</h3>
+        {{ value.value_originations_text }}
+        ({{ value.last_updated_projected_data.strftime('%B&nbsp;%Y') }})</h3>
 
         <br/>
         <h3><b>{{ value.year_over_year_change }}</b>
         <br/>
-        {{ value.year_over_year_change_text }}</h3>
+        {{ value.year_over_year_change_text }}
+        ({{ value.last_updated_projected_data.strftime('%B&nbsp;%Y') }})</h3>
 
         {% if value.inquiry_year_over_year_change %}
         <br/>
         <h3><b>{{ value.inquiry_year_over_year_change }}</b>
         <br/>
-        {{ value.inquiry_year_over_year_change_text }}</h3>
+        {{ value.inquiry_year_over_year_change_text }}
+        ({{ value.inquiry_month.strftime('%B&nbsp;%Y') }})</h3>
         {% endif %}
 
     {% if value.image %}
@@ -65,7 +69,8 @@
         <br/>
         <h3><b>{{ value.denial_year_over_year_change }}</b>
         <br/>
-        {{ value.denial_year_over_year_change_text }}</h3>
+        {{ value.denial_year_over_year_change_text }}
+        ({{ value.denial_month.strftime('%B&nbsp;%Y') }})</h3>
         {% endif %}
 
     {% else %}
@@ -73,7 +78,8 @@
         <br/>
         <h3><b>{{ value.denial_year_over_year_change }}</b>
         <br/>
-        {{ value.denial_year_over_year_change_text }} </h3>
+        {{ value.denial_year_over_year_change_text }}
+        ({{ value.denial_month.strftime('%B&nbsp;%Y') }})</h3>
         {% endif %}
     {% endif %}
 
