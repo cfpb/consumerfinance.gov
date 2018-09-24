@@ -12,8 +12,8 @@ if [ "$RUNTEST" == "frontend" ]; then
     bash <(curl -s https://codecov.io/bash) -F frontend -X coveragepy
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e lint
-    TEST_DATABASE_URL=postgres://travis:travis@localhost:5433/travis tox -e fast
     tox -e missing-migrations
+    TEST_DATABASE_URL=postgres://travis:travis@localhost:5433/travis tox -e fast
     bash <(curl -s https://codecov.io/bash) -F backend
 elif [ "$RUNTEST" == "docs" ]; then
     mkdocs build
