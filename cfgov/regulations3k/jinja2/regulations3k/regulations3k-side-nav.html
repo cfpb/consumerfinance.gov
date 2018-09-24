@@ -10,7 +10,7 @@
 
 {% block content_sidebar %}
     {% if page %}
-        {% import 'eregs/regulations3k-secondary-navigation.html' as secondary_navigation with context %}
+        {% import 'regulations3k/regulations3k-secondary-navigation.html' as secondary_navigation with context %}
         {{ secondary_navigation.render() }}
     {% else %}
         {# TODO: Remove `active_nav_id` and `sec_nav_items` parameters when
@@ -18,7 +18,7 @@
              browse basic, browse filterable, and press resources are moved to Wagtail. #}
         {% set active_nav_id = active_nav_id | default('index') -%}
         {% set sec_nav_items = vars.nav_items %}
-        {% import 'eregs/regulations3k-secondary-navigation.html' as secondary_navigation with context %}
+        {% import 'regulations3k/regulations3k-secondary-navigation.html' as secondary_navigation with context %}
         {{ secondary_navigation.render( active_nav_id, vars.nav_items ) }}
     {% endif %}
 {% endblock %}
