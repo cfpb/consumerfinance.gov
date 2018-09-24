@@ -231,7 +231,8 @@
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [
-            '{{ static('apps/regulations3k/js/index.js') }}'
+            '{{ static('apps/regulations3k/js/index.js') }}',
+            '{{ static('apps/regulations3k/js/permalinks.js') }}'
           ];
           jsl(s);
         }()
