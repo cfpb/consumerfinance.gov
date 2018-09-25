@@ -13,3 +13,6 @@ header.init( document.body.querySelector( '.a-overlay' ) );
 const Footer = require( '../organisms/Footer.js' );
 const footer = new Footer( document.body );
 footer.init();
+
+// Enable improved "Skip to Main Content" links
+const SkipNav = require( '../modules/SkipNav.js' )();
