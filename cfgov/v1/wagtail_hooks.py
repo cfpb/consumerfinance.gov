@@ -8,15 +8,17 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.html import format_html_join
-from django.views.generic import RedirectView
 
-from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
+from wagtail.contrib.modeladmin.options import (
+    ModelAdmin, ModelAdminGroup, modeladmin_register
+)
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 
 from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.models.resources import Resource
+from v1.models.snippets import Contact, ReusableText
 from v1.util import util
 
 
@@ -218,15 +220,32 @@ class ResourceModelAdmin(ModelAdmin):
     search_fields = ('title',)
 
 
-modeladmin_register(ResourceModelAdmin)
+class ContactModelAdmin(ModelAdmin):
+    model = Contact
+    menu_icon = 'snippet'
+    list_display = ('heading', 'body')
+    search_fields = ('heading', 'body', 'contact_info')
 
 
-# Below hook isn't working
-@hooks.register('register_admin_urls')
-def register_resource_snippet_redirect_url():
-    return [
-        url(
-            r'^snippets/v1/resource/$',
-            RedirectView.as_view(url='v1/resource/', permanent=False)
-        ),
-    ]
+class ReusableTextModelAdmin(ModelAdmin):
+    model = ReusableText
+    menu_icon = 'snippet'
+    list_display = ('title', 'sidefoot_heading', 'text')
+    search_fields = ('title', 'sidefoot_heading', 'text')
+
+
+class SnippetModelAdminGroup(ModelAdminGroup):
+    menu_label = 'Snippets'
+    menu_icon = 'snippet'
+    menu_order = 400
+    items = (ContactModelAdmin, ResourceModelAdmin, ReusableTextModelAdmin)
+
+
+modeladmin_register(SnippetModelAdminGroup)
+
+
+# Hide default Snippets menu item
+@hooks.register('construct_main_menu')
+def hide_snippets_menu_item(request, menu_items):
+    menu_items[:] = [item for item in menu_items
+                     if item.url != '/admin/snippets/']
