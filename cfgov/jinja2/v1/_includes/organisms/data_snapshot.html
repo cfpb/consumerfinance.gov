@@ -51,8 +51,9 @@
         <br/>
         {{ value.inquiry_year_over_year_change_text }}
         {% if value.inquiry_month %}
-            ({{ value.inquiry_month.strftime('%B&nbsp;%Y') }})</h3>
+            ({{ value.inquiry_month.strftime('%B&nbsp;%Y') }})
         {% endif %}
+        </h3>
         {% endif %}
 
     {% if value.image %}
@@ -73,8 +74,9 @@
         <br/>
         {{ value.tightness_year_over_year_change_text }}
         {% if value.tightness_month %}
-            ({{ value.tightness_month.strftime('%B&nbsp;%Y') }})</h3>
+            ({{ value.tightness_month.strftime('%B&nbsp;%Y') }})
         {% endif %}
+        </h3>
         {% endif %}
 
     {% else %}
@@ -84,8 +86,9 @@
         <br/>
         {{ value.tightness_year_over_year_change_text }}
         {% if value.tightness_month %}
-            ({{ value.tightness_month.strftime('%B&nbsp;%Y') }})</h3>
+            ({{ value.tightness_month.strftime('%B&nbsp;%Y') }})
         {% endif %}
+        </h3>
         {% endif %}
     {% endif %}
 
