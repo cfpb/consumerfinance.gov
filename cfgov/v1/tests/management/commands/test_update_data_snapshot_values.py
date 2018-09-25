@@ -45,7 +45,7 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
             self.assertContains(response, 'Loans originated')
             self.assertContains(response, 'Dollar value of new loans')
             self.assertContains(response, 'In year-over-year originations')
-            # Should not contain inquiry and denial values
+            # Should not contain inquiry and tightness values
             self.assertNotContains(response, '3.2% increase')
             self.assertNotContains(response, '7.0% increase')
             self.assertNotContains(response, 'In year-over-year inquiries')
@@ -54,9 +54,9 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
                 'In year-over-year credit tightness'
             )
 
-        def test_data_snapshot_with_inquiry_and_denial(self):
+        def test_data_snapshot_with_inquiry_and_tightness(self):
             """ Management command correctly updates data snapshot values
-            for market that contains inquiry and denial data"""
+            for market that contains inquiry and tightness data"""
             browse_page = BrowsePage(
                 title='Browse Page',
                 slug='browse',
@@ -87,7 +87,7 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
             self.assertContains(response, 'Loans originated')
             self.assertContains(response, 'Dollar value of new loans')
             self.assertContains(response, 'In year-over-year originations')
-            # Inquiry and denial values
+            # Inquiry and tightness values
             self.assertContains(response, '3.2% increase')
             self.assertContains(response, '7.0% increase')
             self.assertContains(response, 'In year-over-year inquiries')

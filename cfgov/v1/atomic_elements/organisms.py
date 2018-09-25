@@ -1079,7 +1079,7 @@ class DataSnapshot(blocks.StructBlock):
         help_text='Descriptive sentence, e.g. In year-over-year originations'
     )
 
-    # Inquiry/Denial Indices
+    # Inquiry/Tightness Indices
     inquiry_month = blocks.DateBlock(
         required=False,
         max_length=20,
@@ -1095,17 +1095,17 @@ class DataSnapshot(blocks.StructBlock):
         max_length=100,
         help_text='Descriptive sentence, e.g. In year-over-year inquiries'
     )
-    denial_month = blocks.DateBlock(
+    tightness_month = blocks.DateBlock(
         required=False,
         max_length=20,
-        help_text='Month of latest entry in dataset for denial data'
+        help_text='Month of latest entry in dataset for credit tightness data'
     )
-    denial_year_over_year_change = blocks.CharBlock(
+    tightness_year_over_year_change = blocks.CharBlock(
         required=False,
         max_length=20,
         help_text='Percentage change, e.g. 5.6% increase'
     )
-    denial_year_over_year_change_text = blocks.CharBlock(
+    tightness_year_over_year_change_text = blocks.CharBlock(
         required=False,
         max_length=100,
         help_text='Descriptive sentence, e.g. In year-over-year credit tightness'  # noqa
