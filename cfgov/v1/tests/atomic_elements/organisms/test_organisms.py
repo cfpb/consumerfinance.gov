@@ -301,14 +301,14 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'Loans originated')
         self.assertContains(response, 'Dollar value of new loans')
         self.assertContains(response, 'In year-over-year originations')
-        # Should not include inquiry or denial information
+        # Should not include inquiry or tightness information
         self.assertNotContains(response, '7.4% decrease')
         self.assertNotContains(response, 'In year-over-year inquiries')
         self.assertNotContains(response, '2.8% increase')
         self.assertNotContains(response, 'In year-over-year credit tightness')
 
     def test_data_snapshot_with_optional_fields(self):
-        """ Data Snapshot with inquiry and denial information correctly renders
+        """ Data Snapshot with inquiry and tightness information correctly renders
         fields on a Browse Page"""
         browse_page = BrowsePage(
             title='Browse Page',
@@ -331,7 +331,7 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'Loans originated')
         self.assertContains(response, 'Dollar value of new loans')
         self.assertContains(response, 'In year-over-year originations')
-        # Should  include inquiry or denial information
+        # Should  include inquiry or tightness information
         self.assertContains(response, '7.4% decrease')
         self.assertContains(response, 'In year-over-year inquiries')
         self.assertContains(response, '2.8% increase')

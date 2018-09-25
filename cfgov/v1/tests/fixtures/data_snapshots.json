@@ -7,8 +7,8 @@
             "num_originations": "2.1 million",
             "value_originations": "$46.4 billion",
             "year_over_year_change": "5.8% increase",
-            "denial_month": "2017-01-01",
-            "denial_yoy_change": "3.2% increase",
+            "tightness_month": "2017-01-01",
+            "tightness_yoy_change": "3.2% increase",
             "inquiry_month": "2017-01-01",
             "inquiry_yoy_change": "7.0% increase"
         },

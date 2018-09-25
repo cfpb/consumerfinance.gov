@@ -420,9 +420,9 @@ data_snapshot = {
         'inquiry_month': u'',
         'inquiry_year_over_year_change': u'',
         'inquiry_year_over_year_change_text': u'',
-        'denial_month': u'',
-        'denial_year_over_year_change': u'',
-        'denial_year_over_year_change_text': u'',
+        'tightness_month': u'',
+        'tightness_year_over_year_change': u'',
+        'tightness_year_over_year_change_text': u'',
     }
 }
 
@@ -440,9 +440,9 @@ data_snapshot_with_optional_fields = {
         'inquiry_month': u'2015-01-01',
         'inquiry_year_over_year_change': u'7.4% decrease',
         'inquiry_year_over_year_change_text': u'In year-over-year inquiries',
-        'denial_month': u'2015-01-01',
-        'denial_year_over_year_change': u'2.8% increase',
-        'denial_year_over_year_change_text': u'In year-over-year credit tightness',  # noqa
+        'tightness_month': u'2015-01-01',
+        'tightness_year_over_year_change': u'2.8% increase',
+        'tightness_year_over_year_change_text': u'In year-over-year credit tightness',  # noqa
     }
 }
 

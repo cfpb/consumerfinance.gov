@@ -81,14 +81,14 @@ class Command(BaseCommand):
                 snapshot['inquiry_month'] = ""
                 snapshot['inquiry_year_over_year_change'] = ""
 
-            # Update denial index info if it exists for this market
-            if "denial_yoy_change" in market:
-                snapshot['denial_month'] = market['denial_month']
-                snapshot['denial_year_over_year_change'] = \
-                    market['denial_yoy_change']
+            # Update tightness index info if it exists for this market
+            if "tightness_yoy_change" in market:
+                snapshot['tightness_month'] = market['tightness_month']
+                snapshot['tightness_year_over_year_change'] = \
+                    market['tightness_yoy_change']
             else:
-                snapshot['denial_month'] = ""
-                snapshot['denial_year_over_year_change'] = ""
+                snapshot['tightness_month'] = ""
+                snapshot['tightness_year_over_year_change'] = ""
 
             # Publish changes to the browse page the data snapshot lives on
             page = snapshot['page']

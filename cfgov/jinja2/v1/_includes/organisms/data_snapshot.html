@@ -50,7 +50,10 @@
         <h3><b>{{ value.inquiry_year_over_year_change }}</b>
         <br/>
         {{ value.inquiry_year_over_year_change_text }}
-        ({{ value.inquiry_month.strftime('%B&nbsp;%Y') }})</h3>
+        {% if value.inquiry_month %}
+            ({{ value.inquiry_month.strftime('%B&nbsp;%Y') }})
+        {% endif %}
+        </h3>
         {% endif %}
 
     {% if value.image %}
@@ -65,21 +68,27 @@
                  alt="{{ image_alt_value(media) }}">
         </div>
 
-        {% if value.denial_year_over_year_change %}
+        {% if value.tightness_year_over_year_change %}
         <br/>
-        <h3><b>{{ value.denial_year_over_year_change }}</b>
+        <h3><b>{{ value.tightness_year_over_year_change }}</b>
         <br/>
-        {{ value.denial_year_over_year_change_text }}
-        ({{ value.denial_month.strftime('%B&nbsp;%Y') }})</h3>
+        {{ value.tightness_year_over_year_change_text }}
+        {% if value.tightness_month %}
+            ({{ value.tightness_month.strftime('%B&nbsp;%Y') }})
+        {% endif %}
+        </h3>
         {% endif %}
 
     {% else %}
-        {% if value.denial_year_over_year_change %}
+        {% if value.tightness_year_over_year_change %}
         <br/>
-        <h3><b>{{ value.denial_year_over_year_change }}</b>
+        <h3><b>{{ value.tightness_year_over_year_change }}</b>
         <br/>
-        {{ value.denial_year_over_year_change_text }}
-        ({{ value.denial_month.strftime('%B&nbsp;%Y') }})</h3>
+        {{ value.tightness_year_over_year_change_text }}
+        {% if value.tightness_month %}
+            ({{ value.tightness_month.strftime('%B&nbsp;%Y') }})
+        {% endif %}
+        </h3>
         {% endif %}
     {% endif %}
 
