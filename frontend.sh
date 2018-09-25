@@ -63,48 +63,6 @@ install() {
   fi
 }
 
-# Calculate checksum value.
-calc_checksum() {
-  DEP_CHECKSUM=$(cat yarn.lock cfgov/unprocessed/apps/**/package*.json | shasum -a 256)
-}
-
-# Add a checksum file
-write_checksum() {
-  echo -n "$DEP_CHECKSUM" > node_modules/CHECKSUM
-  echo "Wrote node_modules/CHECKSUM $DEP_CHECKSUM"
-}
-
-# Write file that says the node environment that we're in.
-# We can read this on next run to see if the checksum should be bashed.
-write_node_env() {
-  echo -n "${NODE_ENV}" > "node_modules/NODE_ENV"
-  echo "Wrote node_modules/NODE_ENV $NODE_ENV"
-}
-
-# Analyze setup and see if we need to install dependencies.
-should_rebuild() {
-  [ ! -f node_modules/NODE_ENV ] ||
-  [ ! -f node_modules/CHECKSUM ] ||
-  [ "$NODE_ENV" != "$(cat node_modules/NODE_ENV)" ] ||
-  [ "$DEP_CHECKSUM" != "$(cat node_modules/CHECKSUM)" ]
-}
-
-# If the node directory exists, node_modules/CHECKSUM exists, and
-# the contents DO NOT match the checksum of package.json, clear
-# node_modules so we know we're working with a clean slate of the
-# dependencies listed in package.json.
-clean_and_install() {
-  calc_checksum
-  if should_rebuild; then
-    clean
-    install
-    calc_checksum
-    write_checksum
-    write_node_env
-  else
-    echo "Dependencies are up to date."
-  fi
-}
 
 # Run tasks to build the project for distribution.
 build() {
@@ -115,11 +73,11 @@ build() {
 # Execute requested (or all) functions.
 if [ "$1" == "init" ]; then
   init ""
-  clean_and_install
+  install
 elif [ "$1" == "build" ]; then
   build
 else
   init "$1"
-  clean_and_install
+  install
   build
 fi

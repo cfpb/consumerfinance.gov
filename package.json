@@ -93,7 +93,7 @@
   },
   "scripts": {
     "enforce": "enforce-node-version",
-    "postinstall": "yarn run enforce && node scripts/npm/apps-install",
+    "postinstall": "yarn run enforce && node scripts/yarn/apps-install",
     "test": "snyk test",
     "gulp": "gulp"
   },
