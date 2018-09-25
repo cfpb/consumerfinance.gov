@@ -726,7 +726,18 @@ else:
 
 PARSE_LINKS_BLACKLIST = [
     '/admin/',
-    '/django-admin/'
+    '/django-admin/',
+    '/policy-compliance/rulemaking/regulations/1002/',
+    '/policy-compliance/rulemaking/regulations/1003/',
+    '/policy-compliance/rulemaking/regulations/1004/',
+    '/policy-compliance/rulemaking/regulations/1005/',
+    '/policy-compliance/rulemaking/regulations/1010/',
+    '/policy-compliance/rulemaking/regulations/1011/',
+    '/policy-compliance/rulemaking/regulations/1012/',
+    '/policy-compliance/rulemaking/regulations/1013/',
+    '/policy-compliance/rulemaking/regulations/1024/',
+    '/policy-compliance/rulemaking/regulations/1026/',
+    '/policy-compliance/rulemaking/regulations/1030/',
 ]
 
 # Required by django-extensions to determine the execution directory used by
