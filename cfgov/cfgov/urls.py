@@ -521,7 +521,7 @@ urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 # urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
 
-def handle_error(code, request):
+def handle_error(code, request, exception=None):
     try:
         return render(request, '%s.html' % code, context={'request': request},
                       status=code)
