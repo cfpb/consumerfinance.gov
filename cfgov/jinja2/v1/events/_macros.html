@@ -152,9 +152,14 @@
             {% elif event_state == 'present' and request.path == '/about-us/events/town-hall-topeka-kan-fighting-elder-financial-exploitation-your-community/' %}
                 <iframe alt="Fighting elder financial exploitation in your community."
                         style="display: block; width: 100%; min-height: 470px; border: none;" src="https://mediasite.yorkcast.com/webcast/Play/fe85017780f840d7b931141f063ee5211d?autostart=true"></iframe>
+            {# TODO: Replace this call to the Google Maps Static API
+               (which now requires an API key we don't have)
+               with Mapbox (for which we do have an API key).
             {% else %}
               <img src="{{ event.location_image_url(size='640x320') }}"
-                   alt="Google Maps image of {{ event.venue_name }}">
+                   alt="Google Maps image of
+                        {{ event.venue_city }}{{ ', ' ~ event.venue_state if event.venue_state else '' }}">
+            #}
             {% endif %}
             </figure>
         </footer>
