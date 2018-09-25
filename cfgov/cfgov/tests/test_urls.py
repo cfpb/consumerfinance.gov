@@ -1,7 +1,9 @@
 from imp import reload
 
 from django.conf.urls import url
-from django.test import TestCase, override_settings
+from django.test import RequestFactory, TestCase, override_settings
+
+import mock
 
 from cfgov import urls
 
@@ -105,3 +107,24 @@ class FlaggedWagtailOnlyViewTests(TestCase):
     def test_flag_not_set_returns_view_that_raises_http404(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 404)
+
+
+class HandleErrorTestCase(TestCase):
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    @mock.patch('cfgov.urls.render')
+    def test_handle_error_attribute_error(self, mock_render):
+        mock_render.side_effect = AttributeError()
+        result = urls.handle_error(404, self.factory.get('/test'))
+        self.assertIn('This request could not be processed', result.content)
+        self.assertIn('HTTP Error 404.', result.content)
+
+    @mock.patch('cfgov.urls.render')
+    def test_handle_error(self, mock_render):
+        request = self.factory.get('/test')
+        urls.handle_error(404, request)
+        mock_render.assert_called_with(
+            request, '404.html', context={'request': request}, status=404
+        )
