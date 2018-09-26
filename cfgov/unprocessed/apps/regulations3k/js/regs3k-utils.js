@@ -1,6 +1,5 @@
 import { ajaxRequest as xhr } from '../../../js/modules/util/ajax-request';
 
-
 /**
  * fetch - Wrapper for our ajax request method with callback support
  *
@@ -14,6 +13,13 @@ const fetch = ( url, cb ) => xhr( 'GET', url, {
   fail: err => cb( err )
 } );
 
+/**
+ * getNewHash - Convert an old eRegs hash into a Regs3K hash.
+ *
+ * @param {string} hash Old eRegs URL hash
+ *
+ * @returns {string} New Regs3K hash
+ */
 const getNewHash = hash => {
   if ( ( /(\w+-)+Interp-/ ).test( hash ) ) {
     // Trim off DDDD- e.g. 1003-2-f-Interp-3 becomes 2-f-Interp-3
