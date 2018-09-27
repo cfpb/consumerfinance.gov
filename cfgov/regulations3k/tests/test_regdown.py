@@ -269,6 +269,14 @@ class RegulationsExtensionTestCase(unittest.TestCase):
                       '<span></span></span>',
                       regdown('Field: _______'))
 
+    def test_section_symbol_with_non_breaking_space(self):
+        self.assertIn('§&#160;1023', regdown('§ 1023'))
+        self.assertIn('§&#160;1023.4', regdown('§ 1023.4'))
+        self.assertIn('§&#160;1023.4(a)', regdown('§ 1023.4(a)'))
+        self.assertIn('§&#160;1023.4(a)', regdown('§\t1023.4(a)'))
+        self.assertIn('§&#160;1023.4(a)', regdown('§      1023.4(a)'))
+        self.assertIn('§&#160;1023.4(a)', regdown('§&#160;1023.4(a)'))
+
 
 class RegdownUtilsTestCase(unittest.TestCase):
 
