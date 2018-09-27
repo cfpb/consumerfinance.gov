@@ -1,7 +1,6 @@
 import os
 import sys
 
-import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
@@ -138,6 +137,9 @@ TEMPLATES = [
         # Look for Django templates in each app under a templates subdirectory.
         'APP_DIRS': True,
         'OPTIONS': {
+            'builtins': [
+                'overextends.templatetags.overextends_tags',
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -178,14 +180,6 @@ TEMPLATES = [
         }
     },
 ]
-
-# TODO: Remove this when support for Django < 1.9 is removed.
-# The ability to specify builtins like this was added in Django 1.9.
-# https://docs.djangoproject.com/en/dev/releases/1.9/#templates
-if django.VERSION[:2] >= (1, 9):
-    TEMPLATES[0]['OPTIONS']['builtins'] = [
-        'overextends.templatetags.overextends_tags',
-    ]
 
 WSGI_APPLICATION = 'cfgov.wsgi.application'
 

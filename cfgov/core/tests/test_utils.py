@@ -1,6 +1,5 @@
 import unittest
 
-import django
 from django.test import TestCase
 
 from core.utils import (
@@ -38,12 +37,7 @@ class TestNoMigrations(TestCase):
         self.assertTrue('random-string' in self.nomigrations)
 
     def test_getitem(self):
-        if django.VERSION[:2] < (1, 9):  # pragma: no cover
-            expected = 'nomigrations'
-        else:
-            expected = None
-
-        self.assertEqual(self.nomigrations['random-string'], expected)
+        self.assertIsNone(self.nomigrations['random-string'])
 
 
 class FormatFileSizeTests(unittest.TestCase):
