@@ -2,7 +2,6 @@ import re
 from six import text_type as str
 from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
-import django
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
 
@@ -139,15 +138,9 @@ class NoMigrations(object):
     for an app's migrations (by default this is the "migrations" subdirectory).
     This class simulates a dictionary where a lookup for any app returns a
     value that causes Django to think that no migrations exist.
-
-    In Django >= 1.9, this can be configured by returning None. In Django <1.9,
-    a nonexistent path string must be returned.
     """
     def __contains__(self, item):
         return True
 
     def __getitem__(self, item):
-        if django.VERSION[:2] < (1, 9):  # pragma: no cover
-            return 'nomigrations'
-        else:
-            return None
+        return None
