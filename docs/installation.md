@@ -360,6 +360,37 @@ Uncomment and set the GovDelivery environment variables in your `.env` file.
     The API is used by subscribe forms on our website.
     Users may decide to swap this tool out for another third-party service.
 
+### Install GNU gettext for Django translation support
+
+In order to generate Django translations as documented
+[here](translation.md), you'll need to install the
+[GNU gettext](https://www.gnu.org/software/gettext/) library.
+
+On MacOS, GNU gettext is available via Homebrew:
+
+```
+brew install gettext
+```
+
+but it gets installed as
+["keg-only"](https://docs.brew.sh/FAQ#what-does-keg-only-mean) due to conflicts
+with the default installation of BSD gettext. This means that GNU gettext won't
+be loaded in your PATH by default. To fix this, you can run
+
+```
+brew link --force gettext
+```
+
+to force its installation, or see `brew info gettext` for an alternate
+solution.
+
+If installed locally, you should be able to run this command successfully:
+
+```
+$ gettext --version
+```
+
+GNU gettext is also required to run our translation-related unit tests locally.
 
 ## Curious about what the setup scripts are doing?
 

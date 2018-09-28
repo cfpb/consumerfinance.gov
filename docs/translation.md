@@ -1,10 +1,13 @@
 # Translation
 
-As cfgov-refresh is a Django project, the [Django translation documentation is a good place to start](https://docs.djangoproject.com/en/1.8/topics/i18n/translation/#set-language-redirect-view). What follows is a brief introduction to translations with the particular tools cfgov-refresh uses (like Jinja2 templates) and the conventions we use.
+As cfgov-refresh is a Django project, the [Django translation documentation is a good place to start](https://docs.djangoproject.com/en/1.11/topics/i18n/translation/). What follows is a brief introduction to translations with the particular tools cfgov-refresh uses (like Jinja2 templates) and the conventions we use.
 
 ## Overview
 
-Translation is generally handled by one form or another of [gettext](https://en.wikipedia.org/wiki/Gettext). By convention, this is usually performed in code by wrapping a string to be translated in a function that is either named or aliased with an underscore. For example:
+Django translations use [GNU gettext](https://en.wikipedia.org/wiki/Gettext) (see
+[the installation instructions](installation.md#install-gnu-gettext-for-django-translation-support)).
+
+By convention, translations are usually performed in code by wrapping a string to be translated in a function that is either named or aliased with an underscore. For example:
 
 ```python
 _("This is a translatable string.")

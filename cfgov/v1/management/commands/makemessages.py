@@ -5,18 +5,12 @@
 # The code is based on this StackOverflow question and answer:
 # https://stackoverflow.com/questions/2090717/getting-translation-strings-for-jinja2-templates-integrated-with-django-1-x
 # And the Django docs:
-# https://docs.djangoproject.com/en/1.8/topics/i18n/translation/#customizing-the-makemessages-command
+# https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#customizing-the-makemessages-command
 
 import re
 
-from django import VERSION
 from django.core.management.commands import makemessages
-
-
-if VERSION[:2] < (1, 11):
-    from django.utils.translation import trans_real
-else:
-    from django.utils.translation import template as trans_real
+from django.utils.translation import template as trans_real
 
 
 class Command(makemessages.Command):
@@ -39,9 +33,9 @@ class Command(makemessages.Command):
         # plural_re, constant_re, and one_percent_re should match both Jinja2
         # and Django conventions.
         trans_real.block_re = re.compile(
-            django_block_re + '|' + jinja_block_re)
+            django_block_re.pattern + '|' + jinja_block_re.pattern)
         trans_real.endblock_re = re.compile(
-            django_endblock_re + '|' + jinja_endblock_re)
+            django_endblock_re.pattern + '|' + jinja_endblock_re.pattern)
 
         # The rest of trans_real's regular expressions should match conventions
         # used in both Django and Jinja2 templates.
