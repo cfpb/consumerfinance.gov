@@ -1,12 +1,19 @@
 import os
 import shutil
 import tempfile
+from unittest import skipUnless
 
 from django.core.management import call_command
+from django.core.management.utils import find_command
 from django.test import SimpleTestCase
 from django.utils._os import upath
 
 
+# https://github.com/django/django/blob/1.11.15/tests/i18n/test_extraction.py
+has_xgettext = find_command('xgettext')
+
+
+@skipUnless(has_xgettext, 'xgettext is mandatory for extraction tests')
 class TestCustomMakeMessages(SimpleTestCase):
     DATA_DIR = 'test_makemessages_data'
 
