@@ -216,6 +216,7 @@ class ResourceModelAdmin(ModelAdmin):
     menu_label = 'Resources'
     menu_icon = 'snippet'
     list_display = ('title', 'desc', 'order', 'thumbnail')
+    ordering = ('title',)
     list_filter = (ResourceTagsFilter,)
     search_fields = ('title',)
 
@@ -224,6 +225,7 @@ class ContactModelAdmin(ModelAdmin):
     model = Contact
     menu_icon = 'snippet'
     list_display = ('heading', 'body')
+    ordering = ('heading',)
     search_fields = ('heading', 'body', 'contact_info')
 
 
@@ -231,6 +233,7 @@ class ReusableTextModelAdmin(ModelAdmin):
     model = ReusableText
     menu_icon = 'snippet'
     list_display = ('title', 'sidefoot_heading', 'text')
+    ordering = ('title',)
     search_fields = ('title', 'sidefoot_heading', 'text')
 
 
@@ -248,4 +251,4 @@ modeladmin_register(SnippetModelAdminGroup)
 @hooks.register('construct_main_menu')
 def hide_snippets_menu_item(request, menu_items):
     menu_items[:] = [item for item in menu_items
-                     if item.url != '/admin/snippets/']
+                     if item.url != reverse('wagtailsnippets:index')]
