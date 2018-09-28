@@ -29,7 +29,37 @@ if six.PY2:
                     raise ValueError('Test exception handling')
 
 
+class StderrSuppressingStdoutCapturingTestRunner(StdoutCapturingTestRunner):
+    """Modified StdoutCapturingTestRunner for use in testing.
+
+    Normally when tests are run, they write output to stderr indicating
+    how many tests are run, and whether they succeed, like this:
+
+    .
+    ----------------------------------------------------------------------
+    Ran 1 test in 0.000s
+
+    OK
+
+    For the purposes of testing our test runner, we want to suppress
+    this output, so that we don't get test case output within our test
+    case output.
+
+    We do this by capturing stderr while the tests are run. Note that this
+    is independent of stdout output, which is what we are actually testing.
+    """
+
+    def get_test_runner_kwargs(self):
+        kwargs = super(StderrSuppressingStdoutCapturingTestRunner, self). \
+            get_test_runner_kwargs()
+        kwargs['stream'] = StringIO()
+        return kwargs
+
+
 class TestStdoutCapturingTestRunner(TestCase):
+    def _run_suite(self, suite):
+        runner = StderrSuppressingStdoutCapturingTestRunner()
+        return runner.run_suite(suite)
 
     def test_with_stdout(self):
         class LoudTestCase(TestCase):
@@ -41,11 +71,8 @@ class TestStdoutCapturingTestRunner(TestCase):
             tests=defaultTestLoader.loadTestsFromTestCase(LoudTestCase)
         )
 
-        with self.assertRaises(AssertionError):
-            StdoutCapturingTestRunner(verbosity=0).run_suite(
-                loud_suite,
-                stream=StringIO()
-            )
+        with self.assertRaises(RuntimeError):
+            self._run_suite(loud_suite)
 
     def test_with_no_stdout(self):
         class QuietTestCase(TestCase):
@@ -55,13 +82,7 @@ class TestStdoutCapturingTestRunner(TestCase):
         quiet_suite = TestSuite(
             tests=defaultTestLoader.loadTestsFromTestCase(QuietTestCase)
         )
-
-        # Supress test case output while this runs so we don't get weird
-        # test-case-in-our-test-case messaging
-        result = StdoutCapturingTestRunner().run_suite(
-            quiet_suite,
-            stream=StringIO()
-        )
+        result = self._run_suite(quiet_suite)
 
         # No errors should be raised and the suite should have passed
         self.assertEqual(result.errors, [])
