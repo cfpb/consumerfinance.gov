@@ -41,9 +41,10 @@
         <strong>Date published:</strong> {{ value.date_published.strftime('%B %Y') }}<br>
 
         {% if value.data_source %}
+        <strong>Download:</strong>
         <a class="icon-link icon-link__download"
            href="https://files.consumerfinance.gov/data/{{ value.data_source }}">
-            <span class="icon-link_text">Download CSV file</span>
+            <span class="icon-link_text">CSV file</span>
         </a><br>
         {% endif %}
 
