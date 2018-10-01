@@ -42,14 +42,12 @@ pyelasticsearch==0.6.1
 python-dateutil==2.1
 PyYAML==3.11
 pytz
-requests==2.18.4
-requests_toolbelt==0.6.0
+requests==2.19.1
+requests_toolbelt==0.8.0
 sha3==0.2.1
 six==1.10.0
 unicodecsv==0.14.1
 unipath>=1.1,<=2.0
-# TODO: Remove explicit urllib3 requirement once requests is updated to support urllib3 1.23
-urllib3==1.22
 wagtail-flags==3.0.1
 wagtail-inventory==0.5.1
 wagtail-sharing==0.6.1
