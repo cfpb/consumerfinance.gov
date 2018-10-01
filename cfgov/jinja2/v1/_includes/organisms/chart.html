@@ -52,6 +52,7 @@
 
         {% if value.note %}
         <strong>Note:</strong>
+        {{ value.note }}
         The most recent data available in each visualization are for {{ value.last_updated_projected_data.strftime('%B %Y') }}.
         {% endif %}
     </p>
