@@ -9,11 +9,11 @@
 
    Create a chart organism with data.
    See [GHE]/flapjack/Modules-V1/wiki/Chart
-   
+
    value.has_top_rule_line:        Boolean for whether or not to add top
-                                   border to chart. Used in
-                                   'render_block.html' to modify classes on
-                                   wrapping 'div.block'.
+                                   border to chart.
+                                   Used in 'render_block.html' to modify
+                                   classes on wrapping 'div.block'.
 
    ========================================================================== #}
 
@@ -22,29 +22,35 @@
     <h3>{{ value.title }}</h3>
     {% endif %}
 
-  <div class="m-chart-image cfpb-chart"
-       {% if value.title %}data-chart-title="{{ value.title }}"{% endif %}
-       {% if value.chart_type %}data-chart-type="{{ value.chart_type }}"{% endif %}
-       {% if value.y_axis_label %}
-            data-chart-y-axis-label="{{ value.y_axis_label }}"
-       {% endif %}
-       {% if value.metadata %}data-chart-metadata="{{ value.metadata }}"{% endif %}
-       {% if value.data_source %}data-chart-source="{{ value.data_source }}"{% endif %}
-       {% if value.description %}data-chart-description="{{ value.description }}"{% endif %}
-       {% if value.color_scheme %}data-chart-color="{{ value.color_scheme }}"{% endif %}
-       >
-       {% if value.description %}{{ value.description }}{% endif %}
-  </div>
+    <div class="m-chart-image cfpb-chart"
+         {% if value.title %}data-chart-title="{{ value.title }}"{% endif %}
+         {% if value.chart_type %}data-chart-type="{{ value.chart_type }}"{% endif %}
+         {% if value.y_axis_label %}
+              data-chart-y-axis-label="{{ value.y_axis_label }}"
+         {% endif %}
+         {% if value.metadata %}data-chart-metadata="{{ value.metadata }}"{% endif %}
+         {% if value.data_source %}data-chart-source="{{ value.data_source }}"{% endif %}
+         {% if value.description %}data-chart-description="{{ value.description }}"{% endif %}
+         {% if value.color_scheme %}data-chart-color="{{ value.color_scheme }}"{% endif %}
+         >
+         {% if value.description %}{{ value.description }}{% endif %}
+    </div>
 
-  <p class="m-chart-footnote block__sub block__border-top block short-desc">
-      {% if value.data_source %}
-      <strong>Source:</strong> <a class="icon-link icon-link__download" href="https://s3.amazonaws.com/files.consumerfinance.gov/data/{{ value.data_source }}"> <span class="icon-link_text">Download CSV file</span> </a><br>
-      {% endif %}
+    <p class="m-chart-footnote block__sub block__border-top block short-desc">
+        <strong>Source:</strong> BCFP Consumer Credit Panel<br>
+        <strong>Date published:</strong> {{ value.date_published.strftime('%B %Y') }}<br>
 
-      <strong>Date published:</strong> {{ value.date_published.strftime('%B %Y') }}<br>
+        {% if value.data_source %}
+        <a class="icon-link icon-link__download"
+           href="https://files.consumerfinance.gov/data/{{ value.data_source }}">
+            <span class="icon-link_text">Download CSV file</span>
+        </a><br>
+        {% endif %}
 
-      {% if value.note %}
-      <strong>Note:</strong> {{ value.note }} The most recent data available in each visualization is for {{ value.last_updated_projected_data.strftime('%B %Y') }}.
-      {% endif %}
+        {% if value.note %}
+        <strong>Note:</strong>
+        {{ value.note }} The most recent data available in each visualization
+        is for {{ value.last_updated_projected_data.strftime('%B %Y') }}.
+        {% endif %}
     </p>
 </div>
