@@ -355,10 +355,10 @@ class OrganismsTestCase(TestCase):
         response = self.client.get('/browse/')
         self.assertContains(response, 'Volume of credit cards originated')
         self.assertContains(response, 'foo/bar.csv')
-        self.assertContains(response, 'Data not final')
+        self.assertContains(response, 'Data not final.')
         self.assertContains(
             response,
-            'The most recent data available in each visualization is for April 2016'
+            'The most recent data available in each visualization are for April 2016'
         )
         self.assertContains(response, 'January 2018')
 

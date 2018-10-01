@@ -456,7 +456,7 @@ chart_block = {
         'date_published': u'2018-01-01',
         'description': u'Description',
         'last_updated_projected_data': u'2016-04-01',
-        'note': 'Data not final',
+        'note': 'Data not final.',
     }
 }
 
