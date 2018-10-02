@@ -125,8 +125,9 @@ features. For more information visit the [Babel documentation site]
 
 #### Known feature differences
 
-- JavaScript: We do not serve interactive scripting to Internet Explorer 8 and 9
-  but we do deliver analytics via JavaScript.
+- JavaScript:
+  We do not serve interactive scripting to Internet Explorer 8 and 9,
+  but we do collect analytics via JavaScript.
 
 #### Resources
 
