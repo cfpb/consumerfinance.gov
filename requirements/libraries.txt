@@ -1,7 +1,7 @@
 address==0.1.1
 beautifulsoup4==4.5.1
 boto3==1.7.80
-dj-database-url==0.4.2
+dj-database-url==0.5.0
 djangorestframework==3.6.4
 djangorestframework-csv==2.0.0
 django-csp==3.4
