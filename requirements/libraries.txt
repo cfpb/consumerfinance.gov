@@ -19,7 +19,7 @@ django-overextends==0.4.3
 django-storages==1.5.0
 django-treebeard==3.0
 django-watchman==0.15.0
-edgegrid-python==1.0.10
+edgegrid-python==1.1.1
 elasticsearch==2.4.1
 govdelivery==1.2
 Jinja2==2.7.3
