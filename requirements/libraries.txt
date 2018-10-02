@@ -22,7 +22,6 @@ django-treebeard==3.0
 django-watchman==0.13.1
 edgegrid-python==1.0.10
 elasticsearch==2.4.1
-geocoder==1.12.0
 govdelivery==1.2
 Jinja2==2.7.3
 jsonfield==2.0.2
