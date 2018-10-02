@@ -6,12 +6,13 @@ from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 from scripts import _atomic_helpers as atomic
 
-from v1.atomic_elements.organisms import InfoUnitGroup, SnippetList, TableBlock
+from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock
 from v1.models.browse_page import BrowsePage
 from v1.models.images import CFGOVImage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import LearnPage
-from v1.models.snippets import Contact, Resource
+from v1.models.resources import Resource
+from v1.models.snippets import Contact
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
@@ -362,8 +363,8 @@ class OrganismsTestCase(TestCase):
         )
         self.assertContains(response, 'January 2018')
 
-    def test_snippet_list(self):
-        """ Snippet List renders thumbnails when show_thumbnails is True"""
+    def test_resource_list(self):
+        """ Resource List renders thumbnails when show_thumbnails is True"""
         browse_page = BrowsePage(
             title='Browse Page',
             slug='browse',
@@ -378,11 +379,11 @@ class OrganismsTestCase(TestCase):
         self.create_resource()
 
         response = self.client.get('/browse/')
-        self.assertContains(response, 'Test Snippet List')
+        self.assertContains(response, 'Test Resource List')
         self.assertContains(response, 'Test Resource')
 
-    def test_snippet_list_show_thumbnails_false(self):
-        """ Snippet List doesn't show thumbs when show_thumbnails is False"""
+    def test_resource_list_show_thumbnails_false(self):
+        """ Resource List doesn't show thumbs when show_thumbnails is False"""
         no_thumbnails_page = BrowsePage(
             title='No Thumbnails Page',
             slug='no-thumbnails',
@@ -397,10 +398,10 @@ class OrganismsTestCase(TestCase):
         self.create_resource()
 
         response = self.client.get('/no-thumbnails/')
-        self.assertNotContains(response, 'o-snippet-list_list-thumbnail')
+        self.assertNotContains(response, 'o-resource-list_list-thumbnail')
 
-    def test_snippet_list_show_thumbnails_true(self):
-        """ Snippet List shows thumbnails when show_thumbnails is True"""
+    def test_resource_list_show_thumbnails_true(self):
+        """ Resource List shows thumbnails when show_thumbnails is True"""
         thumbnails_page = BrowsePage(
             title='Thumbnails Page',
             slug='thumbnails',
@@ -415,10 +416,10 @@ class OrganismsTestCase(TestCase):
         self.create_resource()
 
         response = self.client.get('/thumbnails/')
-        self.assertContains(response, 'o-snippet-list_list-thumbnail')
+        self.assertContains(response, 'o-resource-list_list-thumbnail')
 
-    def test_snippet_list_set_col_width(self):
-        """ Snippet List Assets column width is fixed when set"""
+    def test_resource_list_set_col_width(self):
+        """ Resource List Assets column width is fixed when set"""
         assets_width_page = BrowsePage(
             title='Assets Width Test Page',
             slug='assets-width',
@@ -434,11 +435,6 @@ class OrganismsTestCase(TestCase):
 
         response = self.client.get('/assets-width/')
         self.assertContains(response, 'u-w40pct"')
-
-    def test_snippet_list_has_snippet_types(self):
-        """Ensure that the SnippetList block has snippet type choices."""
-        form = SnippetList().render_form({})
-        self.assertIn('option value="v1.models.snippets.', form)
 
 
 class TestInfoUnitGroup(TestCase):

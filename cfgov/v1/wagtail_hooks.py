@@ -2,18 +2,23 @@ import logging
 
 from django.conf import settings
 from django.conf.urls import url
+from django.contrib import admin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.html import format_html_join
 
-from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
+from wagtail.contrib.modeladmin.options import (
+    ModelAdmin, ModelAdminGroup, modeladmin_register
+)
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 
 from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
+from v1.models.resources import Resource
+from v1.models.snippets import Contact, ReusableText
 from v1.util import util
 
 
@@ -163,3 +168,87 @@ modeladmin_register(MegaMenuModelAdmin)
 def clear_mega_menu_cache(sender, instance, **kwargs):
     from django.core.cache import caches
     caches['default_fragment_cache'].delete('mega_menu')
+
+
+def get_resource_tags():
+    tag_list = []
+
+    for resource in Resource.objects.all():
+        for tag in resource.tags.all():
+            tuple = (tag.slug, tag.name)
+            if tuple not in tag_list:
+                tag_list.append(tuple)
+
+    return sorted(tag_list, key=lambda tup: tup[0])
+
+
+class ResourceTagsFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = 'tags'
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'tag'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        return get_resource_tags()
+
+    def queryset(self, request, queryset):
+        """
+        Returns the filtered queryset based on the value
+        provided in the query string and retrievable via
+        `self.value()`.
+        """
+        for tag in get_resource_tags():
+            if self.value() == tag[0]:
+                return queryset.filter(tags__slug__iexact=tag[0])
+
+
+class ResourceModelAdmin(ModelAdmin):
+    model = Resource
+    menu_label = 'Resources'
+    menu_icon = 'snippet'
+    list_display = ('title', 'desc', 'order', 'thumbnail')
+    ordering = ('title',)
+    list_filter = (ResourceTagsFilter,)
+    search_fields = ('title',)
+
+
+class ContactModelAdmin(ModelAdmin):
+    model = Contact
+    menu_icon = 'snippet'
+    list_display = ('heading', 'body')
+    ordering = ('heading',)
+    search_fields = ('heading', 'body', 'contact_info')
+
+
+class ReusableTextModelAdmin(ModelAdmin):
+    model = ReusableText
+    menu_icon = 'snippet'
+    list_display = ('title', 'sidefoot_heading', 'text')
+    ordering = ('title',)
+    search_fields = ('title', 'sidefoot_heading', 'text')
+
+
+class SnippetModelAdminGroup(ModelAdminGroup):
+    menu_label = 'Snippets'
+    menu_icon = 'snippet'
+    menu_order = 400
+    items = (ContactModelAdmin, ResourceModelAdmin, ReusableTextModelAdmin)
+
+
+modeladmin_register(SnippetModelAdminGroup)
+
+
+# Hide default Snippets menu item
+@hooks.register('construct_main_menu')
+def hide_snippets_menu_item(request, menu_items):
+    menu_items[:] = [item for item in menu_items
+                     if item.url != reverse('wagtailsnippets:index')]
