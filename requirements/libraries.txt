@@ -37,7 +37,7 @@ PyYAML==3.13
 requests==2.19.1
 requests_toolbelt==0.8.0
 sha3==0.2.1
-six==1.10.0
+six==1.11.0
 unicodecsv==0.14.1
 unipath>=1.1,<=2.0
 wagtail-flags==3.0.1
