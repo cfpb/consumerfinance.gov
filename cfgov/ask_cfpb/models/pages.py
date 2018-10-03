@@ -22,7 +22,6 @@ from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 
-from ask_cfpb.split_testing_clusters import CLUSTERS
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
@@ -623,11 +622,6 @@ class AnswerPage(CFGOVPage):
                     if related.parent == context['category']:
                         subcategories.append(related)
             context['subcategories'] = set(subcategories)
-        context['in_cluster'] = False
-        for cluster in CLUSTERS:
-            if self.answer_base.id in cluster['answer_ids']:
-                context['in_cluster'] = True
-                break
 
         return context
 
@@ -667,3 +661,9 @@ class AnswerPage(CFGOVPage):
             return None
 
         return self.answer_base.category.first().category_image
+
+    # Overrides the default of page.id for comparing against split testing
+    # clusters. See: core.feature_flags.in_split_testing_cluster
+    @property
+    def split_test_id(self):
+        return self.answer_base.id

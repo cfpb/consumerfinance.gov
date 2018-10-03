@@ -32,12 +32,12 @@ class FeatureFlagTests(TestCase):
 
     def test_flag_enabled_tag(self):
         template = self.jinja_engine.from_string(
-            '{{ flag_enabled("MY_FLAG", request) }}'
+            '{{ flag_enabled("MY_FLAG") }}'
         )
         self.assertEqual(template.render({'request': None}), 'True')
 
     def test_flag_disabled_tag(self):
         template = self.jinja_engine.from_string(
-            '{{ flag_disabled("MY_FLAG", request) }}'
+            '{{ flag_disabled("MY_FLAG") }}'
         )
         self.assertEqual(template.render({'request': None}), 'False')
