@@ -28,7 +28,7 @@ lxml==4.1.0
 Markdown==2.6.11
 markdown-emdash==0.1.0
 ntplib==0.3.3
-openpyxl==2.5.0
+openpyxl==2.5.8
 pyelasticsearch==0.6.1
 python-dateutil==2.7.3
 pytz
