@@ -646,6 +646,13 @@ FLAGS = {
     # Improvements to Find A Housing Counselor page
     # (UI Improvements project, Fall 2018)
     'HUD_TOOL_IMPROVEMENTS': { 'environment is': 'local' },
+
+    # Split Testing Flags
+    #
+    # Ask CFPB page titles as H1s instead of H2s
+    'ASK_CFPB_H1': {
+        'in split testing cluster': core.split_testing_clusters['ASK_CFPB_H1']
+    },
 }
 
 
