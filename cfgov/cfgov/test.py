@@ -31,8 +31,6 @@ except ImportError:
         sys.stdout = new_target
         try:
             yield
-        except Exception:
-            raise
         finally:
             sys.stdout = sys.__stdout__
 
@@ -194,23 +192,18 @@ class HtmlMixin(object):
 
 class StdoutCapturingTestRunner(TestDataTestRunner):
     def run_suite(self, suite, **kwargs):
-        stdout = StringIO()
-        with redirect_stdout(stdout):
-            # This can be replaced with a call to super().run_suite() when
-            # we're past Django 1.8. 1.8 doesn't pass kwargs to the runner,
-            # which means we can't pass stream from our unittests.
-            resultclass = self.get_resultclass()
-            return_value = self.test_runner(
-                verbosity=self.verbosity,
-                failfast=self.failfast,
-                resultclass=resultclass,
+        captured_stdout = StringIO()
+        with redirect_stdout(captured_stdout):
+            return_value = super(StdoutCapturingTestRunner, self).run_suite(
+                suite,
                 **kwargs
-            ).run(suite)
-
-        assert stdout.getvalue() == '', (
-            'unit tests should avoid writing to stdout: {}'.format(
-                stdout.getvalue()
             )
-        )
+
+        if captured_stdout.getvalue():
+            raise RuntimeError(
+                'unit tests should avoid writing to stdout: {}'.format(
+                    captured_stdout.getvalue()
+                )
+            )
 
         return return_value

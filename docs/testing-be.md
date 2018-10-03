@@ -1,8 +1,8 @@
 # Backend testing
 
-## Django and Python unit tests
+## Django and Python tests
 
-To run the the full suite of unit tests using Tox, cd to the project root and
+To run the the full suite of Python tests using Tox, cd to the project root and
 then run:
 
 ```
@@ -23,6 +23,21 @@ To see Python code coverage information, run
 ```
 ./show_coverage.sh
 ```
+
+## Test output
+
+Python tests should avoid writing to stdout as part of their normal execution.
+To enforce this convention, the tests can be run using a custom Django test
+runner that fails if anything is written to stdout. This test runner is at
+`cfgov.test.StdoutCapturingTestRunner` and can be enabled with the `TEST_RUNNER`
+environment variable:
+
+```
+TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e fast
+```
+
+This test runner is enabled when tests are run automatically on [Travis CI](https://travis-ci.org/),
+but is not used by defalt when running tests locally.
 
 ## Source code linting
 
