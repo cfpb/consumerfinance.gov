@@ -1,4 +1,4 @@
-coverage==4.2
+coverage==4.5.1
 django-sslserver==0.19
 github3.py==0.9.6
 mock==2.0.0
