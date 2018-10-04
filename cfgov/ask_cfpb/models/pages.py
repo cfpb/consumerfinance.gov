@@ -566,10 +566,8 @@ class AnswerPage(CFGOVPage):
     sidebar_panels = [StreamFieldPanel('sidebar'), ]
 
     search_fields = Page.search_fields + [
-        index.SearchField('question'),
         index.SearchField('answer'),
-        index.SearchField('answer_base'),
-        index.FilterField('language')
+        index.SearchField('snippet')
     ]
 
     edit_handler = TabbedInterface([

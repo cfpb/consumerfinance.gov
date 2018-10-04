@@ -21,6 +21,7 @@ from wagtail.wagtailcore.models import (
     Orderable, Page, PageManager, PageQuerySet
 )
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailsearch import index
 
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
@@ -88,6 +89,10 @@ class CFGOVPage(Page):
     is_creatable = False
 
     objects = CFGOVPageManager()
+
+    search_fields = Page.search_fields + [
+        index.SearchField('sidefoot'),
+    ]
 
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.

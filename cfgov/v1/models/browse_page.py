@@ -6,6 +6,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
+from wagtail.wagtailsearch import index
 
 from data_research.blocks import (
     ConferenceRegistrationForm, MortgageDataDownloads
@@ -72,6 +73,11 @@ class BrowsePage(CFGOVPage):
     template = 'browse-basic/index.html'
 
     objects = PageManager()
+
+    search_fields = CFGOVPage.search_fields + [
+        index.SearchField('content'),
+        index.SearchField('header')
+    ]
 
     @property
     def page_js(self):
