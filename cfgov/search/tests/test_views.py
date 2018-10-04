@@ -1,7 +1,13 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 
+from wagtail.wagtailcore.blocks import StreamValue
+
 import mock
+
+from v1.models.browse_page import BrowsePage
+from v1.models.snippets import Contact
+from v1.tests.wagtail_pages.helpers import publish_page
 
 
 @override_settings(FLAGS={'SEARCH_DOTGOV_API': {'boolean': 'True'}})
@@ -16,3 +22,52 @@ class SearchViewsTestCase(TestCase):
         self.assertEqual(response.context_data['q'], 'auto')
         self.assertEqual(response.context_data['results'],
                          {'web': {'results': []}})
+
+
+class ExternalLinksSearchViewTestCase(TestCase):
+
+    def setUp(self):
+        self.client.login(username='admin', password='admin')
+
+    def test_get(self):
+        response = self.client.get('/admin/external-links/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_empty_url(self):
+        response = self.client.post('/admin/external-links/', {'url': ''})
+        self.assertEqual(response.status_code, 200)
+
+    def test_no_results(self):
+        response = self.client.post('/admin/external-links/', {
+            'url': 'www.foobar.com'
+        })
+        self.assertContains(response, "Number of page results: 0")
+        self.assertContains(response, "Number of snippet results: 0")
+
+    def test_snippet_results(self):
+        contact = Contact(body='<a href=https://www.foobar.com>...</a>')
+        contact.save()
+        response = self.client.post('/admin/external-links/', {
+            'url': 'www.foobar.com'
+        })
+        self.assertContains(response, "Number of page results: 0")
+        self.assertContains(response, "Number of snippet results: 1")
+
+    def test_page_results(self):
+        page = BrowsePage(title='test', slug='test')
+        page.content = StreamValue(
+            page.content.stream_block,
+            [{
+                'type': 'well',
+                'value': {
+                    'content': '<a href=https://www.foobar.com>...</a>'
+                }
+            }],
+            True
+        )
+        publish_page(page)
+        response = self.client.post('/admin/external-links/', {
+            'url': 'www.foobar.com'
+        })
+        self.assertContains(response, "Number of page results: 1")
+        self.assertContains(response, "Number of snippet results: 0")
