@@ -30,9 +30,6 @@ USE_X_FORWARDED_HOST = True
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
-# see https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-USE_ETAGS
-USE_ETAGS = True
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -103,13 +100,16 @@ POSTGRES_APPS = []
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+
     'core.middleware.ParseLinksMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
