@@ -5,6 +5,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
+from wagtail.wagtailsearch import index
 
 from jobmanager.models import JobListingList
 from v1 import blocks as v1_blocks
@@ -76,6 +77,11 @@ class SublandingPage(CFGOVPage):
     template = 'sublanding-page/index.html'
 
     objects = PageManager()
+
+    search_fields = CFGOVPage.search_fields + [
+        index.SearchField('content'),
+        index.SearchField('header')
+    ]
 
     def get_browsefilterable_posts(self, limit):
         filter_pages = [p.specific

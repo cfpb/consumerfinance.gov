@@ -2,6 +2,7 @@ from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
+from wagtail.wagtailsearch import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import organisms
@@ -25,6 +26,9 @@ class BlogPage(AbstractFilterPage):
     template = 'blog/blog_page.html'
 
     objects = PageManager()
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField('content')
+    ]
 
 
 class LegacyBlogPage(AbstractFilterPage):
@@ -39,3 +43,7 @@ class LegacyBlogPage(AbstractFilterPage):
         content_panel=StreamFieldPanel('content')
     )
     template = 'blog/blog_page.html'
+
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField('content')
+    ]
