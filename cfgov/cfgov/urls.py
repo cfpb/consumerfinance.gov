@@ -427,7 +427,7 @@ urlpatterns = [
         r'^practitioner-resources/youth-financial-education/curriculum-review/$'),  # noqa: E501
 
     flagged_url('TDP_BB_TOOL',
-        r'^practitioner-resources/youth-financial-education/tour',  # noqa: E501
+        r'^practitioner-resources/youth-financial-education/journey',  # noqa: E501
         include_if_app_enabled('teachers_digital_platform',
                                     'teachers_digital_platform.bb_urls')),
 
