@@ -199,8 +199,6 @@ that you may want to perform before continuing.
 Want to know more about what the setup scripts are doing?
 [Read the detailed rundown.](#curious-about-what-the-setup-scripts-are-doing)
 
-Get any errors? [See our troubleshooting tips.](#troubleshooting)
-
 **Continue following the [usage instructions](usage).**
 
 ## Docker-compose installation
@@ -452,21 +450,3 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
 
    Python dependencies are installed into the virtualenv via pip.
    Dependencies vary slightly depending on whether we're in dev, test, or prod.
-
-
-## Troubleshooting
-
-Here are some common issues and how you can fix them:
-
-### Errors referencing South, or other Python errors:
-
-Since moving to Django 1.8, we use Django's built-in migration engine,
-and we no longer use South.
-If you're getting South errors, you probably have it installed globally.
-To solve this, from outside the virtual environment, run `pip uninstall south`.
-
-If you're getting other kinds of Python errors (for example, when running tox),
-you may even want to go as far as uninstalling all globally-installed
-Python packages: `pip freeze | grep -v "^-e" | xargs pip uninstall -y`.
-After doing that, you'll need to reinstall virtualenv:
-`pip install virtualenv virtualenvwrapper`.
