@@ -80,7 +80,7 @@ class ConferenceRegistrationForm(forms.Form):
     email = forms.EmailField(
         max_length=250,
         required=True,
-        widget=forms.TextInput(attrs=text_input_attrs)
+        widget=forms.EmailInput(attrs=text_input_attrs)
     )
     # sessions = forms.MultipleChoiceField(
     #     widget=CheckboxSelectMultiple,
