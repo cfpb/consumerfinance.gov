@@ -2,7 +2,7 @@
 -r postgres.txt
 django-debug-toolbar==1.7
 django-livereload==1.2
-django-sslserver==0.19
+django-sslserver==0.20
 tox-pip-extensions==1.1.0
 tox==2.9.1
 Werkzeug==0.10.4
