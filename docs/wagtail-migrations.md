@@ -4,7 +4,7 @@ Django data migrations with Wagtail can be challenging because programmatic edit
 
 ## Migrating StreamFields
 
-StreamFields do not follow a fixed structure, rather they're a freeform sequences of blocks. Making a change to a StreamField involves both creating a [Django schema migration](https://docs.djangoproject.com/en/1.8/topics/migrations/#workflow) and a custom [Django data migration](https://docs.djangoproject.com/en/1.8/topics/migrations/#data-migrations). The data migration needs to modify both the existing Wagtail pages that correspond to the changed model and all revisions of that page. It also needs to be able to manipulate the StreamField contents.
+StreamFields do not follow a fixed structure, rather they're a freeform sequences of blocks. Making a change to a StreamField involves both creating a [Django schema migration](https://docs.djangoproject.com/en/1.11/topics/migrations/#workflow) and a custom [Django data migration](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations). The data migration needs to modify both the existing Wagtail pages that correspond to the changed model and all revisions of that page. It also needs to be able to manipulate the StreamField contents.
 
 To this end, there are some utility functions in cfgov-refresh that make this easier. Using these utilities, a Django data migration that modifies a StreamField would use the following format:
 
