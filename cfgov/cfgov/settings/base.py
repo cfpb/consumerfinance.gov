@@ -548,11 +548,6 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'files.consumerfinance.gov',
                    's3.amazonaws.com',
-                   # Todo: Take the following URL out as it's only
-                   # for http access to chart data for CCT
-                   # Remove when build moves to https or when
-                   # cfpb-chart-builder#126 PR gets merged
-                   'files.consumerfinance.gov.s3.amazonaws.com',
                    'public.govdelivery.com',
                    'api.iperceptions.com')
 
