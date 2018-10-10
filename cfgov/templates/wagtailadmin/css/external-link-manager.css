@@ -1,0 +1,33 @@
+.external-links .results > h2 {
+	margin-top: 30px;
+}
+
+.external-links .results-message {
+	font-size: 1.17em;
+	font-weight: 400;
+	margin-top: 30px;
+}
+
+.external-links form  {
+    max-width: 600px;
+    display: flex;
+}
+
+.external-links form button {
+    font-size: .95em;
+    padding: 0 1.4em;
+    height: 3em;
+}
+
+.external-links .field {
+    flex: 2;
+    margin-right: 10px;
+}
+
+.external-links .iconfield.field-small .input:before {
+    top: .4em;
+}
+
+.external-links input {
+    padding: .5em 1.2em;
+}

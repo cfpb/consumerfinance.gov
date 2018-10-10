@@ -1,0 +1,61 @@
+{% extends "wagtailadmin/pages/listing/_list.html" %}
+
+{% load i18n %}
+{% load i18n wagtailadmin_tags %}
+
+{# Page listing include, customised for 'explore' mode #}
+
+{% block post_parent_page_headers %}
+    {% include "wagtailadmin/pages/listing/_table_headers_explore.html" %}
+{% endblock %}
+
+{% block page_title %}
+    <h2>
+        {% if page_perms.can_edit %}
+            <a href="{% url 'wagtailadmin_pages:edit' page.id %}" title="{% trans 'Edit this page' %}" target="_blank">
+                {{ page.get_admin_display_title }}
+            </a>
+        {% else %}
+            {{ page.get_admin_display_title }}
+        {% endif %}
+
+        {% include "wagtailadmin/pages/listing/_privacy_indicator.html" with page=page %}
+        {% include "wagtailadmin/pages/listing/_locked_indicator.html" with page=page %}
+    </h2>
+
+    <ul class="actions">
+        {% if page_perms.can_edit %}
+        <li>
+            <a href="{% url 'wagtailadmin_pages:edit' page.id %}" class="button button-small button-secondary" target="_blank">
+                {% trans "Edit" %}
+            </a>
+        </li>
+        {% endif %}
+        {% if page.has_unpublished_changes %}
+            <li>
+                <a href="{% url 'wagtailadmin_pages:view_draft' page.id %}" class="button button-small button-secondary" target="_blank">
+                    {% trans 'View Draft' %}
+                </a>
+            </li>
+        {% elif page.live %}
+            <li>
+                <a href="{{ page.url }}" class="button button-small button-secondary" target="_blank">
+                    {% trans 'View Live' %}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block page_navigation %}
+    {% include "wagtailadmin/pages/listing/_navigation_explore.html" %}
+{% endblock %}
+
+{% block no_results %}
+    {% url 'wagtailadmin_pages:add_subpage' parent_page.id as add_page_url%}
+    <tr><td colspan="3" class="no-results-message">
+        <p>{% trans "There are no matching pages." %}</p>
+    </td></tr>
+{% endblock %}
+
+

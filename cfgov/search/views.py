@@ -51,6 +51,8 @@ class SearchView(View):
             'reusable_texts': reusable_texts,
             'num_page_results': num_page_results,
             'num_snippet_results': num_snippet_results,
+            'single_page': num_page_results == 1,
+            'single_snippet': num_snippet_results == 1
         })
 
 
