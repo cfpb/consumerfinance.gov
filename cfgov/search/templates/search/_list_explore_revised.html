@@ -3,7 +3,8 @@
 {% load i18n %}
 {% load i18n wagtailadmin_tags %}
 
-{# Page listing include, customised for 'explore' mode #}
+{# Based on Wagtail's _list_explore.html template, updated to restrict 
+   main actions to edit and view and open main links in new tab. #}
 
 {% block post_parent_page_headers %}
     {% include "wagtailadmin/pages/listing/_table_headers_explore.html" %}
@@ -49,13 +50,6 @@
 
 {% block page_navigation %}
     {% include "wagtailadmin/pages/listing/_navigation_explore.html" %}
-{% endblock %}
-
-{% block no_results %}
-    {% url 'wagtailadmin_pages:add_subpage' parent_page.id as add_page_url%}
-    <tr><td colspan="3" class="no-results-message">
-        <p>{% trans "There are no matching pages." %}</p>
-    </td></tr>
 {% endblock %}
 
 

@@ -3,20 +3,20 @@
 }
 
 .external-links .results-message {
+	margin-top: 30px;
 	font-size: 1.17em;
 	font-weight: 400;
-	margin-top: 30px;
 }
 
 .external-links form  {
+	display: flex;
     max-width: 600px;
-    display: flex;
 }
 
 .external-links form button {
-    font-size: .95em;
-    padding: 0 1.4em;
     height: 3em;
+    padding: 0 1.4em;
+    font-size: .95em;
 }
 
 .external-links .field {
