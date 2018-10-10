@@ -101,8 +101,23 @@ class ConferenceNotifier(object):
 
     def __init__(self, govdelivery_code, capacity):
         exporter = ConferenceExporter(govdelivery_code)
+        form = ConferenceRegistrationForm
+        in_person_attendees = filter(
+            lambda a: (
+                a.details.get('attendee_type') == form.ATTENDEE_IN_PERSON
+            ),
+            exporter.registrants
+        )
+        virtual_attendees = filter(
+            lambda a: (
+                a.details.get('attendee_type') == form.ATTENDEE_VIRTUALLY
+            ),
+            exporter.registrants
+        )
 
         self.count = exporter.registrants.count()
+        self.count_in_person = len(in_person_attendees)
+        self.count_virtual = len(virtual_attendees)
         self.capacity = capacity
 
         if self.count:
@@ -112,8 +127,10 @@ class ConferenceNotifier(object):
         context = {
             'conference_name': self.conference_name,
             'count': self.count,
+            'count_in_person': self.count_in_person,
+            'count_virtual': self.count_virtual,
             'capacity': self.capacity,
-            'at_capacity': self.count >= self.capacity,
+            'at_capacity': self.count_in_person >= self.capacity,
         }
 
         subject = loader.render_to_string(self.subject_template_name, context)
