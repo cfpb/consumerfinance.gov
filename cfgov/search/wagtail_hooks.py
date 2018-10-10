@@ -22,5 +22,3 @@ def register_external_links_menu():
                     reverse('external-links'),
                     classnames='icon icon-link',
                     order=10000)
-
-

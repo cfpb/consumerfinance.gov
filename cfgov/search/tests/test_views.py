@@ -41,7 +41,10 @@ class ExternalLinksSearchViewTestCase(TestCase):
         response = self.client.post('/admin/external-links/', {
             'url': 'www.foobar.com'
         })
-        self.assertContains(response, "There are no matching pages or snippets")
+        self.assertContains(
+            response,
+            "There are no matching pages or snippets"
+        )
 
     def test_snippet_results(self):
         contact = Contact(body='<a href=https://www.foobar.com>...</a>')
@@ -49,7 +52,10 @@ class ExternalLinksSearchViewTestCase(TestCase):
         response = self.client.post('/admin/external-links/', {
             'url': 'www.foobar.com'
         })
-        self.assertContains(response, "There are 0 matching pages and 1 matching snippet")
+        self.assertContains(
+            response,
+            "There are 0 matching pages and 1 matching snippet"
+        )
 
     def test_page_results(self):
         page = BrowsePage(title='test', slug='test')
@@ -67,4 +73,7 @@ class ExternalLinksSearchViewTestCase(TestCase):
         response = self.client.post('/admin/external-links/', {
             'url': 'www.foobar.com'
         })
-        self.assertContains(response, "There is 1 matching page and 0 matching snippets")
+        self.assertContains(
+            response,
+            "There is 1 matching page and 0 matching snippets"
+        )
