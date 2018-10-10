@@ -38,7 +38,8 @@
                     {% trans 'View Draft' %}
                 </a>
             </li>
-        {% elif page.live %}
+        {% endif %}
+        {% if page.live %}
             <li>
                 <a href="{{ page.url }}" class="button button-small button-secondary" target="_blank">
                     {% trans 'View Live' %}
