@@ -545,6 +545,7 @@ CSP_FONT_SRC = ("'self'", "data:", "fast.fonts.net", "fonts.google.com", "fonts.
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to.
 CSP_CONNECT_SRC = ("'self'",
+                   '*.google-analytics.com',
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
                    'files.consumerfinance.gov',
