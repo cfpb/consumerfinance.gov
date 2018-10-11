@@ -384,6 +384,7 @@ AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_SECURE_URLS = True  # True = use https; False = use http
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_S3_ACCESS_KEY_ID = os.environ['AWS_S3_ACCESS_KEY_ID']
