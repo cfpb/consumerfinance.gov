@@ -138,22 +138,7 @@ class ConferenceRegistrationForm(forms.Form):
             govdelivery_code=self.govdelivery_code
         )
 
-        # TODO: In Django 1.9+, this logic can be optimized through use of
-        # Django's built-in Postgres JSONFields. This will require migrating
-        # the details field of the ConferenceRegistration model.
-        #
-        # attendees = ConferenceRegistrationForm.objects.filter(
-        #     govdelivery_code=self.govdelivery_code,
-        #     details__attendee_type=self.ATTENDEE_IN_PERSON
-        # )
-        in_person_attendees = filter(
-            lambda a: (
-                a.details.get('attendee_type') == self.ATTENDEE_IN_PERSON
-            ),
-            attendees
-        )
-
-        return len(in_person_attendees) >= self.capacity
+        return len(attendees.in_person()) >= self.capacity
 
     def save(self, commit=True):
         registration = ConferenceRegistration(

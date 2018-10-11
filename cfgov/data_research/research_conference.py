@@ -101,23 +101,10 @@ class ConferenceNotifier(object):
 
     def __init__(self, govdelivery_code, capacity):
         exporter = ConferenceExporter(govdelivery_code)
-        form = ConferenceRegistrationForm
-        in_person_attendees = filter(
-            lambda a: (
-                a.details.get('attendee_type') == form.ATTENDEE_IN_PERSON
-            ),
-            exporter.registrants
-        )
-        virtual_attendees = filter(
-            lambda a: (
-                a.details.get('attendee_type') == form.ATTENDEE_VIRTUALLY
-            ),
-            exporter.registrants
-        )
 
         self.count = exporter.registrants.count()
-        self.count_in_person = len(in_person_attendees)
-        self.count_virtual = len(virtual_attendees)
+        self.count_in_person = len(exporter.registrants.in_person())
+        self.count_virtual = len(exporter.registrants.virtual())
         self.capacity = capacity
 
         if self.count:
