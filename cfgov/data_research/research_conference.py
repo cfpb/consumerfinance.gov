@@ -103,6 +103,8 @@ class ConferenceNotifier(object):
         exporter = ConferenceExporter(govdelivery_code)
 
         self.count = exporter.registrants.count()
+        self.count_in_person = len(exporter.registrants.in_person())
+        self.count_virtual = len(exporter.registrants.virtual())
         self.capacity = capacity
 
         if self.count:
@@ -112,8 +114,10 @@ class ConferenceNotifier(object):
         context = {
             'conference_name': self.conference_name,
             'count': self.count,
+            'count_in_person': self.count_in_person,
+            'count_virtual': self.count_virtual,
             'capacity': self.capacity,
-            'at_capacity': self.count >= self.capacity,
+            'at_capacity': self.count_in_person >= self.capacity,
         }
 
         subject = loader.render_to_string(self.subject_template_name, context)
