@@ -1,8 +1,11 @@
 from __future__ import unicode_literals
+
+import logging
 import re
 
 from regulations3k.models import Part, Section
-from regulations3k.scripts.ecfr_importer import LEGACY_PARTS
+from regulations3k.scripts.ecfr_importer import PART_WHITELIST
+
 
 REG_BASE = '/policy-compliance/rulemaking/regulations/{}/'
 SECTION_RE = re.compile('(?:\N{SECTION SIGN}|Section|12 CFR)\W+([^\s]+)')
@@ -10,17 +13,17 @@ PARTS_RE = re.compile(
     r'(?P<part>\d{4})[.-](?P<section>[0-9A-Z]+)(?P<ids>\([a-zA-Z0-9)(]+)?')
 ID_RE = re.compile(r'\(([a-zA-Z0-9]{1,4})\)')
 
+logger = logging.getLogger(__name__)
+
 
 def get_url(section_reference):
     if not PARTS_RE.match(section_reference):
         return
     parts = PARTS_RE.match(section_reference).groupdict()
     part = parts.get('part')
-    if part not in LEGACY_PARTS:
+    if part not in PART_WHITELIST:
         return
     part_url = REG_BASE.format(part)
-    if not parts.get('section'):
-        return part_url
     section_url = "{}{}/".format(part_url, parts.get('section'))
     if not parts.get('ids'):
         return section_url
@@ -54,21 +57,20 @@ def insert_links(reg=None):
     else:
         parts = Part.objects.filter(part_number=reg)
     live_versions = [part.effective_version for part in parts]
-    if not live_versions:
-        return
     live_sections = Section.objects.filter(
         subpart__version__in=live_versions).exclude(
         subpart__title__contains='Supplement I')
     for section in live_sections:
         if 'data-linktag' in section.contents:
-            print("Section {} already has links applied".format(section))
+            logger.info("Section {} already has links applied".format(section))
             continue
         linked_regdown = insert_section_links(section.contents)
         if not linked_regdown:
-            print('No section references found in section {}'.format(section))
+            logger.info(
+                'No section references found in section {}'.format(section))
             continue
         else:
-            print("Links added to section {}".format(section))
+            logger.info("Links added to section {}".format(section))
             section.contents = linked_regdown
             section.save()
 
