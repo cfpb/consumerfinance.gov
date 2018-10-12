@@ -33,8 +33,8 @@ class ConferenceRegistrationForm(forms.Form):
     If save(commit=False) is used, a model instance is created but not
     persisted to the database, and GovDelivery subscription is skipped.
     """
-    ATTENDEE_IN_PERSON = 'In person'
-    ATTENDEE_VIRTUALLY = 'Virtually'
+    ATTENDEE_IN_PERSON = ConferenceRegistration.IN_PERSON
+    ATTENDEE_VIRTUALLY = ConferenceRegistration.VIRTUAL
     ATTENDEE_TYPES = tuple((t, t) for t in (
         ATTENDEE_IN_PERSON,
         ATTENDEE_VIRTUALLY,
