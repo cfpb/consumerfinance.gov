@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 import unittest
+
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 from mock import patch
 from model_mommy import mommy
