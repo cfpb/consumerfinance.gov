@@ -171,6 +171,8 @@ TEMPLATES = [
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
 
+                'flags.jinja2tags.flags',
+
                 'core.jinja2tags.filters',
                 'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.datetimes_extension',
