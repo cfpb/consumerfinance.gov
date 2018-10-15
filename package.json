@@ -85,7 +85,7 @@
     "psi": "3.1.0",
     "sauce-connect-tunnel": "0.2.1",
     "selenium-webdriver": "4.0.0-alpha.1",
-    "snyk": "1.103.1",
+    "snyk": "1.103.4",
     "through2": "2.0.3",
     "wcag": "0.3.0"
   },
