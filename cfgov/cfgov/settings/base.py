@@ -112,7 +112,8 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 
     'core.middleware.ParseLinksMiddleware',
-    'core.middleware.DownstreamCacheControlMiddleware'
+    'core.middleware.DownstreamCacheControlMiddleware',
+    'flags.middleware.FlagConditionsMiddleware',
 )
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
