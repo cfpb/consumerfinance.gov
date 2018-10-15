@@ -1,0 +1,4 @@
+{% set url = page_link.url if page_link else external_link | default('#') %}
+{% if link_text %}
+	<a class="m-list_link" href="{{ url }}">{{ link_text }}</a>
+{% endif %}

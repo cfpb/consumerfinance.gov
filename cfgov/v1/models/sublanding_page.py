@@ -7,6 +7,7 @@ from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailsearch import index
 
+from ask_cfpb.models import blocks as ask_blocks
 from jobmanager.models import JobListingList
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
@@ -37,6 +38,7 @@ class SublandingPage(CFGOVPage):
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
         ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
+        ('ask_block', ask_blocks.AskBlock()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),

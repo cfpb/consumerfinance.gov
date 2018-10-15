@@ -1,0 +1,50 @@
+{% if value.anchor_link -%}
+    {% set anchor_id = 'id=' + value.anchor_link | safe %}
+{% else %}
+    {% set anchor_id = '' %}
+{% endif %}
+
+<div class="o-info-unit-group rich-text" 
+	 {{ anchor_id }}>
+    {% if value.heading %}
+        <{{ value.heading.level }}>
+            {{ value.heading.text }}
+        </{{ value.heading.level }}>
+    {% endif %}
+    {% if value.intro %}
+        {{ value.intro | safe }}
+    {% endif %}
+    <div class="content-l">
+       {% for col in value.columns %}
+        <div class="content-l_col content-l_col-1-2">
+            {% if col.block_type == 'ask_link_column' or col.block_type == 'ask_text_column' %}
+                {% if col.value.heading.text %}
+                    <{{ col.value.heading.level }}>
+                        {{ col.value.heading.text }}
+                    </{{ col.value.heading.level }}>
+                {% endif %}
+            {% endif %}
+        	{% if col.block_type == 'ask_link_column' %}
+        		<ul class="m-list m-list__links">
+            		{% for item in col.value.links %}
+            	 		<li class="m-list_item">
+            	 			{% include_block item with context %}
+            	 		</li>
+            	 	{% endfor %}
+            	 </ul>
+        	{% elif col.block_type == 'ask_text_column' %}
+        		<div class="m-info-unit">
+                    <div class="m-info-unit_content">
+                    	{% for item in col.value.links %}
+                    		{% include_block item with context %}
+	                	{% endfor %}
+	                </div>
+	            </div>
+            {% elif col.block_type == 'info_unit_column' %}
+                {%- from 'molecules/info-unit-2.html' import info_unit with context %}
+                {{- info_unit(col.value) }}
+        	{% endif %}        
+        </div>
+        {% endfor %}
+    </div>
+</div>

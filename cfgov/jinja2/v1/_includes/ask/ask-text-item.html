@@ -1,0 +1,22 @@
+{% set url = page_link.url if page_link else external_link | default('/') %}
+{% if heading and heading_level %}
+	{% if heading_level == 'b' %}
+	<p>
+	{% endif %}
+    <{{ heading_level }}>
+        <a href="{{ url }}">
+            {{ heading }}
+        </a>
+    </{{ heading_level }}>
+    {% if heading_level == 'b' %}
+	</p>
+	{% endif %}
+{% endif %}
+<p>
+{% if body %}
+    {{ body | safe }}
+{% endif %}
+{% if link_text %}
+    <a href="{{url}}">{{ link_text | safe }}</a>
+{% endif %}
+</p>
