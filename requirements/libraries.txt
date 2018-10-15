@@ -1,5 +1,5 @@
 address==0.1.1
-beautifulsoup4==4.6.3
+beautifulsoup4==4.6.0
 boto3==1.7.80
 dj-database-url==0.5.0
 djangorestframework==3.6.4
@@ -11,14 +11,10 @@ django-localflavor==1.6.2
 # django-mptt is required by teachers-digital-platform
 django-mptt==0.9.0
 django-overextends==0.4.3
-# django-storages 1.6.6 drops support for Django 1.8.
-# https://github.com/jschneier/django-storages/blob/master/CHANGELOG.rst
-# Versions >1.5.0,<=1.6.5 fail due to this issue:
-# https://github.com/jschneier/django-storages/issues/382
-django-storages==1.5.0
+django-storages==1.7.1
 django-treebeard==3.0
 django-watchman==0.15.0
-edgegrid-python==1.1.1
+edgegrid-python==1.0.10
 elasticsearch==2.4.1
 govdelivery==1.2
 Jinja2==2.7.3
@@ -42,4 +38,4 @@ unipath>=1.1,<=2.0
 wagtail-flags==3.0.1
 wagtail-inventory==0.5.1
 wagtail-sharing==0.7
-wagtail-treemodeladmin==1.0.3
+wagtail-treemodeladmin==1.0.4
