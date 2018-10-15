@@ -16,7 +16,7 @@ from ask_cfpb.models.django import Answer
 
 class AskItemTest(unittest.TestCase):
     @patch('ask_cfpb.models.django.Answer.objects')
-    def test_success(self, mock_answer):
+    def test_clean_with_valid_answer_id(self, mock_answer):
         mock_answer.get.return_value = True
         block = AskItem()
         value = block.to_python({'answer_id': 1234})
@@ -28,7 +28,7 @@ class AskItemTest(unittest.TestCase):
             )
 
     @patch('ask_cfpb.models.django.Answer.objects')
-    def test_failure(self, mock_answer):
+    def test_clean_with_invalid_answer_id(self, mock_answer):
         mock_answer.get.side_effect = ObjectDoesNotExist
         block = AskItem()
         value = block.to_python({'answer_id': 1234})
@@ -48,7 +48,7 @@ class AskLinkItemTest(unittest.TestCase):
         )
 
     @patch('ask_cfpb.models.django.Answer.objects')
-    def test_context_with_answer(self, mock_answer):
+    def test_context_with_valid_answer(self, mock_answer):
         mock_answer.get.return_value = self.answer
         block = AskLinkItem()
         value = block.to_python({
@@ -65,7 +65,7 @@ class AskLinkItemTest(unittest.TestCase):
         )
 
     @patch('ask_cfpb.models.django.Answer.objects')
-    def test_context_with_answer_and_overridden_text(self, mock_answer):
+    def test_context_with_valid_answer_and_overridden_text(self, mock_answer):
         mock_answer.get.return_value = self.answer
         block = AskLinkItem()
         link_text = 'Alternate text'
@@ -84,7 +84,7 @@ class AskLinkItemTest(unittest.TestCase):
         )
 
     @patch('ask_cfpb.models.django.Answer.objects')
-    def test_context_without_answer(self, mock_answer):
+    def test_context_with_invalid_answer_id(self, mock_answer):
         mock_answer.get.return_value = None
         block = AskLinkItem()
         value = block.to_python({'answer_id': 1234})
@@ -103,7 +103,7 @@ class AskTextItemTest(unittest.TestCase):
         )
 
     @patch('ask_cfpb.models.django.Answer.objects')
-    def test_context_with_answer(self, mock_answer):
+    def test_context_with_valid_answer(self, mock_answer):
         mock_answer.get.return_value = self.answer
         block = AskTextItem()
         block_obj = {
@@ -121,7 +121,7 @@ class AskTextItemTest(unittest.TestCase):
         self.assertEqual(ctx['link_text'], block_obj['link_text'])
 
     @patch('ask_cfpb.models.django.Answer.objects')
-    def test_context_with_answer_and_overridden_heading(self, mock_answer):
+    def test_context_with_valid_answer_and_heading_override(self, mock_answer):
         mock_answer.get.return_value = self.answer
         block = AskTextItem()
         block_obj = {
@@ -140,7 +140,7 @@ class AskTextItemTest(unittest.TestCase):
         self.assertEqual(ctx['link_text'], block_obj['link_text'])
 
     @patch('ask_cfpb.models.django.Answer.objects')
-    def test_context_without_answer(self, mock_answer):
+    def test_context_with_invalid_answer_id(self, mock_answer):
         mock_answer.get.return_value = None
         block = AskTextItem()
         value = block.to_python({'answer_id': 1234})
