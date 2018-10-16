@@ -26,7 +26,7 @@
         <br>
 
         {% if request.POST %}
-        
+
             <h2>Number of page results: {{ num_page_results }}</h2>
             {% include "wagtailadmin/pages/listing/_list_explore.html" with show_parent=1 allow_navigation=0 %}
 
@@ -43,13 +43,17 @@
                     <tr>
                         <td class="title" valign="top">
                             <h2>
-                                <a href="{% url 'wagtailsnippets:edit' 'v1' 'contact' snippet.pk %}" target="_blank">
+                                <a href="{% url 'wagtailsnippets:edit' 'v1' 'contact' snippet.pk %}"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
                                     {{ snippet }}
                                 </a>
                             </h2>
                         </td>
                         <td>
-                            <a href="{% url 'wagtailsnippets:list' 'v1' 'contact' %}" target="_blank">
+                            <a href="{% url 'wagtailsnippets:list' 'v1' 'contact' %}"
+                               target="_blank"
+                               rel="noopener noreferrer">
                                 Contacts
                             </a>
                         </td>
@@ -59,13 +63,17 @@
                     <tr>
                         <td valign="top"class="title" valign="top">
                             <h2>
-                                <a href="{% url 'v1_resource_modeladmin_edit' snippet.pk %}" target="_blank">
+                                <a href="{% url 'v1_resource_modeladmin_edit' snippet.pk %}"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
                                     {{ snippet }}
                                 </a>
                             </h2>
                         </td>
                         <td>
-                            <a href="{% url 'v1_resource_modeladmin_index' %}" target="_blank">
+                            <a href="{% url 'v1_resource_modeladmin_index' %}"
+                               target="_blank"
+                               rel="noopener noreferrer">
                                 Resources
                             </a>
                         </td>
@@ -75,13 +83,17 @@
                     <tr>
                         <td class="title" valign="top">
                             <h2>
-                                <a href="{% url 'wagtailsnippets:edit' 'v1' 'reusabletext' snippet.pk %}" target="_blank">
+                                <a href="{% url 'wagtailsnippets:edit' 'v1' 'reusabletext' snippet.pk %}"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
                                     {{ snippet }}
                                 </a>
                             </h2>
                         </td>
                         <td valign="top">
-                            <a href="{% url 'wagtailsnippets:list' 'v1' 'reusabletext' %}" target="_blank">
+                            <a href="{% url 'wagtailsnippets:list' 'v1' 'reusabletext' %}"
+                               target="_blank"
+                               rel="noopener noreferrer">
                                 Reusable Texts
                             </a>
                         </td>
