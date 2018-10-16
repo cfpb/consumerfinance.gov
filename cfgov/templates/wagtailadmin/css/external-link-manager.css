@@ -8,6 +8,10 @@
 	font-weight: 400;
 }
 
+.external-links .results-note {
+	margin-bottom: 45px;
+}
+
 .external-links form  {
 	display: flex;
     max-width: 600px;
@@ -30,4 +34,8 @@
 
 .external-links input {
     padding: .5em 1.2em;
+}
+
+table.listing {
+	margin-bottom: 1em;
 }
