@@ -63,58 +63,71 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for snippet in contacts %}
-                            <tr>
-                                <td class="title" valign="top">
-                                    <h2>
-                                        <a href="{% url 'wagtailsnippets:edit' 'v1' 'contact' snippet.pk %}" target="_blank">
-                                            {{ snippet }}
-                                        </a>
-                                    </h2>
-                                </td>
-                                <td>
-                                    <a href="{% url 'wagtailsnippets:list' 'v1' 'contact' %}" target="_blank">
-                                        Contacts
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            {% for snippet in resources %}
-                            <tr>
-                                <td valign="top"class="title" valign="top">
-                                    <h2>
-                                        <a href="{% url 'v1_resource_modeladmin_edit' snippet.pk %}" target="_blank">
-                                            {{ snippet }}
-                                        </a>
-                                    </h2>
-                                </td>
-                                <td>
-                                    <a href="{% url 'v1_resource_modeladmin_index' %}" target="_blank">
-                                        Resources
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            {% for snippet in reusable_texts %}
-                            <tr>
-                                <td class="title" valign="top">
-                                    <h2>
-                                        <a href="{% url 'wagtailsnippets:edit' 'v1' 'reusabletext' snippet.pk %}" target="_blank">
-                                            {{ snippet }}
-                                        </a>
-                                    </h2>
-                                </td>
-                                <td valign="top">
-                                    <a href="{% url 'wagtailsnippets:list' 'v1' 'reusabletext' %}" target="_blank">
-                                        Reusable Texts
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
+                    {% for snippet in contacts %}
+                    <tr>
+                        <td class="title" valign="top">
+                            <h2>
+                                <a href="{% url 'wagtailsnippets:edit' 'v1' 'contact' snippet.pk %}"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    {{ snippet }}
+                                </a>
+                            </h2>
+                        </td>
+                        <td>
+                            <a href="{% url 'wagtailsnippets:list' 'v1' 'contact' %}"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                Contacts
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% for snippet in resources %}
+                    <tr>
+                        <td valign="top"class="title" valign="top">
+                            <h2>
+                                <a href="{% url 'v1_resource_modeladmin_edit' snippet.pk %}"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    {{ snippet }}
+                                </a>
+                            </h2>
+                        </td>
+                        <td>
+                            <a href="{% url 'v1_resource_modeladmin_index' %}"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                Resources
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% for snippet in reusable_texts %}
+                    <tr>
+                        <td class="title" valign="top">
+                            <h2>
+                                <a href="{% url 'wagtailsnippets:edit' 'v1' 'reusabletext' snippet.pk %}"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    {{ snippet }}
+                                </a>
+                            </h2>
+                        </td>
+                        <td valign="top">
+                            <a href="{% url 'wagtailsnippets:list' 'v1' 'reusabletext' %}"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                Reusable Texts
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
                     </table>
                 {% endif%}
             
+
         {% endif %}
     </div>
     {% endblock %}
