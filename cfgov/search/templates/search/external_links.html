@@ -41,7 +41,7 @@
             <div class="results">
                 <p class="results-message">
                     {% if num_page_results or num_snippet_results %}
-                        There {{single_page|yesno:"is,are"}} {{num_page_results}} matching {{single_page|yesno:"page,pages"}} and {{num_snippet_results}} matching {{single_snippet|yesno:"snippet,snippets"}}.
+                        There {{ num_page_results|pluralize:"is,are" }} {{num_page_results}} matching page{{ num_page_results|pluralize }} and {{num_snippet_results}} matching snippet{{ num_snippet_results|pluralize }}.
                     {% else %}
                         There are no matching pages or snippets.
                     {% endif %}
@@ -50,6 +50,7 @@
                 {% if num_page_results %}
                     <h2>Page results</h2>
                     {% include "./_list_explore_revised.html" with show_parent=1 allow_navigation=0 %}
+                    <p>Pages may appear in the results multiple times if the link exists in multiple page sections, such as the body and the sidebar.</p>
                 {% endif %}
 
                 {% if num_snippet_results %}

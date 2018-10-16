@@ -13,7 +13,10 @@
 {% block page_title %}
     <h2>
         {% if page_perms.can_edit %}
-            <a href="{% url 'wagtailadmin_pages:edit' page.id %}" title="{% trans 'Edit this page' %}" target="_blank">
+            <a href="{% url 'wagtailadmin_pages:edit' page.id %}" 
+               title="{% trans 'Edit this page' %}" 
+               target="_blank"
+               rel="noopener noreferrer">
                 {{ page.get_admin_display_title }}
             </a>
         {% else %}
@@ -27,21 +30,30 @@
     <ul class="actions">
         {% if page_perms.can_edit %}
         <li>
-            <a href="{% url 'wagtailadmin_pages:edit' page.id %}" class="button button-small button-secondary" target="_blank">
+            <a href="{% url 'wagtailadmin_pages:edit' page.id %}" 
+               class="button button-small button-secondary"
+               target="_blank"
+               rel="noopener noreferrer">
                 {% trans "Edit" %}
             </a>
         </li>
         {% endif %}
         {% if page.has_unpublished_changes %}
             <li>
-                <a href="{% url 'wagtailadmin_pages:view_draft' page.id %}" class="button button-small button-secondary" target="_blank">
+                <a href="{% url 'wagtailadmin_pages:view_draft' page.id %}" 
+                   class="button button-small button-secondary" 
+                   target="_blank"
+                   rel="noopener noreferrer">
                     {% trans 'View Draft' %}
                 </a>
             </li>
         {% endif %}
         {% if page.live %}
             <li>
-                <a href="{{ page.url }}" class="button button-small button-secondary" target="_blank">
+                <a href="{{ page.url }}" 
+                   class="button button-small button-secondary" 
+                   target="_blank"
+                   rel="noopener noreferrer">
                     {% trans 'View Live' %}
                 </a>
             </li>
