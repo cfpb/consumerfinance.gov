@@ -1,107 +1,133 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n %}
+{% load staticfiles i18n %}
 {% block titletag %}{% trans "External Links Management" %}{% endblock %}
 
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/external-link-manager.css' %}" type="text/css" />
+{% endblock %}
+
 {% block content %}
-
-    <div class="nice-padding">
-        <h2>External links</h2>
-
-        <div class="help-block help-info">
-            <p>Enter an external link in the input field to see a list of pages that contain the URL.</p>
+    {% block header %}
+    <header class="nice-padding hasform">
+        <div class="row header-title">
+            <div class="left">
+                <div class="col">
+                    {% block h1 %}<h1 class="icon icon-link">
+                        External Links Search<span></span></h1>
+                    {% endblock %}
+                </div>
+            </div>
         </div>
+    </header>
+    {% endblock %}
+
+    {% block content_main %}
+    <div class="nice-padding external-links">
+        <p class="external-links-intro">Enter an external URL to see where it occurs on our site. If a link appears within more than one section of a given page, such as the body and sidebar, the results will list that page multiple times--once for each occurrence.</p>
         <form method="post">
             {% csrf_token %}
-            <ul class="fields">
-                <li>
-            <div class="field url_field url_input">
-            <div class="input">
-            {{ form.url }}
+            <div class="field iconfield field-small">
+                <div class="input icon-search">
+                    {{ form.url }}
+                </div>
             </div>
-            </div>
-            </li>
-        </ul>
-        <button type="submit" class="button">Search</button>
+            <button type="submit" class="button">Search</button>
         </form>
-        <br>
 
         {% if request.POST %}
+            <div class="results">
+                <p class="results-message">
+                    {% if num_page_results or num_snippet_results %}
+                        There {{ num_page_results|pluralize:"is,are" }} {{num_page_results}} matching page{{ num_page_results|pluralize }} and {{num_snippet_results}} matching snippet{{ num_snippet_results|pluralize }}.
+                    {% else %}
+                        There are no matching pages or snippets.
+                    {% endif %}
+                </p>
+            
+                {% if num_page_results %}
+                    <h2 class="external-links-page-results">Page results</h2>
+                    {% include "./_list_explore_revised.html" with show_parent=1 allow_navigation=0 %}
+                    
+                {% endif %}
 
-            <h2>Number of page results: {{ num_page_results }}</h2>
-            {% include "wagtailadmin/pages/listing/_list_explore.html" with show_parent=1 allow_navigation=0 %}
+                {% if num_snippet_results %}
+                    <h2 class="external-links-snippet-results">Snippet results</h2>
+                    <table class="listing">
+                        <thead>
+                            <tr class="table-headers">
+                                <th>Title</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for snippet in contacts %}
+                            <tr>
+                                <td class="title" valign="top">
+                                    <h2>
+                                        <a href="{% url 'wagtailsnippets:edit' 'v1' 'contact' snippet.pk %}"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            {{ snippet }}
+                                        </a>
+                                    </h2>
+                                </td>
+                                <td>
+                                    <a href="{% url 'wagtailsnippets:list' 'v1' 'contact' %}"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        Contacts
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for snippet in resources %}
+                            <tr>
+                                <td valign="top"class="title" valign="top">
+                                    <h2>
+                                        <a href="{% url 'v1_resource_modeladmin_edit' snippet.pk %}"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            {{ snippet }}
+                                        </a>
+                                    </h2>
+                                </td>
+                                <td>
+                                    <a href="{% url 'v1_resource_modeladmin_index' %}"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        Resources
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for snippet in reusable_texts %}
+                            <tr>
+                                <td class="title" valign="top">
+                                    <h2>
+                                        <a href="{% url 'wagtailsnippets:edit' 'v1' 'reusabletext' snippet.pk %}"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            {{ snippet }}
+                                        </a>
+                                    </h2>
+                                </td>
+                                <td valign="top">
+                                    <a href="{% url 'wagtailsnippets:list' 'v1' 'reusabletext' %}"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        Reusable Texts
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif%}
+            
 
-            <h2>Number of snippet results: {{ num_snippet_results }}</h2>
-            <table class="listing">
-                <thead>
-                    <tr class="table-headers">
-                        <th>Title</th>
-                        <th>Type</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for snippet in contacts %}
-                    <tr>
-                        <td class="title" valign="top">
-                            <h2>
-                                <a href="{% url 'wagtailsnippets:edit' 'v1' 'contact' snippet.pk %}"
-                                   target="_blank"
-                                   rel="noopener noreferrer">
-                                    {{ snippet }}
-                                </a>
-                            </h2>
-                        </td>
-                        <td>
-                            <a href="{% url 'wagtailsnippets:list' 'v1' 'contact' %}"
-                               target="_blank"
-                               rel="noopener noreferrer">
-                                Contacts
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    {% for snippet in resources %}
-                    <tr>
-                        <td valign="top"class="title" valign="top">
-                            <h2>
-                                <a href="{% url 'v1_resource_modeladmin_edit' snippet.pk %}"
-                                   target="_blank"
-                                   rel="noopener noreferrer">
-                                    {{ snippet }}
-                                </a>
-                            </h2>
-                        </td>
-                        <td>
-                            <a href="{% url 'v1_resource_modeladmin_index' %}"
-                               target="_blank"
-                               rel="noopener noreferrer">
-                                Resources
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    {% for snippet in reusable_texts %}
-                    <tr>
-                        <td class="title" valign="top">
-                            <h2>
-                                <a href="{% url 'wagtailsnippets:edit' 'v1' 'reusabletext' snippet.pk %}"
-                                   target="_blank"
-                                   rel="noopener noreferrer">
-                                    {{ snippet }}
-                                </a>
-                            </h2>
-                        </td>
-                        <td valign="top">
-                            <a href="{% url 'wagtailsnippets:list' 'v1' 'reusabletext' %}"
-                               target="_blank"
-                               rel="noopener noreferrer">
-                                Reusable Texts
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         {% endif %}
-
-
+    </div>
+    {% endblock %}
 {% endblock %}

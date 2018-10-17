@@ -18,7 +18,7 @@ def register_external_links_url():
 
 @hooks.register('register_admin_menu_item')
 def register_external_links_menu():
-    return MenuItem('External Links',
+    return MenuItem('External links',
                     reverse('external-links'),
-                    classnames='icon icon-search',
+                    classnames='icon icon-link',
                     order=10000)
