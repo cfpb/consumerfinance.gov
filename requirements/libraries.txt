@@ -35,6 +35,7 @@ sha3==0.2.1
 six==1.11.0
 unicodecsv==0.14.1
 unipath>=1.1,<=2.0
+urllib3==1.23
 wagtail-flags==3.0.1
 wagtail-inventory==0.5.1
 wagtail-sharing==0.7
