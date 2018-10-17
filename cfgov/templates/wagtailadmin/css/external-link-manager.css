@@ -1,15 +1,6 @@
-.external-links .results > h2 {
-	margin-top: 30px;
-}
-
-.external-links .results-message {
-	margin-top: 30px;
-	font-size: 1.17em;
-	font-weight: 400;
-}
-
-.external-links .results-note {
-	margin-bottom: 45px;
+.external-links-intro {
+	max-width: 670px;
+	margin-bottom: 15px;
 }
 
 .external-links form  {
@@ -36,6 +27,16 @@
     padding: .5em 1.2em;
 }
 
-table.listing {
-	margin-bottom: 1em;
+.external-links .results-message {
+	margin-top: 30px;
+	font-size: 1.17em;
+	font-weight: 400;
+}
+
+.external-links-page-results {
+	margin-top: 45px;
+}
+
+.external-links-snippet-results {
+	margin-top: 60px;
 }

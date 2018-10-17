@@ -25,8 +25,7 @@
 
     {% block content_main %}
     <div class="nice-padding external-links">
-        <p>Enter an external link in the input field to see a list of pages that contain the URL.</p>
-    
+        <p class="external-links-intro">Enter an external URL to see where it occurs on our site. If a link appears within more than one section of a given page, such as the body and sidebar, the results will list that page multiple times--once for each occurrence.</p>
         <form method="post">
             {% csrf_token %}
             <div class="field iconfield field-small">
@@ -48,13 +47,13 @@
                 </p>
             
                 {% if num_page_results %}
-                    <h2>Page results</h2>
+                    <h2 class="external-links-page-results">Page results</h2>
                     {% include "./_list_explore_revised.html" with show_parent=1 allow_navigation=0 %}
-                    <p class="results-note"><b>Note:</b> Pages may appear in the results multiple times if the link is found in multiple page sections, such as the body and the sidebar.</p>
+                    
                 {% endif %}
 
                 {% if num_snippet_results %}
-                    <h2>Snippet results</h2>
+                    <h2 class="external-links-snippet-results">Snippet results</h2>
                     <table class="listing">
                         <thead>
                             <tr class="table-headers">
