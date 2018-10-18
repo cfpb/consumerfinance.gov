@@ -8,7 +8,7 @@ from wagtail.wagtailimages.tests.utils import get_test_image_file
 import boto3
 import moto
 
-from v1.s3utils import http_s3_url_prefix, https_s3_url_prefix
+from v1.s3utils import https_s3_url_prefix
 
 
 @override_settings(
@@ -51,23 +51,12 @@ class S3UtilsTestCase(TestCase):
 
 
 class S3UrlPrefixTest(TestCase):
-    def test_http_s3_url_prefix(self):
-        with self.settings(AWS_STORAGE_BUCKET_NAME='foo.bucket'):
-            self.assertEqual(
-                http_s3_url_prefix(),
-                'http://foo.bucket/'
-            )
-
-    def test_http_s3_url_prefix_no_setting(self):
-        with self.settings(AWS_STORAGE_BUCKET_NAME=None):
-            with self.assertRaises(RuntimeError):
-                http_s3_url_prefix()
 
     def test_https_s3_url_prefix(self):
         with self.settings(AWS_STORAGE_BUCKET_NAME='foo.bucket'):
             self.assertEqual(
                 https_s3_url_prefix(),
-                'https://s3.amazonaws.com/foo.bucket/'
+                'https://foo.bucket/'
             )
 
     def test_https_s3_url_prefix_no_setting(self):
