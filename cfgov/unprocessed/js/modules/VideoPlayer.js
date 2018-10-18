@@ -94,6 +94,7 @@ VideoPlayer.init = function init( selector ) {
 
   _attachIFrame();
 
+  /* eslint-disable consistent-return */
   return videoPlayer;
 };
 
