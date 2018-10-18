@@ -359,7 +359,7 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'Data not final.')
         self.assertContains(
             response,
-            'The most recent data available in each visualization are for April 2016'
+            'The most recent data available in this visualization are for April 2016'
         )
         self.assertContains(response, 'January 2018')
 
