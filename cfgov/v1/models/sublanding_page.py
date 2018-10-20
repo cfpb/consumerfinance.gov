@@ -83,6 +83,8 @@ class SublandingPage(CFGOVPage):
         index.SearchField('header')
     ]
 
+    is_searchable = True
+
     def get_browsefilterable_posts(self, limit):
         filter_pages = [p.specific
                         for p in self.get_appropriate_descendants()

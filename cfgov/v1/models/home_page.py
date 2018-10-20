@@ -48,6 +48,8 @@ class HomePage(CFGOVPage):
 
     search_fields = CFGOVPage.search_fields + [index.SearchField('header')]
 
+    is_searchable = True
+
     def get_category_name(self, category_icon_name):
         cats = dict(ref.limited_categories)
         return cats[str(category_icon_name)]

@@ -88,6 +88,9 @@ class CFGOVPage(Page):
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
+    # This is used to limit the search available in /admin/external-links
+    is_searchable = False
+
     objects = CFGOVPageManager()
 
     search_fields = Page.search_fields + [

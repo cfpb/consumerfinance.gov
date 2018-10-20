@@ -30,6 +30,8 @@ class BlogPage(AbstractFilterPage):
         index.SearchField('content')
     ]
 
+    is_searchable = True
+
 
 class LegacyBlogPage(AbstractFilterPage):
     content = StreamField([
@@ -47,3 +49,5 @@ class LegacyBlogPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('content')
     ]
+
+    is_searchable = True

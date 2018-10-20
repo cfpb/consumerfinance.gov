@@ -360,6 +360,7 @@ class MortgagePerformancePage(BrowsePage):
 
     objects = PageManager()
     template = 'browse-basic/index.html'
+    is_searchable = False
 
     def get_mortgage_meta(self):
         meta_names = ['sampling_dates', 'download_files']

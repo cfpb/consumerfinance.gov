@@ -28,7 +28,8 @@ class SearchView(View):
         pages = []
 
         for cls in get_page_models():
-            pages += list(cls.objects.search(url))
+            if hasattr(cls, 'is_searchable') and cls.is_searchable:
+                pages += list(cls.objects.search(url))
         pages = sorted(pages, key=lambda k: k.title)
 
         contacts = list(

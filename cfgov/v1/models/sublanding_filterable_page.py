@@ -48,6 +48,8 @@ class SublandingFilterablePage(FilterableFeedPageMixin,
         index.SearchField('header')
     ]
 
+    is_searchable = True
+
 
 class ActivityLogPage(SublandingFilterablePage):
     template = 'activity-log/index.html'
@@ -56,3 +58,5 @@ class ActivityLogPage(SublandingFilterablePage):
     filterable_per_page_limit = 100
 
     objects = PageManager()
+
+    is_searchable = False

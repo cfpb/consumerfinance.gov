@@ -201,6 +201,8 @@ class AnswerLandingPage(LandingPage):
     ])
     objects = CFGOVPageManager()
 
+    is_searchable = False
+
     def get_context(self, request, *args, **kwargs):
         from ask_cfpb.models import Category, Audience
         context = super(AnswerLandingPage, self).get_context(request)
@@ -569,6 +571,8 @@ class AnswerPage(CFGOVPage):
         index.SearchField('answer'),
         index.SearchField('snippet')
     ]
+
+    is_searchable = True
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),

@@ -79,6 +79,8 @@ class BrowsePage(CFGOVPage):
         index.SearchField('header')
     ]
 
+    is_searchable = True
+
     @property
     def page_js(self):
         return (

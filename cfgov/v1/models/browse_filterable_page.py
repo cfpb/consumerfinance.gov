@@ -55,6 +55,8 @@ class BrowseFilterablePage(FilterableFeedPageMixin,
         index.SearchField('header')
     ]
 
+    is_searchable = True
+
     @property
     def page_js(self):
         return (
@@ -68,6 +70,8 @@ class EventArchivePage(BrowseFilterablePage):
 
     objects = PageManager()
 
+    is_searchable = False
+
     @staticmethod
     def get_form_class():
         from .. import forms
@@ -80,3 +84,5 @@ class NewsroomLandingPage(BrowseFilterablePage):
     filterable_children_only = False
 
     objects = PageManager()
+
+    is_searchable = False

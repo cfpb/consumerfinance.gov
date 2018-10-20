@@ -47,3 +47,5 @@ class LandingPage(CFGOVPage):
         index.SearchField('content'),
         index.SearchField('header')
     ]
+
+    is_searchable = True

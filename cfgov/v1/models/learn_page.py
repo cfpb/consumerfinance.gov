@@ -124,6 +124,8 @@ class LearnPage(AbstractFilterPage):
         index.SearchField('content')
     ]
 
+    is_searchable = True
+
 
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField([
@@ -144,6 +146,8 @@ class DocumentDetailPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('content')
     ]
+
+    is_searchable = True
 
 
 class AgendaItemBlock(blocks.StructBlock):
@@ -239,6 +243,8 @@ class EventPage(AbstractFilterPage):
         index.SearchField('future_body'),
         index.SearchField('agenda_items')
     ]
+
+    is_searchable = True
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
