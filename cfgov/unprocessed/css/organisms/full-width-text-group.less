@@ -52,6 +52,10 @@
           }
       }
 
+      .m-full-width-text + .m-call-to-action {
+          margin-top: unit( 30px / @base-font-size-px, em );
+      }
+
       .respond-to-min( @bp-sm-min, {
           .m-inset {
               margin-left: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -71,10 +75,6 @@
               margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
               margin-bottom: unit( 20px / @base-font-size-px, em );
               margin-left: 0;
-          }
-
-          .m-full-width-text + .m-call-to-action {
-              margin-top: unit( 30px / @base-font-size-px, em );
           }
 
           .m-full-width-text + .m-inset__image {
