@@ -118,8 +118,8 @@ class HandleErrorTestCase(TestCase):
     def test_handle_error_attribute_error(self, mock_render):
         mock_render.side_effect = AttributeError()
         result = urls.handle_error(404, self.factory.get('/test'))
-        self.assertIn('This request could not be processed', result.content)
-        self.assertIn('HTTP Error 404.', result.content)
+        self.assertIn(b'This request could not be processed', result.content)
+        self.assertIn(b'HTTP Error 404.', result.content)
 
     @mock.patch('cfgov.urls.render')
     def test_handle_error(self, mock_render):
