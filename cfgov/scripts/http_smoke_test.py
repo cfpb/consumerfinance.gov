@@ -112,7 +112,7 @@ FULL_RUN = [
     '/about-us/careers/current-openings/',
     '/about-us/doing-business-with-us/',
     '/about-us/advisory-groups/',
-    '/about-us/project-catalyst/',
+    '/about-us/innovation/',
     '/about-us/contact-us/',
     '/eregulations/',
     '/eregulations/1026',
@@ -180,7 +180,7 @@ SHORT_RUN = [
     '/about-us/careers/current-openings/',
     # '/about-us/doing-business-with-us/',
     # '/about-us/advisory-groups/',
-    # '/about-us/project-catalyst/',
+    # '/about-us/innovation/',
     # '/about-us/contact-us/',
 ]
 
