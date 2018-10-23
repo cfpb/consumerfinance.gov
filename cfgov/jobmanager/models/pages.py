@@ -164,4 +164,4 @@ class JobListingPage(CFGOVPage):
         Non-numeric grades are sorted alphabetically after numeric grades.
         """
         grades = set(g.grade.grade for g in self.grades.all())
-        return sorted(grades, key=lambda g: int(g) if g.isdigit() else g)
+        return sorted(grades, key=lambda g: '{0:0>8}'.format(g))

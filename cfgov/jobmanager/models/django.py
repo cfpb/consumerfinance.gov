@@ -35,6 +35,12 @@ class Grade(models.Model):
     class Meta:
         ordering = ['grade']
 
+    def __lt__(self, other):
+        return self.grade < other.grade
+
+    def __gt__(self, other):
+        return self.grade > other.grade
+
 
 class JobCategory(models.Model):
     job_category = models.CharField(max_length=255)
