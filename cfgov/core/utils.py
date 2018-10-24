@@ -15,7 +15,7 @@ NON_GOV_LINKS = re.compile(
 )
 NON_CFPB_LINKS = re.compile(
     r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)'
-    '(?!(content\.)?localhost).*)'
+    r'(?!(content\.)?localhost).*)'
 )
 DOWNLOAD_LINKS = re.compile(
     r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'

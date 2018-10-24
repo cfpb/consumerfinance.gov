@@ -4,7 +4,7 @@ ignore =
     E731,
     # PEP8 weakly recommends Knuth-style line breaks before binary
     # operators
-    W503
+    W503, W504
 exclude = 
     # These are directories that it's a waste of time to traverse
     .git,

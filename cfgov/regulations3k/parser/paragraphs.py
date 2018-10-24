@@ -51,9 +51,9 @@ def lint_paragraph(graph_text):
 
 def restore_italics(graph_text):
     fix1 = re.sub(
-        r'\*\*(see)\*\*', '*\g<1>*', graph_text, flags=re.IGNORECASE)
+        r'\*\*(see)\*\*', r'*\g<1>*', graph_text, flags=re.IGNORECASE)
     fix2 = re.sub(
-        r'\*\*(et\.? seq\.? ?)\*\*?', '*\g<1>*', fix1, flags=re.IGNORECASE)
+        r'\*\*(et\.? seq\.? ?)\*\*?', r'*\g<1>*', fix1, flags=re.IGNORECASE)
     return fix2
 
 

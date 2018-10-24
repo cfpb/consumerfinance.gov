@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import logging
@@ -8,7 +9,7 @@ from regulations3k.scripts.ecfr_importer import PART_WHITELIST
 
 
 REG_BASE = '/policy-compliance/rulemaking/regulations/{}/'
-SECTION_RE = re.compile('(?:\N{SECTION SIGN}|Section|12 CFR)\W+([^\s]+)')
+SECTION_RE = re.compile(r'(?:§|Section|12 CFR)\W+([^\s]+)')
 PARTS_RE = re.compile(
     r'(?P<part>\d{4})[.-](?P<section>[0-9A-Z]+)(?P<ids>\([a-zA-Z0-9)(]+)?')
 ID_RE = re.compile(r'\(([a-zA-Z0-9]{1,4})\)')
