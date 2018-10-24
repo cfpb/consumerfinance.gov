@@ -144,10 +144,10 @@ def get_counselor_json_files(directory):
     Returns iterator of (zipcode, filename) pairs.
     """
     search_path = os.path.join(directory, '*.json')
-    filenames = filter(
+    filenames = list(filter(
         lambda f: re.search(r'/\d{5}.json$', f),
         glob.glob(search_path)
-    )
+    ))
 
     if not filenames:
         raise RuntimeError('no input files found in {}'.format(directory))

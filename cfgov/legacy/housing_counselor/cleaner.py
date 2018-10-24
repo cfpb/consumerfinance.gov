@@ -11,7 +11,7 @@ REQUIRED_COUNSELOR_KEYS = {
 
 def clean_counselors(counselors):
     """Returns a cleaned set of HUD housing counselors."""
-    return map(clean_counselor, counselors)
+    return list(map(clean_counselor, counselors))
 
 
 def clean_counselor(counselor):
