@@ -1,6 +1,7 @@
 from six import text_type as str
 
 from django.conf import settings
+from django.utils.encoding import force_text
 
 from wagtail.wagtailcore.rich_text import expand_db_html
 
@@ -34,17 +35,28 @@ def parse_links(html, encoding=None):
     """Process all links in given html and replace them if markup is added."""
     if encoding is None:
         encoding = settings.DEFAULT_CHARSET
-    html = html.decode(encoding)
-    html = expand_db_html(html)
-    soup = BeautifulSoup(html, 'html.parser')
+
+    # The passed HTML may be a string or bytes, depending on what is calling
+    # this method. For example, Django response.content is always bytes. We
+    # always want this content to be a string for our purposes.
+    html_as_text = force_text(html, encoding=encoding)
+
+    # This call invokes Wagail-specific logic that converts references to
+    # Wagtail pages, documents, and images to their proper link URLs.
+    expanded_html = expand_db_html(html_as_text)
+
+    soup = BeautifulSoup(expanded_html, 'html.parser')
     link_tags = get_link_tags(soup)
     for tag in link_tags:
         original_link = str(tag)
         link_with_markup = add_link_markup(tag)
         if link_with_markup:
-            html = html.replace(original_link, link_with_markup)
+            expanded_html = expanded_html.replace(
+                original_link,
+                link_with_markup
+            )
 
-    return html.encode(encoding)
+    return expanded_html
 
 
 class ParseLinksMiddleware(object):
