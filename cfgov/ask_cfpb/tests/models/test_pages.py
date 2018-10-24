@@ -98,7 +98,7 @@ class OutputScriptFunctionTests(unittest.TestCase):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
         slug = 'ask-cfpb-{}.csv'.format(timestamp)
         m = mock_open()
-        with patch('__builtin__.open', m, create=True):
+        with patch('six.moves.builtins.open', m, create=True):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
         m.assert_called_once_with("/tmp/{}".format(slug), 'w')
@@ -334,9 +334,9 @@ class AnswerModelTestCase(TestCase):
         answer2.subcategory.add(subcategory)
 
         category_facet_map = json.loads(category.facet_map)
-        self.assertItemsEqual(
-            category_facet_map['subcategories']['7'],
-            ['14', '21']
+        self.assertEqual(
+            sorted(category_facet_map['subcategories']['7']),
+            sorted(['14', '21'])
         )
 
     def test_facet_map_skips_draft_page(self):
