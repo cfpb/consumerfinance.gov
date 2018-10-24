@@ -32,7 +32,7 @@ class ZipCodeBasedCounselorGeocoder(object):
         self.zipcodes = zipcodes
 
     def geocode(self, counselors):
-        return map(self.geocode_counselor, counselors)
+        return list(map(self.geocode_counselor, counselors))
 
     def geocode_counselor(self, counselor):
         counselor = dict(counselor)
