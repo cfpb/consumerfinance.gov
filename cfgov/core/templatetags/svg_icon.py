@@ -9,13 +9,13 @@ register = template.Library()
 
 
 SVG_REGEX = re.compile(
-    r'^'                    # start of string
-    '\s*'                   # any leading whitespace
-    '<svg[^>]*>'            # opening <svg> tag with any attributes
-    '(?!.*</svg>.*</svg>)'  # only allow one closing </svg> tag
-    '.*</svg>'              # match anything and then the closing tag
-    '\s*'                   # any trailing whitespace
-    '$',                    # end of string
+    r'^'                     # start of string
+    r'\s*'                   # any leading whitespace
+    r'<svg[^>]*>'            # opening <svg> tag with any attributes
+    r'(?!.*</svg>.*</svg>)'  # only allow one closing </svg> tag
+    r'.*</svg>'              # match anything and then the closing tag
+    r'\s*'                   # any trailing whitespace
+    r'$',                    # end of string
     re.DOTALL | re.IGNORECASE | re.MULTILINE
 )
 
