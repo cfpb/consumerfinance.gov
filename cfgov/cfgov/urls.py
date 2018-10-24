@@ -381,7 +381,7 @@ urlpatterns = [
         include('wellbeing.urls')
     ),
 
-    url('^sitemap\.xml$', sitemap),
+    url(r'^sitemap\.xml$', sitemap),
 
     flagged_url('SEARCH_DOTGOV_API',
                 r'^search/',

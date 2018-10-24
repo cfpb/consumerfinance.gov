@@ -200,7 +200,7 @@ class EventPage(AbstractFilterPage):
                   "It can be obtained by clicking on Share > "
                   "Embed on Youtube.",
         validators=[
-            RegexValidator(regex='^https?:\/\/www\.youtube\.com\/embed\/.*$')
+            RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
         ]
     )
 
