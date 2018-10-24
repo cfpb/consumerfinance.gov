@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.test import TestCase
@@ -52,7 +53,7 @@ class LinkScriptTestCase(TestCase):
     def test_insert_section_links(self):
         """Ensure content with section sign becomes regs3k relative link."""
         test_regdown = (
-            'Regdown with a linkable section \N{SECTION SIGN} 1002.2(a).')
+            'Regdown with a linkable section § 1002.2(a).')
         test_result = insert_section_links(test_regdown)
         self.assertIn(REG_BASE.format('1002'), test_result)
 
