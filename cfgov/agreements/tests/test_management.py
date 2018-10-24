@@ -1,7 +1,7 @@
 import os.path
 import unittest
 import zipfile
-from cStringIO import StringIO
+from six import StringIO
 from zipfile import ZipFile
 
 from django.core import management
@@ -103,7 +103,7 @@ class TestManagementUtils(TestCase):
     def test_save_agreement(self):
         agreements_zip = zipfile.ZipFile(sample_zip)
         # windows-1252 encoded:
-        raw_path = 'Bankers\x92 Bank of Kansas/1.pdf'
+        raw_path = b'Bankers\x92 Bank of Kansas/1.pdf'
         buf = StringIO()
         agreement = _util.save_agreement(
             agreements_zip,
