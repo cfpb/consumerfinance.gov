@@ -57,7 +57,6 @@
     "lodash.throttle": "4.1.1",
     "postcss-unmq": "1.0.2",
     "svg-inline-loader": "0.8.0",
-    "timelinejs": "2.35.6",
     "turbolinks": "5.1.1",
     "uglifyjs-webpack-plugin": "1.2.7",
     "vinyl-named": "1.1.0",

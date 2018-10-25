@@ -97,10 +97,6 @@ module.exports = {
       src:  'code.json',
       dest: paths.processed
     },
-    jsonKBYO: {
-      src:  `${ paths.unprocessed }/apps/know-before-you-owe/js/kbyo-timeline.json`,
-      dest: `${ paths.processed }/apps/know-before-you-owe/js`
-    },
     icons: {
       src:  paths.modules + '/cf-icons/src/icons/*.svg',
       dest: paths.processed + '/icons/'
@@ -115,12 +111,6 @@ module.exports = {
     iconsOld: {
       src:  paths.modules + '/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
-    },
-    timelinejs: {
-      src: [
-        paths.modules + '/timelinejs/build/**/*'
-      ],
-      dest: paths.processed + '/apps/timelinejs'
     },
     lightbox2: {
       src: [
