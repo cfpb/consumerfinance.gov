@@ -53,7 +53,7 @@
                 {{ _related_posts_list(post_type_list, block.value.limit) }}
             </div>
         {% endfor %}
-        {{ _view_more() }}
+        {{ _view_more(block.value.alternate_view_more_url) }}
     </div>
 {% endmacro %}
 
@@ -114,9 +114,11 @@
 
    ========================================================================== #}
 
-{% macro _view_more() %}
+{% macro _view_more(alternate_view_more_url) %}
+    {% set view_more_url = alternate_view_more_url
+                           or page.generate_view_more_url(request) %}
     <a class="a-link a-link__jump"
-       href="{{ page.generate_view_more_url(request) }}">
+       href="{{ view_more_url }}">
         <span class="a-link_text">
             {{ _('View more') }}
         </span>
