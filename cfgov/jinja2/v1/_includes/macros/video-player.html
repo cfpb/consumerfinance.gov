@@ -42,7 +42,7 @@
     {% if video_url.find( 'origin=' ) == -1 -%}
         {% set video_url = _buildParam(
              video_url,
-             'origin=' ~ request.scheme ~ '://' ~ request.META['HTTP_HOST']
+             'origin=' ~ request.scheme ~ '://' ~ request.get_host()
         ) %}
     {% endif %}
     {% set button_pos   = options.button_pos or 'center' %}
