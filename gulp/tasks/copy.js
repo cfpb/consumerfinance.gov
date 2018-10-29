@@ -45,19 +45,6 @@ gulp.task( 'copy:json:code', () => {
   return _genericCopy( jsonCode.src, jsonCode.dest );
 } );
 
-gulp.task( 'copy:json:kbyo', () => {
-  const jsonKBYO = configCopy.jsonKBYO;
-  return _genericCopy( jsonKBYO.src, jsonKBYO.dest );
-} );
-
-gulp.task( 'copy:timelinejs', () => {
-  const timelinejs = configCopy.timelinejs;
-  return _genericCopy( timelinejs.src, timelinejs.dest )
-    .on( 'end', () => {
-      del( timelinejs.dest + '/css/themes' );
-    } );
-} );
-
 gulp.task( 'copy:lightbox2', () => {
   const lightbox2 = configCopy.lightbox2;
   return _genericCopy( lightbox2.src, lightbox2.dest );
@@ -78,8 +65,6 @@ gulp.task( 'copy',
     // TODO: Remove when icon font is entirely deprecated.
     'copy:icons:old',
     'copy:json:code',
-    'copy:json:kbyo',
-    'copy:timelinejs',
     'copy:lightbox2'
   )
 );
