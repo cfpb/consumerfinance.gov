@@ -1,7 +1,6 @@
 import os
 import sys
 
-import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
@@ -30,9 +29,6 @@ USE_X_FORWARDED_HOST = True
 
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
-
-# see https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-USE_ETAGS
-USE_ETAGS = True
 
 # Application definition
 
@@ -104,15 +100,16 @@ POSTGRES_APPS = []
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+
     'core.middleware.ParseLinksMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
@@ -138,6 +135,9 @@ TEMPLATES = [
         # Look for Django templates in each app under a templates subdirectory.
         'APP_DIRS': True,
         'OPTIONS': {
+            'builtins': [
+                'overextends.templatetags.overextends_tags',
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -179,14 +179,6 @@ TEMPLATES = [
     },
 ]
 
-# TODO: Remove this when support for Django < 1.9 is removed.
-# The ability to specify builtins like this was added in Django 1.9.
-# https://docs.djangoproject.com/en/dev/releases/1.9/#templates
-if django.VERSION[:2] >= (1, 9):
-    TEMPLATES[0]['OPTIONS']['builtins'] = [
-        'overextends.templatetags.overextends_tags',
-    ]
-
 WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 # Admin Url Access
@@ -201,7 +193,7 @@ if os.getenv('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config()
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
+# https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -224,7 +216,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/static/'
 
 # Absolute path to the directory static files should be collected to.
@@ -392,6 +384,7 @@ AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_SECURE_URLS = True  # True = use https; False = use http
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_S3_ACCESS_KEY_ID = os.environ['AWS_S3_ACCESS_KEY_ID']
@@ -552,15 +545,11 @@ CSP_FONT_SRC = ("'self'", "data:", "fast.fonts.net", "fonts.google.com", "fonts.
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to.
 CSP_CONNECT_SRC = ("'self'",
+                   '*.google-analytics.com',
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
                    'files.consumerfinance.gov',
                    's3.amazonaws.com',
-                   # Todo: Take the following URL out as it's only
-                   # for http access to chart data for CCT
-                   # Remove when build moves to https or when
-                   # cfpb-chart-builder#126 PR gets merged
-                   'files.consumerfinance.gov.s3.amazonaws.com',
                    'public.govdelivery.com',
                    'api.iperceptions.com')
 

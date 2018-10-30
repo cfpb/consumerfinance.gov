@@ -79,7 +79,7 @@ class RegulationsListTestCase(TestCase):
         }))
         self.assertIn('Reg B', result)
         self.assertIn('/regulations/1002/', result)
-        self.assertIn('New amendment effective', result)
+        self.assertIn('New amendments effective', result)
         self.assertNotIn('Reg C', result)
         self.assertNotIn('/regulations/1003/', result)
 

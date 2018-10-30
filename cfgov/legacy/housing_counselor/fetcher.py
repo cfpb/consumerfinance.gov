@@ -55,10 +55,10 @@ def replace_abbreviations(counselors, attribute, url):
 
     for counselor in counselors:
         abbreviations = counselor[attribute]
-        counselor[attribute] = map(
+        counselor[attribute] = list(map(
             lambda key: values_dict[key],
             abbreviations.split(',') if abbreviations else []
-        )
+        ))
 
 
 def get_json_from_url(url):

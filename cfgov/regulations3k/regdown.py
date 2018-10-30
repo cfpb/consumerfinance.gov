@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 # Regdown
 
@@ -49,6 +50,14 @@ Callbacks:
 
 Example print forms, where the `__` indicate a space for hand-written input.
 Can be any number of underscores between 2 and 50.
+
+## Section symbols
+
+`§ 1024.5(d)`
+`§1024.5(d)`
+
+Section symbols will always have a non-breaking space (&nbsp;) inserted between
+them and whatever follows to avoid hanging a symbol at the end of a line.
 """
 from __future__ import unicode_literals
 
@@ -82,6 +91,9 @@ STRONG_EM_RE = r'(\*)\2{2}(.+?)\2{2}(.*?)\2'
 # __Form Field
 # inline__fields__
 PSEUDO_FORM_RE = r'(?P<underscores>_{2,50})(?P<line_ending>\s*$)?'
+
+# Section symbol §
+SECTION_SYMBOL_RE = r'(?P<section_symbol>§)\s+'
 
 
 DEFAULT_URL_RESOLVER = lambda l: ''
@@ -127,6 +139,9 @@ class RegulationsExtension(Extension):
         md.inlinePatterns['pseudo-form'] = PseudoFormPattern(
             PSEUDO_FORM_RE
         )
+        md.inlinePatterns['section-symbol'] = SectionSymbolPattern(
+            SECTION_SYMBOL_RE
+        )
         del md.inlinePatterns['emphasis2']
 
         # Add block reference processor for `see(label)` syntax
@@ -165,6 +180,18 @@ class PseudoFormPattern(Pattern):
         return el
 
 
+class SectionSymbolPattern(Pattern):
+    """ Make whitespace after a section symbol non-breaking """
+
+    def handleMatch(self, m):
+        return '{section}{stx}{char}{etx}#160;'.format(
+            section=m.group('section_symbol'),
+            stx=util.STX,
+            char=ord('&'),
+            etx=util.ETX
+        )
+
+
 class LabeledParagraphProcessor(ParagraphProcessor):
     """ Process paragraph blocks, including those with labels.
     This processor entirely replaces the standard ParagraphProcessor in
@@ -198,12 +225,14 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             # prefixes that are removed before counting the dashes.
             # e.g. 6-a-Interp-1 becomes 1 and gets a `level-0` class
             # e.g. 12-b-Interp-2-i becomes 2-i and gets a `level-1` class
-            label = re.sub('^(\w+\-)+interp\-', '', label, flags=re.IGNORECASE)
+            label = re.sub(
+                r'^(\w+\-)+interp\-', '', label, flags=re.IGNORECASE
+            )
 
             # Appendices also have special prefixes that need to be stripped.
             # e.g. A-1-a becomes a and gets a `level-0` class
             # e.g. A-2-d-1 becomes d-1 and gets a `level-1` class
-            label = re.sub('^[A-Z]\d?\-\w+\-?', '', label)
+            label = re.sub(r'^[A-Z]\d?\-\w+\-?', '', label)
             level = label.count('-')
             class_name = 'regdown-block level-{}'.format(level)
             el.set('class', class_name)

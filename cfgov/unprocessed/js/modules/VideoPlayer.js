@@ -85,13 +85,16 @@ VideoPlayer.init = function init( selector ) {
   'not([class*="' + CLASSES.VIDEO_PLAYER_SELECTOR + '"__"])';
 
   // There should only be one video player on the page.
-  let videoPlayer;
   const videoPlayerElement = document.querySelector( selector );
-  if ( videoPlayerElement ) {
-    videoPlayer = new this( videoPlayerElement );
-  }
+
+  // Nothing to initialize
+  if ( !videoPlayerElement ) return;
+
+  const videoPlayer = new this( videoPlayerElement );
+
   _attachIFrame();
 
+  /* eslint-disable consistent-return */
   return videoPlayer;
 };
 

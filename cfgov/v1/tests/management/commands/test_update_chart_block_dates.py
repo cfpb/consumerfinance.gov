@@ -42,7 +42,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
             # Tests last_updated_projected_data is correct
             self.assertContains(
                 response,
-                'The most recent data available in each visualization is for June 2017'
+                'The most recent data available in this visualization are for June 2017'
             )
             # Tests date_published is correct
             self.assertContains(response, 'August 2017')

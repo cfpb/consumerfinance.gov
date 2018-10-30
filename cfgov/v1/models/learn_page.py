@@ -13,6 +13,7 @@ from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailsearch import index
 
 from localflavor.us.models import USStateField
 
@@ -73,6 +74,10 @@ class AbstractFilterPage(CFGOVPage):
 
     objects = CFGOVPageManager()
 
+    search_fields = CFGOVPage.search_fields + [
+        index.SearchField('header')
+    ]
+
     @classmethod
     def generate_edit_handler(self, content_panel):
         content_panels = [
@@ -115,6 +120,10 @@ class LearnPage(AbstractFilterPage):
 
     objects = PageManager()
 
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField('content')
+    ]
+
 
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField([
@@ -131,6 +140,10 @@ class DocumentDetailPage(AbstractFilterPage):
     template = 'document-detail/index.html'
 
     objects = PageManager()
+
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField('content')
+    ]
 
 
 class AgendaItemBlock(blocks.StructBlock):
@@ -187,7 +200,7 @@ class EventPage(AbstractFilterPage):
                   "It can be obtained by clicking on Share > "
                   "Embed on Youtube.",
         validators=[
-            RegexValidator(regex='^https?:\/\/www\.youtube\.com\/embed\/.*$')
+            RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
         ]
     )
 
@@ -216,6 +229,16 @@ class EventPage(AbstractFilterPage):
     agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
 
     objects = CFGOVPageManager()
+
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField('body'),
+        index.SearchField('archive_body'),
+        index.SearchField('live_stream_url'),
+        index.SearchField('flickr_url'),
+        index.SearchField('youtube_url'),
+        index.SearchField('future_body'),
+        index.SearchField('agenda_items')
+    ]
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [

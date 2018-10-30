@@ -309,8 +309,8 @@ reg_comment = {
 snippet_list_show_thumbnails_false = {
     "type": "snippet_list",
     "value": {
-        "heading": "Test Snippet List",
-        "snippet_type": "v1.models.snippets.Resource",
+        "heading": "Test Resource List",
+        "snippet_type": "v1.models.resources.Resource",
         "show_thumbnails": False,
     }
 }
@@ -318,8 +318,8 @@ snippet_list_show_thumbnails_false = {
 snippet_list_show_thumbnails_true = {
     "type": "snippet_list",
     "value": {
-        "heading": "Test Snippet List",
-        "snippet_type": "v1.models.snippets.Resource",
+        "heading": "Test Resource List",
+        "snippet_type": "v1.models.resources.Resource",
         "show_thumbnails": True,
     }
 }
@@ -327,8 +327,8 @@ snippet_list_show_thumbnails_true = {
 snippet_list_actions_column_width_40 = {
     "type": "snippet_list",
     "value": {
-        "heading": "Test Snippet List",
-        "snippet_type": "v1.models.snippets.Resource",
+        "heading": "Test Resource List",
+        "snippet_type": "v1.models.resources.Resource",
         "actions_column_width": "40",
     }
 }
@@ -456,7 +456,7 @@ chart_block = {
         'date_published': u'2018-01-01',
         'description': u'Description',
         'last_updated_projected_data': u'2016-04-01',
-        'note': 'Data not final',
+        'note': 'Data not final.',
     }
 }
 

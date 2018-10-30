@@ -3,6 +3,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
+from wagtail.wagtailsearch import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
@@ -41,6 +42,11 @@ class SublandingFilterablePage(FilterableFeedPageMixin,
     template = 'sublanding-page/index.html'
 
     objects = PageManager()
+
+    search_fields = CFGOVPage.search_fields + [
+        index.SearchField('content'),
+        index.SearchField('header')
+    ]
 
 
 class ActivityLogPage(SublandingFilterablePage):

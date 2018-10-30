@@ -1,13 +1,18 @@
-from django.core.cache import cache, caches
+from django.core.cache import caches
 from django.test import TestCase, override_settings
 
 from wagtail.tests.testapp.models import SimplePage
+from wagtail.tests.utils import WagtailTestUtils
 from wagtail.wagtailcore.models import Site
 
 import mock
 
+from v1.models.base import CFGOVPage
 from v1.models.menu_item import MenuItem
-from v1.wagtail_hooks import check_permissions, form_module_handlers
+from v1.models.resources import Resource
+from v1.wagtail_hooks import (
+    check_permissions, form_module_handlers, get_resource_tags
+)
 
 
 class TestCheckPermissions(TestCase):
@@ -157,4 +162,88 @@ class TestMenuItemSave(TestCase):
         self.assertEqual(
             caches['default_fragment_cache'].get('mega_menu'),
             None
+        )
+
+
+class TestGetResourceTags(TestCase):
+    def setUp(self):
+        self.resource1 = Resource.objects.create(title='Test resource 1')
+        self.resource1.tags.add(u'tagA')
+        self.resource2 = Resource.objects.create(title='Test resource 2')
+        self.resource2.tags.add(u'tagB')
+        self.page1 = CFGOVPage(title='live', slug='test')
+        self.page1.tags.add(u'tagC')
+
+    def test_get_resource_tags_returns_only_resource_tags(self):
+        self.assertEqual(
+            get_resource_tags(),
+            [(u'taga', u'tagA'), (u'tagb', u'tagB')]
+        )
+
+    def test_get_resource_tags_returns_only_unique_tags(self):
+        self.resource2.tags.add(u'tagA')
+        self.assertEqual(
+            get_resource_tags(),
+            [(u'taga', u'tagA'), (u'tagb', u'tagB')]
+        )
+
+    def test_get_resource_tags_returns_alphabetized_list(self):
+        self.resource1.tags.add(u'aTag')
+        self.assertEqual(
+            get_resource_tags(),
+            [(u'atag', u'aTag'), (u'taga', u'tagA'), (u'tagb', u'tagB')]
+        )
+
+
+class TestResourceTagsFilter(TestCase, WagtailTestUtils):
+    def setUp(self):
+        self.login()
+        self.resource1 = Resource.objects.create(
+            title='Test resource Orange',
+            order=1
+        )
+        self.resource1.tags.add(u'tagA')
+        self.resource2 = Resource.objects.create(
+            title='Test resource Banana',
+            order=2
+        )
+        self.resource2.tags.add(u'tagB')
+        self.resource3 = Resource.objects.create(
+            title='Test resource Apple',
+            order=3
+        )
+        self.resource3.tags.add(u'tagB')
+        self.resource3.tags.add(u'tagC')
+
+    def get(self, **params):
+        return self.client.get('/admin/v1/resource/', params)
+
+    def test_no_params_returns_all_resources_in_order(self):
+        response = self.get()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['result_count'], 3)
+        self.assertEqual(
+            list(response.context['object_list']),
+            list(Resource.objects.all().order_by('title'))
+        )
+
+    def test_tag_param_returns_a_resource_tagged_that_way(self):
+        response = self.get(tag='taga')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['result_count'], 1)
+
+        for resource in response.context['object_list']:
+            self.assertEqual(resource.title, 'Test resource Orange')
+
+    def test_tag_param_returns_resources_tagged_that_way(self):
+        response = self.get(tag='tagb')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['result_count'], 2)
+        self.assertEqual(
+            response.context['object_list'][0].title,
+            'Test resource Apple'
+        )
+        self.assertEqual(
+            response.context['object_list'][1].title,
+            'Test resource Banana'
         )

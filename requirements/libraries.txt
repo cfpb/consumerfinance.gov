@@ -1,57 +1,42 @@
 address==0.1.1
-beautifulsoup4==4.5.1
+beautifulsoup4==4.6.0
 boto3==1.7.80
-dj-database-url==0.4.2
+dj-database-url==0.5.0
 djangorestframework==3.6.4
-djangorestframework-csv==2.0.0
 django-csp==3.4
-django-braces==1.0.0
-django-extensions==2.1.0
+django-extensions==2.1.3
 django-flags==3.0.2
 django-haystack==2.7.0
-django-localflavor==1.1
+django-localflavor==1.6.2
 # django-mptt is required by teachers-digital-platform
 django-mptt==0.9.0
 django-overextends==0.4.3
-# django-storages 1.6.6 drops support for Django 1.8.
-# https://github.com/jschneier/django-storages/blob/master/CHANGELOG.rst
-# Versions >1.5.0,<=1.6.5 fail due to this issue:
-# https://github.com/jschneier/django-storages/issues/382
-django-storages==1.5.0
-# django-taggit 0.23.0 requires Django 1.11. Normally django-taggit is pulled
-# in by Wagtail's setup.py, but Wagtail 1.13 specifies >0.20,<1.0, which
-# unfortunately includes this version. This line can be removed once we are
-# on Django 1.11.
-django-taggit==0.22.2
+django-storages==1.7.1
 django-treebeard==3.0
-django-watchman==0.13.1
+django-watchman==0.15.0
 edgegrid-python==1.0.10
 elasticsearch==2.4.1
-geocoder==1.12.0
 govdelivery==1.2
-html5lib==0.9999999
 Jinja2==2.7.3
 jsonfield==2.0.2
-jsonschema==2.0.0
-lxml==4.1.0
+lxml==4.2.5
 Markdown==2.6.11
 markdown-emdash==0.1.0
 ntplib==0.3.3
-openpyxl==2.5.0
+openpyxl==2.5.8
 pyelasticsearch==0.6.1
-python-dateutil==2.1
-PyYAML==3.11
+python-dateutil==2.7.3
 pytz
-requests==2.18.4
-requests_toolbelt==0.6.0
+# PyYAML is required by college-costs
+PyYAML==3.13
+requests==2.19.1
+requests_toolbelt==0.8.0
 sha3==0.2.1
-six==1.10.0
+six==1.11.0
 unicodecsv==0.14.1
 unipath>=1.1,<=2.0
-# TODO: Remove explicit urllib3 requirement once requests is updated to support urllib3 1.23
-urllib3==1.22
+urllib3==1.23
 wagtail-flags==3.0.1
 wagtail-inventory==0.5.1
-wagtail-sharing==0.6.1
-wagtail-treemodeladmin==1.0.3
-Wand==0.4.2
+wagtail-sharing==0.7
+wagtail-treemodeladmin==1.0.4

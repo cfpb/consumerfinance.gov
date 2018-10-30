@@ -280,9 +280,9 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
         else:
             sqs = sqs.filter(content=self.ask_category.name)
         sqs = sqs.models(self.Category)
-        if sqs.count() > 0:
+        try:
             facet_map = sqs[0].facet_map
-        else:
+        except IndexError:
             facet_map = self.ask_category.facet_map
         facet_dict = json.loads(facet_map)
         subcat_ids = facet_dict['subcategories'].keys()
@@ -566,10 +566,8 @@ class AnswerPage(CFGOVPage):
     sidebar_panels = [StreamFieldPanel('sidebar'), ]
 
     search_fields = Page.search_fields + [
-        index.SearchField('question'),
         index.SearchField('answer'),
-        index.SearchField('answer_base'),
-        index.FilterField('language')
+        index.SearchField('snippet')
     ]
 
     edit_handler = TabbedInterface([

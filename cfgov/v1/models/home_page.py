@@ -4,6 +4,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
+from wagtail.wagtailsearch import index
 
 from v1.atomic_elements import atoms, molecules
 from v1.models.base import CFGOVPage
@@ -44,6 +45,8 @@ class HomePage(CFGOVPage):
     template = 'index.html'
 
     objects = PageManager()
+
+    search_fields = CFGOVPage.search_fields + [index.SearchField('header')]
 
     def get_category_name(self, category_icon_name):
         cats = dict(ref.limited_categories)

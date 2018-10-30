@@ -5,6 +5,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
+from wagtail.wagtailsearch import index
 
 from jobmanager.models import JobListingList
 from v1 import blocks as v1_blocks
@@ -31,7 +32,7 @@ class SublandingPage(CFGOVPage):
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
         ('feedback', v1_blocks.Feedback()),
-        ('snippet_list', organisms.SnippetList()),
+        ('snippet_list', organisms.ResourceList()),
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
@@ -76,6 +77,11 @@ class SublandingPage(CFGOVPage):
     template = 'sublanding-page/index.html'
 
     objects = PageManager()
+
+    search_fields = CFGOVPage.search_fields + [
+        index.SearchField('content'),
+        index.SearchField('header')
+    ]
 
     def get_browsefilterable_posts(self, limit):
         filter_pages = [p.specific

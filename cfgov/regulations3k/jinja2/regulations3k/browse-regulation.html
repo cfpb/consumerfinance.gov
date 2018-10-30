@@ -24,9 +24,9 @@
     <link rel="prerender" href="{{ routablepageurl(page, 'section', next_section.section_number) }}">
     {% endif %}
     <link rel="manifest" href="{{ static('apps/regulations3k/regulations3k-manifest.json') }}">
-    <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
-    <link rel="apple-touch-icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
-    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/regulations3k-icon-192.png') }}">
+    <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations-icon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations-icon-192.png') }}">
+    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/regulations-icon-192.png') }}">
     <meta name="apple-mobile-web-app-title" content="Regs">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#20aa3f"/>
@@ -231,7 +231,8 @@
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [
-            '{{ static('apps/regulations3k/js/index.js') }}'
+            '{{ static('apps/regulations3k/js/index.js') }}',
+            '{{ static('apps/regulations3k/js/permalinks.js') }}'
           ];
           jsl(s);
         }()

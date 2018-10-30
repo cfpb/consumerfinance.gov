@@ -5,7 +5,22 @@ from django.utils.functional import cached_property
 
 from core.govdelivery import get_govdelivery_api
 from data_research.models import ConferenceRegistration
-from data_research.widgets import EmailInput, Textarea, TextInput
+
+
+# Form input attributes for Capital Framework compatibility.
+#
+# See https://cfpb.github.io/capital-framework/components/cf-forms/
+# for documentation on the styles that are being duplicated here.
+text_input_attrs = {
+    'class': 'a-text-input a-text-input__full',
+}
+
+# This is needed to disable Django's default Textarea sizing.
+textarea_attrs = {
+    'rows': None,
+    'cols': None,
+}
+textarea_attrs.update(text_input_attrs)
 
 
 class ConferenceRegistrationForm(forms.Form):
@@ -18,8 +33,8 @@ class ConferenceRegistrationForm(forms.Form):
     If save(commit=False) is used, a model instance is created but not
     persisted to the database, and GovDelivery subscription is skipped.
     """
-    ATTENDEE_IN_PERSON = 'In person'
-    ATTENDEE_VIRTUALLY = 'Virtually'
+    ATTENDEE_IN_PERSON = ConferenceRegistration.IN_PERSON
+    ATTENDEE_VIRTUALLY = ConferenceRegistration.VIRTUAL
     ATTENDEE_TYPES = tuple((t, t) for t in (
         ATTENDEE_IN_PERSON,
         ATTENDEE_VIRTUALLY,
@@ -52,10 +67,21 @@ class ConferenceRegistrationForm(forms.Form):
         required=True,
         label='Do you plan to attend in person or virtually?',
     )
-    name = forms.CharField(max_length=250, widget=TextInput(required=True))
-    organization = forms.CharField(max_length=250, required=False,
-                                   widget=TextInput)
-    email = forms.EmailField(max_length=250, widget=EmailInput(required=True))
+    name = forms.CharField(
+        max_length=250,
+        required=True,
+        widget=forms.TextInput(attrs=text_input_attrs)
+    )
+    organization = forms.CharField(
+        max_length=250,
+        required=False,
+        widget=forms.TextInput(attrs=text_input_attrs)
+    )
+    email = forms.EmailField(
+        max_length=250,
+        required=True,
+        widget=forms.EmailInput(attrs=text_input_attrs)
+    )
     # sessions = forms.MultipleChoiceField(
     #     widget=CheckboxSelectMultiple,
     #     choices=SESSIONS,
@@ -71,7 +97,7 @@ class ConferenceRegistrationForm(forms.Form):
         label="Please let us know about any food allergies or restrictions."
     )
     other_dietary_restrictions = forms.CharField(
-        widget=Textarea,
+        widget=forms.Textarea(attrs=textarea_attrs),
         required=False,
         label="Any other food allergies or restrictions?"
     )
@@ -85,7 +111,7 @@ class ConferenceRegistrationForm(forms.Form):
         )
     )
     other_accommodations = forms.CharField(
-        widget=Textarea,
+        widget=forms.Textarea(attrs=textarea_attrs),
         required=False,
         label="Any other accommodations needed to attend?"
     )
@@ -112,22 +138,7 @@ class ConferenceRegistrationForm(forms.Form):
             govdelivery_code=self.govdelivery_code
         )
 
-        # TODO: In Django 1.9+, this logic can be optimized through use of
-        # Django's built-in Postgres JSONFields. This will require migrating
-        # the details field of the ConferenceRegistration model.
-        #
-        # attendees = ConferenceRegistrationForm.objects.filter(
-        #     govdelivery_code=self.govdelivery_code,
-        #     details__attendee_type=self.ATTENDEE_IN_PERSON
-        # )
-        in_person_attendees = filter(
-            lambda a: (
-                a.details.get('attendee_type') == self.ATTENDEE_IN_PERSON
-            ),
-            attendees
-        )
-
-        return len(in_person_attendees) >= self.capacity
+        return len(attendees.in_person()) >= self.capacity
 
     def save(self, commit=True):
         registration = ConferenceRegistration(
