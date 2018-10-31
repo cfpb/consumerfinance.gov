@@ -1,77 +1,5 @@
 {# ==========================================================================
 
-   related_posts.render()
-
-   ==========================================================================
-
-   Description:
-
-   Creates related posts markup when given:
-
-   posts:                               Collection of related posts for a
-                                        page as returned by the
-                                        related_posts() method on CFGOVPage.
-
-   block:                               Instance of a RelatedPosts block.
-
-   block.value:                         Dictionary of block field values.
-
-   block.value.limit:                   Integer setting the number of
-                                        posts that will be shown for each
-                                        type of posts selected.
-
-   block.value.header_title:            String for the heading at the top
-                                        of the renderd module.
-
-   block.value.show_heading:            Boolean indicating whether or not
-                                        the heading and icon for each type
-                                        of related post will be shown.
-                                        Defaults to True.
-
-   block.value.alternate_view_more_url: Optional string that replace the
-                                        default URL for the "View more" link
-                                        at the bottom of the rendered module.
-
-   is_half_width:                       Boolean indicating whether the
-                                        posts should be at half width.
-                                        Defaults to False.
-
-   hide_header_slug:                    Boolean indicating whether
-                                        the header should be hidden.
-                                        Defaults to False.
-
-   ========================================================================== #}
-
-{% macro render(posts, block, is_half_width=false, hide_header_slug=false) %}
-    {% import 'macros/category-icon.html' as category_icon %}
-    <div class="m-related-posts
-                {{'m-related-posts__half-width'
-                  if is_half_width else ''}}">
-        {% if not hide_header_slug %}
-            <header class="m-slug-header">
-                <h2 class="a-heading">
-                    {{ block.value.header_title }}
-                </h2>
-            </header>
-        {% endif %}
-        {% for post_type, post_type_list in posts.iteritems() %}
-            {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", category_icon.render('blog')) %}
-            <div class="m-related-posts_list-container">
-                {% if block.value.show_heading %}
-                    <h3 class="h4">
-                        {{ icon }} {{ title }}
-                    </h3>
-                {% endif %}
-                {{ _related_posts_list(post_type_list, block.value.limit) }}
-            </div>
-        {% endfor %}
-        {{ _view_more(block.value.alternate_view_more_url) }}
-    </div>
-{% endmacro %}
-
-
-{# ==========================================================================
-
    _related_posts_list()
 
    ==========================================================================
@@ -122,17 +50,66 @@
 
 {# ==========================================================================
 
-   _view_more()
+   Template for v1.atomic_elements.organisms.RelatedPosts.
+
+   ==========================================================================
+
+   Description:
+
+   Creates related posts markup for RelatedPosts block.
+
+   Uses these entries from the block's value:
+
+   value.header_title:  String for the heading at the top of the rendered
+                        module.
+
+   value.limit:         Integer setting the number of posts that will be shown
+                        for each type of post selected.
+
+   value.show_heading:  Boolean indicating whether or not the heading and icon
+                        for each type of post will be shown. Defaults to True.
+
+   Also expects context to contain these extra parameters:
+
+   half_width:          Boolean indicating whether the posts should be at half
+                        width. Defaults to False.
+
+   hide_header_slug:    Boolean indicating whether the header should be hidden.
+                        Defaults to False.
+
+   posts:               List of related posts to render. Required.
+
+   view_more_url:       URL for "View more" link. Required.
 
    ========================================================================== #}
 
-{% macro _view_more(alternate_view_more_url) %}
-    {% set view_more_url = alternate_view_more_url
-                           or page.generate_view_more_url(request) %}
+{% import 'macros/category-icon.html' as category_icon %}
+
+<div class="m-related-posts
+    {{'m-related-posts__half-width' if half_width else '' }}">
+    {% if not hide_header_slug %}
+        <header class="m-slug-header">
+            <h2 class="a-heading">
+                {{ value.header_title }}
+            </h2>
+        </header>
+    {% endif %}
+    {% for post_type, post_type_list in posts.iteritems() %}
+        {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", category_icon.render('blog')) %}
+        <div class="m-related-posts_list-container">
+            {% if value.show_heading %}
+                <h3 class="h4">
+                    {{ icon }} {{ title }}
+                </h3>
+            {% endif %}
+            {{ _related_posts_list(post_type_list, value.limit) }}
+        </div>
+    {% endfor %}
+
     <a class="a-link a-link__jump"
        href="{{ view_more_url }}">
         <span class="a-link_text">
             {{ _('View more') }}
         </span>
     </a>
-{% endmacro %}
+</div>
