@@ -81,6 +81,7 @@ INSTALLED_APPS = (
     'search',
     'regulations3k',
     'treemodeladmin',
+    'housing_counselor',
 )
 
 OPTIONAL_APPS = [

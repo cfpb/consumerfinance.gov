@@ -119,7 +119,7 @@ def generate_counselor_json(counselors, zipcodes, target):
 
 
 def generate_counselor_html(source_dir, target_dir):
-    template_name = 'hud/housing_counselor_pdf_selfcontained.html'
+    template_name = 'housing_counselor/pdf_selfcontained.html'
     template = loader.get_template(template_name)
 
     for zipcode, filename in get_counselor_json_files(source_dir):

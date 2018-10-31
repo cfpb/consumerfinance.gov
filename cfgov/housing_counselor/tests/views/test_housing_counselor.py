@@ -2,8 +2,7 @@ from django.test import TestCase, override_settings
 
 import mock
 import requests
-
-from legacy.views.housing_counselor import HousingCounselorS3URLMixin
+from housing_counselor.views import HousingCounselorS3URLMixin
 
 
 @override_settings(AWS_STORAGE_BUCKET_NAME='foo.bucket')

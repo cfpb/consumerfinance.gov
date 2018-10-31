@@ -16,6 +16,9 @@ from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 from flags.views import FlaggedTemplateView
+from housing_counselor.views import (
+    HousingCounselorPDFView, HousingCounselorView
+)
 
 from ask_cfpb.views import (
     ask_autocomplete, ask_search, print_answer, redirect_ask_search,
@@ -26,9 +29,6 @@ from core.views import (
 )
 from legacy.views import token_provider
 from legacy.views.complaint import ComplaintLandingView
-from legacy.views.housing_counselor import (
-    HousingCounselorPDFView, HousingCounselorView
-)
 from regulations3k.views import redirect_eregs
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
