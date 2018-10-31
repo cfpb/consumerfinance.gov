@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from itertools import repeat
 from unittest import TestCase
 
-from legacy.housing_counselor.cleaner import (
+from housing_counselor.cleaner import (
     clean_counselor, clean_counselors, float_or_none, reformat_email,
     reformat_weburl, title_case
 )

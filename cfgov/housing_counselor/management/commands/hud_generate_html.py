@@ -2,7 +2,7 @@ from __future__ import absolute_import, print_function
 
 from django.core.management.base import BaseCommand
 
-from legacy.housing_counselor.generator import generate_counselor_html
+from housing_counselor.generator import generate_counselor_html
 
 
 class Command(BaseCommand):

@@ -5,7 +5,7 @@ from unittest import TestCase
 import responses
 from requests.exceptions import HTTPError
 
-from legacy.housing_counselor.fetcher import (
+from housing_counselor.fetcher import (
     HUD_COUNSELORS_URL, HUD_LANGUAGES_URL, HUD_SERVICES_URL,
     download_housing_counselors, fetch_counselors, get_json_from_url,
     replace_abbreviations
