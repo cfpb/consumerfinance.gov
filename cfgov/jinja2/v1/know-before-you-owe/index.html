@@ -41,7 +41,9 @@
         margin-bottom: 3.75em;
     }
 
-    .kbyo-tools, .kbyo-mortgage-disclosures, .kbyo-timeline {
+    .kbyo-tools,
+    .kbyo-mortgage-disclosures,
+    .kbyo-timeline {
         border-top: 1px solid #e3e4e5;
         padding-top: 1.875em;
         padding-bottom: 2.8125em;
@@ -59,9 +61,6 @@
         margin-top: 0;
     }
 
-    .kbyo-timeline__wrapper {
-        border: 1px solid #e3e4e5;
-    }
 </style>
 {% endblock %}
 
@@ -421,23 +420,18 @@
         </div>
     </div>
 </div>
-<div id="timeline" class="wrapper wrapper__match-content kbyo-timeline u-mb45">
+<div class="wrapper wrapper__match-content kbyo-timeline">
     <div class="content-l">
         <div class="content-l_col
                     content-l_col-1-2">
             <h2>Timeline</h2>
-            <p>Follow this timeline to understand the process of how this rule and our work around it has developed since the CFPB’s beginnings.
+            <p>
                 <a class="styled-link" href="/know-before-you-owe/timeline/">
-                    Read the full timeline.
+                    Read the timeline
                 </a>
+                to understand the process of how this rule and our work around
+                it has developed since the CFPB’s beginnings.
             </p>
-        </div>
-    </div>
-    <div class="kbyo-timeline__wrapper">
-        <div id="timeline-embed"
-             classname="storyjs-embed full-embed"
-             style="width: 100%; height: 584px;">
-                <div id="storyjs" style="position: relative;"></div>
         </div>
     </div>
 </div>
@@ -529,19 +523,4 @@
         </div><!-- /.kbyo-footer__row -->
       </div><!-- /.kbyo-footer__wrapper -->
 </section>
-<script type="text/javascript">
-        var timeline_config = {
-          width: '100%',
-          height: '600',
-          source: '{{ static("apps/know-before-you-owe/js/kbyo-timeline.json") }}',
-          embed_id: 'timeline-embed',
-          hash_bookmark: true,
-          debug: false,
-          lang: 'en',
-          maptype: 'ROADMAP',
-          css: '{{ static("apps/timelinejs/css/timeline.css") }}',
-          js: '{{ static("apps/timelinejs/js/timeline-min.js") }}'
-        }
-</script>
-<script type="text/javascript" src='{{ static("apps/timelinejs/js/storyjs-embed.js") }}'></script>
 {% endblock %}
