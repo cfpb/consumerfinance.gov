@@ -77,20 +77,6 @@
   margin:30px 0 10px 0;
 }
 
-.jobs-checkboxes label{
-  display: block;
-  margin-top: 3px;
-}
-
-
-.jobs-checkboxes span{
-  display: inline-block;
-  position: relative;
-  left:4px;
-  top:4px;
-  font-size: .8em;
-}
-
 .jobsect{
   /*background: url(../img/sect-border.png) no-repeat;*/
   border-top: 1px solid #ddd;

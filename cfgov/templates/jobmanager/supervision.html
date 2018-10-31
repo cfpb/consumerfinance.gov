@@ -1,6 +1,10 @@
 {% extends "front/base_nonresponsive.html" %}
 {% load static from staticfiles %}
 
+{% block jquery %}
+<script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
+{% endblock %}
+
 {% block page_meta %}
 <meta charset="UTF-8" />
 <meta property="og:title" content="Supervision"/>
@@ -13,7 +17,7 @@
 {% block breadcrumbs %}
 	<li><a href="/" class="internal-link">Home</a></li>
   <li><a href="/about-us/careers/" class="internal-link">Jobs</a></li>
-    <li>Supervision</li>
+  <li>Supervision</li>
 {% endblock %}
 
 {% block page_css %}
@@ -168,15 +172,11 @@
     </ul>
 </section>
 
-
-
 <div class='breaker'></div>
 
 <section>
     <h2>Interested? Questions?</h2>
     <p>Interested in a job with CFPB supervision, but don't see a current vacancy that is right for you? Please contact <a href='mailto:jobs@cfpb.gov' class="email-link">jobs@cfpb.gov</a>.  We'll let you know if a job that is right for you becomes available.
 </section>
-
-
 
 {% endblock %}
