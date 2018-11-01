@@ -1,0 +1,125 @@
+{% extends 'content-base.html' %}
+
+{% block title %}
+    Find a Housing Counselor | Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<style>
+    .m-hero {
+        background-color: #d6e5e4 !important;
+    }
+
+    .m-hero_image {
+        background-image: url('{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}');
+        filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                src='{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}',
+                sizingMethod='scale' );
+        padding-bottom: 0;
+    }
+
+    @media screen and (min-width: 37.5625em) {
+        .m-hero_image {
+            background-image: url('{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}');
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                    src='{{ static("apps/know-before-you-owe/img/kbyo-hero_laptop-2x.png") }}',
+                    sizingMethod='scale' );
+            padding-bottom: 41.4893617%
+        }
+    }
+
+    @media screen and (max-width: 56.250em) {
+        .kbyo-tools .content-l_col-1-2 {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+    }
+
+    .kbyo-video {
+        margin-top: 3.75em;
+        margin-bottom: 3.75em;
+    }
+
+    .kbyo-tools,
+    .kbyo-mortgage-disclosures,
+    .kbyo-timeline {
+        border-top: 1px solid #e3e4e5;
+        padding-top: 1.875em;
+        padding-bottom: 2.8125em;
+    }
+
+    .kbyo-professional-resources, .kbyo-footer {
+        background-color: #f1f2f2;
+        border-bottom: 1px solid #e3e4e5;
+        border-top: 1px solid #e3e4e5;
+        padding-top: 2.8125em;
+        padding-bottom: 2.8125em;
+    }
+
+    .o-info-unit-group .content-l:first-child {
+        margin-top: 0;
+    }
+
+</style>
+{% endblock %}
+
+{% block hero %}
+<section class="m-hero">
+    <div class="m-hero_wrapper wrapper">
+        <div class="m-hero_text">
+            <h1 class="m-hero_heading">Find a Housing Counselor</h1>
+            <div class="m-hero_subhead">
+                {% if zipcode %}
+                    <div>
+                      <h2>Context:</h2>
+                      <p><b>zipcode</b>: {{ zipcode }}</p>
+                      <p><b>pdf_url</b>: {{ pdf_url }}</p>
+                      <p><b>api_json</b>: {{ api_json }}</p>
+                    </div>
+                    <br>
+                {% else %}
+                    <p> Lorem ipsum dolor amet Lomo dreamcatcher roof party tofu vegan woke four dollar toast whatever readymade 3 wolf moon kinfolk intelligentsia mixtape. Keffiyeh palo santo pickled, you probably haven't heard of them cray venmo portland bushwick. Drinking vinegar readymade pinterest brunch fanny pack occupy narwhal humblebrag four dollar toast. Four loko iceland tumblr, master cleanse williamsburg live-edge iPhone freegan fashion axe banh mi semiotics.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="m-hero_image-wrapper">
+            <div class="m-hero_image"></div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block body_content %}
+<section class="kbyo-footer">
+    <div class="wrapper wrapper__match-content">
+        <div class="content-l">
+          <div class="content-l_col
+                    content-l_col-1-2">
+            <header class="m-slug-header">
+                <h2 class="a-heading">
+                    Reports
+                </h2>
+            </header>
+
+            <header class="m-slug-header">
+                <h2 class="a-heading">
+                    Legal disclaimer
+                </h2>
+            </header>
+            <p>
+              The content on this page provides general consumer information.
+              It is not legal advice or regulatory guidance.
+              The CFPB updates this information periodically.
+              This information may include links or references
+              to third-party resources or content.
+              We do not endorse the third-party or guarantee the accuracy
+              of this third-party information.
+              There may be other resources that also serve your needs.
+            </p>
+          </div><!-- /.kbyo-footer__col -->
+        </div><!-- /.kbyo-footer__row -->
+      </div><!-- /.kbyo-footer__wrapper -->
+</section>
+{% endblock %}

@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.views.generic import TemplateView, View
 
 import requests
+from flags.state import flag_enabled
 
 from legacy.forms import HousingCounselorForm
 from v1.s3utils import https_s3_url_prefix
@@ -31,7 +32,11 @@ class HousingCounselorS3URLMixin(object):
 
 
 class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
-    template_name = 'housing_counselor/index.html'
+    def get_template_names(self):
+        if flag_enabled('HUD_TOOL_IMPROVEMENTS'):
+            return 'housing_counselor/improved_index.html'
+        else:
+            return 'housing_counselor/index.html'
 
     def get_context_data(self, **kwargs):
         context = super(HousingCounselorView, self).get_context_data(**kwargs)

@@ -642,6 +642,10 @@ FLAGS = {
 
     # To be enabled when switching the site to use the BCFP logo
     'BCFP_LOGO': {},
+
+    # Improvements to Find A Housing Counselor page
+    # (UI Improvements project, Fall 2018)
+    'HUD_TOOL_IMPROVEMENTS': { 'environment is': 'local' },
 }
 
 
