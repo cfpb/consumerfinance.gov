@@ -8,25 +8,37 @@
 
    Creates related posts markup when given:
 
-   posts:                    TODO: Add data type and description.
+   posts:                               Collection of related posts for a
+                                        page as returned by the
+                                        related_posts() method on CFGOVPage.
 
-   posts.iteritems():        TODO: Add data type and description.
+   block:                               Instance of a RelatedPosts block.
 
-   block:                    TODO: Add data type and description.
+   block.value:                         Dictionary of block field values.
 
-   block.value:              TODO: Add data type and description.
+   block.value.limit:                   Integer setting the number of
+                                        posts that will be shown for each
+                                        type of posts selected.
 
-   block.value.header_title: TODO: Add data type and description.
+   block.value.header_title:            String for the heading at the top
+                                        of the renderd module.
 
-   block.value.show_heading: TODO: Add data type and description.
+   block.value.show_heading:            Boolean indicating whether or not
+                                        the heading and icon for each type
+                                        of related post will be shown.
+                                        Defaults to True.
 
-   is_half_width:            A Boolean indicating whether the posts
-                             should be at half width.
-                             Defaults to False.
+   block.value.alternate_view_more_url: Optional string that replace the
+                                        default URL for the "View more" link
+                                        at the bottom of the rendered module.
 
-   hide_header_slug:         A Boolean indicating whether
-                             the header should be hidden.
-                             Defaults to False.
+   is_half_width:                       Boolean indicating whether the
+                                        posts should be at half width.
+                                        Defaults to False.
+
+   hide_header_slug:                    Boolean indicating whether
+                                        the header should be hidden.
+                                        Defaults to False.
 
    ========================================================================== #}
 
