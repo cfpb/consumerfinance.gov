@@ -324,6 +324,14 @@ class RelatedPosts(blocks.StructBlock):
                    'posts can match any one topic tag.')
     )
 
+    alternate_view_more_url = blocks.CharBlock(
+        required=False,
+        label='Alternate "View more" URL',
+        help_text=('By default, the "View more" link will go to the Activity '
+                   'Log, filtered based on the above parameters. Enter a URL '
+                   'in this field to override that link destination.')
+    )
+
     class Meta:
         icon = 'link'
         template = '_includes/molecules/related-posts.html'
