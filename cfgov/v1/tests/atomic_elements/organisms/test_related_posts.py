@@ -6,8 +6,7 @@ from django.test import RequestFactory, TestCase
 
 from wagtail.wagtailcore.models import Page, Site
 
-import mock
-
+from v1.atomic_elements.organisms import RelatedPosts
 from v1.models.base import CFGOVPage, CFGOVPageCategory
 from v1.models.learn_page import AbstractFilterPage
 from v1.tests.wagtail_pages import helpers
@@ -81,10 +80,7 @@ class RelatedPostsTestCase(TestCase):
         # note that because of the way that the related_posts_category_lookup function
         # works i.e. by consulting a hard-coded object, the specific_categories
         # slot of the dict has to be something that it can actually find.
-
-        self.block = mock.MagicMock()
-        self.block.block_type = 'related_posts'
-        self.block.value = dict({
+        self.block_value = {
             'limit': 3,
             'show_heading': True,
             'header_title': 'Further reading',
@@ -93,7 +89,7 @@ class RelatedPostsTestCase(TestCase):
             'relate_events': False,
             'specific_categories': [],
             'and_filtering': False,
-        })
+        }
 
     def test_related_posts_blog(self):
         """
@@ -103,12 +99,15 @@ class RelatedPostsTestCase(TestCase):
         be no other posts in either of the other categories.
         """
 
-        self.block.value['relate_posts'] = True
-        self.block.value['relate_newsroom'] = False
-        self.block.value['relate_events'] = False
-        self.block.value['specific_categories'] = ['Info for Consumers', 'Policy &amp; Compliance']
+        self.block_value['relate_posts'] = True
+        self.block_value['relate_newsroom'] = False
+        self.block_value['relate_events'] = False
+        self.block_value['specific_categories'] = ['Info for Consumers', 'Policy &amp; Compliance']
 
-        related_posts = self.page_with_authors.related_posts(self.block)
+        related_posts = RelatedPosts.related_posts(
+            self.page_with_authors,
+            self.block_value
+        )
 
         self.assertIn('Blog', related_posts)
         self.assertEqual(len(related_posts['Blog']), 2)
@@ -126,13 +125,16 @@ class RelatedPostsTestCase(TestCase):
         (newsroom, events) to have, any posts in them.
         """
 
-        self.block.value['relate_posts'] = True
-        self.block.value['relate_newsroom'] = False
-        self.block.value['relate_events'] = False
-        self.block.value['limit'] = 1
-        self.block.value['specific_categories'] = ['Info for Consumers', 'Policy &amp; Compliance']
+        self.block_value['relate_posts'] = True
+        self.block_value['relate_newsroom'] = False
+        self.block_value['relate_events'] = False
+        self.block_value['limit'] = 1
+        self.block_value['specific_categories'] = ['Info for Consumers', 'Policy &amp; Compliance']
 
-        related_posts = self.page_with_authors.related_posts(self.block)
+        related_posts = RelatedPosts.related_posts(
+            self.page_with_authors,
+            self.block_value
+        )
 
         self.assertIn('Blog', related_posts)
         self.assertEqual(len(related_posts['Blog']), 1)
@@ -147,12 +149,15 @@ class RelatedPostsTestCase(TestCase):
         the calling page.
         """
 
-        self.block.value['relate_posts'] = True
-        self.block.value['relate_newsroom'] = True
-        self.block.value['relate_events'] = True
-        self.block.value['and_filtering'] = True
+        self.block_value['relate_posts'] = True
+        self.block_value['relate_newsroom'] = True
+        self.block_value['relate_events'] = True
+        self.block_value['and_filtering'] = True
 
-        related_posts = self.page_with_authors.related_posts(self.block)
+        related_posts = RelatedPosts.related_posts(
+            self.page_with_authors,
+            self.block_value
+        )
 
         self.assertNotIn('Blog', related_posts)
         self.assertIn('Newsroom', related_posts)
@@ -167,10 +172,13 @@ class RelatedPostsTestCase(TestCase):
         calling page.
         """
 
-        self.block.value['relate_posts'] = True
-        self.block.value['and_filtering'] = False
+        self.block_value['relate_posts'] = True
+        self.block_value['and_filtering'] = False
 
-        related_posts = self.page_with_authors.related_posts(self.block)
+        related_posts = RelatedPosts.related_posts(
+            self.page_with_authors,
+            self.block_value
+        )
 
         self.assertIn('Blog', related_posts)
         self.assertEqual(len(related_posts['Blog']), 2)
@@ -186,12 +194,15 @@ class RelatedPostsTestCase(TestCase):
         any posts in them.
         """
 
-        self.block.value['relate_posts'] = False
-        self.block.value['relate_newsroom'] = True
-        self.block.value['relate_events'] = False
-        self.block.value['specific_categories'] = ['Op-Ed']
+        self.block_value['relate_posts'] = False
+        self.block_value['relate_newsroom'] = True
+        self.block_value['relate_events'] = False
+        self.block_value['specific_categories'] = ['Op-Ed']
 
-        related_posts = self.page_with_authors.related_posts(self.block)
+        related_posts = RelatedPosts.related_posts(
+            self.page_with_authors,
+            self.block_value
+        )
 
         self.assertIn('Newsroom', related_posts)
         self.assertEqual(len(related_posts['Newsroom']), 1)
@@ -208,12 +219,15 @@ class RelatedPostsTestCase(TestCase):
         that no other categories (newsroom, blog) have any posts in them.
         """
 
-        self.block.value['relate_posts'] = False
-        self.block.value['relate_newsroom'] = False
-        self.block.value['relate_events'] = True
-        self.block.value['specific_categories'] = ['anything', 'can', 'be', 'here']
+        self.block_value['relate_posts'] = False
+        self.block_value['relate_newsroom'] = False
+        self.block_value['relate_events'] = True
+        self.block_value['specific_categories'] = ['anything', 'can', 'be', 'here']
 
-        related_posts = self.page_with_authors.related_posts(self.block)
+        related_posts = RelatedPosts.related_posts(
+            self.page_with_authors,
+            self.block_value
+        )
 
         self.assertIn('Events', related_posts)
         self.assertEqual(len(related_posts), 1)
@@ -233,12 +247,15 @@ class RelatedPostsTestCase(TestCase):
         """
         helpers.save_new_page(self.events_child2, self.archive_events_parent)
 
-        self.block.value['relate_posts'] = False
-        self.block.value['relate_newsroom'] = False
-        self.block.value['relate_events'] = True
-        self.block.value['specific_categories'] = ['anything', 'can', 'be', 'here']
+        self.block_value['relate_posts'] = False
+        self.block_value['relate_newsroom'] = False
+        self.block_value['relate_events'] = True
+        self.block_value['specific_categories'] = ['anything', 'can', 'be', 'here']
 
-        related_posts = self.page_with_authors.related_posts(self.block)
+        related_posts = RelatedPosts.related_posts(
+            self.page_with_authors,
+            self.block_value
+        )
 
         self.assertIn('Events', related_posts)
         self.assertEqual(len(related_posts['Events']), 2)
@@ -255,14 +272,17 @@ class RelatedPostsTestCase(TestCase):
         posts (two, one, and one of each, respectively).
         """
 
-        self.block.value['relate_posts'] = True
-        self.block.value['relate_newsroom'] = True
-        self.block.value['relate_events'] = True
-        self.block.value['specific_categories'] = ['Info for Consumers',
+        self.block_value['relate_posts'] = True
+        self.block_value['relate_newsroom'] = True
+        self.block_value['relate_events'] = True
+        self.block_value['specific_categories'] = ['Info for Consumers',
                                                    'Policy &amp; Compliance',
                                                    'Op-Ed']
 
-        related_posts = self.page_with_authors.related_posts(self.block)
+        related_posts = RelatedPosts.related_posts(
+            self.page_with_authors,
+            self.block_value
+        )
 
         self.assertIn('Blog', related_posts)
         self.assertIn('Newsroom', related_posts)
@@ -292,7 +312,7 @@ class TestGenerateViewMoreUrl(TestCase):
         self.root.add_child(instance=page)
 
         with self.assertRaises(Page.DoesNotExist):
-            page.generate_view_more_url(self.request)
+            RelatedPosts.view_more_url(page, self.request)
 
     def test_no_tags_url_has_no_query_string(self):
         self._create_activity_log_page()
@@ -301,7 +321,7 @@ class TestGenerateViewMoreUrl(TestCase):
         self.root.add_child(instance=page)
 
         self.assertEqual(
-            page.generate_view_more_url(self.request),
+            RelatedPosts.view_more_url(page, self.request),
             '/activity-log/'
         )
 
@@ -314,6 +334,6 @@ class TestGenerateViewMoreUrl(TestCase):
         page.tags.add('foo')
 
         self.assertEqual(
-            page.generate_view_more_url(self.request),
+            RelatedPosts.view_more_url(page, self.request),
             '/activity-log/?topics=bar&topics=foo'
         )

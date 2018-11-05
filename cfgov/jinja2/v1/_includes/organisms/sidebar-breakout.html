@@ -89,12 +89,9 @@
                             {% endif %}
                         {% endif %}
                     {% elif 'related_posts' in block.block_type %}
-                        {% set posts = page.related_posts(block) %}
-                        {% if posts %}
-                            <div class="block {{- 'block__flush-top' if loop.index == 1 else '' -}}">
-                                {{ related_posts.render(posts, block, half_width) }}
-                            </div>
-                        {% endif %}
+                        <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+                            {% include_block block %}
+                        </div>
                     {% elif 'slug' in block.block_type %}
                         <header class="m-slug-header">
                             <h2 class="a-heading">
