@@ -1,4 +1,8 @@
+<<<<<<< HEAD:test/unit_tests/apps/owning-a-home/js/form-explainer/dom-tools-spec.js
 import domTools from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/form-explainer/dom-tools';
+=======
+import domTools from '../../../../../cfgov/unprocessed/apps/owning-a-home/js/dom-tools.js';
+>>>>>>> Convert JS to use ES6 modules:test/unit_tests/apps/owning-a-home/js/dom-tools-spec.js
 
 const HTML_SNIPPET = `
 <div id="test"></div>

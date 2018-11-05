@@ -4,7 +4,11 @@
    ========================================================================== */
 
 import { noopFunct } from './util/standard-type';
+<<<<<<< HEAD
 import VideoPlayer from './VideoPlayer';
+=======
+import * as VideoPlayer from './VideoPlayer';
+>>>>>>> Convert JS to use ES6 modules
 let YoutubePlayer;
 
 const CLASSES = Object.freeze( {

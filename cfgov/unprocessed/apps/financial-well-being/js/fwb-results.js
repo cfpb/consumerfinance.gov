@@ -92,5 +92,4 @@ function init() {
   setUpListeners();
 }
 
-
 export default { init };

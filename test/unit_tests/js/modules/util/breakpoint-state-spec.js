@@ -1,5 +1,9 @@
 import * as breakpointState from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state';
+<<<<<<< HEAD
 import breakpointsConfig from 'cf-core/src/cf-vars-breakpoints';
+=======
+import breakpointsConfig from '../../../../../cfgov/unprocessed/js/config/breakpoints-config';
+>>>>>>> Convert JS to use ES6 modules
 
 let configKeys;
 
@@ -40,8 +44,12 @@ describe( 'breakpoint-state', () => {
       let breakpointStateKey;
 
       // eslint-disable-next-line guard-for-in
+<<<<<<< HEAD
       let rangeKey;
       for ( rangeKey in breakpointsConfig ) {
+=======
+      for ( const rangeKey in breakpointsConfig ) {
+>>>>>>> Convert JS to use ES6 modules
         width = breakpointsConfig[rangeKey].max ||
                 breakpointsConfig[rangeKey].min;
         breakpointStateKey =

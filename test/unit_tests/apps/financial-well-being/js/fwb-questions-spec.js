@@ -1,5 +1,9 @@
 import { simulateEvent } from '../../../../util/simulate-event';
+<<<<<<< HEAD
 import fwbQuestions from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-questions';
+=======
+import * as fwbQuestions from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-questions';
+>>>>>>> Convert JS to use ES6 modules
 
 let formDom;
 let submitBtnDom;

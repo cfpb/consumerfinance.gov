@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import utils from '../utils';
+=======
+import * as utils from '../utils';
+>>>>>>> Convert JS to use ES6 modules
 import defaultActionCreators from './default';
 
 const chartActionCreators = defaultActionCreators();

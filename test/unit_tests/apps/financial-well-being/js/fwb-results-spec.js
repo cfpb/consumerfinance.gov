@@ -1,5 +1,9 @@
 import { simulateEvent } from '../../../../util/simulate-event';
+<<<<<<< HEAD
 import fwbResults from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-results';
+=======
+import * as fwbResults from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-results';
+>>>>>>> Convert JS to use ES6 modules
 
 const SELECTED_CLASS = 'comparison-chart_toggle-button__selected';
 const HIDDEN_CLASS = 'u-hidden';

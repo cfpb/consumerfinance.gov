@@ -1,5 +1,9 @@
 import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
+<<<<<<< HEAD
 
+=======
+const BASE_CLASS = 'm-notification';
+>>>>>>> Convert JS to use ES6 modules
 const HTML_SNIPPET = `
 <div class="m-notification
             m-notification__default">
