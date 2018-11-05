@@ -1,13 +1,17 @@
 // Required modules.
-const Analytics = require( '../modules/Analytics' );
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const ERROR_MESSAGES = require( '../config/error-messages-config' );
-const getClosestElement = require( '../modules/util/dom-traverse' ).closest;
-const Multiselect = require( '../molecules/Multiselect' );
-const Notification = require( '../molecules/Notification' );
-const standardType = require( '../modules/util/standard-type' );
-const validators = require( '../modules/util/validators' );
-const Expandable = require( 'cf-expandables/src/Expandable' );
+import Analytics from '../modules/Analytics';
+import {
+  checkDom,
+  instantiateAll,
+  setInitFlag
+} from '../modules/util/atomic-helpers';
+import ERROR_MESSAGES from '../config/error-messages-config';
+import { closest } from '../modules/util/dom-traverse';
+import Multiselect from '../molecules/Multiselect';
+import Notification from '../molecules/Notification';
+import { UNDEFINED } from '../modules/util/standard-type';
+import * as validators from '../modules/util/validators';
+import Expandable from 'cf-expandables/src/Expandable';
 let _expandable;
 
 /* eslint-disable max-lines-per-function */
@@ -24,7 +28,7 @@ let _expandable;
  */
 function FilterableListControls( element ) {
   const BASE_CLASS = 'o-filterable-list-controls';
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
   const _form = _dom.querySelector( 'form' );
   let _notification;
   let _fieldGroups;
@@ -48,17 +52,14 @@ function FilterableListControls( element ) {
    *   or undefined if it was already initialized.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return UNDEFINED;
     }
 
     /* instantiate multiselects before their containing expandable
        so height of any 'selected choice' buttons is included when
        expandable height is calculated initially */
-    const multiSelects = atomicHelpers.instantiateAll(
-      'select[multiple]',
-      Multiselect
-    );
+    const multiSelects = instantiateAll( 'select[multiple]', Multiselect );
 
     const _expandables = Expandable.init();
     _expandable = _expandables[0];
@@ -184,7 +185,7 @@ function FilterableListControls( element ) {
     let labelDom;
 
     if ( isInGroup && !selector ) {
-      labelDom = getClosestElement( field, 'fieldset' );
+      labelDom = closest( field, 'fieldset' );
       if ( labelDom ) labelDom = labelDom.querySelector( 'legend' );
     } else {
       selector = selector ||
@@ -325,4 +326,4 @@ function FilterableListControls( element ) {
 }
 /* eslint-enable max-lines-per-function */
 
-module.exports = FilterableListControls;
+export default FilterableListControls;

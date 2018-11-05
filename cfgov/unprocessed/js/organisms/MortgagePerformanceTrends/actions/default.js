@@ -1,4 +1,4 @@
-const utils = require( '../utils' );
+import * as utils from '../utils';
 
 const defaultActionCreators = () => {
 
@@ -196,4 +196,4 @@ const defaultActionCreators = () => {
 
 };
 
-module.exports = defaultActionCreators;
+export default defaultActionCreators;

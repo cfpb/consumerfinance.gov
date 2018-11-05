@@ -2,10 +2,9 @@
    Base Video Player Class
    ========================================================================== */
 
-
-const _assign = require( './util/assign' ).assign;
-const _noopFunct = require( './util/standard-type' ).noopFunct;
-const _jsLoader = require( './util/js-loader' );
+import { assign } from './util/assign';
+import { noopFunct } from './util/standard-type';
+import * as jsLoader from './util/js-loader';
 
 // TODO: Remove data-set ponyfill when IE10 support is dropped in this.
 import elemDataset from 'elem-dataset';
@@ -42,8 +41,8 @@ function VideoPlayer( element, options ) {
   _this = this;
   options = options || {};
   this.baseElement = _ensureElement( element, options.createIFrame );
-  const dataSet = _assign( {}, elemDataset( this.baseElement ) );
-  this.iFrameProperties = _assign( dataSet, this.iFrameProperties );
+  const dataSet = assign( {}, elemDataset( this.baseElement ) );
+  this.iFrameProperties = assign( dataSet, this.iFrameProperties );
 
   _setChildElements( this.childElements );
   _initEvents();
@@ -68,7 +67,7 @@ VideoPlayer.extend = function extend( attributes ) {
     return VideoPlayer.apply( this, arguments );
   }
   child.prototype = Object.create( VideoPlayer.prototype );
-  _assign( child.prototype, attributes );
+  assign( child.prototype, attributes );
   child.init = VideoPlayer.init;
 
   return child;
@@ -240,10 +239,10 @@ const API = {
      */
     function onScriptLoad() { _this.state.isScriptLoading = false; }
     this.state.isScriptLoading = true;
-    _jsLoader.loadScript( script || this.SCRIPT_API, callback || onScriptLoad );
+    jsLoader.loadScript( script || this.SCRIPT_API, callback || onScriptLoad );
   },
 
-  init: _noopFunct,
+  init: noopFunct,
 
   iFrameProperties: {
     allowfullscreen: 'true',
@@ -296,7 +295,7 @@ const API = {
   }
 };
 
-_assign( VideoPlayer.prototype, API );
+assign( VideoPlayer.prototype, API );
 
 // Expose public methods.
-module.exports = VideoPlayer;
+export default VideoPlayer;

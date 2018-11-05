@@ -2,12 +2,10 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-
 const BROWSER_LIST = require( '../config/browser-list-config' );
 const envvars = require( '../config/environment' ).envvars;
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
-
 
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
@@ -29,7 +27,7 @@ const COMMON_MODULE_CONFIG = {
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
-        presets: [ [ 'babel-preset-env', {
+        presets: [ [ '@babel/preset-env', {
           targets: {
             browsers: BROWSER_LIST.LAST_2
           },

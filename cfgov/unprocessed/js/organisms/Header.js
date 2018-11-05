@@ -1,8 +1,8 @@
 // Required modules.
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const GlobalSearch = require( '../molecules/GlobalSearch.js' );
-const MegaMenu = require( '../organisms/MegaMenu.js' );
-const standardType = require( '../modules/util/standard-type' );
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import GlobalSearch from '../molecules/GlobalSearch.js';
+import MegaMenu from '../organisms/MegaMenu.js';
+import { UNDEFINED } from '../modules/util/standard-type';
 
 /**
  * Header
@@ -18,7 +18,7 @@ function Header( element ) {
 
   const BASE_CLASS = 'o-header';
 
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
 
   let _globalSearch;
   let _megaMenu;
@@ -31,8 +31,8 @@ function Header( element ) {
    *   or undefined if it was already initialized.
    */
   function init( overlay ) {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return UNDEFINED;
     }
 
     // Semi-opaque overlay that shows over the content when the menu flies out.
@@ -80,4 +80,4 @@ function Header( element ) {
   return this;
 }
 
-module.exports = Header;
+export default Header;

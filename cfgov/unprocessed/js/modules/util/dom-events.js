@@ -14,6 +14,6 @@ function bindEvent( elem, events ) {
   }
 }
 
-module.exports = {
-  bindEvent: bindEvent
+export {
+  bindEvent
 };

@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-let BreakpointHandler;
+import BreakpointHandler from '../../../../cfgov/unprocessed/js/modules/BreakpointHandler';
 let args;
 
 /**
@@ -23,8 +22,6 @@ describe( 'BreakpointHandler', () => {
       leave:      jest.fn(),
       breakpoint: 600
     };
-
-    BreakpointHandler = require( BASE_JS_PATH + 'modules/BreakpointHandler' );
   } );
 
   it( 'should throw an error if passed incomplete arguments', () => {

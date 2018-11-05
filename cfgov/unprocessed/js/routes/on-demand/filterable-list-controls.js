@@ -2,8 +2,7 @@
    Scripts for Filterable List Controls organism
    ========================================================================== */
 
+import { instantiateAll } from '../../modules/util/atomic-helpers';
+import FilterableListControls from '../../organisms/FilterableListControls';
 
-const atomicHelpers = require( '../../modules/util/atomic-helpers' );
-const FilterableListControls = require( '../../organisms/FilterableListControls' );
-
-atomicHelpers.instantiateAll( '.o-filterable-list-controls', FilterableListControls );
+instantiateAll( '.o-filterable-list-controls', FilterableListControls );

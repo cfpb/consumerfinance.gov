@@ -76,8 +76,8 @@ function dfs( node, callback ) {
   }
 }
 
-module.exports = {
-  backtrack: backtrack,
-  bfs:       bfs,
-  dfs:       dfs
+export {
+  backtrack,
+  bfs,
+  dfs
 };

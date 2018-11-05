@@ -1,13 +1,10 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-
-let Analytics;
+import Analytics from '../../../../cfgov/unprocessed/js/modules/Analytics';
 let dataLayerOptions;
 let getDataLayerOptions;
 let UNDEFINED;
 
 describe( 'Analytics', () => {
   beforeAll( () => {
-    Analytics = require( BASE_JS_PATH + 'modules/Analytics' );
     getDataLayerOptions = Analytics.getDataLayerOptions;
   } );
 

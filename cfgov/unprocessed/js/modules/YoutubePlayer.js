@@ -3,9 +3,8 @@
    Extends Video Player Class.
    ========================================================================== */
 
-
-const _noopFunct = require( './util/standard-type' ).noopFunct;
-const VideoPlayer = require( './VideoPlayer' );
+import { noopFunct } from './util/standard-type';
+import * as VideoPlayer from './VideoPlayer';
 let YoutubePlayer;
 
 const CLASSES = Object.freeze( {
@@ -37,8 +36,8 @@ const API = {
       suggestedQuality: 'highres'
     },
     events: {
-      onReady: _noopFunct,
-      onStateChange: _noopFunct
+      onReady: noopFunct,
+      onStateChange: noopFunct
     }
   },
 
@@ -173,4 +172,4 @@ const API = {
 YoutubePlayer = VideoPlayer.extend( API );
 
 // Expose public methods.
-module.exports = YoutubePlayer;
+export default YoutubePlayer;

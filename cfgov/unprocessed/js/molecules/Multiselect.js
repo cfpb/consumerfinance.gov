@@ -1,12 +1,12 @@
 // Required modules.
-const arrayHelpers = require( '../modules/util/array-helpers' );
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const bindEvent = require( '../modules/util/dom-events' ).bindEvent;
-const domCreate = require( '../modules/util/dom-manipulators' ).create;
-const queryOne = require( '../modules/util/dom-traverse' ).queryOne;
-const standardType = require( '../modules/util/standard-type' );
-const strings = require( '../modules/util/strings' );
-const EventObserver = require( '../modules/util/EventObserver' );
+import * as arrayHelpers from '../modules/util/array-helpers';
+import * as atomicHelpers from '../modules/util/atomic-helpers';
+import { bindEvent } from '../modules/util/dom-events';
+import { create } from '../modules/util/dom-manipulators';
+import { queryOne } from '../modules/util/dom-traverse';
+import { UNDEFINED } from '../modules/util/standard-type';
+import { stringMatch, stringValid } from '../modules/util/strings';
+import EventObserver from '../modules/util/EventObserver';
 
 const closeIcon = require(
   'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/close.svg'
@@ -77,7 +77,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function init() {
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+      return UNDEFINED;
     }
 
     _instance = this;
@@ -144,7 +144,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       item = list[i];
 
       // If the value isn't valid kill the script and prompt the developer.
-      if ( !strings.stringValid( item.value ) ) {
+      if ( !stringValid( item.value ) ) {
         // TODO: Update to throw an error and handle the error vs logging.
         console.log( '\'' + item.value + '\' is not a valid value' );
         // TODO: Remove this line if the class is added via markup.
@@ -169,24 +169,24 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function _populateMarkup() {
     // Add a container for our markup
-    _containerDom = domCreate( 'div', {
+    _containerDom = create( 'div', {
       className: BASE_CLASS,
       around:    _dom
     } );
 
     // Create all our markup but wait to manipulate the DOM just once
-    _selectionsDom = domCreate( 'ul', {
+    _selectionsDom = create( 'ul', {
       className: LIST_CLASS + ' ' +
                  LIST_CLASS + '__unstyled ' +
                  BASE_CLASS + '_choices',
       inside:    _containerDom
     } );
 
-    _headerDom = domCreate( 'header', {
+    _headerDom = create( 'header', {
       className: BASE_CLASS + '_header'
     } );
 
-    _searchDom = domCreate( 'input', {
+    _searchDom = create( 'input', {
       className:   BASE_CLASS + '_search ' + TEXT_INPUT_CLASS,
       type:        'text',
       placeholder: _placeholder || 'Choose up to five',
@@ -194,12 +194,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       id:          _name
     } );
 
-    _fieldsetDom = domCreate( 'fieldset', {
+    _fieldsetDom = create( 'fieldset', {
       'className':   BASE_CLASS + '_fieldset u-invisible',
       'aria-hidden': 'true'
     } );
 
-    _optionsDom = domCreate( 'ul', {
+    _optionsDom = create( 'ul', {
       className: LIST_CLASS + ' ' +
                  LIST_CLASS + '__unstyled ' +
                  BASE_CLASS + '_options',
@@ -207,12 +207,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     } );
 
     _optionsData.forEach( function( option ) {
-      const _optionsItemDom = domCreate( 'li', {
+      const _optionsItemDom = create( 'li', {
         'data-option': option.value,
         'class': 'm-form-field m-form-field__checkbox'
       } );
 
-      domCreate( 'input', {
+      create( 'input', {
         'id':     option.value,
         // Type must come before value or IE fails
         'type':    'checkbox',
@@ -223,7 +223,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         'checked': option.checked
       } );
 
-      domCreate( 'label', {
+      create( 'label', {
         'for':         option.value,
         'textContent': option.text,
         'className':   BASE_CLASS + '_label a-label',
@@ -233,12 +233,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       _optionsDom.appendChild( _optionsItemDom );
 
       if ( option.checked ) {
-        const selectionsItemDom = domCreate( 'li', {
+        const selectionsItemDom = create( 'li', {
           'data-option': option.value,
           'class': 'm-form-field m-form-field__checkbox'
         } );
 
-        domCreate( 'label', {
+        create( 'label', {
           'for':         option.value,
           'textContent': option.text,
           'className':   BASE_CLASS + '_label',
@@ -310,11 +310,11 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         option.checked = false;
         _selectionsCount -= 1;
       } else {
-        _selectionsItemDom = domCreate( 'li', {
+        _selectionsItemDom = create( 'li', {
           'data-option': option.value
         } );
 
-        const _selectionsItemLabelDom = domCreate( 'label', {
+        const _selectionsItemLabelDom = create( 'label', {
           'innerHTML': option.text + closeIcon,
           'for':       option.value,
           'inside':    _selectionsItemDom
@@ -354,7 +354,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       _index = -1;
 
       _filteredData = _optionsData.filter( function( item ) {
-        return strings.stringMatch( item.text, value );
+        return stringMatch( item.text, value );
       } );
 
       _filterResults();

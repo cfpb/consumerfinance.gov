@@ -1,7 +1,7 @@
-const ccb = require( 'cfpb-chart-builder' );
-const actions = require( '../actions/map' );
-const Store = require( '../stores/map' );
-const utils = require( '../utils' );
+import * as ccb from 'cfpb-chart-builder';
+import * as actions from '../actions/chart';
+import Store from '../stores/chart';
+import * as utils from '../utils';
 
 const _plurals = {
   state: 'states',
@@ -358,4 +358,4 @@ MortgagePerformanceMap.prototype.renderTooltip = function() {
   };
 };
 
-module.exports = MortgagePerformanceMap;
+export default MortgagePerformanceMap;

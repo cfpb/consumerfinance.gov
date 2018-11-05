@@ -2,7 +2,6 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-
 const BROWSER_LIST = require( '../../../../config/browser-list-config' );
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
@@ -41,7 +40,7 @@ const COMMON_MODULE_CONFIG = {
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
-        presets: [ [ 'babel-preset-env', {
+        presets: [ [ '@babel/preset-env', {
           configPath: __dirname,
           /* Use useBuiltIns: 'usage' and set `debug: true` to see what
              scripts require polyfilling. */
@@ -93,6 +92,5 @@ const conf = {
   ],
   stats: STATS_CONFIG.stats
 };
-
 
 module.exports = { conf };
