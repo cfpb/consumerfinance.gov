@@ -11,7 +11,7 @@
    MP uses a custom API so point our charts to it instead. */
 window.CFPB_CHART_DATA_SOURCE_BASE = '/data-research/mortgages/api/v1/';
 
-import MortgagePerformanceTrends from '../../organisms/MortgagePerformanceTrends';
+import { Chart, Map } from '../../organisms/MortgagePerformanceTrends';
 
-const chart = new MortgagePerformanceTrends.Chart( { container: 'mp-line-chart-container' } );
-const map = new MortgagePerformanceTrends.Map( { container: 'mp-map-container' } );
+const chart = new Chart( { container: 'mp-line-chart-container' } );
+const map = new Map( { container: 'mp-map-container' } );

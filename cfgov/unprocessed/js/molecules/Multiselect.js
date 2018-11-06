@@ -517,4 +517,4 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   return this;
 }
 
-module.exports = Multiselect;
+export default Multiselect;

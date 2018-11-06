@@ -3,7 +3,7 @@
    ========================================================================== */
 
 import FormSubmit from '../../organisms/FormSubmit.js';
-import validators from '../../modules/util/validators';
+import * as validators from '../../modules/util/validators';
 
 const BASE_CLASS = 'o-email-signup';
 const language = document.body.querySelector( '.content' ).lang;

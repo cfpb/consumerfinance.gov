@@ -2,7 +2,7 @@
    Scripts for Feedback Form organism.
    ========================================================================== */
 
-import { COMMENT, OPTION } from '../../config/error-messages-config';
+import ERROR_MESSAGES from '../../config/error-messages-config';
 import FormSubmit from '../../organisms/FormSubmit.js';
 
 const BASE_CLASS = 'o-feedback';
@@ -15,7 +15,7 @@ function validateFeedback( fields ) {
     if ( fields.comment.value ) {
       return UNDEFINED;
     } else if ( fields.comment.hasAttribute( 'required' ) ) {
-      return COMMENT[requiredKey];
+      return ERROR_MESSAGES.COMMENT[requiredKey];
     }
   }
   if ( fields.is_helpful ) {
@@ -24,7 +24,7 @@ function validateFeedback( fields ) {
         return UNDEFINED;
       }
     }
-    return OPTION[requiredKey];
+    return ERROR_MESSAGES.OPTION[requiredKey];
   }
   return UNDEFINED;
 }

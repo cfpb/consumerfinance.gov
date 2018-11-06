@@ -1,7 +1,7 @@
 import * as ccb from 'cfpb-chart-builder';
-import * as actions from '../actions/chart';
+import actions from '../actions/chart';
 import Store from '../stores/chart';
-import * as utils from '../utils';
+import utils from '../utils';
 
 const store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
 

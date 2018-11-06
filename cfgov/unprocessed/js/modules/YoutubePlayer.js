@@ -4,7 +4,7 @@
    ========================================================================== */
 
 import { noopFunct } from './util/standard-type';
-import * as VideoPlayer from './VideoPlayer';
+import VideoPlayer from './VideoPlayer';
 let YoutubePlayer;
 
 const CLASSES = Object.freeze( {

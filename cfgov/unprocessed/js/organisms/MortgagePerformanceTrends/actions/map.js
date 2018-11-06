@@ -95,4 +95,4 @@ mapActionCreators.fetchCounties = ( countyState, shouldZoom ) => dispatch => {
   } );
 };
 
-module.exports = mapActionCreators;
+export default mapActionCreators;
