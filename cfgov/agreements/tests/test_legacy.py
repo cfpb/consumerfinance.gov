@@ -132,11 +132,14 @@ class Views(TestCase):
 
         path = reverse('issuer_search', kwargs={'issuer_slug': issuer.slug})
         resp = self.client.get(path)
-        self.assertTrue(b'page=2' in resp.content)
+        self.assertContains(resp, 'page=2')
+        self.assertNotContains(resp, 'page=1')
         self.assertFalse(b'page=1' in resp.content)
 
         resp = self.client.get(path + '?page=2')
-        self.assertTrue(b'page=1' in resp.content)
+        self.assertContains(resp, 'page=1')
+        self.assertNotContains(resp, 'page=2')
+        self.assertNotContains(resp, 'page=3')
         self.assertFalse(b'page=2' in resp.content)
         self.assertFalse(b'page=3' in resp.content)
 
