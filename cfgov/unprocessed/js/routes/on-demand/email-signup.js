@@ -3,11 +3,7 @@
    ========================================================================== */
 
 import FormSubmit from '../../organisms/FormSubmit.js';
-<<<<<<< HEAD
 import * as validators from '../../modules/util/validators';
-=======
-import validators from '../../modules/util/validators';
->>>>>>> Convert JS to use ES6 modules
 
 const BASE_CLASS = 'o-email-signup';
 const language = document.body.querySelector( '.content' ).lang;

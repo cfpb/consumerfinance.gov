@@ -2,11 +2,7 @@
    Scripts for Feedback Form organism.
    ========================================================================== */
 
-<<<<<<< HEAD
 import ERROR_MESSAGES from '../../config/error-messages-config';
-=======
-import { COMMENT, OPTION } from '../../config/error-messages-config';
->>>>>>> Convert JS to use ES6 modules
 import FormSubmit from '../../organisms/FormSubmit.js';
 
 const BASE_CLASS = 'o-feedback';
@@ -19,11 +15,7 @@ function validateFeedback( fields ) {
     if ( fields.comment.value ) {
       return UNDEFINED;
     } else if ( fields.comment.hasAttribute( 'required' ) ) {
-<<<<<<< HEAD
       return ERROR_MESSAGES.COMMENT[requiredKey];
-=======
-      return COMMENT[requiredKey];
->>>>>>> Convert JS to use ES6 modules
     }
   }
   if ( fields.is_helpful ) {
@@ -32,11 +24,7 @@ function validateFeedback( fields ) {
         return UNDEFINED;
       }
     }
-<<<<<<< HEAD
     return ERROR_MESSAGES.OPTION[requiredKey];
-=======
-    return OPTION[requiredKey];
->>>>>>> Convert JS to use ES6 modules
   }
   return UNDEFINED;
 }

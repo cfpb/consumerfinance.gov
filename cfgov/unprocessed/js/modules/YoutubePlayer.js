@@ -4,11 +4,7 @@
    ========================================================================== */
 
 import { noopFunct } from './util/standard-type';
-<<<<<<< HEAD
 import VideoPlayer from './VideoPlayer';
-=======
-import * as VideoPlayer from './VideoPlayer';
->>>>>>> Convert JS to use ES6 modules
 let YoutubePlayer;
 
 const CLASSES = Object.freeze( {
@@ -46,8 +42,8 @@ const API = {
   },
 
   /**
-   * Adding Youtube player API callback listeners.
-   */
+  * Adding Youtube player API callback listeners.
+  */
   init: function() {
     const youtubeEvents = this.playerOptions.events;
     youtubeEvents.onReady = this.onPlayerReady.bind( this );
@@ -60,11 +56,11 @@ const API = {
 
 
   /**
-   * Handle initializing of Youtube player and embed API script if necessary.
-   * @returns {Object|undefined}
-   *   YouTube player instance from the Google APIs or undefined if
-   *   the Google APIs have not been loaded on the window object.
-   */
+  * Handle initializing of Youtube player and embed API script if necessary.
+  * @returns {Object|undefined}
+  *   YouTube player instance from the Google APIs or undefined if
+  *   the Google APIs have not been loaded on the window object.
+  */
   initPlayer: function() {
     const YouTubePlayer = window.YT;
     let player;
@@ -84,10 +80,10 @@ const API = {
   },
 
   /**
-   * Load Youtube max res image if it exists.
-   * TODO: Replace this method by calling the Youtube data API.
-   * https://developers.google.com/youtube/v3/getting-started#fields
-   */
+  * Load Youtube max res image if it exists.
+  * TODO: Replace this method by calling the Youtube data API.
+  * https://developers.google.com/youtube/v3/getting-started#fields
+  */
   loadImage: function() {
     let defaultImage;
     let maxResImage;
@@ -103,9 +99,9 @@ const API = {
     }
 
     /**
-     * Event handler for loading state change (onload and onerror)
-     * of an image element when the src attribute is set.
-     */
+    * Event handler for loading state change (onload and onerror)
+    * of an image element when the src attribute is set.
+    */
     function onImageStateChange() {
       // 120px is the natural width of the default YouTube image.
       if ( maxResImage.naturalWidth && maxResImage.naturalWidth !== 120 ) {
@@ -116,19 +112,19 @@ const API = {
   },
 
   /**
-   * Callback function called when Youtube player API
-   * is loaded and events have been initialized.
-   * @param {object} event - Youtube event data.
-   */
+  * Callback function called when Youtube player API
+  * is loaded and events have been initialized.
+  * @param {object} event - Youtube event data.
+  */
   onPlayerReady: function( event ) {
     if ( event && event.target ) this.player = event.target;
   },
 
   /**
-   * Callback function called when Youtube player state
-   * has changed.
-   * @param {object} event - Youtube event data.
-   */
+  * Callback function called when Youtube player state
+  * has changed.
+  * @param {object} event - Youtube event data.
+  */
   onPlayerStateChange: function( event ) {
     if ( event.data === window.YT.PlayerState.ENDED ) {
       this.stop();
@@ -136,8 +132,8 @@ const API = {
   },
 
   /**
-   * Action function used to play the Youtube video.
-   */
+  * Action function used to play the Youtube video.
+  */
   play: function() {
     this._super.play.call( this );
     if ( this.state.isPlayerInitialized && this.player ) {
@@ -149,8 +145,8 @@ const API = {
   },
 
   /**
-   * Action function used to play the Youtube video.
-   */
+  * Action function used to play the Youtube video.
+  */
   stop: function() {
     this._super.stop.call( this );
     if ( this.state.isPlayerInitialized && this.player ) {
@@ -165,14 +161,14 @@ const API = {
 };
 
 /**
- * YoutubePlayer
- * @class
- *
- * @classdesc Initializes a new Youtube player.
- * Extends Video Player Class.
- *
- * @returns {YoutubePlayer} An instance.
- */
+* YoutubePlayer
+* @class
+*
+* @classdesc Initializes a new Youtube player.
+* Extends Video Player Class.
+*
+* @returns {YoutubePlayer} An instance.
+*/
 YoutubePlayer = VideoPlayer.extend( API );
 
 // Expose public methods.
