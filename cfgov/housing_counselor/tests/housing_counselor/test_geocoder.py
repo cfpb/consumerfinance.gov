@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mock import patch
 
-from legacy.housing_counselor.geocoder import (
+from housing_counselor.geocoder import (
     BulkZipCodeGeocoder, ZipCodeBasedCounselorGeocoder, geocode_counselors
 )
 
@@ -10,7 +10,7 @@ from legacy.housing_counselor.geocoder import (
 class TestGeocodeCounselors(TestCase):
     def test_calls_zipcode_based_geocoder_and_passes_zipcodes(self):
         zipcodes = object()
-        cls = 'legacy.housing_counselor.geocoder.ZipCodeBasedCounselorGeocoder'
+        cls = 'housing_counselor.geocoder.ZipCodeBasedCounselorGeocoder'
         with patch(cls) as p:
             geocode_counselors([], zipcodes=zipcodes)
             p.assert_called_once_with(zipcodes=zipcodes)

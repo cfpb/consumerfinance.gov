@@ -7,7 +7,7 @@ import six
 import tempfile
 from unittest import TestCase
 
-from legacy.housing_counselor.generator import (
+from housing_counselor.generator import (
     distance_in_miles, generate_counselor_json, get_counselor_json_files
 )
 

@@ -24,11 +24,11 @@ from ask_cfpb.views import (
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
 )
-from legacy.views import token_provider
-from legacy.views.complaint import ComplaintLandingView
-from legacy.views.housing_counselor import (
+from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
+from legacy.views import token_provider
+from legacy.views.complaint import ComplaintLandingView
 from regulations3k.views import redirect_eregs
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm

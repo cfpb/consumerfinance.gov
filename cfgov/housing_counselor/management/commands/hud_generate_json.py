@@ -4,10 +4,10 @@ import logging
 
 from django.core.management.base import BaseCommand, CommandError
 
-from legacy.housing_counselor.cleaner import clean_counselors
-from legacy.housing_counselor.fetcher import fetch_counselors
-from legacy.housing_counselor.generator import generate_counselor_json
-from legacy.housing_counselor.geocoder import (
+from housing_counselor.cleaner import clean_counselors
+from housing_counselor.fetcher import fetch_counselors
+from housing_counselor.generator import generate_counselor_json
+from housing_counselor.geocoder import (
     GazetteerZipCodeFile, GeocodedZipCodeCsv, geocode_counselors
 )
 
