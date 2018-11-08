@@ -51,14 +51,6 @@
 .job-quote .dept-name{font-style:italic;color:#666;}
 .job-quote.withspace{margin-bottom:15px;}
 
-/* JOB CATEGORY LISTING */
-#job-list-arena{margin-bottom:20px;}
-
-  /* JOB SEARCH METHODS */
-  #job-search-methods{text-align:right;padding:10px;}
-  #job-search-methods a{padding:2px 7px 2px 7px;border-radius:3px;}
-  #job-search-methods a.sel{background:#A2C0CC;color:white;box-shadow:0 0 1px #777;border-bottom:0px;}
-  
   /* JOB SEARCH LIST */
   .job-search-list{padding:0px;margin:0px;}
   .job-search-list li{padding:5px;margin:3px;list-style:none;width:306px;

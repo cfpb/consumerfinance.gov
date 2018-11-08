@@ -1,6 +1,14 @@
 {% extends "front/base_nonresponsive.html" %}
 {% load static from staticfiles %}
 
+{% block jquery %}
+<script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
+{% endblock %}
+
+{% block nemo_js %}
+<script src="{% static 'nemo/_/js/functions.js' %}"></script>
+{% endblock %}
+
 {% block title %}Students and young consumers &gt; Consumer Financial Protection Bureau{% endblock %}
 
 {% block breadcrumbs %}
