@@ -2,6 +2,7 @@ import os
 from zipfile import ZipFile
 
 from django.core.management.base import BaseCommand, CommandError
+from django.utils.encoding import force_text
 
 from agreements.management.commands import _util
 from agreements.models import Agreement, Issuer
@@ -35,8 +36,8 @@ class Command(BaseCommand):
         parser.add_argument(
             '--windows',
             action='store_true',
-            help='Will process a zip file created via Windows, assuming '
-                 'windows-1252 encoding.'
+            help='DEPRECATED. Will process a zip file created via Windows, '
+                 'assuming windows-1252 encoding.'
         )
 
     def handle(self, *args, **options):
@@ -48,8 +49,16 @@ class Command(BaseCommand):
 
         agreements_zip = ZipFile(options['path'])
 
-        all_pdfs = [name for name in agreements_zip.namelist()
-                    if name.upper().endswith('.PDF')]
+        # Zip files default to IBM Code Page 437 encoding unless a specific bit
+        # is set. See Appendix D in the zip file spec:
+        # https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
+        all_pdfs = [
+            info.filename if (info.flag_bits & 0x800) == 0
+            else force_text(info.filename, 'cp437')
+            for info in agreements_zip.infolist()
+            if info.filename.upper().endswith('.PDF')
+        ]
+
         blanks = empty_folder_test(agreements_zip, all_pdfs)
         if blanks:
             error_msg = (
@@ -69,5 +78,4 @@ class Command(BaseCommand):
                 agreements_zip,
                 pdf_path,
                 output_file,
-                windows=options['windows'],
                 upload=do_upload)

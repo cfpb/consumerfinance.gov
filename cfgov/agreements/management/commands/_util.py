@@ -45,19 +45,17 @@ def get_issuer(name):
 
 
 def save_agreement(agreements_zip, pdf_path, outfile,
-                   windows=False, upload=False):
+                   upload=False):
     uri_hostname = 'https://files.consumerfinance.gov'
     s3_prefix = 'a/assets/credit-card-agreements/pdf/'
 
-    if six.PY2:
-        zipinfo = agreements_zip.getinfo(pdf_path)
-    else:
-        zipinfo = agreements_zip.getinfo(force_text(pdf_path, 'cp437'))
+    zipinfo = agreements_zip.getinfo(pdf_path)
 
-    if windows:
-        path = force_text(pdf_path, 'windows-1252')
-    else:
-        path = pdf_path
+    if six.PY3:  # pragma: no cover
+        path = force_text(pdf_path)
+    else:  # pragma: no cover
+        path = pdf_path.decode('cp1252')
+
     try:
         issuer_name, filename = path.split('/')
     except ValueError:

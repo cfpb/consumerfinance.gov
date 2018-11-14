@@ -1,7 +1,7 @@
 import os.path
+import six
 import unittest
 import zipfile
-from six import StringIO
 from zipfile import ZipFile
 
 from django.core import management
@@ -74,7 +74,7 @@ class TestDataLoad(TestCase):
         'agreements.management.commands._util.upload_to_s3'
     )
     def test_import_with_s3_calls_print_statement(self, _):
-        buf = StringIO()
+        buf = six.StringIO()
         management.call_command(
             'import_agreements',
             '--path=' + sample_zip,
@@ -102,14 +102,17 @@ class TestManagementUtils(TestCase):
 
     def test_save_agreement(self):
         agreements_zip = zipfile.ZipFile(sample_zip)
-        # windows-1252 encoded:
-        raw_path = b'Bankers\x92 Bank of Kansas/1.pdf'
-        buf = StringIO()
+
+        if six.PY3:  # pragma: no cover
+            raw_path = b'Bankers\x92 Bank of Kansas/1.pdf'.decode('cp437')
+        else:  # pragma: no cover
+            raw_path = 'Bankers\x92 Bank of Kansas/1.pdf'
+
+        buf = six.StringIO()
         agreement = _util.save_agreement(
             agreements_zip,
             raw_path,
             buf,
-            windows=True,
             upload=False)
 
         self.assertEqual(agreement.file_name, '1.pdf')
@@ -119,6 +122,6 @@ class TestManagementUtils(TestCase):
                                   'AWS_STORAGE_BUCKET_NAME': 'fake'})
     @mock.patch('boto3.client')
     def test_upload_to_s3(self, mock_upload):
-        fake_pdf = StringIO("Not a real PDF")
+        fake_pdf = six.StringIO("Not a real PDF")
         _util.upload_to_s3(fake_pdf, 'bank/agreement.pdf')
         mock_upload.assert_called_once()
