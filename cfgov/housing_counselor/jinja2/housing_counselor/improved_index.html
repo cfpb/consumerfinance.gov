@@ -14,6 +14,11 @@
 {% endblock %}
 
 {% block hero %}
+<script type="text/javascript">
+    var string = "{{ api_json}}";
+    console.log( string );
+</script>
+
 <section class="m-hero">
     <div class="m-hero_wrapper wrapper">
         <div class="m-hero_text">
@@ -59,7 +64,7 @@
                                     <form class="o-form" action="#">
                                         <div class="m-form-field-with-button">
                                             <div class="m-form-field">
-                                                <label class="a-label a-label__heading" for="zip">
+                                                <label class="a-label a-label__heading" for="zipcode">
                                                     Search by ZIP code:
                                                 </label>
                                                 <input id="zip" type="text" name="zipcode" class="a-text-input a-text-input__full" value="52246">
@@ -90,6 +95,7 @@
                             </div>
                         </div>
                     </div>
+                    {% if zipcode %}
                     <div class="block">
                         <div class="results-header">
                             <h2 class="h4">Displaying the 10 locations closest to ZIP code 52246</h2>
@@ -123,41 +129,46 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for counselor in api_json.counseling_agencies %}
                                 <tr>
                                     <td data-label="Agency">
                                         <div class="rich-text">
                                             <p>
-                                                <span class="result-number">1.</span>
-                                                <a class="a-link a-link__icon" href=""><span class="a-link_text">Name</span>
+                                                <span class="result-number">{{ loop.index }}.</span>
+                                                <a class="a-link a-link__icon" href="{{ counselor.weburl }}"><span class="a-link_text">{{ counselor.nme }}</span>
                                                   <svg class="cf-icon-svg" viewbox="0 0 790.1 1200" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M740.1 178.8H449.5c-27.6 0-50 22.4-50 50s22.4 50 50 50h169.9L518.2 379.9c-14.7-6.2-30.5-9.4-46.4-9.4H120c-66.2.1-119.9 53.8-120 120v351.8c.1 66.2 53.8 119.9 120 120h351.8c66.2-.1 119.9-53.8 120-120V490.6c0-12.6-2-25-5.8-37l104.1-104.1v169.9c0 27.6 22.4 50 50 50s50-22.4 50-50V228.8c0-27.7-22.4-50-50-50zM491.8 842.3c-.1 11-9 19.9-20 20H120c-11-.1-19.9-9-20-20V490.6c.1-11 9-19.9 20-20h307.5L267 631.1c-19.4 19.6-19.3 51.3.3 70.7 19.5 19.3 50.9 19.3 70.4 0l154-154 .1 294.5z"></path></svg></a><b><br></b>Address<br>
-                                            Iowa City, IA 52240-8132</p>
-                                            <p><b>Website:</b> <a class="a-link a-link__icon" href=""><span class="a-link_text">http://www.example.com</span> <svg class="cf-icon-svg" viewbox="0 0 790.1 1200" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M740.1 178.8H449.5c-27.6 0-50 22.4-50 50s22.4 50 50 50h169.9L518.2 379.9c-14.7-6.2-30.5-9.4-46.4-9.4H120c-66.2.1-119.9 53.8-120 120v351.8c.1 66.2 53.8 119.9 120 120h351.8c66.2-.1 119.9-53.8 120-120V490.6c0-12.6-2-25-5.8-37l104.1-104.1v169.9c0 27.6 22.4 50 50 50s50-22.4 50-50V228.8c0-27.7-22.4-50-50-50zM491.8 842.3c-.1 11-9 19.9-20 20H120c-11-.1-19.9-9-20-20V490.6c.1-11 9-19.9 20-20h307.5L267 631.1c-19.4 19.6-19.3 51.3.3 70.7 19.5 19.3 50.9 19.3 70.4 0l154-154 .1 294.5z"></path></svg></a><b><br></b>{{ counselor.adr1 }}
+                                            {% if counselor.adr2 and counselor.adr2 != ' '  %}
+                                                <br>{{ counselor.adr2 }}
+                                            {% endif %}<br>
+                                            {{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}
+                                            </p>
+                                            <p><b>Website:</b> <a class="a-link a-link__icon" href="{{ counselor.weburl }}"><span class="a-link_text">{{ counselor.weburl }}</span> <svg class="cf-icon-svg" viewbox="0 0 790.1 1200" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M740.1 178.8H449.5c-27.6 0-50 22.4-50 50s22.4 50 50 50h169.9L518.2 379.9c-14.7-6.2-30.5-9.4-46.4-9.4H120c-66.2.1-119.9 53.8-120 120v351.8c.1 66.2 53.8 119.9 120 120h351.8c66.2-.1 119.9-53.8 120-120V490.6c0-12.6-2-25-5.8-37l104.1-104.1v169.9c0 27.6 22.4 50 50 50s50-22.4 50-50V228.8c0-27.7-22.4-50-50-50zM491.8 842.3c-.1 11-9 19.9-20 20H120c-11-.1-19.9-9-20-20V490.6c.1-11 9-19.9 20-20h307.5L267 631.1c-19.4 19.6-19.3 51.3.3 70.7 19.5 19.3 50.9 19.3 70.4 0l154-154 .1 294.5z"></path></svg></a><br>
-                                            <b>Phone:</b> 000-000-0000<br>
-                                            <b>Email Address:</b> example@example.com<br>
-                                            <b>Languages:</b> English</p>
+                                            <b>Phone:</b> {{ counselor.phone1 }}<br>
+                                            <b>Email Address:</b> {{ counselor.email }}<br>
+                                            <b>Languages:</b> {{ counselor.languages|join(', ') }}</p>
                                         </div>
                                     </td>
                                     <td data-label="Services">
                                         <div class="rich-text">
                                             <ul>
-                                                <li>Mortgage Delinquency and Default Resolution Counse<br></li>
-                                                <li>Financial Management/Budget Counseling<br></li>
-                                                <li>Services for Homeless Counseling<br></li>
-                                                <li>Pre-purchase Counseling<br></li>
-                                                <li>Pre-purchase Homebuyer Education Workshops<br></li>
-                                                <li>Rental Housing Counseling<br></li>
+                                                {% for service in counselor.services %}
+                                                <li>{{ service }}</li>
+                                                {% endfor %}
                                             </ul>
                                             <p></p>
                                         </div>
                                     </td>
                                     <td data-label="Distance">
                                         <div class="rich-text">
-                                            <p>3.1 miles</p>
+                                            <p>{{ counselor.distance|round( 1 ) }} miles</p>
                                         </div>
                                     </td>
                                 </tr>
+                                {% endfor %}
+                            {% endif %}
+                                
                             </tbody>
                         </table>
                     </div>
