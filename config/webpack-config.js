@@ -17,6 +17,7 @@ const COMMON_BUNDLE_NAME = 'common.js';
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
+
     /* The `exclude` rule is a double negative.
        It excludes all of `node_modules/` but it then un-excludes modules that
        start with `cf-` and `cfpb-` (CF components and cfpb-chart-builder).

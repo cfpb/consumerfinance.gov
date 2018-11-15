@@ -66,7 +66,7 @@ describe( 'The Regs3K analytics', () => {
   it( 'should handle navigation clicks on regs links', () => {
     let event = { target: {
       href: '/policy-compliance/rulemaking/regulations/1002/11/'
-    } };
+    }};
     event = analytics.handleNavClick( event );
 
     expect( event ).toEqual( {
@@ -81,7 +81,7 @@ describe( 'The Regs3K analytics', () => {
   it( 'should handle navigation clicks on interp links', () => {
     let mockEvent = { target: {
       href: '/policy-compliance/rulemaking/regulations/1002/Interp-2/'
-    } };
+    }};
     mockEvent = analytics.handleNavClick( mockEvent );
 
     expect( mockEvent ).toEqual( {
@@ -96,14 +96,14 @@ describe( 'The Regs3K analytics', () => {
   it( 'should handle navigation clicks on non-regs links', () => {
     let mockEvent = { target: {
       href: 'https://example.com'
-    } };
+    }};
     mockEvent = analytics.handleNavClick( mockEvent );
 
     expect( mockEvent ).toBeUndefined();
   } );
 
   it( 'should handle navigation clicks on non-links', () => {
-    let mockEvent = { target: {} };
+    let mockEvent = { target: {}};
     mockEvent = analytics.handleNavClick( mockEvent );
 
     expect( mockEvent ).toBeUndefined();
