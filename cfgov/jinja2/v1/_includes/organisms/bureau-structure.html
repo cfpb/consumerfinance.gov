@@ -39,7 +39,7 @@
                 </button>
             </li>
             {% for org in category.data %}
-            {{ _node('li', org, category.sub_title) }}
+            {{ _node(org, 'li', category.sub_title) }}
             {% endfor %}
             {% if loop.last %}
             <li>
@@ -98,14 +98,14 @@
 
    Renders an org chart node when given:
 
-   tagName:   A string representing the encompassing element tag name.
-
    org:       A dictionary object representing an organization.
+
+   tagName:   A string representing the encompassing element tag name.
 
    sub_title: A string representing a sub title for an organization.
 
    ========================================================================== #}
-{% macro _node(tagName="div", org, sub_title="text") -%}
+{% macro _node(org, tagName="div", sub_title="text") -%}
 {% set has_children = org.offices | list | length %}
 
 <{{ tagName }} class="o-bureau-structure_node">
