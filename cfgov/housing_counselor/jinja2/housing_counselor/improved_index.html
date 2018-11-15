@@ -62,7 +62,7 @@
                                                 <label class="a-label a-label__heading" for="zip">
                                                     Search by ZIP code:
                                                 </label>
-                                                <input id="zip" type="text" name="zip" class="a-text-input a-text-input__full" value="52246">
+                                                <input id="zip" type="text" name="zipcode" class="a-text-input a-text-input__full" value="52246">
                                             </div>
                                             <div class="m-form-field-with-button_wrapper">
                                                 <input class="a-btn a-btn__full-on-xs" type="submit" value="Find a counselor">
@@ -196,7 +196,10 @@
     <script type='text/javascript'
             src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
     <script>
-    var hud_data = {{ api_json | tojson }};
+    var hud_data = {};
+    {% if api_json %}
+    hud_data = {{ api_json | tojson }};
+    {% endif %}
     var mapbox_access_token = "{{ mapbox_access_token }}";
     </script>
 
