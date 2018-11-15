@@ -6,7 +6,11 @@
 {% endblock %}
 
 {% block css %}
+<link rel='stylesheet'
+      href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' />
 {{ super() }}
+<link rel="stylesheet"
+      href="{{ static('apps/find-a-housing-counselor/css/main.css') }}">
 {% endblock %}
 
 {% block hero %}
@@ -76,7 +80,13 @@
                                 </div>
                             </div>
                             <div class="col-9">
-                                MAP GOES HERE
+                                <!-- Mapbox map is ignored during voiceover navigation
+                                     as set by aria-hidden. -->
+                                <div id="hud_hca_api_map_container"
+                                     class="hud_hca_api_map col"
+                                     aria-hidden="true">
+                                    <div id="hud_hca_api_map_canvas"></div>
+                                </div><!-- end .hud_hca_api_map -->
                             </div>
                         </div>
                     </div>
@@ -180,3 +190,25 @@
         </div>
     </main>
 {% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+    <script type='text/javascript'
+            src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+    <script>
+    var hud_data = {{ api_json | tojson }};
+    var mapbox_access_token = "{{ mapbox_access_token }}";
+    </script>
+
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/find-a-housing-counselor/js/hud.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}
