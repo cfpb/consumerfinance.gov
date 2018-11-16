@@ -6,8 +6,8 @@ import EventObserver from '../../modules/util/EventObserver';
 import {
   BEHAVIOR_PREFIX,
   JS_HOOK,
-  noopFunct,
-  UNDEFINED
+  UNDEFINED,
+  noopFunct
 } from '../../modules/util/standard-type';
 
 /**

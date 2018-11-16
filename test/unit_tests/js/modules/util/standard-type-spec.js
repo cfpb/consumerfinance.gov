@@ -1,7 +1,7 @@
 import {
   JS_HOOK,
-  noopFunct,
-  UNDEFINED
+  UNDEFINED,
+  noopFunct
 } from '../../../../../cfgov/unprocessed/js/modules/util/standard-type';
 
 describe( 'standard-type', () => {
