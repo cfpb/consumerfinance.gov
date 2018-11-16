@@ -2,4 +2,5 @@
    Scripts for Video Player module.
    ========================================================================== */
 
-require( '../../modules/YoutubePlayer' ).init( '.video-player__youtube' );
+import YoutubePlayer from '../../modules/YoutubePlayer';
+YoutubePlayer.init( '.video-player__youtube' );

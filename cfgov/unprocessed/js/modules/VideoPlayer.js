@@ -6,10 +6,12 @@ import { assign } from './util/assign';
 import { noopFunct } from './util/standard-type';
 import * as jsLoader from './util/js-loader';
 
-// TODO: Remove data-set ponyfill when IE10 support is dropped in this.
+// TODO: Remove data-set ponyfill when IE10 support is dropped.
 import elemDataset from 'elem-dataset';
 
-const DOM_INVALID = require( '../config/error-messages-config' ).DOM.INVALID;
+import ERROR_MESSAGES from '../config/error-messages-config';
+
+const DOM_INVALID = ERROR_MESSAGES.DOM.INVALID;
 
 const CLASSES = Object.freeze( {
   VIDEO_PLAYER_SELECTOR:     '.video-player',
