@@ -1,7 +1,7 @@
-require( '../../modules/util/add-email-popup' );
-require( '../on-demand/ask-autocomplete' );
-require( '../on-demand/read-more' );
-const Analytics = require( '../../modules/Analytics' );
+import '../../modules/util/add-email-popup';
+import '../on-demand/ask-autocomplete';
+import '../on-demand/read-more';
+import Analytics from '../../modules/Analytics';
 
 const analyticsData = document.querySelector( '.analytics-data' );
 
