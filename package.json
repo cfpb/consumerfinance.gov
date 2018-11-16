@@ -62,8 +62,8 @@
     "xdr": "0.5.3"
   },
   "devDependencies": {
-    "@babel/core": "7.1.2",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/core": "7.1.6",
+    "@babel/preset-env": "7.1.6",
     "autoprefixer": "8.6.5",
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "8.0.4",
@@ -86,8 +86,8 @@
     "psi": "3.1.0",
     "sauce-connect-tunnel": "0.2.1",
     "selenium-webdriver": "4.0.0-alpha.1",
-    "snyk": "1.108.0",
-    "through2": "2.0.4",
+    "snyk": "1.108.2",
+    "through2": "3.0.0",
     "wcag": "0.3.0"
   },
   "scripts": {
