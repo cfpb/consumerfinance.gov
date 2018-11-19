@@ -67,7 +67,6 @@
   },
   "devDependencies": {
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "23.6.0",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "core-js": "2.5.7",
