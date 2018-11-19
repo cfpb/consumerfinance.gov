@@ -13,34 +13,6 @@
       href="{{ static('apps/find-a-housing-counselor/css/main.css') }}">
 {% endblock %}
 
-{% block hero %}
-
-<section class="m-hero">
-    <div class="m-hero_wrapper wrapper">
-        <div class="m-hero_text">
-            <h1 class="m-hero_heading">Find a Housing Counselor</h1>
-            <div class="m-hero_subhead">
-                {% if zipcode %}
-                    <div>
-                      <h2>Context:</h2>
-                      <p><b>zipcode</b>: {{ zipcode }}</p>
-                      <p><b>pdf_url</b>: {{ pdf_url }}</p>
-                      <p><b>api_json</b>: {{ api_json }}</p>
-                    </div>
-                    <br>
-                {% else %}
-                    <p> Lorem ipsum dolor amet Lomo dreamcatcher roof party tofu vegan woke four dollar toast whatever readymade 3 wolf moon kinfolk intelligentsia mixtape. Keffiyeh palo santo pickled, you probably haven't heard of them cray venmo portland bushwick. Drinking vinegar readymade pinterest brunch fanny pack occupy narwhal humblebrag four dollar toast. Four loko iceland tumblr, master cleanse williamsburg live-edge iPhone freegan fashion axe banh mi semiotics.
-                    </p>
-                {% endif %}
-            </div>
-        </div>
-        <div class="m-hero_image-wrapper">
-            <div class="m-hero_image"></div>
-        </div>
-    </div>
-</section>
-{% endblock %}
-
 {% block content %}
     <main class="content" id="main" lang="en">
         <div class="wrapper content_wrapper">
