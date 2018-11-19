@@ -32,10 +32,15 @@
                                 <form class="o-form" action="#">
                                     <div class="m-form-field-with-button">
                                         <div class="m-form-field">
-                                            <label class="a-label a-label__heading" for="zipcode">
+                                            <label class="a-label a-label__heading" for="hud_hca_api_query">
                                                 Search by ZIP code:
                                             </label>
-                                            <input id="zip" type="text" name="zipcode" class="a-text-input a-text-input__full" value="52246">
+                                            <input id="hud_hca_api_query"
+                                                   type="text"
+                                                   name="zipcode"
+                                                   class="a-text-input a-text-input__full"
+                                                   value="{% if zipcode == false %}{{ zipcode }}{% endif %}"
+                                                   placeholder="Please enter a 5-digit ZIP code">
                                         </div>
                                         <div class="m-form-field-with-button_wrapper">
                                             <button class="a-btn a-btn__full-on-xs" type="submit">Find a counselor</button>
