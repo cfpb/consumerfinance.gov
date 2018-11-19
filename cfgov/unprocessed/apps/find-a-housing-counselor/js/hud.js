@@ -7,7 +7,7 @@ HUD Counselors by zip code. See hud_api_replace for more details on the
 API queries. -wernerc */
 
 /* checkZip() is an easy, useful function that takes a string
-and returns a valid zip code, or returns false.
+and returns true if it's a valid zip code, or returns false.
 NOTE: 'Valid' means 5 numeric characters,
 not necessarily 'existant' and 'actually addressable.' */
 function checkZip( zip ) {
