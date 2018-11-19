@@ -25,7 +25,10 @@
 
     {% block content_main %}
     <div class="nice-padding external-links">
-        <p class="external-links-intro">Enter an external URL to see where it occurs on our site. If a link appears within more than one section of a given page, such as the body and sidebar, the results will list that page multiple times--once for each occurrence.</p>
+        <p class="external-links-intro">Enter an external link to see a list of
+          pages and snippets that contain that URL. Each page result will
+          appear only once, regardless of how many times a searched URL is
+          present on a page.</p>
         <form method="post">
             {% csrf_token %}
             <div class="field iconfield field-small">
@@ -45,11 +48,11 @@
                         There are no matching pages or snippets.
                     {% endif %}
                 </p>
-            
+
                 {% if num_page_results %}
                     <h2 class="external-links-page-results">Page results</h2>
                     {% include "./_list_explore_revised.html" with show_parent=1 allow_navigation=0 %}
-                    
+
                 {% endif %}
 
                 {% if num_snippet_results %}
@@ -125,7 +128,7 @@
                         </tbody>
                     </table>
                 {% endif%}
-            
+
 
         {% endif %}
     </div>
