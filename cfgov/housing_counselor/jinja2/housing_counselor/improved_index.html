@@ -49,8 +49,7 @@
                     <div class="block block__flush-top block__flush-top">
                         <h1>Find a housing counselor</h1>
                         <div class="rich-text">
-                            <p>Housing counselors throughout the country can provide advice on buying a home, renting, defaults, foreclosures, and credit issues. Using the search box below, you can find one near you. The counseling agencies on this list are approved by the U.S. Department of Housing and Urban Development (HUD) and they can offer independent advice about whether a particular set of mortgage loan terms is a good fit based on your objectives and circumstances, often at little or no cost to you. This list will show you several approved agencies in your area. There is also a <a class="a-link a-link__icon" href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm"><span class="a-link_text">list of nationwide HUD-approved counseling agencies</span> <svg class="cf-icon-svg" viewbox="0 0 790.1 1200" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M740.1 178.8H449.5c-27.6 0-50 22.4-50 50s22.4 50 50 50h169.9L518.2 379.9c-14.7-6.2-30.5-9.4-46.4-9.4H120c-66.2.1-119.9 53.8-120 120v351.8c.1 66.2 53.8 119.9 120 120h351.8c66.2-.1 119.9-53.8 120-120V490.6c0-12.6-2-25-5.8-37l104.1-104.1v169.9c0 27.6 22.4 50 50 50s50-22.4 50-50V228.8c0-27.7-22.4-50-50-50zM491.8 842.3c-.1 11-9 19.9-20 20H120c-11-.1-19.9-9-20-20V490.6c.1-11 9-19.9 20-20h307.5L267 631.1c-19.4 19.6-19.3 51.3.3 70.7 19.5 19.3 50.9 19.3 70.4 0l154-154 .1 294.5z"></path></svg></a>.</p>
+                            <p>Housing counselors throughout the country can provide advice on buying a home, renting, defaults, foreclosures, and credit issues. Using the search box below, you can find one near you. The counseling agencies on this list are approved by the U.S. Department of Housing and Urban Development (HUD) and they can offer independent advice about whether a particular set of mortgage loan terms is a good fit based on your objectives and circumstances, often at little or no cost to you. This list will show you several approved agencies in your area. There is also a <a class="a-link a-link__icon" href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm"><span class="a-link_text">list of nationwide HUD-approved counseling agencies</span> {{ svg_icon('external-link') }}</a>.</p>
                         </div>
                     </div>
                     <div class="block">
@@ -69,7 +68,7 @@
                                                 <input class="a-btn a-btn__full-on-xs" type="submit" value="Find a counselor">
                                                 <div class="m-form-field-with-button_info">
                                                     <p>
-                                                        This tool is powered by <a class="a-link a-link__icon" href="https://data.hud.gov/housing_counseling.html"><span class="a-link_text">HUD's</span> <svg class="cf-icon-svg" viewBox="0 0 790.1 1200" xmlns="http://www.w3.org/2000/svg"> <path d="M740.1 178.8H449.5c-27.6 0-50 22.4-50 50s22.4 50 50 50h169.9L518.2 379.9c-14.7-6.2-30.5-9.4-46.4-9.4H120c-66.2.1-119.9 53.8-120 120v351.8c.1 66.2 53.8 119.9 120 120h351.8c66.2-.1 119.9-53.8 120-120V490.6c0-12.6-2-25-5.8-37l104.1-104.1v169.9c0 27.6 22.4 50 50 50s50-22.4 50-50V228.8c0-27.7-22.4-50-50-50zM491.8 842.3c-.1 11-9 19.9-20 20H120c-11-.1-19.9-9-20-20V490.6c.1-11 9-19.9 20-20h307.5L267 631.1c-19.4 19.6-19.3 51.3.3 70.7 19.5 19.3 50.9 19.3 70.4 0l154-154 .1 294.5z"></path></svg></a> official list of housing counselors.
+                                                        This tool is powered by <a class="a-link a-link__icon" href="https://data.hud.gov/housing_counseling.html"><span class="a-link_text">HUD's</span> {{ svg_icon('external-link') }}</a> official list of housing counselors.
                                                     </p>
                                                     <p>
                                                         If you notice errors in the housing counselor data, contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
@@ -132,18 +131,20 @@
                                             <p>
                                                 <span class="result-number">{{ loop.index }}.</span>
                                                 <a class="a-link a-link__icon" href="{{ counselor.weburl }}"><span class="a-link_text">{{ counselor.nme }}</span>
-                                                  <svg class="cf-icon-svg" viewbox="0 0 790.1 1200" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M740.1 178.8H449.5c-27.6 0-50 22.4-50 50s22.4 50 50 50h169.9L518.2 379.9c-14.7-6.2-30.5-9.4-46.4-9.4H120c-66.2.1-119.9 53.8-120 120v351.8c.1 66.2 53.8 119.9 120 120h351.8c66.2-.1 119.9-53.8 120-120V490.6c0-12.6-2-25-5.8-37l104.1-104.1v169.9c0 27.6 22.4 50 50 50s50-22.4 50-50V228.8c0-27.7-22.4-50-50-50zM491.8 842.3c-.1 11-9 19.9-20 20H120c-11-.1-19.9-9-20-20V490.6c.1-11 9-19.9 20-20h307.5L267 631.1c-19.4 19.6-19.3 51.3.3 70.7 19.5 19.3 50.9 19.3 70.4 0l154-154 .1 294.5z"></path></svg></a><b><br></b>{{ counselor.adr1 }}
+                                                  {{ svg_icon('external-link') }}</a><b><br></b>{{ counselor.adr1 }}
                                             {% if counselor.adr2 and counselor.adr2 != ' '  %}
                                                 <br>{{ counselor.adr2 }}
                                             {% endif %}<br>
                                             {{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}
                                             </p>
-                                            <p><b>Website:</b> <a class="a-link a-link__icon" href="{{ counselor.weburl }}"><span class="a-link_text">{{ counselor.weburl }}</span> <svg class="cf-icon-svg" viewbox="0 0 790.1 1200" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M740.1 178.8H449.5c-27.6 0-50 22.4-50 50s22.4 50 50 50h169.9L518.2 379.9c-14.7-6.2-30.5-9.4-46.4-9.4H120c-66.2.1-119.9 53.8-120 120v351.8c.1 66.2 53.8 119.9 120 120h351.8c66.2-.1 119.9-53.8 120-120V490.6c0-12.6-2-25-5.8-37l104.1-104.1v169.9c0 27.6 22.4 50 50 50s50-22.4 50-50V228.8c0-27.7-22.4-50-50-50zM491.8 842.3c-.1 11-9 19.9-20 20H120c-11-.1-19.9-9-20-20V490.6c.1-11 9-19.9 20-20h307.5L267 631.1c-19.4 19.6-19.3 51.3.3 70.7 19.5 19.3 50.9 19.3 70.4 0l154-154 .1 294.5z"></path></svg></a><br>
-                                            <b>Phone:</b> {{ counselor.phone1 }}<br>
-                                            <b>Email Address:</b> {{ counselor.email }}<br>
-                                            <b>Languages:</b> {{ counselor.languages|join(', ') }}</p>
+                                            <p><b>Website:</b>
+                                                <a class="a-link a-link__icon" href="{{ counselor.weburl }}">
+                                                    <span class="a-link_text">{{ counselor.weburl }}</span> {{ svg_icon('external-link') }}
+                                                </a><br>
+                                                <b>Phone:</b> {{ counselor.phone1 }}<br>
+                                                <b>Email Address:</b> {{ counselor.email }}<br>
+                                                <b>Languages:</b> {{ counselor.languages|join(', ') }}
+                                            </p>
                                         </div>
                                     </td>
                                     <td data-label="Services">
@@ -172,8 +173,7 @@
                         <div class="o-full-width-text-group">
                             <div class="m-full-width-text">
                                 <h3>Paperwork Reduction Act statement</h3>
-                                <p class="u-mb0">According to the Paperwork Reduction Act of 1995, an agency may not conduct or sponsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number. The OMB control number for this collection is <a class="a-link a-link__icon" href="https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025"><span class="a-link_text">3170-0025</span> <svg class="cf-icon-svg" viewbox="0 0 790.1 1200" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M740.1 178.8H449.5c-27.6 0-50 22.4-50 50s22.4 50 50 50h169.9L518.2 379.9c-14.7-6.2-30.5-9.4-46.4-9.4H120c-66.2.1-119.9 53.8-120 120v351.8c.1 66.2 53.8 119.9 120 120h351.8c66.2-.1 119.9-53.8 120-120V490.6c0-12.6-2-25-5.8-37l104.1-104.1v169.9c0 27.6 22.4 50 50 50s50-22.4 50-50V228.8c0-27.7-22.4-50-50-50zM491.8 842.3c-.1 11-9 19.9-20 20H120c-11-.1-19.9-9-20-20V490.6c.1-11 9-19.9 20-20h307.5L267 631.1c-19.4 19.6-19.3 51.3.3 70.7 19.5 19.3 50.9 19.3 70.4 0l154-154 .1 294.5z"></path></svg></a>. It expires on 04/30/2016. Using this tool to generate a list of HUD-Approved Housing Counseling Agencies is voluntary however, if you are an entity subject to 12 CFR § 1024 (78 FR 6856 (Jan. 31, 2013)), you are required to provide this list as specified in the regulation. Comments regarding this collection of information, including suggestions for improving the usefulness of the information, or suggestions for reducing the burden to respond to this collection should be submitted to the Bureau of Consumer Financial Protection (Attention: PRA Office), 1700 G Street NW, Washington, DC 20552, or by email to <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.<br></p>
+                                <p class="u-mb0">According to the Paperwork Reduction Act of 1995, an agency may not conduct or sponsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number. The OMB control number for this collection is <a class="a-link a-link__icon" href="https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025"><span class="a-link_text">3170-0025</span> {{ svg_icon('external-link') }}</a>. It expires on 04/30/2016. Using this tool to generate a list of HUD-Approved Housing Counseling Agencies is voluntary however, if you are an entity subject to 12 CFR § 1024 (78 FR 6856 (Jan. 31, 2013)), you are required to provide this list as specified in the regulation. Comments regarding this collection of information, including suggestions for improving the usefulness of the information, or suggestions for reducing the burden to respond to this collection should be submitted to the Bureau of Consumer Financial Protection (Attention: PRA Office), 1700 G Street NW, Washington, DC 20552, or by email to <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.<br></p>
 
                                 <div class="block
                                             block__flush-bottom
