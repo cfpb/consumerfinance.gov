@@ -143,7 +143,7 @@
                                                 </a><br>
                                                 <b>Phone:</b> {{ counselor.phone1 }}<br>
                                                 <b>Email Address:</b> {{ counselor.email }}<br>
-                                                <b>Languages:</b> {{ counselor.languages|join(', ') }}
+                                                <b>Languages:</b> {{ counselor.languages | join( ', ' ) }}
                                             </p>
                                         </div>
                                     </td>
@@ -159,7 +159,7 @@
                                     </td>
                                     <td data-label="Distance">
                                         <div class="rich-text">
-                                            <p>{{ counselor.distance|round( 1 ) }} miles</p>
+                                            <p>{{ counselor.distance | round( 1 ) }} miles</p>
                                         </div>
                                     </td>
                                 </tr>
