@@ -6,49 +6,38 @@ let UNDEFINED;
 HUD Counselors by zip code. See hud_api_replace for more details on the
 API queries. -wernerc */
 
-/* This class represents a namespace of functions that should be exposed
-for testing purposes. */
-const cfpb_hud_hca = ( function() {
-  /* check_zip() is an easy, useful function that takes a string and returns a valid zip code, or returns false.
-  NOTE: 'Valid' means 5 numeric characters, not necessarily 'existant' and 'actually addressable.' */
-  const check_zip = function( zip ) {
-    if ( ( zip === null ) || ( zip === UNDEFINED ) || ( zip === false ) ) {
-      return false;
-    }
-
-    zip = zip.toString().replace( /[^0-9]+/g, '' );
-    zip = zip.slice( 0, 5 );
-    if ( zip.length === 5 ) {
-      return zip;
-    }
-
+/* checkZip() is an easy, useful function that takes a string
+and returns true if it's a valid zip code, or returns false.
+NOTE: 'Valid' means 5 numeric characters,
+not necessarily 'existant' and 'actually addressable.' */
+function checkZip( zip ) {
+  if ( zip === null || zip === UNDEFINED || zip === false ) {
     return false;
+  }
 
-
-  };
-
-  /* check_data_structure() just makes sure your data has the correct structure before you start
-  requesting properties that don't exist in generate_html() and update_map() */
-  const check_hud_data = function( data ) {
-    if ( ( data === null ) || ( data === 0 ) || ( data === UNDEFINED ) ) {
-      return false;
-    } else if ( data.hasOwnProperty( 'error' ) ) {
-      return 'error';
-    } else if ( !data.hasOwnProperty( 'counseling_agencies' ) ) {
-      return false;
-    } else if ( !data.hasOwnProperty( 'zip' ) ) {
-      return false;
-    }
-
+  zip = zip.toString().replace( /[^0-9]+/g, '' );
+  zip = zip.slice( 0, 5 );
+  if ( zip.length === 5 ) {
     return true;
+  }
 
-  };
+  return false;
+}
 
-  return {
-    check_zip: check_zip,
-    check_hud_data: check_hud_data
-  };
-} )();
+/* checkHudData() just makes sure your data has the correct structure
+before you start requesting properties that don't exist in
+generate_html() and update_map() */
+function checkHudData( data ) {
+  if ( data === null || data === 0 || data === UNDEFINED ) {
+    return false;
+  } else if ( data.hasOwnProperty( 'error' ) ||
+              !data.hasOwnProperty( 'counseling_agencies' ) ||
+              !data.hasOwnProperty( 'zip' ) ) {
+    return false;
+  }
+
+  return true;
+}
 
 ( function( $, L ) { // start jQuery capsule
 
@@ -56,18 +45,24 @@ const cfpb_hud_hca = ( function() {
   let marker_array = [];
   let zip_marker = null;
 
-
-  /* get_url_zip() is a simple function to retrieve the zip variable from the URL */
-  function get_url_zip() {
+  /* getUrlZip() is a simple function to retrieve the zip variable from the URL */
+  function getUrlZip() {
     let zip = '';
     const keyvals = window.location.href.slice( window.location.href.indexOf( '?' ) + 1 ).split( '&' );
+    const addressRegex = new RegExp( '^[0-9]{5}(?:-[0-9]{4})?', 'g' );
     $.each( keyvals, function( i, val ) {
       const parts = val.split( '=' );
-      if ( parts[0] === 'zip' ) {
+      if ( parts[0] === 'zipcode' ) {
         zip = parts[1];
+        // Pick zipcode out of query parameter value. Strips off '#' if present.
+        zip = addressRegex.exec( zip );
+        if ( zip !== null && zip.length > 0 ) {
+          zip = zip[0];
+        }
       }
     } );
-    return cfpb_hud_hca.check_zip( zip );
+
+    return checkZip( zip ) ? zip : '';
   }
 
   /* initialize_map() sets options and creates the map */
@@ -98,7 +93,7 @@ const cfpb_hud_hca = ( function() {
     map.setZoom( 2 );
     map.setView( [ 40, -80 ] );
 
-    if ( cfpb_hud_hca.check_hud_data( data ) === true ) {
+    if ( checkHudData( data ) === true ) {
       const lat = data.zip.lat;
       const lng = data.zip.lng;
       const ziplatlng = [ lat, lng ];
@@ -190,7 +185,7 @@ const cfpb_hud_hca = ( function() {
     } );
 
     // If there is a GET value for zip, load that zip immediately.
-    const getzip = get_url_zip();
+    const getzip = getUrlZip();
     if ( getzip !== '' ) {
       $( '#hud_hca_api_query' ).val( getzip );
       $( '.hud_hca_api_form_button' ).trigger( 'click' );
@@ -199,3 +194,8 @@ const cfpb_hud_hca = ( function() {
   } );
 
 } )( jQuery, window.L ); // end anonymous function capsule
+
+module.exports = {
+  checkZip,
+  checkHudData
+};

@@ -13,34 +13,6 @@
       href="{{ static('apps/find-a-housing-counselor/css/main.css') }}">
 {% endblock %}
 
-{% block hero %}
-
-<section class="m-hero">
-    <div class="m-hero_wrapper wrapper">
-        <div class="m-hero_text">
-            <h1 class="m-hero_heading">Find a Housing Counselor</h1>
-            <div class="m-hero_subhead">
-                {% if zipcode %}
-                    <div>
-                      <h2>Context:</h2>
-                      <p><b>zipcode</b>: {{ zipcode }}</p>
-                      <p><b>pdf_url</b>: {{ pdf_url }}</p>
-                      <p><b>api_json</b>: {{ api_json }}</p>
-                    </div>
-                    <br>
-                {% else %}
-                    <p> Lorem ipsum dolor amet Lomo dreamcatcher roof party tofu vegan woke four dollar toast whatever readymade 3 wolf moon kinfolk intelligentsia mixtape. Keffiyeh palo santo pickled, you probably haven't heard of them cray venmo portland bushwick. Drinking vinegar readymade pinterest brunch fanny pack occupy narwhal humblebrag four dollar toast. Four loko iceland tumblr, master cleanse williamsburg live-edge iPhone freegan fashion axe banh mi semiotics.
-                    </p>
-                {% endif %}
-            </div>
-        </div>
-        <div class="m-hero_image-wrapper">
-            <div class="m-hero_image"></div>
-        </div>
-    </div>
-</section>
-{% endblock %}
-
 {% block content %}
     <main class="content" id="main" lang="en">
         <div class="wrapper content_wrapper">
@@ -52,34 +24,45 @@
                             <p>Housing counselors throughout the country can provide advice on buying a home, renting, defaults, foreclosures, and credit issues. Using the search box below, you can find one near you. The counseling agencies on this list are approved by the U.S. Department of Housing and Urban Development (HUD) and they can offer independent advice about whether a particular set of mortgage loan terms is a good fit based on your objectives and circumstances, often at little or no cost to you. This list will show you several approved agencies in your area. There is also a <a class="a-link a-link__icon" href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm"><span class="a-link_text">list of nationwide HUD-approved counseling agencies</span> {{ svg_icon('external-link') }}</a>.</p>
                         </div>
                     </div>
-                    <div class="block">
-                        <div class="o-full-width-text-group content-l">
-                            <div class="col-3">
-                                <div class="o-well">
-                                    <form class="o-form" action="#">
-                                        <div class="m-form-field-with-button">
-                                            <div class="m-form-field">
-                                                <label class="a-label a-label__heading" for="zipcode">
-                                                    Search by ZIP code:
-                                                </label>
-                                                <input id="zip" type="text" name="zipcode" class="a-text-input a-text-input__full" value="52246">
-                                            </div>
-                                            <div class="m-form-field-with-button_wrapper">
-                                                <input class="a-btn a-btn__full-on-xs" type="submit" value="Find a counselor">
-                                                <div class="m-form-field-with-button_info">
-                                                    <p>
-                                                        This tool is powered by <a class="a-link a-link__icon" href="https://data.hud.gov/housing_counseling.html"><span class="a-link_text">HUD's</span> {{ svg_icon('external-link') }}</a> official list of housing counselors.
-                                                    </p>
-                                                    <p>
-                                                        If you notice errors in the housing counselor data, contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
-                                                    </p>
-                                                </div>
+                    <div class="block block__border">
+
+                        <section class="o-featured-content-module
+                                        o-featured-content-module__right">
+                            <div class="o-featured-content-module_text">
+                                <form class="o-form" action="#">
+                                    <div class="m-form-field-with-button">
+                                        <div class="m-form-field">
+                                            <label class="a-label a-label__heading" for="hud_hca_api_query">
+                                                Search by ZIP code:
+                                            </label>
+                                            <input id="hud_hca_api_query"
+                                                   type="text"
+                                                   name="zipcode"
+                                                   class="a-text-input a-text-input__full"
+                                                   value="{% if zipcode == false %}{{ zipcode }}{% endif %}"
+                                                   placeholder="Please enter a 5-digit ZIP code">
+                                        </div>
+                                        <div class="m-form-field-with-button_wrapper">
+                                            <button class="a-btn a-btn__full-on-xs" type="submit">Find a counselor</button>
+                                            <div class="m-form-field-with-button_info">
+                                                <p>
+                                                    This tool is powered by
+                                                    <a class="a-link a-link__icon"
+                                                       href="https://data.hud.gov/housing_counseling.html">
+                                                    <span class="a-link_text">HUD's</span>
+                                                    {{ svg_icon('external-link') }}</a> official list of housing counselors.
+                                                </p>
+                                                <p>
+                                                    If you notice errors in the housing counselor data,
+                                                    contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
+                                                </p>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
+
                             </div>
-                            <div class="col-9">
+                            <div class="o-featured-content-module_visual">
                                 <!-- Mapbox map is ignored during voiceover navigation
                                      as set by aria-hidden. -->
                                 <div id="hud_hca_api_map_container"
@@ -88,7 +71,8 @@
                                     <div id="hud_hca_api_map_canvas"></div>
                                 </div><!-- end .hud_hca_api_map -->
                             </div>
-                        </div>
+                        </section>
+
                     </div>
                     {% if zipcode %}
                     <div class="block">
@@ -165,7 +149,7 @@
                                 </tr>
                                 {% endfor %}
                             {% endif %}
-                                
+
                             </tbody>
                         </table>
                     </div>
