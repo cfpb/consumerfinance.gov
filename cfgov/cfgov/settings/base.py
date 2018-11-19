@@ -1,5 +1,4 @@
 import os
-import sys
 
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
@@ -7,7 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 import dj_database_url
 from unipath import Path
 
-from ..util import admin_emails
+from core import split_testing_clusters
+from cfgov.util import admin_emails
 
 
 # Repository root is 4 levels above this file
@@ -169,6 +169,8 @@ TEMPLATES = [
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
+
+                'flags.jinja2tags.flags',
 
                 'core.jinja2tags.filters',
                 'regulations3k.jinja2tags.regulations',
@@ -651,7 +653,7 @@ FLAGS = {
     #
     # Ask CFPB page titles as H1s instead of H2s
     'ASK_CFPB_H1': {
-        'in split testing cluster': core.split_testing_clusters['ASK_CFPB_H1']
+        'in split testing cluster': split_testing_clusters['ASK_CFPB_H1']
     },
 }
 

@@ -1,8 +1,10 @@
-import re
+from itertools import chain
 
 from django.conf import settings
 
 from flags import conditions
+
+from core.split_testing_clusters import CLUSTERS
 
 
 def _get_deploy_environment():
@@ -20,15 +22,7 @@ def environment_is_not(environment, **kwargs):
 
 
 @conditions.register('in split testing cluster')
-def split_test_is_active(clusters, request, **kwargs):
-    match = re.match(request.path, r'^/ask-cfpb/.+-(\d+)/$')
-    if match:
-        for cluster in clusters:
-            if match.groups(1) in cluster['answer_ids']:
-                return True
-    else:
-        for cluster in clusters:
-            if request.path in cluster['page_path']:
-                return True
-
-    return False
+def in_split_testing_cluster(cluster_group, page, **kwargs):
+    clusters = CLUSTERS[cluster_group]
+    lookup_value = getattr(page, 'split_test_id', page.id)
+    return lookup_value in chain(*clusters.values())
