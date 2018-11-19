@@ -6,7 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 import dj_database_url
 from unipath import Path
 
-from core import split_testing_clusters
 from cfgov.util import admin_emails
 
 
@@ -42,7 +41,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailimages',
     'wagtail.wagtailembeds',
     'wagtail.contrib.wagtailfrontendcache',
-#    'wagtail.wagtailsearch', # TODO: conflicts with haystack, will need to revisit.
+    # 'wagtail.wagtailsearch',  # TODO: conflicts w/ haystack, need to revisit
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',
@@ -50,6 +49,7 @@ INSTALLED_APPS = (
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.table_block',
     'wagtail.contrib.wagtailroutablepage',
+
     'localflavor',
     'modelcluster',
     'taggit',
@@ -62,6 +62,7 @@ INSTALLED_APPS = (
     'ask_cfpb',
     'agreements',
     'overextends',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,6 +71,7 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+
     'storages',
     'data_research',
     'v1',
@@ -86,14 +88,22 @@ INSTALLED_APPS = (
 
 OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
-    {'import': 'paying_for_college',
-     'apps': ('paying_for_college', 'haystack',)},
+    {
+        'import': 'paying_for_college',
+        'apps': ('paying_for_college', 'haystack',)
+    },
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
-    {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
+    {
+        'import': 'complaint_search',
+        'apps': ('complaint_search', 'rest_framework')
+    },
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
-    {'import': 'teachers_digital_platform', 'apps': ('teachers_digital_platform', 'mptt', 'haystack')},
+    {
+        'import': 'teachers_digital_platform',
+        'apps': ('teachers_digital_platform', 'mptt', 'haystack')
+    },
 ]
 
 POSTGRES_APPS = []
@@ -249,12 +259,13 @@ STATICFILES_DIRS = [
 
 ALLOWED_HOSTS = ['*']
 
-EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
-                          r'^https:\/\/twitter\.com\/cfpb$',
-                          r'^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$',
-                          r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
-                          r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
-                          )
+EXTERNAL_URL_WHITELIST = (
+    r'^https:\/\/facebook\.com\/cfpb$',
+    r'^https:\/\/twitter\.com\/cfpb$',
+    r'^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$',  # noqa 501
+    r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
+    r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
+)
 
 # Wagtail settings
 
@@ -265,8 +276,13 @@ TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = 'v1.auth_forms.UserCreationForm'
 WAGTAIL_USER_EDIT_FORM = 'v1.auth_forms.UserEditForm'
 
-SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
-SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')
+SHEER_ELASTICSEARCH_SERVER = (os.environ.get('ES_HOST', 'localhost')
+                              + ':'
+                              + os.environ.get('ES_PORT', '9200'))
+SHEER_ELASTICSEARCH_INDEX = os.environ.get(
+    'SHEER_ELASTICSEARCH_INDEX',
+    'content'
+)
 ELASTICSEARCH_BIGINT = 50000
 
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
@@ -300,7 +316,7 @@ SHEER_ELASTICSEARCH_SETTINGS = \
     }
 
 
-#LEGACY APPS
+# LEGACY APPS
 
 STATIC_VERSION = ''
 
@@ -333,13 +349,13 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     'tokenizer': 'lowercase',
                     'filter': ['haystack_edgengram']
                 },
-                'synonym_en' : {
-                    'tokenizer' : 'whitespace',
-                    'filter' : ['synonyms_en']
+                'synonym_en': {
+                    'tokenizer': 'whitespace',
+                    'filter': ['synonyms_en']
                 },
-                'synonym_es' : {
-                    'tokenizer' : 'whitespace',
-                    'filter' : ['synonyms_es']
+                'synonym_es': {
+                    'tokenizer': 'whitespace',
+                    'filter': ['synonyms_es']
                 },
             },
             'tokenizer': {
@@ -368,11 +384,11 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                 },
                 'synonyms_en': {
                     'type': 'synonym',
-                    'synonyms_path' : 'analysis/synonyms_en.txt'
+                    'synonyms_path': 'analysis/synonyms_en.txt'
                 },
                 'synonyms_es': {
                     'type': 'synonym',
-                    'synonyms_path' : 'analysis/synonyms_es.txt'
+                    'synonyms_path': 'analysis/synonyms_es.txt'
                 },
             }
         }
@@ -393,11 +409,11 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_S3_ACCESS_KEY_ID = os.environ['AWS_S3_ACCESS_KEY_ID']
     AWS_S3_SECRET_ACCESS_KEY = os.environ['AWS_S3_SECRET_ACCESS_KEY']
     if os.environ.get('AWS_S3_CUSTOM_DOMAIN'):
-        AWS_S3_CUSTOM_DOMAIN=os.environ['AWS_S3_CUSTOM_DOMAIN']
+        AWS_S3_CUSTOM_DOMAIN = os.environ['AWS_S3_CUSTOM_DOMAIN']
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_LOCATION, '')
 
-# Govdelivery
+# GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
 # LOAD OPTIONAL APPS
@@ -413,7 +429,8 @@ for app in OPTIONAL_APPS:
     except ImportError:
         pass
 
-WAGTAIL_ENABLE_UPDATE_CHECK = False  # Removes wagtail version update check banner from admin page.
+# Removes wagtail version update check banner from admin page.
+WAGTAIL_ENABLE_UPDATE_CHECK = False
 
 # Email
 ADMINS = admin_emails(os.environ.get('ADMIN_EMAILS'))
@@ -433,7 +450,10 @@ CFPB_COMMON_PASSWORD_RULES = [
     [r'[A-Z]', 'Password must include at least one capital letter'],
     [r'[a-z]', 'Password must include at least one lowercase letter'],
     [r'[0-9]', 'Password must include at least one digit'],
-    [r'[@#$%&!]', 'Password must include at least one special character (@#$%&!)'],
+    [
+        r'[@#$%&!]',
+        'Password must include at least one special character (@#$%&!)'
+    ],
 ]
 # cfpb_common login rules
 # in seconds
@@ -472,30 +492,31 @@ if ENABLE_AKAMAI_CACHE_PURGE:
 # CSP Whitelists
 
 # These specify what is allowed in <script> tags.
-CSP_SCRIPT_SRC = ("'self'",
-                  "'unsafe-inline'",
-                  "'unsafe-eval'",
-                  '*.google-analytics.com',
-                  '*.googletagmanager.com',
-                  'tagmanager.google.com',
-                  'optimize.google.com',
-                  'ajax.googleapis.com',
-                  'search.usa.gov',
-                  'api.mapbox.com',
-                  'js-agent.newrelic.com',
-                  'dnn506yrbagrg.cloudfront.net',
-                  'bam.nr-data.net',
-                  '*.youtube.com',
-                  '*.ytimg.com',
-                  'trk.cetrk.com',
-                  'universal.iperceptions.com',
-                  'cdn.mouseflow.com',
-                  'n2.mouseflow.com',
-                  'about:',
-                  'connect.facebook.net',
-                  'www.federalregister.gov',
-                  'storage.googleapis.com'
-                  )
+CSP_SCRIPT_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    "'unsafe-eval'",
+    '*.google-analytics.com',
+    '*.googletagmanager.com',
+    'tagmanager.google.com',
+    'optimize.google.com',
+    'ajax.googleapis.com',
+    'search.usa.gov',
+    'api.mapbox.com',
+    'js-agent.newrelic.com',
+    'dnn506yrbagrg.cloudfront.net',
+    'bam.nr-data.net',
+    '*.youtube.com',
+    '*.ytimg.com',
+    'trk.cetrk.com',
+    'universal.iperceptions.com',
+    'cdn.mouseflow.com',
+    'n2.mouseflow.com',
+    'about:',
+    'connect.facebook.net',
+    'www.federalregister.gov',
+    'storage.googleapis.com',
+)
 
 # These specify valid sources of CSS code
 CSP_STYLE_SRC = (
@@ -505,7 +526,8 @@ CSP_STYLE_SRC = (
     'tagmanager.google.com',
     'optimize.google.com',
     'api.mapbox.com',
-    'fonts.googleapis.com',)
+    'fonts.googleapis.com',
+)
 
 # These specify valid image sources
 CSP_IMG_SRC = (
@@ -530,7 +552,8 @@ CSP_IMG_SRC = (
     'stats.search.usa.gov',
     'data:',
     'www.facebook.com',
-    'www.gravatar.com')
+    'www.gravatar.com',
+)
 
 # These specify what URL's we allow to appear in frames/iframes
 CSP_FRAME_SRC = (
@@ -543,20 +566,29 @@ CSP_FRAME_SRC = (
     'universal.iperceptions.com',
     'www.facebook.com',
     'staticxx.facebook.com',
-    'mediasite.yorkcast.com')
+    'mediasite.yorkcast.com',
+)
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = ("'self'", "data:", "fast.fonts.net", "fonts.google.com", "fonts.gstatic.com")
+CSP_FONT_SRC = (
+    "'self'",
+    "data:",
+    "fast.fonts.net",
+    "fonts.google.com",
+    "fonts.gstatic.com",
+)
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to.
-CSP_CONNECT_SRC = ("'self'",
-                   '*.google-analytics.com',
-                   '*.tiles.mapbox.com',
-                   'bam.nr-data.net',
-                   'files.consumerfinance.gov',
-                   's3.amazonaws.com',
-                   'public.govdelivery.com',
-                   'api.iperceptions.com')
+CSP_CONNECT_SRC = (
+    "'self'",
+    '*.google-analytics.com',
+    '*.tiles.mapbox.com',
+    'bam.nr-data.net',
+    'files.consumerfinance.gov',
+    's3.amazonaws.com',
+    'public.govdelivery.com',
+    'api.iperceptions.com'
+)
 
 # Feature flags
 # All feature flags must be listed here with a dict of any hard-coded
@@ -579,7 +611,8 @@ FLAGS = {
     # When enabled, display a "technical issues" banner on /complaintdatabase.
     'CCDB_TECHNICAL_ISSUES': {},
 
-    # When enabled, use Wagtail for /company-signup/ (instead of selfregistration app)
+    # When enabled, use Wagtail for /company-signup/
+    # (instead of selfregistration app)
     'WAGTAIL_COMPANY_SIGNUP': {},
 
     # IA changes to mega menu for user testing
@@ -647,13 +680,13 @@ FLAGS = {
 
     # Improvements to Find A Housing Counselor page
     # (UI Improvements project, Fall 2018)
-    'HUD_TOOL_IMPROVEMENTS': { 'environment is': 'local' },
+    'HUD_TOOL_IMPROVEMENTS': {'environment is': 'local'},
 
-    # Split Testing Flags
-    #
+    # SPLIT TESTING FLAGS
+
     # Ask CFPB page titles as H1s instead of H2s
     'ASK_CFPB_H1': {
-        'in split testing cluster': split_testing_clusters['ASK_CFPB_H1']
+        'in split testing cluster': 'ASK_CFPB_H1'
     },
 }
 
@@ -694,8 +727,8 @@ if DEPLOY_ENVIRONMENT == 'beta':
 EMAIL_POPUP_URLS = {
     'debt': [
         '/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/',
-        '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',
-        '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
+        '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',  # noqa 501
+        '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',   # noqa 501
         '/consumer-tools/debt-collection/',
     ],
     'oah': [
