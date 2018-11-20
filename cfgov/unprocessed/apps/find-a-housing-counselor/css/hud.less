@@ -168,8 +168,6 @@ a:hover, a:focus {
 
 .hud_hca_api_results_actions {
     float: right;
-    margin-top: 1em;
-    width: 48.75%;
 }
 
 .hud_hca_api_results_total p {
@@ -178,11 +176,14 @@ a:hover, a:focus {
     padding: 0 1em;
 }
 
-.hud_hca_api_results_actions p {
-    font-size: 0.875em;
-    line-height: 1.85;
-    padding: 0 1em;
+.hud_hca_api_results_actions {
     text-align: right;
+
+    & abbr,
+    & svg {
+      border-bottom: none;
+      text-decoration: none;
+    }
 }
 
 .hud_hca_api_results_print {
