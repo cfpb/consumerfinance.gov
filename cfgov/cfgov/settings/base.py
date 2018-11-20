@@ -112,7 +112,8 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 
     'core.middleware.ParseLinksMiddleware',
-    'core.middleware.DownstreamCacheControlMiddleware'
+    'core.middleware.DownstreamCacheControlMiddleware',
+    'flags.middleware.FlagConditionsMiddleware',
 )
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
@@ -169,6 +170,8 @@ TEMPLATES = [
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
+
+                'flags.jinja2tags.flags',
 
                 'core.jinja2tags.filters',
                 'regulations3k.jinja2tags.regulations',
