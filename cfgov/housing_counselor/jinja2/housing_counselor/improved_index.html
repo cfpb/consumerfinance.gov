@@ -69,10 +69,10 @@
                                                     {{ svg_icon( 'warning-round' ) }}
                                                     <div class="m-notification_content" role="alert">
                                                         <div class="h4 m-notification_message">
-                                                            You have entered an invalid ZIP code.
+                                                            Sorry, you have entered an invalid ZIP code.
                                                         </div>
                                                         <div class="m-notification_explanation">
-                                                            Enter a valid five-digit ZIP code.
+                                                            Please enter a valid five-digit ZIP code below.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,23 +126,27 @@
                                        m-list__horizontal
                                        hud_hca_api_results_actions">
                                 <li class="m-list_item">
-                                    <button class="a-btn a-btn__link"
-                                       id="hud_print-page-link">
-                                        Print list
+                                    <a class="a-link a-link__icon"
+                                       id="hud_print-page-link" href="#">
+                                        <span class="a-link_text">
+                                            Print list
+                                        </span>
                                         {{ svg_icon( 'print' ) }}
-                                    </button>
+                                    </a>
                                 </li>
                                 <li class="m-list_item">
-                                    <a class="a-btn a-btn__link"
+                                    <a class="a-link a-link__icon"
                                        id="generate-pdf-link"
                                        href="{{ pdf_url }}"
                                        target="_blank"
                                        rel="noopener noreferrer">
-                                        Save list as
-                                        <abbr title="Portable Document Format">
-                                          PDF
-                                        </abbr>
-                                        {{ svg_icon( 'save' ) }}
+                                        <span class="a-link_text">
+                                            Save list as
+                                            <abbr title="Portable Document Format">
+                                              PDF
+                                            </abbr>
+                                        </span>
+                                        {{ svg_icon( 'download' ) }}
                                     </a>
                                 </li>
                             </ul>
