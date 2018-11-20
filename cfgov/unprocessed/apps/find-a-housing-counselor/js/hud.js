@@ -39,11 +39,14 @@ function checkHudData( data ) {
   return true;
 }
 
+// Set up print results list button functionality, if it exists.
 const printPageLink = document.querySelector( '#hud_print-page-link' );
-printPageLink.addEventListener( 'click', evt => {
-  evt.preventDefault();
-  window.print();
-} );
+if ( printPageLink ) {
+  printPageLink.addEventListener( 'click', evt => {
+    evt.preventDefault();
+    window.print();
+  } );
+}
 
 ( function( $, L ) { // start jQuery capsule
 

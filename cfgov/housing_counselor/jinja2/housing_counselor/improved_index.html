@@ -119,10 +119,7 @@
                         </section>
 
                     </div>
-                    {% if zipcode %}
-                    {% if not zipcode_valid %}
-
-                    {% else %}
+                    {% if zipcode and zipcode_valid %}
                     <div class="block">
                         <div class="results-header">
                             <ul class="m-list
@@ -223,7 +220,6 @@
                         </table>
                     </div>
 
-                    {% endif %}
                     {% endif %}
 
                     <div class="block">
