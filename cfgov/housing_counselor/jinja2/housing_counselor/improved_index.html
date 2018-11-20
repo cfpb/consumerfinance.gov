@@ -21,7 +21,7 @@
                     <div class="block block__flush-top block__flush-top">
                         <h1>Find a housing counselor</h1>
                         <div class="rich-text">
-                            <p>Housing counselors throughout the country can provide advice on buying a home, renting, defaults, foreclosures, and credit issues. Using the search box below, you can find one near you. The counseling agencies on this list are approved by the U.S. Department of Housing and Urban Development (HUD) and they can offer independent advice about whether a particular set of mortgage loan terms is a good fit based on your objectives and circumstances, often at little or no cost to you. This list will show you several approved agencies in your area. There is also a <a class="a-link a-link__icon" href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm"><span class="a-link_text">list of nationwide HUD-approved counseling agencies</span> {{ svg_icon('external-link') }}</a>.</p>
+                            <p>Housing counselors throughout the country can provide advice on buying a home, renting, defaults, foreclosures, and credit issues. Using the search box below, you can find one near you. The counseling agencies on this list are approved by the U.S. Department of Housing and Urban Development (HUD) and they can offer independent advice about whether a particular set of mortgage loan terms is a good fit based on your objectives and circumstances, often at little or no cost to you. This list will show you several approved agencies in your area. There is also a <a class="a-link a-link__icon" href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm"><span class="a-link_text">list of nationwide HUD-approved counseling agencies</span> {{ svg_icon( 'external-link' ) }}</a>.</p>
                         </div>
                     </div>
                     <div class="block block__border">
@@ -31,17 +31,39 @@
                             <div class="o-featured-content-module_text">
                                 <form class="o-form" action="#">
                                     <div class="m-form-field-with-button">
+
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading" for="hud_hca_api_query">
                                                 Search by ZIP code:
                                             </label>
+
+                                            {% if zipcode and not zipcode_valid %}
+                                            <div class="u-mb15">
+                                                <div class="m-notification
+                                                            m-notification__default
+                                                            m-notification__error
+                                                            m-notification__visible">
+                                                    {{ svg_icon( 'warning-round' ) }}
+                                                    <div class="m-notification_content" role="alert">
+                                                        <div class="h4 m-notification_message">
+                                                            You have entered an invalid ZIP code.
+                                                        </div>
+                                                        <div class="m-notification_explanation">
+                                                            Enter a valid five-digit ZIP code.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
                                             <input id="hud_hca_api_query"
                                                    type="text"
                                                    name="zipcode"
                                                    class="a-text-input a-text-input__full"
                                                    value="{% if zipcode == false %}{{ zipcode }}{% endif %}"
-                                                   placeholder="Please enter a 5-digit ZIP code">
+                                                   placeholder="Please enter a five-digit ZIP code">
                                         </div>
+
                                         <div class="m-form-field-with-button_wrapper">
                                             <button class="a-btn a-btn__full-on-xs" type="submit">Find a counselor</button>
                                             <div class="m-form-field-with-button_info">
@@ -50,7 +72,7 @@
                                                     <a class="a-link a-link__icon"
                                                        href="https://data.hud.gov/housing_counseling.html">
                                                     <span class="a-link_text">HUD's</span>
-                                                    {{ svg_icon('external-link') }}</a> official list of housing counselors.
+                                                    {{ svg_icon( 'external-link' ) }}</a> official list of housing counselors.
                                                 </p>
                                                 <p>
                                                     If you notice errors in the housing counselor data,
@@ -75,17 +97,42 @@
 
                     </div>
                     {% if zipcode %}
+                    {% if not zipcode_valid %}
+
+                    {% else %}
                     <div class="block">
                         <div class="results-header">
-                            <h2 class="h4">Displaying the 10 locations closest to ZIP code 52246</h2>
-                            <div class="action-buttons">
-                                <button class="a-btn a-btn__link">
-                                    Print list
-                                </button>
-                                <button class="a-btn a-btn__link">
-                                    Save list as PDF
-                                </button>
-                            </div>
+                            <ul class="m-list
+                                       m-list__horizontal
+                                       hud_hca_api_results_actions">
+                                <li class="m-list_item">
+                                    <button class="a-btn a-btn__link"
+                                       id="hud_print-page-link">
+                                        Print list
+                                        {{ svg_icon( 'print' ) }}
+                                    </button>
+                                </li>
+                                <li class="m-list_item">
+                                    <a class="a-btn a-btn__link"
+                                       id="generate-pdf-link"
+                                       href="{{ pdf_url }}"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        Save list as
+                                        <abbr title="Portable Document Format">
+                                          PDF
+                                        </abbr>
+                                        {{ svg_icon( 'save' ) }}
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <h2 class="h4">
+                              Displaying the
+                              {{ api_json.counseling_agencies | length }}
+                              locations closest to ZIP code
+                              {{ zipcode | escape }}
+                            </h2>
                         </div>
                         <table class="o-table o-table__stack-on-small u-w100pct">
                             <thead>
@@ -115,7 +162,7 @@
                                             <p>
                                                 <span class="result-number">{{ loop.index }}.</span>
                                                 <a class="a-link a-link__icon" href="{{ counselor.weburl }}"><span class="a-link_text">{{ counselor.nme }}</span>
-                                                  {{ svg_icon('external-link') }}</a><b><br></b>{{ counselor.adr1 }}
+                                                  {{ svg_icon( 'external-link' ) }}</a><b><br></b>{{ counselor.adr1 }}
                                             {% if counselor.adr2 and counselor.adr2 != ' '  %}
                                                 <br>{{ counselor.adr2 }}
                                             {% endif %}<br>
@@ -123,7 +170,7 @@
                                             </p>
                                             <p><b>Website:</b>
                                                 <a class="a-link a-link__icon" href="{{ counselor.weburl }}">
-                                                    <span class="a-link_text">{{ counselor.weburl }}</span> {{ svg_icon('external-link') }}
+                                                    <span class="a-link_text">{{ counselor.weburl }}</span> {{ svg_icon( 'external-link' ) }}
                                                 </a><br>
                                                 <b>Phone:</b> {{ counselor.phone1 }}<br>
                                                 <b>Email Address:</b> {{ counselor.email }}<br>
@@ -148,16 +195,19 @@
                                     </td>
                                 </tr>
                                 {% endfor %}
-                            {% endif %}
 
                             </tbody>
                         </table>
                     </div>
+
+                    {% endif %}
+                    {% endif %}
+
                     <div class="block">
                         <div class="o-full-width-text-group">
                             <div class="m-full-width-text">
                                 <h3>Paperwork Reduction Act statement</h3>
-                                <p class="u-mb0">According to the Paperwork Reduction Act of 1995, an agency may not conduct or sponsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number. The OMB control number for this collection is <a class="a-link a-link__icon" href="https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025"><span class="a-link_text">3170-0025</span> {{ svg_icon('external-link') }}</a>. It expires on 04/30/2016. Using this tool to generate a list of HUD-Approved Housing Counseling Agencies is voluntary however, if you are an entity subject to 12 CFR § 1024 (78 FR 6856 (Jan. 31, 2013)), you are required to provide this list as specified in the regulation. Comments regarding this collection of information, including suggestions for improving the usefulness of the information, or suggestions for reducing the burden to respond to this collection should be submitted to the Bureau of Consumer Financial Protection (Attention: PRA Office), 1700 G Street NW, Washington, DC 20552, or by email to <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.<br></p>
+                                <p class="u-mb0">According to the Paperwork Reduction Act of 1995, an agency may not conduct or sponsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number. The OMB control number for this collection is <a class="a-link a-link__icon" href="https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025"><span class="a-link_text">3170-0025</span> {{ svg_icon( 'external-link' ) }}</a>. It expires on 04/30/2016. Using this tool to generate a list of HUD-Approved Housing Counseling Agencies is voluntary however, if you are an entity subject to 12 CFR § 1024 (78 FR 6856 (Jan. 31, 2013)), you are required to provide this list as specified in the regulation. Comments regarding this collection of information, including suggestions for improving the usefulness of the information, or suggestions for reducing the burden to respond to this collection should be submitted to the Bureau of Consumer Financial Protection (Attention: PRA Office), 1700 G Street NW, Washington, DC 20552, or by email to <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.<br></p>
 
                                 <div class="block
                                             block__flush-bottom

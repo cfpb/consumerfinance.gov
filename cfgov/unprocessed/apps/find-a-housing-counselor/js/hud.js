@@ -39,6 +39,12 @@ function checkHudData( data ) {
   return true;
 }
 
+const printPageLink = document.querySelector( '#hud_print-page-link' );
+printPageLink.addEventListener( 'click', evt => {
+  evt.preventDefault();
+  window.print();
+} );
+
 ( function( $, L ) { // start jQuery capsule
 
   let map;
@@ -148,41 +154,6 @@ function checkHudData( data ) {
   }
 
   $( document ).ready( function() {
-
-    // On click of the print link, open print dialog
-    $( '.hud_hca_api_no_js_print_text' ).remove();
-    $( '.hud_hca_api_results_print' ).append( '<a class="hud-hca-api-print" href="#print">Print list</a>' );
-    $( '.hud_hca_api_results_print a.hud-hca-api-print' ).click( function() {
-      window.print();
-      return false;
-    } );
-
-    // Provide a fallback for HTML5 placeholder for older browsers
-    $( '#hud_hca_api_query', function() {
-      const input = document.createElement( 'input' );
-      if ( ( 'placeholder' in input ) === false ) {
-        // eslint-disable-next-line max-nested-callbacks
-        $( '[placeholder]' ).focus( function() {
-          const i = $( this );
-          if ( i.val() === i.attr( 'placeholder' ) ) {
-            i.val( '' ).removeClass( 'placeholder' );
-          }
-        // eslint-disable-next-line max-nested-callbacks
-        } ).blur( function() {
-          const i = $( this );
-          if ( i.val() === '' || i.val() === i.attr( 'placeholder' ) ) {
-            i.addClass( 'placeholder' ).val( i.attr( 'placeholder' ) );
-          }
-        // eslint-disable-next-line max-nested-callbacks
-        } ).blur().parents( 'form' ).submit( function() {
-          // eslint-disable-next-line max-nested-callbacks
-          $( this ).find( '[placeholder]' ).each( function() {
-            const i = $( this );
-            if ( i.val() === i.attr( 'placeholder' ) ) i.val( '' );
-          } );
-        } );
-      }
-    } );
 
     // If there is a GET value for zip, load that zip immediately.
     const getzip = getUrlZip();
