@@ -13,7 +13,9 @@
 {# Skip Link to skip to main content #}
 {# TODO: When projects standardize on #main,
    remove this and empty after-header div #}
-<a href="#after-nav" id="skip-nav">Skip to main content</a>
+<div class="skip-nav">
+    <a href="#after-nav" class="skip-nav_link">Skip to main content</a>
+</div>
 
 {% import 'organisms/header.html' as header with context %}
 {{ header.render( show_banner=false ) }}
