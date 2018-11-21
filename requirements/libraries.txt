@@ -5,7 +5,7 @@ dj-database-url==0.5.0
 djangorestframework==3.6.4
 django-csp==3.4
 django-extensions==2.1.3
-django-flags==4.0.0
+django-flags==4.0.1
 django-haystack==2.7.0
 django-localflavor==1.6.2
 # django-mptt is required by teachers-digital-platform
@@ -36,7 +36,7 @@ six==1.11.0
 unicodecsv==0.14.1
 unipath>=1.1,<=2.0
 urllib3==1.23
-wagtail-flags==4.0.0
+wagtail-flags==4.0.1
 wagtail-inventory==0.5.1
 wagtail-sharing==0.7
 wagtail-treemodeladmin==1.0.4
