@@ -178,7 +178,7 @@
                             <tbody>
                                 {% for counselor in api_json.counseling_agencies %}
                                 <tr id="hud-result-{{ loop.index }}">
-                                    <td>
+                                    <td data-label="Agency">
                                         <div class="rich-text">
                                             <p>
                                                 <span class="result-number">{{ loop.index }}.</span>
@@ -210,7 +210,7 @@
                                             </p>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td data-label="Services">
                                         <div class="rich-text">
                                             <ul>
                                                 {% for service in counselor.services %}
@@ -219,7 +219,7 @@
                                             </ul>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td data-label="Distance">
                                         <p class="rich-text">
                                             {{ counselor.distance | round( 1 ) }} miles
                                         </p>
