@@ -40,11 +40,11 @@ function checkHudData( data ) {
 /**
  * Returns the value in a URL query string key/value pair.
  * @param  {string} key - The key in the query string to search for.
- * @return {string} The value to return.
+ * @returns {string} The value to return.
  */
 function getURLQueryVariable( key ) {
   const query = window.location.search.substring( 1 );
-  const vars = query.split('&');
+  const vars = query.split( '&' );
   let pair;
   for ( let i = 0, len = vars.length; i < len; i++ ) {
     pair = vars[i].split( '=' );
@@ -137,7 +137,7 @@ function update_map( data ) {
 
       marker.on( 'click', function() {
         const resultEntryDom = document.querySelector(
-          '#hud-result-' + Number.parseInt( number )
+          '#hud-result-' + Number.parseInt( number, 10 )
         );
         resultEntryDom.scrollIntoView( {
           behavior: 'smooth',
@@ -160,7 +160,7 @@ if ( getzip !== '' ) {
   document.querySelector( '#hud_hca_api_query' ).value = getzip;
 }
 
-initialize_map()
+initialize_map();
 
 module.exports = {
   checkZip,

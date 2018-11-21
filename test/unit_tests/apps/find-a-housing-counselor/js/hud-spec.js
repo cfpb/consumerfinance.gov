@@ -29,7 +29,7 @@ describe( 'hud', () => {
 
   describe( 'getURLQueryVariable', () => {
 
-    beforeEach(() => history.replaceState( {}, 'Home', '/?zipcode=05201') );
+    beforeEach( () => history.replaceState( {}, 'Home', '/?zipcode=05201' ) );
 
     it( 'Should return true on a valid HUD data, false otherwise.', () => {
       expect( hud.getURLQueryVariable( 'zipcode' ) ).toBe( '05201' );
