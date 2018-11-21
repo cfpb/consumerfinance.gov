@@ -24,7 +24,7 @@ function checkZip( zip ) {
 
 /* checkHudData() just makes sure your data has the correct structure
 before you start requesting properties that don't exist in
-generate_html() and update_map() */
+generate_html() and updateMap() */
 function checkHudData( data ) {
   if ( data === null || data === 0 || data === UNDEFINED ) {
     return false;
@@ -70,19 +70,19 @@ let marker_array = [];
 let zip_marker = null;
 
 /* initialize_map() sets options and creates the map */
-function initialize_map() {
+function initializeMap() {
   window.L.mapbox.accessToken = window.mapbox_access_token;
   map = window.L.mapbox.map( 'hud_hca_api_map_container', 'mapbox.streets' )
     .setView( [ 40, -80 ], 2 );
 
   if ( window.hud_data.counseling_agencies ) {
-    update_map( window.hud_data );
+    updateMap( window.hud_data );
   }
 }
 
 /* generate_google_map(data) takes the data and plots the markers, etc, on
 the google map. It's called by get_counselors_by_zip(). */
-function update_map( data ) {
+function updateMap( data ) {
   // reset the map
   for ( let i = 0; i < marker_array.length; i++ ) {
     map.removeLayer( marker_array[i] );
@@ -160,9 +160,8 @@ if ( getzip !== '' ) {
   document.querySelector( '#hud_hca_api_query' ).value = getzip;
 }
 
-initialize_map();
-
 module.exports = {
+  initializeMap,
   checkZip,
   checkHudData,
   getURLQueryVariable
