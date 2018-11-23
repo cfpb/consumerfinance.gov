@@ -17,42 +17,40 @@
     <main class="content" id="main" lang="en">
         <div class="wrapper content_wrapper">
             <div class="content_main">
-                <section lang="en">
+                <section>
                     <div class="block block__flush-top block__flush-top">
                         <h1>Find a housing counselor</h1>
-                        <div class="rich-text">
-                            <p>
-                                Housing counselors throughout the country can
-                                provide advice on buying a home, renting,
-                                defaults, foreclosures, and credit issues.
-                                Using the search box below,
-                                you can find one near you.
-                                The counseling agencies on this list are
-                                approved by the U.S. Department of Housing
-                                and Urban Development (HUD) and they can
-                                offer independent advice about whether a
-                                particular set of mortgage loan terms is a
-                                good fit based on your objectives and
-                                circumstances, often at little
-                                or no cost to you. This list will show you
-                                several approved agencies in your area.
-                                There is also a
-                                <a class="a-link a-link__icon"
-                                   href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm">
-                                   <span class="a-link_text">
-                                       list of nationwide
-                                       HUD-approved counseling agencies
-                                   </span>
-                                   {{ svg_icon( 'external-link' ) }}</a>.
-                            </p>
-                        </div>
+                        <p class="rich-text">
+                            Housing counselors throughout the country can
+                            provide advice on buying a home, renting,
+                            defaults, foreclosures, and credit issues.
+                            Using the search box below,
+                            you can find one near you.
+                            The counseling agencies on this list are
+                            approved by the U.S. Department of Housing
+                            and Urban Development (HUD) and they can
+                            offer independent advice about whether a
+                            particular set of mortgage loan terms is a
+                            good fit based on your objectives and
+                            circumstances, often at little
+                            or no cost to you. This list will show you
+                            several approved agencies in your area.
+                            There is also a
+                            <a class="a-link a-link__icon"
+                               href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm">
+                               <span class="a-link_text">
+                                   list of nationwide
+                                   HUD-approved counseling agencies
+                               </span>
+                               {{ svg_icon( 'external-link' ) }}</a>.
+                        </p>
                     </div>
                     <div class="block block__border">
 
                         <section class="o-featured-content-module
                                         o-featured-content-module__right">
                             <div class="o-featured-content-module_text">
-                                <form class="o-form" action="#">
+                                <form class="o-form" action=".">
                                     <div class="m-form-field-with-button">
 
                                         <div class="m-form-field">
@@ -95,7 +93,8 @@
                                                     <a class="a-link a-link__icon"
                                                        href="https://data.hud.gov/housing_counseling.html">
                                                     <span class="a-link_text">HUD's</span>
-                                                    {{ svg_icon( 'external-link' ) }}</a> official list of housing counselors.
+                                                    {{ svg_icon( 'external-link' ) }}</a>
+                                                    official list of housing counselors.
                                                 </p>
                                                 <p>
                                                     If you notice errors in the housing counselor data,
@@ -105,13 +104,11 @@
                                         </div>
                                     </div>
                                 </form>
-
                             </div>
                             <div class="o-featured-content-module_visual">
                                 <!-- Mapbox map is ignored during voiceover navigation
                                      as set by aria-hidden. -->
                                 <div id="hud_hca_api_map_container"
-                                     class="hud_hca_api_map col"
                                      aria-hidden="true">
                                     <div id="hud_hca_api_map_canvas"></div>
                                 </div><!-- end .hud_hca_api_map -->
@@ -180,24 +177,35 @@
                             </thead>
                             <tbody>
                                 {% for counselor in api_json.counseling_agencies %}
-                                <tr>
+                                <tr id="hud-result-{{ loop.index }}">
                                     <td data-label="Agency">
                                         <div class="rich-text">
                                             <p>
                                                 <span class="result-number">{{ loop.index }}.</span>
-                                                <a class="a-link a-link__icon" href="{{ counselor.weburl }}"><span class="a-link_text">{{ counselor.nme }}</span>
-                                                  {{ svg_icon( 'external-link' ) }}</a><b><br></b>{{ counselor.adr1 }}
-                                            {% if counselor.adr2 and counselor.adr2 != ' '  %}
-                                                <br>{{ counselor.adr2 }}
-                                            {% endif %}<br>
-                                            {{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}
-                                            </p>
-                                            <p><b>Website:</b>
                                                 <a class="a-link a-link__icon" href="{{ counselor.weburl }}">
-                                                    <span class="a-link_text">{{ counselor.weburl }}</span> {{ svg_icon( 'external-link' ) }}
-                                                </a><br>
-                                                <b>Phone:</b> {{ counselor.phone1 }}<br>
-                                                <b>Email Address:</b> {{ counselor.email }}<br>
+                                                  <span class="a-link_text">{{ counselor.nme }}</span>
+                                                  {{ svg_icon( 'external-link' ) }}
+                                                </a>
+                                                <br>
+                                                {{ counselor.adr1 }}
+                                                {% if counselor.adr2 and counselor.adr2 != ' '  %}
+                                                <br>
+                                                {{ counselor.adr2 }}
+                                                {% endif %}
+                                                <br>
+                                                {{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}
+                                            </p>
+                                            <p>
+                                                <b>Website:</b>
+                                                <a class="a-link a-link__icon" href="{{ counselor.weburl }}">
+                                                    <span class="a-link_text">{{ counselor.weburl }}</span>
+                                                    {{ svg_icon( 'external-link' ) }}
+                                                </a>
+                                                <br>
+                                                <b>Phone:</b> {{ counselor.phone1 }}
+                                                <br>
+                                                <b>Email Address:</b> {{ counselor.email }}
+                                                <br>
                                                 <b>Languages:</b> {{ counselor.languages | join( ', ' ) }}
                                             </p>
                                         </div>
@@ -209,13 +217,12 @@
                                                 <li>{{ service }}</li>
                                                 {% endfor %}
                                             </ul>
-                                            <p></p>
                                         </div>
                                     </td>
                                     <td data-label="Distance">
-                                        <div class="rich-text">
-                                            <p>{{ counselor.distance | round( 1 ) }} miles</p>
-                                        </div>
+                                        <p class="rich-text">
+                                            {{ counselor.distance | round( 1 ) }} miles
+                                        </p>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -230,7 +237,9 @@
                         <div class="o-full-width-text-group">
                             <div class="m-full-width-text">
                                 <h3>Paperwork Reduction Act statement</h3>
-                                <p class="u-mb0">
+                                <p class="block
+                                          block__flush-top
+                                          block__flush-bottom">
                                     According to the Paperwork Reduction
                                     Act of 1995, an agency may not conduct or
                                     sponsor, and a person is not required to
@@ -303,7 +312,7 @@
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [
-            '{{ static('apps/find-a-housing-counselor/js/hud.js') }}'
+            '{{ static('apps/find-a-housing-counselor/js/main.js') }}'
           ];
           jsl(s);
         }()
