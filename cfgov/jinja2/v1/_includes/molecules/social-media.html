@@ -133,7 +133,7 @@
                 <li class="m-list_item">
                     <a class="m-social-media_icon"
                        href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
-                       {{ ('target="_blank" rel="noopener noreferrer"' if link.name != 'email' else '') | safe }}>
+                       {{ 'target="_blank" rel="noopener noreferrer"' | safe if link.name != 'email' else '' }}>
                         {{ svg_icon(link.icon ~ '-square') }}
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
                     </a>
