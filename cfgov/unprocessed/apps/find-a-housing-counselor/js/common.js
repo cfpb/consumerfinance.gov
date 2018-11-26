@@ -1,60 +1,8 @@
-let UNDEFINED;
+const hud = require( './hud-util' );
 
 /* This script uses a local Django API to acquire a list of the 10 closest
 HUD Counselors by zip code. See hud_api_replace for more details on the
 API queries. -wernerc */
-
-/* checkZip() is an easy, useful function that takes a string
-and returns true if it's a valid zip code, or returns false.
-NOTE: 'Valid' means 5 numeric characters,
-not necessarily 'existant' and 'actually addressable.' */
-function checkZip( zip ) {
-  if ( zip === null || zip === UNDEFINED || zip === false ) {
-    return false;
-  }
-
-  zip = zip.toString().replace( /[^0-9]+/g, '' );
-  zip = zip.slice( 0, 5 );
-  if ( zip.length === 5 ) {
-    return true;
-  }
-
-  return false;
-}
-
-/* checkHudData() just makes sure your data has the correct structure
-before you start requesting properties that don't exist in
-generate_html() and updateMap() */
-function checkHudData( data ) {
-  if ( data === null || data === 0 || data === UNDEFINED ) {
-    return false;
-  } else if ( data.hasOwnProperty( 'error' ) ||
-              !data.hasOwnProperty( 'counseling_agencies' ) ||
-              !data.hasOwnProperty( 'zip' ) ) {
-    return false;
-  }
-
-  return true;
-}
-
-/**
- * Returns the value in a URL query string key/value pair.
- * @param  {string} key - The key in the query string to search for.
- * @returns {string} The value to return.
- */
-function getURLQueryVariable( key ) {
-  const query = window.location.search.substring( 1 );
-  const vars = query.split( '&' );
-  let pair;
-  for ( let i = 0, len = vars.length; i < len; i++ ) {
-    pair = vars[i].split( '=' );
-    if ( decodeURIComponent( pair[0] ) === key ) {
-      return decodeURIComponent( pair[1] );
-    }
-  }
-
-  return '';
-}
 
 // Set up print results list button functionality, if it exists.
 const printPageLink = document.querySelector( '#hud_print-page-link' );
@@ -94,7 +42,7 @@ function updateMap( data ) {
   map.setZoom( 2 );
   map.setView( [ 40, -80 ] );
 
-  if ( checkHudData( data ) === true ) {
+  if ( hud.checkHudData( data ) === true ) {
     const lat = data.zip.lat;
     const lng = data.zip.lng;
     const ziplatlng = [ lat, lng ];
@@ -154,15 +102,4 @@ function updateMap( data ) {
   }
 }
 
-// If there is a GET value for zip, load that zip immediately.
-const getzip = getURLQueryVariable( 'zipcode' );
-if ( getzip !== '' ) {
-  document.querySelector( '#hud_hca_api_query' ).value = getzip;
-}
-
-module.exports = {
-  initializeMap,
-  checkZip,
-  checkHudData,
-  getURLQueryVariable
-};
+initializeMap();
