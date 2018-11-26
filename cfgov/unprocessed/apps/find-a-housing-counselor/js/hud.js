@@ -1,5 +1,3 @@
-const jQuery = require( 'jquery' );
-
 let UNDEFINED;
 
 /* This script uses a local Django API to acquire a list of the 10 closest
@@ -26,7 +24,7 @@ function checkZip( zip ) {
 
 /* checkHudData() just makes sure your data has the correct structure
 before you start requesting properties that don't exist in
-generate_html() and update_map() */
+generate_html() and updateMap() */
 function checkHudData( data ) {
   if ( data === null || data === 0 || data === UNDEFINED ) {
     return false;
@@ -39,6 +37,25 @@ function checkHudData( data ) {
   return true;
 }
 
+/**
+ * Returns the value in a URL query string key/value pair.
+ * @param  {string} key - The key in the query string to search for.
+ * @returns {string} The value to return.
+ */
+function getURLQueryVariable( key ) {
+  const query = window.location.search.substring( 1 );
+  const vars = query.split( '&' );
+  let pair;
+  for ( let i = 0, len = vars.length; i < len; i++ ) {
+    pair = vars[i].split( '=' );
+    if ( decodeURIComponent( pair[0] ) === key ) {
+      return decodeURIComponent( pair[1] );
+    }
+  }
+
+  return '';
+}
+
 // Set up print results list button functionality, if it exists.
 const printPageLink = document.querySelector( '#hud_print-page-link' );
 if ( printPageLink ) {
@@ -48,128 +65,104 @@ if ( printPageLink ) {
   } );
 }
 
-( function( $, L ) { // start jQuery capsule
+let map;
+let marker_array = [];
+let zip_marker = null;
 
-  let map;
-  let marker_array = [];
-  let zip_marker = null;
+/* initialize_map() sets options and creates the map */
+function initializeMap() {
+  window.L.mapbox.accessToken = window.mapbox_access_token;
+  map = window.L.mapbox.map( 'hud_hca_api_map_container', 'mapbox.streets' )
+    .setView( [ 40, -80 ], 2 );
 
-  /* getUrlZip() is a simple function to retrieve the zip variable from the URL */
-  function getUrlZip() {
-    let zip = '';
-    const keyvals = window.location.href.slice( window.location.href.indexOf( '?' ) + 1 ).split( '&' );
-    const addressRegex = new RegExp( '^[0-9]{5}(?:-[0-9]{4})?', 'g' );
-    $.each( keyvals, function( i, val ) {
-      const parts = val.split( '=' );
-      if ( parts[0] === 'zipcode' ) {
-        zip = parts[1];
-        // Pick zipcode out of query parameter value. Strips off '#' if present.
-        zip = addressRegex.exec( zip );
-        if ( zip !== null && zip.length > 0 ) {
-          zip = zip[0];
-        }
+  if ( window.hud_data.counseling_agencies ) {
+    updateMap( window.hud_data );
+  }
+}
+
+/* generate_google_map(data) takes the data and plots the markers, etc, on
+the google map. It's called by get_counselors_by_zip(). */
+function updateMap( data ) {
+  // reset the map
+  for ( let i = 0; i < marker_array.length; i++ ) {
+    map.removeLayer( marker_array[i] );
+  }
+  marker_array = [];
+  if ( zip_marker !== null ) {
+    map.removeLayer( zip_marker );
+  }
+  map.setZoom( 2 );
+  map.setView( [ 40, -80 ] );
+
+  if ( checkHudData( data ) === true ) {
+    const lat = data.zip.lat;
+    const lng = data.zip.lng;
+    const ziplatlng = [ lat, lng ];
+    const zoom = 14;
+
+    map.setZoom( zoom );
+    map.setView( ziplatlng );
+
+    const bounds = map.getBounds();
+    let xmax = -Infinity;
+    let xmin = Infinity;
+    let ymax = -Infinity;
+    let ymin = Infinity;
+
+    zip_marker = window.L.circle( ziplatlng, 3 ).addTo( map );
+
+    data.counseling_agencies.forEach( ( val, i ) => {
+      const lat = val.agc_ADDR_LATITUDE;
+      const lng = val.agc_ADDR_LONGITUDE;
+      const position = new window.L.LatLng( lat, lng );
+
+      if ( lat > ymax ) ymax = lat;
+      if ( lat < ymin ) ymin = lat;
+      if ( lng > xmax ) xmax = lng;
+      if ( lng < xmin ) xmin = lng;
+
+      let number = i + 1;
+
+      if ( number < 10 ) {
+        number = '0' + number;
       }
-    } );
 
-    return checkZip( zip ) ? zip : '';
-  }
-
-  /* initialize_map() sets options and creates the map */
-  function initialize_map() {
-    L.mapbox.accessToken = window.mapbox_access_token;
-    map = L.mapbox.map( 'hud_hca_api_map_container', 'mapbox.streets' )
-      .setView( [ 40, -80 ], 2 );
-
-    if ( window.hud_data.counseling_agencies ) {
-      update_map( window.hud_data );
-    }
-  }
-
-  $( document ).ready( initialize_map );
-
-  /* generate_google_map(data) takes the data and plots the markers, etc, on
-  the google map. It's called by get_counselors_by_zip(). */
-
-  function update_map( data ) {
-    // reset the map
-    for ( let i = 0; i < marker_array.length; i++ ) {
-      map.removeLayer( marker_array[i] );
-    }
-    marker_array = [];
-    if ( zip_marker !== null ) {
-      map.removeLayer( zip_marker );
-    }
-    map.setZoom( 2 );
-    map.setView( [ 40, -80 ] );
-
-    if ( checkHudData( data ) === true ) {
-      const lat = data.zip.lat;
-      const lng = data.zip.lng;
-      const ziplatlng = [ lat, lng ];
-      const zoom = 14;
-
-      map.setZoom( zoom );
-      map.setView( ziplatlng );
-
-      const bounds = map.getBounds();
-      let xmax = -Infinity;
-      let xmin = Infinity;
-      let ymax = -Infinity;
-      let ymin = Infinity;
-
-      zip_marker = L.circle( ziplatlng, 3 ).addTo( map );
-
-      $.each( data.counseling_agencies, function( i, val ) {
-        const lat = val.agc_ADDR_LATITUDE;
-        const lng = val.agc_ADDR_LONGITUDE;
-        const position = new L.LatLng( lat, lng );
-
-        if ( lat > ymax ) ymax = lat;
-        if ( lat < ymin ) ymin = lat;
-        if ( lng > xmax ) xmax = lng;
-        if ( lng < xmin ) xmin = lng;
-
-        let number = i + 1;
-
-        if ( number < 10 ) {
-          number = '0' + number;
-        }
-
-        const icon = L.icon( {
-          iconUrl: '/static/nemo/_/img/hud_gmap/agc_' + number + '.png',
-          iconAnchor: [ 20, 50 ]
-        } );
-
-        const marker = new L.Marker( position, { icon: icon } ).addTo( map );
-        marker_array[i] = marker;
-
-        marker.on( 'click', function() {
-          $( document.body ).animate( { scrollTop: $( '#hud-result-' + number ).offset().top }, 1000 );
-        } );
+      const icon = window.L.icon( {
+        iconUrl: '/static/apps/find-a-housing-counselor/img/hud_gmap/agc_' + number + '.png',
+        iconAnchor: [ 20, 50 ]
       } );
 
-      // shift the max bounds so that the dropped pins are always on screen
-      const xd = ( xmax - xmin ) / 10;
-      const yd = ( ymax - ymin ) / 10;
+      const marker = new window.L.Marker( position, { icon: icon } ).addTo( map );
+      marker_array[i] = marker;
 
-      map.fitBounds( [ [ ymin - yd, xmin - xd ], [ ymax + yd, xmax + xd ] ] );
-    }
+      marker.on( 'click', function() {
+        const resultEntryDom = document.querySelector(
+          '#hud-result-' + Number.parseInt( number, 10 )
+        );
+        resultEntryDom.scrollIntoView( {
+          behavior: 'smooth',
+          block: 'start'
+        } );
+      } );
+    } );
+
+    // shift the max bounds so that the dropped pins are always on screen
+    const xd = ( xmax - xmin ) / 10;
+    const yd = ( ymax - ymin ) / 10;
+
+    map.fitBounds( [ [ ymin - yd, xmin - xd ], [ ymax + yd, xmax + xd ] ] );
   }
+}
 
-  $( document ).ready( function() {
-
-    // If there is a GET value for zip, load that zip immediately.
-    const getzip = getUrlZip();
-    if ( getzip !== '' ) {
-      $( '#hud_hca_api_query' ).val( getzip );
-      $( '.hud_hca_api_form_button' ).trigger( 'click' );
-    }
-
-  } );
-
-} )( jQuery, window.L ); // end anonymous function capsule
+// If there is a GET value for zip, load that zip immediately.
+const getzip = getURLQueryVariable( 'zipcode' );
+if ( getzip !== '' ) {
+  document.querySelector( '#hud_hca_api_query' ).value = getzip;
+}
 
 module.exports = {
+  initializeMap,
   checkZip,
-  checkHudData
+  checkHudData,
+  getURLQueryVariable
 };
