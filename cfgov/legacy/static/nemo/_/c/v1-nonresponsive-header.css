@@ -1074,17 +1074,23 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
 .lt-ie9 .o-mega-menu .h5 {
     font-weight: normal !important;
 }
-#skip-nav {
+.skip-nav {
+    position: relative;
+}
+.skip-nav_link {
     position: absolute;
-    top: -1.875em;
-    left: 1.875em;
+    top: auto;
+    left: -10000px;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
     background: transparent;
     transition: background .5s linear, -webkit-transform 1s ease;
     transition: transform 1s ease, background .5s linear;
     transition: transform 1s ease, background .5s linear, -webkit-transform 1s ease;
     z-index: 11;
 }
-#skip-nav:focus {
+.skip-nav_link:focus {
     display: inline-block;
     box-sizing: border-box;
     padding: .57142857em 1em;
@@ -1103,35 +1109,38 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
     -webkit-appearance: none;
     padding: .61111111em 1.61111111em;
     font-size: 1.125em;
-    position: absolute;
-    top: 0;
+    top: 10px;
+    left: 10px;
+    height: auto;
+    width: auto;
+    overflow: visible;
     outline: 0;
     transition: background .2s linear, -webkit-transform .1s ease;
     transition: transform .1s ease, background .2s linear;
     transition: transform .1s ease, background .2s linear, -webkit-transform .1s ease;
 }
-.lt-ie9 #skip-nav:focus {
+.lt-ie9 .skip-nav_link:focus {
     font-weight: normal !important;
 }
-#skip-nav:focus,#skip-nav:focus:link,#skip-nav:focus:visited {
+.skip-nav_link:focus,.skip-nav_link:focus:link,.skip-nav_link:focus:visited {
     background-color: #0072ce;
     color: #fff;
 }
-#skip-nav:focus:hover,#skip-nav:focus.hover {
+.skip-nav_link:focus:hover,.skip-nav_link:focus.hover {
     background-color: #4497dc;
 }
-#skip-nav:focus:focus,#skip-nav:focus.focus {
+.skip-nav_link:focus:focus,.skip-nav_link:focus.focus {
     background-color: #4497dc;
     outline: 1px dotted #0072ce;
     outline-offset: 1px;
 }
-#skip-nav:focus:active,#skip-nav:focus.active {
+.skip-nav_link:focus:active,.skip-nav_link:focus.active {
     background-color: #5674a3;
 }
-button#skip-nav:focus::-moz-focus-inner,input#skip-nav:focus::-moz-focus-inner {
+button.skip-nav_link:focus::-moz-focus-inner,input.skip-nav_link:focus::-moz-focus-inner {
     border: 0;
 }
-#skip-nav:focus+#skip-nav:focus {
+.skip-nav_link:focus+.skip-nav_link:focus {
     margin-left: .33333333em;
 }
 /* Fix for terrible Mapbox z-index code */

@@ -104,6 +104,17 @@
                                         </div>
                                     </div>
                                 </form>
+
+                                {% if zipcode and zipcode_valid %}
+                                <div class="skip-nav">
+                                    <a class="skip-nav_link
+                                              skip-nav_link__flush-left"
+                                       href="#hud_results-list_container">
+                                       Skip to results
+                                    </a>
+                                </div>
+                                {% endif %}
+
                             </div>
                             <div class="o-featured-content-module_visual">
                                 <!-- Mapbox map is ignored during voiceover navigation
@@ -117,7 +128,7 @@
 
                     </div>
                     {% if zipcode and zipcode_valid %}
-                    <div class="block">
+                    <div class="block" id="hud_results-list_container">
                         <div class="results-header">
                             <ul class="m-list
                                        m-list__horizontal

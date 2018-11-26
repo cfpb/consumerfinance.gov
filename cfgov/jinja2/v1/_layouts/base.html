@@ -34,7 +34,9 @@
 {# Overlay for the page. Used for the mobile mega menu. #}
 <div class="a-overlay u-hidden"></div>
 
-<a href="#main" id="skip-nav">Skip to main content</a>
+<div class="skip-nav">
+    <a href="#main" class="skip-nav_link">Skip to main content</a>
+</div>
 
 {% block header %}
     {% import 'organisms/header.html' as o_header with context %}
