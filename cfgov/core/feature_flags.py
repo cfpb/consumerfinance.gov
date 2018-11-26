@@ -22,7 +22,7 @@ def environment_is_not(environment, **kwargs):
 
 
 @conditions.register('in split testing cluster')
-def in_split_testing_cluster(cluster_group, page, **kwargs):
-    clusters = CLUSTERS[cluster_group]
+def in_split_testing_cluster(cluster_group, page, clusters=CLUSTERS, **kwargs):
+    cluster_group = clusters[cluster_group]
     lookup_value = getattr(page, 'split_test_id', page.id)
-    return lookup_value in chain(*clusters.values())
+    return lookup_value in chain(*cluster_group.values())
