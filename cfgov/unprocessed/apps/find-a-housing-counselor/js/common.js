@@ -16,6 +16,7 @@ if ( printPageLink ) {
 let map;
 let marker_array = [];
 let zip_marker = null;
+let markerDomCache = {};
 
 /* initialize_map() sets options and creates the map */
 function initializeMap() {
@@ -28,7 +29,13 @@ function initializeMap() {
   }
 }
 
-let markerDomCache = {};
+/**
+ * Cache the map marker result item DOM references so that a DOM lookup doesn't
+ * happen every time a map marker is clicked. The lookup happens on the first
+ * click and then is stored in the markerDomCache object.
+ * @param  {number} num - The index of the result item.
+ * @return {HTMLNode} The DOM node of the result item.
+ */
 function queryMarkerDom( num ) {
   const selector = '#hud-result-' + Number.parseInt( num, 10 );
   let cachedItem = markerDomCache[selector];
