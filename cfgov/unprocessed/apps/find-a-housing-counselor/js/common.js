@@ -34,7 +34,7 @@ function initializeMap() {
  * happen every time a map marker is clicked. The lookup happens on the first
  * click and then is stored in the markerDomCache object.
  * @param  {number} num - The index of the result item.
- * @return {HTMLNode} The DOM node of the result item.
+ * @returns {HTMLNode} The DOM node of the result item.
  */
 function queryMarkerDom( num ) {
   const selector = '#hud-result-' + Number.parseInt( num, 10 );
