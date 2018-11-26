@@ -1081,6 +1081,9 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
     position: absolute;
     top: auto;
     left: -10000px;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
     background: transparent;
     transition: background .5s linear, -webkit-transform 1s ease;
     transition: transform 1s ease, background .5s linear;
@@ -1108,6 +1111,9 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
     font-size: 1.125em;
     top: 10px;
     left: 10px;
+    height: auto;
+    width: auto;
+    overflow: visible;
     outline: 0;
     transition: background .2s linear, -webkit-transform .1s ease;
     transition: transform .1s ease, background .2s linear;
