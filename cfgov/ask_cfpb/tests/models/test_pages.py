@@ -1348,23 +1348,10 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
         self.assertEqual(breadcrumbs[1]['title'], 'Compare page')
 
-    def test_answer_context_in_split_testing_cluster(self):
-        """If the answer ID is found in a split testing cluster,
-        the corresponding context variable is set to True."""
-        from ask_cfpb.split_testing_clusters import CLUSTERS
-        # Add answer ID 1234 to the CLUSTERS data
-        CLUSTERS[0]['answer_ids'][0] = 1234
+    def test_answer_split_testing_id(self):
+        """Confirm AnswerPage's split_testing_id is set to its answer_base.id,
+        which is checked by the core.feature_flags.in_split_testing_cluster
+        flag condition when doing split testing on Ask CFPB answer pages."""
         answer = self.answer1234
         page = answer.english_page
-        request = HttpRequest()
-        context = page.get_context(request)
-        self.assertTrue(context['in_cluster'])
-
-    def test_answer_context_not_in_split_testing_cluster(self):
-        """If the answer ID is not found in a split testing cluster,
-        the corresponding context variable is set to False."""
-        answer = self.answer5678
-        page = answer.english_page
-        request = HttpRequest()
-        context = page.get_context(request)
-        self.assertFalse(context['in_cluster'])
+        self.assertEqual(page.split_test_id, answer.id)
