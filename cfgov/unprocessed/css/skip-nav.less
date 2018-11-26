@@ -31,13 +31,17 @@
                 unit( 29px / 18px, em );
             font-size: unit( 18px / @base-font-size-px, em );
 
-            top: 10px;
-            left: 10px;
+            top: 15px;
+            left: 15px;
             height: auto;
             width: auto;
             overflow: visible;
             outline: 0;
             transition: transform .1s ease, background .2s linear;
+        }
+
+        &__flush-left:focus {
+          left: 0;
         }
     }
 }
