@@ -81,7 +81,7 @@
                                                    type="text"
                                                    name="zipcode"
                                                    class="a-text-input a-text-input__full"
-                                                   value="{% if zipcode == false %}{{ zipcode }}{% endif %}"
+                                                   value="{% if zipcode %}{{ zipcode }}{% endif %}"
                                                    placeholder="Please enter a five-digit ZIP code">
                                         </div>
 
@@ -323,7 +323,7 @@
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [
-            '{{ static('apps/find-a-housing-counselor/js/main.js') }}'
+            '{{ static('apps/find-a-housing-counselor/js/common.js') }}'
           ];
           jsl(s);
         }()
