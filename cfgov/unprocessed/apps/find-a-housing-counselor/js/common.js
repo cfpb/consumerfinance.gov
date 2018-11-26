@@ -28,10 +28,24 @@ function initializeMap() {
   }
 }
 
+let markerDomCache = {};
+function queryMarkerDom( num ) {
+  const selector = '#hud-result-' + Number.parseInt( num, 10 );
+  let cachedItem = markerDomCache[selector];
+  if ( typeof cachedItem === 'undefined' ) {
+    console.log( 'looking up the item!' );
+    cachedItem = document.querySelector( selector );
+    markerDomCache[selector] = cachedItem;
+  }
+
+  return cachedItem;
+}
+
 /* generate_google_map(data) takes the data and plots the markers, etc, on
 the google map. It's called by get_counselors_by_zip(). */
 function updateMap( data ) {
   // reset the map
+  markerDomCache = {};
   for ( let i = 0; i < marker_array.length; i++ ) {
     map.removeLayer( marker_array[i] );
   }
@@ -84,9 +98,7 @@ function updateMap( data ) {
       marker_array[i] = marker;
 
       marker.on( 'click', function() {
-        const resultEntryDom = document.querySelector(
-          '#hud-result-' + Number.parseInt( number, 10 )
-        );
+        const resultEntryDom = queryMarkerDom( number );
         resultEntryDom.scrollIntoView( {
           behavior: 'smooth',
           block: 'start'
