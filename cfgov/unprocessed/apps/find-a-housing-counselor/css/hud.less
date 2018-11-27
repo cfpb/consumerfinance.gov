@@ -1,0 +1,45 @@
+#hud_hca_api_map_container {
+    /* Prevent map controls from appearing on top of mega menu. */
+    z-index: 0;
+}
+
+#hud_hca_api_map_canvas {
+    position: relative;
+    top: -2em;
+    height: 443px;
+    width: 678px;
+}
+
+#hud_hca_api_map_canvas img {
+    max-width: none;
+}
+
+.hud_hca_api_results_actions {
+    float: right;
+
+    // Remove underline from PDF abbreviation and icons in links.
+    & abbr,
+    & svg {
+      border-bottom: none;
+      text-decoration: none;
+    }
+}
+
+// Top-align entries in the table.
+.o-table tr {
+    vertical-align: top;
+}
+
+.no-js {
+    .o-featured-content-module {
+        min-height: auto;
+
+        &_text {
+            width: auto;
+        }
+    }
+
+    #hud_hca_api_map_container {
+        display: none;
+    }
+}

@@ -47,15 +47,17 @@
 {% macro render( value={} ) %}
 
 {% set blurb = (value.blurb or (page.seo_title if page) or value.title or
-                'Look what I found on the CFPB’s site!') | urlencode %}
+                'Look what I found on the CFPB’s site!') %}
 {% set parsed_url = request.build_absolute_uri() | urlencode %}
 {% set is_share_view = value.is_share_view | default( true ) %}
-{% set email_title = value.email_title | urlencode or blurb %}
-{% set email_text = value.email_text | urlencode or 'Check out this page from the CFPB - ' %}
-{% set email_signature = '%0A%0A' + value.email_signature | urlencode if value.email_signature else '' %}
-{% set linkedin_title = value.linkedin_title | urlencode or blurb %}
-{% set linkedin_text = value.linkedin_text | urlencode or '' %}
-{% set twitter_text = value.twitter_text | urlencode or blurb %}
+{% set email_title = value.email_title or blurb %}
+{% set email_text = value.email_text or 'Check out this page from the CFPB - ' %}
+{% set email_signature = '%0A%0A' + value.email_signature if value.email_signature else '' %}
+{% set email_share_url = 'mailto:?subject=' ~ email_title | urlencode ~ '&body=' ~ email_text | urlencode ~ '%20' ~ parsed_url ~ email_signature | urlencode %}
+
+{% set linkedin_title = ( value.linkedin_title or blurb ) | urlencode %}
+{% set linkedin_text = ( value.linkedin_text or '' ) | urlencode %}
+{% set twitter_text = ( value.twitter_text or blurb ) | urlencode %}
 
 <div class="m-social-media
             m-social-media__{{ 'share' if is_share_view else 'follow' }}">
@@ -92,7 +94,7 @@
 
         {% set email_info = {
             'name': 'email',
-            'share_url': 'mailto:?subject=' ~ email_title ~ '&body=' ~ email_text ~ ' ' ~ parsed_url ~ email_signature,
+            'share_url': email_share_url,
             'icon': 'email'
         } %}
 
@@ -131,7 +133,7 @@
                 <li class="m-list_item">
                     <a class="m-social-media_icon"
                        href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
-                       {{ 'target="_blank" rel="noopener noreferrer"' if link.name != 'email' else '' }}>
+                       {{ 'target="_blank" rel="noopener noreferrer"' | safe if link.name != 'email' else '' }}>
                         {{ svg_icon(link.icon ~ '-square') }}
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
                     </a>

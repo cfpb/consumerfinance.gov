@@ -21,8 +21,10 @@ const typeCheckers = require( '../../modules/util/type-checkers' );
  */
 function date( field, currentStatus ) {
   const status = currentStatus || {};
+  // Date regex matches date patterns allowed in cfgov/v1/forms.py FilterableDateField
+  // https://regex101.com/r/JVKCf9/1
   const dateRegex =
-    /^\d{2}$|^\d{4}$|^\d{2}\/(?:\d{4}|\d{2})$|^\d{2}\/\d{2}\/\d{4}$/;
+    /^\d{4}$|^(?:\d{1}|\d{2})\/(?:\d{4}|\d{2})$|^(?:\d{1}|\d{2})\/(?:\d{1}|\d{2})\/(?:\d{4}|\d{2})$/;
   if ( field.value && dateRegex.test( field.value ) === false ) {
     status.msg = status.msg || '';
     status.msg += ERROR_MESSAGES.DATE.INVALID;

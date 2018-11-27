@@ -17,8 +17,22 @@ describe( 'Validators', () => {
       expect( returnedObject ).toStrictEqual( {} );
     } );
 
+    it( 'should allow single digit for month', () => {
+      testField.value = '1/22/2017';
+      returnedObject = validators.date( testField );
+
+      expect( returnedObject ).toStrictEqual( {} );
+    } );
+
+    it( 'should allow single digit for day', () => {
+      testField.value = '11/2/2017';
+      returnedObject = validators.date( testField );
+
+      expect( returnedObject ).toStrictEqual( {} );
+    } );
+
     it( 'should return an error object for a malformed date', () => {
-      testField.value = '11-12-07';
+      testField.value = '11-12-2007';
       returnedObject = validators.date( testField );
 
       expect( returnedObject['date'] ).toBe( false );

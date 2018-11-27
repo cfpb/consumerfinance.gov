@@ -77,8 +77,8 @@
     </div>
     <div class="search_wrapper u-mt30">
         {{ search_bar.render(
-            page.results.search_query,
-            [{ 'name': 'regs', 'value': page.results.regs | join(',') }]
+            [{ 'name': 'regs', 'value': page.results.regs | join(',') }],
+            page.results.search_query
         ) }}
     </div>
 </div>
