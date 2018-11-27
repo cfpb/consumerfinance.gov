@@ -1,10 +1,12 @@
 import json
 from functools import partial
 from six import string_types as basestring
+from six.moves.urllib.parse import urlencode
 
 from django import forms
 from django.apps import apps
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_text
@@ -14,6 +16,7 @@ from django.utils.safestring import mark_safe
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.utils.widgets import WidgetWithScript
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
@@ -323,6 +326,115 @@ class RelatedPosts(blocks.StructBlock):
                    'match ALL topic tags set on this page. Otherwise, related '
                    'posts can match any one topic tag.')
     )
+
+    alternate_view_more_url = blocks.CharBlock(
+        required=False,
+        label='Alternate "View more" URL',
+        help_text=('By default, the "View more" link will go to the Activity '
+                   'Log, filtered based on the above parameters. Enter a URL '
+                   'in this field to override that link destination.')
+    )
+
+    def get_context(self, value, parent_context=None):
+        context = super(RelatedPosts, self).get_context(
+            value,
+            parent_context=parent_context
+        )
+
+        page = context['page']
+        request = context['request']
+
+        context.update({
+            'posts': self.related_posts(page, value),
+            'view_more_url': (
+                value['alternate_view_more_url'] or
+                self.view_more_url(page, request)
+            ),
+        })
+
+        return context
+
+    @staticmethod
+    def related_posts(page, value):
+        from v1.models.learn_page import AbstractFilterPage
+
+        def tag_set(related_page):
+            return set([tag.pk for tag in related_page.tags.all()])
+
+        def match_all_topic_tags(queryset, page_tags):
+            """Return pages that share every one of the current page's tags."""
+            current_tag_set = set([tag.pk for tag in page_tags])
+            return [page for page in queryset
+                    if current_tag_set.issubset(tag_set(page))]
+
+        related_types = []
+        related_items = {}
+        if value.get('relate_posts'):
+            related_types.append('blog')
+        if value.get('relate_newsroom'):
+            related_types.append('newsroom')
+        if value.get('relate_events'):
+            related_types.append('events')
+        if not related_types:
+            return related_items
+
+        tags = page.tags.all()
+        and_filtering = value['and_filtering']
+        specific_categories = value['specific_categories']
+        limit = int(value['limit'])
+        queryset = AbstractFilterPage.objects.live().exclude(
+            id=page.id).order_by('-date_published').distinct()
+
+        for parent in related_types:  # blog, newsroom or events
+            # Include children of this slug that match at least 1 tag
+            children = Page.objects.child_of_q(Page.objects.get(slug=parent))
+            filters = children & Q(('tags__in', tags))
+
+            if parent == 'events':
+                # Include archived events matches
+                archive = Page.objects.get(slug='archive-past-events')
+                children = Page.objects.child_of_q(archive)
+                filters |= children & Q(('tags__in', tags))
+
+            if specific_categories:
+                # Filter by any additional categories specified
+                categories = ref.get_appropriate_categories(
+                    specific_categories=specific_categories,
+                    page_type=parent
+                )
+                if categories:
+                    filters &= Q(('categories__name__in', categories))
+
+            related_queryset = queryset.filter(filters)
+
+            if and_filtering:
+                # By default, we need to match at least one tag
+                # If specified in the admin, change this to match ALL tags
+                related_queryset = match_all_topic_tags(related_queryset, tags)
+
+            related_items[parent.title()] = related_queryset[:limit]
+
+        # Return items in the dictionary that have non-empty querysets
+        return {key: value for key, value in related_items.items() if value}
+
+    @staticmethod
+    def view_more_url(page, request):
+        """Generate a URL to see more pages like this one.
+        This method generates a link to the Activity Log page (which must
+        exist and must have a unique site-wide slug of "activity-log") with
+        filters set by the tags assigned to this page, like this:
+        /activity-log/?topics=foo&topics=bar&topics=baz
+        If for some reason a page with slug "activity-log" does not exist,
+        this method will raise Page.DoesNotExist.
+        """
+        activity_log = Page.objects.get(slug='activity-log')
+        url = activity_log.get_url(request)
+
+        tags = urlencode([('topics', tag) for tag in page.tags.slugs()])
+        if tags:
+            url += '?' + tags
+
+        return url
 
     class Meta:
         icon = 'link'

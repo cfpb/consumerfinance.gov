@@ -61,8 +61,9 @@ please send an email with your full name to tech@cfpb.gov.
     <link rel="apple-touch-icon" size="114x114" href="{% static 'nemo/_/img/apple-touch-icon-114x114-precomposed.png' %}">
     <link rel="apple-touch-icon" size="144x144" href="{% static 'nemo/_/img/apple-touch-icon-144x144-precomposed.png' %}">
 
+    {% block jquery %}
+    {% endblock %}
 
-    <script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
     <!--[if lt IE 9]>
     <script src="{% static 'nemo/_/js/html5shim.js' %}"></script>
     <![endif]-->
@@ -143,10 +144,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {% endblock %}
 
 {% block nemo_js %}
-<script src="{% static 'nemo/_/js/functions.js' %}"></script>
-<script type="text/javascript" src="{% static 'agreements/js/chosen.jquery.js' %}"></script>
 {% endblock %}
-
 
 {% block app_js %}
 {% endblock %}
@@ -166,15 +164,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </script>
 
   <script>
-    // If there are no breadcrumbs on this page, remove the ul tag so that screen
-    // readers don't read it (since the ul has nothing in it).
-    $(function(){
-        var numBreadCrumbs = $("ul.bread").children("li").length;
-        if(numBreadCrumbs == 0){
-            $("ul.bread").remove();
-        }
-    });
-    </script>
+    /* If there are no breadcrumbs on this page,
+       remove the ul tag so that screen readers don't read it
+       (since the ul has nothing in it). */
+    var numBreadCrumbs = document.querySelectorAll("ul.bread li").length;
+    if(numBreadCrumbs === 0){
+      var breadNode = document.querySelector("ul.bread");
+      breadNode.parentNode.removeChild(breadNode);
+    }
+  </script>
 <!--[if gt IE 8]><!-->
 <script type="text/javascript" src="{% static "js/atomic/header.nonresponsive.js" %}"></script>
 <!--<![endif]-->

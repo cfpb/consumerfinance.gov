@@ -1,6 +1,14 @@
 {% extends "front/base_nonresponsive.html" %}
 {% load staticfiles %}
 
+{% block jquery %}
+<script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
+{% endblock %}
+
+{% block nemo_js %}
+<script type="text/javascript" src="{% static 'agreements/js/chosen.jquery.js' %}"></script>
+{% endblock %}
+
 {% block app_css %}
 <link rel="stylesheet" href="{% static 'agreements/css/ccdb.css' %}" />
 <link rel="stylesheet" href="{% static 'agreements/css/chosen.css' %}" />

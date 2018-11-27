@@ -6,18 +6,20 @@ let behaviorElmDom;
 const selector = 'data-js-hook=behavior_flyout-menu';
 
 const HTML_SNIPPET = `
-  <a href="#main" id="skip-nav">Skip to main content</a>
-  <a class="o-mega-menu_content-link o-mega-menu_content-1-link"
-     data-js-hook="behavior_flyout-menu_trigger">
-       Consumer Tools
-  </a>
-  <a class="o-mega-menu_content-link o-mega-menu_content-1-link"
-     data-js-hook="behavior_flyout-menu_trigger">
-        Educational Resources
-  </a>
-  <div data-js-hook="behavior_flyout-menu">
-      <div data-js-hook="behavior_flyout-menu_content"></div>
-  </div>
+<div class="skip-nav">
+  <a href="#main" class="skip-nav_link">Skip to main content</a>
+</div>
+<a class="o-mega-menu_content-link o-mega-menu_content-1-link"
+   data-js-hook="behavior_flyout-menu_trigger">
+     Consumer Tools
+</a>
+<a class="o-mega-menu_content-link o-mega-menu_content-1-link"
+   data-js-hook="behavior_flyout-menu_trigger">
+      Educational Resources
+</a>
+<div data-js-hook="behavior_flyout-menu">
+    <div data-js-hook="behavior_flyout-menu_content"></div>
+</div>
 `;
 
 function triggerEvent( target, eventType, eventOption ) {

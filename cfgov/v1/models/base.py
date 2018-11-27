@@ -1,10 +1,8 @@
 import csv
 from six.moves import cStringIO as StringIO
-from six.moves.urllib.parse import urlencode
 
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.response import TemplateResponse
 from django.utils import timezone, translation
@@ -150,89 +148,6 @@ class CFGOVPage(Page):
         author_names = self.authors.order_by('name')
         # Then sort by last name
         return sorted(author_names, key=lambda x: x.name.split()[-1])
-
-    def generate_view_more_url(self, request):
-        """Generate a URL to see more pages like this one.
-
-        This method generates a link to the Activity Log page (which must
-        exist and must have a unique site-wide slug of "activity-log") with
-        filters set by the tags assigned to this page, like this:
-
-        /activity-log/?topics=foo&topics=bar&topics=baz
-
-        If for some reason a page with slug "activity-log" does not exist,
-        this method will raise Page.DoesNotExist.
-        """
-        activity_log = Page.objects.get(slug='activity-log')
-        url = activity_log.get_url(request)
-
-        tags = urlencode([('topics', tag) for tag in self.tags.slugs()])
-        if tags:
-            url += '?' + tags
-
-        return url
-
-    def related_posts(self, block):
-        from v1.models.learn_page import AbstractFilterPage
-
-        def tag_set(related_page):
-            return set([tag.pk for tag in related_page.tags.all()])
-
-        def match_all_topic_tags(queryset, page_tags):
-            """Return pages that share every one of the current page's tags."""
-            current_tag_set = set([tag.pk for tag in page_tags])
-            return [page for page in queryset
-                    if current_tag_set.issubset(tag_set(page))]
-
-        related_types = []
-        related_items = {}
-        if block.value.get('relate_posts'):
-            related_types.append('blog')
-        if block.value.get('relate_newsroom'):
-            related_types.append('newsroom')
-        if block.value.get('relate_events'):
-            related_types.append('events')
-        if not related_types:
-            return related_items
-
-        tags = self.tags.all()
-        and_filtering = block.value['and_filtering']
-        specific_categories = block.value['specific_categories']
-        limit = int(block.value['limit'])
-        queryset = AbstractFilterPage.objects.live().exclude(
-            id=self.id).order_by('-date_published').distinct()
-
-        for parent in related_types:  # blog, newsroom or events
-            # Include children of this slug that match at least 1 tag
-            children = Page.objects.child_of_q(Page.objects.get(slug=parent))
-            filters = children & Q(('tags__in', tags))
-
-            if parent == 'events':
-                # Include archived events matches
-                archive = Page.objects.get(slug='archive-past-events')
-                children = Page.objects.child_of_q(archive)
-                filters |= children & Q(('tags__in', tags))
-
-            if specific_categories:
-                # Filter by any additional categories specified
-                categories = ref.get_appropriate_categories(
-                    specific_categories=specific_categories,
-                    page_type=parent
-                )
-                if categories:
-                    filters &= Q(('categories__name__in', categories))
-
-            related_queryset = queryset.filter(filters)
-
-            if and_filtering:
-                # By default, we need to match at least one tag
-                # If specified in the admin, change this to match ALL tags
-                related_queryset = match_all_topic_tags(related_queryset, tags)
-
-            related_items[parent.title()] = related_queryset[:limit]
-
-        # Return items in the dictionary that have non-empty querysets
-        return {key: value for key, value in related_items.items() if value}
 
     def related_metadata_tags(self):
         # Set the tags to correct data format

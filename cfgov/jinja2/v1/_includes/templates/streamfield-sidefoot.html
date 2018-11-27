@@ -1,4 +1,3 @@
-{% import 'molecules/related-posts.html' as related_posts with context %}
 {% import 'molecules/related-metadata.html' as related_metadata with context %}
 {% import 'molecules/social-media.html' as social_media with context %}
 
@@ -6,18 +5,14 @@
 {% macro render(streamfield, half_width=false) %}
     {% for block in streamfield %}
         {% if 'related_posts' in block.block_type %}
-            {% set posts = page.related_posts(block) %}
-            {% if posts %}
-                <div class="block {{ 'block__flush-top' if loop.index == 1 else '' -}}">
-                    {{ related_posts.render(posts, block, half_width) }}
-                </div>
-            {% endif %}
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+            {% include_block block %}
         {% elif 'related_metadata' in block.block_type %}
-            <div class="block {{ 'block__flush-top' if loop.index == 1 else '' -}}">
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
                 {{ related_metadata.render(block.value) }}
             </div>
         {% elif 'social_media' in block.block_type %}
-            <div class="block {{ 'block__flush-top' if loop.index == 1 else '' -}}">
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
                 {{ social_media.render(block.value) }}
             </div>
         {% else %}

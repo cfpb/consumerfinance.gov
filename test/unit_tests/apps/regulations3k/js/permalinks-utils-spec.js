@@ -98,7 +98,7 @@ describe( 'The Regs3K permalinks utils', () => {
     it( 'should return the positions of all paragraphs', () => {
       const paragraphs = document.querySelectorAll( '.regdown-block' );
       expect( utils.getParagraphPositions( paragraphs ) ).toEqual(
-        [{'id': 'z-14-i', 'position': -30}, {'id': 'c', 'position': -30}, {'id': 'Interp-1', 'position': -30}]
+        [ { id: 'z-14-i', position: -30 }, { id: 'c', position: -30 }, { id: 'Interp-1', position: -30 } ]
       );
     } );
 
@@ -113,7 +113,7 @@ describe( 'The Regs3K permalinks utils', () => {
 
     it( 'should update and return the positions of all paragraphs', () => {
       expect( utils.updateParagraphPositions() ).toEqual(
-        [{'id': 'e', 'position': -30}, {'id': 'd', 'position': -30}, {'id': 'c', 'position': -30}, {'id': 'b', 'position': -30}, {'id': 'a', 'position': -30}]
+        [ { id: 'e', position: -30 }, { id: 'd', position: -30 }, { id: 'c', position: -30 }, { id: 'b', position: -30 }, { id: 'a', position: -30 } ]
       );
     } );
 
@@ -121,7 +121,7 @@ describe( 'The Regs3K permalinks utils', () => {
 
   describe( 'paragraph getter', () => {
 
-    const paragraphs = [{'id': 'three', 'position': 30}, {'id': 'two', 'position': 20}, {'id': 'one', 'position': 10}];
+    const paragraphs = [ { id: 'three', position: 30 }, { id: 'two', position: 20 }, { id: 'one', position: 10 } ];
 
     it( 'should get paragraph closest to viewport', () => {
       expect( utils.getCurrentParagraph( 'sandwich', paragraphs ) ).toEqual( null );

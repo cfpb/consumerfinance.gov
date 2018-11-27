@@ -1,10 +1,11 @@
+import json
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 
-from wagtail.wagtailcore.blocks import StreamValue
-
 import mock
 
+from v1.models.blog_page import BlogPage
 from v1.models.browse_page import BrowsePage
 from v1.models.snippets import Contact
 from v1.tests.wagtail_pages.helpers import publish_page
@@ -58,16 +59,72 @@ class ExternalLinksSearchViewTestCase(TestCase):
         )
 
     def test_page_results(self):
-        page = BrowsePage(title='test', slug='test')
-        page.content = StreamValue(
-            page.content.stream_block,
-            [{
+        page = BrowsePage(
+            title='Test Browse Page',
+            slug='test-browse-page',
+            content=json.dumps([{
                 'type': 'well',
                 'value': {
                     'content': '<a href=https://www.foobar.com>...</a>'
                 }
-            }],
-            True
+            }])
+        )
+        publish_page(page)
+        response = self.client.post('/admin/external-links/', {
+            'url': 'www.foobar.com'
+        })
+        self.assertContains(
+            response,
+            "There is 1 matching page and 0 matching snippets"
+        )
+
+    def test_single_result_per_page(self):
+        """ Page should show up once in results,
+        even if the same link occurs multiple times in it.
+        """
+        page = BlogPage(
+            title='Test Blog Page',
+            slug='test-blog-page',
+            content=json.dumps([{
+                'type': 'well',
+                'value': {
+                    'content': '<a href=https://www.foobar.com>...</a>'
+                },
+            }]),
+            header=json.dumps([{
+                'type': 'text_introduction',
+                'value': {
+                    'intro': '<a href=https://www.foobar.com>...</a>'
+                },
+            }])
+        )
+        publish_page(page)
+        response = self.client.post('/admin/external-links/', {
+            'url': 'www.foobar.com'
+        })
+        self.assertContains(
+            response,
+            "There is 1 matching page and 0 matching snippets"
+        )
+
+    def test_no_duplicates(self):
+        """ Page should show up once in results,
+        even if field the link is in belongs to a parent page
+        """
+        page = BlogPage(
+            title='Test Blog Page',
+            slug='test-blog-page',
+            sidefoot=json.dumps([{
+                'type': 'related_links',
+                'value': {
+                    'links': [
+                        {
+                            'url': 'https://www.foobar.com',
+                            'text': ''
+                        }
+                    ]
+                },
+            }])
         )
         publish_page(page)
         response = self.client.post('/admin/external-links/', {

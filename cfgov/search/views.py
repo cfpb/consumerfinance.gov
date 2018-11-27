@@ -29,6 +29,8 @@ class SearchView(View):
 
         for cls in get_page_models():
             pages += list(cls.objects.search(url))
+
+        pages = self.remove_duplicates(pages)
         pages = sorted(pages, key=lambda k: k.title)
 
         contacts = list(
@@ -52,6 +54,14 @@ class SearchView(View):
             'num_page_results': num_page_results,
             'num_snippet_results': num_snippet_results,
         })
+
+    @staticmethod
+    def remove_duplicates(pages):
+        seen = set()
+        for page in pages:
+            if page.pk not in seen:
+                seen.add(page.pk)
+                yield page
 
 
 def results_view(request):
