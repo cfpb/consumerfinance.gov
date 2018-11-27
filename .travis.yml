@@ -51,6 +51,7 @@ env:
     - DJANGO_STAGING_HOSTNAME=content.localhost
     - COVERALLS_PARALLEL=true
     - PGPORT=5433
+    - TEST_DATABASE_URL=postgres://travis:travis@localhost:5433/travis
 
 jobs:
   fast_finish: true
