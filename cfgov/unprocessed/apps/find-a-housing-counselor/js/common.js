@@ -40,7 +40,6 @@ function queryMarkerDom( num ) {
   const selector = '#hud-result-' + Number.parseInt( num, 10 );
   let cachedItem = markerDomCache[selector];
   if ( typeof cachedItem === 'undefined' ) {
-    console.log( 'looking up the item!' );
     cachedItem = document.querySelector( selector );
     markerDomCache[selector] = cachedItem;
   }
