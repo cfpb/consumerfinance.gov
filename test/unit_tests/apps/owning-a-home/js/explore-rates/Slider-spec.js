@@ -1,18 +1,17 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const Slider = require( BASE_JS_PATH + 'js/explore-rates/Slider' );
+import Slider from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/Slider';
 let sliderDom;
 let slider;
 
 const HTML_SNIPPET = `
-  <div class="a-range">
-    <div class="a-range_labels">
-      <span class="a-range_labels-min"></span>
-      <span class="a-range_labels-max"></span>
-    </div>
-    <input type="range"
-           class="a-range_input">
-    <div class="a-range_text"></div>
+<div class="a-range">
+  <div class="a-range_labels">
+    <span class="a-range_labels-min"></span>
+    <span class="a-range_labels-max"></span>
   </div>
+  <input type="range"
+         class="a-range_input">
+  <div class="a-range_text"></div>
+</div>
 `;
 
 describe( 'explore-rates/Slider', () => {

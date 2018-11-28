@@ -2,9 +2,8 @@
    Scripts for Email Signup organism.
    ========================================================================== */
 
-
-const FormSubmit = require( '../../organisms/FormSubmit.js' );
-const validators = require( '../../modules/util/validators' );
+import FormSubmit from '../../organisms/FormSubmit.js';
+import * as validators from '../../modules/util/validators';
 
 const BASE_CLASS = 'o-email-signup';
 const language = document.body.querySelector( '.content' ).lang;

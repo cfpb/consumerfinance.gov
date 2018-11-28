@@ -1,4 +1,4 @@
-const Analytics = require( '../../../js/modules/Analytics' );
+import Analytics from '../../../js/modules/Analytics';
 
 /**
  * Initialize the questionnaire

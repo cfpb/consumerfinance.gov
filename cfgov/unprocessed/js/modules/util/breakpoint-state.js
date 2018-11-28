@@ -2,9 +2,8 @@
    Get Breakpoint State
    ========================================================================== */
 
-const _breakpointsConfig = require( '../../config/breakpoints-config' );
-const _getViewportDimensions = require( './get-viewport-dimensions' )
-  .getViewportDimensions;
+import breakpointsConfig from '../../config/breakpoints-config';
+import { getViewportDimensions } from './get-viewport-dimensions';
 
 /**
  * @param {Object} breakpointRange - Object containing breakpoint constants.
@@ -26,14 +25,14 @@ function _inBreakpointRange( breakpointRange, width ) {
 function get( width ) {
   const breakpointState = {};
   let breakpointKey;
-  width = width || _getViewportDimensions().width;
+  width = width || getViewportDimensions().width;
 
   // eslint-disable-next-line guard-for-in
-  for ( const rangeKey in _breakpointsConfig ) {
+  for ( const rangeKey in breakpointsConfig ) {
     breakpointKey = 'is' + rangeKey.charAt( 0 ).toUpperCase() +
                     rangeKey.slice( 1 );
     breakpointState[breakpointKey] =
-      _inBreakpointRange( _breakpointsConfig[rangeKey], width );
+      _inBreakpointRange( breakpointsConfig[rangeKey], width );
   }
 
   return breakpointState;
@@ -55,7 +54,7 @@ function isInDesktop() {
 }
 
 // Expose public methods.
-module.exports = {
-  get: get,
-  isInDesktop: isInDesktop
+export {
+  get,
+  isInDesktop
 };

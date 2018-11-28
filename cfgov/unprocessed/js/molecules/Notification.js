@@ -1,6 +1,6 @@
 // Required modules.
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const standardType = require( '../modules/util/standard-type' );
+import * as atomicHelpers from '../modules/util/atomic-helpers';
+import { UNDEFINED } from '../modules/util/standard-type';
 const SUCCESS_ICON = require(
   'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/check-round.svg'
 );
@@ -53,7 +53,7 @@ function Notification( element ) {
    */
   function init() {
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+      return UNDEFINED;
     }
 
     // Check and set default type of notification.
@@ -171,4 +171,4 @@ function Notification( element ) {
   return this;
 }
 
-module.exports = Notification;
+export default Notification;

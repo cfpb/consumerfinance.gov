@@ -1,7 +1,4 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/js/';
-const Store = require(
-  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/stores/chart.js'
-);
+import Store from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/stores/chart.js';
 let store;
 
 describe( 'Mortgage Performance line chart store', () => {

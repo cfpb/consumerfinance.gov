@@ -1,7 +1,7 @@
 import { simulateEvent } from '../../../util/simulate-event';
 
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const MegaMenu = require( BASE_JS_PATH + 'organisms/MegaMenu' );
+import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu';
+
 const BASE_CLASS = 'o-mega-menu';
 const HTML_SNIPPET = `
 <nav class="o-mega-menu" data-js-hook="behavior_flyout-menu" aria-label="main menu">

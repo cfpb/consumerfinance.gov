@@ -11,22 +11,22 @@ let nonLinkRowCellDom;
 let locationSpy;
 
 const HTML_SNIPPET = `
-  <table class="o-table__row-links">
-      <tbody>
-          <tr>
-              <th>cell1</th>
-              <th class="nonLinkRowCell">cell2</th>
-              <th>cell3</th>
-              <th>cell4</th>
-          </tr>
-          <tr>
-              <td><a href="https://www.example.com">linkCell5</a></td>
-              <td class="linkRowCell">cell6</td>
-              <td>cell7</td>
-              <td>cell8</td>
-          </tr>
-      </tbody>
-  </table>
+<table class="o-table__row-links">
+    <tbody>
+        <tr>
+            <th>cell1</th>
+            <th class="nonLinkRowCell">cell2</th>
+            <th>cell3</th>
+            <th>cell4</th>
+        </tr>
+        <tr>
+            <td><a href="https://www.example.com">linkCell5</a></td>
+            <td class="linkRowCell">cell6</td>
+            <td>cell7</td>
+            <td>cell8</td>
+        </tr>
+    </tbody>
+</table>
 `;
 
 describe( 'o-table-row-links', () => {

@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const Footer = require( BASE_JS_PATH + 'organisms/Footer' );
+import Footer from '../../../../cfgov/unprocessed/js/organisms/Footer';
 
 let footer;
 

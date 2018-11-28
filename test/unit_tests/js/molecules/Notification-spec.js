@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const Notification = require( BASE_JS_PATH + 'molecules/Notification' );
+import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
 const BASE_CLASS = 'm-notification';
 const HTML_SNIPPET = `
   <div class="m-notification

@@ -1,6 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const MoveTransition =
-  require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
+import MoveTransition from '../../../../../cfgov/unprocessed/js/modules/transition/MoveTransition';
 
 let transition;
 

@@ -204,4 +204,4 @@ RateCheckerChart.STATUS_OKAY = 0;
 RateCheckerChart.STATUS_WARNING = 1;
 RateCheckerChart.STATUS_ERROR = 2;
 
-module.exports = RateCheckerChart;
+export default RateCheckerChart;

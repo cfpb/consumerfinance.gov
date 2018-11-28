@@ -1,11 +1,7 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-
 // Disable the AJAX library used by the action creator.
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
 
-const utils = require(
-  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/utils.js'
-);
+import utils from '../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils.js';
 
 let el;
 

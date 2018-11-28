@@ -135,4 +135,4 @@ function Slider( element ) {
 Slider.STATUS_OKAY = 0;
 Slider.STATUS_WARNING = 1;
 
-module.exports = Slider;
+export default Slider;
