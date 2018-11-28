@@ -35,7 +35,7 @@ describe( 'Dom Manipulators create', () => {
     expect( query.getAttribute( 'data-name' ) ).toBe( 'create-heading-data' );
   } );
 
-  xit( 'should create an elem inside another', () => {
+  it( 'should create an elem inside another', () => {
     const query = document.querySelector( 'span' );
 
     expect( query.textContent ).toBe( 'Heading Span' );
@@ -44,7 +44,7 @@ describe( 'Dom Manipulators create', () => {
     expect( query.getAttribute( 'data-name' ) ).toBe( 'create-span-data' );
   } );
 
-  xit( 'should create an elem around another', () => {
+  it( 'should create an elem around another', () => {
     const query = document.querySelector( 'div' );
 
     expect( query.id ).toBe( 'create-div-id' );
