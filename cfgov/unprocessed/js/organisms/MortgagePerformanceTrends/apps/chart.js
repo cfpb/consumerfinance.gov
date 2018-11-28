@@ -1,7 +1,7 @@
-const ccb = require( 'cfpb-chart-builder' );
-const actions = require( '../actions/chart' );
-const Store = require( '../stores/chart' );
-const utils = require( '../utils' );
+import * as ccb from 'cfpb-chart-builder';
+import actions from '../actions/chart';
+import Store from '../stores/chart';
+import utils from '../utils';
 
 const store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
 
@@ -273,4 +273,4 @@ MortgagePerformanceLineChart.prototype.renderStates = function( prevState, state
   this.$state.appendChild( fragment );
 };
 
-module.exports = MortgagePerformanceLineChart;
+export default MortgagePerformanceLineChart;

@@ -1,4 +1,4 @@
-const queryOne = require( './dom-traverse' ).queryOne;
+import { queryOne } from './dom-traverse';
 
 /**
  * Shortcut for creating new dom elements
@@ -32,6 +32,6 @@ function create( tag, options ) {
   return elem;
 }
 
-module.exports = {
-  create: create
+export {
+  create
 };

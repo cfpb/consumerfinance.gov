@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/analytics-gtm/';
-const analyticsUtil = require( BASE_JS_PATH + 'js/util/analytics-util' );
+import * as analyticsUtil from '../../../../../../cfgov/unprocessed/apps/analytics-gtm/js/util/analytics-util';
 
 const HTML_SNIPPET = `
   <div id="test-elem"></div>

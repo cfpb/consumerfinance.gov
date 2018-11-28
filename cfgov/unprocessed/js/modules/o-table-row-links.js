@@ -28,4 +28,4 @@ function _tableClicked( event ) {
   window.location.assign( target.querySelector( 'a' ).getAttribute( 'href' ) );
 }
 
-module.exports = { init: init };
+export { init };

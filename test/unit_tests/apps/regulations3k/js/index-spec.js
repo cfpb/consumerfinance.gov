@@ -1,6 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
-
-const app = require( `${ BASE_JS_PATH }/js/index.js` );
+import app from '../../../../../cfgov/unprocessed/apps/regulations3k/js/index.js';
 
 describe( 'The app', () => {
 

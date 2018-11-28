@@ -1,7 +1,7 @@
 /* TODO: Read these values directly from cf-vars.less.
    All values are pixel based. */
 
-module.exports = {
+const breakPointsConfig = {
   bpXS: {
     min: 0,
     max: 600
@@ -22,3 +22,5 @@ module.exports = {
     min: 1201
   }
 };
+
+export default breakPointsConfig;

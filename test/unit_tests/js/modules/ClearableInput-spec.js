@@ -1,6 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const ClearableInput = require( BASE_JS_PATH + 'modules/ClearableInput' );
-
+import ClearableInput from '../../../../cfgov/unprocessed/js/modules/ClearableInput';
 import { simulateEvent } from '../../../util/simulate-event';
 
 let baseDom;
@@ -8,22 +6,22 @@ let clearBtnDom;
 let inputDom;
 
 const HTML_SNIPPET = `
-  <div class="o-form__input-w-btn_input-container">
-       <div class="m-btn-inside-input
-                   input-contains-label">
-           <label for="query" class="input-contains-label_before
-                                     input-contains-label_before__search">
-           </label>
-           <label for="query" class="input-contains-label_after
-                                     input-contains-label_after__clear">
-           </label>
-           <input type="text"
-                  title="Search the CFPB"
-                  class="a-text-input"
-                  value=""
-                  placeholder="Search the CFPB">
-       </div>
-  </div>
+<div class="o-form__input-w-btn_input-container">
+     <div class="m-btn-inside-input
+                 input-contains-label">
+         <label for="query" class="input-contains-label_before
+                                   input-contains-label_before__search">
+         </label>
+         <label for="query" class="input-contains-label_after
+                                   input-contains-label_after__clear">
+         </label>
+         <input type="text"
+                title="Search the CFPB"
+                class="a-text-input"
+                value=""
+                placeholder="Search the CFPB">
+     </div>
+</div>
 `;
 
 describe( 'ClearableInput', () => {

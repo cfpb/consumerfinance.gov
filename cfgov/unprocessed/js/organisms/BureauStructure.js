@@ -3,8 +3,7 @@
    Scripts for `/the-bureau/bureau-structure/`.
    ========================================================================== */
 
-
-const BreakpointHandler = require( '../modules/BreakpointHandler' );
+import BreakpointHandler from '../modules/BreakpointHandler';
 require( 'cf-expandables/src/Expandable' ).init();
 
 let BS;
@@ -211,4 +210,4 @@ const BureauStructure = BS = {
   }
 };
 
-module.exports = BureauStructure;
+export default BureauStructure;

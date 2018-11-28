@@ -1,5 +1,5 @@
-const utils = require( '../utils' );
-const defaultActionCreators = require( './default' );
+import utils from '../utils';
+import defaultActionCreators from './default';
 
 const chartActionCreators = defaultActionCreators();
 
@@ -215,4 +215,4 @@ chartActionCreators.fetchCounties = ( countyState, includeComparison ) => dispat
   } );
 };
 
-module.exports = chartActionCreators;
+export default chartActionCreators;

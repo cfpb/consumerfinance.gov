@@ -22,8 +22,8 @@
 
 
 // Required modules.
-const standardType = require( './standard-type' );
-const dataHook = require( '../../modules/util/data-hook' );
+import { BEHAVIOR_PREFIX, JS_HOOK } from './standard-type';
+import * as dataHook from '../../modules/util/data-hook';
 
 
 /**
@@ -45,7 +45,7 @@ function _findElements( behaviorSelector, baseElement ) {
   }
 
   if ( behaviorElements.length === 0 &&
-       behaviorSelector.indexOf( standardType.BEHAVIOR_PREFIX ) === -1 ) {
+       behaviorSelector.indexOf( BEHAVIOR_PREFIX ) === -1 ) {
     behaviorElements = find( behaviorSelector, baseElement );
   }
 
@@ -101,7 +101,7 @@ function checkBehaviorDom( element, behaviorDataAttr ) {
   /* If the passed DOM node isn't null,
      query the node to see if it's in the children. */
   if ( element ) {
-    const selector = '[' + standardType.JS_HOOK + '=' + behaviorDataAttr + ']';
+    const selector = '[' + JS_HOOK + '=' + behaviorDataAttr + ']';
     dom = element.querySelector( selector );
   }
 
@@ -120,8 +120,7 @@ function checkBehaviorDom( element, behaviorDataAttr ) {
  * @returns {HTMLNodeList} if it exists in the dom, null otherwise.
  */
 function find( behaviorSelector, baseElement ) {
-  behaviorSelector =
-  standardType.JS_HOOK + '*=' + standardType.BEHAVIOR_PREFIX + behaviorSelector;
+  behaviorSelector = JS_HOOK + '*=' + BEHAVIOR_PREFIX + behaviorSelector;
   behaviorSelector = '[' + behaviorSelector + ']';
 
   return _findElements( behaviorSelector, baseElement );
@@ -137,9 +136,9 @@ function remove( behaviorElement, event, eventHandler ) {
 }
 
 // Expose public methods.
-module.exports = {
-  attach: attach,
-  checkBehaviorDom: checkBehaviorDom,
-  find: find,
-  remove: remove
+export {
+  attach,
+  checkBehaviorDom,
+  find,
+  remove
 };

@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const Tree = require( BASE_JS_PATH + 'modules/Tree' );
+import Tree from '../../../../cfgov/unprocessed/js/modules/Tree';
 
 describe( 'Tree', () => {
   let tree;

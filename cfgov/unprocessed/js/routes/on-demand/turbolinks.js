@@ -3,6 +3,6 @@
    https://github.com/turbolinks/turbolinks
    ========================================================================= */
 
-const Turbolinks = require( 'turbolinks' );
+import * as Turbolinks from 'turbolinks';
 
 Turbolinks.start();

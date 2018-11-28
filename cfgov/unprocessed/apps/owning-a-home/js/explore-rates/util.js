@@ -182,7 +182,7 @@ function setSelection( el, val ) {
   }
 }
 
-module.exports = {
+export {
   calcLoanAmount,
   checkIfZero,
   delay,

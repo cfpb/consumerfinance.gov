@@ -43,7 +43,7 @@ const init = () => {
 
 window.addEventListener( 'load', init );
 
-module.exports = {
+export {
   processNotice,
   processNotices
 };

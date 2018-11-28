@@ -40,7 +40,7 @@ const getNewHash = hash => {
  */
 const isOldHash = hash => ( /^#?\d\d\d\d/ ).test( hash );
 
-module.exports = {
+export {
   fetch,
   getNewHash,
   isOldHash
