@@ -47,6 +47,8 @@ function FilterableListControls( element ) {
     ]
   };
 
+  const _fieldCache = {};
+
   /**
    * @returns {FilterableListControls|undefined} An instance,
    *   or undefined if it was already initialized.
@@ -84,9 +86,91 @@ function FilterableListControls( element ) {
     _notification = new Notification( _dom );
     _notification.init();
 
+    _cacheFields();
     _initEvents();
 
     return this;
+  }
+
+  function _cacheFields() {
+    const rawElements = _form.elements;
+    const validateableElements = [];
+    const fieldGroups = [];
+
+    let element;
+    let type;
+    let isIgnored;
+    let isDisabled;
+    let isInGroup;
+    let groupName;
+    let isRequired;
+    let shouldValidate;
+
+    // Build array from HTMLFormControlsCollection.
+    for ( let i = 0, len = rawElements.length; i < len; i++ ) {
+      element = rawElements[i];
+      type = _getElementType( element );
+      isDisabled = element.getAttribute( 'disabled' ) !== null;
+      isIgnored = _defaults.ignoreFieldTypes.indexOf( type ) > -1;
+      isInGroup = _defaults.groupFieldTypes.indexOf( type ) > -1;
+
+      if ( !isIgnored ) {
+        validateableElements.push( element );
+      }
+
+      if ( isInGroup ) {
+        groupName = element.getAttribute( 'data-group' ) ||
+                    element.getAttribute( 'name' );
+      }
+
+      isRequired = element.getAttribute( 'data-required' ) !== null ||
+                   element.getAttribute( 'required' ) !== null;
+
+      let shouldValidate = !isDisabled && !isIgnored;
+      if ( shouldValidate && isInGroup ) {
+        const name = groupName;
+        const groupExists = fieldGroups.indexOf( name ) > -1;
+        if ( groupExists || isRequired === false ) {
+          shouldValidate = false;
+        } else {
+          fieldGroups.push( name );
+        }
+      }
+
+      _fieldCache[element] = {
+        type: type,
+        isIgnored: isIgnored,
+        isDisabled: isDisabled,
+        isInGroup: isInGroup,
+        groupName: groupName,
+        isRequired: isRequired,
+        shouldValidate: shouldValidate
+      }
+    }
+    _fieldCache.validateableElements = validateableElements;
+    _fieldCache.fieldGroups = fieldGroups;
+  }
+
+  /**
+   * [isIgnoreType description]
+   * @param  {[type]}  elem [description]
+   * @return {Boolean}      [description]
+   */
+  function _isIgnoreType( elem, type ) {
+    return _defaults.ignoreFieldTypes.indexOf( type ) > -1;
+  }
+
+  /**
+   * Retrieve a string representing the type of an element.
+   * May be a custom data-type attribute, the type attribute (of INPUT elements)
+   * or the lowercased tagname.
+   * @param {HTMLNode} elem - The HTML element to check. An input usually.
+   * @returns {string} A type string for the element.
+   */
+  function _getElementType( elem ) {
+    return elem.getAttribute( 'data-type' ) ||
+           elem.getAttribute( 'type' ) ||
+           elem.tagName.toLowerCase();
   }
 
   /**
@@ -146,7 +230,7 @@ function FilterableListControls( element ) {
    * Handle form sumbmission and showing error notification.
    */
   function _formSubmitted( ) {
-    const validatedFields = _validateFields( [].slice.call( _form.elements ) );
+    const validatedFields = _validateFields( _fieldCache.validateableElements );
 
     if ( validatedFields.invalid.length > 0 ) {
       _setNotification( _notification.ERROR,
@@ -210,36 +294,6 @@ function FilterableListControls( element ) {
     _notification[methodName]();
   }
 
-  /* eslint-disable complexity */
-  // TODO: Reduce complexity
-  /**
-   * Determines if you should validate a field.
-   * @param {HTMLNode} field A form field.
-   * @param {string} type The type of field.
-   * @param {boolean} isInGroup A boolean that determines if field in a group.
-   * @returns {boolean} True if the field should be validated, false otherwise.
-   */
-  function shouldValidateField( field, type, isInGroup ) {
-    const isDisabled = field.getAttribute( 'disabled' ) !== null;
-    const isIgnoreType = _defaults.ignoreFieldTypes.indexOf( type ) > -1;
-    let shouldValidate = isDisabled === false && isIgnoreType === false;
-
-    if ( shouldValidate && isInGroup ) {
-      const name = field.getAttribute( 'data-group' ) ||
-                   field.getAttribute( 'name' );
-      const isRequired = field.getAttribute( 'data-required' ) !== null;
-      const groupExists = _fieldGroups.indexOf( name ) > -1;
-      if ( groupExists || isRequired === false ) {
-        shouldValidate = false;
-      } else {
-        _fieldGroups.push( name );
-      }
-    }
-
-    return shouldValidate;
-  }
-  /* eslint-enable complexity */
-
   /**
    * Validate the fields of our form.
    * @param {Array} fields A list of form fields.
@@ -253,23 +307,17 @@ function FilterableListControls( element ) {
     };
     let validatedField;
 
-    _fieldGroups = [];
-
     /* eslint-disable complexity */
     // TODO: Reduce complexity
-    fields.forEach( function loopFields( field ) {
+    fields.forEach( field => {
       let fieldIsValid = true;
-      const type = field.getAttribute( 'data-type' ) ||
-                   field.getAttribute( 'type' ) ||
-                   field.tagName.toLowerCase();
-      const isGroupField = _defaults.groupFieldTypes.indexOf( type ) > -1;
 
-      if ( shouldValidateField( field, type, isGroupField ) === false ) return;
-
-      validatedField = _validateField( field, type, isGroupField );
+      validatedField = _validateField( field );
 
       for ( const prop in validatedField.status ) {
-        if ( validatedField.status[prop] === false ) fieldIsValid = false;
+        if ( validatedField.status[prop] === false ) {
+          fieldIsValid = false;
+        }
       }
 
       if ( fieldIsValid ) {
@@ -292,7 +340,7 @@ function FilterableListControls( element ) {
    * @param {boolean} isInGroup A boolean that determines if field in a group.
    * @returns {Object} An object with a status and message properties.
    */
-  function _validateField( field, type, isInGroup ) {
+  function _validateField( field ) {
     let fieldset;
     const validation = {
       field:  field,
