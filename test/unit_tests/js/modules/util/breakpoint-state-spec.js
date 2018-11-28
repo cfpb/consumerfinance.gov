@@ -1,20 +1,17 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const breakpointState = require(
-  BASE_JS_PATH + 'modules/util/breakpoint-state'
-);
-const breakpointConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
+import * as breakpointState from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state';
+import breakpointsConfig from '../../../../../cfgov/unprocessed/js/config/breakpoints-config';
 
 let configKeys;
 
 describe( 'breakpoint-state', () => {
   beforeEach( () => {
-    configKeys = Object.keys( breakpointConfig );
+    configKeys = Object.keys( breakpointsConfig );
   } );
 
   describe( '.get()', () => {
     it( 'should return an object with properties from config file', () => {
       const breakpointStatekeys =
-        Object.keys( breakpointConfig ).map( key => {
+        Object.keys( breakpointsConfig ).map( key => {
           key.replace( 'is', '' );
           key.charAt( 0 ).toLowerCase() + key.slice( 1 );
           return key;
@@ -42,11 +39,11 @@ describe( 'breakpoint-state', () => {
       let breakpointStateKey;
 
       // eslint-disable-next-line guard-for-in
-      for ( const rangeKey in breakpointConfig ) {
-        width = breakpointConfig[rangeKey].max ||
-                breakpointConfig[rangeKey].min;
+      for ( const rangeKey in breakpointsConfig ) {
+        width = breakpointsConfig[rangeKey].max ||
+                breakpointsConfig[rangeKey].min;
         breakpointStateKey =
-        'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
+          'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
 
         expect( breakpointState.get( width )[breakpointStateKey] ).toBe( true );
       }

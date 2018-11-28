@@ -1,5 +1,5 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/modules/';
-const ExternalSite = require( BASE_JS_PATH + 'ExternalSite' );
+import ExternalSite from '../../../../cfgov/unprocessed/js/modules/ExternalSite';
+
 const HTML_SNIPPET = `
 <main class="content external-site_container">
     <div class="wrapper content_wrapper">

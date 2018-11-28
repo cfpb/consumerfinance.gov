@@ -1,11 +1,10 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const domTools = require( BASE_JS_PATH + 'js/dom-tools.js' ).default;
+import domTools from '../../../../../cfgov/unprocessed/apps/owning-a-home/js/dom-tools.js';
 
 const HTML_SNIPPET = `
-  <div id="test"></div>
-  <div id="test2" class="test"></div>
-  <div class="test"></div>
-  <div class="test"></div>
+<div id="test"></div>
+<div id="test2" class="test"></div>
+<div class="test"></div>
+<div class="test"></div>
 `;
 
 let testDom;

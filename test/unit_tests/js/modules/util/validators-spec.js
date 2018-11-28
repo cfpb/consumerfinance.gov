@@ -1,6 +1,5 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
-const validators = require( BASE_JS_PATH + 'modules/util/validators.js' );
+import ERROR_MESSAGES from '../../../../../cfgov/unprocessed/js/config/error-messages-config';
+import * as validators from '../../../../../cfgov/unprocessed/js/modules/util/validators.js';
 let testField;
 let returnedObject;
 

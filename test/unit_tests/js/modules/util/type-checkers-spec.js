@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const typeCheckers = require( BASE_JS_PATH + 'modules/util/type-checkers.js' );
+import * as typeCheckers from '../../../../../cfgov/unprocessed/js/modules/util/type-checkers.js';
 
 let undefinedVar;
 const blankVar = '';

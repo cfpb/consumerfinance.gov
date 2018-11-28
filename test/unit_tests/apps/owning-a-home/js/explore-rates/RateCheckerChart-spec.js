@@ -1,34 +1,33 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const RateCheckerChart = require( BASE_JS_PATH + 'js/explore-rates/RateCheckerChart' );
+import RateCheckerChart from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/RateCheckerChart';
 
 const HTML_SNIPPET = `
-  <section id="chart-section" class="chart">
+<section id="chart-section" class="chart">
 
-    <figure class="data-enabled loading">
-        <div id="chart" class="chart-area"></div>
-        <figcaption class="chart-caption">
-            <div class="caption-title">
-                Interest rates for your situation
-            </div>
-            <div class="rc-data-link">
-                <a href="#about" class="u-link-underline">
-                    About our data source
-                </a>
-            </div>
-        </figcaption>
-    </figure>
+  <figure class="data-enabled loading">
+      <div id="chart" class="chart-area"></div>
+      <figcaption class="chart-caption">
+          <div class="caption-title">
+              Interest rates for your situation
+          </div>
+          <div class="rc-data-link">
+              <a href="#about" class="u-link-underline">
+                  About our data source
+              </a>
+          </div>
+      </figcaption>
+  </figure>
 
-    <div id="chart-result-alert"
-         class="result-alert chart-alert u-hidden"
-         role="alert">
-    </div>
+  <div id="chart-result-alert"
+       class="result-alert chart-alert u-hidden"
+       role="alert">
+  </div>
 
-    <div id="chart-fail-alert"
-         class="result-alert chart-alert u-hidden"
-         role="alert">
-    </div>
+  <div id="chart-fail-alert"
+       class="result-alert chart-alert u-hidden"
+       role="alert">
+  </div>
 
-  </section>
+</section>
 `;
 
 let chart;

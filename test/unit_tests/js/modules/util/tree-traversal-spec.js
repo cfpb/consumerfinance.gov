@@ -1,6 +1,5 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const Tree = require( BASE_JS_PATH + 'modules/Tree' );
-const treeTraversal = require( BASE_JS_PATH + 'modules/util/tree-traversal' );
+import Tree from '../../../../../cfgov/unprocessed/js/modules/Tree';
+import * as treeTraversal from '../../../../../cfgov/unprocessed/js/modules/util/tree-traversal';
 
 describe( 'Tree traversal', () => {
 

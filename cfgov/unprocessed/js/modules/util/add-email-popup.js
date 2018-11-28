@@ -1,5 +1,6 @@
-const EmailPopup = require( '../../organisms/EmailPopup' );
-const emailHelpers = require( './email-popup-helpers' );
+import EmailPopup from '../../organisms/EmailPopup';
+import * as emailHelpers from './email-popup-helpers';
+
 const emailPopup = document.querySelector( '.' + EmailPopup.BASE_CLASS );
 
 if ( emailPopup && emailHelpers.showEmailPopup() ) {

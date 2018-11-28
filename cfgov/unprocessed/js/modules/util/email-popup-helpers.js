@@ -1,5 +1,5 @@
-const _assign = require( './assign' ).assign;
-const throttle = require( 'lodash.throttle' );
+import { assign } from './assign';
+import throttle from 'lodash.throttle';
 
 /**
  * Stores/retrieves email signup data in localStorage
@@ -108,7 +108,7 @@ function showOnScroll( elToShow, opts ) {
     }
   };
 
-  opts = _assign( defaults, opts || {} );
+  opts = assign( defaults, opts || {} );
 
   function _getScrollTargetPosition() {
     const elHeight = elToShow.offsetHeight;
@@ -141,7 +141,7 @@ function showOnScroll( elToShow, opts ) {
   window.addEventListener( 'scroll', handler );
 }
 
-module.exports = {
+export {
   showEmailPopup,
   recordEmailPopupView,
   recordEmailRegistration,

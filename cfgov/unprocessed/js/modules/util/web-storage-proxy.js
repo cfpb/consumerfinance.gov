@@ -114,9 +114,9 @@ function _getStorageType( storage ) {
 }
 
 // Expose public methods.
-module.exports = {
-  setItem:    setItem,
-  getItem:    getItem,
-  removeItem: removeItem,
-  setStorage: setStorage
+export {
+  setItem,
+  getItem,
+  removeItem,
+  setStorage
 };
