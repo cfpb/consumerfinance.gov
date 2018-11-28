@@ -1,6 +1,6 @@
 // Required modules.
-const EventObserver = require( '../../modules/util/EventObserver' );
-const BaseTransition = require( './BaseTransition' );
+import EventObserver from '../../modules/util/EventObserver';
+import BaseTransition from './BaseTransition';
 
 // Exported constants.
 const CLASSES = {
@@ -84,4 +84,4 @@ function AlphaTransition( element ) {
 // Public static properties.
 AlphaTransition.CLASSES = CLASSES;
 
-module.exports = AlphaTransition;
+export default AlphaTransition;

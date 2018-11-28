@@ -2,8 +2,7 @@
    Scripts for Notification molecule.
    ========================================================================== */
 
+import { instantiateAll } from '../../modules/util/atomic-helpers';
+import Notification from '../../molecules/Notification';
 
-const atomicHelpers = require( '../../modules/util/atomic-helpers' );
-const Notification = require( '../../molecules/Notification' );
-
-atomicHelpers.instantiateAll( '.m-notification', Notification );
+instantiateAll( '.m-notification', Notification );

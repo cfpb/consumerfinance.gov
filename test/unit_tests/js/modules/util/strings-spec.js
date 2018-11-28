@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const strings = require( BASE_JS_PATH + 'modules/util/strings' );
+import * as strings from '../../../../../cfgov/unprocessed/js/modules/util/strings';
 let string;
 let control;
 

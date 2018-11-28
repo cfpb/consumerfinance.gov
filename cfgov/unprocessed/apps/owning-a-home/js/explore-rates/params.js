@@ -72,7 +72,7 @@ function update() {
   }
 }
 
-module.exports = {
+export {
   getAllParams,
   getVal,
   setVal,

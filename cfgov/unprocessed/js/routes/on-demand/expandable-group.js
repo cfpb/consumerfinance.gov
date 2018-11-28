@@ -2,5 +2,4 @@
    Scripts for Expandable Group organism.
    ========================================================================== */
 
-
 require( 'cf-expandables/src/Expandable' ).init();

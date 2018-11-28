@@ -2,5 +2,4 @@
    Scripts for Expandable Molecule.
    ========================================================================== */
 
-
 require( 'cf-expandables/src/Expandable' ).init();

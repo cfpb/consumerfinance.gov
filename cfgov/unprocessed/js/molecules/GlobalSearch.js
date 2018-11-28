@@ -1,12 +1,12 @@
 // Required modules.
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const breakpointState = require( '../modules/util/breakpoint-state' );
-const ClearableInput = require( '../modules/ClearableInput' );
-const EventObserver = require( '../modules/util/EventObserver' );
-const FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
-const MoveTransition = require( '../modules/transition/MoveTransition' );
-const standardType = require( '../modules/util/standard-type' );
-const TabTrigger = require( '../modules/TabTrigger' );
+import * as atomicHelpers from '../modules/util/atomic-helpers';
+import * as breakpointState from '../modules/util/breakpoint-state';
+import ClearableInput from '../modules/ClearableInput';
+import EventObserver from '../modules/util/EventObserver';
+import FlyoutMenu from '../modules/behavior/FlyoutMenu';
+import MoveTransition from '../modules/transition/MoveTransition';
+import { UNDEFINED } from '../modules/util/standard-type';
+import TabTrigger from '../modules/TabTrigger';
 
 /**
  * GlobalSearch
@@ -38,7 +38,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    */
   function init() {
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+      return UNDEFINED;
     }
 
     // Set initial appearance.
@@ -199,4 +199,4 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   return this;
 }
 
-module.exports = GlobalSearch;
+export default GlobalSearch;

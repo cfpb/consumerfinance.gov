@@ -2,7 +2,6 @@
    Get Viewport Dimensions
    ========================================================================== */
 
-
 /**
  * @returns {object} An object literal with the viewport
  *   width and height as properties.
@@ -26,6 +25,6 @@ function getViewportDimensions() {
 }
 
 // Expose public methods.
-module.exports = {
-  getViewportDimensions: getViewportDimensions
+export {
+  getViewportDimensions
 };

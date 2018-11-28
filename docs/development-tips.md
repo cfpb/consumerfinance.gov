@@ -21,7 +21,7 @@ The structure looks like this:
 #### Browserlist
 - Apps may include a
   [browserlist config](https://github.com/browserslist/browserslist#config-file)
-  file, which is automatically picked up by `babel-preset-env` inside the
+  file, which is automatically picked up by `@babel/preset-env` inside the
   webpack config, if no `browsers` option is supplied.
 
 #### Templates

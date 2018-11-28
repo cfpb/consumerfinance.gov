@@ -1,7 +1,6 @@
-const Analytics = require( '../../../js/modules/Analytics' );
+import Analytics from '../../../js/modules/Analytics';
 
 require( 'cf-expandables/src/Expandable' ).init();
-
 
 /**
  * Initialize the results interactions
@@ -99,4 +98,4 @@ function init() {
   setUpUI();
 }
 
-module.exports = { init: init };
+export { init };

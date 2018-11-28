@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const EmailPopup = require( BASE_JS_PATH + 'organisms/EmailPopup' );
+import EmailPopup from '../../../../cfgov/unprocessed/js/organisms/EmailPopup';
 
 let emailPopup;
 

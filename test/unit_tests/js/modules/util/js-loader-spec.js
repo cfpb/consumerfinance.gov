@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const jsLoader = require( BASE_JS_PATH + 'modules/util/js-loader' );
+import { loadScript } from '../../../../../cfgov/unprocessed/js/modules/util/js-loader';
 
 describe( 'loadScript method', () => {
 
@@ -11,7 +10,7 @@ describe( 'loadScript method', () => {
     // eslint-disable-next-line no-unused-vars
     const loaderPromise = new Promise( ( resolve, reject ) => {
       const scriptLocation = 'https://code.jquery.com/jquery-1.5.min.js';
-      jsLoader.loadScript( scriptLocation, () => {
+      loadScript( scriptLocation, () => {
         resolve( 'Callback called' );
       } );
     } );

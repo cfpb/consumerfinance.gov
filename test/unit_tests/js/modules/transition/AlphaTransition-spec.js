@@ -1,6 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const AlphaTransition =
-  require( BASE_JS_PATH + 'modules/transition/AlphaTransition' );
+import AlphaTransition from '../../../../../cfgov/unprocessed/js/modules/transition/AlphaTransition';
 
 let transition;
 

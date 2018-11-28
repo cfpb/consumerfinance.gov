@@ -1,10 +1,10 @@
 // Required modules.
-const assign = require( '../modules/util/assign' ).assign;
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const ajaxRequest = require( '../modules/util/ajax-request' ).ajaxRequest;
-const bindEvent = require( '../modules/util/dom-events' ).bindEvent;
-const standardType = require( '../modules/util/standard-type' );
-const throttle = require( 'lodash.throttle' );
+import { assign } from '../modules/util/assign';
+import * as atomicHelpers from '../modules/util/atomic-helpers';
+import { ajaxRequest } from '../modules/util/ajax-request';
+import { bindEvent } from '../modules/util/dom-events';
+import { UNDEFINED } from '../modules/util/standard-type';
+import * as throttle from 'lodash.throttle';
 
 /**
  * Autocomplete
@@ -86,7 +86,7 @@ function Autocomplete( element, opts ) {
    */
   function init() {
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+      return UNDEFINED;
     }
 
     _autocomplete = _addContainer();
@@ -321,4 +321,4 @@ function Autocomplete( element, opts ) {
   return this;
 }
 
-module.exports = Autocomplete;
+export default Autocomplete;

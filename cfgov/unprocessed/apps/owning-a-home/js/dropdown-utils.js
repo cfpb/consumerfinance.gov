@@ -1,4 +1,4 @@
-const $ = require( 'jquery' );
+import $ from 'jquery';
 
 /**
  * Some dropdown utility methods.
@@ -233,4 +233,4 @@ const utils = function( id ) {
 
 };
 
-module.exports = utils;
+export default utils;

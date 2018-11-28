@@ -1,18 +1,16 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const FlyoutMenu = require( BASE_JS_PATH + 'modules/behavior/FlyoutMenu' );
-const MoveTransition =
-  require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
+import FlyoutMenu from '../../../../../cfgov/unprocessed/js/modules/behavior/FlyoutMenu';
+import MoveTransition from '../../../../../cfgov/unprocessed/js/modules/transition/MoveTransition';
 
 const HTML_SNIPPET = `
-  <div data-js-hook="behavior_flyout-menu">
-      <button data-js-hook="behavior_flyout-menu_trigger"
-              aria-haspopup="menu"
+<div data-js-hook="behavior_flyout-menu">
+    <button data-js-hook="behavior_flyout-menu_trigger"
+            aria-haspopup="menu"
+            aria-expanded="false"></button>
+    <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
+      <button data-js-hook="behavior_flyout-menu_alt-trigger"
               aria-expanded="false"></button>
-      <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
-        <button data-js-hook="behavior_flyout-menu_alt-trigger"
-                aria-expanded="false"></button>
-      </div>
-  </div>
+    </div>
+</div>
 `;
 
 describe( 'FlyoutMenu', () => {

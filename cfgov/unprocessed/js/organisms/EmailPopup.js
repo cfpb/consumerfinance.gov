@@ -1,8 +1,8 @@
-const FormSubmit = require( './FormSubmit.js' );
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const standardType = require( '../modules/util/standard-type' );
-const validators = require( '../modules/util/validators' );
-const emailHelpers = require( '../modules/util/email-popup-helpers' );
+import FormSubmit from './FormSubmit.js';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import { UNDEFINED } from '../modules/util/standard-type';
+import * as validators from '../modules/util/validators';
+import * as emailHelpers from '../modules/util/email-popup-helpers';
 
 /**
  * EmailPopup
@@ -18,7 +18,7 @@ function EmailPopup( element ) {
 
   const VISIBLE_CLASS = 'o-email-popup__visible';
 
-  const _dom = atomicHelpers.checkDom( element, EmailPopup.BASE_CLASS );
+  const _dom = checkDom( element, EmailPopup.BASE_CLASS );
   const _popupLabel = _dom.getAttribute( 'data-popup-label' );
 
   // Set language default.
@@ -85,8 +85,8 @@ function EmailPopup( element ) {
    *   or undefined if it was already initialized.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return UNDEFINED;
     }
 
     // Ensure EmailPopup is definitely hidden on initialization.
@@ -118,4 +118,4 @@ function EmailPopup( element ) {
 }
 EmailPopup.BASE_CLASS = 'o-email-popup';
 
-module.exports = EmailPopup;
+export default EmailPopup;

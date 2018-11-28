@@ -54,4 +54,4 @@ function _scrollToTop() {
   }
 }
 
-module.exports = { init };
+export { init };

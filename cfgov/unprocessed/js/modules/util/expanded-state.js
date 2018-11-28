@@ -2,7 +2,6 @@
    Expanded State Utils
    ========================================================================== */
 
-
 let navTimeOut;
 
 /**
@@ -68,8 +67,8 @@ function toggleExpandedState( elems, state, cb, delay ) {
   }
 }
 
-module.exports = {
-  isThisExpanded: isThisExpanded,
-  isOneExpanded:  isOneExpanded,
-  toggleExpandedState: toggleExpandedState
+export {
+  isThisExpanded,
+  isOneExpanded,
+  toggleExpandedState
 };

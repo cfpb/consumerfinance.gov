@@ -2,7 +2,6 @@
    Dynamic Nonblocking script loader.
    ========================================================================== */
 
-
 /**
  * Dynamically attach and load a script tag in the head of the page.
  * @param {string} url The URL of the script to load.
@@ -24,4 +23,4 @@ function loadScript( url, callback ) {
 }
 
 // Expose public methods.
-module.exports = { loadScript: loadScript };
+export { loadScript };

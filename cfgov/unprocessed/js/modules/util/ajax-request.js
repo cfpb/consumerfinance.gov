@@ -43,6 +43,6 @@ function ajaxRequest( type, url, opts ) {
   return xhr;
 }
 
-module.exports = {
-  ajaxRequest: ajaxRequest
+export {
+  ajaxRequest
 };

@@ -1,4 +1,4 @@
-const typeCheckers = require( './type-checkers' );
+import * as typeCheckers from './type-checkers';
 
 /**
  * Queries for the first match unless an HTMLNode is passed
@@ -100,9 +100,9 @@ function _getMatchesMethod( elem ) {
          elem.msMatchesSelector;
 }
 
-module.exports = {
-  queryOne:    queryOne,
-  closest:     closest,
-  getSiblings: getSiblings,
-  not:         not
+export {
+  queryOne,
+  closest,
+  getSiblings,
+  not
 };

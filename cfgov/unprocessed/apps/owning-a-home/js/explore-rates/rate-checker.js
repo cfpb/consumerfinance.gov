@@ -25,7 +25,7 @@ import jumbo from 'jumbo-mortgage';
 import median from 'median';
 import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
-import tab from './tab';
+import * as tab from './tab';
 import unFormatUSD from 'unformat-usd';
 
 // TODO: remove jquery.
@@ -925,4 +925,4 @@ function registerEvents() {
   rateSelectsDom.addEventListener( 'change', renderInterestAmounts );
 }
 
-module.exports = { init };
+export { init };
