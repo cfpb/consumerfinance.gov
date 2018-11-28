@@ -5576,9 +5576,9 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-"highcharts@git+https://github.com/cfpb/highcharts-dist.git#fix-missing-plotline-label":
+"highcharts@https://github.com/cfpb/highcharts-dist#fix-missing-plotline-label":
   version "5.0.11"
-  resolved "git+https://github.com/cfpb/highcharts-dist.git#0c151c2eae85e2ffaef537ecea97769c082a2d50"
+  resolved "https://github.com/cfpb/highcharts-dist#0c151c2eae85e2ffaef537ecea97769c082a2d50"
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -12466,9 +12466,9 @@ xdr@0.5.3:
   resolved "https://registry.yarnpkg.com/xdr/-/xdr-0.5.3.tgz#c72cd3fe47bcc7607f5f5fc92510b0fab2e2a422"
   integrity sha1-xyzT/ke8x2B/X1/JJRCw+rLipCI=
 
-"xdr@git+https://github.com/contolini/xdr.git":
+"xdr@https://github.com/contolini/xdr":
   version "0.5.4"
-  resolved "git+https://github.com/contolini/xdr.git#4f53e8dc68d14cd4a387874e75faae46c3a4961b"
+  resolved "https://github.com/contolini/xdr#4f53e8dc68d14cd4a387874e75faae46c3a4961b"
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
