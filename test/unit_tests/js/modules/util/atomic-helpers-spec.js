@@ -63,6 +63,12 @@ describe( 'atomic-helpers', () => {
       expect( instArr ).toBeInstanceOf( Array );
       expect( instArr.length ).toBe( 2 );
     } );
+
+    it( 'should return an empty array if no instances found', () => {
+      const instArr = instantiateAll( `.missing-class`, Footer );
+      expect( instArr ).toBeInstanceOf( Array );
+      expect( instArr.length ).toBe( 0 );
+    } );
   } );
 
   describe( '.setInitFlag()', () => {
