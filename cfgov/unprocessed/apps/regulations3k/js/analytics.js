@@ -85,7 +85,7 @@ const handleContentClick = event => {
   return sendEvent( action, section );
 };
 
-module.exports = {
+export {
   getExpandable,
   getExpandableState,
   handleContentClick,

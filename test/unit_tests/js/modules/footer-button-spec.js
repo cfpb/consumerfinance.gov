@@ -6,11 +6,11 @@ import { simulateEvent } from '../../../util/simulate-event';
 let footerBtnDom;
 
 const HTML_SNIPPET = `
-  <a class="a-btn a-btn__secondary o-footer_top-button"
-     data-gtm_ignore="true" data-js-hook="behavior_return-to-top"
-     href="#">
-      Back to top
-  </a>
+<a class="a-btn a-btn__secondary o-footer_top-button"
+   data-gtm_ignore="true" data-js-hook="behavior_return-to-top"
+   href="#">
+    Back to top
+</a>
 `;
 
 /**

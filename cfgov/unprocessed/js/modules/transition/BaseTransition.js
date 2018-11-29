@@ -1,5 +1,5 @@
 // Required modules.
-const EventObserver = require( '../../modules/util/EventObserver' );
+import EventObserver from '../../modules/util/EventObserver';
 
 // eslint-disable-next-line max-statements
 /**
@@ -253,4 +253,4 @@ BaseTransition.END_EVENT = 'transitionEnd';
 BaseTransition.NO_ANIMATION_CLASS = 'u-no-animation';
 BaseTransition.ANIMATING_CLASS = 'u-is-animating';
 
-module.exports = BaseTransition;
+export default BaseTransition;

@@ -3,8 +3,7 @@
    Used on at least `/external-site/`.
    ========================================================================== */
 
-
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
+import { checkDom } from '../modules/util/atomic-helpers';
 
 /**
  * ExternalSite
@@ -19,7 +18,7 @@ function ExternalSite( element ) {
   const TOTAL_DURATION = 5;
   const INTERVAL = 1000;
 
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
   const _durationEl = _dom.querySelector( '.external-site_reload-container' );
   const _directEl = _dom.querySelector( '.external-site_proceed-btn' );
   let _duration = TOTAL_DURATION;
@@ -77,4 +76,4 @@ function ExternalSite( element ) {
 }
 
 // Expose public methods.
-module.exports = ExternalSite;
+export default ExternalSite;

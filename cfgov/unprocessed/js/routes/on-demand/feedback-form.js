@@ -2,9 +2,9 @@
    Scripts for Feedback Form organism.
    ========================================================================== */
 
-const COMMENT_ERRORS = require( '../../config/error-messages-config' ).COMMENT;
-const OPTION_ERRORS = require( '../../config/error-messages-config' ).OPTION;
-const FormSubmit = require( '../../organisms/FormSubmit.js' );
+import ERROR_MESSAGES from '../../config/error-messages-config';
+import FormSubmit from '../../organisms/FormSubmit.js';
+
 const BASE_CLASS = 'o-feedback';
 let requiredKey = 'REQUIRED';
 let UNDEFINED;
@@ -15,7 +15,7 @@ function validateFeedback( fields ) {
     if ( fields.comment.value ) {
       return UNDEFINED;
     } else if ( fields.comment.hasAttribute( 'required' ) ) {
-      return COMMENT_ERRORS[requiredKey];
+      return ERROR_MESSAGES.COMMENT[requiredKey];
     }
   }
   if ( fields.is_helpful ) {
@@ -24,7 +24,7 @@ function validateFeedback( fields ) {
         return UNDEFINED;
       }
     }
-    return OPTION_ERRORS[requiredKey];
+    return ERROR_MESSAGES.OPTION[requiredKey];
   }
   return UNDEFINED;
 }

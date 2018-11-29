@@ -42,4 +42,4 @@ function assign( destination ) {
 }
 
 // Expose public methods.
-module.exports = { assign: assign };
+export { assign };

@@ -1,5 +1,5 @@
 // Required modules.
-const EventObserver = require( '../modules/util/EventObserver' );
+import EventObserver from '../modules/util/EventObserver';
 
 // Key code for the tab key on the keyboard.
 const KEY_TAB = 9;
@@ -71,4 +71,4 @@ function TabTrigger( element ) {
   return this;
 }
 
-module.exports = TabTrigger;
+export default TabTrigger;

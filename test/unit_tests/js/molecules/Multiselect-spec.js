@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const Multiselect = require( BASE_JS_PATH + 'molecules/Multiselect' );
+import Multiselect from '../../../../cfgov/unprocessed/js/molecules/Multiselect';
 
 import { simulateEvent } from '../../../util/simulate-event';
 

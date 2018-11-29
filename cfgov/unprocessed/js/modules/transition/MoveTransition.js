@@ -1,6 +1,6 @@
 // Required modules.
-const EventObserver = require( '../../modules/util/EventObserver' );
-const BaseTransition = require( './BaseTransition' );
+import EventObserver from '../../modules/util/EventObserver';
+import BaseTransition from './BaseTransition';
 
 // Exported constants.
 const CLASSES = {
@@ -125,4 +125,4 @@ function MoveTransition( element ) {
 // Public static properties.
 MoveTransition.CLASSES = CLASSES;
 
-module.exports = MoveTransition;
+export default MoveTransition;

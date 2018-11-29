@@ -27,8 +27,8 @@ function stringMatch( x, y ) {
   return RegExp( stringEscape( y.trim() ), 'i' ).test( x );
 }
 
-module.exports = {
-  stringEscape: stringEscape,
-  stringValid:  stringValid,
-  stringMatch:  stringMatch
+export {
+  stringEscape,
+  stringValid,
+  stringMatch
 };

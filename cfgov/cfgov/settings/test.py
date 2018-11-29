@@ -49,3 +49,7 @@ STATICFILES_DIRS += [
 MOCK_STATICFILES_PATTERNS = {
     'icons/*.svg': 'icons/placeholder.svg',
 }
+
+FLAG_SOURCES = (
+    'flags.sources.SettingsFlagsSource',
+)

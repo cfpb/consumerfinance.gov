@@ -58,4 +58,4 @@ function _bindTabLink( tabGroup, tabContents ) {
   }
 }
 
-module.exports = { init };
+export { init };

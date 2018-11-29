@@ -93,4 +93,4 @@ BreakpointHandler.prototype.watchWindowResize = watchWindowResize;
 BreakpointHandler.prototype.handleViewportChange = handleViewportChange;
 BreakpointHandler.prototype.testBreakpoint = testBreakpoint;
 
-module.exports = BreakpointHandler;
+export default BreakpointHandler;

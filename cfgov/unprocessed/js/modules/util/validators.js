@@ -3,10 +3,9 @@
    Various utility functions to check if a field contains a valid value
    ========================================================================== */
 
-
 // Required Modules
-const ERROR_MESSAGES = require( '../../config/error-messages-config' );
-const typeCheckers = require( '../../modules/util/type-checkers' );
+import ERROR_MESSAGES from '../../config/error-messages-config';
+import * as typeCheckers from '../../modules/util/type-checkers';
 
 /* TODO: Update all the validators to return both passed and failed states
    instead of returning an empty object if the value passed */
@@ -21,8 +20,9 @@ const typeCheckers = require( '../../modules/util/type-checkers' );
  */
 function date( field, currentStatus ) {
   const status = currentStatus || {};
-  // Date regex matches date patterns allowed in cfgov/v1/forms.py FilterableDateField
-  // https://regex101.com/r/JVKCf9/1
+
+  /* Date regex matches date patterns allowed in cfgov/v1/forms.py FilterableDateField
+     https://regex101.com/r/JVKCf9/1 */
   const dateRegex =
     /^\d{4}$|^(?:\d{1}|\d{2})\/(?:\d{4}|\d{2})$|^(?:\d{1}|\d{2})\/(?:\d{1}|\d{2})\/(?:\d{4}|\d{2})$/;
   if ( field.value && dateRegex.test( field.value ) === false ) {
@@ -150,10 +150,10 @@ function _checkableInput( field, currentStatus, fieldset, type ) {
   return currentStatus;
 }
 
-module.exports = {
-  date:     date,
-  email:    email,
-  empty:    empty,
-  checkbox: checkbox,
-  radio:    radio
+export {
+  date,
+  email,
+  empty,
+  checkbox,
+  radio
 };

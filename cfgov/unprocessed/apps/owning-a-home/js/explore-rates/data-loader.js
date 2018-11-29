@@ -64,7 +64,7 @@ function getCounties( forState ) {
   };
 }
 
-module.exports = {
+export {
   getLastCancelToken,
   getData,
   getCounties
