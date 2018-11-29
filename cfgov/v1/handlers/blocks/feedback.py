@@ -50,9 +50,12 @@ class FeedbackHandler(Handler):
             '\xc3\xad': '\xed',
         }
         referrer = self.request.META.get('HTTP_REFERER', '')
+        msg = ("REFERRER arrived as a {} with this content: {}".format(
+            type(referrer), referrer))
+        raise ValueError(msg)
         try:
             referrer.encode('ascii')
-        except (UnicodeEncodeError):
+        except (UnicodeEncodeError, UnicodeDecodeError):
             for char in known_miscodings:
                 referrer = referrer.replace(char, known_miscodings[char])
             parsed_referrer = urllib.parse.urlparse(referrer)
