@@ -64,24 +64,22 @@ function FilterableListControls( element ) {
     const _expandables = Expandable.init();
     _expandable = _expandables[0];
 
-    // If Multiselects exist on the form, initialize them.
-    if ( multiSelects.length > 0 ) {
-      multiSelects.forEach( multiSelect => {
-        multiSelect.addEventListener( 'expandBegin', function refresh() {
-          window.setTimeout(
-            _expandable.transition.expand.bind( _expandable.transition ),
-            250
-          );
-        } );
-
-        multiSelect.addEventListener( 'expandEnd', function refresh() {
-          window.setTimeout(
-            _expandable.transition.expand.bind( _expandable.transition ),
-            250
-          );
-        } );
+    // If multiselects exist on the form, iterate over them.
+    multiSelects.forEach( multiSelect => {
+      multiSelect.addEventListener( 'expandBegin', function refresh() {
+        window.setTimeout(
+          _expandable.transition.expand.bind( _expandable.transition ),
+          250
+        );
       } );
-    }
+
+      multiSelect.addEventListener( 'expandEnd', function refresh() {
+        window.setTimeout(
+          _expandable.transition.expand.bind( _expandable.transition ),
+          250
+        );
+      } );
+    } );
 
     _notification = new Notification( _dom );
     _notification.init();
