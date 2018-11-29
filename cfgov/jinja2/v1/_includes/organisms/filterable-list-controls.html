@@ -33,13 +33,6 @@
     </li>
 {% endmacro %}
 
-{% macro _filter_option(label_text, value) %}
-    <option value="{{ value }}"
-            {{ 'selected' if is_filter_selected(label_text, value) else '' }}>
-        {{ label_text }}
-    </option>
-{% endmacro %}
-
 {% macro _render_filter_fields(controls, form) -%}
     {% if controls.title %}
         {% set field_id = 'title' %}
