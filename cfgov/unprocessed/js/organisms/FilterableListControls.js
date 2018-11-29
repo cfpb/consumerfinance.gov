@@ -64,8 +64,9 @@ function FilterableListControls( element ) {
     const _expandables = Expandable.init();
     _expandable = _expandables[0];
 
-    if ( _dom.classList.contains( 'o-filterable-list-controls' ) ) {
-      multiSelects.forEach( function( multiSelect ) {
+    // If Multiselects exist on the form, initialize them.
+    if ( multiSelects.length > 0 ) {
+      multiSelects.forEach( multiSelect => {
         multiSelect.addEventListener( 'expandBegin', function refresh() {
           window.setTimeout(
             _expandable.transition.expand.bind( _expandable.transition ),
