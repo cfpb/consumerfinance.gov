@@ -16,9 +16,9 @@
     "node": ">=8.5.0"
   },
   "dependencies": {
-    "autoprefixer": "8.6.5",
     "@babel/core": "7.1.6",
     "@babel/preset-env": "7.1.6",
+    "autoprefixer": "8.6.5",
     "babel-loader": "8.0.4",
     "cf-atomic-component": "2.0.0",
     "cf-buttons": "5.0.0",
@@ -52,6 +52,7 @@
     "gulp-replace": "1.0.0",
     "gulp-sourcemaps": "2.6.4",
     "gulp-uglify-es": "1.0.4",
+    "highcharts": "6.2.0",
     "less": "3.0.4",
     "lightbox2": "2.10.0",
     "lodash.throttle": "4.1.1",
