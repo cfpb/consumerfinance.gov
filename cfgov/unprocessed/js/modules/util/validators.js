@@ -21,11 +21,22 @@ import * as typeCheckers from '../../modules/util/type-checkers';
 function date( field, currentStatus ) {
   const status = currentStatus || {};
 
-  /* Date regex matches date patterns allowed in cfgov/v1/forms.py FilterableDateField
-     https://regex101.com/r/JVKCf9/1 */
-  const dateRegex =
-    /^\d{4}$|^(?:\d{1}|\d{2})\/(?:\d{4}|\d{2})$|^(?:\d{1}|\d{2})\/(?:\d{1}|\d{2})\/(?:\d{4}|\d{2})$/;
-  if ( field.value && dateRegex.test( field.value ) === false ) {
+  /* Date regexes match the date patterns that are
+     allowed in cfgov/v1/forms.py FilterableDateField */
+
+  // https://regex101.com/r/M0ipdX/1
+  const yearRegex = /^\d{4}$/;
+  // https://regex101.com/r/PEa2se/1
+  const monthYearRegex = /^(?:\d{1}|\d{2})(?:\-|\/)(?:\d{4}|\d{2})$/;
+  // https://regex101.com/r/1SGTLF/1
+  const dayMonthYearRegex =
+    /^(?:\d{1}|\d{2})(?:\-|\/)(?:\d{1}|\d{2})(?:\-|\/)(?:\d{4}|\d{2})$/;
+
+  const inputIsValid = yearRegex.test( field.value ) ||
+    monthYearRegex.test( field.value ) ||
+    dayMonthYearRegex.test( field.value );
+
+  if ( field.value && !inputIsValid ) {
     status.msg = status.msg || '';
     status.msg += ERROR_MESSAGES.DATE.INVALID;
     status.date = false;
