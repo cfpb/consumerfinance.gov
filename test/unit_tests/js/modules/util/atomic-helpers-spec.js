@@ -65,7 +65,7 @@ describe( 'atomic-helpers', () => {
     } );
 
     it( 'should return an empty array if no instances found', () => {
-      const instArr = instantiateAll( `.missing-class`, Footer );
+      const instArr = instantiateAll( '.missing-class', Footer );
       expect( instArr ).toBeInstanceOf( Array );
       expect( instArr.length ).toBe( 0 );
     } );
