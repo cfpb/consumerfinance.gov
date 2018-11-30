@@ -16,6 +16,7 @@ if ( printPageLink ) {
 let map;
 let marker_array = [];
 let zip_marker = null;
+let markerDomCache = {};
 
 /* initialize_map() sets options and creates the map */
 function initializeMap() {
@@ -28,10 +29,29 @@ function initializeMap() {
   }
 }
 
+/**
+ * Cache the map marker result item DOM references so that a DOM lookup doesn't
+ * happen every time a map marker is clicked. The lookup happens on the first
+ * click and then is stored in the markerDomCache object.
+ * @param  {number} num - The index of the result item.
+ * @returns {HTMLNode} The DOM node of the result item.
+ */
+function queryMarkerDom( num ) {
+  const selector = '#hud-result-' + Number.parseInt( num, 10 );
+  let cachedItem = markerDomCache[selector];
+  if ( typeof cachedItem === 'undefined' ) {
+    cachedItem = document.querySelector( selector );
+    markerDomCache[selector] = cachedItem;
+  }
+
+  return cachedItem;
+}
+
 /* generate_google_map(data) takes the data and plots the markers, etc, on
 the google map. It's called by get_counselors_by_zip(). */
 function updateMap( data ) {
   // reset the map
+  markerDomCache = {};
   for ( let i = 0; i < marker_array.length; i++ ) {
     map.removeLayer( marker_array[i] );
   }
@@ -84,9 +104,7 @@ function updateMap( data ) {
       marker_array[i] = marker;
 
       marker.on( 'click', function() {
-        const resultEntryDom = document.querySelector(
-          '#hud-result-' + Number.parseInt( number, 10 )
-        );
+        const resultEntryDom = queryMarkerDom( number );
         resultEntryDom.scrollIntoView( {
           behavior: 'smooth',
           block: 'start'

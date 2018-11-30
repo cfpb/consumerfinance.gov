@@ -20,9 +20,13 @@ class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
 class FilterableDateField(forms.DateField):
     default_input_formats = (
         '%m/%d/%y',     # 10/25/16, 9/1/16
+        '%m-%d-%y',     # 10-25-16, 9-1-16
         '%m/%d/%Y',     # 10/25/2016, 9/1/2016
+        '%m-%d-%Y',     # 10-25-2016, 9-1-2016
         '%m/%Y',        # 10/2016, 7/2017
+        '%m-%Y',        # 10-2016, 7-2017
         '%m/%y',        # 10/16, 4/18
+        '%m-%y',        # 10-16, 4-18
         '%Y',           # 2016
     )
 
