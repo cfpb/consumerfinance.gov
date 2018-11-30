@@ -2,6 +2,11 @@ import ERROR_MESSAGES from '../../../../../cfgov/unprocessed/js/config/error-mes
 import * as validators from '../../../../../cfgov/unprocessed/js/modules/util/validators.js';
 let testField;
 let returnedObject;
+const validDates = [ '1/22/2017', '11/4/09', '3-31-20', '1-1-1900',
+  '5/2018', '12/18', '05-2010', '1/17', '2016' ];
+
+const invalidDates = [ '305-20-2018', '8//2018', '90', '4/20000' ];
+
 
 describe( 'Validators', () => {
   describe( 'date field', () => {
@@ -16,26 +21,29 @@ describe( 'Validators', () => {
       expect( returnedObject ).toStrictEqual( {} );
     } );
 
-    it( 'should allow single digit for month', () => {
-      testField.value = '1/22/2017';
-      returnedObject = validators.date( testField );
-
-      expect( returnedObject ).toStrictEqual( {} );
-    } );
-
-    it( 'should allow single digit for day', () => {
-      testField.value = '11/2/2017';
-      returnedObject = validators.date( testField );
-
-      expect( returnedObject ).toStrictEqual( {} );
-    } );
-
     it( 'should return an error object for a malformed date', () => {
-      testField.value = '11-12-2007';
+      testField.value = '11.12.2007';
       returnedObject = validators.date( testField );
 
       expect( returnedObject['date'] ).toBe( false );
       expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.DATE.INVALID );
+    } );
+
+    it( 'should allow correctly formatted dates', () => {
+      for ( let i = 0, len = validDates.length; i < len; i++ ) {
+        testField.value = validDates[i];
+        returnedObject = validators.date( testField );
+        expect( returnedObject ).toStrictEqual( {} );
+      }
+    } );
+
+    it( 'should reject incorrectly formatted dates', () => {
+      for ( let i = 0, len = invalidDates.length; i < len; i++ ) {
+        testField.value = invalidDates[i];
+        returnedObject = validators.date( testField );
+        expect( returnedObject['date'] ).toBe( false );
+        expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.DATE.INVALID );
+      }
     } );
 
     it( 'should return an error object for a UTC date', () => {

@@ -64,23 +64,22 @@ function FilterableListControls( element ) {
     const _expandables = Expandable.init();
     _expandable = _expandables[0];
 
-    if ( _dom.classList.contains( 'o-filterable-list-controls' ) ) {
-      multiSelects.forEach( function( multiSelect ) {
-        multiSelect.addEventListener( 'expandBegin', function refresh() {
-          window.setTimeout(
-            _expandable.transition.expand.bind( _expandable.transition ),
-            250
-          );
-        } );
-
-        multiSelect.addEventListener( 'expandEnd', function refresh() {
-          window.setTimeout(
-            _expandable.transition.expand.bind( _expandable.transition ),
-            250
-          );
-        } );
+    // If multiselects exist on the form, iterate over them.
+    multiSelects.forEach( multiSelect => {
+      multiSelect.addEventListener( 'expandBegin', function refresh() {
+        window.setTimeout(
+          _expandable.transition.expand.bind( _expandable.transition ),
+          250
+        );
       } );
-    }
+
+      multiSelect.addEventListener( 'expandEnd', function refresh() {
+        window.setTimeout(
+          _expandable.transition.expand.bind( _expandable.transition ),
+          250
+        );
+      } );
+    } );
 
     _notification = new Notification( _dom );
     _notification.init();
@@ -171,33 +170,32 @@ function FilterableListControls( element ) {
     return msg || ERROR_MESSAGES.DEFAULT;
   }
 
-  /* eslint-disable complexity */
-  // TODO: Reduce complexity
   /**
-   * Validate the fields of our form.
+   * Get the text associated with a form field's label.
    * @param {HTMLNode} field A form field.
-   * @param {string} selector Selector used to retreive the dom element.
    * @param {boolean} isInGroup Flag used determine if field is in group.
    * @returns {string} The label of the field.
    */
-  function _getLabelText( field, selector, isInGroup ) {
+  function _getLabelText( field, isInGroup ) {
     let labelText = '';
     let labelDom;
 
-    if ( isInGroup && !selector ) {
+    if ( isInGroup ) {
       labelDom = closest( field, 'fieldset' );
-      if ( labelDom ) labelDom = labelDom.querySelector( 'legend' );
+      if ( labelDom ) {
+        labelDom = labelDom.querySelector( 'legend' );
+      }
     } else {
-      selector = selector ||
-                 'label[for="' + field.getAttribute( 'id' ) + '"]';
+      const selector = `label[for="${ field.getAttribute( 'id' ) }"]`;
       labelDom = _form.querySelector( selector );
     }
 
-    if ( labelDom ) labelText = labelDom.textContent.trim();
+    if ( labelDom ) {
+      labelText = labelDom.textContent.trim();
+    }
 
     return labelText;
   }
-  /* eslint-enable complexity */
 
   /**
    * Set the notification type, msg, and visibility.
@@ -299,7 +297,7 @@ function FilterableListControls( element ) {
     const validation = {
       field:  field,
       // TODO: Change layout of field groups to use fieldset.
-      label:  _getLabelText( field, '', false || isInGroup ),
+      label:  _getLabelText( field, false || isInGroup ),
       msg:    '',
       status: null
     };
