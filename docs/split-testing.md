@@ -8,12 +8,15 @@ where the change being tested is shown to a portion of the _audience_,
 in the case of split testing,
 the change is shown to everyone, but only on a subset of similar pages
 (e.g., a group of related Ask CFPB answers).
+We call this a subset of pages a "cluster".
 
 
 ## So you've been asked to set up a split testing experiment
 
 Good news! The infrastructure has been put in place for you to do it easily.
 It's set up so that the code being tested is isolated by a feature flag.
+If you're not familiar with how our flags are set up,
+[read the concepts overview in the django-flags concepts](https://cfpb.github.io/django-flags/#concepts).
 
 ### The flag condition
 
