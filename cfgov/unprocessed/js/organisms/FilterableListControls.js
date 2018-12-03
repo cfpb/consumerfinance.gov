@@ -6,13 +6,12 @@ import {
   setInitFlag
 } from '../modules/util/atomic-helpers';
 import ERROR_MESSAGES from '../config/error-messages-config';
-import { closest } from '../modules/util/dom-traverse';
 import Multiselect from '../molecules/Multiselect';
 import Notification from '../molecules/Notification';
 import { UNDEFINED } from '../modules/util/standard-type';
 import * as validators from '../modules/util/validators';
 import Expandable from 'cf-expandables/src/Expandable';
-let _expandable;
+import FormModel from '../modules/util/FormModel';
 
 /* eslint-disable max-lines-per-function */
 // TODO: Reduce lines in FilterableListControls
@@ -30,22 +29,9 @@ function FilterableListControls( element ) {
   const BASE_CLASS = 'o-filterable-list-controls';
   const _dom = checkDom( element, BASE_CLASS );
   const _form = _dom.querySelector( 'form' );
+  let _expandable;
+  let _formModel;
   let _notification;
-  let _fieldGroups;
-
-  const _defaults = {
-    ignoreFieldTypes: [
-      'hidden',
-      'button',
-      'submit',
-      'reset',
-      'fieldset'
-    ],
-    groupFieldTypes: [
-      'radio',
-      'checkbox'
-    ]
-  };
 
   /**
    * @returns {FilterableListControls|undefined} An instance,
@@ -56,9 +42,11 @@ function FilterableListControls( element ) {
       return UNDEFINED;
     }
 
-    /* instantiate multiselects before their containing expandable
+    _formModel = new FormModel( _form );
+
+    /* Instantiate multiselects before their containing expandable
        so height of any 'selected choice' buttons is included when
-       expandable height is calculated initially */
+       expandable height is calculated initially. */
     const multiSelects = instantiateAll( 'select[multiple]', Multiselect );
 
     const _expandables = Expandable.init();
@@ -84,6 +72,7 @@ function FilterableListControls( element ) {
     _notification = new Notification( _dom );
     _notification.init();
 
+    _formModel.init();
     _initEvents();
 
     return this;
@@ -145,8 +134,10 @@ function FilterableListControls( element ) {
   /**
    * Handle form sumbmission and showing error notification.
    */
-  function _formSubmitted( ) {
-    const validatedFields = _validateFields( [].slice.call( _form.elements ) );
+  function _formSubmitted() {
+    const validatedFields = _validateFields(
+      _formModel.getModel().validateableElements
+    );
 
     if ( validatedFields.invalid.length > 0 ) {
       _setNotification( _notification.ERROR,
@@ -163,38 +154,11 @@ function FilterableListControls( element ) {
    */
   function _buildErrorMessage( fields ) {
     let msg = '';
-    fields.forEach( function( validation ) {
-      msg += validation.label + ' ' + validation.msg + '<br>';
+    fields.forEach( validation => {
+      msg += `${ validation.label } ${ validation.msg }<br>`;
     } );
 
     return msg || ERROR_MESSAGES.DEFAULT;
-  }
-
-  /**
-   * Get the text associated with a form field's label.
-   * @param {HTMLNode} field A form field.
-   * @param {boolean} isInGroup Flag used determine if field is in group.
-   * @returns {string} The label of the field.
-   */
-  function _getLabelText( field, isInGroup ) {
-    let labelText = '';
-    let labelDom;
-
-    if ( isInGroup ) {
-      labelDom = closest( field, 'fieldset' );
-      if ( labelDom ) {
-        labelDom = labelDom.querySelector( 'legend' );
-      }
-    } else {
-      const selector = `label[for="${ field.getAttribute( 'id' ) }"]`;
-      labelDom = _form.querySelector( selector );
-    }
-
-    if ( labelDom ) {
-      labelText = labelDom.textContent.trim();
-    }
-
-    return labelText;
   }
 
   /**
@@ -210,36 +174,6 @@ function FilterableListControls( element ) {
     _notification[methodName]();
   }
 
-  /* eslint-disable complexity */
-  // TODO: Reduce complexity
-  /**
-   * Determines if you should validate a field.
-   * @param {HTMLNode} field A form field.
-   * @param {string} type The type of field.
-   * @param {boolean} isInGroup A boolean that determines if field in a group.
-   * @returns {boolean} True if the field should be validated, false otherwise.
-   */
-  function shouldValidateField( field, type, isInGroup ) {
-    const isDisabled = field.getAttribute( 'disabled' ) !== null;
-    const isIgnoreType = _defaults.ignoreFieldTypes.indexOf( type ) > -1;
-    let shouldValidate = isDisabled === false && isIgnoreType === false;
-
-    if ( shouldValidate && isInGroup ) {
-      const name = field.getAttribute( 'data-group' ) ||
-                   field.getAttribute( 'name' );
-      const isRequired = field.getAttribute( 'data-required' ) !== null;
-      const groupExists = _fieldGroups.indexOf( name ) > -1;
-      if ( groupExists || isRequired === false ) {
-        shouldValidate = false;
-      } else {
-        _fieldGroups.push( name );
-      }
-    }
-
-    return shouldValidate;
-  }
-  /* eslint-enable complexity */
-
   /**
    * Validate the fields of our form.
    * @param {Array} fields A list of form fields.
@@ -253,23 +187,17 @@ function FilterableListControls( element ) {
     };
     let validatedField;
 
-    _fieldGroups = [];
-
     /* eslint-disable complexity */
     // TODO: Reduce complexity
-    fields.forEach( function loopFields( field ) {
+    fields.forEach( field => {
       let fieldIsValid = true;
-      const type = field.getAttribute( 'data-type' ) ||
-                   field.getAttribute( 'type' ) ||
-                   field.tagName.toLowerCase();
-      const isGroupField = _defaults.groupFieldTypes.indexOf( type ) > -1;
 
-      if ( shouldValidateField( field, type, isGroupField ) === false ) return;
-
-      validatedField = _validateField( field, type, isGroupField );
+      validatedField = _validateField( field );
 
       for ( const prop in validatedField.status ) {
-        if ( validatedField.status[prop] === false ) fieldIsValid = false;
+        if ( validatedField.status[prop] === false ) {
+          fieldIsValid = false;
+        }
       }
 
       if ( fieldIsValid ) {
@@ -292,17 +220,18 @@ function FilterableListControls( element ) {
    * @param {boolean} isInGroup A boolean that determines if field in a group.
    * @returns {Object} An object with a status and message properties.
    */
-  function _validateField( field, type, isInGroup ) {
+  function _validateField( field ) {
     let fieldset;
+    const fieldModel = _formModel.getModel()[field];
     const validation = {
       field:  field,
       // TODO: Change layout of field groups to use fieldset.
-      label:  _getLabelText( field, false || isInGroup ),
+      label:  fieldModel.label,
       msg:    '',
       status: null
     };
 
-    if ( isInGroup ) {
+    if ( fieldModel.isInGroup ) {
       const groupName = field.getAttribute( 'data-group' ) ||
                         field.getAttribute( 'name' );
       const groupSelector = '[name=' + groupName + ']:checked,' +
@@ -310,8 +239,8 @@ function FilterableListControls( element ) {
       fieldset = _form.querySelectorAll( groupSelector ) || [];
     }
 
-    if ( validators[type] ) {
-      validation.status = validators[type]( field, validation, fieldset );
+    if ( validators[fieldModel.type] ) {
+      validation.status = validators[fieldModel.type]( field, validation, fieldset );
     }
 
     return validators.empty( field, validation );
