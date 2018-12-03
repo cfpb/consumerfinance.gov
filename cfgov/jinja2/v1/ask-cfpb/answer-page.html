@@ -45,7 +45,7 @@
         {% endif %}
 
     {% if flag_enabled('ASK_CFPB_H1', page=page) %}
-        <h1>{{ page.question | striptags }}</h1>
+        <h1 class="h2">{{ page.question | striptags }}</h1>
     {% else %}
         <h2>{{ page.question | striptags }}</h2>
     {% endif %}
