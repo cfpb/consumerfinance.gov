@@ -1347,3 +1347,11 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(len(breadcrumbs), 2)
         self.assertEqual(breadcrumbs[0]['title'], 'Buying a House')
         self.assertEqual(breadcrumbs[1]['title'], 'Compare page')
+
+    def test_answer_split_testing_id(self):
+        """Confirm AnswerPage's split_testing_id is set to its answer_base.id,
+        which is checked by the core.feature_flags.in_split_testing_cluster
+        flag condition when doing split testing on Ask CFPB answer pages."""
+        answer = self.answer1234
+        page = answer.english_page
+        self.assertEqual(page.split_test_id, answer.id)
