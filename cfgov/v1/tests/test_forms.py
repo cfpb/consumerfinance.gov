@@ -33,42 +33,70 @@ class TestFilterableListForm(TestCase):
     @mock.patch('__builtin__.super')
     def test_clean_returns_cleaned_data_if_valid(self, mock_super, mock_init):
         mock_init.return_value = None
-        from_date = datetime.date.today()
+        from_date = datetime.date(2017, 7, 4)
         to_date = from_date + datetime.timedelta(days=1)
+        form_data = {'from_date': from_date, 'to_date': to_date}
 
         form = FilterableListForm()
-        mock_super().clean.return_value = {'from_date': from_date, 'to_date': to_date}
-        form.cleaned_data = {'from_date': from_date, 'to_date': to_date}
+        mock_super().clean.return_value = form_data
+        form.cleaned_data = form_data
+        form.data = {'from_date': '7/4/2017', 'to_date': '7/5/2017'}
+        form._errors = {}
 
         result = form.clean()
         assert result['from_date'] == from_date
+        assert result['to_date'] == to_date
+
+    @mock.patch('v1.forms.FilterableListForm.first_page_date')
+    @mock.patch('v1.forms.FilterableListForm.__init__')
+    @mock.patch('__builtin__.super')
+    def test_clean_uses_earliest_result_if_fromdate_field_is_empty(self, mock_super, mock_init, mock_pub_date):
+        mock_init.return_value = None
+        from_date = None
+        to_date = datetime.date(2017, 1, 15)
+        form_data = {'from_date': from_date, 'to_date': to_date}
+
+        form = FilterableListForm()
+        mock_super().clean.return_value = form_data
+        form.cleaned_data = form_data
+        form.data = {'to_date': '1-15-2017'}
+        form._errors = {}
+        mock_pub_date.return_value = datetime.date(1995, 1, 1)
+
+        result = form.clean()
+        assert result['from_date'] == datetime.date(1995, 1, 1)
         assert result['to_date'] == to_date
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
     @mock.patch('__builtin__.super')
-    def test_clean_returns_cleaned_data_if_only_one_date_field_is_empty(self, mock_super, mock_init):
+    def test_clean_uses_today_if_todate_field_is_empty(self, mock_super, mock_init):
         mock_init.return_value = None
-        from_date = datetime.date.today()
-        to_date = ''
+        from_date = datetime.date(2016, 5, 15)
+        to_date = None
+        form_data = {'from_date': from_date, 'to_date': to_date}
 
         form = FilterableListForm()
-        mock_super().clean.return_value = {'from_date': from_date, 'to_date': to_date}
-        form.cleaned_data = {'from_date': from_date, 'to_date': to_date}
+        mock_super().clean.return_value = form_data
+        form.cleaned_data = form_data
+        form.data = {'from_date': '5-15-2016'}
+        form._errors = {}
 
         result = form.clean()
         assert result['from_date'] == from_date
-        assert result['to_date'] == to_date
+        assert result['to_date'] == datetime.date.today()
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
     @mock.patch('__builtin__.super')
     def test_clean_returns_cleaned_data_if_both_date_fields_are_empty(self, mock_super, mock_init):
         mock_init.return_value = None
-        from_date = ''
-        to_date = ''
+        from_date = None
+        to_date = None
 
         form = FilterableListForm()
         mock_super().clean.return_value = {'from_date': from_date, 'to_date': to_date}
         form.cleaned_data = {'from_date': from_date, 'to_date': to_date}
+        form.data = {}
+        form._errors = {}
 
         result = form.clean()
         assert result['from_date'] == from_date
@@ -79,13 +107,14 @@ class TestFilterableListForm(TestCase):
     @mock.patch('__builtin__.super')
     def test_clean_switches_date_fields_if_todate_is_less_than_fromdate(self, mock_super, mock_init):
         mock_init.return_value = None
-        to_date = datetime.date.today()
+        to_date = datetime.date(2000, 3, 15)
         from_date = to_date + datetime.timedelta(days=1)
 
         form = FilterableListForm()
         mock_super().clean.return_value = {'from_date': from_date, 'to_date': to_date}
         form.cleaned_data = {'from_date': from_date, 'to_date': to_date}
-        form.data = {'from_date': from_date, 'to_date': to_date}
+        form.data = {'from_date': '3/16/2000', 'to_date': '3/15/2000'}
+        form._errors = {}
 
         result = form.clean()
         assert result['from_date'] == to_date
