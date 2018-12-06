@@ -32,6 +32,9 @@ cache:
     - cfgov/unprocessed/apps/regulations3k/node_modules
     - cfgov/unprocessed/apps/analytics-gtm/node_modules
 
+before_install:
+  - sudo rm -f /etc/boto.cfg
+
 install:
   - ./travis_install.sh
 

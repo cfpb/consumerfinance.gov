@@ -53,5 +53,3 @@ MOCK_STATICFILES_PATTERNS = {
 FLAG_SOURCES = (
     'flags.sources.SettingsFlagsSource',
 )
-
-ALLOW_ADMIN_URL = True
