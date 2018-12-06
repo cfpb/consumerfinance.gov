@@ -387,49 +387,11 @@ urlpatterns = [
                 r'^search/',
                 include('search.urls')),
 
-    flagged_wagtail_only_view(
-        'TDP_SEARCH_INTERFACE',
-        r'^practitioner-resources/youth-financial-education/teach/activities/',
-        'tdp_search'),
-
-    flagged_wagtail_only_view(
-        'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/teach/'),
-
-    flagged_wagtail_only_view(
-        'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/learn/'),
-
-    flagged_wagtail_only_view(
-        'TDP_STATIC_PAGE',
-        r'practitioner-resources/youth-financial-education2/'),
-
-    flagged_wagtail_only_view(
-        'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/glossary-financial-terms/'),  # noqa: E501
-
-    flagged_wagtail_only_view(
-        'TDP_STATIC_PAGE',
-        r'^practitioner-resources/youth-financial-education/resources-research/'),  # noqa: E501
-
-    flagged_url('TDP_CRTOOL',
-        r'^practitioner-resources/youth-financial-education/curriculum-review/tool/',  # noqa: E501
+    url(
+        r'^practitioner-resources/youth-financial-education/',
         include_if_app_enabled('teachers_digital_platform',
-                               'teachers_digital_platform.tool_urls')),
-
-    flagged_url('TDP_CRTOOL',
-        r'^practitioner-resources/youth-financial-education/curriculum-review/before-you-begin/',  # noqa: E501
-        include_if_app_enabled('teachers_digital_platform',
-                                'teachers_digital_platform.begin_urls')),
-
-    flagged_wagtail_only_view(
-        'TDP_CRTOOL',
-        r'^practitioner-resources/youth-financial-education/curriculum-review/$'),  # noqa: E501
-
-    flagged_url('TDP_BB_TOOL',
-        r'^practitioner-resources/youth-financial-education/journey',  # noqa: E501
-        include_if_app_enabled('teachers_digital_platform',
-                                    'teachers_digital_platform.bb_urls')),
+                               'teachers_digital_platform.urls')
+    ),
 
     url(
         r'^regulations3k-service-worker.js',

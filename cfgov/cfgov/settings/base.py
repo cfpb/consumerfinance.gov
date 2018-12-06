@@ -656,18 +656,6 @@ FLAGS = {
     # The release of the new Financial Coaching pages
     'FINANCIAL_COACHING': {},
 
-    # Teacher's Digital Platform Customer Review Tool
-    'TDP_CRTOOL': {'environment is': 'beta'},
-
-    # Teacher's Digital Platform Search Interface Tool
-    'TDP_SEARCH_INTERFACE': {'environment is': 'beta'},
-
-    # Teacher's Digital Platform Static Pages
-    'TDP_STATIC_PAGE': {'environment is': 'beta'},
-
-    # Teacher's Digital Platform Building Blocks Tool
-    'TDP_BB_TOOL': {'environment is': 'beta'},
-
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
     'TURBOLINKS': {},
