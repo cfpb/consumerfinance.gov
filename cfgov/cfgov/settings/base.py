@@ -131,7 +131,6 @@ CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
 if ('CSP_ENFORCE' in os.environ):
     MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
-
 ROOT_URLCONF = 'cfgov.urls'
 
 # We support two different template engines: Django templates and Jinja2
@@ -198,6 +197,8 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
+if ALLOW_ADMIN_URL:
+    DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000  # For heavy Wagtail pages
 
 # Databases
 DATABASES = {}

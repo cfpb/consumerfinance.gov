@@ -1,5 +1,4 @@
 language: python
-sudo: false
 dist: trusty
 
 git:
@@ -31,6 +30,9 @@ cache:
     - cfgov/unprocessed/apps/owning-a-home/node_modules
     - cfgov/unprocessed/apps/regulations3k/node_modules
     - cfgov/unprocessed/apps/analytics-gtm/node_modules
+
+before_install:
+  - sudo rm -f /etc/boto.cfg
 
 install:
   - ./travis_install.sh
