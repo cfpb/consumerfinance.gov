@@ -7,6 +7,7 @@ pages:
     - New projects: new-projects.md
     - Branching and merging: branching-merging.md
     - Feature flags: feature-flags.md
+    - Split testing: split-testing.md
 - Back-end guidelines:
     - Wagtail and Django migrations: wagtail-migrations.md
     - Wagtail Pages vs Django views: django-to-wagtail.md

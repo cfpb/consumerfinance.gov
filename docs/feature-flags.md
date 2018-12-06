@@ -42,16 +42,16 @@ Flags can be checked either in Python code or in Django or Jinja2 template files
 
 Most of cfgov-refresh's templates are Jinja2. In these templates, two template functions are provided, `flag_enabled` and `flag_disabled`. Each takes a flag name as its first argument and request` object as the second.
 
-`flag_enabled('MY_FLAG', request)` will return `True` if the conditions under which `MY_FLAG` is enabled **are** met.
+`flag_enabled('MY_FLAG')` will return `True` if the conditions under which `MY_FLAG` is enabled **are** met.
 
-`flag_disabled('MY_FLAG', request)` will return `True` if the conditions under which `MY_FLAG` is enabled **are not** met.
+`flag_disabled('MY_FLAG')` will return `True` if the conditions under which `MY_FLAG` is enabled **are not** met.
 
 See [Enabling a flag](#enabling-a-flag) below for more on flag conditions.
 
 An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56):
 
 ```jinja
-{% if flag_enabled('BETA_NOTICE', request) and show_banner %}
+{% if flag_enabled('BETA_NOTICE') and show_banner %}
 <div class="m-global-banner">
     <div class="wrapper
                 wrapper__match-content
