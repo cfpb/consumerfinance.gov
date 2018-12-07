@@ -1,20 +1,19 @@
 // Required modules.
-import Analytics from '../modules/Analytics';
+import * as validators from '../modules/util/validators';
 import {
   checkDom,
   instantiateAll,
   setInitFlag
 } from '../modules/util/atomic-helpers';
+import Analytics from '../modules/Analytics';
 import ERROR_MESSAGES from '../config/error-messages-config';
+import Expandable from 'cf-expandables/src/Expandable';
+import FormModel from '../modules/util/FormModel';
 import Multiselect from '../molecules/Multiselect';
 import Notification from '../molecules/Notification';
 import { UNDEFINED } from '../modules/util/standard-type';
-import * as validators from '../modules/util/validators';
-import Expandable from 'cf-expandables/src/Expandable';
-import FormModel from '../modules/util/FormModel';
 
-/* eslint-disable max-lines-per-function */
-// TODO: Reduce lines in FilterableListControls
+// TODO: Reduce lines in FilterableListControls or convert to class.
 /**
  * FilterableListControls
  * @class
@@ -47,7 +46,10 @@ function FilterableListControls( element ) {
     /* Instantiate multiselects before their containing expandable
        so height of any 'selected choice' buttons is included when
        expandable height is calculated initially. */
-    const multiSelects = instantiateAll( 'select[multiple]', Multiselect );
+    const multiSelects = instantiateAll(
+      `.${ BASE_CLASS } select[multiple]`,
+      Multiselect
+    );
 
     const _expandables = Expandable.init();
     _expandable = _expandables[0];
@@ -73,7 +75,7 @@ function FilterableListControls( element ) {
     _notification.init();
 
     _formModel.init();
-    _initEvents();
+    _initAnalyticsEvents();
 
     return this;
   }
@@ -81,7 +83,7 @@ function FilterableListControls( element ) {
   /**
    * Initialize FilterableListControls events.
    */
-  function _initEvents() {
+  function _initAnalyticsEvents() {
     const labelDom = _dom.querySelector( '.o-expandable_label' );
     let label;
     const getDataLayerOptions = Analytics.getDataLayerOptions;
@@ -140,8 +142,10 @@ function FilterableListControls( element ) {
     );
 
     if ( validatedFields.invalid.length > 0 ) {
-      _setNotification( _notification.ERROR,
-        _buildErrorMessage( validatedFields.invalid ) );
+      _showNotification(
+        _notification.ERROR,
+        _buildErrorMessage( validatedFields.invalid )
+      );
     } else {
       _form.submit();
     }
@@ -149,7 +153,7 @@ function FilterableListControls( element ) {
 
   /**
    * Build the error message to display within the notification.
-   * @param {Array} fields A list of form fields.
+   * @param {Array} fields - A list of form fields.
    * @returns {string} A text to use for the error notification.
    */
   function _buildErrorMessage( fields ) {
@@ -162,16 +166,13 @@ function FilterableListControls( element ) {
   }
 
   /**
-   * Set the notification type, msg, and visibility.
-   * @param {string} type The type of notification to display.
-   * @param {string} msg The message to display in the notification.
-   * @param {string} methodName The method to use to control visibility
-   *                            of the notification.
+   * Show the notification.
+   * @param {string} type - The type of notification to display.
+   * @param {string} msg - The message to display in the notification.
    */
-  function _setNotification( type, msg, methodName ) {
-    methodName = methodName || 'show';
+  function _showNotification( type, msg ) {
     _notification.setTypeAndContent( type, msg );
-    _notification[methodName]();
+    _notification.show();
   }
 
   /**
@@ -187,8 +188,6 @@ function FilterableListControls( element ) {
     };
     let validatedField;
 
-    /* eslint-disable complexity */
-    // TODO: Reduce complexity
     fields.forEach( field => {
       let fieldIsValid = true;
 
@@ -206,12 +205,10 @@ function FilterableListControls( element ) {
         validatedFields.invalid.push( validatedField );
       }
     } );
-    /* eslint-enable complexity */
 
     return validatedFields;
   }
 
-  /* eslint-disable complexity */
   // TODO: Reduce complexity
   /**
    * Validate the specific field types.
@@ -240,17 +237,17 @@ function FilterableListControls( element ) {
     }
 
     if ( validators[fieldModel.type] ) {
-      validation.status = validators[fieldModel.type]( field, validation, fieldset );
+      validation.status = validators[fieldModel.type](
+        field, validation, fieldset
+      );
     }
 
     return validators.empty( field, validation );
   }
-  /* eslint-enable complexity */
 
   this.init = init;
   this.destroy = destroy;
   return this;
 }
-/* eslint-enable max-lines-per-function */
 
 export default FilterableListControls;
