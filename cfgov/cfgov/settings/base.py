@@ -287,8 +287,6 @@ SHEER_ELASTICSEARCH_INDEX = os.environ.get(
 )
 ELASTICSEARCH_BIGINT = 50000
 
-MAPPINGS = PROJECT_ROOT.child('es_mappings')
-
 SHEER_ELASTICSEARCH_SETTINGS = \
     {
         "settings": {
