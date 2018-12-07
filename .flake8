@@ -21,7 +21,6 @@ exclude =
     site,
 
     # And directories in cfgov that don't have python files to lint
-    cfgov/es_mappings,
     cfgov/jinja2,
     cfgov/static_built,
     cfgov/templates,
