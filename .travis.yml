@@ -20,16 +20,6 @@ addons:
 
 cache:
   pip: true
-  directories:
-    - node_modules
-    # App's may have their own node_modules directory and should be listed here
-    # in the format cfgov/unprocessed/apps/[namespace]/node_modules
-    # If they are not listed here the caching mechanism will falsely see the
-    # main node_modules directory as being cached and never run npm install,
-    # which also installs app's node_modules.
-    - cfgov/unprocessed/apps/owning-a-home/node_modules
-    - cfgov/unprocessed/apps/regulations3k/node_modules
-    - cfgov/unprocessed/apps/analytics-gtm/node_modules
 
 before_install:
   - sudo rm -f /etc/boto.cfg

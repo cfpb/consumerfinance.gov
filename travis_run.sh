@@ -8,7 +8,7 @@ export NODE_ENV='development'
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
-    npm run gulp test -- --travis --headless
+    yarn run gulp test --travis --headless
     bash <(curl -s https://codecov.io/bash) -F frontend -X coveragepy
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e lint

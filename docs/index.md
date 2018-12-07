@@ -21,5 +21,5 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 
 - [Elasticsearch](https://www.elastic.co):
   Used for full-text search capabilities and content indexing.
-- [Node](http://nodejs.org) and [npm (Node Package Manager)](https://www.npmjs.com):
+- [Node](http://nodejs.org) and [yarn](https://yarnpkg.com/):
   Used for downloading and managing front-end dependencies and assets.
