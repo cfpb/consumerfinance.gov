@@ -2384,10 +2384,10 @@ cf-core@4.7.0:
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-cf-expandables@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/cf-expandables/-/cf-expandables-7.0.1.tgz#a27670f4ff5ac327bcd71cb20b77425886ab7edc"
-  integrity sha512-uaWbi31zqIVxoqOfQz6fQ9Gw2eqWxWUs2zCwe0WZO82JTXkHOQZcWIqYeS0iMjw1Xngoy4LSCdZ1R2GmlsDaiw==
+cf-expandables@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/cf-expandables/-/cf-expandables-7.1.0.tgz#bfae1ec1865e7101f954ba4634f8d731deb31caa"
+  integrity sha512-W2UqJ+4cbRZjnXOBKEf3GTyBxMzVyWB4ywGXXA/6F28Cqt3IXhYt1QFdDYhcrLnjVx+iPZaLAMmQEEjRZXIuBw==
   dependencies:
     cf-atomic-component "^1.4.0"
     cf-core "^4.0.0"
