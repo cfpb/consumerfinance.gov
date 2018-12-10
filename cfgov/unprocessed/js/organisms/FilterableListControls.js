@@ -84,15 +84,10 @@ function FilterableListControls( element ) {
    * Initialize FilterableListControls events.
    */
   function _initAnalyticsEvents() {
-    const labelDom = _dom.querySelector( '.o-expandable_label' );
-    let label;
+    let label = _expandable.getLabelText();
     const getDataLayerOptions = Analytics.getDataLayerOptions;
     let dataLayerArray = [];
     const cachedFields = {};
-
-    if ( labelDom ) {
-      label = labelDom.textContent.trim();
-    }
 
     _expandable.transition.addEventListener(
       'expandBegin',
