@@ -30,6 +30,7 @@ install:
 branches:
   only:
     - master
+    - ^\d+\.\d+(\.\d+)?(-\S*)?$
 
 before_script:
   - psql -c "ALTER USER travis WITH PASSWORD 'travis';"
