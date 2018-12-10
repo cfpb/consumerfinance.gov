@@ -1,6 +1,6 @@
 require( '../../on-demand/feedback-form' );
 require( '../../on-demand/ask-autocomplete' );
-const Analytics = require( '../../../modules/Analytics' );
+import Analytics from '../../../modules/Analytics';
 
 const analyticsDataEl = document.querySelector( '.analytics-data' );
 
