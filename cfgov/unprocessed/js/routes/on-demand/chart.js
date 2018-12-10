@@ -6,4 +6,4 @@
 import 'core-js/es6/promise';
 
 // See https://github.com/cfpb/cfpb-chart-builder
-require( 'cfpb-chart-builder' );
+import 'cfpb-chart-builder';

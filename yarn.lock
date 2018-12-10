@@ -2460,10 +2460,10 @@ cf-typography@5.0.1:
     cf-core "^4.0.0"
     cf-icons "^4.0.0"
 
-cfpb-chart-builder@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-5.1.0.tgz#f02ddc7c5f6ad9cab80b92f7e6b71b29885e0458"
-  integrity sha512-ugiiTtwUCMir1akCex2dZxL7IsKknColuoizBNNse8V0l1Yvsa59nqUnyJRnJfz9tujPYiHvWvtZz21iixISbQ==
+cfpb-chart-builder@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-5.1.1.tgz#dd5187610c14bfdcbea5b9d1a5eb060585c2b1e6"
+  integrity sha512-Sr7SpWUJMUWlduTMW5aaDRy8tU6hqG9qnzjJxy+aD8xFLyGjX5tCLdcjhLVqslNYtoWFrApDmEmDi8iMXAqN+w==
   dependencies:
     cf-core "4.10.0"
     cf-layout "5.0.0"
