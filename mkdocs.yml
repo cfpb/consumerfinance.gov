@@ -25,18 +25,18 @@ pages:
     - Consumer complaints: consumer-complaint-database.md
     - HMDA data: hmda.md
 
-theme: mkDOCter
-extra:
-    brand_color: "#2CB34A"
-    brand_font_family: "AvenirNextLTW01-Regular,Arial,sans-serif"
-    brand_font_color: "#101820"
-    logo_url: https://cfpb.github.io/img/logo_210.png
-    logo_alt: Consumer Financial Protection Bureau
+theme:
+  name: 'readthedocs'
+extra_css:
+    - css/overrides.css
 
 markdown_extensions:
     - admonition
-    - tables
+    - pymdownx.betterem
     - pymdownx.github
+    - pymdownx.magiclink
     - pymdownx.superfences
+    - pymdownx.tilde
+    - tables
     - toc:
         permalink: "¶"
