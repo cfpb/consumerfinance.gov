@@ -207,17 +207,28 @@
                                                 {{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}
                                             </p>
                                             <p>
+                                                {% if counselor.weburl %}
                                                 <b>Website:</b>
                                                 <a class="a-link a-link__icon" href="{{ counselor.weburl }}">
                                                     <span class="a-link_text">{{ counselor.weburl }}</span>
                                                     {{ svg_icon( 'external-link' ) }}
                                                 </a>
                                                 <br>
+                                                {% endif %}
+
+                                                {% if counselor.phone1 %}
                                                 <b>Phone:</b> {{ counselor.phone1 }}
                                                 <br>
+                                                {% endif %}
+
+                                                {% if counselor.email %}
                                                 <b>Email Address:</b> {{ counselor.email }}
                                                 <br>
+                                                {% endif %}
+
+                                                {% if counselor.languages %}
                                                 <b>Languages:</b> {{ counselor.languages | join( ', ' ) }}
+                                                {% endif %}
                                             </p>
                                         </div>
                                     </td>
