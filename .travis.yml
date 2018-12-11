@@ -54,6 +54,7 @@ jobs:
         - RUNTEST=backend
         - TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner
     - stage: Docs Deploy
+      if: type != pull_request
       env: RUNTEST=docs
       deploy:
         provider: pages
