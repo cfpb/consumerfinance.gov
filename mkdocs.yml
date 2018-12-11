@@ -8,6 +8,7 @@ pages:
     - Branching and merging: branching-merging.md
     - Feature flags: feature-flags.md
     - Split testing: split-testing.md
+    - How we use Travis: travis.md
 - Back-end guidelines:
     - Wagtail and Django migrations: wagtail-migrations.md
     - Wagtail Pages vs Django views: django-to-wagtail.md
