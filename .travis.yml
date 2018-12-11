@@ -30,7 +30,6 @@ install:
 branches:
   only:
     - master
-    - /^\d+\.\d+(\.\d+)?(-\S*)?$/
 
 before_script:
   - psql -c "ALTER USER travis WITH PASSWORD 'travis';"
@@ -55,7 +54,6 @@ jobs:
         - RUNTEST=backend
         - TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner
     - stage: Docs Deploy
-      if: tag IS present
       env: RUNTEST=docs
       deploy:
         provider: pages
