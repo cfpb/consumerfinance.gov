@@ -22,7 +22,7 @@ import { UNDEFINED } from '../modules/util/standard-type';
  * @returns {MegaMenu} An instance.
  */
 function MegaMenu( element ) {
-  const BASE_CLASS = 'o-mega-menu';
+  const BASE_CLASS = 'o-mega-menu-krang';
 
   const _dom = checkDom( element, BASE_CLASS );
 
