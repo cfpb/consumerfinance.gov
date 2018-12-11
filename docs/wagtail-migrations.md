@@ -1,6 +1,6 @@
 # Wagtail and Django data migrations
 
-Django data migrations with Wagtail can be challenging because programmatic editing of Wagtail pages [is difficult](https://github.com/torchbox/wagtail/issues/1101), and pages have both revisions and StreamFields. This document is intended to describe ways we try to address these challenges in cfgov-refresh.
+Django data migrations with Wagtail can be challenging because programmatic editing of Wagtail pages [is difficult](https://github.com/wagtail/wagtail/issues/1101), and pages have both revisions and StreamFields. This document is intended to describe ways we try to address these challenges in cfgov-refresh.
 
 ## Migrating StreamFields
 
