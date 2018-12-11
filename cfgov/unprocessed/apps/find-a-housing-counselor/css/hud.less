@@ -15,7 +15,13 @@
 }
 
 .hud_hca_api_results_actions {
-    float: right;
+    .respond-to-min( @bp-xs-max, {
+        & {
+            float: right;
+            // Provide a gap between result header links and result text.
+            margin-left: 20px;
+        }
+    } );
 
     // Remove underline from PDF abbreviation and icons in links.
     & abbr,
