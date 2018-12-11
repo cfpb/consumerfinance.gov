@@ -10,10 +10,35 @@ babel-polyfill@^7.0.0-beta.3:
     core-js "^2.4.0"
     regenerator-runtime "^0.11.0"
 
+cf-core@4.10.0:
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/cf-core/-/cf-core-4.10.0.tgz#7e35dcacfe5d194580369060a7a8a02cb38128a1"
+  integrity sha512-PNWKMRTs3/yu0uS038QBt+e2Ivgp7hltQJi4Y4rP8+W/ayaHu5qQzf25ow5+E6fWYCY3bzNPgLqD2PR1mZhxsg==
+  dependencies:
+    normalize-css "^2.0.0"
+    normalize-legacy-addon "0.1.0"
+
 core-js@^2.4.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.0.tgz#1e30793e9ee5782b307e37ffa22da0eacddd84d4"
   integrity sha512-kLRC6ncVpuEW/1kwrOXYX6KQASCVtrh1gQr/UiaVgFlf9WE5Vp+lNe5+h3LuMr5PAucWnnEXwH0nQHRH/gpGtw==
+
+insert-css@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/insert-css/-/insert-css-0.0.0.tgz#2304bfa6f893abecb8ff9ca8d9c7605d94cf2911"
+  integrity sha1-IwS/pviTq+y4/5yo2cdgXZTPKRE=
+
+normalize-css@^2.0.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/normalize-css/-/normalize-css-2.3.1.tgz#fc03e3b91e3a51aa7a1836bae7b2b6ac6d51e156"
+  integrity sha1-/APjuR46Uap6GDa657K2rG1R4VY=
+  dependencies:
+    insert-css "0.0.0"
+
+normalize-legacy-addon@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/normalize-legacy-addon/-/normalize-legacy-addon-0.1.0.tgz#8ca131e8503943a3a9e4d0d70cc0e80a27a40c9e"
+  integrity sha1-jKEx6FA5Q6Op5NDXDMDoCiekDJ4=
 
 regenerator-runtime@^0.11.0:
   version "0.11.1"
