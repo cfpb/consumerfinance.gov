@@ -103,9 +103,6 @@ may have an impact on local server performance.
 Our documentation is written as Markdown files and served in GitHub pages
 by [mkdocs](https://www.mkdocs.org/user-guide/deploying-your-docs/).
 
-To update the docs in GitHub Pages once a pull request has been merged,
-mkdocs provides [a helpful command](https://www.mkdocs.org/user-guide/deploying-your-docs/):
+Every time a PR is merged to master, Travis will build and deploy the documentation to https://cfpb.github.io/cfgov-refresh.
 
-```
-mkdocs gh-deploy --clean
-```
+To add new pages to the navigation, edit the [mkdocs.yml](https://github.com/cfpb/cfgov-refresh/blob/master/mkdocs.yml) file in the root directory.
