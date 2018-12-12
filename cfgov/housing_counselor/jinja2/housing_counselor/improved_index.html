@@ -217,12 +217,18 @@
                                                 {% endif %}
 
                                                 {% if counselor.phone1 %}
-                                                <b>Phone:</b> {{ counselor.phone1 }}
+                                                <b>Phone:</b>
+                                                <a href="tel:+1-{{ counselor.phone1 }}">
+                                                    {{ counselor.phone1 }}
+                                                </a>
                                                 <br>
                                                 {% endif %}
 
                                                 {% if counselor.email %}
-                                                <b>Email Address:</b> {{ counselor.email }}
+                                                <b>Email Address:</b>
+                                                <a href="mailto:{{ counselor.email }}">
+                                                    {{ counselor.email }}
+                                                </a>
                                                 <br>
                                                 {% endif %}
 

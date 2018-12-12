@@ -8,5 +8,5 @@ const dom = document.querySelector( '.o-secondary-navigation' );
    has secondary navigation markup. */
 if ( dom ) {
   // eslint-disable-next-line global-require
-  require( 'cf-expandables/src/Expandable' ).init();
+  require( 'cf-expandables/src/Expandable' ).init( dom );
 }
