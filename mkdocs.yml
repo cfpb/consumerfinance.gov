@@ -33,7 +33,6 @@ extra_css:
 markdown_extensions:
     - admonition
     - pymdownx.betterem
-    - pymdownx.github
     - pymdownx.magiclink
     - pymdownx.superfences
     - pymdownx.tilde
