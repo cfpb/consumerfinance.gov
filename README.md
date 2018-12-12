@@ -73,7 +73,7 @@ If you would like to browse the documentation locally, you can do so
 with [`mkdocs`](http://www.mkdocs.org/):
 
 ```sh
-pip install -r requirements/manual.txt
+pip install -r requirements/docs.txt
 mkdocs serve
 ```
 
