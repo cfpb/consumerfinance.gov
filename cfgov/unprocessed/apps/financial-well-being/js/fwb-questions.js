@@ -169,4 +169,4 @@ function init() {
   setUpData();
 }
 
-module.exports = { init: init };
+export { init };
