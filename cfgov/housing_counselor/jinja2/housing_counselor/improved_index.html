@@ -6,8 +6,6 @@
 {% endblock %}
 
 {% block css %}
-<link rel='stylesheet'
-      href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' />
 {{ super() }}
 <link rel="stylesheet"
       href="{{ static('apps/find-a-housing-counselor/css/main.css') }}">
@@ -46,8 +44,12 @@
                         </p>
                     </div>
                     <div class="block block__border">
-
-                        <section class="o-featured-content-module
+                        {# Set the `no-js` class on page load,
+                           which is reverted if and when the map is
+                           loaded via JavaScript. #}
+                        <section id="hud_search_container"
+                                 class="no-js
+                                        o-featured-content-module
                                         o-featured-content-module__right">
                             <div class="o-featured-content-module_text">
                                 <form class="o-form" action=".">
@@ -328,14 +330,15 @@
 
 {% block javascript %}
     {{ super() }}
-    <script type='text/javascript'
-            src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+
     <script>
-    var hud_data = {};
-    {% if api_json %}
-    hud_data = {{ api_json | tojson }};
-    {% endif %}
-    var mapbox_access_token = "{{ mapbox_access_token }}";
+      // Store backend settings to pass to front-end scripts.
+      window.cfpbHudSettings = {};
+      window.cfpbHudSettings.hud_data = {};
+      {% if api_json %}
+      window.cfpbHudSettings.hud_data = {{ api_json | tojson }};
+      {% endif %}
+      window.cfpbHudSettings.mapbox_access_token = "{{ mapbox_access_token }}";
     </script>
 
     <script async>
