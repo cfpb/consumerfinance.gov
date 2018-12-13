@@ -28,7 +28,7 @@ let markerDomCache = {};
 /**
  * Dynamically add mapbox CSS to document head.
  */
-function injectMapBoxCSS() {
+function injectMapboxCSS() {
   const mapStyles = document.createElement( 'link' );
   mapStyles.rel = 'stylesheet';
   mapStyles.href = MAPBOX_CSS_URL;
@@ -165,5 +165,5 @@ function updateMap( data ) {
 }
 
 // Get started by injecting the Mapbox CSS and JavaScript in the document head…
-injectMapBoxCSS();
+injectMapboxCSS();
 injectMapboxJS();
