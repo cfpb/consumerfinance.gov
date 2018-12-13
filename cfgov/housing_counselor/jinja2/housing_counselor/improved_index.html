@@ -170,15 +170,9 @@
                         <table class="o-table o-table__stack-on-small">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <p>Agency</p>
-                                    </th>
-                                    <th>
-                                        <p>Services</p>
-                                    </th>
-                                    <th>
-                                        <p>Distance</p>
-                                    </th>
+                                    <th>Agency</th>
+                                    <th>Services</th>
+                                    <th>Distance</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -192,12 +186,12 @@
                                                     <a class="a-link a-link__icon"
                                                        href="{{ counselor.weburl }}">
                                                       <span class="a-link_text">
-                                                          <strong>{{ counselor.nme }}</strong>
+                                                          <b>{{ counselor.nme }}</b>
                                                       </span>
                                                       {{ svg_icon( 'external-link' ) }}
                                                     </a>
                                                     {% else %}
-                                                    <strong>{{ counselor.nme }}</strong>
+                                                    <b>{{ counselor.nme }}</b>
                                                     {% endif %}
 
                                                     <br>
