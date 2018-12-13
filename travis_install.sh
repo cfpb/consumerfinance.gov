@@ -12,7 +12,7 @@ backend() {
 }
 
 docs() {
-    pip install -r requirements/manual.txt
+    pip install -r requirements/docs.txt
 }
 
 echo "installing $RUNTEST dependencies"
