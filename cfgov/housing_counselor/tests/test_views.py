@@ -28,9 +28,9 @@ class HousingCounselorViewTestCase(TestCase):
     def test_get_counselors_failed_s3_request(self, mock_requests_get):
         mock_requests_get.side_effect = requests.HTTPError
         response = self.client.get('/find-a-housing-counselor/')
-        self.assertNotIn('zipcode_valid', response.context)
-        self.assertNotIn('api_json', response.context)
-        self.assertNotIn('pdf_url', response.context)
+        self.assertNotIn('zipcode_valid', response.context_data)
+        self.assertNotIn('api_json', response.context_data)
+        self.assertNotIn('pdf_url', response.context_data)
 
     @mock.patch('requests.get')
     def test_get_counselors_invalid_zipcode(self, mock_requests_get):
@@ -42,8 +42,8 @@ class HousingCounselorViewTestCase(TestCase):
         mock_requests_get.return_value.json.return_value = {}
         response = self.client.get('/find-a-housing-counselor/',
                                    {'zipcode': '12345'})
-        self.assertTrue(response.context['zipcode_valid'])
-        self.assertIn('12345.pdf', response.context['pdf_url'])
+        self.assertTrue(response.context_data['zipcode_valid'])
+        self.assertIn('12345.pdf', response.context_data['pdf_url'])
 
 
 @override_settings(AWS_STORAGE_BUCKET_NAME='foo.bucket')
