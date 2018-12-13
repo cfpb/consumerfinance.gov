@@ -1,6 +1,7 @@
-# Wagtail Migrations
+# Django and Wagtail Migrations
 
-Adding or changing fields on Wagtail page models or StreamField block classes
+Adding or changing fields on Django models, Wagtail page models
+(which are a particular kind of Django model), or StreamField block classes
 will always require a new [Django schema migration](#schema-migrations);
 additionally, changing field names or types on an existing block will require a
 [Django data migration](#data-migrations).
@@ -11,6 +12,7 @@ additionally, changing field names or types on an existing block will require a
 1. [Reference material](#reference-material)
 1. [Schema migrations](#schema-migrations)
 1. [Data migrations](#data-migrations)
+   1. [Wagtail-specific consideration](#wagtail-specific considerations)
    1. [Utility functions](#utility-functions)
 
 
@@ -26,8 +28,10 @@ into the concepts presented throughout this page:
 
 ## Schema migrations
 
-Any time you are working with StreamField block or Wagtail page definitions,
-a Django schema migration will be required.
+Any time you add or change a field on a Django model, Wagtail page model
+(which are a particular kind of Django model), or StreamField block classes, a
+[Django schema migration](https://docs.djangoproject.com/en/1.11/topics/migrations)
+will be required.
 
 To automatically generate a schema migration,
 run the following, editing it to give your migration a name
@@ -37,11 +41,17 @@ that briefly describes the change(s) you're making:
 ./cfgov/manage.py makemigrations -n <description_of_changes>
 ```
 
-It is a good idea to wait to do this until just before merging your new code
-into the `master` branch, to avoid potential conflicts with other developers'
-migrations that might make it into `master` before yours.
-Be aware, though, that our [back-end tests that run in Travis](../travis/)
-will fail if a required schema migration is missing.
+Be aware that each migration must have
+a unique four-digit number at the beginning of its filename,
+which is a regular source of conflicts between pull requests
+that are in flight at the same time.
+If a PR with a migration gets merged between the time you create your migration
+and the time that your PR is ready for merging,
+you will have to update your branch as normal to be current with master
+and then re-create your migration.
+Also note that our [back-end tests that run in Travis](../travis/)
+will fail if a required schema migration is missing or if
+migrations are in conflict with one another.
 
 !!! note
     Some changes will generate multiple migration files.
@@ -51,20 +61,64 @@ will fail if a required schema migration is missing.
 
 ## Data migrations
 
-If you…
+[Data migrations](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations)
+are required any time you:
 
-- … are renaming an existing field …
-- … are deleting a field (or converting it to a new type of field)
-  and don't want to lose any existing data stored in that field …
-- … are renaming a block within a page's StreamField definition …
-- … are deleting a block (or converting it to a new type of block)
-  and don't want to lose any existing data stored in that field …
+- rename an existing field
+- change the type of an existing field
+- delete an existing field
+- rename a block within a StreamField
+- delete a block
 
-… then you will need a data migration!
+if you do not want to lose any data already stored in that field or block.
 
-In other words, if an existing field is changing,
-any data stored in that field has to be migrated to the new field,
+In other words, if an existing field or block is changing,
+any data stored in that field or block has to be migrated to a different place,
 unless you're OK with jettisoning it.
+
+There is no automatic generation mechanism like there is for schema migrations.
+You must write the script by hand that automates the transfer of data
+from old fields to new fields.
+
+To generate an empty migration file for your data migration, run:
+
+```bash
+./cfgov/manage.py makemigrations --empty yourappname
+```
+
+You can also copy the code below to get started with
+`forward()` and `backward()` functions to migrate your model's data:
+
+```python
+from django.db import migrations
+
+
+def forwards(apps, schema_editor):
+    MyModel = apps.get_model('yourappname', 'MyModel')
+    for obj in MyModel.objects.all():
+        # Make forward changes to the object
+        pass
+
+
+def backwards(apps, schema_editor):
+    MyModel = apps.get_model('yourappname', 'MyModel')
+    for obj in MyModel.objects.all():
+        # Make backward changes to the object
+        pass
+
+
+class Migration(migrations.Migration):
+    dependencies = []
+    operations = [
+        migrations.RunPython(forwards, backwards),
+    ]
+```
+
+The `forwards()` and `backwards()` functions are where any changes
+that need to happen to a model's data are made.
+
+
+### Wagtail-specific considerations
 
 Django data migrations with Wagtail can be challenging because
 [programmatic editing of Wagtail pages is difficult](https://github.com/wagtail/wagtail/issues/1101),
@@ -75,9 +129,6 @@ The data migration needs to modify both the existing Wagtail pages
 that correspond to the changed model and all revisions of that page.
 It also needs to be able to manipulate the StreamField contents.
 
-There is no automatic generation mechanism like there is for schema migrations.
-You must write the script by hand that automates the transfer of data
-from old fields to new fields.
 
 As described in the
 [editing a component guide](../editing-components/#editing-a-field),

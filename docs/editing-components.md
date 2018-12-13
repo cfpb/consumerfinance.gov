@@ -3,6 +3,10 @@
 cfgov-refresh implements a number of components
 that editors can choose from when building a page,
 for example: Heroes, Expandable Groups, or Info Unit Groups.
+The
+[CFPB Design Manual](https://cfpb.github.io/design-manual/page-components/page-components.html)
+describes the design and intended usage of many of these components.
+
 In Wagtail parlance, these are called
 ["StreamField blocks"](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html)*
 (or just "blocks").
@@ -158,7 +162,7 @@ To make the `RelatedContent` module (shown above) available to this StreamField,
 we'd add a new entry to this list following the same format:
 `('related_content', molecules.RelatedContent()),`.
 
-Most page types have a couple StreamFields (`header` and `content`) in the
+Most page types have two StreamFields (`header` and `content`) in the
 general content area (the first tab on an editing screen), and most also share
 [a common `sidefoot` StreamField](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py#L95-L107)
 (so named for the fact that it appears on the right side on some page types,
@@ -181,13 +185,38 @@ but in the footer on others) on the sidebar tab.
 
 #### The HTML template
 
-As mentioned above, each module's Python class has a `Meta` class
-that defines the location of its template file.
-In the `RelatedContent` example,
-it was `template = '_includes/molecules/related-content.html'`.
-That path is relative to `cfgov/jinja2/v1/`.
+Frontend rendering of Wagtail StreamField blocks to HTML
+can be controlled by writing a Django template
+and associating it with the block type.
+A custom block definition can specify the template path in its `Meta` class:
 
-This is what that template looks like (comments excluded):
+```python
+from wagtail.core import blocks
+
+
+class PersonBlock(blocks.StructBlock):
+    name = blocks.CharBlock()
+    email = blocks.EmailBlock()
+
+    class Meta:
+        template = 'myapp/blocks/person_block.html'
+```
+
+StreamField block templates are loaded by the Django template loader
+in the same way that Django page templates are.
+The specified template path must be loadable
+by one of the Django template engines configured in
+[`settings.TEMPLATES`](https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-TEMPLATES).
+(This project supports both the standard
+[Django templates backend](https://docs.djangoproject.com/en/2.1/topics/templates/#django.template.backends.django.DjangoTemplates)
+and the
+[Jinja2 backend](https://docs.djangoproject.com/en/2.1/topics/templates/#django.template.backends.jinja2.Jinja2),
+but Jinja2 is more commonly used.)
+[See the Django templates documentation](https://docs.djangoproject.com/en/1.11/topics/templates/#usage)
+for more details on the search algorithm used to locate a template.
+
+Returning to the `RelatedContent` example,
+this is what its Jinja2 template looks like (comments excluded):
 
 ```html
 <div class="m-related-content">
@@ -359,19 +388,18 @@ Some field edits (like changing the `default`, `label`, `help_text`,
 and `required` properties, or changing the order of fields on a block)
 do not require a data migration. A schema migration is sufficient.
 
-However, if you…
+Data migrations are required any time you:
 
-- … are renaming an existing field …
-- … are deleting a field (or converting it to a new type of field)
-  and don't want to lose any existing data stored in that field …
-- … are renaming a block within a page's StreamField definition …
-- … are deleting a block (or converting it to a new type of block)
-  and don't want to lose any existing data stored in that field …
+- rename an existing field
+- change the type of an existing field
+- delete an existing field
+- rename a block within a StreamField
+- delete a block
 
-… then you will need a data migration!
+if you do not want to lose any data already stored in that field or block.
 
-In other words, if an existing field is changing,
-any data stored in that field has to be migrated to the new field,
+In other words, if an existing field or block is changing,
+any data stored in that field or block has to be migrated to a different place,
 unless you're OK with jettisoning it.
 
 ---
