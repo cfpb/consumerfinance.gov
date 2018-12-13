@@ -16,17 +16,25 @@ _* If you're going to be doing anything more than making minor updates to
    existing components, this is highly recommended reading._
 
 
+
+
 ## Table of contents
 
 1. [The parts of a Wagtail block](#the-parts-of-a-wagtail-block)
-   1. [The Python class](#the-python-class)
-   1. [Adding it to a StreamField](#adding-it-to-a-streamfield)
-   1. [The HTML template](#the-html-template)
-   1. [Adding some style](#adding-some-style)
-   1. [Adding some JavaScript](#adding-some-javascript)
+   1. [The back end](#the-back-end)
+      1. [The Python class](#the-python-class)
+      1. [Adding it to a StreamField](#adding-it-to-a-streamfield)
+   1. [The front end](#the-front-end)
+      1. [The HTML template](#the-html-template)
+      1. [Adding some style](#adding-some-style)
+      1. [Adding some JavaScript](#adding-some-javascript)
 1. [How-to guides](#how-to-guides)
-   1. [Adding, editing, or removing fields in the Wagtail editor](#adding-editing-or-removing-fields)
+   1. [Adding a field](#adding-a-field)
+   1. [Editing a field](#editing a field)
+   1. [Removing a field](#removing-a-field)
    1. [Creating migrations for StreamField blocks](#creating-migrations-for-streamfield-blocks)
+
+
 
 
 ## The parts of a Wagtail block
@@ -45,13 +53,26 @@ and familiarize yourself with our basic concepts
 of atoms, molecules, and organisms.
 
 
-### The Python class
+### The back end
 
-A component's fields and other properties are defined in a Python class file
-corresponding to the level of the component.
+#### The Python class
 
-These files—`atoms.py`, `molecules.py`, and `organisms.py`—are located in
-[`cfgov/v1/atomic_elements`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements).
+A component's fields and other properties are defined in a Python class,
+typically a subclass of Wagtail's
+[`StructBlock`](http://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#structblock).
+These classes are located in a number of different files across the repository,
+but there are two major categories they fall into:
+
+1. Files corresponding to a general-purpose, site-wide atomic component.
+   These files—`atoms.py`, `molecules.py`, and `organisms.py`—are located in
+   [`cfgov/v1/atomic_elements`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements).
+2. Files that are specific to a particular sub-app, such as regulations3k's
+   [blocks.py](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/blocks.py).
+
+There are other places where StreamField block classes are defined
+(particularly blocks that are only ever used as fields within another block),
+but these are the two most common locations
+where top-level Wagtail modules are stored.
 
 A simple component class looks like this:
 
@@ -75,11 +96,11 @@ There are a few things happening here:
    (see previous comment about blocks being nested within other blocks)
    into a single unit (what we'd think of as a "module" in the Wagtail editor).
    This one has three sub-blocks (lines 2, 3, and 4).
-2. The `heading` block uses the basic Wagtail `CharBlock`, which results in a
+2. The `heading` field uses the basic Wagtail `CharBlock`, which results in a
    field with a basic single-line text input.
-3. The `paragraph` block uses the basic Wagtail `RichTextBlock`,
+3. The `paragraph` field uses the basic Wagtail `RichTextBlock`,
    which results in a field with a multiline WYSIWYG text input.
-4. The `links` block uses another basic Wagtail block, `ListBlock`,
+4. The `links` field uses another basic Wagtail block, `ListBlock`,
    which is a special type of block that can hold a variable number of
    some other block (the `Hyperlink` atom block, in this case).
 5. The `Meta` class defines some properties on the `RelatedContent` block
@@ -93,8 +114,23 @@ There are a few things happening here:
 8. The `template` property is a pointer to the HTML template used to render
    this component. [See below for more on templates.](#the-html-template)
 
+This results in a module that looks like this in the Wagtail editor:
 
-### Adding it to a StreamField
+![A screenshot of a Related Content module with heading, paragraph, and links fields](img/related-content-module.png)
+
+Note again that what we think of as **fields** are _also_ blocks,
+and what we think of as **components** or **modules**
+are a special kind of block, `StructBlock`,
+that comprise the sub-blocks that are our fields.
+
+There are two common optional things that are also used in component classes:
+
+1. [Overriding the default `get_context` method](http://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#streamfield-get-context)
+   to pass additional data to the template
+2. [Adding component-specific JavaScript](#adding-some-javascript)
+    via the `Media` class
+
+#### Adding it to a StreamField
 
 Components are made available in the page editing interface
 by adding them to one of a page types's StreamFields.
@@ -128,21 +164,22 @@ general content area (the first tab on an editing screen), and most also share
 (so named for the fact that it appears on the right side on some page types,
 but in the footer on others) on the sidebar tab.
 
-
 ---
 
-!!! note "Warning: Migrations may be required!"
-    Changes to either of the Python bits will usually require
-    a new schema migration file, and _may_ require a data migration.
-    See
-    ["Creating migrations for StreamField blocks"](#creating-migrations-for-streamfield-blocks)
-    below.
+!!! note "Don't forget the migrations!"
+    Adding or changing fields on either Python class will always require a new
+    [Django schema migration](https://docs.djangoproject.com/en/1.11/topics/migrations/);
+    additionally, changing field names or types
+    on an existing block will require a
+    [Django data migration](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations).
+    See the guide on
+    [creating migrations for StreamField blocks](#creating-migrations-for-streamfield-blocks)
+    for more details.
 
-With the Python pieces covered, it's time to talk about the front end.
-First: the markup.
 
+### The front end
 
-### The HTML template
+#### The HTML template
 
 As mentioned above, each module's Python class has a `Meta` class
 that defines the location of its template file.
@@ -177,23 +214,29 @@ This is what that template looks like (comments excluded):
 ```
 
 When Wagtail renders a block,
-it includes the values of its sub-blocks in an object named `value`.
-Above, you can see where the sub-blocks are output with
+it includes the values of its fields in an object named `value`.
+Above, you can see where the `heading` and `paragraph` fields are output with
 [Jinja2 expression tags](http://jinja.pocoo.org/docs/2.10/templates/#expressions).
-In particular, note how the `links` `ListBlock` is iterated over,
+And note how the `links` field (a `ListBlock`) is iterated over,
 and the values of _its_ `Hyperlink` child blocks are output.
 
 That's about as simple an example as it gets, but block templates can get much
 more complex when they have lots of child blocks and grandchild blocks.
+Also, if a block definition has overridden `get_context` to pass other data
+into the template (as described at the end of
+[the Python class section](#the-python-class) above),
+those context variables can also be output with simple Jinja2 expression tags:
+`{{ context_var }}`.
 
-
-### Adding some style
+#### Adding some style
 
 If a component needs any custom styling not already provided
 by Capital Framework or cfgov-refresh,
 you can it by creating a new Less file for the component.
-This file should live in `cfgov/unprocessed/css/<atoms|molecules|organisms>`.
-Choose the deepest folder according to the atomic rank of the component.
+
+If you're working on a general-purpose atomic component for site-wide use,
+this file should live in `cfgov/unprocessed/css/<atoms|molecules|organisms>/`.
+(Choose the deepest folder according to the atomic rank of the component.)
 Continuing the `RelatedContent` example, if it needed its own styles,
 it would live at `cfgov/unprocessed/css/molecules/related-content.less`.
 
@@ -202,12 +245,18 @@ Newly-created Less files need to be imported into the project's master
 Please place them in the appropriate section for their atomic rank.
 
 Because cfgov-refresh uses `main.less` to build a single CSS file
-for the entire project, it is not necessary
-to tell the Python model anything about a component-specific stylesheet.
+for almost the entire project, it is not necessary
+to tell the Python model anything about a component-specific stylesheet
+(for general-purpose, site-wide components).
 That is _not_ the case with JavaScript, as we will see in the next section.
 
+!!! note
+    If you're working on a component that belongs to a particular sub-app,
+    its Less file should live in `cfgov/unprocessed/<app-name>/css/`,
+    but how those Less files get built and included on their pages is
+    not something this document is prepared to discuss at the moment.
 
-### Adding some JavaScript
+#### Adding some JavaScript
 
 Each atomic component may optionally be given a `Media` class that can
 list one or more JavaScript files that should be loaded when using it.
@@ -238,14 +287,9 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
 ## How-to guides
 
 
-### Adding, editing, or removing fields
+### Adding a field
 
-#### Adding a field
-
-1. Locate the Python class of the component you want to add a field to in
-   [atoms.py](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements/atoms.py),
-   [molecules.py](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements/molecules.py),
-   or [organisms.py](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements/organisms.py).
+1. Locate the Python class of the component you want to add a field to.
 1. Add the field by inserting a snippet like this in the list of fields,
    in the order in which you want it to appear in the editor:
    `field_name = blocks.BlockName()`.
@@ -271,70 +315,43 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
      [basic Wagtail blocks documentation](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#basic-block-types).
 1. [Edit the component template](#the-html-template) to do something with the
    field's data – output it, use it to trigger a CSS class, etc.
-1. [Create a schema migration.](#schema-migrations)
+1. [Create a schema migration.](#creating-migrations-for-streamfield-blocks)
 
-#### Removing a field
 
-These instructions presume that you do not care
-about any data stored in the field you are deleting.
-If that is not the case, please skip to the
-[instructions for editing a field](#editing-a-field)
-and come back here when instructed.
-
-1. Locate the field you want to remove in the block's Python class, either in
-   [atoms.py](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements/atoms.py),
-   [molecules.py](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements/molecules.py),
-   or [organisms.py](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements/organisms.py).
-1. Delete the field definition.
-1. [Create a schema migration.](#schema-migrations)
-
-#### Editing a field
+### Editing a field
 
 1. [Determine if the change you want to make will need a data migration.](#you-may-also-need-a-data-migration)
    - If the answer is **no**: make your changes,
-     [create a schema migration](#schema-migrations), and be on your merry way.
+     [create a schema migration](#creating-migrations-for-streamfield-blocks), and be on your merry way.
    - If the answer is **yes**: continue on.
 1. [Add the new version of the field.](#adding-a-field)
-1. [Create a schema migration](#schema-migrations) for adding the new field.
-1. [Create a data migration](../wagtail-migrations/)
+1. [Create a schema migration](#creating-migrations-for-streamfield-blocks) for adding the new field.
+1. [Create a data migration](#you-may-also-need-a-data-migration)
    to copy data from the old field into the new field.
 1. [Edit the component template](#the-html-template)
    to use the new field's data instead of the old field's data.
 1. [Remove the old field.](#removing-a-field)
-1. [Create a schema migration](#schema-migrations) for removing the old field.
+1. [Create a schema migration](#creating-migrations-for-streamfield-blocks) for removing the old field.
+
+
+### Removing a field
+
+These instructions presume that you do not care
+about any data stored in the field you are deleting.
+If that is not the case, please go up to the
+[instructions for editing a field](#editing-a-field)
+and come back here when instructed.
+
+1. Locate the field you want to remove in the block's Python class.
+1. Delete the field definition.
+1. [Create a schema migration.](#creating-migrations-for-streamfield-blocks)
 
 
 ### Creating migrations for StreamField blocks
 
-**tl;dr:**
-
-1. `./cfgov/manage.py makemigrations -n <description_of_changes>`
-1. [Determine if a data migration is needed](#you-may-also-need-a-data-migration)
-
-#### Schema migrations
-
-Any time you edit a Python file related to a component,
-it's a good idea to check and see whether or not you need to include
-a schema migration file in your changes, and sometimes also a data migration.
-
-To see if a schema migration is required, run the following command
-from the root of the cfgov-refresh repository,
-within your local Docker or virtualenv environment:
-
-```bash
-./cfgov/manage.py makemigrations --dry-run
-```
-
-If anything shows up, you need a schema migration.
-Run the following, editing it to give your migration a name
-that briefly describes the change(s) you're making:
-
-```bash
-./cfgov/manage.py makemigrations -n <description_of_changes>
-```
-
-Include the created file (located in `cfgov/v1/migrations/`)
-in your pull request along with the other changes.
+To automatically generate a **schema migration**, run
+`./cfgov/manage.py makemigrations -n <description_of_changes>`
+from the root of the repository.
 
 #### You may also need a data migration
 
@@ -347,30 +364,17 @@ However, if you…
 - … are renaming an existing field …
 - … are deleting a field (or converting it to a new type of field)
   and don't want to lose any existing data stored in that field …
-- … are renaming a block within a StreamField definition …
+- … are renaming a block within a page's StreamField definition …
 - … are deleting a block (or converting it to a new type of block)
   and don't want to lose any existing data stored in that field …
 
 … then you will need a data migration!
 
 In other words, if an existing field is changing,
-any data stored in that field has to be carefully migrated to the new field,
+any data stored in that field has to be migrated to the new field,
 unless you're OK with jettisoning it.
 
-**Data migrations are not easy.**
-There is no automatic generation mechanism like there is for schema migration.
-You must write the script by hand that automates the transfer of data
-from old fields to new fields.
+---
 
-As described in the "Editing a component" how-to above,
-it's a three-step process to modify a field without losing data:
-
-1. Create the new field with an automatic schema migration
-2. Use a handwritten data migration script to move data
-   from the old field to the new field
-3. Delete the old field with an automatic schema migration
-
-We're getting out of scope for this document, though.
-For more details, please visit
-the [Wagtail Migrations](../wagtail-migrations/) page,
-or consult your friendly local back-end developer.
+For more details on both kinds of migrations,
+see [the Wagtail Migrations page](../wagtail-migrations/).
