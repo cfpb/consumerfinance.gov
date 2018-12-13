@@ -181,6 +181,7 @@ def page_type_choices():
     new_choices = [
         ('Recent updates', (
             ('blog', 'Blog'),
+            ('directors-notebook', "Director's notebook"),
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
             ('research-reports', 'Report'),
