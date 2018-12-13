@@ -1,4 +1,7 @@
 site_name: cfgov-refresh
+
+repo_url: https://github.com/cfpb/cfgov-refresh
+
 nav:
 - Introduction: index.md
 - Installation: installation.md
