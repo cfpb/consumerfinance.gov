@@ -1,5 +1,5 @@
 site_name: cfgov-refresh
-pages:
+nav:
 - Introduction: index.md
 - Installation: installation.md
 - Usage: usage.md
