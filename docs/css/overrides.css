@@ -10,6 +10,12 @@ a:hover,
 .rst-content a:hover code {
     color: #0050b4;
 }
+.rst-content a {
+    text-decoration: underline;    
+}
+.rst-content a.btn {
+    text-decoration: none;    
+}
 .wy-body-for-nav {
     background-color: #ffffff;
 }
