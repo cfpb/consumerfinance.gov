@@ -97,7 +97,8 @@ function updateMap( data ) {
 
       const icon = window.L.icon( {
         iconUrl: '/static/apps/find-a-housing-counselor/img/hud_gmap/agc_' + number + '.png',
-        iconAnchor: [ 20, 50 ]
+        iconAnchor: [ 14, 32 ],
+        iconSize: [ 27, 32 ]
       } );
 
       const marker = new window.L.Marker( position, { icon: icon } ).addTo( map );
