@@ -405,4 +405,4 @@ unless you're OK with jettisoning it.
 ---
 
 For more details on both kinds of migrations,
-see [the Wagtail Migrations page](../wagtail-migrations/).
+see [the Wagtail Migrations page](../migrations/).
