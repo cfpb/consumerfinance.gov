@@ -166,23 +166,18 @@
                               {{ zipcode | escape }}
                             </h2>
                         </div>
-                        <table class="o-table o-table__stack-on-small u-w100pct">
+
+                        <table class="o-table o-table__stack-on-small">
                             <thead>
                                 <tr>
-                                    <th scope="col">
-                                        <div class="rich-text">
-                                            <p>Agency</p>
-                                        </div>
+                                    <th>
+                                        <p>Agency</p>
                                     </th>
-                                    <th scope="col">
-                                        <div class="rich-text">
-                                            <p>Services</p>
-                                        </div>
+                                    <th>
+                                        <p>Services</p>
                                     </th>
-                                    <th scope="col">
-                                        <div class="rich-text">
-                                            <p>Distance</p>
-                                        </div>
+                                    <th>
+                                        <p>Distance</p>
                                     </th>
                                 </tr>
                             </thead>
@@ -190,67 +185,75 @@
                                 {% for counselor in api_json.counseling_agencies %}
                                 <tr id="hud-result-{{ loop.index }}">
                                     <td data-label="Agency">
-                                        <div class="rich-text">
-                                            <p>
-                                                <span class="result-number">{{ loop.index }}.</span>
-                                                <a class="a-link a-link__icon" href="{{ counselor.weburl }}">
-                                                  <span class="a-link_text">{{ counselor.nme }}</span>
-                                                  {{ svg_icon( 'external-link' ) }}
-                                                </a>
-                                                <br>
-                                                {{ counselor.adr1 }}
-                                                {% if counselor.adr2 and counselor.adr2 != ' '  %}
-                                                <br>
-                                                {{ counselor.adr2 }}
-                                                {% endif %}
-                                                <br>
-                                                {{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}
-                                            </p>
-                                            <p>
-                                                {% if counselor.weburl %}
-                                                <b>Website:</b>
-                                                <a class="a-link a-link__icon" href="{{ counselor.weburl }}">
-                                                    <span class="a-link_text">{{ counselor.weburl }}</span>
-                                                    {{ svg_icon( 'external-link' ) }}
-                                                </a>
-                                                <br>
-                                                {% endif %}
+                                        <ol start="{{ loop.index }}">
+                                            <li>
+                                                <p>
+                                                    {% if counselor.weburl %}
+                                                    <a class="a-link a-link__icon"
+                                                       href="{{ counselor.weburl }}">
+                                                      <span class="a-link_text">
+                                                          <strong>{{ counselor.nme }}</strong>
+                                                      </span>
+                                                      {{ svg_icon( 'external-link' ) }}
+                                                    </a>
+                                                    {% else %}
+                                                    <strong>{{ counselor.nme }}</strong>
+                                                    {% endif %}
 
-                                                {% if counselor.phone1 %}
-                                                <b>Phone:</b>
-                                                <a href="tel:+1-{{ counselor.phone1 }}">
-                                                    {{ counselor.phone1 }}
-                                                </a>
-                                                <br>
-                                                {% endif %}
+                                                    <br>
+                                                    {{ counselor.adr1 }}
+                                                    {% if counselor.adr2 and counselor.adr2 != ' '  %}
+                                                    <br>
+                                                    {{ counselor.adr2 }}
+                                                    {% endif %}
+                                                    <br>
+                                                    {{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}
+                                                </p>
+                                                <p>
+                                                    {% if counselor.weburl %}
+                                                    <b>Website:</b>
+                                                    <a class="a-link a-link__icon"
+                                                       href="{{ counselor.weburl }}">
+                                                        <span class="a-link_text">
+                                                            {{ counselor.weburl }}
+                                                        </span>
+                                                        {{ svg_icon( 'external-link' ) }}
+                                                    </a>
+                                                    <br>
+                                                    {% endif %}
 
-                                                {% if counselor.email %}
-                                                <b>Email Address:</b>
-                                                <a href="mailto:{{ counselor.email }}">
-                                                    {{ counselor.email }}
-                                                </a>
-                                                <br>
-                                                {% endif %}
+                                                    {% if counselor.phone1 %}
+                                                    <b>Phone:</b>
+                                                    <a href="tel:+1-{{ counselor.phone1 }}">
+                                                        {{ counselor.phone1 }}
+                                                    </a>
+                                                    <br>
+                                                    {% endif %}
 
-                                                {% if counselor.languages %}
-                                                <b>Languages:</b> {{ counselor.languages | join( ', ' ) }}
-                                                {% endif %}
-                                            </p>
-                                        </div>
+                                                    {% if counselor.email %}
+                                                    <b>Email Address:</b>
+                                                    <a href="mailto:{{ counselor.email }}">
+                                                        {{ counselor.email }}
+                                                    </a>
+                                                    <br>
+                                                    {% endif %}
+
+                                                    {% if counselor.languages %}
+                                                    <b>Languages:</b> {{ counselor.languages | join( ', ' ) }}
+                                                    {% endif %}
+                                                </p>
+                                            </li>
+                                        </ol>
                                     </td>
                                     <td data-label="Services">
-                                        <div class="rich-text">
-                                            <ul>
-                                                {% for service in counselor.services %}
-                                                <li>{{ service }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
+                                        <ul>
+                                            {% for service in counselor.services %}
+                                            <li>{{ service }}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </td>
                                     <td data-label="Distance">
-                                        <p class="rich-text">
-                                            {{ counselor.distance | round( 1 ) }} miles
-                                        </p>
+                                        {{ counselor.distance | round( 1 ) }} miles
                                     </td>
                                 </tr>
                                 {% endfor %}
