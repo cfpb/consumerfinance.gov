@@ -11,10 +11,12 @@ This is the documentation for the `cfgov-refresh` project, a redesign of the [ww
 The standard technology stack for development of cfgov-refresh within the CFPB consists of the following base:
 
 - macOS
+- [Apache]() - Version? Which project exactly? https://apache.org/index.html#projects-list
 - [Homebrew](https://brew.sh) - package manager for installing system software on OSX
 - Python 2.7 and PIP (Python package manager)
-- [Jinja2 templates](http://jinja.pocoo.org/docs/2.10/) for front-end rendering. Exact version is defined in [`requirements/libraries.txt`](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/libraries.txt)
-- [Wagtail CMS](https://wagtail.io) for content administration
+- [Jinja2 templates](http://jinja.pocoo.org/docs/2.10/) for front-end rendering. See [`requirements/libraries.txt`](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/libraries.txt) for version.
+- [Wagtail CMS](https://wagtail.io) for content administration. See [`requirements/wagtail.txt`](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/wagtail.txt) for version.
+- [PostgreSQL](https://www.postgresql.org/) and [Psycopg](http://initd.org/psycopg/) for our database. See [`requirements/postgres.txt`](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/postgres.txt) for version.
 - Additional dependencies, listed below
 
 # Additional dependencies
@@ -31,7 +33,7 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 
 Versions for most front-end packages are kept updated in the project's [package.json](https://github.com/cfpb/cfgov-refresh/blob/master/package.json) file.
 
-Versions for back-end software including Python, etc are kept in the project's requirements files:
+Versions for back-end software including Python, Jinja, Wagtail, PostgreSQL, etc. are kept in the project's requirements files:
 https://github.com/cfpb/cfgov-refresh/tree/master/requirements
 
 - `base.txt`: shortcut for `django.txt` + `wagtail.txt` + `libraries.txt`
