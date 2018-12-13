@@ -51,7 +51,7 @@ function FilterableListControls( element ) {
       Multiselect
     );
 
-    const _expandables = Expandable.init();
+    const _expandables = Expandable.init( _dom );
     _expandable = _expandables[0];
 
     // If multiselects exist on the form, iterate over them.

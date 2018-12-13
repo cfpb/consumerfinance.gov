@@ -2338,17 +2338,10 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-cf-atomic-component@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/cf-atomic-component/-/cf-atomic-component-2.0.0.tgz#83ce4f1bd34ad8ac5c529964ebdd0c3cd7b129c9"
-  integrity sha512-WjPWfdch2D9oBUW5wwJeyZlP0e1aWsNOw0b7AxC7i1vaG1vs2YeKxXic3b07ZjNQI9c2l/r0Oij0JdSrSmU/yQ==
-  dependencies:
-    dom-delegate "^2.0.3"
-
-cf-atomic-component@^1.4.0:
-  version "1.5.6"
-  resolved "https://registry.yarnpkg.com/cf-atomic-component/-/cf-atomic-component-1.5.6.tgz#7f7d3268fe603ae844eae523dae28b775c162440"
-  integrity sha512-wapdnVCfl6gvZK2rzSjpsBS6y/K5HVUArzOJmlz8l5Hnb4tDJaJP2CNc4kzUZ9CDxPOD/Kf4u/u1rligXiLz2g==
+cf-atomic-component@2.1.1, cf-atomic-component@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/cf-atomic-component/-/cf-atomic-component-2.1.1.tgz#580f53168949e3d4ac8e2a9540a9062758076766"
+  integrity sha512-dcOTfLER8dUpWmqRhSr+jk8T4xrO7gkG/IVbm1zfCcQ+Cx797O5ECXmy+ihbui0WG3FN5L4tv8jS2VIx2acv1g==
   dependencies:
     dom-delegate "^2.0.3"
 
@@ -2384,15 +2377,14 @@ cf-core@4.7.0:
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-cf-expandables@7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/cf-expandables/-/cf-expandables-7.1.0.tgz#bfae1ec1865e7101f954ba4634f8d731deb31caa"
-  integrity sha512-W2UqJ+4cbRZjnXOBKEf3GTyBxMzVyWB4ywGXXA/6F28Cqt3IXhYt1QFdDYhcrLnjVx+iPZaLAMmQEEjRZXIuBw==
+cf-expandables@7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/cf-expandables/-/cf-expandables-7.1.1.tgz#a853f996eaac99df0f537d02989bcdf41ac24583"
+  integrity sha512-/MOTf4/K8osO+/v4SXV8YNQirLqw39+++6Z9P1zaSbeZQJ4omqdgDFXx1gyHkGWwxyL9XifIu64/wbUV23CFgQ==
   dependencies:
-    cf-atomic-component "^1.4.0"
+    cf-atomic-component "^2.1.1"
     cf-core "^4.0.0"
     cf-icons "^4.0.0"
-    classlist-polyfill "1.0.3"
 
 cf-forms@5.2.0:
   version "5.2.0"
@@ -2444,12 +2436,12 @@ cf-pagination@5.0.1:
     cf-core "^4.0.0"
     cf-icons "^4.0.0"
 
-cf-tables@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/cf-tables/-/cf-tables-5.0.0.tgz#d112ddb7bdaa2a93e1c2e5dd986718af1137bd86"
-  integrity sha512-eRdie95tgO4yXfA1p6gBUc8jK3JTGYPEGevkVcec+O9BKyGGIr6DIb3rN3YLBoaDP69Y8U9SFARj8WSgjBU+rQ==
+cf-tables@5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/cf-tables/-/cf-tables-5.0.3.tgz#f5d893803c2f9c3586b4b2e9974786bdf23f4b17"
+  integrity sha512-tQTAhLuBNwzFi7PmzVQTFyOiNlfJbQ0C2dsLQ6ozy7aibL8WCr769or3Qj3L5iTqvILxtHsGVmukxZHIl9Pvfg==
   dependencies:
-    cf-atomic-component "^1.4.0"
+    cf-atomic-component "^2.1.1"
     cf-core "^4.0.0"
 
 cf-typography@5.0.1:
@@ -2636,11 +2628,6 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
-
-classlist-polyfill@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/classlist-polyfill/-/classlist-polyfill-1.0.3.tgz#7cd5a9207c8d6932f592fdeaa6b45352ed71690d"
-  integrity sha1-fNWpIHyNaTL1kv3qprRTUu1xaQ0=
 
 clean-css@4.2.1:
   version "4.2.1"
