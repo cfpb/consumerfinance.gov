@@ -98,11 +98,23 @@ This tool exposes various useful pieces of information about things like HTTP he
 Django settings, SQL queries, and template variables. Note that running with the toolbar on
 may have an impact on local server performance.
 
-### TIP: Updating the documentation
+### TIP: Updating this documentation
 
-Our documentation is written as Markdown files and served in GitHub pages
+This documentation is written as Markdown files and served in GitHub pages
 by [mkdocs](https://www.mkdocs.org/user-guide/deploying-your-docs/).
 
 Every time a PR is merged to master, Travis will build and deploy the documentation to https://cfpb.github.io/cfgov-refresh. See [How we use Travis CI](https://github.com/cfpb/cfgov-refresh/blob/master/docs/travis.md) for more info.
 
 To add new pages to the navigation, edit the [mkdocs.yml](https://github.com/cfpb/cfgov-refresh/blob/master/mkdocs.yml) file in the root directory.
+
+The source Markdown file used to generate one page of reference documentation
+can be generated dynamically from the source code by running the following
+Django management command from within a Python environment:
+
+```sh
+$ cfgov/manage.py generate_streamfield_docs > docs/streamfield-blocks.md
+```
+
+To build HTML in a local `site` directory from the input Markdown files,
+run `mkdocs build`. To run an auto-reloading local documentation server at
+[http://localhost:8000](http://localhost:8000), run `mkdocs serve`.

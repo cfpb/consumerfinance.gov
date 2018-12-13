@@ -27,9 +27,12 @@ nav:
     - Ask CFPB: ask-cfpb.md
     - Consumer complaints: consumer-complaint-database.md
     - HMDA data: hmda.md
+- Reference:
+    - StreamField blocks: streamfield-blocks.md
 
 theme:
-  name: 'readthedocs'
+    name: readthedocs
+
 extra_css:
     - css/overrides.css
 
