@@ -6,7 +6,6 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
 from v1.blocks import AnchorLink, HeadingBlock
-from v1.util import ref
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
