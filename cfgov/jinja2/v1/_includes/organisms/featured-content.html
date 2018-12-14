@@ -60,40 +60,43 @@
 <section class="o-featured-content-module
                 o-featured-content-module__center">
     <div class="o-featured-content-module_text">
-        <div class="a-heading a-heading__icon">
-            {{ category_icon.render( fcm_label(value.category) ) | safe }}
-            {{ fcm_label( value.category ) }}
-        </div>
+        {% if value.category %}
+            <div class="a-heading a-heading__icon">
+                {{ category_icon.render( fcm_label(value.category) ) | safe }}
+                {{ fcm_label( value.category ) }}
+            </div>
+        {% endif %}
         <h2>{{ value.heading }}</h2>
         {{ value.body | safe }}
-        {% if (value.show_post_link and value.post) or (value.links[0] and value.links[0].text) %}
+        {% if (value.show_post_link and value.post) or (value.links[0].text and value.links[0].url) %}
             <ul class="m-list m-list__links">
-                {% if value.show_post_link and value.post %}
+                {% if value.show_post_link and value.post_link_text and value.post %}
                     <li class="m-list_item">
                         <a class="m-list_link" href="{{ pageurl(value.post) }}">
                             {{ value.post_link_text }}
                         </a>
                     </li>
                 {% endif %}
-                {% if value.links[0] and value.links[0].text %}
+                {% if value.links[0].text and value.links[0].url %}
                     {% for link in value.links %}
-                        <li class="m-list_item">
-                            <a class="m-list_link" href="{{ link.url }}">
-                                {{ link.text }}
-                            </a>
-                        </li>
+                        {% if link.text and link.url %}
+                            <li class="m-list_item">
+                                <a class="m-list_link" href="{{ link.url }}">
+                                    {{ link.text }}
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
             </ul>
         {% endif %}
     </div>
 
-    {% if value.video and
-          value.video.url and
+    {% if value.video.url and
           value.video.id %}
         {% import 'macros/video-player.html' as video_player with context %}
         {{ video_player.render(value) }}
-    {% elif value.image %}
+    {% elif value.image.upload %}
         <div class="o-featured-content-module_visual">
             {% set photo = image(value.image.upload, 'original') %}
             <img class="o-featured-content-module_img"
