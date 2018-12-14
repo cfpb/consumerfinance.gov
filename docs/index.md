@@ -38,7 +38,7 @@ https://github.com/cfpb/cfgov-refresh/tree/master/requirements
 
 - `base.txt`: shortcut for `django.txt` + `wagtail.txt` + `libraries.txt`
 - `deployment.txt`: requirements for deployment, includes `base.txt` and `postgres.txt` and a New Relic library which we don't install anywhere else.
-- `django.txt`: specifies Django version. In its own file to make it easier to test multiple versions. The file is used when running the site, but by having it separate we can test against other versions of Django by excluding this file.
+- `django.txt`: specifies the Django version. The file is used when running the site, but by having it separate we can test against other versions of Django by excluding this file.
 - `libraries.txt`: Python libraries.
 - `local.txt`: includes `base.txt` and `postgres.txt` and some useful libraries when developing locally.
 - `docs.txt`: requirements to build the cfgov-refresh docs. 
