@@ -1,5 +1,12 @@
 const hud = require( './hud-util' );
 
+const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js';
+const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css';
+
+// Settings stored in the template from the backend.
+const mapboxAccessToken = window.cfpbHudSettings.mapbox_access_token;
+const hudData = window.cfpbHudSettings.hud_data;
+
 /* This script uses a local Django API to acquire a list of the 10 closest
 HUD Counselors by zip code. See hud_api_replace for more details on the
 API queries. -wernerc */
@@ -18,14 +25,48 @@ let marker_array = [];
 let zip_marker = null;
 let markerDomCache = {};
 
-/* initialize_map() sets options and creates the map */
+/**
+ * Dynamically add mapbox CSS to document head.
+ */
+function injectMapboxCSS() {
+  const mapStyles = document.createElement( 'link' );
+  mapStyles.rel = 'stylesheet';
+  mapStyles.href = MAPBOX_CSS_URL;
+  document.head.appendChild( mapStyles );
+}
+
+/**
+ * Dynamically add mapbox JavaScript to document head.
+ */
+function injectMapboxJS() {
+  const mapScript = document.createElement( 'script' );
+  mapScript.addEventListener( 'load', scriptLoaded );
+  mapScript.async = true;
+  mapScript.src = MAPBOX_JS_URL;
+  document.head.appendChild( mapScript );
+}
+
+/**
+ * Event handler for successful load of mapbox JavaScript file.
+ * @param  {Event} evt - The event object from the load event.
+ */
+function scriptLoaded( evt ) {
+  evt.target.removeEventListener( 'load', scriptLoaded );
+  initializeMap();
+}
+
+/**
+ * Set access map options and create map.
+ */
 function initializeMap() {
-  window.L.mapbox.accessToken = window.mapbox_access_token;
+  const fcm = document.querySelector( '#hud_search_container' );
+  fcm.classList.remove( 'no-js' );
+  window.L.mapbox.accessToken = mapboxAccessToken;
   map = window.L.mapbox.map( 'hud_hca_api_map_container', 'mapbox.streets' )
     .setView( [ 40, -80 ], 2 );
 
-  if ( window.hud_data.counseling_agencies ) {
-    updateMap( window.hud_data );
+  if ( hudData.counseling_agencies ) {
+    updateMap( hudData );
   }
 }
 
@@ -47,8 +88,10 @@ function queryMarkerDom( num ) {
   return cachedItem;
 }
 
-/* generate_google_map(data) takes the data and plots the markers, etc, on
-the google map. It's called by get_counselors_by_zip(). */
+/**
+ * Takes the data and plots the markers, etc, on the map.
+ * @param {Object} data - data returned from the API.
+ */
 function updateMap( data ) {
   // reset the map
   markerDomCache = {};
@@ -121,4 +164,6 @@ function updateMap( data ) {
   }
 }
 
-initializeMap();
+// Get started by injecting the Mapbox CSS and JavaScript in the document head…
+injectMapboxCSS();
+injectMapboxJS();
