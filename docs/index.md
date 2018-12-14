@@ -1,12 +1,12 @@
-# Introduction
+# Introduction to `cfgov-refresh`
 
 This is the documentation for the `cfgov-refresh` project, a redesign of the [www.consumerfinance.gov](https://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
 
-# Disclaimer
+## Disclaimer
 
 **This project is a work in progress.** Nothing presented in this repo—whether in the source code, issue tracker, or wiki—is a final product unless it is marked as such or appears on [www.consumerfinance.gov](https://www.consumerfinance.gov). In-progress updates may appear on [beta.consumerfinance.gov](https://beta.consumerfinance.gov).
 
-# Technology stack
+## Technology stack
 
 The standard technology stack for development of cfgov-refresh within the CFPB consists of the following base:
 
@@ -18,7 +18,7 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 - [PostgreSQL](https://www.postgresql.org/) and [Psycopg](http://initd.org/psycopg/) for our database. See [`requirements/postgres.txt`](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/postgres.txt) for version.
 - Additional dependencies, listed below
 
-# Additional dependencies
+## Additional dependencies
 
 - [Elasticsearch](https://www.elastic.co):
   Used for full-text search capabilities and content indexing.
@@ -28,7 +28,7 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 - [virtualenv](https://virtualenv.pypa.io/en/stable/)
 - [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
 
-# Versions
+## Versions
 
 Versions for most front-end packages are kept updated in the project's [package.json](https://github.com/cfpb/cfgov-refresh/blob/master/package.json) file.
 
