@@ -3,7 +3,9 @@ from django.test import TestCase, override_settings
 import mock
 import requests
 
-from housing_counselor.views import HousingCounselorS3URLMixin
+from housing_counselor.views import (
+    HousingCounselorS3URLMixin, HousingCounselorView
+)
 
 
 @override_settings(AWS_STORAGE_BUCKET_NAME='foo.bucket')
@@ -25,12 +27,24 @@ class HousingCounselorS3URLMixinTestCase(TestCase):
 class HousingCounselorViewTestCase(TestCase):
 
     @mock.patch('requests.get')
-    def test_get_counselors_failed_s3_request(self, mock_requests_get):
+    def test_get_counselors_request_nonexistent_zip(self, mock_requests_get):
         mock_requests_get.side_effect = requests.HTTPError
-        response = self.client.get('/find-a-housing-counselor/')
+        response = self.client.get('/find-a-housing-counselor/?zipcode=00000')
         self.assertNotIn('zipcode_valid', response.context_data)
         self.assertNotIn('api_json', response.context_data)
         self.assertNotIn('pdf_url', response.context_data)
+        self.assertIn(HousingCounselorView.invalid_zip_msg['error_message'],
+                      response.content)
+
+    @mock.patch('requests.get')
+    def test_get_counselors_failed_s3_request(self, mock_requests_get):
+        mock_requests_get.side_effect = requests.exceptions.ConnectionError
+        response = self.client.get('/find-a-housing-counselor/?zipcode=12345')
+        self.assertNotIn('zipcode_valid', response.context_data)
+        self.assertNotIn('api_json', response.context_data)
+        self.assertNotIn('pdf_url', response.context_data)
+        self.assertIn(HousingCounselorView.failed_fetch_msg['error_message'],
+                      response.content)
 
     @mock.patch('requests.get')
     def test_get_counselors_invalid_zipcode(self, mock_requests_get):

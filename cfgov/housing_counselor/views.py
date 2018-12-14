@@ -33,6 +33,16 @@ class HousingCounselorS3URLMixin(object):
 class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
     template_name = 'housing_counselor/index.html'
 
+    invalid_zip_msg = {
+        'error_message': "Sorry, you have entered an invalid ZIP code.",
+        'error_help': "Please enter a valid five-digit ZIP code below.",
+    }
+
+    failed_fetch_msg = {
+        'error_message': "Sorry, there was an error retrieving your results.",
+        'error_help': "Please try again later.",
+    }
+
     def get_context_data(self, **kwargs):
         context = super(HousingCounselorView, self).get_context_data(**kwargs)
         context['mapbox_access_token'] = settings.MAPBOX_ACCESS_TOKEN
@@ -47,13 +57,17 @@ class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
                 try:
                     api_json = self.get_counselors(self.request, zipcode)
                 except requests.HTTPError:
-                    pass
+                    context.update(self.invalid_zip_msg)
+                except requests.exceptions.ConnectionError:
+                    context.update(self.failed_fetch_msg)
                 else:
                     context.update({
                         'zipcode_valid': True,
                         'api_json': api_json,
                         'pdf_url': self.s3_pdf_url(zipcode),
                     })
+            else:
+                context.update(self.invalid_zip_msg)
 
         return context
 
