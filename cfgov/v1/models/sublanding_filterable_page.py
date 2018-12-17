@@ -22,7 +22,7 @@ class SublandingFilterablePage(FilterableFeedPageMixin,
         ('text_introduction', molecules.TextIntroduction()),
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
-        ('featured_content', molecules.FeaturedContent()),
+        ('featured_content', organisms.FeaturedContent()),
         ('feedback', v1_blocks.Feedback()),
     ])
 

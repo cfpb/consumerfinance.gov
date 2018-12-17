@@ -494,13 +494,13 @@ class AnswerModelTestCase(TestCase):
             'ask-english-answer', args=['mock-answer', 'en', 1234]))
         self.assertEqual(response.status_code, 200)
 
-    def test_view_answer_302_for_healed_slug(self):
+    def test_view_answer_301_for_healed_slug(self):
         page = self.page1
         revision = page.save_revision()
         revision.publish()
         response = self.client.get(reverse(
             'ask-english-answer', args=['mock-slug', 'en', 1234]))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 301)
 
     def test_view_answer_redirected(self):
         page = self.page1
@@ -511,7 +511,7 @@ class AnswerModelTestCase(TestCase):
         response_302 = self.client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
         self.assertTrue(isinstance(response_302, HttpResponse))
-        self.assertEqual(response_302.status_code, 302)
+        self.assertEqual(response_302.status_code, 301)
 
     def test_answer_deletion(self):
         """deleting an answer should also delete its related pages"""
