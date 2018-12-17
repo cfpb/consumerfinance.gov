@@ -67,7 +67,7 @@ Editor panels define how the page's [fields](#fields) and [StreamFields](#stream
 and correspond to the tabs that appear across the top of the edit view for pages in the Wagtail admin.
 
 The base Wagtail `Page` class and the [`v1.models.base.CFGOVPage` class](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py#L60) 
-defines a specific set of panels to which all fields should be added:
+define a specific set of panels to which all fields should be added:
 
 - `content_panels`:
   For page body content.
