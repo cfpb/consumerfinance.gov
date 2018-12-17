@@ -112,7 +112,7 @@ can be generated dynamically from the source code by running the following
 Django management command from within a Python environment:
 
 ```sh
-$ cfgov/manage.py generate_streamfield_docs > docs/streamfield-blocks.md
+$ cfgov/manage.py generate_streamfield_docs -o docs/streamfield-blocks.md
 ```
 
 To build HTML in a local `site` directory from the input Markdown files,

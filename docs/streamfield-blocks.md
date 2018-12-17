@@ -13,7 +13,7 @@ cfgov/core/jinja2/core/docs/streamfield-blocks.md.
 To regenerate this file, run the following Django management command from
 the project root when inside of a Python environment:
 
-cfgov/manage.py generate_streamfield_docs > docs/streamfield-blocks.md
+cfgov/manage.py generate_streamfield_docs -o docs/streamfield-blocks.md
 
 These instructions are duplicated at
 [Updating the documentation](../development-tips/#tip-updating-the-documentation).
@@ -242,22 +242,6 @@ these blocks implement patterns described by the
     - `v1.models.learn_page.DocumentDetailPage.content`
     - `v1.models.learn_page.LearnPage.content`
     - `v1.models.newsroom_page.NewsroomPage.content`
-    - `v1.models.sublanding_filterable_page.ActivityLogPage.content`
-    - `v1.models.sublanding_filterable_page.SublandingFilterablePage.content`
-    - `v1.models.sublanding_page.SublandingPage.content`
-
-#### FeaturedContent
-
-- Module: `v1.atomic_elements.molecules.FeaturedContent`
-- Template: `_includes/molecules/featured-content.html`
-
-- Available in:
-
-    - `data_research.models.MortgagePerformancePage.header`
-    - `v1.models.browse_filterable_page.BrowseFilterablePage.header`
-    - `v1.models.browse_filterable_page.EventArchivePage.header`
-    - `v1.models.browse_filterable_page.NewsroomLandingPage.header`
-    - `v1.models.browse_page.BrowsePage.header`
     - `v1.models.sublanding_filterable_page.ActivityLogPage.content`
     - `v1.models.sublanding_filterable_page.SublandingFilterablePage.content`
     - `v1.models.sublanding_page.SublandingPage.content`
@@ -640,6 +624,22 @@ these blocks implement patterns described by the
     - `v1.models.browse_page.BrowsePage.content`
     - `v1.models.learn_page.DocumentDetailPage.content`
     - `v1.models.learn_page.LearnPage.content`
+
+#### FeaturedContent
+
+- Module: `v1.atomic_elements.organisms.FeaturedContent`
+- Template: `_includes/organisms/featured-content.html`
+
+- Available in:
+
+    - `data_research.models.MortgagePerformancePage.header`
+    - `v1.models.browse_filterable_page.BrowseFilterablePage.header`
+    - `v1.models.browse_filterable_page.EventArchivePage.header`
+    - `v1.models.browse_filterable_page.NewsroomLandingPage.header`
+    - `v1.models.browse_page.BrowsePage.header`
+    - `v1.models.sublanding_filterable_page.ActivityLogPage.content`
+    - `v1.models.sublanding_filterable_page.SublandingFilterablePage.content`
+    - `v1.models.sublanding_page.SublandingPage.content`
 
 #### FilterControls
 

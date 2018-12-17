@@ -13,7 +13,7 @@ cfgov/core/jinja2/core/docs/streamfield-blocks.md.
 To regenerate this file, run the following Django management command from
 the project root when inside of a Python environment:
 
-cfgov/manage.py generate_streamfield_docs > docs/streamfield-blocks.md
+cfgov/manage.py generate_streamfield_docs -o docs/streamfield-blocks.md
 
 These instructions are duplicated at
 [Updating the documentation](../development-tips/#tip-updating-the-documentation).

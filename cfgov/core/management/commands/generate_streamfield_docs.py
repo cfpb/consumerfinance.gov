@@ -1,3 +1,4 @@
+import argparse
 from collections import defaultdict
 
 from django.apps import apps
@@ -12,6 +13,10 @@ from wagtail.wagtailcore.models import Page
 class Command(BaseCommand):
     help = 'Generate Wagtail StreamField block documentation'
 
+    def add_arguments(self, parser):
+        parser.add_argument('-o', '--output-file', type=argparse.FileType('w'),
+                            default='-')
+
     def handle(self, *args, **options):
         blocks, models = get_blocks_and_models()
 
@@ -21,7 +26,7 @@ class Command(BaseCommand):
             'models': models,
         })
 
-        self.stdout.write(md)
+        options['output_file'].write(md)
 
 
 def get_blocks_and_models():
