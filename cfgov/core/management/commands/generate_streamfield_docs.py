@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('-o', '--output-file', type=argparse.FileType('w'),
-                            default='-')
+                            required=False)
 
     def handle(self, *args, **options):
         blocks, models = get_blocks_and_models()
@@ -26,7 +26,8 @@ class Command(BaseCommand):
             'models': models,
         })
 
-        options['output_file'].write(md)
+        output = options.get('output_file') or self.stdout
+        output.write(md)
 
 
 def get_blocks_and_models():
