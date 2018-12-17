@@ -19,7 +19,7 @@ class BrowseFilterablePage(FilterableFeedPageMixin,
                            CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
-        ('featured_content', molecules.FeaturedContent()),
+        ('featured_content', organisms.FeaturedContent()),
     ])
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),

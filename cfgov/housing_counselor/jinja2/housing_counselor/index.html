@@ -183,61 +183,78 @@
                                     <td data-label="Agency">
                                         <ol start="{{ loop.index }}">
                                             <li>
-                                                <p>
+                                                <div class="u-mb15"
+                                                     itemscope
+                                                     itemtype="http://schema.org/PostalAddress">
+
                                                     {% if counselor.weburl %}
                                                     <a class="a-link a-link__icon"
                                                        href="{{ counselor.weburl }}">
                                                       <span class="a-link_text">
-                                                          <b>{{ counselor.nme }}</b>
+                                                          <b itemprop="name">{{ counselor.nme }}</b>
                                                       </span>
                                                       {{ svg_icon( 'external-link' ) }}
                                                     </a>
                                                     {% else %}
-                                                    <b>{{ counselor.nme }}</b>
+                                                    <b itemprop="name">{{ counselor.nme }}</b>
                                                     {% endif %}
 
                                                     <br>
-                                                    {{ counselor.adr1 }}
+
+                                                    <span itemprop="streetAddress">{{ counselor.adr1 }}</span>
                                                     {% if counselor.adr2 and counselor.adr2 != ' '  %}
                                                     <br>
-                                                    {{ counselor.adr2 }}
+                                                    <span itemprop="streetAddress">{{ counselor.adr2 }}</span>
                                                     {% endif %}
                                                     <br>
-                                                    {{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}
-                                                </p>
-                                                <p>
+                                                    <span itemprop="addressLocality">{{ counselor.city }}</span>,
+                                                    <span itemprop="addressRegion">{{ counselor.statecd }}</span>
+                                                    <span itemprop="postalCode">{{ counselor.zipcd }}</span>
+
+                                                </div>
+
+                                                <dl>
                                                     {% if counselor.weburl %}
-                                                    <b>Website:</b>
+                                                    <dt>Website:</dt>
+                                                    <dd>
                                                     <a class="a-link a-link__icon"
-                                                       href="{{ counselor.weburl }}">
+                                                       href="{{ counselor.weburl }}"
+                                                       itemprop="url">
                                                         <span class="a-link_text">
                                                             {{ counselor.weburl }}
                                                         </span>
                                                         {{ svg_icon( 'external-link' ) }}
                                                     </a>
-                                                    <br>
+                                                    </dd>
                                                     {% endif %}
 
                                                     {% if counselor.phone1 %}
-                                                    <b>Phone:</b>
-                                                    <a href="tel:+1-{{ counselor.phone1 }}">
-                                                        {{ counselor.phone1 }}
-                                                    </a>
-                                                    <br>
+                                                    <dt>Phone:</dt>
+                                                    <dd>
+                                                        <a href="tel:+1-{{ counselor.phone1 }}"
+                                                           itemprop="telephone">
+                                                            {{ counselor.phone1 }}
+                                                        </a>
+                                                    </dd>
                                                     {% endif %}
 
                                                     {% if counselor.email %}
-                                                    <b>Email Address:</b>
-                                                    <a href="mailto:{{ counselor.email }}">
-                                                        {{ counselor.email }}
-                                                    </a>
-                                                    <br>
+                                                    <dt>Email Address:</dt>
+                                                    <dd>
+                                                        <a href="mailto:{{ counselor.email }}"
+                                                           itemprop="email">
+                                                            {{ counselor.email }}
+                                                        </a>
+                                                    </dd>
                                                     {% endif %}
 
                                                     {% if counselor.languages %}
-                                                    <b>Languages:</b> {{ counselor.languages | join( ', ' ) }}
+                                                    <dt>Languages:</dt>
+                                                    <dd itemprop="knowsLanguage">
+                                                        {{ counselor.languages | join( ', ' ) }}
+                                                    </dd>
                                                     {% endif %}
-                                                </p>
+                                                </dt>
                                             </li>
                                         </ol>
                                     </td>
