@@ -1,27 +1,89 @@
 # Backend testing
 
-## Django and Python tests
+## Writing tests
 
-To run the the full suite of Python tests using Tox, cd to the project root and
-then run:
+We have multiple resources for writing new unit tests for Django, Wagtial, and Python code:
 
-```
+- [CFPB Django and Wagtail unit testing documentation](https://github.com/cfpb/development/blob/master/guides/unittesting-django-wagtail.md)
+- [The Django testing documentation](https://docs.djangoproject.com/en/1.11/topics/testing/overview/)
+- [The Wagtail testing documentation](http://docs.wagtail.io/en/v1.13.4/advanced_topics/testing.html)
+- [Real Python's "Testing in Django"](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/)
+
+## Running tests
+
+To run the the full suite of Python tests using Tox, 
+make sure you are in the cfgov-refresh root and then run:
+
+```sh
 tox
+```
+
+This will run linting tests and unit tests with migrations. This is the same as running:
+
+```sh
+tox -e lint -e unittest-py27-dj111-wag113-slow
 ```
 
 By default this uses a local SQLite database for tests. To override this, you
 can set the `DATABASE_URL` environment variable to a database connection
 sring as supported by [dj-database-url](https://github.com/kennethreitz/dj-database-url).
 
-If you haven't changed any installed packages and you don't need to test 
+If you haven't changed any Python dependencies and you don't need to test 
 all migrations, you can run a much faster Python code test using:
-```
+
+```sh
 tox -e fast
 ```
 
-To see Python code coverage information, run
+To test against Python 3 without migrations:
+
+```sh
+tox -e unittest-py36-dj111-wag113-fast
 ```
-./show_coverage.sh
+
+If you would like to run only a specific test, or the tests for a specific app, 
+you can provide a dotted path to the test as the final argument to any of the above calls to `tox`:
+
+```sh
+tox -e unittest-py36-dj111-wag113-fast regulations3k.tests.test_regdown
+```
+
+### Linting
+
+We use the `flake8` and `isort` tools to ensure compliance with 
+[PEP8 style guide](https://www.python.org/dev/peps/pep-0008/),
+[Django coding style guidelines](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/),
+and the 
+[CFPB Python style guide](https://github.com/cfpb/development/blob/unittesting-django-wagtail/standards/python.md#linting).
+
+Both `flake8` and `isort` can be run using the Tox `lint` environment:
+
+```sh
+tox -e lint
+```
+
+This will run `isort` in check-only mode and it will print diffs for imports 
+that need to be fixed. To automatically fix import sort issues, run:
+
+```sh
+isort --recursive cfgov/
+```
+
+From the root of `cfgov-refresh`.
+
+### Coverage
+
+To see Python code coverage information, run
+
+```sh
+coverage report -m
+```
+
+To see coverage for a limited number of files, 
+use the `--include` argument to `coverage` and provide a path to the files you wish to see:
+
+```sh
+coverage report -m --include=./cfgov/regulations3k/*
 ```
 
 ## Test output
@@ -32,64 +94,13 @@ runner that fails if anything is written to stdout. This test runner is at
 `cfgov.test.StdoutCapturingTestRunner` and can be enabled with the `TEST_RUNNER`
 environment variable:
 
-```
+```sh
 TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e fast
 ```
 
 This test runner is enabled when tests are run automatically on [Travis CI](https://travis-ci.org/),
-but is not used by defalt when running tests locally.
+but is not used by default when running tests locally.
 
-## Source code linting
-
-We use the `flake8` and `isort` tools to ensure compliance with 
-[PEP8 style guide](https://www.python.org/dev/peps/pep-0008/) and the 
-[Django coding style guidelines](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/). 
-We do make two exceptions to PEP8 that are ignored in our flake8 
-configuration:
-
-- `E731`, we allow assignment of lambda expressions
-- `W503`, we allow line breaks after binary operators
-
-Both `flake8` and `isort` can be run using the Tox `lint` environment:
-
-```
-tox -e lint
-```
-
-This will run `isort` in check-only mode and it will print diffs for imports 
-that need to be fixed. To automatically fix import sort issues, run:
-
-```
-isort --recursive cfgov/
-```
-
-From the root of `cfgov-refresh`.
-
-## Python 3 
-
-Both unit tests and linting can be run with Python 3 to aid in our transition. To run with all Django migrations, 
-
-```
-tox -e py36
-```
-
-or without Django migrations,
-
-```
-tox -e fast-py3
-```
-
-Existing unit tests that run on code that has not been made compatible with Python 3 may error or fail, but it is possible to run new tests individually with
-
-```
-tox -e fast-py3 package.tests.test_my_code
-```
-
-To run both `flake8` and `isort` with Python 3, run
-
-```
-tox -e lint-py3
-```
 
 ## GovDelivery
 

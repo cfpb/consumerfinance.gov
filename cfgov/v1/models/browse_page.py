@@ -21,7 +21,7 @@ from v1.util.util import get_secondary_nav_items
 class BrowsePage(CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
-        ('featured_content', molecules.FeaturedContent()),
+        ('featured_content', organisms.FeaturedContent()),
     ], blank=True)
 
     content = StreamField([
