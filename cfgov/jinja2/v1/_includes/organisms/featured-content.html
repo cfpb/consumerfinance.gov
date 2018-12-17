@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   featured_content.render()
+   Template for v1.atomic_elements.organisms.FeaturedContent
 
    ==========================================================================
 
@@ -15,19 +15,22 @@
 
    value.body:            Body text.
 
-   value.show_post_link:  Boolean flag for whether to render the post link.
+   value.category:        String of a selected FCM category slug used by the
+                          fcm_label template tag to retrieve the proper
+                          string for output and for passing to the
+                          category_icon macro.
 
    value.post:            (Optional) Page being featured.
 
+   value.show_post_link:  Boolean flag for whether to render the post link.
+
    value.post_link_text:  String for the link text of the displayed post.
 
-   value.macro_link:      (Optional) Object used if the FCM is
-                          rendered outside of wagtail,
-                          this is a simpler way of adding a link.
+   value.image:           (Optional) An ImageBasic atom object containing:
 
-   value.macro_link.url:  String for URL of the link.
+   value.image.upload:    A CFGOVImage object.
 
-   value.macro_link.text: String for text of the link.
+   value.image.alt:       String for alt text for screenreaders.
 
    value.links:           If the FCM is rendered in wagtail,
                           this returns the array of links.
@@ -49,57 +52,51 @@
 
    value.video.id:        A String used to denote the id of the video.
 
-   value.image:           (Optional) An ImageBasic atom object containing:
-
-   value.image.upload:    A CFGOVImage object.
-
-   value.image.alt:       String for alt text for screenreaders.
 
    ========================================================================== #}
 
-{% macro render(value) %}
 {% import 'macros/category-icon.html' as category_icon %}
 
 <section class="o-featured-content-module
                 o-featured-content-module__center">
     <div class="o-featured-content-module_text">
-        <div class="a-heading a-heading__icon">
-            {{ category_icon.render( fcm_label(value.category) ) | safe }}
-            {{ fcm_label( value.category ) }}
-        </div>
+        {% if value.category %}
+            <div class="a-heading a-heading__icon">
+                {{ category_icon.render( fcm_label(value.category) ) | safe }}
+                {{ fcm_label( value.category ) }}
+            </div>
+        {% endif %}
         <h2>{{ value.heading }}</h2>
         {{ value.body | safe }}
-        <ul class="m-list m-list__links">
-            {% if value.show_post_link and value.post %}
-                <li class="m-list_item">
-                    <a class="m-list_link" href="{{ pageurl(value.post) }}">
-                        {{ value.post_link_text }}
-                    </a>
-                </li>
-            {% endif %}
-            {% if value.macro_link %}
-                <li class="m-list_item">
-                    <a class="m-list_link" href="{{ value.macro_link.url }}">
-                        {{ value.macro_link.text }}
-                    </a>
-                </li>
-            {% endif %}
-            {% for link in value.links %}
-                <li class="m-list_item">
-                    <a class="m-list_link" href="{{ link.url }}">
-                        {{ link.text }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+        {% if (value.show_post_link and value.post) or (value.links[0].text and value.links[0].url) %}
+            <ul class="m-list m-list__links">
+                {% if value.show_post_link and value.post_link_text and value.post %}
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="{{ pageurl(value.post) }}">
+                            {{ value.post_link_text }}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if value.links[0].text and value.links[0].url %}
+                    {% for link in value.links %}
+                        {% if link.text and link.url %}
+                            <li class="m-list_item">
+                                <a class="m-list_link" href="{{ link.url }}">
+                                    {{ link.text }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        {% endif %}
     </div>
 
-    {% if value.video and
-          value.video.url and
+    {% if value.video.url and
           value.video.id %}
         {% import 'macros/video-player.html' as video_player with context %}
         {{ video_player.render(value) }}
-    {% elif value.image %}
+    {% elif value.image.upload %}
         <div class="o-featured-content-module_visual">
             {% set photo = image(value.image.upload, 'original') %}
             <img class="o-featured-content-module_img"
@@ -108,4 +105,3 @@
         </div>
     {% endif %}
 </section>
-{% endmacro %}
