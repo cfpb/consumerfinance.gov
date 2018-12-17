@@ -2,8 +2,7 @@
 
 cfgov-refresh implements a number of components
 that editors can choose from when building a page,
-for example: Heroes, Expandable Groups, or Info Unit Groups.
-The
+for example: Heroes, Expandable Groups, or Info Unit Groups. The
 [CFPB Design Manual](https://cfpb.github.io/design-manual/page-components/page-components.html)
 describes the design and intended usage of many of these components.
 
@@ -25,18 +24,18 @@ _* If you're going to be doing anything more than making minor updates to
 ## Table of contents
 
 1. [The parts of a Wagtail block](#the-parts-of-a-wagtail-block)
-   1. [The back end](#the-back-end)
-      1. [The Python class](#the-python-class)
-      1. [Adding it to a StreamField](#adding-it-to-a-streamfield)
-   1. [The front end](#the-front-end)
-      1. [The HTML template](#the-html-template)
-      1. [Adding some style](#adding-some-style)
-      1. [Adding some JavaScript](#adding-some-javascript)
+    1. [The back end](#the-back-end)
+        1. [The Python class](#the-python-class)
+        1. [Adding it to a StreamField](#adding-it-to-a-streamfield)
+    1. [The front end](#the-front-end)
+        1. [The HTML template](#the-html-template)
+        1. [Adding CSS](#adding-css)
+        1. [Adding JavaScript](#adding-javascript)
 1. [How-to guides](#how-to-guides)
-   1. [Adding a field](#adding-a-field)
-   1. [Editing a field](#editing a field)
-   1. [Removing a field](#removing-a-field)
-   1. [Creating migrations for StreamField blocks](#creating-migrations-for-streamfield-blocks)
+    1. [Adding a field](#adding-a-field)
+    1. [Editing a field](#editing a field)
+    1. [Removing a field](#removing-a-field)
+    1. [Creating migrations for StreamField blocks](#creating-migrations-for-streamfield-blocks)
 
 
 
@@ -48,11 +47,11 @@ Blocks are implemented via several different bits of code:
 1. [Defining a block's fields and other properties in a Python class](#the-python-class)
 1. [Adding the class to a page's StreamField block options](#adding-it-to-a-streamfield)
 1. [Creating an HTML template for rendering the block on a page](#the-html-template)
-1. [(Optionally) adding some Less for styling the block](#adding-some-style)
-1. [(Optionally) adding some JavaScript for adding advanced behavior](#adding-some-javascript)
+1. [(Optionally) adding some Less for styling the block](#adding-css)
+1. [(Optionally) adding some JavaScript for adding advanced behavior](#adding-javascript)
 
 Before you dive in further,
-[check out the Atomic Structure page](../atomic-structure/)
+[check out the Notes on Atomic Design page](../atomic-structure/)
 and familiarize yourself with our basic concepts
 of atoms, molecules, and organisms.
 
@@ -100,11 +99,14 @@ There are a few things happening here:
    (see previous comment about blocks being nested within other blocks)
    into a single unit (what we'd think of as a "module" in the Wagtail editor).
    This one has three sub-blocks (lines 2, 3, and 4).
-2. The `heading` field uses the basic Wagtail `CharBlock`, which results in a
-   field with a basic single-line text input.
-3. The `paragraph` field uses the basic Wagtail `RichTextBlock`,
+2. The `heading` field uses the basic Wagtail
+   [`CharBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#charblock),
+   which results in a field with a basic single-line text input.
+3. The `paragraph` field uses the basic Wagtail
+   [`RichTextBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#richtextblock),
    which results in a field with a multiline WYSIWYG text input.
-4. The `links` field uses another basic Wagtail block, `ListBlock`,
+4. The `links` field uses another basic Wagtail block,
+   [`ListBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#listblock),
    which is a special type of block that can hold a variable number of
    some other block (the `Hyperlink` atom block, in this case).
 5. The `Meta` class defines some properties on the `RelatedContent` block
@@ -131,7 +133,7 @@ There are two common optional things that are also used in component classes:
 
 1. [Overriding the default `get_context` method](http://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#streamfield-get-context)
    to pass additional data to the template
-2. [Adding component-specific JavaScript](#adding-some-javascript)
+2. [Adding component-specific JavaScript](#adding-javascript)
     via the `Media` class
 
 #### Adding it to a StreamField
@@ -139,7 +141,8 @@ There are two common optional things that are also used in component classes:
 Components are made available in the page editing interface
 by adding them to one of a page types's StreamFields.
 These are usually the first things in a page's class definition.
-For example, see this snippet from `blog_page.py`:
+For example, see this snippet from
+[`blog_page.py`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/blog_page.py):
 
 ```python
 class BlogPage(AbstractFilterPage):
@@ -182,6 +185,11 @@ but in the footer on others) on the sidebar tab.
 
 
 ### The front end
+
+Before diving into the front-end code, a reminder to
+visit the [Notes on Atomic Design](../atomic-structure/) page
+to learn about how we conceive of components in a hierarchy
+of atoms, molecules, and organisms.
 
 #### The HTML template
 
@@ -257,14 +265,24 @@ into the template (as described at the end of
 those context variables can also be output with simple Jinja2 expression tags:
 `{{ context_var }}`.
 
-#### Adding some style
+#### Adding CSS
 
 If a component needs any custom styling not already provided
 by Capital Framework or cfgov-refresh,
-you can it by creating a new Less file for the component.
+you can add it by creating a new Less file for the component.
 
-If you're working on a general-purpose atomic component for site-wide use,
-this file should live in `cfgov/unprocessed/css/<atoms|molecules|organisms>/`.
+!!! note
+    Please be sure that you actually need new Less before creating it.
+    We have a wide array of styles already available in
+    [Capital Framework components](https://cfpb.github.io/capital-framework/components/) and
+    [here in cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/css),
+    some of which could perhaps be combined to achieve your desired result.
+    Also be sure that new component designs have gone through
+    our internal approval process before adding them to the project.
+
+If you're working on a general-purpose [atomic component](../atomic-structure/)
+for site-wide use, this file should live in
+`cfgov/unprocessed/css/<atoms|molecules|organisms>/`.
 (Choose the deepest folder according to the atomic rank of the component.)
 Continuing the `RelatedContent` example, if it needed its own styles,
 it would live at `cfgov/unprocessed/css/molecules/related-content.less`.
@@ -285,7 +303,7 @@ That is _not_ the case with JavaScript, as we will see in the next section.
     but how those Less files get built and included on their pages is
     not something this document is prepared to discuss at the moment.
 
-#### Adding some JavaScript
+#### Adding JavaScript
 
 Each atomic component may optionally be given a `Media` class that can
 list one or more JavaScript files that should be loaded when using it.
@@ -305,7 +323,8 @@ class RelatedContent(blocks.StructBlock):
 ```
 
 (The `related-content.js` file would need to be placed in
-`cfgov/unprocessed/js/molecules/`.)
+`cfgov/unprocessed/js/molecules/`;
+see [Notes on Atomic Design](../atomic-structure/).)
 
 This will load the `related-content.js` script on any page
 that includes the `RelatedContent` molecule in one of its StreamFields.
@@ -322,26 +341,26 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
 1. Add the field by inserting a snippet like this in the list of fields,
    in the order in which you want it to appear in the editor:
    `field_name = blocks.BlockName()`.
-   - Replace `field_name` with a succinct name for what data the field contains
-   - Replace `BlockName` with one of the
-     [basic Wagtail block types](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#basic-block-types).
-     Sometimes we create our own custom blocks that can be used, as well.
-     See, for example, the
-     [`HeadingBlock`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/blocks.py#L147-L165),
-     [used in `InfoUnitGroup`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/atomic_elements/organisms.py#L54),
-     among other places.
+    - Replace `field_name` with a succinct name for what data the field contains
+    - Replace `BlockName` with one of the
+      [basic Wagtail block types](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#basic-block-types).
+      Sometimes we create our own custom blocks that can be used, as well.
+      See, for example, the
+      [`HeadingBlock`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/blocks.py#L147-L165),
+      [used in `InfoUnitGroup`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/atomic_elements/organisms.py#L54),
+      among other places.
 1. Add any desired parameters:
-   - `required=False` if you do _not_ want the field to be required
-     (it usually is, by default)
-   - `label='Some label'` if you would like the editor to show a label more
-     meaningful than the sentence-case transformation of the field name
-   - `help_text='Some text'` if the field needs a more verbose explanation to
-     be shown in the editor to make it clear to users how it should work
-   - `default=<some appropriate value>` if you want the field to have a
-     specific default value, e.g., `True` to have a `BooleanBlock` checkbox
-     default to checked.
-   - Certain blocks may take other arguments, as described in the
-     [basic Wagtail blocks documentation](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#basic-block-types).
+    - `required=False` if you do _not_ want the field to be required
+      (it usually is, by default)
+    - `label='Some label'` if you would like the editor to show a label more
+      meaningful than the sentence-case transformation of the field name
+    - `help_text='Some text'` if the field needs a more verbose explanation to
+      be shown in the editor to make it clear to users how it should work
+    - `default=<some appropriate value>` if you want the field to have a
+      specific default value, e.g., `True` to have a `BooleanBlock` checkbox
+      default to checked.
+    - Certain blocks may take other arguments, as described in the
+      [basic Wagtail blocks documentation](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#basic-block-types).
 1. [Edit the component template](#the-html-template) to do something with the
    field's data – output it, use it to trigger a CSS class, etc.
 1. [Create a schema migration.](#creating-migrations-for-streamfield-blocks)
@@ -350,9 +369,9 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
 ### Editing a field
 
 1. [Determine if the change you want to make will need a data migration.](#you-may-also-need-a-data-migration)
-   - If the answer is **no**: make your changes,
-     [create a schema migration](#creating-migrations-for-streamfield-blocks), and be on your merry way.
-   - If the answer is **yes**: continue on.
+    - If the answer is **no**: make your changes,
+      [create a schema migration](#creating-migrations-for-streamfield-blocks), and be on your merry way.
+    - If the answer is **yes**: continue on.
 1. [Add the new version of the field.](#adding-a-field)
 1. [Create a schema migration](#creating-migrations-for-streamfield-blocks) for adding the new field.
 1. [Create a data migration](#you-may-also-need-a-data-migration)

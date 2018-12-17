@@ -19,6 +19,7 @@ a:active {
     color: #254b87; /* Navy */
 }
 
+nav a,
 a.btn {
     text-decoration: none;
 }
@@ -74,6 +75,10 @@ a.btn {
 
 .rst-versions .rst-current-version {
     background-color: #43484e;
+}
+
+.rst-content .section ol ol {
+    margin-bottom: 0;
 }
 
 footer {

@@ -41,9 +41,20 @@ that briefly describes the change(s) you're making:
 ./cfgov/manage.py makemigrations -n <description_of_changes>
 ```
 
-Be aware that each migration must have
-a unique four-digit number at the beginning of its filename,
-which is a regular source of conflicts between pull requests
+For examples of good migration names, look through some of
+[our existing migration files](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/migrations).
+
+!!! note
+    Some changes will generate multiple migration files.
+    If you change a block that is used in pages defined in different sub-apps,
+    you will see a migration file for each of those sub-apps.
+
+### Migration numbering and conflicts
+
+When a migration file is generated, it will automatically be given
+a unique four-digit number at the beginning of its filename.
+These numbers are assigned in sequence, and they end up being
+a regular source of conflicts between pull requests
 that are in flight at the same time.
 If a PR with a migration gets merged between the time you create your migration
 and the time that your PR is ready for merging,
@@ -52,11 +63,6 @@ and then re-create your migration.
 Also note that our [back-end tests that run in Travis](../travis/)
 will fail if a required schema migration is missing or if
 migrations are in conflict with one another.
-
-!!! note
-    Some changes will generate multiple migration files.
-    If you change a block that is used in pages defined in different sub-apps,
-    you will see a migration file for each of those sub-apps.
 
 
 ## Data migrations
