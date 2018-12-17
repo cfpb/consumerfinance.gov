@@ -86,9 +86,9 @@ def view_answer(request, slug, language, answer_id):
         raise Http404
     if answer_page.redirect_to:
         new_page = answer_page.redirect_to.answer_pages.get(language=language)
-        return redirect(new_page.url)
+        return redirect(new_page.url, permanent=True)
     if "{}-{}-{}".format(slug, language, answer_id) != answer_page.slug:
-        return redirect(answer_page.url)
+        return redirect(answer_page.url, permanent=True)
     else:
         try:
             sharing_site = SharingSite.find_for_request(request)
