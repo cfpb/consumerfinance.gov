@@ -19,8 +19,8 @@ Database fields in Wagtail pages work exactly the same as in
 [Django models](https://docs.djangoproject.com/en/1.11/topics/db/models/#fields), 
 and Wagtail pages can use any [Django model field](https://docs.djangoproject.com/en/1.11/ref/models/fields/). 
 
-For example, our 
-[`BrowsePage` includes a standard Django `BooleanField`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py) 
+For example, our `BrowsePage` 
+[includes a standard Django `BooleanField`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py) 
 that allows content editors to toggle secondary navigation sibling pages:
 
 ```python
@@ -39,10 +39,12 @@ StreamFields are special Django model fields provided by Wagtail for
 [freeform page content](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html). 
 They allow a content editor to pick any number number of optional components
 and place them in any order within their StreamField. 
-In practice this provides the 
-[flexibilty of a large rich text box with the structure of individual components](https://torchbox.com/blog/rich-text-fields-and-faster-horses/).
+In practice this provides the flexibilty of a large 
+[rich text box with the structure of individual components](https://torchbox.com/blog/rich-text-fields-and-faster-horses/).
 
-For example, our [`LandingPage` page model includes a `header` StreamField](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py) that can have a hero and/or a text introduction:
+For example, our `LandingPage` page model 
+[includes a `header` StreamField](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py) 
+that can have a hero and/or a text introduction:
 
 ```python
 from wagtail.wagtailcore.fields import StreamField
@@ -84,7 +86,8 @@ StreamFields will require a `StreamFieldPanel`.
 See the [Wagtail documentation for additional, more complex panel options](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#editor-panels).
 
 For example, in our `BrowsePage` (used in the [database fields example above](#fields)),
-[the `secondary_nav_exclude_sibling_pages` `BooleanField` is added to the `sidefoot_panels` as a `FieldPanel`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py#L63):
+the `secondary_nav_exclude_sibling_pages` `BooleanField` 
+[is added to the `sidefoot_panels` as a `FieldPanel`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py#L63):
 
 ```python
 from django.db import models
@@ -108,7 +111,8 @@ this creates a checkbox on the "Sidebar" tab when editing a page.
 Checking or unchecking that checkbox will set the value of `secondary_nav_exclude_sibling_pages` when the page is saved.
 
 In our `LandingPage` (used in the [StreamFields example above](#streamfields), 
-[the `header` StreamField is added to the `content_panels` as a `StreamFieldPanel`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py#L31):
+the `header` StreamField 
+[is added to the `content_panels` as a `StreamFieldPanel`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py#L31):
 
 ```python
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
@@ -134,8 +138,9 @@ class LandingPage(CFGOVPage):
 
 ## Parent / child page relationships
 
-Wagtail provides two attributes to page models that 
-[enable restricting the three types of subpages or parent pages a particular page model can have](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#parent-page-subpage-type-rules). 
+Wagtail provides two attributes to page models that enable 
+[restricting the three types of subpages or parent pages](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#parent-page-subpage-type-rules) 
+a particular page model can have. 
 
 For example, in our [interactive regulations page models](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/models/pages.py#L138) 
 we have a `RegulationLandingPage` that can be created anywhere in the page tree. 
@@ -169,8 +174,8 @@ class RegulationPage(CFGOVPage):
 
 ## Template rendering
 
-Sometimes new Wagtail page types will need to 
-[make customizations to their base template when rendering the page](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#template-rendering).
+Sometimes new Wagtail page types will need to make customizations to their base template 
+[when rendering the page](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#template-rendering).
 This is done by overriding the `template` attribute on the page model.
 
 For example, the [interactive regulations landing page](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/models/pages.py#L138) 
