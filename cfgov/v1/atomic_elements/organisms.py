@@ -933,6 +933,47 @@ class VideoPlayer(blocks.StructBlock):
         js = ['video-player.js']
 
 
+class FeaturedContent(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    category = blocks.ChoiceBlock(choices=ref.fcm_types, required=False)
+
+    post = blocks.PageChooserBlock(required=False)
+    show_post_link = blocks.BooleanBlock(required=False,
+                                         label="Render post link?")
+    post_link_text = blocks.CharBlock(required=False)
+
+    image = atoms.ImageBasic(required=False)
+
+    links = blocks.ListBlock(atoms.Hyperlink(required=False),
+                             label='Additional Links')
+
+    video = blocks.StructBlock([
+        ('id', blocks.CharBlock(
+            required=False,
+            label='ID',
+            help_text='E.g., in "https://www.youtube.com/watch?v=en0Iq8II4fA",'
+                      ' the ID is everything after the "?v=".')),
+        ('url', blocks.CharBlock(
+            required=False,
+            label='URL',
+            help_text='You must use the embed URL, e.g., '
+                      'https://www.youtube.com/embed/'
+                      'JPTg8ZB3j5c?autoplay=1&enablejsapi=1')),
+        ('height', blocks.CharBlock(default='320', required=False)),
+        ('width', blocks.CharBlock(default='568', required=False)),
+    ])
+
+    class Meta:
+        template = '_includes/organisms/featured-content.html'
+        icon = 'doc-full-inverse'
+        label = 'Featured Content'
+        classname = 'block__flush'
+
+    class Media:
+        js = ['video-player.js']
+
+
 class HTMLBlock(blocks.StructBlock):
     html_url = blocks.RegexBlock(
         label='Source URL',
