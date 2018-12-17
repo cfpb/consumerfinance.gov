@@ -169,7 +169,8 @@ class RegulationPage(CFGOVPage):
 
 ## Template rendering
 
-Sometimes new Wagtail page types will need to make customizations to their base template when rendering the page.
+Sometimes new Wagtail page types will need to 
+[make customizations to their base template when rendering the page](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#template-rendering).
 This is done by overriding the `template` attribute on the page model.
 
 For example, the [interactive regulations landing page](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/models/pages.py#L138) 
