@@ -85,7 +85,9 @@ vendor/
 
 # Documentation #
 #################
-docs/scripts
+# MkDocs compiles documentation to this directory.
+# This should not be committed because it gets built by Travis.
+site/
 
 # Django #
 ##########
