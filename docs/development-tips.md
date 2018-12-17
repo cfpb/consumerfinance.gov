@@ -107,9 +107,9 @@ Every time a PR is merged to master, Travis will build and deploy the documentat
 
 To add new pages to the navigation, edit the [mkdocs.yml](https://github.com/cfpb/cfgov-refresh/blob/master/mkdocs.yml) file in the root directory.
 
-The source Markdown file used to generate one page of reference documentation
-can be generated dynamically from the source code by running the following
-Django management command from within a Python environment:
+The source Markdown file for the StreamField blocks documentation is generated
+from source code. To generate that documentation, run the following Django
+management command from within a Python environment:
 
 ```sh
 $ cfgov/manage.py generate_streamfield_docs -o docs/streamfield-blocks.md
