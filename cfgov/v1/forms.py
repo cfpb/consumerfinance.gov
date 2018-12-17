@@ -116,7 +116,10 @@ class FilterableListForm(forms.Form):
 
     def first_page_date(self):
         first_post = self.filterable_pages.order_by('date_published').first()
-        return first_post.date_published
+        if first_post:
+            return first_post.date_published
+        else:
+            return date(2010, 1, 1)
 
     def prepare_options(self, arr):
         """
