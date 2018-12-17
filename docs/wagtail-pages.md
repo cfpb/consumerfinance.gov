@@ -6,7 +6,7 @@ that are constructed of
 [fields](#fields), [StreamFields](#streamfields), and [panels](#panels) 
 that are rendered in a standard way. 
 All CFPB Wagtail pages should inherit from the 
-[`v1.models.base.CFGOVPage` class](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py#L60).
+[`v1.models.base.CFGOVPage` class](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py).
 
 There are types of information defined on a new Wagtail page model: 
 basic [database fields](#fields) (like any Django model), 
@@ -20,7 +20,7 @@ Database fields in Wagtail pages work exactly the same as in
 and Wagtail pages can use any [Django model field](https://docs.djangoproject.com/en/1.11/ref/models/fields/). 
 
 For example, our 
-[`BrowsePage` includes a standard Django `BooleanField`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py#L54) 
+[`BrowsePage` includes a standard Django `BooleanField`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py) 
 that allows content editors to toggle secondary navigation sibling pages:
 
 ```python
@@ -42,7 +42,7 @@ and place them in any order within their StreamField.
 In practice this provides the 
 [flexibilty of a large rich text box with the structure of individual components](https://torchbox.com/blog/rich-text-fields-and-faster-horses/).
 
-For example, our [`LandingPage` page model includes a `header` StreamField](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py#L13) that can have a hero and/or a text introduction:
+For example, our [`LandingPage` page model includes a `header` StreamField](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py) that can have a hero and/or a text introduction:
 
 ```python
 from wagtail.wagtailcore.fields import StreamField
@@ -63,25 +63,27 @@ class LandingPage(CFGOVPage):
 
 ## Panels
 
-Editor panels define how the page's [fields](#fields) and [StreamFields](#streamfields) will be organized for content editors.
+Editor panels define how the page's [fields](#fields) and [StreamFields](#streamfields) will be organized for content editors 
+and correspond to the tabs that appear across the top of the edit view for pages in the Wagtail admin.
 
 The base Wagtail `Page` class and the [`v1.models.base.CFGOVPage` class](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py#L60) 
 defines a specific set of panels to which all fields should be added:
 
-- `content_panels`. 
-  These fields appear on the "General Content" tab when editing a page. 
+- `content_panels`:
   For page body content.
-- [`sidefoot_panels`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py#L114-L116).
+  These fields appear on the "General Content" tab when editing a page. 
+- `sidefoot_panels`:
+  For page sidebar or footer content.
   These fields appear on the "Sidebar" tab when editing a page. 
-- [`settings_panels`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py#L118-L125).
-  Appears on the "Configuration" tab when editing a page. 
+- `settings_panels`:
   Page configuration such as the categories, tags, scheduled publishing, etc.
+  Appears on the "Configuration" tab when editing a page. 
 
 Most fields will simply require a `FieldPanel` to be added to one of the sets of panels above. 
 StreamFields will require a `StreamFieldPanel`. 
 See the [Wagtail documentation for additional, more complex panel options](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#editor-panels).
 
-For example, in our `BrowsePage` (used in the [database fields example above](#fields),
+For example, in our `BrowsePage` (used in the [database fields example above](#fields)),
 [the `secondary_nav_exclude_sibling_pages` `BooleanField` is added to the `sidefoot_panels` as a `FieldPanel`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py#L63):
 
 ```python
@@ -101,7 +103,11 @@ class BrowsePage(CFGOVPage):
     ]
 ```
 
-In out `LandingPage` (used in the [StreamFields example above](#streamfields), 
+Because `secondary_nav_exclude_sibling_page` is a boolean field, 
+this creates a checkbox on the "Sidebar" tab when editing a page.
+Checking or unchecking that checkbox will set the value of `secondary_nav_exclude_sibling_pages` when the page is saved.
+
+In our `LandingPage` (used in the [StreamFields example above](#streamfields), 
 [the `header` StreamField is added to the `content_panels` as a `StreamFieldPanel`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py#L31):
 
 ```python
@@ -128,7 +134,8 @@ class LandingPage(CFGOVPage):
 
 ## Parent / child page relationships
 
-Wagtail provides two attributes to page models that enable restricting the types of subpages or parent pages a particular page model can have. 
+Wagtail provides two attributes to page models that 
+[enable restricting the three types of subpages or parent pages a particular page model can have](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#parent-page-subpage-type-rules). 
 
 For example, in our [interactive regulations page models](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/models/pages.py#L138) 
 we have a `RegulationLandingPage` that can be created anywhere in the page tree. 
@@ -157,8 +164,8 @@ class RegulationPage(CFGOVPage):
 ```
 
 !!! note 
-    Note: by setting `subpage_types` to an empty list on `RegulationPage` and `RegulationSearchPage`, 
-    we ensure that neither of these pages can have child pages.
+    Note: we prevent child pages from being added to `RegulationPage` and `RegulationSearchPage` 
+    by setting `subpage_types` to an empty list.
 
 ## Template rendering
 
@@ -188,20 +195,4 @@ And [`regulations3k/landing-page.html`](https://github.com/cfpb/cfgov-refresh/bl
 {% block content_sidebar scoped -%}
     {{ recent_notices }}
 {%- endblock %}
-
-{% block javascript scoped %}
-    {{ super() }}
-    <script async>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
-          var s = [
-            '{{ static('apps/regulations3k/js/index.js') }}',
-            '{{ static('apps/regulations3k/js/recent-notices.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
-    </script>
-{% endblock javascript %}
 ```
