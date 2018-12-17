@@ -167,7 +167,7 @@ And then in our template we check the flag, passing in the current `page`,
 and if the page's answer ID is found in a cluster, `flag_enabled()` is `True`,
 and we see the `<h1>` instead of the `<h2>`.
 
-```jinja2
+```html
 <!-- cfgov/jinja2/v1/ask-cfpb/answer-page.html -->
 
 …
