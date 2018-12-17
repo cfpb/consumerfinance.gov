@@ -9,11 +9,11 @@
 
    Renders a small visual tag with an X icon.
 
-   label:       The tag's text content.
+   options.label:  The tag's text content.
 
-   value:       The tag's underlying value. Optional.
+   value:          The tag's underlying value. Optional.
 
-   behavior:    The checkbox's JS behavior. Optional.
+   behavior:       The checkbox's JS behavior. Optional.
 
    ========================================================================== #}
 
@@ -25,6 +25,6 @@
 <div class="a-tag"
      {{ value }}
      {{ behavior }}>
-    {{ options.label }} {{ svg_icon('error') }}
+    {{ options.label }} {{ svg_icon('remove') }}
 </div>
 {% endmacro %}
