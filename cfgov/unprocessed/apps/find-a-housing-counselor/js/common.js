@@ -78,6 +78,12 @@ function initializeMap() {
  * @returns {HTMLNode} The DOM node of the result item.
  */
 function queryMarkerDom( num ) {
+
+  // Polyfill parseInt on Number for IE11.
+  if ( typeof Number.parseInt === 'undefined' ) {
+    Number.parseInt = window.parseInt;
+  }
+
   const selector = '#hud-result-' + Number.parseInt( num, 10 );
   let cachedItem = markerDomCache[selector];
   if ( typeof cachedItem === 'undefined' ) {
