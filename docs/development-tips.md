@@ -106,3 +106,6 @@ by [mkdocs](https://www.mkdocs.org/user-guide/deploying-your-docs/).
 Every time a PR is merged to master, Travis will build and deploy the documentation to https://cfpb.github.io/cfgov-refresh. See [How we use Travis CI](https://github.com/cfpb/cfgov-refresh/blob/master/docs/travis.md) for more info.
 
 To add new pages to the navigation, edit the [mkdocs.yml](https://github.com/cfpb/cfgov-refresh/blob/master/mkdocs.yml) file in the root directory.
+
+When running cfgov-refresh using [Docker-compose](https://cfpb.github.io/cfgov-refresh/installation/#docker-compose-installation)
+this documentation is running by default at http://localhost:8888.
