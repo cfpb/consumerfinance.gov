@@ -67,7 +67,8 @@ class LandingPage(CFGOVPage):
     ], blank=True)
 ```
 
-**Insert link to StreamField docs here.**
+The specifics of StreamField block components can be found in 
+[Creating and Editing Wagtail Components](https://cfpb.github.io/cfgov-refresh/editing-components/).
 
 ## Panels
 
