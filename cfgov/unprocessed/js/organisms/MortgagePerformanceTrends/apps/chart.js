@@ -1,9 +1,11 @@
 import * as ccb from 'cfpb-chart-builder';
 import actions from '../actions/chart';
-import Store from '../stores/chart';
+import LineChartStore from '../stores/chart';
 import utils from '../utils';
 
-const store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
+const store = new LineChartStore(
+  [ utils.thunkMiddleware, utils.loggerMiddleware ]
+);
 
 class MortgagePerformanceLineChart {
   constructor( { container } ) {

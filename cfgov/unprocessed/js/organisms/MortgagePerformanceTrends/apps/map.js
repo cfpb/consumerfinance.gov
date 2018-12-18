@@ -1,6 +1,6 @@
 import * as ccb from 'cfpb-chart-builder';
-import actions from '../actions/chart';
-import Store from '../stores/chart';
+import actions from '../actions/map';
+import MapStore from '../stores/map';
 import utils from '../utils';
 
 const _plurals = {
@@ -31,7 +31,7 @@ class MortgagePerformanceMap {
     this.endMonth = utils.getMonth( this.endDate );
     this.endYear = utils.getYear( this.endDate );
     const date = `${ this.endYear }-${ this.endMonth }`;
-    this.store = new Store( {
+    this.store = new MapStore( {
       date,
       middleware: [ utils.thunkMiddleware, utils.loggerMiddleware ]
     } );
