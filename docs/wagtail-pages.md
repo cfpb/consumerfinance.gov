@@ -8,6 +8,12 @@ that are rendered in a standard way.
 All CFPB Wagtail pages should inherit from the 
 [`v1.models.base.CFGOVPage` class](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py).
 
+!!! note
+    Before creating a new Wagtail page type 
+    please consider whether one of our existing page types can meet your needs, 
+    whether this is a different type of content than we have anywhere else in the site, 
+    and whether there is maintenance efficiency gained from a new page type.
+
 There are types of information defined on a new Wagtail page model: 
 basic [database fields](#fields) (like any Django model), 
 specialized database fields called [StreamFields](#streamfields) that allow for freeform page content, 
