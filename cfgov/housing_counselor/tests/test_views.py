@@ -26,9 +26,9 @@ class HousingCounselorS3URLMixinTestCase(TestCase):
 @override_settings(AWS_STORAGE_BUCKET_NAME='foo.bucket')
 class HousingCounselorViewTestCase(TestCase):
 
-    @mock.patch('requests.get')
-    def test_get_counselors_request_nonexistent_zip(self, mock_requests_get):
-        mock_requests_get.side_effect = requests.HTTPError
+    @mock.patch('housing_counselor.views.HousingCounselorView.get_counselors')
+    def test_get_counselors_request_nonexistent_zip(self, mock_get_counselors):
+        mock_get_counselors.side_effect = requests.HTTPError
         response = self.client.get('/find-a-housing-counselor/?zipcode=00000')
         self.assertNotIn('zipcode_valid', response.context_data)
         self.assertNotIn('api_json', response.context_data)
@@ -36,9 +36,9 @@ class HousingCounselorViewTestCase(TestCase):
         self.assertIn(HousingCounselorView.invalid_zip_msg['error_message'],
                       response.content)
 
-    @mock.patch('requests.get')
-    def test_get_counselors_failed_s3_request(self, mock_requests_get):
-        mock_requests_get.side_effect = requests.exceptions.ConnectionError
+    @mock.patch('housing_counselor.views.HousingCounselorView.get_counselors')
+    def test_get_counselors_failed_s3_request(self, mock_get_counselors):
+        mock_get_counselors.side_effect = requests.exceptions.ConnectionError
         response = self.client.get('/find-a-housing-counselor/?zipcode=12345')
         self.assertNotIn('zipcode_valid', response.context_data)
         self.assertNotIn('api_json', response.context_data)
@@ -46,14 +46,14 @@ class HousingCounselorViewTestCase(TestCase):
         self.assertIn(HousingCounselorView.failed_fetch_msg['error_message'],
                       response.content)
 
-    @mock.patch('requests.get')
-    def test_get_counselors_invalid_zipcode(self, mock_requests_get):
+    @mock.patch('housing_counselor.views.HousingCounselorView.get_counselors')
+    def test_get_counselors_invalid_zipcode(self, mock_get_counselors):
         self.client.get('/find-a-housing-counselor/', {'zipcode': 'abcdef'})
-        mock_requests_get.assert_not_called()
+        mock_get_counselors.assert_not_called()
 
-    @mock.patch('requests.get')
-    def test_get_counselors_valid_zipcode(self, mock_requests_get):
-        mock_requests_get.return_value.json.return_value = {}
+    @mock.patch('housing_counselor.views.HousingCounselorView.get_counselors')
+    def test_get_counselors_valid_zipcode(self, mock_get_counselors):
+        mock_get_counselors.return_value = {}
         response = self.client.get('/find-a-housing-counselor/',
                                    {'zipcode': '12345'})
         self.assertTrue(response.context_data['zipcode_valid'])
