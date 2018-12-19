@@ -847,8 +847,8 @@ function registerEvents() {
   } );
 
   // Prevent non-numeric characters from being entered.
-  $( '.calc-loan-amt .recalc' ).on( 'keydown', function( event ) {
-    const key = event.which;
+  $( '.calc-loan-amt .recalc' ).on( 'keydown', function( evt ) {
+    const key = evt.which;
     const allowedKeys = [
       8, 9, 37, 38, 39, 40, 48, 49,
       50, 51, 52, 53, 54, 55, 56, 57,
@@ -857,15 +857,15 @@ function registerEvents() {
 
     /* If it's not an allowed key OR the shift key is held down (and they're not tabbing)
        stop everything. */
-    if ( allowedKeys.indexOf( key ) === -1 || ( event.shiftKey && key !== 9 ) ) {
-      event.preventDefault();
+    if ( allowedKeys.indexOf( key ) === -1 || ( evt.shiftKey && key !== 9 ) ) {
+      evt.preventDefault();
     }
   } );
 
   /* Check if input value is a number.
      If not, replace the character with an empty string. */
   $( '.calc-loan-amt .recalc' ).on( 'keyup', function( evt ) {
-    const key = event.which;
+    const key = evt.which;
     // on keyup (not tab or arrows), immediately gray chart
     if ( isKeyAllowed( key ) ) {
       removeAlerts();
