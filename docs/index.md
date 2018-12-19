@@ -1,6 +1,6 @@
-# Introduction to `cfgov-refresh`
+# Introduction to cfgov-refresh
 
-This is the documentation for the `cfgov-refresh` project, a redesign of the [www.consumerfinance.gov](https://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
+This is the documentation for the cfgov-refresh project, a redesign of the [www.consumerfinance.gov](https://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
 
 ## Disclaimer
 
@@ -35,7 +35,7 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 
 Versions for most front-end packages are kept updated in the project's [package.json](https://github.com/cfpb/cfgov-refresh/blob/master/package.json) file.
 
-Versions for back-end software including Python, Jinja, Wagtail, PostgreSQL, etc. are kept in the project's requirements files:
+Versions for back-end software including Django, Wagtail, Jinja, etc. are kept in the project's requirements files:
 https://github.com/cfpb/cfgov-refresh/tree/master/requirements
 
 - `base.txt`: shortcut for `django.txt` + `wagtail.txt` + `libraries.txt`
