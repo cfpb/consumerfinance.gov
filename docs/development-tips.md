@@ -109,3 +109,11 @@ To add new pages to the navigation, edit the [mkdocs.yml](https://github.com/cfp
 
 When running cfgov-refresh using [Docker-compose](https://cfpb.github.io/cfgov-refresh/installation/#docker-compose-installation)
 this documentation is running by default at http://localhost:8888.
+
+When not using Docker, you can run these docs with:
+
+```bash
+mkdocs serve -a :8888
+```
+
+And access on http://localhost:8888.
