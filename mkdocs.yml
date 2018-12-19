@@ -16,7 +16,7 @@ nav:
     - Creating and editing components: editing-components.md
 - Back-end guidelines:
     - Django and Wagtail migrations: migrations.md
-    - Wagtail Pages: wagtail-pages.md
+    - Wagtail pages: wagtail-pages.md
     - Forms in Wagtail page context: forms-in-wagtail.md
     - Testing: testing-be.md
     - Translation: translation.md
