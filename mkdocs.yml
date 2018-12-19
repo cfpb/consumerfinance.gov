@@ -6,15 +6,17 @@ nav:
 - Introduction: index.md
 - Installation: installation.md
 - Usage: usage.md
-- Building and Deploying for cf.gov:
+- Building and deploying for cf.gov:
     - New projects: new-projects.md
     - Branching and merging: branching-merging.md
     - Feature flags: feature-flags.md
     - Split testing: split-testing.md
     - How we use Travis CI: travis.md
+- Working with Wagtail:
+    - Creating and editing components: editing-components.md
 - Back-end guidelines:
-    - Wagtail and Django migrations: wagtail-migrations.md
-    - Wagtail Pages vs Django views: django-to-wagtail.md
+    - Django and Wagtail migrations: migrations.md
+    - Wagtail pages vs Django views: django-to-wagtail.md
     - Forms in Wagtail page context: forms-in-wagtail.md
     - Testing: testing-be.md
     - Translation: translation.md

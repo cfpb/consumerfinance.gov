@@ -60,7 +60,7 @@
                                                 Search by ZIP code:
                                             </label>
 
-                                            {% if zipcode and not zipcode_valid %}
+                                            {% if zipcode and error_message %}
                                             <div class="u-mb15">
                                                 <div class="m-notification
                                                             m-notification__default
@@ -69,10 +69,10 @@
                                                     {{ svg_icon( 'warning-round' ) }}
                                                     <div class="m-notification_content" role="alert">
                                                         <div class="h4 m-notification_message">
-                                                            Sorry, you have entered an invalid ZIP code.
+                                                            {{ error_message }}
                                                         </div>
                                                         <div class="m-notification_explanation">
-                                                            Please enter a valid five-digit ZIP code below.
+                                                            {{ error_help }}
                                                         </div>
                                                     </div>
                                                 </div>
