@@ -205,7 +205,7 @@ function updateView() {
         if ( ( new Date( results.timestamp ) ).getDate() !== parseInt( results.timestamp.split( 'T' )[0].split( '-' )[2], 10 ) ) {
           _timestamp = _timestamp.split( 'T' )[0] + 'T15:00:00Z';
         }
-      } catch ( evt ) {
+      } catch ( err ) {
         // An error occurred.
       }
 
@@ -821,8 +821,8 @@ function finishLoading() {
 function registerEvents() {
   // ARM highlighting handler.
   const rateStructureDom = document.querySelector( '#rate-structure' );
-  rateStructureDom.addEventListener( 'change', evt => {
-    if ( evt.target.value !== params.getVal( 'rate-structure' ) ) {
+  rateStructureDom.addEventListener( 'change', event => {
+    if ( event.target.value !== params.getVal( 'rate-structure' ) ) {
       dropdown( 'arm-type' ).showHighlight();
     }
   } );
@@ -847,8 +847,8 @@ function registerEvents() {
   } );
 
   // Prevent non-numeric characters from being entered.
-  $( '.calc-loan-amt .recalc' ).on( 'keydown', function( evt ) {
-    const key = evt.which;
+  $( '.calc-loan-amt .recalc' ).on( 'keydown', function( event ) {
+    const key = event.which;
     const allowedKeys = [
       8, 9, 37, 38, 39, 40, 48, 49,
       50, 51, 52, 53, 54, 55, 56, 57,
@@ -857,15 +857,15 @@ function registerEvents() {
 
     /* If it's not an allowed key OR the shift key is held down (and they're not tabbing)
        stop everything. */
-    if ( allowedKeys.indexOf( key ) === -1 || ( evt.shiftKey && key !== 9 ) ) {
-      evt.preventDefault();
+    if ( allowedKeys.indexOf( key ) === -1 || ( event.shiftKey && key !== 9 ) ) {
+      event.preventDefault();
     }
   } );
 
   /* Check if input value is a number.
      If not, replace the character with an empty string. */
-  $( '.calc-loan-amt .recalc' ).on( 'keyup', function( evt ) {
-    const key = evt.which;
+  $( '.calc-loan-amt .recalc' ).on( 'keyup', function( event ) {
+    const key = event.which;
     // on keyup (not tab or arrows), immediately gray chart
     if ( isKeyAllowed( key ) ) {
       removeAlerts();
@@ -882,11 +882,11 @@ function registerEvents() {
   creditScoreDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
 
   /**
-   * @param  {KeyboardEvent} evt Event object.
+   * @param  {KeyboardEvent} event Event object.
    */
-  function NoCalcOnForbiddenKeys( evt ) {
-    const element = evt.target;
-    const key = evt.keyCode;
+  function NoCalcOnForbiddenKeys( event ) {
+    const element = event.target;
+    const key = event.keyCode;
 
     // Don't recalculate on TAB or arrow keys.
     if ( isKeyAllowed( key ) || element.classList.contains( 'a-range' ) ) {
@@ -901,10 +901,10 @@ function registerEvents() {
   downPaymentDom.addEventListener( 'focusout', priceFocusOutHandler );
 
   /**
-   * @param  {FocusEvent} evt Event object.
+   * @param  {FocusEvent} event Event object.
    */
-  function priceFocusOutHandler( evt ) {
-    evt.target.value = removeDollarAddCommas( evt.target.value );
+  function priceFocusOutHandler( event ) {
+    event.target.value = removeDollarAddCommas( event.target.value );
   }
 
 
