@@ -672,6 +672,9 @@ FLAGS = {
     'ASK_CFPB_H1': {
         'in split testing cluster': 'ASK_CFPB_H1'
     },
+
+    # Test financial well-being hub pages on Beta
+    'FINANCIAL_WELLBEING_HUB': {},
 }
 
 
