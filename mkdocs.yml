@@ -29,6 +29,7 @@ nav:
     - Ask CFPB: ask-cfpb.md
     - Consumer complaints: consumer-complaint-database.md
     - HMDA data: hmda.md
+- Contributing to the docs: contributing-docs.md
 
 theme:
   name: 'readthedocs'
@@ -38,6 +39,7 @@ extra_css:
 markdown_extensions:
     - admonition
     - pymdownx.betterem
+    - pymdownx.highlight
     - pymdownx.magiclink
     - pymdownx.superfences
     - pymdownx.tilde
