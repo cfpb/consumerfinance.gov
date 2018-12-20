@@ -60,7 +60,7 @@
                                                 Search by ZIP code:
                                             </label>
 
-                                            {% if zipcode and not zipcode_valid %}
+                                            {% if zipcode and error_message %}
                                             <div class="u-mb15">
                                                 <div class="m-notification
                                                             m-notification__default
@@ -69,10 +69,10 @@
                                                     {{ svg_icon( 'warning-round' ) }}
                                                     <div class="m-notification_content" role="alert">
                                                         <div class="h4 m-notification_message">
-                                                            Sorry, you have entered an invalid ZIP code.
+                                                            {{ error_message }}
                                                         </div>
                                                         <div class="m-notification_explanation">
-                                                            Please enter a valid five-digit ZIP code below.
+                                                            {{ error_help }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -169,7 +169,9 @@
                             </h2>
                         </div>
 
-                        <table class="o-table o-table__stack-on-small">
+                        <table class="o-table
+                                      o-table__stack-on-small
+                                      u-w100pct">
                             <thead>
                                 <tr>
                                     <th>Agency</th>
@@ -254,7 +256,7 @@
                                                         {{ counselor.languages | join( ', ' ) }}
                                                     </dd>
                                                     {% endif %}
-                                                </dt>
+                                                </dl>
                                             </li>
                                         </ol>
                                     </td>
@@ -277,7 +279,7 @@
 
                     {% endif %}
 
-                    <div class="block">
+                    <div class="block block__flush-bottom">
                         <div class="o-full-width-text-group">
                             <div class="m-full-width-text">
                                 <h2 class="h3">
@@ -318,23 +320,21 @@
                                     Washington, DC 20552, or by email to
                                     <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.
                                 </p>
-
-                                <div class="block
-                                            block__flush-bottom
-                                            block__flush-top
-                                            block__padded-top">
-                                    {{ social_media.render( {
-                                    "twitter_text": "Use the @CFPB’s interactive tool to find a housing counselor.",
-                                    "email_title": "Find a housing counselor tool from CFPB",
-                                    "email_text": "The CFPB's tool helps you find a housing counselor:",
-                                    "email_signature": "-- From the CFPB",
-                                    "linkedin_title": "Find a housing counselor tool from @CFPB",
-                                    "linkedin_text": "Use the @CFPB’s interactive tool to find a housing counselor."
-                                    } ) }}
-                                </div>
-
                             </div>
                         </div>
+                    </div>
+
+                    <div class="block
+                                block__flush-top
+                                block__padded-top">
+                        {{ social_media.render( {
+                        "twitter_text": "Use the @CFPB’s interactive tool to find a housing counselor.",
+                        "email_title": "Find a housing counselor tool from CFPB",
+                        "email_text": "The CFPB's tool helps you find a housing counselor:",
+                        "email_signature": "-- From the CFPB",
+                        "linkedin_title": "Find a housing counselor tool from @CFPB",
+                        "linkedin_text": "Use the @CFPB’s interactive tool to find a housing counselor."
+                        } ) }}
                     </div>
                 </section>
             </div>
