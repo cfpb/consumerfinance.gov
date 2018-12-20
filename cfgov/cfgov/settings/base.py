@@ -674,7 +674,7 @@ FLAGS = {
     },
 
     # Test financial well-being hub pages on Beta
-    'FINANCIAL_WELLBEING_HUB': {},
+    'FINANCIAL_WELLBEING_HUB': {'environment is': 'beta'},
 }
 
 
