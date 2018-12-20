@@ -31,6 +31,7 @@ class TestNewsroomLandingPage(TestCase):
             [
                 'at-the-cfpb',
                 'data-research-reports',
+                'directors-notebook',
                 'info-for-consumers',
                 'op-ed',
                 'policy_compliance',
