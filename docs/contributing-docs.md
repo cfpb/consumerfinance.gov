@@ -1,6 +1,6 @@
 # Contributing to the Docs
 
-Our documentation is written as Markdown files and served in GitHub pages
+Our documentation is written as Markdown files and served via GitHub Pages
 by [MkDocs](https://www.mkdocs.org/).
 
 ## Writing the docs
@@ -23,7 +23,7 @@ In addition to standard Markdown, our documentation supports the following exten
     provides automatic linking for URLs in the Markdown text.
 
 - [SuperFences](https://facelessuser.github.io/pymdown-extensions/extensions/superfences/)
-    makes a number of improvements to standard Markdown fences.
+    makes a number of improvements to standard Markdown code fences.
 
 - [Tilde](https://facelessuser.github.io/pymdown-extensions/extensions/tilde/) 
     adds support for creating `<del></del>` tags with `~~`.
@@ -33,7 +33,7 @@ In addition to standard Markdown, our documentation supports the following exten
 
 When creating new documents, they should be added to the 
 [mkdocs.yml file](https://github.com/cfpb/cfgov-refresh/blob/master/mkdocs.yml) 
-in the appropriate place under `nav:` with its table of contents title. 
+in the appropriate place under `nav:` to get them to appear in the sidebar navigation. 
 For example:
 
 ```
@@ -45,7 +45,7 @@ nav:
 
 ### With Docker
 
-When running cfgov-refresh using [Docker-compose](https://cfpb.github.io/cfgov-refresh/installation/#docker-compose-installation)
+When running cfgov-refresh using [Docker-compose](https://cfpb.github.io/cfgov-refresh/installation/#docker-compose-installation),
 this documentation is running by default at http://localhost:8888.
 
 ### Manually
@@ -61,7 +61,7 @@ pip install -r requirements/docs.txt
 mkdocs serve -a :8888
 ```
 
-And access at http://localhost:8888.
+Once running, they are accessible at http://localhost:8888.
 
 ## Deploying the docs to GitHub Pages
 
