@@ -16,7 +16,7 @@ nav:
     - Creating and editing components: editing-components.md
 - Back-end guidelines:
     - Django and Wagtail migrations: migrations.md
-    - Wagtail pages vs Django views: django-to-wagtail.md
+    - Wagtail pages: wagtail-pages.md
     - Forms in Wagtail page context: forms-in-wagtail.md
     - Testing: testing-be.md
     - Translation: translation.md
@@ -29,6 +29,7 @@ nav:
     - Ask CFPB: ask-cfpb.md
     - Consumer complaints: consumer-complaint-database.md
     - HMDA data: hmda.md
+- Contributing to the docs: contributing-docs.md
 
 theme:
   name: 'readthedocs'
@@ -38,6 +39,7 @@ extra_css:
 markdown_extensions:
     - admonition
     - pymdownx.betterem
+    - pymdownx.highlight
     - pymdownx.magiclink
     - pymdownx.superfences
     - pymdownx.tilde

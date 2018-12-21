@@ -7,6 +7,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
+from django.views.defaults import page_not_found
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.contrib.wagtailsitemaps.views import sitemap
@@ -403,6 +404,15 @@ urlpatterns = [
 
     # Explicitly redirect eRegulations URLs to Regulations3000
     url(r'^eregulations/.*', redirect_eregs, name='eregs-redirect'),
+
+    # put financial well-being pages behind feature flag for testing
+    flagged_url(
+        'FINANCIAL_WELLBEING_HUB',
+        r'^practitioner-resources/financial-well-being-resources/',
+        lambda request: ServeView.as_view()(request, request.path),
+        fallback=page_not_found,
+        name='financial-well-being-resources'
+    )
 
 ]
 
