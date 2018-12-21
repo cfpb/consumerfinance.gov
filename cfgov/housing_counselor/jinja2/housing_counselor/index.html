@@ -16,9 +16,40 @@
         <div class="wrapper content_wrapper">
             <div class="content_main">
                 <section>
-                    <div class="block block__flush-top block__flush-top">
+
+                    <div class="u-print-only">
+                        <!-- Show different content on print -->
+                        <img src="{{ static( 'img/logo_237x50@2x.png' ) }}"
+                             width="237"
+                             height="50"
+                             alt="Consumer Financial Protection Bureau logo">
+
+                        <h1>Housing counselors near you</h1>
+                        <p>
+                            The counseling agencies on this list are approved
+                            by the U.S. Department of Housing and Urban
+                            Development (HUD), and they can offer independent
+                            advice about whether a particular set of mortgage
+                            loan terms is a good fit based on your objectives
+                            and circumstances, often at little or no cost to
+                            you. This list shows you several approved agencies
+                            in your area. You can find other approved counseling
+                            agencies at the Bureau of Consumer Financial
+                            Protection’s (CFPB) website:
+                            consumerfinance.gov/mortgagehelp or
+                            by calling 1-855-411-CFPB (2372).
+                            You can also access a list of nationwide
+                            HUD-approved counseling agencies at:
+                            https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm
+                        </p>
+                    </div><!-- end .hud_hca_api_print-header -->
+
+                    <div class="block
+                                block__flush-top
+                                block__flush-top
+                                u-screen-only">
                         <h1>Find a housing counselor</h1>
-                        <p class="rich-text">
+                        <p>
                             Housing counselors throughout the country can
                             provide advice on buying a home, renting,
                             defaults, foreclosures, and credit issues.
@@ -43,7 +74,8 @@
                                {{ svg_icon( 'external-link' ) }}</a>.
                         </p>
                     </div>
-                    <div class="block block__border">
+
+                    <div class="block block__border u-screen-only">
                         {# Set the `no-js` class on page load,
                            which is reverted if and when the map is
                            loaded via JavaScript. #}
@@ -169,7 +201,9 @@
                             </h2>
                         </div>
 
-                        <table class="o-table o-table__stack-on-small">
+                        <table class="o-table
+                                      o-table__stack-on-small
+                                      u-w100pct">
                             <thead>
                                 <tr>
                                     <th>Agency</th>
@@ -254,7 +288,7 @@
                                                         {{ counselor.languages | join( ', ' ) }}
                                                     </dd>
                                                     {% endif %}
-                                                </dt>
+                                                </dl>
                                             </li>
                                         </ol>
                                     </td>
@@ -277,7 +311,9 @@
 
                     {% endif %}
 
-                    <div class="block">
+                    <div class="block
+                                block__flush-bottom
+                                u-screen-only">
                         <div class="o-full-width-text-group">
                             <div class="m-full-width-text">
                                 <h2 class="h3">
@@ -318,23 +354,22 @@
                                     Washington, DC 20552, or by email to
                                     <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.
                                 </p>
-
-                                <div class="block
-                                            block__flush-bottom
-                                            block__flush-top
-                                            block__padded-top">
-                                    {{ social_media.render( {
-                                    "twitter_text": "Use the @CFPB’s interactive tool to find a housing counselor.",
-                                    "email_title": "Find a housing counselor tool from CFPB",
-                                    "email_text": "The CFPB's tool helps you find a housing counselor:",
-                                    "email_signature": "-- From the CFPB",
-                                    "linkedin_title": "Find a housing counselor tool from @CFPB",
-                                    "linkedin_text": "Use the @CFPB’s interactive tool to find a housing counselor."
-                                    } ) }}
-                                </div>
-
                             </div>
                         </div>
+                    </div>
+
+                    <div class="block
+                                block__flush-top
+                                block__padded-top
+                                u-screen-only">
+                        {{ social_media.render( {
+                        "twitter_text": "Use the @CFPB’s interactive tool to find a housing counselor.",
+                        "email_title": "Find a housing counselor tool from CFPB",
+                        "email_text": "The CFPB's tool helps you find a housing counselor:",
+                        "email_signature": "-- From the CFPB",
+                        "linkedin_title": "Find a housing counselor tool from @CFPB",
+                        "linkedin_text": "Use the @CFPB’s interactive tool to find a housing counselor."
+                        } ) }}
                     </div>
                 </section>
             </div>

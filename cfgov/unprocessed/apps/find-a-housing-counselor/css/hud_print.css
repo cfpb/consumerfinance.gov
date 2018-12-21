@@ -1,6 +1,23 @@
 /***** PRINT STYLES FOR FIND A HOUSING COUNSELOR *****/
+@media screen {
+    .u-print-only {
+        display: none;
+    }
+
+    .u-screen-only {
+        display: block;
+    }
+}
+
 
 @media print {
+    .u-screen-only {
+        display: none;
+    }
+    .u-print-only {
+        display: block;
+    }
+
     body {
         background: transparent !important;
         color: #000 !important; /* Black prints faster: h5bp.com/s */
@@ -48,10 +65,6 @@
         padding: 0;
     }
 
-    #hud_results-list_container {
-      page-break-before: always;
-    }
-
     /* Prevent blank sheet at the end of the page. */
     main,
     .content_main {
@@ -61,10 +74,7 @@
 
     /* Hide unneeded content */
     .o-header,
-    .bread,
-    .m-social-media,
     .o-footer,
-    #hud_hca_api_map_container,
     .hud_hca_api_results_actions,
     svg {
         display: none !important;
