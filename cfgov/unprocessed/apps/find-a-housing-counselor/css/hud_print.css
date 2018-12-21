@@ -72,6 +72,38 @@
       padding-bottom: 0;
     }
 
+    /* Item result row. */
+    tr {
+      display: grid !important;
+      grid-template-columns: 2;
+      grid-template-rows: 2;
+    }
+
+    /* Item services. */
+    td:nth-child(2) {
+      grid-column-start: 1;
+      grid-row-start: 2;
+    }
+
+    /* Item distance. */
+    td:nth-child(3) {
+      grid-column-start: 2;
+      grid-row-start: 1;
+    }
+
+    /* Convert services list into comma-separated list. */
+    ul li {
+      display: inline;
+    }
+
+    ul li:after {
+      content: ', ';
+    }
+
+    ul li:last-child:after {
+      content: '.';
+    }
+
     /* Hide unneeded content */
     .o-header,
     .o-footer,
