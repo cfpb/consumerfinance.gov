@@ -1,34 +1,19 @@
 {% extends "base.html" %}
 
 {% block title -%}
-    {%- if flag_enabled('BCFP_LOGO', request) -%}
-        Bureau of Consumer Financial Protection
-    {%- else -%}
-        Consumer Financial Protection Bureau
-    {%- endif -%}
+    Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block preload %}
     {{ super() }}
-    {% if flag_enabled('BCFP_LOGO', request) %}
-        <link rel="preload"
-              href="{{ static('img/home-hero_sm_bcfp.jpg') }}"
-              as="image"
-              media="(max-width: 600px)">
-        <link rel="preload"
-              href="{{ static('img/home-hero_lg_bcfp.jpg') }}"
-              as="image"
-              media="(min-width: 601px)">
-    {% else %}
-        <link rel="preload"
-              href="{{ static('img/home-hero_sm.jpg') }}"
-              as="image"
-              media="(max-width: 600px)">
-        <link rel="preload"
-              href="{{ static('img/home-hero_lg.jpg') }}"
-              as="image"
-              media="(min-width: 601px)">
-    {% endif %}
+    <link rel="preload"
+          href="{{ static('img/home-hero_sm.jpg') }}"
+          as="image"
+          media="(max-width: 600px)">
+    <link rel="preload"
+          href="{{ static('img/home-hero_lg.jpg') }}"
+          as="image"
+          media="(min-width: 601px)">
 {%- endblock %}
 
 
@@ -42,25 +27,14 @@
     <main class="content" id="main">
 
         {% from 'molecules/home-hero.html' import home_hero with context %}
-        {% if flag_enabled('BCFP_LOGO', request) %}
-            {{ home_hero( {
-                'heading': 'We’re the BCFP',
-                'body':    'The Bureau of Consumer Financial Protection is a
-                            U.S. government agency that makes sure banks,
-                            lenders, and other financial companies treat you fairly.',
-                'sm_img':  'img/home-hero_sm_bcfp.jpg',
-                'lg_img':  'img/home-hero_lg_bcfp.jpg'
-            } ) }}
-        {% else %}
-            {{ home_hero( {
-                'heading': 'We’re the CFPB',
-                'body':    'The Consumer Financial Protection Bureau is a
-                            U.S. government agency that makes sure banks,
-                            lenders, and other financial companies treat you fairly.',
-                'sm_img':  'img/home-hero_sm.jpg',
-                'lg_img':  'img/home-hero_lg.jpg'
-            } ) }}
-        {% endif %}
+        {{ home_hero( {
+            'heading': 'We’re the CFPB',
+            'body':    'The Consumer Financial Protection Bureau is a
+                        U.S. government agency that makes sure banks,
+                        lenders, and other financial companies treat you fairly.',
+            'sm_img':  'img/home-hero_sm.jpg',
+            'lg_img':  'img/home-hero_lg.jpg'
+        } ) }}
 
         {% from 'molecules/info-unit.html' import info_unit with context %}
         <div class="o-well
