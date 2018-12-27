@@ -1,5 +1,5 @@
 /* ==========================================================================
-   sample-test: sample JS for setting up tests. This is not included in
+   sample: sample JS for setting up tests. This is not included in
    any pages in the site.
    ========================================================================== */
 

@@ -1,55 +1,33 @@
-# Writing JavaScript unit tests
+# Writing tests
 
 This page provides instructions for writing a new JavaScript unit test in cfgov-refresh.
 
-For documentation on *running* tests: [https://cfpb.github.io/cfgov-refresh/testing-fe/#unit-testing](https://cfpb.github.io/cfgov-refresh/testing-fe/#unit-testing)
-
-
-## Table of contents
-
-- Setting up tests
-    - New File from sample
-    - Folder structure (where to put it)
-    - File structure (basic layout of a test file)
-    - Providing test data
-    - Spies, stubs, and mocks
-    - Error handling
-- Common test patterns
-    - Testing a basic function
-    - Testing DOM manipulation
-    - Testing browser state
-    - Testing user interaction
-- Running tests
-    - Commands/fit in existing documentation on how to run tests in diff environments (locally, Travis, Jenks, etc)
-    - link to existing tests
-    - Test coverage
-        - Only shows coverage for unit tests and not acceptance tests
-        - What is our expected level of test coverage for unit tests?
-        - Are there certain scripts we want to exclude from test coverage because they are covered or should be covered by acceptance tests?
-    - how to read test coverage output, how we test coverage, etc.
-- Other sources of information
-    - Jest docs
-    - Istanbul docs
-    - JSDom docs
+For documentation on *running* tests, see [https://cfpb.github.io/cfgov-refresh/testing-fe/#unit-testing](https://cfpb.github.io/cfgov-refresh/testing-fe/#unit-testing)
 
 
 ## Setting up tests
 
-Context: we use Jest, we use (BDD) assertion style
+[Jest](https://jestjs.io/docs/en/getting-started) is the framework we use for writing and running JavaScript unit tests.
 
-Jest is the framework we use for writing and running JavaScript unit tests.
+We recommend using Test-Driven Development (TDD) when you are coding new JavaScript. This requires you to set up your test at the same time as your new JavaScript, so that you write your test first, with the expected behavior and functionality well-described, **then** you write the code that makes the test pass. A [better summary is](http://www.javiersaldana.com/tech/2014/11/26/refactoring-the-three-laws-of-tdd.html):
+
+> 1.  Write only enough of a unit test to fail.
+> 2.  Write only enough production code to make the failing unit test pass.
+
+
+[Read this primer on Test-Driven Development](https://medium.freecodecamp.org/test-driven-development-what-it-is-and-what-it-is-not-41fa6bca02a2?gi=3c8d8b476cc9) to learn about how it differs from the typical approach to programming and unit tests.
 
 ### New test file from sample
 
-We recommend using Test-Driven Development (TDD) when you are coding new JavaScript. This requires you to set up your test at the same time as your new JavaScript, so that you write your test first, with the expected behavior and functionality well-described, **then** you write the code that makes the test pass.
+For this guide, we'll use very basic sample code files to illustrate how to use the test framework in cfgov-refresh and how to test very common code patterns.
 
-Note: a common approach is to look for existing tests that are testing something similar to what you are writing now. Feel free to do so and sub another test file for the sample-test-spec.js file referenced below. For links to existing tests, see the [Running tests](#Running-tests) section on this page.
+Another common approach is to look for existing tests that are testing something similar to what you are writing now. Feel free to do so and sub another test file for the `sample-spec.js` file referenced below. For links to existing tests, see the [Running tests](#running-tests) section on this page.
 
+Now, let's begin! Let's make a new unit test fail, then we will make it pass, following the principles of TDD.
 
-1. Add new test file, named after your JavaScript file. So if you are adding tests for my-javascript.js, create a new file named my-javascript-spec.js
-1. Copy this sample-test-spec.js file:
-1. [Todo: Add sample to cfgov-refresh and run it] this is in progress at [https://github.com/cfpb/cfgov-refresh/compare/add-sample-js-unit-test?expand=1](https://github.com/cfpb/cfgov-refresh/compare/add-sample-js-unit-test?expand=1)
-1. And this sample-test.js file: [link or paste code here]
+1. Create 2 new files: a test file, and a JavaScript file. Their names should match, with the test file adding a `-spec.js` suffix. For example, if your script is named `my-javascript.js`, then your test is named `my-javascript-spec.js`.
+1. Copy the code from this [`sample-spec.js` file](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/test/unit_tests/js/modules/sample-spec.js) into your own test file.
+1. Copy and paste from [`sample.js`](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/cfgov/unprocessed/js/modules/sample.js) into your new JavaScript file.
 
 ### Folder structure (where to put your JavaScript and tests)
 
@@ -57,23 +35,33 @@ JavaScript unit test files belong in the [cfgov-refresh/test/unit_tests/](https:
 
 The folder structure of the test files mirrors the structure of the project JavaScript in [cfgov-refresh/cfgov/unprocessed/js/](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/js).
 
-For example, if you’re working on something in a child app, put it in test/unit_test/appname/js/…, and if you’re working on something that belongs to cfgov-refresh generally, it should go in the corresponding folder under test/unit_test/js/.
+So my `sample-spec.js` file is in `test/unit_tests/modules` and my `sample.js` file is in `cfgov/unprocessed/js/modules` . I put these files in the `modules` folder because they are not atomic components, they are just sample files. Your JavaScript might be an atomic element, in which case, it should go in the corresponding folder. If you're not sure where your JavaScript should go, [read about atomic components in cfgov-refresh](/atomic-structure/).
 
-I’ve decided to put my sample-test.js file in cfgov/unprocessed/js/**modules** because __???__. So my sample-test-spec.js file will go in test/unit_tests/**modules**.
+---
 
-Now that you have your sample JS and test files in the right places, let’s try running them and see what happens!
+!!! note "Child apps"
+    If you’re working on something in a child app, put it in `test/unit_test/appname/js/`. Otherwise, if you’re working on something that belongs to cfgov-refresh generally, it should go in the corresponding folder under `test/unit_test/js/`.
 
-- Edit line 7 of sample-test-spec.js and remove the ".skip" method. The line should now read “it(‘should return a string’), ( )
-- Run your sample test using `gulp test:unit --specs=js/modules/sample-test-spec.js`. The test should fail- this is expected. When doing TDD, we want to write our test to fail first, then write the corresponding JavaScript that will make the test pass.
-- Make the test pass by changing your sample-test.js line 7 to the following:
-    - return ‘Shredder’;
-- Run `gulp test:unit --specs=js/modules/sample-test-spec.js` again to confirm the test now passes. Doesn’t it feel good?
+
+Now that you have your sample JS and test files in the right places, let’s try running them and see what happens! I'll refer to `sample-spec.js` and `sample.js` in the instructions below, but you should work in your own new test file and JavaScript file to save and commit your changes.
+
+1. Edit line 7 of your spec file and remove the `.skip` method. The line should now read: 
+    ```
+    it( 'should return a string', () => {
+    ```
+
+1. Run your sample test using `gulp test:unit --specs=js/modules/sample-spec.js` (subbing with your own filename). The test should fail- this is expected. Remember, when doing TDD, we want to write our test to fail first, then write the corresponding JavaScript that will make the test pass.
+1. Make the test pass by changing your script's line 7 (see [`sample.js`](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/cfgov/unprocessed/js/modules/sample.js)) to the following:
+    ```
+    return ‘Shredder’;
+    ```
+- Run the test again to confirm the test now passes. Doesn’t it feel good?
 
 [Jump to the "Running Tests" section of this page](#heading=h.902hhlo4mqzw) for additional commands to run tests.
 
 ### File structure (basic layout of a test file)
 
-In order to make the sample-test-spec.js more meaningful to your own use case, you’ll need to know how to structure a unit test using Jest methods. Let’s take a look at the structure of our very basic sample test file.
+In order to make the `sample-spec.js` more meaningful to your own use case, you’ll need to know how to structure a unit test using Jest methods. Let’s take a look at the structure of our very basic sample test file.
 
 #### Imports
 
@@ -92,7 +80,7 @@ For example, a common structure when the DOM is involved is to create a constant
 
 #### Describe() method
 
-The `describe` method is where we put the name of the JavaScript file we are testing. For the sample, this is "sample-test."
+The `describe` method is where we put the name of the JavaScript file we are testing. For the sample, this is "sample."
 
     - root `describe`,
     - child `describe`s
@@ -411,3 +399,7 @@ or form submissions is best handled via browser tests, not unit tests.
 User interaction in a unit test could falsely pass
 if the component wasn't visible on the page, for instance.
 [Read more about how we run browser tests.](../browser-tests/)
+
+## Running tests
+
+TBA!
