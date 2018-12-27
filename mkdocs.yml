@@ -21,6 +21,7 @@ nav:
     - Testing: testing-be.md
     - Translation: translation.md
     - Caching: caching.md
+    - Find a housing counselor tool: housing-counselor-tool.md
 - Front-end guidelines:
     - Atomic structure and design: atomic-structure.md
     - Testing: testing-fe.md
