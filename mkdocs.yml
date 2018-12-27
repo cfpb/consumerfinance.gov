@@ -20,7 +20,7 @@ nav:
     - Translation: translation.md
 - Testing:
     - Browser Testing: testing-fe.md
-    - JavaScript Unit Testing: upcoming-doc.md
+    - JavaScript Unit Testing: javascript-unit-tests.md
     - Python Unit Testing: testing-be.md
 - Contributing:
     - Branching and merging: branching-merging.md
