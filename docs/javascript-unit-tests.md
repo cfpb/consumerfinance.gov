@@ -93,24 +93,53 @@ For example, a common structure when the DOM is involved is to create a constant
 
 [Check out the Jest documentation on "Setup and teardown" methods](https://jestjs.io/docs/en/setup-teardown).
 
-#### Providing test data
-
-ways to provide data for your tests to operate on
-
-
-- declare values as variables, for example in this [strings-spec.js]() unit test.
-- declare data for each unit test or for several tests using `beforeEach`/`beforeAll`
-- 
-- HTML markup. For an example of test data that consists of HTML markup, see ["Testing DOM manipulation"](#testing-dom-manipulation) in the “Common test patterns” section of this page.
-
-
 
 #### Describe() method
 
-The `describe` method is where we put the name of the JavaScript file we are testing. For the sample, this is "sample."
+In TDD, the `describe` statements serve as natural organizing statements to outline the methods you need in your JS module.
 
-    - root `describe`,
-    - child `describe`s
+The root `describe` method is where we put the name of the JavaScript module we are testing. For the sample, the name of our module is "sample" and we set this up on line 4:
+
+```
+describe( 'sample', () => {
+```
+
+This module name will appear in your test output in the console when the test is running:
+
+![Console output for failing unit test that reads 'sample should return a string with expected value'](https://user-images.githubusercontent.com/702526/50530438-717a7380-0acb-11e9-9a76-03d356a70516.png)
+
+More complex tests will have multiple child `describe` statements that should correspond with a particular method in the module. These can be written as nested `describe` statements, for example, if we want to add more functionality to our sample JS:
+
+```
+describe( 'sample', () => {
+
+    describe( '.gimmeString()', () => {
+
+      it( 'should return a string with expected value', () => {
+        sampleString = 'Shredder';
+        expect( sample.gimmeString() ).toBe( sampleString );
+      } );
+    
+    } );
+
+    describe( '.gimmeObject()', () => {
+
+      it( 'should return an object with expected value', () => {
+        sampleObject = { 
+            image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+            caption: 'Krang portrait'
+        };
+        expect( sample.gimmeObject() ).toBe( sampleObject );
+      } );
+    
+    } );
+
+} );
+```
+
+Another example is the [`breakpoint-state-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/breakpoint-state-spec.js) file, which tests 2 methods, `.get()` and `.isInDesktop()` on the module `breakpoint-state`.
+
+When using TDD, you may prefer to add `describe()` statements later, during the refactor stage of writing code.
 
 #### Assertions
 
@@ -123,6 +152,14 @@ The `describe` method is where we put the name of the JavaScript file we are tes
 ### Providing test data
 
 - Keep test data as simple as possible – use the minimum needed to test the code
+
+ways to provide data for your tests to operate on
+
+
+- declare values as variables, for example in this [strings-spec.js]() unit test.
+- declare data for each unit test or for several tests using `beforeEach`/`beforeAll`
+- 
+- HTML markup. For an example of test data that consists of HTML markup, see ["Testing DOM manipulation"](#testing-dom-manipulation) in the “Common test patterns” section of this page.
 
 ### Spies, stubs, and mocks
 
