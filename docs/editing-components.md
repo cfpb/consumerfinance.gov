@@ -32,9 +32,10 @@ _* If you're going to be doing anything more than making minor updates to
         1. [Adding CSS](#adding-css)
         1. [Adding JavaScript](#adding-javascript)
 1. [How-to guides](#how-to-guides)
-    1. [Adding a field](#adding-a-field)
-    1. [Editing a field](#editing a field)
-    1. [Removing a field](#removing-a-field)
+    1. [Creating a new component](#creating-a-new-component)
+    1. [Adding a field](#adding-a-field-to-an-existing-component)
+    1. [Editing a field](#editing-a-field-on-an-existing-component)
+    1. [Removing a field](#removing-a-field-from-an-existing-component)
     1. [Creating migrations for StreamField blocks](#creating-migrations-for-streamfield-blocks)
 
 
@@ -47,7 +48,7 @@ Blocks are implemented via several different bits of code:
 1. [Defining a block's fields and other properties in a Python class](#the-python-class)
 1. [Adding the class to a page's StreamField block options](#adding-it-to-a-streamfield)
 1. [Creating an HTML template for rendering the block on a page](#the-html-template)
-1. [(Optionally) adding some Less for styling the block](#adding-css)
+1. [(Optionally) adding some CSS for styling the block](#adding-css)
 1. [(Optionally) adding some JavaScript for adding advanced behavior](#adding-javascript)
 
 Before you dive in further,
@@ -269,7 +270,9 @@ those context variables can also be output with simple Jinja2 expression tags:
 
 If a component needs any custom styling not already provided
 by Capital Framework or cfgov-refresh,
-you can add it by creating a new Less file for the component.
+you can add it by creating a new
+[Less](http://lesscss.org/)
+file for the component.
 
 !!! note
     Please be sure that you actually need new Less before creating it.
@@ -299,9 +302,7 @@ That is _not_ the case with JavaScript, as we will see in the next section.
 
 !!! note
     If you're working on a component that belongs to a particular sub-app,
-    its Less file should live in `cfgov/unprocessed/<app-name>/css/`,
-    but how those Less files get built and included on their pages is
-    not something this document is prepared to discuss at the moment.
+    its Less file should live in `cfgov/unprocessed/<app-name>/css/`.
 
 #### Adding JavaScript
 
@@ -335,7 +336,26 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
 ## How-to guides
 
 
-### Adding a field
+### Creating a new component
+
+1. Review the [Notes on Atomic Design](../atomic-structure/) page.
+1. Add each of the parts mentioned above:
+   1. [Create the Python class](#the-python-class)
+   1. [Add the class to a StreamField](#adding-it-to-a-streamfield)
+   1. [Create an HTML template for the component](#the-html-template)
+   1. [(Optionally) add some CSS](#adding-css)
+   1. [(Optionally) add some JavaScript](#adding-javascript)
+
+!!! note
+    Before creating a new component,
+    please consider whether one of our existing components can meet your needs.
+    Talk to the consumerfinance.gov product owners if
+    your content has specific display requirements that aren't served
+    by an existing component, or if
+    a specific maintenance efficiency will be gained from a new component.
+
+
+### Adding a field to an existing component
 
 1. Locate the Python class of the component you want to add a field to.
 1. Add the field by inserting a snippet like this in the list of fields,
@@ -366,28 +386,28 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
 1. [Create a schema migration.](#creating-migrations-for-streamfield-blocks)
 
 
-### Editing a field
+### Editing a field on an existing component
 
 1. [Determine if the change you want to make will need a data migration.](#you-may-also-need-a-data-migration)
     - If the answer is **no**: make your changes,
       [create a schema migration](#creating-migrations-for-streamfield-blocks), and be on your merry way.
     - If the answer is **yes**: continue on.
-1. [Add the new version of the field.](#adding-a-field)
+1. [Add the new version of the field.](#adding-a-field-to-an-existing-component)
 1. [Create a schema migration](#creating-migrations-for-streamfield-blocks) for adding the new field.
 1. [Create a data migration](#you-may-also-need-a-data-migration)
    to copy data from the old field into the new field.
 1. [Edit the component template](#the-html-template)
    to use the new field's data instead of the old field's data.
-1. [Remove the old field.](#removing-a-field)
+1. [Remove the old field.](#removing-a-field-from-an-existing-component)
 1. [Create a schema migration](#creating-migrations-for-streamfield-blocks) for removing the old field.
 
 
-### Removing a field
+### Removing a field from an existing component
 
 These instructions presume that you do not care
 about any data stored in the field you are deleting.
 If that is not the case, please go up to the
-[instructions for editing a field](#editing-a-field)
+[instructions for editing a field](#editing-a-field-on-an-existing-component)
 and come back here when instructed.
 
 1. Locate the field you want to remove in the block's Python class.
@@ -420,6 +440,40 @@ if you do not want to lose any data already stored in that field or block.
 In other words, if an existing field or block is changing,
 any data stored in that field or block has to be migrated to a different place,
 unless you're OK with jettisoning it.
+
+##### Not sure if there's actually any data that could potentially be lost?
+
+You may not know off the top of your head if a component you are modifying
+actually has any data stored that could be lost.
+One way that you can manually check to see if this is the case
+is to use the Block Inventory feature that
+[we added to Wagtail](https://github.com/cfpb/wagtail-inventory).
+This feature lets you search all Wagtail pages on the site
+for the presence of a component. Here's how:
+
+1. With a current database dump, visit http://localhost:8000/admin/inventory/.
+   (This is also available from the admin menu by going to
+   **Settings** > **Block Inventory**.)
+1. Using the three pairs of dropdown menus at the top of the page,
+   choose to look for pages that either
+   _include_ or _exclude_ particular components.
+    - If multiple components are selected, resulting pages must
+      match _all_ of the conditions.
+1. Click **Find matching pages** to execute the search.
+1. If no results are found, lucky you!
+   You're in the clear to make whatever changes you desire to that component
+   without worrying about data loss.
+1. If, more likely, there _are_ results, you should open each result,
+   look through the page for the instance(s) of the component in question, and
+   see if the changes you want to make would cause the loss of important data.
+
+If there is only a small amount of potential data loss,
+it may be more practical to forego the data migration and
+manually replace that data once the code changes have been deployed.
+If you think this is the preferable route,
+consult with the appropriate stakeholders to confirm that
+they are OK with the window of time in which users may
+experience a gap in the data that is being manually replaced.
 
 ---
 
