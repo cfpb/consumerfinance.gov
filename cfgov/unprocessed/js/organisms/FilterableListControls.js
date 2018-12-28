@@ -133,7 +133,7 @@ function FilterableListControls( element ) {
    */
   function _formSubmitted() {
     const validatedFields = _validateFields(
-      _formModel.getModel().validateableElements
+      _formModel.getModel().get( 'validateableElements' )
     );
 
     if ( validatedFields.invalid.length > 0 ) {
@@ -214,7 +214,7 @@ function FilterableListControls( element ) {
    */
   function _validateField( field ) {
     let fieldset;
-    const fieldModel = _formModel.getModel()[field];
+    const fieldModel = _formModel.getModel().get( field );
     const validation = {
       field:  field,
       // TODO: Change layout of field groups to use fieldset.
