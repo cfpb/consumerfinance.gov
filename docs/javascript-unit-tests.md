@@ -47,7 +47,7 @@ Now that you have your sample JS and test files in the right places, let’s try
 
 1. Edit line 7 of your spec file and remove the `.skip` method. The line should now read: 
     ```
-    it( 'should return a string', () => {
+    it( 'should return a string with expected value', () => {
     ```
 
 1. Run your sample test using `gulp test:unit --specs=js/modules/sample-spec.js` (subbing with your own filename). The test should fail- this is expected. Remember, when doing TDD, we want to write our test to fail first, then write the corresponding JavaScript that will make the test pass.
@@ -55,9 +55,9 @@ Now that you have your sample JS and test files in the right places, let’s try
     ```
     return ‘Shredder’;
     ```
-- Run the test again to confirm the test now passes. Doesn’t it feel good?
+1. Run the test again to confirm the test now passes. Doesn’t it feel good?
 
-[Jump to the "Running Tests" section of this page](#heading=h.902hhlo4mqzw) for additional commands to run tests.
+[Jump to the "Running Tests" section of this page](#running-tests) for additional commands to run tests.
 
 ### File structure (basic layout of a test file)
 
@@ -65,18 +65,45 @@ In order to make the `sample-spec.js` more meaningful to your own use case, you�
 
 #### Imports
 
-Line 1
+Line 1 of any spec file will use `import` statements to include the JavaScript file that you are testing. Additional dependencies should be added in the same manner.
 
-- Import and const
-#### Test data and markup
+```
+import * as sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
+```
+
+Some test files use `const` declarations to require scripts instead of `import`, because those files were written before `import` was available. We prefer to use `import` because it allows [tree shaking in Webpack](https://webpack.js.org/guides/tree-shaking/), meaning if two modules are importing the same module it should only be included in the bundle once, whereas with `require` it would be included twice.
+
+A consequence is that variables can't be used in the import path, since it breaks Webpack figuring out which modules are duplicates. For example, this code should be converted to an `import` statement, but without including the `BASE_JS_PATH` variable in the file path:
+
+```
+const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' ) // works but could duplicate other required files
+import * as FooterButton from BASE_JS_PATH + 'modules/footer-button.js' // doesn't work and the build will fail
+import * as FooterButton from '../../../../cfgov/unprocessed/js/modules/footer-button.js' // is ugly but it works, has tree shaking
+
+```
+
+Imports also provide a benefit in that you can import specific parts of a module so that you only import the dependencies you need. For testing purposes, we will typically import the whole module to make sure we have full test coverage. Read the [`import` reference guide on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) on how to implement `import` for different use cases.
+
 
 #### Setup and teardown
 
 Jest has methods for setting up test data, or performing other actions that are needed before and after running a unit test, such as [`beforeEach` and `afterEach`](https://jestjs.io/docs/en/setup-teardown#repeating-setup-for-many-tests), or [`beforeAll` and `afterAll`](https://jestjs.io/docs/en/setup-teardown#one-time-setup).
 
-For example, a common structure when the DOM is involved is to create a constant for an HTML snippet to test, then set that snippet to the document.body in a `beforeEach` before all the tests. See "Testing DOM manipulation" in the “Common test patterns” section of this page.
+For example, a common structure when the DOM is involved is to create a constant for an HTML snippet to test, then set that snippet to the document.body in a `beforeEach` before all the tests. See ["Testing DOM manipulation"](#testing-dom-manipulation) in the “Common test patterns” section of this page.
 
 [Check out the Jest documentation on "Setup and teardown" methods](https://jestjs.io/docs/en/setup-teardown).
+
+#### Providing test data
+
+ways to provide data for your tests to operate on
+
+
+- declare values as variables, for example in this [strings-spec.js]() unit test.
+- declare data for each unit test or for several tests using `beforeEach`/`beforeAll`
+- 
+- HTML markup. For an example of test data that consists of HTML markup, see ["Testing DOM manipulation"](#testing-dom-manipulation) in the “Common test patterns” section of this page.
+
+
 
 #### Describe() method
 
