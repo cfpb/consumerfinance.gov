@@ -33,9 +33,9 @@ _* If you're going to be doing anything more than making minor updates to
         1. [Adding JavaScript](#adding-javascript)
 1. [How-to guides](#how-to-guides)
     1. [Creating a new component](#creating-a-new-component)
-    1. [Adding a field](#adding-a-field-to-an-existing-component)
-    1. [Editing a field](#editing-a-field-on-an-existing-component)
-    1. [Removing a field](#removing-a-field-from-an-existing-component)
+    1. [Adding a field to an existing component](#adding-a-field-to-an-existing-component)
+    1. [Editing a field on an existing component](#editing-a-field-on-an-existing-component)
+    1. [Removing a field from an existing component](#removing-a-field-from-an-existing-component)
     1. [Creating migrations for StreamField blocks](#creating-migrations-for-streamfield-blocks)
 
 
@@ -340,11 +340,11 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
 
 1. Review the [Notes on Atomic Design](../atomic-structure/) page.
 1. Add each of the parts mentioned above:
-   1. [Create the Python class](#the-python-class)
-   1. [Add the class to a StreamField](#adding-it-to-a-streamfield)
-   1. [Create an HTML template for the component](#the-html-template)
-   1. [(Optionally) add some CSS](#adding-css)
-   1. [(Optionally) add some JavaScript](#adding-javascript)
+    1. [Create the Python class](#the-python-class)
+    1. [Add the class to a StreamField](#adding-it-to-a-streamfield)
+    1. [Create an HTML template for the component](#the-html-template)
+    1. [(Optionally) add some CSS](#adding-css)
+    1. [(Optionally) add some JavaScript](#adding-javascript)
 
 !!! note
     Before creating a new component,
