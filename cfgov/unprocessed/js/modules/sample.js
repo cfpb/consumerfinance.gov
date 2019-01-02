@@ -4,7 +4,7 @@
    ========================================================================== */
 
 function init() {
-  return 'Krang';
+  return 'Shredder';
 }
 
 export { init };

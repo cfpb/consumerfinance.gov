@@ -1,153 +1,286 @@
-# Writing tests
+# Writing JavaScript Unit Tests
 
-This page provides instructions for writing a new JavaScript unit test in cfgov-refresh.
+This page provides instructions for writing
+a new JavaScript unit test in cfgov-refresh.
 
-For documentation on *running* tests, see [https://cfpb.github.io/cfgov-refresh/testing-fe/#unit-testing](https://cfpb.github.io/cfgov-refresh/testing-fe/#unit-testing)
+[Jest](https://jestjs.io/docs/en/getting-started) is the framework we use
+for writing and running JavaScript unit tests.
+If you’re not familiar with it,
+it would be a good idea to peruse their docs before diving in here.
+
+For documentation on _running_ tests,
+[see the main front-end testing page](../testing-fe/#unit-testing).
 
 
-## Setting up tests
 
-[Jest](https://jestjs.io/docs/en/getting-started) is the framework we use for writing and running JavaScript unit tests.
 
-We recommend using Test-Driven Development (TDD) when you are coding new JavaScript. This requires you to set up your test at the same time as your new JavaScript, so that you write your test first, with the expected behavior and functionality well-described, **then** you write the code that makes the test pass. A [better summary is](http://www.javiersaldana.com/tech/2014/11/26/refactoring-the-three-laws-of-tdd.html):
+## Table of contents
+
+1. [Test-driven development](#test-driven-development)
+1. [Setting up tests](setting-up-tests)
+    1. [New test file from sample](#new-test-file-from-sample)
+    1. [Folder structure (where to put your JavaScript and tests)](#folder-structure-where-to-put-your-javascript-and-tests)
+    1. [File structure (basic layout of a test file)](#file-structure-basic-layout-of-a-test-file)
+    1. [Providing test data](#providing-test-data)
+    1. [Spies, stubs, and mocks](#spies-stubs-and-mocks)
+    1. [Error handling](#error-handling)
+1. [Common test patterns](#common-test-patterns)
+    1. [Testing a basic function](#testing-a-basic-function)
+    1. [Testing DOM manipulation](#testing-dom-manipulation)
+    1. [Testing browser state](#testing-browser-state)
+    1. [Testing user interaction](#testing-user-interaction)
+1. [Running unit tests](#running-unit-tests)
+
+
+
+
+## Test-driven development
+
+We recommend using test-driven development (TDD) when coding new JavaScript.
+The general concept is to start by writing your test **first**,
+with the expected behavior and functionality well-described,
+**then** you write the code that makes the test pass.
+[A good pithy summary](http://www.javiersaldana.com/tech/2014/11/26/refactoring-the-three-laws-of-tdd.html)
+is:
 
 > 1.  Write only enough of a unit test to fail.
 > 2.  Write only enough production code to make the failing unit test pass.
 
+Then repeat that process until you have written all of the code you need.
 
-[Read this primer on Test-Driven Development](https://medium.freecodecamp.org/test-driven-development-what-it-is-and-what-it-is-not-41fa6bca02a2?gi=3c8d8b476cc9) to learn about how it differs from the typical approach to programming and unit tests.
+[Read this primer on test-driven development](https://medium.freecodecamp.org/test-driven-development-what-it-is-and-what-it-is-not-41fa6bca02a2?gi=3c8d8b476cc9)
+to learn more about how it differs from
+the typical approach to programming and unit tests.
+
+
+
+
+## Setting up tests
+
 
 ### New test file from sample
 
-For this guide, we'll use very basic sample code files to illustrate how to use the test framework in cfgov-refresh and how to test very common code patterns.
+For this guide, we’ll use very basic sample code files
+to illustrate how to use the test framework in cfgov-refresh
+and how to test very common code patterns.
 
-Another common approach is to look for existing tests that are testing something similar to what you are writing now. Feel free to do so and sub another test file for the `sample-spec.js` file referenced below. For links to existing tests, see the [Running tests](#running-tests) section on this page.
+Another common approach is to look for existing tests
+that are testing something similar to what you are writing now.
+Feel free to do so and substitute another test file for
+the `sample-spec.js` file referenced below.
+For links to existing tests,
+[see the “Running tests” section](#running-tests) on this page.
 
-Now, let's begin! Let's make a new unit test fail, then we will make it pass, following the principles of TDD.
+Now, let’s begin! Let’s make a new unit test fail,
+then we will make it pass, following the principles of TDD.
 
-1. Create 2 new files: a test file, and a JavaScript file. Their names should match, with the test file adding a `-spec.js` suffix. For example, if your script is named `my-javascript.js`, then your test is named `my-javascript-spec.js`.
-1. Copy the code from this [`sample-spec.js` file](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/test/unit_tests/js/modules/sample-spec.js) into your own test file.
-1. Copy and paste from [`sample.js`](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/cfgov/unprocessed/js/modules/sample.js) into your new JavaScript file.
+1. Create 2 new files: a test file, and a JavaScript file.
+   Their names should match, with the test file adding a `-spec` suffix.
+   For example, if your script is named `my-javascript.js`,
+   then your test is named `my-javascript-spec.js`.
+1. Copy the code from this
+   [`sample-spec.js` file](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/test/unit_tests/js/modules/sample-spec.js)
+   into your own test file.
+1. Copy and paste from
+   [`sample.js`](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/cfgov/unprocessed/js/modules/sample.js)
+   into your new JavaScript file.
+
 
 ### Folder structure (where to put your JavaScript and tests)
 
-JavaScript unit test files belong in the [cfgov-refresh/test/unit_tests/](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests) directory.
+JavaScript unit test files belong in the
+[`test/unit_tests/`](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests)
+directory.
 
-The folder structure of the test files mirrors the structure of the project JavaScript in [cfgov-refresh/cfgov/unprocessed/js/](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/js).
+The folder structure of the test files mirrors
+the structure of the project JavaScript in
+[`cfgov/unprocessed/js/`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/js).
 
-So my `sample-spec.js` file is in `test/unit_tests/modules` and my `sample.js` file is in `cfgov/unprocessed/js/modules` . I put these files in the `modules` folder because they are not atomic components, they are just sample files. Your JavaScript might be an atomic element, in which case, it should go in the corresponding folder. If you're not sure where your JavaScript should go, [read about atomic components in cfgov-refresh](/atomic-structure/).
-
----
+So my `sample-spec.js` file is in `test/unit_tests/modules/`
+and my `sample.js` file is in `cfgov/unprocessed/js/modules/`.
+I put these files in the `modules` folder because
+they are not atomic components, they are just sample files.
+Your JavaScript might be an atomic element,
+in which case it should go in the corresponding folder.
+If you're not sure where your JavaScript should go,
+[read about atomic components in cfgov-refresh](../atomic-structure/).
 
 !!! note "Child apps"
-    If you’re working on something in a child app, put it in `test/unit_test/appname/js/`. Otherwise, if you’re working on something that belongs to cfgov-refresh generally, it should go in the corresponding folder under `test/unit_test/js/`.
+    If you’re working on something in a child app,
+    put it in `test/unit_test/appname/js/`.
+    Otherwise, if you’re working on something that
+    belongs to cfgov-refresh generally,
+    it should go in the corresponding folder under `test/unit_test/js/`.
 
+Now that you have your sample JS and test files in the right places,
+let’s try running them and see what happens!
+I’ll refer to `sample-spec.js` and `sample.js` in the instructions below,
+but you should work in your own new test file and JavaScript file
+to save and commit your changes.
 
-Now that you have your sample JS and test files in the right places, let’s try running them and see what happens! I'll refer to `sample-spec.js` and `sample.js` in the instructions below, but you should work in your own new test file and JavaScript file to save and commit your changes.
+1. Edit line 6 of your spec file and remove the `.skip` method.
+   The line should now read:
+   ```js
+   it( 'should return a string with expected value', () => {
+     …
+   } );
+   ```
+1. Run your sample test using `gulp test:unit --specs=js/modules/sample-spec.js`
+   (substituting your own filename).
+   The test should fail – this is expected.
+   Remember, when doing TDD, we want to write our test to fail first,
+   then write the corresponding JavaScript that will make the test pass.
+1. Make the test pass by changing your script’s line 7
+   ([see `sample.js`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/sample.js))
+   to the following:
+   ```js
+   return 'Shredder';
+   ```
+1. Run the test again to confirm the test now passes.
+   Doesn’t it feel good?
 
-1. Edit line 7 of your spec file and remove the `.skip` method. The line should now read: 
-    ```
-    it( 'should return a string with expected value', () => {
-    ```
+[See the “Running tests” section of this page](#running-tests)
+for additional commands to run tests.
 
-1. Run your sample test using `gulp test:unit --specs=js/modules/sample-spec.js` (subbing with your own filename). The test should fail- this is expected. Remember, when doing TDD, we want to write our test to fail first, then write the corresponding JavaScript that will make the test pass.
-1. Make the test pass by changing your script's line 7 (see [`sample.js`](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/cfgov/unprocessed/js/modules/sample.js)) to the following:
-    ```
-    return ‘Shredder’;
-    ```
-1. Run the test again to confirm the test now passes. Doesn’t it feel good?
-
-[Jump to the "Running Tests" section of this page](#running-tests) for additional commands to run tests.
 
 ### File structure (basic layout of a test file)
 
-In order to make the `sample-spec.js` more meaningful to your own use case, you’ll need to know how to structure a unit test using Jest methods. Let’s take a look at the structure of our very basic sample test file.
+In order to make the `sample-spec.js` more meaningful to your own use case,
+you’ll need to know how to structure a unit test using Jest methods.
+Let’s take a look at the structure of our very basic sample test file.
 
-#### Imports
+#### Loading dependencies
 
-Line 1 of any spec file will use `import` statements to include the JavaScript file that you are testing. Additional dependencies should be added in the same manner.
+Line 1 of any spec file will use an `import` statement to
+include the JavaScript file that you are testing.
+Additional dependencies should be added in the same manner.
 
-```
+```js
 import * as sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
 ```
 
-Some test files use `const` declarations to require scripts instead of `import`, because those files were written before `import` was available. We prefer to use `import` because it allows [tree shaking in Webpack](https://webpack.js.org/guides/tree-shaking/), meaning if two modules are importing the same module it should only be included in the bundle once, whereas with `require` it would be included twice.
+Some test files use `const` declarations to
+`require` scripts instead of `import`,
+because those files were written before `import` was available.
+We prefer to use `import` because it allows for
+[tree shaking in Webpack](https://webpack.js.org/guides/tree-shaking/),
+meaning if two modules are importing the same module
+it should only be included in the bundle once,
+whereas with `require` it would be included twice.
 
-A consequence is that variables can't be used in the import path, since it breaks Webpack figuring out which modules are duplicates. For example, this code should be converted to an `import` statement, but without including the `BASE_JS_PATH` variable in the file path:
+A consequence is that variables can't be used in the import path,
+as they prevent Webpack from figuring out which modules are duplicates.
+For example, this snippet shows how a `require` statement
+should be converted to an `import` statement,
+but without including the `BASE_JS_PATH` variable in the file path:
 
+```js
+// works but could duplicate footer-button.js if other files also require it
+const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
+
+// doesn't work and the build will fail
+import * as FooterButton from BASE_JS_PATH + 'modules/footer-button.js';
+
+// is ugly but it works and supports tree shaking
+import * as FooterButton from '../../../../cfgov/unprocessed/js/modules/footer-button.js';
 ```
-const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' ) // works but could duplicate other required files
-import * as FooterButton from BASE_JS_PATH + 'modules/footer-button.js' // doesn't work and the build will fail
-import * as FooterButton from '../../../../cfgov/unprocessed/js/modules/footer-button.js' // is ugly but it works, has tree shaking
 
-```
-
-Imports also provide a benefit in that you can import specific parts of a module so that you only import the dependencies you need. For testing purposes, we will typically import the whole module to make sure we have full test coverage. Read the [`import` reference guide on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) on how to implement `import` for different use cases.
-
+`import` also provides a benefit in that you can choose specific parts
+of a module so that you only import the dependencies you need.
+For testing purposes, we will typically import the whole module
+to make sure we have full test coverage.
+[Read the `import` reference guide on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
+on how to implement `import` for different use cases.
 
 #### Setup and teardown
 
-Jest has methods for setting up test data, or performing other actions that are needed before and after running a unit test, such as [`beforeEach` and `afterEach`](https://jestjs.io/docs/en/setup-teardown#repeating-setup-for-many-tests), or [`beforeAll` and `afterAll`](https://jestjs.io/docs/en/setup-teardown#one-time-setup).
+Jest has methods for setting up test data or performing other actions
+that are needed before and after running a unit test, such as
+[`beforeEach` and `afterEach`](https://jestjs.io/docs/en/setup-teardown#repeating-setup-for-many-tests), or [`beforeAll` and `afterAll`](https://jestjs.io/docs/en/setup-teardown#one-time-setup).
 
-For example, a common structure when the DOM is involved is to create a constant for an HTML snippet to test, then set that snippet to the document.body in a `beforeEach` before all the tests. See ["Testing DOM manipulation"](#testing-dom-manipulation) in the “Common test patterns” section of this page.
+For example, a common structure when the DOM is involved
+is to create a constant representing an HTML snippet to test,
+then – in a `beforeEach` that runs befor each test –
+set `document.body.innerHTML` to that snippet.
+[See “Testing DOM manipulation”](#testing-dom-manipulation)
+in the “Common test patterns” section of this page
+for details more on that scenario.
 
-[Check out the Jest documentation on "Setup and teardown" methods](https://jestjs.io/docs/en/setup-teardown).
+[Check out the Jest documentation on “Setup and teardown” methods.](https://jestjs.io/docs/en/setup-teardown)
 
+#### The `describe` function
 
-#### Describe() method
+In Jest (whose syntax is based on Jasmine),
+[`describe` blocks](https://jestjs.io/docs/en/api#describename-fn)
+serves as an organizational structures that you can use
+to outline the methods you need in your JS module.
 
-In TDD, the `describe` statements serve as natural organizing statements to outline the methods you need in your JS module.
+The root `describe` method is where we put
+the name of the JavaScript module we are testing.
+For the sample, the name of our module is `sample`,
+so we set this up on line 4 of `sample-spec.js`:
 
-The root `describe` method is where we put the name of the JavaScript module we are testing. For the sample, the name of our module is "sample" and we set this up on line 4:
-
-```
+```js
 describe( 'sample', () => {
+  …
+} );
 ```
 
-This module name will appear in your test output in the console when the test is running:
+This module name will appear in your test output in the console
+when the test is running:
 
-![Console output for failing unit test that reads 'sample should return a string with expected value'](https://user-images.githubusercontent.com/702526/50530438-717a7380-0acb-11e9-9a76-03d356a70516.png)
+![Console output for failing unit test that reads 'sample: should return a string with expected value'](img/js-unit-test-output.png)
 
-More complex tests will have multiple child `describe` statements that should correspond with a particular method in the module. These can be written as nested `describe` statements, for example, if we want to add more functionality to our sample JS:
+More complex tests will have additional `describe` blocks –
+children of the root `describe` block –
+that should correspond with a particular method in the module.
+For example, if we want to add more functionality to our sample JS,
+we could start by writing these tests in `sample-spec.js`:
 
-```
+```js
 describe( 'sample', () => {
 
-    describe( '.gimmeString()', () => {
+    describe( 'gimmeString()', () => {
 
       it( 'should return a string with expected value', () => {
         sampleString = 'Shredder';
         expect( sample.gimmeString() ).toBe( sampleString );
       } );
-    
+
     } );
 
-    describe( '.gimmeObject()', () => {
+    describe( 'gimmeObject()', () => {
 
       it( 'should return an object with expected value', () => {
-        sampleObject = { 
+        sampleObject = {
             image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
             caption: 'Krang portrait'
         };
         expect( sample.gimmeObject() ).toBe( sampleObject );
       } );
-    
+
     } );
 
 } );
 ```
 
-Another example is the [`breakpoint-state-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/breakpoint-state-spec.js) file, which tests 2 methods, `.get()` and `.isInDesktop()` on the module `breakpoint-state`.
+And then we would create the `gimmeString` and `gimmeObject` methods
+in our `sample.js` file.
 
-When using TDD, you may prefer to add `describe()` statements later, during the refactor stage of writing code.
+Another example is
+[`breakpoint-state-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/breakpoint-state-spec.js),
+which tests 2 methods, `get` and `isInDesktop`,
+on the module `breakpoint-state`.
+
+When using TDD, you may prefer to add `describe` blocks later,
+during the refactor stage of writing code.
 
 #### Assertions
 
-    - `it` scenarios
-    - [`expect` assertions](https://jestjs.io/docs/en/expect#expectvalue)
-    - Other types of assertions
-- Linter settings that can be ignored in tests
-    - Lint warning for over 55 lines: you can ignore this for the root `describe` fn
+- `it` scenarios
+- [`expect` assertions](https://jestjs.io/docs/en/expect#expectvalue)
+- Other types of assertions
+
 
 ### Providing test data
 
@@ -158,19 +291,24 @@ ways to provide data for your tests to operate on
 
 - declare values as variables, for example in this [strings-spec.js]() unit test.
 - declare data for each unit test or for several tests using `beforeEach`/`beforeAll`
-- 
+-
 - HTML markup. For an example of test data that consists of HTML markup, see ["Testing DOM manipulation"](#testing-dom-manipulation) in the “Common test patterns” section of this page.
+
 
 ### Spies, stubs, and mocks
 
 - Sinon-y stuff – spies, stubs, and mocks – when do you use each? how to do with Jest?
+
 
 ### Error handling
 
 What did we mean by this?
 
 
+
+
 ## Common test patterns
+
 
 ### Testing a basic function
 
@@ -239,6 +377,7 @@ describe( 'indexOfObject()', () => {
   } );
 } );
 ```
+
 
 ### Testing DOM manipulation
 
@@ -337,7 +476,7 @@ and assigns the component node to the `notificationElem` variable, and
 (2) creates a new instance of the Notification class.
 
 !!! A word about `HTML_SNIPPET`s
-    Right now it's possible to update a component’s Jinja template,
+    Right now it’s possible to update a component’s Jinja template,
     forget to update the corresponding JavaScript,
     and the unit tests would still pass,
     because they're using their own `HTML_SNIPPET`.
@@ -385,6 +524,7 @@ describe( 'setTypeAndContent()', () => {
 This part mostly works like testing any other function.
 The notable distinction here is that the test invokes the function
 using the DOM nodes and class set up in `beforeEach`.
+
 
 ### Testing browser state
 
@@ -456,6 +596,7 @@ it( 'should not navigate to new location when non link row cell clicked',
 );
 ```
 
+
 ### Testing user interaction
 
 Testing user interaction with simulated pointer events, keystrokes,
@@ -464,6 +605,9 @@ User interaction in a unit test could falsely pass
 if the component wasn't visible on the page, for instance.
 [Read more about how we run browser tests.](../browser-tests/)
 
-## Running tests
+
+
+
+## Running unit tests
 
 TBA!
