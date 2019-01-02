@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import datetime
 from six.moves import html_parser as HTMLParser
 
+from django.http import HttpResponse
 from django.utils import html
 
 import unicodecsv
@@ -81,7 +82,7 @@ def assemble_output():
     return output_rows
 
 
-def export_questions(path='/tmp'):
+def export_questions(path='/tmp', http_response=False):
     """
     A script for exporting Ask CFPB Answer content
     to a CSV that can be opened easily in Excel.
@@ -93,18 +94,29 @@ def export_questions(path='/tmp'):
     non-ascii encodings. So we throw in the towel and encode the CSV
     with windows-1252.
 
-    The script will dump the file to `/tmp/` unless a path argument
-    is supplied. A command that passes in path would look like this:
+    By default, the script will dump the file to `/tmp/`,
+    unless a path argument is supplied,
+    or http_response is set to True (for downloads via the Wagtail admin).
+    A command that passes in path would look like this:
     `python cfgov/manage.py runscript export_ask_data --script-args [PATH]`
     """
 
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     slug = 'ask-cfpb-{}.csv'.format(timestamp)
+    if http_response:
+        response = HttpResponse(content_type='text/csv; charset=utf-8')
+        response['Content-Disposition'] = 'attachment;filename={}'.format(slug)
+        write_questions_to_csv(response)
+        return response
     file_path = '{}/{}'.format(path, slug).replace('//', '/')
     with open(file_path, 'w') as f:
-        writer = unicodecsv.writer(f, encoding='windows-1252')
-        writer.writerow(HEADINGS)
-        for row in assemble_output():
+        write_questions_to_csv(f)
+
+
+def write_questions_to_csv(csvfile):
+    writer = unicodecsv.writer(csvfile, encoding='windows-1252')
+    writer.writerow(HEADINGS)
+    for row in assemble_output():
             writer.writerow(
                 [row.get(key) for key in HEADINGS])
 
