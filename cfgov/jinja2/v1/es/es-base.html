@@ -57,26 +57,10 @@
         <div class="split brand">
 
             <h1>
-            {% if flag_enabled('BCFP_LOGO', request) %}
-                <a class="brand-logo__bcfp" href="/es/">
-                    <img class="o-header_logo-img"
-                         src="{{ static('img/bcfp-logo_es_284x50.png') }}"
-                         srcset="{{ static('img/bcfp-logo_es_190x34.png') }} 190w,
-                                 {{ static('img/bcfp-logo_es_190x34@2x.png') }} 380w,
-                                 {{ static('img/bcfp-logo_es_190x34@3x.png') }} 570w,
-                                 {{ static('img/bcfp-logo_es_190x34@4x.png') }} 760w,
-                                 {{ static('img/bcfp-logo_es_284x50.png') }} 284w,
-                                 {{ static('img/bcfp-logo_es_284x50@2x.png') }} 568w"
-                         sizes="(max-width: 900px) 190px,
-                                284px"
-                         alt="Oficina para la Protección Financiera del Consumidor">
-                </a>
-            {% else %}
                 <a class="brand-logo" href="/es/">
                     <img src="{{ static('nemo/_/img/cfpb-logo-spanish.png') }}"
                          alt="Oficina para la Protección Financiera del Consumidor">
                 </a>
-            {% endif %}
             </h1>
             <p class="s-hide-on-small split-right brand-tagline">Contáctenos <a href="tel:+18554112372" class="phone">(855) 411-2372</a></p>
 
