@@ -51,11 +51,7 @@
     <title>
         {%- block title -%}
             {%- if page -%} {{ page.seo_title or page.title }} | {% endif -%}
-            {%- if flag_enabled('BCFP_LOGO', request) -%}
-                Bureau of Consumer Financial Protection
-            {%- else -%}
-                Consumer Financial Protection Bureau
-            {%- endif -%}
+            Consumer Financial Protection Bureau
         {%- endblock title -%}
     </title>
     <meta name="description"
@@ -81,11 +77,6 @@
     {% if page.meta_image.should_display_summary_large_image %}
     <meta name="twitter:card" content="summary_large_image">
     {% endif %}
-{% elif flag_enabled('BCFP_LOGO', request) %}
-    <meta property="og:image"
-          content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/bcfp-logo_open-graph_facebook.png') }}">
-    <meta property="twitter:image"
-          content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/bcfp-logo_open-graph_twitter.png') }}">
 {% else %}
     <meta property="og:image"
           content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">

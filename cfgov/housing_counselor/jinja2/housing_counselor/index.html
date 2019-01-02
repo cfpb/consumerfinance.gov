@@ -35,7 +35,7 @@
                             several approved agencies in your area.
                             There is also a
                             <a class="a-link a-link__icon"
-                               href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm">
+                               href="{{ signed_redirect( 'https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm' ) }}">
                                <span class="a-link_text">
                                    list of nationwide
                                    HUD-approved counseling agencies
@@ -93,7 +93,7 @@
                                                 <p>
                                                     This tool is powered by
                                                     <a class="a-link a-link__icon"
-                                                       href="https://data.hud.gov/housing_counseling.html">
+                                                       href="{{ signed_redirect( 'https://data.hud.gov/housing_counseling.html' ) }}">
                                                     <span class="a-link_text">HUD's</span>
                                                     {{ svg_icon( 'external-link' ) }}</a>
                                                     official list of housing counselors.
@@ -191,7 +191,7 @@
 
                                                     {% if counselor.weburl %}
                                                     <a class="a-link a-link__icon"
-                                                       href="{{ counselor.weburl }}">
+                                                       href="{{ signed_redirect( counselor.weburl ) }}">
                                                       <span class="a-link_text">
                                                           <b itemprop="name">{{ counselor.nme }}</b>
                                                       </span>
@@ -220,7 +220,7 @@
                                                     <dt>Website:</dt>
                                                     <dd>
                                                     <a class="a-link a-link__icon"
-                                                       href="{{ counselor.weburl }}"
+                                                       href="{{ signed_redirect( counselor.weburl ) }}"
                                                        itemprop="url">
                                                         <span class="a-link_text">
                                                             {{ counselor.weburl }}
@@ -296,7 +296,7 @@
                                     number. The OMB control number for this
                                     collection is
                                     <a class="a-link a-link__icon"
-                                       href="https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025">
+                                       href="{{ signed_redirect( 'https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025' ) }}">
                                        <span class="a-link_text"
                                              aria-label="The OMB control number for this collection is 3170-0025">
                                            3170-0025
@@ -315,7 +315,7 @@
                                     or suggestions for reducing the burden to
                                     respond to this collection should be
                                     submitted to the
-                                    Bureau of Consumer Financial Protection
+                                    Consumer Financial Protection Bureau
                                     (Attention: PRA Office), 1700 G Street NW,
                                     Washington, DC 20552, or by email to
                                     <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.
