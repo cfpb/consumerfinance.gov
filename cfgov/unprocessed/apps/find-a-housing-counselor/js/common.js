@@ -14,7 +14,6 @@ API queries. -wernerc */
 // Set up print results list button functionality, if it exists.
 const printPageLink = document.querySelector( '#hud_print-page-link' );
 if ( printPageLink ) {
-  printPageLink.classList.remove( 'u-hidden' );
   printPageLink.addEventListener( 'click', evt => {
     evt.preventDefault();
     window.print();
