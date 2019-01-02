@@ -46,19 +46,6 @@
             {% include 'molecules/global-search.html' with context %}
 
             <a class="o-header_logo" href="/">
-            {% if flag_enabled('BCFP_LOGO', request) %}
-                <img class="o-header_logo-img"
-                     src="{{ static('img/bcfp-logo_240x50.png') }}"
-                     srcset="{{ static('img/bcfp-logo_160x34.png') }} 160w,
-                             {{ static('img/bcfp-logo_160x34@2x.png') }} 320w,
-                             {{ static('img/bcfp-logo_160x34@3x.png') }} 480w,
-                             {{ static('img/bcfp-logo_160x34@4x.png') }} 640w,
-                             {{ static('img/bcfp-logo_240x50.png') }} 240w,
-                             {{ static('img/bcfp-logo_240x50@2x.png') }} 480w"
-                     sizes="(max-width: 900px) 160px,
-                            240px"
-                     alt="Bureau of Consumer Financial Protection">
-            {% else %}
                 <img class="o-header_logo-img"
                      src="{{ static('img/logo_237x50.png') }}"
                      srcset="{{ static('img/logo_161x34.png') }} 161w,
@@ -70,7 +57,6 @@
                      sizes="(max-width: 900px) 161px,
                             237px"
                      alt="Consumer Financial Protection Bureau">
-            {% endif %}
             </a>
 
             {% block primary_nav %}

@@ -663,9 +663,6 @@ FLAGS = {
 
     'LEGACY_HUD_API': {'environment is': 'production'},
 
-    # To be enabled when switching the site to use the BCFP logo
-    'BCFP_LOGO': {},
-
     # SPLIT TESTING FLAGS
 
     # Ask CFPB page titles as H1s instead of H2s
