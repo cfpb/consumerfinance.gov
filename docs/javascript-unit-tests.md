@@ -264,6 +264,8 @@ describe( 'sample', () => {
 } );
 ```
 
+(We'll talk more about writing the individual tests in the next section.)
+
 And then we would create the `gimmeString` and `gimmeObject` methods
 in our `sample.js` file.
 
@@ -275,11 +277,62 @@ on the module `breakpoint-state`.
 When using TDD, you may prefer to add `describe` blocks later,
 during the refactor stage of writing code.
 
-#### Assertions
+#### Individual tests
 
-- `it` scenarios
-- [`expect` assertions](https://jestjs.io/docs/en/expect#expectvalue)
-- Other types of assertions
+Within a `describe` block, individual tests are encapsulated by `it` methods,
+which is an alias of
+[Jest’s `test` method](https://jestjs.io/docs/en/api#testname-fn-timeout).
+
+Each test must include one or more assertions (usually only one)
+that confirm that the result of executing some code is what you expected.
+These are called ["matchers"](https://jestjs.io/docs/en/using-matchers)
+in Jest parlance, and they all follow this format:
+
+```js
+expect( someValue ).someKindOfComparisonWith( someOtherValue );
+```
+
+For example, let's take another look at the sample tests we wrote above:
+
+```js
+describe( 'sample', () => {
+
+    describe( 'gimmeString()', () => {
+
+      it( 'should return a string with expected value', () => {
+        sampleString = 'Shredder';
+        expect( sample.gimmeString() ).toBe( sampleString );
+      } );
+
+    } );
+
+    describe( 'gimmeObject()', () => {
+
+      it( 'should return an object with expected value', () => {
+        sampleObject = {
+            image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+            caption: 'Krang portrait'
+        };
+        expect( sample.gimmeObject() ).toBe( sampleObject );
+      } );
+
+    } );
+
+} );
+```
+
+In these tests, we check _(`expect`)_ that
+the string returned by `sample.gimmeString()`
+and the object returned by `sample.gimmeObject()`
+match _(`toBe`)_ the `sampleString` and `sampleObject`
+that we defined in the tests.
+
+There are many kinds of assertions you can use
+besides the simple equality comparison of `toBe`.
+See [the Jest Using Matchers guide](https://jestjs.io/docs/en/using-matchers)
+for a primer on them and
+[the Jest `expect` API docs](https://jestjs.io/docs/en/expect)
+for the full list of its matchers.
 
 
 ### Providing test data
