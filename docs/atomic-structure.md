@@ -32,7 +32,7 @@ Prefixed with `a-` in class names.
 
 ### Less
 
-```less
+```css
 .a-tag {
     cursor: default;
     display: inline-block;
@@ -68,7 +68,7 @@ Prefixed with `m-` in class names.
 
 ### Less
 
-```less
+```css
 .m-notification {
     display: none;
     position: relative;
@@ -127,7 +127,7 @@ Prefixed with `o-` in class names.
 
 ### Less
 
-```less
+```css
 .o-expandable {
     position: relative;
 
