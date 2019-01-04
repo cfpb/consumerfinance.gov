@@ -192,22 +192,6 @@ to make sure we have full test coverage.
 [Read the `import` reference guide on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
 on how to implement `import` for different use cases.
 
-#### Setup and teardown
-
-Jest has methods for setting up test data or performing other actions
-that are needed before and after running a unit test, such as
-[`beforeEach` and `afterEach`](https://jestjs.io/docs/en/setup-teardown#repeating-setup-for-many-tests), or [`beforeAll` and `afterAll`](https://jestjs.io/docs/en/setup-teardown#one-time-setup).
-
-For example, a common structure when the DOM is involved
-is to create a constant representing an HTML snippet to test,
-then – in a `beforeEach` that runs befor each test –
-set `document.body.innerHTML` to that snippet.
-[See “Testing DOM manipulation”](#testing-dom-manipulation)
-in the “Common test patterns” section of this page
-for details more on that scenario.
-
-[Check out the Jest documentation on “Setup and teardown” methods.](https://jestjs.io/docs/en/setup-teardown)
-
 #### The `describe` function
 
 In Jest (whose syntax is based on Jasmine),
@@ -252,6 +236,7 @@ describe( 'sample', () => {
     describe( 'gimmeObject()', () => {
 
       it( 'should return an object with expected value', () => {
+        // You'll need to add `let sampleObject;` at the top of the file, too.
         sampleObject = {
             image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
             caption: 'Krang portrait'
@@ -264,7 +249,7 @@ describe( 'sample', () => {
 } );
 ```
 
-(We'll talk more about writing the individual tests in the next section.)
+(We’ll talk more about writing the individual tests in the next section.)
 
 And then we would create the `gimmeString` and `gimmeObject` methods
 in our `sample.js` file.
@@ -337,15 +322,48 @@ for the full list of its matchers.
 
 ### Providing test data
 
-- Keep test data as simple as possible – use the minimum needed to test the code
+The first principle of test data for unit tests is to
+**keep test data as simple as possible** –
+use the minimum needed to test the code.
 
-ways to provide data for your tests to operate on
+#### Direct definition of test data
 
+The simplest way to set up test data is to
+declare it as variables within each test, e.g., the tests in
+[strings-spec.js](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/strings-spec.js).
+This can include HTML markup for DOM manipulation tests,
+if each test requires different markup.
 
-- declare values as variables, for example in this [strings-spec.js]() unit test.
-- declare data for each unit test or for several tests using `beforeEach`/`beforeAll`
--
-- HTML markup. For an example of test data that consists of HTML markup, see ["Testing DOM manipulation"](#testing-dom-manipulation) in the “Common test patterns” section of this page.
+#### Setup and teardown methods
+
+If you will need to leverage the same test data across different tests,
+Jest has setup and teardown methods, such as
+[`beforeEach` and `afterEach`](https://jestjs.io/docs/en/setup-teardown#repeating-setup-for-many-tests), or [`beforeAll` and `afterAll`](https://jestjs.io/docs/en/setup-teardown#one-time-setup),
+which can be used to performing actions
+that are needed before and after running all tests or each test in a suite.
+Fore example, the tests in
+[`Analytics-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/add-js-unit-testing-doc/test/unit_tests/js/modules/Analytics-spec.js#L7-L32)
+use both `beforeAll` and `beforeEach` inside the root `describe` block to
+do a variable definition for all tests at the beginning of the suite
+and reset the `dataLayer` before each test, respectively.
+
+[Check out the Jest documentation on “Setup and teardown” methods.](https://jestjs.io/docs/en/setup-teardown)
+
+A common structure when the DOM is involved
+is to create a constant representing an HTML snippet to test,
+then – in a `beforeEach` or `beforeAll`
+(depending on whether the tests modify the markup or not) –
+set `document.body.innerHTML` to that snippet.
+
+Use `beforeAll` to attach HTML markup that is unaffected by the tests,
+e.g., the tests in
+[`footer-button-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/add-js-unit-testing-doc/test/unit_tests/js/modules/footer-button-spec.js).
+Use `beforeEach` to reset manipulated markup between tests, e.g., the tests in
+[`Notification-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/add-js-unit-testing-doc/test/unit_tests/js/molecules/Notification-spec.js).
+
+[See “Testing DOM manipulation”](#testing-dom-manipulation)
+in the “Common test patterns” section of this page
+for a more in-depth discussion of this scenario.
 
 
 ### Spies, stubs, and mocks
