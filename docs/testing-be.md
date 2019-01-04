@@ -54,7 +54,7 @@ We use the `flake8` and `isort` tools to ensure compliance with
 [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/),
 [Django coding style guidelines](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/),
 and the 
-[CFPB Python style guide](https://github.com/cfpb/development/blob/unittesting-django-wagtail/standards/python.md#linting).
+[CFPB Python style guide](https://github.com/cfpb/development/blob/master/standards/python.md#linting).
 
 Both `flake8` and `isort` can be run using the Tox `lint` environment:
 
