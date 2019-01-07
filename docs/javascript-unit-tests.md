@@ -341,7 +341,7 @@ Jest has setup and teardown methods, such as
 [`beforeEach` and `afterEach`](https://jestjs.io/docs/en/setup-teardown#repeating-setup-for-many-tests), or [`beforeAll` and `afterAll`](https://jestjs.io/docs/en/setup-teardown#one-time-setup),
 which can be used to performing actions
 that are needed before and after running all tests or each test in a suite.
-Fore example, the tests in
+For example, the tests in
 [`Analytics-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/add-js-unit-testing-doc/test/unit_tests/js/modules/Analytics-spec.js#L7-L32)
 use both `beforeAll` and `beforeEach` inside the root `describe` block to
 do a variable definition for all tests at the beginning of the suite
@@ -364,17 +364,6 @@ Use `beforeEach` to reset manipulated markup between tests, e.g., the tests in
 [See “Testing DOM manipulation”](#testing-dom-manipulation)
 in the “Common test patterns” section of this page
 for a more in-depth discussion of this scenario.
-
-
-### Spies, stubs, and mocks
-
-- Sinon-y stuff – spies, stubs, and mocks – when do you use each? how to do with Jest?
-
-
-### Error handling
-
-What did we mean by this?
-
 
 
 
@@ -681,4 +670,37 @@ if the component wasn't visible on the page, for instance.
 
 ## Running unit tests
 
-TBA!
+### Run single file
+To run a single test file, use the `--specs`` flag to specify a file path: 
+
+```
+gulp test:unit --specs=js/organisms/Footer-spec.js
+```
+
+The above command tests the code at `unprocessed/js/organisms/Footer.js`.
+
+### Run all unit tests
+
+To run all of the unit tests:
+```
+gulp test:unit
+```
+
+
+### Run some unit tests
+A directory of unit tests can be run with:
+
+```
+gulp test:unit --specs=js/molecules/
+```
+
+
+
+### Where to find tests
+The following links list out the main directories containing tests (as of January 2019, this page's publish date). 
+
+- [All unit tests](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests)
+- [Tests for individual apps](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/apps)
+- [Tests for regular modules](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/modules)
+- [Tests for molecules](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/molecules)
+- [Tests for organisms](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/organisms)
