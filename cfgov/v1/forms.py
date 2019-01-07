@@ -211,7 +211,7 @@ class FilterableListForm(forms.Form):
         return cleaned_data
 
     # Does the job of {{ field }}
-    # In the template, you pass the field and the id and name you'd like to
+    # In the template, you pass the field, id, and class you'd like to
     # render the field with.
     def render_with_id(self, field, attr_id, attr_class):
         for f in self.fields:
