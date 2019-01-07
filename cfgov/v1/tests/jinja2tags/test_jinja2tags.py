@@ -6,7 +6,7 @@ from django.test import RequestFactory, TestCase, override_settings
 from model_mommy import mommy
 
 from v1.atomic_elements.atoms import ImageBasic
-from v1.jinja2tags import email_popup, image_alt_value
+from v1.jinja2tags import complaint_issue_banner, email_popup, image_alt_value
 from v1.models import CFGOVImage, CFGOVRendition
 
 
@@ -58,6 +58,12 @@ class TestEmailPopup(TestCase):
     def test_email_popup_defined_and_returns_empty_for_no_popup(self):
         request = RequestFactory().get('/page/without/a/popup')
         self.assertEqual(email_popup(request), '')
+
+
+class TestComplaintBanner(TestCase):
+    def test_complaint_banner_defined_and_returns_empty(self):
+        request = RequestFactory().get('/page/without/a/banner')
+        self.assertEqual(complaint_issue_banner(request), '')
 
 
 class TestIsFilterSelected(TestCase):
