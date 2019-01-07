@@ -13,8 +13,8 @@ function stringEscape( s ) {
  * @returns {boolean}
  *   True if string `s` contains special characters, false otherwise.
  */
-function stringValid( s ) {
-  return !( /[~`!.#$%^&*+=[\]\\';,/{}|\\":<>?]/g ).test( s );
+function stringHasRestrictedChars( s ) {
+  return ( /[~`!.#$%^&*+=[\]\\';,/{}|\\":<>?]/g ).test( s );
 }
 
 /**
@@ -29,6 +29,6 @@ function stringMatch( x, y ) {
 
 export {
   stringEscape,
-  stringValid,
+  stringHasRestrictedChars,
   stringMatch
 };

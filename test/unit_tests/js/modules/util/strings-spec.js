@@ -24,49 +24,49 @@ describe( 'Strings stringEscape()', () => {
   } );
 } );
 
-describe( 'Strings stringValid()', () => {
-  it( 'should return true when testing a standard string', () => {
+describe( 'Strings stringHasRestrictedChars()', () => {
+  it( 'should return false when testing a standard string', () => {
     string = 'Test String';
 
-    expect( strings.stringValid( string ) ).toBe( true );
+    expect( strings.stringHasRestrictedChars( string ) ).toBe( false );
   } );
 
-  it( 'should return true when testing a hyphenated string', () => {
+  it( 'should return false when testing a hyphenated string', () => {
     string = 'Test-String';
 
-    expect( strings.stringValid( string ) ).toBe( true );
+    expect( strings.stringHasRestrictedChars( string ) ).toBe( false );
   } );
 
-  it( 'should return true when testing an underscored string', () => {
+  it( 'should return false when testing an underscored string', () => {
     string = 'Test_String';
 
-    expect( strings.stringValid( string ) ).toBe( true );
+    expect( strings.stringHasRestrictedChars( string ) ).toBe( false );
   } );
 
-  it( 'should return false when testing a string containing a single tick',
+  it( 'should return true when testing a string containing a single tick',
     () => {
       string = 'Person\'s Name';
 
-      expect( strings.stringValid( string ) ).toBe( false );
+      expect( strings.stringHasRestrictedChars( string ) ).toBe( true );
     }
   );
 
-  it( 'should return false when testing a string containing a period', () => {
+  it( 'should return true when testing a string containing a period', () => {
     string = 'Some P. Name';
 
-    expect( strings.stringValid( string ) ).toBe( false );
+    expect( strings.stringHasRestrictedChars( string ) ).toBe( true );
   } );
 
-  it( 'should return false when testing a string containing a colon', () => {
+  it( 'should return true when testing a string containing a colon', () => {
     string = 'Person: Name';
 
-    expect( strings.stringValid( string ) ).toBe( false );
+    expect( strings.stringHasRestrictedChars( string ) ).toBe( true );
   } );
 
-  it( 'should return false when testing a string containing a gt or lt', () => {
+  it( 'should return true when testing a string containing a gt or lt', () => {
     string = '<body>';
 
-    expect( strings.stringValid( string ) ).toBe( false );
+    expect( strings.stringHasRestrictedChars( string ) ).toBe( true );
   } );
 } );
 

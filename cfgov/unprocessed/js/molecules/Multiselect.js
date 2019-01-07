@@ -5,7 +5,7 @@ import { bindEvent } from '../modules/util/dom-events';
 import { create } from '../modules/util/dom-manipulators';
 import { queryOne } from '../modules/util/dom-traverse';
 import { UNDEFINED } from '../modules/util/standard-type';
-import { stringMatch, stringValid } from '../modules/util/strings';
+import { stringMatch, stringHasRestrictedChars } from '../modules/util/strings';
 import EventObserver from '../modules/util/EventObserver';
 
 const closeIcon = require(
@@ -144,7 +144,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       item = list[i];
 
       // If the value isn't valid kill the script and prompt the developer.
-      if ( !stringValid( item.value ) ) {
+      if ( stringHasRestrictedChars( item.value ) ) {
         // TODO: Update to throw an error and handle the error vs logging.
         console.log( '\'' + item.value + '\' is not a valid value' );
         // TODO: Remove this line if the class is added via markup.
