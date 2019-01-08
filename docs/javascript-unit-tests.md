@@ -670,34 +670,40 @@ if the component wasn't visible on the page, for instance.
 
 ## Running unit tests
 
-### Run single file
-To run a single test file, use the `--specs`` flag to specify a file path: 
 
-```
+### Run a single test file
+
+To run a single test file, use the `--specs` flag to specify a file path:
+
+```bash
 gulp test:unit --specs=js/organisms/Footer-spec.js
 ```
 
-The above command tests the code at `unprocessed/js/organisms/Footer.js`.
-
-### Run all unit tests
-
-To run all of the unit tests:
-```
-gulp test:unit
-```
+The above command tests the code at `cfgov/unprocessed/js/organisms/Footer.js`.
 
 
-### Run some unit tests
+### Run a directory of unit tests
+
 A directory of unit tests can be run with:
 
-```
+```bash
 gulp test:unit --specs=js/molecules/
 ```
 
 
+### Run all unit tests
+
+To run all of the unit tests:
+
+```bash
+gulp test:unit
+```
+
 
 ### Where to find tests
-The following links list out the main directories containing tests (as of January 2019, this page's publish date). 
+
+The following links list out the main directories containing tests
+(as of January 2019, this page's publish date).
 
 - [All unit tests](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests)
 - [Tests for individual apps](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/apps)
