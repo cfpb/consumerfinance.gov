@@ -143,7 +143,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     for ( let i = 0, len = list.length; i < len; i++ ) {
       item = list[i];
 
-      // If the value needs URL encoding prompt the developer.
+      // If the value requires URL-encoding, prompt the developer.
       const value = item.value;
       if ( encodeURI( value ) !== value ) {
         // TODO: Update to throw an error and handle the error vs logging.
