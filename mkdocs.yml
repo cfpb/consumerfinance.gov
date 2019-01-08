@@ -32,7 +32,8 @@ nav:
 - Contributing to the docs: contributing-docs.md
 
 theme:
-  name: 'readthedocs'
+    name: readthedocs
+    custom_dir: docs-theme-overrides/
 extra_css:
     - css/overrides.css
 
