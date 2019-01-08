@@ -145,7 +145,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
       // If the value requires URL-encoding, prompt the developer.
       const value = item.value;
-      if ( encodeURI( value ) !== value ) {
+      if ( encodeURIComponent( value ) !== value ) {
         // TODO: Update to throw an error and handle the error vs logging.
         console.log( '\'' + item.value + '\' is not a valid value' );
         // TODO: Remove this line if the class is added via markup.
