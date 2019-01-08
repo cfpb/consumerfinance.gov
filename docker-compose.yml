@@ -33,3 +33,20 @@ services:
         working_dir: /src/cfgov-refresh
         stdin_open: true
         tty: true
+    docs:
+        build:
+            context: ./
+            dockerfile: ./docker/docs/Dockerfile
+        ports:
+            - "8888:8888"
+        environment:
+            LANG: en_US.utf8
+            LC_ALL: en_US.utf8
+        volumes:
+            - ./:/src/cfgov-refresh
+        entrypoint:
+            - sh
+            - /src/cfgov-refresh/docker/docs/entrypoint.sh
+        working_dir: /src/cfgov-refresh
+        stdin_open: true
+        tty: true

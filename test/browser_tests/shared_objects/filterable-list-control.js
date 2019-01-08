@@ -1,6 +1,6 @@
 const _oFilterableListControls =
   element( by.css( '.o-filterable-list-controls' ) );
-const multiselect = require( '../shared_objects/multi-select' );
+const multiselect = require( '../shared_objects/multiselect' );
 const EC = protractor.ExpectedConditions;
 
 

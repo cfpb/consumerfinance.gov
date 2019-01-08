@@ -1,18 +1,23 @@
 site_name: cfgov-refresh
-pages:
+
+repo_url: https://github.com/cfpb/cfgov-refresh
+
+nav:
 - Introduction: index.md
 - Installation: installation.md
 - Usage: usage.md
-- Building and Deploying for cf.gov:
+- Building and deploying for cf.gov:
     - New projects: new-projects.md
     - Branching and merging: branching-merging.md
     - Feature flags: feature-flags.md
     - Split testing: split-testing.md
     - How we use Travis CI: travis.md
     - Satellite repos: satellite-repos.md
+- Working with Wagtail:
+    - Creating and editing components: editing-components.md
 - Back-end guidelines:
-    - Wagtail and Django migrations: wagtail-migrations.md
-    - Wagtail Pages vs Django views: django-to-wagtail.md
+    - Django and Wagtail migrations: migrations.md
+    - Wagtail pages: wagtail-pages.md
     - Forms in Wagtail page context: forms-in-wagtail.md
     - Testing: testing-be.md
     - Translation: translation.md
@@ -25,19 +30,20 @@ pages:
     - Ask CFPB: ask-cfpb.md
     - Consumer complaints: consumer-complaint-database.md
     - HMDA data: hmda.md
+- Contributing to the docs: contributing-docs.md
 
-theme: mkDOCter
-extra:
-    brand_color: "#2CB34A"
-    brand_font_family: "AvenirNextLTW01-Regular,Arial,sans-serif"
-    brand_font_color: "#101820"
-    logo_url: https://cfpb.github.io/img/logo_210.png
-    logo_alt: Consumer Financial Protection Bureau
+theme:
+  name: 'readthedocs'
+extra_css:
+    - css/overrides.css
 
 markdown_extensions:
     - admonition
-    - tables
-    - pymdownx.github
+    - pymdownx.betterem
+    - pymdownx.highlight
+    - pymdownx.magiclink
     - pymdownx.superfences
+    - pymdownx.tilde
+    - tables
     - toc:
         permalink: "¶"

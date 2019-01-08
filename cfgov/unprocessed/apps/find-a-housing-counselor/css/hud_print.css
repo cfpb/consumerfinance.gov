@@ -1,6 +1,23 @@
 /***** PRINT STYLES FOR FIND A HOUSING COUNSELOR *****/
+@media screen {
+    .u-print-only {
+        display: none;
+    }
+
+    .u-screen-only {
+        display: block;
+    }
+}
+
 
 @media print {
+    .u-screen-only {
+        display: none;
+    }
+    .u-print-only {
+        display: block;
+    }
+
     body {
         background: transparent !important;
         color: #000 !important; /* Black prints faster: h5bp.com/s */
@@ -8,25 +25,24 @@
         text-shadow: none !important;
     }
 
+    /* Spell out abbreviations. */
+    abbr[title]:after {
+        content: ' (' attr(title) ')';
+    }
+
+    /*
+     * Don't show links.
+     */
+    a:after {
+        content: '';
+    }
+
     a,
     a:link,
     a:visited {
         border: 0;
         color: #000 !important; /* Black prints faster: h5bp.com/s */
-        text-decoration: underline;
-    }
-
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
-
-    /*
-     * Don't show links for images, or javascript/internal links
-     */
-
-    a[href^="javascript:"]:after,
-    a[href^="#"]:after {
-        content: "";
+        text-decoration: none;
     }
 
     pre,
@@ -39,11 +55,6 @@
         display: table-header-group; /* h5bp.com/t */
     }
 
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
-
     img {
         max-width: 100% !important;
     }
@@ -54,136 +65,51 @@
         padding: 0;
     }
 
-    p,
-    h1,
-    h2,
-    h3,
-    h4 {
-        orphans: 3;
-        widows: 3;
+    /* Prevent blank sheet at the end of the page. */
+    main,
+    .content_main {
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
 
-    h1,
-    h2,
-    h3,
-    h4 {
-        page-break-after: avoid;
+    /* Item result row. */
+    tr {
+      display: grid !important;
+      grid-template-columns: 2;
+      grid-template-rows: 2;
+    }
+
+    /* Item services. */
+    td:nth-child(2) {
+      grid-column-start: 1;
+      grid-row-start: 2;
+    }
+
+    /* Item distance. */
+    td:nth-child(3) {
+      grid-column-start: 2;
+      grid-row-start: 1;
+    }
+
+    /* Convert services list into comma-separated list. */
+    ul li {
+      display: inline;
+    }
+
+    ul li:after {
+      content: ', ';
+    }
+
+    ul li:last-child:after {
+      content: '.';
     }
 
     /* Hide unneeded content */
     .o-header,
-    .bread,
-    .share,
     .o-footer,
-    .hud_hca_api_print_hide {
+    .hud_hca_api_results_actions,
+    svg {
         display: none !important;
     }
 
-    /* Some adjustments */
-    table, thead, tbody, tfoot, tr, td, th, caption {
-        border: 0 !important;
-        display: block !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    .pagetitle > h1 {
-        font-size: 16pt;
-    }
-
-    img.hud_hca_api_print_logo {
-        float: right;
-        max-width: 20% !important;
-    }
-
-    .cfpb_hud_hca_api_print_text {
-        border-bottom: 4px solid #101820;
-        padding-bottom: 1em;
-    }
-
-    .hud_hca_api_the_results {
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    /* Grid adjustments */
-    tr.hud_hca_api_result:before,
-    tr.hud_hca_api_result:after {
-        content: " ";
-        display: table;
-    }
-
-    tr.hud_hca_api_result:after {
-        clear: both;
-    }
-
-    tr.hud_hca_api_result {
-        *zoom: 1;
-    }
-
-    tr.hud_hca_api_result {
-        border-bottom: 1px solid #babbbd !important;
-        padding: 1.5em 0 !important;
-    }
-
-    .hud_hca_api_counselors_td,
-    .hud_hca_api_services_td {
-        float: left;
-        width: 88%;
-    }
-
-    .hud_hca_api_distances_td {
-        float: right;
-        margin-left: 2% !important;
-        margin-top: -255px !important;
-        text-align: right;
-        width: 10%;
-    }
-
-    .hud_hca_api_counselor_address,
-    .hud_hca_api_site,
-    .hud_hca_api_tel,
-    .hud_hca_api_lang,
-    .hud_hca_api_serv,
-    .hud_hca_api_distance {
-        page-break-inside: avoid;
-    }
-
-    .hud_hca_api_print_show {
-        display: block !important;
-        visibility: visible;
-    }
-
-    .hud_hca_api_results_listing_title {
-        margin-top: 1em;
-    }
-
-    .hud_hca_api_services {
-        padding-left: 7.04918%;
-    }
-
-    .hud_hca_api_serv_item {
-        display: inline;
-    }
-
-    .hud_hca_api_serv_item:before {
-        content: " | ";
-    }
-
-    .hud_hca_api_serv_item:first-child:before {
-        content: "";
-    }
-
-    .hud_hca_api_distances_td .hud_hca_api_results_listing_title {
-        margin-top: 0;
-    }
-
-    .hud_hca_api_site > .hud_hca_api_results_listing_title,
-    .hud_hca_api_tel > .hud_hca_api_results_listing_title {
-        display: inline;
-    }
-
-    .hud_hca_api_lang {
-        display: block;
-    }
 }

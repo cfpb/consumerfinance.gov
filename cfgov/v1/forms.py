@@ -1,4 +1,5 @@
 from collections import Counter
+from datetime import date
 
 from django import forms
 from django.db.models import Q
@@ -8,6 +9,7 @@ from taggit.models import Tag
 
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
+from v1.util.date_filter import end_of_time_period
 
 from .models.base import Feedback
 
@@ -94,6 +96,7 @@ class FilterableListForm(forms.Form):
         choices=[],
         widget=widgets.SelectMultiple(attrs=authors_select_attrs)
     )
+    preferred_datetime_format = '%m/%d/%Y'
 
     def __init__(self, *args, **kwargs):
         self.filterable_pages = kwargs.pop('filterable_pages')
@@ -110,6 +113,13 @@ class FilterableListForm(forms.Form):
         return self.filterable_pages.filter(query).distinct().order_by(
             '-date_published'
         )
+
+    def first_page_date(self):
+        first_post = self.filterable_pages.order_by('date_published').first()
+        if first_post:
+            return first_post.date_published
+        else:
+            return date(2010, 1, 1)
 
     def prepare_options(self, arr):
         """
@@ -146,10 +156,18 @@ class FilterableListForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
+        if self.errors.get('from_date') or self.errors.get('to_date'):
+            return cleaned_data
+        else:
+            ordered_dates = self.order_from_and_to_date_filters(cleaned_data)
+            transformed_dates = self.set_interpreted_date_values(ordered_dates)
+            return transformed_dates
+
+    def order_from_and_to_date_filters(self, cleaned_data):
         from_date = cleaned_data.get('from_date')
         to_date = cleaned_data.get('to_date')
-        # Check if both date_lte and date_gte are present
-        # If the 'start' date is after the 'end' date, swap them
+        # Check if both date_lte and date_gte are present.
+        # If the 'start' date is after the 'end' date, swap them.
         if (from_date and to_date) and to_date < from_date:
             data = dict(self.data)
             data_to_date = data['to_date']
@@ -159,6 +177,38 @@ class FilterableListForm(forms.Form):
                 to_date, data_to_date
             self.data = data
         return self.cleaned_data
+
+    def set_interpreted_date_values(self, cleaned_data):
+        from_date = cleaned_data.get('from_date')
+        to_date = cleaned_data.get('to_date')
+        # If from_ or to_ is filled in, fill them both with sensible values.
+        # If neither is filled in, leave them both blank.
+        if from_date or to_date:
+            if from_date:
+                self.data['from_date'] = date.strftime(
+                    cleaned_data['from_date'], self.preferred_datetime_format)
+            else:
+                # If there's a 'to_date' and no 'from_date',
+                #  use date of earliest possible filter result as 'from_date'.
+                earliest_results = self.first_page_date()
+                cleaned_data['from_date'] = earliest_results
+                self.data['from_date'] = date.strftime(
+                    earliest_results, self.preferred_datetime_format)
+
+            if to_date:
+                transformed_to_date = end_of_time_period(
+                    self.data['to_date'], cleaned_data['to_date'])
+                cleaned_data['to_date'] = transformed_to_date
+                self.data['to_date'] = date.strftime(
+                    transformed_to_date, self.preferred_datetime_format)
+            else:
+                # If there's a 'from_date' but no 'to_date', use today's date.
+                today = date.today()
+                cleaned_data['to_date'] = today
+                self.data['to_date'] = date.strftime(
+                    today, self.preferred_datetime_format)
+
+        return cleaned_data
 
     # Does the job of {{ field }}
     # In the template, you pass the field and the id and name you'd like to

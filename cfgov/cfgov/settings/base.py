@@ -663,19 +663,15 @@ FLAGS = {
 
     'LEGACY_HUD_API': {'environment is': 'production'},
 
-    # To be enabled when switching the site to use the BCFP logo
-    'BCFP_LOGO': {},
-
-    # Improvements to Find A Housing Counselor page
-    # (UI Improvements project, Fall 2018)
-    'HUD_TOOL_IMPROVEMENTS': {'environment is': 'local'},
-
     # SPLIT TESTING FLAGS
 
     # Ask CFPB page titles as H1s instead of H2s
     'ASK_CFPB_H1': {
         'in split testing cluster': 'ASK_CFPB_H1'
     },
+
+    # Test financial well-being hub pages on Beta
+    'FINANCIAL_WELLBEING_HUB': {'environment is': 'beta'},
 }
 
 

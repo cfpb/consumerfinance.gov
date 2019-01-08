@@ -1,0 +1,406 @@
+{% extends "base.html" %}
+{% import "molecules/social-media.html" as social_media with context %}
+
+{% block title %}
+    Find a Housing Counselor | Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet"
+      href="{{ static('apps/find-a-housing-counselor/css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+    <main class="content" id="main" lang="en">
+        <div class="wrapper content_wrapper">
+            <div class="content_main">
+                <section>
+
+                    <div class="u-print-only">
+                        <!-- Show different content on print -->
+                        <img src="{{ static( 'img/logo_237x50@2x.png' ) }}"
+                             width="237"
+                             height="50"
+                             alt="Consumer Financial Protection Bureau logo">
+
+                        <h1>Housing counselors near you</h1>
+                        <p>
+                            The counseling agencies on this list are approved
+                            by the U.S. Department of Housing and Urban
+                            Development (HUD), and they can offer independent
+                            advice about whether a particular set of mortgage
+                            loan terms is a good fit based on your objectives
+                            and circumstances, often at little or no cost to
+                            you. This list shows you several approved agencies
+                            in your area. You can find other approved counseling
+                            agencies at the Consumer Financial
+                            Protection Bureau’s (CFPB) website:
+                            consumerfinance.gov/mortgagehelp or
+                            by calling 1-855-411-CFPB (2372).
+                            You can also access a list of nationwide
+                            HUD-approved counseling agencies at:
+                            https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm
+                        </p>
+                    </div><!-- end .hud_hca_api_print-header -->
+
+                    <div class="block
+                                block__flush-top
+                                block__flush-top
+                                u-screen-only">
+                        <h1>Find a housing counselor</h1>
+                        <p>
+                            Housing counselors throughout the country can
+                            provide advice on buying a home, renting,
+                            defaults, foreclosures, and credit issues.
+                            Using the search box below,
+                            you can find one near you.
+                            The counseling agencies on this list are
+                            approved by the U.S. Department of Housing
+                            and Urban Development (HUD) and they can
+                            offer independent advice about whether a
+                            particular set of mortgage loan terms is a
+                            good fit based on your objectives and
+                            circumstances, often at little
+                            or no cost to you. This list will show you
+                            several approved agencies in your area.
+                            There is also a
+                            <a class="a-link a-link__icon"
+                               href="{{ signed_redirect( 'https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm' ) }}">
+                               <span class="a-link_text">
+                                   list of nationwide
+                                   HUD-approved counseling agencies
+                               </span>
+                               {{ svg_icon( 'external-link' ) }}</a>.
+                        </p>
+                    </div>
+
+                    <div class="block block__border u-screen-only">
+                        {# Set the `no-js` class on page load,
+                           which is reverted if and when the map is
+                           loaded via JavaScript. #}
+                        <section id="hud_search_container"
+                                 class="no-js
+                                        o-featured-content-module
+                                        o-featured-content-module__right">
+                            <div class="o-featured-content-module_text">
+                                <form class="o-form" action="#hud_search_container">
+                                    <div class="m-form-field-with-button">
+
+                                        <div class="m-form-field">
+                                            <label class="a-label a-label__heading" for="hud_hca_api_query">
+                                                Search by ZIP code:
+                                            </label>
+
+                                            {% if zipcode and error_message %}
+                                            <div class="u-mb15">
+                                                <div class="m-notification
+                                                            m-notification__default
+                                                            m-notification__error
+                                                            m-notification__visible">
+                                                    {{ svg_icon( 'warning-round' ) }}
+                                                    <div class="m-notification_content" role="alert">
+                                                        <div class="h4 m-notification_message">
+                                                            {{ error_message }}
+                                                        </div>
+                                                        <div class="m-notification_explanation">
+                                                            {{ error_help }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
+                                            <input id="hud_hca_api_query"
+                                                   type="text"
+                                                   name="zipcode"
+                                                   class="a-text-input a-text-input__full"
+                                                   value="{% if zipcode %}{{ zipcode }}{% endif %}"
+                                                   placeholder="Please enter a five-digit ZIP code">
+                                        </div>
+
+                                        <div class="m-form-field-with-button_wrapper">
+                                            <button class="a-btn a-btn__full-on-xs" type="submit">Find a counselor</button>
+                                            <div class="m-form-field-with-button_info">
+                                                <p>
+                                                    This tool is powered by
+                                                    <a class="a-link a-link__icon"
+                                                       href="{{ signed_redirect( 'https://data.hud.gov/housing_counseling.html' ) }}">
+                                                    <span class="a-link_text">HUD's</span>
+                                                    {{ svg_icon( 'external-link' ) }}</a>
+                                                    official list of housing counselors.
+                                                </p>
+                                                <p>
+                                                    If you notice errors in the housing counselor data,
+                                                    contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                {% if zipcode and zipcode_valid %}
+                                <div class="skip-nav">
+                                    <a class="skip-nav_link
+                                              skip-nav_link__flush-left"
+                                       href="#hud_results-list_container">
+                                       Skip to results
+                                    </a>
+                                </div>
+                                {% endif %}
+
+                            </div>
+                            <div class="o-featured-content-module_visual">
+                                <!-- Mapbox map is ignored during voiceover navigation
+                                     as set by aria-hidden. -->
+                                <div id="hud_hca_api_map_container"
+                                     aria-hidden="true">
+                                    <div id="hud_hca_api_map_canvas"></div>
+                                </div><!-- end .hud_hca_api_map -->
+                            </div>
+                        </section>
+
+                    </div>
+                    {% if zipcode and zipcode_valid %}
+                    <div class="block" id="hud_results-list_container">
+                        <div class="results-header">
+                            <ul class="m-list
+                                       m-list__horizontal
+                                       hud_hca_api_results_actions">
+                                <li class="m-list_item">
+                                    <a class="a-link
+                                              a-link__icon"
+                                       id="hud_print-page-link"
+                                       href="#">
+                                        <span class="a-link_text">
+                                            Print list
+                                        </span>
+                                        {{ svg_icon( 'print' ) }}
+                                    </a>
+                                </li>
+                                <li class="m-list_item">
+                                    <a class="a-link a-link__icon"
+                                       id="generate-pdf-link"
+                                       href="{{ pdf_url }}"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        <span class="a-link_text">
+                                            Save list as
+                                            <abbr title="Portable Document Format">
+                                              PDF
+                                            </abbr>
+                                        </span>
+                                        {{ svg_icon( 'download' ) }}
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <h2 class="h4">
+                              Displaying the
+                              {{ api_json.counseling_agencies | length }}
+                              locations closest to ZIP code
+                              {{ zipcode | escape }}
+                            </h2>
+                        </div>
+
+                        <table class="o-table
+                                      o-table__stack-on-small
+                                      u-w100pct">
+                            <thead>
+                                <tr>
+                                    <th>Agency</th>
+                                    <th>Services</th>
+                                    <th>Distance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for counselor in api_json.counseling_agencies %}
+                                <tr id="hud-result-{{ loop.index }}">
+                                    <td data-label="Agency">
+                                        <ol start="{{ loop.index }}">
+                                            <li>
+                                                <div class="u-mb15"
+                                                     itemscope
+                                                     itemtype="http://schema.org/PostalAddress">
+
+                                                    {% if counselor.weburl %}
+                                                    <a class="a-link a-link__icon"
+                                                       href="{{ signed_redirect( counselor.weburl ) }}">
+                                                      <span class="a-link_text">
+                                                          <b itemprop="name">{{ counselor.nme }}</b>
+                                                      </span>
+                                                      {{ svg_icon( 'external-link' ) }}
+                                                    </a>
+                                                    {% else %}
+                                                    <b itemprop="name">{{ counselor.nme }}</b>
+                                                    {% endif %}
+
+                                                    <br>
+
+                                                    <span itemprop="streetAddress">{{ counselor.adr1 }}</span>
+                                                    {% if counselor.adr2 and counselor.adr2 != ' '  %}
+                                                    <br>
+                                                    <span itemprop="streetAddress">{{ counselor.adr2 }}</span>
+                                                    {% endif %}
+                                                    <br>
+                                                    <span itemprop="addressLocality">{{ counselor.city }}</span>,
+                                                    <span itemprop="addressRegion">{{ counselor.statecd }}</span>
+                                                    <span itemprop="postalCode">{{ counselor.zipcd }}</span>
+
+                                                </div>
+
+                                                <dl>
+                                                    {% if counselor.weburl %}
+                                                    <dt>Website:</dt>
+                                                    <dd>
+                                                    <a class="a-link a-link__icon"
+                                                       href="{{ signed_redirect( counselor.weburl ) }}"
+                                                       itemprop="url">
+                                                        <span class="a-link_text">
+                                                            {{ counselor.weburl }}
+                                                        </span>
+                                                        {{ svg_icon( 'external-link' ) }}
+                                                    </a>
+                                                    </dd>
+                                                    {% endif %}
+
+                                                    {% if counselor.phone1 %}
+                                                    <dt>Phone:</dt>
+                                                    <dd>
+                                                        <a href="tel:+1-{{ counselor.phone1 }}"
+                                                           itemprop="telephone">
+                                                            {{ counselor.phone1 }}
+                                                        </a>
+                                                    </dd>
+                                                    {% endif %}
+
+                                                    {% if counselor.email %}
+                                                    <dt>Email Address:</dt>
+                                                    <dd>
+                                                        <a href="mailto:{{ counselor.email }}"
+                                                           itemprop="email">
+                                                            {{ counselor.email }}
+                                                        </a>
+                                                    </dd>
+                                                    {% endif %}
+
+                                                    {% if counselor.languages %}
+                                                    <dt>Languages:</dt>
+                                                    <dd itemprop="knowsLanguage">
+                                                        {{ counselor.languages | join( ', ' ) }}
+                                                    </dd>
+                                                    {% endif %}
+                                                </dl>
+                                            </li>
+                                        </ol>
+                                    </td>
+                                    <td data-label="Services">
+                                        <ul>
+                                            {% for service in counselor.services %}
+                                            <li>{{ service }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                    <td data-label="Distance">
+                                        {{ counselor.distance | round( 1 ) }} miles
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% endif %}
+
+                    <div class="block
+                                block__flush-bottom
+                                u-screen-only">
+                        <div class="o-full-width-text-group">
+                            <div class="m-full-width-text">
+                                <h2 class="h3">
+                                    Paperwork Reduction Act statement
+                                </h2>
+                                <p class="block
+                                          block__flush-top
+                                          block__flush-bottom">
+                                    According to the Paperwork Reduction
+                                    Act of 1995, an agency may not conduct or
+                                    sponsor, and a person is not required to
+                                    respond to a collection of information
+                                    unless it displays a valid OMB control
+                                    number. The OMB control number for this
+                                    collection is
+                                    <a class="a-link a-link__icon"
+                                       href="{{ signed_redirect( 'https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025' ) }}">
+                                       <span class="a-link_text"
+                                             aria-label="The OMB control number for this collection is 3170-0025">
+                                           3170-0025
+                                       </span>
+                                       {{ svg_icon( 'external-link' ) }}</a>.
+                                    It expires on 04/30/2016. Using this tool
+                                    to generate a list of HUD-Approved Housing
+                                    Counseling Agencies is voluntary however,
+                                    if you are an entity subject to 12 CFR §
+                                    1024 (78 FR 6856 (Jan. 31, 2013)),
+                                    you are required to provide this list as
+                                    specified in the regulation.
+                                    Comments regarding this collection of
+                                    information, including suggestions for
+                                    improving the usefulness of the information,
+                                    or suggestions for reducing the burden to
+                                    respond to this collection should be
+                                    submitted to the
+                                    Consumer Financial Protection Bureau
+                                    (Attention: PRA Office), 1700 G Street NW,
+                                    Washington, DC 20552, or by email to
+                                    <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="block
+                                block__flush-top
+                                block__padded-top
+                                u-screen-only">
+                        {{ social_media.render( {
+                        "twitter_text": "Use the @CFPB’s interactive tool to find a housing counselor.",
+                        "email_title": "Find a housing counselor tool from CFPB",
+                        "email_text": "The CFPB's tool helps you find a housing counselor:",
+                        "email_signature": "-- From the CFPB",
+                        "linkedin_title": "Find a housing counselor tool from @CFPB",
+                        "linkedin_text": "Use the @CFPB’s interactive tool to find a housing counselor."
+                        } ) }}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+
+    <script>
+      // Store backend settings to pass to front-end scripts.
+      window.cfpbHudSettings = {};
+      window.cfpbHudSettings.hud_data = {};
+      {% if api_json %}
+      window.cfpbHudSettings.hud_data = {{ api_json | tojson }};
+      {% endif %}
+      window.cfpbHudSettings.mapbox_access_token = "{{ mapbox_access_token }}";
+    </script>
+
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/find-a-housing-counselor/js/common.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

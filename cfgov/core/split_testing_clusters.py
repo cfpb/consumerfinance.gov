@@ -1,4 +1,6 @@
 ASK_CFPB_H1 = {
+    # Initial clusters that went live on 12/4/18,
+    # testing the full set of pages in each cluster:
     18: [
         103, 160, 187, 337, 731, 767, 951, 1157, 1161, 1403, 1405, 1439, 1447,
         1567, 1695,
@@ -16,6 +18,12 @@ ASK_CFPB_H1 = {
     93: [
         146, 226, 237, 318, 338, 545, 633, 811, 1215, 1463, 1507,
     ],
+    # New clusters to go live on 1/2/19, using a random half of each cluster:
+    83: [46, 178, 243, 1145, 1397, 1555, ],
+    96: [137, 204, 585, 763, ],
+    166: [1469, 1539, 2023, 2055, ],
+    280: [1113, 1987, 1993, ],
+    302: [31, 1263, 1865, ],
 }
 
 CLUSTERS = {

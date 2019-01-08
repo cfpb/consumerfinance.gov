@@ -5,6 +5,7 @@ limited_categories = [
     ('speech-bubble', 'Blog'),
     ('newspaper', 'Newsroom'),
     ('document', 'Report'),
+    ('pencil', "Director's notebook"),
     ('date', 'Events'),
     ('microphone', 'Speech'),
     ('bullhorn', 'Press release'),
@@ -24,6 +25,7 @@ related_posts_categories = [
         ('Press Release', 'Press release'),
         ('Speech', 'Speech'),
         ('Testimony', 'Testimony'),
+        ("Director's notebook", "Director's notebook"),
     )),
 ]
 
@@ -90,6 +92,7 @@ categories = [
         ('official-guidance', 'Official guidance'),
     )),
     ('Newsroom', (
+        ('directors-notebook', "Director's notebook"),
         ('op-ed', 'Op-ed'),
         ('press-release', 'Press release'),
         ('speech', 'Speech'),
@@ -178,6 +181,7 @@ def page_type_choices():
     new_choices = [
         ('Recent updates', (
             ('blog', 'Blog'),
+            ('directors-notebook', "Director's notebook"),
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
             ('research-reports', 'Report'),
@@ -201,6 +205,7 @@ def page_type_choices():
             ('blog', 'Blog'),
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
+            ('directors-notebook', "Director's notebook"),
             ('speech', 'Speech'),
             ('testimony', 'Testimony'))),
     ]
