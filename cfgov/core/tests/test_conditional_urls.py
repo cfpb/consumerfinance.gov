@@ -2,7 +2,7 @@ from django.test import TestCase, override_settings
 
 import mock
 
-from transition_utilities.conditional_urls import include_if_app_enabled
+from core.conditional_urls import include_if_app_enabled
 
 
 class ConditionalURLTests(TestCase):
@@ -10,7 +10,7 @@ class ConditionalURLTests(TestCase):
     @override_settings(
         INSTALLED_APPS=['core'],
     )
-    @mock.patch('transition_utilities.conditional_urls.include')
+    @mock.patch('core.conditional_urls.include')
     def test_include_if_app_enabled_calls_include(self, mock_include):
         """ Test that an app gets include()ed when all conditions are met """
         include_if_app_enabled('core', None)
@@ -19,7 +19,7 @@ class ConditionalURLTests(TestCase):
     @override_settings(
         INSTALLED_APPS=[],
     )
-    @mock.patch('transition_utilities.conditional_urls.wagtail_fail_through')
+    @mock.patch('core.conditional_urls.wagtail_fail_through')
     def test_include_if_app_enabled_not_in_installed_apps(
             self, mock_wagtail_fail_through):
         """ Test that fail-through is called if app isn't in INSTALLED_APPS
