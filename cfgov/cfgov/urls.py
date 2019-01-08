@@ -21,6 +21,7 @@ from ask_cfpb.views import (
     ask_autocomplete, ask_search, print_answer, redirect_ask_search,
     view_answer
 )
+from core.conditional_urls import include_if_app_enabled
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
 )
@@ -30,7 +31,6 @@ from housing_counselor.views import (
 from legacy.views import token_provider
 from legacy.views.complaint import ComplaintLandingView
 from regulations3k.views import redirect_eregs
-from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
     change_password, check_permissions, login_with_lockout,

@@ -24,7 +24,7 @@ const closeIcon = require(
  */
 function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  const BASE_CLASS = 'cf-multi-select';
+  const BASE_CLASS = 'cf-multiselect';
   const LIST_CLASS = 'm-list';
   const CHECKBOX_INPUT_CLASS = 'a-checkbox';
   const TEXT_INPUT_CLASS = 'a-text-input';
@@ -71,7 +71,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   let _instance;
 
   /**
-   * Set up and create the multi-select.
+   * Set up and create the multiselect.
    * @returns {Multiselect|undefined} An instance,
    *   or undefined if it was already initialized.
    */
@@ -105,7 +105,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Expand the multi-select drop down.
+   * Expand the multiselect drop down.
    * @returns {Multiselect} An instance.
    */
   function expand() {
@@ -118,7 +118,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Collapse the multi-select drop down.
+   * Collapse the multiselect drop down.
    * @returns {Multiselect} An instance.
    */
   function collapse() {
@@ -165,7 +165,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Populates and injects the markup for the custom multi-select.
+   * Populates and injects the markup for the custom multiselect.
    * @returns {HTMLNode} Newly created <div> element to hold the multiselect.
    */
   function _populateMarkup() {
