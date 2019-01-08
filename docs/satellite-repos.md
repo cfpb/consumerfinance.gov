@@ -15,3 +15,6 @@ We have seven satellite repos that are maintained outside of the cfgov-refresh c
 - [owning_a_home_api](https://github.com/cfpb/owning-a-home-api)
 - [retirement](https://github.com/cfpb/retirement)
 - [teachers_digital_platform](https://github.com/cfpb/teachers-digital-platform)
+
+
+We import these satellite projects into cfgov-refresh by specifying wheel files for each in [`requirements/optional-public.txt`](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt).
