@@ -5,7 +5,7 @@ import { bindEvent } from '../modules/util/dom-events';
 import { create } from '../modules/util/dom-manipulators';
 import { queryOne } from '../modules/util/dom-traverse';
 import { UNDEFINED } from '../modules/util/standard-type';
-import { stringMatch, stringHasRestrictedChars } from '../modules/util/strings';
+import { stringMatch } from '../modules/util/strings';
 import EventObserver from '../modules/util/EventObserver';
 
 const closeIcon = require(
