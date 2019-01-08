@@ -143,8 +143,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     for ( let i = 0, len = list.length; i < len; i++ ) {
       item = list[i];
 
-      // If the value isn't valid kill the script and prompt the developer.
-      if ( stringHasRestrictedChars( item.value ) ) {
+      // If the value needs URL encoding prompt the developer.
+      const value = item.value;
+      if ( encodeURI( value ) !== value ) {
         // TODO: Update to throw an error and handle the error vs logging.
         console.log( '\'' + item.value + '\' is not a valid value' );
         // TODO: Remove this line if the class is added via markup.

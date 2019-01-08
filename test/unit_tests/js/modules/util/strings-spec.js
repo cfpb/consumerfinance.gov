@@ -24,52 +24,6 @@ describe( 'Strings stringEscape()', () => {
   } );
 } );
 
-describe( 'Strings stringHasRestrictedChars()', () => {
-  it( 'should return false when testing a standard string', () => {
-    string = 'Test String';
-
-    expect( strings.stringHasRestrictedChars( string ) ).toBe( false );
-  } );
-
-  it( 'should return false when testing a hyphenated string', () => {
-    string = 'Test-String';
-
-    expect( strings.stringHasRestrictedChars( string ) ).toBe( false );
-  } );
-
-  it( 'should return false when testing an underscored string', () => {
-    string = 'Test_String';
-
-    expect( strings.stringHasRestrictedChars( string ) ).toBe( false );
-  } );
-
-  it( 'should return true when testing a string containing a single tick',
-    () => {
-      string = 'Person\'s Name';
-
-      expect( strings.stringHasRestrictedChars( string ) ).toBe( true );
-    }
-  );
-
-  it( 'should return true when testing a string containing a period', () => {
-    string = 'Some P. Name';
-
-    expect( strings.stringHasRestrictedChars( string ) ).toBe( true );
-  } );
-
-  it( 'should return true when testing a string containing a colon', () => {
-    string = 'Person: Name';
-
-    expect( strings.stringHasRestrictedChars( string ) ).toBe( true );
-  } );
-
-  it( 'should return true when testing a string containing a gt or lt', () => {
-    string = '<body>';
-
-    expect( strings.stringHasRestrictedChars( string ) ).toBe( true );
-  } );
-} );
-
 describe( 'Strings stringMatch()', () => {
   it( 'should return true when testing matching strings', () => {
     string = 'Test String';
