@@ -42,11 +42,11 @@
               {{ value.additional_classes }}">
     <form method="get" action="{{ value.action }}" class="content-l">
         {% if value.label %}
-        <div class="o-search-bar_label o-search-bar_col">
+        <label for="q" class="o-search-bar_label o-search-bar_col">
             <h4 class="u-mb0">
                 {{ value.label | safe }}
             </h4>
-        </div>
+        </label>
         {% endif %}
         <div class="o-search-bar_input o-search-bar_col">
             <div class="input-with-btn input-with-btn__bar">
