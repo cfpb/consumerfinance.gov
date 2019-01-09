@@ -33,7 +33,7 @@ nav:
 
 theme:
     name: readthedocs
-    custom_dir: docs-theme-overrides/
+    custom_dir: docs/theme-overrides/
 extra_css:
     - css/overrides.css
 
