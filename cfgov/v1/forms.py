@@ -2,6 +2,7 @@ from collections import Counter
 from datetime import date
 
 from django import forms
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms import widgets
 
@@ -20,6 +21,13 @@ class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
 
 
 class FilterableDateField(forms.DateField):
+    def validate_after_1900(date):
+        strftime_earliest_year = 1900
+        if date.year < strftime_earliest_year:
+            raise ValidationError("Please enter a date 1/1/1900 or later.")
+
+    default_validators = [validate_after_1900]
+
     default_input_formats = (
         '%m/%d/%y',     # 10/25/16, 9/1/16
         '%m-%d-%y',     # 10-25-16, 9-1-16
