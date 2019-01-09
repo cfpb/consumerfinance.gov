@@ -1,4 +1,4 @@
-# Browser tests
+# Browser/Acceptance Tests
 
 ## Quick start:
 

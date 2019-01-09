@@ -1,35 +1,83 @@
-# Writing JavaScript Unit Tests
+# JavaScript Unit Tests
 
-This page provides instructions for writing
-a new JavaScript unit test in cfgov-refresh.
+This page provides instructions for writing and running
+JavaScript (JS) unit tests in cfgov-refresh.
 
 [Jest](https://jestjs.io/docs/en/getting-started) is the framework we use
 for writing and running JavaScript unit tests.
 If you’re not familiar with it,
 it would be a good idea to peruse their docs before diving in here.
 
-For documentation on _running_ tests,
-[see the main front-end testing page](../testing-fe/#unit-testing).
-
 
 
 
 ## Table of contents
 
+1. [Running unit tests](#running-unit-tests)
+    1. [Running a single test file](#running-a-single-test-file)
+    1. [Run a directory of unit tests](#run-a-directory-of-unit-tests)
+    1. [Run all unit tests](#run-all-unit-tests)
+1. [Where to find tests](#where-to-find-tests)
 1. [Test-driven development](#test-driven-development)
 1. [Setting up tests](setting-up-tests)
     1. [New test file from sample](#new-test-file-from-sample)
     1. [Folder structure (where to put your JavaScript and tests)](#folder-structure-where-to-put-your-javascript-and-tests)
+    1. [First test run](#first-test-run)
     1. [File structure (basic layout of a test file)](#file-structure-basic-layout-of-a-test-file)
     1. [Providing test data](#providing-test-data)
-    1. [Spies, stubs, and mocks](#spies-stubs-and-mocks)
-    1. [Error handling](#error-handling)
 1. [Common test patterns](#common-test-patterns)
     1. [Testing a basic function](#testing-a-basic-function)
     1. [Testing DOM manipulation](#testing-dom-manipulation)
     1. [Testing browser state](#testing-browser-state)
     1. [Testing user interaction](#testing-user-interaction)
-1. [Running unit tests](#running-unit-tests)
+
+
+
+
+## Running unit tests
+
+
+### Run a single test file
+
+To run a single test file, use the `--specs` flag to specify a file path:
+
+```bash
+gulp test:unit --specs=js/organisms/Footer-spec.js
+```
+
+The above command tests the code at `cfgov/unprocessed/js/organisms/Footer.js`.
+
+
+### Run a directory of unit tests
+
+A directory of unit tests can be run with:
+
+```bash
+gulp test:unit --specs=js/molecules/
+```
+
+
+### Run all unit tests
+
+To run all of the unit tests:
+
+```bash
+gulp test:unit
+```
+
+
+
+
+## Where to find tests
+
+The following links list out the main directories containing tests
+(as of January 2019, this page’s initial publication date).
+
+- [All unit tests](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests)
+- [Tests for individual apps](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/apps)
+- [Tests for regular modules](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/modules)
+- [Tests for molecules](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/molecules)
+- [Tests for organisms](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/organisms)
 
 
 
@@ -66,24 +114,29 @@ and how to test very common code patterns.
 
 Another common approach is to look for existing tests
 that are testing something similar to what you are writing now.
-Feel free to do so and substitute another test file for
-the `sample-spec.js` file referenced below.
+Feel free to do so and copy from an existing module and its tests
+instead of copying the sample files referenced below.
 For links to existing tests,
-[see the “Running tests” section](#running-tests) on this page.
+[refer back to the “Where to find tests” section](#where-to-find-tests).
 
 Now, let’s begin! Let’s make a new unit test fail,
 then we will make it pass, following the principles of TDD.
 
-1. Create 2 new files: a test file, and a JavaScript file.
-   Their names should match, with the test file adding a `-spec` suffix.
-   For example, if your script is named `my-javascript.js`,
-   then your test is named `my-javascript-spec.js`.
-1. Copy the code from this
-   [`sample-spec.js` file](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/test/unit_tests/js/modules/sample-spec.js)
-   into your own test file.
-1. Copy and paste from
-   [`sample.js`](https://github.com/cfpb/cfgov-refresh/blob/fc9ecc002f933a432322bd15f54be5eb2cffa6e3/cfgov/unprocessed/js/modules/sample.js)
-   into your new JavaScript file.
+1. Copy the sample test file to a new location by
+   running this command from the root of cfgov-refresh:
+
+    ```bash
+    cp docs/samples/sample-spec.js test/unit_tests/js/modules/
+    ```
+
+1. Copy the sample module file to a new location by running this command:
+
+    ```bash
+    cp docs/samples/sample.js cfgov/unprocessed/js/modules/
+    ```
+
+Test file names should always match what they are testing,
+with the addition of a `-spec` suffix.
 
 
 ### Folder structure (where to put your JavaScript and tests)
@@ -96,14 +149,14 @@ The folder structure of the test files mirrors
 the structure of the project JavaScript in
 [`cfgov/unprocessed/js/`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/js).
 
-So my `sample-spec.js` file is in `test/unit_tests/modules/`
-and my `sample.js` file is in `cfgov/unprocessed/js/modules/`.
-I put these files in the `modules` folder because
-they are not atomic components, they are just sample files.
-Your JavaScript might be an atomic element,
-in which case it should go in the corresponding folder.
-If you're not sure where your JavaScript should go,
-[read about atomic components in cfgov-refresh](../atomic-structure/).
+When considering exactly where to place JavaScript in these directories,
+it might be helpful to review the documentation about
+[atomic components in cfgov-refresh](../atomic-structure).
+JavaScript corresponding to atomic elements should go into
+the appropriate subfolder for the type of element being implemented.
+In our case, `sample.js` and `sample-spec.js` don’t relate to atomic elements,
+so they can be placed into the uncategorized `modules` subfolders:
+`cfgov/unprocessed/js/modules` and `test/unit_tests/modules`, respectively.
 
 !!! note "Child apps"
     If you’re working on something in a child app,
@@ -112,34 +165,56 @@ If you're not sure where your JavaScript should go,
     belongs to cfgov-refresh generally,
     it should go in the corresponding folder under `test/unit_test/js/`.
 
+
+### First test run
+
 Now that you have your sample JS and test files in the right places,
 let’s try running them and see what happens!
 I’ll refer to `sample-spec.js` and `sample.js` in the instructions below,
 but you should work in your own new test file and JavaScript file
 to save and commit your changes.
 
-1. Edit line 6 of your spec file and remove the `.skip` method.
+1. Edit line 6 of your spec file and remove the call to the `.skip` method.
    The line should now read:
-   ```js
-   it( 'should return a string with expected value', () => {
-     …
-   } );
-   ```
-1. Run your sample test using `gulp test:unit --specs=js/modules/sample-spec.js`
-   (substituting your own filename).
-   The test should fail – this is expected.
-   Remember, when doing TDD, we want to write our test to fail first,
-   then write the corresponding JavaScript that will make the test pass.
+
+    ```js
+    it( 'should return a string with expected value', () => {
+      …
+    } );
+    ```
+
+1. Run your sample test using
+
+    ```bash
+    gulp test:unit --specs=js/modules/sample-spec.js
+    ```
+
+    (substituting your own filename).
+
+    You should see output like this:
+
+    ![Snippet of console output for a failing unit test](img/js-unit-test-output-fail.png)
+
+    The test should fail – this is expected.
+    Remember, when doing TDD, we want to write our test to fail first,
+    then write the corresponding JavaScript that will make the test pass.
+
 1. Make the test pass by changing your script’s line 7
    ([see `sample.js`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/sample.js))
    to the following:
-   ```js
-   return 'Shredder';
-   ```
-1. Run the test again to confirm the test now passes.
-   Doesn’t it feel good?
 
-[See the “Running tests” section of this page](#running-tests)
+    ```js
+    return 'Shredder';
+    ```
+
+1. Run the test again to confirm the test now passes.
+   You should see output like this:
+
+    ![Snippet of console output for a passing unit test](img/js-unit-test-output-pass.png)
+
+    Doesn’t it feel good?
+
+[Refer back to the “Running unit tests” section](#running-unit-tests)
 for additional commands to run tests.
 
 
@@ -156,7 +231,7 @@ include the JavaScript file that you are testing.
 Additional dependencies should be added in the same manner.
 
 ```js
-import * as sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
+import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
 ```
 
 Some test files use `const` declarations to
@@ -168,20 +243,20 @@ meaning if two modules are importing the same module
 it should only be included in the bundle once,
 whereas with `require` it would be included twice.
 
-A consequence is that variables can't be used in the import path,
+A consequence is that variables can’t be used in the import path,
 as they prevent Webpack from figuring out which modules are duplicates.
 For example, this snippet shows how a `require` statement
 should be converted to an `import` statement,
 but without including the `BASE_JS_PATH` variable in the file path:
 
 ```js
-// works but could duplicate footer-button.js if other files also require it
+// This works, but could duplicate footer-button.js, if other files also require it.
 const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 
-// doesn't work and the build will fail
+// This doesn't work and the build will fail.
 import * as FooterButton from BASE_JS_PATH + 'modules/footer-button.js';
 
-// is ugly but it works and supports tree shaking
+// This is ugly, but it works and supports tree shaking.
 import * as FooterButton from '../../../../cfgov/unprocessed/js/modules/footer-button.js';
 ```
 
@@ -196,7 +271,7 @@ on how to implement `import` for different use cases.
 
 In Jest (whose syntax is based on Jasmine),
 [`describe` blocks](https://jestjs.io/docs/en/api#describename-fn)
-serves as an organizational structures that you can use
+serve as an organizational structures that you can use
 to outline the methods you need in your JS module.
 
 The root `describe` method is where we put
@@ -213,38 +288,37 @@ describe( 'sample', () => {
 This module name will appear in your test output in the console
 when the test is running:
 
-![Console output for failing unit test that reads 'sample: should return a string with expected value'](img/js-unit-test-output.png)
+![Snippet of console output for a unit test that reads 'sample: should return a string with expected value'](img/js-unit-test-output-with-describes.png)
 
 More complex tests will have additional `describe` blocks –
 children of the root `describe` block –
-that should correspond with a particular method in the module.
+that should correspond to a particular method in the module.
 For example, if we want to add more functionality to our sample JS,
 we could start by writing these tests in `sample-spec.js`:
 
 ```js
 describe( 'sample', () => {
 
-    describe( 'gimmeString()', () => {
+  describe( 'gimmeString()', () => {
 
-      it( 'should return a string with expected value', () => {
-        sampleString = 'Shredder';
-        expect( sample.gimmeString() ).toBe( sampleString );
-      } );
-
+    it( 'should return a string with expected value', () => {
+      const sampleString = 'Shredder';
+      expect( sample.gimmeString() ).toBe( sampleString );
     } );
 
-    describe( 'gimmeObject()', () => {
+  } );
 
-      it( 'should return an object with expected value', () => {
-        // You'll need to add `let sampleObject;` at the top of the file, too.
-        sampleObject = {
-            image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
-            caption: 'Krang portrait'
-        };
-        expect( sample.gimmeObject() ).toBe( sampleObject );
-      } );
+  describe( 'gimmeObject()', () => {
 
+    it( 'should return an object with expected value', () => {
+      const sampleObject = {
+        image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+        caption: 'Krang portrait'
+      };
+      expect( sample.gimmeObject() ).toBe( sampleObject );
     } );
+
+  } );
 
 } );
 ```
@@ -270,38 +344,38 @@ which is an alias of
 
 Each test must include one or more assertions (usually only one)
 that confirm that the result of executing some code is what you expected.
-These are called ["matchers"](https://jestjs.io/docs/en/using-matchers)
+These are called [“matchers”](https://jestjs.io/docs/en/using-matchers)
 in Jest parlance, and they all follow this format:
 
 ```js
 expect( someValue ).someKindOfComparisonWith( someOtherValue );
 ```
 
-For example, let's take another look at the sample tests we wrote above:
+For example, let’s take another look at the sample tests we wrote above:
 
 ```js
 describe( 'sample', () => {
 
-    describe( 'gimmeString()', () => {
+  describe( 'gimmeString()', () => {
 
-      it( 'should return a string with expected value', () => {
-        sampleString = 'Shredder';
-        expect( sample.gimmeString() ).toBe( sampleString );
-      } );
-
+    it( 'should return a string with expected value', () => {
+      const sampleString = 'Shredder';
+      expect( sample.gimmeString() ).toBe( sampleString );
     } );
 
-    describe( 'gimmeObject()', () => {
+  } );
 
-      it( 'should return an object with expected value', () => {
-        sampleObject = {
-            image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
-            caption: 'Krang portrait'
-        };
-        expect( sample.gimmeObject() ).toBe( sampleObject );
-      } );
+  describe( 'gimmeObject()', () => {
 
+    it( 'should return an object with expected value', () => {
+      const sampleObject = {
+        image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+        caption: 'Krang portrait'
+      };
+      expect( sample.gimmeObject() ).toBe( sampleObject );
     } );
+
+  } );
 
 } );
 ```
@@ -342,7 +416,7 @@ Jest has setup and teardown methods, such as
 which can be used to performing actions
 that are needed before and after running all tests or each test in a suite.
 For example, the tests in
-[`Analytics-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/add-js-unit-testing-doc/test/unit_tests/js/modules/Analytics-spec.js#L7-L32)
+[`Analytics-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/Analytics-spec.js#L7-L32)
 use both `beforeAll` and `beforeEach` inside the root `describe` block to
 do a variable definition for all tests at the beginning of the suite
 and reset the `dataLayer` before each test, respectively.
@@ -357,9 +431,9 @@ set `document.body.innerHTML` to that snippet.
 
 Use `beforeAll` to attach HTML markup that is unaffected by the tests,
 e.g., the tests in
-[`footer-button-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/add-js-unit-testing-doc/test/unit_tests/js/modules/footer-button-spec.js).
+[`footer-button-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/footer-button-spec.js).
 Use `beforeEach` to reset manipulated markup between tests, e.g., the tests in
-[`Notification-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/add-js-unit-testing-doc/test/unit_tests/js/molecules/Notification-spec.js).
+[`Notification-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/molecules/Notification-spec.js).
 
 [See “Testing DOM manipulation”](#testing-dom-manipulation)
 in the “Common test patterns” section of this page
@@ -465,14 +539,14 @@ function _setType( type ) {
 
   // Remove existing type class
   const classList = _dom.classList;
-  classList.remove( BASE_CLASS + '__' + _currentType );
+  classList.remove(  `${ BASE_CLASS }__${ _currentType }` );
 
 
   if ( type === SUCCESS ||
        type === WARNING ||
        type === ERROR ) {
     // Add new type class and update the value of _currentType
-    classList.add( BASE_CLASS + '__' + type );
+    classList.add(  `${ BASE_CLASS }__${ type }` );
     _currentType = type;
 
     // Replace <svg> element with contents of type_ICON
@@ -482,7 +556,7 @@ function _setType( type ) {
     const newIcon = newIconSetup.firstChild;
     _dom.replaceChild( newIcon, currentIcon );
   } else {
-    throw new Error( type + ' is not a supported notification type!' );
+    throw new Error( `${ type } is not a supported notification type!` );
   }
   return this;
 }
@@ -662,51 +736,5 @@ it( 'should not navigate to new location when non link row cell clicked',
 Testing user interaction with simulated pointer events, keystrokes,
 or form submissions is best handled via browser tests, not unit tests.
 User interaction in a unit test could falsely pass
-if the component wasn't visible on the page, for instance.
-[Read more about how we run browser tests.](../browser-tests/)
-
-
-
-
-## Running unit tests
-
-
-### Run a single test file
-
-To run a single test file, use the `--specs` flag to specify a file path:
-
-```bash
-gulp test:unit --specs=js/organisms/Footer-spec.js
-```
-
-The above command tests the code at `cfgov/unprocessed/js/organisms/Footer.js`.
-
-
-### Run a directory of unit tests
-
-A directory of unit tests can be run with:
-
-```bash
-gulp test:unit --specs=js/molecules/
-```
-
-
-### Run all unit tests
-
-To run all of the unit tests:
-
-```bash
-gulp test:unit
-```
-
-
-### Where to find tests
-
-The following links list out the main directories containing tests
-(as of January 2019, this page's publish date).
-
-- [All unit tests](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests)
-- [Tests for individual apps](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/apps)
-- [Tests for regular modules](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/modules)
-- [Tests for molecules](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/molecules)
-- [Tests for organisms](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/organisms)
+if the component wasn’t visible on the page, for instance.
+[Read more about how we run browser tests.](../browser-acceptance-tests/)

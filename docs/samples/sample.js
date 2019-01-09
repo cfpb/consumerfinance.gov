@@ -4,7 +4,7 @@
    ========================================================================== */
 
 function init() {
-  return 'Shredder';
+  return 'Krang';
 }
 
-export { init };
+export default { init };

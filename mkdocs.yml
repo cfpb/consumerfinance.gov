@@ -19,9 +19,9 @@ nav:
     - Split testing: split-testing.md
     - Translation: translation.md
 - Testing:
-    - Browser Testing: testing-fe.md
+    - Browser/Acceptance Testing: browser-acceptance-tests.md
     - JavaScript Unit Testing: javascript-unit-tests.md
-    - Python Unit Testing: testing-be.md
+    - Python Unit Testing: python-unit-tests.md
 - Contributing:
     - Branching and merging: branching-merging.md
     - Contributing to the docs: contributing-docs.md

@@ -1,10 +1,9 @@
-import * as sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
-let sampleString;
+import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
 
 describe( 'sample', () => {
 
   it.skip( 'should return a string with expected value', () => {
-    sampleString = 'Shredder';
+    const sampleString = 'Shredder';
     expect( sample.init() ).toBe( sampleString );
   } );
 
