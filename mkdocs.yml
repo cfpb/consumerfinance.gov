@@ -33,7 +33,7 @@ nav:
 
 theme:
     name: readthedocs
-    custom_dir: docs/theme-overrides/
+    custom_dir: docs/theme-overrides/ # @TODO: We may be able to remove this custom template when MkDocs 1.1 is released
 extra_css:
     - css/overrides.css
 
