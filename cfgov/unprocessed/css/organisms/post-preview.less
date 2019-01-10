@@ -85,6 +85,19 @@
 .o-post-preview {
     border-bottom: 1px solid @meta-header_border;
     padding-bottom: unit( 15px / @base-font-size-px, em);
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    grid-template-areas:
+        "header image"
+        "content image";
+
+    .respond-to-max( @bp-xs-max, {
+        grid-template-areas:
+            "header"
+            "image"
+            "content";
+    } );
     
     + .o-post-preview {
         margin-top: unit( 30px / @base-font-size-px, em);
@@ -92,21 +105,27 @@
 
     .m-meta-header {
         border-bottom: none;
+        grid-area: header;
+        /*
         display: inline-grid;
         grid-template-rows: auto;
         grid-template-columns: auto;
         grid-template-areas: "category date";
+        */
 
         .respond-to-max( @bp-xs-max, {
-            grid-template-areas:
-                "date"
-                "category";
 
-            &_left:after {
-                content: none;
-            }
-            &_right {
+
+            .m-meta-header_left {
                 margin-bottom: unit( 5px / @base-font-size-px, em );
+                display: block;
+
+                &:after {
+                    display: none;
+                }
+            }
+            .m-meta-header_right {
+                display: block;
             }
         } );
 
@@ -119,6 +138,7 @@
 
         &_left {
             .u-webfont-medium();
+            display: inline-block;
             float: none;
             font-size: 1.125em;
             grid-area: category;
@@ -131,6 +151,7 @@
         }
 
         &_right {
+            display: inline-block;
             float: none;
             grid-area: date;
             line-height: 1.5;
@@ -141,17 +162,21 @@
         }
     }
 
+    &_content {
+        grid-area: content;
+        padding-right: unit( 30px / @base-font-size-px, em );
+    }
+
     &_description {
         margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
     }
 
     &_image-container {
+        grid-area: image;
+        width: unit( 270px / @base-font-size-px, em);
+
         .respond-to-max( @bp-sm-max, {
             margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
-        } );
-
-        .respond-to-min( @bp-med-min, {
-            .grid_column( 4 );
         } );
     }
 
