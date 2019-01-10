@@ -22,6 +22,7 @@ nav:
     - Testing: testing-be.md
     - Translation: translation.md
     - Caching: caching.md
+    - Find a housing counselor tool: housing-counselor-tool.md
 - Front-end guidelines:
     - Atomic structure and design: atomic-structure.md
     - Testing: testing-fe.md
@@ -33,7 +34,8 @@ nav:
 - Contributing to the docs: contributing-docs.md
 
 theme:
-  name: 'readthedocs'
+    name: readthedocs
+    custom_dir: docs/theme-overrides/ # @TODO: We may be able to remove this custom template when MkDocs 1.1 is released
 extra_css:
     - css/overrides.css
 
