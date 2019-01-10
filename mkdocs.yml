@@ -9,9 +9,9 @@ nav:
 - Pages and Components:
     - Atomic structure and design: atomic-structure.md
     - Creating and editing components: editing-components.md
+    - Django and Wagtail migrations: migrations.md
     - Forms in Wagtail page context: forms-in-wagtail.md
     - Wagtail pages: wagtail-pages.md
-    - Django and Wagtail migrations: migrations.md
 - Supporting Features:
     - Caching: caching.md
     - Feature flags: feature-flags.md
