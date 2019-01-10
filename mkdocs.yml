@@ -15,6 +15,7 @@ nav:
 - Supporting Features:
     - Caching: caching.md
     - Feature flags: feature-flags.md
+    - Satellite repos: satellite-repos.md
     - Split testing: split-testing.md
     - Translation: translation.md
 - Testing:
