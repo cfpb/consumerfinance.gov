@@ -875,6 +875,18 @@ class FilterControls(BaseExpandable):
     ], default='filterable-list')
     title = blocks.BooleanBlock(default=True, required=False,
                                 label='Filter Title')
+    no_posts_message = blocks.CharBlock(
+        required=False,
+        help_text=mark_safe(
+            'Message for the <a href="https://cfpb.github.io/'
+            'capital-framework/components/cf-notifications/'
+            '#recommended-notification-patterns">notification</a> '
+            'that will be displayed instead of filter controls '
+            'if there are no posts to filter.'))
+    no_posts_explanation = blocks.CharBlock(
+        required=False,
+        help_text='Additional explanation for the notification that '
+                  'will be displayed if there are no posts to filter.')
     post_date_description = blocks.CharBlock(default='Published')
     categories = blocks.StructBlock([
         ('filter_category',
