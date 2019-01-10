@@ -6,31 +6,31 @@ nav:
 - Introduction: index.md
 - Installation: installation.md
 - Usage: usage.md
-- Building and deploying for cf.gov:
-    - New projects: new-projects.md
-    - Branching and merging: branching-merging.md
+- Pages and Components:
+    - Atomic structure and design: atomic-structure.md
+    - Creating and editing components: editing-components.md
+    - Forms in Wagtail page context: forms-in-wagtail.md
+    - Wagtail pages: wagtail-pages.md
+    - Django and Wagtail migrations: migrations.md
+- Supporting Features:
+    - Caching: caching.md
     - Feature flags: feature-flags.md
     - Split testing: split-testing.md
-    - How we use Travis CI: travis.md
-- Working with Wagtail:
-    - Creating and editing components: editing-components.md
-- Back-end guidelines:
-    - Django and Wagtail migrations: migrations.md
-    - Wagtail pages: wagtail-pages.md
-    - Forms in Wagtail page context: forms-in-wagtail.md
-    - Testing: testing-be.md
     - Translation: translation.md
-    - Caching: caching.md
-    - Find a housing counselor tool: housing-counselor-tool.md
-- Front-end guidelines:
-    - Atomic structure and design: atomic-structure.md
-    - Testing: testing-fe.md
-- Development tips: development-tips.md
-- APIs:
+- Testing:
+    - Browser Testing: testing-fe.md
+    - JavaScript Unit Testing: upcoming-doc.md
+    - Python Unit Testing: testing-be.md
+- Contributing:
+    - Branching and merging: branching-merging.md
+    - Contributing to the docs: contributing-docs.md
+    - Development tips: development-tips.md
+    - How we use Travis CI: travis.md
+- Public APIs and Data:
     - Ask CFPB: ask-cfpb.md
     - Consumer complaints: consumer-complaint-database.md
+    - Find a housing counselor tool: housing-counselor-tool.md
     - HMDA data: hmda.md
-- Contributing to the docs: contributing-docs.md
 
 theme:
     name: readthedocs
