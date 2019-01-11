@@ -76,14 +76,6 @@ Otherwise, if not using Docker, follow these guidelines:
     After running `gulp build` the site's assets are copied over to `cfgov\static_built`,
     ready to be served by Django.
 
-#### Simple static template setup
-
-By default, Django will render pages with accordance to the URL pattern defined
-for it. For example, going to `http://localhost:8000/the-bureau/index.html`
-(or `http://localhost:8000/the-bureau/`) renders `/the-bureau/index.html` from
-the `cfgov` app folder's `jinja2/v1` templates folder as processed
-by the [Jinja2](http://jinja.pocoo.org/docs) templating engine.
-
 ### TIP: Debugging site performance
 
 When running locally it is possible to enable the

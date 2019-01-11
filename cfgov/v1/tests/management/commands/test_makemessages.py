@@ -9,7 +9,7 @@ from django.test import SimpleTestCase
 from django.utils._os import upath
 
 
-# https://github.com/django/django/blob/1.11.15/tests/i18n/test_extraction.py
+# https://github.com/django/django/blob/1.11.18/tests/i18n/test_extraction.py
 has_xgettext = find_command('xgettext')
 
 
@@ -22,7 +22,7 @@ class TestCustomMakeMessages(SimpleTestCase):
     PO_FILE = 'locale/%s/LC_MESSAGES/django.po' % LOCALE
 
     def setUp(self):
-        # https://github.com/django/django/blob/1.11.15/tests/i18n/utils.py#L33
+        # https://github.com/django/django/blob/1.11.18/tests/i18n/utils.py#L33
         self._cwd = os.getcwd()
 
         # Create a temporary test directory to extract messages from.
@@ -53,7 +53,7 @@ class TestCustomMakeMessages(SimpleTestCase):
 
     def _rmrf(self, dname):
         # Only remove this location if we're really deleting the right thing.
-        # https://github.com/django/django/blob/1.11.15/tests/i18n/utils.py
+        # https://github.com/django/django/blob/1.11.18/tests/i18n/utils.py
         if (
             os.path.commonprefix([self.temp_dir, os.path.abspath(dname)]) !=
             self.temp_dir

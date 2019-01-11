@@ -26,9 +26,6 @@ function scrollTo( xCoord, yCoord ) {
 describe( 'footer-button', () => {
   beforeAll( () => {
     window.scrollTo = scrollTo;
-  } );
-
-  beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     footerBtnDom = document.querySelector( '.o-footer_top-button' );
   } );

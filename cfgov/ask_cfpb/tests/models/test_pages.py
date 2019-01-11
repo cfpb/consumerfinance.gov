@@ -16,6 +16,8 @@ from django.utils.translation import ugettext as _
 from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
 
+from wagtail.tests.utils import WagtailTestUtils
+
 import mock
 from mock import mock_open, patch
 from model_mommy import mommy
@@ -69,7 +71,7 @@ class AnswerSlugCreationTest(unittest.TestCase):
             'no-really-more-than-100-characters-looong')
 
 
-class OutputScriptFunctionTests(unittest.TestCase):
+class ExportAskDataTests(TestCase, WagtailTestUtils):
 
     def setUp(self):
         self.mock_assemble_output_value = [{
@@ -102,6 +104,22 @@ class OutputScriptFunctionTests(unittest.TestCase):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
         m.assert_called_once_with("/tmp/{}".format(slug), 'w')
+
+    @mock.patch('ask_cfpb.scripts.export_ask_data.assemble_output')
+    def test_export_from_admin_post(self, mock_output):
+        self.login()
+        mock_output.return_value = self.mock_assemble_output_value
+        response = self.client.post('/admin/export-ask/')
+        self.assertEqual(response.status_code, 200)
+        # Check that fields from the mock value are included
+        self.assertContains(response, 'fakespanishurl.com')
+        self.assertContains(response, 'fakeurl.com')
+
+    def test_export_from_admin_get(self):
+        self.login()
+        response = self.client.get('/admin/export-ask/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Download a spreadsheet')
 
 
 class AnswerModelTestCase(TestCase):

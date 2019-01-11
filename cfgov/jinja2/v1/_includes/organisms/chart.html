@@ -7,13 +7,12 @@
 
    Description:
 
-   Create a chart organism with data.
-   See [GHE]/flapjack/Modules-V1/wiki/Chart
+   Create a chart organism with data when given:
 
-   value.has_top_rule_line:        Boolean for whether or not to add top
-                                   border to chart.
-                                   Used in 'render_block.html' to modify
-                                   classes on wrapping 'div.block'.
+   value.has_top_rule_line: Boolean for whether or not to add top
+                            border to chart.
+                            Used in 'render_block.html' to modify
+                            classes on wrapping 'div.block'.
 
    ========================================================================== #}
 
@@ -37,7 +36,7 @@
     </div>
 
     <p class="m-chart-footnote block__sub block__border-top block short-desc">
-        <strong>Source:</strong> BCFP Consumer Credit Panel<br>
+        <strong>Source:</strong> CFPB Consumer Credit Panel<br>
         <strong>Date published:</strong> {{ value.date_published.strftime('%B %Y') }}<br>
 
         {% if value.data_source %}

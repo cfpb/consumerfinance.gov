@@ -6,33 +6,36 @@ nav:
 - Introduction: index.md
 - Installation: installation.md
 - Usage: usage.md
-- Building and deploying for cf.gov:
-    - New projects: new-projects.md
-    - Branching and merging: branching-merging.md
-    - Feature flags: feature-flags.md
-    - Split testing: split-testing.md
-    - How we use Travis CI: travis.md
-- Working with Wagtail:
-    - Creating and editing components: editing-components.md
-- Back-end guidelines:
-    - Django and Wagtail migrations: migrations.md
-    - Wagtail pages: wagtail-pages.md
-    - Forms in Wagtail page context: forms-in-wagtail.md
-    - Testing: testing-be.md
-    - Translation: translation.md
-    - Caching: caching.md
-- Front-end guidelines:
+- Pages and Components:
     - Atomic structure and design: atomic-structure.md
-    - Testing: testing-fe.md
-- Development tips: development-tips.md
-- APIs:
+    - Creating and editing components: editing-components.md
+    - Django and Wagtail migrations: migrations.md
+    - Forms in Wagtail page context: forms-in-wagtail.md
+    - Wagtail pages: wagtail-pages.md
+- Supporting Features:
+    - Caching: caching.md
+    - Feature flags: feature-flags.md
+    - Satellite repos: satellite-repos.md
+    - Split testing: split-testing.md
+    - Translation: translation.md
+- Testing:
+    - Browser Testing: testing-fe.md
+    - JavaScript Unit Testing: upcoming-doc.md
+    - Python Unit Testing: testing-be.md
+- Contributing:
+    - Branching and merging: branching-merging.md
+    - Contributing to the docs: contributing-docs.md
+    - Development tips: development-tips.md
+    - How we use Travis CI: travis.md
+- Public APIs and Data:
     - Ask CFPB: ask-cfpb.md
     - Consumer complaints: consumer-complaint-database.md
+    - Find a housing counselor tool: housing-counselor-tool.md
     - HMDA data: hmda.md
-- Contributing to the docs: contributing-docs.md
 
 theme:
-  name: 'readthedocs'
+    name: readthedocs
+    custom_dir: docs/theme-overrides/ # @TODO: We may be able to remove this custom template when MkDocs 1.1 is released
 extra_css:
     - css/overrides.css
 

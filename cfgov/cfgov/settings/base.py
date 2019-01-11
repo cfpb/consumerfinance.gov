@@ -587,6 +587,7 @@ CSP_CONNECT_SRC = (
     'files.consumerfinance.gov',
     's3.amazonaws.com',
     'public.govdelivery.com',
+    'n2.mouseflow.com',
     'api.iperceptions.com'
 )
 
@@ -662,9 +663,6 @@ FLAGS = {
     'PING_GOOGLE_ON_PUBLISH': {'environment is': 'production'},
 
     'LEGACY_HUD_API': {'environment is': 'production'},
-
-    # To be enabled when switching the site to use the BCFP logo
-    'BCFP_LOGO': {},
 
     # SPLIT TESTING FLAGS
 

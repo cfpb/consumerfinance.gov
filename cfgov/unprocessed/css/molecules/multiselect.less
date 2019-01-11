@@ -1,0 +1,135 @@
+// Initial and no-js state.
+select.o-multiselect {
+  box-sizing: border-box;
+  width: 100%;
+  padding: unit( 7px / @base-font-size-px, em );
+}
+
+.o-multiselect {
+    position: relative;
+
+    &_header {
+        position: relative;
+    }
+
+    &_search[type="text"] {
+        display: block;
+
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    &_fieldset {
+        // Resets
+        border-color: @input-border;
+        border-top: none;
+        margin: 0;
+        padding: 0;
+
+        // Styles
+        box-sizing: border-box;
+        overflow-y: scroll;
+        position: absolute;
+        z-index: 10;
+
+        max-height: 0;
+        margin-top: -1px;
+        width: 100%;
+
+        background-color: @white;
+        transition: max-height 0.25s ease-out;
+    }
+
+     &.active {
+        .o-multiselect_fieldset {
+            margin-top: 0;
+            max-height: 140px;
+
+            border-color: @pacific;
+            border-width: 2px;
+            border-top: 0;
+        }
+    }
+
+    &_options {
+        padding: unit( 10px / @base-font-size-px, em );
+
+        li:last-child {
+            margin-bottom: 0;
+        }
+
+        &.filtered li:not( .filter-match ) {
+            display: none;
+        }
+
+        &.no-results,
+        &.max-selections {
+            li {
+                display: none;
+            }
+
+            &:after {
+                display: list-item;
+            }
+        }
+
+        &.no-results:after {
+            content: 'No results found';
+        }
+
+        &.max-selections:after {
+            content: 'Reached maximum of five selections';
+        }
+    }
+
+    .cf-input[type="checkbox"] + label {
+        margin-bottom: 0;
+    }
+
+    &_choices {
+        // The following is required to make side-by-side LI
+        // have a space between them.
+        margin-right: unit( -10px / @base-font-size-px, em );
+        margin-bottom: 0;
+
+        li {
+            display: inline-block;
+
+            // The following is required to make side-by-side LI
+            // have a space between them.
+            margin-right: unit( 10px / @base-font-size-px, em );
+        }
+
+        li:last-child {
+          margin-bottom: unit( 10px / @base-font-size-px, em );
+        }
+
+        label {
+            display: inline-block;
+            padding: 2px 5px;
+            padding-right: unit( 25px / @size-v, em );
+
+            background-color: @navy-80;
+            border-radius: unit( 4px / @size-v, em );
+            color: @white;
+            cursor: pointer;
+            font-size: unit( 14px / @base-font-size-px, em );
+            position: relative;
+
+            &:hover {
+                background-color: @navy;
+
+                &:after {
+                    color: @white;
+                }
+            }
+
+            .cf-icon-svg {
+                position: absolute;
+                top: 3px;
+                right: 5px;
+                fill: @navy-20;
+            }
+        }
+    }
+}

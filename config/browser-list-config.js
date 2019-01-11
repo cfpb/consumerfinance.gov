@@ -3,29 +3,36 @@ const LAST_2 = [
   'last 2 versions'
 ];
 
-const ONLY_IE_8_9 = [
-  'Explorer 8',
-  'Explorer 9'
-];
-
-const ONLY_IE_8 = [
-  'Explorer 8'
+const LAST_2_IE_11_UP = [
+  'last 2 versions',
+  'not ie < 11',
+  'not IE_Mob < 11'
 ];
 
 const LAST_2_IE_9_UP = [
   'last 2 versions',
-  'Explorer >= 9'
+  'ie >= 9'
 ];
 
 const LAST_2_IE_8_UP = [
   'last 2 versions',
-  'Explorer >= 8'
+  'ie >= 8'
+];
+
+const ONLY_IE_8_9 = [
+  'ie 8',
+  'ie 9'
+];
+
+const ONLY_IE_8 = [
+  'ie 8'
 ];
 
 module.exports = {
   LAST_2,
-  ONLY_IE_8_9,
-  ONLY_IE_8,
+  LAST_2_IE_11_UP,
   LAST_2_IE_9_UP,
-  LAST_2_IE_8_UP
+  LAST_2_IE_8_UP,
+  ONLY_IE_8_9,
+  ONLY_IE_8
 };
