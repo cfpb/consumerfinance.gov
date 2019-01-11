@@ -421,17 +421,14 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         _evaluate( this.value );
       },
       focus: function() {
-        expand();
+        if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'true' ) {
+          expand();
+        }
       },
       blur: function() {
         if ( !_isBlurSkipped &&
               _fieldsetDom.getAttribute( 'aria-hidden' ) === 'false' ) {
           collapse();
-        }
-      },
-      mousedown: function() {
-        if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'true' ) {
-          expand();
         }
       },
       keydown: function( event ) {
