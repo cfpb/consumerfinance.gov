@@ -10,6 +10,27 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.formats import date_format
 
+from wagtail.wagtailcore.models import PageRevision
+
+
+User = get_user_model()
+
+
+def _get_inactive_users(days_back):
+    """Find inactive users, by last login and last page edit."""
+    pivot_date = timezone.now() - timedelta(days=days_back)
+    inactive_users = User.objects.filter(
+        Q(last_login__lt=pivot_date) | Q(last_login__isnull=True),
+        is_active=True,
+        date_joined__lt=pivot_date
+    )
+    for user in inactive_users:
+        revisions = PageRevision.objects.filter(
+            user=user).order_by('-created_at')
+        if revisions and revisions.first().created_at >= pivot_date:
+            inactive_users = inactive_users.exclude(pk=user.pk)
+    return inactive_users
+
 
 class Command(BaseCommand):
     help = 'Find users who have been inactive for a given amount of time'
@@ -53,15 +74,7 @@ class Command(BaseCommand):
         deactivate_users_flag_set = options['deactivate_users']
         warn_users_flag_set = options['warn_users']
 
-        User = get_user_model()
-
-        last_possible_date = timezone.now() - timedelta(days=period)
-
-        inactive_users = User.objects.filter(
-            Q(last_login__lt=last_possible_date) | Q(last_login__isnull=True),
-            is_active=True,
-            date_joined__lt=last_possible_date
-        )
+        inactive_users = _get_inactive_users(period)
 
         if len(inactive_users) == 0:
             self.stdout.write('No users are inactive {}+ days'.format(period))
@@ -89,13 +102,7 @@ class Command(BaseCommand):
                                       period))
 
         if warn_users_flag_set:
-            warn_date = timezone.now() - timedelta(days=warn_period)
-            warn_users = User.objects.filter(
-                Q(last_login__lt=warn_date) | Q(last_login__isnull=True),
-                last_login__gt=last_possible_date,
-                is_active=True,
-                date_joined__lt=warn_date
-            )
+            warn_users = _get_inactive_users(warn_period)
 
             if len(warn_users) == 0:
                 return

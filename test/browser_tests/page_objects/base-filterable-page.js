@@ -6,7 +6,7 @@ class BaseFilterablePage extends BasePage {
     this.results = await element.all( by.css( '.o-post-preview_content' ) );
     this.firstResult = this.results[0];
     this.lastResult = this.results[this.results.length - 1];
-    this.multiselect = await element.all( by.css( '.cf-multiselect' ) );
+    this.multiselect = await element.all( by.css( '.o-multiselect' ) );
   }
 
   getResultsCount() {
