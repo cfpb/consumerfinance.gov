@@ -24,7 +24,7 @@ const closeIcon = require(
  */
 function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  const BASE_CLASS = 'cf-multiselect';
+  const BASE_CLASS = 'o-multiselect';
   const LIST_CLASS = 'm-list';
   const CHECKBOX_INPUT_CLASS = 'a-checkbox';
   const TEXT_INPUT_CLASS = 'a-text-input';

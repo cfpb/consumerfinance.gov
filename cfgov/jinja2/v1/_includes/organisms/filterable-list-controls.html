@@ -44,7 +44,12 @@
                            for="{{ field_id }}">
                         Item name
                     </label>
-                    {{ form.render_with_id(form.title, field_id) }}
+                    {{ form.render_with_id(
+                      form.title,
+                      field_id,
+                      'a-text-input a-text-input__full'
+                      )
+                    }}
                 </div>
             </div>
         </div>
@@ -80,7 +85,12 @@
                                        for="{{ field_id }}">
                                     Topic
                                 </label>
-                                {{ form.render_with_id(form.topics, field_id) }}
+                                {{ form.render_with_id(
+                                  form.topics,
+                                  field_id,
+                                  'o-multiselect'
+                                  )
+                                }}
                             </div>
                         </div>
                     </div>
@@ -95,7 +105,12 @@
                                        for="{{ field_id }}">
                                     Author
                                 </label>
-                                {{ form.render_with_id(form.authors, field_id) }}
+                                {{ form.render_with_id(
+                                  form.authors,
+                                  field_id,
+                                  'o-multiselect'
+                                  )
+                                }}
                             </div>
                         </div>
                     </div>
@@ -116,8 +131,12 @@
                                                    for="{{ 'from_date' }}">
                                                 From:
                                             </label>
-                                            {{ form.render_with_id(form.from_date,
-                                               'from_date') }}
+                                            {{ form.render_with_id(
+                                              form.from_date,
+                                              'from_date',
+                                              'a-text-input a-text-input__full'
+                                              )
+                                            }}
                                         </div>
                                     </div>
                                     <div class="content-l_col
@@ -127,8 +146,12 @@
                                                    for="{{ 'to_date' }}">
                                                 To:
                                             </label>
-                                            {{ form.render_with_id(form.to_date,
-                                               'to_date') }}
+                                            {{ form.render_with_id(
+                                              form.to_date,
+                                              'to_date',
+                                              'a-text-input a-text-input__full'
+                                              )
+                                            }}
                                         </div>
                                     </div>
                                 </div>

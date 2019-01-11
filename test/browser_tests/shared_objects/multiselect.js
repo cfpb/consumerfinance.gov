@@ -1,4 +1,4 @@
-const _multiSelect = element.all( by.css( '.cf-multiselect' ) ).first();
+const _multiSelect = element.all( by.css( '.o-multiselect' ) ).first();
 
 function _getMultiSelectElement( selector ) {
   return _multiSelect.element( by.css( selector ) );
@@ -6,11 +6,11 @@ function _getMultiSelectElement( selector ) {
 
 const elements = {
   base:     _multiSelect,
-  choices:  _getMultiSelectElement( '.cf-multiselect_choices' ),
-  header:   _getMultiSelectElement( '.cf-multiselect_header' ),
-  search:   _getMultiSelectElement( '.cf-multiselect_search' ),
-  fieldSet: _getMultiSelectElement( '.cf-multiselect_fieldset' ),
-  options:  _getMultiSelectElement( '.cf-multiselect_options' )
+  choices:  _getMultiSelectElement( '.o-multiselect_choices' ),
+  header:   _getMultiSelectElement( '.o-multiselect_header' ),
+  search:   _getMultiSelectElement( '.o-multiselect_search' ),
+  fieldSet: _getMultiSelectElement( '.o-multiselect_fieldset' ),
+  options:  _getMultiSelectElement( '.o-multiselect_options' )
 };
 
 class MultiSelect {
@@ -55,25 +55,25 @@ class MultiSelect {
   }
 
   getChoiceElements() {
-    return element.all( by.css( '.cf-multiselect_choices label' ) );
+    return element.all( by.css( '.o-multiselect_choices label' ) );
   }
 
   getChoiceElementsCount() {
-    return element.all( by.css( '.cf-multiselect_choices label' ) ).count();
+    return element.all( by.css( '.o-multiselect_choices label' ) ).count();
   }
 
   getDropDownCount() {
-    return element.all( by.css( '.cf-multiselect .filter-match' ) ).count();
+    return element.all( by.css( '.o-multiselect .filter-match' ) ).count();
   }
 
   getDropDownLabelElements() {
     return browser.element.all(
-      by.css( '.cf-multiselect_options li .cf-multiselect_label' )
+      by.css( '.o-multiselect_options li .o-multiselect_label' )
     );
   }
 
   getDisplayedTagElements() {
-    return element.all( by.css( '.cf-multiselect_choices li' ) );
+    return element.all( by.css( '.o-multiselect_choices li' ) );
   }
 
   isRendered() {

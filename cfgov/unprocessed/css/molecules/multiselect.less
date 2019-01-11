@@ -1,4 +1,11 @@
-.cf-multiselect {
+// Initial and no-js state.
+select.o-multiselect {
+  box-sizing: border-box;
+  width: 100%;
+  padding: unit( 7px / @base-font-size-px, em );
+}
+
+.o-multiselect {
     position: relative;
 
     &_header {
@@ -34,7 +41,7 @@
     }
 
      &.active {
-        .cf-multiselect_fieldset {
+        .o-multiselect_fieldset {
             margin-top: 0;
             max-height: 140px;
 
