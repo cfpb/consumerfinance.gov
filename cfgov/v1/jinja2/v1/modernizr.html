@@ -8,6 +8,7 @@
    (e.g. Internet Explorer 8) by reversing no-js/js CSS class change made by
    modernizr. The ECMAScript 5 feature checks are listed in
    https://github.com/Modernizr/Modernizr/tree/master/feature-detects/es5
+   We also check for support of Map, which primarily is used to exclude IE10.
 
    ========================================================================= #}
 <script>
@@ -15,7 +16,9 @@
 
   !function(){
     var modernizr = window.Modernizr;
-    if ( !( typeof modernizr !== 'undefined' && modernizr.es5 ) ) {
+    if ( !( typeof modernizr !== 'undefined' &&
+            modernizr.es5 &&
+            !!( window.Map ) ) ) {
       var docElement = document.documentElement;
       docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
     }

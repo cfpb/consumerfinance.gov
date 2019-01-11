@@ -29,7 +29,7 @@ const COMMON_MODULE_CONFIG = {
       options: {
         presets: [ [ '@babel/preset-env', {
           targets: {
-            browsers: BROWSER_LIST.LAST_2
+            browsers: BROWSER_LIST.LAST_2_IE_11_UP
           },
           debug: false
         } ] ]
