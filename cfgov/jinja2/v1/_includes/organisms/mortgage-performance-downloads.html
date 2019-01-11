@@ -8,7 +8,6 @@
    Description:
 
    A full width organism for automating display of mortgage data archives.
-   See [GHE]/flapjack/Modules-V1/wiki/Data-downloads
 
    ========================================================================== #}
 {% set archive_30_60 = download_files[thru_month]['percent_30_60'] %}
@@ -47,7 +46,7 @@
             <td>
                 <p><a aria-label="Download latest CSV file of mortgages 30 to 60 days delinquent by state"
                         href="{{ archive_30_60['State']['url'] }}">
-                    CSV</a> 
+                    CSV</a>
                     ({{ archive_30_60['State']['size'] }})
                 </p>
             </td>
@@ -61,7 +60,7 @@
                         href="{{ archive_30_60['County']['url'] }}">
                     CSV</a> ({{ archive_30_60['County']['size'] }})</p>
             </td>
-        </tr>                
+        </tr>
         <tr>
             <td>
                 <p>Mortgages 90 or more days delinquent</p>
@@ -140,7 +139,7 @@
                     href="{{ archive_30_60['County']['url'] }}">
                 CSV</a> ({{ archive_30_60['County']['size'] }})</p>
             </td>
-        </tr>                
+        </tr>
         <tr>
             <td>
                 <p>Mortgages 90 or more days delinquent</p>
