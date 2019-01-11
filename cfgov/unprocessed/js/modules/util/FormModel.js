@@ -25,7 +25,7 @@ function FormModel( form ) {
     ]
   };
 
-  const _fieldCache = {};
+  const _fieldCache = new Map();
 
   /**
    * @returns {FormModel} An instance.
@@ -84,15 +84,18 @@ function FormModel( form ) {
         }
       }
 
-      _fieldCache[element] = {
-        type: type,
-        label: _getLabelText( element, false || isInGroup ),
-        isInGroup: isInGroup
-      };
+      _fieldCache.set(
+        element,
+        {
+          type: type,
+          label: _getLabelText( element, false || isInGroup ),
+          isInGroup: isInGroup
+        }
+      );
     }
-    _fieldCache.elements = rawElements;
-    _fieldCache.validateableElements = validateableElements;
-    _fieldCache.fieldGroups = fieldGroups;
+    _fieldCache.set( 'elements', rawElements );
+    _fieldCache.set( 'validateableElements', validateableElements );
+    _fieldCache.set( 'fieldGroups', fieldGroups );
   }
 
   /**
