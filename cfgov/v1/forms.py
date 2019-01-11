@@ -211,14 +211,14 @@ class FilterableListForm(forms.Form):
         return cleaned_data
 
     # Does the job of {{ field }}
-    # In the template, you pass the field and the id and name you'd like to
+    # In the template, you pass the field, id, and class you'd like to
     # render the field with.
-    def render_with_id(self, field, attr_id):
+    def render_with_id(self, field, attr_id, attr_class):
         for f in self.fields:
             if field.html_name == f:
                 self.fields[f].widget.attrs.update({
                     'id': attr_id,
-                    'class': 'a-text-input a-text-input__full'
+                    'class': attr_class
                 })
                 self.set_field_html_name(self.fields[f], attr_id)
                 return self[f]
