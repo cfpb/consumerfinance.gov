@@ -13,11 +13,18 @@ from django.utils import timezone
 from django.utils.formats import date_format
 
 from core.management.commands.inactive_users import Command
+from v1.models import LandingPage
 
 
 class InactiveUsersTestCase(TestCase):
 
     def setUp(self):
+        from v1.models import HomePage
+        self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.landing_page = LandingPage(
+            title='Landing', slug='landing')
+        self.ROOT_PAGE.add_child(instance=self.landing_page)
+
         User = get_user_model()
 
         days_91 = timezone.now() - timedelta(days=91)
@@ -58,6 +65,13 @@ class InactiveUsersTestCase(TestCase):
                                           email='user_6@test.test',
                                           last_login=days_61,
                                           date_joined=days_91)
+
+        # This user hasn't logged in for 91 days but has since edited a page.
+        self.page_editor = User.objects.create(username='page_editor',
+                                               email='page_editor@test.test',
+                                               last_login=days_91,
+                                               date_joined=days_91)
+        self.landing_page.save_revision(user=self.page_editor)
 
         self.stdout = StringIO()
 
@@ -148,8 +162,8 @@ class InactiveUsersTestCase(TestCase):
         call_command('inactive_users',
                      '--warn-users',
                      stdout=self.stdout)
-        # Outbox will have two user emails
-        self.assertEqual(len(mail.outbox), 2)
+        # Should see 5 warnings since we're not passing `--deactivate`.
+        self.assertEqual(len(mail.outbox), 5)
 
     def test_sends_email_when_deactivating(self):
         """ Test that mail.EmailMessage is called with the appropriate
@@ -212,3 +226,13 @@ class InactiveUsersTestCase(TestCase):
         self.assertFalse(User.objects.get(username="user_4").is_active)
         self.assertTrue(User.objects.get(username="user_5").is_active)
         self.assertTrue(User.objects.get(username="user_6").is_active)
+
+        # No warnings if we give the remaining users a save_revision pass.
+        mail.outbox = []
+        self.landing_page.save_revision(user=self.user_3)
+        self.landing_page.save_revision(user=self.user_6)
+
+        call_command('inactive_users',
+                     '--warn-users',
+                     stdout=self.stdout)
+        self.assertEqual(len(mail.outbox), 0)

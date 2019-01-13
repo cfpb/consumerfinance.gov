@@ -16,3 +16,9 @@ We use the following constraints to optimize Travis builds for speed and utility
 To customize Travis to fit the above constraints, we use a combination of:
  - [Build conditionals](https://docs.travis-ci.com/user/conditions-v1) and [build stages](https://docs.travis-ci.com/user/build-stages/) in our [.travis.yml](https://github.com/cfpb/cfgov-refresh/blob/master/.travis.yml) file 
  - "Settings" in the Travis UI at https://travis-ci.org
+
+## An extra task for satellite repositories
+
+For our [satellite apps](https://cfpb.github.io/cfgov-refresh/satellite-repos/), Travis is also used to build and attach a deployment wheel file to every release.  
+
+An example is the `.whl` file on [this release of the retirement app](https://github.com/cfpb/retirement/releases/tag/0.7.6).

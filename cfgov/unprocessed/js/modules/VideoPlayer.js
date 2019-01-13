@@ -6,9 +6,6 @@ import { assign } from './util/assign';
 import { noopFunct } from './util/standard-type';
 import * as jsLoader from './util/js-loader';
 
-// TODO: Remove data-set ponyfill when IE10 support is dropped.
-import elemDataset from 'elem-dataset';
-
 import ERROR_MESSAGES from '../config/error-messages-config';
 
 const DOM_INVALID = ERROR_MESSAGES.DOM.INVALID;
@@ -37,14 +34,16 @@ let _this;
  *
  * @classdesc Base Video Player class.
  * @param {HTMLNode} element - The DOM element to use as the base element.
- * @param {object} options - attributes used to extend the video player
+ * @param {Object} options - attributes used to extend the video player
  */
 function VideoPlayer( element, options ) {
   _this = this;
   options = options || {};
   this.baseElement = _ensureElement( element, options.createIFrame );
-  const dataSet = assign( {}, elemDataset( this.baseElement ) );
-  this.iFrameProperties = assign( dataSet, this.iFrameProperties );
+  this.iFrameProperties = assign(
+    this.baseElement.dataset,
+    this.iFrameProperties
+  );
 
   _setChildElements( this.childElements );
   _initEvents();

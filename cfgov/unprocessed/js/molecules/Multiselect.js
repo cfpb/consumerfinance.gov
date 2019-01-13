@@ -24,7 +24,7 @@ const closeIcon = require(
  */
 function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  const BASE_CLASS = 'cf-multiselect';
+  const BASE_CLASS = 'o-multiselect';
   const LIST_CLASS = 'm-list';
   const CHECKBOX_INPUT_CLASS = 'a-checkbox';
   const TEXT_INPUT_CLASS = 'a-text-input';
@@ -421,17 +421,14 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         _evaluate( this.value );
       },
       focus: function() {
-        expand();
+        if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'true' ) {
+          expand();
+        }
       },
       blur: function() {
         if ( !_isBlurSkipped &&
               _fieldsetDom.getAttribute( 'aria-hidden' ) === 'false' ) {
           collapse();
-        }
-      },
-      mousedown: function() {
-        if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'true' ) {
-          expand();
         }
       },
       keydown: function( event ) {
