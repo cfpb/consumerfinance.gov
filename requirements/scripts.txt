@@ -1,4 +1,4 @@
 beautifulsoup4==4.5.1
 boto3==1.7.80
 github3.py==0.9.6
-requests==2.19.1
+requests==2.20.0

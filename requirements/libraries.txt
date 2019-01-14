@@ -28,8 +28,8 @@ pyelasticsearch==0.6.1
 python-dateutil==2.7.3
 pytz
 # PyYAML is required by college-costs
-PyYAML==3.13
-requests==2.19.1
+PyYAML==4.2b1
+requests==2.20.0
 requests_toolbelt==0.8.0
 sha3==0.2.1
 six==1.11.0
