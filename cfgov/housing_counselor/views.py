@@ -11,7 +11,6 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 from legacy.forms import HousingCounselorForm
-from v1.s3utils import https_s3_url_prefix
 
 
 logger = logging.getLogger(__name__)
@@ -45,7 +44,7 @@ class HousingCounselorS3URLMixin(object):
             format=format,
             zipcode=zipcode
         )
-        return https_s3_url_prefix() + path
+        return path
 
     @classmethod
     def s3_json_url(cls, zipcode):
