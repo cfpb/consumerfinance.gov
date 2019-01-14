@@ -86,7 +86,7 @@ class TestCDNManagementView(TestCase):
         self.client.login(username='cdn', password='password')
         response = self.client.get(reverse('manage-cdn'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Enter a URL to flush it")
+        self.assertContains(response, "Enter a full URL")
 
     @mock.patch('v1.models.akamai_backend.AkamaiBackend.purge')
     def test_submission_with_url(self, mock_purge):
