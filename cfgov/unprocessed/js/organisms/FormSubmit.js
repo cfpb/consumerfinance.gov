@@ -160,7 +160,7 @@ function FormSubmit( element, baseClass, opts ) {
     function fadeInMessage() {
       _notification.setTypeAndContent( _notification.SUCCESS, message );
       _notification.show();
-      _baseElement.replaceChild( _notification.getElement(), _formElement );
+      _baseElement.replaceChild( _notificationElement, _formElement );
       transition.removeEventListener( BaseTransition.END_EVENT, fadeInMessage );
       transition.fadeIn();
     }
