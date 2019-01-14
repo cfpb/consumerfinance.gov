@@ -89,6 +89,17 @@ class TestFilterableListForm(TestCase):
         self.assertEquals(len(page_set), 1)
         self.assertEquals(page_set[0].specific, page1)
 
+    def test_validate_date_after_1900_can_pass(self):
+        form = self.setUpFilterableForm()
+        form.data = {'from_date': '1/1/1900'}
+        self.assertTrue(form.is_valid())
+
+    def test_validate_date_after_1900_can_fail(self):
+        form = self.setUpFilterableForm()
+        form.data = {'from_date': '12/31/1899'}
+        self.assertFalse(form.is_valid())
+        self.assertIn('from_date', form._errors)
+
     def test_clean_categories_converts_blog_subcategories_correctly(self):
         form = self.setUpFilterableForm()
         form.data = {'categories': ['blog']}
