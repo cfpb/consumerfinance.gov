@@ -405,6 +405,33 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(mock_sqs.call_count, 6)
 
     @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
+    def test_routable_search_page_handles_null_highlights(self, mock_sqs):
+        mock_return = mock.Mock()
+        mock_return.part = '1002'
+        mock_return.text = ''
+        mock_return.highlighted = None
+        mock_return.paragraph_id = 'a'
+        mock_return.title = 'Section 1002.1 Now is the time.'
+        mock_return.section_label = '1'
+        mock_queryset = mock.Mock()
+        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
+        mock_queryset.count.return_value = 1
+        mock_sqs.return_value = mock_queryset
+        response = self.client.get(
+            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+                'regulation_results_page'),
+            {'q': 'disclosure', 'regs': '1002', 'order': 'regulation'})
+        self.assertEqual(mock_sqs.call_count, 3)
+        self.assertEqual(response.status_code, 200)
+        response2 = self.client.get(
+            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+                'regulation_results_page'),
+            QueryDict(query_string=(
+                'q=disclosure&regs=1002&regs=1003&order=regulation')))
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(mock_sqs.call_count, 6)
+
+    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
     def test_routable_search_page_reg_only(self, mock_sqs):
         response = self.client.get(
             self.reg_search_page.url + self.reg_search_page.reverse_subpage(

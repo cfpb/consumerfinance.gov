@@ -98,8 +98,11 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             pre_tags=['<strong>'],
             post_tags=['</strong>']).models(SectionParagraph)
         for hit in sqs:
+            try:
+                snippet = Markup(" ".join(hit.highlighted))
+            except TypeError:
+                continue
             letter_code = LETTER_CODES.get(hit.part)
-            snippet = Markup(" ".join(hit.highlighted))
             hit_payload = {
                 'id': hit.paragraph_id,
                 'part': hit.part,
