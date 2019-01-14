@@ -122,13 +122,6 @@ function FilterableListControls( element ) {
   }
 
   /**
-   * Remove Event listeners.
-   */
-  function destroy() {
-    _form.removeEventListener( 'submit', _formSubmitted );
-  }
-
-  /**
    * Handle form sumbmission and showing error notification.
    */
   function _formSubmitted() {
@@ -241,7 +234,7 @@ function FilterableListControls( element ) {
   }
 
   this.init = init;
-  this.destroy = destroy;
+
   return this;
 }
 
