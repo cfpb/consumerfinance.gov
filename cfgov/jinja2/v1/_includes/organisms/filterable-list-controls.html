@@ -221,22 +221,24 @@
             {% endfor %}
         {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
-            {% set count = posts.paginator.count %}
-            {% if not has_active_filters %}
-                {{ notification.render('default', false, '') }}
-            {% elif count == 0 %}
-                {{ notification.render(
-                    'warning',
-                    true,
-                    'Sorry, there were no results based on your filter selections.',
-                    'Please reset the filter or change your selections and try again.'
-                ) }}
-            {% else %}
-                {{ notification.render(
-                    'success',
-                    true,
-                    count ~ ' filtered result' ~ count|pluralize('s')
-                ) }}
+            {% if form.is_valid() %}
+                {% set count = posts.paginator.count %}
+                {% if not has_active_filters %}
+                    {{ notification.render('default', false, '') }}
+                {% elif count == 0 %}
+                    {{ notification.render(
+                        'warning',
+                        true,
+                        'Sorry, there were no results based on your filter selections.',
+                        'Please reset the filter or change your selections and try again.'
+                    ) }}
+                {% else %}
+                    {{ notification.render(
+                        'success',
+                        true,
+                        count ~ ' filtered result' ~ count|pluralize('s')
+                    ) }}
+                {% endif %}
             {% endif %}
         {% endif %}
         {% if controls.categories.page_type == 'activity-log' %}
