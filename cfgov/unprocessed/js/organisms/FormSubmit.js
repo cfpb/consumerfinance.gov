@@ -28,7 +28,9 @@ function FormSubmit( element, baseClass, opts ) {
   let UNDEFINED;
   const _baseElement = checkDom( element, baseClass );
   const _formElement = _baseElement.querySelector( 'form' );
-  const _notificationElement = _baseElement.querySelector( '.m-notification' );
+  const _notificationElement = _baseElement.querySelector(
+    Notification.BASE_CLASS
+  );
   let _notification;
   let _cachedFields;
   const eventObserver = new EventObserver();
@@ -64,7 +66,7 @@ function FormSubmit( element, baseClass, opts ) {
     _baseElement.classList.add( 'form-submitted' );
 
     if ( errors ) {
-      _displayNotification( _notification.ERROR, errors );
+      _displayNotification( Notification.ERROR, errors );
     } else {
       _submitForm();
     }
@@ -88,7 +90,7 @@ function FormSubmit( element, baseClass, opts ) {
    * @param {content} content for notification.
    */
   function _displayNotification( type, content ) {
-    _notification.setTypeAndContent( type, content );
+    _notification.update( type, content );
     _notification.show();
     scrollIntoView( _notificationElement );
   }
@@ -136,8 +138,10 @@ function FormSubmit( element, baseClass, opts ) {
           _replaceFormWithNotification( heading + ' ' + message );
         } else {
           const key = opts.language === 'es' ? state + '_ES' : state;
-          _displayNotification( _notification[state],
-            message || FORM_MESSAGES[key] );
+          _displayNotification(
+            Notification[state],
+            message || FORM_MESSAGES[key]
+          );
         }
         if ( state === 'SUCCESS' ) {
           self.dispatchEvent( 'success', { target: this, form: _formElement } );
@@ -165,7 +169,7 @@ function FormSubmit( element, baseClass, opts ) {
         _baseElement.style.marginBottom = Math.min( _formElement.offsetHeight, 100 ) + 'px';
       }
       _formElement.style.display = 'none';
-      _notification.setTypeAndContent( _notification.SUCCESS, message );
+      _notification.update( Notification.SUCCESS, message );
       _notification.show();
       transition.removeEventListener( BaseTransition.END_EVENT, fadeInMessage );
       transition.fadeIn();
