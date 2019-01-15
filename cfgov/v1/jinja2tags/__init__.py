@@ -8,6 +8,7 @@ from jinja2.ext import Extension
 from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
 from v1.models import CFGOVRendition
+from v1.templatetags.complaint_issue_banner import complaint_issue_banner
 from v1.templatetags.email_popup import email_popup
 from v1.templatetags.mega_menu import get_menu_items
 from v1.util import ref
@@ -92,6 +93,7 @@ class V1Extension(Extension):
             'category_label': ref.category_label,
             'choices_for_page_type': ref.choices_for_page_type,
             'email_popup': email_popup,
+            'complaint_issue_banner': complaint_issue_banner,
             'fcm_label': ref.fcm_label,
             'get_menu_items': get_menu_items,
             'get_model': get_model,
