@@ -227,11 +227,6 @@
                 {% endfor %}
             {% endif %}
         {% endfor %}
-        {% if form.non_field_errors() %}
-            {% for error in form.non_field_errors() %}
-                    {{ notification.render('error', true, error) }}
-            {% endfor %}
-        {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
             {% if form.is_valid() %}
                 {% set count = posts.paginator.count %}
