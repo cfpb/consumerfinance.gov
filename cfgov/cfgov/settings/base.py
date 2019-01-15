@@ -612,6 +612,10 @@ FLAGS = {
     # When enabled, display a "technical issues" banner on /complaintdatabase.
     'CCDB_TECHNICAL_ISSUES': {},
 
+    # When enabled, display a banner stating the complaint intake form is down.
+    # See COMPLAINT_INTAKE_TECHNICAL_ISSUES_URLS below.
+    'COMPLAINT_INTAKE_TECHNICAL_ISSUES': {},
+
     # When enabled, use Wagtail for /company-signup/
     # (instead of selfregistration app)
     'WAGTAIL_COMPANY_SIGNUP': {},
@@ -721,6 +725,13 @@ EMAIL_POPUP_URLS = {
         '/owning-a-home/mortgage-estimate/',
     ],
 }
+
+# URLs that will show the complaint intake issue banner when the service is down.
+COMPLAINT_INTAKE_TECHNICAL_ISSUES_URLS = [
+    '/complaint/',
+    '/complaint/getting-started/',
+    '/complaint/process/'
+]
 
 REGULATIONS_REFERENCE_MAPPING = [
     (
