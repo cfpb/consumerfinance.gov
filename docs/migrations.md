@@ -14,6 +14,7 @@ additionally, changing field names or types on an existing block will require a
 1. [Data migrations](#data-migrations)
    1. [Wagtail-specific consideration](#wagtail-specific considerations)
    1. [Utility functions](#utility-functions)
+1. [Recreating migrations](#recreating-migrations)
 
 
 ## Reference material
@@ -31,7 +32,9 @@ into the concepts presented throughout this page:
 Any time you add or change a field on a Django model, Wagtail page model
 (which are a particular kind of Django model), or StreamField block classes, a
 [Django schema migration](https://docs.djangoproject.com/en/1.11/topics/migrations)
-will be required.
+will be required. 
+When that field is a StreamField, this includes changes to the properties of a child block,
+or even something minor like a help text string.
 
 To automatically generate a schema migration,
 run the following, editing it to give your migration a name
@@ -228,3 +231,95 @@ If commit is `True` (default),
 
 `stream_data` must be a list of `dict`-like objects
 containing the blocks within the given StreamField.
+
+## Recreating migrations
+
+[As described above](#schema-migrations), 
+each time a Django model's definition changes it requires the generation of a new Django migration. 
+Over time, the number of migrations in our apps can grow very large, 
+slowing down testing and the `migrate` command.
+
+For this reason it may be desirable to periodically delete and recreate the migration files, 
+so that instead of a series of files detailing every change over time 
+we have a smaller set that just describes the current state of models in the code. 
+
+Django does provide an automated 
+[squashing](https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations) 
+process for migrations, 
+but this is often not optimal when migrations contain manual `RunPython` blocks that we don't necessarily care about keeping around.
+
+Instead, we delete all existing migration files and then run `manage.py makemigrations` to create new ones. 
+This will generate the smallest number of migration files needed to describe the state of models in the code; 
+typically one per app although sometimes multiple are needed due to app dependencies.
+
+This process does have these critical side effects:
+
+1. Databases that exist at some migration state before the one at the point of the recreation will no longer be able to be migrated to the current state, 
+    as the intermediate changes will have been lost. 
+    This means that those databases will need to be recreated. 
+    This also means that historical database archives will require a bit more work to resurrect; 
+    they'll need to first be migrated to the point just before the recreation, 
+    and then updated to code at or after that point.
+
+    For example, say a database dump exists at a point where N migrations occur. 
+    At such time as N + 1 migrations occur, 
+    we decide to go through the recreation process. 
+    Now we have a new migration numbered N + 2 that represents the equivalent of all (1..N+1) migrations that it replaces. 
+    If you try to load and migrate the dump at point N, 
+    Django no longer has the code necessary to go from N->N+1 only -- 
+    it only has the ability to go from 0->N+2. 
+    To recover such a dump, you'll need to check out the code at the point before the recreation was done, 
+    migrate from N->N+1, and then check out latest and migrate forwards.
+
+2. Any open pull requests at the time of the recreation that reference 
+    or depend on some of the existing migrations 
+    will need to be modified to instead refer to the new migration files.
+
+Migrations can be recreated with this process:
+
+1. Remove all existing migration files:
+
+    ```sh
+    rm -f -v cfgov/*/migrations/0*
+    ```
+
+2. Create new migration files from the state of model Python code:
+
+    ```sh
+    cfgov/manage.py makemigrations --noinput
+    ```
+
+    As it happens this creates new initial migrations (`0001_initial`) for all apps, 
+    plus some subsequent migrations (`0002_something`) for apps that depend on other apps 
+    (for example, `ask_cfpb` has its own initial migration and then some changes that rely on `v1`).
+
+3. Rename the created migration files so that they follow in sequence the migration files that used to exist. 
+   For example, if at the time of recreation there are 101 `v1` migrations, 
+   the first new migration should be numbered 102.
+
+4. Manually alter all new migration files to indicate that they replace the old migration files.
+
+    This involves adding lines to these files like:
+
+    ```py
+    includes = [('app_name', '0002_foo'), ('app_name', '0003_bar'), ...]
+    ```
+
+    This tells Django that these new files replace the old files, 
+    so that when migrations are run again, 
+    it doesn't need to do anything.
+
+    Also manually update any new subsequent migration files so that they properly refer to each other. 
+    For example, if an app has two new migrations 102 and 103, 
+    the 103 file needs to properly depend on 102.
+
+To apply these new migration files to an existing database, you can simply run:
+
+```sh
+cfgov/manage.py migrate --noinput
+```
+
+You'll see that there are no changes to apply, 
+as the new files should exactly describe the current model state in the same way that the old migrations did.
+
+See [cfgov-refresh#3770](https://github.com/cfpb/cfgov-refresh/pull/3770) for an example of when this was done.
