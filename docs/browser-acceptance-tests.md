@@ -1,4 +1,4 @@
-# Browser tests
+# Browser/Acceptance Tests
 
 ## Quick start:
 
@@ -169,7 +169,9 @@ Tests are organized into suites under the `test/browser_tests/cucumber/features`
 - [Understanding Page Objects](https://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings)
 
 
-# Performance testing
+
+
+## Performance testing
 
 To audit if the site complies with performance best practices and guidelines,
 run `gulp audit:perf`.
@@ -178,20 +180,9 @@ The audit will run against
 [Google's Lighthouse](https://github.com/GoogleChrome/lighthouse).
 
 
-# Unit testing
-
-## JavaScript unit tests
-
-JavaScript module unit tests are run with `gulp test:unit`.
-
-If you want to run individual spec files, pass in the `--specs` command-line
-argument with the path to the spec,
-such as `gulp test:unit --specs=js/modules/Tree-spec.js`.
-Also, a directory of unit tests can be run,
-such as `gulp test:unit --specs=js/modules/transition/`.
 
 
-# Accessibility Testing
+## Accessibility Testing
 
 Run the acceptance tests with an `--a11y` flag (i.e. `gulp test:acceptance --a11y`)
 to check every webpage for WCAG and Section 508 compliancy using Protractor's
@@ -207,7 +198,10 @@ If you'd like to audit a specific page, use `gulp audit:a11y`:
      For example, `gulp audit:a11y --u=contact-us`
      or `gulp audit:a11y --u=the-bureau/bureau-structure/`.
 
-# Source code linting
+
+
+
+## Source code linting
 
 The default test task includes linting of the JavaScript source, build,
 and test files.
