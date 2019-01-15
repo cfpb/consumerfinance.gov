@@ -14,23 +14,23 @@
     </li>
 {% endmacro %}
 
-{% macro _render_filter_fields(value, form) -%}
+{% macro _render_filter_fields(controls, form) -%}
     {% if value.title %}
-        {% set field_id = 'title' %}
         <div class="content-l_col
                     content-l_col-1">
             <div class="o-form_group">
                 <div class="m-form-field">
                     <label class="a-label a-label__heading"
-                           for="{{ field_id }}">
+                           for="title">
                         Item name
                     </label>
-                    {{ form.render_with_id(
-                      form.title,
-                      field_id,
-                      'a-text-input a-text-input__full'
-                      )
-                    }}
+                    <input type="text"
+                           name="title"
+                           maxlength="250"
+                           placeholder="Search for a specific word in item title"
+                           class="a-text-input
+                                  a-text-input__full"
+                           id="title">
                 </div>
             </div>
         </div>
@@ -57,41 +57,29 @@
                     content-l_col-2-3">
             <div class="content-l">
                 {% if value.topics %}
-                    {% set field_id = 'topics' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
                             <div class="m-form-field">
                                 <label class="a-label a-label__heading"
-                                       for="{{ field_id }}">
+                                       for="topics">
                                     Topic
                                 </label>
-                                {{ form.render_with_id(
-                                  form.topics,
-                                  field_id,
-                                  'o-multiselect'
-                                  )
-                                }}
+                                {{ form.topics }}
                             </div>
                         </div>
                     </div>
                 {% endif %}
                 {% if value.authors %}
-                    {% set field_id = 'authors' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
                             <div class="m-form-field">
                                 <label class="a-label a-label__heading"
-                                       for="{{ field_id }}">
+                                       for="authors">
                                     Author
                                 </label>
-                                {{ form.render_with_id(
-                                  form.authors,
-                                  field_id,
-                                  'o-multiselect'
-                                  )
-                                }}
+                                {{ form.authors }}
                             </div>
                         </div>
                     </div>
@@ -109,30 +97,32 @@
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="{{ 'from_date' }}">
+                                                   for="from_date">
                                                 From:
                                             </label>
-                                            {{ form.render_with_id(
-                                              form.from_date,
-                                              'from_date',
-                                              'a-text-input a-text-input__full'
-                                              )
-                                            }}
+                                            <input type="text"
+                                                   name="from_date"
+                                                   data-type="date"
+                                                   placeholder="mm/dd/yyyy"
+                                                   class="a-text-input
+                                                          a-text-input__full"
+                                                   id="from_date">
                                         </div>
                                     </div>
                                     <div class="content-l_col
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="{{ 'to_date' }}">
+                                                   for="to_date">
                                                 To:
                                             </label>
-                                            {{ form.render_with_id(
-                                              form.to_date,
-                                              'to_date',
-                                              'a-text-input a-text-input__full'
-                                              )
-                                            }}
+                                            <input type="text"
+                                                   name="to_date"
+                                                   data-type="date"
+                                                   placeholder="mm/dd/yyyy"
+                                                   class="a-text-input
+                                                          a-text-input__full"
+                                                   id="to_date">
                                         </div>
                                     </div>
                                 </div>

@@ -70,22 +70,23 @@ class FilterableToDateField(FilterableDateField):
 
 
 class FilterableListForm(forms.Form):
-    title_attrs = {
-        'placeholder': 'Search for a specific word in item title'
-    }
     topics_select_attrs = {
         'multiple': 'multiple',
         'data-placeholder': 'Search for topics',
+        'class': 'o-multiselect',
+        'id': 'topics'
     }
     authors_select_attrs = {
         'multiple': 'multiple',
-        'data-placeholder': 'Search for authors'
+        'data-placeholder': 'Search for authors',
+        'class': 'o-multiselect',
+        'id': 'authors'
     }
 
     title = forms.CharField(
         max_length=250,
         required=False,
-        widget=widgets.TextInput(attrs=title_attrs)
+        widget=widgets.TextInput()
     )
     from_date = FilterableFromDateField()
     to_date = FilterableToDateField()
@@ -217,19 +218,6 @@ class FilterableListForm(forms.Form):
                     today, self.preferred_datetime_format)
 
         return cleaned_data
-
-    # Does the job of {{ field }}
-    # In the template, you pass the field, id, and class you'd like to
-    # render the field with.
-    def render_with_id(self, field, attr_id, attr_class):
-        for f in self.fields:
-            if field.html_name == f:
-                self.fields[f].widget.attrs.update({
-                    'id': attr_id,
-                    'class': attr_class
-                })
-                self.set_field_html_name(self.fields[f], attr_id)
-                return self[f]
 
     # Sets the html name by replacing the render method to use the given name.
     def set_field_html_name(self, field, new_name):
