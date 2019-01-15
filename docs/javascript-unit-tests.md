@@ -19,7 +19,7 @@ it would be a good idea to peruse their docs before diving in here.
     1. [Run all unit tests](#run-all-unit-tests)
 1. [Where to find tests](#where-to-find-tests)
 1. [Test-driven development](#test-driven-development)
-1. [Setting up tests](setting-up-tests)
+1. [Setting up tests](#setting-up-tests)
     1. [New test file from sample](#new-test-file-from-sample)
     1. [Folder structure (where to put your JavaScript and tests)](#folder-structure-where-to-put-your-javascript-and-tests)
     1. [First test run](#first-test-run)
@@ -193,7 +193,7 @@ to save and commit your changes.
 
     You should see output like this:
 
-    ![Snippet of console output for a failing unit test](img/js-unit-test-output-fail.png)
+    ![Console output for failing unit test: "sample should return a string with expected value"](img/js-unit-test-output-fail.png)
 
     The test should fail – this is expected.
     Remember, when doing TDD, we want to write our test to fail first,
@@ -210,7 +210,7 @@ to save and commit your changes.
 1. Run the test again to confirm the test now passes.
    You should see output like this:
 
-    ![Snippet of console output for a passing unit test](img/js-unit-test-output-pass.png)
+    ![Console output for passing unit test: "PASS test/unit_tests/js/modules/sample-spec.js"](img/js-unit-test-output-pass.png)
 
     Doesn’t it feel good?
 
@@ -271,7 +271,7 @@ on how to implement `import` for different use cases.
 
 In Jest (whose syntax is based on Jasmine),
 [`describe` blocks](https://jestjs.io/docs/en/api#describename-fn)
-serve as an organizational structures that you can use
+serve as organizational structures that you can use
 to outline the methods you need in your JS module.
 
 The root `describe` method is where we put
@@ -609,7 +609,7 @@ and the `beforeEach` function that
 and assigns the component node to the `notificationElem` variable, and
 (2) creates a new instance of the Notification class.
 
-!!! A word about `HTML_SNIPPET`s
+!!! note "A word about `HTML_SNIPPET`s"
     Right now it’s possible to update a component’s Jinja template,
     forget to update the corresponding JavaScript,
     and the unit tests would still pass,
