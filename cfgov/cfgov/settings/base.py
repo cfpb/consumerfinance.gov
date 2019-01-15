@@ -322,7 +322,7 @@ STATIC_VERSION = ''
 
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
-    'a/assets/hud/{format}s/{zipcode}.{format}'
+    'https://files.consumerfinance.gov/a/assets/hud/{format}s/{zipcode}.{format}'
 )
 
 
