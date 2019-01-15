@@ -158,10 +158,6 @@ function Notification( element ) {
     return this;
   }
 
-  function getElement() {
-    return _dom;
-  }
-
   this.SUCCESS = SUCCESS;
   this.WARNING = WARNING;
   this.ERROR = ERROR;
@@ -171,7 +167,6 @@ function Notification( element ) {
   this.setTypeAndContent = setTypeAndContent;
   this.show = show;
   this.hide = hide;
-  this.getElement = getElement;
 
   return this;
 }
