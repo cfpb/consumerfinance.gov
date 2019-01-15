@@ -24,10 +24,7 @@
     {% endfor %}
     {% for block in page.content %}
         {% if 'filter_controls' in block.block_type %}
-            <div class="block
-                        block__flush-top">
-                {{ flc.render(block.value) }}
-            </div>
+            {{ flc.render_if_any(block.value) }}
         {% elif block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
         {% else %}

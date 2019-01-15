@@ -159,7 +159,7 @@ function FilterableListControls( element ) {
    * @param {string} msg - The message to display in the notification.
    */
   function _showNotification( type, msg ) {
-    _notification.setTypeAndContent( type, msg );
+    _notification.update( type, msg );
     _notification.show();
   }
 

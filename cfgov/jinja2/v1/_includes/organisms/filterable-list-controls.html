@@ -196,6 +196,18 @@
 {% import 'molecules/notification.html' as notification with context %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 
+{% macro render_if_any(block_value) %}
+    <div class="block block__flush-top">
+        {% if filter_data.form.filterable_pages.first() %}
+            {{ render(block_value) }}
+        {% elif block_value.no_posts_message %}
+            {{ notification.render('default', true,
+                                   block_value.no_posts_message,
+                                   block_value.no_posts_explanation) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
 {% macro render(controls) %}
     <div class="o-filterable-list-controls"
          id="o-filterable-list-controls">
