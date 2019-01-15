@@ -24,7 +24,7 @@ class FilterableDateField(forms.DateField):
     def validate_after_1900(date):
         strftime_earliest_year = 1900
         if date.year < strftime_earliest_year:
-            raise ValidationError("Please enter a date 1/1/1900 or later.")
+            raise ValidationError("Please enter a date of 1/1/1900 or later.")
 
     default_validators = [validate_after_1900]
 
