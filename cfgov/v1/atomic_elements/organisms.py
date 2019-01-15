@@ -865,10 +865,7 @@ class ItemIntroduction(blocks.StructBlock):
         classname = 'block__flush-top'
 
 
-# TODO: FilterControls/Filterable List should be updated to use same
-#       atomic name used on the frontend of FilterableListControls,
-#       or vice versa.
-class FilterControls(BaseExpandable):
+class FilterableList(BaseExpandable):
     form_type = blocks.ChoiceBlock(choices=[
         ('filterable-list', 'Filterable List'),
         ('pdf-generator', 'PDF Generator'),
@@ -916,9 +913,10 @@ class FilterControls(BaseExpandable):
     class Meta:
         label = 'Filter Controls'
         icon = 'form'
+        template = '_includes/organisms/filterable-list.html'
 
     class Media:
-        js = ['filterable-list-controls.js']
+        js = ['filterable-list.js']
 
 
 class VideoPlayer(blocks.StructBlock):

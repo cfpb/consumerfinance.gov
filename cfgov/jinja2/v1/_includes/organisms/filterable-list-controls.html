@@ -1,22 +1,3 @@
-{# ==========================================================================
-
-   Filter List Controls
-
-   ==========================================================================
-
-   Description:
-
-   Create an expandable of filters when given:
-
-   controls: Collection of field controls and other settings to determine
-             what's rendered.
-
-   form:     Django form that carries the fields that are to be rendered.
-
-
-   ========================================================================== #}
-{% from 'organisms/expandable.html' import expandable with context %}
-
 {% macro _filter_selectable(type, label_text, id, name, value, required=None, group=None) %}
     <li class="m-form-field m-form-field__checkbox">
         <input class="{{ 'a-checkbox' if type == 'checkbox' else 'a-radio' }}"
@@ -33,8 +14,8 @@
     </li>
 {% endmacro %}
 
-{% macro _render_filter_fields(controls, form) -%}
-    {% if controls.title %}
+{% macro _render_filter_fields(value, form) -%}
+    {% if value.title %}
         {% set field_id = 'title' %}
         <div class="content-l_col
                     content-l_col-1">
@@ -54,7 +35,7 @@
             </div>
         </div>
     {% endif %}
-    {% if controls.categories.filter_category %}
+    {% if value.categories.filter_category %}
         <div class="content-l_col
                     content-l_col-1-3">
             <div class="o-form_group">
@@ -63,7 +44,7 @@
                         Category
                     </legend>
                     <ul class="m-list m-list__unstyled">
-                    {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
+                    {% for slug, name in choices_for_page_type(value.categories.page_type) %}
                         {{ _filter_selectable('checkbox', category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
                     {% endfor %}
                     </ul>
@@ -71,11 +52,11 @@
             </div>
         </div>
     {% endif %}
-    {% if controls.topics or controls.authors or controls.date_range %}
+    {% if value.topics or value.authors or value.date_range %}
         <div class="content-l_col
                     content-l_col-2-3">
             <div class="content-l">
-                {% if controls.topics %}
+                {% if value.topics %}
                     {% set field_id = 'topics' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
@@ -95,7 +76,7 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if controls.authors %}
+                {% if value.authors %}
                     {% set field_id = 'authors' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
@@ -115,7 +96,7 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if controls.date_range %}
+                {% if value.date_range %}
                     <div class="content-l_col
                                 content-l_col-1">
                         <div class="o-form_group">
@@ -164,19 +145,19 @@
     {% endif %}
 {% endmacro %}
 
-{% macro _filters_form(controls, form) %}
+{% macro _filters_form(value, form) %}
     <form
-        {% if 'filterable-list' in controls.form_type %}
+        {% if 'filterable-list' in value.form_type %}
             method="get"
             action=".">
-        {% elif 'pdf-generator' in controls.form_type %}
+        {% elif 'pdf-generator' in value.form_type %}
             method="post"
             action="pdf/">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         {% endif %}
 
         <div class="content-l">
-            {{ _render_filter_fields(controls, form) }}
+            {{ _render_filter_fields(value, form) }}
             <div class="content-l_col
                         content-l_col-1
                         m-btn-group">
@@ -192,115 +173,34 @@
     </form>
 {% endmacro %}
 
-{% from 'molecules/info-unit.html' import info_unit with context %}
-{% import 'molecules/notification.html' as notification with context %}
-{% import 'organisms/post-preview.html' as post_preview with context %}
+{# ==========================================================================
 
-{% macro render_if_any(block_value) %}
-    <div class="block block__flush-top">
-        {% if filter_data.form.filterable_pages.first() %}
-            {{ render(block_value) }}
-        {% elif block_value.no_posts_message %}
-            {{ notification.render('default', true,
-                                   block_value.no_posts_message,
-                                   block_value.no_posts_explanation) }}
-        {% endif %}
-    </div>
-{% endmacro %}
+   Filterable List Controls
 
-{% macro render(controls) %}
-    <div class="o-filterable-list-controls"
-         id="o-filterable-list-controls">
-        {% set form = filter_data.form %}
-        {% set posts = filter_data.page_set %}
-        {% if has_active_filters %}
-            {% do controls.update({'is_expanded':true}) %}
+   ==========================================================================
+
+   Description:
+
+   Create an expandable of filters when given:
+
+   value: Collection of field value and other settings to determine
+          what's rendered.
+
+   form: Django form that carries the fields that are to be rendered.
+
+   fragment_id: A unique ID for the filter list control.
+
+   ========================================================================== #}
+{% macro render(value, form, fragment_id) %}
+    {% from 'organisms/expandable.html' import expandable with context %}
+    <div id="{{ fragment_id }}" class="o-filterable-list-controls">
+        {% if value.has_active_filters %}
+            {% do value.update({'is_expanded':true}) %}
         {% endif %}
-        {% set form_markup = _filters_form(controls, form) %}
-        {% call() expandable(controls, expandable_cue_additional_text='filters') %}
+
+        {% set form_markup = _filters_form(value, form) %}
+        {% call() expandable(value, expandable_cue_additional_text='filters') %}
             {{ form_markup | safe }}
         {% endcall %}
-        {% for field in form %}
-            {% if field.errors %}
-                {% for error in field.errors %}
-                    {{ notification.render('error', true, error) }}
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
-        {% if 'filterable-list' in controls.form_type and posts is defined %}
-            {% if form.is_valid() %}
-                {% set count = posts.paginator.count %}
-                {% if not has_active_filters %}
-                    {{ notification.render('default', false, '') }}
-                {% elif count == 0 %}
-                    {{ notification.render(
-                        'warning',
-                        true,
-                        'Sorry, there were no results based on your filter selections.',
-                        'Please reset the filter or change your selections and try again.'
-                    ) }}
-                {% else %}
-                    {{ notification.render(
-                        'success',
-                        true,
-                        count ~ ' filtered result' ~ count|pluralize('s')
-                    ) }}
-                {% endif %}
-            {% endif %}
-        {% endif %}
-        {% if controls.categories.page_type == 'activity-log' %}
-            {% import 'activity-log/_activity-list.html' as activity_list with context %}
-            {{ activity_list.render(posts) }}
-        {% elif controls.output_5050 %}
-            <div class="o-info-unit-group u-mb30" data-qa-hook="image-text-50-50">
-                <div class="content-l">
-                    {% for post in posts %}
-                    <div class="content-l_col
-                                content-l_col-1-2">
-                        {% set post_url = pageurl(post) %}
-                        {% if post.preview_image %}
-                            {% set photo = image(post.preview_image, 'original') %}
-                        {% endif %}
-                        {% set heading = '<a href="' ~ post_url ~ '"><h2 class="h3">' ~
-                                         post.preview_title ~
-                                         '</h2></a>'
-                           if post.preview_title else null %}
-                        {% set sub_heading = '<a href="' ~ post_url ~ '"><h2 class="h4">' ~
-                                             post.preview_subheading ~
-                                             '</h2></a>'
-                           if post.preview_subheading else null %}
-                        {% if post.secondary_link_url and post.secondary_link_text %}
-                            {% set links = [
-                                {
-                                    'url': post.secondary_link_url,
-                                    'text': post.secondary_link_text
-                                }
-                            ] %}
-                        {% endif %}
-                        {{ info_unit( {
-                            'image': {
-                                'url': photo.url if photo else '/',
-                                'alt': post.preview_image.alt if post.preview_image.alt else '',
-                            },
-                            'heading': heading,
-                            'sub_heading': sub_heading,
-                            'body': post.preview_description,
-                            'links': links or null,
-                            'link_image_and_heading': controls.link_image_and_heading
-                        } ) }}
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% else %}
-            {% for post in posts %}
-                {{ post_preview.render(post, controls) }}
-            {% endfor %}
-        {% endif %}
-        <div class="block block__flush-top block__flush-bottom block__padded-top">
-            {% import 'molecules/pagination.html' as pagination with context %}
-            {% set fragment_id = 'o-filterable-list-controls' %}
-            {{ pagination.render( posts.paginator.num_pages, posts.number, fragment_id) }}
-        </div>
     </div>
 {% endmacro %}

@@ -21,7 +21,7 @@ class SublandingFilterablePage(FilterableFeedPageMixin,
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('full_width_text', organisms.FullWidthText()),
-        ('filter_controls', organisms.FilterControls()),
+        ('filter_controls', organisms.FilterableList()),
         ('featured_content', organisms.FeaturedContent()),
         ('feedback', v1_blocks.Feedback()),
     ])

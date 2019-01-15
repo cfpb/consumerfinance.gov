@@ -23,7 +23,7 @@ class BrowseFilterablePage(FilterableFeedPageMixin,
     ])
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
-        ('filter_controls', organisms.FilterControls()),
+        ('filter_controls', organisms.FilterableList()),
         ('feedback', v1_blocks.Feedback()),
     ])
 
