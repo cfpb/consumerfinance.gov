@@ -7,31 +7,31 @@ nav:
 - Installation: installation.md
 - Usage: usage.md
 - Pages and Components:
-    - Atomic structure and design: atomic-structure.md
-    - Creating and editing components: editing-components.md
-    - Django and Wagtail migrations: migrations.md
-    - Forms in Wagtail page context: forms-in-wagtail.md
-    - Wagtail pages: wagtail-pages.md
+    - Atomic Structure and Design: atomic-structure.md
+    - Creating and Editing Components: editing-components.md
+    - Django and Wagtail Migrations: migrations.md
+    - Forms in Wagtail Page Context: forms-in-wagtail.md
+    - Wagtail Pages: wagtail-pages.md
 - Supporting Features:
     - Caching: caching.md
-    - Feature flags: feature-flags.md
-    - Satellite repos: satellite-repos.md
-    - Split testing: split-testing.md
+    - Feature Flags: feature-flags.md
+    - Satellite Repos: satellite-repos.md
+    - Split Testing: split-testing.md
     - Translation: translation.md
 - Testing:
     - Browser/Acceptance Testing: browser-acceptance-tests.md
     - JavaScript Unit Testing: javascript-unit-tests.md
     - Python Unit Testing: python-unit-tests.md
 - Contributing:
-    - Branching and merging: branching-merging.md
-    - Contributing to the docs: contributing-docs.md
-    - Development tips: development-tips.md
-    - How we use Travis CI: travis.md
+    - Branching and Merging: branching-merging.md
+    - Contributing to the Docs: contributing-docs.md
+    - Development Tips: development-tips.md
+    - How We Use Travis CI: travis.md
 - Public APIs and Data:
     - Ask CFPB: ask-cfpb.md
-    - Consumer complaints: consumer-complaint-database.md
-    - Find a housing counselor tool: housing-counselor-tool.md
-    - HMDA data: hmda.md
+    - Consumer Complaints: consumer-complaint-database.md
+    - Find a Housing Counselor Tool: housing-counselor-tool.md
+    - HMDA Data: hmda.md
 
 theme:
     name: readthedocs
