@@ -8,7 +8,8 @@ from django.utils import html
 
 import unicodecsv
 
-from ask_cfpb.models import Answer
+from ask_cfpb.models.django import Answer
+from ask_cfpb.models.pages import AnswerPage
 
 
 html_parser = HTMLParser.HTMLParser()
@@ -40,44 +41,72 @@ def clean_and_strip(data):
 
 
 def assemble_output():
-    answers = Answer.objects.all()
+    prefetch_fields = (
+        'category__name',
+        'subcategory__name',
+        'audiences__name',
+        'related_questions',
+        'next_step__title')
+    answers = list(Answer.objects.prefetch_related(*prefetch_fields).values(
+        'id', 'answer', 'answer_es', 'question', 'question_es',
+        'snippet', *prefetch_fields))
+    answer_pages = list(AnswerPage.objects.values(
+        'id', 'language', 'answer_base__id',
+        'url_path', 'live', 'redirect_to_id'))
     output_rows = []
+    seen = []
+
     for answer in answers:
+        # There are duplicate answer_ids in here
+        # because of the ManyToMany fields prefetched:
+        if answer['id'] in seen:
+            continue
+        seen.append(answer['id'])
+
         output = {heading: '' for heading in HEADINGS}
-        output['ASK_ID'] = answer.id
-        output['Question'] = answer.question
-        output['ShortAnswer'] = clean_and_strip(
-            answer.snippet)
-        output['Answer'] = clean_and_strip(
-            answer.answer)
-
-        if answer.english_page:
-            output['URL'] = answer.english_page.url_path.replace(
-                '/cfgov', '')
-            output['Live'] = answer.english_page.live
-            output['Redirect'] = answer.english_page.redirect_to_id
-        output['SpanishQuestion'] = answer.question_es.replace('\x81', '')
+        output['ASK_ID'] = answer['id']
+        output['Question'] = answer['question']
+        output['ShortAnswer'] = clean_and_strip(answer['snippet'])
+        output['Answer'] = clean_and_strip(answer['answer'])
+        output['SpanishQuestion'] = answer['question_es'].replace('\x81', '')
         output['SpanishAnswer'] = clean_and_strip(
-            answer.answer_es).replace('\x81', '')
+            answer['answer_es']).replace('\x81', '')
+        output['RelatedResources'] = answer['next_step__title']
+        output['Topic'] = answer['category__name']
 
-        if answer.spanish_page:
-            output['SpanishURL'] = answer.spanish_page.url_path.replace(
-                '/cfgov', '')
-            output['SpanishLive'] = answer.spanish_page.live
-            output['SpanishRedirect'] = answer.spanish_page.redirect_to_id
+        for page in answer_pages:
+            if page['answer_base__id'] == answer['id']:
+                url = page['url_path'].replace('/cfgov', '')
+                if page['language'] == 'en':
+                    output['URL'] = url
+                    output['Live'] = page['live']
+                    output['Redirect'] = page['redirect_to_id']
+                elif page['language'] == 'es':
+                    output['SpanishURL'] = url
+                    output['SpanishLive'] = page['live']
+                    output['SpanishRedirect'] = page['redirect_to_id']
 
-        output['Topic'] = (answer.category.first().name
-                           if answer.category.all() else '')
-        output['SubCategories'] = " | ".join(
-            [subcat.name for subcat in answer.subcategory.all()])
-        output['Audiences'] = " | ".join(
-            aud.name for aud in answer.audiences.all())
-        output['RelatedQuestions'] = " | ".join(
-            ['{}'.format(a.id) for a in answer.related_questions.all()])
-        output['RelatedResources'] = (
-            answer.next_step.title
-            if answer.next_step
-            else '')
+        # Group the ManyToMany fields together:
+        audiences = []
+        related_questions = []
+        subcategories = []
+        for a in answers:
+            if a['id'] == answer['id']:
+                if a['audiences__name']:
+                    audiences.append(a['audiences__name'])
+                if a['related_questions']:
+                    related_questions.append(str(a['related_questions']))
+                if a['subcategory__name']:
+                    subcategories.append(a['subcategory__name'])
+
+        # Remove duplicates
+        audiences = list(set(audiences))
+        related_questions = list(set(related_questions))
+        subcategories = list(set(subcategories))
+
+        output['Audiences'] = " | ".join(audiences)
+        output['RelatedQuestions'] = " | ".join(related_questions)
+        output['SubCategories'] = " | ".join(subcategories)
         output_rows.append(output)
     return output_rows
 
