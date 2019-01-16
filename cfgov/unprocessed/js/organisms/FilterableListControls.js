@@ -131,7 +131,7 @@ function FilterableListControls( element ) {
 
     if ( validatedFields.invalid.length > 0 ) {
       _showNotification(
-        _notification.ERROR,
+        Notification.ERROR,
         _buildErrorMessage( validatedFields.invalid )
       );
     } else {
