@@ -6,7 +6,6 @@ import BaseTransition from '../modules/transition/BaseTransition';
 import ERROR_MESSAGES from '../config/error-messages-config';
 import Notification from '../molecules/Notification';
 import EventObserver from '../modules/util/EventObserver';
-
 const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
 
 /**
@@ -29,7 +28,7 @@ function FormSubmit( element, baseClass, opts ) {
   const _baseElement = checkDom( element, baseClass );
   const _formElement = _baseElement.querySelector( 'form' );
   const _notificationElement = _baseElement.querySelector(
-    Notification.BASE_CLASS
+    `.${ Notification.BASE_CLASS }`
   );
   let _notification;
   let _cachedFields;
@@ -162,7 +161,7 @@ function FormSubmit( element, baseClass, opts ) {
     }
 
     function fadeInMessage() {
-      _notification.update( _notification.SUCCESS, message );
+      _notification.update( Notification.SUCCESS, message );
       _notification.show();
       _baseElement.replaceChild( _notificationElement, _formElement );
       transition.removeEventListener( BaseTransition.END_EVENT, fadeInMessage );
