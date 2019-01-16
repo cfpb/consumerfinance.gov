@@ -29,24 +29,24 @@ Before( function() {
 When( 'I select a feedback radio button',
   function() {
     return browser.executeScript(
-      "arguments[0].click();",
+      'arguments[0].click();',
       _dom.radioButton1.getWebElement()
     );
   }
-)
+);
 
 When( 'I enter a comment',
   function() {
     return _dom.commentField.sendKeys( 'comment text' );
   }
-)
+);
 
 When( 'I click the feedback form submit button',
   async function() {
     _dom.submitButton.click();
     return await browser.sleep( 500 );
   }
-)
+);
 
 Then( 'the notification element should be displayed',
   function( ) {
