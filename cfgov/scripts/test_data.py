@@ -113,6 +113,23 @@ def add_reusable_text_snippet(slug, cls):
     publish_page(page)
 
 
+def add_feedback_form(slug, cls):
+    feedback_form = {
+        'type': 'feedback',
+        'value': []
+    }
+    page = cls(
+        title=slug,
+        slug=slug,
+    )
+    page.content = StreamValue(
+        page.content.stream_block,
+        [feedback_form],
+        True,
+    )
+    publish_page(page)
+
+
 def add_menu_item_snippet():
     nav_group_block = {
         'type': 'nav_group',
@@ -159,6 +176,10 @@ def run():
     )
     add_reusable_text_snippet(
         slug='rts',
+        cls=BrowsePage,
+    )
+    add_feedback_form(
+        slug='feedback',
         cls=BrowsePage,
     )
     add_menu_item_snippet()
