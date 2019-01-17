@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from six.moves import urllib
-
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 
@@ -44,21 +42,11 @@ class FeedbackHandler(Handler):
         self.block_value = block_value
 
     def sanitize_referrer(self):
-        known_miscodings = {
-            '\xc3\xb3': '\xf3',
-            '\xc3\xa9': '\xe9',
-            '\xc3\xad': '\xed',
-        }
         referrer = self.request.META.get('HTTP_REFERER', '')
         try:
-            referrer.encode('ascii')
-        except (UnicodeEncodeError):
-            for char in known_miscodings:
-                referrer = referrer.replace(char, known_miscodings[char])
-            parsed_referrer = urllib.parse.urlparse(referrer)
-            referrer = "{}{}".format(
-                parsed_referrer.netloc,
-                urllib.parse.quote(parsed_referrer.path.encode('utf8')))
+            referrer.encode('utf8')
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            referrer = ''
         return referrer
 
     def process(self, is_submitted):
