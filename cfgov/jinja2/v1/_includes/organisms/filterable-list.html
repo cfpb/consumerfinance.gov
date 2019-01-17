@@ -191,7 +191,7 @@
                 {% if total_pages > 1 %}
                     <div class="block block__flush-top block__flush-bottom block__padded-top">
                         {% import 'molecules/pagination.html' as pagination with context %}
-                        {{ pagination.render( total_pages, current_page, fragment_id) }}
+                        {{ pagination.render( total_pages, posts.number, fragment_id) }}
                     </div>
                 {% endif %}
             </section>
