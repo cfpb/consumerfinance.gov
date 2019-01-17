@@ -67,6 +67,9 @@
         {% for field in form %}
             {% if field.errors %}
                 {% for error in field.errors %}
+                    {# The if statement here allows access to the
+                       notification_opts variable outside of the for loop.
+                    #}
                     {% if notification_opts.update({
                         'type': 'error',
                         'is_visible': true,
@@ -80,6 +83,9 @@
                 {% set count = posts.paginator.count %}
                 {% set notification_is_visible = true %}
                 {% if count == 0 %}
+                    {# The if statement here allows access to the
+                        notification_opts variable outside of the for loop.
+                    #}
                     {% if notification_opts.update({
                         'type': 'warning',
                         'is_visible': true,
@@ -87,6 +93,9 @@
                         'explanation': 'Please reset the filter or change your selections and try again.'
                     }) %}{%endif%}
                 {% else %}
+                    {# The if statement here allows access to the
+                        notification_opts variable outside of the for loop.
+                    #}
                     {% if notification_opts.update({
                         'type': 'success',
                         'is_visible': true,
