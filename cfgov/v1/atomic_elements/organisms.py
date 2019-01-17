@@ -911,7 +911,7 @@ class FilterableList(BaseExpandable):
     )
 
     class Meta:
-        label = 'Filter Controls'
+        label = 'Filterable List'
         icon = 'form'
         template = '_includes/organisms/filterable-list.html'
 
