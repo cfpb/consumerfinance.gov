@@ -188,8 +188,7 @@
                 {# DISPLAY THE PAGINATOR, IF THERE ARE RESULTS OVER A COUNT. #}
 
                 {% set total_pages = posts.paginator.num_pages %}
-                {% set current_page = posts.number %}
-                {% if total_pages > 1 and current_page <= total_pages %}
+                {% if total_pages > 1 %}
                     <div class="block block__flush-top block__flush-bottom block__padded-top">
                         {% import 'molecules/pagination.html' as pagination with context %}
                         {{ pagination.render( total_pages, current_page, fragment_id) }}
