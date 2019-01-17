@@ -78,7 +78,7 @@
                         'type': 'error',
                         'is_visible': true,
                         'message': notification_opts.message + field.label + ': ' + error + '<br>' | safe
-                    }) %}{%endif%}
+                    }) %}{% endif %}
                 {% endfor %}
             {% endif %}
         {% endfor %}
@@ -95,7 +95,7 @@
                         'is_visible': true,
                         'message': 'Sorry, there were no results based on your filter selections.',
                         'explanation': 'Please reset the filter or change your selections and try again.'
-                    }) %}{%endif%}
+                    }) %}{% endif %}
                 {% else %}
                     {# The if statement here allows access to the
                         notification_opts variable outside of the for loop.
@@ -104,7 +104,7 @@
                         'type': 'success',
                         'is_visible': true,
                         'message': count ~ ' filtered result' ~ count|pluralize('s')
-                    }) %}{%endif%}
+                    }) %}{% endif %}
                 {% endif %}
             {% endif %}
         {% endif %}
@@ -113,9 +113,9 @@
                     block
                     block__padded
                     block__sub
-                    {% if not has_active_filters %}
+                    {%- if not has_active_filters %}
                     u-hidden
-                    {% endif %}">
+                    {%- endif %}">
             {{ notification.render(
                 notification_opts.type,
                 notification_opts.is_visible,
@@ -129,9 +129,9 @@
         <section class="o-filterable-list_results
                         block
                         block__sub
-                        {% if has_active_filters %}
+                        {%- if has_active_filters %}
                         block__flush-top
-                        {% endif %}">
+                        {%- endif %}">
             {% if value.categories.page_type == 'activity-log' %}
                 {% import 'activity-log/_activity-list.html' as activity_list with context %}
                 {{ activity_list.render(posts) }}
