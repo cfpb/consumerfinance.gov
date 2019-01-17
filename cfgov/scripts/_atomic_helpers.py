@@ -119,28 +119,6 @@ well = {
         'content': "this is well content"
     }
 }
-filter_controls = {
-    'type': 'filter_controls',
-    'value': {
-            'is_expanded': False,
-            'post_date_description': 'Published',
-            'link_image_and_heading': False,
-            'topics': True,
-            'title': True,
-            'label': '',
-            'date_range': True,
-            'is_midtone': False,
-            'authors': True,
-            'form_type': 'filterable-list',
-            'is_bordered': False,
-            'output_5050': False,
-            'categories': {
-                'show_preview_categories': True,
-                'page_type': 'blog',
-                'filter_category': True
-            }
-    }
-}
 full_width_text = {
     'type': 'full_width_text',
     'value': [
@@ -463,7 +441,6 @@ chart_block = {
 filter_controls = {
     'type': u'filter_controls',
     'value': {
-        'form_type': u'filterable-list',
         'categories': {
             'page_type': '',
         },

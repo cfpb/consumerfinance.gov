@@ -866,10 +866,6 @@ class ItemIntroduction(blocks.StructBlock):
 
 
 class FilterableList(BaseExpandable):
-    form_type = blocks.ChoiceBlock(choices=[
-        ('filterable-list', 'Filterable List'),
-        ('pdf-generator', 'PDF Generator'),
-    ], default='filterable-list')
     title = blocks.BooleanBlock(default=True, required=False,
                                 label='Filter Title')
     no_posts_message = blocks.CharBlock(
