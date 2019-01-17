@@ -190,11 +190,13 @@
 
    fragment_id: A unique ID for the filter list control.
 
+   has_active_filters: Whether the filter has active filters or not.
+
    ========================================================================== #}
-{% macro render(value, form, fragment_id) %}
+{% macro render(value, form, fragment_id, has_active_filters) %}
     {% from 'organisms/expandable.html' import expandable with context %}
     <div id="{{ fragment_id }}" class="o-filterable-list-controls">
-        {% if value.has_active_filters %}
+        {% if has_active_filters %}
             {% do value.update({'is_expanded':true}) %}
         {% endif %}
 

@@ -53,7 +53,12 @@
         {# ADD THE FILTER CONTROLS. #}
 
         {% set fragment_id = 'o-filterable-list-controls' %}
-        {{ filterable_list_controls.render(value, form, fragment_id) }}
+        {{ filterable_list_controls.render(
+            value,
+            form,
+            fragment_id,
+            has_active_filters)
+        }}
 
         {# ADD THE NOTIFICATION, IF NEEDED. #}
 
