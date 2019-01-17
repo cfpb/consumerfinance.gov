@@ -85,7 +85,6 @@
         {% if 'filterable-list' in value.form_type and posts is defined %}
             {% if form.is_valid() %}
                 {% set count = posts.paginator.count %}
-                {% set notification_is_visible = true %}
                 {% if count == 0 %}
                     {# The if statement here allows access to the
                         notification_opts variable outside of the for loop.
