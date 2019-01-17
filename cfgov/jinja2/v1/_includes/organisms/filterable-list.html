@@ -35,14 +35,16 @@
 
 {# SHOW A NOTIFICATION IF THERE'S NOTHING TO FILTER. #}
 
-{% if value.no_posts_message %}
+{% set has_results = filter_data.form.filterable_pages.first() %}
+
+{% if not has_results and value.no_posts_message %}
     {{ notification.render(
         'default',
         true,
         value.no_posts_message,
         value.no_posts_explanation
     ) }}
-{% elif filter_data.form.filterable_pages.first() %}
+{% elif has_results %}
 
     <div class="o-filterable-list">
         {% set form = filter_data.form %}
