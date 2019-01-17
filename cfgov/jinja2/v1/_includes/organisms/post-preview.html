@@ -178,7 +178,7 @@
             {% endfor %}
             </div>
 
-            {% if post.tags.exists() %}
+            {% if post.tags.exists() and controls.categories.page_type != 'foia-freq-req-record' %}
                 {%- import 'tags.html' as tags %}
                 {{ tags.render(post.related_metadata_tags(), hide_heading=true, is_wagtail=True) }}
             {% endif %}
