@@ -31,22 +31,22 @@ class TestFeedbackHandler(TestCase):
         page.url = '/es/obtener-respuestas/'
         page.language = 'es'
         non_ascii_referrers = [
-            ('http://localhost:8000/es/obtener-respuestas/'
-             'buscar-por-etiqueta/rescisi\xc3\xb3n/'),
-            ('https://www.consumerfinance.gov/es/obtener-respuestas/'
-             'buscar-por-etiqueta/l\xc3\xadnea_de_cr\xc3\xa9dito_personal/')]
+            (b'http://localhost:8000/es/obtener-respuestas/'
+             b'buscar-por-etiqueta/rescisi\xc3\xb3n/'),
+            (b'https://www.consumerfinance.gov/es/obtener-respuestas/'
+             b'buscar-por-etiqueta/l\xc3\xadnea_de_cr\xc3\xa9dito_personal/')]
         for referrer in non_ascii_referrers:
             request = self.factory.get('/')
             request.META = {'HTTP_REFERER': referrer}
             handler = FeedbackHandler(page, request, block_value={})
             sanitized = handler.sanitize_referrer()
             self.assertNotIn('\xc3', sanitized)
-        misencoded_string = 'https://fake.com/cr\xc3\xb3dito'
+        misencoded_string = b'https://fake.com/cr\xc3\xb3dito'
         request = self.factory.get('/')
         request.META = {'HTTP_REFERER': misencoded_string}
         handler = FeedbackHandler(page, request, block_value={})
         sanitized = handler.sanitize_referrer()
-        self.assertEqual(sanitized, 'fake.com/cr%C3%B3dito')
+        self.assertEqual(sanitized, '')
 
     @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.get_response')
     def test_process_calls_handler_get_response(self, mock_get_response):
