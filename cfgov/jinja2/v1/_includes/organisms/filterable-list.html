@@ -34,16 +34,16 @@
 
 {# SHOW A NOTIFICATION IF THERE'S NOTHING TO FILTER. #}
 
-{% set has_results = filter_data.form.filterable_pages.first() %}
+{% set has_unfiltered_results = filter_data.form.filterable_pages.first() %}
 
-{% if not has_results and value.no_posts_message %}
+{% if not has_unfiltered_results and value.no_posts_message %}
     {{ notification.render(
         'default',
         true,
         value.no_posts_message,
         value.no_posts_explanation
     ) }}
-{% elif has_results %}
+{% elif has_unfiltered_results %}
 
     <div class="o-filterable-list">
         {% set form = filter_data.form %}
@@ -82,6 +82,7 @@
                 {% endfor %}
             {% endif %}
         {% endfor %}
+
         {% if 'filterable-list' in value.form_type and posts is defined %}
             {% if form.is_valid() %}
                 {% set count = posts.paginator.count %}
@@ -102,7 +103,7 @@
                     {% if notification_opts.update({
                         'type': 'success',
                         'is_visible': true,
-                        'message': count ~ ' filtered result' ~ count|pluralize('s')
+                        'message': count ~ ' filtered result' ~ count | pluralize('s')
                     }) %}{% endif %}
                 {% endif %}
             {% endif %}
@@ -125,74 +126,76 @@
 
         {# ADD THE FILTER RESULTS, IF THERE ARE ANY. #}
 
-        <section class="o-filterable-list_results
-                        block
-                        block__sub
-                        {%- if has_active_filters %}
-                        block__flush-top
-                        {%- endif %}">
-            {% if value.categories.page_type == 'activity-log' %}
-                {% import 'activity-log/_activity-list.html' as activity_list with context %}
-                {{ activity_list.render(posts) }}
-            {% elif value.output_5050 %}
-                {% from 'molecules/info-unit-2.html' import info_unit with context %}
-                <div class="o-info-unit-group u-mb30" data-qa-hook="image-text-50-50">
-                    <div class="content-l">
-                        {% for post in posts %}
-                        <div class="content-l_col
-                                    content-l_col-1-2">
-                            {% set post_url = pageurl(post) %}
-                            {% if post.preview_image %}
-                                {% set photo = image(post.preview_image, 'original') %}
-                            {% endif %}
-                            {% set heading = '<a href="' ~ post_url ~ '"><h2 class="h3">' ~
-                                            post.preview_title ~
-                                            '</h2></a>'
-                            if post.preview_title else null %}
-                            {% set sub_heading = '<a href="' ~ post_url ~ '"><h2 class="h4">' ~
-                                                post.preview_subheading ~
+        {% if count is defined and count > 0 %}
+            <section class="o-filterable-list_results
+                            block
+                            block__sub
+                            {%- if has_active_filters %}
+                            block__flush-top
+                            {%- endif %}">
+                {% if value.categories.page_type == 'activity-log' %}
+                    {% import 'activity-log/_activity-list.html' as activity_list with context %}
+                    {{ activity_list.render(posts) }}
+                {% elif value.output_5050 %}
+                    {% from 'molecules/info-unit-2.html' import info_unit with context %}
+                    <div class="o-info-unit-group u-mb30" data-qa-hook="image-text-50-50">
+                        <div class="content-l">
+                            {% for post in posts %}
+                            <div class="content-l_col
+                                        content-l_col-1-2">
+                                {% set post_url = pageurl(post) %}
+                                {% if post.preview_image %}
+                                    {% set photo = image(post.preview_image, 'original') %}
+                                {% endif %}
+                                {% set heading = '<a href="' ~ post_url ~ '"><h2 class="h3">' ~
+                                                post.preview_title ~
                                                 '</h2></a>'
-                            if post.preview_subheading else null %}
-                            {% if post.secondary_link_url and post.secondary_link_text %}
-                                {% set links = [
-                                    {
-                                        'url': post.secondary_link_url,
-                                        'text': post.secondary_link_text
-                                    }
-                                ] %}
-                            {% endif %}
-                            {{ info_unit( {
-                                'image': {
-                                    'url': photo.url if photo else '/',
-                                    'alt': post.preview_image.alt if post.preview_image.alt else '',
-                                },
-                                'heading': heading,
-                                'sub_heading': sub_heading,
-                                'body': post.preview_description,
-                                'links': links or null,
-                                'link_image_and_heading': value.link_image_and_heading
-                            } ) }}
+                                if post.preview_title else null %}
+                                {% set sub_heading = '<a href="' ~ post_url ~ '"><h2 class="h4">' ~
+                                                    post.preview_subheading ~
+                                                    '</h2></a>'
+                                if post.preview_subheading else null %}
+                                {% if post.secondary_link_url and post.secondary_link_text %}
+                                    {% set links = [
+                                        {
+                                            'url': post.secondary_link_url,
+                                            'text': post.secondary_link_text
+                                        }
+                                    ] %}
+                                {% endif %}
+                                {{ info_unit( {
+                                    'image': {
+                                        'url': photo.url if photo else '/',
+                                        'alt': post.preview_image.alt if post.preview_image.alt else '',
+                                    },
+                                    'heading': heading,
+                                    'sub_heading': sub_heading,
+                                    'body': post.preview_description,
+                                    'links': links or null,
+                                    'link_image_and_heading': value.link_image_and_heading
+                                } ) }}
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     </div>
-                </div>
-            {% else %}
-                {% import 'organisms/post-preview.html' as post_preview with context %}
-                {% for post in posts %}
-                    {{ post_preview.render(post, value) }}
-                {% endfor %}
-            {% endif %}
+                {% else %}
+                    {% import 'organisms/post-preview.html' as post_preview with context %}
+                    {% for post in posts %}
+                        {{ post_preview.render(post, value) }}
+                    {% endfor %}
+                {% endif %}
 
-            {# DISPLAY THE PAGINATOR, IF THERE ARE RESULTS OVER A COUNT. #}
+                {# DISPLAY THE PAGINATOR, IF THERE ARE RESULTS OVER A COUNT. #}
 
-            {% set total_pages = posts.paginator.num_pages %}
-            {% set current_page = posts.number %}
-            {% if total_pages > 1 and current_page <= total_pages %}
-                <div class="block block__flush-top block__flush-bottom block__padded-top">
-                    {% import 'molecules/pagination.html' as pagination with context %}
-                    {{ pagination.render( total_pages, current_page, fragment_id) }}
-                </div>
-            {% endif %}
-        </section>
+                {% set total_pages = posts.paginator.num_pages %}
+                {% set current_page = posts.number %}
+                {% if total_pages > 1 and current_page <= total_pages %}
+                    <div class="block block__flush-top block__flush-bottom block__padded-top">
+                        {% import 'molecules/pagination.html' as pagination with context %}
+                        {{ pagination.render( total_pages, current_page, fragment_id) }}
+                    </div>
+                {% endif %}
+            </section>
+        {% endif %}
     </div>
 {% endif %}
