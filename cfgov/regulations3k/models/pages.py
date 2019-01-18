@@ -1,8 +1,10 @@
 from __future__ import absolute_import, unicode_literals
 
+import logging
 import re
 from collections import OrderedDict
 from functools import partial
+from six.moves import urllib
 
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import InvalidPage, Paginator
@@ -35,6 +37,9 @@ from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
 
 
+logger = logging.getLogger(__name__)
+
+
 class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     """A page for the custom search interface for regulations."""
 
@@ -62,7 +67,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         order = request.GET.get('order', 'relevance')
         if 'regs' in request.GET and request.GET.get('regs'):
             regs = request.GET.getlist('regs')
-        search_query = request.GET.get('q', '')  # haystack cleans this string
+        search_query = request.GET.get('q', '').strip()
         payload = {
             'search_query': search_query,
             'results': [],
@@ -70,7 +75,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             'regs': regs,
             'all_regs': [],
         }
-        if not search_query:
+        if not search_query or len(urllib.parse.unquote(search_query)) == 1:
             self.results = payload
             return TemplateResponse(
                 request,
@@ -98,8 +103,14 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             pre_tags=['<strong>'],
             post_tags=['</strong>']).models(SectionParagraph)
         for hit in sqs:
+            try:
+                snippet = Markup(" ".join(hit.highlighted))
+            except TypeError as e:
+                logger.warning(
+                    "Query string {} produced a TypeError: {}".format(
+                        search_query, e))
+                continue
             letter_code = LETTER_CODES.get(hit.part)
-            snippet = Markup(" ".join(hit.highlighted))
             hit_payload = {
                 'id': hit.paragraph_id,
                 'part': hit.part,
