@@ -87,7 +87,7 @@
             {% endif %}
         {% endfor %}
 
-        {% if posts and form.is_valid() %}
+        {% if form.is_valid() %}
             {% set count = posts.paginator.count %}
             {% if count == 0 %}
                 {# The if statement here allows access to the
