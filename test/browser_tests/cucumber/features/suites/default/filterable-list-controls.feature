@@ -33,17 +33,15 @@ Scenario: Select multiple categories
 
 @undefined
 Scenario: Date range to present
-	When I enter “01/01/2017” in the From date entry field
+	When I enter “1/1/2017” in the From date entry field
 	And I apply filters
-	Then I should see only results dated 01/01/2017 or later
-
-# It’s a usability issue that currently the filter won’t work if you don’t put leading zeroes in the date range field. There's a plan to update that behavior at some point, and the test should be updated then too.
+	Then I should see only results dated 1/1/2017 or later
 
 @undefined
 Scenario: Date range in past
-	When I enter “01/01/2016” in the From date entry field
-	And I enter “01/01/2017” in the To date entry field
-	Then I should see only results between 01/01/2016 and 01/01/2017, inclusive
+	When I enter “1/1/2016” in the From date entry field
+	And I enter “1/1/2017” in the To date entry field
+	Then I should see only results between 1/1/2016 and 1/1/2017, inclusive
 
 @undefined
 Scenario: Select a topic
@@ -118,9 +116,9 @@ Scenario: Name search plus topic
 @undefined
 Scenario: Name search plus date range
 	When I type “loans” in the item name input box
-	And I type “01/01/2017” in the From date entry field
+	And I type “1/1/2017” in the From date entry field
 	And I apply filters
-	Then I should see only results dated 01/01/2017 or later with “loans” in the post title
+	Then I should see only results dated 1/1/2017 or later with “loans” in the post title
 
 @undefined
 Scenario: Name search plus author

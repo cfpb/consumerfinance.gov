@@ -21,7 +21,7 @@ class BrowseFilterableContent(StreamBlock):
     Pages can have at most one filterable list.
     """
     full_width_text = organisms.FullWidthText()
-    filter_controls = organisms.FilterControls()
+    filter_controls = organisms.FilterableList()
     feedback = v1_blocks.Feedback()
 
     class Meta:
