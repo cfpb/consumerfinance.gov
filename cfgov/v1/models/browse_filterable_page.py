@@ -3,6 +3,7 @@ from django.db import models
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
+from wagtail.wagtailcore.blocks import StreamBlock
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailsearch import index
@@ -14,6 +15,21 @@ from v1.models.base import CFGOVPage
 from v1.util.filterable_list import FilterableListMixin
 
 
+class BrowseFilterableContent(StreamBlock):
+    """Defines the StreamField blocks for BrowseFilterablePage content.
+
+    Pages can have at most one filterable list.
+    """
+    full_width_text = organisms.FullWidthText()
+    filter_controls = organisms.FilterableList()
+    feedback = v1_blocks.Feedback()
+
+    class Meta:
+        block_counts = {
+            'filter_controls': {'max_num': 1},
+        }
+
+
 class BrowseFilterablePage(FilterableFeedPageMixin,
                            FilterableListMixin,
                            CFGOVPage):
@@ -21,11 +37,7 @@ class BrowseFilterablePage(FilterableFeedPageMixin,
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', organisms.FeaturedContent()),
     ])
-    content = StreamField([
-        ('full_width_text', organisms.FullWidthText()),
-        ('filter_controls', organisms.FilterableList()),
-        ('feedback', v1_blocks.Feedback()),
-    ])
+    content = StreamField(BrowseFilterableContent)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
 
