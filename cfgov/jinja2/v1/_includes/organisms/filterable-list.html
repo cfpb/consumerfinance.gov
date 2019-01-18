@@ -87,29 +87,27 @@
             {% endif %}
         {% endfor %}
 
-        {% if 'filterable-list' in value.form_type and posts is defined %}
-            {% if form.is_valid() %}
-                {% set count = posts.paginator.count %}
-                {% if count == 0 %}
-                    {# The if statement here allows access to the
-                        notification_opts variable outside of the for loop.
-                    #}
-                    {% if notification_opts.update({
-                        'type': 'warning',
-                        'is_visible': true,
-                        'message': 'Sorry, there were no results based on your filter selections.',
-                        'explanation': 'Please reset the filter or change your selections and try again.'
-                    }) %}{% endif %}
-                {% else %}
-                    {# The if statement here allows access to the
-                        notification_opts variable outside of the for loop.
-                    #}
-                    {% if notification_opts.update({
-                        'type': 'success',
-                        'is_visible': true,
-                        'message': count ~ ' filtered result' ~ count | pluralize('s')
-                    }) %}{% endif %}
-                {% endif %}
+        {% if form.is_valid() %}
+            {% set count = posts.paginator.count %}
+            {% if count == 0 %}
+                {# The if statement here allows access to the
+                    notification_opts variable outside of the for loop.
+                #}
+                {% if notification_opts.update({
+                    'type': 'warning',
+                    'is_visible': true,
+                    'message': 'Sorry, there were no results based on your filter selections.',
+                    'explanation': 'Please reset the filter or change your selections and try again.'
+                }) %}{% endif %}
+            {% else %}
+                {# The if statement here allows access to the
+                    notification_opts variable outside of the for loop.
+                #}
+                {% if notification_opts.update({
+                    'type': 'success',
+                    'is_visible': true,
+                    'message': count ~ ' filtered result' ~ count | pluralize('s')
+                }) %}{% endif %}
             {% endif %}
         {% endif %}
 

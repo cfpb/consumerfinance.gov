@@ -146,16 +146,7 @@
 {% endmacro %}
 
 {% macro _filters_form(value, form) %}
-    <form
-        {% if 'filterable-list' in value.form_type %}
-            method="get"
-            action=".">
-        {% elif 'pdf-generator' in value.form_type %}
-            method="post"
-            action="pdf/">
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        {% endif %}
-
+    <form method="get" action=".">
         <div class="content-l">
             {{ _render_filter_fields(value, form) }}
             <div class="content-l_col
