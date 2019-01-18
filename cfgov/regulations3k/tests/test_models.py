@@ -432,6 +432,15 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(mock_sqs.call_count, 6)
 
     @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
+    def test_search_page_refuses_single_character_search(self, mock_sqs):
+        response = self.client.get(
+            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+                'regulation_results_page'),
+            {'q': '%21', 'regs': '1002', 'order': 'regulation'})
+        self.assertEqual(mock_sqs.call_count, 0)
+        self.assertEqual(response.status_code, 200)
+
+    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
     def test_routable_search_page_reg_only(self, mock_sqs):
         response = self.client.get(
             self.reg_search_page.url + self.reg_search_page.reverse_subpage(
