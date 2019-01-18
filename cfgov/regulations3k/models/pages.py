@@ -106,8 +106,9 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             try:
                 snippet = Markup(" ".join(hit.highlighted))
             except TypeError as e:
-                logger.info("Query string {} produced a TypeError: {}".format(
-                    search_query, e))
+                logger.warning(
+                    "Query string {} produced a TypeError: {}".format(
+                        search_query, e))
                 continue
             letter_code = LETTER_CODES.get(hit.part)
             hit_payload = {
