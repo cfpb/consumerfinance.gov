@@ -30,11 +30,9 @@ into the concepts presented throughout this page:
 ## Schema migrations
 
 Any time you add or change a field on a Django model, Wagtail page model
-(which are a particular kind of Django model), or StreamField block classes, a
+(which are a particular kind of Django model), or StreamField block class, a
 [Django schema migration](https://docs.djangoproject.com/en/1.11/topics/migrations)
-will be required. 
-When that field is a StreamField, this includes changes to the properties of a child block,
-or even something minor like a help text string.
+will be required. This includes changes as small as modifying the `help_text` string.
 
 To automatically generate a schema migration,
 run the following, editing it to give your migration a name
