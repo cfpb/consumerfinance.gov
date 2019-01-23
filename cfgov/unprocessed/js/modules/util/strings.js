@@ -8,16 +8,6 @@ function stringEscape( s ) {
 }
 
 /**
- * Tests whether a string contains special characters.
- * @param   {string}  s The string to test.
- * @returns {boolean}
- *   True if string `s` contains special characters, false otherwise.
- */
-function stringValid( s ) {
-  return !( /[~`!.#$%^&*+=[\]\\';,/{}|\\":<>?]/g ).test( s );
-}
-
-/**
  * Tests whether a string matches another.
  * @param   {string}  x The control string.
  * @param   {string}  y The comparison string.
@@ -29,6 +19,5 @@ function stringMatch( x, y ) {
 
 export {
   stringEscape,
-  stringValid,
   stringMatch
 };
