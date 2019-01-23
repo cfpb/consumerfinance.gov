@@ -7,30 +7,29 @@ import {
 } from '../modules/util/atomic-helpers';
 import Analytics from '../modules/Analytics';
 import ERROR_MESSAGES from '../config/error-messages-config';
+import EventObserver from '../modules/util/EventObserver';
 import Expandable from 'cf-expandables/src/Expandable';
 import FormModel from '../modules/util/FormModel';
 import Multiselect from '../molecules/Multiselect';
-import Notification from '../molecules/Notification';
 import { UNDEFINED } from '../modules/util/standard-type';
 
-// TODO: Reduce lines in FilterableListControls or convert to class.
+const BASE_CLASS = 'o-filterable-list-controls';
+
 /**
  * FilterableListControls
  * @class
  *
- * @classdesc Initializes a new Filterable-List-Controls organism.
+ * @classdesc Initializes a new FilterableListControls organism.
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the organism.
  * @returns {FilterableListControls} An instance.
  */
 function FilterableListControls( element ) {
-  const BASE_CLASS = 'o-filterable-list-controls';
   const _dom = checkDom( element, BASE_CLASS );
   const _form = _dom.querySelector( 'form' );
   let _expandable;
   let _formModel;
-  let _notification;
 
   /**
    * @returns {FilterableListControls|undefined} An instance,
@@ -71,11 +70,8 @@ function FilterableListControls( element ) {
       } );
     } );
 
-    _notification = new Notification( _dom );
-    _notification.init();
-
     _formModel.init();
-    _initAnalyticsEvents();
+    _initAnalyticsEvents.bind( this )();
 
     return this;
   }
@@ -84,7 +80,7 @@ function FilterableListControls( element ) {
    * Initialize FilterableListControls events.
    */
   function _initAnalyticsEvents() {
-    let label = _expandable.getLabelText();
+    const label = _expandable.getLabelText();
     const getDataLayerOptions = Analytics.getDataLayerOptions;
     let dataLayerArray = [];
     const cachedFields = {};
@@ -109,13 +105,20 @@ function FilterableListControls( element ) {
       cachedFields[field.name] = getDataLayerOptions( action, field.value );
     } );
 
+    const formSubmittedBinded = _formSubmitted.bind( this );
     _form.addEventListener( 'submit', function sendEvent( event ) {
       event.preventDefault();
       Object.keys( cachedFields ).forEach( function( key ) {
         dataLayerArray.push( cachedFields[key] );
       } );
-      dataLayerArray.push( getDataLayerOptions( 'Filter:submit', label,
-        '', _formSubmitted ) );
+      dataLayerArray.push(
+        getDataLayerOptions(
+          'Filter:submit',
+          label,
+          '',
+          formSubmittedBinded
+        )
+      );
       Analytics.sendEvents( dataLayerArray );
       dataLayerArray = [];
     } );
@@ -130,10 +133,9 @@ function FilterableListControls( element ) {
     );
 
     if ( validatedFields.invalid.length > 0 ) {
-      _showNotification(
-        Notification.ERROR,
-        _buildErrorMessage( validatedFields.invalid )
-      );
+      this.dispatchEvent( 'fieldInvalid', {
+        message: _buildErrorMessage( validatedFields.invalid )
+      } );
     } else {
       _form.submit();
     }
@@ -151,16 +153,6 @@ function FilterableListControls( element ) {
     } );
 
     return msg || ERROR_MESSAGES.DEFAULT;
-  }
-
-  /**
-   * Show the notification.
-   * @param {string} type - The type of notification to display.
-   * @param {string} msg - The message to display in the notification.
-   */
-  function _showNotification( type, msg ) {
-    _notification.update( type, msg );
-    _notification.show();
   }
 
   /**
@@ -235,7 +227,14 @@ function FilterableListControls( element ) {
 
   this.init = init;
 
+  const eventObserver = new EventObserver();
+  this.addEventListener = eventObserver.addEventListener;
+  this.removeEventListener = eventObserver.removeEventListener;
+  this.dispatchEvent = eventObserver.dispatchEvent;
+
   return this;
 }
+
+FilterableListControls.BASE_CLASS = BASE_CLASS;
 
 export default FilterableListControls;
