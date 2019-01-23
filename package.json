@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@babel/core": "7.2.2",
-    "@babel/preset-env": "7.2.3",
+    "@babel/preset-env": "7.3.1",
     "autoprefixer": "8.6.5",
     "babel-loader": "8.0.5",
     "cf-atomic-component": "2.1.1",
@@ -83,7 +83,7 @@
     "jest": "23.6.0",
     "jest-cli": "23.6.0",
     "jsdoc": "3.5.5",
-    "lighthouse": "3.2.1",
+    "lighthouse": "4.0.0",
     "minimist": "1.2.0",
     "protractor": "5.4.2",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
@@ -92,7 +92,7 @@
     "psi": "3.1.0",
     "sauce-connect-tunnel": "0.2.1",
     "selenium-webdriver": "4.0.0-alpha.1",
-    "snyk": "1.120.1",
+    "snyk": "1.122.3",
     "through2": "3.0.0",
     "wcag": "0.3.0"
   },
