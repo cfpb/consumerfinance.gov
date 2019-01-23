@@ -42,23 +42,6 @@ describe( 'Multiselect', () => {
 
       expect( choices.length ).toBe( 1 );
       expect( choices[0].innerHTML ).toContain( 'Debt collection' );
-    }
-    );
-
-    it( 'should log a helpful tip if passed a bad option value', () => {
-
-      /* TODO: Remove console.log in favor of throwing an error. */
-      const consoleSpy = jest.spyOn( window.console, 'log' );
-      const option = document.querySelector( 'option' );
-      option.value = 'Foo\'';
-      multiselect.init();
-      selectDom = document.querySelectorAll( 'select[multiple]' );
-      multiselectDom = document.querySelectorAll( '.o-multiselect' );
-
-      expect( selectDom.length ).toBe( 1 );
-      expect( multiselectDom.length ).toBe( 0 );
-      expect( consoleSpy ).toHaveBeenCalledTimes( 1 );
-      expect( consoleSpy ).toHaveBeenCalledWith( '\'Foo\'\' is not a valid value' );
     } );
   } );
 
