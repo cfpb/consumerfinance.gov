@@ -38,48 +38,53 @@
         </nav>
     </div>
     <div class="content_wrapper">
-        <div class="form-explainer
-                    content_main
-                    {% if subnav %}col-9{% endif %}">
-            <div class="page-intro content-l">
-                <div class="content-l_col-2-3">
-                    <h1 class="page-title">Loan Estimate Explainer</h1>
-                    <p class="lead">A Loan Estimate tells you important details about a mortgage loan you have requested. Use this tool to review your Loan Estimate to make sure it reflects what you discussed with the lender. If something looks different from what you expected, ask why. Request multiple Loan Estimates from different lenders so you can compare and choose the loan that's right for you.</p>
-                    <div class="block
-                              block__flush-top
-                              block__padded-top
-                              block__flush-bottom
-                              u-right-on-desktop">
-                        {{ social_media.render( {
-                              "twitter_text": "Use the @CFPB's interactive tool to review your Loan Estimate and get definitions for unfamiliar terms.",
-                              "email_title": "Review your Loan Estimate with the CFPB",
-                              "email_text": "Check the details on your mortgage Loan Estimate and get definitions with this interactive tool from the CFPB.",
-                              "email_signature": "-- From the CFPB",
-                              "linkedin_title": "Learn the lingo of Loan Estimates with the @CFPB.",
-                              "linkedin_text": "The @CFPB has a helpful tool to review your mortgage Loan Estimate and get definitions for unfamiliar terms. Via @CFPB"
-                        } ) }}
+            <div class="content_main">
+
+                {% include "_templates/no_js.html" %}
+
+                <div class="form-explainer
+                            {% if subnav %}col-9{% endif %}">
+                    <div class="page-intro content-l">
+                        <div class="content-l_col-2-3">
+                            <h1 class="page-title">Loan Estimate Explainer</h1>
+                            <p class="lead">A Loan Estimate tells you important details about a mortgage loan you have requested. Use this tool to review your Loan Estimate to make sure it reflects what you discussed with the lender. If something looks different from what you expected, ask why. Request multiple Loan Estimates from different lenders so you can compare and choose the loan that's right for you.</p>
+                            <div class="block
+                                    block__flush-top
+                                    block__padded-top
+                                    block__flush-bottom
+                                    u-right-on-desktop">
+                                {{ social_media.render( {
+                                    "twitter_text": "Use the @CFPB's interactive tool to review your Loan Estimate and get definitions for unfamiliar terms.",
+                                    "email_title": "Review your Loan Estimate with the CFPB",
+                                    "email_text": "Check the details on your mortgage Loan Estimate and get definitions with this interactive tool from the CFPB.",
+                                    "email_signature": "-- From the CFPB",
+                                    "linkedin_title": "Learn the lingo of Loan Estimates with the @CFPB.",
+                                    "linkedin_text": "The @CFPB has a helpful tool to review your mortgage Loan Estimate and get definitions for unfamiliar terms. Via @CFPB"
+                                } ) }}
+                            </div>
+                        </div>
+                        <div class="content-l_col-1-3">
+                            <img src="{{ static('apps/owning-a-home/img/ill-form-explainer-loan-est.png') }}"
+                                alt=""
+                                class="illustration">
+                        </div>
                     </div>
-                </div>
-                <div class="content-l_col-1-3">
-                    <img src="{{ static('apps/owning-a-home/img/ill-form-explainer-loan-est.png') }}"
-                         alt=""
-                         class="illustration">
-                </div>
+                    {# Import the form explainer macros #}
+                    {% import "_templates/form-explainer.html" as form_explainer %}
+                    {# Import the data to use with form explainer #}
+                    {% from "loan-estimate-1-data.html" import data as page_1 %}
+                    {% from "loan-estimate-2-data.html" import data as page_2 %}
+                    {% from "loan-estimate-3-data.html" import data as page_3 %}
+                    {# Render form explainer with the data for this form #}
+                    <div class="col-12">
+                        {{ form_explainer.render([ page_1, page_2, page_3 ]) }}
+                    </div>
+                    <div class="col-12">
+                        {% include "_templates/ratings-form.html" %}
+                    </div>
+                </div><!-- /.form-explainer -->
             </div>
-            {# Import the form explainer macros #}
-            {% import "_templates/form-explainer.html" as form_explainer %}
-            {# Import the data to use with form explainer #}
-            {% from "loan-estimate-1-data.html" import data as page_1 %}
-            {% from "loan-estimate-2-data.html" import data as page_2 %}
-            {% from "loan-estimate-3-data.html" import data as page_3 %}
-            {# Render form explainer with the data for this form #}
-            <div class="col-12">
-                {{ form_explainer.render([ page_1, page_2, page_3 ]) }}
-            </div>
-            <div class="col-12">
-                {% include "_templates/ratings-form.html" %}
-            </div>
-        </div><!-- /.form-explainer -->
+        </div>
     </div>
     {% import "_templates/brand-footer.html" as brand_footer %}
     {% set footer_links = [
