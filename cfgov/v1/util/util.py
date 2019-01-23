@@ -106,7 +106,7 @@ def get_secondary_nav_items(request, current_page):
 
         nav_items.append(item)
 
-    # Add `/process/` segment to OAH journey page nav urls.
+    # Add `/process/` segment to BAH journey page nav urls.
     # TODO: Remove this when redirects for `/process/` urls
     # are added after 2018 homebuying campaign.
     journey_urls = (

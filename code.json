@@ -1252,7 +1252,7 @@
     },
     {
       "name": "owning-a-home-api",
-      "description": "The API that drives the Owning A Home project. ",
+      "description": "The API that drives the Buying a House project. ",
       "repositoryURL": "https://github.com/cfpb/owning-a-home-api",
       "permissions": {
         "licenses": [

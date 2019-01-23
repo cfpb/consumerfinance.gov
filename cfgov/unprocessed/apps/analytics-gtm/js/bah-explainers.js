@@ -4,8 +4,8 @@ import {
 } from './util/analytics-util';
 
 /*
-Owning a Home /owning-a-home/loan-estimate/
-Owning a Home /owning-a-home/closing-disclosure/
+Buying a House /owning-a-home/loan-estimate/
+Buying a House /owning-a-home/closing-disclosure/
 */
 
 export default function( label ) {
