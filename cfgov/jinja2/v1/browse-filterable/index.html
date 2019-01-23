@@ -1,7 +1,6 @@
 {% extends 'layout-side-nav.html' %}
 
 {% import 'form_block.html' as form_block with context %}
-{% import 'organisms/filterable-list-controls.html' as flc with context %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -24,7 +23,9 @@
     {% endfor %}
     {% for block in page.content %}
         {% if 'filter_controls' in block.block_type %}
-            {{ flc.render_if_any(block.value) }}
+            <div class="block block__flush-top">
+                {% include_block block %}
+            </div>
         {% elif block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
         {% else %}

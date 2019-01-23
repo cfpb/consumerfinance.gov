@@ -1,7 +1,7 @@
 # Navigational links: open in same tab
 # Non-Navigational links: open in new tab
 Feature: verify the Loan Options page works according to requirements
-  As a first time visitor to the Owning a Home page
+  As a first time visitor to the Buying a House page
   I want to navigate the Loan Options page
   So that I can find the information I'm looking for
 
@@ -51,14 +51,14 @@ Scenario Outline: Test inbound links in the Loan Options page
       And I should see "<page_title>" displayed in the page title
 
 Examples:
-  | link_name                    | page_title                                           | relative_url         |
-  | Owning a Home                | Owning a Home > Consumer Financial Protection Bureau | /                    |
+  | link_name                    | page_title                                            | relative_url         |
+  | Buying a House               | Buying a House > Consumer Financial Protection Bureau | /                    |
 
 
 @smoke_testing @loan_options
-Scenario: Test OAH link in the Loan Options page
-   When I click on the "Owning a Home" link
-   Then I should be directed to the OAH Landing page
+Scenario: Test BAH link in the Loan Options page
+   When I click on the "Buying a House" link
+   Then I should be directed to the BAH Landing page
 
 
 @loan_options @loan_options_expandable

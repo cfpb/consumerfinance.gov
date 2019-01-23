@@ -1,6 +1,6 @@
 import bahExplainers from './bah-explainers';
 
-// Owning a Home /owning-a-home/closing-disclosure/
+// Buying a House /owning-a-home/closing-disclosure/
 
 const OAHCDAnalytics = ( () => {
 

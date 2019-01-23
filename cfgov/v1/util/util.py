@@ -55,27 +55,6 @@ def get_secondary_nav_items(request, current_page):
     # children
     has_children = False
 
-    # Handle the Newsroom page specially.
-    # TODO: Remove this ASAP once Press Resources gets its own Wagtail page
-    if page.slug == 'newsroom':
-        return [
-            {
-                'title': page.title,
-                'slug': page.slug,
-                'url': page.relative_url(request.site),
-                'children': [
-                    {
-                        'title': 'Press Resources',
-                        'slug': 'press-resources',
-                        'url': '/newsroom/press-resources/',
-                    }
-                ],
-                'active': True,
-                'expanded': True,
-            }
-        ], True
-    # END TODO
-
     if page.secondary_nav_exclude_sibling_pages:
         pages = [page]
     else:
@@ -127,7 +106,7 @@ def get_secondary_nav_items(request, current_page):
 
         nav_items.append(item)
 
-    # Add `/process/` segment to OAH journey page nav urls.
+    # Add `/process/` segment to BAH journey page nav urls.
     # TODO: Remove this when redirects for `/process/` urls
     # are added after 2018 homebuying campaign.
     journey_urls = (

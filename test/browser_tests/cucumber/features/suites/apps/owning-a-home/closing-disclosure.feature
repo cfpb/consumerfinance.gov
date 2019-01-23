@@ -1,5 +1,5 @@
 Feature: Test the default values in the Closing Disclosure page
-  As a first time visitor to the Owning a Home page
+  As a first time visitor to the Buying a House page
   I want to have content loaded
   So that I can get clever and conquer the world
 
@@ -119,4 +119,4 @@ Scenario Outline: Testing availability of pages on Closing Disclosure
 Examples:
   | page_name             |
   | Closing Disclosure    |
- 
+
