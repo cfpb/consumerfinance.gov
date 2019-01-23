@@ -1,10 +1,10 @@
 Feature: verify the Home page works according to requirements
-As a first time visitor to the Owning a Home page
+As a first time visitor to the Buying a House page
 I want to navigate the home page
 So that I can find the information I'm looking for
 
 Background:
-   Given I navigate to the OAH Landing page
+   Given I navigate to the BAH Landing page
 
 @smoke_testing @landing_page @email_signup
 Scenario: Testing valid email signup
