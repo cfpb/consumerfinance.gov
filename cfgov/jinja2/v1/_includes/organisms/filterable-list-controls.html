@@ -14,23 +14,17 @@
     </li>
 {% endmacro %}
 
-{% macro _render_filter_fields(controls, form) -%}
+{% macro _render_filter_fields(value, form) -%}
     {% if value.title %}
         <div class="content-l_col
                     content-l_col-1">
             <div class="o-form_group">
                 <div class="m-form-field">
                     <label class="a-label a-label__heading"
-                           for="title">
+                           for="{{ form.title.id_for_label }}">
                         Item name
                     </label>
-                    <input type="text"
-                           name="title"
-                           maxlength="250"
-                           placeholder="Search for a specific word in item title"
-                           class="a-text-input
-                                  a-text-input__full"
-                           id="title">
+                    {{ form.title }}
                 </div>
             </div>
         </div>
@@ -97,32 +91,20 @@
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="from_date">
+                                                   for="{{ form.from_date.id_for_label }}">
                                                 From:
                                             </label>
-                                            <input type="text"
-                                                   name="from_date"
-                                                   data-type="date"
-                                                   placeholder="mm/dd/yyyy"
-                                                   class="a-text-input
-                                                          a-text-input__full"
-                                                   id="from_date">
+                                            {{ form.from_date }}
                                         </div>
                                     </div>
                                     <div class="content-l_col
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="to_date">
+                                                   for="{{ form.to_date.id_for_label }}">
                                                 To:
                                             </label>
-                                            <input type="text"
-                                                   name="to_date"
-                                                   data-type="date"
-                                                   placeholder="mm/dd/yyyy"
-                                                   class="a-text-input
-                                                          a-text-input__full"
-                                                   id="to_date">
+                                            {{ form.to_date }}
                                         </div>
                                     </div>
                                 </div>

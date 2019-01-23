@@ -41,7 +41,7 @@ class FilterableDateField(forms.DateField):
     )
 
     default_widget_attrs = {
-        'class': 'js-filter_range-date',
+        'class': 'a-text-input a-text-input__full',
         'type': 'text',
         'placeholder': 'mm/dd/yyyy',
         'data-type': 'date'
@@ -50,61 +50,64 @@ class FilterableDateField(forms.DateField):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('required', False)
         kwargs.setdefault('input_formats', self.default_input_formats)
+        kwargs.setdefault('error_messages', ERROR_MESSAGES['DATE_ERRORS'])
+
+        field_id = kwargs.pop('field_id', None)
+        if field_id:
+            self.default_widget_attrs['id'] = field_id
+
         kwargs.setdefault('widget', widgets.DateInput(
             attrs=self.default_widget_attrs
         ))
-        kwargs.setdefault('error_messages', ERROR_MESSAGES['DATE_ERRORS'])
         super(FilterableDateField, self).__init__(*args, **kwargs)
 
 
-class FilterableFromDateField(FilterableDateField):
-    def __init__(self, *args, **kwargs):
-        self.default_widget_attrs['class'] += ' js-filter_range-date__gte'
-        super(FilterableFromDateField, self).__init__(*args, **kwargs)
-
-
-class FilterableToDateField(FilterableDateField):
-    def __init__(self, *args, **kwargs):
-        self.default_widget_attrs['class'] += ' js-filter_range-date__lte'
-        super(FilterableToDateField, self).__init__(*args, **kwargs)
-
-
 class FilterableListForm(forms.Form):
-    topics_select_attrs = {
-        'multiple': 'multiple',
-        'data-placeholder': 'Search for topics',
-        'class': 'o-multiselect',
-        'id': 'topics'
-    }
-    authors_select_attrs = {
-        'multiple': 'multiple',
-        'data-placeholder': 'Search for authors',
-        'class': 'o-multiselect',
-        'id': 'authors'
-    }
-
     title = forms.CharField(
         max_length=250,
         required=False,
-        widget=widgets.TextInput()
+        widget=forms.TextInput(attrs={
+            'id': 'o-filterable-list-controls_title',
+            'class': 'a-text-input a-text-input__full',
+            'placeholder': 'Search for a specific word in item title',
+        })
     )
-    from_date = FilterableFromDateField()
-    to_date = FilterableToDateField()
+    from_date = FilterableDateField(
+        field_id='o-filterable-list-controls_from-date'
+    )
+
+    to_date = FilterableDateField(
+        field_id='o-filterable-list-controls_to-date'
+    )
+
     categories = forms.MultipleChoiceField(
         required=False,
         choices=ref.page_type_choices,
         widget=widgets.CheckboxSelectMultiple()
     )
+
     topics = MultipleChoiceFieldNoValidation(
         required=False,
         choices=[],
-        widget=widgets.SelectMultiple(attrs=topics_select_attrs)
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_topics',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for topics',
+            'multiple': 'multiple',
+        })
     )
+
     authors = forms.MultipleChoiceField(
         required=False,
         choices=[],
-        widget=widgets.SelectMultiple(attrs=authors_select_attrs)
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_authors',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for authors',
+            'multiple': 'multiple',
+        })
     )
+
     preferred_datetime_format = '%m/%d/%Y'
 
     def __init__(self, *args, **kwargs):
