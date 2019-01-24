@@ -56,7 +56,7 @@
                         <div class="o-form_group">
                             <div class="m-form-field">
                                 <label class="a-label a-label__heading"
-                                       for="topics">
+                                       for="{{ form.topics.id_for_label }}">
                                     Topic
                                 </label>
                                 {{ form.topics }}
@@ -70,7 +70,7 @@
                         <div class="o-form_group">
                             <div class="m-form-field">
                                 <label class="a-label a-label__heading"
-                                       for="authors">
+                                       for="{{ form.authors.id_for_label }}">
                                     Author
                                 </label>
                                 {{ form.authors }}
