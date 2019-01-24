@@ -5,7 +5,7 @@ import { bindEvent } from '../modules/util/dom-events';
 import { create } from '../modules/util/dom-manipulators';
 import { queryOne } from '../modules/util/dom-traverse';
 import { UNDEFINED } from '../modules/util/standard-type';
-import { stringMatch, stringValid } from '../modules/util/strings';
+import { stringMatch } from '../modules/util/strings';
 import EventObserver from '../modules/util/EventObserver';
 
 const closeIcon = require(
@@ -84,7 +84,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _name = _dom.name;
     _options = _dom.options || [];
     _placeholder = _dom.getAttribute( 'placeholder' );
-    _filteredData = _optionsData = _sanitizeOptions( _options );
+    _filteredData = _optionsData = _formatOptions( _options );
 
     if ( _optionsData.length > 0 ) {
       const newDom = _populateMarkup();
@@ -132,26 +132,16 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Cleans up a list of options for saving to memory.
+   * Formats the list of options.
    * @param   {Array} list The options from the parent select elem.
    * @returns {Array}      An array of option objects.
    */
-  function _sanitizeOptions( list ) {
+  function _formatOptions( list ) {
     let item;
     const cleaned = [];
 
     for ( let i = 0, len = list.length; i < len; i++ ) {
       item = list[i];
-
-      // If the value isn't valid kill the script and prompt the developer.
-      if ( !stringValid( item.value ) ) {
-        // TODO: Update to throw an error and handle the error vs logging.
-        console.log( '\'' + item.value + '\' is not a valid value' );
-        // TODO: Remove this line if the class is added via markup.
-        element.classList.remove( BASE_CLASS );
-
-        return false;
-      }
 
       cleaned.push( {
         value:   item.value,
@@ -286,7 +276,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   /**
    * Tracks a user's selections and updates the list in the dom.
-   * @param   {string} value The value of the option the user has chosen.
+   * @param {string} value The value of the option the user has chosen.
    */
   function _updateSelections( value ) {
     const optionIndex =
@@ -345,7 +335,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   /**
    * Evaluates the list of options based on the user's query in the
    * search input.
-   * @param  {string} value Text the user has entered in the search query.
+   * @param {string} value Text the user has entered in the search query.
    */
   function _evaluate( value ) {
     _resetFilter();
