@@ -10,7 +10,7 @@ from ask_cfpb.wagtail_hooks import (
     Answer, AnswerModelAdmin, AnswerModelAdminSaveUserEditView, Audience,
     AudienceModelAdmin, Category, CategoryModelAdmin, NextStep,
     NextStepModelAdmin, SubCategory, SubCategoryModelAdmin, editor_css,
-    editor_js, whitelister_element_rules
+    editor_js
 )
 
 
@@ -27,8 +27,6 @@ class TestAskHooks(TestCase):
     def test_js_functions(self):
         self.assertIn("registerHalloPlugin('editHtmlButton')", editor_js())
         self.assertIn("css/question-tips.css", editor_css())
-        self.assertIn('aside', whitelister_element_rules().keys())
-        self.assertIn('table', whitelister_element_rules().keys())
 
     def test_AnswerModelAdminSaveUserEditView(self):
         mock_admin = mock.Mock()
