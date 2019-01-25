@@ -132,10 +132,16 @@ def editor_css():
 
 
 def whitelister_element_rules():
-    allow_html_class = attribute_rule({'class': True})
+    allow_html_class = attribute_rule({
+        'class': True,
+        'itemprop': True,
+        'itemscope': True,
+        'itemtype': True,
+    })
 
-    allowed_tags = ['aside', 'table', 'tr', 'th', 'td', 'tbody', 'thead',
-                    'tfoot', 'col', 'colgroup']
+    allowed_tags = ['aside', 'div', 'h4', 'p', 'span',
+                    'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
+                    'col', 'colgroup']
 
     return {tag: allow_html_class for tag in allowed_tags}
 
