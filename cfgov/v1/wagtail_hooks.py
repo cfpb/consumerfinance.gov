@@ -14,6 +14,7 @@ from wagtail.contrib.modeladmin.options import (
 )
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
+from wagtail.wagtailcore.whitelist import attribute_rule
 
 from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
@@ -252,3 +253,20 @@ modeladmin_register(SnippetModelAdminGroup)
 def hide_snippets_menu_item(request, menu_items):
     menu_items[:] = [item for item in menu_items
                      if item.url != reverse('wagtailsnippets:index')]
+
+
+# Override list of allowed tags in a RichTextField
+@hooks.register('construct_whitelister_element_rules')
+def whitelister_element_rules():
+    allow_html_class = attribute_rule({
+        'class': True,
+        'itemprop': True,
+        'itemscope': True,
+        'itemtype': True,
+    })
+
+    allowed_tags = ['aside', 'h4', 'p', 'span',
+                    'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
+                    'col', 'colgroup']
+
+    return {tag: allow_html_class for tag in allowed_tags}

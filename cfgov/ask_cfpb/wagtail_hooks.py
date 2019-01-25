@@ -14,7 +14,6 @@ from wagtail.contrib.modeladmin.options import (
 from wagtail.contrib.modeladmin.views import EditView
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.whitelist import attribute_rule
 
 from ask_cfpb.models import Answer, Audience, Category, NextStep, SubCategory
 from ask_cfpb.scripts import export_ask_data
@@ -131,25 +130,8 @@ def editor_css():
         'css/question-tips.css">\n')
 
 
-def whitelister_element_rules():
-    allow_html_class = attribute_rule({
-        'class': True,
-        'itemprop': True,
-        'itemscope': True,
-        'itemtype': True,
-    })
-
-    allowed_tags = ['aside', 'div', 'h4', 'p', 'span',
-                    'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
-                    'col', 'colgroup']
-
-    return {tag: allow_html_class for tag in allowed_tags}
-
-
 hooks.register('insert_editor_js', editor_js)
 hooks.register('insert_editor_css', editor_css)
-hooks.register(
-    'construct_whitelister_element_rules', whitelister_element_rules)
 
 
 @hooks.register('register_admin_menu_item')
