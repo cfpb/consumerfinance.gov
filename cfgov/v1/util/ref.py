@@ -266,3 +266,12 @@ def get_category_children(category_names):
         dict(categories_dict[category]).keys()
         for category in category_names
     )))
+
+def get_fl_display_settings(filterable_page_type):
+    settings = {
+        'page_type': filterable_page_type,
+        'show_tags': True,
+        }
+    if "foia-freq-req-record" in filterable_page_type:
+        settings['show_tags'] = False
+    return settings

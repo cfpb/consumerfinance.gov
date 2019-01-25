@@ -103,6 +103,7 @@ class V1Extension(Extension):
             'is_report': ref.is_report,
             'is_filter_selected': contextfunction(is_filter_selected),
             'render_stream_child': contextfunction(render_stream_child),
+            'get_fl_display_settings': ref.get_fl_display_settings,
         })
 
 
