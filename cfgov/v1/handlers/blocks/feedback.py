@@ -97,7 +97,7 @@ class FeedbackHandler(Handler):
                      'message': "Be sure to also sign up for our email list "
                      "to get our blog posts and other tips about homebuying "
                      "and mortgages in your inbox. We'll also let you know "
-                     "when we make updates to Owning a Home."}
+                     "when we make updates to Buying a House."}
                 )
             else:
                 return JsonResponse(

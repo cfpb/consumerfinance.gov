@@ -177,8 +177,8 @@ class CFGOVPage(Page):
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
                 # Add top level parent page and `/process/` url segments
-                # where necessary to OAH page breadcrumbs.
-                # TODO: Remove this when OAH moves under /consumer-tools
+                # where necessary to BAH page breadcrumbs.
+                # TODO: Remove this when BAH moves under /consumer-tools
                 # and redirects are added after 2018 homebuying campaign.
                 if ancestor.slug == 'owning-a-home':
                     breadcrumbs = []

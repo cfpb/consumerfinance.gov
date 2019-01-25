@@ -16,21 +16,15 @@
 
 {% macro _render_filter_fields(value, form) -%}
     {% if value.title %}
-        {% set field_id = 'title' %}
         <div class="content-l_col
                     content-l_col-1">
             <div class="o-form_group">
                 <div class="m-form-field">
                     <label class="a-label a-label__heading"
-                           for="{{ field_id }}">
+                           for="{{ form.title.id_for_label }}">
                         Item name
                     </label>
-                    {{ form.render_with_id(
-                      form.title,
-                      field_id,
-                      'a-text-input a-text-input__full'
-                      )
-                    }}
+                    {{ form.title }}
                 </div>
             </div>
         </div>
@@ -57,41 +51,29 @@
                     content-l_col-2-3">
             <div class="content-l">
                 {% if value.topics %}
-                    {% set field_id = 'topics' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
                             <div class="m-form-field">
                                 <label class="a-label a-label__heading"
-                                       for="{{ field_id }}">
+                                       for="{{ form.topics.id_for_label }}">
                                     Topic
                                 </label>
-                                {{ form.render_with_id(
-                                  form.topics,
-                                  field_id,
-                                  'o-multiselect'
-                                  )
-                                }}
+                                {{ form.topics }}
                             </div>
                         </div>
                     </div>
                 {% endif %}
                 {% if value.authors %}
-                    {% set field_id = 'authors' %}
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
                             <div class="m-form-field">
                                 <label class="a-label a-label__heading"
-                                       for="{{ field_id }}">
+                                       for="{{ form.authors.id_for_label }}">
                                     Author
                                 </label>
-                                {{ form.render_with_id(
-                                  form.authors,
-                                  field_id,
-                                  'o-multiselect'
-                                  )
-                                }}
+                                {{ form.authors }}
                             </div>
                         </div>
                     </div>
@@ -109,30 +91,20 @@
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="{{ 'from_date' }}">
+                                                   for="{{ form.from_date.id_for_label }}">
                                                 From:
                                             </label>
-                                            {{ form.render_with_id(
-                                              form.from_date,
-                                              'from_date',
-                                              'a-text-input a-text-input__full'
-                                              )
-                                            }}
+                                            {{ form.from_date }}
                                         </div>
                                     </div>
                                     <div class="content-l_col
                                                 content-l_col-1-2">
                                         <div class="m-form-field">
                                             <label class="a-label a-label__heading"
-                                                   for="{{ 'to_date' }}">
+                                                   for="{{ form.to_date.id_for_label }}">
                                                 To:
                                             </label>
-                                            {{ form.render_with_id(
-                                              form.to_date,
-                                              'to_date',
-                                              'a-text-input a-text-input__full'
-                                              )
-                                            }}
+                                            {{ form.to_date }}
                                         </div>
                                     </div>
                                 </div>
