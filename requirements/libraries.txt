@@ -29,7 +29,7 @@ python-dateutil==2.7.3
 pytz
 # PyYAML is required by college-costs
 PyYAML==3.13
-requests==2.19.1
+requests==2.21.0
 requests_toolbelt==0.8.0
 sha3==0.2.1
 six==1.11.0
