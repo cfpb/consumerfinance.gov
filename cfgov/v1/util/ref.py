@@ -74,7 +74,7 @@ categories = [
         ('data-research-reports', 'Data, research, and reports'),
         ('info-for-consumers', 'Info for consumers'),
     )),
-    ('Consumer Reporting Companies List', (
+    ('Consumer Reporting Companies', (
         ('nationwide', 'Nationwide'),
         ('employment-screening', 'Employment screening'),
         ('tenant-screening', 'Tenant screening'),
