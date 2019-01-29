@@ -267,6 +267,7 @@ def get_category_children(category_names):
         for category in category_names
     )))
 
+
 def get_fl_display_settings(filterable_page_type):
     settings = {
         'page_type': filterable_page_type,
