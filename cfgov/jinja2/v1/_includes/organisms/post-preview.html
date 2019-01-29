@@ -66,6 +66,7 @@
     {% set display_settings = get_fl_display_settings(controls.categories.page_type) if controls.categories is defined else get_fl_display_settings('None') %}
     <article class="o-post-preview">
         <div class="m-meta-header">
+            {% if display_settings.show_date %}
             <div class="m-meta-header_right">
                 <span class="a-date">
                     {{ date_desc }}
@@ -76,6 +77,7 @@
                     {% endif %}
                 </span>
             </div>
+            {% endif %}
             <div class="m-meta-header_left">
                 {# Newsroom Blog category logic #}
                 {% if show_categories %}

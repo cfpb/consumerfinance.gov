@@ -45,6 +45,7 @@ page_types = [
     ('rule-under-dev', 'Rule Under Development'),
     ('story', 'Story'),
     ('ask', 'Ask CFPB'),
+    ('cfpb-researchers', 'CFPB Researchers'),
 ]
 
 fcm_types = [
@@ -272,7 +273,10 @@ def get_fl_display_settings(filterable_page_type):
     settings = {
         'page_type': filterable_page_type,
         'show_tags': True,
+        'show_date': True,
         }
     if "foia-freq-req-record" in filterable_page_type:
         settings['show_tags'] = False
+    elif "cfpb-researchers" in filterable_page_type:
+        settings['show_date'] = False
     return settings
