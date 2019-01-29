@@ -46,7 +46,8 @@
    post.preview_link_text:  A string with the description text of an external link.
    post.preview_link_url:   A string with the url of an external link.
 
-   controls:                       An object with specific article information.
+   controls:                       Data object from an instance of the
+                                   FilterableList StreamField block.
    controls.post_date_description: A string of the post publication description.
    controls.categories:            An array with the categories for the post.
 
@@ -55,16 +56,28 @@
 
    post_date_description:   A string of the post publication description.
 
+   show_date: Whether to render a date for this post.
+
+   show_tags: Whether to render the tags for this post.
+
    ========================================================================== #}
 
 {% import 'macros/time.html' as time %}
 
-{% macro render(post, controls, url='', post_date_description='') %}
+{% macro render(
+    post,
+    controls,
+    url='',
+    post_date_description='',
+    show_date=true,
+    show_tags=true
+) %}
     {% set date_desc = controls.post_date_description or post_date_description or 'Published' %}
     {% set cat_controls = controls.categories %}
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
     <article class="o-post-preview">
         <div class="m-meta-header">
+            {% if show_date %}
             <div class="m-meta-header_right">
                 <span class="a-date">
                     {{ date_desc }}
@@ -75,6 +88,7 @@
                     {% endif %}
                 </span>
             </div>
+            {% endif %}
             <div class="m-meta-header_left">
                 {# Newsroom Blog category logic #}
                 {% if show_categories %}
@@ -178,7 +192,7 @@
             {% endfor %}
             </div>
 
-            {% if post.tags.exists() %}
+            {% if show_tags and post.tags.exists() %}
                 {%- import 'tags.html' as tags %}
                 {{ tags.render(post.related_metadata_tags(), hide_heading=true, is_wagtail=True) }}
             {% endif %}

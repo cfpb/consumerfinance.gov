@@ -46,6 +46,7 @@ page_types = [
     ('rule-under-dev', 'Rule Under Development'),
     ('story', 'Story'),
     ('ask', 'Ask CFPB'),
+    ('cfpb-researchers', 'CFPB Researchers'),
 ]
 
 fcm_types = [

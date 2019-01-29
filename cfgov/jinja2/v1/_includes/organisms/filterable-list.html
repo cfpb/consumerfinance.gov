@@ -31,6 +31,10 @@
 
    filter_data.page_set: Result set of posts from the filtered content.
 
+   show_post_dates: Whether to render a date in post previews.
+
+   show_post_tags: Whether to render the tags in post previews.
+
    ========================================================================== #}
 
 {% import 'organisms/filterable-list-controls.html' as filterable_list_controls with context %}
@@ -181,9 +185,14 @@
                         </div>
                     </div>
                 {% else %}
-                    {% import 'organisms/post-preview.html' as post_preview with context %}
+                    {% import 'organisms/post-preview.html' as post_preview without context %}
                     {% for post in posts %}
-                        {{ post_preview.render(post, value) }}
+                        {{ post_preview.render(
+                            post,
+                            value,
+                            show_date=show_post_dates|default(true),
+                            show_tags=show_post_tags|default(true)
+                        ) }}
                     {% endfor %}
                 {% endif %}
 

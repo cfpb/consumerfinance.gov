@@ -32,14 +32,7 @@
         {% elif block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
         {% elif 'post_preview_snapshot' in block.block_type %}
-            <div class="block
-                        {{ block.block.meta.classname if block.block.meta.classname else '' }}">
-                {% set limit = block.value.limit | int %}
-                {% set posts = page.get_browsefilterable_posts(limit) %}
-                {% for post in posts %}
-                    {{ post_preview.render(post, controls=none, url=pageurl(post.parent()), post_date_description=block.value.post_date_description) }}
-                {% endfor %}
-             </div>
+            {% include_block block %}
         {% elif 'filter_controls' in block.block_type %}
             <div class="block block__flush-top">
                 {% include_block block %}
