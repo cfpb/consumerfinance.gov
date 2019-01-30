@@ -218,6 +218,7 @@ class PostPreviewSnapshot(blocks.StructBlock):
 
     class Meta:
         icon = 'order'
+        template = '_includes/organisms/post-preview-snapshot.html'
 
 
 class EmailSignUp(blocks.StructBlock):
@@ -913,6 +914,37 @@ class FilterableList(BaseExpandable):
 
     class Media:
         js = ['filterable-list.js']
+
+    def get_context(self, value, parent_context=None):
+        context = super(FilterableList, self).get_context(
+            value,
+            parent_context=parent_context
+        )
+
+        # Different instances of FilterableList need to render their post
+        # previews differently depending on the page type they live on. By
+        # default post dates and tags are always shown.
+        context.update({
+            'show_post_dates': True,
+            'show_post_tags': True,
+        })
+
+        # Pull out the page type selected when the FilterableList was
+        # configured in the page editor, if one was specified. See the
+        # 'categories' block definition above. The page type choices are
+        # defined in v1.util.ref.page_types.
+        page_type = value['categories'].get('page_type')
+
+        # Pending a much-needed refactor of that code, this logic is being
+        # placed here to keep FilterableList logic in one place. It would be
+        # better if this kind of configuration lived on custom Page models.
+        page_type_overrides = {
+            'cfpb-researchers': {'show_post_dates': False},
+            'foia-freq-req-record': {'show_post_tags': False},
+        }
+
+        context.update(page_type_overrides.get(page_type, {}))
+        return context
 
 
 class VideoPlayer(blocks.StructBlock):

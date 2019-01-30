@@ -1,0 +1,33 @@
+{# ==========================================================================
+
+   Post preview snapshot
+
+   ==========================================================================
+
+   Description:
+
+   Render a list of post previews for a page when given:
+
+   value: Data object from an instance of the PostPreviewControls StreamField
+          block.
+
+   value.limit: Number of posts to show.
+
+   value.post_date_description: Text to display next to date, e.g. "Published".
+
+   ========================================================================== #}
+
+{% import 'organisms/post-preview.html' as post_preview with context %}
+
+<div class="block">
+{% set num_posts = value.limit | int %}
+{% set posts = page.get_browsefilterable_posts(num_posts) if page else [] %}
+{% for post in posts %}
+    {{ post_preview.render(
+        post,
+        controls=none, 
+        url=pageurl(post.parent()),
+        post_date_description=value.post_date_description
+    ) }}
+{% endfor %}
+</div>
