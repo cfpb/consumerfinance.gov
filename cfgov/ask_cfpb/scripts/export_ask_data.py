@@ -146,8 +146,7 @@ def write_questions_to_csv(csvfile):
     writer = unicodecsv.writer(csvfile, encoding='windows-1252')
     writer.writerow(HEADINGS)
     for row in assemble_output():
-            writer.writerow(
-                [row.get(key) for key in HEADINGS])
+        writer.writerow([row.get(key) for key in HEADINGS])
 
 
 def run(*args):
