@@ -21,4 +21,4 @@ We import these satellite projects into cfgov-refresh by specifying wheel files 
 
 ## Local setup and usage
 
-See ["Usage"](https://cfpb.github.io/cfgov-refresh/usage/#develop-satellite-apps) for local setup and usage instructions.
+See ["Usage"](../usage#develop-satellite-apps) for local setup and usage instructions.
