@@ -38,6 +38,10 @@
         {{ complaint_issue_banner(request) }}
     {% endif %}
 
+    {% if flag_enabled('COMPLAINT_INTAKE_MAINTENANCE', request) %}
+        {{ complaint_maintenance_banner(request) }}
+    {% endif %}
+
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render( true ) }}
 
