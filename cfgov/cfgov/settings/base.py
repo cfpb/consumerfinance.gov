@@ -599,84 +599,99 @@ FLAGS = {
     # Ask CFPB search spelling correction support
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results.
-    'ASK_SEARCH_TYPOS': {},
+    'ASK_SEARCH_TYPOS': [],
 
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
-    'BETA_NOTICE': {'environment is': 'beta'},
+    'BETA_NOTICE': [('environment is', 'beta')],
 
     # When enabled, include a recruitment code comment in the base template.
-    'CFPB_RECRUITING': {},
+    'CFPB_RECRUITING': [],
 
     # When enabled, display a "technical issues" banner on /complaintdatabase.
-    'CCDB_TECHNICAL_ISSUES': {},
+    'CCDB_TECHNICAL_ISSUES': [],
 
     # When enabled, display a banner stating the complaint intake form is down.
-    # See COMPLAINT_INTAKE_TECHNICAL_ISSUES_URLS below.
-    'COMPLAINT_INTAKE_TECHNICAL_ISSUES': {},
+    'COMPLAINT_INTAKE_TECHNICAL_ISSUES': [
+        {'condition': 'path matches', 'value': r'^/complaint', 'required': True},
+        # Boolean to turn it off explicitly unless enabled by another condition
+        {'condition': 'boolean', 'value': False}
+    ],
+
+    # When enabled, display a banner stating that the complaint intake form is
+    # offline for maintenance. A combination of 'after date'/'before date'
+    # conditions is expected.
+    'COMPLAINT_INTAKE_MAINTENANCE': [
+        {'condition': 'path matches', 'value': r'^/complaint', 'required': True},
+        # Boolean to turn it off explicitly unless enabled by another condition
+        {'condition': 'after date', 'value': '2019-01-01T12:00Z', 'required': True},
+        {'condition': 'before date', 'value': '2019-03-01T12:00Z', 'required': True},
+    ],
 
     # When enabled, use Wagtail for /company-signup/
     # (instead of selfregistration app)
-    'WAGTAIL_COMPANY_SIGNUP': {},
+    'WAGTAIL_COMPANY_SIGNUP': [],
 
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
-    'IA_USER_TESTING_MENU': {},
+    'IA_USER_TESTING_MENU': [],
 
     # Fix for margin-top when using the text inset
     # When enabled, the top margin of full-width text insets is increased
-    'INSET_TEST': {},
+    'INSET_TEST': [],
 
     # When enabled, serves `/es/` pages from this
     # repo ( excluding /obtener-respuestas/ pages ).
-    'ES_CONV_FLAG': {},
+    'ES_CONV_FLAG': [],
 
     # The next version of the public consumer complaint database
-    'CCDB5_RELEASE': {},
+    'CCDB5_RELEASE': [],
 
     # To be enabled when mortgage-performance data visualizations go live
-    'MORTGAGE_PERFORMANCE_RELEASE': {},
+    'MORTGAGE_PERFORMANCE_RELEASE': [],
 
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
-    'AB_TESTING': {},
+    'AB_TESTING': [],
 
     # Email popups.
-    'EMAIL_POPUP_OAH': {'boolean': True},
-    'EMAIL_POPUP_DEBT': {'boolean': True},
+    'EMAIL_POPUP_OAH': [('boolean', True)],
+    'EMAIL_POPUP_DEBT': [('boolean', True)],
 
     # Wagtail menu
-    'WAGTAIL_MENU': {},
+    'WAGTAIL_MENU': [],
 
     # The release of new Whistleblowers content/pages
-    'WHISTLEBLOWER_RELEASE': {},
+    'WHISTLEBLOWER_RELEASE': [],
 
     # Search.gov API-based site-search
-    'SEARCH_DOTGOV_API': {},
+    'SEARCH_DOTGOV_API': [],
 
     # The release of the new Financial Coaching pages
-    'FINANCIAL_COACHING': {},
+    'FINANCIAL_COACHING': [],
 
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
-    'TURBOLINKS': {},
+    'TURBOLINKS': [],
 
     # Ping google on page publication in production only
-    'PING_GOOGLE_ON_PUBLISH': {'environment is': 'production'},
+    'PING_GOOGLE_ON_PUBLISH': [('environment is', 'production')],
 
-    'LEGACY_HUD_API': {'environment is': 'production'},
+    'LEGACY_HUD_API': [('environment is', 'production')],
 
     # SPLIT TESTING FLAGS
 
     # Ask CFPB page titles as H1s instead of H2s
-    'ASK_CFPB_H1': {
-        'in split testing cluster': 'ASK_CFPB_H1'
-    },
+    'ASK_CFPB_H1': [
+        ('in split testing cluster', 'ASK_CFPB_H1')
+    ],
 
     # Test financial well-being hub pages on Beta
-    'FINANCIAL_WELLBEING_HUB': {'environment is': 'beta'},
+    'FINANCIAL_WELLBEING_HUB': [('environment is', 'beta')],
+
+    'MY_FLAG': [],
 }
 
 
@@ -725,13 +740,6 @@ EMAIL_POPUP_URLS = {
         '/owning-a-home/mortgage-estimate/',
     ],
 }
-
-# URLs that will show the complaint intake issue banner when the service is down.
-COMPLAINT_INTAKE_TECHNICAL_ISSUES_URLS = [
-    '/complaint/',
-    '/complaint/getting-started/',
-    '/complaint/process/'
-]
 
 REGULATIONS_REFERENCE_MAPPING = [
     (
