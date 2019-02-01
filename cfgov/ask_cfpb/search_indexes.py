@@ -29,7 +29,7 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
     suggestions = indexes.FacetCharField()
 
     def prepare_tags(self, obj):
-        return obj.tags
+        return obj.clean_tags
 
     def prepare_answer(self, obj):
         data = super(AnswerBaseIndex, self).prepare(obj)
@@ -76,7 +76,7 @@ class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
     suggestions = indexes.FacetCharField()
 
     def prepare_tags(self, obj):
-        return obj.tags_es
+        return obj.clean_tags_es
 
     def prepare_spanish_answer_index(self, obj):
         data = super(SpanishBaseIndex, self).prepare(obj)

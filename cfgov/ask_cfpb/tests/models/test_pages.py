@@ -711,7 +711,7 @@ class AnswerModelTestCase(TestCase):
         """Test the list produced by answer.tags()"""
         answer = self.prepare_answer(search_tags='Chutes, Ladders')
         answer.save()
-        taglist = answer.tags
+        taglist = answer.clean_tags
         for name in ['Chutes', 'Ladders']:
             self.assertIn(name, taglist)
 
@@ -719,7 +719,7 @@ class AnswerModelTestCase(TestCase):
         """Test the list produced by answer.tags_es()"""
         answer = self.prepare_answer(search_tags_es='sistema judicial, tipos')
         answer.save()
-        taglist = answer.tags_es
+        taglist = answer.clean_tags_es
         for term in ['sistema judicial', 'tipos']:
             self.assertIn(term, taglist)
 
