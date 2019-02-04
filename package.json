@@ -51,7 +51,7 @@
     "gulp-header": "2.0.7",
     "gulp-imagemin": "5.0.3",
     "gulp-less": "4.0.1",
-    "gulp-modernizr-build": "0.0.6",
+    "gulp-modernizr": "3.1.0",
     "gulp-newer": "1.4.0",
     "gulp-notify": "3.2.0",
     "gulp-postcss": "7.0.1",
