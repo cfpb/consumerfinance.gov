@@ -39,47 +39,55 @@
         </nav>
     </div>
     <div class="content_wrapper">
-        <div class="form-explainer content_main u-pb0">
-            <div class="page-intro content-l">
-                <div class="content-l_col-2-3">
-                    <h1 class="page-title">Closing Disclosure Explainer</h1>
-                    <p class="lead">Use this tool to double-check that all the details about your loan are correct on your Closing Disclosure. Lenders are required to provide your Closing Disclosure three business days before your scheduled closing. Use these days wisely&mdash;now is the time to resolve problems. If something looks different from what you expected, ask why.</p>
-                    <div class="block
-                                block__flush-top
-                                block__padded-top
-                                block__flush-bottom
-                                u-right-on-desktop">
-                        {{ social_media.render( {
-                        "twitter_text": "Use the @CFPB’s interactive tool to double-check all the details of your Closing Disclosure.",
-                        "email_title": "Get Closing Disclosure help from the CFPB",
-                        "email_text": "The CFPB’s tool helps you double-check your closing disclosure:",
-                        "email_signature": "-- From the CFPB",
-                        "linkedin_title": "Double-check your Closing Disclosure with the @CFPB",
-                        "linkedin_text": "Use this tool from the @CFPB to double-check that all the details in your closing disclosure are correct. Via @CFPB"
-                        } ) }}
+        <div class="content_main">
+
+            {% include "_templates/no_js.html" %}
+
+            <div class="form-explainer">
+
+                <div class="page-intro content-l">
+                    <div class="content-l_col-2-3">
+                        <h1 class="page-title">Closing Disclosure Explainer</h1>
+                        <p class="lead">Use this tool to double-check that all the details about your loan are correct on your Closing Disclosure. Lenders are required to provide your Closing Disclosure three business days before your scheduled closing. Use these days wisely&mdash;now is the time to resolve problems. If something looks different from what you expected, ask why.</p>
+                        <div class="block
+                                    block__flush-top
+                                    block__padded-top
+                                    block__flush-bottom
+                                    u-right-on-desktop">
+                            {{ social_media.render( {
+                            "twitter_text": "Use the @CFPB’s interactive tool to double-check all the details of your Closing Disclosure.",
+                            "email_title": "Get Closing Disclosure help from the CFPB",
+                            "email_text": "The CFPB’s tool helps you double-check your closing disclosure:",
+                            "email_signature": "-- From the CFPB",
+                            "linkedin_title": "Double-check your Closing Disclosure with the @CFPB",
+                            "linkedin_text": "Use this tool from the @CFPB to double-check that all the details in your closing disclosure are correct. Via @CFPB"
+                            } ) }}
+                        </div>
+                    </div>
+                    <div class="content-l_col-1-3">
+                        <img src="{{ static('img/ill-form-explainer-closing-disc.png') }}"
+                            alt=""
+                            class="illustration">
                     </div>
                 </div>
-                <div class="content-l_col-1-3">
-                    <img src="{{ static('img/ill-form-explainer-closing-disc.png') }}"
-                         alt=""
-                         class="illustration">
+
+                {# Import the form explainer macros #}
+                {% import "_templates/form-explainer.html" as form_explainer %}
+                {# Import the data to use with form explainer #}
+                {% from "closing-disclosure-1-data.html" import data as page_1 %}
+                {% from "closing-disclosure-2-data.html" import data as page_2 %}
+                {% from "closing-disclosure-3-data.html" import data as page_3 %}
+                {% from "closing-disclosure-4-data.html" import data as page_4 %}
+                {% from "closing-disclosure-5-data.html" import data as page_5 %}
+                {# Render form explainer with the data for this form #}
+                <div class="col-12">
+                    {{ form_explainer.render([ page_1, page_2, page_3, page_4, page_5 ]) }}
+                </div>
+                <div class="col-12">
+                    {% include "_templates/ratings-form.html" %}
                 </div>
             </div>
-            {# Import the form explainer macros #}
-            {% import "_templates/form-explainer.html" as form_explainer %}
-            {# Import the data to use with form explainer #}
-            {% from "closing-disclosure-1-data.html" import data as page_1 %}
-            {% from "closing-disclosure-2-data.html" import data as page_2 %}
-            {% from "closing-disclosure-3-data.html" import data as page_3 %}
-            {% from "closing-disclosure-4-data.html" import data as page_4 %}
-            {% from "closing-disclosure-5-data.html" import data as page_5 %}
-            {# Render form explainer with the data for this form #}
-            <div class="col-12">
-                {{ form_explainer.render([ page_1, page_2, page_3, page_4, page_5 ]) }}
-            </div>
-            <div class="col-12">
-                {% include "_templates/ratings-form.html" %}
-            </div>
+
         </div>
     </div>
     {% import "_templates/brand-footer.html" as brand_footer %}
