@@ -2,11 +2,17 @@ import {
   chartTooltipMultiple,
   chartTooltipSingle
 } from './template-loader';
+import { applyThemeTo } from './highcharts-theme';
 import Highcharts from 'highcharts';
 import RateCheckerChartMenu from './RateCheckerChartMenu';
 import highchartsExport from 'highcharts/modules/exporting';
-import { applyThemeTo } from './highcharts-theme';
 
+/**
+ * RateCheckerChart
+ * @class
+ * @classdesc Creates the left-hand side chart on /owning-a-home/explore-rates/
+ * @returns {RateCheckerChart} An instance.
+ */
 function RateCheckerChart() {
   let _highChart;
   let _containerDom;
@@ -23,6 +29,9 @@ function RateCheckerChart() {
   // Set some properties for the histogram.
   let isInitialized = false;
 
+  /**
+   * Initialize the chart variables and set the loading appearance.
+   */
   function init() {
     // Load and style highCharts library. https://www.highCharts.com/docs.
     highchartsExport( Highcharts );
@@ -37,6 +46,10 @@ function RateCheckerChart() {
     startLoading();
   }
 
+  /**
+   * Initialize and create highcharts-related instances.
+   * @returns {RateCheckerChartMenu} A menu instance.
+   */
   function _createHighcharts() {
     _highChart = new Highcharts.Chart( {
       chart: {
@@ -122,7 +135,7 @@ function RateCheckerChart() {
       }
     } );
 
-    new RateCheckerChartMenu( _highChart );
+    return new RateCheckerChartMenu( _highChart );
   }
 
   /**
@@ -168,6 +181,9 @@ function RateCheckerChart() {
     _currentState = state;
   }
 
+  /**
+   * Set the loading apperance of the chart.
+   */
   function startLoading() {
     setStatus( RateCheckerChart.STATUS_OKAY );
     _dataLoadedDom.classList.add( 'loading' );
