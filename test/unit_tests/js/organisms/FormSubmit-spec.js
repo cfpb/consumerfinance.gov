@@ -33,7 +33,7 @@ const HTML_SNIPPET = `
         </label>
         <input id="form_3"
                type="email"
-               placeholder="example@mail.com"
+               placeholder="mail@example.com"
                name="email"
                class="a-text-input a-text-input__full">
       </div>
