@@ -13,7 +13,7 @@ refresh_dump_name=$1
 USAGE=$(cat << 'EOF'
 Please download a recent database dump before running this script:
 
-  ./refresh-data.sh production_django.sql
+  ./refresh-data.sh production_django.sql.gz
 
 Or you can define the location of a dump and this script will
 download it for you:
