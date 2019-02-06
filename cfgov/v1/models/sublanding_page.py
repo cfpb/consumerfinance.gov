@@ -22,21 +22,18 @@ class SublandingPage(CFGOVPage):
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', organisms.FeaturedContent()),
-        ('info_unit_group', organisms.InfoUnitGroup()),
         ('full_width_text', organisms.FullWidthText()),
-        ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
+        ('info_unit_group', organisms.InfoUnitGroup()),
         ('well', organisms.Well()),
-        ('table_block', organisms.AtomicTableBlock(
-            table_options={'renderer': 'html'})),
+        ('snippet_list', organisms.ResourceList()),
+        ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('contact', organisms.MainContactInfo()),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'}
+        )),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
         ('feedback', v1_blocks.Feedback()),
-        ('snippet_list', organisms.ResourceList()),
-        ('image_text_25_75_group', organisms.ImageText2575Group()),
-        ('image_text_50_50_group', organisms.ImageText5050Group()),
-        ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
-        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),
