@@ -16,11 +16,12 @@ def complaint_issue_banner(request):
 
 @register.simple_tag
 def complaint_maintenance_banner(request):
-    """ Add a complaint maintenance banner. This banner is intended to be used
-    along with the COMPLAINT_INTAKE_MAINTENANCE feature flag with a pair of
-    'after date' and 'before date' conditions to indicate the maintenance
-    window. The 'before date' condition will be used to inform visitors when
-    the maintenance window ends. """
+    """ Add a complaint maintenance banner.
+    This banner is intended to be used along with the
+    COMPLAINT_INTAKE_MAINTENANCE feature flag with a pair of 'after date' and
+    'before date' conditions to indicate the maintenance window. The
+    'before date' condition will be used to inform visitors when the
+    maintenance window ends. """
 
     template = 'organisms/complaint-maintenance-banner.html'
 
@@ -53,7 +54,7 @@ def complaint_maintenance_banner(request):
             if before_date > now:
                 date_str = 'after {time} on {date}'.format(
                     time=format(before_date, 'g:i a e'),
-                    date=format(before_date, 'l, F j, Y'),
+                    date=format(before_date, 'l, F j, Y,'),
                 )
                 break
 
