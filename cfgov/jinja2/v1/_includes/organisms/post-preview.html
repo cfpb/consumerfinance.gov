@@ -86,10 +86,14 @@
                 {% else %}
                     {% for cat in post.categories.all() %}
                         {% if loop.index > 1 %}
-                            |
+                            <span class="m-meta-header_separator">|</span>
                         {% endif %}
                         {{ category_slug.render(category=cat.name, href=url) }}
                     {% endfor %}
+                {% endif %}
+                {# pipe ("|") separator logic #}
+                {% if show_date %}
+                <span class="m-meta-header_separator">|</span> 
                 {% endif %}
             </div>
             {% endif %}

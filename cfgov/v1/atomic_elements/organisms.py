@@ -872,6 +872,7 @@ class FilterableList(BaseExpandable):
         # better if this kind of configuration lived on custom Page models.
         page_type_overrides = {
             'cfpb-researchers': {'show_post_dates': False},
+            'consumer-reporting': {'show_post_dates': False},
             'foia-freq-req-record': {'show_post_tags': False},
         }
 
