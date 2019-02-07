@@ -60,12 +60,6 @@ class TestEmailPopup(TestCase):
         self.assertEqual(email_popup(request), '')
 
 
-class TestComplaintBanner(TestCase):
-    def test_complaint_banner_defined_and_returns_empty(self):
-        request = RequestFactory().get('/page/without/a/banner')
-        self.assertEqual(complaint_issue_banner(request), '')
-
-
 class TestIsFilterSelected(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
