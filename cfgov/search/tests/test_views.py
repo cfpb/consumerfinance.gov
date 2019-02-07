@@ -11,7 +11,7 @@ from v1.models.snippets import Contact
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
-@override_settings(FLAGS={'SEARCH_DOTGOV_API': {'boolean': 'True'}})
+@override_settings(FLAGS={'SEARCH_DOTGOV_API': [('boolean', True)]})
 class SearchViewsTestCase(TestCase):
 
     @mock.patch('search.dotgov.search')

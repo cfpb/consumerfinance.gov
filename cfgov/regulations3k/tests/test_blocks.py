@@ -15,7 +15,7 @@ from regulations3k.models.pages import RegulationLandingPage, RegulationPage
 
 
 @override_settings(
-    FLAGS={'REGULATIONS3K': {'boolean': True}}
+    FLAGS={'REGULATIONS3K': [('boolean', True)]}
 )
 class RegulationsListTestCase(TestCase):
 
