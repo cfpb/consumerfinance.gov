@@ -3,6 +3,125 @@ from django.db import migrations
 from v1.util.migrations import get_stream_data, set_stream_data
 
 
+""" This data migration converts Link Blob Groups to Info Unit Groups.
+
+The HalfWidthLinkBlobGroup and ThirdWidthLinkBlobGroup organisms
+have the following format:
+
+{
+    # string, not required
+    'heading': 'Heading',
+
+    # boolean, not required, defaults to False
+    'has_top_border': True,
+
+    # boolean, not required, defaults to False
+    'has_bottom_border': False,
+
+    # ListBlock of HalfWidthLinkBlob molecules
+    'link_blobs': [
+        {
+            # string, not required
+            'heading': 'Heading (level 3)',
+
+            # string, not required
+            'sub_heading': 'Heading (level 4)',
+
+            # string, not required
+            'sub_heading_icon': 'help-round',
+
+            # rich text, not required
+            'body': '<p>HTML text</p>',
+
+            # ListBlock of Hyperlink atoms
+            'links': [
+                {
+                    'text': 'Link text'
+                    'url': '/path/to/something/'
+                },
+                ...
+            ]
+        },
+        ...
+    ]
+}
+
+
+The InfoUnitGroup organism has the following format:
+
+{
+    # ChoiceBlock; choices of '50-50', '25-75', or '33-33-33'; required
+    format: '50-50',
+
+    # HeadingBlock
+    'heading': {
+        # string, not required
+        'text': 'Heading',
+
+        # ChoiceBlock; choices of 'h2', 'h3', or 'h4'; not required
+        'level': 'h2'
+
+        # string, not required
+        'icon': 'help-round'
+    },
+
+    # rich text, not required
+    'intro': '<p>HTML text</p>',
+
+    # boolean, not required, defaults to True
+    'link_image_and_heading': True,
+
+    # boolean, not required, defaults to False
+    'has_top_rule_line': False,
+
+    # boolean, not required, defaults to False
+    'lines_between_items': False,
+
+    # ListBlock of InfoUnit molecules
+    'info_units': [
+        {
+            # ImageBasic atom
+            'image': <ImageBasic PK>,
+
+            # HeadingBlock
+            'heading': {
+                # string, not required
+                'text': 'Heading',
+
+                # ChoiceBlock; choices of 'h2', 'h3', or 'h4'; not required
+                'level': 'h3'
+
+                # string, not required
+                'icon': 'help-round'
+            },
+
+            # rich text, not required
+            'body': '<p>HTML text</p>',
+
+            # ListBlock of Hyperlink atoms
+            'links': [
+                {
+                    'text': 'Link text'
+                    'url': '/path/to/something/'
+                },
+                ...
+            ]
+        },
+        ...
+    ],
+
+    # StructBlock
+    'sharing': {
+        # boolean, not required, defaults to False
+        'shareable': False
+
+        # string, not required
+        'share_blurb': 'Tweet text, e-mail subject line, and LinkedIn post'
+    }
+}
+"""
+
+
 def link_blob_group_to_info_unit_group(old_value, new_format):
     new_value = {}
 
@@ -68,38 +187,37 @@ def migrate_streamfield_forward(page_or_revision, streamfield_name):
     """ Migrate a StreamField belonging to the page or revision """
     old_stream_data = get_stream_data(page_or_revision, streamfield_name)
 
-    if old_stream_data != []:
-        new_stream_data = []
-        migrated = False
+    new_stream_data = []
+    migrated = False
 
-        block_conversions = {
-            'half_width_link_blob_group': '50-50',
-            'third_width_link_blob_group': '33-33-33',
-        }
+    block_conversions = {
+        'half_width_link_blob_group': '50-50',
+        'third_width_link_blob_group': '33-33-33',
+    }
 
-        for block in old_stream_data:
-            block_type = block['type']
+    for block in old_stream_data:
+        block_type = block['type']
 
-            if block_type in block_conversions:
-                new_block = {
-                    'type': 'info_unit_group',
-                    'value': link_blob_group_to_info_unit_group(
-                        block['value'],
-                        block_conversions[block_type]
-                    )
-                }
+        if block_type in block_conversions:
+            new_block = {
+                'type': 'info_unit_group',
+                'value': link_blob_group_to_info_unit_group(
+                    block['value'],
+                    block_conversions[block_type]
+                )
+            }
 
-                new_stream_data.append(new_block)
-                migrated = True
-            else:
-                new_stream_data.append(block)
+            new_stream_data.append(new_block)
+            migrated = True
+        else:
+            new_stream_data.append(block)
 
-        if migrated:
-            set_stream_data(
-                page_or_revision,
-                streamfield_name,
-                new_stream_data
-            )
+    if migrated:
+        set_stream_data(
+            page_or_revision,
+            streamfield_name,
+            new_stream_data
+        )
 
 
 def forwards(apps, schema_editor):
@@ -124,10 +242,6 @@ def forwards(apps, schema_editor):
                 migrate_streamfield_forward(revision, streamfield_name)
 
 
-def backwards():
-    return
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -135,5 +249,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-         migrations.RunPython(forwards, backwards),
+         migrations.RunPython(forwards, migrations.RunPython.noop),
     ]
