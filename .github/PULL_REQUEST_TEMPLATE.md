@@ -45,13 +45,13 @@
 
 ### Browsers
 
-- [ ] Chrome
+- [ ] Chrome on desktop
 - [ ] Firefox
-- [ ] Safari
-- [ ] Internet Explorer 8, 9, 10, and 11
+- [ ] Safari on macOS
 - [ ] Edge
-- [ ] iOS Safari
-- [ ] Chrome for Android
+- [ ] Internet Explorer 9, 10, and 11
+- [ ] Safari on iOS
+- [ ] Chrome on Android
 
 ### Accessibility
 
