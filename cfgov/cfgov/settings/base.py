@@ -625,8 +625,7 @@ FLAGS = {
     'COMPLAINT_INTAKE_MAINTENANCE': [
         {'condition': 'path matches', 'value': r'^/complaint', 'required': True},
         # Boolean to turn it off explicitly unless enabled by another condition
-        {'condition': 'after date', 'value': '2019-01-01T12:00Z', 'required': True},
-        {'condition': 'before date', 'value': '2019-03-01T12:00Z', 'required': True},
+        {'condition': 'boolean', 'value': False}
     ],
 
     # When enabled, use Wagtail for /company-signup/
