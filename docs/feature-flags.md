@@ -1,6 +1,6 @@
 # Feature flags
 
-Feature flags are implemented using our [Django-Flags](https://github.com/cfpb/django-flags) and [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) apps. The [Django-Flags documentation]([Django-Flags](https://cfpb.github.io/django-flags) contains and overview of feature flags and how to use them and the [Wagtail-Flags README](https://github.com/cfpb/wagtail-flags/blob/master/README.md) describes how to add feature flag conditions in the Wagtail admin.
+Feature flags are implemented using our [Django-Flags](https://github.com/cfpb/django-flags) and [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) apps. The [Django-Flags documentation](https://cfpb.github.io/django-flags) contains an overview of feature flags and how to use them and the [Wagtail-Flags README](https://github.com/cfpb/wagtail-flags/blob/master/README.md) describes how to add feature flag conditions in the Wagtail admin.
 
 This document covers how to add and use feature flags with cfgov-refresh and the conventions we have around their use.
 
