@@ -7,10 +7,10 @@ const Highcharts = require(
   BASE_JS_PATH + 'node_modules/highcharts'
 );
 
-const simulateEvent =
-  require( '../../../../../util/simulate-event' ).simulateEvent;
+import { simulateEvent } from '../../../../../util/simulate-event';
 
-const STATES = RateCheckerChartMenu.STATES;
+const STATE_OPEN = 'open';
+const STATE_CLOSED = 'closed';
 
 let highCharts;
 let chartMenu;
@@ -18,29 +18,35 @@ let chartMenuDOM;
 let chartMenuBtnDOM;
 
 const HTML_SNIPPET = `
-  <section id="chart-section" class="chart">
-  </section>
-    <div class="chart-menu">
-      <button class="chart-menu_btn
-                     cf-icon
-                     cf-icon__after
-                     cf-icon-download">
-        Download chart
-      </button>
-      <ul class="chart-menu_options">
-        <li data-export-type="0">PNG</li>
-        <li data-export-type="1">SVG</li>
-        <li data-export-type="2">JPEG</li>
-        <li data-export-type="3">Print chart</li>
-      </ul>
-    </div>
+<section id="chart-section" class="chart">
+  <div class="chart-menu">
+    <button class="chart-menu_btn
+                    cf-icon
+                    cf-icon__after
+                    cf-icon-download">
+      Download chart
+    </button>
+    <ul class="chart-menu_options">
+      <li>PNG</li>
+      <li>SVG</li>
+      <li>JPEG</li>
+      <li>Print chart</li>
+    </ul>
+  </div>
+  <figure>
+    <div id="chart" class="chart-area"></div>
+  </figure>
+</section>
 `;
 
 describe( 'explore-rates/RateCheckerChartMenu', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
 
-    highCharts = new Highcharts.Chart( 'chart-section', {
+    highCharts = new Highcharts.Chart( {
+      chart: {
+        renderTo: document.querySelector( '#chart' )
+      },
       xAxis: {
         categories: [ 'Jan', 'Feb' ]
       },
@@ -59,7 +65,7 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
 
   describe( 'new RateCheckerChartMenu()', () => {
     it( 'should set the state to closed', () => {
-      expect( chartMenu.state ).toStrictEqual( { position: STATES.CLOSED } );
+      expect( chartMenu.state ).toStrictEqual( STATE_CLOSED );
     } );
 
     it( 'should set a reference to the highcharts instance', () => {
@@ -84,36 +90,23 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
   describe( 'open()', () => {
     it( 'should set the open state', () => {
       chartMenu.open();
-      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
+      expect( chartMenu.state ).toStrictEqual( STATE_OPEN );
     } );
   } );
 
   describe( 'close()', () => {
     it( 'should set the closed state', () => {
       chartMenu.close();
-      expect( chartMenu.state ).toStrictEqual( { position: STATES.CLOSED } );
+      expect( chartMenu.state ).toStrictEqual( STATE_CLOSED );
     } );
   } );
 
   describe( 'render()', () => {
     it( 'should set the proper classes on the menu DOM', () => {
       chartMenu.open();
+      expect( chartMenu.state ).toStrictEqual( STATE_OPEN );
       expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
         .toStrictEqual( true );
-    } );
-  } );
-
-  describe( '_setState()', () => {
-    it( 'should set the state when passed an object', () => {
-      chartMenu._setState( { position: STATES.OPEN } );
-      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
-    } );
-
-    it( 'should maintain the state when an object isn\'t passed', () => {
-      chartMenu.open();
-      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
-      chartMenu._setState();
-      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
     } );
   } );
 
@@ -129,9 +122,9 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
 
     it( 'should set the proper state when the menu button is clicked', () => {
       simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenu.state ).toStrictEqual( { position: STATES.OPEN } );
+      expect( chartMenu.state ).toStrictEqual( STATE_OPEN );
       simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenu.state ).toStrictEqual( { position: STATES.CLOSED } );
+      expect( chartMenu.state ).toStrictEqual( STATE_CLOSED );
     } );
 
     it( 'should call exportChart when a menu export option is clicked', () => {
@@ -146,11 +139,13 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
 
   describe( 'exportChart()', () => {
     it( 'should call the appropriate highCharts.export method', () => {
-      chartMenu.exportChart( 1 );
+      chartMenu.exportChart( 'PNG' );
+      expect( highCharts.exportChart ).toBeCalledWith( { type: 'image/png' } );
+      chartMenu.exportChart( 'SVG' );
       expect( highCharts.exportChart ).toBeCalledWith( { type: 'image/svg+xml' } );
-      chartMenu.exportChart( 2 );
+      chartMenu.exportChart( 'JPEG' );
       expect( highCharts.exportChart ).toBeCalledWith( { type: 'image/jpeg' } );
-      chartMenu.exportChart( 3 );
+      chartMenu.exportChart( 'Print chart' );
       expect( highCharts.print ).toHaveBeenCalled();
     } );
   } );
