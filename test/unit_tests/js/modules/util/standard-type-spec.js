@@ -1,6 +1,5 @@
 import {
   JS_HOOK,
-  UNDEFINED,
   noopFunct
 } from '../../../../../cfgov/unprocessed/js/modules/util/standard-type';
 
@@ -11,9 +10,5 @@ describe( 'standard-type', () => {
 
   it( 'should include a non operational function', () => {
     expect( noopFunct() ).toBeUndefined();
-  } );
-
-  it( 'should include a standard undefined reference', () => {
-    expect( UNDEFINED ).toBeUndefined();
   } );
 } );

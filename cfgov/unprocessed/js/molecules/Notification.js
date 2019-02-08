@@ -1,6 +1,5 @@
 // Required modules.
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import { UNDEFINED } from '../modules/util/standard-type';
 const SUCCESS_ICON = require(
   'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/check-round.svg'
 );
@@ -49,6 +48,7 @@ function Notification( element ) {
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 

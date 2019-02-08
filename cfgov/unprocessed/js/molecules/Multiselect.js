@@ -4,7 +4,6 @@ import * as atomicHelpers from '../modules/util/atomic-helpers';
 import { bindEvent } from '../modules/util/dom-events';
 import { create } from '../modules/util/dom-manipulators';
 import { queryOne } from '../modules/util/dom-traverse';
-import { UNDEFINED } from '../modules/util/standard-type';
 import { stringMatch } from '../modules/util/strings';
 import EventObserver from '../modules/util/EventObserver';
 
@@ -77,6 +76,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function init() {
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 

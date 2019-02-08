@@ -1,8 +1,8 @@
 // Required modules.
-import { checkDom, setInitFlag }
-  from '../../../../js/modules/util/atomic-helpers';
-import { UNDEFINED }
-  from '../../../../js/modules/util/standard-type';
+import {
+  checkDom,
+  setInitFlag
+} from '../../../../js/modules/util/atomic-helpers';
 import rangesliderJs from 'rangeslider-js';
 
 /**
@@ -42,6 +42,7 @@ function Slider( element ) {
    */
   function init( options ) {
     if ( !setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 
