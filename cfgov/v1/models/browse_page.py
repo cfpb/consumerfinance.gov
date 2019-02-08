@@ -38,7 +38,6 @@ class BrowsePage(CFGOVPage):
         ('conference_registration_form', ConferenceRegistrationForm()),
         ('raw_html_block', blocks.RawHTMLBlock(
             label='Raw HTML block')),
-        ('html_block', organisms.HTMLBlock()),
         ('chart_block', organisms.ChartBlock()),
         ('mortgage_chart_block', organisms.MortgageChartBlock()),
         ('mortgage_map_block', organisms.MortgageMapBlock()),
