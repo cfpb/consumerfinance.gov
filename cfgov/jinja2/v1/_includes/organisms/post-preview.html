@@ -77,7 +77,7 @@
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
     <article class="o-post-preview">
         <div class="m-meta-header">
-            {% if post.categories.exists() and show_categories %}
+            {% if show_categories and post.categories.exists()  %}
             <div class="m-meta-header_left">
                 {# Newsroom Blog category logic #}
                 {% import 'macros/category-slug.html' as category_slug %}
@@ -88,10 +88,10 @@
                         {% if loop.index > 1 %}
                             <span class="m-meta-header_separator">|</span>
                         {% endif %}
-                        {{ category_slug.render(category=cat.name, href=url) }}
+                        <span class="m-meta-header_category">{{ category_slug.render(category=cat.name, href=url) }}</span>
                     {% endfor %}
                 {% endif %}
-                {# pipe ("|") separator logic #}
+                {# Pipe ("|") separator logic. #}
                 {% if show_date %}
                 <span class="m-meta-header_separator">|</span> 
                 {% endif %}
