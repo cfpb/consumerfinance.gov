@@ -77,8 +77,8 @@ def get_stream_data(page_or_revision, field_name):
         stream_data = stream_block.get_prep_value(field)
     else:
         revision_content = json.loads(page_or_revision.content_json)
-        field = revision_content[field_name]
-        stream_data = json.loads(field)
+        field = revision_content.get(field_name)
+        stream_data = json.loads(field) if field else []
 
     return stream_data
 

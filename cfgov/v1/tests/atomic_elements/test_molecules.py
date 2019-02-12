@@ -132,21 +132,6 @@ class MoleculesTestCase(TestCase):
         response = django_client.get('/landing/')
         self.assertContains(response, 'this is a related link')
 
-    def test_half_width_link_blob(self):
-        """Half width link blob value correctly displays on a Landing Page"""
-        landing_page = LandingPage(
-            title='Landing Page',
-            slug='landing',
-        )
-        landing_page.content = StreamValue(
-            landing_page.content.stream_block,
-            [atomic.half_width_link_blob_group],
-            True
-        )
-        publish_page(child=landing_page)
-        response = django_client.get('/landing/')
-        self.assertContains(response, 'this is a half width link blob')
-
     def test_rss_feed(self):
         """RSS feed correctly displays on a Sublanding Page"""
         sublanding_page = SublandingPage(
@@ -191,25 +176,6 @@ class MoleculesTestCase(TestCase):
         publish_page(child=ddp)
         response = django_client.get('/ddp/')
         self.assertContains(response, 'this is a related metadata heading')
-
-    def test_image_texts(self):
-        """Image Text molecules correctly display on a Landing Page"""
-        landing_page = LandingPage(
-            title='Landing Page',
-            slug='landing',
-        )
-        landing_page.content = StreamValue(
-            landing_page.content.stream_block,
-            [
-                atomic.image_text_50_50_group,
-                atomic.image_text_25_75_group
-            ],
-            True,
-        )
-        publish_page(child=landing_page)
-        response = django_client.get('/landing/')
-        self.assertContains(response, 'this is an image text in a 50 50 group')
-        self.assertContains(response, 'this is an image text in a 25 75 group')
 
     def test_formfield_with_button(self):
         """FormField with Button correctly displays on a Sublanding Page"""

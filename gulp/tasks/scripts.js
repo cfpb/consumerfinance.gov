@@ -10,7 +10,7 @@ const configScripts = config.scripts;
 const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const gulpConcat = require( 'gulp-concat' );
-const gulpModernizrBuild = require( 'gulp-modernizr-build' );
+const gulpModernizr = require( 'gulp-modernizr' );
 const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
@@ -60,9 +60,9 @@ function scriptsPolyfill() {
        setClasses sets detection checks as feat/no-feat CSS in html element.
        html5printshiv enables use of HTML5 sectioning elements in IE8
        See https://github.com/aFarkas/html5shiv */
-    .pipe( gulpModernizrBuild( 'modernizr.min.js', {
-      addFeatures: [ 'css/pointerevents', 'es5/specification' ],
-      options: [ 'setClasses', 'html5printshiv' ]
+    .pipe( gulpModernizr( 'modernizr.min.js', {
+      options: [ 'setClasses', 'html5printshiv' ],
+      tests: [ 'csspointerevents', 'es5' ]
     } ) )
     .pipe( gulpUglifyEs( {
       compress: {
