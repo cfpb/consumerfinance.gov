@@ -3,12 +3,12 @@ from importlib import import_module
 from unittest import TestCase
 
 
-class TestMigration0136(TestCase):
+class TestMigration0137(TestCase):
     @classmethod
     def setUpClass(cls):
-        super(TestMigration0136, cls).setUpClass()
+        super(TestMigration0137, cls).setUpClass()
         cls.migration = import_module(
-            'v1.migrations.0136_migrate_imagetextgroups_to_infounitgroup'
+            'v1.migrations.0137_migrate_imagetextgroups_to_infounitgroup'
         )
 
     def test_image_text_50_50_group_to_info_unit_group(self):

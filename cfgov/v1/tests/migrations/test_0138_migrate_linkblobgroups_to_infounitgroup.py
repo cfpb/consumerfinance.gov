@@ -3,12 +3,12 @@ from importlib import import_module
 from unittest import TestCase
 
 
-class TestMigration0137(TestCase):
+class TestMigration0138(TestCase):
     @classmethod
     def setUpClass(cls):
-        super(TestMigration0137, cls).setUpClass()
+        super(TestMigration0138, cls).setUpClass()
         cls.migration = import_module(
-            'v1.migrations.0137_migrate_linkblobgroups_to_infounitgroup'
+            'v1.migrations.0138_migrate_linkblobgroups_to_infounitgroup'
         )
 
     def test_half_width_link_blob_group_to_info_unit_group(self):
