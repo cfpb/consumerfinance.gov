@@ -8,6 +8,11 @@ from wagtail.wagtailcore.blocks import StreamValue
 
 from treebeard.mp_tree import MP_Node
 
+try:  # pragma: no cover
+    from collections.abc import Sequence
+except ImportError:  # pragma: no cover
+    from collections import Sequence
+
 
 def get_page(page_cls, slug):
     return page_cls.objects.get(slug=slug)
@@ -142,6 +147,18 @@ def migrate_stream_field(page_or_revision, field_name, block_path, mapper):
 
     stream_data, migrated = migrate_stream_data(
         page_or_revision, block_path, stream_data, mapper
+    )
+
+    return new_stream_data, migrated
+
+
+def migrate_stream_field(page_or_revision, field_name, block_type, mapper):
+    """ Migrate blocks of the type within a StreamField of the name belonging
+    to the page or revision using the mapper function """
+    stream_data = get_stream_data(page_or_revision, field_name)
+
+    new_stream_data, migrated = migrate_stream_data(
+        page_or_revision, block_type, stream_data, mapper
     )
 
     if migrated:
