@@ -230,21 +230,6 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'Item Introduction')
         self.assertContains(response, 'Item introduction body')
 
-    def test_html_block(self):
-        """ HTML Block correctly renders HTML on a Browse Page"""
-        browse_page = BrowsePage(
-            title='Browse Page',
-            slug='browse',
-        )
-        browse_page.content = StreamValue(
-            browse_page.content.stream_block,
-            [atomic.html_block],
-            True
-        )
-        publish_page(child=browse_page)
-        response = self.client.get('/browse/')
-        self.assertContains(response, 'Age 30 to 44')
-
     def test_data_snapshot(self):
         """ Data Snapshot correctly renders fields on a Browse Page"""
         browse_page = BrowsePage(

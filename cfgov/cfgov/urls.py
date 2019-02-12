@@ -118,10 +118,7 @@ urlpatterns = [
         TemplateView.as_view(
         template_name='know-before-you-owe/compare/index.html'),
         name='kbyo-compare'),
-    url(r'^fin-ed/privacy-act-statement/$',
-        TemplateView.as_view(
-        template_name='/adult-financial-education/'
-                      'privacy-act-statement/index.html')),
+
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
     url(r'^fair-lending/$', TemplateView.as_view(

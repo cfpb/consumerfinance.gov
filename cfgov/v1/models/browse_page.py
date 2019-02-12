@@ -35,7 +35,6 @@ class BrowsePage(CFGOVPage):
             table_options={'renderer': 'html'}
         )),
         ('feedback', v1_blocks.Feedback()),
-        ('html_block', organisms.HTMLBlock()),
         ('raw_html_block', blocks.RawHTMLBlock(
             label='Raw HTML block'
         )),
