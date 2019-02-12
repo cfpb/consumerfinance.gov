@@ -1,4 +1,5 @@
 import json
+import six
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -6,6 +7,11 @@ from django.db import transaction
 from wagtail.wagtailcore.blocks import StreamValue
 
 from treebeard.mp_tree import MP_Node
+
+try:  # pragma: no cover
+    from collections.abc import Sequence
+except ImportError:  # pragma: no cover
+    from collections import Sequence
 
 
 def get_page(page_cls, slug):
@@ -101,19 +107,34 @@ def set_stream_data(page_or_revision, field_name, stream_data, commit=True):
         page_or_revision.save()
 
 
-def migrate_stream_field(page_or_revision, field_name, field_type, mapper):
-    """ Migrate a block of the type within a StreamField of the name belonging
-    to the page or revision using the mapper function """
-    old_stream_data = get_stream_data(page_or_revision, field_name)
+def migrate_stream_data(page_or_revision, block_type, stream_data, mapper):
+    """ Recursively run the mapper on fields of block_type in stream_data """
+    migrated = False
     new_stream_data = []
 
-    migrated = False
-    for field in old_stream_data:
-        if field_type == field['type']:
+    for field in stream_data:
+        if block_type == field['type']:
             field['value'] = mapper(page_or_revision, field['value'])
             migrated = True
+        elif (isinstance(field['value'], Sequence) and
+              not isinstance(field['value'], six.string_types)):
+            field['value'], migrated = migrate_stream_data(
+                page_or_revision, block_type, field['value'], mapper
+            )
 
         new_stream_data.append(field)
+
+    return new_stream_data, migrated
+
+
+def migrate_stream_field(page_or_revision, field_name, block_type, mapper):
+    """ Migrate blocks of the type within a StreamField of the name belonging
+    to the page or revision using the mapper function """
+    stream_data = get_stream_data(page_or_revision, field_name)
+
+    new_stream_data, migrated = migrate_stream_data(
+        page_or_revision, block_type, stream_data, mapper
+    )
 
     if migrated:
         set_stream_data(page_or_revision, field_name, new_stream_data)
@@ -121,8 +142,8 @@ def migrate_stream_field(page_or_revision, field_name, field_type, mapper):
 
 @transaction.atomic
 def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
-    """ Migrate the fields of a wagtail page type using the given mapper
-        function. page_types_and_fields should be a list of 4-tuples
+    """ Migrate Wagtail StreamFields using the given mapper function.
+        page_types_and_fields should be a list of 4-tuples
         providing ('app', 'PageType', 'field_name', 'block type'). """
     for app, page_type, field_name, block_type in page_types_and_fields:
         page_model = apps.get_model(app, page_type)

@@ -12,7 +12,7 @@ import mock
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import (
     get_stream_data, is_page, migrate_page_types_and_fields,
-    migrate_stream_field, set_stream_data
+    migrate_stream_data, migrate_stream_field, set_stream_data,
 )
 
 
@@ -80,6 +80,47 @@ class MigrationsUtilTestCase(TestCase):
         set_stream_data(self.page, 'body', new_stream_data, commit=False)
 
         self.assertEqual(self.page.save.mock_calls, [])
+
+    def test_migrate_stream_data_recursion(self):
+        mapper = mock.Mock(return_value='new text')
+        stream_data = [
+            {
+                'type': 'not-migratory',
+                'value': [
+                    {
+                        'type': 'migratory',
+                        'value': 'old text',
+                    },
+                ]
+            },
+        ]
+        result, migrated = migrate_stream_data(
+            self.page, 'migratory', stream_data, mapper
+        )
+        self.assertTrue(migrated)
+        self.assertEquals(
+            result[0]['value'][0]['value'], 'new text'
+        )
+
+    def test_migrate_stream_data_no_iterable_value(self):
+        mapper = mock.Mock(return_value='new text')
+        stream_data = [
+            {
+                'type': 'not-migratory',
+                'value': 'old text',
+            },
+            {
+                'type': 'migratory',
+                'value': 'old text',
+            },
+        ]
+        result, migrated = migrate_stream_data(
+            self.page, 'migratory', stream_data, mapper
+        )
+        self.assertTrue(migrated)
+        self.assertEquals(
+            result[1]['value'], 'new text'
+        )
 
     def test_migrate_stream_field_page(self):
         """ Test that the migrate_stream_field function correctly gets
@@ -154,3 +195,4 @@ class MigrationsUtilTestCase(TestCase):
                                                   'body',
                                                   'text',
                                                   mapper)
+
