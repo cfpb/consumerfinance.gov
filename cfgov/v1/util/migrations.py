@@ -153,8 +153,7 @@ def migrate_stream_field(page_or_revision, field_name, block_path, mapper):
 
 
 def migrate_stream_field(page_or_revision, field_name, block_type, mapper):
-    """ Migrate blocks of the type within a StreamField of the name belonging
-    to the page or revision using the mapper function """
+    """ Run mapper on blocks within a StreamField on a page or revision. """
     stream_data = get_stream_data(page_or_revision, field_name)
 
     new_stream_data, migrated = migrate_stream_data(
