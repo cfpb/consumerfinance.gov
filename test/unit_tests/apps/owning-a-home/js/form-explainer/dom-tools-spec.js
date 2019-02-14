@@ -1,4 +1,4 @@
-import domTools from '../../../../../cfgov/unprocessed/apps/owning-a-home/js/dom-tools.js';
+import domTools from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/form-explainer/dom-tools';
 
 const HTML_SNIPPET = `
 <div id="test"></div>
