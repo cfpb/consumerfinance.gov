@@ -1,10 +1,10 @@
-import { elementInView, scrollIntoView, scrollTo }
-  from '../../../js/modules/util/scroll';
+import {
+  scrollIntoView,
+  scrollTo
+} from '../../../../js/modules/util/scroll';
+import { assign } from '../../../../js/modules/util/assign';
+import { closest } from '../../../../js/modules/util/dom-traverse';
 import DT from './dom-tools';
-
-import { assign } from '../../../js/modules/util/assign';
-import { closest } from '../../../js/modules/util/dom-traverse';
-import { instantiateAll } from '../../../js/modules/util/atomic-helpers';
 import throttle from 'lodash.throttle';
 
 const EXPLAIN_TYPES = {
@@ -19,7 +19,7 @@ const CSS = {
   HOVER_HAS_ATTENTION:   'hover-has-attention'
 };
 
-const NO_OP = function( ) {
+const NO_OP = () => {
   // Placeholder function meant to be overridden.
 };
 
@@ -42,13 +42,21 @@ class FormExplainer {
     this.elements.base = element;
     this.pageName = 'form';
     this.resized = false;
+  }
 
+  /**
+   * Initialize the FormExplainer.
+   * @returns {FormExplainer} An instance.
+   */
+  init() {
     this.setPageCount();
     this.setCurrentPage( this.currentPage, UNDEFINED, false );
     this.setUIElements();
     this.setTabIndex();
     this.initializeUI( this.elements );
     this.initializeEvents();
+
+    return this;
   }
 
   /**

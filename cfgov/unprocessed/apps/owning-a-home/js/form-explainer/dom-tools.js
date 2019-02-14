@@ -26,6 +26,12 @@ function applyAll( elements, applyFn ) {
   return false;
 }
 
+/**
+ * Bind a collection of events to a collection of elements.
+ * @param {Array|string} elements - Collection of elements.
+ * @param {Array|Object} events - Collection of events.
+ * @param {Function} callback - Function to call when events fire.
+ */
 function bindEvents( elements, events, callback = NO_OP ) {
   if ( Array.isArray( events ) === false ) {
     events = [ events ];
@@ -127,11 +133,16 @@ function getEl( selector ) {
 function getPreviousEls( element, filter = '*' ) {
   const previousSiblings = [];
   let prevEl = element.previousElementSibling;
+
+  /**
+   * @param {HTMLNode} el - An HTML element.
+   * @returns {Function} The browser's Element.matches() method.
+   */
   function _getMatches( el ) {
     return el.matches ||
-             el.webkitMatchesSelector ||
-             el.mozMatchesSelector ||
-             el.msMatchesSelector;
+           el.webkitMatchesSelector ||
+           el.mozMatchesSelector ||
+           el.msMatchesSelector;
   }
   const _matchesMethod = _getMatches( element );
 
