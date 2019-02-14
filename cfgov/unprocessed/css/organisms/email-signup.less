@@ -36,20 +36,23 @@
 */
 
 .o-email-signup {
+    .m-btn-group {
+        margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    }
 
-    .respond-to-range(@bp-sm-min, @bp-sm-max {
+    .respond-to-range( @bp-sm-min, @bp-sm-max {
         .grid_column(6);
 
         &:last-child:nth-last-child(2) {
             .grid_column(12);
         }
-    });
+    } );
 
     .respond-to-max( @bp-xs-max, {
         .a-label__heading {
             font-size: 1em;
         }
-     } );
+    } );
 }
 
 /* topdoc

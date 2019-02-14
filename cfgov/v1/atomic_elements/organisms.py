@@ -154,7 +154,7 @@ class PostPreviewSnapshot(blocks.StructBlock):
 
 
 class EmailSignUp(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
+    heading = blocks.CharBlock(required=False, default='Stay informed')
     default_heading = blocks.BooleanBlock(
         required=False,
         default=True,
@@ -162,12 +162,30 @@ class EmailSignUp(blocks.StructBlock):
         help_text=('If selected, heading will be styled as an H5 '
                    'with green top rule. Deselect to style header as H3.')
     )
-    text = blocks.CharBlock(required=False)
-    gd_code = blocks.CharBlock(required=False)
-
-    form_field = blocks.ListBlock(molecules.FormFieldWithButton(),
-                                  icon='mail',
-                                  required=False)
+    text = blocks.CharBlock(
+        required=False,
+        help_text=('Write a sentence or two about what kinds of emails the '
+                   'user is signing up for, how frequently they will be sent, '
+                   'etc.')
+    )
+    gd_code = blocks.CharBlock(
+        required=False,
+        label='GovDelivery code',
+        help_text=('Code for the topic (i.e., mailing list) you want people '
+                   'who submit this form to subscribe to. Format: USCFPB_###')
+    )
+    form_field = blocks.ListBlock(
+        molecules.FormFieldWithButton(),
+        icon='mail',
+        required=False
+    )
+    disclaimer_page = blocks.PageChooserBlock(
+        required=False,
+        label='Privacy Act statement',
+        help_text=('Choose the page that the "See Privacy Act statement" link '
+                   'should go to. If in doubt, use "Generic Email Sign-Up '
+                   'Privacy Act Statement".')
+    )
 
     class Meta:
         icon = 'mail'

@@ -28,29 +28,45 @@
         </h2>
     </header>
 {% endif %}
+{% if value.text %}
+    <p>
+        {{ value.text }}
+    </p>
+{% endif %}
 
-<form id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
-      class="o-form o-form__email-signup"
-      action="/subscriptions/new/"
-      method="POST"
-      enctype="application/x-www-form-urlencoded">
-    <div class="u-mb15">
-        {% import 'molecules/notification.html' as notification with context %}
-        {{ notification.render('default', false, '') }}
-    </div>
-    {% if value.text %}
-        <p>
-            {{ value.text }}
-        </p>
-    {% endif %}
+    <form class="o-form o-form__email-signup"
+          id="{{ 'o-email-signup_' ~ range(1, 100) | random }}"
+          method="POST"
+          action="/subscriptions/new/"
+          enctype="application/x-www-form-urlencoded">
+        <div class="u-mb15">
+            {% import 'molecules/notification.html' as notification with context %}
+            {{ notification.render('default', false, '') }}
+        </div>
 
-    {% set field = 'email' %}
-    {% for form in value.form_field %}
-        {% include_block form %}
-    {% endfor %}
+        <div class="m-form-field">
+            <label class="a-label a-label__heading" for="email">
+                Email address
+            </label>
+            <input class="a-text-input a-text-input__full"
+                   id="email"
+                   name="email"
+                   type="email"
+                   placeholder="mail@example.com"
+                   required>
+        </div>
 
-    <div class="form-group">
+        <div class="m-btn-group">
+            <input class="a-btn a-btn" type="submit" value="Sign up">
+
+            <a class="a-btn a-btn__link a-btn__secondary"
+               href="{{ pageurl(value.disclaimer_page) or
+                     '/privacy/generic-email-sign-privacy-act-statement/' }}"
+               target="_blank">
+                See Privacy Act statement
+            </a>
+        </div>
+
         <input type="hidden" name="code" value="{{ value.gd_code }}">
-    </div>
-</form>
+    </form>
 </div>

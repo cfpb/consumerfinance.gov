@@ -6,11 +6,7 @@ from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
 
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
-
-
-def get_unique_id(prefix='', suffix=''):
-    index = hex(int(time() * 10000000))[2:]
-    return prefix + str(index) + suffix
+from wagtail.wagtailcore.models import Site
 
 
 # These messages are manually mirrored on the
@@ -24,6 +20,11 @@ ERROR_MESSAGES = {
         'invalid': 'You have entered an invalid date.',
     }
 }
+
+
+def get_unique_id(prefix='', suffix=''):
+    index = hex(int(time() * 10000000))[2:]
+    return prefix + str(index) + suffix
 
 
 def instanceOfBrowseOrFilterablePages(page):
@@ -189,3 +190,10 @@ def validate_social_sharing_image(image):
         raise ValidationError(
             'Social sharing image must be less than 4096w x 4096h'
         )
+
+
+def get_page_from_path(path):
+    site = Site.objects.get(is_default_site=True)
+    path_components = [component for component in path.split('/') if component]
+    route = site.root_page.route(None, path_components)
+    return route.page

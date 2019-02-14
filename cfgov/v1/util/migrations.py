@@ -124,6 +124,9 @@ def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
     block_name = block_path[0]
     child_block_path = block_path[1:]
 
+    if page_or_revision.pk == 11358:
+        import pdb; pdb.set_trace()
+
     for field in stream_data:
         if field['type'] == block_name:
             if len(child_block_path) == 0:
