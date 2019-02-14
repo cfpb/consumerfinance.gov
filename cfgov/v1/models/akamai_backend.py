@@ -68,22 +68,17 @@ class AkamaiBackend(BaseBackend):
         resp.raise_for_status()
 
     def purge_all(self):
-        payload = self.get_payload(
-            obj=os.environ['AKAMAI_OBJECT_ID']
-        )
-        payload['type'] = 'cpcode'
-        payload['domain'] = 'production'
-        payload['action'] = 'invalidate'
-
+        obj = os.environ['AKAMAI_OBJECT_ID']
         resp = requests.post(
             os.environ['AKAMAI_PURGE_ALL_URL'],
             headers=self.headers,
-            data=json.dumps(payload),
+            data=json.dumps(self.get_payload(obj=obj)),
             auth=self.auth
         )
         logger.info(
-            u'Initiated site-wide Akamai flush, '
+            u'Attempted to invalidate content provider {obj}, '
             'got back response {message}'.format(
+                obj=obj,
                 message=resp.text
             )
         )
