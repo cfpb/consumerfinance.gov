@@ -110,8 +110,6 @@ def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
     if isinstance(block_path, six.string_types):
         block_path = [block_path, ]
 
-    block_path = list(block_path)
-
     if len(block_path) == 0:
         return stream_data, False
 

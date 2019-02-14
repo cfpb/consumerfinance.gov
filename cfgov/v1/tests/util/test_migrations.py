@@ -95,7 +95,7 @@ class MigrationsUtilTestCase(TestCase):
             },
         ]
         result, migrated = migrate_stream_data(
-            self.page, ('not-migratory', 'migratory'), stream_data, mapper
+            self.page, ['not-migratory', 'migratory'], stream_data, mapper
         )
         self.assertTrue(migrated)
         self.assertEquals(
@@ -115,12 +115,19 @@ class MigrationsUtilTestCase(TestCase):
             },
         ]
         result, migrated = migrate_stream_data(
-            self.page, ('migratory', ), stream_data, mapper
+            self.page, ['migratory', ], stream_data, mapper
         )
         self.assertTrue(migrated)
         self.assertEquals(
             result[1]['value'], 'new text'
         )
+
+    def test_migrate_stream_data_empty_block_path(self):
+        mapper = mock.Mock(return_value='new text')
+        result, migrated = migrate_stream_data(
+            self.page, [], {}, mapper
+        )
+        self.assertFalse(migrated)
 
     def test_migrate_stream_field_page(self):
         """ Test that the migrate_stream_field function correctly gets
