@@ -135,6 +135,13 @@ class MigrationsUtilTestCase(TestCase):
         )
         self.assertFalse(migrated)
 
+    def test_migrate_stream_data_empty_block_path(self):
+        mapper = mock.Mock(return_value='new text')
+        result, migrated = migrate_stream_data(
+            self.page, [], {}, mapper
+        )
+        self.assertFalse(migrated)
+
     def test_migrate_stream_field_page(self):
         """ Test that the migrate_stream_field function correctly gets
         old data, calls the mapper function, and stores new data
