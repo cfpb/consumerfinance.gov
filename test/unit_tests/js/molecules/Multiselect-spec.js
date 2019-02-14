@@ -31,6 +31,9 @@ describe( 'Multiselect', () => {
 
       expect( selectDom.length ).toBe( 0 );
       expect( multiselectDom.length ).toBe( 1 );
+
+      // Return undefined if we've already initialized.
+      expect( multiselect.init() ).toBeUndefined();
     } );
 
     it( 'should autocheck any selected options (form submitted pages)', () => {
