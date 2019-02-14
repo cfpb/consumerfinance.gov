@@ -3,7 +3,6 @@ import * as arrayHelpers from '../modules/util/array-helpers';
 import * as atomicHelpers from '../modules/util/atomic-helpers';
 import { bindEvent } from '../modules/util/dom-events';
 import { create } from '../modules/util/dom-manipulators';
-import { queryOne } from '../modules/util/dom-traverse';
 import { UNDEFINED } from '../modules/util/standard-type';
 import { stringMatch } from '../modules/util/strings';
 import EventObserver from '../modules/util/EventObserver';
@@ -440,13 +439,19 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       },
       keydown: function( event ) {
         const key = event.keyCode;
-        const checked = event.target.checked;
+        const target = event.target;
+        const checked = target.checked;
 
         if ( key === KEY_RETURN ) {
           event.preventDefault();
-          event.target.checked = !checked;
 
-          queryOne( event.target ).dispatchEvent( 'change' );
+          /* Programmatically checking a checkbox does not fire a change event
+          so we need to manually create an event and dispatch it from the input.
+          */
+          target.checked = !checked;
+          const evt = document.createEvent( 'HTMLEvents' );
+          evt.initEvent( 'change', false, true );
+          target.dispatchEvent( evt );
         } else if ( key === KEY_ESCAPE ) {
           _searchDom.focus();
           collapse();

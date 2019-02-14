@@ -74,6 +74,15 @@ describe( 'Multiselect', () => {
   } );
 
   describe( 'interactions', () => {
+    it( 'should highlight the first item when keying down', function() {
+      multiselect.init();
+      const search = document.querySelector( '#test-select' );
+      search.click();
+      simulateEvent( 'keydown', search, { keyCode: 40 } );
+
+      expect( document.activeElement.id ).toBe( 'Debt collection' );
+    } );
+
     xit( 'should open when the search input is clicked', function() {
       multiselect.init();
       multiselectDom = document.querySelector( '.o-multiselect' );
@@ -85,15 +94,6 @@ describe( 'Multiselect', () => {
       expect( document.activeElement.id ).toBe( 'test-select' );
       expect( multiselectDom.className ).toBe( 'o-multiselect active' );
       expect( fieldset.getAttribute( 'aria-hidden' ) ).toBe( 'false' );
-    } );
-
-    xit( 'should highlight the first item when keying down', function() {
-      multiselect.init();
-      const search = document.querySelector( '#test-select' );
-      search.click();
-      simulateEvent( 'keydown', search, { keyCode: 40 } );
-
-      expect( document.activeElement.id ).toBe( 'Debt collection' );
     } );
 
     xit( 'should close when the body is clicked', function() {
