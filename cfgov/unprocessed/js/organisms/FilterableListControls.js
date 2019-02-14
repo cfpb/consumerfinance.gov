@@ -11,7 +11,6 @@ import EventObserver from '../modules/util/EventObserver';
 import Expandable from 'cf-expandables/src/Expandable';
 import FormModel from '../modules/util/FormModel';
 import Multiselect from '../molecules/Multiselect';
-import { UNDEFINED } from '../modules/util/standard-type';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 
@@ -37,6 +36,7 @@ function FilterableListControls( element ) {
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 

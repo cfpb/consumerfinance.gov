@@ -1,6 +1,5 @@
 import FormSubmit from './FormSubmit.js';
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import { UNDEFINED } from '../modules/util/standard-type';
 import * as validators from '../modules/util/validators';
 import * as emailHelpers from '../modules/util/email-popup-helpers';
 
@@ -86,6 +85,7 @@ function EmailPopup( element ) {
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 

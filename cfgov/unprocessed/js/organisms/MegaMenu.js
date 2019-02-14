@@ -9,7 +9,6 @@ import MegaMenuMobile from '../organisms/MegaMenuMobile';
 import MoveTransition from '../modules/transition/MoveTransition';
 import TabTrigger from '../modules/TabTrigger';
 import Tree from '../modules/Tree';
-import { UNDEFINED } from '../modules/util/standard-type';
 
 /**
  * MegaMenu
@@ -43,6 +42,7 @@ function MegaMenu( element ) {
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 
