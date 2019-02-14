@@ -3,7 +3,6 @@ import { assign } from '../modules/util/assign';
 import * as atomicHelpers from '../modules/util/atomic-helpers';
 import { ajaxRequest } from '../modules/util/ajax-request';
 import { bindEvent } from '../modules/util/dom-events';
-import { UNDEFINED } from '../modules/util/standard-type';
 import * as throttle from 'lodash.throttle';
 
 /**
@@ -86,6 +85,7 @@ function Autocomplete( element, opts ) {
    */
   function init() {
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 

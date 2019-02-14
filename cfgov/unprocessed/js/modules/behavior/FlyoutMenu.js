@@ -6,7 +6,6 @@ import EventObserver from '../../modules/util/EventObserver';
 import {
   BEHAVIOR_PREFIX,
   JS_HOOK,
-  UNDEFINED,
   noopFunct
 } from '../../modules/util/standard-type';
 
@@ -383,6 +382,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     if ( transition ) { transition.remove(); }
     transition = getTransition( FlyoutMenu.COLLAPSE_TYPE );
     if ( transition ) { transition.remove(); }
+
+    let UNDEFINED;
 
     _expandTransition = UNDEFINED;
     _expandTransitionMethod = UNDEFINED;
