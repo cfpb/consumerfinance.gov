@@ -1,0 +1,239 @@
+{% extends "agreements/base_agreements.html" %}
+
+{% block title %}Credit card agreement database{% endblock %}
+
+{% block content %}
+<main class="content content__2-1 content__bleedbar">
+    <div class="content_wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+            <a href="/" class="breadcrumbs_link">Home</a>
+            <a href="/credit-cards/" class="breadcrumbs_link">Credit cards</a>
+        </nav>
+    </div>
+    <div class="content_wrapper">
+        <div class="content_main">
+
+            <h1>Credit card agreement database</h1>
+
+            <p>
+                The CFPB maintains a database
+                of credit card agreements from hundreds of card issuers.
+                Using the tool below,
+                you can search for an agreement by the name of the issuer.
+            </p>
+
+            <h5>Show agreements by card issuer</h5>
+
+            {{ issuer_select() }}
+
+            {% include '_search_helper.html' %}
+
+            <p>
+                This search method accesses all credit card agreements as of the CFPB’s most recent quarterly collection of
+                credit card agreements. To access all agreements from the most recent or earlier periods, please click on the
+                relevant agreement link below. (Please note that the Bureau did not collect agreements for 2015. The January
+                2016 archive is a sample that was collected by Bureau staff from the publicly-available websites of the largest
+                credit card issuers as of the first week of January 2016, and does not constitute a full set of agreements).
+                Credit card issuers are generally required to post the credit card agreements that they offer to the public on
+                their websites, with limited exceptions.
+                If you are an issuer, email <a href="mailto:CardAgreements@consumerfinance.gov">CardAgreements@consumerfinance.gov</a>
+                for agreement submission instructions.
+            </p>
+
+
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q3.zip">
+                    Download all most recent agreements (Q3-2018)
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q2.zip">
+                    Archived Q2-2018 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q1.zip">
+                    Archived Q1-2018 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q4.zip">
+                    Archived Q4-2017 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q3.zip">
+                    Archived Q3-2017 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q2.zip">
+                    Archived Q2-2017 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q1.zip">
+                    Archived Q1-2017 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q4.zip">
+                    Archived Q4-2016 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q3.zip">
+                    Archived Q3-2016 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q2.zip">
+                    Archived Q2-2016 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2016_Q1.zip">
+                    Archived Q1-2016 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2015_Q4.zip">
+                    Archived January 2016 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q4.zip">
+                    Archived Q4-2014 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q3.zip">
+                    Archived Q3-2014 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q2.zip">
+                    Archived Q2-2014 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q1.zip">
+                    Archived Q1-2014 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q4.zip">
+                    Archived Q4-2013 agreements
+                </a>
+            </p>
+
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q3.zip">
+                    Archived Q3-2013 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q2.zip">
+                    Archived Q2-2013 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q1.zip">
+                    Archived Q1-2013 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q4.zip">
+                    Archived Q4-2012 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q3.zip">
+                    Archived Q3-2012 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q2.zip">
+                    Archived Q2-2012 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q1.zip">
+                    Archived Q1-2012 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q4.zip">
+                    Archived Q4-2011 agreements
+                </a>
+            </p>
+            <p>
+                <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q3.zip">
+                    Archived Q3-2011 agreements
+                </a>
+            </p>
+
+            <h5>Looking for your own credit card agreement?</h5>
+            <p>
+                We have provided this database so you can search for agreements between
+                credit card issuers and their customers. The agreements in this database
+                have general terms and conditions, pricing, and fee information.
+            </p>
+            <p>
+                If you are looking for information specific to your account,
+                contact the bank or institution that issued your card.
+                By law, the issuer must make your agreement available to you upon request.
+                If you are having trouble getting your agreement, let us know by
+                <a href="https://www.consumerfinance.gov/complaint/">submitting a complaint</a>.
+            </p>
+
+            <h5>College credit card agreements</h5>
+            <p>
+                We have collected credit card issuer marketing agreements with
+                universities or affiliated organizations. We are also required to
+                report to Congress on the state of college credit card agreements.
+            </p>
+            <p>
+                <a href="/credit-cards/college-agreements/">
+                    View college credit card agreements information
+                </a>
+            </p>
+
+            {% include '_database_disclaimer.html' %}
+
+        </div>
+        <!-- /.content_main -->
+
+        <aside class="content_sidebar o-sidebar-content">
+            <h3>Need help with your credit cards?</h3>
+            <p>
+                We'll forward your issue to your credit card company, give you a tracking
+                number, and keep you updated on the status of your complaint.
+            </p>
+            <p>
+                <a href="https://www.consumerfinance.gov/complaint/">
+                    Submit a credit card complaint
+                </a>
+            </p>
+
+            <p>
+                The CARD Act is often called the Credit Cardholders Bill of Rights.
+                President Obama signed the bill into law in May 2009. Many of the most
+                significant provisions of the law took effect in February 2010.
+            </p>
+            <p>
+                <a href="/credit-cards/credit-card-act/">Read more about the Credit CARD Act</a>
+            </p>
+
+            <p>
+                Find guides, your rights related to your credit score,
+                and your credit card protections.
+            </p>
+            <p>
+                <a href="/credit-cards/">Get more information about consumer credit cards</a>
+            </p>
+        </aside>
+    </div>
+    <!-- /.content_wrapper -->
+</main>
+{% endblock %}

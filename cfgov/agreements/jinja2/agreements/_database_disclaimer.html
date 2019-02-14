@@ -1,0 +1,16 @@
+{% import "molecules/social-media.html" as social_media with context %}
+
+<div class="block">
+    <hr>
+</div>
+
+<div class="block block__flush-top">
+    <h3>Database disclaimer</h3>
+    <p>We will display the consumer credit card agreements in this database as the respective issuers submitted them. The CFPB is not responsible for the content of the agreements, including any discrepancies between an agreement as presented in this database and the agreement as offered to the public, or for any omissions or other errors in the agreement as submitted by the issuer.</p>
+    <p>The agreements on file will have general terms and conditions, pricing, and fee information. They are not specific to an individual's account information.</p>
+    <p>If you have questions about the agreements themselves, contact the card issuer directly.</p>
+</div>
+
+<div class="block">
+    {{ social_media.render() }}
+</div>
