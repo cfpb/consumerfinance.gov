@@ -102,8 +102,8 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 
 
 ```bash
-# Use --without-node to use your system installed node version
-brew install yarn --without-node
+# Use --ignore-dependencies to use your system installed node version
+brew install yarn --ignore-dependencies
 ```
 
 
