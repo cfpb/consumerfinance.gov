@@ -48,10 +48,16 @@ class MigrationsUtilTestCase(TestCase):
     def test_get_stream_data_revision(self):
         """ Test that get_stream_data fetches the stream_data correctly
         from a revision object. """
-        stream_data = get_stream_data(self.revision.as_page_object(), 'body')
+        stream_data = get_stream_data(self.revision, 'body')
 
         self.assertEqual(stream_data[0]['type'], 'text')
         self.assertEqual(stream_data[0]['value'], 'some text')
+
+    def test_get_stream_data_revision_no_field(self):
+        """ Test that get an empty list for fields that don't exist on
+        revisions """
+        stream_data = get_stream_data(self.revision, 'notbody')
+        self.assertEqual(stream_data, [])
 
     def test_set_stream_data_page(self):
         """ Test that set_stream_data correctly sets stream data for a
@@ -93,14 +99,16 @@ class MigrationsUtilTestCase(TestCase):
                     },
                 ]
             },
+            {
+                'type': 'not-migratory',
+                'value': []
+            },
         ]
         result, migrated = migrate_stream_data(
             self.page, ['not-migratory', 'migratory'], stream_data, mapper
         )
         self.assertTrue(migrated)
-        self.assertEquals(
-            result[0]['value'][0]['value'], 'new text'
-        )
+        self.assertEquals(result[0]['value'][0]['value'], 'new text')
 
     def test_migrate_stream_data_flat(self):
         mapper = mock.Mock(return_value='new text')
@@ -118,9 +126,7 @@ class MigrationsUtilTestCase(TestCase):
             self.page, ['migratory', ], stream_data, mapper
         )
         self.assertTrue(migrated)
-        self.assertEquals(
-            result[1]['value'], 'new text'
-        )
+        self.assertEquals(result[1]['value'], 'new text')
 
     def test_migrate_stream_data_empty_block_path(self):
         mapper = mock.Mock(return_value='new text')

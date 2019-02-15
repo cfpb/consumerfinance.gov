@@ -78,8 +78,11 @@ def get_stream_data(page_or_revision, field_name):
         stream_data = stream_block.get_prep_value(field)
     else:
         revision_content = json.loads(page_or_revision.content_json)
-        field = revision_content.get(field_name)
-        stream_data = json.loads(field) if field else []
+        if revision_content.get(field_name):
+            field = revision_content[field_name]
+            stream_data = json.loads(field)
+        else:
+            stream_data = []
 
     return stream_data
 
@@ -105,7 +108,6 @@ def set_stream_data(page_or_revision, field_name, stream_data, commit=True):
 def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
     """ Recursively run the mapper on fields of block_type in stream_data """
     migrated = False
-    new_stream_data = []
 
     if isinstance(block_path, six.string_types):
         block_path = [block_path, ]
@@ -113,32 +115,37 @@ def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
     if len(block_path) == 0:
         return stream_data, False
 
-    block_name = block_path.pop(0)
+    # Separate out the current block name from its child paths
+    block_name = block_path[0]
+    child_block_path = block_path[1:]
 
     for field in stream_data:
         if field['type'] == block_name:
-            if len(block_path) == 0:
-                field['value'] = mapper(page_or_revision, field['value'])
-                migrated = True
-            elif len(block_path) > 0:
-                field['value'], migrated = migrate_stream_data(
-                    page_or_revision, block_path, field['value'], mapper
+            if len(child_block_path) == 0:
+                value = mapper(page_or_revision, field['value'])
+                field_migrated = True
+            else:
+                value, field_migrated = migrate_stream_data(
+                    page_or_revision, child_block_path, field['value'], mapper
                 )
 
-        new_stream_data.append(field)
+            if field_migrated:
+                field['value'] = value
+                migrated = True
 
-    return new_stream_data, migrated
+    return stream_data, migrated
 
 
 def migrate_stream_field(page_or_revision, field_name, block_path, mapper):
     """ Run mapper on blocks within a StreamField on a page or revision. """
     stream_data = get_stream_data(page_or_revision, field_name)
-    new_stream_data, migrated = migrate_stream_data(
+
+    stream_data, migrated = migrate_stream_data(
         page_or_revision, block_path, stream_data, mapper
     )
 
     if migrated:
-        set_stream_data(page_or_revision, field_name, new_stream_data)
+        set_stream_data(page_or_revision, field_name, stream_data)
 
 
 @transaction.atomic
