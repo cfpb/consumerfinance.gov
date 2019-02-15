@@ -45,10 +45,8 @@ function FilterableListControls( element ) {
     /* Instantiate multiselects before their containing expandable
        so height of any 'selected choice' buttons is included when
        expandable height is calculated initially. */
-    const multiSelects = instantiateAll(
-      `.${ BASE_CLASS } select[multiple]`,
-      Multiselect
-    );
+    const multiSelectsSelector = `.${ BASE_CLASS } .${ Multiselect.BASE_CLASS }`;
+    const multiSelects = instantiateAll( multiSelectsSelector, Multiselect );
 
     const _expandables = Expandable.init( _dom );
     _expandable = _expandables[0];
