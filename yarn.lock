@@ -2327,15 +2327,7 @@ cf-atomic-component@2.1.1, cf-atomic-component@^2.1.1:
   dependencies:
     dom-delegate "^2.0.3"
 
-cf-buttons@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/cf-buttons/-/cf-buttons-5.0.0.tgz#91a6a945c8654fbafd3ed652fab0d28fdb81e39e"
-  integrity sha512-TgNTJuYt+OJdnosqI1NJuuQoQg1F/jxFkWcshnpbijaB/PmkRS72RTtMAa5cPtmlPnR1PK8rAiqhWgdQxbUqgw==
-  dependencies:
-    cf-core "^4.0.0"
-    cf-icons "^4.0.0"
-
-cf-buttons@^5.0.0:
+cf-buttons@5.0.1, cf-buttons@^5.0.0:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/cf-buttons/-/cf-buttons-5.0.1.tgz#9fcca2ab6943f3953cf62db3ed71bd261d3eb866"
   integrity sha512-7N1AnWezhr2OOADV0AArSJwwaD3AusQMiEjyurpfnNjBTlDkj18T/q13xZ5vvR6NyhsN7x5IeP+9B/gz6yRndw==
@@ -2351,14 +2343,6 @@ cf-core@4.10.0, cf-core@^4.0.0:
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-cf-core@4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/cf-core/-/cf-core-4.7.0.tgz#e857a8c9ea8d0d3751698f97cea7fa58bfc5bb48"
-  integrity sha512-NsYKB4NAFyy/DMsL/ZS/HMxBat9RtNSPs/bwvLeenrPIC3H+lgj/9j5QxZ1eQu7SjbDbrF2MjcP4SpV5KWKJLQ==
-  dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
-
 cf-expandables@7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/cf-expandables/-/cf-expandables-7.1.1.tgz#a853f996eaac99df0f537d02989bcdf41ac24583"
@@ -2368,10 +2352,10 @@ cf-expandables@7.1.1:
     cf-core "^4.0.0"
     cf-icons "^4.0.0"
 
-cf-forms@5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/cf-forms/-/cf-forms-5.2.0.tgz#80e87dd4e2ad7c5848cac6934b16a2ee5f68e967"
-  integrity sha512-W7fhimGOzIOXoqt74SiQXpjk8Edb1eHyAwAk94GAlcAOXGuu+tCYRoICGUyp8RHxcdc9oPR2W/MsrcD49YoILQ==
+cf-forms@5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/cf-forms/-/cf-forms-5.3.0.tgz#79aff4027bc30ed629c08079d737419de9dc797b"
+  integrity sha512-fAJPhCfJQ/jaK0wlhG356RfmV485FdTjWoHLUG31qMgcbaPZPtK/yxe4hZtgYDPwgvr5tgKXV4yISIi1yjG7Ng==
   dependencies:
     cf-buttons "^5.0.0"
     cf-core "^4.0.0"
@@ -2386,7 +2370,14 @@ cf-grid@4.2.4, cf-grid@^4.0.0:
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-cf-icons@4.4.1, cf-icons@^4.0.0:
+cf-icons@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/cf-icons/-/cf-icons-4.5.0.tgz#3dbb573555dd50ac198113e59d4522b91f409c80"
+  integrity sha512-JkY50A+BVu+HaVYrqKsAhFXWyC1P4lk5EIuZ6e2wwXk8hg7HjSL0AJbPY1A0qq+UStUx73gXoQMQxl6ePkr3Fw==
+  dependencies:
+    cf-core "^4.0.0"
+
+cf-icons@^4.0.0:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/cf-icons/-/cf-icons-4.4.1.tgz#d56dd45025201054a9df43f5279e0bcfaffbae36"
   integrity sha512-gtCxgybdiXMK/uNcRaaTYrV8mb7KXP4lpKVkXFVlAZPHuI5o7eJfrnJiFQ7K1u2Pb4fls/Or96PtfKMkCG6ZGg==
@@ -2409,10 +2400,10 @@ cf-notifications@2.0.2:
     cf-core "^4.0.0"
     cf-icons "^4.0.0"
 
-cf-pagination@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/cf-pagination/-/cf-pagination-5.0.1.tgz#93b3e32769f654815315ffd03ef2be500c570eb9"
-  integrity sha512-+Pf+CYcdJGmk1MBV/Q/Gv7tdsRc5PFgECV/Qsb/t7hhkI8DoHveli49xwpLcTsORxqxpvgpMZltvh+pbgsZrcw==
+cf-pagination@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/cf-pagination/-/cf-pagination-5.0.2.tgz#49303b297a8728e77010e07e8716b177bf83d014"
+  integrity sha512-o2cSyHnmOhHDOh6GIOx0OLyLgYoS8aQLqoRMRxoKQfp4aNCNUtsSQ8hafFnD1s/g4cxky9jrUjwBuAoiwASpDQ==
   dependencies:
     cf-buttons "^5.0.0"
     cf-core "^4.0.0"

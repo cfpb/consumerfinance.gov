@@ -2,7 +2,6 @@
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import GlobalSearch from '../molecules/GlobalSearch.js';
 import MegaMenu from '../organisms/MegaMenu.js';
-import { UNDEFINED } from '../modules/util/standard-type';
 
 /**
  * Header
@@ -32,6 +31,7 @@ function Header( element ) {
    */
   function init( overlay ) {
     if ( !setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 

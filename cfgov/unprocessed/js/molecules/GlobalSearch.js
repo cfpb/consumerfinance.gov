@@ -5,7 +5,6 @@ import ClearableInput from '../modules/ClearableInput';
 import EventObserver from '../modules/util/EventObserver';
 import FlyoutMenu from '../modules/behavior/FlyoutMenu';
 import MoveTransition from '../modules/transition/MoveTransition';
-import { UNDEFINED } from '../modules/util/standard-type';
 import TabTrigger from '../modules/TabTrigger';
 
 /**
@@ -38,6 +37,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    */
   function init() {
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 
