@@ -24,6 +24,10 @@ The structure looks like this:
   file, which is automatically picked up by `@babel/preset-env` inside the
   webpack config, if no `browsers` option is supplied.
 
+#### Adding Images
+- Images should be compressed and optimized before being committed to the repo
+- In order to keep builds fast and reduce dependencies, the front-end build does not contain an image optimization step
+
 #### Templates
 - Apps use a jinja template that extends the `base.html`
   template used by the rest of the site.
