@@ -1,4 +1,5 @@
 import json
+import six
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -77,8 +78,11 @@ def get_stream_data(page_or_revision, field_name):
         stream_data = stream_block.get_prep_value(field)
     else:
         revision_content = json.loads(page_or_revision.content_json)
-        field = revision_content.get(field_name)
-        stream_data = json.loads(field) if field else []
+        if revision_content.get(field_name):
+            field = revision_content[field_name]
+            stream_data = json.loads(field)
+        else:
+            stream_data = []
 
     return stream_data
 
@@ -101,36 +105,65 @@ def set_stream_data(page_or_revision, field_name, stream_data, commit=True):
         page_or_revision.save()
 
 
-def migrate_stream_field(page_or_revision, field_name, field_type, mapper):
-    """ Migrate a block of the type within a StreamField of the name belonging
-    to the page or revision using the mapper function """
-    old_stream_data = get_stream_data(page_or_revision, field_name)
-    new_stream_data = []
-
+def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
+    """ Recursively run the mapper on fields of block_type in stream_data """
     migrated = False
-    for field in old_stream_data:
-        if field_type == field['type']:
-            field['value'] = mapper(page_or_revision, field['value'])
-            migrated = True
 
-        new_stream_data.append(field)
+    if isinstance(block_path, six.string_types):
+        block_path = [block_path, ]
+
+    if len(block_path) == 0:
+        return stream_data, False
+
+    # Separate out the current block name from its child paths
+    block_name = block_path[0]
+    child_block_path = block_path[1:]
+
+    for field in stream_data:
+        if field['type'] == block_name:
+            if len(child_block_path) == 0:
+                value = mapper(page_or_revision, field['value'])
+                field_migrated = True
+            else:
+                value, field_migrated = migrate_stream_data(
+                    page_or_revision, child_block_path, field['value'], mapper
+                )
+
+            if field_migrated:
+                field['value'] = value
+                migrated = True
+
+    return stream_data, migrated
+
+
+def migrate_stream_field(page_or_revision, field_name, block_path, mapper):
+    """ Run mapper on blocks within a StreamField on a page or revision. """
+    stream_data = get_stream_data(page_or_revision, field_name)
+
+    stream_data, migrated = migrate_stream_data(
+        page_or_revision, block_path, stream_data, mapper
+    )
 
     if migrated:
-        set_stream_data(page_or_revision, field_name, new_stream_data)
+        set_stream_data(page_or_revision, field_name, stream_data)
 
 
 @transaction.atomic
 def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
-    """ Migrate the fields of a wagtail page type using the given mapper
-        function. page_types_and_fields should be a list of 4-tuples
-        providing ('app', 'PageType', 'field_name', 'block type'). """
-    for app, page_type, field_name, block_type in page_types_and_fields:
+    """ Migrate Wagtail StreamFields using the given mapper function.
+        page_types_and_fields should be a list of 4-tuples
+        providing ('app', 'PageType', 'field_name', ('block_path', )).
+        'field_name' is the field on the 'PageType' model.
+        'block path' is a tuple containing block names to access the
+        StreamBlock type to migrate."""
+    for app, page_type, field_name, block_path in page_types_and_fields:
         page_model = apps.get_model(app, page_type)
         revision_model = apps.get_model('wagtailcore.PageRevision')
+
         for page in page_model.objects.all():
-            migrate_stream_field(page, field_name, block_type, mapper)
+            migrate_stream_field(page, field_name, block_path, mapper)
 
             revisions = revision_model.objects.filter(
                 page=page).order_by('-id')
             for revision in revisions:
-                migrate_stream_field(revision, field_name, block_type, mapper)
+                migrate_stream_field(revision, field_name, block_path, mapper)
