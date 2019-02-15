@@ -144,7 +144,7 @@ class Category(models.Model):
         valid_dict = Answer.valid_tags(language='es')
         cleaned = []
         for a in self.answer_set.all():
-            cleaned += a.tags_es
+            cleaned += a.clean_tags_es
         valid_clean = [tag for tag in cleaned
                        if tag in valid_dict['valid_tags']]
         counter = collections.Counter(valid_clean)
@@ -343,7 +343,6 @@ class Answer(models.Model):
         help_text="Change the date to today "
                   "if you edit a Spanish question, snippet or answer.",
         verbose_name="Last edited Spanish content")
-
     subcategory = models.ManyToManyField(
         'SubCategory',
         blank=True,
@@ -497,11 +496,11 @@ class Answer(models.Model):
             if tag.replace('"', '').strip()]
 
     @cached_property
-    def tags(self):
+    def clean_tags(self):
         return self.clean_tag_list(self.search_tags)
 
     @cached_property
-    def tags_es(self):
+    def clean_tags_es(self):
         return self.clean_tag_list(self.search_tags_es)
 
     @classmethod
@@ -520,16 +519,16 @@ class Answer(models.Model):
         tag_map = {}
         if language == 'es':
             for a in cls.objects.all():
-                cleaned += a.tags_es
-                for tag in a.tags_es:
+                cleaned += a.clean_tags_es
+                for tag in a.clean_tags_es:
                     if tag not in tag_map:
                         tag_map[tag] = [a]
                     else:
                         tag_map[tag].append(a)
         else:
             for a in cls.objects.all():
-                cleaned += a.tags
-                for tag in a.tags:
+                cleaned += a.clean_tags
+                for tag in a.clean_tags:
                     if tag not in tag_map:
                         tag_map[tag] = [a]
                     else:
@@ -556,14 +555,20 @@ class Answer(models.Model):
             _parent = english_parent
             _slug = self.slug
             _question = self.question
-            _snippet = self.snippet
-            _answer = self.answer
+            # _snippet = self.snippet
+            # _answer = self.answer
+            # _statement = self.statement
+            _last_edited = self.last_edited
+            _search_tags = self.search_tags
         elif language == 'es':
             _parent = spanish_parent
             _slug = self.slug_es
             _question = self.question_es
-            _snippet = self.snippet_es
-            _answer = self.answer_es
+            # _snippet = self.snippet_es
+            # _answer = self.answer_es
+            # _statement = ''
+            _last_edited = self.last_edited_es
+            _search_tags = self.search_tags_es
         else:
             raise ValueError('unsupported language: "{}"'.format(language))
         try:
@@ -582,9 +587,12 @@ class Answer(models.Model):
                 answer_base=self)
             base_page.save_revision(user=self.last_user)
         _page = base_page.get_latest_revision_as_page()
-        _page.question = _question
-        _page.answer = _answer
-        _page.snippet = _snippet
+        # _page.question = _question
+        # _page.answer = _answer
+        # _page.snippet = _snippet
+        # _page.statement = _statement
+        _page.last_edited = _last_edited
+        _page.search_tags = _search_tags
         _page.title = '{}-{}-{}'.format(
             _question[:244], language, self.id)
         _page.live = False
@@ -628,10 +636,6 @@ class Answer(models.Model):
                     self.create_or_update_page(language='en')
                 if self.update_spanish_page:
                     self.create_or_update_page(language='es')
-
-    def delete(self):
-        self.answer_pages.all().delete()
-        super(Answer, self).delete()
 
 
 class EnglishAnswerProxy(Answer):
