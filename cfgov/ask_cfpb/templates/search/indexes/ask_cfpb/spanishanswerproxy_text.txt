@@ -6,7 +6,7 @@
 {{ object.question_es }} 
 {{ object.question_es|stripaccents }} 
 
-{% for tag in tags_es %}
+{% for tag in clean_tags_es %}
 {{tag}}
 {{tag|stripaccents}}
 {% endfor %}
