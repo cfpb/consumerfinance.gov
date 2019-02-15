@@ -1,4 +1,4 @@
-import _breakpointsConfig from '../config/breakpoints-config';
+import breakpointsConfig from 'cf-core/src/cf-vars-breakpoints';
 import { get as getBreakpointState } from './util/breakpoint-state';
 
 /**
@@ -9,7 +9,7 @@ import { get as getBreakpointState } from './util/breakpoint-state';
  * and calls `enter` or `leave` callback if breakpoint
  * region has just been entered or exited.
  *
- * @param {object} opts Options object. Takes form:
+ * @param {Object} opts Options object. Takes form:
  * {
  *  breakpoint: number (600) or range [600, 1023],
  *  type:       range, max, or min (type of media query to emulate),
@@ -29,8 +29,8 @@ function BreakpointHandler( opts ) {
   const breakpoint = opts.breakpoint;
   this.match = false;
   this.type = opts.type || 'max';
-  this.breakpoint = _breakpointsConfig[breakpoint] &&
-                    _breakpointsConfig[breakpoint][this.type] ||
+  this.breakpoint = breakpointsConfig[breakpoint] &&
+                    breakpointsConfig[breakpoint][this.type] ||
                     breakpoint;
   this.enter = opts.enter;
   this.leave = opts.leave;
