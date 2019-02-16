@@ -1,6 +1,4 @@
 const gulp = require( 'gulp' );
-const gulpChanged = require( 'gulp-changed' );
-const gulpImagemin = require( 'gulp-imagemin' );
 const handleErrors = require( '../utils/handle-errors' );
 const paths = require( '../../config/environment' ).paths;
 
@@ -12,8 +10,6 @@ const paths = require( '../../config/environment' ).paths;
  */
 function _genericCopy( src, dest ) {
   return gulp.src( src )
-    .pipe( gulpChanged( dest ) )
-    .pipe( gulpImagemin() )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( dest ) );
 }
