@@ -27,6 +27,10 @@ The structure looks like this:
 #### Adding Images
 - Images should be compressed and optimized before being committed to the repo
 - In order to keep builds fast and reduce dependencies, the front-end build does not contain an image optimization step
+- A suggested workflow for those with Adobe Creative Suite is as follows:
+  - Export a full-quality PNG from Adobe Illustrator
+  - Reexport that PNG from Adobe Fireworks as an 8-bit PNG
+  - Run the 8-bit PNG through [ImageOptim](https://imageoptim.com)
 
 #### Templates
 - Apps use a jinja template that extends the `base.html`
