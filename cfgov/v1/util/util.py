@@ -1,12 +1,12 @@
 from time import time
 
+from django.apps import apps
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
 
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
-from wagtail.wagtailcore.models import Site
 
 
 # These messages are manually mirrored on the
@@ -192,8 +192,26 @@ def validate_social_sharing_image(image):
         )
 
 
-def get_page_from_path(path):
-    site = Site.objects.get(is_default_site=True)
+def get_page_from_path(path, root=None):
+    """ Given a string path, return the corresponding page object.
+
+    If `root` is not passed, it is assumed you want to search from the root
+    page of the default site.
+
+    If `root` is passed, it will start the search from that page.
+
+    If a page cannot be found at that path, returns `None`.
+    """
+    if root is None:
+        site_model = apps.get_model('wagtailcore', 'Site')
+        site = site_model.objects.get(is_default_site=True)
+        root = site.root_page
+
     path_components = [component for component in path.split('/') if component]
-    route = site.root_page.route(None, path_components)
+
+    try:
+        route = root.route(None, path_components)
+    except Http404:
+        return None
+
     return route.page

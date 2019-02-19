@@ -1,14 +1,9 @@
-import json
+import mock
 from datetime import date
 
 from django.test import TestCase
-from django.test.client import RequestFactory
 
-from wagtail.wagtailcore.models import PageRevision
-
-import mock
-
-from v1.models import BrowseFilterablePage, BrowsePage, CFGOVPage
+from v1.models import BrowseFilterablePage, BrowsePage, CFGOVPage, HomePage
 from v1.tests.wagtail_pages import helpers
 from v1.util import util
 
@@ -148,14 +143,14 @@ class TestSecondaryNav(TestCase):
             self.request, browse_filterable_page
         )
 
-        self.assertEqual(has_children, True)   
+        self.assertEqual(has_children, True)
 
     def test_has_children_is_false_for_browse_page_with_only_non_browse_children(self):
         browse_page3 = BrowsePage(title='Browse page 3')
         helpers.publish_page(child=browse_page3)
         child_of_browse_page3 = CFGOVPage(title='Non-browse child of browse page')
         helpers.save_new_page(child_of_browse_page3, browse_page3)
-        
+
         nav, has_children = util.get_secondary_nav_items(
             self.request, browse_page3
         )
@@ -172,4 +167,22 @@ class TestSecondaryNav(TestCase):
             self.request, browse_page_without_children
         )
 
-        self.assertEqual(has_children, False)      
+        self.assertEqual(has_children, False)
+
+
+class TestGetPageFromPath(TestCase):
+    def test_no_root_returns_correctly(self):
+        page = CFGOVPage(title='Test page')
+        helpers.save_new_page(page)
+
+        self.assertEqual(util.get_page_from_path('/test-page/'), page)
+
+    def test_with_root_returns_correctly(self):
+        page = CFGOVPage(title='Test page 2')
+        helpers.save_new_page(page)
+        root = HomePage.objects.get(title='CFGov')
+
+        self.assertEqual(util.get_page_from_path('/test-page-2/', root), page)
+
+    def test_bad_path_returns_correctly(self):
+        self.assertEqual(util.get_page_from_path('/does-not-exist/'), None)

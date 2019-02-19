@@ -1,4 +1,5 @@
 import re
+from urlparse import urlparse
 
 from django.db import migrations
 
@@ -12,19 +13,28 @@ def forward_mapper(page_or_revision, data):
     match = page_id_link_pattern.search(old_disclaimer)
 
     if match:
-        # import pdb; pdb.set_trace()
         page_id = int(match.group(1))
     else:
-        href_link_pattern = re.compile(r'href="(\d+)"')
+        href_link_pattern = re.compile(r'href="(.+)"')
         match = href_link_pattern.search(old_disclaimer)
 
         if match:
-            path = match.group(1).replace(
-                'https://www.consumerfinance.gov/', ''
-            )
-            page_id = get_page_from_path(path).pk
+            path = urlparse(match.group(1)).path
+            page = get_page_from_path(path)
+
+            if page:
+                page_id = page.pk
+            else:
+                page_id = 1189  # Generic Email Sign-Up Privacy Act Statement
         else:
-            page_id = 1189  # Generic Email Sign-Up Privacy Act Statement
+            # Fall back on the Generic Email Sign-Up Privacy Act Statement
+            page_id = 1189
+
+    if page_id == 558 or page_id == 571:
+        # Convert links to /privacy/privacy-policy/ and
+        # /privacy/website-privacy-policy/ to the
+        # Generic Email Sign-Up Privacy Act Statement
+        page_id = 1189
 
     data['disclaimer_page'] = page_id
 
