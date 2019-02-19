@@ -255,7 +255,7 @@ You can get more information by reading the following:
 
 Gulp is used as a task automation tool.
 Tasks include compiling CSS, creating a standard Webpack workflow for bundling
-scripts, minifying code, linting, image optimizing, running unit tests,
+scripts, minifying code, linting, running unit tests,
 and [more](https://github.com/cfpb/cfgov-refresh/tree/master/gulp).
 
 ### Webpack
