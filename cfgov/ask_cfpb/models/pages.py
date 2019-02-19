@@ -538,7 +538,20 @@ class AnswerPage(CFGOVPage):
             "(Optional) Use this field to rephrase the question title as "
             "a statement. Use only if this answer has been chosen to appear "
             "on a money topic portal (e.g. /consumer-tools/debt-collection)."))
-    answer = RichTextField(blank=True)
+    answer = RichTextField(
+        blank=True,
+        features=[
+            'bold', 'italic', 'h2', 'h3', 'h4', 'link', 'ol', 'ul', 
+            'document-link', 'image', 'embed', 'ask-tips', 'edit-html'
+        ],
+        help_text=(
+            "Do not use H2 or H3 to style text. Only use the HTML Editor "
+            "for troubleshooting. To style tips, warnings and notes, "
+            "select the content that will go inside the rule lines "
+            "(so, title + paragraph) and click the Pencil button "
+            "to style it. Click again to unstyle the tip."
+        )
+    )
     snippet = RichTextField(blank=True, help_text='Optional answer intro')
     search_tags = models.CharField(
         max_length=1000,
