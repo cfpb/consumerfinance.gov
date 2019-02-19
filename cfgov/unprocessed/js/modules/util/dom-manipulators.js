@@ -9,7 +9,8 @@ import { queryOne } from './dom-traverse';
 function create( tag, options ) {
   const elem = document.createElement( tag );
 
-  for ( const i in options ) {
+  let i;
+  for ( i in options ) {
     if ( options.hasOwnProperty( i ) ) {
       const val = options[i];
       let ref;

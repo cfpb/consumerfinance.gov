@@ -6,7 +6,8 @@
 function bindEvent( elem, events ) {
   let callback;
 
-  for ( const event in events ) {
+  let event;
+  for ( event in events ) {
     if ( events.hasOwnProperty( event ) ) {
       callback = events[event];
       elem.addEventListener( event, callback );

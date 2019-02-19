@@ -28,7 +28,8 @@ function getSearchValues( searchEl, filterEls ) {
  */
 function serializeFormFields( fields ) {
   fields = fields.map( field => {
-    for ( const key in field ) {
+    let key;
+    for ( key in field ) {
       field = `${ key }=${ field[key] }`;
     }
     return field;

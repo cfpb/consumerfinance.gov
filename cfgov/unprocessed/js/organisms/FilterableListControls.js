@@ -173,7 +173,8 @@ function FilterableListControls( element ) {
 
       validatedField = _validateField( field );
 
-      for ( const prop in validatedField.status ) {
+      let prop;
+      for ( prop in validatedField.status ) {
         if ( validatedField.status[prop] === false ) {
           fieldIsValid = false;
         }
