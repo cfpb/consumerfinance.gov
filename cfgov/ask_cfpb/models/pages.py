@@ -571,10 +571,11 @@ class AnswerPage(CFGOVPage):
         FieldPanel('statement'),
         FieldPanel('snippet'),
         FieldPanel('answer'),
-        FieldPanel('search_tags'),
         FieldPanel('redirect_to'),
     ]
-
+    settings_panels = CFGOVPage.settings_panels + [
+        FieldPanel('search_tags'),
+    ]
     sidebar = StreamField([
         ('call_to_action', molecules.CallToAction()),
         ('related_links', molecules.RelatedLinks()),
@@ -596,7 +597,7 @@ class AnswerPage(CFGOVPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(sidebar_panels, heading='Sidebar (English only)'),
-        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+        ObjectList(settings_panels, heading='Configuration'),
     ])
 
     objects = CFGOVPageManager()
