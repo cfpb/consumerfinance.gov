@@ -20,6 +20,12 @@
 
    ========================================================================== #}
 
+{% set form_id = get_unique_id() %}
+
+{% set disclaimer_url = '/privacy/email-sign-privacy-act-statement/'
+   if not value.disclaimer_url
+   else value.disclaimer_url %}
+
 <div class="o-email-signup">
 {% if value.heading %}
     <header class="{{ 'm-slug-header' if value.default_heading else '' }}">
@@ -28,29 +34,42 @@
         </h2>
     </header>
 {% endif %}
+{% if value.text %}
+    <p>
+        {{ value.text }}
+    </p>
+{% endif %}
 
-<form id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
-      class="o-form o-form__email-signup"
-      action="/subscriptions/new/"
-      method="POST"
-      enctype="application/x-www-form-urlencoded">
-    <div class="u-mb15">
+    <form class="o-form o-form__email-signup"
+          id="{{ 'o-form__email-signup_' ~ form_id }}"
+          method="POST"
+          action="/subscriptions/new/"
+          enctype="application/x-www-form-urlencoded">
         {% import 'molecules/notification.html' as notification with context %}
         {{ notification.render('default', false, '') }}
-    </div>
-    {% if value.text %}
-        <p>
-            {{ value.text }}
-        </p>
-    {% endif %}
 
-    {% set field = 'email' %}
-    {% for form in value.form_field %}
-        {% include_block form %}
-    {% endfor %}
+        <div class="m-form-field">
+            <label class="a-label a-label__heading" for="{{ 'email_' ~ form_id }}">
+                Email address
+            </label>
+            <input class="a-text-input a-text-input__full"
+                   id="{{ 'email_' ~ form_id }}"
+                   name="email"
+                   type="email"
+                   placeholder="mail@example.com"
+                   required>
+        </div>
 
-    <div class="form-group">
+        <div class="m-btn-group">
+            <input class="a-btn" type="submit" value="Sign up">
+            <a class="a-btn a-btn__link a-btn__secondary"
+               href="{{ pageurl(value.disclaimer_page) if value.disclaimer_page else disclaimer_url }}"
+               target="_blank"
+               rel="noopener noreferrer">
+                See Privacy Act statement
+            </a>
+        </div>
+
         <input type="hidden" name="code" value="{{ value.gd_code }}">
-    </div>
-</form>
+    </form>
 </div>
