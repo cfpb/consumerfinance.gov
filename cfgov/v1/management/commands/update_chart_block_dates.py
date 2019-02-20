@@ -31,18 +31,8 @@ class Command(BaseCommand):
     def update_chart_blocks(self, date_published, last_updated, markets):
         """ Update date_published on all chart blocks """
 
-        # check if market key is in the data source string - if so it's the correct market
-        def is_market(data, data_source):
-            for item in data:
-                market_key = item['market_key']
-                if market_key in data_source:
-                    print item['market_key'] + ' is in ' + data_source
-                    return True
-                else:
-                    return False
-
         # check if inquiry index or credit tightness chart
-        def matches_prefix(data_source, prefix):
+        def matches_prefix(prefix, data_source):
             if prefix in data_source:
                 print prefix + ' is in ' + data_source
                 return True
@@ -51,17 +41,25 @@ class Command(BaseCommand):
 
         def get_inquiry_month(data, data_source):
             for item in data:
-                # print item['inquiry_month']
-                # nested loops with the is_market call? or in this function?
-                # if inquiry month or tightness month keys are in the data, then it is an line index data
-                # then need to check if it's tightness chart or inquiry index chart (based on data source)
-                # THEN get the value for the correct market
-                # if it's not the right market then we continue the loop
+                # if inquiry month, the month is inquiry month OR credit tightness month.
+                # does the market match the data_source?
+                # is the data source inq_ (inquiry index) or crt_(credit tightness)?
+                month = '2033-03-03'
+                print item
                 if 'inquiry_month' in item:
-                    month = item['inquiry_month'] if is_market(data, data_source) and matches_prefix(data_source, 'inq_') else '2020-02-02'
-                # elif 'tightness_month' in item  AND chart source is credit tightness, then get the value for the correct market's tightness
-                else:
-                    month = '2025-02-02'
+                    month = '2022-02-02'
+                    if item['market_key'] in data_source:
+                        month = '2021-01-01'
+                        print 'it is in the source'
+                        if matches_prefix('inq_', data_source):
+                            month = item['inquiry_month']
+                        elif matches_prefix('crt_', data_source):
+                            month = item['tightness_month']
+                    else:
+                        print 'NOT the same market:'
+                        print item['market_key']
+                        print data_source
+            print month
             return month
 
         for page in BrowsePage.objects.all():
@@ -73,8 +71,6 @@ class Command(BaseCommand):
                 continue
             for chart in chart_blocks:
                 chart['value']['date_published'] = date_published
-                # use tightness_month for credit tightness charts
-                # use inquiry_month for inquiry index charts
                 if chart['value']['chart_type'] == 'line-index':
                     last_updated_inquiry = get_inquiry_month(markets, chart['value']['data_source'])
                     chart['value']['last_updated_projected_data'] = last_updated_inquiry
