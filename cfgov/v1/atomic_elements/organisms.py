@@ -181,9 +181,6 @@ class EmailSignUp(blocks.StructBlock):
                    'should go to. If in doubt, use "Generic Email Sign-Up '
                    'Privacy Act Statement".')
     )
-    form_field = blocks.ListBlock(molecules.FormFieldWithButton(),
-                                  icon='mail',
-                                  required=False)
 
     class Meta:
         icon = 'mail'
