@@ -37,7 +37,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
             # Call management command to update values
             filename = os.path.join(
                 settings.PROJECT_ROOT,
-                'v1/tests/fixtures/data_snapshots.json'
+                'v1/tests/fixtures/data_snapshot.json'
             )
             call_command(
                 'update_chart_block_dates',
@@ -48,7 +48,8 @@ class UpdateChartBlockDatesTestCase(TestCase):
             # Tests last_updated_projected_data is correct
             self.assertContains(
                 response,
-                'The most recent data available in this visualization are for June 2017'
+                'The most recent data available in this visualization are for July 2018'
             )
+
             # Tests date_published is correct
-            self.assertContains(response, 'August 2017')
+            self.assertContains(response, 'October 2018')
