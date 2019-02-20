@@ -541,7 +541,7 @@ class AnswerPage(CFGOVPage):
     answer = RichTextField(
         blank=True,
         features=[
-            'bold', 'italic', 'h2', 'h3', 'h4', 'link', 'ol', 'ul', 
+            'bold', 'italic', 'h2', 'h3', 'h4', 'link', 'ol', 'ul',
             'document-link', 'image', 'embed', 'ask-tips', 'edit-html'
         ],
         help_text=(
