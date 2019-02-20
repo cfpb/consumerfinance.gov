@@ -45,21 +45,16 @@ class Command(BaseCommand):
                 # does the market match the data_source?
                 # is the data source inq_ (inquiry index) or crt_(credit tightness)?
                 month = '2033-03-03'
-                print item
                 if 'inquiry_month' in item:
                     month = '2022-02-02'
                     if item['market_key'] in data_source:
                         month = '2021-01-01'
-                        print 'it is in the source'
                         if matches_prefix('inq_', data_source):
                             month = item['inquiry_month']
+                            break
                         elif matches_prefix('crt_', data_source):
                             month = item['tightness_month']
-                    else:
-                        print 'NOT the same market:'
-                        print item['market_key']
-                        print data_source
-            print month
+                            break
             return month
 
         for page in BrowsePage.objects.all():
@@ -83,11 +78,10 @@ class Command(BaseCommand):
         with open(self.expand_path(options['snapshot_file'])) as json_data:
             data = json.load(json_data)
 
+        markets = data['markets']
         date_published = data['date_published']
         last_updated = max(
-            [item['data_month'] for item in data['markets']]
+            [item['data_month'] for item in markets]
         )
-
-        markets = data['markets']
 
         self.update_chart_blocks(date_published, last_updated, markets)
