@@ -9,8 +9,7 @@ import mock
 from ask_cfpb.wagtail_hooks import (
     Answer, AnswerModelAdmin, AnswerModelAdminSaveUserEditView, Audience,
     AudienceModelAdmin, Category, CategoryModelAdmin, NextStep,
-    NextStepModelAdmin, SubCategory, SubCategoryModelAdmin, editor_css,
-    editor_js
+    NextStepModelAdmin, SubCategory, SubCategoryModelAdmin, editor_css
 )
 
 
@@ -25,7 +24,6 @@ class TestAskHooks(TestCase):
         self.assertEqual(CategoryModelAdmin.model, Category)
 
     def test_js_functions(self):
-        self.assertIn("registerHalloPlugin('editHtmlButton')", editor_js())
         self.assertIn("css/question-tips.css", editor_css())
 
     def test_AnswerModelAdminSaveUserEditView(self):
