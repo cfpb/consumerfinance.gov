@@ -1,6 +1,7 @@
-from agreements.models import Agreement, Issuer
 from jinja2 import Markup
 from jinja2.ext import Extension
+
+from agreements.models import Agreement, Issuer
 
 
 def issuer_select(selected=None):

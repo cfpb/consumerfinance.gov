@@ -6,8 +6,9 @@ from django.http import HttpResponse
 from django.template import Context, Template
 from django.test import TestCase
 
-from agreements import models
 from mock import patch
+
+from agreements import models
 
 
 def agreement_factory(**kwargs):
