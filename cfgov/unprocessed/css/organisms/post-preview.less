@@ -89,7 +89,7 @@
     grid-template-rows: auto;
     grid-template-columns: auto;
     grid-template-areas:
-        "header image"
+        "header header"
         "content image";
 
     .respond-to-max( @bp-xs-max, {
@@ -115,6 +115,7 @@
                 "category";
             .m-meta-header_left {
                 display: block;
+
                 margin-bottom: unit( 5px / @base-font-size-px, em );
                 grid-area: category;
 

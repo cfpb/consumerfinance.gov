@@ -79,7 +79,7 @@
         <div class="m-meta-header">
             {% if show_categories and post.categories.exists()  %}
             <div class="m-meta-header_left">
-                {# Newsroom Blog category logic #}
+                {# If rendering a blog post in the newsroom, use the 'Blog' aggregate category instead of the post's true category. #}
                 {% import 'macros/category-slug.html' as category_slug %}
                 {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
                     {{ category_slug.render(category='blog', href=url) }}
@@ -91,7 +91,6 @@
                         <span class="m-meta-header_category">{{ category_slug.render(category=cat.name, href=url) }}</span>
                     {% endfor %}
                 {% endif %}
-                {# Pipe ("|") separator logic. #}
                 {% if show_date %}
                 <span class="m-meta-header_separator">|</span> 
                 {% endif %}
