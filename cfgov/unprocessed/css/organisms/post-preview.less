@@ -109,12 +109,14 @@
 
         .respond-to-max( @bp-xs-max, {
             display: grid;
+
             grid-template-areas:
                 "date"
                 "category";
             .m-meta-header_left {
-                margin-bottom: unit( 5px / @base-font-size-px, em );
                 display: block;
+                margin-bottom: unit( 5px / @base-font-size-px, em );
+                grid-area: category;
 
                 .m-meta-header_separator {
                     display: none;
@@ -122,6 +124,7 @@
             }
             .m-meta-header_right {
                 display: block;
+                grid-area: date;
             }
         } );
 
@@ -140,7 +143,6 @@
 
         &_left {
             .heading-4();
-            grid-area: category;
             line-height: unit( 24px / 18px );
 
             .m-meta-header_separator {
@@ -150,7 +152,6 @@
         }
 
         &_right {
-            grid-area: date;
             line-height: 1.5;
 
             .a-date {
