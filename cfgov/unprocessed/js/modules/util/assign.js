@@ -27,7 +27,8 @@ function assign( destination ) {
   for ( let i = 1; i < arguments.length; i++ ) {
     const source = arguments[i] || {};
     hasOwnProp = Object.hasOwnProperty.bind( source );
-    for ( const key in source ) {
+    let key;
+    for ( key in source ) {
       if ( hasOwnProp( key ) ) {
         const value = source[key];
         if ( _isPlainObject( value ) ) {

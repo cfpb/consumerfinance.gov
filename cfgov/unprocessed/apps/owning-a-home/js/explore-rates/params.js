@@ -59,7 +59,8 @@ function update() {
   _params.prevLocation = _params.location;
 
   let val;
-  for ( const param in _params ) {
+  let param;
+  for ( param in _params ) {
     if ( Object.prototype.hasOwnProperty.call( _params, param ) ) {
       val = domValues.getSelection( param );
       if ( param !== 'prevLoanType' &&

@@ -129,7 +129,8 @@ function updateView() {
       // sort results by interest rate, ascending
       const sortedKeys = [];
       const sortedResults = {};
-      for ( const key in results ) {
+      let key;
+      for ( key in results ) {
         if ( results.hasOwnProperty( key ) ) {
           sortedKeys.push( key );
         }
