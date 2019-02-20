@@ -32,27 +32,33 @@ class Command(BaseCommand):
         """ Update date_published on all chart blocks """
 
         # check if market key is in the data source string - if so it's the correct market
-        def is_market(data, market):
+        def is_market(data, data_source):
             for item in data:
                 market_key = item['market_key']
-                if market_key in market:
-                    # end and exit loop and return true
-                    print item['market_key'] + market
-                    break
+                if market_key in data_source:
+                    print item['market_key'] + ' is in ' + data_source
+                    return True
+                else:
+                    return False
+
+        # check if inquiry index or credit tightness chart
+        def matches_prefix(data_source, prefix):
+            if prefix in data_source:
+                print prefix + ' is in ' + data_source
                 return True
             else:
                 return False
 
-        def get_inquiry_month(data, market):
+        def get_inquiry_month(data, data_source):
             for item in data:
                 # print item['inquiry_month']
-                # nested loops with the is_market call
+                # nested loops with the is_market call? or in this function?
                 # if inquiry month or tightness month keys are in the data, then it is an line index data
                 # then need to check if it's tightness chart or inquiry index chart (based on data source)
                 # THEN get the value for the correct market
                 # if it's not the right market then we continue the loop
                 if 'inquiry_month' in item:
-                    month = item['inquiry_month'] if is_market(data, market) else '2020-02-02'
+                    month = item['inquiry_month'] if is_market(data, data_source) and matches_prefix(data_source, 'inq_') else '2020-02-02'
                 # elif 'tightness_month' in item  AND chart source is credit tightness, then get the value for the correct market's tightness
                 else:
                     month = '2025-02-02'
