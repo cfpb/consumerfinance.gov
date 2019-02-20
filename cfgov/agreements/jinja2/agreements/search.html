@@ -18,9 +18,7 @@
             <h2>Credit card agreement database</h2>
             <div id="ccagrsearch">
                 <table class="o-table o-table__striped u-w100pct">
-                    {% if issuer %}
                     <caption>Agreements by '{{ issuer.name }}'</caption>
-                    {% endif %}
                     <thead>
                         <tr>
                             <th>Issuer</th>
@@ -29,7 +27,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% if issuer and page.object_list %}
                         {% for result in page.object_list %}
 
                         <tr>
@@ -44,11 +41,10 @@
                         </tr>
 
                         {% endfor %}
-                        {% endif %}
                     </tbody>
                 </table>
 
-                {% if issuer and page.has_next() or page.has_previous() %}
+                {% if page.has_next() or page.has_previous() %}
 
                 <nav class="m-pagination"
                      role="navigation"
@@ -119,7 +115,7 @@
             <div>
                 <h5>Search again</h5>
                 <h6>Show agreements by card issuer</h6>
-                {% if issuer %}{{ issuer_select(issuer.slug) }}{% else %}{{ issuer_select() }}{% endif %}
+                {{ agreements_issuer_select(issuer.slug) | safe }}
 
                 {% include '_search_helper.html' %}
 

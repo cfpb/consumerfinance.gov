@@ -24,7 +24,7 @@
 
             <h5>Show agreements by card issuer</h5>
 
-            {{ issuer_select() }}
+            {{ agreements_issuer_select() | safe }}
 
             {% include '_search_helper.html' %}
 

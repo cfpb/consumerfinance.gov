@@ -3,7 +3,6 @@ import random
 from django.core.paginator import Page
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.template import Context, Template
 from django.test import TestCase
 
 from mock import patch
@@ -138,11 +137,9 @@ class Views(TestCase):
         self.assertFalse(b'page=1' in resp.content)
 
         resp = self.client.get(path + '?page=2')
-        self.assertContains(resp, 'page=1')
-        self.assertNotContains(resp, 'page=2')
-        self.assertNotContains(resp, 'page=3')
-        self.assertFalse(b'page=2' in resp.content)
-        self.assertFalse(b'page=3' in resp.content)
+        self.assertTrue('href="?page=1' in resp.content)
+        self.assertFalse('href="?page=2' in resp.content)
+        self.assertFalse('href="?page=3' in resp.content)
 
     @patch('agreements.views.render', return_value=HttpResponse())
     def test_issuer_paging_too_high(self, render):
@@ -188,58 +185,3 @@ class Views(TestCase):
         self.assertEqual(40, len(object_ids1))
         self.assertEqual(40, len(object_idsabcd))
         self.assertEqual(object_ids1, object_idsabcd)
-
-
-class TemplateTags(TestCase):
-    def test_issuer_select(self):
-        """
-        Confirm that the issuer_select tag doesn't explode.
-        """
-        t = Template("{% load agreements_extras %}{% issuer_select %} ")
-        output = t.render(Context({}))
-        self.assertTrue(len(output) > 1)
-
-    def test_issuer_select_entries(self):
-        """
-        issuer_select tag should include all issuers.
-        """
-        names = [letter * 6 for letter in ['A', 'B', 'C', 'D', 'E']]
-
-        random_order_names = random.sample(names, len(names))
-        for name in random_order_names:
-            issuer = models.Issuer.objects.create(name=name, slug=name)
-            models.Agreement.objects.create(issuer=issuer, size=1234)
-
-        t = Template("{% load agreements_extras %}{% issuer_select %} ")
-        output = t.render(Context({}))
-
-        for l_idx in range(len(names)):
-            self.assertTrue(names[l_idx] in output)
-            #   Also, verify that this letter comes before the others
-            for r_idx in range(l_idx + 1, len(names)):
-                self.assertTrue(output.find(names[l_idx]) <
-                                output.find(names[r_idx]))
-
-    def test_issuer_select_selected(self):
-        """
-        issuer_select tag should default to the selected id.
-        """
-        for name in ('AAA', 'BBB', 'CCC'):
-            issuer = models.Issuer.objects.create(name=name, slug=name)
-            models.Agreement.objects.create(issuer=issuer, size=1234)
-
-        t = Template("{% load agreements_extras %}" +
-                     "{% issuer_select id %}")
-        html = t.render(Context({'id': 'BBB'}))
-        self.assertHTMLEqual(html, """
-<select
-    data-placeholder="Choose an issuer"
-    class="chzn-select"
-    tabindex="2"
-    id="issuer_select"
->
-    <option value="AAA">AAA</option>
-    <option value="BBB" selected>BBB</option>
-    <option value="CCC">CCC</option>
-</select>
-        """)
