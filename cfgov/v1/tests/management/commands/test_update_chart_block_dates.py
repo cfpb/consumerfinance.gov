@@ -10,9 +10,15 @@ from scripts import _atomic_helpers as atomic
 
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_page
-
+from v1.management.commands.update_chart_block_dates import matches_prefix
 
 class UpdateChartBlockDatesTestCase(TestCase):
+        def test_matches_prefix(self):
+            self.assertTrue(matches_prefix('crt_', 'consumer-credit-trends/auto-loans/crt_data_AUT.csv'))
+            self.assertFalse(matches_prefix('crt_', 'consumer-credit-trends/auto-loans/inq_data_AUT.csv'))
+            self.assertFalse(matches_prefix('fake', 'consumer-credit-trends/auto-loans/inq_data_AUT.csv'))
+            # matches_prefix('')
+
         def test_chart_block(self):
             """ Management command correctly updates chart block dates"""
             browse_page = BrowsePage(
