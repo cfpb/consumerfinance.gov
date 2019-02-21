@@ -10,14 +10,28 @@ from scripts import _atomic_helpers as atomic
 
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_page
-from v1.management.commands.update_chart_block_dates import matches_prefix
+from v1.management.commands.update_chart_block_dates import matches_prefix, get_inquiry_month
 
 class UpdateChartBlockDatesTestCase(TestCase):
         def test_matches_prefix(self):
             self.assertTrue(matches_prefix('crt_', 'consumer-credit-trends/auto-loans/crt_data_AUT.csv'))
-            self.assertFalse(matches_prefix('crt_', 'consumer-credit-trends/auto-loans/inq_data_AUT.csv'))
-            self.assertFalse(matches_prefix('fake', 'consumer-credit-trends/auto-loans/inq_data_AUT.csv'))
-            # matches_prefix('')
+            self.assertTrue(matches_prefix('inq_', 'consumer-credit-trends/credit-cards/inq_data_CRC.csv'))
+            self.assertFalse(matches_prefix('crt_', 'consumer-credit-trends/mortgages/inq_data_MTG.csv'))
+            self.assertFalse(matches_prefix('inq_', 'consumer-credit-trends/mortgages/crt_data_MTG.csv'))
+            self.assertFalse(matches_prefix('fake', 'consumer-credit-trends/this-is-not-a-real-file.csv'))
+
+        def test_get_inquiry_month(self):
+            # can i import data_snapshot.json?
+            markets_list = [
+                {
+                "data_month": "2018-07-01",
+                "inquiry_month": "2018-06-01",
+                "market_key": "CRC",
+                "tightness_month": "2018-02-01",
+                }
+            ]
+            data_source = 'consumer-credit-trends/credit-cards/inq_data_CRC.csv'
+            self.assertEqual(get_inquiry_month(markets_list, data_source), '2018-06-01')
 
         def test_chart_block(self):
             """ Management command correctly updates chart block dates"""
