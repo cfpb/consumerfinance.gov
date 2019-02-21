@@ -1,3 +1,4 @@
+import json
 import os
 
 from django.conf import settings
@@ -21,8 +22,17 @@ class UpdateChartBlockDatesTestCase(TestCase):
             self.assertFalse(matches_prefix('fake', 'consumer-credit-trends/this-is-not-a-real-file.csv'))
 
         def test_get_inquiry_month(self):
-            # can i import data_snapshot.json?
-            markets_list = [
+            with open('./v1/tests/fixtures/data_snapshot.json') as json_data:
+                data = json.load(json_data)
+            markets = data['markets']
+            data_source_crc = 'consumer-credit-trends/credit-cards/inq_data_CRC.csv'
+            data_source_mtg = 'consumer-credit-trends/credit-cards/crt_data_mtg.csv'
+            
+            self.assertEqual(get_inquiry_month(markets, data_source_crc), '2018-06-01')
+            self.assertNotEqual(get_inquiry_month(markets, data_source_crc), '2018-02-01')
+            # self.assertEqual(get_inquiry_month(markets, data_source_mtg), '2018-06-01')
+
+            wonky_markets = [
                 {
                 "data_month": "2018-07-01",
                 "inquiry_month": "2018-06-01",
@@ -30,8 +40,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
                 "tightness_month": "2018-02-01",
                 }
             ]
-            data_source = 'consumer-credit-trends/credit-cards/inq_data_CRC.csv'
-            self.assertEqual(get_inquiry_month(markets_list, data_source), '2018-06-01')
+            
 
         def test_chart_block(self):
             """ Management command correctly updates chart block dates"""
