@@ -62,9 +62,10 @@ class Command(BaseCommand):
             if not chart_blocks:
                 continue
             for chart in chart_blocks:
+                chart_options = chart['value']
                 chart['value']['date_published'] = date_published
-                if chart['value']['chart_type'] == 'line-index':
-                    last_updated_inquiry = get_inquiry_month(markets, chart['value']['data_source'])
+                if chart_options['chart_type'] == 'line-index':
+                    last_updated_inquiry = get_inquiry_month(markets, chart_options['data_source'])
                     chart['value']['last_updated_projected_data'] = last_updated_inquiry
                 else:
                     chart['value']['last_updated_projected_data'] = last_updated
