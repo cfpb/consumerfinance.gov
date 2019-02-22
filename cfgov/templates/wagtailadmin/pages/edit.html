@@ -2,11 +2,19 @@
 {% block content %}
 {{ block.super }}
 {% if page.answer_base %}
+{% if page.language == 'es' and page.answer_base.english_page %}
 <div class="row nice-padding">
-      <a href="/admin/ask_cfpb/answer/edit/{{ page.answer_base.id }}/" 
+      <a href="/admin/pages/{{ page.answer_base.english_page.id }}/edit/" 
          class="button button-secondary button-large">
-          EDIT ANSWER CONTENT
+          EDIT ENGLISH PAGE
       </a>
 </div>
-{% endif %}
+{% elif page.language == 'en' and page.answer_base.spanish_page %}
+<div class="row nice-padding">
+      <a href="/admin/pages/{{ page.answer_base.spanish_page.id }}/edit/" 
+         class="button button-secondary button-large">
+          EDIT SPANISH PAGE
+      </a>
+</div>
+{% endif %}{% endif %}
 {% endblock %}

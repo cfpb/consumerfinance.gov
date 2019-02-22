@@ -59,14 +59,13 @@
                 {{ value.body | safe }}
             </div>
         </div>
-    {% if img %}
         <div class="m-hero_image-wrapper">
+        {% if img %}
             <div class="m-hero_image"></div>
+        {% endif %}
         </div>
-    {% endif %}
     </div>
 
-{% if img %}
     {# Due to the nature of setting backgrounds and padding dynamically,
        these styles are set in an element to both contain them and make
        it clear where to change them in the future. #}
@@ -76,7 +75,7 @@
                 background-color: {{ value.background_color }};
             {% endif -%}
         }
-
+    {% if img %}
         .m-hero_image {
             background-image: url('{{ sm_img.url }}');
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
@@ -102,6 +101,6 @@
                     sizingMethod='scale');
             }
         }
+    {% endif %}
     </style>
-{% endif %}
 </section>

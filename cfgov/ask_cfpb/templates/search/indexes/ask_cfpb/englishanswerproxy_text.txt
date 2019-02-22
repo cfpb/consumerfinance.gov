@@ -1,6 +1,6 @@
 {{ object.answer|striptags|safe }}
 {{ object.snippet|striptags|safe }}
 {{ object.question }}
-{% for tag in tags %}
+{% for tag in clean_tags %}
 {{ tag }}
 {% endfor %}

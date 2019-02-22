@@ -90,7 +90,7 @@ urlpatterns = [
 
 @override_settings(ROOT_URLCONF=__name__)
 class FlaggedWagtailOnlyViewTests(TestCase):
-    @override_settings(FLAGS={'MY_TEST_FLAG': {'boolean': True}})
+    @override_settings(FLAGS={'MY_TEST_FLAG': [('boolean', True)]})
     def test_flag_set_returns_view_that_calls_wagtail_serve_view(self):
         """When flag is set, request should be routed to Wagtail.
 
@@ -103,7 +103,7 @@ class FlaggedWagtailOnlyViewTests(TestCase):
             'U.S. government agency that makes sure banks'
         )
 
-    @override_settings(FLAGS={'MY_TEST_FLAG': {'boolean': False}})
+    @override_settings(FLAGS={'MY_TEST_FLAG': [('boolean', False)]})
     def test_flag_not_set_returns_view_that_raises_http404(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 404)

@@ -25,30 +25,27 @@ class BrowsePage(CFGOVPage):
     ], blank=True)
 
     content = StreamField([
-        ('bureau_structure', organisms.BureauStructure()),
-        ('info_unit_group', organisms.InfoUnitGroup()),
-        ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
-        ('expandable', organisms.Expandable()),
+        ('info_unit_group', organisms.InfoUnitGroup()),
         ('expandable_group', organisms.ExpandableGroup()),
+        ('expandable', organisms.Expandable()),
+        ('well', organisms.Well()),
+        ('snippet_list', organisms.ResourceList()),
         ('table_block', organisms.AtomicTableBlock(
-            table_options={'renderer': 'html'})),
-        ('job_listing_table', JobListingTable()),
+            table_options={'renderer': 'html'}
+        )),
         ('feedback', v1_blocks.Feedback()),
-        ('conference_registration_form', ConferenceRegistrationForm()),
         ('raw_html_block', blocks.RawHTMLBlock(
-            label='Raw HTML block')),
-        ('html_block', organisms.HTMLBlock()),
+            label='Raw HTML block'
+        )),
+        ('conference_registration_form', ConferenceRegistrationForm()),
         ('chart_block', organisms.ChartBlock()),
         ('mortgage_chart_block', organisms.MortgageChartBlock()),
         ('mortgage_map_block', organisms.MortgageMapBlock()),
         ('mortgage_downloads_block', MortgageDataDownloads()),
-        ('snippet_list', organisms.ResourceList()),
         ('data_snapshot', organisms.DataSnapshot()),
-        ('image_text_25_75_group', organisms.ImageText2575Group()),
-        ('image_text_50_50_group', organisms.ImageText5050Group()),
-        ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
-        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
+        ('job_listing_table', JobListingTable()),
+        ('bureau_structure', organisms.BureauStructure()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

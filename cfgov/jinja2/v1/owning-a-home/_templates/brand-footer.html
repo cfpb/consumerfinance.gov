@@ -37,7 +37,8 @@
         {% endif %}
         {% endfor %}
         <div class="brand-footer_container brand-footer_container-{{ links | length + 1 }}">
-            {% include "_templates/oah-email-signup.html" %}
+            {% import "_templates/email-signup.html" as email_signup %}
+            {{ email_signup.render() }}
         </div>
     </div>
 </footer>

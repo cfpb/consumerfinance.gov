@@ -10,7 +10,7 @@ from regulations3k.models import EffectiveVersion, Part
 from regulations3k.views import get_version_date, redirect_eregs
 
 
-@override_settings(FLAGS={'REGULATIONS3K': {'boolean': 'True'}})
+@override_settings(FLAGS={'REGULATIONS3K': [('boolean', True)]})
 class RedirectRegulations3kTestCase(TestCase):
 
     def setUp(self):

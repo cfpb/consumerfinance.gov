@@ -25,7 +25,7 @@ class SvgIconTests(TestCase):
             template.render()
 
 
-@override_settings(FLAGS={'MY_FLAG': {'boolean': 'True'}})
+@override_settings(FLAGS={'MY_FLAG': [('boolean', True)]})
 class FeatureFlagTests(TestCase):
     def setUp(self):
         self.jinja_engine = engines['wagtail-env']

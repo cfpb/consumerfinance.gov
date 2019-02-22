@@ -22,7 +22,6 @@ from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
-import requests
 from jinja2 import Markup
 
 import ask_cfpb
@@ -141,73 +140,6 @@ class InfoUnitGroup2575Only(InfoUnitGroup):
 
     class Meta:
         label = 'Info unit group'
-
-
-class ImageText5050Group(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title', required=False)
-
-    link_image_and_heading = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text=('Check this to link all images and headings to the URL of '
-                   'the first link in their unit\'s list, if there is a link.')
-    )
-
-    sharing = blocks.StructBlock([
-        ('shareable', blocks.BooleanBlock(label='Include sharing links?',
-                                          help_text='If checked, share links '
-                                                    'will be included below '
-                                                    'the items.',
-                                          required=False)),
-        ('share_blurb', blocks.CharBlock(help_text='Sets the tweet text, '
-                                                   'email subject line, and '
-                                                   'LinkedIn post text.',
-                                         required=False)),
-    ])
-
-    image_texts = blocks.ListBlock(molecules.ImageText5050())
-
-    class Meta:
-        icon = None
-        label = ' '
-        template = '_includes/organisms/image-text-50-50-group.html'
-
-
-class ImageText2575Group(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title', required=False)
-    link_image_and_heading = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text=('Check this to link all images and headings to the URL of '
-                   'the first link in their unit\'s list, if there is a link.')
-    )
-    image_texts = blocks.ListBlock(molecules.ImageText2575())
-
-    class Meta:
-        icon = None
-        label = ' '
-        template = '_includes/organisms/image-text-25-75-group.html'
-
-
-class LinkBlobGroup(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title', required=False)
-    has_top_border = blocks.BooleanBlock(required=False)
-    has_bottom_border = blocks.BooleanBlock(required=False)
-    link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
-
-
-class ThirdWidthLinkBlobGroup(LinkBlobGroup):
-    class Meta:
-        icon = None
-        label = ' '
-        template = '_includes/organisms/third-width-link-blob-group.html'
-
-
-class HalfWidthLinkBlobGroup(LinkBlobGroup):
-    class Meta:
-        icon = None
-        label = ' '
-        template = '_includes/organisms/half-width-link-blob-group.html'
 
 
 class PostPreviewSnapshot(blocks.StructBlock):
@@ -1010,29 +942,6 @@ class FeaturedContent(blocks.StructBlock):
 
     class Media:
         js = ['video-player.js']
-
-
-class HTMLBlock(blocks.StructBlock):
-    html_url = blocks.RegexBlock(
-        label='Source URL',
-        default='',
-        required=True,
-        regex=r'^https://(s3.amazonaws.com/)?files.consumerfinance.gov/.+$',
-        error_messages={
-            'required': 'The HTML URL field is required for rendering raw '
-                        'HTML from a remote source.',
-            'invalid': 'The URL is invalid or not allowed. ',
-        }
-    )
-
-    def render(self, value, context=None):
-        resp = requests.get(value['html_url'], timeout=5)
-        resp.raise_for_status()
-        return mark_safe(resp.content)
-
-    class Meta:
-        label = 'HTML Block'
-        icon = 'code'
 
 
 class ChartBlock(blocks.StructBlock):
