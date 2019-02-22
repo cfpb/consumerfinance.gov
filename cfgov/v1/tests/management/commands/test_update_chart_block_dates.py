@@ -27,15 +27,14 @@ class UpdateChartBlockDatesTestCase(TestCase):
             markets = data['markets']
             data_source_crc = 'consumer-credit-trends/credit-cards/inq_data_CRC.csv'
             data_source_mtg = 'consumer-credit-trends/mortgages/crt_data_MTG.csv'
-            data_source_broken = 'this-is-not-a-valid-file-path/MTG_crt_fake.csv'
+            data_source_other = 'consumer-credit-trends/student-loans/num_data_STU.csv'
             
             self.assertEqual(get_inquiry_month(markets, data_source_crc), '2018-06-01')
             self.assertNotEqual(get_inquiry_month(markets, data_source_crc), '2018-02-01')
             self.assertEqual(get_inquiry_month(markets, data_source_mtg), '2017-09-01')
             self.assertNotEqual(get_inquiry_month(markets, data_source_mtg), '2018-06-01')
-
-            # should fail as is, what can we do to make this pass? to check for valid data source?
-            self.assertEqual(get_inquiry_month(markets, data_source_broken), '2018-06-01')
+            self.assertNotEqual(get_inquiry_month(markets, data_source_other), '2018-06-01')
+            self.assertIs(get_inquiry_month(markets, data_source_other), None)
 
             wonky_markets = [
                 {

@@ -23,11 +23,9 @@ def get_inquiry_month(data, data_source):
         # if inquiry month, the month is inquiry month OR credit tightness month.
         # does the market match the data_source?
         # is the data source inq_ (inquiry index) or crt_(credit tightness)?
-        month = '2033-03-03'
+        month = None
         if 'inquiry_month' in item:
-            month = '2022-02-02'
             if item['market_key'] in data_source:
-                month = '2021-01-01'
                 if matches_prefix('inq_', data_source):
                     month = item['inquiry_month']
                     break
