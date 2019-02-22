@@ -13,9 +13,6 @@ logger = logging.getLogger(__name__)
 
 def get_inquiry_month(data, data_source):
     for item in data:
-        # if inquiry month, the month is inquiry month OR credit tightness month.
-        # does the market match the data_source?
-        # is the data source inq_ (inquiry index) or crt_(credit tightness)?
         month = None
         if item['market_key'] in data_source:
             if 'inq_' in data_source:
