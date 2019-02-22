@@ -126,7 +126,8 @@ that need to happen to a model's data are made.
 
 !!! note
     While backwards migrations are necessary in external libraries that we create, 
-    we do not require them in cfgov-refresh. 
+    we do not require them in cfgov-refresh 
+    because we prefer not to rollback migrations that have already been applied.
 
 ### Wagtail-specific considerations
 
