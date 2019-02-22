@@ -11,16 +11,9 @@ from scripts import _atomic_helpers as atomic
 
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_page
-from v1.management.commands.update_chart_block_dates import matches_prefix, get_inquiry_month
+from v1.management.commands.update_chart_block_dates import get_inquiry_month
 
 class UpdateChartBlockDatesTestCase(TestCase):
-        def test_matches_prefix(self):
-            self.assertTrue(matches_prefix('crt_', 'consumer-credit-trends/auto-loans/crt_data_AUT.csv'))
-            self.assertTrue(matches_prefix('inq_', 'consumer-credit-trends/credit-cards/inq_data_CRC.csv'))
-            self.assertFalse(matches_prefix('crt_', 'consumer-credit-trends/mortgages/inq_data_MTG.csv'))
-            self.assertFalse(matches_prefix('inq_', 'consumer-credit-trends/mortgages/crt_data_MTG.csv'))
-            self.assertFalse(matches_prefix('fake', 'consumer-credit-trends/this-is-not-a-real-file.csv'))
-
         def test_get_inquiry_month(self):
             with open('./v1/tests/fixtures/data_snapshot.json') as json_data:
                 data = json.load(json_data)
