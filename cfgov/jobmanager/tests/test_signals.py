@@ -6,6 +6,7 @@ from mock import patch
 
 from jobmanager.models.django import JobCategory, Region
 from jobmanager.models.pages import JobListingPage
+from jobmanager.signals import register_signal_handlers
 from v1.tests.wagtail_pages import helpers
 
 
@@ -29,6 +30,8 @@ class JobListingPagePublishedSignalCase(TestCase):
             close_date=date(2099, 1, 15),
             division=division,
             location=region)
+
+        register_signal_handlers()
 
     @patch('jobmanager.signals.flag_enabled', return_value=True)
     def test_ping_google_when_job_page_published(self, flag_enabled_check):
