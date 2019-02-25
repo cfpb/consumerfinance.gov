@@ -40,7 +40,7 @@ select.o-multiselect {
         transition: max-height 0.25s ease-out;
     }
 
-     &.active {
+     &.u-active {
         .o-multiselect_fieldset {
             margin-top: 0;
             max-height: 140px;
@@ -63,7 +63,7 @@ select.o-multiselect {
         }
 
         &.u-no-results,
-        &.max-selections {
+        &.u-max-selections {
             li {
                 display: none;
             }
@@ -77,13 +77,9 @@ select.o-multiselect {
             content: 'No results found';
         }
 
-        &.max-selections:after {
+        &.u-max-selections:after {
             content: 'Reached maximum of five selections';
         }
-    }
-
-    .cf-input[type="checkbox"] + label {
-        margin-bottom: 0;
     }
 
     &_choices {
@@ -101,7 +97,7 @@ select.o-multiselect {
         }
 
         li:last-child {
-          margin-bottom: unit( 10px / @base-font-size-px, em );
+            margin-bottom: unit( 10px / @base-font-size-px, em );
         }
 
         label {
