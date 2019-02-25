@@ -172,10 +172,13 @@
 
     &_image-container {
         grid-area: image;
-        width: unit( 270px / @base-font-size-px, em);
-
+        
         .respond-to-max( @bp-sm-max, {
             margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+        } );
+
+        .respond-to-min( @bp-med-min, {
+            width: unit( 270px / @base-font-size-px, em );
         } );
     }
 
