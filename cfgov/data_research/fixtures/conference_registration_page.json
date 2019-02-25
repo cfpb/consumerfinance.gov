@@ -32,11 +32,9 @@
 },
 {
     "fields": {
-        "shared": false,
         "social_sharing_image": null,
         "sidefoot": "[]",
-        "language": "en",
-        "has_unshared_changes": false
+        "language": "en"
     },
     "model": "v1.cfgovpage",
     "pk": 99999
