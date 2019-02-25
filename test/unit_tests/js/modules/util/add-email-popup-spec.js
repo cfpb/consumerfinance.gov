@@ -30,7 +30,7 @@ const HTML_SNIPPET = `
               </div>
 
               <div class="m-btn-group">
-                  <input class="a-btn a-btn__full-on-xs" type="submit" value="Sign up">
+                  <button class="a-btn a-btn__full-on-xs">Sign up</button>
                   <a class="a-btn a-btn__link a-btn__secondary"
                      href="/owning-a-home/privacy-act-statement"
                      target="_blank"
