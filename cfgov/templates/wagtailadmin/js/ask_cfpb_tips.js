@@ -26,11 +26,8 @@
         buttonset.append(buttonElement);
         
         buttonElement.on('click', function (event) {
-
-
           var sel = window.getSelection();
-          var node = sel.baseNode;
-          
+          var node = sel.baseNode || sel.anchorNode;
           var tip = $(node).closest( '.' + baseClass )[0];
 
           // If selection is currently styled as a tip,

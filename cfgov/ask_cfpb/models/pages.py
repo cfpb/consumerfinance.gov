@@ -549,7 +549,8 @@ class AnswerPage(CFGOVPage):
             "for troubleshooting. To style tips, warnings and notes, "
             "select the content that will go inside the rule lines "
             "(so, title + paragraph) and click the Pencil button "
-            "to style it. Click again to unstyle the tip."
+            "to style it. Re-select the content and click the button "
+            "again to unstyle the tip."
         )
     )
     snippet = RichTextField(blank=True, help_text='Optional answer intro')
