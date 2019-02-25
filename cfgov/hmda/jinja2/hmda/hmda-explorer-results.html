@@ -1,0 +1,60 @@
+{% macro _render_years(years) %}
+    <h3>Nationwide HMDA records</h3>
+    {% for year in years %}
+        <h4>{{ year }}</h4>
+        <ul>
+          <li><a href="#">Download CSV with labels</a> (999KB)</li>
+          <li><a href="#">Download CSV with labels and codes</a> (999KB)</li>
+        </ul>
+    {% endfor %}
+{% endmacro %}
+
+{% macro _render_states(years, states) %}
+    {% for year in years %}
+        {% for state in states %}
+            <h3>{{ state }} {{ year }} HMDA records</h3>
+            <h4>Home purchase</h4>
+            <ul>
+              <li><a href="#">Download CSV with labels</a> (999KB)</li>
+              <li><a href="#">Download CSV with labels and codes</a> (999KB)</li>
+            </ul>
+            <h4>Home improvement</h4>
+            <ul>
+              <li><a href="#">Download CSV with labels</a> (999KB)</li>
+              <li><a href="#">Download CSV with labels and codes</a> (999KB)</li>
+            </ul>
+            <h4>Refinancing</h4>
+            <ul>
+              <li><a href="#">Download CSV with labels</a> (999KB)</li>
+              <li><a href="#">Download CSV with labels and codes</a> (999KB)</li>
+            </ul>
+        {% endfor %}
+    {% endfor %}
+{% endmacro %}
+
+{# ==========================================================================
+
+   HMDA Explorer Results
+
+   ==========================================================================
+
+   Description:
+
+   List of results to HMDA data files on AWS S3
+
+   years: Years of HMDA data to show
+
+   states: U.S. states of HMDA data to show
+
+   action: Mortgage action taken
+
+   ========================================================================== #}
+{% macro render(years, states, action) %}
+    <div class="u-mb30">
+        {% if states %}
+            {{ _render_states(years, states) }}
+        {% else %}
+            {{ _render_years(years) }}
+        {% endif %}
+    </div>
+{% endmacro %}
