@@ -6,12 +6,12 @@ from v1.models.base import CFGOVPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 
-class TestMigration0141(TestCase):
+class TestMigration0142(TestCase):
     @classmethod
     def setUpClass(cls):
-        super(TestMigration0141, cls).setUpClass()
+        super(TestMigration0142, cls).setUpClass()
         cls.migration = import_module(
-            'v1.migrations.0141_migrate_pas_link_data_to_pagechooserblock'
+            'v1.migrations.0142_migrate_pas_link_data_to_pagechooserblock'
         )
 
     def test_forward_mapper_internal_pas_link(self):

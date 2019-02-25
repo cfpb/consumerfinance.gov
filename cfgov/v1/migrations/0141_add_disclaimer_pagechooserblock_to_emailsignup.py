@@ -17,7 +17,7 @@ import wagtail.wagtailsnippets.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0139_rm_linkblob_and_imagetext_organisms'),
+        ('v1', '0140_cfgovpage_remove_deprecated_sharing'),
     ]
 
     operations = [

@@ -17,7 +17,7 @@ import wagtail.wagtailsnippets.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0141_migrate_pas_link_data_to_pagechooserblock'),
+        ('v1', '0142_migrate_pas_link_data_to_pagechooserblock'),
     ]
 
     operations = [

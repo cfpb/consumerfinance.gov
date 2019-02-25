@@ -113,7 +113,7 @@ def forwards(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('v1', '0140_add_disclaimer_pagechooserblock_to_emailsignup')
+        ('v1', '0141_add_disclaimer_pagechooserblock_to_emailsignup')
     ]
     operations = [
         migrations.RunPython(forwards, migrations.RunPython.noop),
