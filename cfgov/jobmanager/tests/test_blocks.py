@@ -10,7 +10,7 @@ from mock import Mock
 from model_mommy import mommy
 from scripts._atomic_helpers import job_listing_list
 
-from jobmanager.models.blocks import JobListingList, JobListingTable
+from jobmanager.blocks import JobListingList, JobListingTable
 from jobmanager.models.django import Grade, JobCategory, JobLocation
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel
