@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 
 from wagtail.wagtailimages import get_image_model
 
-from .utils import WagtailClient
+from v1.management.commands._utils import WagtailClient
 
 
 class Command(WagtailClient, BaseCommand):

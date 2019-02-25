@@ -2,14 +2,15 @@ from datetime import date
 
 from django.test import RequestFactory, TestCase
 from django.utils import timezone
+from django.utils.encoding import force_text
 
 from wagtail.wagtailcore.models import Page
 
+from mock import Mock
 from model_mommy import mommy
 from scripts._atomic_helpers import job_listing_list
 
-from cfgov.test import HtmlMixin
-from jobmanager.models.blocks import JobListingList, JobListingTable
+from jobmanager.blocks import JobListingList, JobListingTable
 from jobmanager.models.django import Grade, JobCategory, JobLocation
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel
@@ -39,7 +40,7 @@ def make_job_listing_page(title, close_date=None, grades=[], **kwargs):
     return page
 
 
-class JobListingListTestCase(HtmlMixin, TestCase):
+class JobListingListTestCase(TestCase):
     def setUp(self):
         self.request = RequestFactory().get('/')
         self.more_jobs_page = Page.objects.first()
@@ -51,24 +52,14 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         }))
 
     def test_html_has_aside(self):
-        self.assertHtmlRegexpMatches(self._render_block_to_html(), (
-            '^<aside class="m-jobs-list" data-qa-hook="openings-section">'
-            '.*'
-            '</aside>$'
-        ))
-
-    def test_html_has_ul(self):
-        make_job_listing_page(
-            title='Manager',
-            grades=['1', '2', '3'],
-            close_date=date(2099, 8, 5)
+        self.assertInHTML(
+            ('<aside class="m-jobs-list" data-qa-hook="openings-section">'
+             '<h3 class="short-desc">There are no current openings at this '
+             'time.</h3></aside>'),
+            self._render_block_to_html()
         )
 
-        self.assertHtmlRegexpMatches(self._render_block_to_html(), (
-            '<ul class="m-list m-list__unstyled m-list__links">.*</ul>'
-        ))
-
-    def test_html_formatting(self):
+    def test_html_has_job_listings(self):
         make_job_listing_page(
             title='Manager',
             grades=['1', '2', '3'],
@@ -79,21 +70,11 @@ class JobListingListTestCase(HtmlMixin, TestCase):
             grades=['12'],
             close_date=date(2099, 4, 21)
         )
-
-        self.assertHtmlRegexpMatches(self._render_block_to_html(), (
-            '<li class="m-list_item">'
-            '<a class="m-list_link" href=".*">Assistant' +
-            '<span class="m-list_link-subtext">Closing' +
-            '<span class="datetime">.*Apr. 21, 2099.*</span>'
-            '</span></a>'
-            '</li>'
-            '<li class="m-list_item">'
-            '<a class="m-list_link" href=".*">Manager' +
-            '<span class="m-list_link-subtext">Closing' +
-            '<span class="datetime">.*Aug. 5, 2099.*</span>'
-            '</span></a>'
-            '</li>'
-        ))
+        content = self._render_block_to_html()
+        self.assertIn('Assistant', content)
+        self.assertIn('Manager', content)
+        self.assertIn('Apr. 21, 2099', content)
+        self.assertIn('Aug. 5, 2099', content)
 
     def test_excludes_draft_jobs(self):
         make_job_listing_page('Job', live=False)
@@ -115,54 +96,33 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         save_new_page(page)
         set_stream_data(page, 'sidebar_breakout', [job_listing_list])
 
-        self.assertPageIncludesHtml(page, (
-            '><aside class="m-jobs-list" data-qa-hook="openings-section">'
-            '.*'
-            '</aside><'
-        ))
+        request = RequestFactory().get('/')
+        request.user = Mock()
+        rendered_html = force_text(page.serve(request).render().content)
+        self.assertInHTML(
+            ('<aside class="m-jobs-list" data-qa-hook="openings-section">'
+             '<h3 class="short-desc">There are no current openings at this '
+             'time.</h3></aside>'),
+            rendered_html
+        )
 
 
-class JobListingTableTestCase(HtmlMixin, TestCase):
+class JobListingTableTestCase(TestCase):
     def test_html_displays_no_data_message(self):
         table = JobListingTable()
         html = table.render(table.to_python({'empty_table_msg': 'No Jobs'}))
-
-        self.assertHtmlRegexpMatches(html, (
-            '<h3>No Jobs</h3>'
-        ))
+        self.assertInHTML('<h3>No Jobs</h3>', html)
 
     def test_html_displays_table_if_row_flag_false(self):
         table = JobListingTable()
         html = table.render(table.to_python(
             {'first_row_is_table_header': False}
         ))
-
-        self.assertHtmlRegexpMatches(html, (
-            '<tr>'
-            '.*'
-            'TITLE'
-            '.*'
-            'GRADE'
-            '.*'
-            'POSTING CLOSES'
-            '.*'
-            'LOCATION'
-            '.*'
-            '</tr>'
-        ))
-
-    def test_html_displays_single_row(self):
-        make_job_listing_page(
-            title='CEO',
-            close_date=date(2099, 12, 1)
-        )
-        table = JobListingTable()
-        html = table.render(table.to_python({}))
-        self.assertHtmlRegexpMatches(html, (
-            '<tr>'
-            '.*'
-            '</tr>'
-        ))
+        self.assertNotIn('<thead>', html)
+        self.assertIn('TITLE', html)
+        self.assertIn('GRADE', html)
+        self.assertIn('POSTING CLOSES', html)
+        self.assertIn('LOCATION', html)
 
     def test_html_has_header(self):
         make_job_listing_page(
@@ -171,14 +131,9 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
         )
         table = JobListingTable()
         html = table.render(table.to_python({}))
+        self.assertIn('<thead>', html)
 
-        self.assertHtmlRegexpMatches(html, (
-            '<thead>'
-            '.*'
-            '</thead>'
-        ))
-
-    def test_html_formatting(self):
+    def test_html_has_job_listings(self):
         make_job_listing_page(
             title='Manager',
             grades=['1', '2', '3'],
@@ -193,64 +148,13 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
         table = JobListingTable()
         html = table.render(table.to_python({}))
 
-        self.assertHtmlRegexpMatches(html, (
-            'TITLE'
-            '.*'
-            'Assistant'
-            '.*'
-            'GRADE'
-            '.*'
-            '12'
-            '.*'
-            'POSTING CLOSES'
-            '.*'
-            'Apr. 21, 2099'
-            '.*'
-            'LOCATION'
-            '.*'
-            'Silicon Valley'
-            '.*'
-            'TITLE'
-            '.*'
-            'Manager'
-            '.*'
-            'GRADE'
-            '.*'
-            '1, 2, 3'
-            '.*'
-            'POSTING CLOSES'
-            '.*'
-            'Aug. 5, 2099'
-            '.*'
-            'LOCATION'
-            '.*'
-            'Silicon Valley'
-        ))
-
-    def test_html_formatting_no_grade(self):
-        make_job_listing_page(
-            title='CEO',
-            close_date=date(2099, 12, 1)
-        )
-
-        table = JobListingTable()
-        html = table.render(table.to_python({}))
-
-        self.assertHtmlRegexpMatches(html, (
-            'TITLE'
-            '.*'
-            'CEO'
-            '.*'
-            'GRADE'
-            '.*'
-            'POSTING CLOSES'
-            '.*'
-            'Dec. 1, 2099'
-            '.*'
-            'LOCATION'
-            '.*'
-            'Silicon Valley'
-        ))
+        self.assertIn('Manager', html)
+        self.assertIn('Assistant', html)
+        self.assertIn('1, 2, 3', html)
+        self.assertIn('12', html)
+        self.assertIn('Aug. 5, 2099', html)
+        self.assertIn('Apr. 21, 2099', html)
+        self.assertEqual(html.count('Silicon Valley'), 2)
 
     def test_excludes_draft_jobs(self):
         make_job_listing_page('Job', live=False)

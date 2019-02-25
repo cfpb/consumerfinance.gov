@@ -28,7 +28,8 @@ function get( width ) {
   width = width || getViewportDimensions().width;
 
   // eslint-disable-next-line guard-for-in
-  for ( const rangeKey in breakpointsConfig ) {
+  let rangeKey;
+  for ( rangeKey in breakpointsConfig ) {
     breakpointKey = 'is' + rangeKey.charAt( 0 ).toUpperCase() +
                     rangeKey.slice( 1 );
     breakpointState[breakpointKey] =

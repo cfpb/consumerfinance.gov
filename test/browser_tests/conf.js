@@ -165,7 +165,8 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 
   for ( let i = 0, len = capabilities.length; i < len; i++ ) {
     capability = capabilities[i];
-    for ( const p in injectParams ) {
+    let p;
+    for ( p in injectParams ) {
       if ( injectParams.hasOwnProperty( p ) ) {
         capability[p] = injectParams[p];
       }

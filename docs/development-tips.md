@@ -97,3 +97,24 @@ $ ENABLE_DEBUG_TOOLBAR=1 ./runserver.sh
 This tool exposes various useful pieces of information about things like HTTP headers,
 Django settings, SQL queries, and template variables. Note that running with the toolbar on
 may have an impact on local server performance.
+
+To log database queries to the console when running locally,
+define the `ENABLE_SQL_LOGGING` environment variable:
+
+```sh
+$ ENABLE_SQL_LOGGING=1 cfgov/manage.py shell
+>>> from django.contrib.auth import get_user_model
+>>> User = get_user_model()
+>>> User.objects.count()
+(0.004) SELECT COUNT(*) AS "__count" FROM "auth_user"; args=()
+97
+```
+
+This will log any database queries (and time taken to execute them)
+to the console, and works with any Django code invoked from the shell,
+including the server and management commands:
+
+```sh
+$ ENABLE_SQL_LOGGING=1 ./runserver.sh
+$ ENABLE_SQL_LOGGING=1 cfgov/manage.py some_management_command
+```
