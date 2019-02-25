@@ -1,0 +1,94 @@
+{% macro _render_filter_fields(form) %}
+    <div class="content-l_col
+                content-l_col-1-2">
+        <div class="o-form_group">
+            <fieldset class="o-form_fieldset">
+                <legend class="a-legend">
+                    Years
+                </legend>
+                <ul class="m-list m-list__unstyled">
+                    {{ form.years }}
+                </ul>
+            </fieldset>
+        </div>
+    </div>
+    <div class="content-l_col
+                content-l_col-1-2">
+        <div class="o-form_group">
+            <fieldset class="o-form_fieldset">
+                <legend class="a-legend">
+                    States
+                </legend>
+                <ul class="m-list m-list__unstyled">
+                    {{ form.states }}
+                </ul>
+            </fieldset>
+        </div>
+    </div>
+    <div class="content-l_col
+                content-l_col-1-2">
+        <div class="o-form_group">
+            <fieldset class="o-form_fieldset">
+                <legend class="a-legend">
+                    Action taken
+                </legend>
+               {% for radio in form.action %}
+                  <div class="m-form-field m-form-field__radio">
+                     <input class="a-radio hover" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
+                     <label class="a-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                  </div>
+               {% endfor %}
+            </fieldset>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro _filters_form(form) %}
+    <form method="get" action=".">
+        <div class="content-l">
+            {{ _render_filter_fields(form) }}
+            <div class="content-l_col
+                        content-l_col-1
+                        m-btn-group">
+                <input class="a-btn"
+                       type="submit"
+                       value="Apply filters">
+                <a class="a-btn a-btn__link a-btn__warning"
+                   href="{{ request.path }}">
+                    Clear filters
+                </a>
+            </div>
+        </div>
+    </form>
+{% endmacro %}
+
+{# ==========================================================================
+
+   HMDA Explorer Controls
+
+   ==========================================================================
+
+   Description:
+
+   Create an expandable of filters when given:
+
+   value: Data object from an instance of the FilterableList StreamField block.
+
+   form: Django form that carries the fields that are to be rendered.
+
+   fragment_id: A unique ID for the filter list control.
+
+   ========================================================================== #}
+{% macro render(value, form, fragment_id, has_active_filters) %}
+    {% from 'organisms/expandable.html' import expandable with context %}
+    <div id="{{ fragment_id }}" class="o-filterable-list-controls u-mb30">
+        {% if has_active_filters %}
+            {% do value.update({'is_expanded':true}) %}
+        {% endif %}
+
+        {% set form_markup = _filters_form(form) %}
+        {% call() expandable(value, expandable_cue_additional_text='filters') %}
+            {{ form_markup | safe }}
+        {% endcall %}
+    </div>
+{% endmacro %}

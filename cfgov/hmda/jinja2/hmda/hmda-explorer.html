@@ -1,0 +1,77 @@
+{% extends 'layout-side-nav.html' %}
+
+{% import 'form_block.html' as form_block with context %}
+{% import 'hmda-explorer-controls.html' as controls with context %}
+{% import 'hmda-explorer-results.html' as results with context %}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    {% for block in page.header -%}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block
+                        block__border
+                        {{ 'u-mt0' if loop.first }}">
+                        {# u-mt0 is used instead of block__flush-top to keep top border #}
+                {% include_block block %}
+            </div>
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+
+    {% for block in page.content -%}
+        {{ render_block.render(block, loop.index) }}
+    {%- endfor %}
+
+    <div class="o-filterable-list">
+
+      {% set fragment_id = 'o-filterable-list-controls' %}
+      {% set has_active_filters = years or states or action %}
+      {% set value = {
+        'is_bordered': True,
+        'is_expanded': has_active_filters,
+        'is_midtone': True,
+        'label': 'Filter HMDA data'
+      } %}
+
+      {{ controls.render(
+          value,
+          form,
+          fragment_id,
+          has_active_filters)
+      }}
+
+    </div>
+
+    {{ results.render(
+        years,
+        states,
+        action)
+    }}
+
+    {% if page.sidefoot %}
+        <aside class="o-prefooter">
+            {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+        </aside>
+    {% endif %}
+{% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/hmda/js/index.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}
