@@ -879,7 +879,7 @@ class AnswerModelTestCase(TestCase):
             test_context['choices'].count(),
             self.category.subcategories.count())
 
-    def test_category_page_truncation(self):
+    def test_spanish_category_page_truncation(self):
         answer = self.answer1234
         answer.answer_es = ("We need an answer with more than 40 words to"
                             "prove that truncation is working as expected."
@@ -888,6 +888,7 @@ class AnswerModelTestCase(TestCase):
                             "40 words, which I have now managed to exceed.")
         answer.category.add(self.category)
         answer.save()
+        answer.spanish_page.get_latest_revision().publish()
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
         mock_request = HttpRequest()
