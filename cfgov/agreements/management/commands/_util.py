@@ -1,5 +1,9 @@
-import os
+from __future__ import unicode_literals
 
+import os
+import six
+
+from django.utils.encoding import force_text
 from django.utils.text import slugify
 
 import boto3
@@ -7,7 +11,10 @@ from agreements.models import Issuer
 
 
 def s3_safe_key(path, prefix=''):
-    key = prefix + path.encode('utf-8')
+    if six.PY2:
+        key = prefix + force_text(path)
+    else:
+        key = prefix + path
     key = key.replace(' ', '_')
     key = key.replace('%', '')
     key = key.replace(';', '')
@@ -38,15 +45,17 @@ def get_issuer(name):
 
 
 def save_agreement(agreements_zip, pdf_path, outfile,
-                   windows=False, upload=False):
+                   upload=False):
     uri_hostname = 'https://files.consumerfinance.gov'
     s3_prefix = 'a/assets/credit-card-agreements/pdf/'
 
     zipinfo = agreements_zip.getinfo(pdf_path)
-    if windows:
-        path = pdf_path.decode('windows-1252')
-    else:
-        path = pdf_path
+
+    if six.PY3:  # pragma: no cover
+        path = force_text(pdf_path)
+    else:  # pragma: no cover
+        path = pdf_path.decode('cp1252')
+
     try:
         issuer_name, filename = path.split('/')
     except ValueError:
