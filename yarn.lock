@@ -2190,10 +2190,10 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-cf-atomic-component@2.1.1, cf-atomic-component@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/cf-atomic-component/-/cf-atomic-component-2.1.1.tgz#580f53168949e3d4ac8e2a9540a9062758076766"
-  integrity sha512-dcOTfLER8dUpWmqRhSr+jk8T4xrO7gkG/IVbm1zfCcQ+Cx797O5ECXmy+ihbui0WG3FN5L4tv8jS2VIx2acv1g==
+cf-atomic-component@2.1.2, cf-atomic-component@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/cf-atomic-component/-/cf-atomic-component-2.1.2.tgz#5e1308bae401f459bdca972615dcfca0d70fc464"
+  integrity sha512-iYBydyuZG0vEGLjpiAExTpjqKyUo9Of6dJT5Wx1b2Zborysrxf0GX+syiHS8pNH2vfm4mLrTdi8M6hM/xZbXjw==
   dependencies:
     dom-delegate "^2.0.3"
 
