@@ -182,35 +182,6 @@ class Hero(blocks.StructBlock):
         classname = 'block__flush-top block__flush-bottom'
 
 
-class FormFieldWithButton(blocks.StructBlock):
-    btn_text = blocks.CharBlock(required=False)
-
-    required = blocks.BooleanBlock(required=False)
-
-    info = blocks.RichTextBlock(required=False, label="Disclaimer")
-    inline_info = blocks.BooleanBlock(
-        required=False,
-        label='Inline disclaimer',
-        help_text=('Show disclaimer on same line as button. Only select '
-                   'this option if the disclaimer text is a few words (ie, '
-                   '"Privacy Act statement") rather than a full sentence.')
-    )
-    label = blocks.CharBlock(required=True)
-    type = blocks.ChoiceBlock(choices=[
-        ('text', 'Text'),
-        ('checkbox', 'Checkbox'),
-        ('email', 'Email'),
-        ('number', 'Number'),
-        ('url', 'URL'),
-        ('radio', 'Radio'),
-    ], required=False)
-    placeholder = blocks.CharBlock(required=False)
-
-    class Meta:
-        icon = 'mail'
-        template = '_includes/molecules/form-field-with-button.html'
-
-
 class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
     paragraph_text = blocks.RichTextBlock(required=False)

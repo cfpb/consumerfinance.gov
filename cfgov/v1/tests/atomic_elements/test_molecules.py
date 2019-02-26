@@ -5,7 +5,7 @@ from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 
-from v1.atomic_elements.molecules import FormFieldWithButton, TextIntroduction
+from v1.atomic_elements.molecules import TextIntroduction
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.browse_page import BrowsePage
 from v1.models.landing_page import LandingPage
@@ -177,21 +177,6 @@ class MoleculesTestCase(TestCase):
         response = django_client.get('/ddp/')
         self.assertContains(response, 'this is a related metadata heading')
 
-    def test_formfield_with_button(self):
-        """FormField with Button correctly displays on a Sublanding Page"""
-        sublanding_page = DocumentDetailPage(
-            title='Sublanding Page',
-            slug='sublanding',
-        )
-        sublanding_page.sidefoot = StreamValue(
-            sublanding_page.sidefoot.stream_block,
-            [atomic.email_signup],
-            True,
-        )
-        publish_page(child=sublanding_page)
-        response = django_client.get('/sublanding/')
-        self.assertContains(response, 'this is a form field with button')
-        self.assertNotContains(response, '(required)')
 
 class TestTextIntroductionValidation(TestCase):
 
