@@ -87,6 +87,8 @@
       border: none;
       padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em)
                unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+      // !important needed to override the default o-email-signup margin
+      margin-bottom: 0 !important;
 
       .respond-to-min( @bp-sm-min, {
           padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em)
