@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('regulations3k', '0019_add_disclaimer_pagechooserblock_to_emailsignup'),
+        ('v1', '0142_migrate_pas_link_data_to_pagechooserblock'),
     ]
 
     operations = [
