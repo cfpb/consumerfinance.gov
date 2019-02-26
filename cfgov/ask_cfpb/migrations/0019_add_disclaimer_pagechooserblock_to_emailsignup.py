@@ -13,7 +13,7 @@ import wagtail.wagtailsnippets.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ask_cfpb', '0017_adjust_fields_for_editing'),
+        ('ask_cfpb', '0018_migrate_answer_field_help_text'),
     ]
 
     operations = [
