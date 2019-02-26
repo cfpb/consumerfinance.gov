@@ -1,7 +1,8 @@
-import mock
 from datetime import date
 
 from django.test import TestCase
+
+import mock
 
 from v1.models import BrowseFilterablePage, BrowsePage, CFGOVPage, HomePage
 from v1.tests.wagtail_pages import helpers
