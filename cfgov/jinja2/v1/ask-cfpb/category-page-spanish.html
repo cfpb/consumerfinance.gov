@@ -33,18 +33,18 @@
 
                     {% if questions %}
                     {% for question in questions %}
-                    {% if question.question_es %}
-                    <a href="/es/obtener-respuestas/{{ question.slug_es }} " class="ac-qa-summary">
-						<article>
-						    <h3 class="ac-qa-question">{{ question.question_es|safe }}</h3>
-						    <div class="ac-qa-answer">
-                                
-						        <p> {{ question.answer_es|safe|striptags|truncate }} </p>
-                                
-						    </div>
-						</article>
-					</a>
-                    {% endif %}
+                        {% if question.question %}
+                        <a href="/es/obtener-respuestas/{{ question.slug_es }} " class="ac-qa-summary">
+    						<article>
+    						    <h3 class="ac-qa-question">{{ question.question|safe }}</h3>
+    						    <div class="ac-qa-answer">
+                                    
+    						        <p> {{ question.answer|safe|striptags|truncate }} </p>
+                                    
+    						    </div>
+    						</article>
+    					</a>
+                        {% endif %}
 					{% endfor %}                
 
                     
@@ -61,8 +61,8 @@
                 </div><!-- .primary -->
 
                 <aside class="secondary span4">            
-                    {% if tags %}
-                        {% for tag in tags %}
+                    {% if search_tags %}
+                        {% for tag in search_tags %}
                             {% if loop.first %}
                                 <section class="supplement ac-related-topics">
                                     <h3>Temas relacionados</h3>

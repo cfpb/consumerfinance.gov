@@ -1,10 +1,8 @@
 from haystack import indexes
 
-from ask_cfpb.models import Category, EnglishAnswerProxy, SpanishAnswerProxy
+from ask_cfpb.models import Category
+from ask_cfpb.models.pages import AnswerPage
 from search import fields
-
-
-# AnswerTagProxy,
 
 
 class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
@@ -21,15 +19,9 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
     tags = indexes.MultiValueField(
         indexed=True,
         boost=10.0)
-    last_edited = indexes.DateTimeField(
-        indexed=True,
-        null=True,
-        model_attr='last_edited',
-        boost=2.0)
+    language = indexes.CharField(
+        model_attr='language')
     suggestions = indexes.FacetCharField()
-
-    def prepare_tags(self, obj):
-        return obj.clean_tags
 
     def prepare_answer(self, obj):
         data = super(AnswerBaseIndex, self).prepare(obj)
@@ -37,66 +29,21 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
             data['boost'] = 2.0
         return data
 
+    def prepare_tags(self, obj):
+        return obj.clean_search_tags
+
     def prepare(self, obj):
         data = super(AnswerBaseIndex, self).prepare(obj)
         data['suggestions'] = data['text']
         return data
 
     def get_model(self):
-        return EnglishAnswerProxy
+        return AnswerPage
 
     def index_queryset(self, using=None):
         ids = [record.id for record in self.get_model().objects.all()
-               if record.english_page
-               and record.english_page.live is True
-               and record.english_page.redirect_to is None]
-        return self.get_model().objects.filter(id__in=ids)
-
-
-class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
-    text = fields.CharFieldWithSynonyms(
-        language='es',
-        document=True,
-        use_template=True,
-        boost=10.0)
-    autocomplete = indexes.EdgeNgramField(
-        use_template=True,
-        indexed=True)
-    url = indexes.CharField(
-        use_template=True,
-        indexed=False)
-    tags = indexes.MultiValueField(
-        indexed=True,
-        boost=10.0)
-    last_edited = indexes.DateTimeField(
-        indexed=True,
-        null=True,
-        model_attr='last_edited_es',
-        boost=2.0)
-    suggestions = indexes.FacetCharField()
-
-    def prepare_tags(self, obj):
-        return obj.clean_tags_es
-
-    def prepare_spanish_answer_index(self, obj):
-        data = super(SpanishBaseIndex, self).prepare(obj)
-        if obj.question.lower().startswith('what is'):
-            data['boost'] = 2.0
-        return data
-
-    def prepare(self, obj):
-        data = super(SpanishBaseIndex, self).prepare(obj)
-        data['suggestions'] = data['text']
-        return data
-
-    def get_model(self):
-        return SpanishAnswerProxy
-
-    def index_queryset(self, using=None):
-        ids = [record.id for record in self.get_model().objects.all()
-               if record.spanish_page
-               and record.spanish_page.live is True
-               and record.spanish_page.redirect_to is None]
+               if record.live is True
+               and record.redirect_to is None]
         return self.get_model().objects.filter(id__in=ids)
 
 

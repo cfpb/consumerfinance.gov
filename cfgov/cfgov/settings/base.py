@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     'wagtailinventory',
     'wagtailsharing',
     'flags',
+    'wagtailautocomplete',
     'wagtailflags',
     'watchman',
     'haystack',

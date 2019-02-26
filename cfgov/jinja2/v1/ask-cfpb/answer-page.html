@@ -112,19 +112,19 @@
 
 {% block content_sidebar scoped  %}
 
-    {% if page.answer_base.next_step %}
+    {% if page.related_resource %}
         <div class="block block__flush-top">
             <h3 >
                 Explore related resources
             </h3>
-            {{ page.answer_base.next_step.text | safe }}
+            {{ page.related_resource.text | safe }}
         </div>
     {% endif %}
     {% if page.sidebar_panels %}
             {{ streamfield_sidefoot.render(page.sidebar) }}
     {% endif %}
     {% if category and subcategories %}
-        <div class="block {% if not page.answer_base.next_step %}block__flush-top{% endif %}">
+        <div class="block {% if not page.next_step %}block__flush-top{% endif %}">
             <div class="m-related-links">
                 <header class="m-slug-header">
                     <h2 class="a-heading">
@@ -160,7 +160,7 @@
                 <ul class="m-list m-list__unstyled m-list__links">
                     {% for question in related_questions %}
                     <li class="m-list_item">
-                        <a href="{{ question.english_page.url }}" class="m-list_link">
+                        <a href="{{ question.url }}" class="m-list_link">
                             {{ question.question | safe }}
                         </a>
                     </li>
