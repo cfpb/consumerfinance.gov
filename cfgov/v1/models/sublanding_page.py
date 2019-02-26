@@ -7,7 +7,7 @@ from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailsearch import index
 
-from jobmanager.models import JobListingList
+from jobmanager.blocks import JobListingList
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.forms import FilterableListForm

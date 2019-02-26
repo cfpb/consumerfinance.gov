@@ -23,7 +23,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         }
     },
@@ -35,6 +35,14 @@ LOGGING = {
         }
     }
 }
+
+# Log database queries.
+if os.environ.get('ENABLE_SQL_LOGGING'):
+    LOGGING['loggers']['django.db.backends'] = {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+        'propagate': False,
+    }
 
 # Django Debug Toolbar
 if os.environ.get('ENABLE_DEBUG_TOOLBAR'):

@@ -12,6 +12,9 @@ fi
 docker ps 2>/dev/null
 if [ $? -eq 0 ]; then
   echo "You've already got a working docker setup!"
+  # Unset docker-machine variables to prevent Docker for Mac conflicts
+  # See https://docs.docker.com/machine/reference/env/
+  eval $(docker-machine env -u)
 else
   echo "Maybe we just need to start your default docker machine..."
   MACHINE_IP=$(docker-machine ip)

@@ -149,7 +149,8 @@ function renderLoanAmount( elem, loanAmount ) {
  */
 function setSelections( fields ) {
   let val;
-  for ( const key in fields ) {
+  let key;
+  for ( key in fields ) {
     if ( Object.prototype.hasOwnProperty.call( fields, key ) ) {
       val = fields[key];
       const el = document.querySelector( '#' + key );

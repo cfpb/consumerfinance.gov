@@ -29,4 +29,5 @@ def request_site_recrawl(sender, **kwargs):
         )
 
 
-page_published.connect(request_site_recrawl, sender=JobListingPage)
+def register_signal_handlers():
+    page_published.connect(request_site_recrawl, sender=JobListingPage)
