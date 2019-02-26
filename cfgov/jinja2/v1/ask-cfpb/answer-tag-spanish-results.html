@@ -31,11 +31,11 @@
                     {% endif %}    
 
                     {% for question in results %}
-                        <a href=" {{ question[0] }} " class="ac-qa-summary">
+                        <a href=" {{ question.url }} " class="ac-qa-summary">
                             <article>
-                                <h3 class="ac-qa-question">{{ question[1]|safe }}</h3>
+                                <h3 class="ac-qa-question">{{ question.question|safe }}</h3>
                                 <div class="ac-qa-answer">
-                                    <p> {{ question[2]|safe|striptags }} </p>
+                                    <p> {{ question.answer|safe|striptags|truncate(300) }} </p>
                                     
                                 </div>
                             </article>
@@ -88,8 +88,8 @@
     {% endif %}
     <ul>
     {% for pairing in page.answers %}
-        <li><a href="{{ pairing[0] }}">{{ pairing[1] }} </a>
-        <p>{{ pairing[2]|safe }}</p>
+        <li><a href="{{ pairing.url }}">{{ pairing.question }} </a>
+        <p>{{ pairing.answer|safe|truncate(300) }}</p>
 
         </li>
     {% endfor %}

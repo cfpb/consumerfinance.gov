@@ -19,7 +19,7 @@ from wagtail.wagtailcore.whitelist import attribute_rule
 from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.models.resources import Resource
-from v1.models.snippets import Contact, ReusableText
+from v1.models.snippets import Contact, ReusableText, RelatedResource
 from v1.util import util
 
 
@@ -238,11 +238,23 @@ class ReusableTextModelAdmin(ModelAdmin):
     search_fields = ('title', 'sidefoot_heading', 'text')
 
 
+class RelatedResourceModelAdmin(ModelAdmin):
+    model = RelatedResource
+    menu_icon = 'snippet'
+    list_display = ('title', 'text')
+    ordering = ('title',)
+    search_fields = ('title', 'text')
+
+
 class SnippetModelAdminGroup(ModelAdminGroup):
     menu_label = 'Snippets'
     menu_icon = 'snippet'
     menu_order = 400
-    items = (ContactModelAdmin, ResourceModelAdmin, ReusableTextModelAdmin)
+    items = (
+        ContactModelAdmin,
+        ResourceModelAdmin,
+        ReusableTextModelAdmin,
+        RelatedResourceModelAdmin)
 
 
 modeladmin_register(SnippetModelAdminGroup)

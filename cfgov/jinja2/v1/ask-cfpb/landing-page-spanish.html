@@ -18,9 +18,9 @@
                     </a>
                 </h2>
                 <ul class="ac-catnav-list unstyled spaced">
-                    {% for a in cat.featured_answers() %}
+                    {% for a in cat.featured_answers('es') %}
                      <li>
-                        <a href="{{ a.spanish_page.url }}">{{ a.question_es|safe }}</a>
+                        <a href="{{ a.url }}">{{ a.question|safe }}</a>
                      </li>
                     {% endfor %}
                 </ul>
