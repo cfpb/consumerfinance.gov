@@ -89,6 +89,21 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
             'RelatedQuestions': "1 | 2 | 3",
             'RelatedResources': "Owning a Home"}]
 
+    def test_export_script_assemble_output(self):
+        answer = Answer(id=1234)
+        answer.save()
+        page = AnswerPage(
+            slug='mock-question1-en-1234',
+            title='Mock question1')
+        page.answer_base = answer
+        page.question = 'Mock question1'
+        helpers.publish_page(page)
+
+        output = assemble_output()[0]
+        self.assertEqual(output.get('ASK_ID'), 1234)
+        self.assertEqual(output.get('URL'), '/mock-question1-en-1234/')
+        self.assertEqual(output.get('Question'), 'Mock question1')
+
     def test_clean_and_strip(self):
         raw_data = "<p>If you have been scammed, file a complaint.</p>"
         clean_data = "If you have been scammed, file a complaint."
@@ -237,16 +252,6 @@ class AnswerModelTestCase(TestCase):
         self.page2.answer_base = self.answer5678
         self.page2.parent = self.english_parent_page
         self.page2.save()
-
-    def test_export_script_assemble_output(self):
-        expected_urls = ['/ask-cfpb/mock-question1-en-1234/',
-                         '/ask-cfpb/mock-answer-page-en-5678/']
-        expected_questions = ['Mock question1', 'Mock question2']
-        test_output = assemble_output()
-        for obj in test_output:
-            self.assertIn(obj.get('ASK_ID'), [1234, 5678])
-            self.assertIn(obj.get('URL'), expected_urls)
-            self.assertIn(obj.get('Question'), expected_questions)
 
     def test_spanish_print_page(self):
         response = self.client.get(reverse(
