@@ -25,7 +25,7 @@
     "@babel/preset-env": "7.3.1",
     "autoprefixer": "8.6.5",
     "babel-loader": "8.0.5",
-    "cf-atomic-component": "2.1.1",
+    "cf-atomic-component": "2.1.2",
     "cf-buttons": "5.0.1",
     "cf-core": "4.10.0",
     "cf-expandables": "7.1.1",
