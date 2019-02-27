@@ -69,15 +69,9 @@
 
             {% block primary_nav %}
                 {% from 'organisms/mega-menu.html' import mega_menu with context %}
-                {% if flag_enabled('WAGTAIL_MENU', request) %}
-                    {% cache 'mega_menu', 'default_fragment_cache' %}
-                        {{ mega_menu(get_menu_items(request)) }}
-                    {% endcache %}
-                {% else %}
-                    {% import '_vars-mega-menu.html' as vars with context %}
-                    {{ mega_menu(vars.menu_items) }}
-                {% endif %}
-
+                {% cache 'mega_menu', 'default_fragment_cache' %}
+                {{ mega_menu(get_menu_items(request)) }}
+                {% endcache %}
             {% endblock primary_nav %}
         </div>
 
