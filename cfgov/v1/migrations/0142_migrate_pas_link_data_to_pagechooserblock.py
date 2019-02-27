@@ -113,6 +113,11 @@ def forwards(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
+        ('ask_cfpb', '0019_add_disclaimer_pagechooserblock_to_emailsignup'),
+        (
+            'regulations3k',
+            '0019_add_disclaimer_pagechooserblock_to_emailsignup'
+        ),
         ('v1', '0141_add_disclaimer_pagechooserblock_to_emailsignup')
     ]
     operations = [
