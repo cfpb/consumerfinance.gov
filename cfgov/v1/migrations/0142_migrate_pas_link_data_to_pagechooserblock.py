@@ -22,8 +22,6 @@ def forward_mapper(page_or_revision, data):
 
     if not data.get('form_field'):
         return data
-    elif not data['form_field']:
-        return data
     elif not data['form_field'][0].get('info'):
         return data
 
