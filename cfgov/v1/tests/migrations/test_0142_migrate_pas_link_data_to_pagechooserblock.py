@@ -138,6 +138,87 @@ class TestMigration0142(TestCase):
             }]
         })
 
+    def test_forward_mapper_no_info_gets_generic(self):
+        data = {
+            'text': u'Our email newsletter has tips and info to help you ...',
+            'gd_code': u'USCFPB_127',
+            'heading': u'Buying a home?',
+            'form_field': [{
+                'inline_info': True,
+                'required': True,
+                'label': u'Email address',
+                'btn_text': u'Sign up',
+                'placeholder': u'example@mail.com',
+                'type': u'email'
+            }],
+            'default_heading': False
+        }
+
+        migrated = self.migration.forward_mapper(
+            'unused param',
+            data
+        )
+
+        self.assertEqual(migrated, {
+            'heading': u'Buying a home?',
+            'default_heading': False,
+            'text': u'Our email newsletter has tips and info to help you ...',
+            'gd_code': u'USCFPB_127',
+            'disclaimer_page': 1189,
+            'form_field': [{
+                'type': u'email',
+                'inline_info': True,
+                'btn_text': u'Sign up',
+                'label': u'Email address',
+                'required': True,
+                'placeholder': u'example@mail.com'
+            }]
+        })
+
+    def test_forward_mapper_empty_form_field_gets_generic(self):
+        data = {
+            'text': u'Our email newsletter has tips and info to help you ...',
+            'gd_code': u'USCFPB_127',
+            'heading': u'Buying a home?',
+            'form_field': [],
+            'default_heading': False
+        }
+
+        migrated = self.migration.forward_mapper(
+            'unused param',
+            data
+        )
+
+        self.assertEqual(migrated, {
+            'heading': u'Buying a home?',
+            'default_heading': False,
+            'text': u'Our email newsletter has tips and info to help you ...',
+            'gd_code': u'USCFPB_127',
+            'disclaimer_page': 1189,
+            'form_field': []
+        })
+
+    def test_forward_mapper_no_form_field_gets_generic(self):
+        data = {
+            'text': u'Our email newsletter has tips and info to help you ...',
+            'gd_code': u'USCFPB_127',
+            'heading': u'Buying a home?',
+            'default_heading': False
+        }
+
+        migrated = self.migration.forward_mapper(
+            'unused param',
+            data
+        )
+
+        self.assertEqual(migrated, {
+            'heading': u'Buying a home?',
+            'default_heading': False,
+            'text': u'Our email newsletter has tips and info to help you ...',
+            'gd_code': u'USCFPB_127',
+            'disclaimer_page': 1189,
+        })
+
     def test_forward_mapper_wrong_generic_links_get_correct_generic_link(self):
         self.maxDiff = None
 
