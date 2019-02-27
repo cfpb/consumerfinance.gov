@@ -15,6 +15,18 @@ from v1.util.util import get_page_from_path
 
 
 def forward_mapper(page_or_revision, data):
+    # Set the default disclaimer_page_id, which corresponds to
+    # the Generic Email Sign-Up Privacy Act Statement.
+    disclaimer_page_id = 1189
+    data['disclaimer_page'] = disclaimer_page_id
+
+    if not data.get('form_field'):
+        return data
+    elif not data['form_field']:
+        return data
+    elif not data['form_field'][0].get('info'):
+        return data
+
     old_disclaimer = data['form_field'][0]['info']
 
     # First look to see if there is an internal Wagtail link in the field.
@@ -24,7 +36,7 @@ def forward_mapper(page_or_revision, data):
     if match:
         # If there was a match for the internal link regex, set page_id to the
         # value of the link's id attribute.
-        page_id = int(match.group(1))
+        disclaimer_page_id = int(match.group(1))
     else:
         # If there was not an internal link, look for an "external" link (a
         # link where the path or full URL was entered by hand).
@@ -33,29 +45,21 @@ def forward_mapper(page_or_revision, data):
 
         if match:
             # If there was a match for the internal link regex, get the page
-            # that corresponds to the path and set page_id to its pk
+            # that corresponds to the path and set disclaimer_page_id to its pk
             # value of the link's id attribute.
             path = urlparse(match.group(1)).path
             page = get_page_from_path(path)
 
             if page:
-                page_id = page.pk
-            else:
-                # If the path doesn't actually point to a page in Wagtail,
-                # fall back on the Generic Email Sign-Up Privacy Act Statement
-                page_id = 1189  # Generic Email Sign-Up Privacy Act Statement
-        else:
-            # Fall back on the Generic Email Sign-Up Privacy Act Statement if
-            # no link was found in the disclaimer field.
-            page_id = 1189
+                disclaimer_page_id = page.pk
 
-    if page_id == 558 or page_id == 571:
+    if disclaimer_page_id == 558 or disclaimer_page_id == 571:
         # Convert links to /privacy/privacy-policy/ and
         # /privacy/website-privacy-policy/ to the
         # Generic Email Sign-Up Privacy Act Statement
-        page_id = 1189
+        disclaimer_page_id = 1189
 
-    data['disclaimer_page'] = page_id
+    data['disclaimer_page'] = disclaimer_page_id
 
     return data
 
