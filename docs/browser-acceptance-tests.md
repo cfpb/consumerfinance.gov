@@ -121,7 +121,15 @@ Sauce Labs can be used to run tests remotely in the cloud.
 ### For new Sauce Labs users
 
 1. [Follow the instructions here](https://github.com/cfpb/development/blob/master/guides/browser-testing-with-sauce-labs.md) in the "Sign up for saucelabs.com" and "Set up Sauce Connect to test URLs on local and dev servers" sections. The remaining sections are not required to run cfgov-refresh browser tests, but are recommended if you want to use Sauce Labs to manually QA in supported browsers.
-1. Add your Sauce Labs credentials to your cfgov-refresh `.env` file. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`, and `SAUCE_SELENIUM_URL` values in `.env` and add your username and access key. The access key can be found on the [Sauce Labs user settings page](https://saucelabs.com/beta/user-settings).
+1. Edit your cfgov-refresh `.env` file. Uncomment the `export` statements in the "Sauce Labs section of the file, and update them as follows:
+    -  `SAUCE_USERNAME`: Your saucelabs.com username
+    - `SAUCE_ACCESS_KEY`: Your access key can be found on the [Sauce Labs user settings page](https://saucelabs.com/beta/user-settings).
+    - `SAUCE_SELENIUM_URL`: This depends on what environment you would like to run the browser tests against:
+        - `localhost:4445/wd/hub` is the default. Sauce will run the tests against this temporary test server that has the basic [`initial-data.sh` database](https://cfpb.github.io/cfgov-refresh/installation/#load-initial-data-into-database).
+        - `consumerfinance.gov` to run this against the live site URL, or you can use another URL such as a dev or staging server.
+        - `http://localhost:8000` if you want to run the browser tests against different data than the default, [load a database dump](#load-a-database-dump) locally and set this to your localhost. 
+    - `SAUCE_TUNNEL`: Leave as default. This is a name for your browser tests that then appears in the SauceLabs.com Dashboard. Feel free to edit if you would like to have your name on the tests, for example.
+
 1. Reload the settings with `source .env`.
 
 
@@ -139,7 +147,7 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 !!! Note
     If you get the error `Error: ENOTFOUND getaddrinfo ENOTFOUND`
-    while running a test, it likely means that Sauce Connect is not running. Make sure you have followed the setup steps above ["For new Sauce Labs users."](http://localhost:8000/browser-acceptance-tests/#for-new-sauce-labs-users)
+    while running a test, it likely means that Sauce Connect is not running. Make sure you have followed the setup steps above ["For new Sauce Labs users."](#for-new-sauce-labs-users)
 
 ## Manual test configuration
 
