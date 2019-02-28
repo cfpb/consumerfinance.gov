@@ -118,23 +118,28 @@ Scenario: User logs in
 
 Sauce Labs can be used to run tests remotely in the cloud.
 
-1. Log into [https://saucelabs.com/account](https://saucelabs.com/account).
+### For new Sauce Labs users
 
-2. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
-   and `SAUCE_SELENIUM_URL` values in your `.env` file.
-   The access key can be found on the Sauce Labs
-   [user settings page](https://saucelabs.com/beta/user-settings).
+1. [Follow the instructions here](https://github.com/cfpb/development/blob/master/guides/browser-testing-with-sauce-labs.md) in the "Sign up for saucelabs.com" and "Set up Sauce Connect to test URLs on local and dev servers" sections. The remaining sections are not required to run cfgov-refresh browser tests, but are recommended if you want to use Sauce Labs to manually QA in supported browsers.
+1. Add your Sauce Labs credentials to your cfgov-refresh `.env` file. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`, and `SAUCE_SELENIUM_URL` values in `.env` and add your username and access key. The access key can be found on the [Sauce Labs user settings page](https://saucelabs.com/beta/user-settings).
+1. Reload the settings with `source .env`.
 
-3. Reload the settings with `source .env`.
 
-4. Run the tests with `gulp test:acceptance --sauce`.
-
-5. Monitor progress of the tests
+### Run browser tests in Sauce Labs
+1. Run all the tests, which takes about 40 minutes:
+  ```
+  gulp test:acceptance --sauce
+  ```
+  Or just one browser at a time, which takes 7 minutes: 
+  ```
+  gulp test:acceptance --sauce --browserName='internet explorer' --version='9' --platform='Windows 7'
+  ```
+1. Monitor progress of the tests
    on the [Sauce Labs dashboard](https://saucelabs.com/dashboard) Automated Tests tab.
 
 !!! Note
     If you get the error `Error: ENOTFOUND getaddrinfo ENOTFOUND`
-    while running a test, it likely means that Sauce Connect is not running.
+    while running a test, it likely means that Sauce Connect is not running. Make sure you have followed the setup steps above ["For new Sauce Labs users."](http://localhost:8000/browser-acceptance-tests/#for-new-sauce-labs-users)
 
 ## Manual test configuration
 
