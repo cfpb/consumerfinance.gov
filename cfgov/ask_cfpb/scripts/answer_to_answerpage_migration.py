@@ -5,6 +5,16 @@ from django.contrib.auth.models import User
 from ask_cfpb.models.django import NextStep
 from ask_cfpb.models.pages import AnswerPage
 from v1.models.snippets import RelatedResource
+from taggit.models import Tag
+
+
+# A mapping of Audience pks to Tag pks
+AUDIENCE_MAPPING = {
+    3: 99,  # 'Older Americans': {'audience': 3, 'tag': 99}
+    7: 102,  # 'Parents': {'audience': 7, 'tag': 102}
+    5: 64,  # 'Servicemembers': {'audience': 5, 'tag': 64}
+    1: 14  # 'Students': {'audience': 1, 'tag': 14}
+}
 
 
 def run():
@@ -20,7 +30,9 @@ def run():
             page.category.add(category)
         for subcategory in page.answer_base.subcategory.all():
             page.subcategory.add(subcategory)
-
+        for audience in page.answer_base.audiences.all():
+            page.tags.add(
+                Tag.objects.get(pk=AUDIENCE_MAPPING[audience.pk]))
         if page.answer_base.next_step:
             page.related_resource = RelatedResource.objects.get(
                 title=page.answer_base.next_step.title,
