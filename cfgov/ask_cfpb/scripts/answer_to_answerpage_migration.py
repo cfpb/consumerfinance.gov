@@ -11,10 +11,9 @@ def run():
     migration_user_pk = os.getenv('MIGRATION_USER_PK', 9999)
     user = User.objects.filter(id=migration_user_pk).first()
     for next_step in NextStep.objects.all():
-        related_resource = RelatedResource(
+        RelatedResource.objects.get_or_create(
             title=next_step.title,
             text=next_step.text)
-        related_resource.save()
 
     for page in AnswerPage.objects.all():
         for category in page.answer_base.category.all():
