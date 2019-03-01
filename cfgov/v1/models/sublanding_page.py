@@ -21,6 +21,7 @@ class SublandingPage(CFGOVPage):
     ], blank=True)
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
+        ('notification', molecules.Notification()),
         ('featured_content', organisms.FeaturedContent()),
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),

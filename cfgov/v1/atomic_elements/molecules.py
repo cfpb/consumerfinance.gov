@@ -159,6 +159,23 @@ class Hero(blocks.StructBlock):
         classname = 'block__flush-top block__flush-bottom'
 
 
+class Notification(blocks.StructBlock):
+    type = blocks.ChoiceBlock(choices=[
+        ('default', 'Default'),
+        ('success', 'Success'),
+        ('warning', 'Warning'),
+        ('error', 'Error'),
+    ], required=True, default='default')
+    message = blocks.CharBlock(required=True,
+                               label='Notification message')
+    explanation = blocks.RichTextBlock(required=False,
+                                       label='Explanation text '
+                                             'below the message')
+    class Meta:
+        icon = 'warning'
+        template = '_includes/molecules/notification.html'
+
+
 class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
     paragraph_text = blocks.RichTextBlock(required=False)

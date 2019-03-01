@@ -23,14 +23,14 @@
 
 {% macro render(type, is_visible, message, explanation=none) %}
 
-  {% set type_lookup  = {
+  {% set type_lookup = {
         'default': 'information-round',
         'success': 'approved-round',
         'warning': 'warning-round',
         'error':   'error-round',
       }
   %}
-  {% set icon = type_lookup[type]  %}
+  {% set icon = type_lookup[type | default( 'default' )] %}
   {% set type = (' m-notification__' + type | string) if type else '' %}
 
   <div class="m-notification
@@ -47,3 +47,27 @@
   </div>
 
 {% endmacro %}
+
+{% if value %}
+
+    {#
+      TODO: This if/else is for removing the explanation if it's empty HTML.
+            Investigate a better way to do this that doesn't repeat the call.
+    #}
+    {% if ( value.explanation | trim ) == '<div class="rich-text"><p><br/></p></div>' %}
+        {{ render(
+            value.type,
+            value.is_visible | default( true ),
+            value.message
+          )
+        }}
+    {% else %}
+        {{ render(
+            value.type,
+            value.is_visible | default( true ),
+            value.message,
+            value.explanation
+          )
+        }}
+    {% endif %}
+{% endif %}

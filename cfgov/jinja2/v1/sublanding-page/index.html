@@ -22,7 +22,14 @@
 
 {% block content_main %}
     {% for block in page.content -%}
-        {% if 'featured_content' in block.block_type %}
+        {% if block.block_type == 'notification' %}
+            <div class="block
+                        block__flush-top
+                        block__flush-bottom
+                        block__padded-bottom">
+                {% include_block block %}
+            </div>
+        {% elif 'featured_content' in block.block_type %}
             <div class="block
                         block__border
                         {{ 'u-mt0' if loop.first }}">
