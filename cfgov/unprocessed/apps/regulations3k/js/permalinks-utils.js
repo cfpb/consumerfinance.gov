@@ -1,5 +1,6 @@
 // Array that tracks paragraph positions
 let paragraphPositions;
+const wayfinderOffset = 45;
 
 /**
  * scrollY - Get the Y coord of the current viewport. Older browsers don't
@@ -74,12 +75,27 @@ const getCurrentParagraph = ( currentPosition, paragraphs ) => {
  * @returns {object} window object
  */
 const updateUrlHash = () => {
-  const currentParagraph = getCurrentParagraph( scrollY(), paragraphPositions );
+  const currentParagraph = getCurrentParagraph( scrollY() + wayfinderOffset, paragraphPositions );
   // Setting the window state to `.` removes the URL hash
   const hash = currentParagraph ? `#${ currentParagraph }` : '.';
   return window.history.replaceState( null, null, hash );
 };
 
+const updateWayfinder = () => {
+  let paragraphMarker;
+  const currentParagraph = getCurrentParagraph( scrollY() + wayfinderOffset, paragraphPositions );
+  if ( currentParagraph ) {
+    const regex = /\-/g;
+    paragraphMarker = '(' + currentParagraph.replace( regex, ')(' ) + ')';
+    document.querySelector( '.o-regulations-wayfinder_link' ).href = '#' + currentParagraph;
+    document.querySelector( '.regulations3k' ).classList.add( 'show-wayfinder' );
+  } else {
+    paragraphMarker = '';
+    document.querySelector( '.o-regulations-wayfinder_link' ).href = '#';
+    document.querySelector( '.regulations3k' ).classList.remove( 'show-wayfinder' );
+  }
+  return document.querySelector( '.o-regulations-wayfinder_marker' ).textContent = paragraphMarker;
+}
 
 /**
  * updateParagraphPositions - Update the array that tracks paragraph positions
@@ -119,5 +135,6 @@ module.exports = {
   getYLocation,
   scrollY,
   updateParagraphPositions,
-  updateUrlHash
+  updateUrlHash,
+  updateWayfinder
 };

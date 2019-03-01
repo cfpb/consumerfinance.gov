@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Regulations 3000
+   Wayfinder
+   ========================================================================== */
+
+.o-regulations-wayfinder {
+    box-sizing: border-box;
+    width: 100%;
+    border-bottom: 2px solid @green;
+    margin-left: -29px;
+    position: fixed;
+    top: -60px;
+    background-color: @white;
+    box-shadow: 0px 3px 8px -6px @black;
+    transition: top 0.1s ease-in-out;
+    z-index: 100;
+
+    &_link {
+        display: inline-block;
+        margin-top: 15px;
+        margin-left: 30px;
+    }
+
+    &_link:visited {
+        border-color: @link-underline;
+        color: @link-text;
+    }
+}
+
+.show-wayfinder .o-regulations-wayfinder {
+    top: 0;
+}

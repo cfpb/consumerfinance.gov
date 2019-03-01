@@ -12,7 +12,8 @@
 import {
   debounce,
   updateParagraphPositions,
-  updateUrlHash
+  updateUrlHash,
+  updateWayfinder
 } from './permalinks-utils';
 
 /**
@@ -24,6 +25,7 @@ const init = () => {
   debounce( 'resize', 300, updateParagraphPositions );
   debounce( 'click', 300, updateParagraphPositions );
   debounce( 'scroll', 100, updateUrlHash );
+  debounce( 'scroll', 100, updateWayfinder );
 };
 
 // Provide the no-JS experience to browsers without `replaceState`
