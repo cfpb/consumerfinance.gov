@@ -139,6 +139,7 @@ const updateWayfinder = () => {
     document.querySelector( '.o-regulations-wayfinder_link' ).href = '#';
     document.querySelector( '.regulations3k' ).classList.remove( 'show-wayfinder' );
   }
+
   document.querySelector( '.o-regulations-wayfinder_section-title' ).textContent = sectionFormattedTitle;
   document.querySelector( '.o-regulations-wayfinder_marker' ).textContent = paragraphMarker;
 }
