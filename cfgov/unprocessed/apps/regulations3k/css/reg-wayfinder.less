@@ -7,9 +7,9 @@
     box-sizing: border-box;
     width: 100%;
     border-bottom: 2px solid @green;
-    margin-left: -29px;
     position: fixed;
     top: -60px;
+    left: 0;
     background-color: @white;
     box-shadow: 0px 3px 8px -6px @black;
     transition: top 0.1s ease-in-out;
@@ -17,13 +17,29 @@
 
     &_link {
         display: inline-block;
-        margin-top: 15px;
-        margin-left: 30px;
     }
 
     &_link:visited {
         border-color: @link-underline;
         color: @link-text;
+    }
+
+    .content_main,
+    .content_sidebar {
+        padding-top: 15px;
+    }
+
+    .content_main:after {
+        top: 0;
+    }
+
+    .o-regulations-wayfinder__content {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .o-regulations-wayfinder__version {
+        text-align: right;
     }
 }
 
