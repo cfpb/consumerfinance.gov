@@ -2,10 +2,11 @@ import os
 
 from django.contrib.auth.models import User
 
+from taggit.models import Tag
+
 from ask_cfpb.models.django import NextStep
 from ask_cfpb.models.pages import AnswerPage
 from v1.models.snippets import RelatedResource
-from taggit.models import Tag
 
 
 # A mapping of Audience pks to Tag pks

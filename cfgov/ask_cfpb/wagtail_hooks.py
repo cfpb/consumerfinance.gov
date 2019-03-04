@@ -56,10 +56,8 @@ class MyModelAdminGroup(ModelAdminGroup):
     menu_label = 'Ask CFPB'
     menu_icon = 'list-ul'
     items = (
-        AudienceModelAdmin,
         CategoryModelAdmin,
-        SubCategoryModelAdmin,
-        NextStepModelAdmin)
+        SubCategoryModelAdmin)
 
 
 def export_data(request):
