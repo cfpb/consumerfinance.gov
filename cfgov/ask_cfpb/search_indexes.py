@@ -1,6 +1,5 @@
 from haystack import indexes
 
-from ask_cfpb.models import Category
 from ask_cfpb.models.pages import AnswerPage
 from search import fields
 
@@ -45,41 +44,3 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
                if record.live is True
                and record.redirect_to is None]
         return self.get_model().objects.filter(id__in=ids)
-
-
-class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(
-        document=True,
-        use_template=True)
-    facet_map = indexes.CharField(
-        indexed=True)
-    slug = indexes.CharField(
-        model_attr='slug')
-    slug_es = indexes.CharField(
-        model_attr='slug_es')
-
-    def prepare_facet_map(self, obj):
-        return obj.facet_map
-
-    def get_model(self):
-        return Category
-
-    def index_queryset(self, using=None):
-        return self.get_model().objects.all()
-
-
-# class TagIndex(indexes.SearchIndex, indexes.Indexable):
-#     text = indexes.CharField(
-#         use_template=True,
-#         document=True)
-
-#     valid_spanish = indexes.MultiValueField()
-
-#     def get_model(self):
-#         return AnswerTagProxy
-
-#     def prepare_valid_spanish(self, obj):
-#         return self.get_model().valid_spanish_tags()
-
-#     def index_queryset(self, using=None):
-#         return self.get_model().objects.filter(id=1)
