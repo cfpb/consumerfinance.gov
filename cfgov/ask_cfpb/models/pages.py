@@ -9,7 +9,6 @@ from django.http import Http404
 from django.template.defaultfilters import slugify
 from django.template.response import TemplateResponse
 from django.utils.text import Truncator
-from django.utils.translation import ugettext_lazy as _
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
@@ -276,33 +275,16 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
 
         return 'ask-cfpb/category-page.html'
 
-    def prune_answers(self, id_list):
-        """Make sure category pages don't see nonexistent or draft pages."""
-        answer_query = self.Answer.objects.filter(
-            pk__in=id_list).order_by('-pk')
-        if self.language == 'es':
-            pruned_pks = [a.pk for a in answer_query
-                          if a.spanish_page
-                          and a.spanish_page.live
-                          and not a.spanish_page.redirect_to]
-            pruned_answers = answer_query.filter(pk__in=pruned_pks).values(
-                'id', 'question', 'question_es',
-                'slug', 'slug_es', 'answer_es')
-            for a in pruned_answers:
-                a['answer_es'] = Truncator(a['answer_es']).words(
-                    40, truncate=' ...')
-        else:  # English answers are pruned upstream
-            pruned_answers = answer_query.values(
-                'id', 'question', 'question_es',
-                'slug', 'slug_es', 'answer_es')
-        return pruned_answers
-
     def get_context(self, request, *args, **kwargs):
         context = super(
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
         answers = self.ask_category.answerpage_set.filter(
-            language=self.language
-        )
+            language=self.language, redirect_to=None, live=True).values(
+                'answer_id', 'question', 'slug', 'answer')
+        if self.language == 'es':
+            for a in answers:
+                a['answer'] = Truncator(a['answer']).words(
+                    40, truncate=' ...')
         subcats = self.ask_category.subcategories.all()
         context.update({
             'answers': answers,
@@ -703,9 +685,9 @@ class AnswerPage(CFGOVPage):
     def status_string(self):
         if self.redirect_to_page:
             if not self.live:
-                return _("redirected but not live")
+                return ("redirected but not live")
             else:
-                return _("redirected")
+                return ("redirected")
         else:
             return super(AnswerPage, self).status_string
 

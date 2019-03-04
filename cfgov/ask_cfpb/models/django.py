@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-import json
-from collections import Counter, OrderedDict
+from collections import Counter
 from six.moves import html_parser as HTMLParser
 
 from django import forms
@@ -10,13 +9,10 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils import html
-from django.utils.functional import cached_property
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-
-from v1.util.util import validate_social_sharing_image
 
 
 html_parser = HTMLParser.HTMLParser()
@@ -127,8 +123,7 @@ class Category(models.Model):
         return self.name
 
     def featured_answers(self, language):
-        from .pages import AnswerPage
-        return AnswerPage.objects.filter(
+        return self.answerpage_set.filter(
             language=language,
             category=self,
             featured=True).order_by('featured_rank')
@@ -141,51 +136,6 @@ class Category(models.Model):
             search_tags += page.clean_search_tags
         counter = Counter(search_tags)
         return counter.most_common()[:10]
-
-    @cached_property
-    def facet_map(self):
-        raw_answers = self.answer_set.order_by('-pk').select_related()
-        answers = [
-            answer for answer in raw_answers if answer.english_page.live]
-        subcats = self.subcategories.all().select_related()
-        audiences = Audience.objects.all()
-        container = {
-            'subcategories': {},
-            'audiences': {}
-        }
-        container['answers'] = OrderedDict([
-            (str(answer.pk),
-             {'question': answer.question,
-              'url': '/ask-cfpb/slug-en-{}'.format(answer.pk)}
-             ) for answer in answers
-            if answer.answer_pages.filter(language='en', redirect_to=None)])
-        subcat_data = {}
-        for subcat in subcats:
-            key = str(subcat.id)
-            subcat_data[key] = [
-                str(answer.pk) for answer
-                in subcat.answer_set.all()
-                if answer.answer_pages.filter(language='en', redirect_to=None)]
-        container['subcategories'].update(subcat_data)
-        audience_map = {audience: {'all': [], 'name': audience.name}
-                        for audience in audiences}
-        for answer in answers:
-            for audience in audience_map:
-                if audience in answer.audiences.all():
-                    audience_map[audience]['all'].append(str(answer.pk))
-        for subcat in subcats:
-            ID = str(subcat.id)
-            for audience in audience_map:
-                _map = audience_map[audience]
-                if _map['all']:
-                    _map[ID] = []
-                    for answer_id in subcat_data[ID]:
-                        if answer_id in _map['all']:
-                            _map[ID].append(answer_id)
-        container['audiences'].update(
-            {str(audience.id): audience_map[audience]
-             for audience in audience_map.keys()})
-        return json.dumps(container)
 
     class Meta:
         ordering = ['name']
@@ -381,10 +331,6 @@ class Answer(models.Model):
         return "{} {}".format(self.id, self.slug)
 
     @property
-    def available_subcategory_qs(self):
-        return SubCategory.objects.filter(parent__in=self.category.all())
-
-    @property
     def english_page(self):
         return self.answer_pages.filter(language='en').first()
 
@@ -408,10 +354,6 @@ class Answer(models.Model):
             html_parser.unescape(self.answer_es)))
         return html.strip_tags(unescaped).strip()
 
-    def clean(self):
-        super(Answer, self).clean()
-        validate_social_sharing_image(self.social_sharing_image)
-
     def cleaned_questions(self):
         cleaned_terms = html_parser.unescape(self.question)
         return [html.strip_tags(cleaned_terms).strip()]
@@ -434,23 +376,3 @@ class Answer(models.Model):
 
     def audience_strings(self):
         return [audience.name for audience in self.audiences.all()]
-
-    def has_live_page(self):
-        if not self.answer_pages.all():
-            return False
-        for page in self.answer_pages.all():
-            if page.live:
-                return True
-        return False
-
-
-class EnglishAnswerProxy(Answer):
-    """A no-op proxy class to allow separate language indexing in Haystack"""
-    class Meta:
-        proxy = True
-
-
-class SpanishAnswerProxy(Answer):
-    """A no-op proxy class to allow separate language indexing in Haystack"""
-    class Meta:
-        proxy = True
