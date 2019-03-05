@@ -1,7 +1,18 @@
 FROM centos:7
 
+# Set envvars required by apache
+ENV CFGOV_PATH=/src/cfgov-refresh\
+    STATIC_PATH=/src/cfgov-refresh/cfgov/static_built\
+    APACHE_SERVER_ROOT=/src/cfgov-refresh/apache\
+    APACHE_WWW_PATH=/src/cfgov-refresh/apache/www\
+    CFGOV_SANDBOX=/src/cfgov-refresh/sandbox\
+    APACHE_PROCESS_COUNT=4\
+    ERROR_LOG=/proc/self/fd/1
+
 # Install required packages
-RUN yum install -y https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm && \
+RUN yum install -y epel-release && \
+    yum-config-manager --enable cr && \
+    yum update -y && \
     yum install -y epel-release make gcc gcc-c++ kernel-devel mailcap which && \
     yum install -y postgresql10 postgresql10-devel && \
     yum install -y python-devel python36 python36-devel && \

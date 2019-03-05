@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 """
 
 import os
+import sys
 
 
 def initialize_new_relic():
@@ -25,6 +26,9 @@ def initialize_new_relic():
 
 initialize_new_relic()
 
+path = "/src/cfgov-refresh/cfgov"
+if path not in sys.path:
+    sys.path.insert(0, path)
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cfgov.settings.local')
 
