@@ -21,30 +21,6 @@ ENGLISH_PARENT_SLUG = 'ask-cfpb'
 SPANISH_PARENT_SLUG = 'obtener-respuestas'
 
 
-def get_feedback_stream_value(page):
-    """Delivers a basic feedback module with yes/no buttons and comment box"""
-    translation_text = {
-        'helpful': {'es': '¿Fue útil esta respuesta?',
-                    'en': 'Was this page helpful to you?'},
-        'button': {'es': 'Enviar',
-                   'en': 'Submit'}
-    }
-    stream_value = [
-        {'type': 'feedback',
-         'value': {
-             'was_it_helpful_text': translation_text['helpful'][page.language],
-             'button_text': translation_text['button'][page.language],
-             'intro_text': '',
-             'question_text': '',
-             'radio_intro': '',
-             'radio_text': ('This information helps us '
-                            'understand your question better.'),
-             'radio_question_1': 'How soon do you expect to buy a home?',
-             'radio_question_2': 'Do you currently own a home?',
-             'contact_advisory': ''}}]
-    return stream_value
-
-
 def generate_short_slug(slug_string):
     """Limits a slug to around 100 characters, using full words"""
     if len(slug_string) < 100:
