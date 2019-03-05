@@ -120,17 +120,10 @@ class Hero(blocks.StructBlock):
         required=False,
         help_text='Maximum character count: 185 (including spaces)'
     )
-
-    links = blocks.ListBlock(
-        atoms.Hyperlink(),
-        help_text='If your hero needs a call-to-action link, '
-                  'enter it here, rather than inside the body field.'
-    )
     is_button = blocks.BooleanBlock(
         required=False,
         help_text='Select to render any links given above as buttons.'
     )
-
     image = ImageChooserBlock(
         required=False,
         help_text='Should be exactly 390px tall, and up to 940px wide, '
@@ -141,7 +134,6 @@ class Hero(blocks.StructBlock):
         help_text='Select if you want the provided image to be '
                   'a background image under the entire hero.'
     )
-
     background_color = blocks.CharBlock(
         required=False,
         help_text='Specify a hex value (with the # sign) '
@@ -164,7 +156,6 @@ class Hero(blocks.StructBlock):
                   'https://github.com/cfpb/cf-theme-cfpb/blob/'
                   'master/src/color-palette.less'
     )
-
     is_bleeding = blocks.BooleanBlock(
         required=False,
         help_text='Select if you want the provided image to bleed '
