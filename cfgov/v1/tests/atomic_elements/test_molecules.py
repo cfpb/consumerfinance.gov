@@ -107,14 +107,16 @@ class MoleculesTestCase(TestCase):
             title='Sublanding Page',
             slug='sublanding',
         )
-        sublanding_page.notification = StreamValue(
-            sublanding_page.notification.stream_block,
+        sublanding_page.content = StreamValue(
+            sublanding_page.content.stream_block,
             [atomic.notification],
             True
         )
         publish_page(child=sublanding_page)
         response = django_client.get('/sublanding/')
-        self.assertContains(response, 'this is a notification')
+        self.assertContains(response, 'this is a notification message')
+        self.assertContains(response, 'this is a notification explanation')
+        self.assertContains(response, 'this is a notification link')
 
     def test_hero(self):
         """Hero heading correctly displays on a Sublanding Filterable Page"""

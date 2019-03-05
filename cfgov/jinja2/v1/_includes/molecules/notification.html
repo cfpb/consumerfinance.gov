@@ -43,7 +43,7 @@
           {%- if explanation %}
               <p class="m-notification_explanation">{{ explanation | safe }}</p>
           {% endif -%}
-          {% for link in value.links %}
+          {% for link in links %}
               {% if link.text %}
                   {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
                       <li class="m-list_item">
