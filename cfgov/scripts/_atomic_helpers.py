@@ -83,11 +83,11 @@ notification = {
         'message': "this is a notification message",
         'explanation': "this is a notification explanation",
         'links': [
-                    {
-                        "url": "/",
-                        "text": "this is a notification link"
-                    }
-                ]
+            {
+                "url": "/",
+                "text": "this is a notification link"
+            }
+        ]
     }
 }
 related_metadata = {
