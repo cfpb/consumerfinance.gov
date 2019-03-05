@@ -1,0 +1,4 @@
+cluster.name: "es-docker-cluster"
+node.name: "es-docker-node"
+
+cluster.routing.allocation.disk.threshold_enabled: false
