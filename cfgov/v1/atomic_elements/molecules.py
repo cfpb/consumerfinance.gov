@@ -6,6 +6,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
 from v1.blocks import AnchorLink, HeadingBlock
+from v1.feeds import get_rss_feed_for_page
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
@@ -326,21 +327,17 @@ class RelatedMetadata(blocks.StructBlock):
         label = 'Related metadata'
 
 
-class RSSFeed(blocks.ChoiceBlock):
-    choices = [
-        ('blog_feed', 'Blog Feed'),
-        ('newsroom_feed', 'Newsroom Feed'),
-    ]
-
-    feed_urls = {
-            'blog_feed': '/about-us/blog/feed/',
-            'newsroom_feed': '/about-us/newsroom/feed/'
-        }
-
+class RSSFeed(blocks.StaticBlock):
     class Meta:
         icon = 'plus'
         template = '_includes/molecules/rss-feed.html'
         label = 'RSS feed'
+        admin_text = (
+            'RSS Feed: '
+            'If this page or one of its ancestors provides an RSS feed, '
+            'this block renders a link to that feed. If not, this block '
+            'renders nothing.'
+        )
 
     def get_context(self, value, parent_context=None):
         context = super(RSSFeed, self).get_context(
@@ -348,7 +345,10 @@ class RSSFeed(blocks.ChoiceBlock):
             parent_context=parent_context
         )
 
-        context['value'] = self.feed_urls[context['value']]
+        page = context.get('page')
+
+        if page:
+            context['value'] = get_rss_feed_for_page(page)
 
         return context
 

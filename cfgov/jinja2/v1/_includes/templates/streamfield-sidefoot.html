@@ -4,7 +4,6 @@
 
 {% macro render(streamfield, half_width=false) %}
     {% for block in streamfield %}
-        {{ block.block_type }}
         {% if 'related_posts' in block.block_type %}
             <div class="block{{ ' block__flush-top' if loop.first else '' }}">
             {% include_block block %}
@@ -17,7 +16,9 @@
                 {{ social_media.render(block.value) }}
             </div>
         {% elif 'rss_feed' in block.block_type %}
-            {% include_block block %}
+            <div class="block">
+                {% include_block block %}
+            </div>
         {% else %}
             {% import 'templates/render_block.html' as render_block with context %}
             {{ render_block.render(block, loop.index) }}

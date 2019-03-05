@@ -63,3 +63,29 @@ class FilterableFeedPageMixin(object):
             return FilterableFeed(self, context)(request)
         else:
             return super(FilterableFeedPageMixin, self).serve(request)
+
+
+def get_page_ancestor_with_feed(page):
+    """Return the closest page ancestor with a feed.
+
+    Includes the specified page in the search. Returns None if no ancestors
+    inherit from FilterableFeedPageMixin.
+    """
+    ancestors = page.get_ancestors(inclusive=True)
+    ancestors_with_feeds_q = ancestors.type_q(FilterableFeedPageMixin)
+    ancestors_with_feeds = ancestors.filter(ancestors_with_feeds_q)
+
+    # page.get_ancestors() orders from root down to page.
+    return ancestors_with_feeds.last()
+
+
+def get_rss_feed_for_page(page, request=None):
+    """Return the path to an RSS feed for a page, if one exists.
+
+    Returns None if neither this page nor any of its ancestors provide a feed.
+    """
+    ancestor = get_page_ancestor_with_feed(page)
+
+    if ancestor:
+        ancestor_url = ancestor.get_url(request=request)
+        return ancestor_url + 'feed/'

@@ -1,22 +1,6 @@
-{% extends 'layout-2-1-bleedbar.html' %}
+{% extends 'blog/blog_page.html' %}
 
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
-
-{% block og_type -%}
-    article
-{%- endblock %}
-
-{% block og_article_prefix -%}
-    article: http://ogp.me/ns/article#
-{%- endblock %}
-
-{% block og_article_author -%}
-    <meta property="article:author" content="https://www.facebook.com/CFPB">
-{%- endblock %}
-
-{% block content_main %}
-    {% include 'article.html' %}
-
+{% block post_article_content %}
     <aside class="block">
         <header class="m-slug-header">
             <h2 class="a-heading">
@@ -33,10 +17,4 @@
             Go to press resources page
         </a>
     </aside>
-{% endblock %}
-
-{% block content_sidebar %}
-    {{ streamfield_sidefoot.render(page.sidefoot) }}
-    {% import 'molecules/rss-feed.html' as rss %}
-    {{ rss.render(rss_url) }}
 {% endblock %}

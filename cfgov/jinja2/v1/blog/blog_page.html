@@ -16,6 +16,7 @@
 
 {% block content_main %}
     {% include 'article.html' %}
+    {% block post_article_content %}
     <div class="block">
         <p>
             Join the conversation. Follow CFPB on
@@ -32,10 +33,13 @@
             </a>.
         </p>
     </div>
+    {% endblock %}
 {% endblock %}
 
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
-        {% import 'molecules/rss-feed.html' as rss %}
-        {{ rss.render(rss_url) }}
+    {% if rss_feed %}
+    {% import 'molecules/rss-feed.html' as rss %}
+    {{ rss.render(rss_feed) }}
+    {% endif %}
 {% endblock %}

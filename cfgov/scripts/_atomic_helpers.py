@@ -49,10 +49,6 @@ related_links = {
         ]
     }
 }
-rss_feed = {
-    "type": "rss_feed",
-    "value": "blog_feed"
-}
 featured_content = {
     'type': 'featured_content',
     'value': {
