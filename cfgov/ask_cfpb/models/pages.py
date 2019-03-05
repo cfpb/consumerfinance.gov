@@ -16,10 +16,10 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
+from modelcluster.fields import ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from v1 import blocks as v1_blocks
@@ -563,7 +563,7 @@ class AnswerPage(CFGOVPage):
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
-    related_questions = models.ManyToManyField(
+    related_questions = ParentalManyToManyField(
         'self',
         symmetrical=False,
         blank=True,
@@ -590,7 +590,6 @@ class AnswerPage(CFGOVPage):
                 'related_questions',
                 page_type='ask_cfpb.AnswerPage',
                 is_single=False),
-            ImageChooserPanel('social_sharing_image'),
             FieldPanel('answer_id')],
             heading="Metadata",
             classname="collapsible"),
