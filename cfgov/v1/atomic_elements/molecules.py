@@ -166,11 +166,19 @@ class Notification(blocks.StructBlock):
         ('warning', 'Warning'),
         ('error', 'Error'),
     ], required=True, default='default')
-    message = blocks.CharBlock(required=True,
-                               label='Notification message')
-    explanation = blocks.RichTextBlock(required=False,
-                                       label='Explanation text '
-                                             'below the message')
+    message = blocks.CharBlock(
+        required=True,
+        help_text='The main notification message to display.'
+    )
+    explanation = blocks.CharBlock(
+        required=False,
+        help_text='Explanation text appears below the message in smaller type.'
+    )
+    links = blocks.ListBlock(
+        atoms.Hyperlink(required=False),
+        required=False,
+        help_text='Links appear on their own lines below the explanation.'
+    )
 
     class Meta:
         icon = 'warning'

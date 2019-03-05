@@ -21,7 +21,7 @@
 
    ========================================================================== #}
 
-{% macro render(type, is_visible, message, explanation=none) %}
+{% macro render(type, is_visible, message, explanation=none, links=[]) %}
 
   {% set type_lookup = {
         'default': 'information-round',
@@ -38,36 +38,34 @@
               {{- ' m-notification__visible' if is_visible else '' -}}">
       {{ svg_icon(icon) }}
       <div class="m-notification_content"
-           {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
+          {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
           <div class="h4 m-notification_message">{{ message }}</div>
           {%- if explanation %}
               <p class="m-notification_explanation">{{ explanation | safe }}</p>
           {% endif -%}
+          {% for link in value.links %}
+              {% if link.text %}
+                  {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
+                      <li class="m-list_item">
+                          <a class="m-list_link" href="{{ link.url }}">
+                              {{ link.text }}
+                          </a>
+                      </li>
+                  {% if loop.last %}</ul>{% endif %}
+              {% endif %}
+          {% endfor %}
       </div>
   </div>
 
 {% endmacro %}
 
 {% if value %}
-
-    {#
-      TODO: This if/else is for removing the explanation if it's empty HTML.
-            Investigate a better way to do this that doesn't repeat the call.
-    #}
-    {% if ( value.explanation | trim ) == '<div class="rich-text"><p><br/></p></div>' %}
-        {{ render(
-            value.type,
-            value.is_visible | default( true ),
-            value.message
-          )
-        }}
-    {% else %}
-        {{ render(
-            value.type,
-            value.is_visible | default( true ),
-            value.message,
-            value.explanation
-          )
-        }}
-    {% endif %}
+  {{ render(
+      value.type,
+      value.is_visible | default( true ),
+      value.message,
+      value.explanation | default( '' ),
+      value.links | default( [] )
+    )
+  }}
 {% endif %}
