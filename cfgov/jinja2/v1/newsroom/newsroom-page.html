@@ -37,8 +37,6 @@
 
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
-    <div class="block block__sub" data-qa-hook="rss-subscribe-section">
-        {% import 'rss.html' as rss %}
-        {{ rss.render('/about-us/newsroom/feed/') }}
-    </div>
+    {% import 'molecules/rss-feed.html' as rss %}
+    {{ rss.render(rss_url) }}
 {% endblock %}

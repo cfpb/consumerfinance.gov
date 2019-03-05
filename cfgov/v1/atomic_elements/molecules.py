@@ -332,10 +332,25 @@ class RSSFeed(blocks.ChoiceBlock):
         ('newsroom_feed', 'Newsroom Feed'),
     ]
 
+    feed_urls = {
+            'blog_feed': '/about-us/blog/feed/',
+            'newsroom_feed': '/about-us/newsroom/feed/'
+        }
+
     class Meta:
         icon = 'plus'
         template = '_includes/molecules/rss-feed.html'
         label = 'RSS feed'
+
+    def get_context(self, value, parent_context=None):
+        context = super(RSSFeed, self).get_context(
+            value,
+            parent_context=parent_context
+        )
+
+        context['value'] = self.feed_urls[context['value']]
+
+        return context
 
 
 class SocialMedia(blocks.StructBlock):

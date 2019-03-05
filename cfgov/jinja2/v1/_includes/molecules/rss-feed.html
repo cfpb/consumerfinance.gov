@@ -9,8 +9,20 @@
    Creates a block containing RSS feed markup.
 
    ========================================================================== #}
-
+{% macro render( url ) %}
 <div class="block block__sub" data-qa-hook="rss-subscribe-section">
-    {% import 'rss.html' as rss %}
-    {{ rss.render('feed/') }}
+	<p data-qa-hook="rss-subscribe-desc">
+	    Subscribe to our RSS feed to get the latest content in your reader.
+	</p>
+	<a class="a-btn" href="{{ url }}">
+	    <span class="a-btn_icon__on-left">
+	        {{- svg_icon('rss') -}}
+	    </span>
+	    Subscribe to RSS
+	</a>
 </div>
+{% endmacro %}
+
+{% if value %}
+	{{ render(value) }}
+{% endif %}
