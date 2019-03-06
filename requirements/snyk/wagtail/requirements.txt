@@ -1,1 +1,1 @@
-../wagtail.txt
+../../wagtail.txt

@@ -1,1 +1,1 @@
-../django.txt
+../../django.txt
