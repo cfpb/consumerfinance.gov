@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 
 from v1.forms import FeedbackForm, ReferredFeedbackForm, SuggestionFeedbackForm
-
 from v1.handlers import Handler
 
 
