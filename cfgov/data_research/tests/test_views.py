@@ -164,7 +164,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 'data_research_api_metadata',
                 kwargs={'meta_name': 'xxx'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('No metadata object found.', response.content)
+        self.assertContains(response, 'No metadata object found.')
 
     def test_national_timeseries_30_89(self):
         response = self.client.get(
@@ -219,7 +219,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={'fips': '16220',
                         'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('not valid', response.content)
+        self.assertContains(response, 'not valid')
 
     def test_non_msa_timeseries_30_89(self):
         response = self.client.get(
@@ -260,7 +260,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={'fips': '99999',
                         'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('FIPS code not found', response.content)
+        self.assertContains(response, 'FIPS code not found')
 
     def test_map_data_bad_date(self):
         response = self.client.get(
@@ -270,7 +270,7 @@ class TimeseriesViewTests(django.test.TestCase):
                         'days_late': '90',
                         'year_month': '0000-01'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Invalid year-month pair', response.content)
+        self.assertContains(response, 'Invalid year-month pair')
 
     def test_map_data_disallowed_delinquency_digit(self):
         with self.assertRaises(NoReverseMatch):
@@ -287,21 +287,21 @@ class TimeseriesViewTests(django.test.TestCase):
                     'days_late': '38-89',
                     'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Unknown delinquency range', response.content)
+        self.assertContains(response, 'Unknown delinquency range')
 
     def test_timeseries_disallowed_delinquency_range(self):
         response = self.client.get(reverse(
             'data_research_api_mortgage_timeseries',
             kwargs={'fips': '12081', 'days_late': '38-89'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Unknown delinquency range', response.content)
+        self.assertContains(response, 'Unknown delinquency range')
 
     def test_national_timeseries_disallowed_delinquency_range(self):
         response = self.client.get(reverse(
             'data_research_api_mortgage_timeseries_national',
             kwargs={'days_late': '38-89'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Unknown delinquency range', response.content)
+        self.assertContains(response, 'Unknown delinquency range')
 
     def test_map_data_unknown_geo(self):
         response = self.client.get(
@@ -311,7 +311,7 @@ class TimeseriesViewTests(django.test.TestCase):
                         'days_late': '90',
                         'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Unkown geographic unit', response.content)
+        self.assertContains(response, 'Unkown geographic unit')
 
     def test_county_map_data_30_89(self):
         response = self.client.get(
@@ -416,4 +416,4 @@ class TimeseriesViewTests(django.test.TestCase):
                 'data_research_api_mortgage_timeseries',
                 kwargs={'fips': '12081', 'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('County is below display threshold', response.content)
+        self.assertContains(response, 'County is below display threshold')

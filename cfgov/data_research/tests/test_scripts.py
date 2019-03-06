@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
 import datetime
-import StringIO
 import unittest
+from six import BytesIO
 
 import django
 
@@ -89,7 +89,7 @@ class SourceToTableTest(django.test.TestCase):
 
     def test_dump_as_csv(self):
         m = mock_open()
-        with patch('__builtin__.open', m, create=True):
+        with patch('six.moves.builtins.open', m, create=True):
             dump_as_csv([self.data_row], '/tmp/mp_countydata')
         self.assertEqual(m.call_count, 1)
 
@@ -181,8 +181,9 @@ class DataLoadIntegrityTest(django.test.TestCase):
             valid=True)
 
         # real values from a base CSV row
-        self.data_header = 'date,fips,open,current,thirty,sixty,ninety,other\n'
-        self.data_row = '09/01/16,12081,1952,1905,21,5,10,11\n'
+        self.data_header = (b'date,fips,open,current,thirty,sixty,ninety,'
+                            b'other\n')
+        self.data_row = b'09/01/16,12081,1952,1905,21,5,10,11\n'
         self.data_row_dict = {'date': '09/01/16',
                               'fips': '12081',
                               'open': '1952',
@@ -203,7 +204,7 @@ class DataLoadIntegrityTest(django.test.TestCase):
         and that the object's calculated API values are correct.
         """
 
-        f = StringIO.StringIO(self.data_header + self.data_row)
+        f = BytesIO(self.data_header + self.data_row)
         reader = unicodecsv.DictReader(f)
         mock_read_csv.return_value = reader
         load_values()
