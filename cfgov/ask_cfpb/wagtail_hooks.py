@@ -127,10 +127,13 @@ def get_feedback_stream_value(page):
 
 
 @hooks.register('after_create_page')
-def after_create_page(request, page):
+def after_create_answer_page(request, page):
     if isinstance(page, AnswerPage):
         page.content = StreamValue(
             page.content.stream_block,
             get_feedback_stream_value(page),
             is_lazy=True)
-        page.save_revision(user=request.user)
+        if request.POST.get('action-publish') == 'action-publish':
+            page.save_revision(user=request.user).publish()
+        else:
+            page.save_revision(user=request.user)
