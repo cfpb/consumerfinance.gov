@@ -1,43 +1,43 @@
-import { assign } from '../../../../js/modules/util/assign';
+const STATE_OPEN = 'open';
+const STATE_CLOSED = 'closed';
 
-const STATES = {
-  OPEN:   'OPEN',
-  CLOSED: 'CLOSED'
-};
+// These types should match the content inside the rate checker jinja template.
+const EXPORT_TYPE_PNG = 'PNG';
+const EXPORT_TYPE_SVG = 'SVG';
+const EXPORT_TYPE_JPEG = 'JPEG';
+const EXPORT_TYPE_PRINT = 'Print chart';
 
 class RateCheckerChartMenu {
 
   /**
    * Set the initial state value and call
    * the appropriate instantiation methods.
-   * @param {object} highCharts HighCharts instance.
+   * @param {Object} highCharts - HighCharts instance.
    */
   constructor( highCharts ) {
     this.highCharts = highCharts;
-    this.state = { position: STATES.CLOSED };
+    this.state = STATE_CLOSED;
     this.element = document.querySelector( '.chart-menu' );
     if ( this.element ) this._initEvents();
   }
 
   /**
    * Export the chart using the HighCharts API.
-   * @param {string|number} exportType The type of chart.
+   * @param {string} exportType - Export type keyword.
+   *                              May be an image type or print command.
    */
   exportChart( exportType ) {
     const highCharts = this.highCharts;
 
-    switch ( Number( exportType ) ) {
-      case 1:
-        highCharts.exportChart( { type: 'image/svg+xml' } );
-        break;
-      case 2:
-        highCharts.exportChart( { type: 'image/jpeg' } );
-        break;
-      case 3:
-        highCharts.print();
-        break;
-      default:
-        highCharts.exportChart();
+    if ( exportType === EXPORT_TYPE_PRINT ) {
+      highCharts.print();
+    } else {
+      const MIME_TYPES = {};
+      MIME_TYPES[EXPORT_TYPE_PNG] = { type: 'image/png' };
+      MIME_TYPES[EXPORT_TYPE_SVG] = { type: 'image/svg+xml' };
+      MIME_TYPES[EXPORT_TYPE_JPEG] = { type: 'image/jpeg' };
+
+      highCharts.exportChart( MIME_TYPES[exportType] );
     }
   }
 
@@ -45,43 +45,47 @@ class RateCheckerChartMenu {
    * Open the menu by setting the appropriate state.
    */
   open() {
-    this._setState( { position: STATES.OPEN } );
+    this._setState( STATE_OPEN );
   }
 
   /**
    * Close the menu by setting the appropriate state.
    */
   close() {
-    this._setState( { position: STATES.CLOSED } );
+    this._setState( STATE_CLOSED );
   }
 
   /**
    * Call the appropriate methods based on the event.
-   * @param {MouseEvent} event Menu click event.
+   * @param {MouseEvent} event - Menu click event.
    */
   onClick( event ) {
-    if ( this.state.position === STATES.CLOSED ) {
+    if ( this.state === STATE_CLOSED ) {
       this.open();
     } else {
       this.close();
-      const exportType = event.target.getAttribute( 'data-export-type' );
-      if ( exportType ) this.exportChart( exportType );
+      const target = event.target;
+      // Ensure we clicked on a <li>.
+      if ( target.tagName === 'LI' ) {
+        const exportType = target.textContent;
+        this.exportChart( exportType );
+      }
     }
   }
 
   /**
    * Render the menu UI changes.
-   * @param {object} oldState The previous state of the menu.
-   * @param {object} newState The current state of the menu.
+   * @param {string} oldState - The previous state of the menu.
+   * @param {string} newState - The current state of the menu.
    */
   render( oldState, newState ) {
     const STATE_PREFIX = 'chart-menu__';
 
     this.element.classList.remove(
-      STATE_PREFIX + oldState.position.toLowerCase()
+      STATE_PREFIX + oldState
     );
     this.element.classList.add(
-      STATE_PREFIX + newState.position.toLowerCase()
+      STATE_PREFIX + newState
     );
   }
 
@@ -94,15 +98,13 @@ class RateCheckerChartMenu {
 
   /**
    * Set the state of the RateCheckerChartMenu.
-   * @param {object} state The position of the menu.
+   * @param {string} newState - The position of the menu.
    */
-  _setState( state = {} ) {
-    const oldState = assign( {}, this.state );
-    assign( this.state, state );
-    this.render( oldState, this.state );
+  _setState( newState ) {
+    const oldState = this.state;
+    this.state = newState;
+    this.render( oldState, newState );
   }
 }
-
-RateCheckerChartMenu.STATES = STATES;
 
 export default RateCheckerChartMenu;

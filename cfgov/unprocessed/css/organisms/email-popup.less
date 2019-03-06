@@ -1,6 +1,7 @@
 
 .o-email-popup {
-    width: 270px;
+    // !important needed to override the default o-email-signup width
+    width: 270px !important;
     position: fixed;
     bottom: 1em;
     right: 1em;
@@ -13,10 +14,16 @@
     .respond-to-max( @bp-xs-max, {
         margin-left: -135px;
         left: 50%;
+
+        button {
+            // !important needed to override the default o-email-signup margin
+            margin-right: 0 !important;
+        }
     } );
 
     .respond-to-min( @bp-sm-min, {
-        width: 555px;
+        // !important needed to override the default o-email-signup width
+        width: 555px !important;
     } );
 
   &__visible {
@@ -53,28 +60,10 @@
         margin-bottom:  unit( (@grid_gutter-width / 2) / @font-size, em);
     }
 
-    .o-email-signup {
-        width: 100% !important;
-    }
-
-    .o-email-signup.form-submitted {
-        margin-bottom: unit( (@grid_gutter-width * 2) / @base-font-size-px, em);
-    }
-
-    input[type="email"] {
-        width: 100%;
-        margin-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-        box-sizing: border-box;
-    }
-
     .respond-to-max( @bp-xs-max, {
         // This is needed because the image can vary and so is specified in the
         // template. "!important" is needed to override the element's style tag.
         background-image: none !important;
-
-        .o-email-signup.form-submitted {
-            margin-bottom: unit( (@grid_gutter-width * 3) / @base-font-size-px, em);
-        }
     } );
 
     .respond-to-min( @bp-sm-min, {
@@ -91,35 +80,19 @@
             .h3();
             margin-bottom: unit( (@grid_gutter-width / 3) / @font-size, em);
         }
-
-      .m-form-field-with-button {
-          p {
-              float: right;
-              position: relative;
-              top: 0.7em;
-          }
-          .a-btn {
-              float: left;
-          }
-      }
     } );
   }
 
-  .o-email-signup_footer {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+  &_footer .m-notification {
+      border: none;
+      padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em)
+               unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+      // !important needed to override the default o-email-signup margin
+      margin-bottom: 0 !important;
 
-      .m-notification {
-          border: none;
+      .respond-to-min( @bp-sm-min, {
           padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em)
-                   unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-
-          .respond-to-min( @bp-sm-min, {
-              padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em)
-                       unit( @grid_gutter-width / @base-font-size-px, em);
-          } );
-      }
+                   unit( @grid_gutter-width / @base-font-size-px, em);
+      } );
   }
 }

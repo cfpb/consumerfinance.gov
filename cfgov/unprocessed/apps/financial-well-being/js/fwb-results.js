@@ -1,11 +1,11 @@
 import Analytics from '../../../js/modules/Analytics';
-
-require( 'cf-expandables/src/Expandable' ).init();
+const Expandable = require( 'cf-expandables/src/Expandable' );
 
 /**
  * Initialize the results interactions
  */
 function init() {
+  Expandable.init();
 
   const buttonsDom = document.querySelectorAll(
     '.comparison-chart_toggle-button'
@@ -98,4 +98,4 @@ function init() {
   setUpUI();
 }
 
-export { init };
+export default { init };

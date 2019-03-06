@@ -2,7 +2,6 @@
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import FilterableListControls from './FilterableListControls';
 import Notification from '../molecules/Notification';
-import { UNDEFINED } from '../modules/util/standard-type';
 
 const BASE_CLASS = 'o-filterable-list';
 
@@ -33,6 +32,7 @@ function FilterableList( element ) {
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 

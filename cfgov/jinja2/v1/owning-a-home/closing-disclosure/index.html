@@ -23,7 +23,8 @@
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [
-            '{{ static('apps/owning-a-home/js/common.js') }}'
+            '{{ static('apps/owning-a-home/js/common.js') }}',
+            '{{ static('apps/owning-a-home/js/form-explainer/index.js') }}'
           ];
           jsl(s);
         }()
@@ -44,7 +45,6 @@
             {% include "_templates/no_js.html" %}
 
             <div class="form-explainer">
-
                 <div class="page-intro content-l">
                     <div class="content-l_col-2-3">
                         <h1 class="page-title">Closing Disclosure Explainer</h1>

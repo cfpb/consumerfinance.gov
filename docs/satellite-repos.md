@@ -18,3 +18,7 @@ We have seven satellite repos that are maintained outside of the cfgov-refresh c
 
 
 We import these satellite projects into cfgov-refresh by specifying wheel files for each in [`requirements/optional-public.txt`](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt).
+
+## Local setup and usage
+
+See ["Usage"](../usage#develop-satellite-apps) for local setup and usage instructions.

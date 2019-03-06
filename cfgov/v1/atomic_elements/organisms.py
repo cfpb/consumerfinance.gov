@@ -22,7 +22,6 @@ from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
-import requests
 from jinja2 import Markup
 
 import ask_cfpb
@@ -143,73 +142,6 @@ class InfoUnitGroup2575Only(InfoUnitGroup):
         label = 'Info unit group'
 
 
-class ImageText5050Group(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title', required=False)
-
-    link_image_and_heading = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text=('Check this to link all images and headings to the URL of '
-                   'the first link in their unit\'s list, if there is a link.')
-    )
-
-    sharing = blocks.StructBlock([
-        ('shareable', blocks.BooleanBlock(label='Include sharing links?',
-                                          help_text='If checked, share links '
-                                                    'will be included below '
-                                                    'the items.',
-                                          required=False)),
-        ('share_blurb', blocks.CharBlock(help_text='Sets the tweet text, '
-                                                   'email subject line, and '
-                                                   'LinkedIn post text.',
-                                         required=False)),
-    ])
-
-    image_texts = blocks.ListBlock(molecules.ImageText5050())
-
-    class Meta:
-        icon = None
-        label = ' '
-        template = '_includes/organisms/image-text-50-50-group.html'
-
-
-class ImageText2575Group(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title', required=False)
-    link_image_and_heading = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text=('Check this to link all images and headings to the URL of '
-                   'the first link in their unit\'s list, if there is a link.')
-    )
-    image_texts = blocks.ListBlock(molecules.ImageText2575())
-
-    class Meta:
-        icon = None
-        label = ' '
-        template = '_includes/organisms/image-text-25-75-group.html'
-
-
-class LinkBlobGroup(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title', required=False)
-    has_top_border = blocks.BooleanBlock(required=False)
-    has_bottom_border = blocks.BooleanBlock(required=False)
-    link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
-
-
-class ThirdWidthLinkBlobGroup(LinkBlobGroup):
-    class Meta:
-        icon = None
-        label = ' '
-        template = '_includes/organisms/third-width-link-blob-group.html'
-
-
-class HalfWidthLinkBlobGroup(LinkBlobGroup):
-    class Meta:
-        icon = None
-        label = ' '
-        template = '_includes/organisms/half-width-link-blob-group.html'
-
-
 class PostPreviewSnapshot(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit',
                              help_text='How many posts do you want to show?')
@@ -222,7 +154,7 @@ class PostPreviewSnapshot(blocks.StructBlock):
 
 
 class EmailSignUp(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
+    heading = blocks.CharBlock(required=False, default='Stay informed')
     default_heading = blocks.BooleanBlock(
         required=False,
         default=True,
@@ -230,12 +162,25 @@ class EmailSignUp(blocks.StructBlock):
         help_text=('If selected, heading will be styled as an H5 '
                    'with green top rule. Deselect to style header as H3.')
     )
-    text = blocks.CharBlock(required=False)
-    gd_code = blocks.CharBlock(required=False)
-
-    form_field = blocks.ListBlock(molecules.FormFieldWithButton(),
-                                  icon='mail',
-                                  required=False)
+    text = blocks.CharBlock(
+        required=False,
+        help_text=('Write a sentence or two about what kinds of emails the '
+                   'user is signing up for, how frequently they will be sent, '
+                   'etc.')
+    )
+    gd_code = blocks.CharBlock(
+        required=False,
+        label='GovDelivery code',
+        help_text=('Code for the topic (i.e., mailing list) you want people '
+                   'who submit this form to subscribe to. Format: USCFPB_###')
+    )
+    disclaimer_page = blocks.PageChooserBlock(
+        required=False,
+        label='Privacy Act statement',
+        help_text=('Choose the page that the "See Privacy Act statement" link '
+                   'should go to. If in doubt, use "Generic Email Sign-Up '
+                   'Privacy Act Statement".')
+    )
 
     class Meta:
         icon = 'mail'
@@ -940,6 +885,7 @@ class FilterableList(BaseExpandable):
         # better if this kind of configuration lived on custom Page models.
         page_type_overrides = {
             'cfpb-researchers': {'show_post_dates': False},
+            'consumer-reporting': {'show_post_dates': False},
             'foia-freq-req-record': {'show_post_tags': False},
         }
 
@@ -1010,29 +956,6 @@ class FeaturedContent(blocks.StructBlock):
 
     class Media:
         js = ['video-player.js']
-
-
-class HTMLBlock(blocks.StructBlock):
-    html_url = blocks.RegexBlock(
-        label='Source URL',
-        default='',
-        required=True,
-        regex=r'^https://(s3.amazonaws.com/)?files.consumerfinance.gov/.+$',
-        error_messages={
-            'required': 'The HTML URL field is required for rendering raw '
-                        'HTML from a remote source.',
-            'invalid': 'The URL is invalid or not allowed. ',
-        }
-    )
-
-    def render(self, value, context=None):
-        resp = requests.get(value['html_url'], timeout=5)
-        resp.raise_for_status()
-        return mark_safe(resp.content)
-
-    class Meta:
-        label = 'HTML Block'
-        icon = 'code'
 
 
 class ChartBlock(blocks.StructBlock):

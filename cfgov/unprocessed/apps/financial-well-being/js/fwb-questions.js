@@ -169,4 +169,4 @@ function init() {
   setUpData();
 }
 
-export { init };
+export default { init };

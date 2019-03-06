@@ -1,5 +1,5 @@
 import * as breakpointState from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state';
-import breakpointsConfig from '../../../../../cfgov/unprocessed/js/config/breakpoints-config';
+import breakpointsConfig from 'cf-core/src/cf-vars-breakpoints';
 
 let configKeys;
 
@@ -27,7 +27,8 @@ describe( 'breakpoint-state', () => {
 
       const breakpointStateGet = breakpointState.get();
       // eslint-disable-next guard-for-in
-      for ( const stateKey in breakpointStateGet ) {
+      let stateKey;
+      for ( stateKey in breakpointStateGet ) {
         if ( breakpointStateGet[stateKey] === true ) trueValueCount++;
       }
 
@@ -39,7 +40,8 @@ describe( 'breakpoint-state', () => {
       let breakpointStateKey;
 
       // eslint-disable-next-line guard-for-in
-      for ( const rangeKey in breakpointsConfig ) {
+      let rangeKey;
+      for ( rangeKey in breakpointsConfig ) {
         width = breakpointsConfig[rangeKey].max ||
                 breakpointsConfig[rangeKey].min;
         breakpointStateKey =

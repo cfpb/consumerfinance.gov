@@ -48,7 +48,7 @@ class MultiSelect {
   }
 
   async dropDownHasValue( value ) {
-    const selector = `li[data-option="${ value }"].filter-match`;
+    const selector = `li[data-option="${ value }"].u-filter-match`;
     const selectedTagsCount = await element.all( by.css( selector ) ).count();
 
     return selectedTagsCount > 0;
@@ -63,7 +63,7 @@ class MultiSelect {
   }
 
   getDropDownCount() {
-    return element.all( by.css( '.o-multiselect .filter-match' ) ).count();
+    return element.all( by.css( '.o-multiselect .u-filter-match' ) ).count();
   }
 
   getDropDownLabelElements() {

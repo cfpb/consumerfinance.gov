@@ -124,6 +124,10 @@ class Migration(migrations.Migration):
 The `forwards()` and `backwards()` functions are where any changes
 that need to happen to a model's data are made.
 
+!!! note
+    While backwards migrations are necessary in external libraries that we create, 
+    we do not require them in cfgov-refresh 
+    because we prefer not to rollback migrations that have already been applied.
 
 ### Wagtail-specific considerations
 
@@ -134,8 +138,7 @@ This section describes ways we try to address these challenges in cfgov-refresh.
 
 The data migration needs to modify both the existing Wagtail pages
 that correspond to the changed model and all revisions of that page.
-It also needs to be able to manipulate the StreamField contents.
-
+It also needs to be able to manipulate the contents of StreamFields.
 
 As described in the
 [editing a component guide](../editing-components/#editing-a-field),
@@ -158,33 +161,35 @@ from v1.util.migrations import migrate_page_types_and_fields
 
 
 def forward_mapper(page_or_revision, data):
-    data = dict(data)
     # Manipulate the stream block data forwards
     return data
 
 
 def backward_mapper(page_or_revision, data):
-    data = dict(data)
     # Manipulate the stream block data backwards
     return data
 
 
 def forwards(apps, schema_editor):
     page_types_and_fields = [
-        ('myapp', 'MyPage', 'streamfield_name', 'streamblock_type'),
+        ('myapp', 'MyPage', 'field_name', 'block_name'),
     ]
-    migrate_page_types_and_fields(apps,
-                                  page_types_and_fields,
-                                  forward_mapper)
+    migrate_page_types_and_fields(
+        apps,
+        page_types_and_fields,
+        forward_mapper
+    )
 
 
 def backwards(apps, schema_editor):
     page_types_and_fields = [
-        ('myapp', 'MyPage', 'streamfield_name', 'streamblock_type'),
+        ('myapp', 'MyPage', 'field_name', 'block_name'),
     ]
-    migrate_page_types_and_fields(apps,
-                                  page_types_and_fields,
-                                  backward_mapper)
+    migrate_page_types_and_fields(
+        apps,
+        page_types_and_fields,
+        backward_mapper
+    )
 
 
 class Migration(migrations.Migration):
@@ -194,25 +199,77 @@ class Migration(migrations.Migration):
     ]
 ```
 
+`field_name` is the name of the StreamField on the Page model that contains the blocks to migrate. 
+`block_name` is the name of the block within a StreamField that contains the data to be migrated.
+
+StreamBlocks can themselves also contain child blocks. 
+The block name can be given as a list of block names 
+that form the "path" to the block that needs to be migrated. 
+For example :
+
+```python
+def forwards(apps, schema_editor):
+    page_types_and_fields = [
+        ('myapp', 'MyPage', 'field_name', ['parent_block', 'child_block']),
+    ]
+    migrate_page_types_and_fields(
+        apps,
+        page_types_and_fields,
+        forward_mapper
+    )
+```
+
+In this example, 
+a block with the name `child_block` 
+that is inside a block named `parent_block` 
+will be passed to the `forward_mapper` function.
+
+The `data` that gets passed to the `forward_mapper` or `backward_mapper`
+is a JSON-compatible Python `dict` that corresponds to the block's schema.
+
 ### Utility functions
 
 These functions, defined in `v1.util.migrations`,
-are used in the above data migration example.
+are used in the above data migration example. 
+They reduce the amount of boilerplate required
+to work with Wagtail StreamField data in data migrations.
 
 #### `migrate_page_types_and_fields(apps, page_types_and_fields, mapper)`
 
-Migrate the fields of a Wagtail page type using the given mapper function.
+Migrate the fields of a Wagtail page type using the given `mapper` function.
 `page_types_and_fields` should be a list of 4-tuples providing
-`('app', 'PageType', 'field_name', 'block type')`.
+`('app', 'PageType', 'field_name', 'block_name')` or 
+`('app', 'PageType', 'field_name', ['parent_block_name', 'child_block_name'])`. 
 
-The mapper function should take `page_or_revision` and the stream block value.
+`field_name` is the name of the StreamField on the Page model. 
 
-#### `migrate_stream_field(page_or_revision, field_name, block_type, mapper)`
+`block_name` is the name of the StreamBlock within the StreamField to migrate. 
 
-Migrate a block of the type within a StreamField of the name
-belonging to the page or revision using the mapper function.
+The mapper function should take `page_or_revision` 
+and the stream block's value as a `dict`.
 
-The mapper function should take `page_or_revision` and the stream block value.
+This function calls `migrate_stream_field()`.
+
+#### `migrate_stream_field(page_or_revision, field_name, block_path, mapper)`
+
+Migrate all occurrences of the block name 
+contained within the `block_path` list
+belonging to the page or revision using the `mapper` function.
+
+The mapper function should take `page_or_revision` 
+and the stream block's value as a `dict`.
+
+This function calls `migrate_stream_data()`.
+
+#### `migrate_stream_data(page_or_revision, block_path, stream_data, mapper)`
+
+Migrate all occurrences of the block name 
+contained within the `block_path` list
+within the `stream_data` `dict` 
+using the given `mapper` function.
+
+The mapper function should take `page_or_revision`
+and the stream block's value as a `dict`.
 
 #### `get_stream_data(page_or_revision, field_name)`
 

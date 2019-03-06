@@ -129,40 +129,6 @@ class OrganismsTestCase(TestCase):
         response = django_client.get('/learn/')
         self.assertContains(response, 'Full width text content')
 
-    def test_image_text_groups(self):
-        """Image Text Groups correctly display on a Landing Page"""
-        landing_page = LandingPage(
-            title='Landing Page',
-            slug='landing',
-        )
-        landing_page.content = StreamValue(
-            landing_page.content.stream_block,
-            [
-                atomic.image_text_50_50_group,
-                atomic.image_text_25_75_group
-            ],
-            True,
-        )
-        publish_page(child=landing_page)
-        response = django_client.get('/landing/')
-        self.assertContains(response, 'Image 25 75 Group')
-        self.assertContains(response, 'Image 50 50 Group')
-
-    def test_half_width_link_blob_group(self):
-        """Half width link blob group correctly displays on a Landing Page"""
-        landing_page = LandingPage(
-            title='Landing Page',
-            slug='landing',
-        )
-        landing_page.content = StreamValue(
-            landing_page.content.stream_block,
-            [atomic.half_width_link_blob_group],
-            True
-        )
-        publish_page(child=landing_page)
-        response = django_client.get('/landing/')
-        self.assertContains(response, 'Half Width Link Blob Group')
-
     def test_info_unit_group(self):
         """Info Unit Group correctly displays on a Landing Page"""
         landing_page = LandingPage(
@@ -263,21 +229,6 @@ class OrganismsTestCase(TestCase):
         response = django_client.get('/learn/')
         self.assertContains(response, 'Item Introduction')
         self.assertContains(response, 'Item introduction body')
-
-    def test_html_block(self):
-        """ HTML Block correctly renders HTML on a Browse Page"""
-        browse_page = BrowsePage(
-            title='Browse Page',
-            slug='browse',
-        )
-        browse_page.content = StreamValue(
-            browse_page.content.stream_block,
-            [atomic.html_block],
-            True
-        )
-        publish_page(child=browse_page)
-        response = self.client.get('/browse/')
-        self.assertContains(response, 'Age 30 to 44')
 
     def test_data_snapshot(self):
         """ Data Snapshot correctly renders fields on a Browse Page"""

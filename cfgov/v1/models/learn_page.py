@@ -100,18 +100,18 @@ class AbstractFilterPage(CFGOVPage):
 
 class LearnPage(AbstractFilterPage):
     content = StreamField([
-        ('info_unit_group_25_75_only', organisms.InfoUnitGroup2575Only()),
-        ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
-        ('expandable', organisms.Expandable()),
+        ('info_unit_group_25_75_only', organisms.InfoUnitGroup2575Only()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table_block', organisms.AtomicTableBlock(
-            table_options={'renderer': 'html'})),
+        ('expandable', organisms.Expandable()),
+        ('well', organisms.Well()),
         ('call_to_action', molecules.CallToAction()),
-        ('feedback', v1_blocks.Feedback()),
-        ('video_player', organisms.VideoPlayer()),
         ('email_signup', organisms.EmailSignUp()),
-        ('image_text_25_75_group', organisms.ImageText2575Group()),
+        ('video_player', organisms.VideoPlayer()),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'}
+        )),
+        ('feedback', v1_blocks.Feedback()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel('content')

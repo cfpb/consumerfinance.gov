@@ -9,14 +9,14 @@ from django.db import models
 from django.http import Http404
 from django.template.defaultfilters import slugify
 from django.template.response import TemplateResponse
-from django.utils import timezone
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
+    TabbedInterface
 )
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page
@@ -28,6 +28,10 @@ from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
 from v1.models.snippets import ReusableText
 
 
+LANGUAGE_BASES = {
+    'es': '/es/obtener-respuestas/{}/',
+    'en': '/ask-cfpb/{}/'
+}
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
 ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
@@ -271,6 +275,27 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
 
         return 'ask-cfpb/category-page.html'
 
+    def prune_answers(self, id_list):
+        """Make sure category pages don't see nonexistent or draft pages."""
+        answer_query = self.Answer.objects.filter(
+            pk__in=id_list).order_by('-pk')
+        if self.language == 'es':
+            pruned_pks = [a.pk for a in answer_query
+                          if a.spanish_page
+                          and a.spanish_page.live
+                          and not a.spanish_page.redirect_to]
+            pruned_answers = answer_query.filter(pk__in=pruned_pks).values(
+                'id', 'question', 'question_es',
+                'slug', 'slug_es', 'answer_es')
+            for a in pruned_answers:
+                a['answer_es'] = Truncator(a['answer_es']).words(
+                    40, truncate=' ...')
+        else:  # English answers are pruned upstream
+            pruned_answers = answer_query.values(
+                'id', 'question', 'question_es',
+                'slug', 'slug_es', 'answer_es')
+        return pruned_answers
+
     def get_context(self, request, *args, **kwargs):
         context = super(
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
@@ -287,17 +312,11 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
         facet_dict = json.loads(facet_map)
         subcat_ids = facet_dict['subcategories'].keys()
         answer_ids = facet_dict['answers'].keys()
+        answers = self.prune_answers(answer_ids)
         audience_ids = facet_dict['audiences'].keys()
         subcats = self.SubCategory.objects.filter(
             pk__in=subcat_ids).values(
                 'id', 'slug', 'slug_es', 'name', 'name_es')
-        answers = self.Answer.objects.filter(
-            pk__in=answer_ids).order_by('-pk').values(
-                'id', 'question', 'question_es',
-                'slug', 'slug_es', 'answer_es')
-        for a in answers:
-            a['answer_es'] = Truncator(a['answer_es']).words(
-                40, truncate=' ...')
         audiences = self.Audience.objects.filter(
             pk__in=audience_ids).values('id', 'name')
         context.update({
@@ -523,13 +542,37 @@ class AnswerPage(CFGOVPage):
     Page type for Ask CFPB answers.
     """
     from ask_cfpb.models import Answer
-    question = RichTextField(blank=True, editable=False)
-    answer = RichTextField(blank=True, editable=False)
-    snippet = RichTextField(
-        blank=True, help_text='Optional answer intro', editable=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    publish_date = models.DateTimeField(default=timezone.now)
+    last_edited = models.DateField(
+        blank=True,
+        null=True,
+        help_text="Change the date to today if you make a significant change.")
+    question = models.TextField(blank=True)
+    statement = models.TextField(
+        blank=True,
+        help_text=(
+            "(Optional) Use this field to rephrase the question title as "
+            "a statement. Use only if this answer has been chosen to appear "
+            "on a money topic portal (e.g. /consumer-tools/debt-collection)."))
+    answer = RichTextField(
+        blank=True,
+        features=[
+            'bold', 'italic', 'h2', 'h3', 'h4', 'link', 'ol', 'ul',
+            'document-link', 'image', 'embed', 'ask-tips', 'edit-html'
+        ],
+        help_text=(
+            "Do not use H2 or H3 to style text. Only use the HTML Editor "
+            "for troubleshooting. To style tips, warnings and notes, "
+            "select the content that will go inside the rule lines "
+            "(so, title + paragraph) and click the Pencil button "
+            "to style it. Re-select the content and click the button "
+            "again to unstyle the tip."
+        )
+    )
+    snippet = RichTextField(blank=True, help_text='Optional answer intro')
+    search_tags = models.CharField(
+        max_length=1000,
+        blank=True,
+        help_text="PLEASE DON'T USE. THIS FIELD IS NOT YET ACTIVATED.")
     answer_base = models.ForeignKey(
         Answer,
         blank=True,
@@ -549,6 +592,15 @@ class AnswerPage(CFGOVPage):
     ], blank=True)
 
     content_panels = CFGOVPage.content_panels + [
+        MultiFieldPanel([
+            FieldRowPanel([FieldPanel('last_edited')])
+        ],
+            heading="Visible time stamp"),
+        FieldPanel('question'),
+        FieldPanel('statement'),
+        FieldPanel('snippet'),
+        FieldPanel('answer'),
+        FieldPanel('search_tags'),
         FieldPanel('redirect_to'),
     ]
 
@@ -591,7 +643,7 @@ class AnswerPage(CFGOVPage):
             for audience in self.answer_base.audiences.all()]
         if self.language == 'es':
             tag_dict = self.Answer.valid_tags(language='es')
-            context['tags_es'] = [tag for tag in self.answer_base.tags_es
+            context['tags_es'] = [tag for tag in self.answer_base.clean_tags_es
                                   if tag in tag_dict['valid_tags']]
             context['tweet_text'] = Truncator(self.question).chars(
                 100, truncate=' ...')
@@ -601,13 +653,14 @@ class AnswerPage(CFGOVPage):
         elif self.language == 'en':
             # we're not using tags on English pages yet, so cut the overhead
             # tag_dict = self.Answer.valid_tags()
-            # context['tags'] = [tag for tag in self.answer_base.tags
+            # context['tags'] = [tag for tag in self.answer_base.clean_tags
             #                    if tag in tag_dict['valid_tags']]
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
                 ENGLISH_DISCLAIMER_SNIPPET_TITLE)
-            context['last_edited'] = self.answer_base.last_edited
+            context['last_edited'] = (
+                self.last_edited or self.answer_base.last_edited)
             # breadcrumbs and/or category should reflect
             # the referrer if it is a consumer tools portal or
             # ask category page

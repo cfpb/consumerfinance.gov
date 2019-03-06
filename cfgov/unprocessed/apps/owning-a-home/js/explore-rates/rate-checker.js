@@ -1,4 +1,5 @@
 import * as params from './params';
+import * as tab from './tab';
 import * as template from './template-loader';
 import {
   calcLoanAmount,
@@ -25,7 +26,6 @@ import jumbo from 'jumbo-mortgage';
 import median from 'median';
 import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
-import * as tab from './tab';
 import unFormatUSD from 'unformat-usd';
 
 // TODO: remove jquery.
@@ -224,7 +224,8 @@ function updateView() {
 function updateLanguage( totalVals ) {
   function renderLocation() {
     const stateDropDown = document.querySelector( '#location' );
-    const state = stateDropDown.options[stateDropDown.selectedIndex].textContent;
+    const selectedDropDown = stateDropDown.options[stateDropDown.selectedIndex];
+    const state = selectedDropDown.textContent;
     const locations = document.querySelectorAll( '.location' );
     // forEach could be used here, but it's not supported in IE11.
     for ( let i = 0, len = locations.length; i < len; i++ ) {

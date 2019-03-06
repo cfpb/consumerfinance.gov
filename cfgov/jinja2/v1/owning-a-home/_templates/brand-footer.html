@@ -37,7 +37,14 @@
         {% endif %}
         {% endfor %}
         <div class="brand-footer_container brand-footer_container-{{ links | length + 1 }}">
-            {% include "_templates/oah-email-signup.html" %}
+            {% set value = {
+                'heading': 'Buying a home?',
+                'default_heading': True,
+                'text': 'Sign up for email tips and info to help you through the process.',
+                'gd_code': 'USCFPB_127',
+                'disclaimer_url': '/owning-a-home/privacy-act-statement/'
+            } %}
+            {% include '_includes/organisms/email-signup.html' %}
         </div>
     </div>
 </footer>

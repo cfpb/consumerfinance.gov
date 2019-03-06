@@ -11,7 +11,6 @@ import EventObserver from '../modules/util/EventObserver';
 import Expandable from 'cf-expandables/src/Expandable';
 import FormModel from '../modules/util/FormModel';
 import Multiselect from '../molecules/Multiselect';
-import { UNDEFINED } from '../modules/util/standard-type';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 
@@ -37,6 +36,7 @@ function FilterableListControls( element ) {
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
+      let UNDEFINED;
       return UNDEFINED;
     }
 
@@ -45,10 +45,8 @@ function FilterableListControls( element ) {
     /* Instantiate multiselects before their containing expandable
        so height of any 'selected choice' buttons is included when
        expandable height is calculated initially. */
-    const multiSelects = instantiateAll(
-      `.${ BASE_CLASS } select[multiple]`,
-      Multiselect
-    );
+    const multiSelectsSelector = `.${ BASE_CLASS } .${ Multiselect.BASE_CLASS }`;
+    const multiSelects = instantiateAll( multiSelectsSelector, Multiselect );
 
     const _expandables = Expandable.init( _dom );
     _expandable = _expandables[0];
@@ -173,7 +171,8 @@ function FilterableListControls( element ) {
 
       validatedField = _validateField( field );
 
-      for ( const prop in validatedField.status ) {
+      let prop;
+      for ( prop in validatedField.status ) {
         if ( validatedField.status[prop] === false ) {
           fieldIsValid = false;
         }

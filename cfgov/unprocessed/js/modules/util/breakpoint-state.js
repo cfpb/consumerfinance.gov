@@ -2,7 +2,7 @@
    Get Breakpoint State
    ========================================================================== */
 
-import breakpointsConfig from '../../config/breakpoints-config';
+import breakpointsConfig from 'cf-core/src/cf-vars-breakpoints';
 import { getViewportDimensions } from './get-viewport-dimensions';
 
 /**
@@ -28,7 +28,8 @@ function get( width ) {
   width = width || getViewportDimensions().width;
 
   // eslint-disable-next-line guard-for-in
-  for ( const rangeKey in breakpointsConfig ) {
+  let rangeKey;
+  for ( rangeKey in breakpointsConfig ) {
     breakpointKey = 'is' + rangeKey.charAt( 0 ).toUpperCase() +
                     rangeKey.slice( 1 );
     breakpointState[breakpointKey] =

@@ -1,15 +1,16 @@
 import { queryOne } from './dom-traverse';
 
 /**
- * Shortcut for creating new dom elements
- * @param   {string} tag     The html elem to create
- * @param   {Object} options The options for building the elem
- * @returns {HTMLNode}       The created elem
+ * Shortcut for creating new dom elements.
+ * @param {string} tag - The html elem to create.
+ * @param {Object} options - The options for building the elem.
+ * @returns {HTMLNode} The created elem.
  */
 function create( tag, options ) {
   const elem = document.createElement( tag );
 
-  for ( const i in options ) {
+  let i;
+  for ( i in options ) {
     if ( options.hasOwnProperty( i ) ) {
       const val = options[i];
       let ref;

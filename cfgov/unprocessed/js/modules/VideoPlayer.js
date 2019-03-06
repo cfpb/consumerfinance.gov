@@ -41,6 +41,7 @@ function VideoPlayer( element, options ) {
   options = options || {};
   this.baseElement = _ensureElement( element, options.createIFrame );
   this.iFrameProperties = assign(
+    {},
     this.baseElement.dataset,
     this.iFrameProperties
   );

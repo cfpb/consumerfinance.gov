@@ -6,13 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
-from django.utils.html import format_html, format_html_join
+from django.utils.html import format_html
 
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
 from wagtail.contrib.modeladmin.views import EditView
 from wagtail.wagtailadmin.menu import MenuItem
+from wagtail.wagtailadmin.rich_text import HalloPlugin
 from wagtail.wagtailcore import hooks
 
 from ask_cfpb.models import Answer, Audience, Category, NextStep, SubCategory
@@ -103,23 +104,25 @@ def export_data(request):
     return render(request, 'admin/export.html')
 
 
-def editor_js():
-    js_files = [
-        'js/html_editor.js',
-        'js/ask_cfpb_tips.js'
-    ]
-    js_includes = format_html_join(
-        '\n', '<script src="{0}{1}"></script>',
-        ((settings.STATIC_URL, filename) for filename in js_files)
+@hooks.register('register_rich_text_features')
+def register_tips_feature(features):
+    features.register_editor_plugin(
+        'hallo', 'ask-tips',
+        HalloPlugin(
+            name='answermodule',
+            js=['js/ask_cfpb_tips.js'],
+        )
     )
 
-    return js_includes + format_html(
-        """
-        <script>
-            registerHalloPlugin('editHtmlButton');
-            registerHalloPlugin('answermodule');
-        </script>
-        """
+
+@hooks.register('register_rich_text_features')
+def register_html_feature(features):
+    features.register_editor_plugin(
+        'hallo', 'edit-html',
+        HalloPlugin(
+            name='editHtmlButton',
+            js=['js/html_editor.js'],
+        )
     )
 
 
@@ -130,7 +133,6 @@ def editor_css():
         'css/question-tips.css">\n')
 
 
-hooks.register('insert_editor_js', editor_js)
 hooks.register('insert_editor_css', editor_css)
 
 

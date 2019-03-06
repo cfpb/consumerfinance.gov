@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from django.db import models
 from django.utils.http import urlquote
+from django.utils.six import python_2_unicode_compatible
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.models import Orderable
@@ -56,6 +57,7 @@ class USAJobsApplicationLink(Orderable, models.Model):
     ]
 
 
+@python_2_unicode_compatible
 class GradePanel(Orderable, models.Model):
     grade = models.ForeignKey(Grade, related_name='grade_panels')
     job_listing = ParentalKey(JobListingPage, related_name='grades')
@@ -67,5 +69,5 @@ class GradePanel(Orderable, models.Model):
         FieldPanel('grade'),
     ]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.grade.grade

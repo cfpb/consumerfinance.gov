@@ -6,7 +6,7 @@ const LAST_2 = [
 const LAST_2_IE_11_UP = [
   'last 2 versions',
   'not ie < 11',
-  'not IE_Mob < 11'
+  'not ie_mob < 11'
 ];
 
 const LAST_2_IE_9_UP = [

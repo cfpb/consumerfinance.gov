@@ -230,13 +230,6 @@ info_unit_group = {
     }
 }
 
-html_block = {
-    "type": "html_block",
-    "value": {
-        "html_url": "https://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/charts/auto-loans/borrower-age/figure-4a__30-to-44__auto-loans.html"  # noqa
-    }
-}
-
 email_signup = {
     'type': 'email_signup',
     'value': {
