@@ -9,9 +9,10 @@ from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 
+from v1.management.commands.update_chart_block_dates import get_inquiry_month
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_page
-from v1.management.commands.update_chart_block_dates import get_inquiry_month
+
 
 class UpdateChartBlockDatesTestCase(TestCase):
         def test_get_inquiry_month(self):
