@@ -120,28 +120,6 @@ class Hero(blocks.StructBlock):
         required=False,
         help_text='Maximum character count: 185 (including spaces)'
     )
-
-    links = blocks.ListBlock(
-        atoms.Hyperlink(),
-        help_text='If your hero needs a call-to-action link, '
-                  'enter it here, rather than inside the body field.'
-    )
-    is_button = blocks.BooleanBlock(
-        required=False,
-        help_text='Select to render any links given above as buttons.'
-    )
-
-    image = ImageChooserBlock(
-        required=False,
-        help_text='Should be exactly 390px tall, and up to 940px wide, '
-                  'unless this is an overlay or bleeding style hero.'
-    )
-    is_overlay = blocks.BooleanBlock(
-        required=False,
-        help_text='Select if you want the provided image to be '
-                  'a background image under the entire hero.'
-    )
-
     background_color = blocks.CharBlock(
         required=False,
         help_text='Specify a hex value (with the # sign) '
@@ -154,17 +132,16 @@ class Hero(blocks.StructBlock):
         help_text='Turns the hero text white. Useful if using '
                   'a dark background color or background image.'
     )
-    cta_link_color = blocks.CharBlock(
+    image = ImageChooserBlock(
         required=False,
-        label='CTA link color',
-        help_text='If using a dark background color or background image, '
-                  'you may need to specify an alternate color '
-                  'for the call-to-action link. Specify a hex value '
-                  '(with the # sign) from our official palette: '
-                  'https://github.com/cfpb/cf-theme-cfpb/blob/'
-                  'master/src/color-palette.less'
+        help_text='Should be exactly 390px tall, and up to 940px wide, '
+                  'unless this is an overlay or bleeding style hero.'
     )
-
+    is_overlay = blocks.BooleanBlock(
+        required=False,
+        help_text='Select if you want the provided image to be '
+                  'a background image under the entire hero.'
+    )
     is_bleeding = blocks.BooleanBlock(
         required=False,
         help_text='Select if you want the provided image to bleed '
@@ -180,35 +157,6 @@ class Hero(blocks.StructBlock):
         icon = 'image'
         template = '_includes/molecules/hero.html'
         classname = 'block__flush-top block__flush-bottom'
-
-
-class FormFieldWithButton(blocks.StructBlock):
-    btn_text = blocks.CharBlock(required=False)
-
-    required = blocks.BooleanBlock(required=False)
-
-    info = blocks.RichTextBlock(required=False, label="Disclaimer")
-    inline_info = blocks.BooleanBlock(
-        required=False,
-        label='Inline disclaimer',
-        help_text=('Show disclaimer on same line as button. Only select '
-                   'this option if the disclaimer text is a few words (ie, '
-                   '"Privacy Act statement") rather than a full sentence.')
-    )
-    label = blocks.CharBlock(required=True)
-    type = blocks.ChoiceBlock(choices=[
-        ('text', 'Text'),
-        ('checkbox', 'Checkbox'),
-        ('email', 'Email'),
-        ('number', 'Number'),
-        ('url', 'URL'),
-        ('radio', 'Radio'),
-    ], required=False)
-    placeholder = blocks.CharBlock(required=False)
-
-    class Meta:
-        icon = 'mail'
-        template = '_includes/molecules/form-field-with-button.html'
 
 
 class CallToAction(blocks.StructBlock):

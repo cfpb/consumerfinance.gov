@@ -7,12 +7,12 @@ let selectDom;
 let multiselectDom;
 
 const HTML_SNIPPET = `
-  <select name="test-select" id="test-select" multiple>
-    <option value="Debt collection">Debt collection</option>
-    <option value="consumers-responses">Consumer&#39;s Responses</option>
-    <option value="Mortgage disclosure">Mortgage disclosure</option>
-    <optgroup label="All other topics">
-  </select>
+<select name="test-select" id="test-select" multiple>
+  <option value="Debt collection">Debt collection</option>
+  <option value="consumers-responses">Consumer&#39;s Responses</option>
+  <option value="Mortgage disclosure">Mortgage disclosure</option>
+  <optgroup label="All other topics">
+</select>
 `;
 
 describe( 'Multiselect', () => {
@@ -40,8 +40,7 @@ describe( 'Multiselect', () => {
       const option = document.querySelector( 'option' );
       option.defaultSelected = true;
       multiselect.init();
-      const choices =
-          document.querySelectorAll( '.o-multiselect_choices li' );
+      const choices = document.querySelectorAll( '.o-multiselect_choices li' );
 
       expect( choices.length ).toBe( 1 );
       expect( choices[0].innerHTML ).toContain( 'Debt collection' );
@@ -53,10 +52,11 @@ describe( 'Multiselect', () => {
       multiselect.init();
       multiselect.expand();
       multiselectDom = document.querySelector( '.o-multiselect' );
-      const fieldset =
-        multiselectDom.querySelector( '.o-multiselect_fieldset' );
+      const fieldset = multiselectDom.querySelector(
+        '.o-multiselect_fieldset'
+      );
 
-      expect( multiselectDom.className ).toBe( 'o-multiselect active' );
+      expect( multiselectDom.className ).toBe( 'o-multiselect u-active' );
       expect( fieldset.getAttribute( 'aria-hidden' ) ).toBe( 'false' );
     } );
 
@@ -65,8 +65,9 @@ describe( 'Multiselect', () => {
       multiselect.expand();
       multiselect.collapse();
       multiselectDom = document.querySelector( '.o-multiselect' );
-      const fieldset =
-        multiselectDom.querySelector( '.o-multiselect_fieldset' );
+      const fieldset = multiselectDom.querySelector(
+        '.o-multiselect_fieldset'
+      );
 
       expect( multiselectDom.className ).toBe( 'o-multiselect' );
       expect( fieldset.getAttribute( 'aria-hidden' ) ).toBe( 'true' );
@@ -86,13 +87,14 @@ describe( 'Multiselect', () => {
     xit( 'should open when the search input is clicked', function() {
       multiselect.init();
       multiselectDom = document.querySelector( '.o-multiselect' );
-      const fieldset =
-        multiselectDom.querySelector( '.o-multiselect_fieldset' );
+      const fieldset = multiselectDom.querySelector(
+        '.o-multiselect_fieldset'
+      );
       const search = document.querySelector( '#test-select' );
       search.click();
 
       expect( document.activeElement.id ).toBe( 'test-select' );
-      expect( multiselectDom.className ).toBe( 'o-multiselect active' );
+      expect( multiselectDom.className ).toBe( 'o-multiselect u-active' );
       expect( fieldset.getAttribute( 'aria-hidden' ) ).toBe( 'false' );
     } );
 
@@ -100,8 +102,9 @@ describe( 'Multiselect', () => {
       multiselect.init();
       multiselect.expand();
       multiselectDom = document.querySelector( '.o-multiselect' );
-      const fieldset =
-        multiselectDom.querySelector( '.o-multiselect_fieldset' );
+      const fieldset = multiselectDom.querySelector(
+        '.o-multiselect_fieldset'
+      );
       document.click();
 
       expect( multiselectDom.className ).toBe( 'o-multiselect' );

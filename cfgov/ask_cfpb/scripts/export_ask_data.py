@@ -48,11 +48,13 @@ def assemble_output():
         'related_questions',
         'next_step__title')
     answers = list(Answer.objects.prefetch_related(*prefetch_fields).values(
-        'id', 'answer', 'answer_es', 'question', 'question_es',
-        'snippet', *prefetch_fields))
+        'id', *prefetch_fields))
+
     answer_pages = list(AnswerPage.objects.values(
-        'id', 'language', 'answer_base__id',
-        'url_path', 'live', 'redirect_to_id'))
+        'language', 'answer_base__id', 'url_path', 'live',
+        'redirect_to_id', 'question', 'answer', 'snippet'
+    ))
+
     output_rows = []
     seen = []
 
@@ -65,24 +67,25 @@ def assemble_output():
 
         output = {heading: '' for heading in HEADINGS}
         output['ASK_ID'] = answer['id']
-        output['Question'] = answer['question']
-        output['ShortAnswer'] = clean_and_strip(answer['snippet'])
-        output['Answer'] = clean_and_strip(answer['answer'])
-        output['SpanishQuestion'] = answer['question_es'].replace('\x81', '')
-        output['SpanishAnswer'] = clean_and_strip(
-            answer['answer_es']).replace('\x81', '')
         output['RelatedResources'] = answer['next_step__title']
         output['Topic'] = answer['category__name']
 
         for page in answer_pages:
             if page['answer_base__id'] == answer['id']:
-                url = page['url_path'].replace('/cfgov', '')
                 if page['language'] == 'en':
-                    output['URL'] = url
+                    output['Question'] = page['question']
+                    output['Answer'] = clean_and_strip(page['answer'])
+                    output['ShortAnswer'] = clean_and_strip(page['snippet'])
+                    output['URL'] = page['url_path'].replace('/cfgov', '')
                     output['Live'] = page['live']
                     output['Redirect'] = page['redirect_to_id']
                 elif page['language'] == 'es':
-                    output['SpanishURL'] = url
+                    output['SpanishQuestion'] = page['question'].replace(
+                        '\x81', '')
+                    output['SpanishAnswer'] = clean_and_strip(
+                        page['answer']).replace('\x81', '')
+                    output['SpanishURL'] = page['url_path'].replace(
+                        '/cfgov', '')
                     output['SpanishLive'] = page['live']
                     output['SpanishRedirect'] = page['redirect_to_id']
 

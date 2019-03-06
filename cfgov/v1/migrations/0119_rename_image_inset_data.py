@@ -57,6 +57,7 @@ def backwards(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
+        ('regulations3k', '0013_add_image_to_fullwidthtext'),
         ('v1', '0118_add_image_to_fullwidthtext')
     ]
     operations = [
