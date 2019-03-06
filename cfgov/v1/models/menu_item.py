@@ -1,3 +1,5 @@
+from six import text_type
+
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -125,4 +127,4 @@ class MenuItem(models.Model):
                         if child.name != 'span':
                             child = child.wrap(soup.new_tag('span'))
                         child['aria-hidden'] = 'true'
-        return str(soup).decode('utf-8').replace(u'\xa0', ' ')
+        return text_type(soup).replace(u'\xa0', ' ')
