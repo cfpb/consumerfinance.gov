@@ -29,15 +29,6 @@ class UpdateChartBlockDatesTestCase(TestCase):
             self.assertNotEqual(get_inquiry_month(markets, data_source_other), '2018-06-01')
             self.assertIs(get_inquiry_month(markets, data_source_other), None)
 
-            wonky_markets = [
-                {
-                "data_month": "2018-07-01",
-                "inquiry_month": "2018-06-01",
-                "market_key": "CRC",
-                "tightness_month": "2018-02-01",
-                }
-            ]
-            
         def test_chart_block(self):
             """ Management command correctly updates chart block dates"""
             browse_page = BrowsePage(
