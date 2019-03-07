@@ -589,9 +589,7 @@ class AnswerPage(CFGOVPage):
             AutocompletePanel(
                 'related_questions',
                 page_type='ask_cfpb.AnswerPage',
-                is_single=False),
-            ImageChooserPanel('social_sharing_image'),
-            FieldPanel('answer_id')],
+                is_single=False)],
             heading="Metadata",
             classname="collapsible"),
         AutocompletePanel('redirect_to_page', page_type='ask_cfpb.AnswerPage'),
