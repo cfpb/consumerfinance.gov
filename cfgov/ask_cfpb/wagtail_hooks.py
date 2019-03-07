@@ -13,22 +13,8 @@ from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailadmin.rich_text import HalloPlugin
 from wagtail.wagtailcore import hooks
 
-from ask_cfpb.models import Audience, Category, NextStep, SubCategory
+from ask_cfpb.models import Category, SubCategory
 from ask_cfpb.scripts import export_ask_data
-
-
-class AudienceModelAdmin(ModelAdmin):
-    model = Audience
-    menu_icon = 'list-ul'
-    menu_label = 'Audiences'
-
-
-class NextStepModelAdmin(ModelAdmin):
-    model = NextStep
-    menu_label = 'Related resources'
-    menu_icon = 'list-ul'
-    list_display = (
-        'title', 'text')
 
 
 class SubCategoryModelAdmin(ModelAdmin):
