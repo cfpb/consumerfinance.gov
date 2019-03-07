@@ -49,10 +49,10 @@
         <br>
         {% endif %}
 
-        {% if value.note %}
         <strong>Note:</strong>
-        {{ value.note }}
+            {% if value.note %}
+            {{ value.note }}
+            {% endif %}
         The most recent data available in this visualization are for {{ value.last_updated_projected_data.strftime('%B %Y') }}.
-        {% endif %}
     </p>
 </div>
