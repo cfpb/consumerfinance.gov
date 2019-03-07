@@ -77,6 +77,19 @@ hero = {
         'heading': "this is a hero heading"
     }
 }
+notification = {
+    'type': 'notification',
+    'value': {
+        'message': "this is a notification message",
+        'explanation': "this is a notification explanation",
+        'links': [
+            {
+                "url": "/",
+                "text": "this is a notification link"
+            }
+        ]
+    }
+}
 related_metadata = {
     'type': 'related_metadata',
     'value': {
