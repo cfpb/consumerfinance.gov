@@ -76,8 +76,8 @@
                 {% endif %}
 
                 {# This brings in the feedback module #}
-                {% for block in page.content %}
-                    {{- form_block.render(block, 'content', loop.index0) -}}
+                {% for block in page.user_feedback %}
+                    {{- form_block.render(block, 'user_feedback', loop.index0) -}}
                 {% endfor %}
                 {% if disclaimer %}
                 <div class="block block__flush-bottom ask-disclaimer">

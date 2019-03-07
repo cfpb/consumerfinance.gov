@@ -1,0 +1,194 @@
+[
+{
+    "model": "v1.portaltopic",
+    "pk": 1,
+    "fields": {
+        "heading": "Auto loans",
+        "heading_es": "Comprar un veh\u00edculo"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 2,
+    "fields": {
+        "heading": "Bank accounts",
+        "heading_es": "Cuentas bancarias"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 3,
+    "fields": {
+        "heading": "Credit cards",
+        "heading_es": "Tarjetas de cr\u00e9dito"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 4,
+    "fields": {
+        "heading": "Credit reports and scores",
+        "heading_es": "Adquirir cr\u00e9dito"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 5,
+    "fields": {
+        "heading": "Debt collection",
+        "heading_es": "Manejar una deuda"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 7,
+    "fields": {
+        "heading": "Fraud and scams",
+        "heading_es": ""
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 8,
+    "fields": {
+        "heading": "Money transfers",
+        "heading_es": "Enviar dinero"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 9,
+    "fields": {
+        "heading": "Mortgages",
+        "heading_es": "Comprar una casa"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 10,
+    "fields": {
+        "heading": "Payday loans",
+        "heading_es": "Pr\u00e9stamos de d\u00eda de pago"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 11,
+    "fields": {
+        "heading": "Prepaid cards",
+        "heading_es": "Escoger una tarjeta prepagada"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 12,
+    "fields": {
+        "heading": "Reverse mortgages",
+        "heading_es": ""
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 13,
+    "fields": {
+        "heading": "Student loans",
+        "heading_es": "Pagar la universidad"
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 1,
+    "fields": {
+        "tag": 10,
+        "content_object": 1
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 2,
+    "fields": {
+        "tag": 1022,
+        "content_object": 2
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 3,
+    "fields": {
+        "tag": 19,
+        "content_object": 3
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 4,
+    "fields": {
+        "tag": 117,
+        "content_object": 4
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 5,
+    "fields": {
+        "tag": 65,
+        "content_object": 5
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 7,
+    "fields": {
+        "tag": 1025,
+        "content_object": 7
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 8,
+    "fields": {
+        "tag": 62,
+        "content_object": 8
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 9,
+    "fields": {
+        "tag": 30,
+        "content_object": 9
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 10,
+    "fields": {
+        "tag": 6,
+        "content_object": 10
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 11,
+    "fields": {
+        "tag": 13,
+        "content_object": 11
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 12,
+    "fields": {
+        "tag": 115,
+        "content_object": 12
+    }
+},
+{
+    "model": "v1.portaltopictag",
+    "pk": 13,
+    "fields": {
+        "tag": 15,
+        "content_object": 13
+    }
+}
+]

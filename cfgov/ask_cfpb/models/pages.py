@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import re
 from six.moves.urllib.parse import urlparse
 
+from django import forms
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
@@ -19,12 +20,14 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
-from modelcluster.fields import ParentalManyToManyField
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
+from v1.models import (
+    CFGOVPage, CFGOVPageManager, LandingPage, PortalSeeAll, PortalTopic
+)
 from v1.models.snippets import RelatedResource, ReusableText
 
 
@@ -568,10 +571,26 @@ class AnswerPage(CFGOVPage):
         symmetrical=False,
         blank=True,
         related_name='related_question',
-        help_text='Maximum of 3')
+        help_text='Maximum of 3 related questions')
     answer_id = models.IntegerField(default=0)
+    portal_topic = ParentalManyToManyField(
+        PortalTopic,
+        blank=True,
+        help_text='Limit to 1 portal topic if possible')
+    primary_portal_topic = ParentalKey(
+        PortalTopic,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='primary_portal_topic',
+        help_text=(
+            "Use only if assigning more than one portal topic, "
+            "to control which topic is used as a breadcrumb."))
+    portal_see_all = ParentalManyToManyField(
+        PortalSeeAll,
+        blank=True)
 
-    content = StreamField([
+    user_feedback = StreamField([
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
 
@@ -589,11 +608,14 @@ class AnswerPage(CFGOVPage):
             AutocompletePanel(
                 'related_questions',
                 page_type='ask_cfpb.AnswerPage',
-                is_single=False)],
+                is_single=False),
+            FieldPanel('primary_portal_topic'),
+            FieldPanel('portal_topic', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('portal_see_all', widget=forms.CheckboxSelectMultiple)],
             heading="Metadata",
             classname="collapsible"),
         AutocompletePanel('redirect_to_page', page_type='ask_cfpb.AnswerPage'),
-        StreamFieldPanel('content'),
+        StreamFieldPanel('user_feedback'),
     ]
 
     sidebar = StreamField([
