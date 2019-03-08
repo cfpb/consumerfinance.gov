@@ -577,13 +577,13 @@ class AnswerPage(CFGOVPage):
 
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
-            FieldPanel('question', classname="title"),
-            FieldPanel('statement', classname="title"),
-            FieldPanel('snippet', classname="full"),
-            FieldPanel('answer', classname="full")],
+            FieldPanel('question'),
+            FieldPanel('statement'),
+            FieldPanel('snippet'),
+            FieldPanel('answer'),
+            FieldPanel('last_edited')],
             heading="Page content",
             classname="collapsible"),
-        FieldPanel('last_edited'),
         MultiFieldPanel([
             SnippetChooserPanel('related_resource'),
             AutocompletePanel(

@@ -1,3 +1,6 @@
+from __future__ import unicode_literals
+
+import datetime
 import os
 
 from django.contrib.auth.models import User
@@ -19,6 +22,7 @@ AUDIENCE_MAPPING = {
 
 
 def run():
+    starter = datetime.datetime.now()
     migration_user_pk = os.getenv('MIGRATION_USER_PK', 9999)
     user = User.objects.filter(id=migration_user_pk).first()
     for next_step in NextStep.objects.all():
@@ -72,10 +76,10 @@ def run():
             for related_question in page.answer_base.related_questions.all():
                 page.related_questions.add(related_question.english_page)
 
-        # Save & unpublish the draft page
+        # Save & publish our changes
+        page.save_revision(user=user).publish()
+
+        # Unpublish pages that were originally draft only
         if draft:
-            page.save_revision(user=user)
             page.unpublish()
-        # Save & re-publish 'live' and 'live + draft' pages
-        else:
-            page.save_revision(user=user).publish()
+    print("Migration took {}.".format(datetime.datetime.now() - starter))

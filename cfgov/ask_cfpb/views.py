@@ -78,7 +78,7 @@ def print_answer(request, slug, language, answer_id):
 
 def view_answer(request, slug, language, answer_id):
     answer_page = get_object_or_404(
-        AnswerPage, language=language, answer_id=answer_id)
+        AnswerPage, language=language, answer_base__id=answer_id)
     if answer_page.live is False:
         raise Http404
     if answer_page.redirect_to_page:

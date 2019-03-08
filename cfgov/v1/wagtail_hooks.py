@@ -19,7 +19,7 @@ from wagtail.wagtailcore.whitelist import attribute_rule
 from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.models.resources import Resource
-from v1.models.snippets import Contact, ReusableText, RelatedResource
+from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.util import util
 
 
