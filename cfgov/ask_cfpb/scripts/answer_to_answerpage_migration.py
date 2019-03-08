@@ -27,6 +27,18 @@ def run():
             text=next_step.text)
 
     for page in AnswerPage.objects.all():
+        # Capture whether the page we're working with is a draft or not.
+        # Our changes to 'live' and 'live + draft' pages can be published.
+        draft = False
+        if page.status_string == 'draft':
+            draft = True
+
+        # First, publish the page so we're working with the latest revision.
+        # We'll unpublish draft pages at the end of this script.
+        page.get_latest_revision().publish()
+        page = AnswerPage.objects.get(pk=page.pk)
+
+        # Then, migrate data from Answer to AnswerPage
         for category in page.answer_base.category.all():
             page.category.add(category)
         for subcategory in page.answer_base.subcategory.all():
@@ -60,8 +72,10 @@ def run():
             for related_question in page.answer_base.related_questions.all():
                 page.related_questions.add(related_question.english_page)
 
-        if page.status_string != 'draft':
-            # We need to publish for the answer ID, next step, and search tags
-            page.save_revision(user=user).publish()
-        else:
+        # Save & unpublish the draft page
+        if draft:
             page.save_revision(user=user)
+            page.unpublish()
+        # Save & re-publish 'live' and 'live + draft' pages
+        else:
+            page.save_revision(user=user).publish()
