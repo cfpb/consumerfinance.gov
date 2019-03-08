@@ -72,10 +72,9 @@ def run():
             for related_question in page.answer_base.related_questions.all():
                 page.related_questions.add(related_question.english_page)
 
-        # Save & unpublish the draft page
+        # Save & publish our changes
+        page.save_revision(user=user).publish()
+
+        # Unpublish pages that were originally draft only
         if draft:
-            page.save_revision(user=user)
             page.unpublish()
-        # Save & re-publish 'live' and 'live + draft' pages
-        else:
-            page.save_revision(user=user).publish()
