@@ -16,7 +16,6 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
@@ -594,6 +593,7 @@ class AnswerPage(CFGOVPage):
             heading="Metadata",
             classname="collapsible"),
         AutocompletePanel('redirect_to_page', page_type='ask_cfpb.AnswerPage'),
+        StreamFieldPanel('content'),
     ]
 
     sidebar = StreamField([

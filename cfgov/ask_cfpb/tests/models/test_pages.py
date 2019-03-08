@@ -6,11 +6,12 @@ import unittest
 from six.moves import html_parser as HTMLParser
 
 from django.apps import apps
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpRequest, HttpResponse
 from django.template.defaultfilters import slugify
 from django.test import RequestFactory, TestCase
-from django.utils import html, timezone
+from django.utils import html, timezone, translation
 
 from wagtail.tests.utils import WagtailTestUtils
 
@@ -179,6 +180,7 @@ class AnswerPageTestCase(TestCase):
         return AnswerAudiencePage.objects.create(**kwargs)
 
     def setUp(self):
+        self.test_user = User.objects.last()
         self.factory = RequestFactory()
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.audience = mommy.make(Audience, name='stub_audience')
@@ -609,17 +611,24 @@ class AnswerPageTestCase(TestCase):
         self.assertEqual(audience.__str__(), audience.name)
 
     def test_status_string(self):
-        # with translation.override('en'):
-        page1 = self.page1
-        page1.redirect_to_page = self.page2
-        page1.save()
-        page1.get_latest_revision().publish()
-        self.assertEqual(
-            (page1.status_string),
-            "redirected")
-        page1.unpublish()
-        self.assertEqual(
-            page1.status_string, ("redirected but not live"))
+        with translation.override('en'):
+            page1 = self.page1
+            self.assertEqual(
+                (page1.status_string),
+                'live + draft')
+
+    def test_status_string_redirected(self):
+        with translation.override('en'):
+            page1 = self.page1
+            page1.redirect_to_page = self.page2
+            page1.save()
+            page1.get_latest_revision().publish()
+            self.assertEqual(
+                (page1.status_string),
+                "redirected")
+            page1.unpublish()
+            self.assertEqual(
+                page1.status_string, ("redirected but not live"))
 
     def test_get_ask_nav_items(self):
         from ask_cfpb.models import get_ask_nav_items
@@ -820,6 +829,14 @@ class AnswerPageTestCase(TestCase):
         """
         category_page = self.create_category_page(ask_category=self.category)
         self.assertIsNone(category_page.meta_image)
+
+    def test_social_sharing_image_used(self):
+        from v1.models.images import CFGOVImage
+        image = CFGOVImage.objects.last()
+        page = self.page1
+        page.social_sharing_image = image
+        page.save_revision(user=self.test_user).publish()
+        self.assertEqual(page.meta_image, image)
 
     def test_category_meta_image_uses_category_image(self):
         """ Category page's meta image is its category's image """

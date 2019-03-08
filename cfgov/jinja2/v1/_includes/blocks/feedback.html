@@ -7,17 +7,17 @@
 {# JS-disabled result handling #}
 
 <div class="o-feedback block">
-	<form method="post"
-	      action="."
-	      class="o-form
-	      		 {% if value.was_it_helpful_text %}
-	      		 block
-		         block__bg
-		       	 block__border
-		       	 block__padded-top
-	       		 {% endif %}"
-	      novalidate>
-	<div class="u-mb15">
+  <form method="post"
+        action="."
+        class="o-form
+             {% if value.was_it_helpful_text %}
+             block
+             block__bg
+             block__border
+             block__padded-top
+             {% endif %}"
+        novalidate>
+  <div class="u-mb15">
         {% if get_messages(request) %}
         {% for message in get_messages(request) %}
             {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
@@ -94,7 +94,7 @@
             </label>
             <p class="u-mb15"><small><em>
                 {% if page.language == 'es' %}
-                    Nota: No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo.
+                    No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo.
                 {% else %}
                     Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature.
                 {% endif %}
@@ -190,7 +190,7 @@
     </div>
     {% endif %}
 
-    <button class="a-btn" type="submit">{{ value.button_text }}</button>
+    <button class="a-btn" type="submit">{% if page.language == 'es' %}Enviar{% else %}{{ value.button_text }}{% endif %}</button>
   </form>
 </div>
 {% endmacro %}
