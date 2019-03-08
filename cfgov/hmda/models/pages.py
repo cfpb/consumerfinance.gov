@@ -2,7 +2,11 @@
 
 from wagtail.wagtailcore.models import PageManager
 
-from forms import HMDA_STATES, HMDA_YEARS, HmdaFilterableForm
+from forms import HmdaFilterableForm
+from hmda.resources.hmda_data_files import get_data_files
+from hmda.resources.hmda_data_options import (
+    HMDA_FIELD_DESC_OPTIONS, HMDA_GEO_OPTIONS, HMDA_RECORDS_OPTIONS
+)
 
 from v1.models import BrowsePage
 
@@ -20,34 +24,21 @@ class HmdaExplorerPage(BrowsePage):
         context = super(HmdaExplorerPage, self).get_context(
             request, *args, **kwargs)
 
-        form = HmdaFilterableForm(request.GET)
-        states = self.get_states(request.GET.getlist('states'), HMDA_STATES)
-        years = self.get_years(request.GET.getlist('years'), HMDA_YEARS)
+        params = request.GET
+        geo = params.get('geo', 'nationwide')
+        labels = params.get('field_descriptions', 'labels')
+        record_set = params.get('records', 'first-lien-owner-occupied-1-4-family-records')
 
         context.update({
-            'form': form,
-            'action': request.GET.get('action'),
-            'states': states,
-            'years': years,
+            'form': HmdaFilterableForm(params),
+            'title': self.get_title(geo, record_set),
+            'files': get_data_files(geo, labels, record_set),
         })
 
         return context
 
-    def get_states(self, selected_states, all_states):
-        """
-        Given a list of state abbreviations, return the full state names.
-        """
-        states_dict = dict(all_states)
-        states = []
-        for state in selected_states:
-            try:
-                states.append(states_dict[state])
-            except KeyError:
-                pass
-        return states
-
-    def get_years(self, selected_years, all_years):
-        """
-        Return user's selected years or all years if they didn't provide any.
-        """
-        return selected_years or list(map(lambda year: year[0], all_years))
+    # TODO: refine the wording for these titles with designer input
+    def get_title(self, location, record_set):
+        location_name = dict(HMDA_GEO_OPTIONS).get(location, "State")
+        records_name = dict(HMDA_RECORDS_OPTIONS).get(record_set, "records")
+        return "{} records for {}".format(location_name, records_name)
