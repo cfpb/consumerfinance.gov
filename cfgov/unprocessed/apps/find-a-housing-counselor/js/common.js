@@ -1,7 +1,7 @@
 const hud = require( './hud-util' );
 
-const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js';
-const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css';
+const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.js';
+const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.css';
 
 // Settings stored in the template from the backend.
 const mapboxAccessToken = window.cfpbHudSettings.mapbox_access_token;
