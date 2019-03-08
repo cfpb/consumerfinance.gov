@@ -1,3 +1,9 @@
+/**
+ * Adapted from
+ * https://www.simoahava.com/analytics/track-browsing-behavior-in-google-analytics/#1-the-why-and-how-theory
+ * for tracking tab navigation of the site.
+ */
+
 const TabNavigationTracking = ( () => {
 
   if ( !window.Storage ) {
