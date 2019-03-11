@@ -16,7 +16,7 @@ def remove_status_in_related_metadata(page_or_revision, data):
     content = data['content']
     filtered_content = [
         block for block in content
-        if block['type'] == 'text' and  block['value']['heading'] != 'Status'
+        if block['value'].get('heading', '') != 'Status'
     ]
     data['content'] = filtered_content
     return data

@@ -36,6 +36,10 @@ class TestMigrationXXXX(TestCase):
                         'blob': 'Inactive or resolved'
                     }
                 },
+                {
+                    'type': 'nottext',
+                    'value': {},
+                }
             ]
         }
 
@@ -52,6 +56,10 @@ class TestMigrationXXXX(TestCase):
                             'heading': 'Category',
                             'blob': 'Some Categorization'
                         }
+                    },
+                    {
+                        'type': 'nottext',
+                        'value': {},
                     }
                 ]
             }
