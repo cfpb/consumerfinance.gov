@@ -16,7 +16,7 @@
                 {{ social_media.render(block.value) }}
             </div>
         {% elif 'rss_feed' in block.block_type %}
-            <div class="block">
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
                 {% include_block block %}
             </div>
         {% else %}
