@@ -3,6 +3,7 @@
 {% import 'form_block.html' as form_block with context %}
 {% import 'hmda-explorer-controls.html' as controls with context %}
 {% import 'hmda-explorer-results.html' as results with context %}
+{% import 'hmda-explorer-data-dictionaries.html' as data_dictionaries with context %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -31,12 +32,11 @@
     <div class="o-filterable-list">
 
       {% set fragment_id = 'o-filterable-list-controls' %}
-      {% set has_active_filters = years or states or action %}
       {% set value = {
         'is_bordered': True,
-        'is_expanded': has_active_filters,
+        'is_expanded': True,
         'is_midtone': True,
-        'label': 'Filter HMDA data'
+        'label': 'Select the HMDA data you want'
       } %}
 
       {{ controls.render(
@@ -49,10 +49,11 @@
     </div>
 
     {{ results.render(
-        years,
-        states,
-        action)
+        title,
+        files)
     }}
+
+    {{ data_dictionaries.render() }}
 
     {% if page.sidefoot %}
         <aside class="o-prefooter">

@@ -1,35 +1,27 @@
-{% macro _render_years(years) %}
-    <h3>Nationwide HMDA records</h3>
-    {% for year in years %}
-        <h4>{{ year }}</h4>
-        <ul>
-          <li><a href="#">Download CSV with labels</a> (999KB)</li>
-          <li><a href="#">Download CSV with labels and codes</a> (999KB)</li>
-        </ul>
-    {% endfor %}
-{% endmacro %}
-
-{% macro _render_states(years, states) %}
-    {% for year in years %}
-        {% for state in states %}
-            <h3>{{ state }} {{ year }} HMDA records</h3>
-            <h4>Home purchase</h4>
-            <ul>
-              <li><a href="#">Download CSV with labels</a> (999KB)</li>
-              <li><a href="#">Download CSV with labels and codes</a> (999KB)</li>
-            </ul>
-            <h4>Home improvement</h4>
-            <ul>
-              <li><a href="#">Download CSV with labels</a> (999KB)</li>
-              <li><a href="#">Download CSV with labels and codes</a> (999KB)</li>
-            </ul>
-            <h4>Refinancing</h4>
-            <ul>
-              <li><a href="#">Download CSV with labels</a> (999KB)</li>
-              <li><a href="#">Download CSV with labels and codes</a> (999KB)</li>
-            </ul>
-        {% endfor %}
-    {% endfor %}
+{% macro _render_files(title, files) %}
+    <div class="u-mb30">
+        <h3>{{ title }}</h3>
+        <div class="o-table o-table-wrapper__scrolling">
+            <table class="u-w100pct">
+                <thead>
+                    <tr>
+                        <th class="u-w33pct">Year</th>
+                        <th class="u-w33pct">Records</th>
+                        <th class="u-w33pct">Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for year, csv in files.iteritems() %}
+                    <tr>
+                        <td data-label="Year" class="u-w33pct">{{ year }}</td>
+                        <td data-label="Records" class="u-w33pct">{{ csv.number_of_records }}</td>
+                        <td data-label="Download" class="u-w33pct"><a href="https://files.consumerfinance.gov/historic-hmda-data/{{ csv.file_name }}">CSV</a> ({{ csv.file_size }})</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endmacro %}
 
 {# ==========================================================================
@@ -42,19 +34,12 @@
 
    List of results to HMDA data files on AWS S3
 
-   years: Years of HMDA data to show
+   title: Title at the top of the search results
 
-   states: U.S. states of HMDA data to show
-
-   action: Mortgage action taken
+   files: List of S3 HMDA files
 
    ========================================================================== #}
-{% macro render(years, states, action) %}
-    <div class="u-mb30">
-        {% if states %}
-            {{ _render_states(years, states) }}
-        {% else %}
-            {{ _render_years(years) }}
-        {% endif %}
-    </div>
+
+{% macro render(title, files) %}
+    {{ _render_files(title, files) }}
 {% endmacro %}

@@ -40,5 +40,7 @@ class HmdaExplorerPage(BrowsePage):
     # TODO: refine the wording for these titles with designer input
     def get_title(self, location, record_set):
         location_name = dict(HMDA_GEO_OPTIONS).get(location, "State")
+        if (record_set == 'all-records'):
+            return "All {} records".format(location_name)
         records_name = dict(HMDA_RECORDS_OPTIONS).get(record_set, "records")
-        return "{} records for {}".format(location_name, records_name)
+        return "{} records for {}".format(location_name, records_name.lower())

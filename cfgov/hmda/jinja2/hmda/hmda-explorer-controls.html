@@ -3,38 +3,45 @@
                 content-l_col-1-2">
         <div class="o-form_group">
             <fieldset class="o-form_fieldset">
-                <legend class="a-legend">
-                    Years
-                </legend>
-                <ul class="m-list m-list__unstyled">
-                    {{ form.years }}
-                </ul>
+                <div class="m-form-field m-form-field__select">
+                    <label class="a-label a-label__heading" for="id_geo">
+                        Geographic area
+                    </label>
+                    <div class="a-select">
+                        <select id="id_geo" name="geo">
+                        {% for option in form.geo %}
+                            <option value="{{ option.data.value }}"{% if option.data.selected %} selected{% endif %}>{{ option.choice_label }}</option>
+                        {% endfor %}
+                        </select>
+
+                    </div>
+                </div>
             </fieldset>
         </div>
     </div>
     <div class="content-l_col
-                content-l_col-1-2">
+                content-l_col-1">
         <div class="o-form_group">
             <fieldset class="o-form_fieldset">
                 <legend class="a-legend">
-                    States
+                    Records included
                 </legend>
-                <ul class="m-list m-list__unstyled">
-                    {{ form.states }}
-                </ul>
+               {% for radio in form.records %}
+                  <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                     <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
+                     <label class="a-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                  </div>
+               {% endfor %}
             </fieldset>
         </div>
-    </div>
-    <div class="content-l_col
-                content-l_col-1-2">
         <div class="o-form_group">
             <fieldset class="o-form_fieldset">
                 <legend class="a-legend">
-                    Action taken
+                    Variable descriptions
                 </legend>
-               {% for radio in form.action %}
-                  <div class="m-form-field m-form-field__radio">
-                     <input class="a-radio hover" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
+               {% for radio in form.field_descriptions %}
+                  <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                     <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
                      <label class="a-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
                   </div>
                {% endfor %}
@@ -53,10 +60,6 @@
                 <input class="a-btn"
                        type="submit"
                        value="Apply filters">
-                <a class="a-btn a-btn__link a-btn__warning"
-                   href="{{ request.path }}">
-                    Clear filters
-                </a>
             </div>
         </div>
     </form>
@@ -82,12 +85,8 @@
 {% macro render(value, form, fragment_id, has_active_filters) %}
     {% from 'organisms/expandable.html' import expandable with context %}
     <div id="{{ fragment_id }}" class="o-filterable-list-controls u-mb30">
-        {% if has_active_filters %}
-            {% do value.update({'is_expanded':true}) %}
-        {% endif %}
-
         {% set form_markup = _filters_form(form) %}
-        {% call() expandable(value, expandable_cue_additional_text='filters') %}
+        {% call() expandable(value) %}
             {{ form_markup | safe }}
         {% endcall %}
     </div>
