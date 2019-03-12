@@ -61,8 +61,8 @@
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
     {# TODO: make events feed #}
-    {# <div class="block block__sub" data-qa-hook="rss-subscribe-section">
-        {% import 'rss.html' as rss %}
+    {# <div class="block block__sub">
+        {% import 'rss_feed.html' as rss %}
         {{ rss.render(reverse('events_feed')) }}
     </div> #}
     <section class="block">
