@@ -5,14 +5,14 @@ from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 
-from v1.atomic_elements.molecules import TextIntroduction
+from v1.atomic_elements.molecules import RSSFeed, TextIntroduction
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.browse_page import BrowsePage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import DocumentDetailPage, LearnPage
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.sublanding_page import SublandingPage
-from v1.tests.wagtail_pages.helpers import publish_page
+from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
 django_client = Client()
@@ -101,6 +101,23 @@ class MoleculesTestCase(TestCase):
         response = django_client.get('/learn/')
         self.assertContains(response, 'this is a call to action')
 
+    def test_notification(self):
+        """Notification correctly displays on a Sublanding Page"""
+        sublanding_page = SublandingPage(
+            title='Sublanding Page',
+            slug='sublanding',
+        )
+        sublanding_page.content = StreamValue(
+            sublanding_page.content.stream_block,
+            [atomic.notification],
+            True
+        )
+        publish_page(child=sublanding_page)
+        response = django_client.get('/sublanding/')
+        self.assertContains(response, 'this is a notification message')
+        self.assertContains(response, 'this is a notification explanation')
+        self.assertContains(response, 'this is a notification link')
+
     def test_hero(self):
         """Hero heading correctly displays on a Sublanding Filterable Page"""
         sfp = SublandingFilterablePage(
@@ -131,21 +148,6 @@ class MoleculesTestCase(TestCase):
         publish_page(child=landing_page)
         response = django_client.get('/landing/')
         self.assertContains(response, 'this is a related link')
-
-    def test_rss_feed(self):
-        """RSS feed correctly displays on a Sublanding Page"""
-        sublanding_page = SublandingPage(
-            title='Sublanding Page',
-            slug='sublanding',
-        )
-        sublanding_page.sidefoot = StreamValue(
-            sublanding_page.sidefoot.stream_block,
-            [atomic.rss_feed],
-            True
-        )
-        publish_page(sublanding_page)
-        response = django_client.get('/sublanding/')
-        self.assertContains(response, 'rss-subscribe-section')
 
     def test_expandable(self):
         """Expandable label value correctly displays on a Browse Page"""
@@ -216,3 +218,55 @@ class TestTextIntroductionValidation(TestCase):
             block.clean(value)
         except ValidationError:
             self.fail('eyebrow with heading should not fail validation')
+
+
+class RSSFeedTests(TestCase):
+    def render(self, context):
+        block = RSSFeed()
+
+        # RSSFeed doesn't take any options.
+        value = block.to_python({})
+
+        return block.render(value=value, context=context)
+
+    def assertHTMLContainsLinkToPageFeed(self, html, page):
+        feed = page.url + 'feed/'
+        self.assertIn('<a class="a-btn" href="{}">'.format(feed), html)
+
+    def test_render_no_page_in_context_renders_nothing(self):
+        html = self.render(context={})
+        self.assertFalse(html.strip())
+
+    def test_render_page_doesnt_provide_feed_renders_nothing(self):
+        page = BrowsePage(title='test', slug='test')
+        save_new_page(page)
+
+        html = self.render(context={'page': page})
+        self.assertFalse(html.strip())
+
+    def test_render_page_provides_feed(self):
+        page = SublandingFilterablePage(title='test', slug='test')
+        save_new_page(page)
+
+        html = self.render(context={'page': page})
+        self.assertHTMLContainsLinkToPageFeed(html, page)
+
+    def test_render_parent_page_provides_feed(self):
+        parent_page = SublandingFilterablePage(title='test', slug='test')
+        save_new_page(parent_page)
+
+        child_page = BrowsePage(title='test', slug='test')
+        save_new_page(child_page, root=parent_page)
+
+        html = self.render(context={'page': child_page})
+        self.assertHTMLContainsLinkToPageFeed(html, parent_page)
+
+    def test_render_both_child_and_parent_page_provide_feed(self):
+        parent_page = SublandingFilterablePage(title='test', slug='test')
+        save_new_page(parent_page)
+
+        child_page = SublandingFilterablePage(title='test', slug='test')
+        save_new_page(child_page, root=parent_page)
+
+        html = self.render(context={'page': child_page})
+        self.assertHTMLContainsLinkToPageFeed(html, child_page)

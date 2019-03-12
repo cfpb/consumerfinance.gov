@@ -49,10 +49,6 @@ related_links = {
         ]
     }
 }
-rss_feed = {
-    "type": "rss_feed",
-    "value": "blog_feed"
-}
 featured_content = {
     'type': 'featured_content',
     'value': {
@@ -75,6 +71,19 @@ hero = {
     'type': 'hero',
     'value': {
         'heading': "this is a hero heading"
+    }
+}
+notification = {
+    'type': 'notification',
+    'value': {
+        'message': "this is a notification message",
+        'explanation': "this is a notification explanation",
+        'links': [
+            {
+                "url": "/",
+                "text": "this is a notification link"
+            }
+        ]
     }
 }
 related_metadata = {
@@ -430,6 +439,35 @@ chart_block = {
         'note': 'Data not final.',
     }
 }
+
+chart_block_inquiry_activity = {
+    'type': u'chart_block',
+    'value': {
+        'title': u'Indexed number of consumers with inquiries (beta)',
+        'chart_type': u'line-index',
+        'color_scheme': u'Purple',
+        'data_source': u'consumer-credit-trends/credit-cards/inq_data_CRC.csv',
+        # should get overwritten by data_snapshot.json
+        'date_published': u'2001-01-01',
+        'description': u'Indexed number of people with credit card inquiries.',
+        'note': 'Data from the last four months are not final.',
+    }
+}
+
+chart_block_credit_tightness = {
+    'type': u'chart_block',
+    'value': {
+        'title': u'Indexed number of consumers with credit tightness (beta)',
+        'chart_type': u'line-index',
+        'color_scheme': u'Purple',
+        'data_source': u'consumer-credit-trends/credit-cards/crt_data_CRC.csv',
+        # should get overwritten by data_snapshot.json
+        'date_published': u'2001-01-01',
+        'description': u'Indexed number of people who applied for credit cards but did not open a new account.',  # noqa
+        'note': 'Data from the last four months are not final.',
+    }
+}
+
 
 filter_controls = {
     'type': u'filter_controls',
