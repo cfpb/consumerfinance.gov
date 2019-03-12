@@ -192,7 +192,7 @@ This is done by overriding the `template` attribute on the page model.
 For example, the [interactive regulations landing page](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/models/pages.py) 
 includes a customized list of recently issued notices that gets loaded dynamically from the Federal Register. 
 To do this it provides its own template that inherits from our base templates 
-and overrides the `content_sidebar` block to include a seperate `recent_notices` template:
+and overrides the `content_sidebar` block to include a separate `recent_notices` template:
 
 ```python
 from v1.models import CFGOVPage
