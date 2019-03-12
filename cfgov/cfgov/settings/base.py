@@ -659,9 +659,6 @@ FLAGS = {
     'EMAIL_POPUP_OAH': [('boolean', True)],
     'EMAIL_POPUP_DEBT': [('boolean', True)],
 
-    # Wagtail menu
-    'WAGTAIL_MENU': [],
-
     # The release of new Whistleblowers content/pages
     'WHISTLEBLOWER_RELEASE': [],
 

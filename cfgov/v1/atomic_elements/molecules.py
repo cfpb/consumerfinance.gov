@@ -1,11 +1,13 @@
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
+from django.utils.safestring import mark_safe
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
 from v1.blocks import AnchorLink, HeadingBlock
+from v1.feeds import get_appropriate_rss_feed_url_for_page
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
@@ -120,28 +122,6 @@ class Hero(blocks.StructBlock):
         required=False,
         help_text='Maximum character count: 185 (including spaces)'
     )
-
-    links = blocks.ListBlock(
-        atoms.Hyperlink(),
-        help_text='If your hero needs a call-to-action link, '
-                  'enter it here, rather than inside the body field.'
-    )
-    is_button = blocks.BooleanBlock(
-        required=False,
-        help_text='Select to render any links given above as buttons.'
-    )
-
-    image = ImageChooserBlock(
-        required=False,
-        help_text='Should be exactly 390px tall, and up to 940px wide, '
-                  'unless this is an overlay or bleeding style hero.'
-    )
-    is_overlay = blocks.BooleanBlock(
-        required=False,
-        help_text='Select if you want the provided image to be '
-                  'a background image under the entire hero.'
-    )
-
     background_color = blocks.CharBlock(
         required=False,
         help_text='Specify a hex value (with the # sign) '
@@ -154,17 +134,16 @@ class Hero(blocks.StructBlock):
         help_text='Turns the hero text white. Useful if using '
                   'a dark background color or background image.'
     )
-    cta_link_color = blocks.CharBlock(
+    image = ImageChooserBlock(
         required=False,
-        label='CTA link color',
-        help_text='If using a dark background color or background image, '
-                  'you may need to specify an alternate color '
-                  'for the call-to-action link. Specify a hex value '
-                  '(with the # sign) from our official palette: '
-                  'https://github.com/cfpb/cf-theme-cfpb/blob/'
-                  'master/src/color-palette.less'
+        help_text='Should be exactly 390px tall, and up to 940px wide, '
+                  'unless this is an overlay or bleeding style hero.'
     )
-
+    is_overlay = blocks.BooleanBlock(
+        required=False,
+        help_text='Select if you want the provided image to be '
+                  'a background image under the entire hero.'
+    )
     is_bleeding = blocks.BooleanBlock(
         required=False,
         help_text='Select if you want the provided image to bleed '
@@ -182,33 +161,30 @@ class Hero(blocks.StructBlock):
         classname = 'block__flush-top block__flush-bottom'
 
 
-class FormFieldWithButton(blocks.StructBlock):
-    btn_text = blocks.CharBlock(required=False)
-
-    required = blocks.BooleanBlock(required=False)
-
-    info = blocks.RichTextBlock(required=False, label="Disclaimer")
-    inline_info = blocks.BooleanBlock(
-        required=False,
-        label='Inline disclaimer',
-        help_text=('Show disclaimer on same line as button. Only select '
-                   'this option if the disclaimer text is a few words (ie, '
-                   '"Privacy Act statement") rather than a full sentence.')
-    )
-    label = blocks.CharBlock(required=True)
+class Notification(blocks.StructBlock):
     type = blocks.ChoiceBlock(choices=[
-        ('text', 'Text'),
-        ('checkbox', 'Checkbox'),
-        ('email', 'Email'),
-        ('number', 'Number'),
-        ('url', 'URL'),
-        ('radio', 'Radio'),
-    ], required=False)
-    placeholder = blocks.CharBlock(required=False)
+        ('default', 'Default'),
+        ('success', 'Success'),
+        ('warning', 'Warning'),
+        ('error', 'Error'),
+    ], required=True, default='default')
+    message = blocks.CharBlock(
+        required=True,
+        help_text='The main notification message to display.'
+    )
+    explanation = blocks.CharBlock(
+        required=False,
+        help_text='Explanation text appears below the message in smaller type.'
+    )
+    links = blocks.ListBlock(
+        atoms.Hyperlink(required=False),
+        required=False,
+        help_text='Links appear on their own lines below the explanation.'
+    )
 
     class Meta:
-        icon = 'mail'
-        template = '_includes/molecules/form-field-with-button.html'
+        icon = 'warning'
+        template = '_includes/molecules/notification.html'
 
 
 class CallToAction(blocks.StructBlock):
@@ -352,16 +328,30 @@ class RelatedMetadata(blocks.StructBlock):
         label = 'Related metadata'
 
 
-class RSSFeed(blocks.ChoiceBlock):
-    choices = [
-        ('blog_feed', 'Blog Feed'),
-        ('newsroom_feed', 'Newsroom Feed'),
-    ]
-
+class RSSFeed(blocks.StaticBlock):
     class Meta:
         icon = 'plus'
         template = '_includes/molecules/rss-feed.html'
         label = 'RSS feed'
+        admin_text = mark_safe(
+            '<h3>RSS Feed</h3>'
+            'If this page or one of its ancestors provides an RSS feed, '
+            'this block renders a link to that feed. If not, this block '
+            'renders nothing.'
+        )
+
+    def get_context(self, value, parent_context=None):
+        context = super(RSSFeed, self).get_context(
+            value,
+            parent_context=parent_context
+        )
+
+        page = context.get('page')
+
+        if page:
+            context['value'] = get_appropriate_rss_feed_url_for_page(page)
+
+        return context
 
 
 class SocialMedia(blocks.StructBlock):

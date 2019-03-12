@@ -37,8 +37,14 @@
         {% endif %}
         {% endfor %}
         <div class="brand-footer_container brand-footer_container-{{ links | length + 1 }}">
-            {% import "_templates/email-signup.html" as email_signup %}
-            {{ email_signup.render() }}
+            {% set value = {
+                'heading': 'Buying a home?',
+                'default_heading': True,
+                'text': 'Sign up for our 2-week Get Homebuyer Ready boot camp. We’ll take you step-by-step through the entire homebuying process.',
+                'gd_code': 'USCFPB_127',
+                'disclaimer_url': '/owning-a-home/privacy-act-statement/'
+            } %}
+            {% include '_includes/organisms/email-signup.html' %}
         </div>
     </div>
 </footer>

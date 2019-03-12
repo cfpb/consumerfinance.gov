@@ -77,6 +77,25 @@
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
     <article class="o-post-preview">
         <div class="m-meta-header">
+            {% if show_categories and post.categories.exists()  %}
+            <div class="m-meta-header_left">
+                {# If rendering a blog post in the newsroom, use the 'Blog' aggregate category instead of the post's true category. #}
+                {% import 'macros/category-slug.html' as category_slug %}
+                {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
+                    {{ category_slug.render(category='blog', href=url) }}
+                {% else %}
+                    {% for cat in post.categories.all() %}
+                        {% if loop.index > 1 %}
+                            <span class="m-meta-header_separator">|</span>
+                        {% endif %}
+                        <span class="m-meta-header_category">{{ category_slug.render(category=cat.name, href=url) }}</span>
+                    {% endfor %}
+                {% endif %}
+                {% if show_date %}
+                <span class="m-meta-header_separator">|</span> 
+                {% endif %}
+            </div>
+            {% endif %}
             {% if show_date %}
             <div class="m-meta-header_right">
                 <span class="a-date">
@@ -89,22 +108,6 @@
                 </span>
             </div>
             {% endif %}
-            <div class="m-meta-header_left">
-                {# Newsroom Blog category logic #}
-                {% if show_categories %}
-                    {% import 'macros/category-slug.html' as category_slug %}
-                    {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
-                        {{ category_slug.render(category='blog', href=url) }}
-                    {% else %}
-                        {% for cat in post.categories.all() %}
-                            {% if loop.index > 1 %}
-                                |
-                            {% endif %}
-                            {{ category_slug.render(category=cat.name, href=url) }}
-                        {% endfor %}
-                    {% endif %}
-                {% endif %}
-            </div>
         </div>
         {% cache post.post_preview_cache_key, 'post_preview' %}
         {% set post_url = pageurl(post) %}

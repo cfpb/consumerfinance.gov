@@ -124,6 +124,11 @@ class Migration(migrations.Migration):
 The `forwards()` and `backwards()` functions are where any changes
 that need to happen to a model's data are made.
 
+!!! note
+    While backwards migrations are necessary in external libraries that we create, 
+    we do not require them in cfgov-refresh 
+    because we prefer not to rollback migrations that have already been applied.
+
 ### Wagtail-specific considerations
 
 Django data migrations with Wagtail can be challenging because

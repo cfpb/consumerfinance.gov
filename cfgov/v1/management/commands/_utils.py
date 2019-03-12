@@ -1,5 +1,5 @@
 import getpass
-from six.moves import raw_input
+from six.moves import input
 
 from django.contrib.auth import get_user_model
 from django.test import Client
@@ -11,7 +11,7 @@ class WagtailClient(object):
         self.client = Client()
 
     def login(self):
-        username = raw_input('Wagtail username:')
+        username = input('Wagtail username:')
 
         password = getpass.getpass(prompt='Wagtail password:')
         response = self.client.login(

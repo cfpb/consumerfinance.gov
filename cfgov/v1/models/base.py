@@ -65,8 +65,6 @@ class CFGOVPage(Page):
                                      related_name='authored_pages')
     tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
                                   related_name='tagged_pages')
-    shared = models.BooleanField(default=False)
-    has_unshared_changes = models.BooleanField(default=False)
     language = models.CharField(
         choices=ref.supported_languagues, default='en', max_length=2
     )

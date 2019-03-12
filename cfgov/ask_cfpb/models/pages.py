@@ -275,6 +275,27 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
 
         return 'ask-cfpb/category-page.html'
 
+    def prune_answers(self, id_list):
+        """Make sure category pages don't see nonexistent or draft pages."""
+        answer_query = self.Answer.objects.filter(
+            pk__in=id_list).order_by('-pk')
+        if self.language == 'es':
+            pruned_pks = [a.pk for a in answer_query
+                          if a.spanish_page
+                          and a.spanish_page.live
+                          and not a.spanish_page.redirect_to]
+            pruned_answers = answer_query.filter(pk__in=pruned_pks).values(
+                'id', 'question', 'question_es',
+                'slug', 'slug_es', 'answer_es')
+            for a in pruned_answers:
+                a['answer_es'] = Truncator(a['answer_es']).words(
+                    40, truncate=' ...')
+        else:  # English answers are pruned upstream
+            pruned_answers = answer_query.values(
+                'id', 'question', 'question_es',
+                'slug', 'slug_es', 'answer_es')
+        return pruned_answers
+
     def get_context(self, request, *args, **kwargs):
         context = super(
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
@@ -291,17 +312,11 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
         facet_dict = json.loads(facet_map)
         subcat_ids = facet_dict['subcategories'].keys()
         answer_ids = facet_dict['answers'].keys()
+        answers = self.prune_answers(answer_ids)
         audience_ids = facet_dict['audiences'].keys()
         subcats = self.SubCategory.objects.filter(
             pk__in=subcat_ids).values(
                 'id', 'slug', 'slug_es', 'name', 'name_es')
-        answers = self.Answer.objects.filter(
-            pk__in=answer_ids).order_by('-pk').values(
-                'id', 'question', 'question_es',
-                'slug', 'slug_es', 'answer_es')
-        for a in answers:
-            a['answer_es'] = Truncator(a['answer_es']).words(
-                40, truncate=' ...')
         audiences = self.Audience.objects.filter(
             pk__in=audience_ids).values('id', 'name')
         context.update({
@@ -538,7 +553,21 @@ class AnswerPage(CFGOVPage):
             "(Optional) Use this field to rephrase the question title as "
             "a statement. Use only if this answer has been chosen to appear "
             "on a money topic portal (e.g. /consumer-tools/debt-collection)."))
-    answer = RichTextField(blank=True)
+    answer = RichTextField(
+        blank=True,
+        features=[
+            'bold', 'italic', 'h2', 'h3', 'h4', 'link', 'ol', 'ul',
+            'document-link', 'image', 'embed', 'ask-tips', 'edit-html'
+        ],
+        help_text=(
+            "Do not use H2 or H3 to style text. Only use the HTML Editor "
+            "for troubleshooting. To style tips, warnings and notes, "
+            "select the content that will go inside the rule lines "
+            "(so, title + paragraph) and click the Pencil button "
+            "to style it. Re-select the content and click the button "
+            "again to unstyle the tip."
+        )
+    )
     snippet = RichTextField(blank=True, help_text='Optional answer intro')
     search_tags = models.CharField(
         max_length=1000,

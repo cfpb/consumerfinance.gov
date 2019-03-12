@@ -7,7 +7,7 @@ from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailsearch import index
 
-from jobmanager.models import JobListingList
+from jobmanager.blocks import JobListingList
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.forms import FilterableListForm
@@ -21,6 +21,7 @@ class SublandingPage(CFGOVPage):
     ], blank=True)
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
+        ('notification', molecules.Notification()),
         ('featured_content', organisms.FeaturedContent()),
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
@@ -31,7 +32,6 @@ class SublandingPage(CFGOVPage):
         ('table_block', organisms.AtomicTableBlock(
             table_options={'renderer': 'html'}
         )),
-        ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
