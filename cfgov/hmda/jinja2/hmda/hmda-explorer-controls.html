@@ -11,9 +11,11 @@
                         <select id="id_geo" name="geo">
                         {% for option in form.geo %}
                             <option value="{{ option.data.value }}"{% if option.data.selected %} selected{% endif %}>{{ option.choice_label }}</option>
+                            {% if loop.index == 1 %}
+                              <option disabled>──────────</option>
+                            {% endif %}
                         {% endfor %}
                         </select>
-
                     </div>
                 </div>
             </fieldset>
@@ -28,8 +30,8 @@
                 </legend>
                {% for radio in form.records %}
                   <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-                     <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
-                     <label class="a-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                      <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
+                      <label class="a-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
                   </div>
                {% endfor %}
             </fieldset>
@@ -59,7 +61,7 @@
                         m-btn-group">
                 <input class="a-btn"
                        type="submit"
-                       value="Apply filters">
+                       value="Search">
             </div>
         </div>
     </form>
