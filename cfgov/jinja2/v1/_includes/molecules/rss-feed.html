@@ -11,18 +11,18 @@
    ========================================================================== #}
 {% macro render( url ) %}
 <div data-qa-hook="rss-subscribe-section">
-	<p data-qa-hook="rss-subscribe-desc">
-	    Subscribe to our RSS feed to get the latest content in your reader.
-	</p>
-	<a class="a-btn" href="{{ url }}">
-	    <span class="a-btn_icon__on-left">
-	        {{- svg_icon('rss') -}}
-	    </span>
-	    Subscribe to RSS
-	</a>
+    <p data-qa-hook="rss-subscribe-desc">
+        Subscribe to our RSS feed to get the latest content in your reader.
+    </p>
+    <a class="a-btn" href="{{ url }}">
+        <span class="a-btn_icon__on-left">
+            {{- svg_icon('rss') -}}
+        </span>
+        Subscribe to RSS
+    </a>
 </div>
 {% endmacro %}
 
 {% if value %}
-  {{ render(value) }}
+    {{ render(value) }}
 {% endif %}
