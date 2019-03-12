@@ -7,7 +7,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
 from v1.blocks import AnchorLink, HeadingBlock
-from v1.feeds import get_rss_feed_for_page
+from v1.feeds import get_appropriate_rss_feed_url_for_page
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
@@ -349,7 +349,7 @@ class RSSFeed(blocks.StaticBlock):
         page = context.get('page')
 
         if page:
-            context['value'] = get_rss_feed_for_page(page)
+            context['value'] = get_appropriate_rss_feed_url_for_page(page)
 
         return context
 

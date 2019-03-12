@@ -6,7 +6,7 @@ from wagtail.wagtailsearch import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import organisms
-from v1.feeds import get_rss_feed_for_page
+from v1.feeds import get_appropriate_rss_feed_url_for_page
 from v1.models.base import CFGOVPageManager
 from v1.models.learn_page import AbstractFilterPage
 
@@ -32,7 +32,12 @@ class BlogPage(AbstractFilterPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super(BlogPage, self).get_context(request, *args, **kwargs)
-        context['rss_feed'] = get_rss_feed_for_page(self, request=request)
+
+        context['rss_feed'] = get_appropriate_rss_feed_url_for_page(
+            self,
+            request=request
+        )
+
         return context
 
 

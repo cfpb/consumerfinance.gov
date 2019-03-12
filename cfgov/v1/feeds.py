@@ -65,27 +65,28 @@ class FilterableFeedPageMixin(object):
             return super(FilterableFeedPageMixin, self).serve(request)
 
 
-def get_page_ancestor_with_feed(page):
-    """Return the closest page ancestor with a feed.
+def get_appropriate_rss_feed_url_for_page(page, request=None):
+    """Given a page, return the most appropriate RSS feed for it to link to.
 
-    Includes the specified page in the search. Returns None if no ancestors
-    inherit from FilterableFeedPageMixin.
+    This may be the page itself if the specified page provides a feed (for
+    example if the specified page is a blog index page) or may be the
+    specified page's closest ancestor that provides a feed (for example if the
+    specified page is an individual blog page that lives in the tree somewhere
+    under the index page).
+
+    Pages are considered to provide a feed if they inherit from
+    FilterableFeedPageMixin.
+
+    Returns None if neither the page nor any of its ancestors provide feeds.
     """
-    ancestors = page.get_ancestors(inclusive=True)
-    ancestors_with_feeds_q = ancestors.type_q(FilterableFeedPageMixin)
-    ancestors_with_feeds = ancestors.filter(ancestors_with_feeds_q)
+    ancestors_including_page = page.get_ancestors(inclusive=True)
+    ancestors_including_page_with_feeds = ancestors_including_page.filter(
+        ancestors_including_page.type_q(FilterableFeedPageMixin)
+    )
 
     # page.get_ancestors() orders from root down to page.
-    return ancestors_with_feeds.last()
+    rss_feed_providing_page = ancestors_including_page_with_feeds.last()
 
-
-def get_rss_feed_for_page(page, request=None):
-    """Return the path to an RSS feed for a page, if one exists.
-
-    Returns None if neither this page nor any of its ancestors provide a feed.
-    """
-    ancestor = get_page_ancestor_with_feed(page)
-
-    if ancestor:
-        ancestor_url = ancestor.get_url(request=request)
-        return ancestor_url + 'feed/'
+    if rss_feed_providing_page:
+        page_url = rss_feed_providing_page.get_url(request=request)
+        return page_url + 'feed/'
