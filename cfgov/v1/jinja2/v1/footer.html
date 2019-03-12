@@ -10,18 +10,4 @@
 {% import 'organisms/footer.html' as footer with context %}
 {{ footer.render() }}
 
-{#
-    Script allows Digital Gov to generate our global site search results.
-    Do not edit, this script comes straight from Digital Gov.
-    https://search.digitalgov.gov/manual/code.html
-#}
-<script>
-//<![CDATA[
-    var usasearch_config = { siteHandle: 'cfpb' };
-
-    var script = document.createElement( 'script' );
-    script.type = 'text/javascript';
-    script.src = 'https://search.usa.gov/assets/sayt_loader.js';
-    document.getElementsByTagName( 'head' )[0].appendChild( script );
-//]]>
-</script>
+{% include '_includes/snippets/search_gov.html' %}
