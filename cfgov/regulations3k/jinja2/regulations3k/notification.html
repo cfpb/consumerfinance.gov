@@ -6,29 +6,23 @@
 
    Description:
 
-   Creates Capital Framework Notification
+   Creates a container that contains a Capital Framework notification.
 
    value.message:           The main message of the notification
 
    value.explanation:       The explanation for the notification
 
-   value.notification_type: The type of notification (success, warning, error)
-
-   notification_icon:       The icon for the notification (approved-round, 
-                            warning-round, error-round)
+   TODO: This container should eventually be phased out and the layout for the
+         notification should be handled in the template in the
+         regulations landing page.
 
    ========================================================================== #}
-<div class="o-notification">
-    <div class="m-full-width-text
-                m-notification
-                m-notification__visible
-                m-notification__{{ value.notification_type }}">
-        {{ svg_icon(notification_icon) }} 
-        <div class="m-notification_content">
-            <div class="h4 m-notification_message">{{ value.message }}</div>
-            {% if value.explanation %}
-            <p class="m-notification_explanation">{{ value.explanation }}</p>
-            {% endif %}
-        </div> 
-    </div> 
+<div class="m-full-width-text u-mt45">
+    {% import 'molecules/notification.html' as notification %}
+    {{- notification.render(
+        'warning',
+        true,
+        value.message,
+        value.explanation
+    ) }}
 </div>
