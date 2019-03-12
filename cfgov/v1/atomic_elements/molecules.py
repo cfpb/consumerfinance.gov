@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
+from django.utils.safestring import mark_safe
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
@@ -332,8 +333,8 @@ class RSSFeed(blocks.StaticBlock):
         icon = 'plus'
         template = '_includes/molecules/rss-feed.html'
         label = 'RSS feed'
-        admin_text = (
-            'RSS Feed: '
+        admin_text = mark_safe(
+            '<h3>RSS Feed</h3>'
             'If this page or one of its ancestors provides an RSS feed, '
             'this block renders a link to that feed. If not, this block '
             'renders nothing.'
