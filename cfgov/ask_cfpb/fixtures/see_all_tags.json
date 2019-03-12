@@ -32,6 +32,14 @@
     }
 },
 {
+    "model": "v1.portalseeall",
+    "pk": 5,
+    "fields": {
+        "heading": "Common issues",
+        "heading_es": ""
+    }
+},
+{
     "model": "v1.portalseealltag",
     "pk": 1,
     "fields": {
@@ -61,6 +69,14 @@
     "fields": {
         "tag": 1031,
         "content_object": 4
+    }
+},
+{
+    "model": "v1.portalseealltag",
+    "pk": 5,
+    "fields": {
+        "tag": 1032,
+        "content_object": 5
     }
 }
 ]

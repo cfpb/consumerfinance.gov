@@ -10,8 +10,8 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0146_add_portal_tag_models'),
-        ('ask_cfpb', '0022_add_related_resource_field'),
+        ('v1', '0148_add_portal_tag_models'),
+        ('ask_cfpb', '0023_add_related_resource_field'),
     ]
 
     operations = [

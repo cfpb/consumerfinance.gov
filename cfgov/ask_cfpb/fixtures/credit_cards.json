@@ -1,0 +1,891 @@
+[
+    {
+        "ask_id": "2072", 
+        "see_all_ids": [
+            3, 
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1485", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "2043", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1969", 
+        "see_all_ids": [
+            3
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1861", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1859", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1827", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1697", 
+        "see_all_ids": [
+            1, 
+            3
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1543", 
+        "see_all_ids": [
+            3
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1541", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1527", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1377", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1239", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "328", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "98", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "97", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "96", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "95", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "94", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "93", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "92", 
+        "see_all_ids": [
+            1, 
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "91", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "88", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "87", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "86", 
+        "see_all_ids": [
+            3
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "85", 
+        "see_all_ids": [
+            5, 
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "84", 
+        "see_all_ids": [
+            1, 
+            3
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "83", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "82", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "81", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "80", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "79", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "78", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "77", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "76", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "75", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "74", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "73", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "72", 
+        "see_all_ids": [
+            5, 
+            2, 
+            3
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "71", 
+        "see_all_ids": [
+            5, 
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "70", 
+        "see_all_ids": [
+            1, 
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "69", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "68", 
+        "see_all_ids": [
+            1, 
+            2, 
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "67", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "65", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "64", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "63", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "62", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "61", 
+        "see_all_ids": [
+            3
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "60", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "59", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "58", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "57", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "56", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "55", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "54", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "53", 
+        "see_all_ids": [
+            4, 
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "52", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "51", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "50", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "49", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "48", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "47", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "46", 
+        "see_all_ids": [
+            1, 
+            4
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "45", 
+        "see_all_ids": [
+            1, 
+            4
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "44", 
+        "see_all_ids": [
+            4
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "43", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "42", 
+        "see_all_ids": [
+            1, 
+            4
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "41", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "40", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "39", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "38", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "37", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "36", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "35", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "34", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "33", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "32", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "25", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "24", 
+        "see_all_ids": [
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "23", 
+        "see_all_ids": [
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "22", 
+        "see_all_ids": [
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "21", 
+        "see_all_ids": [
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "20", 
+        "see_all_ids": [
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "19", 
+        "see_all_ids": [
+            2
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "18", 
+        "see_all_ids": [
+            2, 
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "17", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "16", 
+        "see_all_ids": [], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "15", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "14", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "13", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "12", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "11", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "10", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "9", 
+        "see_all_ids": [
+            1
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "8", 
+        "see_all_ids": [
+            3
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "7", 
+        "see_all_ids": [
+            5, 
+            3
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "2", 
+        "see_all_ids": [
+            5
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }, 
+    {
+        "ask_id": "1", 
+        "see_all_ids": [
+            1, 
+            4
+        ], 
+        "portal_ids": [
+            3
+        ]
+    }
+]
