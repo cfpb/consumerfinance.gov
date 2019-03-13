@@ -21,16 +21,16 @@
 
    ========================================================================== #}
 
-{% macro render(type, is_visible, message, explanation=none) %}
+{% macro render(type, is_visible, message, explanation=none, links=[]) %}
 
-  {% set type_lookup  = {
+  {% set type_lookup = {
         'default': 'information-round',
         'success': 'approved-round',
         'warning': 'warning-round',
         'error':   'error-round',
       }
   %}
-  {% set icon = type_lookup[type]  %}
+  {% set icon = type_lookup[type | default( 'default' )] %}
   {% set type = (' m-notification__' + type | string) if type else '' %}
 
   <div class="m-notification
@@ -38,12 +38,34 @@
               {{- ' m-notification__visible' if is_visible else '' -}}">
       {{ svg_icon(icon) }}
       <div class="m-notification_content"
-           {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
+          {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
           <div class="h4 m-notification_message">{{ message }}</div>
           {%- if explanation %}
-              <p class="m-notification_explanation">{{ explanation | safe }}</p>
+              <p class="m-notification_explanation">{{ explanation }}</p>
           {% endif -%}
+          {% for link in links %}
+              {% if link.text %}
+                  {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
+                      <li class="m-list_item">
+                          <a class="m-list_link" href="{{ link.url }}">
+                              {{ link.text }}
+                          </a>
+                      </li>
+                  {% if loop.last %}</ul>{% endif %}
+              {% endif %}
+          {% endfor %}
       </div>
   </div>
 
 {% endmacro %}
+
+{% if value %}
+  {{ render(
+      value.type,
+      value.is_visible | default( true ),
+      value.message,
+      value.explanation | default( '' ),
+      value.links | default( [] )
+    )
+  }}
+{% endif %}

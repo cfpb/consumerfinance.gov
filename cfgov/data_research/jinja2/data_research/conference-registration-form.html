@@ -14,7 +14,7 @@
             {{- notification.render(
                 'success',
                 true,
-                value.success_message
+                value.success_message | richtext
             ) }}
         </div>
     {% endif %}
@@ -27,7 +27,7 @@
     #}
     {% if settings.is_at_capacity %}
         <div class="block block__flush-top">
-            {{ value.at_capacity_message }}
+            {{ value.at_capacity_message | richtext }}
         </div>
 
         {#
@@ -51,7 +51,7 @@
             <div class="u-mb15">
             {% set form = settings.form %}
             {% for error in form.non_field_errors() %}
-                {{- notification.render('error', true, error) }}
+                {{- notification.render('error', true, error | richtext ) }}
             {% endfor %}
             {% for field in form %}
                 {% for error in field.errors %}
@@ -158,7 +158,7 @@
             <div class="u-mb15">
             {% set form = settings.form %}
             {% for error in form.non_field_errors() %}
-                {{- notification.render('error', true, error) }}
+                {{- notification.render('error', true, error | richtext) }}
             {% endfor %}
             {% for field in form %}
                 {% for error in field.errors %}

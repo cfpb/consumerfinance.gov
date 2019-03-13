@@ -251,8 +251,10 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
 
         if effective_version.draft:
-            page_perms = self.permissions_for_user(request.user)
-            if not page_perms.can_edit():
+            perms = request.user.get_all_permissions()
+
+            if (not request.user.is_superuser and
+               'regulations3k.change_section' not in perms):
                 raise PermissionDenied
 
         return effective_version
