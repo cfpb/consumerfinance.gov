@@ -30,7 +30,7 @@ class TestFilterableListForm(TestCase):
         mock_tag_objects.filter.assert_called_with(v1_cfgovauthoredpages_items__content_object__id__in=page_ids)
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('__builtin__.super')
+    @mock.patch('six.moves.builtins.super')
     def test_clean_returns_cleaned_data_if_valid(self, mock_super, mock_init):
         mock_init.return_value = None
         from_date = datetime.date(2017, 7, 4)
@@ -49,7 +49,7 @@ class TestFilterableListForm(TestCase):
 
     @mock.patch('v1.forms.FilterableListForm.first_page_date')
     @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('__builtin__.super')
+    @mock.patch('six.moves.builtins.super')
     def test_clean_uses_earliest_result_if_fromdate_field_is_empty(self, mock_super, mock_init, mock_pub_date):
         mock_init.return_value = None
         from_date = None
@@ -68,7 +68,7 @@ class TestFilterableListForm(TestCase):
         assert result['to_date'] == to_date
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('__builtin__.super')
+    @mock.patch('six.moves.builtins.super')
     def test_clean_uses_today_if_todate_field_is_empty(self, mock_super, mock_init):
         mock_init.return_value = None
         from_date = datetime.date(2016, 5, 15)
@@ -86,7 +86,7 @@ class TestFilterableListForm(TestCase):
         assert result['to_date'] == datetime.date.today()
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('__builtin__.super')
+    @mock.patch('six.moves.builtins.super')
     def test_clean_returns_cleaned_data_if_both_date_fields_are_empty(self, mock_super, mock_init):
         mock_init.return_value = None
         from_date = None
@@ -104,7 +104,7 @@ class TestFilterableListForm(TestCase):
 
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('__builtin__.super')
+    @mock.patch('six.moves.builtins.super')
     def test_clean_switches_date_fields_if_todate_is_less_than_fromdate(self, mock_super, mock_init):
         mock_init.return_value = None
         to_date = datetime.date(2000, 3, 15)

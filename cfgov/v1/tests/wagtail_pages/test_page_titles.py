@@ -1,6 +1,5 @@
 from django.test import Client, TestCase
 
-from helpers import publish_page
 from scripts import _atomic_helpers as atomic
 
 from v1.models.blog_page import BlogPage, LegacyBlogPage
@@ -15,10 +14,11 @@ from v1.models.sublanding_filterable_page import (
     ActivityLogPage, SublandingFilterablePage
 )
 from v1.models.sublanding_page import SublandingPage
+from v1.tests.wagtail_pages.helpers import publish_page
 
 
 '''
-Page types tested here: 
+Page types tested here:
 
 LandingPage,
 SubLandingPage,
@@ -35,7 +35,7 @@ LegacyNewsroomPage,
 BlogPage,
 LegacyBlogPage,
 ActivityLogPage
- 
+
 '''
 
 django_client = Client()

@@ -25,7 +25,7 @@ class ServeViewTestCase(TestCase):
         response = self.view.get(self.request, doc.pk, doc.filename)
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response, StreamingHttpResponse)
-        self.assertEqual(''.join(response.streaming_content), 'Test content')
+        self.assertEqual(b''.join(response.streaming_content), b'Test content')
 
     @override_settings(DEFAULT_FILE_STORAGE=(
         'wagtail.tests.dummy_external_storage.DummyExternalStorage'
@@ -59,4 +59,4 @@ class ServeUrlTestCase(TestCase):
 
     def test_url_resolve(self):
         view = resolve('/documents/123/example.doc')
-        self.assertEqual(view.func.func_name, 'DocumentServeView')
+        self.assertEqual(view.func.__name__, 'DocumentServeView')
