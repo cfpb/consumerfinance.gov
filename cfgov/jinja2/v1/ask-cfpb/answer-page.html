@@ -58,7 +58,7 @@
                 <strong>
                     Answer:
                 </strong>
-                {{ page.snippet | safe }}
+                {{ page.snippet | richtext | safe }}
             </h3>
         {% endif %}
         <div data-qa-hook="expandable"
