@@ -41,7 +41,7 @@
           {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
           <div class="h4 m-notification_message">{{ message }}</div>
           {%- if explanation %}
-              <p class="m-notification_explanation">{{ explanation | safe }}</p>
+              <p class="m-notification_explanation">{{ explanation }}</p>
           {% endif -%}
           {% for link in links %}
               {% if link.text %}

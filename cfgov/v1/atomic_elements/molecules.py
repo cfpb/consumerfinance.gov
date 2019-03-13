@@ -172,7 +172,7 @@ class Notification(blocks.StructBlock):
         required=True,
         help_text='The main notification message to display.'
     )
-    explanation = blocks.CharBlock(
+    explanation = blocks.TextBlock(
         required=False,
         help_text='Explanation text appears below the message in smaller type.'
     )
