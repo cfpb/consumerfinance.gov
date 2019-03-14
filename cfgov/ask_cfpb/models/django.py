@@ -1,59 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-import json
-from collections import Counter, OrderedDict
+from collections import Counter
 from six.moves import html_parser as HTMLParser
 
 from django import forms
-from django.apps import apps
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils import html
-from django.utils.functional import cached_property
 
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel
-)
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-
-from v1.util.migrations import get_or_create_page
-from v1.util.util import validate_social_sharing_image
 
 
 html_parser = HTMLParser.HTMLParser()
 
 ENGLISH_PARENT_SLUG = 'ask-cfpb'
 SPANISH_PARENT_SLUG = 'obtener-respuestas'
-
-
-def get_feedback_stream_value(page):
-    """Delivers a basic feedback module with yes/no buttons and comment box"""
-    translation_text = {
-        'helpful': {'es': '¿Fue útil esta respuesta?',
-                    'en': 'Was this page helpful to you?'},
-        'button': {'es': 'Enviar',
-                   'en': 'Submit'}
-    }
-    stream_value = [
-        {'type': 'feedback',
-         'value': {
-             'was_it_helpful_text': translation_text['helpful'][page.language],
-             'button_text': translation_text['button'][page.language],
-             'intro_text': '',
-             'question_text': '',
-             'radio_intro': '',
-             'radio_text': ('This information helps us '
-                            'understand your question better.'),
-             'radio_question_1': 'How soon do you expect to buy a home?',
-             'radio_question_2': 'Do you currently own a home?',
-             'contact_advisory': ''}}]
-    return stream_value
 
 
 def generate_short_slug(slug_string):
@@ -133,67 +98,20 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def featured_answers(self):
-        return Answer.objects.filter(
+    def featured_answers(self, language):
+        return self.answerpage_set.filter(
+            language=language,
             category=self,
             featured=True).order_by('featured_rank')
 
     @property
-    def top_tags_es(self):
-        import collections
-        valid_dict = Answer.valid_tags(language='es')
-        cleaned = []
-        for a in self.answer_set.all():
-            cleaned += a.clean_tags_es
-        valid_clean = [tag for tag in cleaned
-                       if tag in valid_dict['valid_tags']]
-        counter = collections.Counter(valid_clean)
+    def top_tags(self, language='es'):
+        search_tags = []
+        pages = self.answerpage_set.filter(language=language).all()
+        for page in pages:
+            search_tags += page.clean_search_tags
+        counter = Counter(search_tags)
         return counter.most_common()[:10]
-
-    @cached_property
-    def facet_map(self):
-        raw_answers = self.answer_set.order_by('-pk').select_related()
-        answers = [
-            answer for answer in raw_answers if answer.english_page.live]
-        subcats = self.subcategories.all().select_related()
-        audiences = Audience.objects.all()
-        container = {
-            'subcategories': {},
-            'audiences': {}
-        }
-        container['answers'] = OrderedDict([
-            (str(answer.pk),
-             {'question': answer.question,
-              'url': '/ask-cfpb/slug-en-{}'.format(answer.pk)}
-             ) for answer in answers
-            if answer.answer_pages.filter(language='en', redirect_to=None)])
-        subcat_data = {}
-        for subcat in subcats:
-            key = str(subcat.id)
-            subcat_data[key] = [
-                str(answer.pk) for answer
-                in subcat.answer_set.all()
-                if answer.answer_pages.filter(language='en', redirect_to=None)]
-        container['subcategories'].update(subcat_data)
-        audience_map = {audience: {'all': [], 'name': audience.name}
-                        for audience in audiences}
-        for answer in answers:
-            for audience in audience_map:
-                if audience in answer.audiences.all():
-                    audience_map[audience]['all'].append(str(answer.pk))
-        for subcat in subcats:
-            ID = str(subcat.id)
-            for audience in audience_map:
-                _map = audience_map[audience]
-                if _map['all']:
-                    _map[ID] = []
-                    for answer_id in subcat_data[ID]:
-                        if answer_id in _map['all']:
-                            _map[ID].append(answer_id)
-        container['audiences'].update(
-            {str(audience.id): audience_map[audience]
-             for audience in audience_map.keys()})
-        return json.dumps(container)
 
     class Meta:
         ordering = ['name']
@@ -382,60 +300,11 @@ class Answer(models.Model):
         )
     )
 
-    panels = [
-        MultiFieldPanel([
-            FieldRowPanel([
-                FieldPanel('update_english_page'),
-                FieldPanel('last_edited')]),
-            FieldRowPanel([
-                FieldPanel('update_spanish_page'),
-                FieldPanel('last_edited_es')])],
-            heading="Workflow fields -- check before saving",
-            classname="collapsible"),
-        MultiFieldPanel([
-            FieldPanel('question', classname="title"),
-            FieldPanel('statement', classname="title"),
-            FieldPanel('snippet', classname="full"),
-            FieldPanel('answer', classname="full")],
-            heading="English",
-            classname="collapsible"),
-        MultiFieldPanel([
-            FieldPanel('question_es', classname="title"),
-            FieldPanel('snippet_es', classname="full"),
-            FieldPanel('answer_es', classname="full")],
-            heading="Spanish",
-            classname="collapsible"),
-        MultiFieldPanel([
-            FieldRowPanel([
-                FieldPanel('featured'),
-                FieldPanel('featured_rank')]),
-            FieldPanel('audiences', widget=forms.CheckboxSelectMultiple),
-            FieldPanel('next_step'),
-            FieldPanel(
-                'category', widget=forms.CheckboxSelectMultiple),
-            FieldPanel(
-                'subcategory',
-                widget=forms.CheckboxSelectMultiple),
-            FieldPanel(
-                'related_questions',
-                widget=forms.SelectMultiple,
-                classname="full"),
-            FieldPanel('search_tags'),
-            FieldPanel('search_tags_es'),
-            ImageChooserPanel('social_sharing_image')],
-            heading="Metadata",
-            classname="collapsible"),
-    ]
-
     class Meta:
         ordering = ['-id']
 
     def __str__(self):
         return "{} {}".format(self.id, self.slug)
-
-    @property
-    def available_subcategory_qs(self):
-        return SubCategory.objects.filter(parent__in=self.category.all())
 
     @property
     def english_page(self):
@@ -461,10 +330,6 @@ class Answer(models.Model):
             html_parser.unescape(self.answer_es)))
         return html.strip_tags(unescaped).strip()
 
-    def clean(self):
-        super(Answer, self).clean()
-        validate_social_sharing_image(self.social_sharing_image)
-
     def cleaned_questions(self):
         cleaned_terms = html_parser.unescape(self.question)
         return [html.strip_tags(cleaned_terms).strip()]
@@ -487,164 +352,3 @@ class Answer(models.Model):
 
     def audience_strings(self):
         return [audience.name for audience in self.audiences.all()]
-
-    @staticmethod
-    def clean_tag_list(taglist):
-        return [
-            tag.replace('"', '').strip()
-            for tag in taglist.split(',')
-            if tag.replace('"', '').strip()]
-
-    @cached_property
-    def clean_tags(self):
-        return self.clean_tag_list(self.search_tags)
-
-    @cached_property
-    def clean_tags_es(self):
-        return self.clean_tag_list(self.search_tags_es)
-
-    @classmethod
-    def valid_tags(cls, language='en'):
-        """
-        Search tags are arbitrary and messy. This function serves 2 purposes:
-        - Assemble a whitelist of tags that are safe for search.
-        - Exclude tags that are attached to only one answer.
-        Tags are useless until they can be used to collect at least 2 answers.
-
-        This method returns a dict {'valid_tags': [], tag_map: {}}
-        valid_tags is an alphabetical list of valid tags.
-        tag_map is a dictionary mapping tags to questions.
-        """
-        cleaned = []
-        tag_map = {}
-        if language == 'es':
-            for a in cls.objects.all():
-                cleaned += a.clean_tags_es
-                for tag in a.clean_tags_es:
-                    if tag not in tag_map:
-                        tag_map[tag] = [a]
-                    else:
-                        tag_map[tag].append(a)
-        else:
-            for a in cls.objects.all():
-                cleaned += a.clean_tags
-                for tag in a.clean_tags:
-                    if tag not in tag_map:
-                        tag_map[tag] = [a]
-                    else:
-                        tag_map[tag].append(a)
-        tag_counter = Counter(cleaned)
-        valid = sorted(
-            tup[0] for tup in tag_counter.most_common() if tup[1] > 1)
-        return {'valid_tags': valid, 'tag_map': tag_map}
-
-    def has_live_page(self):
-        if not self.answer_pages.all():
-            return False
-        for page in self.answer_pages.all():
-            if page.live:
-                return True
-        return False
-
-    def create_or_update_page(self, language=None):
-        """Create or update an English or Spanish Answer page"""
-        from .pages import AnswerPage
-        english_parent = Page.objects.get(slug=ENGLISH_PARENT_SLUG).specific
-        spanish_parent = Page.objects.get(slug=SPANISH_PARENT_SLUG).specific
-        if language == 'en':
-            _parent = english_parent
-            _slug = self.slug
-            _question = self.question
-            # _snippet = self.snippet
-            # _answer = self.answer
-            # _statement = self.statement
-            _last_edited = self.last_edited
-            _search_tags = self.search_tags
-        elif language == 'es':
-            _parent = spanish_parent
-            _slug = self.slug_es
-            _question = self.question_es
-            # _snippet = self.snippet_es
-            # _answer = self.answer_es
-            # _statement = ''
-            _last_edited = self.last_edited_es
-            _search_tags = self.search_tags_es
-        else:
-            raise ValueError('unsupported language: "{}"'.format(language))
-        try:
-            base_page = AnswerPage.objects.get(
-                language=language, answer_base=self)
-        except ObjectDoesNotExist:
-            base_page = get_or_create_page(
-                apps,
-                'ask_cfpb',
-                'AnswerPage',
-                '{}-{}-{}'.format(_question[:244], language, self.id),
-                _slug,
-                _parent,
-                show_in_menus=True,
-                language=language,
-                answer_base=self)
-            base_page.save_revision(user=self.last_user)
-        _page = base_page.get_latest_revision_as_page()
-        # _page.question = _question
-        # _page.answer = _answer
-        # _page.snippet = _snippet
-        # _page.statement = _statement
-        _page.last_edited = _last_edited
-        _page.search_tags = _search_tags
-        _page.title = '{}-{}-{}'.format(
-            _question[:244], language, self.id)
-        _page.live = False
-        _page.has_unpublished_changes = True
-        stream_block = _page.content.stream_block
-        _page.content = StreamValue(
-            stream_block,
-            get_feedback_stream_value(_page),
-            is_lazy=True)
-        _page.save_revision(user=self.last_user)
-        return _page
-
-    def create_or_update_pages(self):
-        counter = 0
-        if self.answer:
-            counter += 1
-            self.create_or_update_page(language='en')
-        if self.answer_es:
-            counter += 1
-            self.create_or_update_page(language='es')
-        return counter
-
-    def save(self, skip_page_update=False, *args, **kwargs):
-        if not self.id:
-            super(Answer, self).save(*args, **kwargs)
-            self.save(skip_page_update=skip_page_update)
-        else:
-            if self.answer:
-                self.slug = "{}-en-{}".format(
-                    generate_short_slug(self.question), self.id)
-            else:
-                self.slug = "slug-en-{}".format(self.id)
-            if self.answer_es:
-                self.slug_es = "{}-es-{}".format(
-                    generate_short_slug(self.question_es), self.id)
-            else:
-                self.slug_es = "slug-es-{}".format(self.id)
-            super(Answer, self).save(*args, **kwargs)
-            if skip_page_update is False:
-                if self.update_english_page:
-                    self.create_or_update_page(language='en')
-                if self.update_spanish_page:
-                    self.create_or_update_page(language='es')
-
-
-class EnglishAnswerProxy(Answer):
-    """A no-op proxy class to allow separate language indexing in Haystack"""
-    class Meta:
-        proxy = True
-
-
-class SpanishAnswerProxy(Answer):
-    """A no-op proxy class to allow separate language indexing in Haystack"""
-    class Meta:
-        proxy = True

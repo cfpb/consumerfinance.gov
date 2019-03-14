@@ -16,6 +16,9 @@ from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 from flags.views import FlaggedTemplateView
+from wagtailautocomplete.urls.admin import (
+    urlpatterns as autocomplete_admin_urls
+)
 
 from ask_cfpb.views import (
     ask_autocomplete, ask_search, print_answer, redirect_ask_search,
@@ -454,6 +457,7 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^admin/account/change_password/$',
             change_password,
             name='wagtailadmin_account_change_password'),
+        url(r'^admin/autocomplete/', include(autocomplete_admin_urls)),
         url(r'^admin/', include(wagtailadmin_urls)),
 
     ]

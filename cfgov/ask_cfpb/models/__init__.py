@@ -1,8 +1,7 @@
 # flake8: noqa F401
 from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Audience, Category,
-    EnglishAnswerProxy, NextStep, SpanishAnswerProxy, SubCategory,
-    generate_short_slug, get_feedback_stream_value
+    NextStep, SubCategory, generate_short_slug
 )
 from ask_cfpb.models.pages import (
     ABOUT_US_SNIPPET_TITLE, CONSUMER_TOOLS_PORTAL_PAGES,

@@ -2,68 +2,19 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.conf.urls import url
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
-from django.utils.decorators import method_decorator
 from django.utils.html import format_html
 
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
-from wagtail.contrib.modeladmin.views import EditView
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailadmin.rich_text import HalloPlugin
 from wagtail.wagtailcore import hooks
 
-from ask_cfpb.models import Answer, Audience, Category, NextStep, SubCategory
+from ask_cfpb.models import Category, SubCategory
 from ask_cfpb.scripts import export_ask_data
-
-
-class AnswerModelAdminSaveUserEditView(EditView):
-    """
-    An edit_handler that saves the current user as the 'last user'
-    on an Answer object so that it can be passed to a created or updated page.
-    """
-
-    def save_instance_user(self):
-        self.instance.last_user = self.request.user
-        self.instance.save(skip_page_update=True)
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        self.save_instance_user()
-        return super(EditView, self).dispatch(request, *args, **kwargs)
-
-
-class AnswerModelAdmin(ModelAdmin):
-    model = Answer
-    menu_label = 'Answers'
-    menu_icon = 'list-ul'
-    list_display = (
-        'id',
-        'question',
-        'last_edited',
-        'question_es',
-        'last_edited_es')
-    search_fields = (
-        'id', 'question', 'question_es', 'answer', 'answer_es', 'search_tags')
-    list_filter = ('category', 'featured', 'audiences')
-    edit_view_class = AnswerModelAdminSaveUserEditView
-
-
-class AudienceModelAdmin(ModelAdmin):
-    model = Audience
-    menu_icon = 'list-ul'
-    menu_label = 'Audiences'
-
-
-class NextStepModelAdmin(ModelAdmin):
-    model = NextStep
-    menu_label = 'Related resources'
-    menu_icon = 'list-ul'
-    list_display = (
-        'title', 'text')
 
 
 class SubCategoryModelAdmin(ModelAdmin):
@@ -91,11 +42,8 @@ class MyModelAdminGroup(ModelAdminGroup):
     menu_label = 'Ask CFPB'
     menu_icon = 'list-ul'
     items = (
-        AnswerModelAdmin,
-        AudienceModelAdmin,
         CategoryModelAdmin,
-        SubCategoryModelAdmin,
-        NextStepModelAdmin)
+        SubCategoryModelAdmin)
 
 
 def export_data(request):

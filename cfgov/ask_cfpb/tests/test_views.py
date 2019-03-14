@@ -14,7 +14,9 @@ from wagtailsharing.models import SharingSite
 import mock
 from model_mommy import mommy
 
-from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
+from ask_cfpb.models import (
+    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerPage
+)
 from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
 
@@ -48,11 +50,34 @@ class AnswerPagePreviewCase(TestCase):
             live=True)
         self.test_answer = mommy.make(
             Answer,
-            answer="Test answer.",
-            question="Test question.",
-            slug='test-question',
-            update_english_page=True,
-            update_spanish_page=False)
+            answer="Test answer1.",
+            question="Test question1.",
+            slug='test-question1')
+        self.test_answer2 = mommy.make(
+            Answer,
+            answer="Test answer2.",
+            question="Test question2.",
+            slug='test-question2')
+        self.english_answer_page = AnswerPage(
+            answer_base=self.test_answer,
+            answer_id=self.test_answer.pk,
+            language='en',
+            slug='test-question1-en-{}'.format(self.test_answer.pk),
+            title='Test question1',
+            answer='Test answer1.',
+            question='Test question1.')
+        self.english_parent_page.add_child(instance=self.english_answer_page)
+        self.english_answer_page.save_revision().publish()
+        self.english_answer_page2 = AnswerPage(
+            answer_base=self.test_answer2,
+            answer_id=self.test_answer2.pk,
+            language='en',
+            slug='test-question2-en-{}'.format(self.test_answer2.pk),
+            title='Test question2',
+            answer='Test answer2.',
+            question='Test question2.')
+        self.english_parent_page.add_child(instance=self.english_answer_page2)
+        self.english_answer_page2.save_revision().publish()
         self.site = mommy.make(
             Site,
             root_page=self.ROOT_PAGE,
@@ -68,21 +93,17 @@ class AnswerPagePreviewCase(TestCase):
     @mock.patch('ask_cfpb.views.ServeView.serve_latest_revision')
     def test_preview_page(self, mock_serve):
         from ask_cfpb.views import view_answer
-        page = self.test_answer.english_page
-        revision = page.save_revision()
-        revision.publish()
         test_request = HttpRequest()
         test_request.META['SERVER_NAME'] = 'preview.localhost'
         test_request.META['SERVER_PORT'] = 8000
         view_answer(
-            test_request, 'test-question', 'en', self.test_answer.pk)
+            test_request, 'test-question1', 'en', self.test_answer.pk)
         self.assertEqual(mock_serve.call_count, 1)
 
     def test_answer_page_not_live(self):
         from ask_cfpb.views import view_answer
         page = self.test_answer.english_page
-        page.live = False
-        page.save()
+        page.unpublish()
         test_request = HttpRequest()
         with self.assertRaises(Http404):
             view_answer(
@@ -90,6 +111,16 @@ class AnswerPagePreviewCase(TestCase):
                 'test-question',
                 'en',
                 self.test_answer.pk)
+
+    def test_page_redirected(self):
+        page = self.english_answer_page
+        page.get_latest_revision().publish()
+        page.redirect_to_page = self.english_answer_page2
+        page.save()
+        page.save_revision().publish()
+        response = self.client.get(page.url)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url, self.english_answer_page2.url)
 
 
 class AnswerViewTestCase(TestCase):

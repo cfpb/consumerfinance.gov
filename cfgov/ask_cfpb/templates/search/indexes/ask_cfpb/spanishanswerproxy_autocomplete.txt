@@ -1,1 +1,0 @@
-{{ object.question_es|striptags|safe }}
