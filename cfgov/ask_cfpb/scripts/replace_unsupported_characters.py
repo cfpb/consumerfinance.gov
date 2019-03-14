@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-import datetime
 import os
 
 from django.contrib.auth.models import User
@@ -32,7 +31,6 @@ def fix(text, string):
 
 
 def run():
-    starter = datetime.datetime.now()
     migration_user_pk = os.getenv('MIGRATION_USER_PK', 9999)
     user = User.objects.filter(id=migration_user_pk).first()
     for page in AnswerPage.objects.filter(live=True):
@@ -49,5 +47,3 @@ def run():
                 fixed = True
         if fixed:
             page.save_revision(user=user).publish()
-    print("Character cleanup took {}".format(
-        datetime.datetime.now() - starter))
