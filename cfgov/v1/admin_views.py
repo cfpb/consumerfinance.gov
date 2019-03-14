@@ -60,7 +60,7 @@ def manage_cdn(request):
                 history_item.save()
                 messages.error(request, error_message)
         else:
-            for field, error_list in form.errors.iteritems():
+            for field, error_list in form.errors.items():
                 for error in error_list:
                     messages.error(request, "Error in %s: %s" % (field, error))
     history = AkamaiHistory.objects.all().order_by('-created')[:20]

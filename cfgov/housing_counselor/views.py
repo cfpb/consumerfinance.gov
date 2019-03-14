@@ -39,20 +39,20 @@ def requests_retry_session(
 class HousingCounselorS3URLMixin(object):
 
     @staticmethod
-    def s3_url(format, zipcode):
+    def s3_url(file_format, zipcode):
         path = settings.HOUSING_COUNSELOR_S3_PATH_TEMPLATE.format(
-            format=format,
+            file_format=file_format,
             zipcode=zipcode
         )
         return path
 
     @classmethod
     def s3_json_url(cls, zipcode):
-        return cls.s3_url(format='json', zipcode=zipcode)
+        return cls.s3_url(file_format='json', zipcode=zipcode)
 
     @classmethod
     def s3_pdf_url(cls, zipcode):
-        return cls.s3_url(format='pdf', zipcode=zipcode)
+        return cls.s3_url(file_format='pdf', zipcode=zipcode)
 
 
 class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):

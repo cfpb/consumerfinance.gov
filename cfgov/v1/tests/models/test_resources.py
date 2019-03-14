@@ -1,9 +1,13 @@
+import six
+from unittest import skipIf
+
 from django.test import TestCase
 
 from v1.models.resources import Resource
 
 
 class TestUnicodeCompatibility(TestCase):
+    @skipIf(six.PY3, "all strings are unicode")
     def test_unicode_resource_title_str(self):
         resource = Resource(title=u'Unicod\xeb')
         self.assertEqual(str(resource), 'Unicod\xc3\xab')
@@ -11,8 +15,8 @@ class TestUnicodeCompatibility(TestCase):
 
     def test_unicode_resource_title_unicode(self):
         resource = Resource(title=u'Unicod\xeb')
-        self.assertEqual(unicode(resource), u'Unicod\xeb')
-        self.assertIsInstance(unicode(resource), unicode)
+        self.assertEqual(six.text_type(resource), u'Unicod\xeb')
+        self.assertIsInstance(six.text_type(resource), six.text_type)
 
 
 class TestFilterByTags(TestCase):

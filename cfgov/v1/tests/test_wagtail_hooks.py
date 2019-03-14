@@ -59,7 +59,7 @@ class TestFormModuleHandlers(TestCase):
         self.request = mock.Mock()
         self.context = {}
 
-    @mock.patch('__builtin__.hasattr')
+    @mock.patch('six.moves.builtins.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
     def test_sets_context(self, mock_getstreamfields, mock_hasattr):
         mock_hasattr.return_value = True
@@ -79,7 +79,7 @@ class TestFormModuleHandlers(TestCase):
         form_module_handlers(self.page, self.request, self.context)
         mock_getstreamfields.assert_called_with(self.page)
 
-    @mock.patch('__builtin__.hasattr')
+    @mock.patch('six.moves.builtins.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
     def test_checks_child_block_if_set_form_context_exists(self, mock_getstreamfields, mock_hasattr):
         child = mock.Mock()
@@ -88,7 +88,7 @@ class TestFormModuleHandlers(TestCase):
         form_module_handlers(self.page, self.request, self.context)
         mock_hasattr.assert_called_with(child.block, 'get_result')
 
-    @mock.patch('__builtin__.hasattr')
+    @mock.patch('six.moves.builtins.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
     def test_sets_context_fieldname_if_not_set(self, mock_getstreamfields, mock_hasattr):
         child = mock.Mock()
@@ -99,7 +99,7 @@ class TestFormModuleHandlers(TestCase):
         assert 'name' in self.context['form_modules']
         self.assertIsInstance(self.context['form_modules']['name'], dict)
 
-    @mock.patch('__builtin__.hasattr')
+    @mock.patch('six.moves.builtins.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
     def test_calls_child_block_get_result(self, mock_getstreamfields, mock_hasattr):
         child = mock.Mock()
@@ -114,7 +114,7 @@ class TestFormModuleHandlers(TestCase):
             child.block.is_submitted()
         )
 
-    @mock.patch('__builtin__.hasattr')
+    @mock.patch('six.moves.builtins.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
     def test_calls_child_block_is_submitted(self, mock_getstreamfields, mock_hasattr):
         child = mock.Mock()

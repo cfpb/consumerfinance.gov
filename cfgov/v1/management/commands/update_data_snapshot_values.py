@@ -35,10 +35,10 @@ class Command(BaseCommand):
         snapshots = []
         for page in BrowsePage.objects.all():
             stream_data = page.specific.content.stream_data
-            snapshot = filter(
+            snapshot = list(filter(
                 lambda item: item['type'] == 'data_snapshot',
                 stream_data
-            )
+            ))
             if snapshot:
                 snapshot[0]['value']['page'] = page
                 snapshots.append(snapshot[0]['value'])

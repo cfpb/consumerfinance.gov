@@ -1,11 +1,13 @@
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
+from django.utils.safestring import mark_safe
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
 from v1.blocks import AnchorLink, HeadingBlock
+from v1.feeds import get_appropriate_rss_feed_url_for_page
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
@@ -170,7 +172,7 @@ class Notification(blocks.StructBlock):
         required=True,
         help_text='The main notification message to display.'
     )
-    explanation = blocks.CharBlock(
+    explanation = blocks.TextBlock(
         required=False,
         help_text='Explanation text appears below the message in smaller type.'
     )
@@ -326,16 +328,30 @@ class RelatedMetadata(blocks.StructBlock):
         label = 'Related metadata'
 
 
-class RSSFeed(blocks.ChoiceBlock):
-    choices = [
-        ('blog_feed', 'Blog Feed'),
-        ('newsroom_feed', 'Newsroom Feed'),
-    ]
-
+class RSSFeed(blocks.StaticBlock):
     class Meta:
         icon = 'plus'
         template = '_includes/molecules/rss-feed.html'
         label = 'RSS feed'
+        admin_text = mark_safe(
+            '<h3>RSS Feed</h3>'
+            'If this page or one of its ancestors provides an RSS feed, '
+            'this block renders a link to that feed. If not, this block '
+            'renders nothing.'
+        )
+
+    def get_context(self, value, parent_context=None):
+        context = super(RSSFeed, self).get_context(
+            value,
+            parent_context=parent_context
+        )
+
+        page = context.get('page')
+
+        if page:
+            context['value'] = get_appropriate_rss_feed_url_for_page(page)
+
+        return context
 
 
 class SocialMedia(blocks.StructBlock):

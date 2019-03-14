@@ -83,13 +83,13 @@ def get_secondary_nav_items(request, current_page):
         }
 
         if page.id == sibling.id:
-            visible_children = filter(
+            visible_children = list(filter(
                 lambda c: (
                     instanceOfBrowseOrFilterablePages(c) and
                     (c.live)
                 ),
                 sibling.get_children().specific()
-            )
+            ))
             if len(visible_children):
                 has_children = True
                 for child in visible_children:
