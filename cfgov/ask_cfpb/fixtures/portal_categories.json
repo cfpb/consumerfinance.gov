@@ -1,6 +1,6 @@
 [
 {
-    "model": "v1.portalseeall",
+    "model": "v1.portalcategory",
     "pk": 1,
     "fields": {
         "heading": "Basics",
@@ -8,7 +8,7 @@
     }
 },
 {
-    "model": "v1.portalseeall",
+    "model": "v1.portalcategory",
     "pk": 2,
     "fields": {
         "heading": "Know your rights",
@@ -16,7 +16,7 @@
     }
 },
 {
-    "model": "v1.portalseeall",
+    "model": "v1.portalcategory",
     "pk": 3,
     "fields": {
         "heading": "How-to",
@@ -24,7 +24,7 @@
     }
 },
 {
-    "model": "v1.portalseeall",
+    "model": "v1.portalcategory",
     "pk": 4,
     "fields": {
         "heading": "Key terms",
@@ -32,7 +32,7 @@
     }
 },
 {
-    "model": "v1.portalseeall",
+    "model": "v1.portalcategory",
     "pk": 5,
     "fields": {
         "heading": "Common issues",
@@ -40,7 +40,7 @@
     }
 },
 {
-    "model": "v1.portalseealltag",
+    "model": "v1.portalcategorytag",
     "pk": 1,
     "fields": {
         "tag": 1028,
@@ -48,7 +48,7 @@
     }
 },
 {
-    "model": "v1.portalseealltag",
+    "model": "v1.portalcategorytag",
     "pk": 2,
     "fields": {
         "tag": 1029,
@@ -56,7 +56,7 @@
     }
 },
 {
-    "model": "v1.portalseealltag",
+    "model": "v1.portalcategorytag",
     "pk": 3,
     "fields": {
         "tag": 1030,
@@ -64,7 +64,7 @@
     }
 },
 {
-    "model": "v1.portalseealltag",
+    "model": "v1.portalcategorytag",
     "pk": 4,
     "fields": {
         "tag": 1031,
@@ -72,7 +72,7 @@
     }
 },
 {
-    "model": "v1.portalseealltag",
+    "model": "v1.portalcategorytag",
     "pk": 5,
     "fields": {
         "tag": 1032,

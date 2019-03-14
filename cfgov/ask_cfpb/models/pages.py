@@ -26,7 +26,7 @@ from wagtailautocomplete.edit_handlers import AutocompletePanel
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
-    CFGOVPage, CFGOVPageManager, LandingPage, PortalSeeAll, PortalTopic
+    CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic
 )
 from v1.models.snippets import RelatedResource, ReusableText
 
@@ -496,14 +496,14 @@ class AnswerPage(CFGOVPage):
         null=True,
         help_text="Change the date to today if you make a significant change.")
     question = models.TextField(blank=True)
-    snippet = RichTextField(
-        blank=True, help_text='Optional answer intro')
     statement = models.TextField(
         blank=True,
         help_text=(
             "(Optional) Use this field to rephrase the question title as "
             "a statement. Use only if this answer has been chosen to appear "
             "on a money topic portal (e.g. /consumer-tools/debt-collection)."))
+    short_answer = RichTextField(
+        blank=True, help_text='Optional answer intro')
     answer = RichTextField(
         blank=True,
         features=[
@@ -586,8 +586,8 @@ class AnswerPage(CFGOVPage):
         help_text=(
             "Use only if assigning more than one portal topic, "
             "to control which topic is used as a breadcrumb."))
-    portal_see_all = ParentalManyToManyField(
-        PortalSeeAll,
+    portal_category = ParentalManyToManyField(
+        PortalCategory,
         blank=True)
 
     user_feedback = StreamField([
@@ -598,7 +598,7 @@ class AnswerPage(CFGOVPage):
         MultiFieldPanel([
             FieldPanel('question'),
             FieldPanel('statement'),
-            FieldPanel('snippet'),
+            FieldPanel('short_answer'),
             FieldPanel('answer'),
             FieldPanel('last_edited')],
             heading="Page content",
@@ -611,11 +611,15 @@ class AnswerPage(CFGOVPage):
                 is_single=False),
             FieldPanel('primary_portal_topic'),
             FieldPanel('portal_topic', widget=forms.CheckboxSelectMultiple),
-            FieldPanel('portal_see_all', widget=forms.CheckboxSelectMultiple)],
+            FieldPanel(
+                'portal_category', widget=forms.CheckboxSelectMultiple)],
             heading="Metadata",
             classname="collapsible"),
         AutocompletePanel('redirect_to_page', page_type='ask_cfpb.AnswerPage'),
-        StreamFieldPanel('user_feedback'),
+        MultiFieldPanel([
+            StreamFieldPanel('user_feedback')],
+            heading="User feedback",
+            classname="collapsible collapsed"),
     ]
 
     sidebar = StreamField([
@@ -633,7 +637,7 @@ class AnswerPage(CFGOVPage):
 
     search_fields = Page.search_fields + [
         index.SearchField('answer'),
-        index.SearchField('snippet')
+        index.SearchField('short_answer')
     ]
 
     edit_handler = TabbedInterface([
@@ -647,7 +651,7 @@ class AnswerPage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(AnswerPage, self).get_context(request)
         context['related_questions'] = self.related_questions.all()
-        context['description'] = self.snippet if self.snippet \
+        context['description'] = self.short_answer if self.short_answer \
             else Truncator(self.answer).words(40, truncate=' ...')
         context['answer_id'] = self.answer_base.id
         if self.language == 'es':

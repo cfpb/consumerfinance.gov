@@ -33,21 +33,21 @@ class PortalTopic(ClusterableModel):
         return self.heading
 
 
-class PortalSeeAllTag(TaggedItemBase):
+class PortalCategoryTag(TaggedItemBase):
     content_object = ParentalKey(
-        'v1.PortalSeeAll',
-        related_name='tagged_portal_see_all',
+        'v1.PortalCategory',
+        related_name='tagged_portal_category',
         null=True,
         on_delete=models.SET_NULL)
 
 
 @python_2_unicode_compatible
-class PortalSeeAll(ClusterableModel):
+class PortalCategory(ClusterableModel):
     heading = models.CharField(max_length=255, blank=True)
     heading_es = models.CharField(max_length=255, blank=True)
 
     tags = TaggableManager(
-        through=PortalSeeAllTag,
+        through=PortalCategoryTag,
         blank=True,
         help_text=(
             'Tags are used to identify and organize portal see-all pages.')

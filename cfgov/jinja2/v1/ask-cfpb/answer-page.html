@@ -13,7 +13,7 @@
     {{ description | striptags | safe}}
 {% endblock %}
 {%- block og_desc -%}
-  {{- page.search_description or page.seo_title or page.snippet|striptags -}}
+  {{- page.search_description or page.seo_title or page.short_answer|striptags -}}
 {%- endblock -%}
 
 {% block banner_top %}
@@ -53,12 +53,12 @@
 
     <div class="block
                 block__flush-top">
-        {% if page.snippet %}
+        {% if page.short_answer %}
             <h3 class="answer-snippet">
                 <strong>
                     Answer:
                 </strong>
-                {{ page.snippet | richtext | safe }}
+                {{ page.short_answer | richtext | safe }}
             </h3>
         {% endif %}
         <div data-qa-hook="expandable"

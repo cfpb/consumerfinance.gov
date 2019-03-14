@@ -22,7 +22,7 @@ from v1.models.learn_page import (
 from v1.models.menu_item import MenuItem
 from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
 from v1.models.portal_topics import (
-    PortalSeeAll, PortalSeeAllTag, PortalTopic, PortalTopicTag
+    PortalCategory, PortalCategoryTag, PortalTopic, PortalTopicTag
 )
 from v1.models.resources import Resource, ResourceTag, TaggableSnippetManager
 from v1.models.snippets import Contact, ReusableText

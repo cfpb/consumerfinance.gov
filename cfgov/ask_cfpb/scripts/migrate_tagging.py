@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from ask_cfpb.models import AnswerPage
-from v1.models import PortalSeeAll, PortalTopic
+from v1.models import PortalCategory, PortalTopic
 
 
 PROJECT_ROOT = settings.PROJECT_ROOT
@@ -45,7 +45,7 @@ PORTAL_IDS = {
     'Reverse mortgages': 12,
     'Student loans': 13,
 }
-SEE_ALL_IDS = {
+CATEGORY_IDS = {
     'Basics': 1,
     'Know your rights': 2,
     'How-to': 3,
@@ -84,12 +84,13 @@ def run():
             output_json(output, slug)
             print("Output {}.json".format(slug))
         apply_tags(output)
-        print("Tag migrations took {}".format(datetime.datetime.now() - starter))
+        print("Tag migrations took {}".format(
+            datetime.datetime.now() - starter))
 
 
 def apply_tags(data):
     """Apply tagging values to answer pages."""
-    see_all_map = {obj.pk: obj for obj in PortalSeeAll.objects.all()}
+    category_map = {obj.pk: obj for obj in PortalCategory.objects.all()}
     migration_user_pk = os.getenv('MIGRATION_USER_PK')
     user = User.objects.filter(id=migration_user_pk).first()  # default is None
     for entry in data:
@@ -99,16 +100,15 @@ def apply_tags(data):
             initial_status = page.status_string
             page.get_latest_revision().publish()
             portal_ids = entry.get('portal_ids')
-            see_all_ids = entry.get('see_all_ids')
+            category_ids = entry.get('see_all_ids')
             for portal_id in portal_ids:
                 topic = PortalTopic.objects.get(pk=portal_id)
                 page.portal_topic.add(topic)
-            for see_id in see_all_ids:
-                see_object = see_all_map.get(see_id)
-                if see_object:
-                    page.portal_see_all.add(see_object)
+            for category_id in category_ids:
+                category_object = category_map.get(category_id)
+                if category_object:
+                    page.portal_category.add(category_object)
             page.save_revision(user=user).publish()
-            print("Portal tags applied to {}".format(page))
             if initial_status == 'draft':
                 page.unpublish()
 
@@ -123,19 +123,19 @@ def transform_csv(dict_rows, portal):
     output = []
     portal_pk = PORTAL_IDS.get(portal)
     for row in dict_rows:
-        see_alls = [
+        categories = [
             tag.strip() for tag in [
                 row['PrimaryCategoryTag'],
                 row['CategoryTag2'],
                 row['CategoryTag3'],
                 row['CategoryTag4']]
             if tag.strip()]
-        see_all_pks = [SEE_ALL_IDS.get(tag) for tag in see_alls
-                       if SEE_ALL_IDS.get(tag)]
+        category_pks = [CATEGORY_IDS.get(tag) for tag in categories
+                        if CATEGORY_IDS.get(tag)]
         entry = {
             'ask_id': row.get('ask_id'),
             'portal_ids': [portal_pk],
-            'see_all_ids': see_all_pks,
+            'see_all_ids': category_pks,
         }
         output.append(entry)
     return output
