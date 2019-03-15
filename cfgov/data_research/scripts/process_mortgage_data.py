@@ -106,21 +106,23 @@ def process_source(
                     (datetime.datetime.now() - starter),
                     len(new_objects)))
     if dump_slug:
-        rows = []
-        for obj in new_objects:
-            rows.append([
-                obj.pk,
-                obj.fips,
-                "{}".format(obj.date),
-                obj.total,
-                obj.current,
-                obj.thirty,
-                obj.sixty,
-                obj.ninety,
-                obj.other,
-                county.pk
-            ])
-        dump_as_csv(rows, dump_slug)
+        dump_as_csv(
+            (
+                (
+                    obj.pk,
+                    obj.fips,
+                    "{}".format(obj.date),
+                    obj.total,
+                    obj.current,
+                    obj.thirty,
+                    obj.sixty,
+                    obj.ninety,
+                    obj.other,
+                    obj.county.pk,
+                ) for obj in new_objects
+            ),
+            dump_slug
+        )
 
 
 def run(*args):
