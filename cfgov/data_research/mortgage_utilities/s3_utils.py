@@ -13,7 +13,7 @@ import unicodecsv
 # bake_to_s3 functions require S3 secrets to be stored in the env
 BASE_BUCKET = settings.AWS_STORAGE_BUCKET_NAME
 MORTGAGE_SUB_BUCKET = "data/mortgage-performance"
-PUBLIC_ACCESS_BASE = 'https://{}/{}'.format(
+PUBLIC_ACCESS_BASE = 'https://s3.amazonaws.com/{}/{}'.format(
     BASE_BUCKET, MORTGAGE_SUB_BUCKET)
 S3_MORTGAGE_DOWNLOADS_BASE = '{}/downloads'.format(PUBLIC_ACCESS_BASE)
 S3_SOURCE_BUCKET = '{}/source'.format(PUBLIC_ACCESS_BASE)
