@@ -691,6 +691,13 @@ FLAGS = {
 
     # Home Page automatic Latest Updates
     'AUTOMATIC_LATEST_UPDATES': [('environment is', 'beta')],
+
+    # Test migrated HMDA content pages. Delete after HMDA content launch
+    'HMDA_LEGACY_REVIEW': [{'condition': 'site',
+        'value': 'content.consumerfinance.gov:80'}],
+    # Publish new HMDA content pages
+    # Delete after HMDA API is deprecated (hopefully Summer 2019)
+    'HMDA_LEGACY_PUBLISH': [],
 }
 
 
