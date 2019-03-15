@@ -41,7 +41,7 @@ def dump_as_csv(rows_out, dump_slug):
     Sample output row:
     1,01001,2008-01-01,268,260,4,1,0,3,2891
     """
-    with open('{}.csv'.format(dump_slug), 'w') as f:
+    with open('{}.csv'.format(dump_slug), 'wb') as f:
         writer = unicodecsv.writer(f)
         for row in rows_out:
             writer.writerow(row)
