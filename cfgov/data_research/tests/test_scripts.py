@@ -10,7 +10,6 @@ import django
 import mock
 import unicodecsv
 from dateutil import parser
-from mock import mock_open, patch
 from model_mommy import mommy
 
 from data_research.models import (
