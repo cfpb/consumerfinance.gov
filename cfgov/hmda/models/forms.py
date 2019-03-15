@@ -2,7 +2,7 @@ from django import forms
 from django.forms import widgets
 
 from hmda.resources.hmda_data_options import (
-    HMDA_GEO_OPTIONS, HMDA_RECORDS_OPTIONS, HMDA_FIELD_DESC_OPTIONS
+    HMDA_FIELD_DESC_OPTIONS, HMDA_GEO_OPTIONS, HMDA_RECORDS_OPTIONS
 )
 
 

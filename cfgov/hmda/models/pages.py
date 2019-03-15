@@ -1,19 +1,17 @@
-# from django.core.paginator import InvalidPage, Paginator
-
 from wagtail.wagtailcore.models import PageManager
 
 from forms import HmdaFilterableForm
+
 from hmda.resources.hmda_data_files import get_data_files
 from hmda.resources.hmda_data_options import (
     HMDA_FIELD_DESC_OPTIONS, HMDA_GEO_OPTIONS, HMDA_RECORDS_OPTIONS
 )
-
 from v1.models import BrowsePage
 
 
-class HmdaExplorerPage(BrowsePage):
+class HmdaHistoricDataPage(BrowsePage):
     """
-    A model for the new HMDA explorer page that displays links to S3 files
+    A model for the new HMDA Historic Data page that displays links to S3 files
     containing HMDA data.
     """
 
@@ -21,26 +19,44 @@ class HmdaExplorerPage(BrowsePage):
     template = 'hmda/hmda-explorer.html'
 
     def get_context(self, request, *args, **kwargs):
-        context = super(HmdaExplorerPage, self).get_context(
+        context = super(HmdaHistoricDataPage, self).get_context(
             request, *args, **kwargs)
 
-        params = request.GET
-        geo = params.get('geo', 'nationwide')
-        labels = params.get('field_descriptions', 'labels')
-        record_set = params.get('records', 'first-lien-owner-occupied-1-4-family-records')
+        form_data = self.form_data(request.GET)
+        plain_language_records = \
+            dict(HMDA_RECORDS_OPTIONS).get(form_data.get('records'))
 
         context.update({
-            'form': HmdaFilterableForm(params),
-            'title': self.get_title(geo, record_set),
-            'files': get_data_files(geo, labels, record_set),
+            'form': HmdaFilterableForm(form_data),
+            'title': self.get_title(form_data.get('geo')),
+            'subtitle': plain_language_records,
+            'files': get_data_files(**form_data),
         })
 
         return context
 
-    # TODO: refine the wording for these titles with designer input
-    def get_title(self, location, record_set):
-        location_name = dict(HMDA_GEO_OPTIONS).get(location, "State")
-        if (record_set == 'all-records'):
-            return "All {} records".format(location_name)
-        records_name = dict(HMDA_RECORDS_OPTIONS).get(record_set, "records")
-        return "{} records for {}".format(location_name, records_name.lower())
+    def form_data(self, params):
+        geo = self.value_or_default(HMDA_GEO_OPTIONS, params.get('geo'))
+        labels = self.value_or_default(HMDA_FIELD_DESC_OPTIONS,
+                                       params.get('field_descriptions'))
+        record_set = self.value_or_default(HMDA_RECORDS_OPTIONS,
+                                           params.get('records'))
+
+        data = {'geo': geo,
+                'field_descriptions': labels,
+                'records': record_set}
+        return data
+
+    def get_title(self, geo):
+        if geo == 'nationwide':
+            return 'Showing nationwide records'
+        else:
+            location_name = dict(HMDA_GEO_OPTIONS).get(geo, "State")
+            return 'Showing records for {}'.format(location_name)
+
+    def value_or_default(self, options, user_input):
+        options_dict = dict(options)
+        if user_input in options_dict:
+            return user_input
+        else:
+            return options[0][0]
