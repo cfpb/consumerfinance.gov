@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
-import StringIO
+from six import BytesIO
 
 from django.conf import settings
 
@@ -22,7 +22,7 @@ S3_SOURCE_FILE = 'latest_county_delinquency.csv'
 
 def read_in_s3_csv(url):
     response = requests.get(url)
-    f = StringIO.StringIO(response.content)
+    f = BytesIO(response.content)
     reader = unicodecsv.DictReader(f)
     return reader
 

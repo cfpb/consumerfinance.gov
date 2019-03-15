@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 import logging
-from cStringIO import StringIO
+from six import BytesIO
 
 import unicodecsv
 from dateutil import parser
@@ -158,7 +158,7 @@ def export_downloadable_csv(geo_type, late_value):
         geo_type, LATE_VALUE_TITLE[late_value], thru_month)
     _map = geo_dict.get(geo_type)
     fips_list = _map['fips_list']
-    csvfile = StringIO()
+    csvfile = BytesIO()
     writer = unicodecsv.writer(csvfile)
     writer.writerow(_map['headings'] + date_list)
     nation_starter = [NATION_STARTER[heading]
