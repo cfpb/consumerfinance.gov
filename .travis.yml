@@ -4,9 +4,6 @@ dist: trusty
 git:
   depth: 10
 
-python:
-  - "2.7"
-
 services:
   - postgresql
 
@@ -51,10 +48,17 @@ jobs:
     - stage: Run Tests
       env: RUNTEST=frontend
       if: type = pull_request
+      python: 2.7
     - env:
         - RUNTEST=backend
         - TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner
       if: type = pull_request
+      python: 2.7
+    - env:
+        - RUNTEST=backend3
+        - TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner
+      if: type = pull_request
+      python: 3.6
     - stage: Docs Deploy
       if: type != pull_request
       env: RUNTEST=docs
