@@ -13,8 +13,11 @@ if [ "$RUNTEST" == "frontend" ]; then
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e lint
     tox -e missing-migrations
-    tox -e fast
+    tox -e unittest-py27-dj111-wag113-fast
     bash <(curl -s https://codecov.io/bash) -F backend
+elif [ "$RUNTEST" == "backend3" ]; then
+    tox -e lint-py36
+    tox -e unittest-py36-dj111-wag113-fast
 elif [ "$RUNTEST" == "docs" ]; then
     mkdocs build
 fi

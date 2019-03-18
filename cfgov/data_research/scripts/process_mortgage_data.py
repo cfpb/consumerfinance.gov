@@ -41,7 +41,7 @@ def dump_as_csv(rows_out, dump_slug):
     Sample output row:
     1,01001,2008-01-01,268,260,4,1,0,3,2891
     """
-    with open('{}.csv'.format(dump_slug), 'w') as f:
+    with open('{}.csv'.format(dump_slug), 'wb') as f:
         writer = unicodecsv.writer(f)
         for row in rows_out:
             writer.writerow(row)
@@ -106,21 +106,23 @@ def process_source(
                     (datetime.datetime.now() - starter),
                     len(new_objects)))
     if dump_slug:
-        rows = []
-        for obj in new_objects:
-            rows.append([
-                obj.pk,
-                obj.fips,
-                "{}".format(obj.date),
-                obj.total,
-                obj.current,
-                obj.thirty,
-                obj.sixty,
-                obj.ninety,
-                obj.other,
-                county.pk
-            ])
-        dump_as_csv(rows, dump_slug)
+        dump_as_csv(
+            (
+                (
+                    obj.pk,
+                    obj.fips,
+                    "{}".format(obj.date),
+                    obj.total,
+                    obj.current,
+                    obj.thirty,
+                    obj.sixty,
+                    obj.ninety,
+                    obj.other,
+                    obj.county.pk,
+                ) for obj in new_objects
+            ),
+            dump_slug
+        )
 
 
 def run(*args):

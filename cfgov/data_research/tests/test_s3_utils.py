@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import csv
-from cStringIO import StringIO
+from six import BytesIO, StringIO
 
 from django.test import TestCase, override_settings
 
@@ -21,7 +21,7 @@ class S3UtilsTests(TestCase):
         responses.add(responses.GET, url, body='a,b,c\nd,e,f')
         reader = read_in_s3_csv(url)
         self.assertEqual(reader.fieldnames, ['a', 'b', 'c'])
-        self.assertEqual(sorted(reader.next().values()), ['d', 'e', 'f'])
+        self.assertEqual(sorted(next(reader).values()), ['d', 'e', 'f'])
 
     @moto.mock_s3
     @override_settings(AWS_STORAGE_BUCKET_NAME='test.bucket')
@@ -30,15 +30,20 @@ class S3UtilsTests(TestCase):
         bucket = s3.Bucket('test.bucket')
         bucket.create(ACL='private')
 
+        # In Python 3, csv.writer expects a file opened in text mode, which is
+        # a StringIO.
         csvfile = StringIO()
         writer = csv.writer(csvfile)
         writer.writerow(['a', 'b', 'c'])
         writer.writerow(['1', '2', '3'])
-        bake_csv_to_s3('foo', csvfile)
+
+        # But boto3 expects a regular file object, so we need to convert to
+        # BytesIO.
+        bake_csv_to_s3('foo', BytesIO(csvfile.getvalue().encode('utf-8')))
 
         key = bucket.Object('data/foo.csv')
         response = key.get()
-        self.assertEqual(response['Body'].read(), 'a,b,c\r\n1,2,3\r\n')
+        self.assertEqual(response['Body'].read(), b'a,b,c\r\n1,2,3\r\n')
 
         # bake_csv_to_s3 sets 'public-read' on the item.
         acl = key.Acl()
