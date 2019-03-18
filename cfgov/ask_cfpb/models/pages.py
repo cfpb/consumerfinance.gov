@@ -596,11 +596,11 @@ class AnswerPage(CFGOVPage):
 
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
+            FieldPanel('last_edited'),
             FieldPanel('question'),
             FieldPanel('statement'),
             FieldPanel('short_answer'),
-            FieldPanel('answer'),
-            FieldPanel('last_edited')],
+            FieldPanel('answer')],
             heading="Page content",
             classname="collapsible"),
         MultiFieldPanel([
@@ -608,14 +608,21 @@ class AnswerPage(CFGOVPage):
             AutocompletePanel(
                 'related_questions',
                 page_type='ask_cfpb.AnswerPage',
-                is_single=False),
-            FieldPanel('primary_portal_topic'),
+                is_single=False)],
+            heading="Related resources",
+            classname="collapsible collapsed"),
+        MultiFieldPanel([
             FieldPanel('portal_topic', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('primary_portal_topic'),
             FieldPanel(
                 'portal_category', widget=forms.CheckboxSelectMultiple)],
-            heading="Metadata",
-            classname="collapsible"),
-        AutocompletePanel('redirect_to_page', page_type='ask_cfpb.AnswerPage'),
+            heading="Portal tags",
+            classname="collapsible collapsed"),
+        MultiFieldPanel([
+            AutocompletePanel(
+                'redirect_to_page', page_type='ask_cfpb.AnswerPage')],
+            heading="Redirect to another answer",
+            classname="collapsible collapsed"),
         MultiFieldPanel([
             StreamFieldPanel('user_feedback')],
             heading="User feedback",

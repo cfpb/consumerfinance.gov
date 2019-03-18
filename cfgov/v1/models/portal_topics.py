@@ -53,5 +53,8 @@ class PortalCategory(ClusterableModel):
             'Tags are used to identify and organize portal see-all pages.')
     )
 
+    class Meta:
+        verbose_name_plural = "portal categories"
+
     def __str__(self):
         return self.heading
