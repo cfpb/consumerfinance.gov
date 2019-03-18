@@ -131,7 +131,7 @@ categories = [
         ('consumer-edu-empower', 'Consumer education and empowerment'),
         ('to-congress', 'To Congress'),
     )),
-    ('Rule under development', (
+    ('Rule Under Development', (
         ('notice-proposed-rule-2', 'Advance notice of proposed rulemaking'),
         ('proposed-rule-2', 'Proposed rule'),
     )),
