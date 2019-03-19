@@ -688,6 +688,9 @@ FLAGS = {
 
     # Test financial well-being hub pages on Beta
     'FINANCIAL_WELLBEING_HUB': [('environment is', 'beta')],
+
+    # Home Page automatic Latest Updates
+    'AUTOMATIC_LATEST_UPDATES': [('environment is', 'beta')],
 }
 
 
