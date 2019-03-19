@@ -610,19 +610,19 @@ class AnswerPage(CFGOVPage):
                 page_type='ask_cfpb.AnswerPage',
                 is_single=False)],
             heading="Related resources",
-            classname="collapsible collapsed"),
+            classname="collapsible"),
         MultiFieldPanel([
             FieldPanel('portal_topic', widget=forms.CheckboxSelectMultiple),
             FieldPanel('primary_portal_topic'),
             FieldPanel(
                 'portal_category', widget=forms.CheckboxSelectMultiple)],
             heading="Portal tags",
-            classname="collapsible collapsed"),
+            classname="collapsible"),
         MultiFieldPanel([
             AutocompletePanel(
                 'redirect_to_page', page_type='ask_cfpb.AnswerPage')],
             heading="Redirect to another answer",
-            classname="collapsible collapsed"),
+            classname="collapsible"),
         MultiFieldPanel([
             StreamFieldPanel('user_feedback')],
             heading="User feedback",
