@@ -1,10 +1,9 @@
 # Requirements files for Snyk
 
 The files in the subdirectories of this one are symlinks back to the original
-requirements files in the main `requirements/` directory
-(this directory's parent).
+requirements files in the main `requirements/` directory.
 They are needed for the current version of the Snyk.io service
-to be able to check the requirements, since (as of March 6, 2019) it
+to be able to check the requirements, since (as of March 18, 2019) it
 can only check files named exactly `requirements.txt` and it
 cannot follow `-r` references to other requirements files.
 
