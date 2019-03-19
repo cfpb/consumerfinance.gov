@@ -88,6 +88,14 @@ def run():
             datetime.datetime.now() - starter))
 
 
+def update_feedback_default(stream_value):
+    new_stream_data = stream_value.stream_data
+    new_stream_data[0]['value'].update(
+        {'was_it_helpful_text': 'Was this answer helpful to you?'})
+    stream_value.stream_data = new_stream_data
+    return stream_value
+
+
 def apply_tags(data):
     """Apply tagging values to answer pages."""
     category_map = {obj.pk: obj for obj in PortalCategory.objects.all()}
@@ -99,6 +107,7 @@ def apply_tags(data):
         for page in pages:
             initial_status = page.status_string
             page.get_latest_revision().publish()
+            page.user_feedback = update_feedback_default(page.user_feedback)
             portal_ids = entry.get('portal_ids')
             category_ids = entry.get('see_all_ids')
             for portal_id in portal_ids:
