@@ -519,6 +519,7 @@ CSP_SCRIPT_SRC = (
     'connect.facebook.net',
     'www.federalregister.gov',
     'storage.googleapis.com',
+    'api.consumerfinance.gov'
 )
 
 # These specify valid sources of CSS code
@@ -579,6 +580,7 @@ CSP_FONT_SRC = (
     "fast.fonts.net",
     "fonts.google.com",
     "fonts.gstatic.com",
+    "files.consumerfinance.gov"
 )
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to.
