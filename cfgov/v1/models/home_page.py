@@ -36,9 +36,15 @@ class HomePage(CFGOVPage):
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
         StreamFieldPanel('latest_updates'),
-        InlinePanel('excluded_updates',
-                    label='Pages excluded from Latest Updates',
-                    help_text='Some help text here'),
+        InlinePanel(
+            'excluded_updates',
+            label='Pages excluded from Latest Updates',
+            help_text=('This block automatically displays the six most '
+                       'recently published blog posts, press releases, '
+                       'speeches, testimonies, events, or op-eds. If you want '
+                       'to exclude a page from appearing as a recent update '
+                       'in this block, add it as an excluded page.')
+        ),
     ]
 
     # Tab handler interface
