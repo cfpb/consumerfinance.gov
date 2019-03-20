@@ -627,6 +627,7 @@ class AnswerPage(CFGOVPage):
         context['related_questions'] = self.related_questions.all()
         context['description'] = self.snippet if self.snippet \
             else Truncator(self.answer).words(40, truncate=' ...')
+        context['answer_id'] = self.answer_base.id
         if self.language == 'es':
             context['search_tags'] = self.clean_search_tags
             context['tweet_text'] = Truncator(self.question).chars(
