@@ -25,7 +25,6 @@
 {% block content %}
 
     <main class="content" id="main">
-
         {% from 'molecules/home-hero.html' import home_hero with context %}
         {{ home_hero( {
             'heading': 'We’re the CFPB',
@@ -188,49 +187,49 @@
                     {% import 'macros/category-slug.html' as category_slug %}
                     {% for post in latest_updates %}
 
-                    {% if loop.index0 % 2 == 0 %}
-                    <section class="content-l_col
-                                    content-l_col-1-3">
-                    {% endif %}
+                        {% if loop.index % 2 == 1 %}
+                        <section class="content-l_col
+                                        content-l_col-1-3">
+                        {% endif %}
 
-                        {# TODO: Refactor to not use m-list.
-                                    It's only used to make the links bold.
-                                    It should either be a list or not. #}
-                        <div class="m-related-posts_list-container m-list">
-                            <h3 class="h4">
-                                {% if is_blog(post) %}
-                                    {{ category_slug.render(category='blog', href=page_url) }}
-                                {% elif is_report(post) %}
-                                    {{ category_slug.render(category='report', href=page_url) }}
-                                {% else %}
-                                    {% for cat in post.categories.all() %}
-                                        {% if loop.index > 1 %}
-                                            |
-                                        {% endif %}
-                                        {{ category_slug.render(category=cat.name, href=page_url) }}
-                                    {% endfor %}
-                                {% endif %}
-                            </h3>
-                            <a class="m-list_link" href="{{ post.get_url() }}">
-                                {{ post.title }}
-                            </a>
-                            <p class="a-date">
-                            {{ time.render(post.first_published_at, {'date':true}) }}
-                            </p>
-                        </div>
+                            {# TODO: Refactor to not use m-list.
+                                        It's only used to make the links bold.
+                                        It should either be a list or not. #}
+                            <div class="m-related-posts_list-container m-list">
+                                <h3 class="h4">
+                                    {% if is_blog(post) %}
+                                        {{ category_slug.render(category='blog', href=page_url) }}
+                                    {% elif is_report(post) %}
+                                        {{ category_slug.render(category='report', href=page_url) }}
+                                    {% else %}
+                                        {% for cat in post.categories.all() %}
+                                            {% if loop.index > 1 %}
+                                                |
+                                            {% endif %}
+                                            {{ category_slug.render(category=cat.name, href=page_url) }}
+                                        {% endfor %}
+                                    {% endif %}
+                                </h3>
+                                <a class="m-list_link" href="{{ post.get_url() }}">
+                                    {{ post.title }}
+                                </a>
+                                <p class="a-date">
+                                    {{ time.render(post.first_published_at, {'date':true}) }}
+                                </p>
+                            </div>
 
-                    {% if loop.last %}
-                        <div class="m-related-posts_list-container">
-                            <a class="a-link
+                        {% if loop.last %}
+                            <div class="m-related-posts_list-container">
+                                <a class="a-link
                                         a-link__jump"
-                                href="/activity-log/">
-                                See all updates
-                            </a>
-                        </div>
-                    </section>
-                    {% elif loop.index is divisibleby(2) %}
-                    </section>
-                    {% endif %}
+                                    href="/activity-log/">
+                                    See all updates
+                                </a>
+                            </div>
+                        </section>
+                        {% elif loop.index is divisibleby(2) %}
+                        </section>
+                        {% endif %}
 
                     {% endfor %}
                 </div>
