@@ -1,8 +1,7 @@
 from django.test import TestCase
 
 from v1.models import (
-    BlogPage, EventPage, HomePage, NewsroomPage,
-    SublandingFilterablePage,
+    BlogPage, EventPage, HomePage, NewsroomPage, SublandingFilterablePage
 )
 
 
@@ -22,51 +21,42 @@ class TestHomePage(TestCase):
         self.blog_1 = BlogPage(
             title='Blog 1', slug='blog1', live=True
         )
-        self.blog_1.categories.create(name='activity-log', page=self.blog_1)
         self.updates_page.add_child(instance=self.blog_1)
         self.blog_2 = BlogPage(
             title='Blog 2', slug='blog2', live=True
         )
-        self.blog_2.categories.create(name='activity-log', page=self.blog_1)
         self.updates_page.add_child(instance=self.blog_2)
         self.blog_3 = BlogPage(
             title='Blog 3', slug='blog3', live=True
         )
-        self.blog_3.categories.create(name='activity-log', page=self.blog_1)
         self.updates_page.add_child(instance=self.blog_3)
 
         # Set up some events
         self.event_1 = EventPage(
             title='Event 1', slug='event1', live=True
         )
-        self.event_1.categories.create(name='activity-log', page=self.blog_1)
         self.updates_page.add_child(instance=self.event_1)
         self.event_2 = EventPage(
             title='Event 2', slug='event2', live=True
         )
-        self.event_2.categories.create(name='activity-log', page=self.blog_1)
         self.updates_page.add_child(instance=self.event_2)
         self.event_3 = EventPage(
             title='Event 3', slug='event3', live=True
         )
-        self.event_3.categories.create(name='activity-log', page=self.blog_1)
         self.updates_page.add_child(instance=self.event_3)
 
         # Set up some Newsroom posts
         self.news_1 = NewsroomPage(
             title='Newsroom 1', slug='news1', live=True
         )
-        self.news_1.categories.create(name='activity-log', page=self.blog_1)
         self.updates_page.add_child(instance=self.news_1)
         self.news_2 = NewsroomPage(
             title='Newsroom 2', slug='news2', live=True
         )
-        self.news_2.categories.create(name='activity-log', page=self.blog_1)
         self.updates_page.add_child(instance=self.news_2)
         self.news_3 = NewsroomPage(
             title='Newsroom 3', slug='news3', live=True
         )
-        self.news_3.categories.create(name='activity-log', page=self.blog_1)
         self.updates_page.add_child(instance=self.news_3)
 
         # Publish things in an order

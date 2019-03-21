@@ -184,33 +184,42 @@
                 {% if flag_enabled('AUTOMATIC_LATEST_UPDATES') %}
 
                 <div class="content-l">
-                        {% import 'macros/time.html' as time %}
-                        {% import 'macros/category-slug.html' as category_slug %}
-                        {% for update_page in latest_updates %}
+                    {% import 'macros/time.html' as time %}
+                    {% import 'macros/category-slug.html' as category_slug %}
+                    {% for post in latest_updates %}
 
-                        {% if loop.index0 % 2 == 0 %}
+                    {% if loop.index0 % 2 == 0 %}
                     <section class="content-l_col
                                     content-l_col-1-3">
-                        {% endif %}
+                    {% endif %}
+
                         {# TODO: Refactor to not use m-list.
                                     It's only used to make the links bold.
                                     It should either be a list or not. #}
-
                         <div class="m-related-posts_list-container m-list">
                             <h3 class="h4">
-                                {% for cat in update_page.categories.all() %}
-                                    {{ category_slug.render(category=cat.name, href=page_url) }}
-                                {% endfor %}
+                                {% if is_blog(post) %}
+                                    {{ category_slug.render(category='blog', href=page_url) }}
+                                {% elif is_report(post) %}
+                                    {{ category_slug.render(category='report', href=page_url) }}
+                                {% else %}
+                                    {% for cat in post.categories.all() %}
+                                        {% if loop.index > 1 %}
+                                            |
+                                        {% endif %}
+                                        {{ category_slug.render(category=cat.name, href=page_url) }}
+                                    {% endfor %}
+                                {% endif %}
                             </h3>
-                            <a class="m-list_link" href="{{ update_page.get_url() }}">
-                                {{ update_page.title }}
+                            <a class="m-list_link" href="{{ post.get_url() }}">
+                                {{ post.title }}
                             </a>
                             <p class="a-date">
-                            {{ time.render(update_page.first_published_at, {'date':true}) }}
+                            {{ time.render(post.first_published_at, {'date':true}) }}
                             </p>
                         </div>
 
-                        {% if loop.last %}
+                    {% if loop.last %}
                         <div class="m-related-posts_list-container">
                             <a class="a-link
                                         a-link__jump"
@@ -219,13 +228,11 @@
                             </a>
                         </div>
                     </section>
-                        {% elif loop.index is divisibleby(2) %}
+                    {% elif loop.index is divisibleby(2) %}
                     </section>
-                        {% endif %}
+                    {% endif %}
 
-                        {% endfor %}
-
-
+                    {% endfor %}
                 </div>
 
                 {% else %}

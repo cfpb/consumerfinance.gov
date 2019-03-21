@@ -13,7 +13,7 @@ from wagtail.wagtailsearch import index
 from modelcluster.fields import ParentalKey
 
 from v1.atomic_elements import atoms, molecules
-from v1.models.base import CFGOVPage, CFGOVPageCategory
+from v1.models.base import CFGOVPage
 from v1.util import ref
 
 
@@ -73,9 +73,6 @@ class HomePage(CFGOVPage):
         return context
 
     def get_latest_updates(self, request):
-        activity_log_qs = CFGOVPageCategory.objects.filter(
-            name='activity-log'
-        )
         # TODO: There should be a way to express this as part of the query
         # rather than evaluating it in Python.
         excluded_updates_pks = [
@@ -87,7 +84,6 @@ class HomePage(CFGOVPage):
         ).exclude(
             pk__in=excluded_updates_pks
         ).filter(
-            # categories__in=activity_log_qs,
             Q(content_type__app_label='v1') & (
                 Q(content_type__model='blogpage') |
                 Q(content_type__model='eventpage') |
