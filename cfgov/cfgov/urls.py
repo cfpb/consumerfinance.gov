@@ -28,7 +28,6 @@ from core.conditional_urls import include_if_app_enabled
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
 )
-from hmda.views import legacy_explorer_view
 from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
@@ -414,14 +413,20 @@ urlpatterns = [
 
     # Temporary: HMDA Legacy pages
     # Will be deleted when HMDA API is retired (hopefully Summer 2019)
-    flagged_url('HMDA_LEGACY_REVIEW',
-                r'^data-research/hmda-new/explore$',
-                legacy_explorer_view,
-                name='legacy_explorer_draft'),
-    flagged_url('HMDA_LEGACY_PUBLISH',
-                r'^data-research/hmda/explore$',
-                legacy_explorer_view,
-                name='legacy_explorer_published'),
+    url(r'data-research/hmda-new/explore$',
+        FlaggedTemplateView.as_view(
+            flag_name='HMDA_LEGACY_REVIEW',
+            template_name='hmda/orange-explorer.html'
+        ),
+        name='legacy_explorer_draft'
+    ),
+    url(r'data-research/hmda/explore$',
+        FlaggedTemplateView.as_view(
+            flag_name='HMDA_LEGACY_PUBLISH',
+            template_name='hmda/orange-explorer.html'
+        ),
+        name='legacy_explorer_published'
+    ),
 
 ]
 
