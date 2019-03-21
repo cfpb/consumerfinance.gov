@@ -6,12 +6,6 @@ from django.test import TestCase, override_settings
 import mock
 
 
-cache_config = {'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
-                'CLIENT_TOKEN': 'fake',
-                'CLIENT_SECRET': 'fake',
-                'ACCESS_TOKEN': 'fake'}
-
-
 def create_admin_access_permissions():
     """
     This is to ensure that Wagtail's non-model permissions are set-up
@@ -38,7 +32,20 @@ def create_admin_access_permissions():
         group.permissions.add(admin_permission)
 
 
-@override_settings(WAGTAILFRONTENDCACHE=dict(akamai=cache_config))
+@override_settings(WAGTAILFRONTENDCACHE={
+    'akamai': {
+        'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
+        'CLIENT_TOKEN': 'fake',
+        'CLIENT_SECRET': 'fake',
+        'ACCESS_TOKEN': 'fake'
+    },
+    'cloudfront': {
+        'BACKEND': 'wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend',  # noqa: E501
+        'DISTRIBUTION_ID': {
+            'files.fake.gov': 'fake'
+        }
+    }
+})
 class TestCDNManagementView(TestCase):
     def setUp(self):
 
@@ -89,11 +96,22 @@ class TestCDNManagementView(TestCase):
         self.assertContains(response, "Enter a full URL")
 
     @mock.patch('v1.models.akamai_backend.AkamaiBackend.purge')
-    def test_submission_with_url(self, mock_purge):
+    def test_submission_with_url_akamai(self, mock_purge):
         self.client.login(username='cdn', password='password')
-        self.client.post(reverse('manage-cdn'),
-                         {'url': 'http://fake.gov'})
-        mock_purge.assert_called_with('http://fake.gov')
+        self.client.post(
+            reverse('manage-cdn'),
+            {'url': 'http://www.fake.gov'}
+        )
+        mock_purge.assert_called_with('http://www.fake.gov')
+
+    @mock.patch('wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend.purge_batch')  # noqa: E501
+    def test_submission_with_url_cloudfront(self, mock_purge_batch):
+        self.client.login(username='cdn', password='password')
+        self.client.post(
+            reverse('manage-cdn'),
+            {'url': 'http://files.fake.gov'}
+        )
+        mock_purge_batch.assert_called_with(['http://files.fake.gov'])
 
     @mock.patch('v1.models.akamai_backend.AkamaiBackend.purge_all')
     def test_submission_without_url(self, mock_purge_all):

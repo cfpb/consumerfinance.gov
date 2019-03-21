@@ -10,13 +10,13 @@
     {% include "wagtailadmin/shared/header.html" with title="CDN Manager" icon="tag" %}
 
     <div class="nice-padding">
-        <h2>Flush Akamai</h2>
+        <h2>Cache Invalidator</h2>
 
     {% if user_can_purge %}
         <div class="help-block help-info">
             <p>
                 Enter a full URL (e.g., <code>https://www.consumerfinance.gov/about-us/</code>)
-                to flush it from the cache, or leave it blank to flush the entire site cache.
+                to invalidate its cache, or leave it blank to invalidate the cache for the entire site.
             </p>
         </div>
         <form method="post" id="flush_site">
@@ -30,7 +30,7 @@
                     </div>
                 </li>
             </ul>
-            <button type="submit" name="flush" class="button">Flush cache</button>
+            <button type="submit" name="flush" class="button">Invalidate cache</button>
         </form>
     {% else %}
         <div class="help-block help-info">

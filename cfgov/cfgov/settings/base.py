@@ -479,18 +479,26 @@ GOOGLE_ANALYTICS_SITE = ''
 REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
 REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
 
-# Akamai
+# CDNs
+WAGTAILFRONTENDCACHE = {}
+
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)
 if ENABLE_AKAMAI_CACHE_PURGE:
-    WAGTAILFRONTENDCACHE = {
-        'akamai': {
-            'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
-            'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
-            'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
-            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN')
-        },
+    WAGTAILFRONTENDCACHE['akamai'] = {
+        'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
+        'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
+        'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
+        'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN')
     }
 
+ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get('ENABLE_CLOUDFRONT_CACHE_PURGE', False)
+if ENABLE_CLOUDFRONT_CACHE_PURGE:
+    WAGTAILFRONTENDCACHE['cloudfront'] = {
+        'BACKEND': 'wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend',
+        'DISTRIBUTION_ID': {
+            'files.consumerfinance.gov': os.environ.get('CLOUDFRONT_DISTRIBUTION_ID_FILES')
+        }
+    }
 
 # CSP Whitelists
 
