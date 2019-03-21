@@ -85,6 +85,7 @@ INSTALLED_APPS = (
     'regulations3k',
     'treemodeladmin',
     'housing_counselor',
+    'hmda',
 )
 
 OPTIONAL_APPS = [
@@ -518,6 +519,7 @@ CSP_SCRIPT_SRC = (
     'connect.facebook.net',
     'www.federalregister.gov',
     'storage.googleapis.com',
+    'api.consumerfinance.gov'
 )
 
 # These specify valid sources of CSS code
@@ -578,6 +580,7 @@ CSP_FONT_SRC = (
     "fast.fonts.net",
     "fonts.google.com",
     "fonts.gstatic.com",
+    "files.consumerfinance.gov"
 )
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to.
@@ -691,6 +694,12 @@ FLAGS = {
 
     # Home Page automatic Latest Updates
     'AUTOMATIC_LATEST_UPDATES': [('environment is', 'beta')],
+
+    # Test migrated HMDA content pages. Delete after HMDA content launch
+    'HMDA_LEGACY_REVIEW': [],
+    # Publish new HMDA content pages
+    # Delete after HMDA API is deprecated (hopefully Summer 2019)
+    'HMDA_LEGACY_PUBLISH': [],
 }
 
 
