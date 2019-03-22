@@ -10,7 +10,7 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0150_add_portal_tag_models'),
+        ('v1', '0151_add_portal_tag_models'),
         ('ask_cfpb', '0023_rename_snippet_to_short_answer'),
     ]
 

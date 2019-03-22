@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('taggit', '0002_auto_20150616_2121'),
-        ('v1', '0149_rules_under_development'),
+        ('v1', '0150_add_excluded_updates_to_home_page'),
     ]
 
     operations = [
