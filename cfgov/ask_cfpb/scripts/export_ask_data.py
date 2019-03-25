@@ -52,7 +52,7 @@ def assemble_output():
 
     answer_pages = list(AnswerPage.objects.values(
         'language', 'answer_base__id', 'url_path', 'live',
-        'redirect_to_id', 'question', 'answer', 'snippet'
+        'redirect_to_id', 'question', 'answer', 'short_answer'
     ))
 
     output_rows = []
@@ -75,7 +75,8 @@ def assemble_output():
                 if page['language'] == 'en':
                     output['Question'] = page['question']
                     output['Answer'] = clean_and_strip(page['answer'])
-                    output['ShortAnswer'] = clean_and_strip(page['snippet'])
+                    output['ShortAnswer'] = clean_and_strip(
+                        page['short_answer'])
                     output['URL'] = page['url_path'].replace('/cfgov', '')
                     output['Live'] = page['live']
                     output['Redirect'] = page['redirect_to_id']

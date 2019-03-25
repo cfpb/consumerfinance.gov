@@ -22,7 +22,7 @@ YESTERDAY = AWARE_NOW - datetime.timedelta(days=1)
 
 
 def publish_ask_pages():
-    print("Setting page go_live_at dates to yesterady")
+    print("Setting page go_live_at dates to yesterday")
     count = 0
     for cls in [AnswerPage,
                 AnswerAudiencePage,

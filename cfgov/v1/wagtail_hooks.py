@@ -18,6 +18,7 @@ from wagtail.wagtailcore.whitelist import attribute_rule
 
 from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
+from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.util import util
@@ -230,6 +231,22 @@ class ContactModelAdmin(ModelAdmin):
     search_fields = ('heading', 'body', 'contact_info')
 
 
+class PortalTopicModelAdmin(ModelAdmin):
+    model = PortalTopic
+    menu_icon = 'snippet'
+    list_display = ('heading', 'heading_es')
+    ordering = ('heading',)
+    search_fields = ('heading', 'heading_es')
+
+
+class PortalCategoryModelAdmin(ModelAdmin):
+    model = PortalCategory
+    menu_icon = 'snippet'
+    list_display = ('heading', 'heading_es')
+    ordering = ('heading',)
+    search_fields = ('heading', 'heading_es')
+
+
 class ReusableTextModelAdmin(ModelAdmin):
     model = ReusableText
     menu_icon = 'snippet'
@@ -254,7 +271,9 @@ class SnippetModelAdminGroup(ModelAdminGroup):
         ContactModelAdmin,
         ResourceModelAdmin,
         ReusableTextModelAdmin,
-        RelatedResourceModelAdmin)
+        RelatedResourceModelAdmin,
+        PortalTopicModelAdmin,
+        PortalCategoryModelAdmin)
 
 
 modeladmin_register(SnippetModelAdminGroup)
