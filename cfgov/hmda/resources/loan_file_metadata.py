@@ -1,26 +1,9 @@
 # flake8: noqa E501
-from collections import OrderedDict
-
-
-def get_data_files(geo, field_descriptions, records):
-    if geo in HMDA_DATA_FILES:
-        files = HMDA_DATA_FILES[geo][field_descriptions][records]
-    else:
-        files = HMDA_DATA_FILES['nationwide'][field_descriptions][records]
-
-    ordered = OrderedDict(sorted(files.items(), key=lambda t: t[0], reverse=True))
-    return ordered
-
-
-class HmdaDataFile:
-    def __init__(self, file_name, number_of_records, file_size):
-        self.file_name = file_name
-        self.number_of_records = number_of_records
-        self.file_size = file_size
+from hmda.models.hmda_data_file import HmdaDataFile
 
 
 # Access this using HMDA_DATA_FILES[geo][field_descriptions][records]
-HMDA_DATA_FILES = {
+LOAN_FILE_METADATA = {
     'nationwide': {
         'labels': {
             'first-lien-owner-occupied-1-4-family-records': {
@@ -36,15 +19,73 @@ HMDA_DATA_FILES = {
                 '2013': HmdaDataFile('hmda_2013_nationwide_first-lien-owner-occupied-1-4-family-records_labels.zip', '7126202', '492.02 MB'),
                 '2012': HmdaDataFile('hmda_2012_nationwide_first-lien-owner-occupied-1-4-family-records_labels.zip', '8298882', '573.78 MB')
             },
-            'all-records': {},
+            'all-records': {
+                '2016': HmdaDataFile('hmda_2016_nationwide_all-records_labels.zip', '16332987', '1.2 GB'),
+                '2007': HmdaDataFile('hmda_2007_nationwide_all-records_labels.zip', '26605695', '1.72 GB'),
+                '2017': HmdaDataFile('hmda_2017_nationwide_all-records_labels.zip', '14285496', '986 MB'),
+                '2015': HmdaDataFile('hmda_2015_nationwide_all-records_labels.zip', '14374184', '1.21 GB'),
+                '2014': HmdaDataFile('hmda_2014_nationwide_all-records_labels.zip', '12049341', '862.92 MB'),
+                '2008': HmdaDataFile('hmda_2008_nationwide_all-records_labels.zip', '17391570', '1.06 GB'),
+                '2009': HmdaDataFile('hmda_2009_nationwide_all-records_labels.zip', '19493491', '1.29 GB'),
+                '2011': HmdaDataFile('hmda_2011_nationwide_all-records_labels.zip', '14873415', '1.08 GB'),
+                '2010': HmdaDataFile('hmda_2010_nationwide_all-records_labels.zip', '16348557', '1.19 GB'),
+                '2013': HmdaDataFile('hmda_2013_nationwide_all-records_labels.zip', '17016159', '1.27 GB'),
+                '2012': HmdaDataFile('hmda_2012_nationwide_all-records_labels.zip', '18691551', '1.4 GB')
+            },
             'originated-records': {
-                '2007': HmdaDataFile('hmda_2007_nationwide_originated-records_labels.zip', '10441545', '528.7 MB')
+                '2016': HmdaDataFile('hmda_2016_nationwide_originated-records_labels.zip', '8377907', '457.12 MB'),
+                '2007': HmdaDataFile('hmda_2007_nationwide_originated-records_labels.zip', '10441545', '528.7 MB'),
+                '2017': HmdaDataFile('hmda_2017_nationwide_originated-records_labels.zip', '7339057', '247.2 MB'),
+                '2015': HmdaDataFile('hmda_2015_nationwide_originated-records_labels.zip', '7404258', '461.08 MB'),
+                '2014': HmdaDataFile('hmda_2014_nationwide_originated-records_labels.zip', '6039826', '331.36 MB'),
+                '2008': HmdaDataFile('hmda_2008_nationwide_originated-records_labels.zip', '7177262', '360.36 MB'),
+                '2009': HmdaDataFile('hmda_2009_nationwide_originated-records_labels.zip', '8950936', '416.67 MB'),
+                '2011': HmdaDataFile('hmda_2011_nationwide_originated-records_labels.zip', '7095262', '381.6 MB'),
+                '2010': HmdaDataFile('hmda_2010_nationwide_originated-records_labels.zip', '7863337', '419.27 MB'),
+                '2013': HmdaDataFile('hmda_2013_nationwide_originated-records_labels.zip', '8706657', '476.47 MB'),
+                '2012': HmdaDataFile('hmda_2012_nationwide_originated-records_labels.zip', '9783966', '529.5 MB')
             }
         },
         'codes': {
-            'first-lien-owner-occupied-1-4-family-records': {},
-            'all-records': {},
-            'originated-records': {}
+            'first-lien-owner-occupied-1-4-family-records': {
+                '2016': HmdaDataFile('hmda_2016_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '7036352', '165.84 MB'),
+                '2007': HmdaDataFile('hmda_2007_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '7201366', '141.73 MB'),
+                '2017': HmdaDataFile('hmda_2017_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '5986659', '77.47 MB'),
+                '2015': HmdaDataFile('hmda_2015_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '6113423', '144.37 MB'),
+                '2014': HmdaDataFile('hmda_2014_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '4787867', '113.54 MB'),
+                '2008': HmdaDataFile('hmda_2008_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '5526941', '107.3 MB'),
+                '2009': HmdaDataFile('hmda_2009_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '7783986', '140.57 MB'),
+                '2011': HmdaDataFile('hmda_2011_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '5946435', '132 MB'),
+                '2010': HmdaDataFile('hmda_2010_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '6764902', '149.36 MB'),
+                '2013': HmdaDataFile('hmda_2013_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '7126202', '166.47 MB'),
+                '2012': HmdaDataFile('hmda_2012_nationwide_first-lien-owner-occupied-1-4-family-records_codes.zip', '8298882', '189.65 MB')
+            },
+            'all-records': {
+                '2016': HmdaDataFile('hmda_2016_nationwide_all-records_codes.zip', '16332987', '384.11 MB'),
+                '2007': HmdaDataFile('hmda_2007_nationwide_all-records_codes.zip', '26605695', '461.15 MB'),
+                '2017': HmdaDataFile('hmda_2017_nationwide_all-records_codes.zip', '14285496', '182.02 MB'),
+                '2015': HmdaDataFile('hmda_2015_nationwide_all-records_codes.zip', '14374184', '337.27 MB'),
+                '2014': HmdaDataFile('hmda_2014_nationwide_all-records_codes.zip', '11875464', '278.4 MB'),
+                '2008': HmdaDataFile('hmda_2008_nationwide_all-records_codes.zip', '17391570', '309.22 MB'),
+                '2009': HmdaDataFile('hmda_2009_nationwide_all-records_codes.zip', '19493491', '331.31 MB'),
+                '2011': HmdaDataFile('hmda_2011_nationwide_all-records_codes.zip', '14873415', '335.22 MB'),
+                '2010': HmdaDataFile('hmda_2010_nationwide_all-records_codes.zip', '16348557', '367.78 MB'),
+                '2013': HmdaDataFile('hmda_2013_nationwide_all-records_codes.zip', '17016159', '400.19 MB'),
+                '2012': HmdaDataFile('hmda_2012_nationwide_all-records_codes.zip', '18691551', '434.69 MB')
+            },
+            'originated-records': {
+                '2016': HmdaDataFile('hmda_2016_nationwide_originated-records_codes.zip', '8377907', '196.62 MB'),
+                '2007': HmdaDataFile('hmda_2007_nationwide_originated-records_codes.zip', '10441545', '199.55 MB'),
+                '2017': HmdaDataFile('hmda_2017_nationwide_originated-records_codes.zip', '7339057', '94.95 MB'),
+                '2015': HmdaDataFile('hmda_2015_nationwide_originated-records_codes.zip', '7404258', '173.96 MB'),
+                '2014': HmdaDataFile('hmda_2014_nationwide_originated-records_codes.zip', '5979766', '140.82 MB'),
+                '2008': HmdaDataFile('hmda_2008_nationwide_originated-records_codes.zip', '7177262', '137.98 MB'),
+                '2009': HmdaDataFile('hmda_2009_nationwide_originated-records_codes.zip', '8950936', '162.04 MB'),
+                '2011': HmdaDataFile('hmda_2011_nationwide_originated-records_codes.zip', '7095262', '157.4 MB'),
+                '2010': HmdaDataFile('hmda_2010_nationwide_originated-records_codes.zip', '7863337', '173.45 MB'),
+                '2013': HmdaDataFile('hmda_2013_nationwide_originated-records_codes.zip', '8706657', '203.33 MB'),
+                '2012': HmdaDataFile('hmda_2012_nationwide_originated-records_codes.zip', '9783966', '224.11 MB')
+            }
         }
     },
     'va': {
@@ -128,90 +169,6 @@ HMDA_DATA_FILES = {
                 '2010': HmdaDataFile('hmda_2010_va_originated-records_codes.zip', '260214', '8.98 MB'),
                 '2013': HmdaDataFile('hmda_2013_va_originated-records_codes.zip', '294145', '10.63 MB'),
                 '2012': HmdaDataFile('hmda_2012_va_originated-records_codes.zip', '334770', '11.93 MB')
-            }
-        }
-    },
-    'gu': {
-        'labels': {
-            'first-lien-owner-occupied-1-4-family-records': {
-                '2016': HmdaDataFile('hmda_2016_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2007': HmdaDataFile('hmda_2007_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2017': HmdaDataFile('hmda_2017_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2015': HmdaDataFile('hmda_2015_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2014': HmdaDataFile('hmda_2014_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2008': HmdaDataFile('hmda_2008_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2009': HmdaDataFile('hmda_2009_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2011': HmdaDataFile('hmda_2011_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2010': HmdaDataFile('hmda_2010_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2013': HmdaDataFile('hmda_2013_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2012': HmdaDataFile('hmda_2012_gu_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes')
-            },
-            'all-records': {
-                '2016': HmdaDataFile('hmda_2016_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2007': HmdaDataFile('hmda_2007_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2017': HmdaDataFile('hmda_2017_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2015': HmdaDataFile('hmda_2015_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2014': HmdaDataFile('hmda_2014_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2008': HmdaDataFile('hmda_2008_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2009': HmdaDataFile('hmda_2009_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2011': HmdaDataFile('hmda_2011_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2010': HmdaDataFile('hmda_2010_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2013': HmdaDataFile('hmda_2013_gu_all-records_labels.zip', '0', '581 bytes'),
-                '2012': HmdaDataFile('hmda_2012_gu_all-records_labels.zip', '0', '581 bytes')
-            },
-            'originated-records': {
-                '2016': HmdaDataFile('hmda_2016_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2007': HmdaDataFile('hmda_2007_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2017': HmdaDataFile('hmda_2017_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2015': HmdaDataFile('hmda_2015_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2014': HmdaDataFile('hmda_2014_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2008': HmdaDataFile('hmda_2008_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2009': HmdaDataFile('hmda_2009_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2011': HmdaDataFile('hmda_2011_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2010': HmdaDataFile('hmda_2010_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2013': HmdaDataFile('hmda_2013_gu_originated-records_labels.zip', '0', '595 bytes'),
-                '2012': HmdaDataFile('hmda_2012_gu_originated-records_labels.zip', '0', '595 bytes')
-            }
-        },
-        'codes': {
-            'first-lien-owner-occupied-1-4-family-records': {
-                '2016': HmdaDataFile('hmda_2016_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2007': HmdaDataFile('hmda_2007_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2017': HmdaDataFile('hmda_2017_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2015': HmdaDataFile('hmda_2015_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2014': HmdaDataFile('hmda_2014_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2008': HmdaDataFile('hmda_2008_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2009': HmdaDataFile('hmda_2009_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2011': HmdaDataFile('hmda_2011_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2010': HmdaDataFile('hmda_2010_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2013': HmdaDataFile('hmda_2013_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2012': HmdaDataFile('hmda_2012_gu_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes')
-            },
-            'all-records': {
-                '2016': HmdaDataFile('hmda_2016_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2007': HmdaDataFile('hmda_2007_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2017': HmdaDataFile('hmda_2017_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2015': HmdaDataFile('hmda_2015_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2014': HmdaDataFile('hmda_2014_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2008': HmdaDataFile('hmda_2008_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2009': HmdaDataFile('hmda_2009_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2011': HmdaDataFile('hmda_2011_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2010': HmdaDataFile('hmda_2010_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2013': HmdaDataFile('hmda_2013_gu_all-records_codes.zip', '0', '474 bytes'),
-                '2012': HmdaDataFile('hmda_2012_gu_all-records_codes.zip', '0', '474 bytes')
-            },
-            'originated-records': {
-                '2016': HmdaDataFile('hmda_2016_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2007': HmdaDataFile('hmda_2007_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2017': HmdaDataFile('hmda_2017_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2015': HmdaDataFile('hmda_2015_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2014': HmdaDataFile('hmda_2014_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2008': HmdaDataFile('hmda_2008_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2009': HmdaDataFile('hmda_2009_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2011': HmdaDataFile('hmda_2011_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2010': HmdaDataFile('hmda_2010_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2013': HmdaDataFile('hmda_2013_gu_originated-records_codes.zip', '0', '488 bytes'),
-                '2012': HmdaDataFile('hmda_2012_gu_originated-records_codes.zip', '0', '488 bytes')
             }
         }
     },
@@ -548,90 +505,6 @@ HMDA_DATA_FILES = {
                 '2010': HmdaDataFile('hmda_2010_al_originated-records_codes.zip', '106706', '3.27 MB'),
                 '2013': HmdaDataFile('hmda_2013_al_originated-records_codes.zip', '118638', '3.76 MB'),
                 '2012': HmdaDataFile('hmda_2012_al_originated-records_codes.zip', '123170', '3.94 MB')
-            }
-        }
-    },
-    'as': {
-        'labels': {
-            'first-lien-owner-occupied-1-4-family-records': {
-                '2016': HmdaDataFile('hmda_2016_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2007': HmdaDataFile('hmda_2007_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2017': HmdaDataFile('hmda_2017_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2015': HmdaDataFile('hmda_2015_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2014': HmdaDataFile('hmda_2014_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '43', '1.17 KB'),
-                '2008': HmdaDataFile('hmda_2008_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2009': HmdaDataFile('hmda_2009_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2011': HmdaDataFile('hmda_2011_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2010': HmdaDataFile('hmda_2010_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2013': HmdaDataFile('hmda_2013_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2012': HmdaDataFile('hmda_2012_as_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes')
-            },
-            'all-records': {
-                '2016': HmdaDataFile('hmda_2016_as_all-records_labels.zip', '0', '581 bytes'),
-                '2007': HmdaDataFile('hmda_2007_as_all-records_labels.zip', '0', '581 bytes'),
-                '2017': HmdaDataFile('hmda_2017_as_all-records_labels.zip', '0', '581 bytes'),
-                '2015': HmdaDataFile('hmda_2015_as_all-records_labels.zip', '0', '581 bytes'),
-                '2014': HmdaDataFile('hmda_2014_as_all-records_labels.zip', '43', '1.1 KB'),
-                '2008': HmdaDataFile('hmda_2008_as_all-records_labels.zip', '0', '581 bytes'),
-                '2009': HmdaDataFile('hmda_2009_as_all-records_labels.zip', '0', '581 bytes'),
-                '2011': HmdaDataFile('hmda_2011_as_all-records_labels.zip', '0', '581 bytes'),
-                '2010': HmdaDataFile('hmda_2010_as_all-records_labels.zip', '0', '581 bytes'),
-                '2013': HmdaDataFile('hmda_2013_as_all-records_labels.zip', '0', '581 bytes'),
-                '2012': HmdaDataFile('hmda_2012_as_all-records_labels.zip', '0', '581 bytes')
-            },
-            'originated-records': {
-                '2016': HmdaDataFile('hmda_2016_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2007': HmdaDataFile('hmda_2007_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2017': HmdaDataFile('hmda_2017_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2015': HmdaDataFile('hmda_2015_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2014': HmdaDataFile('hmda_2014_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2008': HmdaDataFile('hmda_2008_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2009': HmdaDataFile('hmda_2009_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2011': HmdaDataFile('hmda_2011_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2010': HmdaDataFile('hmda_2010_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2013': HmdaDataFile('hmda_2013_as_originated-records_labels.zip', '0', '595 bytes'),
-                '2012': HmdaDataFile('hmda_2012_as_originated-records_labels.zip', '0', '595 bytes')
-            }
-        },
-        'codes': {
-            'first-lien-owner-occupied-1-4-family-records': {
-                '2016': HmdaDataFile('hmda_2016_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2007': HmdaDataFile('hmda_2007_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2017': HmdaDataFile('hmda_2017_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2015': HmdaDataFile('hmda_2015_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2014': HmdaDataFile('hmda_2014_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2008': HmdaDataFile('hmda_2008_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2009': HmdaDataFile('hmda_2009_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2011': HmdaDataFile('hmda_2011_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2010': HmdaDataFile('hmda_2010_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2013': HmdaDataFile('hmda_2013_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2012': HmdaDataFile('hmda_2012_as_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes')
-            },
-            'all-records': {
-                '2016': HmdaDataFile('hmda_2016_as_all-records_codes.zip', '0', '474 bytes'),
-                '2007': HmdaDataFile('hmda_2007_as_all-records_codes.zip', '0', '474 bytes'),
-                '2017': HmdaDataFile('hmda_2017_as_all-records_codes.zip', '0', '474 bytes'),
-                '2015': HmdaDataFile('hmda_2015_as_all-records_codes.zip', '0', '474 bytes'),
-                '2014': HmdaDataFile('hmda_2014_as_all-records_codes.zip', '0', '474 bytes'),
-                '2008': HmdaDataFile('hmda_2008_as_all-records_codes.zip', '0', '474 bytes'),
-                '2009': HmdaDataFile('hmda_2009_as_all-records_codes.zip', '0', '474 bytes'),
-                '2011': HmdaDataFile('hmda_2011_as_all-records_codes.zip', '0', '474 bytes'),
-                '2010': HmdaDataFile('hmda_2010_as_all-records_codes.zip', '0', '474 bytes'),
-                '2013': HmdaDataFile('hmda_2013_as_all-records_codes.zip', '0', '474 bytes'),
-                '2012': HmdaDataFile('hmda_2012_as_all-records_codes.zip', '0', '474 bytes')
-            },
-            'originated-records': {
-                '2016': HmdaDataFile('hmda_2016_as_originated-records_codes.zip', '0', '488 bytes'),
-                '2007': HmdaDataFile('hmda_2007_as_originated-records_codes.zip', '0', '488 bytes'),
-                '2017': HmdaDataFile('hmda_2017_as_originated-records_codes.zip', '0', '488 bytes'),
-                '2015': HmdaDataFile('hmda_2015_as_originated-records_codes.zip', '0', '488 bytes'),
-                '2014': HmdaDataFile('hmda_2014_as_originated-records_codes.zip', '43', '1.11 KB'),
-                '2008': HmdaDataFile('hmda_2008_as_originated-records_codes.zip', '0', '488 bytes'),
-                '2009': HmdaDataFile('hmda_2009_as_originated-records_codes.zip', '0', '488 bytes'),
-                '2011': HmdaDataFile('hmda_2011_as_originated-records_codes.zip', '0', '488 bytes'),
-                '2010': HmdaDataFile('hmda_2010_as_originated-records_codes.zip', '0', '488 bytes'),
-                '2013': HmdaDataFile('hmda_2013_as_originated-records_codes.zip', '43', '1.11 KB'),
-                '2012': HmdaDataFile('hmda_2012_as_originated-records_codes.zip', '0', '488 bytes')
             }
         }
     },
@@ -1808,90 +1681,6 @@ HMDA_DATA_FILES = {
                 '2010': HmdaDataFile('hmda_2010_la_originated-records_codes.zip', '96150', '3.06 MB'),
                 '2013': HmdaDataFile('hmda_2013_la_originated-records_codes.zip', '101849', '3.22 MB'),
                 '2012': HmdaDataFile('hmda_2012_la_originated-records_codes.zip', '107636', '3.34 MB')
-            }
-        }
-    },
-    'na': {
-        'labels': {
-            'first-lien-owner-occupied-1-4-family-records': {
-                '2016': HmdaDataFile('hmda_2016_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2007': HmdaDataFile('hmda_2007_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2017': HmdaDataFile('hmda_2017_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2015': HmdaDataFile('hmda_2015_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2014': HmdaDataFile('hmda_2014_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2008': HmdaDataFile('hmda_2008_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2009': HmdaDataFile('hmda_2009_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2011': HmdaDataFile('hmda_2011_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2010': HmdaDataFile('hmda_2010_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2013': HmdaDataFile('hmda_2013_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2012': HmdaDataFile('hmda_2012_na_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes')
-            },
-            'all-records': {
-                '2016': HmdaDataFile('hmda_2016_na_all-records_labels.zip', '0', '581 bytes'),
-                '2007': HmdaDataFile('hmda_2007_na_all-records_labels.zip', '0', '581 bytes'),
-                '2017': HmdaDataFile('hmda_2017_na_all-records_labels.zip', '0', '581 bytes'),
-                '2015': HmdaDataFile('hmda_2015_na_all-records_labels.zip', '0', '581 bytes'),
-                '2014': HmdaDataFile('hmda_2014_na_all-records_labels.zip', '0', '581 bytes'),
-                '2008': HmdaDataFile('hmda_2008_na_all-records_labels.zip', '0', '581 bytes'),
-                '2009': HmdaDataFile('hmda_2009_na_all-records_labels.zip', '0', '581 bytes'),
-                '2011': HmdaDataFile('hmda_2011_na_all-records_labels.zip', '0', '581 bytes'),
-                '2010': HmdaDataFile('hmda_2010_na_all-records_labels.zip', '0', '581 bytes'),
-                '2013': HmdaDataFile('hmda_2013_na_all-records_labels.zip', '0', '581 bytes'),
-                '2012': HmdaDataFile('hmda_2012_na_all-records_labels.zip', '0', '581 bytes')
-            },
-            'originated-records': {
-                '2016': HmdaDataFile('hmda_2016_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2007': HmdaDataFile('hmda_2007_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2017': HmdaDataFile('hmda_2017_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2015': HmdaDataFile('hmda_2015_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2014': HmdaDataFile('hmda_2014_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2008': HmdaDataFile('hmda_2008_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2009': HmdaDataFile('hmda_2009_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2011': HmdaDataFile('hmda_2011_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2010': HmdaDataFile('hmda_2010_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2013': HmdaDataFile('hmda_2013_na_originated-records_labels.zip', '0', '595 bytes'),
-                '2012': HmdaDataFile('hmda_2012_na_originated-records_labels.zip', '0', '595 bytes')
-            }
-        },
-        'codes': {
-            'first-lien-owner-occupied-1-4-family-records': {
-                '2016': HmdaDataFile('hmda_2016_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2007': HmdaDataFile('hmda_2007_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2017': HmdaDataFile('hmda_2017_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2015': HmdaDataFile('hmda_2015_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2014': HmdaDataFile('hmda_2014_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2008': HmdaDataFile('hmda_2008_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2009': HmdaDataFile('hmda_2009_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2011': HmdaDataFile('hmda_2011_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2010': HmdaDataFile('hmda_2010_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2013': HmdaDataFile('hmda_2013_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2012': HmdaDataFile('hmda_2012_na_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes')
-            },
-            'all-records': {
-                '2016': HmdaDataFile('hmda_2016_na_all-records_codes.zip', '0', '474 bytes'),
-                '2007': HmdaDataFile('hmda_2007_na_all-records_codes.zip', '0', '474 bytes'),
-                '2017': HmdaDataFile('hmda_2017_na_all-records_codes.zip', '0', '474 bytes'),
-                '2015': HmdaDataFile('hmda_2015_na_all-records_codes.zip', '0', '474 bytes'),
-                '2014': HmdaDataFile('hmda_2014_na_all-records_codes.zip', '0', '474 bytes'),
-                '2008': HmdaDataFile('hmda_2008_na_all-records_codes.zip', '0', '474 bytes'),
-                '2009': HmdaDataFile('hmda_2009_na_all-records_codes.zip', '0', '474 bytes'),
-                '2011': HmdaDataFile('hmda_2011_na_all-records_codes.zip', '0', '474 bytes'),
-                '2010': HmdaDataFile('hmda_2010_na_all-records_codes.zip', '0', '474 bytes'),
-                '2013': HmdaDataFile('hmda_2013_na_all-records_codes.zip', '0', '474 bytes'),
-                '2012': HmdaDataFile('hmda_2012_na_all-records_codes.zip', '0', '474 bytes')
-            },
-            'originated-records': {
-                '2016': HmdaDataFile('hmda_2016_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2007': HmdaDataFile('hmda_2007_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2017': HmdaDataFile('hmda_2017_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2015': HmdaDataFile('hmda_2015_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2014': HmdaDataFile('hmda_2014_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2008': HmdaDataFile('hmda_2008_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2009': HmdaDataFile('hmda_2009_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2011': HmdaDataFile('hmda_2011_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2010': HmdaDataFile('hmda_2010_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2013': HmdaDataFile('hmda_2013_na_originated-records_codes.zip', '0', '488 bytes'),
-                '2012': HmdaDataFile('hmda_2012_na_originated-records_codes.zip', '0', '488 bytes')
             }
         }
     },
@@ -4328,90 +4117,6 @@ HMDA_DATA_FILES = {
                 '2010': HmdaDataFile('hmda_2010_mt_originated-records_codes.zip', '27263', '689.27 KB'),
                 '2013': HmdaDataFile('hmda_2013_mt_originated-records_codes.zip', '31007', '815.5 KB'),
                 '2012': HmdaDataFile('hmda_2012_mt_originated-records_codes.zip', '31452', '815.03 KB')
-            }
-        }
-    },
-    'mp': {
-        'labels': {
-            'first-lien-owner-occupied-1-4-family-records': {
-                '2016': HmdaDataFile('hmda_2016_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2007': HmdaDataFile('hmda_2007_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2017': HmdaDataFile('hmda_2017_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2015': HmdaDataFile('hmda_2015_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2014': HmdaDataFile('hmda_2014_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2008': HmdaDataFile('hmda_2008_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2009': HmdaDataFile('hmda_2009_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2011': HmdaDataFile('hmda_2011_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2010': HmdaDataFile('hmda_2010_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2013': HmdaDataFile('hmda_2013_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes'),
-                '2012': HmdaDataFile('hmda_2012_mp_first-lien-owner-occupied-1-4-family-records_labels.zip', '0', '647 bytes')
-            },
-            'all-records': {
-                '2016': HmdaDataFile('hmda_2016_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2007': HmdaDataFile('hmda_2007_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2017': HmdaDataFile('hmda_2017_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2015': HmdaDataFile('hmda_2015_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2014': HmdaDataFile('hmda_2014_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2008': HmdaDataFile('hmda_2008_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2009': HmdaDataFile('hmda_2009_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2011': HmdaDataFile('hmda_2011_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2010': HmdaDataFile('hmda_2010_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2013': HmdaDataFile('hmda_2013_mp_all-records_labels.zip', '0', '581 bytes'),
-                '2012': HmdaDataFile('hmda_2012_mp_all-records_labels.zip', '0', '581 bytes')
-            },
-            'originated-records': {
-                '2016': HmdaDataFile('hmda_2016_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2007': HmdaDataFile('hmda_2007_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2017': HmdaDataFile('hmda_2017_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2015': HmdaDataFile('hmda_2015_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2014': HmdaDataFile('hmda_2014_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2008': HmdaDataFile('hmda_2008_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2009': HmdaDataFile('hmda_2009_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2011': HmdaDataFile('hmda_2011_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2010': HmdaDataFile('hmda_2010_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2013': HmdaDataFile('hmda_2013_mp_originated-records_labels.zip', '0', '595 bytes'),
-                '2012': HmdaDataFile('hmda_2012_mp_originated-records_labels.zip', '0', '595 bytes')
-            }
-        },
-        'codes': {
-            'first-lien-owner-occupied-1-4-family-records': {
-                '2016': HmdaDataFile('hmda_2016_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2007': HmdaDataFile('hmda_2007_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2017': HmdaDataFile('hmda_2017_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2015': HmdaDataFile('hmda_2015_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2014': HmdaDataFile('hmda_2014_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2008': HmdaDataFile('hmda_2008_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2009': HmdaDataFile('hmda_2009_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2011': HmdaDataFile('hmda_2011_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2010': HmdaDataFile('hmda_2010_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2013': HmdaDataFile('hmda_2013_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes'),
-                '2012': HmdaDataFile('hmda_2012_mp_first-lien-owner-occupied-1-4-family-records_codes.zip', '0', '540 bytes')
-            },
-            'all-records': {
-                '2016': HmdaDataFile('hmda_2016_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2007': HmdaDataFile('hmda_2007_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2017': HmdaDataFile('hmda_2017_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2015': HmdaDataFile('hmda_2015_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2014': HmdaDataFile('hmda_2014_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2008': HmdaDataFile('hmda_2008_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2009': HmdaDataFile('hmda_2009_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2011': HmdaDataFile('hmda_2011_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2010': HmdaDataFile('hmda_2010_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2013': HmdaDataFile('hmda_2013_mp_all-records_codes.zip', '0', '474 bytes'),
-                '2012': HmdaDataFile('hmda_2012_mp_all-records_codes.zip', '0', '474 bytes')
-            },
-            'originated-records': {
-                '2016': HmdaDataFile('hmda_2016_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2007': HmdaDataFile('hmda_2007_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2017': HmdaDataFile('hmda_2017_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2015': HmdaDataFile('hmda_2015_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2014': HmdaDataFile('hmda_2014_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2008': HmdaDataFile('hmda_2008_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2009': HmdaDataFile('hmda_2009_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2011': HmdaDataFile('hmda_2011_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2010': HmdaDataFile('hmda_2010_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2013': HmdaDataFile('hmda_2013_mp_originated-records_codes.zip', '0', '488 bytes'),
-                '2012': HmdaDataFile('hmda_2012_mp_originated-records_codes.zip', '0', '488 bytes')
             }
         }
     },

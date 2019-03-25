@@ -2,10 +2,10 @@ from wagtail.wagtailcore.models import PageManager
 
 from forms import HmdaFilterableForm
 
-from hmda.resources.hmda_data_files import get_data_files
 from hmda.resources.hmda_data_options import (
     HMDA_FIELD_DESC_OPTIONS, HMDA_GEO_OPTIONS, HMDA_RECORDS_OPTIONS
 )
+from hmda.resources.loan_file_metadata import LOAN_FILE_METADATA
 from v1.models import BrowsePage
 
 
@@ -30,7 +30,7 @@ class HmdaHistoricDataPage(BrowsePage):
             'form': HmdaFilterableForm(form_data),
             'title': self.get_title(form_data.get('geo')),
             'subtitle': plain_language_records,
-            'files': get_data_files(**form_data),
+            'files': self.get_data_files(**form_data),
         })
 
         return context
@@ -60,3 +60,9 @@ class HmdaHistoricDataPage(BrowsePage):
             return user_input
         else:
             return options[0][0]
+
+    def get_data_files(self, geo, field_descriptions, records):
+        files = LOAN_FILE_METADATA[geo][field_descriptions][records]
+
+        # sort files in reverse chronological order
+        return sorted(files.items(), key=lambda t: t[0], reverse=True)
