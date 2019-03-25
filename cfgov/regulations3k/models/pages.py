@@ -245,18 +245,31 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
+    def can_serve_draft_versions(self, request):
+        perms = request.user.get_all_permissions()
+        if (request.user.is_superuser or
+                getattr(request, 'served_by_wagtail_sharing', False) or
+                'regulations3k.change_section' in perms):
+            return True
+        return False
+
+    def get_versions_query(self, request):
+        versions = self.regulation.versions
+
+        if not self.can_serve_draft_versions(request):
+            versions = versions.filter(draft=False)
+
+        return versions
+
     def get_effective_version(self, request, date_str):
         """ Get the requested effective version if the user has permission """
         effective_version = self.regulation.versions.get(
             effective_date=date_str
         )
 
-        if effective_version.draft:
-            perms = request.user.get_all_permissions()
-
-            if (not request.user.is_superuser and
-               'regulations3k.change_section' not in perms):
-                raise PermissionDenied
+        if (effective_version.draft and
+                not self.can_serve_draft_versions(request)):
+            raise PermissionDenied
 
         return effective_version
 
@@ -280,8 +293,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                 'search-regulations/results/?regs=' +
                 self.regulation.part_number
             ),
-            'num_versions': self.regulation.versions.filter(
-                draft=False).count(),
+            'num_versions': self.get_versions_query(request).count(),
         })
         return context
 
@@ -389,9 +401,11 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                 'effective_date': v.effective_date,
                 'date_str': str(v.effective_date),
                 'sections': self.get_section_query(effective_version=v).all(),
+                'draft': v.draft
             }
-            for v in self.regulation.versions.filter(
-                draft=False).order_by('-effective_date')
+            for v in self.get_versions_query(request).order_by(
+                '-effective_date'
+            )
         ]
 
         context.update({

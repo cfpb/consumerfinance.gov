@@ -111,6 +111,8 @@
 
                 {% if version.effective_date == page.regulation.effective_version.effective_date %}
                 (current regulation)
+                {% elif version.draft %}
+                (draft)
                 {% endif %}
             </li>
         {% endfor %}
