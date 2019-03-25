@@ -202,6 +202,7 @@ class RegModelTests(DjangoTestCase):
     def get_request(self, path='', data={}):
         request = self.factory.get(path, data=data)
         request.site = self.site
+        request.user = AnonymousUser()
         return request
 
     def test_part_string_method(self):
@@ -522,7 +523,6 @@ class RegModelTests(DjangoTestCase):
 
     def test_get_effective_version_draft_without_perm(self):
         request = self.get_request()
-        request.user = AnonymousUser()
         with self.assertRaises(PermissionDenied):
             self.reg_page.get_effective_version(
                 request, '2020-01-01'
@@ -642,6 +642,21 @@ class RegModelTests(DjangoTestCase):
             CACHE_PURGED_URLS,
             ['http://localhost/reg-landing/1002/4/']
         )
+
+    def test_reg_page_can_serve_draft_versions(self):
+        request = self.get_request()
+        request.served_by_wagtail_sharing = True
+        self.assertTrue(self.reg_page.can_serve_draft_versions(request))
+
+    def test_reg_page_num_versions_on_sharing(self):
+        request = self.get_request()
+        request.served_by_wagtail_sharing = True
+        test_context = self.reg_page.get_context(request)
+        self.assertEqual(test_context['num_versions'], 3)
+
+    def test_reg_page_num_versions_off_sharing(self):
+        test_context = self.reg_page.get_context(self.get_request())
+        self.assertEqual(test_context['num_versions'], 2)
 
 
 class SectionNavTests(unittest.TestCase):

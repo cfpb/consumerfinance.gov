@@ -1,5 +1,7 @@
 from django.core.cache import caches
-from django.test import SimpleTestCase, TestCase, override_settings
+from django.test import (
+    RequestFactory, SimpleTestCase, TestCase, override_settings
+)
 
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
@@ -12,7 +14,8 @@ from v1.models.base import CFGOVPage
 from v1.models.menu_item import MenuItem
 from v1.models.resources import Resource
 from v1.wagtail_hooks import (
-    check_permissions, form_module_handlers, get_resource_tags
+    check_permissions, form_module_handlers, get_resource_tags,
+    set_served_by_wagtail_sharing
 )
 
 
@@ -290,3 +293,14 @@ class TestWhitelistOverride(SimpleTestCase):
         '''
         output_html = DbWhitelister.clean(input_html)
         self.assertHTMLEqual(input_html, output_html)
+
+
+class TestSetServedByWagtailSharing(TestCase):
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_set_served_by_wagtail_sharing(self):
+        request = self.factory.get('/an-url')
+        set_served_by_wagtail_sharing(None, request, [], {})
+        self.assertTrue(request.served_by_wagtail_sharing)

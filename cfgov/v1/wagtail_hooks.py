@@ -282,3 +282,8 @@ def whitelister_element_rules():
                     'col', 'colgroup']
 
     return {tag: allow_html_class for tag in allowed_tags}
+
+
+@hooks.register('before_serve_shared_page')
+def set_served_by_wagtail_sharing(page, request, args, kwargs):
+    setattr(request, 'served_by_wagtail_sharing', True)
