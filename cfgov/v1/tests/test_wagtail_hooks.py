@@ -1,5 +1,7 @@
 from django.core.cache import caches
-from django.test import RequestFactory, SimpleTestCase, TestCase, override_settings
+from django.test import (
+    RequestFactory, SimpleTestCase, TestCase, override_settings
+)
 
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
