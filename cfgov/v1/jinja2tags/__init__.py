@@ -5,6 +5,7 @@ from django.utils.module_loading import import_string
 from jinja2 import Markup, contextfunction
 from jinja2.ext import Extension
 
+from hmda.templatetags.hmda_banners import hmda_outage_banner
 from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
 from v1.models import CFGOVRendition
@@ -101,6 +102,7 @@ class V1Extension(Extension):
             'get_menu_items': get_menu_items,
             'get_model': get_model,
             'get_unique_id': get_unique_id,
+            'hmda_outage_banner': hmda_outage_banner,
             'image_alt_value': image_alt_value,
             'is_blog': ref.is_blog,
             'is_report': ref.is_report,

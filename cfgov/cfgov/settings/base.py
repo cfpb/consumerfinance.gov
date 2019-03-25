@@ -700,6 +700,14 @@ FLAGS = {
     # Publish new HMDA content pages
     # Delete after HMDA API is deprecated (hopefully Summer 2019)
     'HMDA_LEGACY_PUBLISH': [],
+
+    # The HMDA API and HMDA explorer pages will temporarily be taken down at
+    # TBD intervals. We use a GET parameter during downtime to trigger an
+    # explanatory banner about the outages.
+    'HMDA_OUTAGE': [
+        {'condition': 'parameter', 'value': 'hmda-outage', 'required': True},
+        {'condition': 'path matches', 'value': r'^/data-research', 'required': True}
+    ]
 }
 
 

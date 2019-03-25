@@ -1,0 +1,24 @@
+{# ==========================================================================
+
+   HMDA outage banner
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for a banner stating that HMDA is down.
+
+   ========================================================================== #}
+
+{% import 'molecules/notification.html' as notification %}
+<div class="m-global-banner">
+  <div class="wrapper
+              wrapper__match-content">
+        {{ notification.render(
+            'warning',
+            true,
+            'The HMDA Explorer tool and HMDA API have a planned outage today.',
+            'They will be back tomorrow, but will soon be retired permanently.'
+        ) }}
+    </div>
+</div>
