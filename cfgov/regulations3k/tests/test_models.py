@@ -9,21 +9,36 @@ from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator
 from django.http import HttpRequest, QueryDict  # Http404, HttpResponse
-from django.test import RequestFactory, TestCase as DjangoTestCase
+from django.test import (
+    RequestFactory, TestCase as DjangoTestCase, override_settings
+)
 
+from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
 from wagtail.wagtailcore.models import Site
 
 import mock
 from model_mommy import mommy
 
 from regulations3k.models.django import (
-    EffectiveVersion, Part, Section, SectionParagraph, Subpart, sortable_label
+    EffectiveVersion, Part, Section, SectionParagraph, Subpart,
+    effective_version_saved, section_saved, sortable_label
 )
 from regulations3k.models.pages import (
     RegulationLandingPage, RegulationPage, RegulationsSearchPage,
     get_next_section, get_previous_section, get_secondary_nav_items,
     get_section_url, validate_num_results, validate_page_number
 )
+
+
+CACHE_PURGED_URLS = []
+
+
+class MockCacheBackend(BaseBackend):
+    def __init__(self, config):
+        pass
+
+    def purge(self, url):
+        CACHE_PURGED_URLS.append(url)
 
 
 class RegModelTests(DjangoTestCase):
@@ -181,6 +196,8 @@ class RegModelTests(DjangoTestCase):
         self.landing_page.add_child(instance=self.reg_search_page)
         self.reg_page.save()
         self.reg_search_page.save()
+
+        CACHE_PURGED_URLS[:] = []
 
     def get_request(self, path='', data={}):
         request = self.factory.get(path, data=data)
@@ -577,6 +594,54 @@ class RegModelTests(DjangoTestCase):
         )
         with self.assertRaises(ValidationError):
             new_effective_version.validate_unique()
+
+    def test_get_urls_for_version(self):
+        urls = list(self.reg_page.get_urls_for_version(self.effective_version))
+        self.assertIn('http://localhost/reg-landing/1002/', urls)
+        self.assertIn('http://localhost/reg-landing/1002/4/', urls)
+        self.assertIn('http://localhost/reg-landing/1002/versions/', urls)
+
+        urls = list(self.reg_page.get_urls_for_version(
+            self.effective_version, section=self.section_num4))
+        self.assertEqual(['http://localhost/reg-landing/1002/4/'], urls)
+
+        urls = list(self.reg_page.get_urls_for_version(
+            self.old_effective_version))
+        self.assertIn('http://localhost/reg-landing/1002/2011-01-01/', urls)
+        self.assertIn('http://localhost/reg-landing/1002/2011-01-01/4/', urls)
+
+    @override_settings(WAGTAILFRONTENDCACHE={
+        'varnish': {
+            'BACKEND': 'regulations3k.tests.test_models.MockCacheBackend',
+        },
+    })
+    def test_effective_version_saved(self):
+        effective_version_saved(None, self.effective_version)
+
+        self.assertIn(
+            'http://localhost/reg-landing/1002/',
+            CACHE_PURGED_URLS
+        )
+        self.assertIn(
+            'http://localhost/reg-landing/1002/4/',
+            CACHE_PURGED_URLS
+        )
+        self.assertIn(
+            'http://localhost/reg-landing/1002/versions/',
+            CACHE_PURGED_URLS
+        )
+
+    @override_settings(WAGTAILFRONTENDCACHE={
+        'varnish': {
+            'BACKEND': 'regulations3k.tests.test_models.MockCacheBackend',
+        },
+    })
+    def test_section_saved(self):
+        section_saved(None, self.section_num4)
+        self.assertEqual(
+            CACHE_PURGED_URLS,
+            ['http://localhost/reg-landing/1002/4/']
+        )
 
 
 class SectionNavTests(unittest.TestCase):

@@ -5,6 +5,7 @@ import re
 from collections import OrderedDict
 from functools import partial
 from six.moves import urllib
+from six.moves.urllib.parse import urljoin
 
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import InvalidPage, Paginator
@@ -300,6 +301,28 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             ]
 
         return crumbs
+
+    def get_urls_for_version(self, effective_version, section=None):
+        base_url = self.get_full_url()
+        versions_url = urljoin(base_url, 'versions') + '/'
+
+        if effective_version.live_version:
+            # This is the current version
+            version_url = base_url
+        else:
+            # It's a past or future version, URLs have the date str
+            date_str = str(effective_version.effective_date)
+            version_url = urljoin(base_url, date_str) + '/'
+            yield version_url
+
+        if section is not None:
+            yield urljoin(version_url, section.label) + '/'
+        else:
+            sections = self.get_section_query(effective_version)
+            yield version_url
+            yield versions_url
+            for section in sections.all():
+                yield urljoin(version_url, section.label) + '/'
 
     def render_interp(self, context, raw_contents, **kwargs):
         template = get_template('regulations3k/inline_interps.html')
