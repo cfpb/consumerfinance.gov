@@ -104,10 +104,13 @@
                             </div>
                             <div class="o-regulations-wayfinder__version">
                                 {% if section.subpart.version.effective_date < regulation.effective_version.effective_date %}
-                                    Previous version (from {{ ap_date(section.subpart.version.effective_date) }})
+                                    Previous version (effective
+                                    {{ ap_date(section.subpart.version.effective_date) }} to
+                                    June 1, 2018)
                                 {% endif %}
                                 {% if section.subpart.version.effective_date > regulation.effective_version.effective_date %}
-                                    Future version (effective {{ ap_date(section.subpart.version.effective_date) }})
+                                    Future version (effective
+                                    {{ ap_date(section.subpart.version.effective_date) }})
                                 {% endif %}
                             </div>
                         </div>
