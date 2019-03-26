@@ -15,6 +15,18 @@ from v1.models import PortalCategory, PortalTopic
 PROJECT_ROOT = settings.PROJECT_ROOT
 FIXTURE_DIR = "{}/ask_cfpb/fixtures/".format(PROJECT_ROOT)
 CSV_BASE_DIR = os.getenv('ASK_CSV_BASE_DIR')
+CATEGORY_HEADINGS = [
+    'PrimaryCategoryTag',
+    'CategoryTag2',
+    'CategoryTag3',
+    'CategoryTag4'
+]
+SECONDARY_TOPIC_HEADINGS = [
+    'TopicTag2',
+    'TopicTag3',
+    'TopicTag4',
+    'TopicTag5'
+]
 # mapping of slugs to portal name variations, with the correct variation first
 SLUGS = {
     'auto_loans': ['Auto loans'],
@@ -34,15 +46,19 @@ SLUGS = {
 PORTAL_IDS = {
     'Auto loans': 1,
     'Bank accounts': 2,
+    'Bank accounts and services': 2,
     'Credit cards': 3,
     'Credit reports and scores': 4,
     'Debt collection': 5,
     'Fraud and scams': 7,
+    'Frauds and scams': 7,
+    'Fraud and Scams': 7,
     'Money transfers': 8,
     'Mortgages': 9,
     'Payday loans': 10,
     'Prepaid cards': 11,
     'Reverse mortgages': 12,
+    'reverse mortgages': 12,
     'Student loans': 13,
 }
 CATEGORY_IDS = {
@@ -52,6 +68,8 @@ CATEGORY_IDS = {
     'Key terms': 4,
     'Common issues': 5,
 }
+CATEGORY_OBJECTS = {obj.pk: obj for obj in PortalCategory.objects.all()}
+TOPIC_OBJECTS = {obj.pk: obj for obj in PortalTopic.objects.all()}
 
 
 # header = (
@@ -76,6 +94,7 @@ def run():
                 data = [
                     row for row in reader
                     if row['PrimaryTopicTag'] in SLUGS[slug]
+                    and row['ask_id'].isdigit()
                 ]
             output = transform_csv(data, portal_name)
             if not output:
@@ -98,25 +117,26 @@ def update_feedback_default(stream_value):
 
 def apply_tags(data):
     """Apply tagging values to answer pages."""
-    category_map = {obj.pk: obj for obj in PortalCategory.objects.all()}
     migration_user_pk = os.getenv('MIGRATION_USER_PK')
     user = User.objects.filter(id=migration_user_pk).first()  # default is None
     for entry in data:
         pages = AnswerPage.objects.filter(
-            answer_base__pk=entry.get('ask_id'))
+            redirect_to_page=None,
+            answer_base__pk=entry.get('ask_id')
+        )
         for page in pages:
             initial_status = page.status_string
             page.get_latest_revision().publish()
             page.user_feedback = update_feedback_default(page.user_feedback)
-            portal_ids = entry.get('portal_ids')
-            category_ids = entry.get('see_all_ids')
-            for portal_id in portal_ids:
-                topic = PortalTopic.objects.get(pk=portal_id)
-                page.portal_topic.add(topic)
+            primary_topic = entry.get('primary_topic')
+            topic_ids = entry.get('topics')
+            category_ids = entry.get('categories')
+            if len(topic_ids) > 1:
+                page.primary_portal_topic = TOPIC_OBJECTS.get(primary_topic)
+            for topic_id in topic_ids:
+                page.portal_topic.add(TOPIC_OBJECTS.get(topic_id))
             for category_id in category_ids:
-                category_object = category_map.get(category_id)
-                if category_object:
-                    page.portal_category.add(category_object)
+                page.portal_category.add(CATEGORY_OBJECTS.get(category_id))
             page.save_revision(user=user).publish()
             if initial_status == 'draft':
                 page.unpublish()
@@ -127,24 +147,31 @@ def output_json(data, slug):
         f.write(json.dumps(data, indent=4))
 
 
+def valid_tags(row, headings, ids):
+    return [
+        row[heading].strip()
+        for heading in headings
+        if row[heading].strip()
+        and row[heading].strip() in ids
+    ]
+
+
 def transform_csv(dict_rows, portal):
     """Turn a CE spreadsheet into a json mapping file."""
     output = []
-    portal_pk = PORTAL_IDS.get(portal)
+    primary_portal_pk = PORTAL_IDS.get(portal)
     for row in dict_rows:
-        categories = [
-            tag.strip() for tag in [
-                row['PrimaryCategoryTag'],
-                row['CategoryTag2'],
-                row['CategoryTag3'],
-                row['CategoryTag4']]
-            if tag.strip()]
-        category_pks = [CATEGORY_IDS.get(tag) for tag in categories
-                        if CATEGORY_IDS.get(tag)]
+        category_strings = valid_tags(row, CATEGORY_HEADINGS, CATEGORY_IDS)
+        category_pks = [CATEGORY_IDS.get(tag) for tag in category_strings]
+        topic_strings = valid_tags(row, SECONDARY_TOPIC_HEADINGS, PORTAL_IDS)
+        topic_pks = [primary_portal_pk] + [
+            PORTAL_IDS.get(topic) for topic in topic_strings
+        ]
         entry = {
             'ask_id': row.get('ask_id'),
-            'portal_ids': [portal_pk],
-            'see_all_ids': category_pks,
+            'primary_topic': primary_portal_pk,
+            'categories': sorted(set(category_pks)),
+            'topics': sorted(set(topic_pks)),
         }
         output.append(entry)
     return output
