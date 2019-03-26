@@ -70,13 +70,15 @@ CATEGORY_IDS = {
 }
 CATEGORY_OBJECTS = {obj.pk: obj for obj in PortalCategory.objects.all()}
 TOPIC_OBJECTS = {obj.pk: obj for obj in PortalTopic.objects.all()}
+MIGRATION_USER_PK = os.getenv('MIGRATION_USER_PK')
+USER = User.objects.filter(id=MIGRATION_USER_PK).first()  # default is None
 
 
 # header = (
 #     "ask_id,url,Topic,SubCategories,Audiences,"
 #     "PrimaryCategoryTag,CategoryTag2,CategoryTag3,CategoryTag4,"
 #     "PrimaryTopicTag,TopicTag2,TopicTag3,TopicTag4,TopicTag5")
-def run():
+def run(*args):
     starter = datetime.datetime.now()
     for slug in sorted(SLUGS.keys()):
         portal_name = SLUGS[slug][0]
@@ -102,8 +104,14 @@ def run():
                 return
             output_json(output, slug)
             print("Output {}.json".format(slug))
-        apply_tags(output)
-    print("Tag migrations took {}".format(datetime.datetime.now() - starter))
+        if args and args[0].isdigit() and AnswerPage.objects.filter(
+                redirect_to_page=None,
+                answer_base__pk=int(args[0])).exists():
+            apply_tags(output, singleton=args[0])
+        else:
+            apply_tags(output)
+    print("Tag migrations took {}".format(
+        datetime.datetime.now() - starter))
 
 
 def update_feedback_default(stream_value):
@@ -114,30 +122,42 @@ def update_feedback_default(stream_value):
     return stream_value
 
 
-def apply_tags(data):
-    """Apply tagging values to answer pages."""
-    migration_user_pk = os.getenv('MIGRATION_USER_PK')
-    user = User.objects.filter(id=migration_user_pk).first()  # default is None
+def update_page(page, entry):
+    initial_status = page.status_string
+    page.user_feedback = update_feedback_default(page.user_feedback)
+    primary_topic = entry.get('primary_topic')
+    topic_ids = entry.get('topics')
+    category_ids = entry.get('categories')
+    if len(topic_ids) > 1:
+        page.primary_portal_topic = TOPIC_OBJECTS.get(primary_topic)
+    for topic_id in topic_ids:
+        page.portal_topic.add(TOPIC_OBJECTS.get(topic_id))
+    for category_id in category_ids:
+        page.portal_category.add(CATEGORY_OBJECTS.get(category_id))
+    page.save_revision(user=USER).publish()
+    if initial_status == 'draft':
+        page.unpublish()
+
+
+def apply_tags(data, singleton=None):
+    """Apply tagging values to answer pages, or to a single Ask ID."""
+    if singleton:
+        if singleton not in [d['ask_id'] for d in data]:
+            return
+        pages = AnswerPage.objects.filter(
+            redirect_to_page=None,
+            answer_base__pk=singleton)
+        entry = [d for d in data if d['ask_id'] == singleton][0]
+        for page in pages:
+            update_page(page, entry)
+        return
     for entry in data:
         pages = AnswerPage.objects.filter(
             redirect_to_page=None,
             answer_base__pk=entry.get('ask_id')
         )
         for page in pages:
-            initial_status = page.status_string
-            page.user_feedback = update_feedback_default(page.user_feedback)
-            primary_topic = entry.get('primary_topic')
-            topic_ids = entry.get('topics')
-            category_ids = entry.get('categories')
-            if len(topic_ids) > 1:
-                page.primary_portal_topic = TOPIC_OBJECTS.get(primary_topic)
-            for topic_id in topic_ids:
-                page.portal_topic.add(TOPIC_OBJECTS.get(topic_id))
-            for category_id in category_ids:
-                page.portal_category.add(CATEGORY_OBJECTS.get(category_id))
-            page.save_revision(user=user).publish()
-            if initial_status == 'draft':
-                page.unpublish()
+            update_page(page, entry)
 
 
 def output_json(data, slug):
