@@ -88,7 +88,7 @@
         {% endif %}
 
         <section class="block block__flush-top">
-            <div class="o-regulations-wayfinder">
+            <div class="o-regulations-wayfinder" data-section="{{section}}">
                 <div class="wrapper content_wrapper">
                     <div class="content_sidebar content__flush-top content__flush-bottom">
                         <span class="h4">
@@ -99,7 +99,7 @@
                         <div class="o-regulations-wayfinder__content">
                             <div class="o-regulations-wayfinder__heading">
                                 <a href="#" class="h4 o-regulations-wayfinder_link">
-                                    §&nbsp;{{section.part}}.{{section.label}}<span class="o-regulations-wayfinder_marker"></span>
+                                    <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
                                 </a>
                             </div>
                             <div class="o-regulations-wayfinder__version">

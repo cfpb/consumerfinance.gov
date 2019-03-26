@@ -83,18 +83,57 @@ const updateUrlHash = () => {
 
 const updateWayfinder = () => {
   let paragraphMarker;
+  let sectionFormattedTitle;
   const currentParagraph = getCurrentParagraph( scrollY() + wayfinderOffset, paragraphPositions );
   if ( currentParagraph ) {
-    const regex = /\-/g;
-    paragraphMarker = '(' + currentParagraph.replace( regex, ')(' ) + ')';
+    const sectionTitle = document.querySelector( '.o-regulations-wayfinder' ).dataset.section;
+    // For interpretations, the wayfinder should look like "Comment 4(a)-1.iv.A"
+    if ( sectionTitle.indexOf( 'Comment for ' ) === 0 ) {
+      let commentedSection;
+      const commentedSectionRegex = /[0-9]./;
+      let commentedParagraph;
+      let commentParagraph;
+      const splitCurrentParagraph = currentParagraph.split( 'Interp' );
+      const commentedParagraphID = splitCurrentParagraph[0]
+        .split( '-' );
+      const commentParagraphID = splitCurrentParagraph[1]
+        .split('-');
+      commentedSection = commentedParagraphID[0];
+      commentedParagraph = commentedParagraphID
+        .slice( 1, -1 )
+        .join( ')(' );
+      commentParagraph = commentParagraphID
+        .slice( 1 )
+        .join( '.' );
+      if ( commentParagraph !== '' ) {
+        commentParagraph = '-' + commentParagraph;
+      }
+      sectionFormattedTitle = 'Comment ';
+      paragraphMarker = commentedSection + '(' + commentedParagraph + ')' + commentParagraph;
+    }
+    // For appendices, the wayfinder should look like "Appendix A"
+    else if ( sectionTitle.indexOf( 'Appendix ' ) === 0 ) {
+      const appendixTitleRegex = /Appendix [A-Z]/;
+      sectionFormattedTitle = sectionTitle.match( appendixTitleRegex )[0];
+      paragraphMarker = '';
+    }
+    // For sections of the main regulation text, the wayfinder should look like "§ 1026.5(b)(2)(ii)(A)(1)""
+    else {
+      const titleRegex = /§ 10[0-9].\.[0-9]/g;
+      const markerRegex = /\-/g;
+      sectionFormattedTitle = sectionTitle.match( titleRegex )[0];
+      paragraphMarker = '(' + currentParagraph.replace( markerRegex, ')(' ) + ')';
+    }
     document.querySelector( '.o-regulations-wayfinder_link' ).href = '#' + currentParagraph;
     document.querySelector( '.regulations3k' ).classList.add( 'show-wayfinder' );
   } else {
+    sectionFormattedTitle = '';
     paragraphMarker = '';
     document.querySelector( '.o-regulations-wayfinder_link' ).href = '#';
     document.querySelector( '.regulations3k' ).classList.remove( 'show-wayfinder' );
   }
-  return document.querySelector( '.o-regulations-wayfinder_marker' ).textContent = paragraphMarker;
+  document.querySelector( '.o-regulations-wayfinder_section-title' ).textContent = sectionFormattedTitle;
+  document.querySelector( '.o-regulations-wayfinder_marker' ).textContent = paragraphMarker;
 }
 
 /**
