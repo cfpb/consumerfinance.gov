@@ -5,14 +5,13 @@ from wagtail.wagtailadmin.edit_handlers import (
     InlinePanel, ObjectList, PageChooserPanel, StreamFieldPanel,
     TabbedInterface
 )
-from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailsearch import index
 
 from modelcluster.fields import ParentalKey
 
-from v1.atomic_elements import atoms, molecules
+from v1.atomic_elements import molecules
 from v1.models.base import CFGOVPage
 from v1.util import ref
 
@@ -23,19 +22,9 @@ class HomePage(CFGOVPage):
         ('half_width_link_blob', molecules.HalfWidthLinkBlob()),
     ], blank=True)
 
-    latest_updates = StreamField([
-        ('posts', blocks.ListBlock(blocks.StructBlock([
-            ('categories', blocks.ChoiceBlock(choices=ref.limited_categories,
-                                              required=False)),
-            ('link', atoms.Hyperlink()),
-            ('date', blocks.DateTimeBlock(required=False)),
-        ]))),
-    ], blank=True)
-
     # General content tab
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
-        StreamFieldPanel('latest_updates'),
         InlinePanel(
             'excluded_updates',
             label='Pages excluded from Latest Updates',

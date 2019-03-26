@@ -180,8 +180,6 @@
             <div class="content_main content_main__home">
                 <h2>Latest updates</h2>
 
-                {% if flag_enabled('AUTOMATIC_LATEST_UPDATES') %}
-
                 <div class="content-l">
                     {% import 'macros/time.html' as time %}
                     {% import 'macros/category-slug.html' as category_slug %}
@@ -233,46 +231,6 @@
 
                     {% endfor %}
                 </div>
-
-                {% else %}
-
-                <div class="content-l">
-                    {% for sections in page.latest_updates %}
-                        <section class="content-l_col
-                                        content-l_col-1-3">
-                            {% for block in sections.value %}
-                                {# TODO: Refactor to not use m-list.
-                                         It's only used to make the links bold.
-                                         It should either be a list or not. #}
-                                <div class="m-related-posts_list-container m-list">
-                                    <h3 class="h4">
-                                        {% set icon = 'open-quote' if block.categories == 'double-quote' else block.categories %}
-                                        {{ svg_icon(icon) }}
-                                        {{ page.get_category_name(block.categories) }}
-                                    </h3>
-                                    <a class="m-list_link" href="{{ block.link.url }}">
-                                        {{ block.link.text }}
-                                    </a>
-                                    <p class="a-date">
-                                        {% import 'macros/time.html' as time %}
-                                        {{ time.render(block.date, {'date':true}) }}
-                                    </p>
-                                </div>
-                            {% endfor %}
-                        {% if loop.last %}
-                            <div class="m-related-posts_list-container">
-                                <a class="a-link
-                                          a-link__jump"
-                                   href="/activity-log/">
-                                    See all updates
-                                </a>
-                            </div>
-                        {% endif %}
-                        </section>
-                    {% endfor %}
-                </div>
-
-                {% endif %}
 
             </div>
         </div>
