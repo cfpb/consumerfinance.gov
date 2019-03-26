@@ -88,9 +88,9 @@ const updateWayfinder = () => {
   if ( currentParagraph ) {
     const sectionTitle = document.querySelector( '.o-regulations-wayfinder' ).dataset.section;
     // For interpretations, the wayfinder should look like "Comment 4(a)-1.iv.A"
+    // Or like "Comment app. G-1.iv.A" for interpretations of appendices
     if ( sectionTitle.indexOf( 'Comment for ' ) === 0 ) {
       let commentedSection;
-      const commentedSectionRegex = /[0-9]./;
       let commentedParagraph;
       let commentParagraph;
       const splitCurrentParagraph = currentParagraph.split( 'Interp' );
@@ -99,9 +99,16 @@ const updateWayfinder = () => {
       const commentParagraphID = splitCurrentParagraph[1]
         .split('-');
       commentedSection = commentedParagraphID[0];
-      commentedParagraph = commentedParagraphID
-        .slice( 1, -1 )
-        .join( ')(' );
+      if ( commentedSection.match( /[A-Z]/ ) ) {
+        commentedSection = 'app. ' + commentedParagraphID[0];
+        commentedParagraph = '';
+      }
+      else {
+        commentedParagraph = commentedParagraphID
+          .slice( 1, -1 )
+          .join( ')(' );
+        commentedParagraph = '(' + commentedParagraph + ')';
+      }
       commentParagraph = commentParagraphID
         .slice( 1 )
         .join( '.' );
@@ -109,7 +116,7 @@ const updateWayfinder = () => {
         commentParagraph = '-' + commentParagraph;
       }
       sectionFormattedTitle = 'Comment ';
-      paragraphMarker = commentedSection + '(' + commentedParagraph + ')' + commentParagraph;
+      paragraphMarker = commentedSection + commentedParagraph  + commentParagraph;
     }
     // For appendices, the wayfinder should look like "Appendix A"
     else if ( sectionTitle.indexOf( 'Appendix ' ) === 0 ) {
