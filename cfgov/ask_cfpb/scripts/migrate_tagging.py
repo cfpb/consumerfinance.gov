@@ -140,7 +140,9 @@ def update_page(page, entry):
 
 
 def apply_tags(data, singleton=None):
-    """Apply tagging values to answer pages, or to a single Ask ID."""
+    """
+    Apply tags to all answer pages, or only to pages linked to a single Ask ID.
+    """
     if singleton:
         if singleton not in [d['ask_id'] for d in data]:
             return
