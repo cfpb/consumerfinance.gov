@@ -1,427 +1,473 @@
 [
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "2084", 
-        "see_all_ids": [
+        "categories": [
             1
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "2055", 
-        "see_all_ids": [
-            5, 
-            3
+        "categories": [
+            3, 
+            5
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "2053", 
-        "see_all_ids": [
+        "categories": [
             1, 
             4
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "539", 
-        "see_all_ids": [
+        "categories": [
             1, 
             2
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "537", 
-        "see_all_ids": [
+        "categories": [
             1
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            2, 
+            11
+        ], 
         "ask_id": "529", 
-        "see_all_ids": [
+        "categories": [
             1, 
             2
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "523", 
-        "see_all_ids": [
+        "categories": [
             1, 
             3
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "521", 
-        "see_all_ids": [
+        "categories": [
             1, 
             5
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "515", 
-        "see_all_ids": [
+        "categories": [
             1, 
             5
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "513", 
-        "see_all_ids": [
+        "categories": [
             1, 
             5
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "509", 
-        "see_all_ids": [
+        "categories": [
             1, 
             3
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
+        "topics": [
+            11
+        ], 
         "ask_id": "507", 
-        "see_all_ids": [
-            4, 
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "505", 
-        "see_all_ids": [
-            1, 
-            3
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "503", 
-        "see_all_ids": [
-            3, 
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "501", 
-        "see_all_ids": [
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "475", 
-        "see_all_ids": [
-            3, 
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "473", 
-        "see_all_ids": [
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "471", 
-        "see_all_ids": [
-            1, 
-            3
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "465", 
-        "see_all_ids": [
-            1, 
-            3
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "451", 
-        "see_all_ids": [
-            4, 
-            3, 
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "449", 
-        "see_all_ids": [
-            1, 
-            3
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "445", 
-        "see_all_ids": [
-            1, 
-            3
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "443", 
-        "see_all_ids": [
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "441", 
-        "see_all_ids": [
-            3
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "439", 
-        "see_all_ids": [
-            1, 
-            5
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "437", 
-        "see_all_ids": [
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "433", 
-        "see_all_ids": [
-            1, 
-            2
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "425", 
-        "see_all_ids": [
-            1, 
-            2
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "423", 
-        "see_all_ids": [
-            1, 
-            2
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "421", 
-        "see_all_ids": [
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "417", 
-        "see_all_ids": [
-            4, 
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "415", 
-        "see_all_ids": [
-            1, 
-            2
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "411", 
-        "see_all_ids": [
-            1, 
-            5
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "409", 
-        "see_all_ids": [
-            4, 
-            2, 
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "407", 
-        "see_all_ids": [
-            1, 
-            5, 
-            2
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "405", 
-        "see_all_ids": [
-            3, 
-            2, 
-            5
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "403", 
-        "see_all_ids": [
-            1, 
-            2
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "401", 
-        "see_all_ids": [
-            4, 
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "395", 
-        "see_all_ids": [
-            3, 
-            1, 
-            2
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "393", 
-        "see_all_ids": [
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "383", 
-        "see_all_ids": [
-            1
-        ], 
-        "portal_ids": [
-            11
-        ]
-    }, 
-    {
-        "ask_id": "381", 
-        "see_all_ids": [
+        "categories": [
             1, 
             4
         ], 
-        "portal_ids": [
-            11
-        ]
+        "primary_topic": 11
     }, 
     {
-        "ask_id": "379", 
-        "see_all_ids": [
-            3, 
+        "topics": [
+            11
+        ], 
+        "ask_id": "505", 
+        "categories": [
+            1, 
+            3
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "503", 
+        "categories": [
+            1, 
+            3
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "501", 
+        "categories": [
             1
         ], 
-        "portal_ids": [
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
             11
-        ]
+        ], 
+        "ask_id": "475", 
+        "categories": [
+            1, 
+            3
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "473", 
+        "categories": [
+            1
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "471", 
+        "categories": [
+            1, 
+            3
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "465", 
+        "categories": [
+            1, 
+            3
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "451", 
+        "categories": [
+            1, 
+            3, 
+            4
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "449", 
+        "categories": [
+            1, 
+            3
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "445", 
+        "categories": [
+            1, 
+            3
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "443", 
+        "categories": [
+            1
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "441", 
+        "categories": [
+            3
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "439", 
+        "categories": [
+            1, 
+            5
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "437", 
+        "categories": [
+            1
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            3, 
+            11
+        ], 
+        "ask_id": "433", 
+        "categories": [
+            1, 
+            2
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "425", 
+        "categories": [
+            1, 
+            2
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "423", 
+        "categories": [
+            1, 
+            2
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "421", 
+        "categories": [
+            1
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "417", 
+        "categories": [
+            1, 
+            4
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "415", 
+        "categories": [
+            1, 
+            2
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "411", 
+        "categories": [
+            1, 
+            5
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "409", 
+        "categories": [
+            1, 
+            2, 
+            4
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "407", 
+        "categories": [
+            1, 
+            2, 
+            5
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "405", 
+        "categories": [
+            2, 
+            3, 
+            5
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "403", 
+        "categories": [
+            1, 
+            2
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "401", 
+        "categories": [
+            1, 
+            4
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "395", 
+        "categories": [
+            1, 
+            2, 
+            3
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "393", 
+        "categories": [
+            1
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "383", 
+        "categories": [
+            1
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            11
+        ], 
+        "ask_id": "381", 
+        "categories": [
+            1, 
+            4
+        ], 
+        "primary_topic": 11
+    }, 
+    {
+        "topics": [
+            3, 
+            11
+        ], 
+        "ask_id": "379", 
+        "categories": [
+            1, 
+            3
+        ], 
+        "primary_topic": 11
     }
 ]
