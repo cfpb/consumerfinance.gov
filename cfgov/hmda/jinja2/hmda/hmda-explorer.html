@@ -30,39 +30,28 @@
         {% endif %}
     {%- endfor %}
 
-    {% for block in page.content -%}
-        {{ render_block.render(block, loop.index) }}
-    {%- endfor %}
+    <div class="hmda-historic-data" style="margin-top: -20px">
 
-    <div class="hmda-historic-data">
-
-        <div class="o-filterable-list">
-
-          {% set fragment_id = 'o-filterable-list-controls' %}
-          {% set value = {
-            'is_bordered': True,
-            'is_expanded': True,
-            'is_midtone': True,
-            'label': 'Select the HMDA data you want'
-          } %}
-
-          {{ controls.render(
-              value,
-              form,
-              fragment_id,
-              has_active_filters)
-          }}
-
-        </div>
+        {{ controls.render(form) }}
 
         {{ results.render(
             title,
             files)
         }}
 
-        <p>Review the <a href="#">data dictionary</a> for an explanation of each field.</p>
+        <p>For an explanation of each field <a href="#">review the variable list</a> or <a href="#">find code explanations</a>.</p>
 
         {{ institutions.render() }}
+
+        <p>See the documentation for the <a href="#">transmittal sheet</a> and <a href="#">panel data</a>.</p>
+
+        {% for block in page.content -%}
+            {% if block.block_type in ['feedback', 'conference_registration_form'] %}
+                {{- form_block.render(block, 'content', loop.index0) -}}
+            {% else %}
+                {{ render_block.render(block, loop.index) }}
+            {% endif %}
+        {%- endfor %}
 
     </div>
 

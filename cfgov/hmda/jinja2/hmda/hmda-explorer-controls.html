@@ -29,10 +29,10 @@
                     Records included
                 </legend>
                {% for radio in form.records %}
-                  <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-                      <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
-                      <label class="a-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-                  </div>
+                <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                    <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
+                    <label class="a-label" for="{{ radio.id_for_label }}">{{ radio.choice_label}}</label>
+                </div>
                {% endfor %}
             </fieldset>
         </div>
@@ -84,12 +84,10 @@
    fragment_id: A unique ID for the filter list control.
 
    ========================================================================== #}
-{% macro render(value, form, fragment_id, has_active_filters) %}
-    {% from 'organisms/expandable.html' import expandable with context %}
-    <div id="{{ fragment_id }}" class="o-filterable-list-controls u-mb30">
-        {% set form_markup = _filters_form(form) %}
-        {% call() expandable(value) %}
-            {{ form_markup | safe }}
-        {% endcall %}
+{% macro render(form) %}
+    {% set form_markup = _filters_form(form) %}
+    <div class="o-well u-mb30">
+        <h2>Select the HMDA data you want</h2>
+        {{ form_markup | safe }}
     </div>
 {% endmacro %}

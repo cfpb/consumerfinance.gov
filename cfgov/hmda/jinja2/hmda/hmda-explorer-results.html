@@ -1,7 +1,8 @@
 {% macro _render_files(title, files) %}
-    <div class="u-mt10 u-mb10">
+    <div class="u-mb10">
         <h3>{{ title }}</h3>
-        <div class="o-table o-table-wrapper__scrolling">
+        <p>{{ subtitle }}</p>
+        <div class="o-table">
             <table class="u-w100pct">
                 <thead>
                     <tr>
@@ -16,10 +17,10 @@
                         <td data-label="Year">{{ year }}</td>
                         <td data-label="Records">
                           <div class="decimal-align-right">
-                            {{ csv.number_of_records }}
+                            {{ "{:,.0f}".format(csv.number_of_records | int) }}
                           </div>
                         </td>
-                        <td data-label="Download"><a href="https://files.consumerfinance.gov/historic-hmda-data/{{ csv.file_name }}">CSV</a> ({{ csv.file_size }})</td>
+                        <td data-label="Download"><a href="https://files.consumerfinance.gov/hmda-historic-loan-data/{{ csv.file_name }}" aria-label="{{ csv.file_size }} CSV containing HMDA loan application records for {{ geo }} in {{ year }}">CSV</a> ({{ csv.file_size }})</td>
                     </tr>
                     {% endfor %}
                 </tbody>
