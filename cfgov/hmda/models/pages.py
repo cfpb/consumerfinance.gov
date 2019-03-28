@@ -5,10 +5,10 @@ from hmda.resources.hmda_data_options import (
     HMDA_FIELD_DESC_OPTIONS, HMDA_GEO_OPTIONS, HMDA_RECORDS_OPTIONS
 )
 from hmda.resources.loan_file_metadata import LOAN_FILE_METADATA
-from v1.models import BrowsePage
+from v1.models import LearnPage
 
 
-class HmdaHistoricDataPage(BrowsePage):
+class HmdaHistoricDataPage(LearnPage):
     """
     A model for the new HMDA Historic Data page that displays links to S3 files
     containing HMDA data.

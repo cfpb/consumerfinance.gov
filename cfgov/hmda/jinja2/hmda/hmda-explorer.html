@@ -1,9 +1,10 @@
-{% extends 'layout-side-nav.html' %}
+{% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'form_block.html' as form_block with context %}
 {% import 'hmda-explorer-controls.html' as controls with context %}
 {% import 'hmda-explorer-results.html' as results with context %}
 {% import 'hmda-explorer-institutions.html' as institutions with context %}
+{% import 'organisms/item-introduction.html' as item_introduction with context %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -18,13 +19,8 @@
 
 {% block content_main %}
     {% for block in page.header -%}
-        {% if 'featured_content' in block.block_type %}
-            <div class="block
-                        block__border
-                        {{ 'u-mt0' if loop.first }}">
-                        {# u-mt0 is used instead of block__flush-top to keep top border #}
-                {% include_block block %}
-            </div>
+        {% if block.block_type == 'item_introduction' %}
+            {{ item_introduction.render(block.value) }}
         {% else %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}
@@ -39,25 +35,23 @@
             files)
         }}
 
-        <p>For an explanation of each field <a href="#">review the variable list</a> or <a href="#">find code explanations</a>.</p>
-
         {{ institutions.render() }}
-
-        <p>See the documentation for the <a href="#">transmittal sheet</a> and <a href="#">panel data</a>.</p>
-
-        {% for block in page.content -%}
-            {% if block.block_type in ['feedback', 'conference_registration_form'] %}
-                {{- form_block.render(block, 'content', loop.index0) -}}
-            {% else %}
-                {{ render_block.render(block, loop.index) }}
-            {% endif %}
-        {%- endfor %}
 
     </div>
 
-    {% if page.sidefoot %}
-        <aside class="o-prefooter">
-            {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
-        </aside>
-    {% endif %}
+    {% for block in page.content -%}
+        {% if block.block_type == 'feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
 {% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+{%- endblock %}
