@@ -402,55 +402,6 @@ class AnswerResultsPage(SecondaryNavigationJSMixin, CFGOVPage):
             return 'ask-cfpb/answer-search-spanish-results.html'
 
 
-class AnswerAudiencePage(SecondaryNavigationJSMixin, CFGOVPage):
-    from ask_cfpb.models import Audience
-
-    objects = CFGOVPageManager()
-    content = StreamField([
-    ], null=True)
-    ask_audience = models.ForeignKey(
-        Audience,
-        blank=True,
-        null=True,
-        on_delete=models.PROTECT,
-        related_name='audience_page')
-    content_panels = CFGOVPage.content_panels + [
-        FieldPanel('ask_audience', Audience),
-        StreamFieldPanel('content'),
-    ]
-
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='Content'),
-        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
-    ])
-
-    def get_context(self, request, *args, **kwargs):
-        from ask_cfpb.models import Answer
-        context = super(AnswerAudiencePage, self).get_context(request)
-        answers = Answer.objects.filter(audiences__id=self.ask_audience.id)
-        paginator = Paginator(answers, 20)
-        page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
-        context.update({
-            'answers': page,
-            'current_page': page_number,
-            'paginator': paginator,
-            'results_count': len(answers),
-            'get_secondary_nav_items': get_ask_nav_items
-        })
-
-        if self.language == 'en':
-            context['about_us'] = get_reusable_text_snippet(
-                ABOUT_US_SNIPPET_TITLE)
-            context['disclaimer'] = get_reusable_text_snippet(
-                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
-            context['breadcrumb_items'] = get_ask_breadcrumbs()
-
-        return context
-
-    template = 'ask-cfpb/audience-page.html'
-
-
 class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     """A routable page for serving Answers by tag"""
 
