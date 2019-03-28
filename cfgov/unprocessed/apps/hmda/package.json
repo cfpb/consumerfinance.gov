@@ -1,7 +1,7 @@
 {
   "name": "cfpb-hmda",
   "description": "The consumerfinance.gov/hmda website.",
-  "homepage": "https://www.consumerfinance.gov/eregulations/",
+  "homepage": "https://www.consumerfinance.gov/hmda/",
   "author": {
     "name": "Consumer Financial Protection Bureau",
     "email": "tech@cfpb.gov",
