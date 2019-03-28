@@ -1,7 +1,6 @@
 from wagtail.wagtailcore.models import PageManager
 
-from forms import HmdaFilterableForm
-
+from hmda.models.forms import HmdaFilterableForm
 from hmda.resources.hmda_data_options import (
     HMDA_FIELD_DESC_OPTIONS, HMDA_GEO_OPTIONS, HMDA_RECORDS_OPTIONS
 )
