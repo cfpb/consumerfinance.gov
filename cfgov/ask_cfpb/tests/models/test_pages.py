@@ -23,9 +23,7 @@ from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Audience, Category,
     NextStep, SubCategory, generate_short_slug
 )
-from ask_cfpb.models.pages import (
-    JOURNEY_PATHS, AnswerAudiencePage, AnswerCategoryPage, AnswerPage
-)
+from ask_cfpb.models.pages import JOURNEY_PATHS, AnswerCategoryPage, AnswerPage
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
@@ -170,14 +168,6 @@ class AnswerPageTestCase(TestCase):
         cat_page = AnswerCategoryPage(**kwargs)
         cat_page.save()
         return cat_page
-
-    def create_audience_page(self, **kwargs):
-        kwargs.setdefault(
-            'path', get_free_path(apps, self.english_parent_page))
-        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
-        kwargs.setdefault('slug', 'audience-students')
-        kwargs.setdefault('title', 'Students')
-        return AnswerAudiencePage.objects.create(**kwargs)
 
     def setUp(self):
         self.test_user = User.objects.last()
@@ -482,15 +472,6 @@ class AnswerPageTestCase(TestCase):
         self.assertTrue(isinstance(response_302, HttpResponse))
         self.assertEqual(response_302.status_code, 301)
 
-    def test_audience_page_add_js(self):
-        test_page = self.create_audience_page(language='en')
-        self.assertEqual(test_page.page_js, ['secondary-navigation.js'])
-
-    def test_audience_page_add_js_wrong_language(self):
-        """page_js should only be added on English Audience pages"""
-        test_page = self.create_audience_page(language='es')
-        self.assertFalse(test_page.page_js)
-
     def test_spanish_template_used(self):
         page = self.page1_es
         response = self.client.get(page.url)
@@ -651,39 +632,6 @@ class AnswerPageTestCase(TestCase):
         self.assertEqual(len(breadcrumbs), 2)
         self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
         self.assertEqual(breadcrumbs[1]['title'], test_category.name)
-
-    def test_audience_page_get_english_template(self):
-        mock_site = mock.Mock()
-        mock_site.hostname = 'localhost'
-        mock_request = HttpRequest()
-        mock_request.site = mock_site
-        audience_page = self.create_audience_page(
-            ask_audience=self.audience, language='en')
-        test_get_template = audience_page.get_template(mock_request)
-        self.assertEqual(
-            test_get_template,
-            'ask-cfpb/audience-page.html')
-
-    def test_audience_page_context(self):
-        from ask_cfpb.models import get_ask_nav_items
-        mock_site = mock.Mock()
-        mock_site.hostname = 'localhost'
-        mock_request = HttpRequest()
-        mock_request.site = mock_site
-        audience_page = self.create_audience_page(
-            ask_audience=self.audience, language='en')
-        test_context = audience_page.get_context(mock_request)
-        self.assertEqual(
-            test_context['get_secondary_nav_items'],
-            get_ask_nav_items)
-
-    def test_audience_page_handles_bad_pagination(self):
-        audience_page = self.create_audience_page(
-            ask_audience=self.audience, language='en')
-        request = HttpRequest()
-        request.GET['page'] = '100'
-        response = audience_page.serve(request)
-        self.assertEqual(response.status_code, 200)
 
     def test_category_page_context(self):
         mock_site = mock.Mock()
