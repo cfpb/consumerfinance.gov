@@ -27,11 +27,11 @@ download_data() {
     echo 'Downloading fresh production Django database dump...'
     prod_archive="$refresh_dump_name"
     if test -e "$prod_archive"
-	    then 
-		    curl -R -o "$prod_archive" -z "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
-	    else
-		    curl -R -o "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
-	    fi
+       then 
+           curl -R -o "$prod_archive" -z "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
+       else
+           curl -R -o "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
+       fi
 }
 
 refresh_data() {
