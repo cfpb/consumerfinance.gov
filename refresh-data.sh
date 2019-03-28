@@ -28,9 +28,9 @@ download_data() {
     prod_archive="$refresh_dump_name"
     if test -e "$prod_archive"
 	    then 
-		    curl -o "$prod_archive" -z "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
+		    curl -R -o "$prod_archive" -z "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
 	    else
-		    curl -o "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
+		    curl -R -o "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
 	    fi
 }
 
