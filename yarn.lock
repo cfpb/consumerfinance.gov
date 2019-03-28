@@ -1903,7 +1903,6 @@ center-align@^0.1.1:
 cf-atomic-component@2.1.2, cf-atomic-component@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/cf-atomic-component/-/cf-atomic-component-2.1.2.tgz#5e1308bae401f459bdca972615dcfca0d70fc464"
-  integrity sha512-iYBydyuZG0vEGLjpiAExTpjqKyUo9Of6dJT5Wx1b2Zborysrxf0GX+syiHS8pNH2vfm4mLrTdi8M6hM/xZbXjw==
   dependencies:
     dom-delegate "^2.0.3"
 
@@ -1993,14 +1992,14 @@ cf-typography@5.0.1:
     cf-core "^4.0.0"
     cf-icons "^4.0.0"
 
-cfpb-chart-builder@5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-5.1.2.tgz#2e95b3a458f662f0148b05760f881c8fa06b1215"
+cfpb-chart-builder@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-6.0.0.tgz#0bbd31e872fc043792fcf8ce536f8a5820085e96"
   dependencies:
     cf-core "4.10.0"
     cf-layout "5.0.0"
     cf-typography "5.0.1"
-    highcharts "6.2.0"
+    highcharts "7.0.0"
     xdr "0.5.3"
 
 chai-as-promised@5.x:
@@ -4407,6 +4406,10 @@ hash.js@^1.0.0, hash.js@^1.0.3:
 highcharts@6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-6.2.0.tgz#2a6d04652eb43c66f462ca7e2d2808f1f2782b61"
+
+highcharts@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-7.0.0.tgz#07b3d9a23715088a48965f6fae080bc9c20c01dd"
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
