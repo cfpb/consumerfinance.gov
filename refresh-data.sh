@@ -25,13 +25,26 @@ EOF
 
 download_data() {
     echo 'Downloading fresh production Django database dump...'
-    prod_archive="$refresh_dump_name"
-    if test -e "$prod_archive"
-       then 
-           curl -R -o "$prod_archive" -z "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
-       else
-           curl -R -o "$prod_archive" "$CFGOV_PROD_DB_LOCATION"
-       fi
+    skip_download=0
+
+    # If the file already exists, check its timestamp, and skip the download
+    # if it matches the timestamp of the remote file.
+    if test -e "$refresh_dump_name"; then
+        timestamp_check=$(curl -s -I -R -z "$refresh_dump_name" "$CFGOV_PROD_DB_LOCATION")
+        if [[ "$timestamp_check" == *"304 Not Modified"* ]]; then
+            echo 'Skipping download as local timestamp matches remote timestamp'
+            skip_download=1
+        fi
+    fi
+
+    if [[ "$skip_download" == 0 ]]; then
+        curl -R -o "$refresh_dump_name" "$CFGOV_PROD_DB_LOCATION"
+    fi
+}
+
+check_data() {
+    echo 'Validating local dump file'
+    gunzip -t "$refresh_dump_name"
 }
 
 refresh_data() {
@@ -58,4 +71,5 @@ else
     fi
 fi
 
+check_data
 refresh_data
