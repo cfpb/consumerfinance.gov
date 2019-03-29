@@ -664,7 +664,7 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(validate_order(request), 'relevance')
         request.GET.update({'order': 'regulation'})
         self.assertEqual(validate_order(request), 'regulation')
-        
+
     def test_reg_page_next_version(self):
         response = self.client.get('/reg-landing/1002/2011-01-01/4/')
         self.assertEqual(
