@@ -107,32 +107,44 @@ def create_answer_id(request, page):
 
     Also create a sister-language page to keep languages in sync.
     """
+    def create_sister_page(new_page, answer_base):
+        sister_map = {
+            'es': {
+                'language': 'en',
+                'parent': Page.objects.get(slug='ask-cfpb').specific,
+                'title_prefix': 'English draft of',
+            },
+            'en': {
+                'language': 'es',
+                'parent': Page.objects.get(slug='obtener-respuestas').specific,
+                'title_prefix': 'Spanish draft of',
+            }
+        }
+        sister_values = sister_map[new_page.language]
+        sister_page = AnswerPage(
+            live=False,
+            language=sister_values['language'],
+            title="{} {}-{}-{}".format(
+                sister_values['title_prefix'],
+                new_page.title,
+                sister_values['language'],
+                answer_base.pk),
+            answer_base=answer_base,
+        )
+        sister_values['parent'].add_child(instance=sister_page)
+        return sister_page
+
     if isinstance(page, AnswerPage) and page.answer_base is None:
         new_answer_base = Answer(
             last_user=request.user,
             question=page.title)
         new_answer_base.save()
         new_id = new_answer_base.pk
-        if page.get_parent().slug == 'obtener-respuestas':
-            page.language = 'es'
-            sister_page = AnswerPage(
-                live=False,
-                language='en',
-                title="English draft of {}-en-{}".format(page.title, new_id),
-                answer_base=new_answer_base)
-            Page.objects.get(slug='ask-cfpb').specific.add_child(
-                instance=sister_page)
-        else:
-            sister_page = AnswerPage(
-                live=False,
-                language='es',
-                title="Spanish draft of {}-es-{}".format(page.title, new_id),
-                answer_base=new_answer_base)
-            Page.objects.get(slug='obtener-respuestas').specific.add_child(
-                instance=sister_page)
+        page.answer_base = new_answer_base
+        page.language = page.get_parent().language
+        sister_page = create_sister_page(page, new_answer_base)
         sister_page.save()
         sister_page.save_revision(user=request.user)
-        page.answer_base = new_answer_base
         page.title = "{}-{}-{}".format(
             page.title, page.language, new_id)
         page.slug = "{}-{}-{}".format(

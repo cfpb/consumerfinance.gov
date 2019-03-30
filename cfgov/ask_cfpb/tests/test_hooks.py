@@ -23,13 +23,15 @@ class TestAskHooks(TestCase):
         self.site_root = Page.objects.get(slug='root')
         self.spanish_landing_page = AnswerLandingPage(
             title="Obtener respuestas",
-            slug='obtener-respuestas')
+            slug='obtener-respuestas',
+            language='es')
         self.site_root.add_child(instance=self.spanish_landing_page)
         self.spanish_landing_page.save()
         self.spanish_landing_page.save_revision(user=self.user).publish()
         self.english_landing_page = AnswerLandingPage(
             title="Ask CFPB",
-            slug='ask-cfpb')
+            slug='ask-cfpb',
+            language='en')
         self.site_root.add_child(instance=self.english_landing_page)
         self.english_landing_page.save()
         self.english_landing_page.save_revision(user=self.user).publish()
@@ -61,11 +63,11 @@ class TestAskHooks(TestCase):
         request = HttpRequest
         request.user = self.user
         test_page = AnswerPage(
-            slug='spanish-page', title='Spanish page')
+            slug='spanish-page-1', title='Spanish page 1', language='es')
         self.spanish_landing_page.add_child(instance=test_page)
         test_page.save()
         create_answer_id(request, test_page)
-        self.assertEqual(test_page.slug, 'spanish-page-es-{}'.format(
+        self.assertEqual(test_page.slug, 'spanish-page-1-es-{}'.format(
             Answer.objects.order_by('pk').last().pk))
         self.assertIsNotNone(test_page.answer_base)
         self.assertIsNotNone(test_page.answer_base.english_page)
