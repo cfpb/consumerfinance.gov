@@ -562,7 +562,16 @@ class AnswerPageTestCase(TestCase):
         answer.save()
         self.assertEqual(
             answer.__str__(),
-            "{} {}".format(answer.id, answer.slug))
+            answer.question)
+
+    def test_answer_str_no_english_question(self):
+        answer = self.prepare_answer(
+            question='',
+            question_es="Let's test with no English")
+        answer.save()
+        self.assertEqual(
+            answer.__str__(),
+            answer.question_es)
 
     def test_category_str(self):
         category = self.category
