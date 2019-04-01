@@ -20,7 +20,7 @@
                             {{ "{:,.0f}".format(csv.number_of_records | int) }}
                           </div>
                         </td>
-                        <td data-label="Download"><a href="https://files.consumerfinance.gov/hmda-historic-loan-data/{{ csv.file_name }}" aria-label="{{ csv.file_size }} CSV containing HMDA loan application records for {{ geo }} in {{ year }}">CSV</a> ({{ csv.file_size }})</td>
+                        <td data-label="Download"><a href="https://files.consumerfinance.gov/hmda-historic-loan-data/{{ csv.file_name }}" aria-label="{{ csv.file_size }} CSV containing HMDA loan application records for {{ year }}">CSV</a> ({{ csv.file_size }})</td>
                     </tr>
                     {% endfor %}
                 </tbody>
