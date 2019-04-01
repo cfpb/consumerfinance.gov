@@ -304,7 +304,7 @@ class Answer(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return "{} {}".format(self.id, self.slug)
+        return self.question or self.question_es
 
     @property
     def english_page(self):
