@@ -13,12 +13,12 @@ from django.test import (
     RequestFactory, TestCase as DjangoTestCase, override_settings
 )
 
-from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
 from wagtail.wagtailcore.models import Site
 
 import mock
 from model_mommy import mommy
 
+from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, SectionParagraph, Subpart,
     effective_version_saved, section_saved, sortable_label
@@ -28,17 +28,6 @@ from regulations3k.models.pages import (
     get_next_section, get_previous_section, get_secondary_nav_items,
     get_section_url, validate_num_results, validate_page_number
 )
-
-
-CACHE_PURGED_URLS = []
-
-
-class MockCacheBackend(BaseBackend):
-    def __init__(self, config):
-        pass
-
-    def purge(self, url):
-        CACHE_PURGED_URLS.append(url)
 
 
 class RegModelTests(DjangoTestCase):
@@ -612,7 +601,7 @@ class RegModelTests(DjangoTestCase):
 
     @override_settings(WAGTAILFRONTENDCACHE={
         'varnish': {
-            'BACKEND': 'regulations3k.tests.test_models.MockCacheBackend',
+            'BACKEND': 'core.testutils.mock_cache_backend.MockCacheBackend',
         },
     })
     def test_effective_version_saved(self):
@@ -633,7 +622,7 @@ class RegModelTests(DjangoTestCase):
 
     @override_settings(WAGTAILFRONTENDCACHE={
         'varnish': {
-            'BACKEND': 'regulations3k.tests.test_models.MockCacheBackend',
+            'BACKEND': 'core.testsutils.mock_cache_backend.MockCacheBackend',
         },
     })
     def test_section_saved(self):
