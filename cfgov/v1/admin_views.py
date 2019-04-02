@@ -10,7 +10,7 @@ from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
 from requests.exceptions import HTTPError
 
 from v1.admin_forms import CacheInvalidationForm
-from v1.models.akamai_backend import AkamaiBackend, AkamaiHistory
+from v1.models.caching import AkamaiBackend, AkamaiHistory
 
 
 logger = logging.getLogger(__name__)

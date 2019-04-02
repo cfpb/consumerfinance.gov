@@ -1,11 +1,19 @@
 import json
 import logging
 import os
+from six.moves.urllib.parse import urljoin
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
+from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
+
+from wagtail.wagtaildocs.models import Document
+from v1.models.images import CFGOVRendition
 
 import requests
 from akamai.edgegrid import EdgeGridAuth
@@ -83,3 +91,20 @@ class AkamaiBackend(BaseBackend):
             )
         )
         resp.raise_for_status()
+
+
+@receiver(post_save, sender=Document)
+@receiver(post_save, sender=CFGOVRendition)
+def cloudfront_cache_invalidation(sender, instance, **kwargs):
+    media_base = settings.MEDIA_URL
+    if hasattr(settings, 'AWS_S3_CUSTOM_DOMAIN'):
+        media_base = settings.AWS_S3_CUSTOM_DOMAIN
+
+    url = urljoin(media_base, instance.url)
+
+    print("Invalidating cache for " + url)
+    logger.info("Invalidating cache for " + url)
+
+    batch = PurgeBatch()
+    batch.add_url(url)
+    batch.purge(backends='cloudfront')

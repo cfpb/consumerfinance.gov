@@ -34,7 +34,7 @@ def create_admin_access_permissions():
 
 @override_settings(WAGTAILFRONTENDCACHE={
     'akamai': {
-        'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
+        'BACKEND': 'v1.models.caching.AkamaiBackend',
         'CLIENT_TOKEN': 'fake',
         'CLIENT_SECRET': 'fake',
         'ACCESS_TOKEN': 'fake'
@@ -48,7 +48,6 @@ def create_admin_access_permissions():
 })
 class TestCDNManagementView(TestCase):
     def setUp(self):
-
         create_admin_access_permissions()
 
         self.no_permission = User.objects.create_user(username='noperm',
@@ -95,7 +94,7 @@ class TestCDNManagementView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Enter a full URL")
 
-    @mock.patch('v1.models.akamai_backend.AkamaiBackend.purge')
+    @mock.patch('v1.models.caching.AkamaiBackend.purge')
     def test_submission_with_url_akamai(self, mock_purge):
         self.client.login(username='cdn', password='password')
         self.client.post(
@@ -113,7 +112,7 @@ class TestCDNManagementView(TestCase):
         )
         mock_purge_batch.assert_called_with(['http://files.fake.gov'])
 
-    @mock.patch('v1.models.akamai_backend.AkamaiBackend.purge_all')
+    @mock.patch('v1.models.caching.AkamaiBackend.purge_all')
     def test_submission_without_url(self, mock_purge_all):
         self.client.login(username='cdn', password='password')
         self.client.post(reverse('manage-cdn'))

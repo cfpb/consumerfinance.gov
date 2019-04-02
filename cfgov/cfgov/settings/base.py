@@ -485,7 +485,7 @@ WAGTAILFRONTENDCACHE = {}
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)
 if ENABLE_AKAMAI_CACHE_PURGE:
     WAGTAILFRONTENDCACHE['akamai'] = {
-        'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
+        'BACKEND': 'v1.models.caching.AkamaiBackend',
         'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
         'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
         'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN')

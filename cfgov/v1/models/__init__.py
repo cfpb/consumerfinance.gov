@@ -1,7 +1,7 @@
 # flake8: noqa F401
 from django.conf import settings
 
-from v1.models.akamai_backend import AkamaiHistory
+from v1.models.caching import AkamaiHistory
 from v1.models.base import (
     BaseCFGOVPageManager, CFGOVAuthoredPages, CFGOVPage, CFGOVPageCategory,
     CFGOVPageManager, CFGOVTaggedPages, FailedLoginAttempt, Feedback,
