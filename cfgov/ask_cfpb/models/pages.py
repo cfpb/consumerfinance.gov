@@ -282,7 +282,7 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
         context = super(
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
         answers = self.ask_category.answerpage_set.filter(
-            language=self.language, redirect_to=None, live=True).values(
+            language=self.language, redirect_to_page=None, live=True).values(
                 'answer_id', 'question', 'slug', 'answer')
         if self.language == 'es':
             for a in answers:
@@ -338,7 +338,7 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
             raise Http404
         context = self.get_context(request)
         answers = self.ask_subcategory.answerpage_set.filter(
-            language=self.language)
+            language=self.language, live=True, redirect_to_page=None)
         paginator = Paginator(answers, 20)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)
