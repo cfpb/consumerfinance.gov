@@ -384,9 +384,6 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(mock_filter.call_count, 1)
         self.assertEqual(page.language, 'es')
         self.assertEqual(page.answers, [])
-        self.assertEqual(
-            page.get_template(HttpRequest()),
-            'ask-cfpb/answer-search-spanish-results.html')
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_json_response(self, mock_filter):

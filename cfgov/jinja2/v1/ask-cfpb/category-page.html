@@ -4,6 +4,7 @@
 {% import 'atoms/partially-styled-link.html' as partially_styled_link with context %}
 {% import 'molecules/pagination.html' as pagination with context %}
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
+{% set language = page.language if page and page.language else 'en' %}
 
 {% block content_modifiers -%}
     {{ super() }} content__hide-horizontal-overflow ask-cfpb-page ask-cfpb-page__category
@@ -30,14 +31,15 @@
                     block__sub">
         <h1>
             {{ category_icon.render(page.ask_category.name, true) }}
-            {{ page.ask_category.name }}
+            {{ page.ask_category.name_es if language == 'es' else page.ask_category.name }}
         </h1>
-
+        {% if language != 'es' %}
         <div class="lead-paragraph">
             <p>{{ page.ask_category.intro|safe }}</p>
         </div>
+        {% endif %}
     </section>
-    {% if choices|length > 0 %}
+    {% if choices|length > 0 and language != 'es' %}
     <section class="ask-categories
                     block
                     block__bg
@@ -70,19 +72,31 @@
     <section class="search-results block block__flush-top">
         <div class="search-results_notification u-mt30">
             {% from 'molecules/notification.html' import render as notification with context %}
-            {{ notification('success', false, results_count ~ ' results') }}
+            {{ notification('success', false, results_count ~ ' respuestas' if language == 'es' else results_count ~ ' results') }}
         </div>
 
         <div class="question_list">
             {% for question in questions %}
             <article class="question_summary question_summary__basic">
-                {{ partially_styled_link.render( {'plain_text': question.question, 'underlined_text': 'Read answer', 'url': '/ask-cfpb/' + question.slug + '/'} ) }}
+                {% if language == 'es' %}
+                    {{ partially_styled_link.render( {'plain_text': question.question, 'underlined_text': 'Leer respuesta', 'url': '/es/obtener-respuestas/' + question.slug + '/' } ) }}
+                {% else %}
+                    {{ partially_styled_link.render( {'plain_text': question.question, 'underlined_text': 'Read answer', 'url': '/ask-cfpb/' + question.slug + '/'} ) }}
+                {% endif %}
             </article>
             {% endfor %}
         </div>
 
         <div class="block block__sub">
-            {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
+            {{ pagination.render( 
+                paginator.num_pages,
+                current_page,
+                '',
+                0,
+                'Anterior' if language == 'es' else 'Previous',
+                'Siguiente' if language == 'es' else 'Next'
+            ) }}
+            
         </div>
 
         {% if disclaimer %}

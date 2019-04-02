@@ -11,8 +11,12 @@
 
    ========================================================================== #}
 
-{% macro render( is_large ) %}
+{% macro render( is_large, language='en' ) %}
 <div class="a-tagline{{ ' a-tagline__large' if is_large else '' }}">
-    An official website of the United States government
+	{% if language == 'es' %}
+		Un sitio web oficial del gobierno federal de los Estados Unidos
+	{% else %}
+    	An official website of the United States government
+	{% endif %}
 </div>
 {% endmacro %}

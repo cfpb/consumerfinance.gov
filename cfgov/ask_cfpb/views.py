@@ -49,33 +49,6 @@ def annotate_links(answer_text):
     return (unicode(soup), footnotes)
 
 
-def print_answer(request, slug, language, answer_id):
-    answer = get_object_or_404(Answer, id=answer_id)
-    field_map = {
-        'es': {'slug': answer.slug_es,
-               'title': answer.question_es,
-               'answer_text': answer.answer_es},
-        'en': {'slug': answer.slug,
-               'title': answer.question,
-               'answer_text': answer.answer},
-    }
-    _map = field_map[language]
-    if not _map['answer_text']:
-        raise Http404
-    (text, footnotes) = annotate_links(_map['answer_text'])
-
-    print_context = {
-        'answer': text,
-        'title': _map['title'],
-        'slug': _map['slug'],
-        'footnotes': footnotes
-    }
-    return render(
-        request,
-        'ask-cfpb/answer-page-spanish-printable.html',
-        context=print_context)
-
-
 def view_answer(request, slug, language, answer_id):
     answer_page = get_object_or_404(
         AnswerPage, language=language, answer_base__id=answer_id)

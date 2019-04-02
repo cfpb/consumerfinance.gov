@@ -46,7 +46,7 @@
 
    ========================================================================== #}
 
-{% macro _nav_list( nav_depth, nav_groups ) %}
+{% macro _nav_list( nav_depth, nav_groups, language ) %}
 <div class="{{ _classes( nav_depth, '-lists' ) }}">
     {% for nav_group in nav_groups %}
     {% set group = nav_group.value %}
@@ -64,7 +64,7 @@
             {% if nav_depth == 1 -%}
             <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
                 {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-                {{ global_header_cta.render() }}
+                {{ global_header_cta.render( language=language ) }}
             </li>
             {%- endif %}
             {%- for item in group.nav_items %}
@@ -100,7 +100,7 @@
 
    ========================================================================== #}
 
-{% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text ) %}
+{% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text, language='en' ) %}
 <section class="{{- _classes( nav_depth ) -}} u-hidden-overflow"
      aria-expanded="false"
      data-js-hook="behavior_flyout-menu_content">
@@ -146,7 +146,7 @@
                 {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}
             {% endif %}
             {% if nav_item.nav_groups %}
-                {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
+                {{ _nav_list( nav_depth, nav_item.nav_groups, language ) }}
             {% endif %}
             {% if nav_item.footer %}
             <div class="{{ base_class ~ '_footer' }}">
@@ -161,7 +161,7 @@
 
     {% if nav_depth == 1 %}
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
-    {{ global_eyebrow.render() }}
+    {{ global_eyebrow.render( language=language ) }}
     {% endif %}
 </section>
 {% endmacro %}
@@ -224,7 +224,7 @@
    Creates a mega menu primary navigation menu.
 
    ========================================================================== #}
-{% macro mega_menu( menu_items ) %}
+{% macro mega_menu( menu_items, language='en' ) %}
 <nav class="{{ base_class }}
             u-hide-on-mobile"
     data-js-hook="behavior_flyout-menu"
@@ -246,7 +246,7 @@
     </h2>
    {# Create a root menu at depth one.
       This is the 1st level of a 3-level menu. #}
-   {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]} ) }}
+   {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]}, language=language ) }}
 </nav>
 
 {% endmacro %}

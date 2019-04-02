@@ -11,7 +11,7 @@
 
    ========================================================================== #}
 
-{% macro render( language='en' ) %}
+{% macro render() %}
 {% import 'molecules/social-media.html' as social_media with context %}
 {% import 'atoms/tagline.html' as tagline with context %}
 {% set external_redirect_url = '/external-site/?ext_url=' %}
@@ -26,55 +26,25 @@
                 data-gtm_ignore="true"
                 data-js-hook="behavior_return-to-top"
                 href="#">
-                {{ 'Volver al inicio de la página' if language == 'es' else 'Back to top'}} {{ svg_icon('arrow-up') }}
+                Volver al inicio de la página {{ svg_icon('arrow-up') }}
             </a>
 
             <ul class="o-footer_nav-list m-list">
-                {% if language == 'es' %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/">Inicio</a>
-                    </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/obtener-respuestas/">Obtener respuestas</a>
-                    </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/presentar-una-queja/">Presentar una queja</a>
-                    </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/quienes-somos/">Quiénes somos</a>
-                    </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/es/comprar-casa/">Comprar casa</a>
-                    </li>
-                {% else %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/about-us/contact-us/">
-                            Contact Us
-                        </a>
-                    </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/about-us/newsroom/">
-                            Newsroom
-                        </a>
-                    </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/about-us/careers/">
-                            Careers
-                        </a>
-                    </li>
-                    {% if flag_enabled('WHISTLEBLOWER_RELEASE', request) %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/policy-compliance/enforcement/information-industry-whistleblowers/">
-                            Industry Whistleblowers
-                        </a>
-                    </li>
-                    {% endif %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/cfpb-ombudsman/">
-                            CFPB Ombudsman
-                        </a>
-                    </li>
-                {% endif %}
+                <li class="m-list_item">
+                    <a class="m-list_link" href="/es/">Inicio</a>
+                </li>
+                <li class="m-list_item">
+                    <a class="m-list_link" href="/es/obtener-respuestas/">Obtener respuestas</a>
+                </li>
+                <li class="m-list_item">
+                    <a class="m-list_link" href="/es/presentar-una-queja/">Presentar una queja</a>
+                </li>
+                <li class="m-list_item">
+                    <a class="m-list_link" href="/es/quienes-somos/">Quiénes somos</a>
+                </li>
+                <li class="m-list_item">
+                    <a class="m-list_link" href="/es/comprar-casa/">Comprar casa</a>
+                </li>
             </ul>
             <div class="block
                         block__flush-top
@@ -83,11 +53,9 @@
                 {{ social_media.render( { 'is_share_view': false } ) }}
             </div>
         </div>{# END .o-footer_pre #}
-
-        {% if language == 'es' %}
-        <p class="u-mb30">En este momento, la política de información sólo está disponible en inglés.</p>
-        {% endif %}
-
+        <div>
+            <p class="u-mb15">En este momento, la política de información sólo está disponible en inglés.</p>
+        </div>
         <div class="o-footer-middle-left">
 
             <div class="o-footer_col">
@@ -113,22 +81,10 @@
                             Website Privacy Policy & Legal Notices
                         </a>
                     </li>
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/open-government/">
-                            Open Government
-                        </a>
-                    </li>
                 </ul>
             </div>
             <div class="o-footer_col">
                 <ul class="o-footer_list m-list">
-                    {% if language == 'en' %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/administrative-adjudication-proceedings/">
-                            Administrative Adjudication
-                        </a>
-                    </li>
-                    {% endif %}
                     <li class="m-list_item">
                         <a class="m-list_link" href="/accessibility/">
                             Accessibility
@@ -144,19 +100,11 @@
                             No FEAR Act Data
                         </a>
                     </li>
-                    {% if language == 'es'%}
                     <li class="m-list_item">
-                        <a class="m-list_link" href="/cfpb-ombudsman/">
-                            CFPB Ombudsman
-                        </a>
-                     </li>
-                    {% else %}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/tribal/">
-                            Tribal
+                        <a class="m-list_link" href="/open-government/">
+                            Open Government
                         </a>
                     </li>
-                    {% endif %}
                 </ul>
             </div>
         </div>{# END .o-footer-middle-left #}
@@ -164,7 +112,6 @@
         <div class="o-footer-middle-right">
                 <ul class="o-footer_list">
                     <li class="m-list_item">
-                        {% if language == 'es' %}
                         <a class="m-list_link
                                   icon-link
                                   icon-link__external-link"
@@ -172,14 +119,6 @@
                            hreflang="es">
                             <span class="icon-link_text">GobiernoUSA.gov</span>
                         </a>
-                        {% else %}
-                        <a class="m-list_link
-                                  icon-link
-                                  icon-link__external-link"
-                           href="https://usa.gov/">
-                            <span class="icon-link_text">USA.gov</span>
-                        </a>
-                        {% endif %}
                     </li>
                     <li class="m-list_item">
                         <a class="m-list_link
@@ -189,11 +128,17 @@
                             <span class="icon-link_text">Office of Inspector General</span>
                         </a>
                     </li>
+
+                    <li class="m-list_item">
+                    <a class="m-list_link" href="/cfpb-ombudsman/">
+                        CFPB Ombudsman
+                    </a>
+                     </li>
                 </ul>
         </div>{# END .o-footer-middle-right #}
 
         <div class="o-footer-post">
-            {{ tagline.render( is_large=true, language=language ) }}
+            {{ tagline.render( is_large=true, language='es' ) }}
         </div>{# END .o-footer-post #}
 
     </div>{# END .wrapper.wrapper__match-content #}

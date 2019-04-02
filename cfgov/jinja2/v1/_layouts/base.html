@@ -3,6 +3,8 @@
 #}
 {% extends 'base-common.html' %}
 
+{% set language = 'es' if page and page.language == 'es' and 'obtener-respuestas' in request.path else 'en' %}
+
 {% block preload %}
 <link rel="preload" href="{{ static('css/main.css') }}" as="style">
 <link rel="preload"
@@ -40,7 +42,7 @@
 
 {% block header %}
     {% import 'organisms/header.html' as o_header with context %}
-    {{ o_header.render( show_banner=true ) }}
+    {{ o_header.render( show_banner=true, language=language ) }}
 {% endblock header %}
 
 {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
@@ -60,10 +62,10 @@
 {% endblock %}
 
 {% block footer %}
+    
     {% import 'organisms/footer.html' as o_footer with context %}
-    {{ o_footer.render() }}
+    {{ o_footer.render( language=language ) }}
 {% endblock footer %}
-
 {% endblock body %}
 
 {#

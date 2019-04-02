@@ -10,17 +10,25 @@
 
    ========================================================================== #}
 
+
+
+{% macro render( language='en' ) %}
+
+{% set search_text = 'Buscar' if language == 'es' else 'Search' %}
+{% set close_text = 'Cerrar' if language == 'es' else 'Close' %}
+{% set search_placeholder = 'Buscar la CFPB' if language == 'es' else 'Search the CFPB' %}
+
 <div class="m-global-search"
      data-js-hook="behavior_flyout-menu">
     <button class="m-global-search_trigger"
             data-js-hook="behavior_flyout-menu_trigger">
         <span class="m-global-search_trigger-open-label">
             {{ svg_icon('search') }}
-            <span class="u-hide-on-mobile">Search</span>
+            <span class="u-hide-on-mobile">{{ search_text }}</span>
         </span>
         <span class="m-global-search_trigger-close-label">
             {{ svg_icon('delete') }}
-            <span class="u-hide-on-mobile">Close</span>
+            <span class="u-hide-on-mobile">{{ close_text }}</span>
         </span>
     </button>
     <div class="m-global-search_content
@@ -51,26 +59,26 @@
                               class="input-contains-label_before
                                      input-contains-label_before__search">
                             {{ svg_icon('search') }}
-                            <span class="u-visually-hidden">Search</span>
+                            <span class="u-visually-hidden">{{ search_text }}</span>
                        </label>
                        <input id="m-global-search_query"
                               name="query"
                               type="text"
-                              title="Search the CFPB"
+                              title="{{ search_placeholder }}"
                               class="a-text-input"
                               value=""
-                              placeholder="Search the CFPB">
+                              placeholder="{{ search_placeholder }}">
                        <label for="m-global-search_query"
                               class="input-contains-label_after
                                      input-contains-label_after__clear
                                      u-hidden">
                             {{ svg_icon('delete') }}
-                            <span class="u-visually-hidden">Close</span>
+                            <span class="u-visually-hidden">{{ close_text }}</span>
                        </label>
                    </div>
                </div>
                <div class="o-form__input-w-btn_btn-container">
-                   <button class="a-btn">Search</button>
+                   <button class="a-btn">{{ search_text }}</button>
                </div>
             </div>
 
@@ -102,3 +110,4 @@
         </form>
     </div>
 </div>
+{% endmacro %}

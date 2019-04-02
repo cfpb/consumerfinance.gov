@@ -1,19 +1,22 @@
 {% import 'organisms/search-bar.html' as search_bar with context %}
 
-{% set default_label = 'Don\'t see what you\'re looking for? <span class="break">Search for your question.</span>' %}
+{% set language = page.language if page and page.language else 'en' %}
+{% set default_label = '¿No ve lo que está buscando? <span class="break">Busca su pregunta.</span>' if language == 'es' else 'Don\'t see what you\'re looking for? <span class="break">Search for your question.</span>' %}
 {% set default_classes = 'block__bg-branded block__flush-top block__flush-bottom' %}
-{% set default_position = 'full' %}
 
-{% macro render( position=default_position, label=default_label, additional_classes=default_classes, q='' ) %}
-
+{% macro render( position='full', label=default_label, additional_classes=default_classes, q='' ) %}
 {% set search_opts = {
     'label': label,
     'position': position,
-    'action': '/ask-cfpb/search',
+    'action': '/es/obtener-respuestas/buscar' if language == 'es' else '/ask-cfpb/search',
     'additional_classes': additional_classes,
     'autocomplete': 'true',
     'q': q,
+    'language': language,
+    'button_text': 'Buscar' if language == 'es' else 'Search'
   } %}
+
+
 {{ search_bar.render( search_opts ) }}
 
 {% endmacro %}

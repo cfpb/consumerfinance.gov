@@ -12,23 +12,30 @@
                   defaults to false.
 
    ========================================================================== #}
-{% macro render( is_horizontal=false ) %}
+{% macro render( is_horizontal=false, language='en' ) %}
 {% import 'atoms/tagline.html' as tagline with context %}
     <div class="m-global-eyebrow
                 m-global-eyebrow__{{ 'horizontal' if is_horizontal
                                       else 'list' }}">
         <div class="wrapper
                     {{ 'wrapper__match-content' if is_horizontal else '' }}">
-            {{ tagline.render() }}
+            {{ tagline.render(language=language) }}
             <div class="m-global-eyebrow_actions">
                 <ul class="m-list
                            m-list__horizontal
                            m-global-eyebrow_languages">
                     <li class="m-list_item">
+                        {% if language == 'es' %}
+                        <a href="/" hreflang="en" lang="en">
+                            English
+                        </a>
+                        {% else %}
                         <a href="/es/" hreflang="es" lang="es">
                             Español
                         </a>
+                        {% endif %}
                     </li>
+                    {% if language != 'es' %}
                     <li class="m-list_item">
                         <a href="/language/zh/" hreflang="zh" lang="zh">
                             中文
@@ -64,6 +71,7 @@
                             Kreyòl Ayisyen
                         </a>
                     </li>
+                    {% endif %}
                 </ul>
                 <span class="m-global-eyebrow_phone">
                     <a href="tel:+1-855-411-2372">(855) 411-2372</a>
