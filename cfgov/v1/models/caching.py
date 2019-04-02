@@ -102,7 +102,6 @@ def cloudfront_cache_invalidation(sender, instance, **kwargs):
 
     url = urljoin(media_base, instance.url)
 
-    print("Invalidating cache for " + url)
     logger.info("Invalidating cache for " + url)
 
     batch = PurgeBatch()
