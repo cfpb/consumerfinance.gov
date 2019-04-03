@@ -1992,9 +1992,9 @@ cf-typography@5.0.1:
     cf-core "^4.0.0"
     cf-icons "^4.0.0"
 
-cfpb-chart-builder@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-6.0.0.tgz#0bbd31e872fc043792fcf8ce536f8a5820085e96"
+cfpb-chart-builder@6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-6.0.1.tgz#837b2786fd965abf23682ee5b404709f96d228eb"
   dependencies:
     cf-core "4.10.0"
     cf-layout "5.0.0"
