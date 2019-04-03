@@ -17,8 +17,9 @@ class TestHmdaHistoricDataPage(TestCase):
         test_context = page.get_context(self.factory.get('/'))
 
         self.assertEqual(test_context['title'], 'Showing nationwide records')
-        self.assertEqual(test_context['subtitle'],
-            'Originated mortgages for first lien, owner-occupied, 1-4 family homes')  # noqa E501
+        self.assertEqual(
+            test_context['subtitle'],
+            'Mortgages for first lien, owner-occupied, 1-4 family homes')
         years = [item[0] for item in test_context['files']]
         self.assertEqual(years, self.expected_years)
 
