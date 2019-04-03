@@ -2,6 +2,8 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 
 
+# Remove this file and the associated URLs and templates
+# after the HMDA API is retired (hopefully summer 2019)
 class LegacyHmdaPagesTest(TestCase):
 
     @override_settings(FLAGS={
