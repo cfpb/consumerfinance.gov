@@ -421,7 +421,10 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     def tag_search(self, request, **kwargs):
         tag = kwargs.get('tag').replace('_', ' ')
         self.answers = AnswerPage.objects.filter(
-            search_tags__contains=tag, language='es', live=True)
+            language=self.language,
+            search_tags__contains=tag,
+            redirect_to_page=None,
+            live=True)
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)
