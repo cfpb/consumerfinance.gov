@@ -11,12 +11,12 @@ from django.dispatch import receiver
 
 from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
 from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
-
 from wagtail.wagtaildocs.models import Document
-from v1.models.images import CFGOVRendition
 
 import requests
 from akamai.edgegrid import EdgeGridAuth
+
+from v1.models.images import CFGOVRendition
 
 
 logger = logging.getLogger(__name__)

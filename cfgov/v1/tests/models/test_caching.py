@@ -5,9 +5,7 @@ from wagtail.wagtaildocs.models import Document
 from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
-from v1.models.caching import (
-    AkamaiBackend, cloudfront_cache_invalidation
-)
+from v1.models.caching import AkamaiBackend, cloudfront_cache_invalidation
 from v1.models.images import CFGOVImage
 
 

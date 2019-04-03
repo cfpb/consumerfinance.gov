@@ -43,14 +43,14 @@ def purge(url=None):
             logger.info('Purging {} from akamai'.format(url))
             batch.purge(backends='akamai')
 
-        return "invalidated %s" % url
+        return "Submitted invalidation for %s" % url
 
     else:
         # purge_all only exists on our AkamaiBackend
         backend = AkamaiBackend(akamai_config)
         logger.info('Purging entire site from akamai')
         backend.purge_all()
-        return "invalidated entire site"
+        return "Submitted invalidation for the entire site."
 
 
 def manage_cdn(request):
