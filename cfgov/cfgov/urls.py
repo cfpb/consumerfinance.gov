@@ -447,13 +447,6 @@ if settings.ALLOW_ADMIN_URL:
                                  permanent=True,
                                  query_string=True)),
 
-        url(r'^d/admin/(?P<path>.*)$',
-            RedirectView.as_view(url='/django-admin/%(path)s',
-                                 permanent=True)),
-
-        url(r'^tasks/(?P<path>.*)$',
-            RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
-
         url(r'^django-admin/password_change',
             change_password,
             name='django_admin_account_change_password'),
