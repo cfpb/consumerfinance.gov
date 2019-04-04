@@ -1,13 +1,9 @@
 from __future__ import absolute_import, unicode_literals
 
-import re
-from six.moves.urllib.parse import urlparse
-
 from django import forms
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
-from django.template.defaultfilters import slugify
 from django.template.response import TemplateResponse
 from django.utils.text import Truncator
 
@@ -29,6 +25,8 @@ from v1.models import (
     CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic
 )
 from v1.models.snippets import RelatedResource, ReusableText
+from v1.jinja2_environment import environment
+
 
 REUSABLE_TEXT_TITLES = {
     'about_us': {
@@ -79,12 +77,14 @@ def get_ask_nav_items(request, current_page):
 
 def get_ask_breadcrumbs(language='en', category=None):
     if language == 'es':
-        breadcrumbs = [{'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/'}]
+        breadcrumbs = [{
+            'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/'}]
     else:
         breadcrumbs = [{'title': 'Ask CFPB', 'href': '/ask-cfpb/'}]
     if category:
         if language == 'es':
-            href = '/es/obtener-respuestas/categoria-{}'.format(category.slug_es)
+            href = '/es/obtener-respuestas/categoria-{}'.format(
+                category.slug_es)
         else:
             href = '/ask-cfpb/category-{}'.format(category.slug)
         breadcrumbs.append({
@@ -194,7 +194,8 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
             'get_secondary_nav_items': get_ask_nav_items,
             'breadcrumb_items': get_ask_breadcrumbs(self.language),
             'about_us': get_standard_text(self.language, 'about_us'),
-            'disclaimer': get_standard_text(self.language, 'disclaimer')
+            'disclaimer': get_standard_text(self.language, 'disclaimer'),
+            'gettext': environment.func_globals.get('ugettext'),
         })
         return context
 
@@ -300,13 +301,14 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     @route(r'^(?P<tag>[^/]+)/$')
     def tag_search(self, request, **kwargs):
         tag = kwargs.get('tag').replace('_', ' ')
-        self.answers = [(p.url, p.question, p.short_answer if p.short_answer else p.answer)
-                for p in AnswerPage.objects.filter(
-                    search_tags__contains=tag,
-                    language=self.language,
-                    live=True,
-                    redirect_to=None)
-                ]
+        self.answers = [
+            (p.url, p.question, p.short_answer if p.short_answer else p.answer)
+            for p in AnswerPage.objects.filter(
+                search_tags__contains=tag,
+                language=self.language,
+                live=True,
+                redirect_to=None)
+        ]
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)

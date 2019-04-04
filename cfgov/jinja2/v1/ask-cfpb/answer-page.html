@@ -5,8 +5,6 @@
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% set language = page.language if page and page.language else 'en' %}
-
 {% block title %}
     {{ page.question | striptags }}
 {% endblock %}
@@ -43,7 +41,7 @@
                 block__flush-top
                 block__sub">
         {% if last_edited %}
-        <time datetime='{{ last_edited }}' class="answer-edited-date">{% if language == 'es'%}actualizado {% else %}updated{% endif %} {{ dt.format_date(last_edited) }}</time>
+        <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
         {% endif %}
 
     {% if flag_enabled('ASK_CFPB_H1', page=page) %}
@@ -82,19 +80,11 @@
                     title="Expand content">
                 <span class="o-expandable_link">
                     <span class="o-expandable_cue o-expandable_cue-open">
-                        {% if language == 'es' %}
-                        Leer la respuesta completa 
-                        {% else %} 
-                        Read full answer    
-                        {% endif %} 
+                        {{ _('Read full answer') }}
                         {{ svg_icon('plus-round') }}
                    </span>
                     <span class="o-expandable_cue o-expandable_cue-close">
-                        {% if language == 'es' %}
-                        Esconder la respuesta completa
-                        {% else %} 
-                        Hide full answer    
-                        {% endif %}                     
+                        {{ _('Hide full answer') }}
                         {{ svg_icon('minus-round') }}
                    </span>
                 </span>
@@ -113,14 +103,10 @@
 
 {% block content_sidebar scoped  %}
 
-    {% if page.related_resource and language != 'es' %}
+    {% if page.related_resource and page.language != 'es' %}
         <div class="block block__flush-top">
             <h3 >
-                {% if language == 'es' %}
-                Explora recursos relacionados
-                {% else %}
-                Explore related resources
-                {% endif %}
+                {{ _('Explore related resources') }}
             </h3>
             {{ page.related_resource.text | safe }}
         </div>
@@ -156,15 +142,11 @@
     {% endif %}
     
     {% if related_questions %}
-        <div class="block {% if language == 'es' %}block__flush-top{% endif %}">
+        <div class="block{% if page.language == 'es' %} block__flush-top{% endif %}">
             <div class="m-related-links">
                 <header class="m-slug-header">
                     <h2 class="a-heading">
-                        {% if language == 'es' %}
-                        Preguntas similares
-                        {% else %}
-                        Related questions
-                        {% endif %}
+                        {{ _('Related questions') }}
                     </h2>
                 </header>
                 <ul class="m-list m-list__unstyled m-list__links">

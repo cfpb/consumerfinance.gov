@@ -52,7 +52,7 @@
             {{ global_header_cta.render( true, language=language ) }}
 
             {% import 'molecules/global-search.html' as global_search with context %}
-            {{ global_search.render( language=language ) }}
+            {{ global_search.render() }}
 
             {% if language == 'es' %}
             <a class="o-header_logo" href="/es/">

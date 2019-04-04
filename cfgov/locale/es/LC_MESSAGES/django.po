@@ -19,20 +19,110 @@ msgstr "Buscar la CFPB"
 msgid "Submit a Complaint"
 msgstr "Presentar una queja"
 
-msgid "Suggested search terms:"
-msgstr ""
-
-msgid "Regulations"
-msgstr ""
-
-msgid "Compliance guides"
-msgstr ""
-
 msgid "Mortgage"
-msgstr ""
+msgstr "Hipoteca"
 
-msgid "College loans"
-msgstr ""
+#: v1/ask-cfpb/category-page.html
+msgid "results"
+msgstr "respuestas"
+
+msgid " results"
+msgstr " respuestas"
+
+msgid "Read answer"
+msgstr "Leer la respuesta"
+
+msgid "/ask-cfpb/"
+msgstr "/es/obtener-respuestas/"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "No results found for"
+msgstr "No se han encontrado resultados para"
+
+msgid "Please enter a search term in the box above."
+msgstr "Por favor, introduzca un término en el cuadro de búsqueda anterior."
+
+#: cfgov/jinja2/v1/ask-cfpb/answer-page.html
+msgid "updated"
+msgstr "actualizado"
+
+msgid "Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature."
+msgstr "No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo."
+
+msgid "Read full answer"
+msgstr "Leer la respuesta completa"
+
+msgid "Hide full answer"
+msgstr "Esconder la respuesta completa"
+
+msgid "Explore related resources"
+msgstr "Explora recursos relacionados"
+
+msgid "Related questions"
+msgstr "Preguntas similares"
+
+#: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
+
+msgid "Ask CFPB"
+msgstr "Obtener respuestas"
+
+msgid "Showing results for "
+msgstr "Mostrando resultados para "
+
+msgid "Showing"
+msgstr "Mostrando"
+
+msgid "of"
+msgstr "de"
+
+msgid "results for"
+msgstr "resultados para"
+
+msgid "Search instead for"
+msgstr "Busca de"
+
+#: cfgov/jinja2/v1/ask-cfpb/landing-page.html
+msgid "Browse questions by category"
+msgstr "Examinar las preguntas por categoría"
+
+#: cfgov/jinja2/v1/_includes/blocks/feedback.html
+msgid "Was this answer helpful to you?"
+msgstr "¿Te resultó útil esta respuesta?"
+
+msgid "Additional comment"
+msgstr "Comentario adicional"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "optional"
+msgstr "opcional"
+
+#: v1/_includes/ask/ask-search-bar.html
+msgid "/ask-cfpb/search"
+msgstr "/es/obtener-respuestas/buscar"
+
+msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
+msgstr "¿No ve lo que está buscando? <span class=\"break\">Busca su pregunta.</span>"
+
+#: cfgov/jinja2/v1/_includes/atoms/tagline.html
+msgid "An official website of the United States government"
+msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
+
+#: cfgov/jinja2/v1/_includes/molecules/pagination.html
+msgid "Page"
+msgstr "Pagina"
+
+msgid " of "
+msgstr " de "
+
+msgid "Go"
+msgstr "Ir"
 
 #: ask_cfpb/models/pages.py:649 ask_cfpb/tests/models/test_pages.py:781
 msgid "redirected but not live"
