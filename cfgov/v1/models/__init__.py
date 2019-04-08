@@ -11,7 +11,7 @@ from v1.models.browse_filterable_page import (
     BrowseFilterablePage, EventArchivePage, NewsroomLandingPage
 )
 from v1.models.browse_page import BrowsePage
-from v1.models.caching import AkamaiHistory
+from v1.models.caching import CDNHistory
 from v1.models.home_page import HomePage
 from v1.models.images import CFGOVImage, CFGOVRendition
 from v1.models.landing_page import LandingPage

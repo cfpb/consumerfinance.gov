@@ -22,7 +22,7 @@ from v1.models.images import CFGOVRendition
 logger = logging.getLogger(__name__)
 
 
-class AkamaiHistory(models.Model):
+class CDNHistory(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=2083)
     message = models.CharField(max_length=255)

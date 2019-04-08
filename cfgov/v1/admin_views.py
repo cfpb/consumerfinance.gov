@@ -10,7 +10,7 @@ from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
 from requests.exceptions import HTTPError
 
 from v1.admin_forms import CacheInvalidationForm
-from v1.models.caching import AkamaiBackend, AkamaiHistory
+from v1.models.caching import AkamaiBackend, CDNHistory
 
 
 logger = logging.getLogger(__name__)
@@ -69,7 +69,7 @@ def manage_cdn(request):
         form = CacheInvalidationForm(request.POST)
         if form.is_valid():
             url = form.cleaned_data['url']
-            history_item = AkamaiHistory(subject=url or "entire site",
+            history_item = CDNHistory(subject=url or "entire site",
                                          user=request.user)
 
             try:
@@ -93,7 +93,7 @@ def manage_cdn(request):
                 for error in error_list:
                     messages.error(request, "Error in %s: %s" % (field, error))
 
-    history = AkamaiHistory.objects.all().order_by('-created')[:20]
+    history = CDNHistory.objects.all().order_by('-created')[:20]
     return render(request, 'cdnadmin/index.html',
                   context={'form': form,
                            'user_can_purge': user_can_purge,

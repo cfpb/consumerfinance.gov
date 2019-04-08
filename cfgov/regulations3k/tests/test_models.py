@@ -622,7 +622,7 @@ class RegModelTests(DjangoTestCase):
 
     @override_settings(WAGTAILFRONTENDCACHE={
         'varnish': {
-            'BACKEND': 'core.testsutils.mock_cache_backend.MockCacheBackend',
+            'BACKEND': 'core.testutils.mock_cache_backend.MockCacheBackend',
         },
     })
     def test_section_saved(self):
