@@ -30,7 +30,7 @@ def purge(url=None):
         batch = PurgeBatch()
         batch.add_url(url)
 
-        # If the URL matches any of our cloudfront distributions, invalidate
+        # If the URL matches any of our CloudFront distributions, invalidate
         # with that backend
         if any(k for k in cloudfront_config.get('DISTRIBUTION_ID', {})
                if k in url):
