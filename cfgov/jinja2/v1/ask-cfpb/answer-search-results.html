@@ -2,8 +2,6 @@
 
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
-{% set language = page.language if page and page.language else 'en' %}
-
 {% extends 'layout-side-nav.html' %}
 
 {% block content_modifiers -%}
@@ -41,7 +39,7 @@
                     <h3 class="results-header">{{ _('Showing') }} {{ results.start_index() }}-{{ results.end_index() }} {{ _('of') }} {{ paginator.count }} {{ _('results for') }} “{{ page.result_query }}”</h3>
                 {% endif %}
                 {% if page.suggestion %}
-                    <p>{{ _('Search instead for') }} <a href="/ask-cfpb/search?q={{ page.suggestion }}&correct=0">{{ page.suggestion }}</a></p>
+                    <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}&correct=0">{{ page.suggestion }}</a></p>
                 {% endif %}
             {% else %}
                 {% if tag %}
@@ -90,15 +88,12 @@
 
                 {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
                     {% if page.suggestion %}
-                    <p>Search instead for <a href="/ask-cfpb/search?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
+                    <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
                     {% endif %}
-                {% endif %}
+                {% else %}
                 <p class="short-desc u-mb30">
-                    {% if page.language == 'es' %}
-                        ¿No encuentra su pregunta? <a href="/es/obtener-respuestas/">Examine las preguntas por categoría</a>
-                    {% else %}
-                        Can't find your question? <a href="/ask-cfpb/">Browse questions by category</a>
-                    {% endif %}
+                    {{ _("Can't find your question?") }} <a href="{{ _('/ask-cfpb/') }}">{{ _('Browse questions by category') }}</a>
+                {% endif %}
                 </p>
             </div>
         </section>

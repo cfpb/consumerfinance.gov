@@ -6,6 +6,7 @@ from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
 from django.utils.text import Truncator
+from django.utils.translation import activate, deactivate_all
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
@@ -25,7 +26,6 @@ from v1.models import (
     CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic
 )
 from v1.models.snippets import RelatedResource, ReusableText
-from v1.jinja2_environment import environment
 
 
 REUSABLE_TEXT_TITLES = {
@@ -180,13 +180,23 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
 
     template = 'ask-cfpb/category-page.html'
 
+    def set_language(self):
+        if self.language != 'en':
+            activate(self.language)
+        else:
+            deactivate_all()
+
     def get_context(self, request, *args, **kwargs):
+        self.set_language()
         context = super(
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
         answers = self.ask_category.answerpage_set.filter(
             language=self.language, redirect_to=None, live=True).values(
                 'answer_id', 'question', 'slug', 'answer')
         subcats = self.ask_category.subcategories.all()
+        paginator = Paginator(answers, 20)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
         context.update({
             'answers': answers,
             'choices': subcats,
@@ -195,7 +205,9 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
             'breadcrumb_items': get_ask_breadcrumbs(self.language),
             'about_us': get_standard_text(self.language, 'about_us'),
             'disclaimer': get_standard_text(self.language, 'disclaimer'),
-            'gettext': environment.func_globals.get('ugettext'),
+            'paginator': paginator,
+            'current_page': page_number,
+            'questions': page,
         })
         return context
 
@@ -203,23 +215,6 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
     @property
     def meta_image(self):
         return self.ask_category.category_image
-
-    @route(r'^$')
-    def category_page(self, request):
-        context = self.get_context(request)
-        paginator = Paginator(context.get('answers'), 20)
-        page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
-        context.update({
-            'paginator': paginator,
-            'current_page': page_number,
-            'questions': page,
-        })
-
-        return TemplateResponse(
-            request,
-            self.template,
-            context)
 
     @route(r'^(?P<subcat>[^/]+)/$')
     def subcategory_page(self, request, **kwargs):
@@ -245,7 +240,6 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
                 self.ask_category
             )
         })
-
         return TemplateResponse(
             request, self.template, context)
 

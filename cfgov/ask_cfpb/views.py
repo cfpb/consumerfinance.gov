@@ -5,7 +5,7 @@ from six import text_type as unicode
 from six.moves.urllib.parse import urljoin
 
 from django.http import Http404, HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 from haystack.inputs import Clean
 from haystack.query import SearchQuerySet
@@ -17,7 +17,7 @@ from wagtailsharing.views import ServeView
 from bs4 import BeautifulSoup as bs
 from flags.state import flag_enabled
 
-from ask_cfpb.models import Answer, AnswerPage, AnswerResultsPage
+from ask_cfpb.models import AnswerPage, AnswerResultsPage
 
 
 def annotate_links(answer_text):

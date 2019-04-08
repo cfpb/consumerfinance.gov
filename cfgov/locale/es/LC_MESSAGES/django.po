@@ -67,6 +67,8 @@ msgid "Related questions"
 msgstr "Preguntas similares"
 
 #: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
+msgid "Can't find your question?"
+msgstr "¿No encuentra su pregunta?"
 
 msgid "Ask CFPB"
 msgstr "Obtener respuestas"
@@ -123,6 +125,20 @@ msgstr " de "
 
 msgid "Go"
 msgstr "Ir"
+
+#: cfgov/jinja2/v1/_includes/organisms/secondary-navigation.html
+msgid "In this section"
+msgstr "En esta sección"
+
+#: cfgov/jinja2/v1/_includes/organisms/footer.html
+msgid "Back to top"
+msgstr "Volver al inicio de la página"
+
+msgid "https://usa.gov/"
+msgstr "https://gobiernousa.gov/"
+
+msgid "USA.gov"
+msgstr "GobiernoUSA.gov"
 
 #: ask_cfpb/models/pages.py:649 ask_cfpb/tests/models/test_pages.py:781
 msgid "redirected but not live"
