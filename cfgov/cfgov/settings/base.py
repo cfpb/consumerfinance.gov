@@ -493,7 +493,7 @@ if ENABLE_AKAMAI_CACHE_PURGE:
 
 ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get('ENABLE_CLOUDFRONT_CACHE_PURGE', False)
 if ENABLE_CLOUDFRONT_CACHE_PURGE:
-    WAGTAILFRONTENDCACHE['cloudfront'] = {
+    WAGTAILFRONTENDCACHE['files'] = {
         'BACKEND': 'wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend',
         'DISTRIBUTION_ID': {
             'files.consumerfinance.gov': os.environ.get('CLOUDFRONT_DISTRIBUTION_ID_FILES')

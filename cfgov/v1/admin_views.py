@@ -23,8 +23,7 @@ def cdn_is_configured():
 
 def purge(url=None):
     akamai_config = settings.WAGTAILFRONTENDCACHE.get('akamai', {})
-    cloudfront_config = settings.WAGTAILFRONTENDCACHE.get(
-        'cloudfront', {})
+    cloudfront_config = settings.WAGTAILFRONTENDCACHE.get('files', {})
 
     if url:
         # Use the Wagtail frontendcache PurgeBatch to perform the purge
@@ -35,20 +34,20 @@ def purge(url=None):
         # with that backend
         if any(k for k in cloudfront_config.get('DISTRIBUTION_ID', {})
                if k in url):
-            logger.info('Purging {} from cloudfront'.format(url))
-            batch.purge(backends='cloudfront')
+            logger.info('Purging {} from "files" cache'.format(url))
+            batch.purge(backends=['files'])
 
         # Otherwise invalidate with our default backend
         else:
-            logger.info('Purging {} from akamai'.format(url))
-            batch.purge(backends='akamai')
+            logger.info('Purging {} from "akamai" cache'.format(url))
+            batch.purge(backends=['akamai'])
 
         return "Submitted invalidation for %s" % url
 
     else:
         # purge_all only exists on our AkamaiBackend
         backend = AkamaiBackend(akamai_config)
-        logger.info('Purging entire site from akamai')
+        logger.info('Purging entire site from "akamai" cache')
         backend.purge_all()
         return "Submitted invalidation for the entire site."
 
@@ -57,7 +56,7 @@ def manage_cdn(request):
     if not cdn_is_configured():
         return render(request, 'cdnadmin/disabled.html')
 
-    user_can_purge = request.user.has_perm('v1.add_akamaihistory')
+    user_can_purge = request.user.has_perm('v1.add_cdnhistory')
 
     if request.method == 'GET':
         form = CacheInvalidationForm()
@@ -70,7 +69,7 @@ def manage_cdn(request):
         if form.is_valid():
             url = form.cleaned_data['url']
             history_item = CDNHistory(subject=url or "entire site",
-                                         user=request.user)
+                                      user=request.user)
 
             try:
                 message = purge(url)

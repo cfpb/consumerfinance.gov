@@ -39,7 +39,7 @@ def create_admin_access_permissions():
         'CLIENT_SECRET': 'fake',
         'ACCESS_TOKEN': 'fake'
     },
-    'cloudfront': {
+    'files': {
         'BACKEND': 'wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend',  # noqa: E501
         'DISTRIBUTION_ID': {
             'files.fake.gov': 'fake'
@@ -59,7 +59,7 @@ class TestCDNManagementView(TestCase):
                                                     password='password')
 
         # Give CDN Manager permission to add history items
-        cdn_permission = Permission.objects.get(name='Can add akamai history')
+        cdn_permission = Permission.objects.get(name='Can add cdn history')
         self.cdn_manager.user_permissions.add(cdn_permission)
 
         # Add no_permission and cdn_manager to Editors group
@@ -75,14 +75,14 @@ class TestCDNManagementView(TestCase):
                              fetch_redirect_response=False)
 
     def test_form_hiding(self):
-        # users without 'Can add akamai history' can view the page,
+        # users without 'Can add cdn history' can view the page,
         # but the form is hidden
         self.client.login(username='noperm', password='password')
         response = self.client.get(reverse('manage-cdn'))
         self.assertContains(response, "You do not have permission")
 
     def test_post_blocking(self):
-        # similarly, users without 'Can add akamai history' are also
+        # similarly, users without 'Can add cdn history' are also
         # blocked from POST'ing
         self.client.login(username='noperm', password='password')
         response = self.client.post(reverse('manage-cdn'))

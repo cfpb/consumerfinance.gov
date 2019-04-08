@@ -96,6 +96,12 @@ class AkamaiBackend(BaseBackend):
 @receiver(post_save, sender=Document)
 @receiver(post_save, sender=CFGOVRendition)
 def cloudfront_cache_invalidation(sender, instance, **kwargs):
+    if not settings.ENABLE_CLOUDFRONT_CACHE_PURGE:
+        return
+
+    if not instance.file:
+        return
+
     media_base = settings.MEDIA_URL
     if hasattr(settings, 'AWS_S3_CUSTOM_DOMAIN'):
         media_base = settings.AWS_S3_CUSTOM_DOMAIN
@@ -106,4 +112,4 @@ def cloudfront_cache_invalidation(sender, instance, **kwargs):
 
     batch = PurgeBatch()
     batch.add_url(url)
-    batch.purge(backends='cloudfront')
+    batch.purge(backends=['files'])
