@@ -67,21 +67,21 @@ class CloudfrontInvalidationTest(TestCase):
         self.document.file.delete()
         pass
 
-    @override_settings(AWS_S3_CUSTOM_DOMAIN='https://bar/')
+    @override_settings(AWS_S3_CUSTOM_DOMAIN='https://foo/')
     def test_rendition_saved_cache_invalidation_with_custom_domain(self):
         rendition = self.image.get_rendition('original')
         cloudfront_cache_invalidation(None, rendition)
-        self.assertIn('https://bar' + rendition.url, CACHE_PURGED_URLS)
+        self.assertIn('https://foo' + rendition.url, CACHE_PURGED_URLS)
 
     def test_rendition_saved_cache_invalidation_without_custom_domain(self):
         rendition = self.image.get_rendition('original')
         cloudfront_cache_invalidation(None, rendition)
         self.assertIn(rendition.url, CACHE_PURGED_URLS)
 
-    @override_settings(AWS_S3_CUSTOM_DOMAIN='https://bar/')
+    @override_settings(AWS_S3_CUSTOM_DOMAIN='https://foo/')
     def test_document_saved_cache_invalidation_with_custom_domain(self):
         cloudfront_cache_invalidation(None, self.document)
-        self.assertIn('https://bar' + self.document.url, CACHE_PURGED_URLS)
+        self.assertIn('https://foo' + self.document.url, CACHE_PURGED_URLS)
 
     def test_document_saved_cache_invalidation_without_custom_domain(self):
         cloudfront_cache_invalidation(None, self.document)
