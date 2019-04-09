@@ -1,4 +1,4 @@
-const MultiSelect = require( '../../shared_objects/multi-select.js' );
+const MultiSelect = require( '../../shared_objects/multiselect.js' );
 const { Then, When, Before } = require( 'cucumber' );
 const chai = require( 'chai' );
 const expect = chai.expect;
