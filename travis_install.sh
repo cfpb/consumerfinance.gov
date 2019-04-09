@@ -21,8 +21,6 @@ if [ "$RUNTEST" == "frontend" ]; then
     backend
 elif [ "$RUNTEST" == "backend" ]; then
     backend
-elif [ "$RUNTEST" == "backend3" ]; then
-    backend
 elif [ "$RUNTEST" == "docs" ]; then
     docs
 fi

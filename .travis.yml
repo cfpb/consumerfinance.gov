@@ -1,6 +1,10 @@
 language: python
 dist: trusty
 
+python:
+- 2.7
+- 3.6
+
 git:
   depth: 10
 
@@ -41,25 +45,21 @@ env:
     - COVERALLS_PARALLEL=true
     - PGPORT=5433
     - TEST_DATABASE_URL=postgres://travis:travis@localhost:5433/travis
+    - TRAVIS_CHECK_MIGRATIONS="./manage.py makemigrations --dry-run --check"
+  matrix:
+    - RUNTEST=backend
+    - RUNTEST=frontend
+
+matrix:
+  exclude:
+    # We only want to run the frontend build once.
+    - python: 2.7
+      env: RUNTEST=frontend
 
 jobs:
-  fast_finish: true
   include:
-    - stage: Run Tests
-      env: RUNTEST=frontend
-      if: type = pull_request
-      python: 2.7
-    - env:
-        - RUNTEST=backend
-        - TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner
-      if: type = pull_request
-      python: 2.7
-    - env:
-        - RUNTEST=backend3
-        - TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner
-      if: type = pull_request
-      python: 3.6
-    - stage: Docs Deploy
+    # This stage will run after the default testing stage succeeds.
+    - stage: Build docs and push them to GitHub Pages
       if: type != pull_request
       env: RUNTEST=docs
       deploy:
