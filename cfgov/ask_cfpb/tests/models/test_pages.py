@@ -71,16 +71,13 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
     def setUp(self):
         self.mock_assemble_output_value = [{
             'ASK_ID': 123456,
+            'PAGE_ID': 56789,
             'Question': "Question",
             'ShortAnswer': "Short answer.",
             'Answer': "Long answer.",
             'URL': "fakeurl.com",
-            'SpanishQuestion': "Spanish question.",
-            'SpanishAnswer': "Spanish answer",
-            'SpanishURL': "fakespanishurl.com",
-            'Topic': "Category 5 Hurricane",
-            'SubCategories': "Subcat1 | Subcat2",
-            'Audiences': "Audience1 | Audience2",
+            'PortalTopics': "Category 5 Hurricane",
+            'PortalCategories': "Subcat1 | Subcat2",
             'RelatedQuestions': "1 | 2 | 3",
             'RelatedResources': "Owning a Home"}]
 
@@ -122,7 +119,8 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         response = self.client.post('/admin/export-ask/')
         self.assertEqual(response.status_code, 200)
         # Check that fields from the mock value are included
-        self.assertContains(response, 'fakespanishurl.com')
+        self.assertContains(response, 'Category 5 Hurricane')
+        self.assertContains(response, '56789')
         self.assertContains(response, 'fakeurl.com')
 
     def test_export_from_admin_get(self):
