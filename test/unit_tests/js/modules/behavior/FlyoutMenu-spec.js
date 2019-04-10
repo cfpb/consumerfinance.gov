@@ -221,6 +221,13 @@ describe( 'FlyoutMenu', () => {
         }
       } );
       triggerDom.click();
+
+      /* The transitionend event should fire on its own,
+         but for some reason the transitionend event is not firing within JSDom.
+         In a future JSDom update this should be revisited.
+         See https://github.com/jsdom/jsdom/issues/1781
+      */
+      contentDom.dispatchEvent( new Event( 'transitionend' ) );
     } );
   } );
 
@@ -240,6 +247,13 @@ describe( 'FlyoutMenu', () => {
         }
       } );
       triggerDom.click();
+
+      /* The transitionend event should fire on its own,
+         but for some reason the transitionend event is not firing within JSDom.
+         In a future JSDom update this should be revisited.
+         See https://github.com/jsdom/jsdom/issues/1781
+      */
+      contentDom.dispatchEvent( new Event( 'transitionend' ) );
     } );
   } );
 

@@ -25,8 +25,12 @@ describe( 'AlphaTransition', () => {
 
     it( 'should apply u-alpha-100 class', () => {
       transition.fadeIn();
-      const classes = 'content-1 u-alpha-transition u-alpha-100';
+      let classes = 'content-1 u-alpha-transition u-is-animating u-alpha-100';
       expect( contentDom.className ).toStrictEqual( classes );
+      transition.addEventListener( 'transitionend', () => {
+        classes = 'content-1 u-alpha-transition u-alpha-100';
+        expect( contentDom.className ).toStrictEqual( classes );
+      } );
     } );
   } );
 
@@ -37,8 +41,12 @@ describe( 'AlphaTransition', () => {
 
     it( 'should apply u-alpha-0 class', () => {
       transition.fadeOut();
-      const classes = 'content-1 u-alpha-transition u-alpha-0';
+      let classes = 'content-1 u-alpha-transition u-is-animating u-alpha-0';
       expect( contentDom.className ).toStrictEqual( classes );
+      transition.addEventListener( 'transitionend', () => {
+        classes = 'content-1 u-alpha-transition u-alpha-0';
+        expect( contentDom.className ).toStrictEqual( classes );
+      } );
     } );
   } );
 } );

@@ -352,7 +352,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * @param {Function} method
    *   The transition method to call on expand.
    * @param {Array} [args]
-   *   List of arguments to apply to collapse method.
+   *   List of arguments to apply to expand method.
    */
   function setExpandTransition( transition, method, args ) {
     _expandTransition = transition;
