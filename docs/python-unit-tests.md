@@ -26,8 +26,8 @@ tox -e lint -e unittest-py27-dj111-wag113-slow -e unittest-py36-dj111-wag113-slo
 ```
 
 By default this uses a local SQLite database for tests. To override this, you
-can set the `DATABASE_URL` environment variable to a database connection
-sring as supported by [dj-database-url](https://github.com/kennethreitz/dj-database-url).
+can set the `TEST_DATABASE_URL` environment variable to a database connection
+string as supported by [dj-database-url](https://github.com/kennethreitz/dj-database-url).
 
 If you haven't changed any Python dependencies and you don't need to test 
 all migrations, you can run a much faster Python code test using:
