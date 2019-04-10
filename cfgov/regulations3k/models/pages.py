@@ -10,7 +10,7 @@ from six.moves.urllib.parse import urljoin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
-from django.http import HttpResponse, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
@@ -30,7 +30,9 @@ from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import (
     RegulationsFullWidthText, RegulationsListingFullWidthText
 )
-from regulations3k.models import Part, Section, SectionParagraph
+from regulations3k.models import (
+    EffectiveVersion, Part, Section, SectionParagraph
+)
 from regulations3k.parser.integer_conversion import LETTER_CODES
 from regulations3k.regdown import regdown
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
@@ -263,9 +265,12 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
     def get_effective_version(self, request, date_str):
         """ Get the requested effective version if the user has permission """
-        effective_version = self.regulation.versions.get(
-            effective_date=date_str
-        )
+        try:
+            effective_version = self.regulation.versions.get(
+                effective_date=date_str
+            )
+        except EffectiveVersion.DoesNotExist:
+            raise Http404
 
         if (effective_version.draft and
                 not self.can_serve_draft_versions(request)):

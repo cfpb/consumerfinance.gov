@@ -8,7 +8,7 @@ import unittest
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator
-from django.http import HttpRequest, QueryDict  # Http404, HttpResponse
+from django.http import Http404, HttpRequest, QueryDict
 from django.test import (
     RequestFactory, TestCase as DjangoTestCase, override_settings
 )
@@ -515,6 +515,13 @@ class RegModelTests(DjangoTestCase):
         with self.assertRaises(PermissionDenied):
             self.reg_page.get_effective_version(
                 request, '2020-01-01'
+            )
+
+    def test_get_effective_version_dne(self):
+        request = self.get_request()
+        with self.assertRaises(Http404):
+            self.reg_page.get_effective_version(
+                request, '2050-01-01'
             )
 
     def test_index_page_with_effective_date(self):
