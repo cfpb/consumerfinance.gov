@@ -465,7 +465,8 @@ function processCounty() {
 }
 
 /**
- * Store the loan amount and down payment, process the county data, check if it's a jumbo loan.
+ * Store the loan amount and down payment, process the county data,
+ * check if it's a jumbo loan.
  * @param {HTMLNode} element - TODO: Add description.
  */
 function processLoanAmount( element ) {
@@ -572,11 +573,16 @@ function renderInterestAmounts() {
     }
 
     const length = parseInt( $( item ).parents( '.rc-comparison-section' ).find( '.loan-years' ).text(), 10 ) * 12;
-    const amortizedVal = amortize( { amount: params.getVal( 'loan-amount' ), rate: rate, totalTerm: fullTerm, amortizeTerm: length } );
+    const amortizedVal = amortize( {
+      amount: params.getVal( 'loan-amount' ),
+      rate: rate,
+      totalTerm: fullTerm,
+      amortizeTerm: length
+    } );
     const totalInterest = amortizedVal.interest;
     const roundedInterest = Math.round( unFormatUSD( totalInterest ) );
     const $el = $( item ).find( '.new-cost' );
-    $el.text( formatUSD( roundedInterest, { decimalPlaces: 0 } ) );
+    $el.text( formatUSD( { amount: roundedInterest, decimalPlaces: 0 } ) );
     // Add short term rates, interest, and term to the shortTermVal array.
     if ( length < 180 ) {
       shortTermVal.push( {
@@ -608,7 +614,9 @@ function renderInterestSummary( intVals, term ) {
     return a.rate - b.rate;
   } );
 
-  const diff = formatUSD( sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest, { decimalPlaces: 0 } );
+  const rawDiff = sortedRates[sortedRates.length - 1].interest -
+                  sortedRates[0].interest;
+  const diff = formatUSD( { amount: rawDiff, decimalPlaces: 0 } );
   $( id + ' .comparison-term' ).text( sortedRates[0].term );
   $( id + ' .rate-diff' ).text( diff );
   $( id + ' .higher-rate' ).text( sortedRates[sortedRates.length - 1].rate + '%' );
