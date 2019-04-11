@@ -2,12 +2,10 @@
 let paragraphPositions;
 const wayfinderOffset = 45;
 const wayfinderRegex = {
-  appendixTitleRegex: /Appendix [A-Z]/,
+  appendixTitle: /Appendix [A-Z]/,
   title: /§ 10[0-9].\.[0-9]*/g,
   marker: /\-/g
 };
-const mainContent = document.querySelector( '.regulations3k' );
-const wayfinder = document.querySelector( '.o-regulations-wayfinder' );
 
 /**
  * scrollY - Get the Y coord of the current viewport. Older browsers don't
@@ -158,6 +156,8 @@ const getWayfinderInfo = ( paragraph, sectionTitle ) => {
  * updateWayfinder - Update the Wayfinder element with current paragraph info
  */
 const updateWayfinder = () => {
+  const mainContent = document.querySelector( '.regulations3k' );
+  const wayfinder = document.querySelector( '.o-regulations-wayfinder' );
   if ( wayfinder !== null && mainContent !== null ) {
     let paragraphMarker;
     let sectionFormattedTitle;
