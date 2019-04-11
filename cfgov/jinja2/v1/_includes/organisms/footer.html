@@ -144,13 +144,7 @@
                             No FEAR Act Data
                         </a>
                     </li>
-                    {% if language == 'es'%}
-                    <li class="m-list_item">
-                        <a class="m-list_link" href="/cfpb-ombudsman/">
-                            CFPB Ombudsman
-                        </a>
-                     </li>
-                    {% else %}
+                    {% if language != 'es'%}
                     <li class="m-list_item">
                         <a class="m-list_link" href="/tribal/">
                             Tribal
@@ -179,6 +173,13 @@
                             <span class="icon-link_text">Office of Inspector General</span>
                         </a>
                     </li>
+                    {% if language == 'es'%}
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="/cfpb-ombudsman/">
+                            CFPB Ombudsman
+                        </a>
+                     </li>
+                    {% endif %}
                 </ul>
         </div>{# END .o-footer-middle-right #}
 
