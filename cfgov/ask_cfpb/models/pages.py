@@ -1,15 +1,12 @@
 from __future__ import absolute_import, unicode_literals
 
-import re
-from six.moves.urllib.parse import urlparse
-
 from django import forms
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
-from django.template.defaultfilters import slugify
 from django.template.response import TemplateResponse
 from django.utils.text import Truncator
+from django.utils.translation import activate, deactivate_all
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
@@ -29,6 +26,7 @@ from v1.models import (
     CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic
 )
 from v1.models.snippets import RelatedResource, ReusableText
+
 
 REUSABLE_TEXT_TITLES = {
     'about_us': {
@@ -79,12 +77,14 @@ def get_ask_nav_items(request, current_page):
 
 def get_ask_breadcrumbs(language='en', category=None):
     if language == 'es':
-        breadcrumbs = [{'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/'}]
+        breadcrumbs = [{
+            'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/'}]
     else:
         breadcrumbs = [{'title': 'Ask CFPB', 'href': '/ask-cfpb/'}]
     if category:
         if language == 'es':
-            href = '/es/obtener-respuestas/categoria-{}'.format(category.slug_es)
+            href = '/es/obtener-respuestas/categoria-{}'.format(
+                category.slug_es)
         else:
             href = '/ask-cfpb/category-{}'.format(category.slug)
         breadcrumbs.append({
@@ -180,13 +180,23 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
 
     template = 'ask-cfpb/category-page.html'
 
+    def set_language(self):
+        if self.language != 'en':
+            activate(self.language)
+        else:
+            deactivate_all()
+
     def get_context(self, request, *args, **kwargs):
+        self.set_language()
         context = super(
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
         answers = self.ask_category.answerpage_set.filter(
             language=self.language, redirect_to=None, live=True).values(
                 'answer_id', 'question', 'slug', 'answer')
         subcats = self.ask_category.subcategories.all()
+        paginator = Paginator(answers, 20)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
         context.update({
             'answers': answers,
             'choices': subcats,
@@ -194,7 +204,10 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
             'get_secondary_nav_items': get_ask_nav_items,
             'breadcrumb_items': get_ask_breadcrumbs(self.language),
             'about_us': get_standard_text(self.language, 'about_us'),
-            'disclaimer': get_standard_text(self.language, 'disclaimer')
+            'disclaimer': get_standard_text(self.language, 'disclaimer'),
+            'paginator': paginator,
+            'current_page': page_number,
+            'questions': page,
         })
         return context
 
@@ -202,23 +215,6 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
     @property
     def meta_image(self):
         return self.ask_category.category_image
-
-    @route(r'^$')
-    def category_page(self, request):
-        context = self.get_context(request)
-        paginator = Paginator(context.get('answers'), 20)
-        page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
-        context.update({
-            'paginator': paginator,
-            'current_page': page_number,
-            'questions': page,
-        })
-
-        return TemplateResponse(
-            request,
-            self.template,
-            context)
 
     @route(r'^(?P<subcat>[^/]+)/$')
     def subcategory_page(self, request, **kwargs):
@@ -244,7 +240,6 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
                 self.ask_category
             )
         })
-
         return TemplateResponse(
             request, self.template, context)
 
@@ -300,13 +295,14 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     @route(r'^(?P<tag>[^/]+)/$')
     def tag_search(self, request, **kwargs):
         tag = kwargs.get('tag').replace('_', ' ')
-        self.answers = [(p.url, p.question, p.short_answer if p.short_answer else p.answer)
-                for p in AnswerPage.objects.filter(
-                    search_tags__contains=tag,
-                    language=self.language,
-                    live=True,
-                    redirect_to=None)
-                ]
+        self.answers = [
+            (p.url, p.question, p.short_answer if p.short_answer else p.answer)
+            for p in AnswerPage.objects.filter(
+                search_tags__contains=tag,
+                language=self.language,
+                live=True,
+                redirect_to=None)
+        ]
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)

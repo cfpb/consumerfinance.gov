@@ -26,7 +26,7 @@
                 data-gtm_ignore="true"
                 data-js-hook="behavior_return-to-top"
                 href="#">
-                {{ 'Volver al inicio de la página' if language == 'es' else 'Back to top'}} {{ svg_icon('arrow-up') }}
+                {{ _('Back to top') }} {{ svg_icon('arrow-up') }}
             </a>
 
             <ul class="o-footer_nav-list m-list">
@@ -164,22 +164,12 @@
         <div class="o-footer-middle-right">
                 <ul class="o-footer_list">
                     <li class="m-list_item">
-                        {% if language == 'es' %}
                         <a class="m-list_link
                                   icon-link
                                   icon-link__external-link"
-                           href="https://gobiernousa.gov/"
-                           hreflang="es">
-                            <span class="icon-link_text">GobiernoUSA.gov</span>
+                           href="{{ _('https://usa.gov/') }}">
+                            <span class="icon-link_text">{{ _('USA.gov') }}</span>
                         </a>
-                        {% else %}
-                        <a class="m-list_link
-                                  icon-link
-                                  icon-link__external-link"
-                           href="https://usa.gov/">
-                            <span class="icon-link_text">USA.gov</span>
-                        </a>
-                        {% endif %}
                     </li>
                     <li class="m-list_item">
                         <a class="m-list_link

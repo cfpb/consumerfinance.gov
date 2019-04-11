@@ -51,7 +51,7 @@
     <title>
         {%- block title -%}
             {%- if page -%} {{ page.seo_title or page.title }} | {% endif -%}
-            {{ 'Oficina para la Protección Financiera del Consumidor' if page and page.language == 'es' else 'Consumer Financial Protection Bureau' }}
+            {{ _('Consumer Financial Protection Bureau') }}
         {%- endblock title -%}
     </title>
     <meta name="description"

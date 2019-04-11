@@ -7,6 +7,7 @@ from six.moves import html_parser as HTMLParser
 
 from django.apps import apps
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpRequest, HttpResponse
 from django.template.defaultfilters import slugify
@@ -24,13 +25,12 @@ from ask_cfpb.models.django import (
     NextStep, SubCategory, generate_short_slug
 )
 from ask_cfpb.models.pages import (
-    AnswerCategoryPage, AnswerPage, REUSABLE_TEXT_TITLES
+    REUSABLE_TEXT_TITLES, AnswerCategoryPage, AnswerPage, validate_page_number
 )
-
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
-from v1.models import BrowsePage, CFGOVImage, HomePage
+from v1.models import CFGOVImage, HomePage
 from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import get_free_path, get_or_create_page
 
@@ -159,18 +159,19 @@ class AnswerPageTestCase(TestCase):
         kwargs.setdefault('slug', 'category-mortgages')
         kwargs.setdefault('title', 'Mortgages')
         kwargs.setdefault('language', 'en')
-        return AnswerCategoryPage(**kwargs)
+        cat_page = AnswerCategoryPage(**kwargs)
+        self.english_parent_page.add_child(instance=cat_page)
+        cat_page.save()
+        return cat_page
 
     def create_es_category_page(self, **kwargs):
-        kwargs.setdefault(
-            'path', get_free_path(apps, self.spanish_parent_page))
-        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
         kwargs.setdefault('slug', 'spanishcat')
         kwargs.setdefault('title', 'Spanish mortgages')
         kwargs.setdefault('language', 'es')
-        cat_page = AnswerCategoryPage(**kwargs)
-        cat_page.save()
-        return cat_page
+        es_cat_page = AnswerCategoryPage(**kwargs)
+        self.spanish_parent_page.add_child(instance=es_cat_page)
+        es_cat_page.save()
+        return es_cat_page
 
     def setUp(self):
         self.test_user = User.objects.last()
@@ -295,15 +296,25 @@ class AnswerPageTestCase(TestCase):
     def test_routable_category_page_view(self):
         cat_page = self.create_category_page(
             ask_category=self.category)
-        response = cat_page.category_page(HttpRequest())
+        response = cat_page.serve(HttpRequest())
         self.assertEqual(response.status_code, 200)
+
+    def test_es_routable_category_page_view(self):
+        es_cat_page = self.create_es_category_page(
+            ask_category=self.category)
+        response = es_cat_page.serve(HttpRequest())
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(es_cat_page.language, 'es')
+        self.assertEqual(es_cat_page.get_language_display(), 'Spanish')
+        self.assertEqual(
+            es_cat_page.template, 'ask-cfpb/category-page.html')
 
     def test_routable_category_page_bad_pagination(self):
         cat_page = self.create_category_page(
             ask_category=self.category)
         request = HttpRequest()
         request.GET['page'] = 50
-        response = cat_page.category_page(request)
+        response = cat_page.serve(HttpRequest())
         self.assertEqual(response.status_code, 200)
 
     def test_routable_category_page_invalid_pagination(self):
@@ -311,7 +322,7 @@ class AnswerPageTestCase(TestCase):
             ask_category=self.category)
         request = HttpRequest()
         request.GET['page'] = 'A50'
-        response = cat_page.category_page(request)
+        response = cat_page.serve(HttpRequest())
         self.assertEqual(response.status_code, 200)
 
     def test_routable_subcategory_page_view(self):
@@ -537,7 +548,15 @@ class AnswerPageTestCase(TestCase):
     def test_get_ask_nav_items(self):
         from ask_cfpb.models import get_ask_nav_items
         mommy.make(Category, name='test_cat')
-        test_nav_items = get_ask_nav_items({},self.page1)[0]
+        test_nav_items = get_ask_nav_items({}, self.page1)[0]
+        self.assertEqual(
+            len(test_nav_items),
+            Category.objects.count())
+
+    def test_get_es_ask_nav_items(self):
+        from ask_cfpb.models import get_ask_nav_items
+        mommy.make(Category, name='test_es_cat')
+        test_nav_items = get_ask_nav_items({}, self.page1_es)[0]
         self.assertEqual(
             len(test_nav_items),
             Category.objects.count())
@@ -555,6 +574,15 @@ class AnswerPageTestCase(TestCase):
         self.assertEqual(len(breadcrumbs), 2)
         self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
         self.assertEqual(breadcrumbs[1]['title'], test_category.name)
+
+    def test_get_es_ask_breadcrumbs_with_category(self):
+        from ask_cfpb.models import get_ask_breadcrumbs
+        test_category = mommy.make(Category, name_es='es_breadcrumb_cat')
+        breadcrumbs = get_ask_breadcrumbs(
+            language='es', category=test_category)
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Obtener respuestas')
+        self.assertEqual(breadcrumbs[1]['title'], test_category.name_es)
 
     def test_category_page_context(self):
         mock_site = mock.Mock()
@@ -712,3 +740,16 @@ class AnswerPageTestCase(TestCase):
         answer = self.answer1234
         page = answer.english_page
         self.assertEqual(page.split_test_id, answer.id)
+
+    def test_validate_pagination_number(self):
+        paginator = Paginator([{'fake': 'results'}] * 30, 25)
+        request = HttpRequest()
+        self.assertEqual(validate_page_number(request, paginator), 1)
+        request.GET.update({'page': '2'})
+        self.assertEqual(validate_page_number(request, paginator), 2)
+        request = HttpRequest()
+        request.GET.update({'page': '1000'})
+        self.assertEqual(validate_page_number(request, paginator), 1)
+        request = HttpRequest()
+        request.GET.update({'page': '<script>Boo</script>'})
+        self.assertEqual(validate_page_number(request, paginator), 1)

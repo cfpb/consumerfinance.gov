@@ -12,8 +12,7 @@
 {%- endblock %}
 
 {% block content %}
-
-    {% for block in page.header -%}
+        {% for block in page.header -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 
@@ -22,11 +21,7 @@
             <div class="content-l">
                 <section class="ask-categories">
                     <h2 class="u-show-on-mobile u-mt30">
-                        {% if language == 'es' %}
-                        Examinar las preguntas por categoría
-                        {% else %}
-                        Browse questions by category
-                        {% endif %}
+                        {{ _('Browse questions by category') }}
                     </h2>
                     <ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
                         {% for category in categories %}

@@ -349,6 +349,3 @@ class Answer(models.Model):
             return [cat.name_es for cat in self.category.all()]
         else:
             return ''
-
-    def audience_strings(self):
-        return [audience.name for audience in self.audiences.all()]
