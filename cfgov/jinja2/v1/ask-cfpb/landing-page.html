@@ -5,7 +5,6 @@
 {% import 'macros/category-icon.html' as category_icon %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
-{% set language = page.language if page and page.language else 'en' %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -30,13 +29,13 @@
                                           a-link
                                           a-link__jump
                                           a-link__icon-after-text"
-                                   {% if language == 'es' %}
+                                   {% if page.language == 'es' %}
                                    href="{{ slugurl( 'categoria-' + category.slug_es ) }}"
                                    {% else %}
                                    href="{{ slugurl( 'category-' + category.slug ) }}"
                                    {% endif %}>
                                     <span class="a-link_text">
-                                        {% if language == 'es' %}
+                                        {% if page.language == 'es' %}
                                         {{ category.name_es }}
                                         {% else %}
                                         {{ category.name }}
@@ -58,13 +57,13 @@
                                         <article class="m-card content-l_body__equal-height">
 
                                             <h2>
-                                                {% if language == 'es' %}
+                                                {% if page.language == 'es' %}
                                                 <a href="{{ slugurl( 'categoria-' + category.slug_es ) }}">
                                                 {% else %}
                                                 <a href="{{ slugurl( 'category-' + category.slug ) }}">
                                                 {% endif %}
                                                 {{ category_icon.render( category.name ) }}
-                                                {% if language == 'es' %}
+                                                {% if page.language == 'es' %}
                                                 {{ category.name_es }}
                                                 {% else %}
                                                 {{ category.name }}
@@ -73,7 +72,7 @@
                                             </h2>
 
                                             <ul class="m-list question_list m-list__flush-left u-mt10 u-mb30">
-                                                {% if language == 'es'%}
+                                                {% if page.language == 'es'%}
                                                     {% for a in category.featured_answers('es') %}
                                                     <li class="m-list_item">
                                                     {{ partially_styled_link.render( {'plain_text': a.question, 'underlined_text': 'Leer la respuesta', 'url': a.url} ) }}
@@ -91,7 +90,7 @@
 
                                             <div class="content-l_footer__equal-height">
                                                 <p class="short-desc u-mb0">
-                                                    {% if language == 'es'%}
+                                                    {% if page.language == 'es'%}
                                                         <a href="{{ slugurl( 'categoria-' + category.slug_es ) }}">
                                                             Ver todas las respuestas de {{ category.name_es|lower }}
                                                         </a>

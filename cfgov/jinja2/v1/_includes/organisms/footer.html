@@ -122,7 +122,7 @@
             </div>
             <div class="o-footer_col">
                 <ul class="o-footer_list m-list">
-                    {% if language == 'en' %}
+                    {% if language != 'es' %}
                     <li class="m-list_item">
                         <a class="m-list_link" href="/administrative-adjudication-proceedings/">
                             Administrative Adjudication
@@ -183,7 +183,7 @@
         </div>{# END .o-footer-middle-right #}
 
         <div class="o-footer-post">
-            {{ tagline.render( is_large=true, language=language ) }}
+            {{ tagline.render( is_large=true ) }}
         </div>{# END .o-footer-post #}
 
     </div>{# END .wrapper.wrapper__match-content #}

@@ -46,7 +46,7 @@
 
    ========================================================================== #}
 
-{% macro _nav_list( nav_depth, nav_groups, language ) %}
+{% macro _nav_list( nav_depth, nav_groups ) %}
 <div class="{{ _classes( nav_depth, '-lists' ) }}">
     {% for nav_group in nav_groups %}
     {% set group = nav_group.value %}
@@ -64,7 +64,7 @@
             {% if nav_depth == 1 -%}
             <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
                 {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-                {{ global_header_cta.render( language=language ) }}
+                {{ global_header_cta.render() }}
             </li>
             {%- endif %}
             {%- for item in group.nav_items %}
@@ -146,7 +146,7 @@
                 {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}
             {% endif %}
             {% if nav_item.nav_groups %}
-                {{ _nav_list( nav_depth, nav_item.nav_groups, language ) }}
+                {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
             {% endif %}
             {% if nav_item.footer %}
             <div class="{{ base_class ~ '_footer' }}">

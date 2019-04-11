@@ -14,7 +14,7 @@
    ========================================================================== #}
 
 
-{% macro render( is_horizontal=false, language='en' ) %}
+{% macro render( is_horizontal=false ) %}
     {# TODO: Padding should be on link, not CTA itself #}
     <div class="m-global-header-cta
                 m-global-header-cta__{{ 'horizontal' if is_horizontal else 'list' }}">

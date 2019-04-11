@@ -35,7 +35,6 @@
 {% if nav_items is not defined and has_children is not defined %}
     {% set nav_items, has_children = get_secondary_nav_items(request, page) %}
 {% endif %}
-{% set language = page.language if page and page.language else 'en' %}
 <nav class="o-secondary-navigation
             {{ '' if has_children else 'o-secondary-navigation__no-children' }}"
      aria-label="Section navigation">
