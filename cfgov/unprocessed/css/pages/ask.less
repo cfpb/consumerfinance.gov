@@ -82,19 +82,19 @@
     .ask-categories,
     .ask-search,
     .ask-cfpb-banner {
-        .respond-to-max( @bp-xs-max {
+        .respond-to-max( @bp-xs-max, {
             padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
             padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         } );
 
-        .respond-to-range( @bp-med-min, @bp-med-max {
+        .respond-to-range( @bp-med-min, @bp-med-max, {
             padding-left: 0;
             padding-right: 0;
         } );
     }
 
     .ask-cfpb-banner {
-        .respond-to-range( @bp-med-min, @bp-med-max {
+        .respond-to-range( @bp-med-min, @bp-med-max, {
             padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
             padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
         } );
@@ -102,13 +102,13 @@
     }
 
     .ask-search {
-        .respond-to-max( @bp-xs-max {
+        .respond-to-max( @bp-xs-max, {
             padding: 0;
         } );
     }
 
     .ask-disclaimer {
-        .respond-to-min( @bp-sm-min {
+        .respond-to-min( @bp-sm-min, {
             margin-bottom: 0;
         } );
     }
