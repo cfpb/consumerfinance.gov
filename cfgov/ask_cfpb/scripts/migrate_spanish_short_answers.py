@@ -15,10 +15,11 @@ false_positives = [1637]
 
 
 def run():
-    answers = [
-        p for p in AnswerPage.objects.filter(language='es', redirect_to=None)
-        if p.status_string != 'draft'
-    ]
+    answers = AnswerPage.objects.filter(
+        language='es',
+        redirect_to_page=None,
+        live=True
+    )
     migration_user_pk = os.getenv('MIGRATION_USER_PK', 9999)
     user = User.objects.filter(id=migration_user_pk).first()
     updated = 0
