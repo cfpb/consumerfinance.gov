@@ -283,7 +283,7 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
         answers = self.ask_category.answerpage_set.filter(
             language=self.language, redirect_to_page=None, live=True).values(
-                'answer_id', 'question', 'slug', 'answer')
+                'answer_base__id', 'question', 'slug', 'answer')
         if self.language == 'es':
             for a in answers:
                 a['answer'] = Truncator(a['answer']).words(
@@ -479,13 +479,6 @@ class AnswerPage(CFGOVPage):
         null=True,
         related_name='answer_pages',
         on_delete=models.SET_NULL)
-    redirect_to = models.ForeignKey(
-        Answer,
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='redirected_pages',
-        help_text="Choose another Answer to redirect this page to")
     redirect_to_page = models.ForeignKey(
         'self',
         blank=True,
@@ -526,7 +519,6 @@ class AnswerPage(CFGOVPage):
         blank=True,
         related_name='related_question',
         help_text='Maximum of 3 related questions')
-    answer_id = models.IntegerField(default=0)
     portal_topic = ParentalManyToManyField(
         PortalTopic,
         blank=True,

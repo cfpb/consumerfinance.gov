@@ -44,7 +44,7 @@ def assemble_output():
     answer_pages = list(AnswerPage.objects.prefetch_related(
         *prefetch_fields).order_by('language', '-answer_base__id').values(
             'id', 'answer_base__id', 'question', 'short_answer',
-            'answer', 'url_path', 'live', 'redirect_to_id',
+            'answer', 'url_path', 'live', 'redirect_to_page_id',
             'related_resource__title', 'language', *prefetch_fields))
     output_rows = []
     seen = []
@@ -66,7 +66,7 @@ def assemble_output():
         output['ShortAnswer'] = clean_and_strip(page['short_answer'])
         output['URL'] = page['url_path'].replace('/cfgov', '')
         output['Live'] = page['live']
-        output['Redirect'] = page['redirect_to_id']
+        output['Redirect'] = page['redirect_to_page_id']
 
         # Group the ManyToMany fields together:
         related_questions = []
