@@ -10,6 +10,7 @@ additionally, changing field names or types on an existing block will require a
 ## Table of contents
 
 1. [Reference material](#reference-material)
+1. [Do I need to create a migration?](#do-i-need-to-create-a-migration)
 1. [Schema migrations](#schema-migrations)
 1. [Data migrations](#data-migrations)
    1. [Wagtail-specific consideration](#wagtail-specific-considerations)
@@ -25,6 +26,52 @@ into the concepts presented throughout this page:
 - [Django migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/)
 - [Django data migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations)
 - [Wagtail Streamfield migrations documentation](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#migrations)
+
+
+## Do I need to create a migration?
+
+A new Django migration is required for most, but not all, changes that you
+make to the definitions of Django model classes. Even experienced Django
+developers may find it unintuitive to determine which changes will require
+a migration.
+
+Example model changes that require a migration:
+
+- Adding, removing, or renaming a model field
+- Changing a model field definition in a way that impacts the database schema
+(for example, changing the size of a `CharField`)
+- Changing a model field definition in a way that does not impact the database schema
+(for example, changing the field's `help_text`)
+
+Example model changes that do not require a migration:
+
+- Adding, removing, renaming, or modifying a model class method
+- Modifying a model class [manager](https://docs.djangoproject.com/en/1.11/topics/db/managers/)
+
+The best way to tell if your changes require a migration is to ask Django to
+determine that for you. Django's
+[makemigrations](https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-makemigrations)
+management command can be used for this purpose:
+
+```bash
+./cfgov/manage.py makemigrations --dry-run
+```
+
+If you haven't made any changes to your local source code that would necessitate the
+creation of a new migration, this command will print `No changes detected`.
+
+Otherwise, if you have made changes that require a migration, Django will print
+information about the migration that would need to be created:
+
+```bash
+Migrations for 'v1':
+  cfgov/v1/migrations/0154_auto_20190412_1008.py
+    - Alter field alt on cfgovimage
+```
+
+Running with the `--dry-run` flag won't actually create any migration files on disk.
+See below for more information on how to do this, including how to give your
+migrations a more descriptive name.
 
 
 ## Schema migrations
