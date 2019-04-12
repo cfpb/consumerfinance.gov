@@ -91,15 +91,15 @@ const updateUrlHash = () => {
 /**
  * getCommentMarker - Does the legwork for the more complex comment markers
  *
- * @param {string} currentParagraph - data-label of the current paragraph
+ * @param {string} label - data-label of the current paragraph
  *
  * @returns {string} formatted comment marker
  */
-const getCommentMarker = currentParagraph => {
+const getCommentMarker = label => {
   let commentedSection;
   let commentedParagraph;
   let commentParagraph;
-  const splitCurrentParagraph = currentParagraph.split( 'Interp' );
+  const splitCurrentParagraph = label.split( 'Interp' );
   const commentedParagraphID = splitCurrentParagraph[0].split( '-' );
   const commentParagraphID = splitCurrentParagraph[1]
     .split( '-' );
@@ -133,9 +133,10 @@ const getCommentMarker = currentParagraph => {
 const getWayfinderInfo = ( label, sectionTitle ) => {
   let sectionFormattedTitle;
   let paragraphMarker;
+
   // For interpretations, the wayfinder should look like "Comment 4(a)-1.iv.A"
   // Or like "Comment app. G-1.iv.A" for interpretations of appendices
-  if ( sectionTitle.indexOf( 'Comment for ' ) === 0 ) {
+  if ( sectionTitle.indexOf( 'Comment for ' ) > -1 || label.indexOf('Interp') > -1 ) {
     sectionFormattedTitle = 'Comment ';
     paragraphMarker = getCommentMarker( label );
   } else if ( sectionTitle.indexOf( 'Appendix ' ) === 0 ) {
