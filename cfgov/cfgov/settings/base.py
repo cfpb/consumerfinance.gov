@@ -791,7 +791,7 @@ else:
 
 # See core.middleware.ParseLinksMiddleware. Normally all HTML responses get
 # processed by this middleware so that their link content gets the proper
-# markup (e.g. download icons). We want to exclude certain links from this
+# markup (e.g., download icons). We want to exclude certain pages from this
 # middleware. These two lists of regular expressions define a set of URLs
 # against which we don't want this logic to be run.
 #
