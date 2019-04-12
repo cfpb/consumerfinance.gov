@@ -7,6 +7,9 @@
  *
  * As users scroll through the page we search the array for the paragraph
  * closest to the top of the viewport and update the URL hash accordingly.
+ *
+ * The wayfinder element uses the same paragraph IDs (and data-label) to
+ * populate its description.
  */
 
 import {
@@ -22,6 +25,8 @@ import {
  */
 const init = () => {
   updateParagraphPositions();
+  updateWayfinder( true );
+
   debounce( 'resize', 300, updateParagraphPositions );
   debounce( 'click', 300, updateParagraphPositions );
   debounce( 'scroll', 100, updateUrlHash );

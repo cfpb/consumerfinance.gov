@@ -6,6 +6,8 @@ const wayfinderRegex = {
   title: /§ 10[0-9].\.[0-9]*/g,
   marker: /\-/g
 };
+const regs3kMainContent = document.querySelector( '.regulations3k' );
+const regs3kWayfinder = document.querySelector( '.o-regulations-wayfinder' );
 
 /**
  * scrollY - Get the Y coord of the current viewport. Older browsers don't
@@ -89,7 +91,7 @@ const updateUrlHash = () => {
 /**
  * getCommentMarker - Does the legwork for the more complex comment markers
  *
- * @param {string} currentParagraph - id of the current paragraph
+ * @param {string} currentParagraph - data-label of the current paragraph
  *
  * @returns {string} formatted comment marker
  */
@@ -123,19 +125,19 @@ const getCommentMarker = currentParagraph => {
 
 /**
  * getWayfinderInfo - process paragraph to create wayfinder
- * @param {string} paragraph - id of current paragraph
+ * @param {string} label - label of current paragraph
  * @param {string} sectionTitle - title of current section
  *
  * @returns {object} object of the values for wayfinder
  */
-const getWayfinderInfo = ( paragraph, sectionTitle ) => {
+const getWayfinderInfo = ( label, sectionTitle ) => {
   let sectionFormattedTitle;
   let paragraphMarker;
   // For interpretations, the wayfinder should look like "Comment 4(a)-1.iv.A"
   // Or like "Comment app. G-1.iv.A" for interpretations of appendices
   if ( sectionTitle.indexOf( 'Comment for ' ) === 0 ) {
     sectionFormattedTitle = 'Comment ';
-    paragraphMarker = getCommentMarker( paragraph );
+    paragraphMarker = getCommentMarker( label );
   } else if ( sectionTitle.indexOf( 'Appendix ' ) === 0 ) {
     // For appendices, the wayfinder should look like "Appendix A"
     sectionFormattedTitle = sectionTitle.match( wayfinderRegex.appendixTitle )[0];
@@ -143,7 +145,9 @@ const getWayfinderInfo = ( paragraph, sectionTitle ) => {
   } else {
     // For sections of the main regulation text, the wayfinder should look like "§ 1026.5(b)(2)(ii)(A)(1)""
     sectionFormattedTitle = sectionTitle.match( wayfinderRegex.title )[0];
-    paragraphMarker = '(' + paragraph.replace( wayfinderRegex.marker, ')(' ) + ')';
+    if ( label !== '' ) {
+      paragraphMarker = '(' + label.replace( wayfinderRegex.marker, ')(' ) + ')';
+    }
   }
 
   return {
@@ -154,10 +158,15 @@ const getWayfinderInfo = ( paragraph, sectionTitle ) => {
 
 /**
  * updateWayfinder - Update the Wayfinder element with current paragraph info
+ * @param {Boolean} scroll - if true, the function will scroll the current paragraph into view
+ * @param {object} wayfinder - wayfinder HTML element
+ * @param {object} mainContent - regs main section HTML element
  */
-const updateWayfinder = () => {
-  const mainContent = document.querySelector( '.regulations3k' );
-  const wayfinder = document.querySelector( '.o-regulations-wayfinder' );
+const updateWayfinder = function( scroll, wayfinder, mainContent ) {
+  // We can usually rely on the constants declared above, but just in case...
+  if ( typeof wayfinder === 'undefined' ) wayfinder = regs3kWayfinder;
+  if ( typeof mainContent === 'undefined' ) mainContent = regs3kMainContent;
+
   if ( wayfinder !== null && mainContent !== null ) {
     let paragraphMarker;
     let sectionFormattedTitle;
@@ -166,12 +175,14 @@ const updateWayfinder = () => {
     const currentParagraph = getCurrentParagraph( scrollY() + wayfinderOffset, paragraphPositions );
 
     if ( currentParagraph ) {
+      // To avoid hashed IDs, we use data-label for wayfinder text formatting
+      const currentLabel = document.getElementById( currentParagraph ).dataset.label;
       const sectionTitle = wayfinder.dataset.section;
-      wayfinderInfo = getWayfinderInfo( currentParagraph, sectionTitle );
+      wayfinderInfo = getWayfinderInfo( currentLabel, sectionTitle );
       paragraphMarker = wayfinderInfo.paragraphMarker;
       sectionFormattedTitle = wayfinderInfo.formattedTitle;
-      wayfinderLink.href = '#' + currentParagraph;
       mainContent.classList.add( 'show-wayfinder' );
+      wayfinderLink.href = '#' + currentParagraph;
     } else {
       sectionFormattedTitle = '';
       paragraphMarker = '';
@@ -181,6 +192,12 @@ const updateWayfinder = () => {
 
     wayfinder.querySelector( '.o-regulations-wayfinder_section-title' ).textContent = sectionFormattedTitle;
     wayfinder.querySelector( '.o-regulations-wayfinder_marker' ).textContent = paragraphMarker;
+
+    if ( scroll === true && window.location.hash.slice( 1 ) !== '' ) {
+      const elem = document.getElementById( window.location.hash.slice( 1 ) );
+      const rect = elem.getBoundingClientRect();
+      window.scrollTo( 0, window.scrollY + rect.top - 60 );
+    }
   }
 
   document.querySelector( '.o-regulations-wayfinder_section-title' ).textContent = sectionFormattedTitle;
