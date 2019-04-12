@@ -137,9 +137,9 @@ class Views(TestCase):
         self.assertFalse(b'page=1' in resp.content)
 
         resp = self.client.get(path + '?page=2')
-        self.assertTrue('href="?page=1' in resp.content)
-        self.assertFalse('href="?page=2' in resp.content)
-        self.assertFalse('href="?page=3' in resp.content)
+        self.assertContains(resp, 'href="?page=1')
+        self.assertNotContains(resp, 'href="?page=2')
+        self.assertNotContains(resp, 'href="?page=3')
 
     @patch('agreements.views.render', return_value=HttpResponse())
     def test_issuer_paging_too_high(self, render):
