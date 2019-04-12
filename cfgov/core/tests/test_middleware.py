@@ -23,15 +23,6 @@ class TestParseLinksMiddleware(TestCase):
         self.client.get('/foo/bar')
         mock_parse_links.assert_not_called()
 
-    @override_settings(
-        PARSE_LINKS_EXCLUSION_LIST=['^/foo/'],
-        PARSE_LINKS_INCLUSION_LIST=['^/foo/bar']
-    )
-    def test_parse_links_gets_called_included(self, mock_parse_links):
-        """Middleware invokes parse links when path is included"""
-        response = self.client.get('/foo/bar')
-        mock_parse_links.assert_called_with(response.content, encoding='utf-8')
-
 
 class TestShouldParseLinks(TestCase):
     def test_should_not_parse_links_if_non_html(self):
@@ -45,6 +36,33 @@ class TestShouldParseLinks(TestCase):
             request_path='/foo/bar',
             response_content_type='text/html'
         ))
+
+    def check_should_parse_links_for_path(self, path, expected):
+        self.assertEqual(
+            ParseLinksMiddleware.should_parse_links(
+                request_path=path,
+                response_content_type='text/html'
+            ),
+            expected
+        )
+
+    def test_should_parse_links_false_for_admin_root(self):
+        self.check_should_parse_links_for_path('/admin/', False)
+
+    def test_should_parse_links_false_for_admin_page(self):
+        self.check_should_parse_links_for_path('/admin/foo/bar/', False)
+
+    def test_should_parse_links_true_for_admin_page_preview(self):
+        self.check_should_parse_links_for_path(
+            '/admin/pages/1234/edit/preview/',
+            True
+        )
+
+    def test_should_parse_links_true_for_admin_page_view_draft(self):
+        self.check_should_parse_links_for_path(
+            '/admin/pages/1234/view_draft/',
+            True
+        )
 
 
 class TestParseLinks(TestCase):

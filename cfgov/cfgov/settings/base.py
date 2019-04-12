@@ -792,27 +792,17 @@ else:
 # See core.middleware.ParseLinksMiddleware. Normally all HTML responses get
 # processed by this middleware so that their link content gets the proper
 # markup (e.g., download icons). We want to exclude certain pages from this
-# middleware. These two lists of regular expressions define a set of URLs
-# against which we don't want this logic to be run.
-#
-# If a pattern matches against both the exclusion and inclusion list, the
-# inclusion list takes priority, and the middleware will process that response.
+# middleware. This list of regular expressions defines a set of URLs against
+# which we don't want this logic to be run.
 PARSE_LINKS_EXCLUSION_LIST = [
-    # Wagtail admin pages
-    r'^/admin/',
+    # Wagtail admin pages, except preview and draft views
+    r'^/admin/(?!pages/\d+/(edit/preview|view_draft)/)',
     # Django admin pages
     r'^/django-admin/',
     # Our custom login pages
     r'^/login/',
     # Regulations pages that have their own link markup
     r'^/policy-compliance/rulemaking/regulations/\d+/'
-]
-
-PARSE_LINKS_INCLUSION_LIST = [
-    # Wagtail page preview view
-    r'^/admin/pages/\d+/edit/preview/',
-    # Wagtail page draft view
-    r'^/admin/pages/\d+/view_draft/',
 ]
 
 # Required by django-extensions to determine the execution directory used by

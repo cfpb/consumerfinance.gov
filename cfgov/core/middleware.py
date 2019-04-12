@@ -61,10 +61,8 @@ class ParseLinksMiddleware(object):
 
         Returns True if
 
-        1. The response has the default content type AND
-        2. The request path
-            does not match settings.PARSE_LINKS_EXCLUSION_LIST OR
-            does match settings.PARSE_LINKS_INCLUSION_LIST
+        1. The response has the default content type (HTML) AND
+        2. The request path does not match settings.PARSE_LINKS_EXCLUSION_LIST
 
         Otherwise returns False.
         """
@@ -75,10 +73,6 @@ class ParseLinksMiddleware(object):
             settings.PARSE_LINKS_EXCLUSION_LIST,
             request_path
         ):
-            if not cls.any_regexes_match(
-                settings.PARSE_LINKS_INCLUSION_LIST,
-                request_path
-            ):
                 return False
 
         return True
