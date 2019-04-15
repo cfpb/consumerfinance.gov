@@ -57,8 +57,17 @@
             {% if language == 'es' %}
             <a class="o-header_logo" href="/es/">
                 <img class="o-header_logo-img"
-                     src="{{ static('img/logo_spanish_2x.png') }}"
+                     src="{{ static('img/logo_es_286x50.png') }}"
+                     srcset="{{ static('img/logo_es_228x40.png') }} 228w,
+                             {{ static('img/logo_es_228x40@2x.png') }} 456w,
+                             {{ static('img/logo_es_228x40@3x.png') }} 684w,
+                             {{ static('img/logo_es_228x40@4x.png') }} 912w,
+                             {{ static('img/logo_es_286x50.png') }} 286w,
+                             {{ static('img/logo_es_286x50@2x.png') }} 572w"
+                     sizes="(max-width: 900px) 228px,
+                            286px"
                      alt="Oficina para la Protección Financiera del Consumidor">
+                
             </a>
             {% else %}
             <a class="o-header_logo" href="/">
