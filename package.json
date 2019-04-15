@@ -68,7 +68,6 @@
     "xdr": "0.5.3"
   },
   "devDependencies": {
-    "babel-core": "7.0.0-bridge.0",
     "babel-jest": "24.7.1",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
@@ -83,10 +82,9 @@
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "protractor-cucumber-framework": "6.1.1",
     "protractor-retry": "1.2.6",
-    "psi": "3.1.0",
     "sauce-connect-tunnel": "0.2.1",
     "selenium-webdriver": "4.0.0-alpha.1",
-    "snyk": "1.150.0",
+    "snyk": "1.150.1",
     "through2": "3.0.1",
     "wcag": "0.3.0"
   },
