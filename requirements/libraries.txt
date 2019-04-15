@@ -17,7 +17,7 @@ django-watchman==0.15.0
 edgegrid-python==1.0.10
 elasticsearch==2.4.1
 govdelivery==1.2
-Jinja2==2.10
+Jinja2==2.10.1
 jsonfield==2.0.2
 lxml==4.2.5
 Markdown==2.6.11
