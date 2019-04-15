@@ -69,14 +69,7 @@ class ParseLinksMiddleware(object):
         if settings.DEFAULT_CONTENT_TYPE not in response_content_type:
             return False
 
-        if cls.any_regexes_match(
-            settings.PARSE_LINKS_EXCLUSION_LIST,
-            request_path
-        ):
-                return False
-
-        return True
-
-    @staticmethod
-    def any_regexes_match(regexes, s):
-        return any(re.search(regex, s) for regex in regexes)
+        return not any(
+            re.search(regex, request_path)
+            for regex in settings.PARSE_LINKS_EXCLUSION_LIST
+        )
