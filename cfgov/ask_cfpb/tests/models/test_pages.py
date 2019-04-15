@@ -236,7 +236,6 @@ class AnswerPageTestCase(TestCase):
         self.page1 = AnswerPage(
             language='en',
             answer_base=self.answer1234,
-            answer_id=1234,
             slug='mock-question-en-1234',
             title='Mock question1',
             answer='Mock answer 1',
@@ -249,7 +248,6 @@ class AnswerPageTestCase(TestCase):
             slug='mock-spanish-question1-es-1234',
             title='Mock Spanish question1',
             answer_base=self.answer1234,
-            answer_id=1234,
             answer='Mock Spanish answer',
             question='Mock Spanish question1',
             search_tags='hipotecas')
@@ -267,7 +265,6 @@ class AnswerPageTestCase(TestCase):
             slug='mock-question2-en-5678',
             title='Mock question2',
             answer_base=self.answer5678,
-            answer_id=5678,
             answer='Mock answer 2',
             question='Mock question2',
             search_tags='hippodrome')
