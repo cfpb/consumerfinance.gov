@@ -11,7 +11,7 @@
     //       behavior and handle its own styling
     //       (possibly shared with expandables).
 
-    .respond-to-max( @bp-sm-max {
+    .respond-to-max( @bp-sm-max, {
         background-color: @gray-5;
         border-bottom: 1px solid @gray-40;
         border-top: 1px solid @gray-40;
@@ -53,7 +53,7 @@
     }
 
     &:before {
-        .respond-to-max( @bp-sm-max {
+        .respond-to-max( @bp-sm-max, {
             border-bottom: 1px solid @gray-40;
             content: ' ';
             display: block;
@@ -65,7 +65,7 @@
 // Regs3K secondary nav header
 .o-regs3k-navigation {
 
-    .respond-to-max( @bp-sm-max {
+    .respond-to-max( @bp-sm-max, {
         padding: unit( 10px / @base-font-size-px, em )
                  unit( 15px / @base-font-size-px, em );
     } );
@@ -112,7 +112,7 @@
 // is stacked on top of the page's content
 .u-hide-on-stacked {
 
-    .respond-to-max( @bp-sm-max {
+    .respond-to-max( @bp-sm-max, {
         display: none;
     } );
 
@@ -121,7 +121,7 @@
 .u-show-on-stacked {
 
     display: none;
-    .respond-to-max( @bp-sm-max {
+    .respond-to-max( @bp-sm-max, {
         display: block;
     } );
 
