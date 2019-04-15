@@ -288,6 +288,18 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
 
     objects = CFGOVPageManager()
 
+    def set_language(self):
+        if self.language != 'en':
+            activate(self.language)
+        else:
+            deactivate_all()
+
+    def get_context(self, request, *args, **kwargs):
+        self.set_language()
+        context = super(
+            TagResultsPage, self).get_context(request, *args, **kwargs)
+        return context
+
     @route(r'^$')
     def tag_base(self, request):
         raise Http404
