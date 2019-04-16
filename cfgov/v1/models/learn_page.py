@@ -1,6 +1,7 @@
 from datetime import date
 from six.moves.urllib.parse import urlencode
 
+from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -307,14 +308,13 @@ class EventPage(AbstractFilterPage):
             center = self.venue_city
         if self.venue_state:
             center = center + ', ' + self.venue_state
-        options = {
-            'center': center,
-            'scale': scale,
-            'size': size,
-            'zoom': zoom
-        }
-        url = 'https://maps.googleapis.com/maps/api/staticmap?'
-        return '{url}{options}'.format(
-            url=url,
-            options=urlencode(options)
-        )
+        map_id = 'mapbox.mapbox-streets-v8'
+        zoom = '1'
+        tile_column = '0'
+        tile_row = '0'
+        image_format = '.png32'
+        options = map_id + '/' + zoom + '/' + tile_column + '/' + tile_row + image_format
+
+        # figure out how to obscure the mapbox token on rendered page
+        url = 'https://api.mapbox.com/v4/' + options + '?access_token=' + settings.MAPBOX_ACCESS_TOKEN
+        return url
