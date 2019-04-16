@@ -5,7 +5,8 @@ from ask_cfpb.models.django import (
 )
 from ask_cfpb.models.pages import (
     AnswerCategoryPage, AnswerLandingPage, AnswerPage, AnswerResultsPage,
-    SecondaryNavigationJSMixin, TagResultsPage, get_ask_breadcrumbs,
-    get_ask_nav_items, get_reusable_text_snippet, get_standard_text,
-    validate_page_number
+    PortalSearchPage, SecondaryNavigationJSMixin, TagResultsPage,
+    get_ask_breadcrumbs, get_ask_nav_items, get_reusable_text_snippet,
+    get_standard_text, validate_page_number
 )
+from ask_cfpb.models.search import AskSearch

@@ -1,12 +1,17 @@
 from __future__ import absolute_import, unicode_literals
 
+from collections import OrderedDict
+from six.moves.urllib.parse import unquote
+
 from django import forms
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
-from django.utils.text import Truncator
-from django.utils.translation import activate, deactivate_all
+from django.utils.html import format_html
+from django.utils.text import Truncator, slugify
+from django.utils.translation import activate, deactivate_all, gettext as _
+from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
@@ -20,6 +25,7 @@ from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
+from ask_cfpb.models.search import AskSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
@@ -44,6 +50,17 @@ def get_standard_text(language, text_type):
     return get_reusable_text_snippet(
         REUSABLE_TEXT_TITLES[text_type][language]
     )
+
+
+JOURNEY_PATHS = (
+    '/owning-a-home/prepare',
+    '/owning-a-home/explore',
+    '/owning-a-home/compare',
+    '/owning-a-home/close',
+    '/owning-a-home/process',
+)
+# Custom sort for navigation, by PortalCategory primary keys
+PORTAL_CATEGORY_SORT_ORDER = [1, 4, 5, 2, 3]
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -145,6 +162,185 @@ class SecondaryNavigationJSMixin(object):
         if self.language == 'en':
             js += ['secondary-navigation.js']
         return js
+
+
+class PortalSearchPage(
+        RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
+    """
+    A routable page type for Ask CFPB portal search ("see-all") pages.
+    """
+
+    objects = CFGOVPageManager()
+    portal_topic = models.ForeignKey(
+        PortalTopic,
+        blank=True,
+        null=True,
+        related_name='portal_search_pages',
+        on_delete=models.SET_NULL)
+    portal_category = None
+    query_base = None
+    overview = models.TextField(blank=True)
+    content_panels = CFGOVPage.content_panels + [
+        FieldPanel('portal_topic'),
+        FieldPanel('overview'),
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+
+    @property
+    def category_map(self):
+        """
+        Return an ordered dictionary of translated-slug:object pairs.
+
+        We use this custom sequence for categories in the navigation sidebar:
+        - Basics
+        - Key terms
+        - Common issues
+        - Know your rights
+        - How-to guides
+        """
+        categories = PortalCategory.objects.order_by('pk')
+        sorted_mapping = OrderedDict()
+        for i in PORTAL_CATEGORY_SORT_ORDER:
+            sorted_mapping.update({
+                slugify(
+                    categories[i - 1].title(self.language)
+                ): categories[i - 1]
+            })
+        return sorted_mapping
+
+    def results_message(self, count, heading, search_term):
+        if search_term:
+            _for_term = '{} "{}"'.format(_('for'), search_term)
+        else:
+            _for_term = ''
+        if count == 1:
+            _showing = _('Showing ')  # trailing space triggers singular es
+            _results = _('result')
+        else:
+            _showing = _('Showing')
+            _results = _('results')
+        if self.portal_category and search_term:
+            return format_html(
+                '<p>{} {} {} {} {} {}</p>'
+                '<p><a href="../?search_term={}">'
+                '{} {}</a></p>',
+                _showing,
+                count,
+                _results,
+                _for_term,
+                _('within'),
+                heading.lower(),
+                search_term,
+                _('See all results within'),
+                self.portal_topic.title(self.language).lower()
+            )
+        elif self.portal_category:
+            return '{} {} {} {} {}'.format(
+                _showing,
+                count,
+                _results,
+                _('within'),
+                heading.lower()
+            )
+        return '{} {} {} {} {} {}'.format(
+            _showing,
+            count,
+            _results,
+            _for_term,
+            _('within'),
+            heading.lower())
+
+    def get_heading(self):
+        if self.portal_category:
+            return self.portal_category.title(self.language)
+        else:
+            return self.portal_topic.title(self.language)
+
+    def get_context(self, request, *args, **kwargs):
+        if self.language != 'en':
+            activate(self.language)
+        else:
+            deactivate_all()
+        return super(PortalSearchPage, self).get_context(
+            request, *args, **kwargs)
+
+    def get_nav_items(self, request, page):
+        """Return sorted nav items for sidebar."""
+        sorted_categories = [
+            {
+                'title': category.title(self.language),
+                'url': "{}{}/".format(page.url, slug),
+                'active': (
+                    False if not page.portal_category
+                    else category.title(self.language)
+                    == page.portal_category.title(self.language))
+            }
+            for slug, category in self.category_map.items()
+        ]
+        return [{
+            'title': page.portal_topic.title(self.language),
+            'url': page.url,
+            'active': False if page.portal_category else True,
+            'expanded': True,
+            'children': sorted_categories
+        }], True
+
+    def get_results(self, request):
+        context = self.get_context(request)
+        search_term = request.GET.get('search_term', '').strip()
+        heading = self.get_heading()
+        if not search_term or len(unquote(search_term)) == 1:
+            results = self.query_base
+        else:
+            search = AskSearch(
+                search_term=search_term,
+                query_base=self.query_base)
+            results = search.queryset
+            if results.count() == 0:
+                # No results, so let's try to suggest a better query
+                search.suggest(request=request)
+                results = search.queryset
+                search_term = search.search_term
+        search_message = self.results_message(
+            results.count(),
+            heading,
+            search_term)
+        paginator = Paginator(results, 10)
+        page_number = validate_page_number(request, paginator)
+        context.update({
+            'heading': heading,
+            'search_term': search_term,
+            'results_message': search_message,
+            'pages': paginator.page(page_number),
+            'paginator': paginator,
+            'current_page': page_number,
+            'get_secondary_nav_items': self.get_nav_items,
+        })
+        return TemplateResponse(
+            request,
+            'ask-cfpb/see-all.html',
+            context)
+
+    @route(r'^$')
+    def portal_topic_page(self, request):
+        self.query_base = SearchQuerySet().filter(
+            portal_topics=self.portal_topic.heading,
+            language=self.language)
+        self.portal_category = None
+        return self.get_results(request)
+
+    @route(r'^(?P<category>[^/]+)/$')
+    def portal_category_page(self, request, **kwargs):
+        category_slug = kwargs.get('category')
+        self.portal_category = self.category_map.get(category_slug)
+        self.query_base = SearchQuerySet().filter(
+            portal_topics=self.portal_topic.heading,
+            language=self.language,
+            portal_categories=self.portal_category.heading)
+        return self.get_results(request)
 
 
 class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
@@ -269,10 +465,10 @@ class AnswerResultsPage(SecondaryNavigationJSMixin, CFGOVPage):
         context.update(**kwargs)
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
+        results = paginator.page(page_number)
         context['current_page'] = page_number
         context['paginator'] = paginator
-        context['results'] = page
+        context['results'] = results
         context['results_count'] = len(self.answers)
         context['get_secondary_nav_items'] = get_ask_nav_items
         context['breadcrumb_items'] = get_ask_breadcrumbs(self.language)
