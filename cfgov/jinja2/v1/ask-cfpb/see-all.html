@@ -1,0 +1,58 @@
+{% extends 'layout-side-nav.html' %}
+
+{% import 'molecules/pagination.html' as pagination with context %}
+{% import 'atoms/partially-styled-link.html' as partially_styled_link with context %}
+
+{% block content_modifiers -%}
+    {{ super() }} see-all-page
+{%- endblock %}
+
+{% block content_main %}
+    <h1>
+      {{ _(page.portal_topic.heading) }}
+      {% if page.portal_category %}
+        {{ _(page.portal_category.heading) | lower }}
+      {% endif %}
+    </h1>
+    {% if not page.portal_category %}
+    <p class="lead-paragraph">
+        {{ _(page.overview) }}
+    </p>
+    {% endif %}
+    <aside class="search-bar u-mt30">
+        <form method="get" action=".">
+            <label for="ask-search" class="a-label a-label__heading">
+                Narrow your search
+            </label>
+            <div class="m-form-field">
+                <input
+                    class="a-text-input a-text-input__full"
+                    type="text"
+                    name="search_term"
+                    value="{{ search_term }}">
+                <button class="a-btn" id="ask-search" type="submit">
+                    {{ _('Search') }}
+                </button>
+            </div>
+        </form>
+    </aside>
+
+    <div class="block block__sub">
+        {% from 'molecules/notification.html' import render as notification with context %}
+        {{ notification('success', True, results_message) }}
+    </div>
+
+    <section class="results">
+        {% for page in pages %}
+        <article>
+            <div class="h3"><a href="{{page.url}}">{{page.autocomplete}}</a></div>
+        </article>
+        {% endfor %}
+
+        <div class="block block__sub">
+            {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
+        </div>
+    </section>
+    <b>Don't see what you're looking for? </b><a href=/ask-cfpb/search/>Search our full library of answers</a>
+
+{% endblock %}

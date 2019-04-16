@@ -4,6 +4,8 @@ from __future__ import absolute_import, unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
+from wagtail.wagtailsnippets.models import register_snippet
+
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from taggit.managers import TaggableManager
@@ -19,6 +21,7 @@ class PortalTopicTag(TaggedItemBase):
 
 
 @python_2_unicode_compatible
+@register_snippet
 class PortalTopic(ClusterableModel):
     heading = models.CharField(max_length=255, blank=True)
     heading_es = models.CharField(max_length=255, blank=True)
@@ -42,6 +45,7 @@ class PortalCategoryTag(TaggedItemBase):
 
 
 @python_2_unicode_compatible
+@register_snippet
 class PortalCategory(ClusterableModel):
     heading = models.CharField(max_length=255, blank=True)
     heading_es = models.CharField(max_length=255, blank=True)

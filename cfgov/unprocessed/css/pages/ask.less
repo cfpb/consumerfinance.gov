@@ -3,6 +3,48 @@
    Ask CFPB pages at /ask-cfpb/.
    ========================================================================== */
 
+.see-all-page {
+    .search-bar,
+    .m-notification,
+    .results {
+        box-sizing: border-box;
+        max-width: 41.8em;
+    }
+
+    .m-form-field {
+        display: flex;
+
+        .a-btn {
+            margin-left: 10px;
+        }
+    }
+
+    .results {
+        article {
+            padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+            padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            border-bottom: 1px solid @block__border-bottom;
+
+            &:first-child {
+                padding-top: 0;
+            }
+
+            &:last-child {
+                border-bottom-width: 0;
+            }
+
+            .h3 {
+                margin-bottom: 0;
+
+                a {
+                    color: @black;
+                }
+            }
+        }
+    }
+
+}
+
 /* Answer page */
 
 .ask-cfpb-page__answer {

@@ -4,26 +4,26 @@ from ask_cfpb.models.pages import AnswerPage
 from search import fields
 
 
-class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
+class AnswerPageIndex(indexes.SearchIndex, indexes.Indexable):
     text = fields.CharFieldWithSynonyms(
         document=True,
         use_template=True,
         boost=10.0)
     autocomplete = indexes.EdgeNgramField(
-        use_template=True,
-        indexed=True)
+        use_template=True)
     url = indexes.CharField(
         use_template=True,
         indexed=False)
     tags = indexes.MultiValueField(
-        indexed=True,
         boost=10.0)
     language = indexes.CharField(
         model_attr='language')
+    portal_topics = indexes.MultiValueField()
+    portal_categories = indexes.MultiValueField()
     suggestions = indexes.FacetCharField()
 
     def prepare_answer(self, obj):
-        data = super(AnswerBaseIndex, self).prepare(obj)
+        data = super(AnswerPageIndex, self).prepare(obj)
         if obj.question.lower().startswith('what is'):
             data['boost'] = 2.0
         return data
@@ -31,8 +31,14 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_tags(self, obj):
         return obj.clean_search_tags
 
+    def prepare_portal_topics(self, obj):
+        return [topic.heading for topic in obj.portal_topic.all()]
+
+    def prepare_portal_categories(self, obj):
+        return [topic.heading for topic in obj.portal_category.all()]
+
     def prepare(self, obj):
-        data = super(AnswerBaseIndex, self).prepare(obj)
+        data = super(AnswerPageIndex, self).prepare(obj)
         data['suggestions'] = data['text']
         return data
 
