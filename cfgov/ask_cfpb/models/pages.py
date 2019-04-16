@@ -316,7 +316,7 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             count = self.query_base.count()
             context['count'] = count
             context['pages'] = self.query_base
-            results_message = "Showing {} results within {}".format(
+            results_message = 'Showing {} results within {}'.format(
                 count, _(self.portal_topic.heading).lower())
         else:
             sqs = self.query_base.filter(content=search_term)
@@ -334,7 +334,7 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                     count = sqs.count()
             context['count'] = count
             context['pages'] = sqs
-            results_message = "Showing {} results for {} within {}".format(
+            results_message = 'Showing {} results for "{}" within {}'.format(
                 count, search_term, _(self.portal_topic.heading).lower())
         paginator = Paginator(context.get('pages'), 10)
         page_number = validate_page_number(request, paginator)
