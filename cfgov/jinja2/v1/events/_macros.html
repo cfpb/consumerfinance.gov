@@ -155,10 +155,13 @@
             {# TODO: Replace this call to the Google Maps Static API
                (which now requires an API key we don't have)
                with Mapbox (for which we do have an API key).
+               Is this macro even used?? post-preview.html seems
+                to be instead.
             {% else %}
-              <img src="{{ event.location_image_url(size='640x320') }}"
-                   alt="Google Maps image of
-                        {{ event.venue_city }}{{ ', ' ~ event.venue_state if event.venue_state else '' }}">
+              <img data-js-hook="o-post-preview_image-event-map"
+                   data-js-map-location="{{ event.venue_city }}{{ ', ' ~ event.venue_state if event.venue_state else '' }}"
+                   src="{{ event.location_image_url(size='640x320') }}"
+                   alt="">
             #}
             {% endif %}
             </figure>

@@ -300,7 +300,7 @@ class EventPage(AbstractFilterPage):
 
     @property
     def page_js(self):
-        return super(EventPage, self).page_js + ['video-player.js']
+        return super(EventPage, self).page_js + ['video-player.js'] + ['event-location-map.js']
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
         center = 'Washington, DC'
