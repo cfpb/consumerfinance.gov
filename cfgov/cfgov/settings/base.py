@@ -788,20 +788,21 @@ else:
         }
     }
 
-PARSE_LINKS_BLACKLIST = [
-    '/admin/',
-    '/django-admin/',
-    '/policy-compliance/rulemaking/regulations/1002/',
-    '/policy-compliance/rulemaking/regulations/1003/',
-    '/policy-compliance/rulemaking/regulations/1004/',
-    '/policy-compliance/rulemaking/regulations/1005/',
-    '/policy-compliance/rulemaking/regulations/1010/',
-    '/policy-compliance/rulemaking/regulations/1011/',
-    '/policy-compliance/rulemaking/regulations/1012/',
-    '/policy-compliance/rulemaking/regulations/1013/',
-    '/policy-compliance/rulemaking/regulations/1024/',
-    '/policy-compliance/rulemaking/regulations/1026/',
-    '/policy-compliance/rulemaking/regulations/1030/',
+
+# See core.middleware.ParseLinksMiddleware. Normally all HTML responses get
+# processed by this middleware so that their link content gets the proper
+# markup (e.g., download icons). We want to exclude certain pages from this
+# middleware. This list of regular expressions defines a set of URLs against
+# which we don't want this logic to be run.
+PARSE_LINKS_EXCLUSION_LIST = [
+    # Wagtail admin pages, except preview and draft views
+    r'^/admin/(?!pages/\d+/(edit/preview|view_draft)/)',
+    # Django admin pages
+    r'^/django-admin/',
+    # Our custom login pages
+    r'^/login/',
+    # Regulations pages that have their own link markup
+    r'^/policy-compliance/rulemaking/regulations/\d+/'
 ]
 
 # Required by django-extensions to determine the execution directory used by
