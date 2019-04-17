@@ -21,8 +21,7 @@ from wagtailautocomplete.urls.admin import (
 )
 
 from ask_cfpb.views import (
-    ask_autocomplete, ask_search, redirect_ask_search,
-    view_answer
+    ask_autocomplete, ask_search, redirect_ask_search, view_answer
 )
 from core.conditional_urls import include_if_app_enabled
 from core.views import (
