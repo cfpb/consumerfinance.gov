@@ -60,7 +60,6 @@ class AnswerPagePreviewCase(TestCase):
             slug='test-question2')
         self.english_answer_page = AnswerPage(
             answer_base=self.test_answer,
-            answer_id=self.test_answer.pk,
             language='en',
             slug='test-question1-en-{}'.format(self.test_answer.pk),
             title='Test question1',
@@ -70,7 +69,6 @@ class AnswerPagePreviewCase(TestCase):
         self.english_answer_page.save_revision().publish()
         self.english_answer_page2 = AnswerPage(
             answer_base=self.test_answer2,
-            answer_id=self.test_answer2.pk,
             language='en',
             slug='test-question2-en-{}'.format(self.test_answer2.pk),
             title='Test question2',

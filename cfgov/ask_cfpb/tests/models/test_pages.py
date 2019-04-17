@@ -74,16 +74,13 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
     def setUp(self):
         self.mock_assemble_output_value = [{
             'ASK_ID': 123456,
+            'PAGE_ID': 56789,
             'Question': "Question",
             'ShortAnswer': "Short answer.",
             'Answer': "Long answer.",
             'URL': "fakeurl.com",
-            'SpanishQuestion': "Spanish question.",
-            'SpanishAnswer': "Spanish answer",
-            'SpanishURL': "fakespanishurl.com",
-            'Topic': "Category 5 Hurricane",
-            'SubCategories': "Subcat1 | Subcat2",
-            'Audiences': "Audience1 | Audience2",
+            'PortalTopics': "Category 5 Hurricane",
+            'PortalCategories': "Subcat1 | Subcat2",
             'RelatedQuestions': "1 | 2 | 3",
             'RelatedResources': "Owning a Home"}]
 
@@ -125,7 +122,8 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         response = self.client.post('/admin/export-ask/')
         self.assertEqual(response.status_code, 200)
         # Check that fields from the mock value are included
-        self.assertContains(response, 'fakespanishurl.com')
+        self.assertContains(response, 'Category 5 Hurricane')
+        self.assertContains(response, '56789')
         self.assertContains(response, 'fakeurl.com')
 
     def test_export_from_admin_get(self):
@@ -242,7 +240,6 @@ class AnswerPageTestCase(TestCase):
         self.page1 = AnswerPage(
             language='en',
             answer_base=self.answer1234,
-            answer_id=1234,
             slug='mock-question-en-1234',
             title='Mock question1',
             answer='Mock answer 1',
@@ -255,7 +252,6 @@ class AnswerPageTestCase(TestCase):
             slug='mock-spanish-question1-es-1234',
             title='Mock Spanish question1',
             answer_base=self.answer1234,
-            answer_id=1234,
             answer='Mock Spanish answer',
             question='Mock Spanish question1',
             search_tags='hipotecas')
@@ -273,7 +269,6 @@ class AnswerPageTestCase(TestCase):
             slug='mock-question2-en-5678',
             title='Mock question2',
             answer_base=self.answer5678,
-            answer_id=5678,
             answer='Mock answer 2',
             question='Mock question2',
             search_tags='hippodrome')

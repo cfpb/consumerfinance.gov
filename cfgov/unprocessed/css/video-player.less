@@ -132,7 +132,7 @@
 
     .m-social-media {
 
-        .respond-to-min( @bp-sm-min {
+        .respond-to-min( @bp-sm-min, {
             text-align: right;
         } );
     }
@@ -142,7 +142,7 @@
         margin-bottom: 0;
         .grid_column(6);
 
-        .respond-to-max( @bp-xs-max {
+        .respond-to-max( @bp-xs-max, {
             width: 100%;
         } );
     }
@@ -180,7 +180,7 @@
         margin-top: @gutter-half__em;
     } );
 
-    .respond-to-range( @bp-sm-min, @fcm-bp-max {
+    .respond-to-range( @bp-sm-min, @fcm-bp-max, {
         .grid_column(6);
     } );
 }

@@ -6,12 +6,6 @@ from django.test import TestCase, override_settings
 import mock
 
 
-cache_config = {'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
-                'CLIENT_TOKEN': 'fake',
-                'CLIENT_SECRET': 'fake',
-                'ACCESS_TOKEN': 'fake'}
-
-
 def create_admin_access_permissions():
     """
     This is to ensure that Wagtail's non-model permissions are set-up
@@ -38,10 +32,22 @@ def create_admin_access_permissions():
         group.permissions.add(admin_permission)
 
 
-@override_settings(WAGTAILFRONTENDCACHE=dict(akamai=cache_config))
+@override_settings(WAGTAILFRONTENDCACHE={
+    'akamai': {
+        'BACKEND': 'v1.models.caching.AkamaiBackend',
+        'CLIENT_TOKEN': 'fake',
+        'CLIENT_SECRET': 'fake',
+        'ACCESS_TOKEN': 'fake'
+    },
+    'files': {
+        'BACKEND': 'wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend',  # noqa: E501
+        'DISTRIBUTION_ID': {
+            'files.fake.gov': 'fake'
+        }
+    }
+})
 class TestCDNManagementView(TestCase):
     def setUp(self):
-
         create_admin_access_permissions()
 
         self.no_permission = User.objects.create_user(username='noperm',
@@ -53,7 +59,7 @@ class TestCDNManagementView(TestCase):
                                                     password='password')
 
         # Give CDN Manager permission to add history items
-        cdn_permission = Permission.objects.get(name='Can add akamai history')
+        cdn_permission = Permission.objects.get(name='Can add cdn history')
         self.cdn_manager.user_permissions.add(cdn_permission)
 
         # Add no_permission and cdn_manager to Editors group
@@ -69,14 +75,14 @@ class TestCDNManagementView(TestCase):
                              fetch_redirect_response=False)
 
     def test_form_hiding(self):
-        # users without 'Can add akamai history' can view the page,
+        # users without 'Can add cdn history' can view the page,
         # but the form is hidden
         self.client.login(username='noperm', password='password')
         response = self.client.get(reverse('manage-cdn'))
         self.assertContains(response, "You do not have permission")
 
     def test_post_blocking(self):
-        # similarly, users without 'Can add akamai history' are also
+        # similarly, users without 'Can add cdn history' are also
         # blocked from POST'ing
         self.client.login(username='noperm', password='password')
         response = self.client.post(reverse('manage-cdn'))
@@ -88,14 +94,25 @@ class TestCDNManagementView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Enter a full URL")
 
-    @mock.patch('v1.models.akamai_backend.AkamaiBackend.purge')
-    def test_submission_with_url(self, mock_purge):
+    @mock.patch('v1.models.caching.AkamaiBackend.purge')
+    def test_submission_with_url_akamai(self, mock_purge):
         self.client.login(username='cdn', password='password')
-        self.client.post(reverse('manage-cdn'),
-                         {'url': 'http://fake.gov'})
-        mock_purge.assert_called_with('http://fake.gov')
+        self.client.post(
+            reverse('manage-cdn'),
+            {'url': 'http://www.fake.gov'}
+        )
+        mock_purge.assert_called_with('http://www.fake.gov')
 
-    @mock.patch('v1.models.akamai_backend.AkamaiBackend.purge_all')
+    @mock.patch('wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend.purge_batch')  # noqa: E501
+    def test_submission_with_url_cloudfront(self, mock_purge_batch):
+        self.client.login(username='cdn', password='password')
+        self.client.post(
+            reverse('manage-cdn'),
+            {'url': 'http://files.fake.gov'}
+        )
+        mock_purge_batch.assert_called_with(['http://files.fake.gov'])
+
+    @mock.patch('v1.models.caching.AkamaiBackend.purge_all')
     def test_submission_without_url(self, mock_purge_all):
         self.client.login(username='cdn', password='password')
         self.client.post(reverse('manage-cdn'))

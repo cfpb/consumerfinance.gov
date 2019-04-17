@@ -191,8 +191,8 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
         context = super(
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
         answers = self.ask_category.answerpage_set.filter(
-            language=self.language, redirect_to=None, live=True).values(
-                'answer_id', 'question', 'slug', 'answer')
+            language=self.language, redirect_to_page=None, live=True).values(
+                'answer_base__id', 'question', 'slug', 'answer')
         subcats = self.ask_category.subcategories.all()
         paginator = Paginator(answers, 20)
         page_number = validate_page_number(request, paginator)
@@ -226,7 +226,7 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
             raise Http404
         context = self.get_context(request)
         answers = self.ask_subcategory.answerpage_set.filter(
-            language=self.language)
+            language=self.language, live=True, redirect_to_page=None)
         paginator = Paginator(answers, 20)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)
@@ -307,14 +307,11 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     @route(r'^(?P<tag>[^/]+)/$')
     def tag_search(self, request, **kwargs):
         tag = kwargs.get('tag').replace('_', ' ')
-        self.answers = [
-            (p.url, p.question, p.short_answer if p.short_answer else p.answer)
-            for p in AnswerPage.objects.filter(
-                search_tags__contains=tag,
-                language=self.language,
-                live=True,
-                redirect_to=None)
-        ]
+        self.answers = AnswerPage.objects.filter(
+            language=self.language,
+            search_tags__contains=tag,
+            redirect_to_page=None,
+            live=True)
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)
@@ -369,13 +366,6 @@ class AnswerPage(CFGOVPage):
         null=True,
         related_name='answer_pages',
         on_delete=models.SET_NULL)
-    redirect_to = models.ForeignKey(
-        Answer,
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='redirected_pages',
-        help_text="Choose another Answer to redirect this page to")
     redirect_to_page = models.ForeignKey(
         'self',
         blank=True,
@@ -416,7 +406,6 @@ class AnswerPage(CFGOVPage):
         blank=True,
         related_name='related_question',
         help_text='Maximum of 3 related questions')
-    answer_id = models.IntegerField(default=0)
     portal_topic = ParentalManyToManyField(
         PortalTopic,
         blank=True,

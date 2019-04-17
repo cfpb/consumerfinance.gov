@@ -17,7 +17,7 @@ class RegulationIndexTestCase(TestCase):
     index = RegulationParagraphIndex()
 
     def setUp(self):
-        Section.objects.first().extract_graphs()
+        Section.objects.order_by('pk').first().extract_graphs()
 
     def test_extract_paragraphs(self):
         self.assertEqual(SectionParagraph.objects.count(), 13)

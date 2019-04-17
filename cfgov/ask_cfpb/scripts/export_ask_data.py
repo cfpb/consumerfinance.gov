@@ -8,7 +8,6 @@ from django.utils import html
 
 import unicodecsv
 
-from ask_cfpb.models.django import Answer
 from ask_cfpb.models.pages import AnswerPage
 
 
@@ -16,22 +15,18 @@ html_parser = HTMLParser.HTMLParser()
 
 HEADINGS = [
     'ASK_ID',
+    'PAGE_ID',
     'Question',
     'ShortAnswer',
     'Answer',
     'URL',
     'Live',
     'Redirect',
-    'SpanishQuestion',
-    'SpanishAnswer',
-    'SpanishURL',
-    'SpanishLive',
-    'SpanishRedirect',
-    'Topic',
-    'SubCategories',
-    'Audiences',
+    'PortalTopics',
+    'PortalCategories',
     'RelatedQuestions',
-    'RelatedResources',
+    'RelatedResource',
+    'Language'
 ]
 
 
@@ -41,76 +36,59 @@ def clean_and_strip(data):
 
 
 def assemble_output():
+
     prefetch_fields = (
-        'category__name',
-        'subcategory__name',
-        'audiences__name',
         'related_questions',
-        'next_step__title')
-    answers = list(Answer.objects.prefetch_related(*prefetch_fields).values(
-        'id', *prefetch_fields))
-
-    answer_pages = list(AnswerPage.objects.values(
-        'language', 'answer_base__id', 'url_path', 'live',
-        'redirect_to_id', 'question', 'answer', 'short_answer'
-    ))
-
+        'portal_topic__heading',
+        'portal_category__heading')
+    answer_pages = list(AnswerPage.objects.prefetch_related(
+        *prefetch_fields).order_by('language', '-answer_base__id').values(
+            'id', 'answer_base__id', 'question', 'short_answer',
+            'answer', 'url_path', 'live', 'redirect_to_page_id',
+            'related_resource__title', 'language', *prefetch_fields))
     output_rows = []
     seen = []
 
-    for answer in answers:
-        # There are duplicate answer_ids in here
+    for page in answer_pages:
+        # There are duplicate pages in here
         # because of the ManyToMany fields prefetched:
-        if answer['id'] in seen:
+        if page['id'] in seen:
             continue
-        seen.append(answer['id'])
+        seen.append(page['id'])
 
         output = {heading: '' for heading in HEADINGS}
-        output['ASK_ID'] = answer['id']
-        output['RelatedResources'] = answer['next_step__title']
-        output['Topic'] = answer['category__name']
-
-        for page in answer_pages:
-            if page['answer_base__id'] == answer['id']:
-                if page['language'] == 'en':
-                    output['Question'] = page['question']
-                    output['Answer'] = clean_and_strip(page['answer'])
-                    output['ShortAnswer'] = clean_and_strip(
-                        page['short_answer'])
-                    output['URL'] = page['url_path'].replace('/cfgov', '')
-                    output['Live'] = page['live']
-                    output['Redirect'] = page['redirect_to_id']
-                elif page['language'] == 'es':
-                    output['SpanishQuestion'] = page['question'].replace(
-                        '\x81', '')
-                    output['SpanishAnswer'] = clean_and_strip(
-                        page['answer']).replace('\x81', '')
-                    output['SpanishURL'] = page['url_path'].replace(
-                        '/cfgov', '')
-                    output['SpanishLive'] = page['live']
-                    output['SpanishRedirect'] = page['redirect_to_id']
+        output['ASK_ID'] = page['answer_base__id']
+        output['PAGE_ID'] = page['id']
+        output['Language'] = page['language']
+        output['RelatedResource'] = page['related_resource__title']
+        output['Question'] = page['question'].replace('\x81', '')
+        output['Answer'] = clean_and_strip(page['answer']).replace('\x81', '')
+        output['ShortAnswer'] = clean_and_strip(page['short_answer'])
+        output['URL'] = page['url_path'].replace('/cfgov', '')
+        output['Live'] = page['live']
+        output['Redirect'] = page['redirect_to_page_id']
 
         # Group the ManyToMany fields together:
-        audiences = []
         related_questions = []
-        subcategories = []
-        for a in answers:
-            if a['id'] == answer['id']:
-                if a['audiences__name']:
-                    audiences.append(a['audiences__name'])
-                if a['related_questions']:
-                    related_questions.append(str(a['related_questions']))
-                if a['subcategory__name']:
-                    subcategories.append(a['subcategory__name'])
+        portal_topics = []
+        portal_categories = []
+        for p in answer_pages:
+            if p['id'] == page['id']:
+                if p['related_questions']:
+                    related_questions.append(str(p['related_questions']))
+                if p['portal_topic__heading']:
+                    portal_topics.append(p['portal_topic__heading'])
+                if p['portal_category__heading']:
+                    portal_categories.append(p['portal_category__heading'])
 
         # Remove duplicates
-        audiences = list(set(audiences))
         related_questions = list(set(related_questions))
-        subcategories = list(set(subcategories))
+        portal_topics = list(set(portal_topics))
+        portal_categories = list(set(portal_categories))
 
-        output['Audiences'] = " | ".join(audiences)
         output['RelatedQuestions'] = " | ".join(related_questions)
-        output['SubCategories'] = " | ".join(subcategories)
+        output['PortalTopics'] = " | ".join(portal_topics)
+        output['PortalCategories'] = " | ".join(portal_categories)
         output_rows.append(output)
     return output_rows
 

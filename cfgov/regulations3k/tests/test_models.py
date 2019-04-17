@@ -8,17 +8,17 @@ import unittest
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator
-from django.http import HttpRequest, QueryDict  # Http404, HttpResponse
+from django.http import Http404, HttpRequest, QueryDict
 from django.test import (
     RequestFactory, TestCase as DjangoTestCase, override_settings
 )
 
-from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
 from wagtail.wagtailcore.models import Site
 
 import mock
 from model_mommy import mommy
 
+from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, SectionParagraph, Subpart,
     effective_version_saved, section_saved, sortable_label
@@ -28,17 +28,6 @@ from regulations3k.models.pages import (
     get_next_section, get_previous_section, get_secondary_nav_items,
     get_section_url, validate_num_results, validate_page_number
 )
-
-
-CACHE_PURGED_URLS = []
-
-
-class MockCacheBackend(BaseBackend):
-    def __init__(self, config):
-        pass
-
-    def purge(self, url):
-        CACHE_PURGED_URLS.append(url)
 
 
 class RegModelTests(DjangoTestCase):
@@ -528,6 +517,13 @@ class RegModelTests(DjangoTestCase):
                 request, '2020-01-01'
             )
 
+    def test_get_effective_version_dne(self):
+        request = self.get_request()
+        with self.assertRaises(Http404):
+            self.reg_page.get_effective_version(
+                request, '2050-01-01'
+            )
+
     def test_index_page_with_effective_date(self):
         response = self.client.get('/reg-landing/1002/2011-01-01/')
         self.assertEqual(response.status_code, 200)
@@ -612,7 +608,7 @@ class RegModelTests(DjangoTestCase):
 
     @override_settings(WAGTAILFRONTENDCACHE={
         'varnish': {
-            'BACKEND': 'regulations3k.tests.test_models.MockCacheBackend',
+            'BACKEND': 'core.testutils.mock_cache_backend.MockCacheBackend',
         },
     })
     def test_effective_version_saved(self):
@@ -633,7 +629,7 @@ class RegModelTests(DjangoTestCase):
 
     @override_settings(WAGTAILFRONTENDCACHE={
         'varnish': {
-            'BACKEND': 'regulations3k.tests.test_models.MockCacheBackend',
+            'BACKEND': 'core.testutils.mock_cache_backend.MockCacheBackend',
         },
     })
     def test_section_saved(self):

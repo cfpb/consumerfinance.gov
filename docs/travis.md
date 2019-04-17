@@ -14,6 +14,7 @@ We use the following constraints to optimize Travis builds for speed and utility
 - We do not run Travis builds of any kind on any other branches that are not `master`, and that are not pull request branches.
 
 To customize Travis to fit the above constraints, we use a combination of:
+
  - [Build conditionals](https://docs.travis-ci.com/user/conditions-v1) and [build stages](https://docs.travis-ci.com/user/build-stages/) in our [.travis.yml](https://github.com/cfpb/cfgov-refresh/blob/master/.travis.yml) file 
  - "Settings" in the Travis UI at https://travis-ci.org
 

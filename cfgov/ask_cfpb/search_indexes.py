@@ -40,7 +40,5 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
         return AnswerPage
 
     def index_queryset(self, using=None):
-        ids = [record.id for record in self.get_model().objects.all()
-               if record.live is True
-               and record.redirect_to is None]
-        return self.get_model().objects.filter(id__in=ids)
+        return self.get_model().objects.filter(
+            live=True, redirect_to_page=None)

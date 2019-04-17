@@ -1,7 +1,7 @@
 # All lists have their default value listed first
 HMDA_RECORDS_OPTIONS = [
     ('first-lien-owner-occupied-1-4-family-records',
-        'Originated mortgages for first lien, owner-occupied, 1-4 family homes'),  # noqa E501
+        'Mortgages for first lien, owner-occupied, 1-4 family homes'),
     ('originated-records', 'All originated mortgages'),
     ('all-records', 'All records'),
 ]
