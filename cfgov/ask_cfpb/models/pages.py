@@ -316,7 +316,7 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             count = self.query_base.count()
             context['count'] = count
             context['pages'] = self.query_base
-            results_message = 'Showing {} results within {}'.format(
+            results_message = 'Showing {} answers within {}'.format(
                 count, _(self.portal_topic.heading).lower())
         else:
             sqs = self.query_base.filter(content=search_term)
