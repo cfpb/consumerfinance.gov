@@ -40,7 +40,7 @@ body {
         font-family: "Avenir Next Medium", Arial, sans-serif;
         font-weight: 400;
         line-height: 1.222222;
-        margin: 0 0 0.68em;  
+        margin: 0 0 0.68em;
     }
 
     p {
@@ -64,7 +64,7 @@ body {
           text-decoration: none;
         }
     }
-    
+
     .share a {
         border: none;
     }
@@ -89,7 +89,7 @@ body {
 
 @media @respond-to-medium-screens {
     .es-ask_results-section {
-        .ac-search { 
+        .ac-search {
             padding: 20px;
         }
 
@@ -179,7 +179,7 @@ body {
 
     .ac-search {
         padding: 30px 20px;
-        margin-top: 0em; 
+        margin-top: 0em;
         margin-bottom: unit( 30px / 16px, em );
     }
 
@@ -649,7 +649,7 @@ a.ac-qa-summary:focus {
 
     .ac-qa-answer p:first-child:before {
         width: 2.0em; /* 40/20 match .ac-qa left padding */
-        margin-left: -2.2em; /* 40/20 match .ac-qa left padding */    
+        margin-left: -2.2em; /* 40/20 match .ac-qa left padding */
     }
 
 }
@@ -675,142 +675,12 @@ a.ac-qa-summary:focus {
 }
 
 /* ==========================================================================
-   Feedback module
-   ========================================================================== */
-
-.cf-input_label {
-    display: block;
-}
-fieldset {
-    border: none;
-    margin: 0;
-    padding: .35em 0 .75em;
-}
-legend {
-    border: 0;
-    padding: 0;
-}
-
-.o-form-input-group p {
-    margin-bottom: 0;
-    line-height: 1.2;
-}
-
-.o-form-input-group small {
-    font-size: 80%;
-}
-
-.o-form-input-group__two-column legend {
-  font-size: 1.125em;
-  text-transform: uppercase;
-  font-family: "Avenir Next Demi",Arial,sans-serif;
-  font-weight: 600;
-  font-style: normal;
-  margin: 0 0 1em;
-}
-
-.m-big-radio-button {
-    margin-bottom: .9375em;
-    width: 50%;
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border: solid transparent;
-    border-width: 0;
-    margin-right: -0.25em;
-    vertical-align: top;
-    width: 50%;
-    border-right-width: 7.5px;
-}
-
-.m-big-radio-button:last-child {
-    border-left-width: 10px;
-}
-
-
-.m-big-radio-button .cf-input[type="radio"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    border: 0;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-}
-.lt-ie9 .m-big-radio-button .cf-input[type="radio"] {
-    height: 20px;
-    width: 20px;
-    border: 0;
-    margin: 1em;
-    position: static;
-    float: left;
-}
-.m-big-radio-button .cf-input[type="radio"]+label {
-    cursor: pointer;
-    margin-bottom: 0;
-}
-.m-big-radio-button .cf-input[type="radio"]+label::before {
-    display: inline-block;
-    margin-top: .125em;
-    margin-right: .6em;
-    border-radius: 100%;
-    -webkit-box-shadow: 0 0 0 2px #fff, 0 0 0 3px #5a5d61;
-    box-shadow: 0 0 0 2px #fff, 0 0 0 3px #5a5d61;
-    height: 1.0625em;
-    width: 1.0625em;
-    background: white;
-    content: '\a0';
-    vertical-align: top;
-}
-.m-big-radio-button .cf-input[type="radio"]:checked+label::before {
-    background-color: #2cb34a;
-    -webkit-box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2cb34a;
-    box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2cb34a;
-}
-.m-big-radio-button .cf-input[type="radio"]:hover+label::before {
-    -webkit-box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2cb34a;
-    box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2cb34a;
-}
-.m-big-radio-button .cf-input[type="radio"]:focus+label::before {
-    -webkit-box-shadow: 0 0 0 1px #fff, 0 0 0 3px #2cb34a;
-    box-shadow: 0 0 0 1px #fff, 0 0 0 3px #2cb34a;
-}
-.m-big-radio-button .cf-input[type="radio"]:disabled+label {
-    color: #aeb0b5;
-    cursor: not-allowed;
-}
-.m-big-radio-button .cf-input[type="radio"]:disabled+label::before {
-    background: #b4b5b6;
-    -webkit-box-shadow: 0 0 0 1px #fff, 0 0 0 2px #aeb0b5;
-    box-shadow: 0 0 0 1px #fff, 0 0 0 2px #aeb0b5;
-    cursor: not-allowed;
-}
-.m-big-radio-button label {
-    padding: .9375em;
-    margin: 0;
-}
-.m-big-radio-button.selected label,
-.m-big-radio-button.focus label,
-.m-big-radio-button input:focus+label,
-.m-big-radio-button input:checked+label {
-    outline: 1px solid #2cb34a;
-}
-.m-big-radio-button.selected label,
-.m-big-radio-button input:checked+label {
-    background-color: #addc91;
-}
-.m-big-radio-button_container {
-    background: #e7e8e9;
-}
-
-/* ==========================================================================
    Autocomplete
    ========================================================================== */
 @pacific:      #0072ce;
 @gray-20:      #d2d3d5;
 @gray-5:       #f7f8f9;
-@black:        #101820; 
+@black:        #101820;
 @block__bg:    @gray-5;
 
 .m-autocomplete {
@@ -872,7 +742,7 @@ legend {
 .u-alpha-0 {
    opacity: 0;
 }
-   
+
 .u-move-transition {
     transition: transform 0.25s ease-out;
 }

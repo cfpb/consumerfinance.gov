@@ -10,12 +10,12 @@
   <form method="post"
         action="."
         class="o-form
-             {% if value.was_it_helpful_text %}
-             block
-             block__bg
-             block__border
-             block__padded-top
-             {% endif %}"
+               {% if value.was_it_helpful_text %}
+               block
+               block__bg
+               block__border
+               block__padded-top
+               {% endif %}"
         novalidate>
   <div class="u-mb15">
         {% if get_messages(request) %}
