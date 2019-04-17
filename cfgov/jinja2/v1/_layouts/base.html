@@ -3,7 +3,7 @@
 #}
 {% extends 'base-common.html' %}
 
-{% set language = 'es' if page and page.language == 'es' and 'obtener-respuestas' in request.path else 'en' %}
+{% set language = page.language if page and page.language else 'en' %}
 
 {% block preload %}
 <link rel="preload" href="{{ static('css/main.css') }}" as="style">
@@ -62,7 +62,6 @@
 {% endblock %}
 
 {% block footer %}
-    
     {% import 'organisms/footer.html' as o_footer with context %}
     {{ o_footer.render( language=language ) }}
 {% endblock footer %}
