@@ -116,6 +116,13 @@ msgstr "¿No ve lo que está buscando? <span class=\"break\">Busca su pregunta.<
 msgid "An official website of the United States government"
 msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
 
+#: ask_cfpb/models/pages/PortalTopicSearchPage
+msgid "Narrow your results"
+msgstr "Limita tus resultados"
+
+msgid "answers within"
+msgstr "respuestas dentro"
+
 #: cfgov/jinja2/v1/_includes/molecules/pagination.html
 msgid "Page"
 msgstr "Pagina"
@@ -184,6 +191,12 @@ msgid "Common issues"
 msgstr "Problemas comunes"
 
 msgid "How-to"
+msgstr "Paso a paso"
+
+msgid "How-to guides"
+msgstr "Paso a paso"
+
+msgid "How to guides"
 msgstr "Paso a paso"
 
 msgid "Key terms"

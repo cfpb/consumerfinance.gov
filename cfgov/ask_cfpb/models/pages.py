@@ -279,8 +279,21 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             for category in PortalCategory.objects.all()
         }
 
+    def results_message(self, count, heading):
+        return '{} {} {} {}'.format(
+            _('Showing'),
+            count,
+            _('answers within'),
+            heading.lower())
+
     def get_template(self, request):
         return 'ask-cfpb/see-all.html'
+
+    def get_heading(self, obj):
+        if self.language == 'es':
+            return obj.heading_es
+        else:
+            return obj.heading
 
     def get_context(self, request, *args, **kwargs):
         if self.language != 'en':
@@ -290,15 +303,19 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         return super(SeeAllPage, self).get_context(request, *args, **kwargs)
 
     def get_nav_items(self, request, page):
+        search_term = request.GET.get('search_term', '').strip()
         return [{
             'title': _(page.portal_topic.heading),
-            'url': page.url,
+            'url': "{}?search_term={}".format(page.url, search_term),
             'active': False if page.portal_category else True,
             'expanded': True,
             'children': [
                 {
                     'title': _(category.heading),
-                    'url': page.url + slugify(_(category.heading)) + '/',
+                    'url': ("{}{}/?search_term={}".format(
+                        page.url,
+                        slugify(_(category.heading)),
+                        search_term)),
                     'active': (
                         False if not page.portal_category
                         else _(category.heading)
@@ -311,13 +328,13 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
     @route(r'^$')
     def portal_topic_page(self, request):
         context = self.get_context(request)
+        heading = self.get_heading(self.portal_topic)
+        context['heading'] = heading
         search_term = request.GET.get('search_term', '').strip()
         if not search_term or len(unquote(search_term)) == 1:
             count = self.query_base.count()
-            context['count'] = count
-            context['pages'] = self.query_base
-            results_message = 'Showing {} answers within {}'.format(
-                count, _(self.portal_topic.heading).lower())
+            sqs = self.query_base
+            search_message = self.results_message(count, heading)
         else:
             sqs = self.query_base.filter(content=search_term)
             count = sqs.count()
@@ -332,16 +349,15 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                     sqs = self.query_base.filter(content=suggestion)
                     search_term, suggestion = suggestion, search_term
                     count = sqs.count()
-            context['count'] = count
             context['pages'] = sqs
-            results_message = 'Showing {} results for "{}" within {}'.format(
-                count, search_term, _(self.portal_topic.heading).lower())
-        paginator = Paginator(context.get('pages'), 10)
+            search_message = self.results_message(count, heading)
+        paginator = Paginator(sqs, 10)
         page_number = validate_page_number(request, paginator)
         pages = paginator.page(page_number)
         context.update({
+            'count': count,
             'search_term': search_term,
-            'results_message': results_message,
+            'results_message': search_message,
             'pages': pages,
             'paginator': paginator,
             'current_page': page_number,
@@ -357,15 +373,13 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         context = self.get_context(request)
         category_slug = kwargs.get('category')
         self.portal_category = self.category_map.get(category_slug)
-        search_term = request.GET.get('search_term', '').strip()
+        heading = self.get_heading(self.portal_category)
         sqs = self.query_base.filter(
             portal_categories=self.portal_category.heading)
+        search_term = request.GET.get('search_term', '').strip()
         if not search_term or len(unquote(search_term)) == 1:
             count = sqs.count()
-            context['count'] = count
-            context['pages'] = sqs
-            results_message = "Showing {} results within {}".format(
-                count, _(self.portal_category.heading).lower())
+            search_message = self.results_message(count, heading)
         else:
             sqs = sqs.filter(content=search_term)
             count = sqs.count()
@@ -380,16 +394,15 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                     sqs = self.query_base.filter(content=suggestion)
                     search_term, suggestion = suggestion, search_term
                     count = sqs.count()
-            context['count'] = count
-            context['pages'] = sqs
-            results_message = "Showing {} results for {} within {}".format(
-                count, search_term, _(self.portal_category.heading).lower())
-        paginator = Paginator(context.get('pages'), 10)
+            search_message = self.results_message(count, heading)
+        paginator = Paginator(sqs, 10)
         page_number = validate_page_number(request, paginator)
         pages = paginator.page(page_number)
         context.update({
+            'count': count,
+            'heading': heading,
             'search_term': search_term,
-            'results_message': results_message,
+            'results_message': search_message,
             'pages': pages,
             'paginator': paginator,
             'current_page': page_number,

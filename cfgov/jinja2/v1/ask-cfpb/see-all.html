@@ -9,20 +9,17 @@
 
 {% block content_main %}
     <h1>
-      {{ _(page.portal_topic.heading) }}
-      {% if page.portal_category %}
-        {{ _(page.portal_category.heading) | lower }}
-      {% endif %}
+      {{ heading }}
     </h1>
     {% if not page.portal_category %}
     <p class="lead-paragraph">
-        {{ _(page.overview) }}
+        {{ page.overview }}
     </p>
     {% endif %}
     <aside class="search-bar u-mt30">
         <form method="get" action=".">
             <label for="ask-search" class="a-label a-label__heading">
-                Narrow your search
+                {{ _('Narrow your results') }}
             </label>
             <div class="m-form-field">
                 <input
@@ -45,7 +42,7 @@
     <section class="results">
         {% for page in pages %}
         <article>
-            <div class="h3"><a href="{{page.url}}">{{page.autocomplete}}</a></div>
+            <div class="h3 hover"><a href="{{page.url}}" class="hover">{{page.autocomplete}}</a></div>
         </article>
         {% endfor %}
 
@@ -53,6 +50,9 @@
             {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
         </div>
     </section>
-    <b>Don't see what you're looking for? </b><a href=/ask-cfpb/search/>Search our full library of answers</a>
-
+    {% if not page.portal_category %}
+    <p class="h4">
+        Don't see what you're looking for? <a href=/ask-cfpb/search/>Search our full library of answers</a>
+    </p>
+    {% endif %}
 {% endblock %}
