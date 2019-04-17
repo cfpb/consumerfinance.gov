@@ -24,10 +24,10 @@ msgstr "Hipoteca"
 
 #: v1/ask-cfpb/category-page.html
 msgid "results"
-msgstr "respuestas"
+msgstr "resultados"
 
 msgid " results"
-msgstr " respuestas"
+msgstr " resultados"
 
 msgid "Read answer"
 msgstr "Leer la respuesta"
@@ -42,10 +42,10 @@ msgid "Next"
 msgstr "Siguiente"
 
 msgid "No results found for"
-msgstr "No se han encontrado resultados para"
+msgstr "No se encontraron resultados para"
 
 msgid "Please enter a search term in the box above."
-msgstr "Por favor, introduzca un término en el cuadro de búsqueda anterior."
+msgstr "Por favor ingrese un término de búsqueda en el cuadro de arriba."
 
 #: cfgov/jinja2/v1/ask-cfpb/answer-page.html
 msgid "updated"
@@ -86,7 +86,7 @@ msgid "results for"
 msgstr "resultados para"
 
 msgid "Search instead for"
-msgstr "Busca de"
+msgstr "Buscar en lugar para"
 
 #: cfgov/jinja2/v1/ask-cfpb/landing-page.html
 msgid "Browse questions by category"
@@ -118,7 +118,7 @@ msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
 
 #: cfgov/jinja2/v1/_includes/molecules/pagination.html
 msgid "Page"
-msgstr "Pagina"
+msgstr "Página"
 
 msgid " of "
 msgstr " de "
@@ -132,7 +132,7 @@ msgstr "En esta sección"
 
 #: cfgov/jinja2/v1/_includes/organisms/footer.html
 msgid "Back to top"
-msgstr "Volver al inicio de la página"
+msgstr "Volver al inicio"
 
 msgid "https://usa.gov/"
 msgstr "https://gobiernousa.gov/"
