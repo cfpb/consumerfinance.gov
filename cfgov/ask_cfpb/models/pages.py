@@ -8,6 +8,7 @@ from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
+from django.utils.html import format_html
 from django.utils.text import Truncator, slugify
 from django.utils.translation import activate, deactivate_all
 from django.utils.translation import gettext as _
@@ -279,7 +280,18 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             for category in PortalCategory.objects.all()
         }
 
-    def results_message(self, count, heading):
+    def results_message(self, count, heading, search_term):
+        if count == 0 and self.portal_category:
+            return format_html(
+                '{} {} {} {}<br><p><a href="../?search_term={}">'
+                'Search all {} answers</a></p>',
+                _('Showing'),
+                count,
+                _('answers within'),
+                heading.lower(),
+                search_term,
+                _(self.portal_topic.heading)
+            )
         return '{} {} {} {}'.format(
             _('Showing'),
             count,
@@ -337,7 +349,7 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         if not search_term or len(unquote(search_term)) == 1:
             count = self.query_base.count()
             sqs = self.query_base
-            search_message = self.results_message(count, heading)
+            search_message = self.results_message(count, heading, search_term)
         else:
             sqs = self.query_base.filter(content=search_term)
             count = sqs.count()
@@ -353,7 +365,7 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                     search_term, suggestion = suggestion, search_term
                     count = sqs.count()
             context['pages'] = sqs
-            search_message = self.results_message(count, heading)
+            search_message = self.results_message(count, heading, search_term)
         paginator = Paginator(sqs, 10)
         page_number = validate_page_number(request, paginator)
         pages = paginator.page(page_number)
@@ -382,7 +394,7 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         search_term = request.GET.get('search_term', '').strip()
         if not search_term or len(unquote(search_term)) == 1:
             count = sqs.count()
-            search_message = self.results_message(count, heading)
+            search_message = self.results_message(count, heading, search_term)
         else:
             sqs = sqs.filter(content=search_term)
             count = sqs.count()
@@ -397,7 +409,7 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                     sqs = self.query_base.filter(content=suggestion)
                     search_term, suggestion = suggestion, search_term
                     count = sqs.count()
-            search_message = self.results_message(count, heading)
+            search_message = self.results_message(count, heading, search_term)
         paginator = Paginator(sqs, 10)
         page_number = validate_page_number(request, paginator)
         pages = paginator.page(page_number)
