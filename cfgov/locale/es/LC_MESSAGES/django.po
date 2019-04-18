@@ -109,6 +109,15 @@ msgstr "opcional"
 msgid "/ask-cfpb/search"
 msgstr "/es/obtener-respuestas/buscar"
 
+msgid "Don't see what you're looking for?"
+msgstr "¿No ve lo que está buscando?"
+
+msgid "Search for your question."
+msgstr "Busca su pregunta."
+
+msgid "Search our full library of answers"
+msgstr "Busca su pregunta."
+
 msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
 msgstr "¿No ve lo que está buscando? <span class=\"break\">Busca su pregunta.</span>"
 
@@ -119,6 +128,9 @@ msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
 #: ask_cfpb/models/pages/PortalTopicSearchPage
 msgid "Narrow your results"
 msgstr "Limita tus resultados"
+
+msgid "within"
+msgstr "dentro"
 
 msgid "answers within"
 msgstr "respuestas dentro"

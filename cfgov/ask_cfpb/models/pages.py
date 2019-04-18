@@ -281,21 +281,29 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         }
 
     def results_message(self, count, heading, search_term):
-        if count == 0 and self.portal_category:
+        if search_term:
+            for_term = 'for "{}"'.format(search_term)
+        else:
+            for_term = ''
+        if self.portal_category:
             return format_html(
-                '{} {} {} {}<br><p><a href="../?search_term={}">'
+                '{} {} {} {} {} {}<br><p><a href="../?search_term={}">'
                 'Search all {} answers</a></p>',
                 _('Showing'),
                 count,
-                _('answers within'),
+                _('results'),
+                for_term,
+                _('within'),
                 heading.lower(),
                 search_term,
                 _(self.portal_topic.heading)
             )
-        return '{} {} {} {}'.format(
+        return '{} {} {} {} {} {}'.format(
             _('Showing'),
             count,
-            _('answers within'),
+            _('results'),
+            for_term,
+            _('within'),
             heading.lower())
 
     def get_template(self, request):
