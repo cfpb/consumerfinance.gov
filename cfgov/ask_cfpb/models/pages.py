@@ -246,7 +246,7 @@ class SecondaryNavigationJSMixin(object):
 
 class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
     """
-    A routable page type for Ask CFPB see all pages.
+    A routable page type for Ask CFPB portal seearch pages.
     """
 
     objects = CFGOVPageManager()
@@ -303,26 +303,29 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         return super(SeeAllPage, self).get_context(request, *args, **kwargs)
 
     def get_nav_items(self, request, page):
+        """Return nav items sorted by an arbitrary order."""
         search_term = request.GET.get('search_term', '').strip()
+        pk_sort_order = [1, 4, 5, 2, 3]
+        hand_sorted_categories = []
+        for pk in pk_sort_order:
+            category = PortalCategory.objects.get(pk=pk)
+            hand_sorted_categories.append({
+                'title': _(category.heading),
+                'url': ("{}{}/?search_term={}".format(
+                    page.url,
+                    slugify(_(category.heading)),
+                    search_term)),
+                'active': (
+                    False if not page.portal_category
+                    else _(category.heading)
+                    == _(page.portal_category.heading)),
+            })
         return [{
             'title': _(page.portal_topic.heading),
             'url': "{}?search_term={}".format(page.url, search_term),
             'active': False if page.portal_category else True,
             'expanded': True,
-            'children': [
-                {
-                    'title': _(category.heading),
-                    'url': ("{}{}/?search_term={}".format(
-                        page.url,
-                        slugify(_(category.heading)),
-                        search_term)),
-                    'active': (
-                        False if not page.portal_category
-                        else _(category.heading)
-                        == _(page.portal_category.heading)),
-                }
-                for category in PortalCategory.objects.all()
-            ],
+            'children': hand_sorted_categories
         }], True
 
     @route(r'^$')
