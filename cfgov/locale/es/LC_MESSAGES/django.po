@@ -22,6 +22,9 @@ msgstr "Presentar una queja"
 msgid "Mortgage"
 msgstr "Hipoteca"
 
+msgid "Mortgages"
+msgstr "Hipotecas"
+
 #: v1/ask-cfpb/category-page.html
 msgid "results"
 msgstr "respuestas"
@@ -179,10 +182,7 @@ msgid "Fraud and scams"
 msgstr "Fraudes y estafas"
 
 msgid "Money transfers"
-msgstr "Transferencias y envíos de dinero"
-
-msgid "Mortgages"
-msgstr "Comprar una vivienda"
+msgstr "Transferencias de dinero"
 
 msgid "Payday loans"
 msgstr "Préstamos del día de pago"
@@ -194,10 +194,10 @@ msgid "Reverse mortgages"
 msgstr "Hipotecas inversas"
 
 msgid "Student loans"
-msgstr "Préstamos para educación"
+msgstr "Préstamos estudiantiles"
 
 msgid "Basics"
-msgstr "Lo que debe saber"
+msgstr "Lo básico"
 
 msgid "Common issues"
 msgstr "Problemas comunes"
