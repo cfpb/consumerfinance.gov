@@ -604,7 +604,8 @@ CSP_CONNECT_SRC = (
     's3.amazonaws.com',
     'public.govdelivery.com',
     'n2.mouseflow.com',
-    'api.iperceptions.com'
+    'api.iperceptions.com',
+    'api.mapbox.com'
 )
 
 # Feature flags

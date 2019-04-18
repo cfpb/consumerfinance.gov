@@ -308,13 +308,10 @@ class EventPage(AbstractFilterPage):
             center = self.venue_city
         if self.venue_state:
             center = center + ', ' + self.venue_state
-        map_id = 'mapbox.mapbox-streets-v8'
-        zoom = '1'
-        tile_column = '0'
-        tile_row = '0'
-        image_format = '.png32'
-        options = map_id + '/' + zoom + '/' + tile_column + '/' + tile_row + image_format
 
-        # figure out how to obscure the mapbox token on rendered page
-        url = 'https://api.mapbox.com/v4/' + options + '?access_token=' + settings.MAPBOX_ACCESS_TOKEN
+        url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/38.89378,-77.1546607,' + zoom + '/' + size + '?access_token=' + settings.MAPBOX_ACCESS_TOKEN
         return url
+
+    def location_image_mapbox_token(self):
+        token = settings.MAPBOX_ACCESS_TOKEN
+        return token
