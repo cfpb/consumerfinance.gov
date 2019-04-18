@@ -9,6 +9,9 @@
 
    Render HTML for the global footer.
 
+   language:      The page's language value (used to display different
+                  information on Spanish pages). Defaults to English. 
+
    ========================================================================== #}
 
 {% macro render( language='en' ) %}
@@ -85,7 +88,9 @@
         </div>{# END .o-footer_pre #}
 
         {% if language == 'es' %}
-        <p class="u-mb30">En este momento, la política de información sólo está disponible en inglés.</p>
+        <div class="block block__flush-bottom block__flush-top block__padded-bottom">
+            En este momento, la política de información sólo está disponible en inglés.
+        </div>
         {% endif %}
 
         <div class="o-footer-middle-left">

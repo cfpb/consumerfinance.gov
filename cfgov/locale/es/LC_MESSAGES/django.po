@@ -26,9 +26,6 @@ msgstr "Hipoteca"
 msgid "results"
 msgstr "resultados"
 
-msgid " results"
-msgstr " resultados"
-
 msgid "Read answer"
 msgstr "Leer la respuesta"
 
@@ -119,9 +116,6 @@ msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
 #: cfgov/jinja2/v1/_includes/molecules/pagination.html
 msgid "Page"
 msgstr "Página"
-
-msgid " of "
-msgstr " de "
 
 msgid "Go"
 msgstr "Ir"

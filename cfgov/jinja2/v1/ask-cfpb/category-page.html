@@ -71,7 +71,7 @@
     <section class="search-results block block__flush-top">
         <div class="search-results_notification u-mt30">
             {% from 'molecules/notification.html' import render as notification with context %}
-            {{ notification('success', false, results_count ~ _(" results") ) }}
+            {{ notification('success', false, results_count ~ ' ' ~ _('results') ) }}
         </div>
 
         <div class="question_list">

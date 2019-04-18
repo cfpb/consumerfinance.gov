@@ -42,7 +42,7 @@
 
 {% block header %}
     {% import 'organisms/header.html' as o_header with context %}
-    {{ o_header.render( show_banner=true, language=language ) }}
+    {{ o_header.render( true, language ) }}
 {% endblock header %}
 
 {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
@@ -63,7 +63,7 @@
 
 {% block footer %}
     {% import 'organisms/footer.html' as o_footer with context %}
-    {{ o_footer.render( language=language ) }}
+    {{ o_footer.render( language ) }}
 {% endblock footer %}
 {% endblock body %}
 

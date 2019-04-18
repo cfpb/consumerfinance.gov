@@ -11,6 +11,9 @@
    show_banner: Whether the global banner molecule is included.
                 Default is true.
 
+   language:    The page's language value (used to display different
+                information on Spanish pages). Defaults to English.
+
    ========================================================================== #}
 
 {% macro render( show_banner=false, language='en' ) %}
@@ -47,7 +50,7 @@
     {% endif %}
 
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
-    {{ global_eyebrow.render( true, language=language ) }}
+    {{ global_eyebrow.render( true, language ) }}
 
     <div class="o-header_content no-js">
 
@@ -71,7 +74,6 @@
                      sizes="(max-width: 900px) 228px,
                             286px"
                      alt="Oficina para la Protección Financiera del Consumidor">
-                
             </a>
             {% else %}
             <a class="o-header_logo" href="/">

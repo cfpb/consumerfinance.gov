@@ -11,7 +11,7 @@
 {%- endblock %}
 
 {% block content %}
-        {% for block in page.header -%}
+    {% for block in page.header -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 
@@ -73,15 +73,15 @@
 
                                             <ul class="m-list question_list m-list__flush-left u-mt10 u-mb30">
                                                 {% if page.language == 'es'%}
-                                                    {% for a in category.featured_answers('es') %}
+                                                    {% for answer in category.featured_answers('es') %}
                                                     <li class="m-list_item">
-                                                    {{ partially_styled_link.render( {'plain_text': a.question, 'underlined_text': 'Leer la respuesta', 'url': a.url} ) }}
+                                                    {{ partially_styled_link.render( {'plain_text': answer.question, 'underlined_text': 'Leer la respuesta', 'url': answer.url} ) }}
                                                     </li>
                                                     {% endfor %}
                                                 {% else %}
-                                                    {% for a in category.featured_answers('en') %}
+                                                    {% for answer in category.featured_answers('en') %}
                                                     <li class="m-list_item">
-                                                    {{ partially_styled_link.render( {'plain_text': a.question, 'underlined_text': 'Read answer', 'url': a.url} ) }}
+                                                    {{ partially_styled_link.render( {'plain_text': answer.question, 'underlined_text': 'Read answer', 'url': answer.url} ) }}
                                                     </li>
                                                     {% endfor %}
                                                 {% endif %}

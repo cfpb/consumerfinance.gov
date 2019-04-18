@@ -89,7 +89,7 @@
                    inputmode="numeric"
                    value="{{ current_page }}">
             <span class="m-pagination_label">
-                {{ _(' of ') }} {{ total_pages }}
+                {{- ' ' ~ _('of') ~ ' ' -}} {{- total_pages -}}
             </span>
             <button class="a-btn
                            a-btn__link
