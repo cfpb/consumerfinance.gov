@@ -245,7 +245,8 @@ class SecondaryNavigationJSMixin(object):
         return js
 
 
-class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
+class PortalSearchPage(
+        RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
     """
     A routable page type for Ask CFPB portal seearch pages.
     """
@@ -320,7 +321,8 @@ class SeeAllPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             activate(self.language)
         else:
             deactivate_all()
-        return super(SeeAllPage, self).get_context(request, *args, **kwargs)
+        return super(PortalSearchPage, self).get_context(
+            request, *args, **kwargs)
 
     def get_nav_items(self, request, page):
         """Return nav items sorted by an arbitrary order."""

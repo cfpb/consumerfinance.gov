@@ -8,7 +8,7 @@ from ask_cfpb.models.pages import (
     ENGLISH_ANSWER_SLUG_BASE, ENGLISH_DISCLAIMER_SNIPPET_TITLE,
     SPANISH_ANSWER_SLUG_BASE, SPANISH_DISCLAIMER_SNIPPET_TITLE,
     AnswerCategoryPage, AnswerLandingPage, AnswerPage, AnswerResultsPage,
-    SecondaryNavigationJSMixin, SeeAllPage, TagResultsPage,
+    PortalSearchPage, SecondaryNavigationJSMixin, TagResultsPage,
     get_ask_breadcrumbs, get_ask_nav_items, get_question_referrer_data,
     get_reusable_text_snippet, validate_page_number
 )
