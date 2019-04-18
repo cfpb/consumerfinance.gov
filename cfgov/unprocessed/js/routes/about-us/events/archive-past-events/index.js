@@ -1,9 +1,5 @@
 /* ==========================================================================
-   Scripts for `/about-us/events/.
+   Scripts for `/about-us/events/archive-past-events/.
    ========================================================================== */
 
-function get_location_coords( ) {
-  console.log( 'we are gonna get some lat and long from mapbox i hope' );
-}
-
-get_location_coords( );
+require( '../../../on-demand/event-location-map' );
