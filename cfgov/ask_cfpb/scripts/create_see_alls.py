@@ -24,7 +24,7 @@ PARENT_PAGE_MAP = {
                     'title': 'Préstamos para vehículos respuestas',
                     'slug': 'respuestas',
                     'overview': '',
-                    "portal_topic": 1}},
+                    "portal_topic_id": 1}},
         ]
     },
     'en': {
@@ -41,7 +41,7 @@ PARENT_PAGE_MAP = {
                     'title': 'Auto loans',
                     'slug': 'answers',
                     "overview": "When you\u2019re shopping for a new auto loan, know the right questions to ask. Get answers to frequently asked auto loan questions.",  # noqa
-                    "portal_topic": 1}},
+                    "portal_topic_id": 1}},
             {
                 'model': SublandingPage,
                 'pk': 12297,
@@ -52,7 +52,7 @@ PARENT_PAGE_MAP = {
                     'title': 'Bank account answers',
                     'slug': 'answers',
                     "overview": "Do you know how to avoid overdraft fees and find out what to do if someone took money from your bank account without permission? Learn more about these and other issues.",  # noqa
-                    "portal_topic": 2}},
+                    "portal_topic_id": 2}},
             {
                 'model': SublandingPage,
                 'pk': None,
@@ -63,7 +63,7 @@ PARENT_PAGE_MAP = {
                     'title': 'Credit card answers',
                     'slug': 'answers',
                     "overview": "Whether you’re shopping for a new card or managing an existing card, it helps to have the facts. From late fees to lost cards, get answers to your credit card questions.",  # noqa
-                    "portal_topic": 3}},
+                    "portal_topic_id": 3}},
             {
                 'model': SublandingPage,
                 'pk': 12201,
@@ -74,7 +74,7 @@ PARENT_PAGE_MAP = {
                     'title': 'Credit report answers',
                     'slug': 'answers',
                     "overview": "You can take action to get your credit report and to get and keep a good credit score. Find out how with our frequently asked questions.",  # noqa
-                    "portal_topic": 4}},
+                    "portal_topic_id": 4}},
             {
                 'model': SublandingPage,
                 'pk': 12238,
@@ -85,7 +85,7 @@ PARENT_PAGE_MAP = {
                     'title': 'Debt collection answers',
                     'slug': 'answers',
                     "overview": "Did you know that debt collectors generally can’t call you after 9 p.m.? Learn about debt collection, harassment, and more by searching or browsing.",  # noqa
-                    "portal_topic": 5}},
+                    "portal_topic_id": 5}},
             {
                 'model': SublandingPage,
                 'pk': 12283,
@@ -174,18 +174,19 @@ def create_see_all_pages(language):
         else:
             parent_page = parent_map['model'](
                 title=title,
+                language=language,
                 slug=slugify(title))
             grandparent.add_child(instance=parent_page)
             parent_page.save()
             parent_page.save_revision(user=user).publish()
         child_page = child_map.get('model')(
             title=child_map.get('title'),
-            slug=child_map.get('slug')
-        )
-        for field in ['overview', 'portal_topic_id']:
-            setattr(child_page, field, child_map.get(field))
+            slug=child_map.get('slug'),
+            language=language,
+            overview=child_map.get('overview'))
         parent_page.add_child(instance=child_page)
         child_page.save()
+        child_page.portal_topic_id = child_map.get('portal_topic_id')
         child_page.save_revision(user=user).publish()
 
 
