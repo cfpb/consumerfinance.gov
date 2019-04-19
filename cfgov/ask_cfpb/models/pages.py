@@ -283,34 +283,39 @@ class PortalSearchPage(
 
     def results_message(self, count, heading, search_term):
         if search_term:
-            for_term = 'for "{}"'.format(search_term)
+            for_term = '{} "{}"'.format(_('for'), search_term)
         else:
             for_term = ''
+        if count == 1:
+            result_term = _('result')
+        else:
+            result_term = _('results')
         if self.portal_category and search_term:
             return format_html(
-                '{} {} {} {} {} {}<br><p><a href="../?search_term={}">'
+                '{} {} {} {} {} {}<br><p class="m-notification_message_link">'
+                '<a href="../?search_term={}">'
                 'Search all {} answers</a></p>',
                 _('Showing'),
                 count,
-                _('results'),
+                result_term,
                 for_term,
                 _('within'),
                 heading.lower(),
                 search_term,
-                _(self.portal_topic.heading)
+                _(self.portal_topic.heading).lower()
             )
         elif self.portal_category:
             return '{} {} {} {} {}'.format(
                 _('Showing'),
                 count,
-                _('results'),
+                _(result_term),
                 _('within'),
                 heading.lower()
             )
         return '{} {} {} {} {} {}'.format(
             _('Showing'),
             count,
-            _('results'),
+            result_term,
             for_term,
             _('within'),
             heading.lower())

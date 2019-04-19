@@ -51,8 +51,8 @@
         </div>
     </section>
     {% if not page.portal_category %}
-    <p class="h4">
-        Don't see what you're looking for? <a href=/ask-cfpb/search/>Search our full library of answers</a>
+    <p class="ask-search-link h4">
+        {{ _("Don't see what you're looking for?") }} <a href=/ask-cfpb/search/>{{ _('Search our full library of answers') }}</a>
     </p>
     {% endif %}
 {% endblock %}

@@ -27,10 +27,13 @@ msgstr "Hipotecas"
 
 #: v1/ask-cfpb/category-page.html
 msgid "results"
-msgstr "respuestas"
+msgstr "resultados"
+
+msgid "result"
+msgstr "resultado"
 
 msgid " results"
-msgstr " respuestas"
+msgstr " resultados"
 
 msgid "Read answer"
 msgstr "Leer la respuesta"
@@ -79,6 +82,9 @@ msgstr "Obtener respuestas"
 msgid "Showing results for "
 msgstr "Mostrando resultados para "
 
+msgid "for"
+msgstr "para"
+
 msgid "Showing"
 msgstr "Mostrando"
 
@@ -87,6 +93,9 @@ msgstr "de"
 
 msgid "results for"
 msgstr "resultados para"
+
+msgid "result for"
+msgstr "resultado para"
 
 msgid "Search instead for"
 msgstr "Busca de"
@@ -119,7 +128,7 @@ msgid "Search for your question."
 msgstr "Busca su pregunta."
 
 msgid "Search our full library of answers"
-msgstr "Busca su pregunta."
+msgstr "Busca en nuestra biblioteca completa de respuestas"
 
 msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
 msgstr "¿No ve lo que está buscando? <span class=\"break\">Busca su pregunta.</span>"
@@ -133,10 +142,10 @@ msgid "Narrow your results"
 msgstr "Limita tus resultados"
 
 msgid "within"
-msgstr "dentro"
+msgstr "dentro de"
 
 msgid "answers within"
-msgstr "respuestas dentro"
+msgstr "respuestas dentro de"
 
 #: cfgov/jinja2/v1/_includes/molecules/pagination.html
 msgid "Page"
