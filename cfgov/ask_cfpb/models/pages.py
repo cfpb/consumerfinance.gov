@@ -248,7 +248,7 @@ class SecondaryNavigationJSMixin(object):
 class PortalSearchPage(
         RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
     """
-    A routable page type for Ask CFPB portal seearch pages.
+    A routable page type for Ask CFPB portal search ("see-all") pages.
     """
 
     objects = CFGOVPageManager()
@@ -286,7 +286,7 @@ class PortalSearchPage(
             for_term = 'for "{}"'.format(search_term)
         else:
             for_term = ''
-        if self.portal_category:
+        if self.portal_category and search_term:
             return format_html(
                 '{} {} {} {} {} {}<br><p><a href="../?search_term={}">'
                 'Search all {} answers</a></p>',
@@ -298,6 +298,14 @@ class PortalSearchPage(
                 heading.lower(),
                 search_term,
                 _(self.portal_topic.heading)
+            )
+        elif self.portal_category:
+            return '{} {} {} {} {}'.format(
+                _('Showing'),
+                count,
+                _('results'),
+                _('within'),
+                heading.lower()
             )
         return '{} {} {} {} {} {}'.format(
             _('Showing'),

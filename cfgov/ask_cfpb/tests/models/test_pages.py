@@ -23,7 +23,9 @@ from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Audience, Category,
     NextStep, SubCategory, generate_short_slug
 )
-from ask_cfpb.models.pages import JOURNEY_PATHS, AnswerCategoryPage, AnswerPage
+from ask_cfpb.models.pages import (
+    JOURNEY_PATHS, AnswerCategoryPage, AnswerPage  # , PortalSearchPage
+)
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
@@ -128,6 +130,11 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         response = self.client.get('/admin/export-ask/')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Download a spreadsheet')
+
+
+# class PortalSearchPageTestCase(TestCase):
+#     PortalSearchPage.objects.first()
+#     pass
 
 
 class AnswerPageTestCase(TestCase):
