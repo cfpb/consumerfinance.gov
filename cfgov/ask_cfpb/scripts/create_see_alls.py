@@ -215,7 +215,8 @@ def create_see_all_pages(language):
     for parent_map in page_map.get('parents'):
         child_map = parent_map.get('child')
         title = parent_map.get('title')
-        print("Creating parent and child pages for {}".format(title))
+        print("Creating parent and child pages for {}".format(title).encode(
+            'utf-8'))
         if parent_map['pk']:
             parent_page = parent_map['model'].objects.get(
                 pk=parent_map['pk'])
@@ -247,4 +248,4 @@ def run(*args):
     else:
         print(
             "Please provide a language value. Example:\n"
-            "./cfgov/manage.py runscript create_seealls --script-args 'en'")
+            "./cfgov/manage.py runscript create_see_alls --script-args 'en'")

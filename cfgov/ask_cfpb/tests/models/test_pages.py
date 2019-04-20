@@ -12,6 +12,7 @@ from django.http import Http404, HttpRequest, HttpResponse
 from django.template.defaultfilters import slugify
 from django.test import RequestFactory, TestCase
 from django.utils import html, timezone, translation
+# from django.utils.translation import activate, deactivate_all
 
 from wagtail.tests.utils import WagtailTestUtils
 
@@ -24,12 +25,14 @@ from ask_cfpb.models.django import (
     NextStep, SubCategory, generate_short_slug
 )
 from ask_cfpb.models.pages import (
-    JOURNEY_PATHS, AnswerCategoryPage, AnswerPage  # , PortalSearchPage
+    JOURNEY_PATHS, AnswerCategoryPage, AnswerPage, PortalSearchPage
 )
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
-from v1.models import BrowsePage, CFGOVImage, HomePage
+from v1.models import (
+    BrowsePage, CFGOVImage, HomePage, PortalTopic, SublandingPage
+)
 from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import get_free_path, get_or_create_page
 
@@ -132,9 +135,37 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         self.assertContains(response, 'Download a spreadsheet')
 
 
-# class PortalSearchPageTestCase(TestCase):
-#     PortalSearchPage.objects.first()
-#     pass
+class PortalSearchPageTestCase(TestCase):
+
+    fixtures = ['portal_topics', 'portal_categories', 'test_ask_tags']
+
+    def setUp(self):
+        self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.test_user = User.objects.last()
+        self.factory = RequestFactory()
+        self.english_parent = SublandingPage(
+            title='Consumer Tools',
+            slug='consumer-tools')
+        self.ROOT_PAGE.add_child(instance=self.english_parent)
+        self.english_parent.save()
+        self.english_parent.save_revision(user=self.test_user).publish()
+        self.spanish_parent = SublandingPage(
+            title='Obtener respuestas',
+            slug='obtener-respuestas')
+        self.ROOT_PAGE.add_child(instance=self.spanish_parent)
+        self.spanish_parent.save()
+        self.spanish_parent.save_revision(user=self.test_user).publish()
+
+    def test_english_portal_title(self):
+        test_page = PortalSearchPage(
+            title="Auto loans",
+            slug="auto-loans")
+        self.english_parent.add_child(instance=test_page)
+        test_page.save()
+        test_page.portal_topic_id = 1
+        test_page.save_revision(user=self.test_user).publish()
+        self.assertEqual(str(test_page), test_page.title)
+        self.assertEqual(test_page.portal_topic, PortalTopic.objects.get(pk=1))
 
 
 class AnswerPageTestCase(TestCase):
