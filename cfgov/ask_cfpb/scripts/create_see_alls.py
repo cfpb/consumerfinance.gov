@@ -9,6 +9,7 @@ from django.utils.text import slugify
 from ask_cfpb.models import AnswerLandingPage, PortalSearchPage
 from v1.models import BrowsePage, LandingPage, SublandingPage
 
+
 PARENT_PAGE_MAP = {
     'es': {
         # Obtener respuestas

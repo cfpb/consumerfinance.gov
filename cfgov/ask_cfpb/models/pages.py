@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import re
-from six.moves.urllib.parse import urlparse, unquote
+from six.moves.urllib.parse import unquote, urlparse
 
 from django import forms
 from django.core.paginator import InvalidPage, Paginator
@@ -10,8 +10,8 @@ from django.http import Http404
 from django.template.response import TemplateResponse
 from django.utils.html import format_html
 from django.utils.text import Truncator, slugify
-from django.utils.translation import activate, deactivate_all
-from django.utils.translation import gettext as _
+from django.utils.translation import activate, deactivate_all, gettext as _
+from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
@@ -23,7 +23,6 @@ from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
 from flags.state import flag_enabled
-from haystack.query import SearchQuerySet
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
@@ -294,7 +293,7 @@ class PortalSearchPage(
             return format_html(
                 '{} {} {} {} {} {}<br><p class="m-notification_message_link">'
                 '<a href="../?search_term={}">'
-                'Search all {} answers</a></p>',
+                '{} {}</a></p>',
                 _('Showing'),
                 count,
                 result_term,
@@ -302,6 +301,7 @@ class PortalSearchPage(
                 _('within'),
                 heading.lower(),
                 search_term,
+                _('See all results within'),
                 _(self.portal_topic.heading).lower()
             )
         elif self.portal_category:
@@ -339,17 +339,13 @@ class PortalSearchPage(
 
     def get_nav_items(self, request, page):
         """Return nav items sorted by an arbitrary order."""
-        search_term = request.GET.get('search_term', '').strip()
         pk_sort_order = [1, 4, 5, 2, 3]
         hand_sorted_categories = []
         for pk in pk_sort_order:
             category = PortalCategory.objects.get(pk=pk)
             hand_sorted_categories.append({
                 'title': _(category.heading),
-                'url': ("{}{}/?search_term={}".format(
-                    page.url,
-                    slugify(_(category.heading)),
-                    search_term)),
+                'url': "{}{}/".format(page.url, slugify(_(category.heading))),
                 'active': (
                     False if not page.portal_category
                     else _(category.heading)
@@ -357,7 +353,7 @@ class PortalSearchPage(
             })
         return [{
             'title': _(page.portal_topic.heading),
-            'url': "{}?search_term={}".format(page.url, search_term),
+            'url': page.url,
             'active': False if page.portal_category else True,
             'expanded': True,
             'children': hand_sorted_categories
