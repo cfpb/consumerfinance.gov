@@ -703,9 +703,7 @@ FLAGS = {
     # Test financial well-being hub pages on Beta
     'FINANCIAL_WELLBEING_HUB': [('environment is', 'beta')],
 
-    # Test migrated HMDA content pages. Delete after HMDA content launch
-    'HMDA_LEGACY_REVIEW': [],
-    # Publish new HMDA content pages
+    # Publish new HMDA Explore page
     # Delete after HMDA API is deprecated (hopefully Summer 2019)
     'HMDA_LEGACY_PUBLISH': [],
 
