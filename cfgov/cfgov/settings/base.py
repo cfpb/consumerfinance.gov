@@ -26,6 +26,9 @@ DEPLOY_ENVIRONMENT = os.getenv('DEPLOY_ENVIRONMENT')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 
+# in some environments, we want to respect X-Forwarded-Port
+USE_X_FORWARDED_PORT = os.environ.get('USE_X_FORWARDED_PORT') == 'True'
+
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
