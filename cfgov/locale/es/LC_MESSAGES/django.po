@@ -27,7 +27,7 @@ msgid "results"
 msgstr "resultados"
 
 msgid "Read answer"
-msgstr "Leer la respuesta"
+msgstr "Leer más"
 
 msgid "/ask-cfpb/"
 msgstr "/es/obtener-respuestas/"
@@ -52,16 +52,16 @@ msgid "Please do not share any personally identifiable information (PII), includ
 msgstr "No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo."
 
 msgid "Read full answer"
-msgstr "Leer la respuesta completa"
+msgstr "Leer más"
 
 msgid "Hide full answer"
 msgstr "Esconder la respuesta completa"
 
 msgid "Explore related resources"
-msgstr "Explora recursos relacionados"
+msgstr "Otros recursos"
 
 msgid "Related questions"
-msgstr "Preguntas similares"
+msgstr "Otras preguntas"
 
 #: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
 msgid "Can't find your question?"
@@ -71,10 +71,10 @@ msgid "Ask CFPB"
 msgstr "Obtener respuestas"
 
 msgid "Showing results for "
-msgstr "Mostrando resultados para "
+msgstr "Se muestran resultados para "
 
 msgid "Showing"
-msgstr "Mostrando"
+msgstr "Se muestran"
 
 msgid "of"
 msgstr "de"
@@ -107,7 +107,7 @@ msgid "/ask-cfpb/search"
 msgstr "/es/obtener-respuestas/buscar"
 
 msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
-msgstr "¿No ve lo que está buscando? <span class=\"break\">Busca su pregunta.</span>"
+msgstr "¿No encuentra lo que busca? <span class=\"break\">Busca su pregunta.</span>"
 
 #: cfgov/jinja2/v1/_includes/atoms/tagline.html
 msgid "An official website of the United States government"
@@ -126,7 +126,7 @@ msgstr "En esta sección"
 
 #: cfgov/jinja2/v1/_includes/organisms/footer.html
 msgid "Back to top"
-msgstr "Volver al inicio"
+msgstr "Ir arriba"
 
 msgid "https://usa.gov/"
 msgstr "https://gobiernousa.gov/"
