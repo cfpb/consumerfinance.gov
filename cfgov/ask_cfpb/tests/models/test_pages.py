@@ -493,6 +493,42 @@ class AnswerPageTestCase(TestCase):
             answer.__str__(),
             answer.question_es)
 
+    def test_english_header_and_footer(self):
+        english_answer_page_response = self.client.get(reverse(
+            'ask-english-answer',
+            args=['mock-question', 'en', 1234]))
+        self.assertContains(
+            english_answer_page_response,
+            'An official website of the United States government')
+        self.assertNotContains(
+            english_answer_page_response,
+            'Un sitio web oficial del gobierno federal de los Estados Unidos')
+        self.assertContains(
+            english_answer_page_response,
+            'https://usa.gov/')
+        self.assertNotContains(
+            english_answer_page_response,
+            'https://gobiernousa.gov/')
+
+    def test_spanish_header_and_footer(self):
+        spanish_answer_page_response = self.client.get(reverse(
+            'ask-spanish-answer',
+            args=['mock-spanish-question1', 'es', 1234]))
+        self.assertContains(
+            spanish_answer_page_response,
+            'Un sitio web oficial del gobierno federal de los Estados Unidos'
+        )
+        self.assertNotContains(
+            spanish_answer_page_response,
+            'An official website of the United States government'
+        )
+        self.assertContains(
+            spanish_answer_page_response,
+            'https://gobiernousa.gov/')
+        self.assertNotContains(
+            spanish_answer_page_response,
+            'https://usa.gov/')
+
     def test_category_str(self):
         category = self.category
         self.assertEqual(category.__str__(), category.name)
