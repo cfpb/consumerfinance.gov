@@ -255,6 +255,7 @@ class PortalSearchPage(
         PortalTopic,
         blank=True,
         null=True,
+        related_name='portal_search_pages',
         on_delete=models.SET_NULL)
     portal_category = None
     overview = models.TextField(blank=True)
