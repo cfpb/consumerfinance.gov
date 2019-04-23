@@ -426,7 +426,9 @@ class PortalSearchPage(
                     suggestion = None
                 elif (request.GET.get('correct', '1') == '1' and
                         flag_enabled('ASK_SEARCH_TYPOS', request=request)):
-                    sqs = self.query_base.filter(content=suggestion)
+                    sqs = self.query_base.filter(
+                        content=suggestion,
+                        portal_categories=self.portal_category.heading)
                     search_term, suggestion = suggestion, search_term
                     count = sqs.count()
             search_message = self.results_message(count, heading, search_term)
