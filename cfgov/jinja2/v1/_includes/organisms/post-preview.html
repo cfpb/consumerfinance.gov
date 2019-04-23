@@ -127,11 +127,9 @@
                              alt="Livestream event">
                     {% else %}
                         {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
-                        <img data-map-location="{{ event.venue_city }}{{ ', ' ~ event.venue_state if event.venue_state else '' }}"
-                             data-mapbox-token="{{ event.location_image_mapbox_token() }}"
-                             class="o-post-preview_image o-post-preview_image-event-map"
+                        <img class="o-post-preview_image"
                              src="{{ event.location_image_url() }}"
-                             alt="">
+                             alt="Google Maps image of {{ event.venue_name }}">
                     {% endif %}
                 </div>
             {% endif %}
