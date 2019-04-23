@@ -103,7 +103,7 @@ def cloudfront_cache_invalidation(sender, instance, **kwargs):
 
     url = instance.file.url
 
-    logger.info("Invalidating cache for " + url)
+    logger.info('Purging {} from "files" cache'.format(url))
 
     batch = PurgeBatch()
     batch.add_url(url)
