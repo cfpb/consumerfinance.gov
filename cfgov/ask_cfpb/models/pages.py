@@ -283,22 +283,24 @@ class PortalSearchPage(
 
     def results_message(self, count, heading, search_term):
         if search_term:
-            for_term = '{} "{}"'.format(_('for'), search_term)
+            _for_term = '{} "{}"'.format(_('for'), search_term)
         else:
-            for_term = ''
+            _for_term = ''
         if count == 1:
-            result_term = _('result')
+            _showing = _('Showing ')  # trailing space triggers singular es
+            _results = _('result')
         else:
-            result_term = _('results')
+            _showing = _('Showing')
+            _results = _('results')
         if self.portal_category and search_term:
             return format_html(
                 '{} {} {} {} {} {}<br><p class="m-notification_message_link">'
                 '<a href="../?search_term={}">'
                 '{} {}</a></p>',
-                _('Showing'),
+                _showing,
                 count,
-                result_term,
-                for_term,
+                _results,
+                _for_term,
                 _('within'),
                 heading.lower(),
                 search_term,
@@ -307,17 +309,17 @@ class PortalSearchPage(
             )
         elif self.portal_category:
             return '{} {} {} {} {}'.format(
-                _('Showing'),
+                _showing,
                 count,
-                _(result_term),
+                _results,
                 _('within'),
                 heading.lower()
             )
         return '{} {} {} {} {} {}'.format(
-            _('Showing'),
+            _showing,
             count,
-            result_term,
-            for_term,
+            _results,
+            _for_term,
             _('within'),
             heading.lower())
 

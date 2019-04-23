@@ -233,7 +233,7 @@ class PortalSearchPageTestCase(TestCase):
     def test_results_message_no_category_with_search_term(self):
         msg = self.english_page.results_message(1, 'Auto loans', 'hoodoo')
         self.assertEqual(
-            msg, 'Showing 1 result for "hoodoo" within auto loans')
+            msg, 'Showing  1 result for "hoodoo" within auto loans')
 
     def test_results_message_with_category_no_search_term(self):
         self.english_page.portal_category = PortalCategory.objects.get(
@@ -247,7 +247,7 @@ class PortalSearchPageTestCase(TestCase):
         msg = self.english_page.results_message(1, 'How-to guides', 'hoodoo')
         self.assertEqual(
             msg,
-            'Showing 1 result for &quot;hoodoo&quot; within how-to guides'
+            'Showing  1 result for &quot;hoodoo&quot; within how-to guides'
             '<br><p class="m-notification_message_link">'
             '<a href="../?search_term=hoodoo">See all '
             'results within auto loans</a></p>')

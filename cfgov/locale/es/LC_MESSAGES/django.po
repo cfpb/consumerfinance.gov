@@ -10,6 +10,12 @@ msgstr ""
 msgid "Search"
 msgstr "Buscar"
 
+msgid "Clear search"
+msgstr "Borrar búsqueda"
+
+msgid "Clear"
+msgstr "Borrar"
+
 msgid "Close"
 msgstr "Cerrar"
 
@@ -54,7 +60,7 @@ msgid "No results found for"
 msgstr "No se han encontrado resultados para"
 
 msgid "Please enter a search term in the box above."
-msgstr "Por favor, introduzca un término en el cuadro de búsqueda anterior."
+msgstr "Por favor escriba su búsqueda arriba"
 
 #: cfgov/jinja2/v1/ask-cfpb/answer-page.html
 msgid "updated"
@@ -63,17 +69,20 @@ msgstr "actualizado"
 msgid "Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature."
 msgstr "No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo."
 
+msgid "Return to top"
+msgstr "Ir arriba"
+
 msgid "Read full answer"
-msgstr "Leer la respuesta completa"
+msgstr "Leer más"
 
 msgid "Hide full answer"
 msgstr "Esconder la respuesta completa"
 
 msgid "Explore related resources"
-msgstr "Explora recursos relacionados"
+msgstr "Otros recursos"
 
 msgid "Related questions"
-msgstr "Preguntas similares"
+msgstr "Otras preguntas"
 
 #: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
 msgid "Can't find your question?"
@@ -85,14 +94,24 @@ msgstr "Obtener respuestas"
 msgid "Showing results for "
 msgstr "Mostrando resultados para "
 
+msgid "of"
+msgstr "de"
+
 msgid "for"
 msgstr "para"
 
-msgid "Showing"
-msgstr "Mostrando"
+#: singular
+msgid "Showing "
+msgstr "Se muestra "
 
-msgid "of"
-msgstr "de"
+msgid "Showing"
+msgstr "Se muestran"
+
+msgid "result within"
+msgstr "resultado de"
+
+msgid "results within"
+msgstr "resultados de"
 
 msgid "results for"
 msgstr "resultados para"
@@ -114,6 +133,9 @@ msgstr "¿Te resultó útil esta respuesta?"
 msgid "Additional comment"
 msgstr "Comentario adicional"
 
+msgid "Explore"
+msgstr "Explorar"
+
 msgid "Yes"
 msgstr "Sí"
 
@@ -125,13 +147,13 @@ msgid "/ask-cfpb/search"
 msgstr "/es/obtener-respuestas/buscar"
 
 msgid "Don't see what you're looking for?"
-msgstr "¿No ve lo que está buscando?"
+msgstr "¿No encuentra lo que busca?"
 
 msgid "Search for your question."
 msgstr "Busca su pregunta."
 
 msgid "Search our full library of answers"
-msgstr "Busca en nuestra biblioteca de respuestas"
+msgstr "Buscar en toda la lista de respuestas"
 
 msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
 msgstr "¿No ve lo que está buscando? <span class=\"break\">Busca su pregunta.</span>"
@@ -142,13 +164,13 @@ msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
 
 #: ask_cfpb/models/pages/PortalTopicSearchPage
 msgid "Narrow your results"
-msgstr "Limita tus resultados"
+msgstr "Búsqueda especial"
 
 msgid "See all results within"
-msgstr "Ver todos los resultados dentro de"
+msgstr "Ver todos los resultados para"
 
 msgid "within"
-msgstr "dentro de"
+msgstr "en"
 
 msgid "answers within"
 msgstr "respuestas dentro de"
