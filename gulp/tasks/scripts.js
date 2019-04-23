@@ -14,7 +14,7 @@ const gulpModernizr = require( 'gulp-modernizr' );
 const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
-const gulpUglifyEs = require( 'gulp-uglify-es' ).default;
+const gulpTerser = require( 'gulp-terser' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
@@ -64,7 +64,7 @@ function scriptsPolyfill() {
       options: [ 'setClasses', 'html5printshiv' ],
       tests: [ 'csspointerevents', 'es5' ]
     } ) )
-    .pipe( gulpUglifyEs( {
+    .pipe( gulpTerser( {
       compress: {
         properties: false
       }
@@ -169,7 +169,7 @@ function scriptsNemo() {
     } ) )
     .pipe( gulpConcat( 'scripts.js' ) )
     .on( 'error', handleErrors )
-    .pipe( gulpUglifyEs() )
+    .pipe( gulpTerser() )
     .pipe( gulpRename( 'scripts.min.js' ) )
     .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) );
 }
