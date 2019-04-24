@@ -308,7 +308,7 @@ class EventPage(AbstractFilterPage):
         # Default to Washington DC coordinates
         venue_coords = '-77.039628,38.898238'
 
-        if not self.venue_city and not self.venue_state:
+        if not self.venue_city or not self.venue_state:
             return venue_coords
 
         location = '{} {}'.format(self.venue_city, self.venue_state)
