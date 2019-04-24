@@ -217,7 +217,9 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(test_page.portal_topic, PortalTopic.objects.get(pk=1))
 
     def test_category_map(self):
-        self.assertEqual(len(self.english_page.category_map), 5)
+        self.assertEqual(
+            len(self.english_page.category_map),
+            PortalCategory.objects.count())
 
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
     def test_query_base(self, mock_sqs):
