@@ -23,10 +23,10 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
-from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
+from ask_cfpb.models.search import AskSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
@@ -261,6 +261,7 @@ class PortalSearchPage(
         related_name='portal_search_pages',
         on_delete=models.SET_NULL)
     portal_category = None
+    query_base = None
     overview = models.TextField(blank=True)
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('portal_topic'),
@@ -270,12 +271,6 @@ class PortalSearchPage(
         ObjectList(content_panels, heading='Content'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
-
-    @property
-    def query_base(self):
-        return SearchQuerySet().filter(
-            portal_topics=self.portal_topic.heading,
-            language=self.language)
 
     @property
     def category_map(self):
@@ -338,14 +333,17 @@ class PortalSearchPage(
             _('within'),
             heading.lower())
 
-    def get_template(self, request):
-        return 'ask-cfpb/see-all.html'
-
-    def get_heading(self, obj):
-        if self.language == 'es':
-            return obj.heading_es
+    def get_heading(self):
+        if self.portal_category:
+            if self.language == 'es':
+                return self.portal_category.heading_es
+            else:
+                return self.portal_category.heading
         else:
-            return obj.heading
+            if self.language == 'es':
+                return self.portal_topic.heading_es
+            else:
+                return self.portal_topic.heading
 
     def get_context(self, request, *args, **kwargs):
         if self.language != 'en':
@@ -376,95 +374,59 @@ class PortalSearchPage(
             'children': sorted_categories
         }], True
 
-    @route(r'^$')
-    def portal_topic_page(self, request):
+    def get_results(self, request):
         context = self.get_context(request)
-        heading = self.get_heading(self.portal_topic)
-        context['heading'] = heading
         search_term = request.GET.get('search_term', '').strip()
+        heading = self.get_heading()
         if not search_term or len(unquote(search_term)) == 1:
-            count = self.query_base.count()
-            sqs = self.query_base
-            search_message = self.results_message(count, heading, search_term)
+            results = self.query_base
         else:
-            sqs = self.query_base.filter(content=search_term)
-            count = sqs.count()
-            if count == 0:
+            search = AskSearch(
+                search_term=search_term,
+                query_base=self.query_base)
+            results = search.queryset
+            if results.count() == 0:
                 # No results, so let's try to suggest a better query
-                suggestion = SearchQuerySet().models(
-                    AnswerPage).spelling_suggestion(search_term)
-                if suggestion == search_term:
-                    suggestion = None
-                elif (request.GET.get('correct', '1') == '1' and
-                        flag_enabled('ASK_SEARCH_TYPOS', request=request)):
-                    sqs = self.query_base.filter(content=suggestion)
-                    search_term, suggestion = suggestion, search_term
-                    count = sqs.count()
-            context['pages'] = sqs
-            search_message = self.results_message(count, heading, search_term)
-        paginator = Paginator(sqs, 10)
+                search.suggest(request=request)
+                results = search.queryset
+                search_term = search.search_term
+        search_message = self.results_message(
+            results.count(),
+            heading,
+            search_term)
+        paginator = Paginator(results, 10)
         page_number = validate_page_number(request, paginator)
-        pages = paginator.page(page_number)
         context.update({
-            'count': count,
-            'search_term': search_term,
-            'results_message': search_message,
-            'pages': pages,
-            'paginator': paginator,
-            'current_page': page_number,
-            'get_secondary_nav_items': self.get_nav_items,
-        })
-        return TemplateResponse(
-            request,
-            self.get_template(request),
-            context)
-
-    @route(r'^(?P<category>[^/]+)/$')
-    def portal_category_page(self, request, **kwargs):
-        context = self.get_context(request)
-        category_slug = kwargs.get('category')
-        self.portal_category = self.category_map.get(category_slug)
-        heading = self.get_heading(self.portal_category)
-        sqs = self.query_base.filter(
-            portal_categories=self.portal_category.heading)
-        search_term = request.GET.get('search_term', '').strip()
-        if not search_term or len(unquote(search_term)) == 1:
-            count = sqs.count()
-            search_message = self.results_message(count, heading, search_term)
-        else:
-            sqs = sqs.filter(content=search_term)
-            count = sqs.count()
-            if count == 0:
-                # No results, so let's try to suggest a better query
-                suggestion = SearchQuerySet().models(
-                    AnswerPage).spelling_suggestion(search_term)
-                if suggestion == search_term:
-                    suggestion = None
-                elif (request.GET.get('correct', '1') == '1' and
-                        flag_enabled('ASK_SEARCH_TYPOS', request=request)):
-                    sqs = self.query_base.filter(
-                        content=suggestion,
-                        portal_categories=self.portal_category.heading)
-                    search_term, suggestion = suggestion, search_term
-                    count = sqs.count()
-            search_message = self.results_message(count, heading, search_term)
-        paginator = Paginator(sqs, 10)
-        page_number = validate_page_number(request, paginator)
-        pages = paginator.page(page_number)
-        context.update({
-            'count': count,
             'heading': heading,
             'search_term': search_term,
             'results_message': search_message,
-            'pages': pages,
+            'pages': paginator.page(page_number),
             'paginator': paginator,
             'current_page': page_number,
             'get_secondary_nav_items': self.get_nav_items,
         })
         return TemplateResponse(
             request,
-            self.get_template(request),
+            'ask-cfpb/see-all.html',
             context)
+
+    @route(r'^$')
+    def portal_topic_page(self, request):
+        self.query_base = SearchQuerySet().filter(
+            portal_topics=self.portal_topic.heading,
+            language=self.language)
+        self.portal_category = None
+        return self.get_results(request)
+
+    @route(r'^(?P<category>[^/]+)/$')
+    def portal_category_page(self, request, **kwargs):
+        category_slug = kwargs.get('category')
+        self.portal_category = self.category_map.get(category_slug)
+        self.query_base = SearchQuerySet().filter(
+            portal_topics=self.portal_topic.heading,
+            language=self.language,
+            portal_categories=self.portal_category.heading)
+        return self.get_results(request)
 
 
 class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,

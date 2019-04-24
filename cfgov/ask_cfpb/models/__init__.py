@@ -12,3 +12,4 @@ from ask_cfpb.models.pages import (
     get_ask_breadcrumbs, get_ask_nav_items, get_question_referrer_data,
     get_reusable_text_snippet, validate_page_number
 )
+from ask_cfpb.models.search import AskSearch

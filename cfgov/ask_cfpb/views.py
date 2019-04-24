@@ -7,7 +7,6 @@ from six.moves.urllib.parse import urljoin
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.defaultfilters import slugify
-from haystack.inputs import Clean
 from haystack.query import SearchQuerySet
 
 from wagtail.wagtailcore.models import Site
@@ -15,9 +14,8 @@ from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
-from flags.state import flag_enabled
 
-from ask_cfpb.models import Answer, AnswerPage, AnswerResultsPage
+from ask_cfpb.models import Answer, AnswerPage, AnswerResultsPage, AskSearch
 
 
 def annotate_links(answer_text):
@@ -106,14 +104,6 @@ def ask_search(request, language='en', as_json=False):
         'en': 'ask-cfpb-search-results',
         'es': 'respuestas'
     }
-    sqs = SearchQuerySet().models(AnswerPage)
-    clean_query = Clean(request.GET.get('q', ''))
-    clean_qstring = clean_query.query_string.strip()
-    qstring = clean_qstring
-    query_sqs = sqs.filter(
-        content=clean_query,
-        language=language
-    )
     results_page = get_object_or_404(
         AnswerResultsPage,
         language=language,
@@ -121,44 +111,39 @@ def ask_search(request, language='en', as_json=False):
     )
 
     # If there's no query string, don't search
-    if not qstring:
+    search_term = request.GET.get('q', '')
+    if not search_term:
         results_page.query = ''
         results_page.result_query = ''
         return results_page.serve(request)
 
-    # If we have no results from our query, let's try to suggest a better one
-    suggestion = sqs.spelling_suggestion(qstring)
-    if suggestion == qstring:
-        suggestion = None
-    elif (query_sqs.count() == 0 and
-            request.GET.get('correct', '1') == '1' and
-            flag_enabled('ASK_SEARCH_TYPOS', request=request)):
-        query_sqs = sqs.filter(content=suggestion)
-        qstring, suggestion = suggestion, qstring
+    search = AskSearch(search_term=search_term, language=language)
+    if search.queryset.count() == 0:
+        search.suggest(request=request)
 
     if as_json:
         results = {
-            'query': clean_qstring,
-            'result_query': qstring,
-            'suggestion': suggestion,
+            'query': search_term,
+            'result_query': search.search_term,
+            'suggestion': search.suggestion,
             'results': [
                 {
                     'question': result.autocomplete,
                     'url': result.url,
                     'text': result.text
                 }
-                for result in query_sqs
+                for result in search.queryset
             ]
         }
         json_results = json.dumps(results)
         return HttpResponse(json_results, content_type='application/json')
     else:
-        results_page.query = clean_qstring
-        results_page.result_query = qstring
-        results_page.suggestion = suggestion
+        results_page.query = search_term
+        results_page.result_query = search.search_term
+        results_page.suggestion = search.suggestion
         results_page.answers = []
 
-        for result in query_sqs:
+        for result in search.queryset:
             results_page.answers.append(
                 (result.url, result.autocomplete, result.text)
             )

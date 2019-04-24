@@ -197,14 +197,14 @@ class PortalSearchPageTestCase(TestCase):
 
     def test_get_english_heading(self):
         page = self.english_page
-        portal_object = PortalTopic.objects.get(heading='Auto loans')
-        self.assertEqual(page.get_heading(portal_object), 'Auto loans')
+        page.portal_topic = PortalTopic.objects.get(heading='Auto loans')
+        self.assertEqual(page.get_heading(), 'Auto loans')
 
     def test_get_spanish_heading(self):
         page = self.spanish_page
-        portal_object = PortalTopic.objects.get(heading='Auto loans')
+        page.portal_topic = PortalTopic.objects.get(heading='Auto loans')
         self.assertEqual(
-            page.get_heading(portal_object), 'Préstamos para vehículos')
+            page.get_heading(), 'Préstamos para vehículos')
 
     def test_english_portal_title(self):
         test_page = PortalSearchPage(
@@ -228,13 +228,6 @@ class PortalSearchPageTestCase(TestCase):
             PORTAL_CATEGORY_SORT_ORDER,
             [category.pk for slug, category in mapping.items()]
         )
-
-    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
-    def test_query_base(self, mock_sqs):
-        mock_sqs.return_value = ['item']
-        test_query = self.english_page.query_base
-        self.assertEqual(mock_sqs.call_count, 1)
-        self.assertEqual(len(test_query), 1)
 
     def test_results_message_no_category_no_search_term(self):
         msg = self.english_page.results_message(10, 'Auto loans', '')
@@ -261,11 +254,6 @@ class PortalSearchPageTestCase(TestCase):
             '<br><p class="m-notification_message_link">'
             '<a href="../?search_term=hoodoo">See all '
             'results within auto loans</a></p>')
-
-    def test_get_template(self):
-        self.assertEqual(
-            self.english_page.get_template(HttpRequest()),
-            'ask-cfpb/see-all.html')
 
     def test_portal_topic_page_200(self):
         page = self.english_page
