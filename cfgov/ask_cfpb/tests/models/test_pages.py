@@ -25,7 +25,8 @@ from ask_cfpb.models.django import (
     NextStep, SubCategory, generate_short_slug
 )
 from ask_cfpb.models.pages import (
-    JOURNEY_PATHS, AnswerCategoryPage, AnswerPage, PortalSearchPage
+    JOURNEY_PATHS, PORTAL_CATEGORY_SORT_ORDER, AnswerCategoryPage, AnswerPage,
+    PortalSearchPage
 )
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
@@ -216,10 +217,17 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(str(test_page), test_page.title)
         self.assertEqual(test_page.portal_topic, PortalTopic.objects.get(pk=1))
 
-    def test_category_map(self):
+    def test_category_map_length(self):
         self.assertEqual(
             len(self.english_page.category_map),
             PortalCategory.objects.count())
+
+    def test_category_map_sort_order(self):
+        mapping = self.english_page.category_map
+        self.assertEqual(
+            PORTAL_CATEGORY_SORT_ORDER,
+            [category.pk for slug, category in mapping.items()]
+        )
 
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
     def test_query_base(self, mock_sqs):

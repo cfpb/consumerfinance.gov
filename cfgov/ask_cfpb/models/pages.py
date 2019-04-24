@@ -78,6 +78,8 @@ JOURNEY_PATHS = (
     '/owning-a-home/close',
     '/owning-a-home/process',
 )
+# Custom sort for navigation, by PortalCategory primary keys
+PORTAL_CATEGORY_SORT_ORDER = [1, 4, 5, 2, 3]
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -287,10 +289,9 @@ class PortalSearchPage(
         - Know your rights
         - How-to guides
         """
-        nav_sort_order_by_pk = [1, 4, 5, 2, 3]
         categories = PortalCategory.objects.order_by('pk')
         sorted_mapping = OrderedDict()
-        for i in nav_sort_order_by_pk:
+        for i in PORTAL_CATEGORY_SORT_ORDER:
             sorted_mapping.update(
                 {slugify(_(categories[i - 1].heading)): categories[i - 1]})
         return sorted_mapping
