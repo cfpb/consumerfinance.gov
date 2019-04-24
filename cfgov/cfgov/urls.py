@@ -412,13 +412,6 @@ urlpatterns = [
 
     # Temporary: HMDA Legacy pages
     # Will be deleted when HMDA API is retired (hopefully Summer 2019)
-    url(r'data-research/hmda-new/explore$',
-        FlaggedTemplateView.as_view(
-            flag_name='HMDA_LEGACY_REVIEW',
-            template_name='hmda/orange-explorer.html'
-        ),
-        name='legacy_explorer_draft'
-    ),
     url(r'data-research/hmda/explore$',
         FlaggedTemplateView.as_view(
             flag_name='HMDA_LEGACY_PUBLISH',

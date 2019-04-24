@@ -1,7 +1,6 @@
 import json
 import logging
 import os
-from six.moves.urllib.parse import urljoin
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -102,13 +101,9 @@ def cloudfront_cache_invalidation(sender, instance, **kwargs):
     if not instance.file:
         return
 
-    media_base = settings.MEDIA_URL
-    if hasattr(settings, 'AWS_S3_CUSTOM_DOMAIN'):
-        media_base = settings.AWS_S3_CUSTOM_DOMAIN
+    url = instance.file.url
 
-    url = urljoin(media_base, instance.url)
-
-    logger.info("Invalidating cache for " + url)
+    logger.info('Purging {} from "files" cache'.format(url))
 
     batch = PurgeBatch()
     batch.add_url(url)
