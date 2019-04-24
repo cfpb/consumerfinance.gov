@@ -1,6 +1,4 @@
 import json
-import requests
-
 from datetime import date
 
 from django.conf import settings
@@ -18,6 +16,7 @@ from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
+import requests
 from localflavor.us.models import USStateField
 
 from v1 import blocks as v1_blocks

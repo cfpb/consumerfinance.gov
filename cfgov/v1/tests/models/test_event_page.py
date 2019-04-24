@@ -1,11 +1,13 @@
 import re
-import responses
 
 from django.test import TestCase
 from django.test.utils import override_settings
 
+import responses
+
 from v1.models import EventPage
 from v1.tests.wagtail_pages.helpers import save_new_page
+
 
 class EventPageTests(TestCase):
     @override_settings(MAPBOX_ACCESS_TOKEN='test_token')
