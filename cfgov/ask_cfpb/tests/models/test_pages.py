@@ -50,6 +50,9 @@ now = timezone.now()
 
 class MockSearchResult(SearchResult):
     def __init__(self, app_label, model_name, pk, score, **kwargs):
+        self.autocomplete = "What is mock question {}?".format(pk)
+        self.url = "/ask-cfpb/mock-question-en-{}/".format(pk)
+        self.text = "Mock answer text for question {}.".format(pk)
         super(MockSearchResult, self).__init__(  # pragma: no cover
             app_label, model_name, pk, score, **kwargs)
 
@@ -58,14 +61,21 @@ def mock_queryset(count=0):
     class MockSearchQuerySet(SearchQuerySet):
         def __iter__(self):
             if count:
-                return iter([  # pragma: no cover
+                return iter([
                     MockSearchResult('ask_cfpb', 'AnswerPage', i, 0.5)
-                    for i, in list(range(1, count + 1))])
+                    for i in list(range(1, count + 1))])
             else:
                 return iter([])
 
         def count(self):
             return count
+
+        def filter(self, *args, **kwargs):
+            return self
+
+        def models(self, *models):
+            return self  # pragma: no cover
+
     return MockSearchQuerySet()
 
 
@@ -202,16 +212,27 @@ class PortalSearchPageTestCase(TestCase):
         self.spanish_page.portal_topic_id = 1
         self.spanish_page.save_revision(user=self.test_user).publish()
 
-    def test_get_english_heading(self):
+    def test_get_english_topic_heading(self):
         page = self.english_page
-        page.portal_topic = PortalTopic.objects.get(heading='Auto loans')
         self.assertEqual(page.get_heading(), 'Auto loans')
 
-    def test_get_spanish_heading(self):
+    def test_get_english_category_heading(self):
+        page = self.english_page
+        page.portal_category = PortalCategory.objects.get(
+            heading='How-to guides')
+        self.assertEqual(page.get_heading(), 'How-to guides')
+
+    def test_get_spanish_topic_heading(self):
         page = self.spanish_page
-        page.portal_topic = PortalTopic.objects.get(heading='Auto loans')
         self.assertEqual(
             page.get_heading(), 'Préstamos para vehículos')
+
+    def test_get_spanish_category_heading(self):
+        page = self.spanish_page
+        page.portal_category = PortalCategory.objects.get(
+            heading_es='Paso a paso')
+        self.assertEqual(
+            page.get_heading(), 'Paso a paso')
 
     def test_english_portal_title(self):
         test_page = PortalSearchPage(

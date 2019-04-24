@@ -194,7 +194,7 @@ class AnswerViewTestCase(TestCase):
             self.ROOT_PAGE,
             language='en')
 
-        mock_ask_search.queryset = mock_queryset(count=1)
+        mock_ask_search.queryset = mock_queryset(count=3)
         mock_ask_search.suggestion = None
         mock_ask_search.search_term = 'payday'
         response = self.client.get(reverse(
@@ -298,8 +298,8 @@ class AnswerViewTestCase(TestCase):
         self.assertTrue(mock_ask_search.called_with(
             language='es', search_term='payday'))
 
-    @mock.patch('ask_cfpb.models.search.SearchQuerySet.filter')
-    def test_search_page_en_selection(self, mock_filter):
+    @mock.patch('ask_cfpb.views.AskSearch')
+    def test_search_page_en_selection(self, mock_search):
         page = get_or_create_page(
             apps,
             'ask_cfpb',
@@ -309,24 +309,18 @@ class AnswerViewTestCase(TestCase):
             self.english_parent_page,
             language='en',
             live=True)
-        mock_return = mock.Mock()
-        mock_return.url = 'url'
-        mock_return.autocomplete = 'question text'
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        mock_filter.return_value = mock_queryset
-        self.client.get(reverse(
+        mock_search.serch_term = 'tuition'
+        mock_search.queryset = mock_queryset(count=1)
+        response = self.client.get(reverse(
             'ask-search-en'), {'q': 'tuition'})
-        self.assertEqual(mock_filter.call_count, 1)
-        self.assertEqual(page.language, 'en')
-        self.assertEqual(page.answers, [])
+        self.assertEqual(mock_search.call_count, 1)
+        self.assertEqual(response.context_data.get('page').language, 'en')
         self.assertEqual(
             page.get_template(HttpRequest()),
             'ask-cfpb/answer-search-results.html')
 
     @mock.patch('ask_cfpb.views.AskSearch')
-    def test_search_page_es_selection(self, mock_filter):
+    def test_search_page_es_selection(self, mock_search):
         page = get_or_create_page(
             apps,
             'ask_cfpb',
@@ -336,24 +330,19 @@ class AnswerViewTestCase(TestCase):
             self.spanish_parent_page,
             language='es',
             live=True)
-        mock_return = mock.Mock()
-        mock_return.url = 'url'
-        mock_return.autocomplete = 'question text'
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        mock_filter.return_value = mock_queryset
-        self.client.get(reverse(
+        mock_search.serch_term = 'hipotecas'
+        mock_search.queryset = mock_queryset(count=5)
+        response = self.client.get(reverse(
             'ask-search-es', kwargs={'language': 'es'}), {'q': 'hipotecas'})
-        self.assertEqual(mock_filter.call_count, 1)
-        self.assertEqual(page.language, 'es')
-        self.assertEqual(page.answers, [])
+        self.assertEqual(mock_search.call_count, 1)
+        self.assertEqual(response.context_data['page'].language, 'es')
         self.assertEqual(
             page.get_template(HttpRequest()),
             'ask-cfpb/answer-search-spanish-results.html')
 
-    @mock.patch('ask_cfpb.models.search.SearchQuerySet.filter')
-    def test_json_response(self, mock_filter):
+    @mock.patch('ask_cfpb.views.SearchQuerySet.spelling_suggestion')
+    @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
+    def test_json_response(self, mock_filter, mock_suggestion):
         get_or_create_page(
             apps,
             'ask_cfpb',
@@ -363,14 +352,9 @@ class AnswerViewTestCase(TestCase):
             self.english_parent_page,
             language='en',
             live=True)
-        mock_return = mock.Mock()
-        mock_return.url = "inscisive_url.com"
-        mock_return.autocomplete = "inscisive question"
-        mock_return.text = "inscisive text"
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        mock_filter.return_value = mock_queryset
+        mock_suggestion.return_value = 'tuition'
+        mock_filter.count.return_value = 5
+        mock_filter.return_value = mock_queryset(count=5)
         response = self.client.get(reverse(
             'ask-search-en-json',
             kwargs={'as_json': 'json'}), {'q': 'tuition'})

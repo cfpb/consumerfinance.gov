@@ -137,17 +137,15 @@ def ask_search(request, language='en', as_json=False):
         }
         json_results = json.dumps(results)
         return HttpResponse(json_results, content_type='application/json')
-    else:
-        results_page.query = search_term
-        results_page.result_query = search.search_term
-        results_page.suggestion = search.suggestion
-        results_page.answers = []
 
-        for result in search.queryset:
-            results_page.answers.append(
-                (result.url, result.autocomplete, result.text)
-            )
-        return results_page.serve(request)
+    results_page.query = search_term
+    results_page.result_query = search.search_term
+    results_page.suggestion = search.suggestion
+    results_page.answers = [
+        (result.url, result.autocomplete, result.text)
+        for result in search.queryset
+    ]
+    return results_page.serve(request)
 
 
 def ask_autocomplete(request, language='en'):
