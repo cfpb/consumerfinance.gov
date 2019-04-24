@@ -567,10 +567,10 @@ class AnswerResultsPage(SecondaryNavigationJSMixin, CFGOVPage):
         context.update(**kwargs)
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
+        results = paginator.page(page_number)
         context['current_page'] = page_number
         context['paginator'] = paginator
-        context['results'] = page
+        context['results'] = results
         context['results_count'] = len(self.answers)
         context['get_secondary_nav_items'] = get_ask_nav_items
 

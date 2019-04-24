@@ -54,6 +54,21 @@ class MockSearchResult(SearchResult):
             app_label, model_name, pk, score, **kwargs)
 
 
+def mock_queryset(count=0):
+    class MockSearchQuerySet(SearchQuerySet):
+        def __iter__(self):
+            if count:
+                return iter([  # pragma: no cover
+                    MockSearchResult('ask_cfpb', 'AnswerPage', i, 0.5)
+                    for i, in list(range(1, count + 1))])
+            else:
+                return iter([])
+
+        def count(self):
+            return count
+    return MockSearchQuerySet()
+
+
 class AnswerSlugCreationTest(unittest.TestCase):
 
     def test_long_slug_string(self):
@@ -187,14 +202,6 @@ class PortalSearchPageTestCase(TestCase):
         self.spanish_page.portal_topic_id = 1
         self.spanish_page.save_revision(user=self.test_user).publish()
 
-    def mock_search(self):
-        class MockSearchQuerySet(SearchQuerySet):
-            def __iter__(self):
-                return iter([  # pragma: no cover
-                    MockSearchResult('ask_cfpb', 'AnswerPage', 1, 0.5),
-                    MockSearchResult('ask_cfpb', 'AnswerPage', 2, 0.5)])
-        return MockSearchQuerySet()
-
     def test_get_english_heading(self):
         page = self.english_page
         page.portal_topic = PortalTopic.objects.get(heading='Auto loans')
@@ -262,7 +269,7 @@ class PortalSearchPageTestCase(TestCase):
 
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
     def test_portal_category_page_200(self, mock_filter):
-        mock_filter.return_value = self.mock_search()
+        mock_filter.return_value = mock_queryset(count=2)
         page = self.english_page
         url = page.url + page.reverse_subpage(
             'portal_category_page', kwargs={'category': 'how-to-guides'})
@@ -283,13 +290,12 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
-    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.count')
+    # @mock.patch('ask_cfpb.models.pages.SearchQuerySet.count')
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion')
     def test_portal_topic_page_with_no_hits_same_suggestion(
-            self, mock_suggestion, mock_count, mock_filter):
+            self, mock_suggestion, mock_filter):
         mock_suggestion.return_value = 'hoodoo'
-        mock_count.return_value = 0
-        mock_filter.return_value = self.mock_search()
+        mock_filter.return_value = mock_queryset()
         page = self.english_page
         base_url = page.url
         url = "{}?search_term=hoodoo".format(base_url)
@@ -303,7 +309,7 @@ class PortalSearchPageTestCase(TestCase):
             self, mock_suggestion, mock_count, mock_filter):
         mock_suggestion.return_value = 'hoodunit'
         mock_count.return_value = 0
-        mock_filter.return_value = self.mock_search()
+        mock_filter.return_value = mock_queryset()
         page = self.english_page
         base_url = page.url
         url = "{}?search_term=hoodoo".format(base_url)
@@ -320,7 +326,7 @@ class PortalSearchPageTestCase(TestCase):
             self, mock_suggestion, mock_count, mock_filter):
         mock_count.return_value = 0
         mock_suggestion.return_value = 'hoodunit'
-        mock_filter.return_value = self.mock_search()
+        mock_filter.return_value = mock_queryset()
         page = self.english_page
         base_url = page.url + page.reverse_subpage(
             'portal_category_page', kwargs={'category': 'how-to-guides'})
@@ -336,7 +342,7 @@ class PortalSearchPageTestCase(TestCase):
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion')
     def test_portal_category_page_same_suggestion(
             self, mock_suggestion, mock_count, mock_filter):
-        mock_filter.return_value = self.mock_search()
+        mock_filter.return_value = mock_queryset()
         mock_count.return_value = 0
         mock_suggestion.return_value = 'hoodoo'
         page = self.english_page
@@ -351,7 +357,7 @@ class PortalSearchPageTestCase(TestCase):
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
     def test_portal_topic_page_suggestion(self, mock_filter, mock_models):
         mock_models.spelling_suggestion.return_value = 'hoodunit'
-        mock_filter.return_value = self.mock_search()
+        mock_filter.return_value = mock_queryset()
         page = self.english_page
         url = "{}?search_term=hoodoo".format(page.url)
         response = self.client.get(url)
