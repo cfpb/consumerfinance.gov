@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import re
+from collections import OrderedDict
 from six.moves.urllib.parse import unquote, urlparse
 
 from django import forms
@@ -276,10 +277,23 @@ class PortalSearchPage(
 
     @property
     def category_map(self):
-        return {
-            slugify(_(category.heading)): category
-            for category in PortalCategory.objects.all()
-        }
+        """
+        Return an ordered dictionary of translated-slug:object pairs.
+
+        We use this custom sequence for categories in the navigation sidebar:
+        - Basics
+        - Key terms
+        - Common issues
+        - Know your rights
+        - How-to guides
+        """
+        nav_sort_order_by_pk = [1, 4, 5, 2, 3]
+        categories = PortalCategory.objects.order_by('pk')
+        sorted_mapping = OrderedDict()
+        for i in nav_sort_order_by_pk:
+            sorted_mapping.update(
+                {slugify(_(categories[i - 1].heading)): categories[i - 1]})
+        return sorted_mapping
 
     def results_message(self, count, heading, search_term):
         if search_term:
@@ -341,25 +355,24 @@ class PortalSearchPage(
             request, *args, **kwargs)
 
     def get_nav_items(self, request, page):
-        """Return nav items sorted by an arbitrary order."""
-        pk_sort_order = [1, 4, 5, 2, 3]
-        hand_sorted_categories = []
-        for pk in pk_sort_order:
-            category = PortalCategory.objects.get(pk=pk)
-            hand_sorted_categories.append({
+        """Return sorted nav items for sidebar."""
+        sorted_categories = [
+            {
                 'title': _(category.heading),
-                'url': "{}{}/".format(page.url, slugify(_(category.heading))),
+                'url': "{}{}/".format(page.url, slug),
                 'active': (
                     False if not page.portal_category
                     else _(category.heading)
-                    == _(page.portal_category.heading)),
-            })
+                    == _(page.portal_category.heading))
+            }
+            for slug, category in self.category_map.items()
+        ]
         return [{
             'title': _(page.portal_topic.heading),
             'url': page.url,
             'active': False if page.portal_category else True,
             'expanded': True,
-            'children': hand_sorted_categories
+            'children': sorted_categories
         }], True
 
     @route(r'^$')
