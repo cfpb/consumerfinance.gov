@@ -2,7 +2,6 @@ import json
 import requests
 
 from datetime import date
-from six.moves.urllib.parse import urlencode
 
 from django.conf import settings
 from django.core.validators import RegexValidator
@@ -306,34 +305,46 @@ class EventPage(AbstractFilterPage):
     def page_js(self):
         return super(EventPage, self).page_js + ['video-player.js']
 
-    def get_venue_coords(self, location='Washington, DC'):
-        if self.venue_city and self.venue_state:
-            location = self.venue_city + ', ' + self.venue_state
+    def get_venue_coords(self):
+        # Default to Washington DC coordinates
+        venue_coords = '-77.039628,38.898238'
 
+        if not self.venue_city and not self.venue_state:
+            return venue_coords
+
+        location = '{} {}'.format(self.venue_city, self.venue_state)
         geocode_api_url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
         geocode_location_url = geocode_api_url + location + '.json'
 
-        params = {
-            'access_token': settings.MAPBOX_ACCESS_TOKEN
-        }
-
+        params = {'access_token': settings.MAPBOX_ACCESS_TOKEN}
         response = requests.get(geocode_location_url, params=params)
 
         if response.status_code != 200:
-            return HttpResponse(status=response.status_code)
+            return venue_coords
 
-        geocode_data = json.loads(response.text)
-        coordinates = geocode_data['features'][0]['geometry']['coordinates']
-        return str(coordinates[0]) + ',' + str(coordinates[1])
+        try:
+            geo_data = json.loads(response.text)
+            coordinates = geo_data['features'][0]['geometry']['coordinates']
+            venue_coords = str(coordinates[0]) + ',' + str(coordinates[1])
+        except KeyError:
+            pass
+
+        return venue_coords
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
-        venue_coords = self.venue_coords or self.get_venue_coords()
-        map_image_api_url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/'
-        map_image_url = map_image_api_url + venue_coords + ',' + zoom + '/' + size + '?access_token=' + settings.MAPBOX_ACCESS_TOKEN
+        if not self.venue_coords:
+            self.save()
+        api_url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static'
+        static_map_image_url = '{}/{},{}/{}?access_token={}'.format(
+            api_url,
+            self.venue_coords,
+            zoom,
+            size,
+            settings.MAPBOX_ACCESS_TOKEN
+        )
 
-        return map_image_url
+        return static_map_image_url
 
     def save(self, *args, **kwargs):
-        if kwargs.get('update_fields'):
-            self.venue_coords = self.get_venue_coords()
+        self.venue_coords = self.get_venue_coords()
         return super(EventPage, self).save(*args, **kwargs)
