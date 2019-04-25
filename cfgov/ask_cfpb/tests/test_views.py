@@ -17,8 +17,8 @@ from model_mommy import mommy
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerPage
 )
-from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
 from ask_cfpb.tests.models.test_pages import mock_queryset
+from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
 # from ask_cfpb.models.search import AskSearch
 from v1.util.migrations import get_or_create_page
 
