@@ -88,7 +88,7 @@ class EventArchivePage(BrowseFilterablePage):
 
 class NewsroomLandingPage(BrowseFilterablePage):
     template = 'newsroom/index.html'
-    filterable_categories = ('Blog', 'Newsroom')
+    filterable_categories = ['Newsroom']
     filterable_children_only = False
 
     objects = PageManager()
