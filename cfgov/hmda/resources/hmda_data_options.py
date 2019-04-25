@@ -7,7 +7,7 @@ HMDA_RECORDS_OPTIONS = [
 ]
 
 HMDA_FIELD_DESC_OPTIONS = [
-    ('labels', 'Plan language labels and HMDA codes'),
+    ('labels', 'Plain language labels and HMDA codes'),
     ('codes', 'HMDA codes only'),
 ]
 
