@@ -199,61 +199,6 @@ msgstr "https://gobiernousa.gov/"
 msgid "USA.gov"
 msgstr "GobiernoUSA.gov"
 
-#: v1/models/portal_topics.py
-msgid "Auto loans"
-msgstr "Préstamos para vehículos"
-
-msgid "Bank accounts"
-msgstr "Cuentas bancarias"
-
-msgid "Credit cards"
-msgstr "Tarjetas de crédito"
-
-msgid "Credit reports and scores"
-msgstr "Informes y puntajes de crédito"
-
-msgid "Debt collection"
-msgstr "Cobro de deudas"
-
-msgid "Fraud and scams"
-msgstr "Fraudes y estafas"
-
-msgid "Money transfers"
-msgstr "Transferencias de dinero"
-
-msgid "Payday loans"
-msgstr "Préstamos del día de pago"
-
-msgid "Prepaid cards"
-msgstr "Tarjetas prepagadas"
-
-msgid "Reverse mortgages"
-msgstr "Hipotecas inversas"
-
-msgid "Student loans"
-msgstr "Préstamos estudiantiles"
-
-msgid "Basics"
-msgstr "Lo básico"
-
-msgid "Common issues"
-msgstr "Problemas comunes"
-
-msgid "How-to"
-msgstr "Paso a paso"
-
-msgid "How-to guides"
-msgstr "Paso a paso"
-
-msgid "How to guides"
-msgstr "Paso a paso"
-
-msgid "Key terms"
-msgstr "Palabras claves"
-
-msgid "Know your rights"
-msgstr "Conozca sus derechos"
-
 #: ask_cfpb/models/pages.py:649 ask_cfpb/tests/models/test_pages.py:781
 msgid "redirected but not live"
 msgstr ""
