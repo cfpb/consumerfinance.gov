@@ -32,6 +32,11 @@ class PortalTopic(ClusterableModel):
         help_text='Tags are used to identify and organize portal topic pages.'
     )
 
+    def title(self, language='en'):
+        if language == 'es':
+            return self.heading_es
+        return self.heading
+
     def __str__(self):
         return self.heading
 
@@ -59,6 +64,12 @@ class PortalCategory(ClusterableModel):
 
     class Meta:
         verbose_name_plural = "portal categories"
+
+    def title(self, language='en'):
+        if language == 'es':
+            return self.heading_es
+
+        return self.heading
 
     def __str__(self):
         return self.heading

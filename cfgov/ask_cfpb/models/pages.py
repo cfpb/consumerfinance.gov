@@ -287,8 +287,11 @@ class PortalSearchPage(
         categories = PortalCategory.objects.order_by('pk')
         sorted_mapping = OrderedDict()
         for i in PORTAL_CATEGORY_SORT_ORDER:
-            sorted_mapping.update(
-                {slugify(_(categories[i - 1].heading)): categories[i - 1]})
+            sorted_mapping.update({
+                slugify(
+                    categories[i - 1].title(self.language)
+                ): categories[i - 1]
+            })
         return sorted_mapping
 
     def results_message(self, count, heading, search_term):
@@ -315,7 +318,7 @@ class PortalSearchPage(
                 heading.lower(),
                 search_term,
                 _('See all results within'),
-                _(self.portal_topic.heading).lower()
+                self.portal_topic.title(self.language).lower()
             )
         elif self.portal_category:
             return '{} {} {} {} {}'.format(
@@ -335,15 +338,9 @@ class PortalSearchPage(
 
     def get_heading(self):
         if self.portal_category:
-            if self.language == 'es':
-                return self.portal_category.heading_es
-            else:
-                return self.portal_category.heading
+            return self.portal_category.title(self.language)
         else:
-            if self.language == 'es':
-                return self.portal_topic.heading_es
-            else:
-                return self.portal_topic.heading
+            return self.portal_topic.title(self.language)
 
     def get_context(self, request, *args, **kwargs):
         if self.language != 'en':
@@ -357,17 +354,17 @@ class PortalSearchPage(
         """Return sorted nav items for sidebar."""
         sorted_categories = [
             {
-                'title': _(category.heading),
+                'title': category.title(self.language),
                 'url': "{}{}/".format(page.url, slug),
                 'active': (
                     False if not page.portal_category
-                    else _(category.heading)
-                    == _(page.portal_category.heading))
+                    else category.title(self.language)
+                    == page.portal_category.title(self.language))
             }
             for slug, category in self.category_map.items()
         ]
         return [{
-            'title': _(page.portal_topic.heading),
+            'title': page.portal_topic.title(self.language),
             'url': page.url,
             'active': False if page.portal_category else True,
             'expanded': True,
