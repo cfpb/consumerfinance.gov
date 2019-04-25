@@ -1,4 +1,3 @@
-import json
 from datetime import date
 
 from django.conf import settings
@@ -312,17 +311,17 @@ class EventPage(AbstractFilterPage):
             return venue_coords
 
         location = '{} {}'.format(self.venue_city, self.venue_state)
-        geocode_api_url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
-        geocode_location_url = geocode_api_url + location + '.json'
+        api = 'https://api.mapbox.com/geocoding/v5/mapbox.places-permanent/'
+        location_api_url = api + location + '.json'
 
         params = {'access_token': settings.MAPBOX_ACCESS_TOKEN}
-        response = requests.get(geocode_location_url, params=params)
+        response = requests.get(location_api_url, params=params)
 
         if response.status_code != 200:
             return venue_coords
 
         try:
-            geo_data = json.loads(response.text)
+            geo_data = response.json()
             coordinates = geo_data['features'][0]['geometry']['coordinates']
             venue_coords = str(coordinates[0]) + ',' + str(coordinates[1])
         except KeyError:
@@ -331,8 +330,6 @@ class EventPage(AbstractFilterPage):
         return venue_coords
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
-        if not self.venue_coords:
-            self.save()
         api_url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static'
         static_map_image_url = '{}/{},{}/{}?access_token={}'.format(
             api_url,
