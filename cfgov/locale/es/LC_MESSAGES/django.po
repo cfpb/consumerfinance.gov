@@ -1,14 +1,190 @@
-# Spanish translations for cfgov-refresh
-#, fuzzy
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-01 10:48-0500\n"
-"Language: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es\n"
+
+#: v1/_includes/molecules/global-search.html
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Search the CFPB"
+msgstr "Buscar la CFPB"
+
+msgid "Submit a Complaint"
+msgstr "Presentar una queja"
+
+msgid "Mortgage"
+msgstr "Hipoteca"
+
+#: v1/ask-cfpb/category-page.html
+msgid "results"
+msgstr "resultados"
+
+msgid "Read answer"
+msgstr "Leer más"
+
+msgid "/ask-cfpb/"
+msgstr "/es/obtener-respuestas/"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "No results found for"
+msgstr "No se encontraron resultados para"
+
+msgid "Please enter a search term in the box above."
+msgstr "Por favor ingrese un término de búsqueda en el cuadro de arriba."
+
+#: cfgov/jinja2/v1/ask-cfpb/answer-page.html
+msgid "updated"
+msgstr "actualizado"
+
+msgid "Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature."
+msgstr "No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo."
+
+msgid "Read full answer"
+msgstr "Leer más"
+
+msgid "Hide full answer"
+msgstr "Esconder la respuesta completa"
+
+msgid "Explore related resources"
+msgstr "Otros recursos"
+
+msgid "Related questions"
+msgstr "Otras preguntas"
+
+#: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
+msgid "Can't find your question?"
+msgstr "¿No encuentra su pregunta?"
+
+msgid "Ask CFPB"
+msgstr "Obtener respuestas"
+
+msgid "Showing results for "
+msgstr "Se muestran resultados para "
+
+msgid "Showing"
+msgstr "Se muestran"
+
+msgid "of"
+msgstr "de"
+
+msgid "results for"
+msgstr "resultados para"
+
+msgid "Search instead for"
+msgstr "Buscar en lugar para"
+
+#: cfgov/jinja2/v1/ask-cfpb/landing-page.html
+msgid "Browse questions by category"
+msgstr "Examinar las preguntas por categoría"
+
+#: cfgov/jinja2/v1/_includes/blocks/feedback.html
+msgid "Was this answer helpful to you?"
+msgstr "¿Te resultó útil esta respuesta?"
+
+msgid "Additional comment"
+msgstr "Comentario adicional"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "optional"
+msgstr "opcional"
+
+#: v1/_includes/ask/ask-search-bar.html
+msgid "/ask-cfpb/search"
+msgstr "/es/obtener-respuestas/buscar"
+
+msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
+msgstr "¿No encuentra lo que busca? <span class=\"break\">Busca su pregunta.</span>"
+
+#: cfgov/jinja2/v1/_includes/atoms/tagline.html
+msgid "An official website of the United States government"
+msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
+
+#: cfgov/jinja2/v1/_includes/molecules/pagination.html
+msgid "Page"
+msgstr "Página"
+
+msgid "Go"
+msgstr "Ir"
+
+#: cfgov/jinja2/v1/_includes/organisms/secondary-navigation.html
+msgid "In this section"
+msgstr "En esta sección"
+
+#: cfgov/jinja2/v1/_includes/organisms/footer.html
+msgid "Back to top"
+msgstr "Ir arriba"
+
+msgid "https://usa.gov/"
+msgstr "https://gobiernousa.gov/"
+
+msgid "USA.gov"
+msgstr "GobiernoUSA.gov"
+
+#: v1/models/portal_topics.py
+msgid "Auto loans"
+msgstr "Préstamos para vehículos"
+
+msgid "Bank accounts"
+msgstr "Cuentas bancarias"
+
+msgid "Credit cards"
+msgstr "Tarjetas de crédito"
+
+msgid "Credit reports and scores"
+msgstr "Informes y puntajes de crédito"
+
+msgid "Debt collection"
+msgstr "Cobro de deudas"
+
+msgid "Fraud and scams"
+msgstr "Fraudes y estafas"
+
+msgid "Money transfers"
+msgstr "Transferencias y envíos de dinero"
+
+msgid "Mortgages"
+msgstr "Comprar una vivienda"
+
+msgid "Payday loans"
+msgstr "Préstamos del día de pago"
+
+msgid "Prepaid cards"
+msgstr "Tarjetas prepagadas"
+
+msgid "Reverse mortgages"
+msgstr "Hipotecas inversas"
+
+msgid "Student loans"
+msgstr "Préstamos para educación"
+
+msgid "Basics"
+msgstr "Lo que debe saber"
+
+msgid "Common issues"
+msgstr "Problemas comunes"
+
+msgid "How-to"
+msgstr "Paso a paso"
+
+msgid "Key terms"
+msgstr "Palabras claves"
+
+msgid "Know your rights"
+msgstr "Conozca sus derechos"
 
 #: ask_cfpb/models/pages.py:649 ask_cfpb/tests/models/test_pages.py:781
 msgid "redirected but not live"
@@ -156,7 +332,7 @@ msgstr ""
 #: legacy/templates/front/base_nonresponsive.html:32
 #: legacy/templates/front/base_update.html:52
 msgid "Consumer Financial Protection Bureau"
-msgstr ""
+msgstr "Oficina para la Protección Financiera del Consumidor"
 
 #: legacy/templates/front/base_nonresponsive.html:110
 #: legacy/templates/front/base_update.html:172

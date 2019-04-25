@@ -5,7 +5,7 @@ from six import text_type as unicode
 from six.moves.urllib.parse import urljoin
 
 from django.http import Http404, HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 from haystack.inputs import Clean
 from haystack.query import SearchQuerySet
@@ -17,7 +17,7 @@ from wagtailsharing.views import ServeView
 from bs4 import BeautifulSoup as bs
 from flags.state import flag_enabled
 
-from ask_cfpb.models import Answer, AnswerPage, AnswerResultsPage
+from ask_cfpb.models import AnswerPage, AnswerResultsPage
 
 
 def annotate_links(answer_text):
@@ -47,33 +47,6 @@ def annotate_links(answer_text):
         parent.insert(link_location + 1, super_tag)
         index += 1
     return (unicode(soup), footnotes)
-
-
-def print_answer(request, slug, language, answer_id):
-    answer = get_object_or_404(Answer, id=answer_id)
-    field_map = {
-        'es': {'slug': answer.slug_es,
-               'title': answer.question_es,
-               'answer_text': answer.answer_es},
-        'en': {'slug': answer.slug,
-               'title': answer.question,
-               'answer_text': answer.answer},
-    }
-    _map = field_map[language]
-    if not _map['answer_text']:
-        raise Http404
-    (text, footnotes) = annotate_links(_map['answer_text'])
-
-    print_context = {
-        'answer': text,
-        'title': _map['title'],
-        'slug': _map['slug'],
-        'footnotes': footnotes
-    }
-    return render(
-        request,
-        'ask-cfpb/answer-page-spanish-printable.html',
-        context=print_context)
 
 
 def view_answer(request, slug, language, answer_id):

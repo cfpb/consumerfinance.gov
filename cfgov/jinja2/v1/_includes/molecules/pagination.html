@@ -66,7 +66,7 @@
         <form class="m-pagination_form" action="{{ fragment_id }}">
             <label for="m-pagination_current-page-{{ index | string }}">
                 <span class="m-pagination_label">
-                    Page
+                    {{ _('Page') }}
                 </span>
                 <span class="u-visually-hidden">
                     {{ current_page }} out of {{ total_pages }} total pages
@@ -89,13 +89,13 @@
                    inputmode="numeric"
                    value="{{ current_page }}">
             <span class="m-pagination_label">
-                of {{ total_pages }}
+                {{- ' ' ~ _('of') ~ ' ' -}} {{- total_pages -}}
             </span>
             <button class="a-btn
                            a-btn__link
                            m-pagination_btn-submit"
                     type="submit">
-                Go
+                {{ _('Go') }}
             </button>
         </form>
     </nav>

@@ -21,8 +21,7 @@ from wagtailautocomplete.urls.admin import (
 )
 
 from ask_cfpb.views import (
-    ask_autocomplete, ask_search, print_answer, redirect_ask_search,
-    view_answer
+    ask_autocomplete, ask_search, redirect_ask_search, view_answer
 )
 from core.conditional_urls import include_if_app_enabled
 from core.views import (
@@ -346,8 +345,8 @@ urlpatterns = [
         view_answer,
         name='ask-spanish-answer'),
     url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/$',
-        print_answer,
-        name='ask-spanish-print-answer'),
+        view_answer,
+        name='ask-spanish-answer'),
     url(r'^(?i)ask-cfpb/search/$',
         ask_search,
         name='ask-search-en'),
