@@ -3092,3 +3092,8 @@ Not in CF docs yet..
 .o-mega-menu a:hover {
 	background-color: transparent;
 }
+
+/* Students email signup fix */
+.students-privacy-link {
+	margin-left: 10px;
+}
