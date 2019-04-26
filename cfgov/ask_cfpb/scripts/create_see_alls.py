@@ -115,7 +115,7 @@ PARENT_PAGE_MAP = {
                 "title": "Auto loans",
                 'child': {
                     'title': 'Auto loan answers',
-                    "overview": "When you’re shopping for a new auto loan, it’s important to know the right questions to ask. Preparing can help you save money, reduce stress, and get the auto loan that’s right for you.",  # noqa
+                    "overview": "When you’re shopping for a new auto loan, know the right questions to ask. Get answers to frequently asked auto loan questions.",  # noqa
                     "portal_topic_id": 1}},
             {
                 'model': SublandingPage,
@@ -123,7 +123,7 @@ PARENT_PAGE_MAP = {
                 "title": "Bank accounts and services",
                 'child': {
                     'title': 'Bank account answers',
-                    "overview": "When choosing and using your bank or credit union account, it’s important to know your options.",  # noqa
+                    "overview": "Do you know how to avoid overdraft fees and find out what to do if someone took money from your bank account without permission? Learn more about these and other issues.",  # noqa
                     "portal_topic_id": 2}},
             {
                 'model': SublandingPage,
@@ -139,7 +139,7 @@ PARENT_PAGE_MAP = {
                 "title": "Credit reports and scores",
                 'child': {
                     'title': 'Credit report answers',
-                    "overview": "Your credit reports and scores have a major impact on your financial opportunities. Our resources can help you learn how to correct inaccuracies and improve your credit record.",  # noqa
+                    "overview": "You can take action to get your credit report and to get and keep a good credit score. Find out how with our frequently asked questions.",  # noqa
                     "portal_topic_id": 4}},
             {
                 'model': SublandingPage,
@@ -147,7 +147,7 @@ PARENT_PAGE_MAP = {
                 "title": "Debt Collection",
                 'child': {
                     'title': 'Debt collection answers',
-                    "overview": "Debt collection issues can be challenging. You don't have to face them alone. Our resources can help you understand how debt collection works and what your rights are.",  # noqa
+                    "overview": "Did you know that debt collectors generally can’t call you after 9 p.m.? Learn about debt collection, harassment, and more by searching or browsing.",  # noqa
                     "portal_topic_id": 5}},
             {
                 'model': SublandingPage,
@@ -171,7 +171,7 @@ PARENT_PAGE_MAP = {
                 'title': 'Mortgages',
                 'child': {
                     'title': 'Mortgage answers',
-                    "overview": "Whether you’re thinking of buying a home, already have a home loan, or are having trouble paying your mortgage, we have resources to help you every step of the way.",  # noqa
+                    "overview": "Whether you are getting a mortgage, having trouble paying your mortgage, or want to learn about reverse mortgages, we have answers to your questions.",  # noqa
                     "portal_topic_id": 9}},
             {
                 'model': SublandingPage,
@@ -179,7 +179,7 @@ PARENT_PAGE_MAP = {
                 'title': 'Prepaid cards',
                 'child': {
                     'title': 'Prepaid card answers',
-                    "overview": "If you’re considering getting a prepaid card or account, we have information that can help you choose the right one for you and better understand your rights.",  # noqa
+                    "overview": "Prepaid cards might look like debit and credit cards, but there are some important differences between them. Learn about fees and charges, and find answers to common questions.",  # noqa
                     "portal_topic_id": 11}},
             {
                 'model': SublandingPage,
@@ -195,7 +195,7 @@ PARENT_PAGE_MAP = {
                 'title': 'Student loans',
                 'child': {
                     'title': 'Student loan answers',
-                    "overview": "Whether you are preparing for college, attending school, or already repaying your student loans, we have tools and resources to help you make the best decisions for you.",  # noqa
+                    "overview": "Student loans are complicated. We have answers to questions about how to pay off your loans and the repayment programs available to you.",  # noqa
                     "portal_topic_id": 13}},
         ]
     },
