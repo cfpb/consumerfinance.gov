@@ -45,7 +45,7 @@
             <span class="a-btn_icon a-btn_icon__on-left">
                 {{- svg_icon('left') -}}
             </span>
-            {{ prev_text }}
+            {{ _(prev_text) }}
         </a>
         {%- if current_page < total_pages %}
         <a class="a-btn
@@ -58,7 +58,7 @@
                   a-btn__disabled
                   m-pagination_btn-next">
         {% endif -%}
-            {{ next_text }}
+            {{ _(next_text) }}
             <span class="a-btn_icon a-btn_icon__on-right">
                 {{- svg_icon('right') -}}
             </span>
