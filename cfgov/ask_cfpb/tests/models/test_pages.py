@@ -527,6 +527,17 @@ class AnswerPageTestCase(TestCase):
         self.english_parent_page.add_child(instance=self.page2)
         self.page2.save_revision().publish()
 
+    def test_tag_results_page_templates(self):
+        self.assertEqual(
+            self.tag_results_page_es.get_template(HttpRequest()),
+            self.tag_results_page_en.get_template(HttpRequest()))
+
+    def test_tag_results_page_context_language(self):
+        context = self.tag_results_page_es.get_context(HttpRequest())
+        self.assertEqual(
+            context.get('breadcrumb_items')[0]['title'],
+            'Obtener respuestas')
+
     def test_english_page_context(self):
         from v1.models.snippets import ReusableText
         from ask_cfpb.models.pages import get_reusable_text_snippet

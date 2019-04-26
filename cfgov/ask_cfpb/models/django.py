@@ -104,15 +104,6 @@ class Category(models.Model):
             category=self,
             featured=True).order_by('featured_rank')
 
-    # @property
-    # def top_tags(self, language='es'):
-    #     search_tags = []
-    #     pages = self.answerpage_set.filter(language=language).all()
-    #     for page in pages:
-    #         search_tags += page.clean_search_tags
-    #     counter = Counter(search_tags)
-    #     return counter.most_common()[:10]
-
     class Meta:
         ordering = ['name']
         verbose_name_plural = 'Categories'
