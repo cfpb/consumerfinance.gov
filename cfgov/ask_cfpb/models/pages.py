@@ -480,7 +480,11 @@ class AnswerResultsPage(SecondaryNavigationJSMixin, CFGOVPage):
 class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     """A routable page for serving Answers by tag"""
 
-    template = 'ask-cfpb/answer-search-results.html'
+    def get_template(self, request):
+        if self.language == 'es':
+            return 'ask-cfpb/answer-tag-spanish-results.html'
+        else:
+            return 'ask-cfpb/answer-search-results.html'
 
     objects = CFGOVPageManager()
 
@@ -516,7 +520,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
         context['paginator'] = paginator
         return TemplateResponse(
             request,
-            self.template,
+            self.get_template(request),
             context)
 
 
