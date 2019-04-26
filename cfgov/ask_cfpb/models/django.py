@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from collections import Counter
+# from collections import Counter
 from six.moves import html_parser as HTMLParser
 
 from django import forms
@@ -104,14 +104,14 @@ class Category(models.Model):
             category=self,
             featured=True).order_by('featured_rank')
 
-    @property
-    def top_tags(self, language='es'):
-        search_tags = []
-        pages = self.answerpage_set.filter(language=language).all()
-        for page in pages:
-            search_tags += page.clean_search_tags
-        counter = Counter(search_tags)
-        return counter.most_common()[:10]
+    # @property
+    # def top_tags(self, language='es'):
+    #     search_tags = []
+    #     pages = self.answerpage_set.filter(language=language).all()
+    #     for page in pages:
+    #         search_tags += page.clean_search_tags
+    #     counter = Counter(search_tags)
+    #     return counter.most_common()[:10]
 
     class Meta:
         ordering = ['name']

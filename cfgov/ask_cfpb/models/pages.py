@@ -484,14 +484,11 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
 
     objects = CFGOVPageManager()
 
-    def set_language(self):
+    def get_context(self, request, *args, **kwargs):
         if self.language != 'en':
             activate(self.language)
         else:
             deactivate_all()
-
-    def get_context(self, request, *args, **kwargs):
-        self.set_language()
         context = super(
             TagResultsPage, self).get_context(request, *args, **kwargs)
         return context

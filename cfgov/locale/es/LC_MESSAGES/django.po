@@ -35,11 +35,11 @@ msgstr "Hipotecas"
 msgid "results"
 msgstr "resultados"
 
-msgid "Read answer"
-msgstr "Leer más"
-
 msgid "result"
 msgstr "resultado"
+
+msgid " results"
+msgstr " resultados"
 
 msgid "Read answer"
 msgstr "Leer la respuesta"
@@ -106,9 +106,6 @@ msgstr "Se muestra "
 
 msgid "Showing"
 msgstr "Se muestran"
-
-msgid "of"
-msgstr "de"
 
 msgid "result within"
 msgstr "resultado de"
@@ -179,9 +176,6 @@ msgstr "en"
 msgid "answers within"
 msgstr "respuestas dentro de"
 
-#: cfgov/jinja2/v1/_includes/molecules/pagination.html
-msgid "Page"
-msgstr "Pagina"
 
 msgid " of "
 msgstr " de "
@@ -225,9 +219,6 @@ msgstr "Fraudes y estafas"
 msgid "Money transfers"
 msgstr "Transferencias y envíos de dinero"
 
-msgid "Mortgages"
-msgstr "Comprar una vivienda"
-
 msgid "Payday loans"
 msgstr "Préstamos del día de pago"
 
@@ -247,6 +238,9 @@ msgid "Common issues"
 msgstr "Problemas comunes"
 
 msgid "How-to"
+msgstr "Paso a paso"
+
+msgid "How-to guides"
 msgstr "Paso a paso"
 
 msgid "Key terms"
