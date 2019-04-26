@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
         "heading": "Basics",
-        "heading_es": ""
+        "heading_es": "Lo b\u00e1sico"
     }
 },
 {
@@ -12,15 +12,15 @@
     "pk": 2,
     "fields": {
         "heading": "Know your rights",
-        "heading_es": ""
+        "heading_es": "Conozca sus derechos"
     }
 },
 {
     "model": "v1.portalcategory",
     "pk": 3,
     "fields": {
-        "heading": "How-to",
-        "heading_es": ""
+        "heading": "How-to guides",
+        "heading_es": "Paso a paso"
     }
 },
 {
@@ -28,7 +28,7 @@
     "pk": 4,
     "fields": {
         "heading": "Key terms",
-        "heading_es": ""
+        "heading_es": "Palabras claves"
     }
 },
 {
@@ -36,47 +36,7 @@
     "pk": 5,
     "fields": {
         "heading": "Common issues",
-        "heading_es": ""
-    }
-},
-{
-    "model": "v1.portalcategorytag",
-    "pk": 1,
-    "fields": {
-        "tag": 1028,
-        "content_object": 1
-    }
-},
-{
-    "model": "v1.portalcategorytag",
-    "pk": 2,
-    "fields": {
-        "tag": 1029,
-        "content_object": 2
-    }
-},
-{
-    "model": "v1.portalcategorytag",
-    "pk": 3,
-    "fields": {
-        "tag": 1030,
-        "content_object": 3
-    }
-},
-{
-    "model": "v1.portalcategorytag",
-    "pk": 4,
-    "fields": {
-        "tag": 1031,
-        "content_object": 4
-    }
-},
-{
-    "model": "v1.portalcategorytag",
-    "pk": 5,
-    "fields": {
-        "tag": 1032,
-        "content_object": 5
+        "heading_es": "Problemas comunes"
     }
 }
 ]
