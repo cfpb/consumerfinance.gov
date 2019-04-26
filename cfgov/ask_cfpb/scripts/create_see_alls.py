@@ -45,7 +45,7 @@ PARENT_PAGE_MAP = {
                 'title': 'Informes y puntajes de crédito',
                 'child': {
                     'title': 'Informes y puntajes de crédito respuestas',
-                    'overview': 'Sus informes y puntajes de crédito tienen un gran impacto sobre sus oportunidades financieras. Nuestros recursos pueden ayudarle a aprender a corregir los errores y a mejorar su historial de crédito a lo largo del tiempo.',  # noqa
+                    'overview': '',  # noqa
                     "portal_topic_id": 4}},
             {
                 'model': SublandingPage,
@@ -53,7 +53,7 @@ PARENT_PAGE_MAP = {
                 'title': 'Cobro de deudas',
                 'child': {
                     'title': 'Cobro de deudas respuestas',
-                    'overview': 'Los problemas de cobro de deudas pueden ser un reto. Usted no tiene que enfrentarlse a ellos solo. Nuestros recursos pueden ayudarle a entender cómo funciona el cobro de deudas y cuáles son sus derechos.',  # noqa
+                    'overview': '',  # noqa
                     "portal_topic_id": 5}},
             {
                 'model': SublandingPage,
@@ -85,7 +85,7 @@ PARENT_PAGE_MAP = {
                 'title': 'Tarjetas prepagadas',
                 'child': {
                     'title': 'Tarjetas prepagadas respuestas',
-                    'overview': 'Si está pensando en obtener una cuenta o tarjeta prepagada, tenemos información que le puede ayudar a elegir la más adecuada para usted. También podemos ayudarle a entender sus derechos.',  # noqa
+                    'overview': '',  # noqa
                     "portal_topic_id": 11}},
             {
                 'model': SublandingPage,
