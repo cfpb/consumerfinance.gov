@@ -307,7 +307,8 @@ class EventPage(AbstractFilterPage):
         # Default to Washington DC coordinates
         venue_coords = '-77.039628,38.898238'
 
-        if not self.venue_city or not self.venue_state:
+        if None in (self.venue_city, self.venue_state,
+                    settings.MAPBOX_ACCESS_TOKEN):
             return venue_coords
 
         location = '{} {}'.format(self.venue_city, self.venue_state)
