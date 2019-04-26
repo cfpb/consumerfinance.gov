@@ -92,11 +92,11 @@
         and JavaScript appears in unprocessed/js/routes/[app-url]/single.js.
       #}
       {% macro template_js() %}
-         {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
+         {% include 'js/routes/' + app_url(request) + '/single.js' ignore missing %}
       {% endmacro %}
       {% set js_source = template_js() | trim %}
       {% if js_source | length > 0 %}
-        s.push( '{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}' );
+        s.push( '{{ static('js/routes/' + app_url(request) + '/single.js') }}' );
       {% endif %}
       {#
         Check and include component-level JavaScript.
@@ -116,11 +116,11 @@
         and JavaScript appears in unprocessed/js/routes/[app-url]/index.js.
       #}
       {% macro page_js() %}
-         {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+         {% include 'js/routes/' + app_page_url(request) + 'index.js' ignore missing %}
       {% endmacro %}
       {% set js_source = page_js() | trim %}
       {% if js_source | length > 0 %}
-        s.push( '{{ static('js/routes/' + request.path[1:] + 'index.js') }}' );
+        s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
       {% endif %}
       {% if flag_enabled('TURBOLINKS', request) %}
         s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );

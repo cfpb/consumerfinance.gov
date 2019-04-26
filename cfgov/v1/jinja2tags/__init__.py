@@ -9,6 +9,7 @@ from hmda.templatetags.hmda_banners import hmda_outage_banner
 from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
 from v1.models import CFGOVRendition
+from v1.templatetags.app_urls import app_page_url, app_url
 from v1.templatetags.complaint_banners import (
     complaint_issue_banner, complaint_maintenance_banner
 )
@@ -108,6 +109,8 @@ class V1Extension(Extension):
             'is_report': ref.is_report,
             'is_filter_selected': contextfunction(is_filter_selected),
             'render_stream_child': contextfunction(render_stream_child),
+            'app_url': app_url,
+            'app_page_url': app_page_url,
         })
 
 
