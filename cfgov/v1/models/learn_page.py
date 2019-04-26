@@ -330,6 +330,8 @@ class EventPage(AbstractFilterPage):
         return venue_coords
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
+        if not self.venue_coords:
+            self.venue_coords = self.get_venue_coords()
         api_url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static'
         static_map_image_url = '{}/{},{}/{}?access_token={}'.format(
             api_url,
