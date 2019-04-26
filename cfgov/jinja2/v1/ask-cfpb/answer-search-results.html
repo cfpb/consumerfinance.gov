@@ -118,7 +118,7 @@
 
         {% if disclaimer %}
         <div class="block block__flush-bottom ask-disclaimer">
-            {{ disclaimer.text | safe }}
+            {{ _(disclaimer.text) | safe }}
         </div>
         {% endif %}
     </div>

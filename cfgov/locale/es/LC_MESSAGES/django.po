@@ -10,6 +10,12 @@ msgstr ""
 msgid "Search"
 msgstr "Buscar"
 
+msgid "Clear search"
+msgstr "Borrar búsqueda"
+
+msgid "Clear"
+msgstr "Borrar"
+
 msgid "Close"
 msgstr "Cerrar"
 
@@ -22,15 +28,27 @@ msgstr "Presentar una queja"
 msgid "Mortgage"
 msgstr "Hipoteca"
 
+msgid "Mortgages"
+msgstr "Hipotecas"
+
 #: v1/ask-cfpb/category-page.html
 msgid "results"
 msgstr "resultados"
 
+msgid "result"
+msgstr "resultado"
+
+msgid " results"
+msgstr " resultados"
+
 msgid "Read answer"
-msgstr "Leer más"
+msgstr "Leer la respuesta"
 
 msgid "/ask-cfpb/"
 msgstr "/es/obtener-respuestas/"
+
+msgid "/ask-cfpb/search/"
+msgstr "/es/obtener-respuestas/buscar/"
 
 msgid "Previous"
 msgstr "Anterior"
@@ -42,7 +60,7 @@ msgid "No results found for"
 msgstr "No se encontraron resultados para"
 
 msgid "Please enter a search term in the box above."
-msgstr "Por favor ingrese un término de búsqueda en el cuadro de arriba."
+msgstr "Por favor escriba su búsqueda arriba"
 
 #: cfgov/jinja2/v1/ask-cfpb/answer-page.html
 msgid "updated"
@@ -50,6 +68,9 @@ msgstr "actualizado"
 
 msgid "Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature."
 msgstr "No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo."
+
+msgid "Return to top"
+msgstr "Ir arriba"
 
 msgid "Read full answer"
 msgstr "Leer más"
@@ -73,17 +94,33 @@ msgstr "Obtener respuestas"
 msgid "Showing results for "
 msgstr "Se muestran resultados para "
 
+msgid "of"
+msgstr "de"
+
+msgid "for"
+msgstr "para"
+
+#: singular
+msgid "Showing "
+msgstr "Se muestra "
+
 msgid "Showing"
 msgstr "Se muestran"
 
-msgid "of"
-msgstr "de"
+msgid "result within"
+msgstr "resultado de"
+
+msgid "results within"
+msgstr "resultados de"
 
 msgid "results for"
 msgstr "resultados para"
 
+msgid "result for"
+msgstr "resultado para"
+
 msgid "Search instead for"
-msgstr "Buscar en lugar para"
+msgstr "Busca de"
 
 #: cfgov/jinja2/v1/ask-cfpb/landing-page.html
 msgid "Browse questions by category"
@@ -95,6 +132,9 @@ msgstr "¿Te resultó útil esta respuesta?"
 
 msgid "Additional comment"
 msgstr "Comentario adicional"
+
+msgid "Explore"
+msgstr "Explorar"
 
 msgid "Yes"
 msgstr "Sí"
@@ -109,6 +149,15 @@ msgstr "/es/obtener-respuestas/buscar"
 msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
 msgstr "¿No encuentra lo que busca? <span class=\"break\">Busca su pregunta.</span>"
 
+msgid "Don't see what you're looking for?"
+msgstr "¿No encuentra lo que busca?"
+
+msgid "Search for your question."
+msgstr "Busca su pregunta."
+
+msgid "Search our full library of answers"
+msgstr "Buscar en toda la lista de respuestas"
+
 #: cfgov/jinja2/v1/_includes/atoms/tagline.html
 msgid "An official website of the United States government"
 msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
@@ -116,6 +165,23 @@ msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
 #: cfgov/jinja2/v1/_includes/molecules/pagination.html
 msgid "Page"
 msgstr "Página"
+
+#: ask_cfpb/models/pages/PortalTopicSearchPage
+msgid "Narrow your results"
+msgstr "Búsqueda especial"
+
+msgid "See all results within"
+msgstr "Ver todos los resultados para"
+
+msgid "within"
+msgstr "en"
+
+msgid "answers within"
+msgstr "respuestas dentro de"
+
+
+msgid " of "
+msgstr " de "
 
 msgid "Go"
 msgstr "Ir"
@@ -156,9 +222,6 @@ msgstr "Fraudes y estafas"
 msgid "Money transfers"
 msgstr "Transferencias y envíos de dinero"
 
-msgid "Mortgages"
-msgstr "Comprar una vivienda"
-
 msgid "Payday loans"
 msgstr "Préstamos del día de pago"
 
@@ -178,6 +241,9 @@ msgid "Common issues"
 msgstr "Problemas comunes"
 
 msgid "How-to"
+msgstr "Paso a paso"
+
+msgid "How-to guides"
 msgstr "Paso a paso"
 
 msgid "Key terms"
