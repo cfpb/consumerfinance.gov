@@ -120,7 +120,7 @@
       {% endmacro %}
       {% set js_source = page_js() | trim %}
       {% if js_source | length > 0 %}
-        s.push( '{{ static('js/routes/' + page_url(request) + 'index.js') }}' );
+        s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
       {% endif %}
       {% if flag_enabled('TURBOLINKS', request) %}
         s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
