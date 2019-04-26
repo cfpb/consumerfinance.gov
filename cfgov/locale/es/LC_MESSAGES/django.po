@@ -146,6 +146,9 @@ msgstr "opcional"
 msgid "/ask-cfpb/search"
 msgstr "/es/obtener-respuestas/buscar"
 
+msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
+msgstr "¿No encuentra lo que busca? <span class=\"break\">Busca su pregunta.</span>"
+
 msgid "Don't see what you're looking for?"
 msgstr "¿No encuentra lo que busca?"
 
