@@ -235,15 +235,27 @@ class PortalSearchPageTestCase(TestCase):
             page.get_heading(), 'Paso a paso')
 
     def test_english_portal_title(self):
-        test_page = PortalSearchPage(
-            title="Auto loans",
-            slug="auto-loans")
-        self.english_parent.add_child(instance=test_page)
-        test_page.save()
-        test_page.portal_topic_id = 1
-        test_page.save_revision(user=self.test_user).publish()
+        test_page = self.english_page
         self.assertEqual(str(test_page), test_page.title)
         self.assertEqual(test_page.portal_topic, PortalTopic.objects.get(pk=1))
+
+    def test_english_category_title(self):
+        page = self.english_page
+        url = page.url + page.reverse_subpage(
+            'portal_category_page', kwargs={'category': 'how-to-guides'})
+        response = self.client.get(url)
+        self.assertEqual(
+            response.context_data.get('page').title,
+            'Auto loans answers - how-to guides')
+
+    def test_spanish_category_title(self):
+        page = self.spanish_page
+        url = page.url + page.reverse_subpage(
+            'portal_category_page', kwargs={'category': 'paso-a-paso'})
+        response = self.client.get(url)
+        self.assertEqual(
+            response.context_data.get('page').title,
+            'Préstamos para vehículos respuestas - paso a paso')
 
     def test_category_map_length(self):
         self.assertEqual(

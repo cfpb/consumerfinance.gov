@@ -176,6 +176,9 @@ msgstr "Ver todos los resultados para"
 msgid "within"
 msgstr "en"
 
+msgid "answers"
+msgstr "respuestas"
+
 msgid "answers within"
 msgstr "respuestas dentro de"
 

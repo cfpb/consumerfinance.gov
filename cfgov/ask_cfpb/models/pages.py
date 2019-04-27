@@ -340,7 +340,13 @@ class PortalSearchPage(
             portal_topics=self.portal_topic.heading,
             language=self.language,
             portal_categories=self.portal_category.heading)
-        return self.get_results(request)
+        # call results here to activate translations, to get the right title
+        results = self.get_results(request)
+        self.title = "{} {} - {}".format(
+            self.portal_topic.title(self.language),
+            _('answers'),
+            self.portal_category.title(self.language).lower())
+        return results
 
 
 class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
