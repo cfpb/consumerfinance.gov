@@ -224,9 +224,9 @@ class PortalSearchPage(
             _results = _('results')
         if self.portal_category and search_term:
             return format_html(
-                '<p>{} {} {} {} {} {}</p>'
-                '<p><a href="../?search_term={}">'
-                '{} {}</a></p>',
+                '{} {} {} {} {} {}'
+                '<span class="results-link"><a href="../?search_term={}">'
+                '{} {}</a></span>',
                 _showing,
                 count,
                 _results,
@@ -340,6 +340,9 @@ class PortalSearchPage(
             portal_topics=self.portal_topic.heading,
             language=self.language,
             portal_categories=self.portal_category.heading)
+        self.title = "{} {}".format(
+            self.portal_topic.title(self.language),
+            self.portal_category.title(self.language).lower())
         return self.get_results(request)
 
 

@@ -1,5 +1,7 @@
+from django.db import models
+
 from wagtail.wagtailadmin.edit_handlers import (
-    ObjectList, StreamFieldPanel, TabbedInterface
+    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
@@ -16,6 +18,13 @@ from v1.models.learn_page import AbstractFilterPage
 
 
 class SublandingPage(CFGOVPage):
+    portal_topic = models.ForeignKey(
+        'v1.PortalTopic',
+        blank=True,
+        null=True,
+        related_name='portal_pages',
+        on_delete=models.SET_NULL,
+        help_text='Select a topic if this is a MONEY TOPICS portal page.')
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
@@ -58,6 +67,7 @@ class SublandingPage(CFGOVPage):
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
         StreamFieldPanel('content'),
+        FieldPanel('portal_topic'),
     ]
 
     sidebar_panels = [
