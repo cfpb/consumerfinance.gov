@@ -30,7 +30,7 @@ now = timezone.now()
 class AskSearchSafetyCase(unittest.TestCase):
 
     def test_make_safe(self):
-        test_phrase = 'Would you like green eggs and ^~`[]#<>;|\\{\\}\\?'
+        test_phrase = 'Would you like green eggs and ^~`[]#<>;|%\\{\\}\\?'
         self.assertEqual(
             make_safe(test_phrase),
             'Would you like green eggs and ?'
