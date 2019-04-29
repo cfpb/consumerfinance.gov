@@ -15,12 +15,12 @@ from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
-import requests
 from localflavor.us.models import USStateField
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
+from v1.util.events import get_venue_coords
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -303,36 +303,11 @@ class EventPage(AbstractFilterPage):
     def page_js(self):
         return super(EventPage, self).page_js + ['video-player.js']
 
-    def get_venue_coords(self):
-        # Default to Washington DC coordinates
-        venue_coords = '-77.039628,38.898238'
-
-        if None in (self.venue_city, self.venue_state,
-                    settings.MAPBOX_ACCESS_TOKEN):
-            return venue_coords
-
-        location = '{} {}'.format(self.venue_city, self.venue_state)
-        api = 'https://api.mapbox.com/geocoding/v5/mapbox.places-permanent/'
-        location_api_url = api + location + '.json'
-
-        params = {'access_token': settings.MAPBOX_ACCESS_TOKEN}
-        response = requests.get(location_api_url, params=params)
-
-        if response.status_code != 200:
-            return venue_coords
-
-        try:
-            geo_data = response.json()
-            coordinates = geo_data['features'][0]['geometry']['coordinates']
-            venue_coords = str(coordinates[0]) + ',' + str(coordinates[1])
-        except KeyError:
-            pass
-
-        return venue_coords
-
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
         if not self.venue_coords:
-            self.venue_coords = self.get_venue_coords()
+            self.venue_coords = get_venue_coords(
+                self.venue_city, self.venue_state
+            )
         api_url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static'
         static_map_image_url = '{}/{},{}/{}?access_token={}'.format(
             api_url,
@@ -345,5 +320,5 @@ class EventPage(AbstractFilterPage):
         return static_map_image_url
 
     def save(self, *args, **kwargs):
-        self.venue_coords = self.get_venue_coords()
+        self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
         return super(EventPage, self).save(*args, **kwargs)
