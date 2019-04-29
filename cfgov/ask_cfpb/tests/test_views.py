@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import json
+import unittest
 
 from django.apps import apps
 from django.core.urlresolvers import NoReverseMatch, reverse
@@ -17,12 +18,23 @@ from model_mommy import mommy
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerPage
 )
+from ask_cfpb.models.search import make_safe
 from ask_cfpb.tests.models.test_pages import mock_queryset
 from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
 
 
 now = timezone.now()
+
+
+class AskSearchSafetyCase(unittest.TestCase):
+
+    def test_make_safe(self):
+        test_phrase = 'Would you like green eggs and ^~`[]#<>;|\\{\\}\\?'
+        self.assertEqual(
+            make_safe(test_phrase),
+            'Would you like green eggs and ?'
+        )
 
 
 class AnswerPagePreviewCase(TestCase):
