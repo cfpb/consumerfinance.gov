@@ -16,7 +16,6 @@ PARENT_PAGE_MAP = {
         'grandparent': AnswerLandingPage.objects.get(pk=5704),
         'parents': [
             {
-                'model': SublandingPage,
                 'pk': None,
                 'title': 'Préstamos para vehículos',
                 'child': {
@@ -24,7 +23,6 @@ PARENT_PAGE_MAP = {
                     'overview': '',
                     "portal_topic_id": 1}},
             {
-                'model': SublandingPage,
                 'pk': None,
                 'title': 'Cuentas bancarias',
                 'child': {
@@ -32,7 +30,6 @@ PARENT_PAGE_MAP = {
                     'overview': 'A la hora de elegir y utilizar sus cuentas en un banco o cooperativa de crédito, es importante que conozca sus opciones.',  # noqa
                     "portal_topic_id": 2}},
             {
-                'model': SublandingPage,
                     'pk': None,
                 'title': 'Tarjetas de crédito',
                 'child': {
@@ -40,7 +37,6 @@ PARENT_PAGE_MAP = {
                     'overview': '',
                     "portal_topic_id": 3}},
             {
-                'model': SublandingPage,
                     'pk': None,
                 'title': 'Informes y puntajes de crédito',
                 'child': {
@@ -48,7 +44,6 @@ PARENT_PAGE_MAP = {
                     'overview': '',  # noqa
                     "portal_topic_id": 4}},
             {
-                'model': SublandingPage,
                     'pk': None,
                 'title': 'Cobro de deudas',
                 'child': {
@@ -56,7 +51,6 @@ PARENT_PAGE_MAP = {
                     'overview': '',  # noqa
                     "portal_topic_id": 5}},
             {
-                'model': SublandingPage,
                     'pk': None,
                 'title': 'Fraudes y estafas',
                 'child': {
@@ -64,7 +58,6 @@ PARENT_PAGE_MAP = {
                     'overview': 'Perder dinero o propiedad a causa de estafas y fraudes puede ser devastador. Nuestros recursos pueden ayudarle a reconocer, evitar e informar sobre estafas y fraudes.',  # noqa
                     "portal_topic_id": 7}},
             {
-                'model': SublandingPage,
                     'pk': None,
                 'title': 'Transferencias de dinero',
                 'child': {
@@ -72,7 +65,6 @@ PARENT_PAGE_MAP = {
                     'overview': '',
                     "portal_topic_id": 8}},
             {
-                'model': SublandingPage,
                     'pk': None,
                 'title': 'Hipotecas',
                 'child': {
@@ -80,7 +72,6 @@ PARENT_PAGE_MAP = {
                     'overview': 'Ya sea que usted esté pensando en comprar una vivienda, tenga un préstamo hipotecario, o problemas para pagar su hipoteca, tenemos los recursos para ayudarle en todo momento.',  # noqa
                     "portal_topic_id": 9}},
             {
-                'model': SublandingPage,
                     'pk': None,
                 'title': 'Tarjetas prepagadas',
                 'child': {
@@ -88,7 +79,6 @@ PARENT_PAGE_MAP = {
                     'overview': '',  # noqa
                     "portal_topic_id": 11}},
             {
-                'model': SublandingPage,
                     'pk': None,
                 'title': 'Hipotecas inversas',
                 'child': {
@@ -96,7 +86,6 @@ PARENT_PAGE_MAP = {
                     'overview': '',
                     "portal_topic_id": 12}},
             {
-                'model': SublandingPage,
                     'pk': None,
                 'title': 'Préstamos estudiantiles',
                 'child': {
@@ -110,7 +99,6 @@ PARENT_PAGE_MAP = {
         'grandparent': LandingPage.objects.get(pk=12051),
         'parents': [
             {
-                'model': SublandingPage,
                 'pk': 12309,
                 "title": "Auto loans",
                 'child': {
@@ -118,7 +106,6 @@ PARENT_PAGE_MAP = {
                     "overview": "When you’re shopping for a new auto loan, know the right questions to ask. Get answers to frequently asked auto loan questions.",  # noqa
                     "portal_topic_id": 1}},
             {
-                'model': SublandingPage,
                 'pk': 12297,
                 "title": "Bank accounts and services",
                 'child': {
@@ -126,7 +113,6 @@ PARENT_PAGE_MAP = {
                     "overview": "Do you know how to avoid overdraft fees and find out what to do if someone took money from your bank account without permission? Learn more about these and other issues.",  # noqa
                     "portal_topic_id": 2}},
             {
-                'model': SublandingPage,
                 'pk': None,
                 "title": "Credit cards",
                 'child': {
@@ -134,7 +120,6 @@ PARENT_PAGE_MAP = {
                     "overview": "Whether you’re shopping for a new card or managing an existing card, it helps to have the facts. From late fees to lost cards, get answers to your credit card questions.",  # noqa
                     "portal_topic_id": 3}},
             {
-                'model': SublandingPage,
                 'pk': 12201,
                 "title": "Credit reports and scores",
                 'child': {
@@ -142,7 +127,6 @@ PARENT_PAGE_MAP = {
                     "overview": "You can take action to get your credit report and to get and keep a good credit score. Find out how with our frequently asked questions.",  # noqa
                     "portal_topic_id": 4}},
             {
-                'model': SublandingPage,
                 'pk': 12238,
                 "title": "Debt Collection",
                 'child': {
@@ -150,7 +134,6 @@ PARENT_PAGE_MAP = {
                     "overview": "Did you know that debt collectors generally can’t call you after 9 p.m.? Learn about debt collection, harassment, and more by searching or browsing.",  # noqa
                     "portal_topic_id": 5}},
             {
-                'model': SublandingPage,
                 'pk': 12283,
                 'title': 'Fraud and scams',
                 'child': {
@@ -158,7 +141,6 @@ PARENT_PAGE_MAP = {
                     "overview": "Losing money or property to scams and fraud can be devastating. Our resources can help you prevent, recognize, and report scams and fraud.",  # noqa
                     "portal_topic_id": 7}},
             {
-                'model': SublandingPage,
                 'pk': None,
                 'title': 'Money transfers',
                 'child': {
@@ -166,7 +148,6 @@ PARENT_PAGE_MAP = {
                     "overview": "What are money and remittance transfers? And how do they work? Learn more about transferring money from the United States to other countries and your consumer protections.",  # noqa
                     "portal_topic_id": 8}},
             {
-                'model': SublandingPage,
                 'pk': 12279,
                 'title': 'Mortgages',
                 'child': {
@@ -174,7 +155,6 @@ PARENT_PAGE_MAP = {
                     "overview": "Whether you are getting a mortgage, having trouble paying your mortgage, or want to learn about reverse mortgages, we have answers to your questions.",  # noqa
                     "portal_topic_id": 9}},
             {
-                'model': SublandingPage,
                 'pk': 12599,
                 'title': 'Prepaid cards',
                 'child': {
@@ -182,7 +162,6 @@ PARENT_PAGE_MAP = {
                     "overview": "Prepaid cards might look like debit and credit cards, but there are some important differences between them. Learn about fees and charges, and find answers to common questions.",  # noqa
                     "portal_topic_id": 11}},
             {
-                'model': SublandingPage,
                 'pk': None,
                 'title': 'Reverse mortgages',
                 'child': {
@@ -190,7 +169,6 @@ PARENT_PAGE_MAP = {
                     "overview": "",  # noqa
                     "portal_topic_id": 12}},
             {
-                'model': SublandingPage,
                 'pk': 12290,
                 'title': 'Student loans',
                 'child': {
@@ -216,18 +194,22 @@ def create_see_all_pages(language):
     for parent_map in page_map.get('parents'):
         child_map = parent_map.get('child')
         title = parent_map.get('title')
+        portal_id = child_map.get('portal_topic_id')
         print("Creating parent and child pages for {}".format(title).encode(
             'utf-8'))
         if parent_map['pk']:
-            parent_page = parent_map['model'].objects.get(
+            parent_page = SublandingPage.objects.get(
                 pk=parent_map['pk'])
+            parent_page.portal_topic_id = portal_id
+            parent_page.save_revision(user=user).publish()
         else:
-            parent_page = parent_map['model'](
+            parent_page = SublandingPage(
                 title=title,
                 language=language,
                 slug=slugify(title))
             grandparent.add_child(instance=parent_page)
             parent_page.save()
+            parent_page.portal_topic_id = portal_id
             parent_page.save_revision(user=user).publish()
             parent_page.unpublish()
         child_page = PortalSearchPage(
@@ -237,7 +219,7 @@ def create_see_all_pages(language):
             overview=child_map.get('overview'))
         parent_page.add_child(instance=child_page)
         child_page.save()
-        child_page.portal_topic_id = child_map.get('portal_topic_id')
+        child_page.portal_topic_id = portal_id
         child_page.save_revision(user=user).publish()
 
 
