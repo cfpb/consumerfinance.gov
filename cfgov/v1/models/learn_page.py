@@ -1,6 +1,6 @@
 from datetime import date
-from six.moves.urllib.parse import urlencode
 
+from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -20,6 +20,7 @@ from localflavor.us.models import USStateField
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
+from v1.util.events import get_venue_coords
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -221,6 +222,7 @@ class EventPage(AbstractFilterPage):
         null=True
     )
     # Venue content fields
+    venue_coords = models.CharField(max_length=100, blank=True)
     venue_name = models.CharField(max_length=100, blank=True)
     venue_street = models.CharField(max_length=100, blank=True)
     venue_suite = models.CharField(max_length=100, blank=True)
@@ -302,19 +304,21 @@ class EventPage(AbstractFilterPage):
         return super(EventPage, self).page_js + ['video-player.js']
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
-        center = 'Washington, DC'
-        if self.venue_city:
-            center = self.venue_city
-        if self.venue_state:
-            center = center + ', ' + self.venue_state
-        options = {
-            'center': center,
-            'scale': scale,
-            'size': size,
-            'zoom': zoom
-        }
-        url = 'https://maps.googleapis.com/maps/api/staticmap?'
-        return '{url}{options}'.format(
-            url=url,
-            options=urlencode(options)
+        if not self.venue_coords:
+            self.venue_coords = get_venue_coords(
+                self.venue_city, self.venue_state
+            )
+        api_url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static'
+        static_map_image_url = '{}/{},{}/{}?access_token={}'.format(
+            api_url,
+            self.venue_coords,
+            zoom,
+            size,
+            settings.MAPBOX_ACCESS_TOKEN
         )
+
+        return static_map_image_url
+
+    def save(self, *args, **kwargs):
+        self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
+        return super(EventPage, self).save(*args, **kwargs)
