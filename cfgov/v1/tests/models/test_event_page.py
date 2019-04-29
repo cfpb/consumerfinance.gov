@@ -35,3 +35,9 @@ class EventPageTests(TestCase):
         save_new_page(page)
         self.assertEqual(page.venue_coords, '123.456,321.654')
         self.assertIn('static/123.456,321.654', page.location_image_url())
+
+
+    def test_venue_coords_without_saving(self):
+        page = EventPage(title='Party time')
+        # Should get static image URL even if page hasn't been saved
+        self.assertIn('static/-77.039628,38.898238', page.location_image_url())
