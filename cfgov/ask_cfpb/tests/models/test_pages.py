@@ -290,9 +290,9 @@ class PortalSearchPageTestCase(TestCase):
         msg = self.english_page.results_message(1, 'How-to guides', 'hoodoo')
         self.assertEqual(
             msg,
-            '<p>Showing  1 result for &quot;hoodoo&quot; within how-to guides'
-            '</p><p><a href="../?search_term=hoodoo">'
-            'See all results within auto loans</a></p>')
+            'Showing  1 result for &quot;hoodoo&quot; within how-to guides'
+            '<span class="results-link"><a href="../?search_term=hoodoo">'
+            'See all results within auto loans</a></span>')
 
     def test_portal_topic_page_200(self):
         page = self.english_page
