@@ -246,7 +246,7 @@ class PortalSearchPageTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(
             response.context_data.get('page').title,
-            'Auto loans answers - how-to guides')
+            'Auto loans how-to guides')
 
     def test_spanish_category_title(self):
         page = self.spanish_page
@@ -255,7 +255,7 @@ class PortalSearchPageTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(
             response.context_data.get('page').title,
-            'Préstamos para vehículos respuestas - paso a paso')
+            'Préstamos para vehículos paso a paso')
 
     def test_category_map_length(self):
         self.assertEqual(
