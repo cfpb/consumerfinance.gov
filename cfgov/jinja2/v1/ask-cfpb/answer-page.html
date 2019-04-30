@@ -41,7 +41,7 @@
                 block__flush-top
                 block__sub">
         {% if last_edited %}
-        <time datetime='{{ last_edited }}' class="answer-edited-date">updated {{ dt.format_date(last_edited) }}</time>
+        <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
         {% endif %}
 
     {% if flag_enabled('ASK_CFPB_H1', page=page) %}
@@ -55,9 +55,6 @@
                 block__flush-top">
         {% if page.short_answer %}
             <h3 class="answer-snippet">
-                <strong>
-                    Answer:
-                </strong>
                 {{ page.short_answer | richtext | safe }}
             </h3>
         {% endif %}
@@ -69,12 +66,6 @@
                 <div class="answer-text">
                     {{ page.answer | richtext | safe }}
                 </div>
-                {% if audiences %}
-                <div class="u-mt15">
-                    {{ tags.render( {'links': audiences}, is_wagtail=True) }}
-                </div>
-                {% endif %}
-
                 {# This brings in the feedback module #}
                 {% for block in page.user_feedback %}
                     {{- form_block.render(block, 'user_feedback', loop.index0) -}}
@@ -89,11 +80,11 @@
                     title="Expand content">
                 <span class="o-expandable_link">
                     <span class="o-expandable_cue o-expandable_cue-open">
-                        Read full answer
+                        {{ _('Read full answer') }}
                         {{ svg_icon('plus-round') }}
                    </span>
                     <span class="o-expandable_cue o-expandable_cue-close">
-                        Hide full answer
+                        {{ _('Hide full answer') }}
                         {{ svg_icon('minus-round') }}
                    </span>
                 </span>
@@ -112,10 +103,10 @@
 
 {% block content_sidebar scoped  %}
 
-    {% if page.related_resource %}
+    {% if page.related_resource and page.language != 'es' %}
         <div class="block block__flush-top">
             <h3 >
-                Explore related resources
+                {{ _('Explore related resources') }}
             </h3>
             {{ page.related_resource.text | safe }}
         </div>
@@ -123,6 +114,7 @@
     {% if page.sidebar_panels %}
             {{ streamfield_sidefoot.render(page.sidebar) }}
     {% endif %}
+
     {% if category and subcategories %}
         <div class="block {% if not page.related_resource %}block__flush-top{% endif %}">
             <div class="m-related-links">
@@ -148,13 +140,13 @@
             </div>
         </div>
     {% endif %}
-
+    
     {% if related_questions %}
-        <div class="block">
+        <div class="block{% if page.language == 'es' %} block__flush-top{% endif %}">
             <div class="m-related-links">
                 <header class="m-slug-header">
                     <h2 class="a-heading">
-                        Related questions
+                        {{ _('Related questions') }}
                     </h2>
                 </header>
                 <ul class="m-list m-list__unstyled m-list__links">
@@ -169,9 +161,4 @@
             </div>
         </div>
     {% endif %}
-    <div class="analytics-data"
-         data-answer-id="{{ answer_id }}"
-         data-category-slug="{{ category.slug }}"
-         data-category-name="{{ category.name }}">
-    </div>
 {% endblock %}

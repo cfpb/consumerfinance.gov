@@ -91,16 +91,21 @@
 
    Creates menu content markup when given:
 
-   nav_depth:         Level of menu nesting. 1 equals the root menu.
+   nav_depth:          Level of menu nesting. 1 equals the root menu.
 
-   nav_item:          Menu item of this level of nav.
+   nav_item:           Menu item of this level of nav.
 
-   nav_overview_url:  A string used for a sub nav overview title URL.
+   nav_overview_url:   A string used for a sub nav overview title URL.
+
+   nav_overview_text:  A string used for a sub nav overview title.
+
+   language:           The page's language (passed to global_eyebrow macro). 
+                       Defaults to English.
 
 
    ========================================================================== #}
 
-{% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text ) %}
+{% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text, language='en' ) %}
 <section class="{{- _classes( nav_depth ) -}} u-hidden-overflow"
      aria-expanded="false"
      data-js-hook="behavior_flyout-menu_content">
@@ -161,7 +166,7 @@
 
     {% if nav_depth == 1 %}
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
-    {{ global_eyebrow.render() }}
+    {{ global_eyebrow.render( language=language ) }}
     {% endif %}
 </section>
 {% endmacro %}
@@ -224,7 +229,7 @@
    Creates a mega menu primary navigation menu.
 
    ========================================================================== #}
-{% macro mega_menu( menu_items ) %}
+{% macro mega_menu( menu_items, language='en' ) %}
 <nav class="{{ base_class }}
             u-hide-on-mobile"
     data-js-hook="behavior_flyout-menu"
@@ -246,7 +251,7 @@
     </h2>
    {# Create a root menu at depth one.
       This is the 1st level of a 3-level menu. #}
-   {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]} ) }}
+   {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]}, language=language ) }}
 </nav>
 
 {% endmacro %}

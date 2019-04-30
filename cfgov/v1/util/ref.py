@@ -217,7 +217,6 @@ def page_type_choices():
             ('raj-date', 'Raj Date'),
             ('elizabeth-warren', 'Elizabeth Warren'))),
         ('Newsroom', (
-            ('blog', 'Blog'),
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
             ('directors-notebook', "Director's notebook"),

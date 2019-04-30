@@ -35,7 +35,7 @@
     <div class="o-form_group">
         <fieldset class="o-form_fieldset">
             <legend class="a-legend">
-                {{ value.was_it_helpful_text }}
+                {{ _(value.was_it_helpful_text) }}
             </legend>
 
             <ul class="content-l m-list m-list__unstyled">
@@ -51,7 +51,7 @@
                                {{ 'checked' if request.POST.is_helpful == '1' else '' }}>
                         <label class="a-label"
                                for="is_helpful_1">
-                            {% if page.language == 'es' %}Sí{% else %}Yes{% endif %}
+                            {{ _('Yes') }}
                         </label>
                     </div>
                 </li>
@@ -89,15 +89,12 @@
                 {% elif value.question_text %}
                     {{ value.question_text }}
                 {% elif value.was_it_helpful_text %}
-                    {% if page.language == 'es' %}Comentario adicional{% else %}Additional comment{% endif %} <small class="a-label_helper">({% if page.language == 'es' %}opcional{% else %}optional{% endif %})</small>
+                    {{ _('Additional comment') }}
+                    <small class="a-label_helper">({{ _('optional') }})</small>
                 {% endif %}
             </label>
             <p class="u-mb15"><small><em>
-                {% if page.language == 'es' %}
-                    No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo.
-                {% else %}
-                    Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature.
-                {% endif %}
+                  {{ _('Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature.') }}
             </em></small></p>
             <textarea class="a-text-input a-text-input__full"
                       id="comment"

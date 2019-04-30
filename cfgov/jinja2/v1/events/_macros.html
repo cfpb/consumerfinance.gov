@@ -152,14 +152,10 @@
             {% elif event_state == 'present' and request.path == '/about-us/events/town-hall-baton-rouge-la-preventing-elder-financial-exploitation/' %}
                 <iframe alt="Preventing elder financial exploitation."
                         style="display: block; width: 100%; min-height: 470px; border: none;" src="https://mediasite.yorkcast.com/webcast/Play/49307158a39a454d913b39a9469428cc1d?autostart=true"></iframe>
-            {# TODO: Replace this call to the Google Maps Static API
-               (which now requires an API key we don't have)
-               with Mapbox (for which we do have an API key).
             {% else %}
               <img src="{{ event.location_image_url(size='640x320') }}"
-                   alt="Google Maps image of
+                   alt="Map image of
                         {{ event.venue_city }}{{ ', ' ~ event.venue_state if event.venue_state else '' }}">
-            #}
             {% endif %}
             </figure>
         </footer>
