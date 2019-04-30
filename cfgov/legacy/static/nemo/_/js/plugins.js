@@ -23,10 +23,10 @@
      *
      * Usage:
      *
-     * <a href="http://youtu.be/xX3fhgEwyVA">Play</a>
+     * <a href="https://youtu.be/xX3fhgEwyVA">Play</a>
      *
-     * $('a[href^="http://youtu.be"]').cfpbVideoReplace();
-     * 
+     * $('a[href^="https://youtu.be"]').cfpbVideoReplace();
+     *
      */
 
     $.fn.cfpbVideoReplace = function() {
@@ -44,7 +44,7 @@
                     $newThis;
 
                 // Get the video id
-                // http://stackoverflow.com/questions/10591547/how-to-get-youtube-video-id-from-url
+                // https://stackoverflow.com/questions/10591547/how-to-get-youtube-video-id-from-url
                 videoId = videoLink.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
 
                 // Stop the link from going anywhere
@@ -61,7 +61,7 @@
                     // to allow for flexible video
                     $newThis
                     .html(
-                        '<iframe width="820" height="461" src="http://www.youtube.com/embed/' +
+                        '<iframe width="820" height="461" src="https://www.youtube.com/embed/' +
                         videoId[1] +
                         '?autoplay=1&rel=0&showinfo=0&theme=light" frameborder="0" allowfullscreen></iframe>'
                     )
@@ -82,12 +82,12 @@
      *
      * Adds a class if the user has typed something into the field,
      * removes the class if it is empty
-     * 
+     *
      * Usage: $('input').cfpbInputFilledCheck();
-     * 
+     *
      * You can specify the class added:
      * $('input').cfpbInputFilledCheck({ 'className': 'has-stuff' });
-     * 
+     *
      */
 
     $.fn.cfpbInputFilledCheck = function( userSettings ) {
@@ -115,24 +115,24 @@
      * ======================================================================
      *
      * Simple form posting using $.post
-     * 
+     *
      * Usage: $('#form').cfpbSimpleFormPost();
-     * 
+     *
      * Supports two activity message types [ waiting, results ]
      * --------------------------------------------------------
      * If you need activity messages add them yourself to the dom using either
      * the default selectors or your own. This plugin will show and hide them
      * for you. Data returned from the post will be added to resultsTarget if
      * you added one.
-     * 
+     *
      * Settings
      * ----------------------------------------------------------------------
      * You can change some settings when you initialize the plugin:
-     * 
+     *
      * speed:          the animation speed (a number(ms) or string 'slow')
      * waitingTarget:  a selector specifying an element to use as a waiting message
      * resultsTarget:  a selector specifying an element to use as a results message
-     * 
+     *
      */
 
     $.fn.cfpbSimpleFormPost = function( userSettings ) {
@@ -196,20 +196,20 @@
      * ======================================================================
      *
      * Show/hide toggle pattern supporting sliding and fading
-     * 
+     *
      * Usage: $('.js-showtoggle-toggle').cfpbShowToggle();
-     * 
+     *
      * Settings
      * ----------------------------------------------------------------------
      * You can change some of the settings when you initialize the plugin:
-     * 
+     *
      * triggerTarget:  a selector that triggers the toggle
      * contentTarget:  a selector that represents the content to toggle
      * startOpen:      a class name, if it is present on contentTarget it will
      *                 initially be open instead of hidden
      * animation:      animation type ('slide' or 'fade')
      * speed:          the animation speed (a number(ms) or string 'slow')
-     * 
+     *
      * Example:
      * $('.fade-toggle').cfpbShowToggle({
      *   'triggerTarget': '#toggle-trigger',
@@ -218,7 +218,7 @@
      *   'animation': 'fade',
      *   'speed': 10000,
      * });
-     * 
+     *
      */
 
     $.fn.cfpbShowToggle = function( userSettings ) {
@@ -298,7 +298,7 @@
             // same element. We know if it was already set by checking for the
             // data-is-cfpbShowToggle attribute which gets set in init().
             if ( !$this.is('[data-is-cfpbShowToggle]') ) {
-                init();                
+                init();
             }
 
         });

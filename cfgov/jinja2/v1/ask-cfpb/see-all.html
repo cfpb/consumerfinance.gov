@@ -1,0 +1,61 @@
+{% extends 'layout-side-nav.html' %}
+
+{% import 'molecules/pagination.html' as pagination with context %}
+
+{% block content_modifiers -%}
+    {{ super() }} see-all-page
+{%- endblock %}
+
+{% block content_main %}
+    <h1>
+      {{ heading }}
+    </h1>
+    {% if not page.portal_category %}
+    <p class="lead-paragraph u-mt0">
+        {{ page.overview }}
+    </p>
+    {% endif %}
+    <aside class="search-bar">
+        <form method="get" action=".">
+            <label for="ask-search" class="a-label h4">
+                {{ _('Narrow your results') }}
+            </label>
+            <div class="m-form-field">
+                <input
+                    class="a-text-input a-text-input__full"
+                    type="text"
+                    aria-label="Search term"
+                    name="search_term"
+                    value="{{ search_term }}">
+                
+                    <button class="a-btn" id="ask-search" type="submit">
+                        {{ _('Search') }}
+                    </button>
+                    <a class="a-btn a-btn__link a-btn__warning"
+                       href=".">
+                        {{ _('Clear search') }}
+                    </a>
+            </div>
+        </form>
+    </aside>
+
+    <p class="results-message">{{ results_message }}</p>
+
+    <section class="results">
+        <div class="page-links">
+        {% for page in pages %}
+        <article>
+            <div class="h3 hover"><a href="{{page.url}}" class="hover">{{page.autocomplete}}</a></div>
+        </article>
+        {% endfor %}
+
+        <div class="block block__sub">
+            {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
+        </div>
+    </section>
+    {% if not page.portal_category %}
+    <p class="ask-search-link h4">
+        {{ _("Don't see what you're looking for?") }} <span class="break"><a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a></span>
+    </p>
+    {% endif %}
+{% endblock %}

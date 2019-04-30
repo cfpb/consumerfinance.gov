@@ -11,9 +11,12 @@
    show_banner: Whether the global banner molecule is included.
                 Default is true.
 
+   language:    The page's language value (used to display different
+                information on Spanish pages). Defaults to English.
+
    ========================================================================== #}
 
-{% macro render( show_banner=false ) %}
+{% macro render( show_banner=false, language='en' ) %}
 
 <header class="o-header">
 
@@ -47,7 +50,7 @@
     {% endif %}
 
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
-    {{ global_eyebrow.render( true ) }}
+    {{ global_eyebrow.render( true, language ) }}
 
     <div class="o-header_content no-js">
 
@@ -55,8 +58,24 @@
             {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
             {{ global_header_cta.render( true ) }}
 
-            {% include 'molecules/global-search.html' with context %}
+            {% import 'molecules/global-search.html' as global_search with context %}
+            {{ global_search.render() }}
 
+            {% if language == 'es' %}
+            <a class="o-header_logo" href="/es/">
+                <img class="o-header_logo-img"
+                     src="{{ static('img/logo_es_286x50.png') }}"
+                     srcset="{{ static('img/logo_es_228x40.png') }} 228w,
+                             {{ static('img/logo_es_228x40@2x.png') }} 456w,
+                             {{ static('img/logo_es_228x40@3x.png') }} 684w,
+                             {{ static('img/logo_es_228x40@4x.png') }} 912w,
+                             {{ static('img/logo_es_286x50.png') }} 286w,
+                             {{ static('img/logo_es_286x50@2x.png') }} 572w"
+                     sizes="(max-width: 900px) 228px,
+                            286px"
+                     alt="Oficina para la Protección Financiera del Consumidor">
+            </a>
+            {% else %}
             <a class="o-header_logo" href="/">
                 <img class="o-header_logo-img"
                      src="{{ static('img/logo_237x50.png') }}"
@@ -70,12 +89,18 @@
                             237px"
                      alt="Consumer Financial Protection Bureau">
             </a>
+            {% endif %}
 
             {% block primary_nav %}
                 {% from 'organisms/mega-menu.html' import mega_menu with context %}
-                {% cache 'mega_menu', 'default_fragment_cache' %}
-                {{ mega_menu(get_menu_items(request)) }}
-                {% endcache %}
+                {% if language == 'es' %}
+                    {% import '_vars-mega-menu-spanish.html' as vars with context %}
+                    {{ mega_menu(vars.menu_items) }}
+                {% else %}
+                    {% cache 'mega_menu', 'default_fragment_cache' %}
+                        {{ mega_menu(get_menu_items(request)) }}
+                    {% endcache %}
+                {% endif %}
             {% endblock primary_nav %}
         </div>
 

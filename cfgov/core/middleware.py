@@ -1,3 +1,4 @@
+import re
 from six import text_type as str
 
 from django.conf import settings
@@ -15,20 +16,6 @@ class DownstreamCacheControlMiddleware(object):
         if 'CSRF_COOKIE_USED' in request.META:
             response['Edge-Control'] = 'no-store'
         return response
-
-
-def should_parse_links(request_path, content_type):
-    """ Do not parse links for paths in the blacklist,
-    or for content that is not html
-    """
-    for path in settings.PARSE_LINKS_BLACKLIST:
-        if request_path.startswith(path):
-            return False
-
-    if settings.DEFAULT_CONTENT_TYPE not in content_type:
-        return False
-
-    return True
 
 
 def parse_links(html, encoding=None):
@@ -61,9 +48,28 @@ def parse_links(html, encoding=None):
 
 class ParseLinksMiddleware(object):
     def process_response(self, request, response):
-        if should_parse_links(request.path, response['content-type']):
+        if self.should_parse_links(request.path, response['content-type']):
             response.content = parse_links(
                 response.content,
                 encoding=response.charset
             )
         return response
+
+    @classmethod
+    def should_parse_links(cls, request_path, response_content_type):
+        """Determine if links should be parsed for a given request/response.
+
+        Returns True if
+
+        1. The response has the default content type (HTML) AND
+        2. The request path does not match settings.PARSE_LINKS_EXCLUSION_LIST
+
+        Otherwise returns False.
+        """
+        if settings.DEFAULT_CONTENT_TYPE not in response_content_type:
+            return False
+
+        return not any(
+            re.search(regex, request_path)
+            for regex in settings.PARSE_LINKS_EXCLUSION_LIST
+        )
