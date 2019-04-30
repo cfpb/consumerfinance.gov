@@ -180,67 +180,137 @@ class PortalSearchPageTestCase(TestCase):
     ]
 
     def setUp(self):
+
+        def create_page(model, title, slug, parent, language='en', **kwargs):
+            new_page = model(
+                live=False,
+                language=language,
+                title=title,
+                slug=slug)
+            for k, v in kwargs.items():
+                setattr(new_page, k, v)
+            parent.add_child(instance=new_page)
+            new_page.save()
+            new_page.save_revision(user=self.test_user).publish()
+            return new_page
         self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.test_user = User.objects.last()
         self.factory = RequestFactory()
-        self.english_parent = SublandingPage(
-            title='Consumer Tools',
-            slug='consumer-tools')
-        self.ROOT_PAGE.add_child(instance=self.english_parent)
-        self.english_parent.save()
-        self.english_parent.save_revision(user=self.test_user).publish()
-        self.english_page = PortalSearchPage(
-            title="Auto loans",
-            slug='answers')
-        self.english_parent.add_child(instance=self.english_page)
-        self.english_page.save()
-        self.english_page.portal_topic_id = 1
-        self.english_page.save_revision(user=self.test_user).publish()
-
-        self.spanish_parent = SublandingPage(
-            title='Obtener respuestas',
-            slug='obtener-respuestas')
-        self.ROOT_PAGE.add_child(instance=self.spanish_parent)
-        self.spanish_parent.save()
-        self.spanish_parent.save_revision(user=self.test_user).publish()
-        self.spanish_page = PortalSearchPage(
-            title="Préstamos para vehículos",
+        self.english_ask_parent = create_page(
+            SublandingPage,
+            'Ask CFPB',
+            'ask-cfpb',
+            self.ROOT_PAGE)
+        self.english_portal_parent = create_page(
+            SublandingPage,
+            'Consumer Tools',
+            'consumer-tools',
+            self.ROOT_PAGE)
+        self.english_portal = create_page(
+            SublandingPage,
+            'Auto loans',
+            'auto-loans',
+            self.english_portal_parent,
+            portal_topic_id=1)
+        self.english_search_page = create_page(
+            PortalSearchPage,
+            'Auto loan answers',
+            'answers',
+            self.english_portal,
+            portal_topic_id=1)
+        self.spanish_parent = create_page(
+            SublandingPage,
+            'Obtener respuestas',
+            'obtener-respuestas',
+            self.ROOT_PAGE,
+            language='es')
+        self.spanish_portal = create_page(
+            SublandingPage,
+            'Préstamos para vehículos',
+            'prestamos-para-vehiculos',
+            self.spanish_parent,
             language='es',
-            slug='respuestas')
-        self.spanish_parent.add_child(instance=self.spanish_page)
-        self.spanish_page.save()
-        self.spanish_page.portal_topic_id = 1
-        self.spanish_page.save_revision(user=self.test_user).publish()
+            portal_topic_id=1)
+        self.spanish_search_page = create_page(
+            PortalSearchPage,
+            'Préstamos para vehículos respuestas',
+            'respuestas',
+            self.spanish_portal,
+            language='es',
+            portal_topic_id=1)
+
+    def test_get_ask_breadcrumbs_with_portal(self):
+        answer_page_es = AnswerPage(
+            live=False,
+            language='es',
+            title='Spanish test question-es-9999?',
+            slug='spanish_test-question-es-9999',
+            primary_portal_topic_id=1,
+        )
+        self.spanish_parent.add_child(instance=answer_page_es)
+        answer_page_es.save()
+        answer_page_es.save_revision(user=self.test_user).publish()
+        with override_settings(
+                FLAGS={'ASK_CATEGORIES_OFF': [('boolean', True)]}):
+            response = self.client.get(answer_page_es.url)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(
+                len(response.context_data['breadcrumb_items']), 1)
+            self.assertEqual(
+                response.context_data['breadcrumb_items'][0]['title'],
+                answer_page_es.primary_portal_topic.heading_es)
+
+    # def test_get_ask_breadcrumbs_with_draft_portal(self):
+    #     self.spanish_portal.unpublish()
+    #     answer_page_es2 = AnswerPage(
+    #         live=False,
+    #         language='es',
+    #         title='Spanish test question-es-99999?',
+    #         slug='spanish_test-question-es-99999',
+    #         primary_portal_topic_id=1,
+    #     )
+    #     self.spanish_parent.add_child(instance=answer_page_es2)
+    #     answer_page_es2.save()
+    #     answer_page_es2.save_revision(user=self.test_user).publish()
+    #     with override_settings(
+    #             FLAGS={'ASK_CATEGORIES_OFF': [('boolean', True)]}):
+    #         response = self.client.get(answer_page_es2.url)
+    #         self.assertEqual(response.status_code, 200)
+    #         self.assertEqual(
+    #             len(response.context_data['breadcrumb_items']), 1)
+    #         self.assertEqual(
+    #             response.context_data['breadcrumb_items'][0]['title'],
+    #             self.spanish_search_page.title)
 
     def test_get_english_topic_heading(self):
-        page = self.english_page
+        page = self.english_search_page
         self.assertEqual(page.get_heading(), 'Auto loans')
 
     def test_get_english_category_heading(self):
-        page = self.english_page
+        page = self.english_search_page
         page.portal_category = PortalCategory.objects.get(
             heading='How-to guides')
         self.assertEqual(page.get_heading(), 'How-to guides')
 
     def test_get_spanish_topic_heading(self):
-        page = self.spanish_page
+        page = self.spanish_search_page
         self.assertEqual(
             page.get_heading(), 'Préstamos para vehículos')
 
     def test_get_spanish_category_heading(self):
-        page = self.spanish_page
+        page = self.spanish_search_page
         page.portal_category = PortalCategory.objects.get(
             heading_es='Paso a paso')
         self.assertEqual(
             page.get_heading(), 'Paso a paso')
 
     def test_english_portal_title(self):
-        test_page = self.english_page
+        test_page = self.english_search_page
         self.assertEqual(str(test_page), test_page.title)
         self.assertEqual(test_page.portal_topic, PortalTopic.objects.get(pk=1))
 
     def test_english_category_title(self):
-        page = self.english_page
+        page = self.english_search_page
         url = page.url + page.reverse_subpage(
             'portal_category_page', kwargs={'category': 'how-to-guides'})
         response = self.client.get(url)
@@ -249,7 +319,7 @@ class PortalSearchPageTestCase(TestCase):
             'Auto loans how-to guides')
 
     def test_spanish_category_title(self):
-        page = self.spanish_page
+        page = self.spanish_search_page
         url = page.url + page.reverse_subpage(
             'portal_category_page', kwargs={'category': 'paso-a-paso'})
         response = self.client.get(url)
@@ -259,35 +329,37 @@ class PortalSearchPageTestCase(TestCase):
 
     def test_category_map_length(self):
         self.assertEqual(
-            len(self.english_page.category_map),
+            len(self.english_search_page.category_map),
             PortalCategory.objects.count())
 
     def test_category_map_sort_order(self):
-        mapping = self.english_page.category_map
+        mapping = self.english_search_page.category_map
         self.assertEqual(
             PORTAL_CATEGORY_SORT_ORDER,
             [category.pk for slug, category in mapping.items()]
         )
 
     def test_results_message_no_category_no_search_term(self):
-        msg = self.english_page.results_message(10, 'Auto loans', '')
+        msg = self.english_search_page.results_message(10, 'Auto loans', '')
         self.assertEqual(msg, "Showing 10 results  within auto loans")
 
     def test_results_message_no_category_with_search_term(self):
-        msg = self.english_page.results_message(1, 'Auto loans', 'hoodoo')
+        msg = self.english_search_page.results_message(
+            1, 'Auto loans', 'hoodoo')
         self.assertEqual(
             msg, 'Showing  1 result for "hoodoo" within auto loans')
 
     def test_results_message_with_category_no_search_term(self):
-        self.english_page.portal_category = PortalCategory.objects.get(
+        self.english_search_page.portal_category = PortalCategory.objects.get(
             heading='How-to guides')
-        msg = self.english_page.results_message(10, 'How-to guides', '')
+        msg = self.english_search_page.results_message(10, 'How-to guides', '')
         self.assertEqual(msg, "Showing 10 results within how-to guides")
 
     def test_results_message_with_category_and_search_term(self):
-        self.english_page.portal_category = PortalCategory.objects.get(
+        self.english_search_page.portal_category = PortalCategory.objects.get(
             heading='How-to guides')
-        msg = self.english_page.results_message(1, 'How-to guides', 'hoodoo')
+        msg = self.english_search_page.results_message(
+            1, 'How-to guides', 'hoodoo')
         self.assertEqual(
             msg,
             'Showing  1 result for &quot;hoodoo&quot; within how-to guides'
@@ -295,14 +367,14 @@ class PortalSearchPageTestCase(TestCase):
             'See all results within auto loans</a></span>')
 
     def test_portal_topic_page_200(self):
-        page = self.english_page
+        page = self.english_search_page
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
 
     @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
     def test_portal_category_page_200(self, mock_filter):
         mock_filter.return_value = mock_queryset(count=2)
-        page = self.english_page
+        page = self.english_search_page
         url = page.url + page.reverse_subpage(
             'portal_category_page', kwargs={'category': 'how-to-guides'})
         response = self.client.get(url)
@@ -317,7 +389,7 @@ class PortalSearchPageTestCase(TestCase):
             'expanded': True,
             'children': []
         }], True
-        page = self.spanish_page
+        page = self.spanish_search_page
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
 
@@ -328,7 +400,7 @@ class PortalSearchPageTestCase(TestCase):
             self, mock_suggestion, mock_filter):
         mock_suggestion.return_value = 'hoodoo'
         mock_filter.return_value = mock_queryset()
-        page = self.english_page
+        page = self.english_search_page
         base_url = page.url
         url = "{}?search_term=hoodoo".format(base_url)
         response = self.client.get(url)
@@ -342,7 +414,7 @@ class PortalSearchPageTestCase(TestCase):
         mock_suggestion.return_value = 'hoodunit'
         mock_count.return_value = 0
         mock_filter.return_value = mock_queryset()
-        page = self.english_page
+        page = self.english_search_page
         base_url = page.url
         url = "{}?search_term=hoodoo".format(base_url)
         with override_settings(
@@ -359,7 +431,7 @@ class PortalSearchPageTestCase(TestCase):
         mock_count.return_value = 0
         mock_suggestion.return_value = 'hoodunit'
         mock_filter.return_value = mock_queryset()
-        page = self.english_page
+        page = self.english_search_page
         base_url = page.url + page.reverse_subpage(
             'portal_category_page', kwargs={'category': 'how-to-guides'})
         url = "{}?search_term=hoodoo".format(base_url)
@@ -377,7 +449,7 @@ class PortalSearchPageTestCase(TestCase):
         mock_filter.return_value = mock_queryset()
         mock_count.return_value = 0
         mock_suggestion.return_value = 'hoodoo'
-        page = self.english_page
+        page = self.english_search_page
         base_url = page.url + page.reverse_subpage(
             'portal_category_page', kwargs={'category': 'how-to-guides'})
         url = "{}?search_term=hoodoo".format(base_url)
@@ -390,7 +462,7 @@ class PortalSearchPageTestCase(TestCase):
     def test_portal_topic_page_suggestion(self, mock_filter, mock_models):
         mock_models.spelling_suggestion.return_value = 'hoodunit'
         mock_filter.return_value = mock_queryset()
-        page = self.english_page
+        page = self.english_search_page
         url = "{}?search_term=hoodoo".format(page.url)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -398,6 +470,8 @@ class PortalSearchPageTestCase(TestCase):
 
 
 class AnswerPageTestCase(TestCase):
+
+    fixtures = ['ask_tests', 'portal_topics']
 
     def prepare_answer(self, **kwargs):
         kwargs.setdefault('answer', 'Mock answer')
@@ -436,7 +510,7 @@ class AnswerPageTestCase(TestCase):
         return es_cat_page
 
     def setUp(self):
-        self.test_user = User.objects.last()
+        self.test_user = User.objects.get(pk=1)
         self.factory = RequestFactory()
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.audience = mommy.make(Audience, name='stub_audience')
@@ -868,27 +942,45 @@ class AnswerPageTestCase(TestCase):
             Category.objects.count())
 
     def test_get_ask_breadcrumbs(self):
+        request = HttpRequest()
         from ask_cfpb.models import get_ask_breadcrumbs
-        breadcrumbs = get_ask_breadcrumbs()
+        breadcrumbs = get_ask_breadcrumbs(request)
         self.assertEqual(len(breadcrumbs), 1)
         self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
 
     def test_get_ask_breadcrumbs_with_category(self):
+        request = HttpRequest()
         from ask_cfpb.models import get_ask_breadcrumbs
         test_category = mommy.make(Category, name='breadcrumb_cat')
-        breadcrumbs = get_ask_breadcrumbs(category=test_category)
+        breadcrumbs = get_ask_breadcrumbs(request, category=test_category)
         self.assertEqual(len(breadcrumbs), 2)
         self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
         self.assertEqual(breadcrumbs[1]['title'], test_category.name)
 
     def test_get_es_ask_breadcrumbs_with_category(self):
+        request = HttpRequest()
         from ask_cfpb.models import get_ask_breadcrumbs
         test_category = mommy.make(Category, name_es='es_breadcrumb_cat')
         breadcrumbs = get_ask_breadcrumbs(
-            language='es', category=test_category)
+            request, language='es', category=test_category)
         self.assertEqual(len(breadcrumbs), 2)
         self.assertEqual(breadcrumbs[0]['title'], 'Obtener respuestas')
         self.assertEqual(breadcrumbs[1]['title'], test_category.name_es)
+
+    def test_legacy_answer_page_breadcrumb_no_referrer(self):
+        """ If no referrer, breadcrumbs should reflect first category."""
+        page = self.page1
+        test_category = mommy.make(Category, name='Test cat', slug='test-cat')
+        page.category.add(self.category)
+        page.category.add(test_category)
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = ''
+        context = page.get_context(request)
+        default_category = page.category.first()
+        self.assertEqual(context['category'], default_category)
+        self.assertEqual(len(context['breadcrumb_items']), 2)
+        self.assertEqual(context['breadcrumb_items'][1]['title'],
+                         default_category.name)
 
     def test_category_page_context(self):
         mock_site = mock.Mock()
@@ -1021,23 +1113,6 @@ class AnswerPageTestCase(TestCase):
         self.assertEqual(context['category'], first_category)
         self.assertEqual(len(context['subcategories']),
                          first_category.subcategories.count())
-
-    def test_answer_page_breadcrumbs_and_subcategories(self):
-        """ If there is no referrer, category/breadcrumbs should reflect
-        first category on answer."""
-        page = self.page1
-        test_category = mommy.make(
-            Category, name='Test cat', slug='test-cat')
-        page.category.add(self.category)
-        page.category.add(test_category)
-        request = HttpRequest()
-        request.META['HTTP_REFERER'] = ''
-        context = page.get_context(request)
-        default_category = page.category.first()
-        self.assertEqual(context['category'], default_category)
-        self.assertEqual(len(context['breadcrumb_items']), 2)
-        self.assertEqual(context['breadcrumb_items'][1]['title'],
-                         default_category.name)
 
     def test_answer_split_testing_id(self):
         """Confirm AnswerPage's split_testing_id is set to its answer_base.id,
