@@ -26,8 +26,8 @@ from regulations3k.models.django import (
 from regulations3k.models.pages import (
     RegulationLandingPage, RegulationPage, RegulationsSearchPage,
     get_next_section, get_previous_section, get_secondary_nav_items,
-    get_section_url, validate_num_results, validate_page_number,
-    validate_regs_list
+    get_section_url, validate_num_results, validate_order,
+    validate_page_number, validate_regs_list
 )
 
 
@@ -654,6 +654,12 @@ class RegModelTests(DjangoTestCase):
     def test_reg_page_num_versions_off_sharing(self):
         test_context = self.reg_page.get_context(self.get_request())
         self.assertEqual(test_context['num_versions'], 2)
+
+    def test_validate_order(self):
+        request = HttpRequest()
+        self.assertEqual(validate_order(request), 'relevance')
+        request.GET.update({'order': 'regulation'})
+        self.assertEqual(validate_order(request), 'regulation')
 
 
 class SectionNavTests(unittest.TestCase):
