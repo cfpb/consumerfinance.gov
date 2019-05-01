@@ -67,7 +67,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     def regulation_results_page(self, request):
         all_regs = Part.objects.order_by('part_number')
         regs = validate_regs_list(request)
-        order = request.GET.get('order', 'relevance')
+        order = validate_order(request)
         search_query = request.GET.get('q', '').strip()
         payload = {
             'search_query': search_query,
@@ -603,3 +603,10 @@ def validate_regs_list(request):
         return [reg for reg in regs_input_list if reg.isalnum()]
     else:
         return []
+
+
+def validate_order(request):
+    order = request.GET.get('order')
+    if order not in ('relevance', 'regulation'):
+        order = 'relevance'
+    return order
