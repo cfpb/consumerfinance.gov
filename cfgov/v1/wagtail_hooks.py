@@ -20,7 +20,8 @@ from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
-from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.models.snippets import (Contact, GlossaryTerm, RelatedResource,
+    ReusableText)
 from v1.util import util
 
 
@@ -263,6 +264,14 @@ class RelatedResourceModelAdmin(ModelAdmin):
     search_fields = ('title', 'text')
 
 
+class GlossaryTermModelAdmin(ModelAdmin):
+    model = GlossaryTerm
+    menu_icon = 'snippet'
+    list_display = ('term', 'definition', 'portal_topic')
+    ordering = ('term',)
+    search_fields = ('term', 'definition')
+
+
 class SnippetModelAdminGroup(ModelAdminGroup):
     menu_label = 'Snippets'
     menu_icon = 'snippet'
@@ -273,7 +282,8 @@ class SnippetModelAdminGroup(ModelAdminGroup):
         ReusableTextModelAdmin,
         RelatedResourceModelAdmin,
         PortalTopicModelAdmin,
-        PortalCategoryModelAdmin)
+        PortalCategoryModelAdmin,
+        GlossaryTermModelAdmin)
 
 
 modeladmin_register(SnippetModelAdminGroup)

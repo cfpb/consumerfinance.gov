@@ -406,6 +406,18 @@ class PortalSearchPage(
             'ask-cfpb/see-all.html',
             context)
 
+    def get_key_terms(self, request):
+        context = self.get_context(request)
+        context.update({
+            'terms': self.portal_topic.glossary_terms.order_by('term'),
+            'get_secondary_nav_items': self.get_nav_items,
+            'heading': self.get_heading()
+        })
+        return TemplateResponse(
+            request,
+            'ask-cfpb/see-all.html',
+            context)
+
     @route(r'^$')
     def portal_topic_page(self, request):
         self.query_base = SearchQuerySet().filter(
@@ -418,14 +430,17 @@ class PortalSearchPage(
     def portal_category_page(self, request, **kwargs):
         category_slug = kwargs.get('category')
         self.portal_category = self.category_map.get(category_slug)
-        self.query_base = SearchQuerySet().filter(
-            portal_topics=self.portal_topic.heading,
-            language=self.language,
-            portal_categories=self.portal_category.heading)
         self.title = "{} {}".format(
             self.portal_topic.title(self.language),
             self.portal_category.title(self.language).lower())
-        return self.get_results(request)
+        if self.portal_category.heading == 'Key terms':
+            return self.get_key_terms(request)
+        else:
+            self.query_base = SearchQuerySet().filter(
+                portal_topics=self.portal_topic.heading,
+                language=self.language,
+                portal_categories=self.portal_category.heading)
+            return self.get_results(request)
 
 
 class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,

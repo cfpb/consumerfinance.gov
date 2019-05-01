@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.text import slugify
+
+from modelcluster.fields import ParentalKey
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import RichTextField, StreamField
@@ -79,3 +82,45 @@ class RelatedResource(index.Indexed, models.Model):
 
     def __str__(self):
         return self.title
+
+
+@python_2_unicode_compatible
+@register_snippet
+class GlossaryTerm(index.Indexed, models.Model):
+    term = models.CharField(
+        max_length=255,
+    )
+    definition = RichTextField()
+    anchor = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    term_es = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    definition_es = RichTextField(
+        null=True,
+        blank=True
+    )
+    portal_topic = ParentalKey(
+        'v1.PortalTopic',
+        related_name='glossary_terms',
+        null=True,
+        blank=True
+    )
+
+    search_fields = [
+        index.SearchField('term', partial_match=True),
+        index.SearchField('definition', partial_match=True),
+    ]
+
+    def __str__(self):
+        return self.term
+
+    def clean(self):
+        super(GlossaryTerm, self).clean()
+        if not self.anchor:
+            self.anchor = slugify(self.term)
