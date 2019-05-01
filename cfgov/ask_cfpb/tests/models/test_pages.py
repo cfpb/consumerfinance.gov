@@ -238,49 +238,39 @@ class PortalSearchPageTestCase(TestCase):
             self.spanish_portal,
             language='es',
             portal_topic_id=1)
-
-    def test_get_ask_breadcrumbs_with_portal(self):
-        answer_page_es = AnswerPage(
-            live=False,
+        self.answer_page_es = create_page(
+            AnswerPage,
+            'Spanish test question-es-9999?',
+            'spanish_test-question-es-9999',
+            self.spanish_parent,
             language='es',
-            title='Spanish test question-es-9999?',
-            slug='spanish_test-question-es-9999',
             primary_portal_topic_id=1,
         )
-        self.spanish_parent.add_child(instance=answer_page_es)
-        answer_page_es.save()
-        answer_page_es.save_revision(user=self.test_user).publish()
+
+    def test_get_ask_breadcrumbs_with_portal(self):
         with override_settings(
                 FLAGS={'ASK_CATEGORIES_OFF': [('boolean', True)]}):
-            response = self.client.get(answer_page_es.url)
+            response = self.client.get(self.answer_page_es.url)
             self.assertEqual(response.status_code, 200)
             self.assertEqual(
                 len(response.context_data['breadcrumb_items']), 1)
             self.assertEqual(
                 response.context_data['breadcrumb_items'][0]['title'],
-                answer_page_es.primary_portal_topic.heading_es)
+                self.answer_page_es.primary_portal_topic.heading_es)
 
-    # def test_get_ask_breadcrumbs_with_draft_portal(self):
-    #     self.spanish_portal.unpublish()
-    #     answer_page_es2 = AnswerPage(
-    #         live=False,
-    #         language='es',
-    #         title='Spanish test question-es-99999?',
-    #         slug='spanish_test-question-es-99999',
-    #         primary_portal_topic_id=1,
-    #     )
-    #     self.spanish_parent.add_child(instance=answer_page_es2)
-    #     answer_page_es2.save()
-    #     answer_page_es2.save_revision(user=self.test_user).publish()
-    #     with override_settings(
-    #             FLAGS={'ASK_CATEGORIES_OFF': [('boolean', True)]}):
-    #         response = self.client.get(answer_page_es2.url)
-    #         self.assertEqual(response.status_code, 200)
-    #         self.assertEqual(
-    #             len(response.context_data['breadcrumb_items']), 1)
-    #         self.assertEqual(
-    #             response.context_data['breadcrumb_items'][0]['title'],
-    #             self.spanish_search_page.title)
+    def test_get_ask_breadcrumbs_with_draft_portal(self):
+        self.spanish_portal.unpublish()
+        self.spanish_portal.save()
+        with override_settings(
+                FLAGS={'ASK_CATEGORIES_OFF': [('boolean', True)]}):
+            response = self.client.get(self.answer_page_es.url)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(
+                len(response.context_data['breadcrumb_items']), 1)
+            self.assertEqual(
+                response.context_data['breadcrumb_items'][0]['title'],
+                self.spanish_search_page.title)
+        self.spanish_portal.save_revision(user=self.test_user).publish()
 
     def test_get_english_topic_heading(self):
         page = self.english_search_page

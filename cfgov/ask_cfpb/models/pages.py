@@ -123,21 +123,27 @@ def get_ask_breadcrumbs(
     }
 
     if portal_topic and flag_enabled('ASK_CATEGORIES_OFF', request=request):
-        title = portal_topic.title(language=language)
-        if portal_topic.portal_pages.filter(
-                language=language, live=True).exists():
-            slug = slugify(title)
-            crumbs = PORTAL_CRUMBS[language]
+        portal_title = portal_topic.title(language=language)
+        portal_slug = slugify(portal_title)
+        crumbs = PORTAL_CRUMBS[language]
+        portal_page = portal_topic.portal_pages.filter(
+            language=language, live=True).first()
+        if portal_page:
+            title = portal_page.title
+            slug = portal_slug
             crumbs[0].update({
                 'title': title,
                 'href': crumbs[0]['href'].format(slug)
             })
         else:
-            slug = slugify(title)
-            crumbs = PORTAL_CRUMBS[language]
+            portal_search_page = portal_topic.portal_search_pages.get(
+                language=language)
+            title = portal_search_page.title
+            href = '{}{}/'.format(
+                crumbs[0]['href'].format(portal_slug), _('answers'))
             crumbs[0].update({
-                'title': "{} {}".format(title, _('answers')),
-                'href': crumbs[0]['href'].format(slug) + _('answers') + '/'
+                'title': title,
+                'href': href
             })
         return crumbs
     if category:
@@ -736,8 +742,9 @@ class AnswerPage(CFGOVPage):
         portal_topic = self.primary_portal_topic or self.portal_topic.first()
         context = super(AnswerPage, self).get_context(request)
         context['related_questions'] = self.related_questions.all()
-        context['description'] = self.short_answer if self.short_answer \
-            else Truncator(self.answer).words(40, truncate=' ...')
+        context['description'] = (
+            self.short_answer if self.short_answer
+            else Truncator(self.answer).words(40, truncate=' ...'))
         context['last_edited'] = self.last_edited
         context['category'] = self.category.first()
         context['breadcrumb_items'] = get_ask_breadcrumbs(
