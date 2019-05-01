@@ -66,10 +66,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     @route(r'^results/')
     def regulation_results_page(self, request):
         all_regs = Part.objects.order_by('part_number')
-        regs = []
+        regs = validate_regs_list(request)
         order = request.GET.get('order', 'relevance')
-        if 'regs' in request.GET and request.GET.get('regs'):
-            regs = request.GET.getlist('regs')
         search_query = request.GET.get('q', '').strip()
         payload = {
             'search_query': search_query,
@@ -592,3 +590,16 @@ def validate_page_number(request, paginator):
     except InvalidPage:
         page_number = 1
     return page_number
+
+
+def validate_regs_list(request):
+    """
+    A utility for validating a RegulationsSearchPage request.
+
+    Validates that a list of regulation part numbers is alphanumeric.
+    """
+    if 'regs' in request.GET and request.GET.get('regs'):
+        regs_input_list = request.GET.getlist('regs')
+        return [reg for reg in regs_input_list if reg.isalnum()]
+    else:
+        return []
