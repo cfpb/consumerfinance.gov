@@ -612,9 +612,6 @@ CSP_CONNECT_SRC = (
 # conditions or an empty dict. If the conditions dict is empty the flag will
 # only be enabled if database conditions are added.
 FLAGS = {
-    # This flag will be activated when Ask CFPB category pages are turned off.
-    'ASK_CATEGORIES_OFF': [],
-
     # Ask CFPB search spelling correction support
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results.
