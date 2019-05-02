@@ -617,6 +617,9 @@ FLAGS = {
     # will be used when the given search term provides no results.
     'ASK_SEARCH_TYPOS': [],
 
+    # This flag will be activated when Ask CFPB category pages are turned off.
+    'ASK_CATEGORIES_OFF': [],
+
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
