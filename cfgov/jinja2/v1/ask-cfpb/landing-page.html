@@ -23,25 +23,18 @@
                         {{ _('Browse questions by category') }}
                     </h2>
                     <ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
-                        {% for category in categories %}
+                        {% for topic_page in topic_pages %}
+                            {% set topic = topic_page.portal_topic %}
                             <li class="m-list_item">
                                 <a class="m-list_link
                                           a-link
                                           a-link__jump
                                           a-link__icon-after-text"
-                                   {% if page.language == 'es' %}
-                                   href="{{ slugurl( 'categoria-' + category.slug_es ) }}"
-                                   {% else %}
-                                   href="{{ slugurl( 'category-' + category.slug ) }}"
-                                   {% endif %}>
+                                    href="{{ topic_page.url }} "
                                     <span class="a-link_text">
-                                        {% if page.language == 'es' %}
-                                        {{ category.name_es }}
-                                        {% else %}
-                                        {{ category.name }}
-                                        {% endif %}
+                                        {{ topic.title(page.language) }}
                                     </span>
-                                    {{ category_icon.render( category.name ) }}
+                                    {{ category_icon.render(topic) }}
                                 </a>
                             </li>
                         {% endfor %}
@@ -52,59 +45,47 @@
 
                             <div class="content-l content-l__equal-height">
 
-                                {% for category in categories %}
-                                    <div class="content-l_col content-l_col-1-2__on-med content-l_col-1-3__on-lg content-l_col__equal-height">
-                                        <article class="m-card content-l_body__equal-height">
+                                {% for topic_page in topic_pages %}
+                                    {% set topic = topic_page.portal_topic %}
+                                    {% set featured_answers = topic.featured_answers(page.language) %}
+                                    {% if featured_answers %}
+                                        <div class="content-l_col content-l_col-1-2__on-med content-l_col-1-3__on-lg content-l_col__equal-height">
+                                            <article class="m-card content-l_body__equal-height">
 
-                                            <h2>
-                                                {% if page.language == 'es' %}
-                                                <a href="{{ slugurl( 'categoria-' + category.slug_es ) }}">
-                                                {% else %}
-                                                <a href="{{ slugurl( 'category-' + category.slug ) }}">
-                                                {% endif %}
-                                                {{ category_icon.render( category.name ) }}
-                                                {% if page.language == 'es' %}
-                                                {{ category.name_es }}
-                                                {% else %}
-                                                {{ category.name }}
-                                                {% endif %}
-                                                </a>
-                                            </h2>
+                                                <h2>
+                                                    <a href="{{ topic_page.url }}">
+                                                    {{ category_icon.render( topic ) }}
+                                                    {{ topic.title(page.language) }}
+                                                    </a>
+                                                </h2>
 
-                                            <ul class="m-list question_list m-list__flush-left u-mt10 u-mb30">
-                                                {% if page.language == 'es'%}
-                                                    {% for answer in category.featured_answers('es') %}
-                                                    <li class="m-list_item">
-                                                    {{ partially_styled_link.render( {'plain_text': answer.question, 'underlined_text': 'Leer la respuesta', 'url': answer.url} ) }}
-                                                    </li>
+                                                <ul class="m-list question_list m-list__flush-left u-mt10 u-mb30">
+                                                    {% for page in featured_answers %}
+                                                        <li class="m-list_item">
+                                                        {{ partially_styled_link.render({
+                                                            'plain_text': page.question,
+                                                            'underlined_text': _('Read answer'),
+                                                            'url': page.url})
+                                                        }}
+                                                        </li>
                                                     {% endfor %}
-                                                {% else %}
-                                                    {% for answer in category.featured_answers('en') %}
-                                                    <li class="m-list_item">
-                                                    {{ partially_styled_link.render( {'plain_text': answer.question, 'underlined_text': 'Read answer', 'url': answer.url} ) }}
-                                                    </li>
-                                                    {% endfor %}
-                                                {% endif %}
+                                                </ul>
 
-                                            </ul>
-
-                                            <div class="content-l_footer__equal-height">
-                                                <p class="short-desc u-mb0">
-                                                    {% if page.language == 'es'%}
-                                                        <a href="{{ slugurl( 'categoria-' + category.slug_es ) }}">
-                                                            Ver todas las respuestas de {{ category.name_es|lower }}
+                                                <div class="content-l_footer__equal-height">
+                                                    <p class="short-desc u-mb0">
+                                                        <a href="{{ topic_page.url }}">
+                                                        {% if page.language == 'es' %}
+                                                            Ver todas las respuestas de {{ topic.title(page.language)|lower }}
+                                                        {% else %}
+                                                            See all {{ topic.title(page.language)|lower }} questions
+                                                        {% endif %}
                                                         </a>
-                                                    {% else %}
-                                                        <a href="{{ slugurl( 'category-' + category.slug ) }}">
-                                                        See all {{ category.name|lower }} questions
-                                                        </a>
-                                                    {% endif %}
-                                                    
-                                                </p>
-                                            </div>
+                                                    </p>
+                                                </div>
 
-                                        </article>
-                                    </div>
+                                            </article>
+                                        </div>
+                                    {% endif %}
 
                                 {% endfor %}
 

@@ -194,9 +194,12 @@ class AnswerLandingPage(LandingPage):
     objects = CFGOVPageManager()
 
     def get_context(self, request, *args, **kwargs):
-        from ask_cfpb.models import Category
+        topic_pages = PortalSearchPage.objects.filter(
+            language=self.language,
+            live=True
+        ).order_by('portal_topic__heading')
         context = super(AnswerLandingPage, self).get_context(request)
-        context['categories'] = Category.objects.all()
+        context['topic_pages'] = topic_pages
         context['about_us'] = get_standard_text(self.language, 'about_us')
         context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
         return context

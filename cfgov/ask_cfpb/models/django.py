@@ -98,12 +98,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def featured_answers(self, language):
-        return self.answerpage_set.filter(
-            language=language,
-            category=self,
-            featured=True).order_by('featured_rank')
-
     class Meta:
         ordering = ['name']
         verbose_name_plural = 'Categories'
