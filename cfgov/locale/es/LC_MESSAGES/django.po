@@ -89,6 +89,9 @@ msgid "Learn more about"
 msgstr "Sepa más sobre"
 
 #: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
+msgid "Search our library of answers"
+msgstr "Buscar en nuestra lista de respuestas"
+
 msgid "Can't find your question?"
 msgstr "¿No encuentra su pregunta?"
 
