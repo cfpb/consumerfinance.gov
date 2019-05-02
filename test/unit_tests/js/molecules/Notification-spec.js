@@ -1,8 +1,7 @@
 import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
 
 const HTML_SNIPPET = `
-<div class="m-notification
-            m-notification__default">
+<div class="m-notification">
   <svg xmlns="http://www.w3.org/2000/svg"
        viewBox="0 0 1000 1200" class="cf-icon-svg"></svg>
   <div class="m-notification_content">
@@ -36,7 +35,6 @@ describe( 'Notification', () => {
 
     it( 'should return the Notification instance if it has a success class',
       () => {
-        notificationElem.classList.remove( 'm-notification__default' );
         notificationElem.classList.add( 'm-notification__success' );
 
         expect( notification.init().constructor ).toBe( Notification );
@@ -46,7 +44,6 @@ describe( 'Notification', () => {
 
     it( 'should return the Notification instance if it has a warning class',
       () => {
-        notificationElem.classList.remove( 'm-notification__default' );
         notificationElem.classList.add( 'm-notification__warning' );
 
         expect( notification.init().constructor ).toBe( Notification );
@@ -56,7 +53,6 @@ describe( 'Notification', () => {
 
     it( 'should return the Notification instance if it has a error class',
       () => {
-        notificationElem.classList.remove( 'm-notification__default' );
         notificationElem.classList.add( 'm-notification__error' );
 
         expect( notification.init().constructor ).toBe( Notification );
