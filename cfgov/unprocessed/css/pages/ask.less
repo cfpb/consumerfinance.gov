@@ -153,12 +153,15 @@
 /* Landing page */
 
 .ask-cfpb-page__landing {
-
+    .respond-to-min( @bp-sm-min, {
+        .m-hero {
+            border-bottom: 1px solid @block__border;
+        }
+           
+    });
     .question-categories {
         .respond-to-min( @bp-sm-min, {
-            background: @block__bg;
-            padding: unit( 45 / @base-font-size-px, em )
-                     unit( @grid_gutter-width / @base-font-size-px, em );
+            padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         });
 
         .content-l_col {
@@ -178,38 +181,12 @@
         }
     }
 
-    .ask-categories,
-    .ask-search,
-    .ask-cfpb-banner {
-        .respond-to-max( @bp-xs-max, {
-            padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-            padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        } );
-
-        .respond-to-range( @bp-med-min, @bp-med-max, {
-            padding-left: 0;
-            padding-right: 0;
-        } );
+    .input-with-btn__bar .input-with-btn_btn button {
+        height: 35px;
     }
 
-    .ask-cfpb-banner {
-        .respond-to-range( @bp-med-min, @bp-med-max, {
-            padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
-            padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
-        } );
-
-    }
-
-    .ask-search {
-        .respond-to-max( @bp-xs-max, {
-            padding: 0;
-        } );
-    }
-
-    .ask-disclaimer {
-        .respond-to-min( @bp-sm-min, {
-            margin-bottom: 0;
-        } );
+     .o-search-bar_input {
+        max-width: 500px;
     }
 
 }
