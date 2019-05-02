@@ -92,7 +92,7 @@
                     {% endfor %}
                 {% endif %}
                 {% if show_date %}
-                <span class="m-meta-header_separator">|</span> 
+                <span class="m-meta-header_separator">|</span>
                 {% endif %}
             </div>
             {% endif %}
@@ -129,7 +129,7 @@
                         {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
                         <img class="o-post-preview_image"
                              src="{{ event.location_image_url() }}"
-                             alt="Google Maps image of {{ event.venue_name }}">
+                             alt="Map image of {{ event.venue_name }}">
                     {% endif %}
                 </div>
             {% endif %}

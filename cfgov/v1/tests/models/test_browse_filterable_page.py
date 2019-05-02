@@ -29,12 +29,8 @@ class TestNewsroomLandingPage(TestCase):
         self.assertEqual(
             get_category_children(NewsroomLandingPage.filterable_categories),
             [
-                'at-the-cfpb',
-                'data-research-reports',
                 'directors-notebook',
-                'info-for-consumers',
                 'op-ed',
-                'policy_compliance',
                 'press-release',
                 'speech',
                 'testimony',

@@ -26,6 +26,9 @@ DEPLOY_ENVIRONMENT = os.getenv('DEPLOY_ENVIRONMENT')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 
+# in some environments, we want to respect X-Forwarded-Port
+USE_X_FORWARDED_PORT = os.environ.get('USE_X_FORWARDED_PORT') == 'True'
+
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
@@ -700,9 +703,7 @@ FLAGS = {
     # Test financial well-being hub pages on Beta
     'FINANCIAL_WELLBEING_HUB': [('environment is', 'beta')],
 
-    # Test migrated HMDA content pages. Delete after HMDA content launch
-    'HMDA_LEGACY_REVIEW': [],
-    # Publish new HMDA content pages
+    # Publish new HMDA Explore page
     # Delete after HMDA API is deprecated (hopefully Summer 2019)
     'HMDA_LEGACY_PUBLISH': [],
 

@@ -99,18 +99,6 @@ function scriptsExternal() {
 }
 
 /**
- * Bundle base js for Spanish Ask CFPB pages.
- * @returns {PassThrough} A source stream.
- */
-function scriptsSpanish() {
-  return _processScript(
-    webpackConfig.spanishConf,
-    '/js/routes/es/obtener-respuestas/single.js',
-    '/js/'
-  );
-}
-
-/**
  * Bundle atomic header component scripts.
  * Provides a means to bundle JS for specific atomic components,
  * which then can be carried over to other projects.
@@ -242,7 +230,6 @@ gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
-gulp.task( 'scripts:spanish', scriptsSpanish );
 
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
@@ -262,7 +249,6 @@ gulp.task( 'scripts',
     'scripts:apps',
     'scripts:external',
     'scripts:nemo',
-    'scripts:spanish',
     'scripts:ondemand'
   )
 );
