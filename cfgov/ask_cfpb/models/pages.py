@@ -522,7 +522,7 @@ class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
             request, self.template, context)
 
 
-class AnswerResultsPage(SecondaryNavigationJSMixin, CFGOVPage):
+class AnswerResultsPage(CFGOVPage):
 
     objects = CFGOVPageManager()
     answers = []
@@ -552,7 +552,6 @@ class AnswerResultsPage(SecondaryNavigationJSMixin, CFGOVPage):
         context['paginator'] = paginator
         context['results'] = results
         context['results_count'] = len(self.answers)
-        context['get_secondary_nav_items'] = get_ask_nav_items
         context['breadcrumb_items'] = get_ask_breadcrumbs(
             request,
             language=self.language)
