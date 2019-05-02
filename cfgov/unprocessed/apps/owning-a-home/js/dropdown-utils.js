@@ -84,7 +84,7 @@ const utils = function( id ) {
 
     $el.each( function() {
       // If the option already exists, abort.
-      if ( $el.children( 'option[value=' + value + ']' ).length > 0 ) {
+      if ( $el.children( "option[value='" + value + "']" ).length > 0 ) {
         return;
       }
 
