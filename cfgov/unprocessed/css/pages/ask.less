@@ -115,21 +115,32 @@
     }
 
     .answer-text {
-        h2,
-        h3,
+        h2 {
+             margin-top: unit( @grid_gutter-width / @size-ii, em );
+        }
+
+        h3 {
+             margin-top: unit( @grid_gutter-width * 1.5 / @size-iii, em );
+        }
+
         h4 {
-            margin-top: 30px;
+             margin-top: unit( @grid_gutter-width * 1.5 / @size-iv, em );
         }
 
         .respond-to-min(@bp-sm-min, {
             h2 {
-                margin-top: 45px;
+                margin-top: unit( @grid_gutter-width * 1.5 / @size-ii, em );
             }
         });
 
         .o-table:not(:first-child),
         .video-player:not(:first-child) {
             margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
+
+        .o-table:not(:last-child),
+        .video-player:not(:last-child) {
+            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
         }
 
         .m-inset h4,
@@ -144,11 +155,6 @@
         h3 + .o-table,
         h4 + .o-table {
             margin-top: 0 !important;
-        }
-         
-        .o-table:not(:last-child),
-        .video-player:not(:last-child) {
-            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
         }
     }   
 
@@ -178,17 +184,17 @@
     .m-inset__bordered {
         border-top:4px solid @teal-60;
         border-bottom: 2px solid @teal-40;
-        padding: unit( 15px / @base-font-size-px, em ) 0;
-        margin-bottom: unit( 15px / @base-font-size-px, em );
+        padding: unit( @grid_gutter-width /2 / @base-font-size-px, em ) 0;
+        margin-bottom: unit( @grid_gutter-width /2 / @base-font-size-px, em );
     }
 
     .respond-to-min(@bp-sm-min, {
         .m-inset__bordered {
             margin: unit( 3px / @base-font-size-px, em )
                     0
-                    unit( 30px / @base-font-size-px, em )
-                    unit( 30px / @base-font-size-px, em );
-            padding: unit( 30px / @base-font-size-px, em ) 0;
+                    unit( @grid_gutter-width / @base-font-size-px, em )
+                    unit( @grid_gutter-width / @base-font-size-px, em );
+            padding: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
         }
     });
 
