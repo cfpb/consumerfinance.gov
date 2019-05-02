@@ -30,7 +30,8 @@ from ask_cfpb.models.search import AskSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
-    CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic
+    CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic,
+    SublandingPage
 )
 from v1.models.snippets import RelatedResource, ReusableText
 
@@ -196,30 +197,34 @@ class AnswerLandingPage(LandingPage):
     def get_portal_cards(self):
         """Return an array of dictionaries used to populate portal cards."""
         portal_cards = []
-        topic_pages = PortalSearchPage.objects.filter(
+        portal_pages = SublandingPage.objects.filter(
+            portal_topic_id__isnull=False,
             language=self.language,
-            live=True
         ).order_by('portal_topic__heading')
-        for topic_page in topic_pages:
-            topic = topic_page.portal_topic
-            featured_answers = topic.featured_answers(self.language)
+        for portal_page in portal_pages:
+            topic = portal_page.portal_topic
             # Only include a portal if it has featured answers
-            if featured_answers:
-                # If a live portal page exists, link to that
-                portal_page = topic.portal_pages.filter(
+            featured_answers = topic.featured_answers(self.language)
+            if not featured_answers:
+                continue
+            # If the portal page is live, link to it
+            if portal_page.live:
+                url = portal_page.url
+            # Otherwise, link to the topic "see all" page if there is one
+            else:
+                topic_page = topic.portal_search_pages.filter(
                     language=self.language,
                     live=True).first()
-                if portal_page:
-                    url = portal_page.url
-                # Otherwise, link to the topic "see all" page
-                else:
+                if topic_page:
                     url = topic_page.url
-                portal_cards.append({
-                    'topic': topic,
-                    'title': topic.title(self.language),
-                    'url': url,
-                    'featured_answers': featured_answers,
-                })
+                else:
+                    continue
+            portal_cards.append({
+                'topic': topic,
+                'title': topic.title(self.language),
+                'url': url,
+                'featured_answers': featured_answers,
+            })
         return portal_cards
 
     def get_context(self, request, *args, **kwargs):
