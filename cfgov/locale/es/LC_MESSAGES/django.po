@@ -78,8 +78,14 @@ msgstr "Leer más"
 msgid "Hide full answer"
 msgstr "Esconder la respuesta completa"
 
-msgid "Explore related resources"
-msgstr "Otros recursos"
+msgid "Browse related questions"
+msgstr "Otras preguntas"
+
+msgid "Take the next step"
+msgstr "Dar el siguiente paso"
+
+msgid "Learn more about"
+msgstr "Aprender más sobre"
 
 msgid "Related questions"
 msgstr "Otras preguntas"
@@ -126,6 +132,10 @@ msgstr "Busca de"
 msgid "Browse questions by category"
 msgstr "Examinar las preguntas por categoría"
 
+#: cfgov/jinja2/v1/_includes/ask/tip.html
+msgid "Tip"
+msgstr "Consejo"
+
 #: cfgov/jinja2/v1/_includes/blocks/feedback.html
 msgid "Was this answer helpful to you?"
 msgstr "¿Te resultó útil esta respuesta?"
@@ -154,6 +164,9 @@ msgstr "¿No encuentra lo que busca?"
 
 msgid "Search for your question."
 msgstr "Busca su pregunta."
+
+msgid "<h3>Search for your question</h3>"
+msgstr "<h3>Busca su pregunta</h3>"
 
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"

@@ -1,0 +1,27 @@
+{# ==========================================================================
+
+   Content block
+
+   ==========================================================================
+
+   Description:
+
+   Outputs the blocks from an Ask content streamfield:
+
+   value: List of blocks from a Streamfield block.
+
+   ========================================================================== #}
+
+{% for block in value %}
+    {% if block.block_type == 'tip' %}
+    <div class="inset-row">
+    {% endif %}
+    {% if block.block_type == 'text' %}
+        {{ block.value.content | richtext | safe }}
+    {% else %}
+        {% include_block block %}
+    {% endif %}
+    {% if loop.index > 1 and page.answer_content[loop.index - 2].block_type == 'tip' %}
+    </div>
+    {% endif %}
+{% endfor %}

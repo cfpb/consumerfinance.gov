@@ -1,0 +1,22 @@
+{# ==========================================================================
+
+   Tip block
+
+   ==========================================================================
+
+   Description:
+
+   Implements inset molecule with static 'Tip' header.
+
+   value: Object defined from a Streamfield block.
+
+   value.content: 	  			Tip text
+
+   ========================================================================== #}
+
+
+<div class="m-inset 
+            m-inset__bordered">
+	<h4>{{ _('Tip') }}</h4>
+	{{ value.content | richtext | safe }}
+</div>
