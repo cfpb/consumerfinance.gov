@@ -26,7 +26,8 @@ from regulations3k.models.django import (
 from regulations3k.models.pages import (
     RegulationLandingPage, RegulationPage, RegulationsSearchPage,
     get_next_section, get_previous_section, get_secondary_nav_items,
-    get_section_url, validate_num_results, validate_page_number
+    get_section_url, validate_num_results, validate_order,
+    validate_page_number, validate_regs_list
 )
 
 
@@ -654,6 +655,12 @@ class RegModelTests(DjangoTestCase):
         test_context = self.reg_page.get_context(self.get_request())
         self.assertEqual(test_context['num_versions'], 2)
 
+    def test_validate_order(self):
+        request = HttpRequest()
+        self.assertEqual(validate_order(request), 'relevance')
+        request.GET.update({'order': 'regulation'})
+        self.assertEqual(validate_order(request), 'regulation')
+
 
 class SectionNavTests(unittest.TestCase):
 
@@ -711,3 +718,16 @@ class SectionNavTests(unittest.TestCase):
         request = HttpRequest()
         request.GET.update({'results': '10'})
         self.assertEqual(validate_num_results(request), 25)
+
+    def test_validate_regs_input_list(self):
+        request = HttpRequest()
+        request.GET.update(QueryDict('regs=one&regs=2&regs=three33'))
+        self.assertEqual(validate_regs_list(request), ['one', '2', 'three33'])
+        request2 = HttpRequest()
+        request2.GET.update(QueryDict('regs=1@#$5567'))
+        self.assertEqual(validate_regs_list(request2), [])
+        request3 = HttpRequest()
+        request3.GET.update(QueryDict('regs=one&regs=734^*^&regs=2'))
+        self.assertEqual(validate_regs_list(request3), ['one', '2'])
+        request4 = HttpRequest()
+        self.assertEqual(validate_regs_list(request4), [])
