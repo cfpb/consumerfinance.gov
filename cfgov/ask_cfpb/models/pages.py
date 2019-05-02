@@ -193,13 +193,39 @@ class AnswerLandingPage(LandingPage):
 
     objects = CFGOVPageManager()
 
-    def get_context(self, request, *args, **kwargs):
+    def get_portal_cards(self):
+        """Return an array of dictionaries used to populate portal cards."""
+        portal_cards = []
         topic_pages = PortalSearchPage.objects.filter(
             language=self.language,
             live=True
         ).order_by('portal_topic__heading')
+        for topic_page in topic_pages:
+            topic = topic_page.portal_topic
+            featured_answers = topic.featured_answers(self.language)
+            # Only include a portal if it has featured answers
+            if featured_answers:
+                # If a live portal page exists, link to that
+                portal_page = topic.portal_pages.filter(
+                    language=self.language,
+                    live=True).first()
+                if portal_page:
+                    url = portal_page.url
+                # Otherwise, link to the topic "see all" page
+                else:
+                    url = topic_page.url
+                portal_cards.append({
+                    'topic': topic,
+                    'title': topic.title(self.language),
+                    'url': url,
+                    'featured_answers': featured_answers,
+                })
+        return portal_cards
+
+    def get_context(self, request, *args, **kwargs):
+        from v1.models.sublanding_page import SublandingPage
         context = super(AnswerLandingPage, self).get_context(request)
-        context['topic_pages'] = topic_pages
+        context['portal_cards'] = self.get_portal_cards()
         context['about_us'] = get_standard_text(self.language, 'about_us')
         context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
         return context
