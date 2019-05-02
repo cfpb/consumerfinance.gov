@@ -115,57 +115,40 @@
     }
 
     .answer-text {
-        .inset-row + h2,
-        .inset-row + h3,
-        .inset-row + h4,
-        .rich-text + h2,
-        .rich-text + h3,
-        .rich-text + h4,
-        .rich-text + .rich-text h2,
-        .rich-text + .rich-text h3,
-        .inset-row + .rich-text h2,
-        .inset-row + .rich-text h3,
-        .rich-text + .inset-row .rich-text h2,
-        .rich-text + .inset-row .rich-text h3,
-        .inset-row + .inset-row .rich-text h2,
-        .inset-row + .inset-row .rich-text h3 {
+        h2,
+        h3,
+        h4 {
             margin-top: 30px;
-        } 
+        }
 
         .respond-to-min(@bp-sm-min, {
-            .inset-row + h2,
-            .rich-text + h2,
-            .rich-text + .rich-text h2,
-            .inset-row + .rich-text h2,
-            .rich-text + .inset-row .rich-text h2,
-            .inset-row + .inset-row .rich-text h2,
-            .o-table + h2,
-            .video-player + h2,
-            .o-table + .rich-text h2,
-            .video-player + .rich-text h2,
-            .o-table + .inset-row .rich-text h2,
-            .video-player + .inset-row .rich-text h2 {
+            h2 {
                 margin-top: 45px;
             }
         });
 
-        .rich-text + .o-table,
-        .video-player + .o-table,
-        .inset-row + .o-table,
-        .rich-text + .video-player,
-        .video-player + .video-player,
-        .inset-row + .video-player {
-            margin-top: 30px;
-        }
-         
-        .o-table,
-        .video-player {
-            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        .o-table:not(:first-child),
+        .video-player:not(:first-child) {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
         }
 
-        & > .o-table:last-child,
-        & > .video-player:last-child {
-            margin-bottom: 0;
+        .m-inset h4,
+        & > .inset-row:first-child .rich-text h2:first-child,
+        & > .inset-row:first-child .rich-text h3:first-child,
+        & > .rich-text:first-child h2:first-child,
+        & > .rich-text:first-child h3:first-child,
+        & > h2:first-child,
+        & > h3:first-child,
+        & > h4:first-child,
+        h2 + .o-table,
+        h3 + .o-table,
+        h4 + .o-table {
+            margin-top: 0 !important;
+        }
+         
+        .o-table:not(:last-child),
+        .video-player:not(:last-child) {
+            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
         }
     }   
 
