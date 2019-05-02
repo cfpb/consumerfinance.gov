@@ -4568,15 +4568,14 @@ gulp-sourcemaps@2.6.5:
     strip-bom-string "1.X"
     through2 "2.X"
 
-gulp-uglify-es@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/gulp-uglify-es/-/gulp-uglify-es-1.0.4.tgz#59ee0d5ea98c1e09c6eaa58c8b018a6ad33f48d4"
-  integrity sha512-UMRufZsBmQizCYpftutaiVoLswpbzFEfY90EJLU4YlTgculeHnanb794s88TMd5tpCZVC638sAX6JrLVYTP/Wg==
+gulp-terser@1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/gulp-terser/-/gulp-terser-1.1.7.tgz#b011c05cc05661c3d2b629d114f419a90622462e"
+  integrity sha512-u577eHpz9zHaO7SiJJM5Rd1deBJastfNJ41pSfUpTagOtCommfDq00VK4JPwwTkQ++IGJbkFBen1C+vDxTO9gg==
   dependencies:
-    o-stream "^0.2.2"
     plugin-error "^1.0.1"
-    terser "^3.7.5"
-    vinyl "^2.1.0"
+    terser "^3.14.1"
+    through2 "^3.0.0"
     vinyl-sourcemaps-apply "^0.2.1"
 
 gulp@4.0.0:
@@ -7206,11 +7205,6 @@ nwsapi@^2.0.7:
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.1.3.tgz#25f3a5cec26c654f7376df6659cdf84b99df9558"
   integrity sha512-RowAaJGEgYXEZfQ7tvvdtAQUKPyTR6T6wNu0fwlNsGQYr/h3yQc6oI8WnVZh3Y/Sylwc+dtAlvPqfFZjhTyk3A==
 
-o-stream@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/o-stream/-/o-stream-0.2.2.tgz#7fe03af870b8f9537af33b312b381b3034ab410f"
-  integrity sha512-V3j76KU3g/Gyl8rpdi2z72rn5zguMvTCQgAXfBe3pxEefKqXmOUOD7mvx/mNjykdxGqDVfpSoo8r+WdrkWg/1Q==
-
 oauth-sign@~0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.9.0.tgz#47a7b016baa68b5fa0ecf3dee08a85c679ac6455"
@@ -9593,7 +9587,7 @@ term-size@^1.2.0:
   dependencies:
     execa "^0.7.0"
 
-terser-webpack-plugin@^1.1.0:
+terser-webpack-plugin@1.2.3, terser-webpack-plugin@^1.1.0:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/terser-webpack-plugin/-/terser-webpack-plugin-1.2.3.tgz#3f98bc902fac3e5d0de730869f50668561262ec8"
   integrity sha512-GOK7q85oAb/5kE12fMuLdn2btOS9OBZn4VsecpHDywoUC/jLhSAKOiYo0ezx7ss2EXPMzyEWFoE0s1WLE+4+oA==
@@ -9607,7 +9601,7 @@ terser-webpack-plugin@^1.1.0:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
-terser@^3.16.1, terser@^3.7.5:
+terser@^3.14.1, terser@^3.16.1:
   version "3.17.0"
   resolved "https://registry.yarnpkg.com/terser/-/terser-3.17.0.tgz#f88ffbeda0deb5637f9d24b0da66f4e15ab10cb2"
   integrity sha512-/FQzzPJmCpjAH9Xvk2paiWrFq+5M6aVOf+2KRbwhByISDX/EujxsK+BAvrhb6H+2rtrLCHK9N01wO014vrIwVQ==
@@ -9686,7 +9680,7 @@ through2@3.0.0:
     readable-stream "2 || 3"
     xtend "~4.0.1"
 
-through2@3.0.1, through2@^3.0.1:
+through2@3.0.1, through2@^3.0.0, through2@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/through2/-/through2-3.0.1.tgz#39276e713c3302edf9e388dd9c812dd3b825bd5a"
   integrity sha512-M96dvTalPT3YbYLaKaCuwu+j06D/8Jfib0o/PxbVt6Amhv3dUAtW6rTV1jPgJSBG83I/e04Y6xkVdVhSRhi0ww==
@@ -9957,20 +9951,6 @@ uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
   integrity sha1-bgkk1r2mta/jSeOabWMoUKD4grc=
-
-uglifyjs-webpack-plugin@1.2.7:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.7.tgz#57638dd99c853a1ebfe9d97b42160a8a507f9d00"
-  integrity sha512-1VicfKhCYHLS8m1DCApqBhoulnASsEoJ/BvpUpP4zoNAPpKzdH+ghk0olGJMmwX2/jprK2j3hAHdUbczBSy2FA==
-  dependencies:
-    cacache "^10.0.4"
-    find-cache-dir "^1.0.0"
-    schema-utils "^0.4.5"
-    serialize-javascript "^1.4.0"
-    source-map "^0.6.1"
-    uglify-es "^3.3.4"
-    webpack-sources "^1.1.0"
-    worker-farm "^1.5.2"
 
 uglifyjs-webpack-plugin@^1.2.4:
   version "1.3.0"
