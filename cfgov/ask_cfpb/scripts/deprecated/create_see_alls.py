@@ -30,63 +30,70 @@ PARENT_PAGE_MAP = {
                     'overview': 'A la hora de elegir y utilizar sus cuentas en un banco o cooperativa de crédito, es importante que conozca sus opciones.',  # noqa
                     "portal_topic_id": 2}},
             {
-                    'pk': None,
+                'pk': None,
                 'title': 'Tarjetas de crédito',
                 'child': {
                     'title': 'Tarjetas de crédito respuestas',
                     'overview': '',
                     "portal_topic_id": 3}},
             {
-                    'pk': None,
+                'pk': None,
                 'title': 'Informes y puntajes de crédito',
                 'child': {
                     'title': 'Informes y puntajes de crédito respuestas',
                     'overview': '',  # noqa
                     "portal_topic_id": 4}},
             {
-                    'pk': None,
+                'pk': None,
                 'title': 'Cobro de deudas',
                 'child': {
                     'title': 'Cobro de deudas respuestas',
                     'overview': '',  # noqa
                     "portal_topic_id": 5}},
             {
-                    'pk': None,
+                'pk': None,
                 'title': 'Fraudes y estafas',
                 'child': {
                     'title': 'Fraudes y estafas respuestas',
                     'overview': 'Perder dinero o propiedad a causa de estafas y fraudes puede ser devastador. Nuestros recursos pueden ayudarle a reconocer, evitar e informar sobre estafas y fraudes.',  # noqa
                     "portal_topic_id": 7}},
             {
-                    'pk': None,
+                'pk': None,
                 'title': 'Transferencias de dinero',
                 'child': {
                     'title': 'Transferencias de dinero respuestas',
                     'overview': '',
                     "portal_topic_id": 8}},
             {
-                    'pk': None,
+                'pk': None,
                 'title': 'Hipotecas',
                 'child': {
                     'title': 'Hipotecas respuestas',
                     'overview': 'Ya sea que usted esté pensando en comprar una vivienda, tenga un préstamo hipotecario, o problemas para pagar su hipoteca, tenemos los recursos para ayudarle en todo momento.',  # noqa
                     "portal_topic_id": 9}},
             {
-                    'pk': None,
+                'pk': None,
+                'title': 'Préstamos del día de pago',
+                'child': {
+                    'title': 'Préstamos del día de pago respuestas',
+                    'overview': '',  # noqa
+                    "portal_topic_id": 10}},
+            {
+                'pk': None,
                 'title': 'Tarjetas prepagadas',
                 'child': {
                     'title': 'Tarjetas prepagadas respuestas',
                     'overview': '',  # noqa
                     "portal_topic_id": 11}},
             {
-                    'pk': None,
+                'pk': None,
                 'title': 'Hipotecas inversas',
                 'child': {
                     'title': 'Hipotecas inversas respuestas',
                     'overview': '',
                     "portal_topic_id": 12}},
             {
-                    'pk': None,
+                'pk': None,
                 'title': 'Préstamos estudiantiles',
                 'child': {
                     'title': 'Préstamos estudiantiles respuestas',
@@ -154,6 +161,13 @@ PARENT_PAGE_MAP = {
                     'title': 'Mortgage answers',
                     "overview": "Whether you are getting a mortgage, having trouble paying your mortgage, or want to learn about reverse mortgages, we have answers to your questions.",  # noqa
                     "portal_topic_id": 9}},
+            {
+                'pk': None,
+                'title': 'Payday loans',
+                'child': {
+                    'title': 'Payday loan answers',
+                    'overview': '',  # noqa
+                    "portal_topic_id": 10}},
             {
                 'pk': 12599,
                 'title': 'Prepaid cards',
