@@ -70,10 +70,6 @@ module.exports = {
       './config/**/*.js',
       './gulp/**/*.js'
     ],
-    otherBuildTriggerFilesKBSpanish: [
-      paths.legacy + '/knowledgebase/**/*.css',
-      paths.legacy + '/knowledgebase/**/*.less'
-    ],
     otherBuildTriggerFilesNemo: [
       paths.legacy + '/nemo/**/*.css',
       paths.legacy + '/nemo/**/*.less'
