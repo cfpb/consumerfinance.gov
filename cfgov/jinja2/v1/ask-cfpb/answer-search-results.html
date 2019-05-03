@@ -1,35 +1,23 @@
 {% import 'molecules/pagination.html' as pagination with context %}
 
-{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
+{% import 'ask/ask-search.html' as ask_search_bar with context %}
 
-{% extends 'layout-side-nav.html' %}
+{% extends 'layout-2-1-bleedbar.html' %}
 
 {% block content_modifiers -%}
-    {{ super() }} content__hide-horizontal-overflow
+    {{ super() }} ask-cfpb-page ask-cfpb-page__search
 {%- endblock %}
 
-{% block content_wrapper_modifiers -%}
-    {{ super() }} content_wrapper__full-height-left-sidebar ask-cfpb-page ask-cfpb-page__search
-{%- endblock %}
-
-{% block banner_top %}
-    {% if about_us %}
-        {% set value = {
-            'border_bottom': True,
-            'additional_classes': ' ask-cfpb-banner',
-            'content': about_us.text
-        } %}
-        {% include 'templates/content-banner.html' with context %}
-    {% endif %}
-{% endblock %}
 
 {% block content_main %}
     <div class="block
                 block__flush-top
                 u-mb15">
-        <h1>{{ _('Ask CFPB') }}</h1>
+        <h1>{{ _('Search our library of answers') }}</h1>
 
-        {{ ask_search_bar.render( 'right', '', 'block__bg-branded u-mt30 u-mb30', q=tag or page.query ) }}
+        <div class="block block__sub">
+        {{ ask_search_bar.render( q=tag or page.query, language=page.language, show_label=False, autocomplete=False ) }}
+        </div>
 
         {% if results %}
             {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
@@ -115,14 +103,25 @@
         </section>
 
         {% endif %}
-
-        {% if disclaimer %}
-        <div class="block block__flush-bottom ask-disclaimer">
-            {{ _(disclaimer.text) | safe }}
-        </div>
-        {% endif %}
     </div>
 
 {% endblock %}
 
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+<div class="block block__flush-top u-mb45 about-us-text">
+    {% if about_us %}
+        {{ about_us.text | richtext }}
+    {% endif %}
+</div>
+<div class="block block__border-top block__padded-top disclaimer-text">
+    {% if disclaimer %}
+        <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
+        {{ disclaimer.text | richtext }}
+    {% endif %}
+</div>
+{%- endblock %}
 

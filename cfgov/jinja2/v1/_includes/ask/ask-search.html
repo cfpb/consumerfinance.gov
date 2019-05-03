@@ -1,0 +1,45 @@
+{# ==========================================================================
+
+   ask_search_bar.render()
+
+   ==========================================================================
+
+   Description:
+
+   Output an ask search bar when given:
+   
+   language:      page's language
+
+   show_label:    Boolean; whether to show form label
+
+   q              The previous search query string
+
+   autocomplete:  Boolean; whether to allow autocomplete
+
+   ========================================================================== #}
+
+{% macro render(q='', language='en', show_label=True, autocomplete=True) %}
+<aside class="o-search-bar">
+    <form method="get" action="{{ _('/ask-cfpb/search') }}">
+        {% if show_label %}
+        <label for="o-search-bar_query">
+            <h3>{{ _('Search for your question') }}</h3>
+        </label>
+        {% endif %}
+        <div class="o-search-bar_input">
+            <div class="input-with-btn input-with-btn__bar">
+                <div class="input-with-btn_input 
+                            {% if autocomplete %}m-autocomplete{% endif %}"
+                      data-language="{{ language }}">
+                    <input class="a-text-input" type="text" name="q" id="o-search-bar_query" value="{{ q }}">
+                </div>
+                <div class="input-with-btn_btn">
+                    <button class="a-btn" type="submit">
+                        {{ _('Search') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</aside>
+{% endmacro %}

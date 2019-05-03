@@ -84,7 +84,14 @@ msgstr "Otros recursos"
 msgid "Related questions"
 msgstr "Otras preguntas"
 
+#: cfgov/jinja2/v1/ask-cfpb/landing-page.html
+msgid "Learn more about"
+msgstr "Sepa más sobre"
+
 #: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
+msgid "Search our library of answers"
+msgstr "Buscar en nuestra lista de respuestas"
+
 msgid "Can't find your question?"
 msgstr "¿No encuentra su pregunta?"
 
@@ -154,6 +161,9 @@ msgstr "¿No encuentra lo que busca?"
 
 msgid "Search for your question."
 msgstr "Busca su pregunta."
+
+msgid "Search for your question"
+msgstr "Busca su pregunta"
 
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"
