@@ -228,7 +228,6 @@ class AnswerLandingPage(LandingPage):
         return portal_cards
 
     def get_context(self, request, *args, **kwargs):
-        from v1.models.sublanding_page import SublandingPage
         context = super(AnswerLandingPage, self).get_context(request)
         context['portal_cards'] = self.get_portal_cards()
         context['about_us'] = get_standard_text(self.language, 'about_us')
