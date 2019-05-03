@@ -732,6 +732,10 @@ class AnswerPage(CFGOVPage):
             heading="Portal tags",
             classname="collapsible"),
         MultiFieldPanel([
+            FieldPanel('featured')],
+            heading="Featured answer on Ask landing page",
+            classname="collapsible"),
+        MultiFieldPanel([
             AutocompletePanel(
                 'redirect_to_page', page_type='ask_cfpb.AnswerPage')],
             heading="Redirect to another answer",
