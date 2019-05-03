@@ -32,6 +32,11 @@ class PortalTopic(ClusterableModel):
         help_text='Tags are used to identify and organize portal topic pages.'
     )
 
+    def featured_answers(self, language):
+        return self.answerpage_set.filter(
+            language=language,
+            featured=True).order_by('featured_rank')
+
     def title(self, language='en'):
         if language == 'es':
             return self.heading_es
