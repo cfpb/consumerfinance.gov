@@ -21,6 +21,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Deploy environment
 DEPLOY_ENVIRONMENT = os.getenv('DEPLOY_ENVIRONMENT')
 
+# In certain environments, we allow DEBUG to be enabled
+DEBUG = os.environ.get('DJANGO_DEBUG') == 'True'
+
 # signal that tells us that this is a proxied HTTPS request
 # effects how request.is_secure() responds
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
