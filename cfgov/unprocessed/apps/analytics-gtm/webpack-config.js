@@ -8,7 +8,7 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
-const COMMON_UGLIFY_CONFIG = new TerserPlugin( {
+const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   cache: true,
   parallel: true,
   terserOptions: {
@@ -64,7 +64,7 @@ const conf = {
   },
   optimization: {
     minimizer: [
-      COMMON_UGLIFY_CONFIG
+      COMMON_MINIFICATION_CONFIG
     ]
   },
   stats: STATS_CONFIG.stats
