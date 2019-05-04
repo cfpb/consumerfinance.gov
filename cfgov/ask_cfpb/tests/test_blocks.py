@@ -55,3 +55,17 @@ class ContentBlockTestCase(TestCase):
 		self.assertIn('<div class="rich-text">Tip content</div>', html)
 		self.assertIn('</aside>', html)
 		self.assertIn('<div class="rich-text">text</div></div>', html)
+
+	def test_no_wrapper_without_tip(self):
+		text = {
+			'type': 'text',
+			'value': {
+				'content': 'Test text'
+			}
+		}
+		block = AskAnswerContent()
+		value = block.to_python([text])
+		html = block.render(value)
+		self.assertNotIn('<div class="inset-row">', html)
+		self.assertNotIn('<div class="rich-text">Test text</div></div>', html)
+		self.assertIn('<div class="rich-text">Test text</div>', html)

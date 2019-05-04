@@ -8,7 +8,7 @@
     .m-notification,
     .results {
         box-sizing: border-box;
-        max-width: 41.8em;
+        max-width: 41.875rem;
     }
 
     .ask-search-link {
@@ -64,13 +64,13 @@
     }
 
     .results-link {
-        margin: 5px 0;
+        margin: unit( 5px / @base-font-size-px, em ) 0;
         display: block;
     }
 
 
     .ask-search-link {
-        margin-top: 40px;
+        margin-top: unit( 40px / @base-font-size-px, em );
     }
 
     .results {
@@ -216,7 +216,7 @@
 
     .lead-paragraph {
         // This makes for line lengths between 85-95 characters
-        max-width: 41.8em;
+        max-width: 41.875rem;
     }
 
     .answer-edited-date {
@@ -329,7 +329,7 @@
 
 .ask-cfpb-page__search {
     .o-search-bar {
-        max-width: 41.8em;
+        max-width: 41.875rem;
         .a-text-input {
             width:100%;
         }

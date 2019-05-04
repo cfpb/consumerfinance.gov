@@ -21,7 +21,7 @@
     {%- else -%}
         {%- include_block block -%}
     {%- endif -%}
-    {%- if loop.last or ( loop.index > 1 and value[loop.index - 2].block_type == 'tip' ) -%}
+    {%- if (block.block_type == 'tip' and loop.last) or ( loop.index > 1 and value[loop.index - 2].block_type == 'tip' ) -%}
     </div>
     {%- endif -%}
 {%- endfor -%}
