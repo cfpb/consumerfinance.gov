@@ -156,7 +156,23 @@
         h4 + .o-table {
             margin-top: 0 !important;
         }
-    }   
+    }  
+
+    .respond-to-max(@bp-xs-max, {
+        .inset-row {
+            display: flex;
+            flex-direction: column-reverse;
+
+            .m-inset {
+                margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            }
+        }
+
+        .next-steps,
+        .related-questions {
+            margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+        }
+    }); 
 
     .about-us-text,
     .disclaimer-text {

@@ -70,7 +70,7 @@
                 </button>
             </div>
         {% if page.related_resource and page.language != 'es' %}
-            <div class="block">
+            <div class="block next-steps">
                 <div class="o-well">
                 <h2 class="u-mb15">
                     {{ _('Take the next step') }}
@@ -81,7 +81,7 @@
             </div>
         {% endif %}
         
-        <div class="block">
+        <div class="block related-questions">
             <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
             {% if page.language != 'es' and related_questions %}
             <div class="block block__sub">
