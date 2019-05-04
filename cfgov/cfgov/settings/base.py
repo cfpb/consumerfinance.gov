@@ -647,10 +647,6 @@ FLAGS = {
         {'condition': 'boolean', 'value': False}
     ],
 
-    # IA changes to mega menu for user testing
-    # When enabled, the mega menu under "Consumer Tools" is arranged by topic
-    'IA_USER_TESTING_MENU': [],
-
     # Fix for margin-top when using the text inset
     # When enabled, the top margin of full-width text insets is increased
     'INSET_TEST': [],
