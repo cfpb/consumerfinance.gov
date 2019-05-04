@@ -717,7 +717,10 @@ FLAGS = {
     'HMDA_OUTAGE': [
         {'condition': 'parameter', 'value': 'hmda-outage', 'required': True},
         {'condition': 'path matches', 'value': r'^/data-research', 'required': True}
-    ]
+    ],
+    
+    #Add HowTo schema markup to answer page
+    'HOW_TO_SCHEMA': []
 }
 
 
