@@ -12,16 +12,16 @@
 
    ========================================================================== #}
 
-{%- for block in value -%}
-    {%- if block.block_type == 'tip' -%}
+{% for block in value %}
+    {% if block.block_type == 'tip' %}
     <div class="inset-row">
-    {%- endif -%}
-    {%- if block.block_type == 'text' -%}
+    {% endif %}
+    {% if block.block_type == 'text' %}
         {{ block.value.content | richtext | safe }}
-    {%- else -%}
-        {%- include_block block -%}
-    {%- endif -%}
-    {%- if (block.block_type == 'tip' and loop.last) or ( loop.index > 1 and value[loop.index - 2].block_type == 'tip' ) -%}
+    {% else %}
+        {% include_block block %}
+    {% endif %}
+    {% if (block.block_type == 'tip' and loop.last) or ( loop.index > 1 and value[loop.index - 2].block_type == 'tip' ) %}
     </div>
-    {%- endif -%}
-{%- endfor -%}
+    {% endif %}
+{% endfor %}
