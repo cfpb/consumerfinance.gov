@@ -651,10 +651,6 @@ FLAGS = {
     # When enabled, the top margin of full-width text insets is increased
     'INSET_TEST': [],
 
-    # When enabled, serves `/es/` pages from this
-    # repo ( excluding /obtener-respuestas/ pages ).
-    'ES_CONV_FLAG': [],
-
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': [],
 
