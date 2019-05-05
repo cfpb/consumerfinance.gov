@@ -669,9 +669,6 @@ FLAGS = {
     # Search.gov API-based site-search
     'SEARCH_DOTGOV_API': [],
 
-    # The release of the new Financial Coaching pages
-    'FINANCIAL_COACHING': [],
-
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
     'TURBOLINKS': [],
