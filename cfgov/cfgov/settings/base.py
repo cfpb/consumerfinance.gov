@@ -676,8 +676,6 @@ FLAGS = {
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': [('environment is', 'production')],
 
-    'LEGACY_HUD_API': [('environment is', 'production')],
-
     # SPLIT TESTING FLAGS
 
     # Ask CFPB page titles as H1s instead of H2s
