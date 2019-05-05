@@ -654,9 +654,6 @@ FLAGS = {
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': [],
 
-    # To be enabled when mortgage-performance data visualizations go live
-    'MORTGAGE_PERFORMANCE_RELEASE': [],
-
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
