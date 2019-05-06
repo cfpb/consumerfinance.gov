@@ -513,9 +513,31 @@ class AnswerPageTestCase(TestCase):
         self.test_image = mommy.make(CFGOVImage)
         self.test_image2 = mommy.make(CFGOVImage)
         self.next_step = mommy.make(NextStep, title='stub_step')
+        self.portal_topic = mommy.make(
+            PortalTopic,
+            heading='test topic',
+            heading_es='prueba tema')
         page_clean = mock.patch('ask_cfpb.models.pages.CFGOVPage.clean')
         page_clean.start()
         self.addCleanup(page_clean.stop)
+        self.portal_page = SublandingPage(
+            title='test portal page',
+            slug='test-portal-page',
+            portal_topic=self.portal_topic,
+            language='en'
+        )
+        ROOT_PAGE.add_child(instance=self.portal_page)
+        self.portal_page.save()
+        self.portal_page.save_revision().publish()
+        self.portal_page_es = SublandingPage(
+            title='test portal page',
+            slug='test-portal-page-es',
+            portal_topic=self.portal_topic,
+            language='es'
+        )
+        ROOT_PAGE.add_child(instance=self.portal_page_es)
+        self.portal_page_es.save()
+        self.portal_page_es.save_revision().publish()
         self.english_parent_page = get_or_create_page(
             apps,
             'ask_cfpb',
@@ -872,14 +894,12 @@ class AnswerPageTestCase(TestCase):
         category = self.category
         self.assertEqual(category.__str__(), category.name)
 
-    def test_category_featured_answers(self):
-        category = self.category
+    def test_portal_topic_featured_answers(self):
         page = self.page1
-        page.category.add(category)
+        page.portal_topic.add(self.portal_topic)
         page.featured = True
         page.save_revision().publish()
-        category.save()
-        self.assertIn(page, category.featured_answers('en'))
+        self.assertIn(page, self.portal_topic.featured_answers('en'))
 
     def test_subcategory_str(self):
         subcategory = self.subcategories[0]
@@ -983,16 +1003,64 @@ class AnswerPageTestCase(TestCase):
             test_context['choices'].count(),
             self.category.subcategories.count())
 
-    def test_landing_page_context(self):
+    def test_landing_page_context_no_featured_answer(self):
+        page = self.page1
+        page.portal_topic.add(self.portal_topic)
+        page.featured = False
+        page.save_revision().publish()
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
         mock_request = HttpRequest()
         mock_request.site = mock_site
         landing_page = self.english_parent_page
         test_context = landing_page.get_context(mock_request)
+        self.assertEqual(len(test_context['portal_cards']), 0)
+
+    def test_landing_page_context(self):
+        page = self.page1
+        page.portal_topic.add(self.portal_topic)
+        page.featured = True
+        page.save_revision().publish()
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        landing_page = self.english_parent_page
+        test_context = landing_page.get_context(mock_request)
+        self.assertEqual(len(test_context['portal_cards']), 1)
         self.assertEqual(
-            test_context['categories'].count(),
-            Category.objects.count())
+            test_context['portal_cards'][0]['title'],
+            'test topic')
+
+    def test_spanish_landing_page_context(self):
+        page = self.page1_es
+        page.portal_topic.add(self.portal_topic)
+        page.featured = True
+        page.save_revision().publish()
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        landing_page = self.spanish_parent_page
+        test_context = landing_page.get_context(mock_request)
+        self.assertEqual(len(test_context['portal_cards']), 1)
+        self.assertEqual(
+            test_context['portal_cards'][0]['title'],
+            'prueba tema')
+
+    def test_landing_page_context_draft_portal_page(self):
+        page = self.page1
+        page.portal_topic.add(self.portal_topic)
+        page.featured = True
+        page.save_revision().publish()
+        self.portal_page.unpublish()
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        landing_page = self.english_parent_page
+        test_context = landing_page.get_context(mock_request)
+        self.assertEqual(len(test_context['portal_cards']), 0)
 
     def test_category_page_add_js_function(self):
         cat_page = self.create_category_page(ask_category=self.category)
