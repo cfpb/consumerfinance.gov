@@ -3,7 +3,7 @@
    ========================================================================== */
 
 const paths = require( '../../../../config/environment' ).paths;
-const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
+const TerserPlugin = require( 'terser-webpack-plugin' );
 const fs = require( 'fs' );
 const path = require( 'path' );
 const fancyLog = require( 'fancy-log' );
@@ -21,10 +21,10 @@ const MANIFEST_DEST = `${ paths.processed }/apps/${ APP_NAME }/${ MANIFEST_FILEN
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
-const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
+const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   cache: true,
   parallel: true,
-  uglifyOptions: {
+  terserOptions: {
     ie8: false,
     ecma: 5,
     warnings: false,
@@ -114,9 +114,11 @@ const conf = {
     filename: '[name]',
     jsonpFunction: 'apps'
   },
-  plugins: [
-    COMMON_UGLIFY_CONFIG
-  ],
+  optimization: {
+    minimizer: [
+      COMMON_MINIFICATION_CONFIG
+    ]
+  },
   resolve: {
     symlinks: false
   },

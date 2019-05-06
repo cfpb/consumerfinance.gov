@@ -40,7 +40,7 @@ const COMMON_MODULE_CONFIG = {
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
-const COMMON_UGLIFY_CONFIG = new TerserPlugin( {
+const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   cache: true,
   parallel: true,
   terserOptions: {
@@ -74,7 +74,7 @@ const commonConf = {
   },
   optimization: {
     minimizer: [
-      COMMON_UGLIFY_CONFIG
+      COMMON_MINIFICATION_CONFIG
     ]
   },
   resolve: {
@@ -92,7 +92,7 @@ const externalConf = {
   },
   optimization: {
     minimizer: [
-      COMMON_UGLIFY_CONFIG
+      COMMON_MINIFICATION_CONFIG
     ]
   },
   resolve: {
@@ -113,7 +113,7 @@ const modernConf = {
   ],
   optimization: {
     minimizer: [
-      COMMON_UGLIFY_CONFIG
+      COMMON_MINIFICATION_CONFIG
     ]
   },
   resolve: {
@@ -142,7 +142,7 @@ const appsConf = {
   ],
   optimization: {
     minimizer: [
-      COMMON_UGLIFY_CONFIG
+      COMMON_MINIFICATION_CONFIG
     ]
   },
   resolve: {
@@ -160,7 +160,7 @@ const spanishConf = {
   },
   optimization: {
     minimizer: [
-      COMMON_UGLIFY_CONFIG
+      COMMON_MINIFICATION_CONFIG
     ]
   },
   resolve: {
