@@ -650,27 +650,12 @@ FLAGS = {
         {'condition': 'boolean', 'value': False}
     ],
 
-    # When enabled, use Wagtail for /company-signup/
-    # (instead of selfregistration app)
-    'WAGTAIL_COMPANY_SIGNUP': [],
-
-    # IA changes to mega menu for user testing
-    # When enabled, the mega menu under "Consumer Tools" is arranged by topic
-    'IA_USER_TESTING_MENU': [],
-
     # Fix for margin-top when using the text inset
     # When enabled, the top margin of full-width text insets is increased
     'INSET_TEST': [],
 
-    # When enabled, serves `/es/` pages from this
-    # repo ( excluding /obtener-respuestas/ pages ).
-    'ES_CONV_FLAG': [],
-
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': [],
-
-    # To be enabled when mortgage-performance data visualizations go live
-    'MORTGAGE_PERFORMANCE_RELEASE': [],
 
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
@@ -687,17 +672,12 @@ FLAGS = {
     # Search.gov API-based site-search
     'SEARCH_DOTGOV_API': [],
 
-    # The release of the new Financial Coaching pages
-    'FINANCIAL_COACHING': [],
-
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
     'TURBOLINKS': [],
 
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': [('environment is', 'production')],
-
-    'LEGACY_HUD_API': [('environment is', 'production')],
 
     # SPLIT TESTING FLAGS
 
