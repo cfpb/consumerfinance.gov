@@ -37,60 +37,61 @@
 {%- endblock %}
 
 {% block content_main %}
-    <div class="block
-                block__flush-top
-                block__sub">
-        {% if last_edited %}
-        <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
-        {% endif %}
-
-    {% if flag_enabled('ASK_CFPB_H1', page=page) %}
-        <h1 class="h2">{{ page.question | striptags }}</h1>
-    {% else %}
-        <h2>{{ page.question | striptags }}</h2>
-    {% endif %}
-    </div>
-
-    <div class="block
-                block__flush-top">
-        {% if page.short_answer %}
-            <h3 class="answer-snippet">
-                {{ page.short_answer | richtext | safe }}
-            </h3>
-        {% endif %}
-        <div data-qa-hook="expandable"
-             data-read-more="true"
-             class="o-expandable
-                    o-expandable__read-more">
-            <div class="o-expandable_content" id="answer-content">
-                <div class="answer-text">
-                    {{ page.answer | richtext | safe }}
-                </div>
-                {# This brings in the feedback module #}
-                {% for block in page.user_feedback %}
-                    {{- form_block.render(block, 'user_feedback', loop.index0) -}}
-                {% endfor %}
-                {% if disclaimer %}
-                <div class="block block__flush-bottom ask-disclaimer">
-                    {{ disclaimer.text | safe }}
-                </div>
-                {% endif %}
-            </div>
-            <button class="o-expandable_header o-expandable_target"
-                    title="Expand content">
-                <span class="o-expandable_link">
-                    <span class="o-expandable_cue o-expandable_cue-open">
-                        {{ _('Read full answer') }}
-                        {{ svg_icon('plus-round') }}
-                   </span>
-                    <span class="o-expandable_cue o-expandable_cue-close">
-                        {{ _('Hide full answer') }}
-                        {{ svg_icon('minus-round') }}
-                   </span>
-                </span>
-            </button>
+    <div {% if flag_enabled('HOW_TO_SCHEMA', request) %}
+            itemscope=""
+            itemtype="http://schema.org/HowTo"
+            {% endif %}>
+        <div class="block
+                    block__flush-top
+                    block__sub">
+            {% if last_edited %}
+            <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
+            {% endif %}
+            <h1 {% if flag_enabled('HOW_TO_SCHEMA', request) %}itemprop="name"{% endif %}>
+                {{ page.question | striptags }}
+            </h1>
         </div>
+        <div class="block
+                    block__flush-top">
+            {% if page.short_answer %}
+                <h3 class="answer-snippet">
+                    {{ page.short_answer | richtext | safe }}
+                </h3>
+            {% endif %}
+            <div data-qa-hook="expandable"
+                 data-read-more="true"
+                 class="o-expandable
+                        o-expandable__read-more">
+                <div class="o-expandable_content" id="answer-content">
+                    <div class="answer-text">
+                        {{ page.answer | richtext | safe }}
+                    </div>
+                    {# This brings in the feedback module #}
+                    {% for block in page.user_feedback %}
+                        {{- form_block.render(block, 'user_feedback', loop.index0) -}}
+                    {% endfor %}
+                    {% if disclaimer %}
+                    <div class="block block__flush-bottom ask-disclaimer">
+                        {{ disclaimer.text | safe }}
+                    </div>
+                    {% endif %}
+                </div>
+                <button class="o-expandable_header o-expandable_target"
+                        title="Expand content">
+                    <span class="o-expandable_link">
+                        <span class="o-expandable_cue o-expandable_cue-open">
+                            {{ _('Read full answer') }}
+                            {{ svg_icon('plus-round') }}
+                       </span>
+                        <span class="o-expandable_cue o-expandable_cue-close">
+                            {{ _('Hide full answer') }}
+                            {{ svg_icon('minus-round') }}
+                       </span>
+                    </span>
+                </button>
+            </div>
 
+        </div>
     </div>
     {{ ask_search_bar.render( 'left' ) }}
 
