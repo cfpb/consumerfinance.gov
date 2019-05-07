@@ -703,7 +703,8 @@ FLAGS = {
     ],
     
     # Add HowTo schema markup to answer page
-    # Intended for use with path conditions.
+    # Intended for use with path conditions in admin for specific ask pages,
+    # such as: is enabled when path matches ^/ask-cfpb/what-is-an-ach-en-1065/
     # Delete after Google schema pilot completes and schema usage is
     # discontinued or implemented with a toggle in answer page admin.
     'HOW_TO_SCHEMA': []
