@@ -703,6 +703,9 @@ FLAGS = {
     ],
     
     # Add HowTo schema markup to answer page
+    # Intended for use with path conditions.
+    # Delete after Google schema pilot completes and schema usage is
+    # discontinued or implemented with a toggle in answer page admin.
     'HOW_TO_SCHEMA': []
 }
 
