@@ -64,7 +64,7 @@
         {% if value.category %}
             <div class="a-heading a-heading__icon">
                 {{ category_icon.render( fcm_label(value.category) ) | safe }}
-                {{ fcm_label( value.category ) }}
+                {{ _(fcm_label( value.category )) }}
             </div>
         {% endif %}
         <h2>{{ value.heading }}</h2>
