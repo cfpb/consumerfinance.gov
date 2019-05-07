@@ -719,7 +719,7 @@ FLAGS = {
         {'condition': 'path matches', 'value': r'^/data-research', 'required': True}
     ],
     
-    #Add HowTo schema markup to answer page
+    # Add HowTo schema markup to answer page
     'HOW_TO_SCHEMA': []
 }
 
