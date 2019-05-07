@@ -1192,3 +1192,15 @@ class AnswerPageTestCase(TestCase):
         request = HttpRequest()
         request.GET.update({'page': '<script>Boo</script>'})
         self.assertEqual(validate_page_number(request, paginator), 1)
+
+    def test_schema_html_does_not_appear_when_flag_is_off(self):
+        with override_settings(
+                FLAGS={'HOW_TO_SCHEMA': [('boolean', False)]}):
+            response = self.client.get(self.page1.url)
+            self.assertNotContains(response, 'itemtype="http://schema.org/HowTo"')
+
+    def test_schema_html_appears_when_flag_is_on(self):
+        with override_settings(
+                FLAGS={'HOW_TO_SCHEMA': [('boolean', True)]}):
+            response = self.client.get(self.page1.url)
+            self.assertContains(response, 'itemtype="http://schema.org/HowTo"')
