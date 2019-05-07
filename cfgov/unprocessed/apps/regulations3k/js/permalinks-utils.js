@@ -1,13 +1,17 @@
 // Array that tracks paragraph positions
 let paragraphPositions;
-const wayfinderOffset = 45;
+const regs3kMainContent = document.querySelector( '.regulations3k' );
+const regs3kWayfinder = document.querySelector( '.o-regulations-wayfinder' );
+const wayfinderOffset = 0;
+if ( regs3kWayfinder != null ) {
+  wayfinderOffset = regs3kWayfinder.scrollHeight + 10;
+}
+
 const wayfinderRegex = {
   appendixTitle: /Appendix [A-Z]/,
   title: /§ 10[0-9].\.[0-9]*/g,
   marker: /\-/g
 };
-const regs3kMainContent = document.querySelector( '.regulations3k' );
-const regs3kWayfinder = document.querySelector( '.o-regulations-wayfinder' );
 
 /**
  * scrollY - Get the Y coord of the current viewport. Older browsers don't
@@ -183,12 +187,14 @@ const updateWayfinder = function( scroll, wayfinder, mainContent ) {
       paragraphMarker = wayfinderInfo.paragraphMarker;
       sectionFormattedTitle = wayfinderInfo.formattedTitle;
       mainContent.classList.add( 'show-wayfinder' );
+      wayfinder.style.top = '0px';
       wayfinderLink.href = '#' + currentParagraph;
     } else {
       sectionFormattedTitle = '';
       paragraphMarker = '';
       wayfinderLink.href = '#';
       mainContent.classList.remove( 'show-wayfinder' );
+      wayfinder.style.top = -Math.abs( wayfinderOffset ) + 'px';
     }
 
     wayfinder.querySelector( '.o-regulations-wayfinder_section-title' ).textContent = sectionFormattedTitle;
@@ -196,14 +202,10 @@ const updateWayfinder = function( scroll, wayfinder, mainContent ) {
 
     if ( scroll === true && window.location.hash.slice( 1 ) !== '' ) {
       const elem = document.getElementById( window.location.hash.slice( 1 ) );
-      const rect = elem.getBoundingClientRect();
-      window.scrollTo( 0, window.scrollY + rect.top - 60 );
+      window.scrollTo( 0, getYLocation( elem ) - wayfinderOffset + 30 );
     }
   }
-
-  document.querySelector( '.o-regulations-wayfinder_section-title' ).textContent = sectionFormattedTitle;
-  document.querySelector( '.o-regulations-wayfinder_marker' ).textContent = paragraphMarker;
-}
+};
 
 /**
  * updateParagraphPositions - Update the array that tracks paragraph positions

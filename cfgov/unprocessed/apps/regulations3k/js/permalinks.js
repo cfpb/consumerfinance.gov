@@ -18,6 +18,10 @@ import {
   updateUrlHash,
   updateWayfinder
 } from './permalinks-utils';
+import { bindEvent } from '../../../js/modules/util/dom-events';
+import { queryOne as find } from '../../../js/modules/util/dom-traverse';
+
+const wayfinderLink = find( '.o-regulations-wayfinder_link' );
 
 /**
  * init - Initialize the permalink functionality by cataloging all paragraph
@@ -27,10 +31,18 @@ const init = () => {
   updateParagraphPositions();
   updateWayfinder( true );
 
+  bindEvent( wayfinderLink, {
+    click: event => {
+      event.preventDefault();
+      updateWayfinder( true );
+    }
+  } );
+
   debounce( 'resize', 300, updateParagraphPositions );
   debounce( 'click', 300, updateParagraphPositions );
   debounce( 'scroll', 100, updateUrlHash );
   debounce( 'scroll', 100, updateWayfinder );
+
 };
 
 // Provide the no-JS experience to browsers without `replaceState`

@@ -220,7 +220,7 @@ describe( 'The Regs3K permalinks utils', () => {
       utils.updateParagraphPositions();
       let mainContent = document.querySelector( '.regulations3k' );
       let wayfinder = document.querySelector( '.o-regulations-wayfinder' );
-      
+
       utils.updateWayfinder( false, wayfinder, mainContent );
       expect( document.querySelector( '.o-regulations-wayfinder_link' ).textContent.trim() ).toEqual( 'Comment 33(a)(2)-2' );
       expect( document.querySelector( '.o-regulations-wayfinder_link' ).href ).toEqual( 'http://localhost/#33-a-2-Interp-2' );
