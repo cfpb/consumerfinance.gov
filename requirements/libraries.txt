@@ -19,14 +19,15 @@ govdelivery==1.2
 Jinja2==2.10.1
 jsonfield==2.0.2
 lxml==4.2.5
-Markdown==2.6.11
-markdown-emdash==0.1.0
+Markdown==3.1
 ntplib==0.3.3
 openpyxl==2.5.8
 pyelasticsearch==0.6.1
 python-dateutil==2.7.3
 # PyYAML is required by college-costs
 PyYAML==3.13
+# This will change to regdown==1.0.0 before merging.
+git+https://github.com/cfpb/regdown.git#egg=regdown
 requests==2.21.0
 requests_toolbelt==0.8.0
 sha3==0.2.1
