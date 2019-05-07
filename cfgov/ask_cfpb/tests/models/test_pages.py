@@ -1197,7 +1197,10 @@ class AnswerPageTestCase(TestCase):
         with override_settings(
                 FLAGS={'HOW_TO_SCHEMA': [('boolean', False)]}):
             response = self.client.get(self.page1.url)
-            self.assertNotContains(response, 'itemtype="http://schema.org/HowTo"')
+            self.assertNotContains(
+                response,
+                'itemtype="http://schema.org/HowTo"'
+            )
 
     def test_schema_html_appears_when_flag_is_on(self):
         with override_settings(
