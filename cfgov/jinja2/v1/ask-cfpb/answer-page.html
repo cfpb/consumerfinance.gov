@@ -2,8 +2,8 @@
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
 {% import 'macros/util/format/datetime.html' as dt %}
-{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'ask/ask-search.html' as ask_search_bar with context %}
 
 {% block title %}
     {{ page.question | striptags }}
@@ -16,16 +16,6 @@
   {{- page.search_description or page.seo_title or page.short_answer|striptags -}}
 {%- endblock -%}
 
-{% block banner_top %}
-    {% if about_us %}
-        {% set value = {
-            'border_bottom': True,
-            'additional_classes': ' ask-cfpb-banner',
-            'content': about_us.text
-        } %}
-        {% include 'templates/content-banner.html' with context %}
-    {% endif %}
-{% endblock %}
 
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__answer
@@ -37,44 +27,36 @@
 {%- endblock %}
 
 {% block content_main %}
-    <div {% if flag_enabled('HOW_TO_SCHEMA', request) %}
-            itemscope=""
-            itemtype="http://schema.org/HowTo"
-            {% endif %}>
-        <div class="block
-                    block__flush-top
-                    block__sub">
-            {% if last_edited %}
-            <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
-            {% endif %}
-            <h1 {% if flag_enabled('HOW_TO_SCHEMA', request) %}itemprop="name"{% endif %}>
-                {{ page.question | striptags }}
-            </h1>
-        </div>
-        <div class="block
-                    block__flush-top">
-            {% if page.short_answer %}
-                <h3 class="answer-snippet">
-                    {{ page.short_answer | richtext | safe }}
-                </h3>
-            {% endif %}
+<div {% if flag_enabled('HOW_TO_SCHEMA', request) %}
+        itemscope=""
+        itemtype="http://schema.org/HowTo"
+     {% endif %}>
+    <div class="block
+                block__flush-top
+                block__sub">
+        {% if last_edited %}
+        <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
+        {% endif %}
+        <h1 {% if flag_enabled('HOW_TO_SCHEMA', request) %}itemprop="name"{% endif %}>
+            {{ page.question | striptags }}
+        </h1>
+    </div>
+    <div class="block
+                block__flush-top">
+        {% if page.short_answer %}
+            <div class="lead-paragraph">
+                {{ page.short_answer | richtext | safe }}
+            </div>
+        {% endif %}
+        <div class="block block__sub">
             <div data-qa-hook="expandable"
                  data-read-more="true"
                  class="o-expandable
                         o-expandable__read-more">
                 <div class="o-expandable_content" id="answer-content">
                     <div class="answer-text">
-                        {{ page.answer | richtext | safe }}
+                        {% include_block page.answer_content %}   
                     </div>
-                    {# This brings in the feedback module #}
-                    {% for block in page.user_feedback %}
-                        {{- form_block.render(block, 'user_feedback', loop.index0) -}}
-                    {% endfor %}
-                    {% if disclaimer %}
-                    <div class="block block__flush-bottom ask-disclaimer">
-                        {{ disclaimer.text | safe }}
-                    </div>
-                    {% endif %}
                 </div>
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
@@ -90,66 +72,23 @@
                     </span>
                 </button>
             </div>
-
-        </div>
-    </div>
-    {{ ask_search_bar.render( 'left' ) }}
-
-    {{ email_popup(request) }}
-{% endblock %}
-
-{% block content_sidebar_modifiers -%}
-    o-sidebar-content
-{%- endblock %}
-
-{% block content_sidebar scoped  %}
-
-    {% if page.related_resource and page.language != 'es' %}
-        <div class="block block__flush-top">
-            <h3 >
-                {{ _('Explore related resources') }}
-            </h3>
-            {{ page.related_resource.text | safe }}
-        </div>
-    {% endif %}
-    {% if page.sidebar_panels %}
-            {{ streamfield_sidefoot.render(page.sidebar) }}
-    {% endif %}
-
-    {% if category and subcategories %}
-        <div class="block {% if not page.related_resource %}block__flush-top{% endif %}">
-            <div class="m-related-links">
-                <header class="m-slug-header">
-                    <h2 class="a-heading">
-                        Related {{category.name}} subjects
-                    </h2>
-                </header>
-                <ul class="m-list m-list__unstyled m-list__links">
-                    {% for subcat in subcategories %}
-                        <li class="m-list_item">
-                            <a href="{{slugurl('category-' + subcat.parent.slug)}}{{subcat.slug}}/" class="m-list_link">
-                                {{ subcat.name }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                    <li class="m-list_item">
-                        <a class="a-btn category-button" href="{{slugurl('category-' + category.slug)}}">
-                            See all {{ category.name | lower }} questions
-                        </a>
-                    </li>
-                </ul>
+        {% if page.related_resource and page.language != 'es' %}
+            <div class="block next-steps">
+                <div class="o-well">
+                <h2 class="u-mb15">
+                    {{ _('Take the next step') }}
+                </h2>
+                <h3 class="u-mt15">{{ page.related_resource.title | safe }}</h3>
+                {{ page.related_resource.text | safe }}
+                </div>
             </div>
-        </div>
-    {% endif %}
-    
-    {% if related_questions %}
-        <div class="block{% if page.language == 'es' %} block__flush-top{% endif %}">
-            <div class="m-related-links">
-                <header class="m-slug-header">
-                    <h2 class="a-heading">
-                        {{ _('Related questions') }}
-                    </h2>
-                </header>
+        {% endif %}
+        
+        <div class="block related-questions">
+            <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
+            {% if page.language != 'es' and related_questions %}
+            <div class="block block__sub">
+                <h3>{{ _('Browse related questions') }} </h3>
                 <ul class="m-list m-list__unstyled m-list__links">
                     {% for question in related_questions %}
                     <li class="m-list_item">
@@ -158,8 +97,48 @@
                         </a>
                     </li>
                     {% endfor %}
+                    {% if category %}
+                    <li class="m-list_item m-list_item__last">
+                        <a href="{{slugurl('category-' + category.slug)}}" class="m-list_link">
+                            <b>{{ _('Learn more about') }} {{ category.name_es | lower if page.language == 'es' else category.name | lower }}</b>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
+            {% endif %}
+            <div class="block block__sub">
+                {{ ask_search_bar.render( language=page.language ) }}
+            </div>
         </div>
+        {# This brings in the feedback module #}
+        {% for block in page.user_feedback %}
+            {{- form_block.render(block, 'user_feedback', loop.index0) -}}
+        {% endfor %}
+        </div>
+
+    </div>
+</div>
+{{ email_popup(request) }}
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped  %}
+    <div class="block block__flush-top u-mb45 about-us-text">
+    {% if about_us %}
+        {{ about_us.text | richtext }}
+    {% endif %}
+    </div>
+    <div class="block block__border-top block__padded-top disclaimer-text">
+    {% if disclaimer %}
+        <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
+        {{ disclaimer.text | richtext }}
+    {% endif %}
+    </div>
+    {% if page.sidebar_panels %}
+        {{ streamfield_sidefoot.render(page.sidebar) }}
     {% endif %}
 {% endblock %}

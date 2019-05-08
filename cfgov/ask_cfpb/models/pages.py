@@ -26,6 +26,7 @@ from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
+from ask_cfpb.models import blocks as ask_blocks
 from ask_cfpb.models.search import AskSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
@@ -624,7 +625,9 @@ class AnswerPage(CFGOVPage):
             "a statement. Use only if this answer has been chosen to appear "
             "on a money topic portal (e.g. /consumer-tools/debt-collection)."))
     short_answer = RichTextField(
-        blank=True, help_text='Optional answer intro')
+        blank=True,
+        features=['link', 'document-link'],
+        help_text='Optional answer intro')
     answer = RichTextField(
         blank=True,
         features=[
@@ -640,6 +643,10 @@ class AnswerPage(CFGOVPage):
             "again to unstyle the tip."
         )
     )
+    answer_content = StreamField(
+        ask_blocks.AskAnswerContent(),
+        blank=True,
+        verbose_name='Answer')
     answer_base = models.ForeignKey(
         Answer,
         blank=True,
@@ -712,10 +719,10 @@ class AnswerPage(CFGOVPage):
             FieldPanel('last_edited'),
             FieldPanel('question'),
             FieldPanel('statement'),
-            FieldPanel('short_answer'),
-            FieldPanel('answer')],
+            FieldPanel('short_answer')],
             heading="Page content",
             classname="collapsible"),
+        StreamFieldPanel('answer_content'),
         MultiFieldPanel([
             SnippetChooserPanel('related_resource'),
             AutocompletePanel(
@@ -766,7 +773,7 @@ class AnswerPage(CFGOVPage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(sidebar_panels, heading='Sidebar (English only)'),
+        ObjectList(sidebar_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
