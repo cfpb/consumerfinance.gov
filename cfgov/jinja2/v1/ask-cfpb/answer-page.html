@@ -27,18 +27,22 @@
 {%- endblock %}
 
 {% block content_main %}
+<div {% if flag_enabled('HOW_TO_SCHEMA', request) %}
+        itemscope=""
+        itemtype="http://schema.org/HowTo"
+     {% endif %}>
     <div class="block
                 block__flush-top
                 block__sub">
         {% if last_edited %}
         <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
         {% endif %}
-        <h1>{{ page.question | striptags }}</h1>
+        <h1 {% if flag_enabled('HOW_TO_SCHEMA', request) %}itemprop="name"{% endif %}>
+            {{ page.question | striptags }}
+        </h1>
     </div>
-
     <div class="block
                 block__flush-top">
-
         {% if page.short_answer %}
             <div class="lead-paragraph">
                 {{ page.short_answer | richtext | safe }}
@@ -52,7 +56,6 @@
                 <div class="o-expandable_content" id="answer-content">
                     <div class="answer-text">
                         {% include_block page.answer_content %}   
-                        
                     </div>
                 </div>
                 <button class="o-expandable_header o-expandable_target"
@@ -115,8 +118,8 @@
         </div>
 
     </div>
-
-    {{ email_popup(request) }}
+</div>
+{{ email_popup(request) }}
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}

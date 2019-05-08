@@ -296,7 +296,7 @@ def whitelister_element_rules():
         'itemtype': True,
     })
 
-    allowed_tags = ['aside', 'h4', 'p', 'span',
+    allowed_tags = ['aside', 'h4', 'h3', 'p', 'span',
                     'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
                     'col', 'colgroup']
 

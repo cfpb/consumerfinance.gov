@@ -62,6 +62,10 @@ msgstr "No se encontraron resultados para"
 msgid "Please enter a search term in the box above."
 msgstr "Por favor escriba su búsqueda arriba"
 
+#: portals
+msgid "Featured"
+msgstr "Destacado"
+
 #: cfgov/jinja2/v1/ask-cfpb/answer-page.html
 msgid "updated"
 msgstr "actualizado"
