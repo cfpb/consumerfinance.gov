@@ -18,7 +18,8 @@ services:
     python2:
         build: 
             context: ./
-            dockerfile: ./docker/python2/Dockerfile
+            dockerfile: ./Dockerfile
+        image: python
         ports:
             - "8000:8000"
         environment:
@@ -36,9 +37,7 @@ services:
         stdin_open: true
         tty: true
     python3:
-        build: 
-            context: ./
-            dockerfile: ./docker/python2/Dockerfile
+        image: python
         ports:
             - "8333:8000"
         environment:
