@@ -2,13 +2,13 @@
 let paragraphPositions;
 const regs3kMainContent = document.querySelector( '.regulations3k' );
 const regs3kWayfinder = document.querySelector( '.o-regulations-wayfinder' );
-const wayfinderOffset = 0;
+let wayfinderOffset = 0;
 if ( regs3kWayfinder != null ) {
   wayfinderOffset = regs3kWayfinder.scrollHeight + 10;
 }
 
 const wayfinderRegex = {
-  appendixTitle: /Appendix [A-Z]/,
+  appendixTitle: /Appendix [^\s]+/,
   title: /§ 10[0-9].\.[0-9]*/g,
   marker: /\-/g
 };
