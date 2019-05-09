@@ -15,8 +15,10 @@ services:
             POSTGRES_USER: cfpb
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
-    python:
-        build: .
+    python2:
+        build: 
+            context: ./
+            dockerfile: ./docker/python2/Dockerfile
         ports:
             - "8000:8000"
         environment:
@@ -26,7 +28,27 @@ services:
             - ./develop-apps:/src/develop-apps
         entrypoint:
             - sh
-            - /src/cfgov-refresh/cfgov/entrypoint.sh
+            - /src/cfgov-refresh/docker/python2/entrypoint.sh
+        depends_on:
+            - elasticsearch
+            - postgres
+        working_dir: /src/cfgov-refresh
+        stdin_open: true
+        tty: true
+    python3:
+        build: 
+            context: ./
+            dockerfile: ./docker/python2/Dockerfile
+        ports:
+            - "8333:8000"
+        environment:
+            ES_HOST: elasticsearch
+        volumes:
+            - ./:/src/cfgov-refresh
+            - ./develop-apps:/src/develop-apps
+        entrypoint:
+            - sh
+            - /src/cfgov-refresh/docker/python3/entrypoint.sh
         depends_on:
             - elasticsearch
             - postgres
