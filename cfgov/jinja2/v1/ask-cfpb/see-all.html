@@ -10,15 +10,20 @@
     <h1>
       {{ page.title }}
     </h1>
-    {% if terms %}
+    {% if glossary_terms %}
         <div class="terms" style="max-width: 41.875rem;">
-        {% for term in terms %}
-        <div class="u-mb45 {{'u-mt45' if loop.index == 1 else 'block block__border-top block__padded-top'}}"
-             id="{{ term.anchor }}"
-             style="{{'padding-top:45px;' if loop.index != 1 else ''}}">
-        <h2>{{ term.term }}</h2>
-        <p>{{ term.definition | richtext }}</p>
-        </div>
+        {% for item in glossary_terms %}
+            {% if item.term(page.language) %}
+                <div class="u-mb45 {{'u-mt45' if loop.index == 1 else 'block block__border-top block__padded-top'}}"
+                     id="{{ item.anchor(page.language) }}"
+                     style="{{'padding-top:45px;' if loop.index != 1 else ''}}">
+                <h2>{{ item.term(page.language) }}</h2>
+                <p>{{ item.definition(page.language) | richtext }}</p>
+                {% if item.answer_page_en %}
+                <a href="{{ item.answer_page_url(page.language) }}"> {{ _('Read full answer') }} </a>
+                {% endif %}
+                </div>
+            {% endif %}
         {% endfor %}
         </div>
     {% else %}

@@ -2,12 +2,12 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
 
-from modelcluster.fields import ParentalKey
-
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
+
+from modelcluster.fields import ParentalKey
 
 from v1.atomic_elements import molecules
 # We import ReusableTextChooserBlock here because this is where it used to
@@ -87,21 +87,31 @@ class RelatedResource(index.Indexed, models.Model):
 @python_2_unicode_compatible
 @register_snippet
 class GlossaryTerm(index.Indexed, models.Model):
-    term = models.CharField(
+    term_en = models.CharField(
         max_length=255,
-    )
-    definition = RichTextField()
-    anchor = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
     )
     term_es = models.CharField(
         max_length=255,
         null=True,
         blank=True
     )
+    definition_en = RichTextField(
+        null=True,
+        blank=True
+    )
     definition_es = RichTextField(
+        null=True,
+        blank=True
+    )
+    answer_page_en = models.ForeignKey(
+        'ask_cfpb.AnswerPage',
+        related_name='glossary_terms',
+        null=True,
+        blank=True
+    )
+    answer_page_es = models.ForeignKey(
+        'ask_cfpb.AnswerPage',
+        related_name='glossary_terms_es',
         null=True,
         blank=True
     )
@@ -111,16 +121,30 @@ class GlossaryTerm(index.Indexed, models.Model):
         null=True,
         blank=True
     )
-
     search_fields = [
-        index.SearchField('term', partial_match=True),
-        index.SearchField('definition', partial_match=True),
+        index.SearchField('term_en', partial_match=True),
+        index.SearchField('definition_en', partial_match=True),
+        index.SearchField('term_es', partial_match=True),
+        index.SearchField('definition_es', partial_match=True),
     ]
 
-    def __str__(self):
-        return self.term
+    def term(self, language='en'):
+        if language == 'es':
+            return self.term_es
+        return self.term_en
 
-    def clean(self):
-        super(GlossaryTerm, self).clean()
-        if not self.anchor:
-            self.anchor = slugify(self.term)
+    def definition(self, language='en'):
+        if language == 'es':
+            return self.definition_es
+        return self.definition_en
+
+    def answer_page_url(self, language='en'):
+        if language == 'es':
+            return self.answer_page_es.url
+        return self.answer_page_en.url
+
+    def anchor(self, language='en'):
+        return slugify(self.term(language))
+
+    def __str__(self):
+        return self.term_en

@@ -406,10 +406,11 @@ class PortalSearchPage(
             'ask-cfpb/see-all.html',
             context)
 
-    def get_key_terms(self, request):
+    def get_glossary_terms(self, request):
         context = self.get_context(request)
         context.update({
-            'terms': self.portal_topic.glossary_terms.order_by('term'),
+            'glossary_terms':
+                self.portal_topic.glossary_terms.order_by('term_en'),
             'get_secondary_nav_items': self.get_nav_items,
             'heading': self.get_heading()
         })
@@ -434,7 +435,7 @@ class PortalSearchPage(
             self.portal_topic.title(self.language),
             self.portal_category.title(self.language).lower())
         if self.portal_category.heading == 'Key terms':
-            return self.get_key_terms(request)
+            return self.get_glossary_terms(request)
         else:
             self.query_base = SearchQuerySet().filter(
                 portal_topics=self.portal_topic.heading,
