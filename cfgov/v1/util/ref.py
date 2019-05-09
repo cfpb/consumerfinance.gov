@@ -262,6 +262,11 @@ def is_blog(page):
         return True
 
 
+def is_event(page):
+    if 'Event' in page.specific_class.__name__:
+        return True
+
+
 def is_report(page):
     for category in page.categories.all():
         for choice in choices_for_page_type('research-reports'):
