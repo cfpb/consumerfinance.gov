@@ -1,4 +1,22 @@
-## Usage: Stand Alone
+# Usage
+
+- [Stand Alone](#stand-alone)
+    1. [Git operations](#1-git-operations)
+        - [Updating all dependencies](#updating-all-dependencies)
+        - [Setting environments](#setting-environments)
+    2. [Run Elasticsearch (optional)](#2-run-elasticsearch-optional)
+    3. [Launch site](#3-launch-site)
+        - [Available Gulp Tasks](#available-gulp-tasks)
+- [Docker](#docker)
+    - [Environment variables](#environment-variables)
+    - [Access the containers' shell](#access-the-containers-shell)
+    - [Run management commands](#run-management-commands)
+    - [Update Python dependencies](#update-python-dependencies)
+    - [Work on satellite apps](#work-on-satellite-apps)
+    - [Attach for debugging](#attach-for-debugging)
+    - [Useful Docker commands](#useful-docker-commands)
+
+## Stand Alone
 
 You will generally have three tabs (or windows) open in your terminal,
 which will be used for:
@@ -128,133 +146,119 @@ yarn run gulp test:acceptance # Run only acceptance (in-browser) tests on produc
 yarn run gulp audit           # Run code quality audits.
 ```
 
-## Usage: Docker
+## Docker
 
-Much of the guidance above for the "stand-alone" set-up still stands, and it
-is worth reviewing in full. Here are some things that might be different:
+We use [`docker-compose`](https://docs.docker.com/compose/reference/overview/)
+to run an Elasticsearch container, a PostgreSQL container, 
+and Django in Python 2.7 and 3.6 containers. 
+There is also a container serving the documentation. 
 
-- `docker-compose` takes care of running Elasticsearch for you, and all
-Elasticsearch, Postgres, and Python output will be shown in a single Terminal
-window or tab. (wherever you run `docker-compose up`)
-- `manage.py` commands can only be run after you've opened up a terminal in the
-Python container, which you can do with `./shell.sh`
-- There is not *yet* a good way to use SSL/HTTPS, but that is in the works
-- You won't ever need to use `backend.sh` or `runserver.sh`
+All of these containers are configured in our 
+[`docker-compose.yml` file](https://github.com/cfpb/cfgov-refresh/blob/master/docker-compose.yml). 
+See the [Docker documentation](https://docs.docker.com/compose/compose-file/) 
+for more about the format and use of this file.
 
-### How do I...
+The following URLs are mapped to your host from the containers:
 
-#### Use Docker Machine
+- Python 2.7 container: http://localhost:8000/
+- Python 3.6 container: http://localhost:8333/
+- Elasticsearch: http://localhost:9200/
+- This documentation: http://localhost:8888/
 
-If you used `mac-virtualbox-init.sh`, then we used Docker Machine to create a
-VirtualBox VM, running the Docker server. Here are some useful `docker-machine`
-commands:
+To build and run the containers for the first time, run:
 
-- Start and stop the VM with  `docker-machine start` and `docker-machine stop`
-- get the current machine IP with `docker-machine ip`
-- if for some reason you want to start over, `docker-machine rm default`, and
-  `source mac-virtualbox-init.sh`
+```bash
+docker-compose up
+```
 
-To enable Docker and Docker Compose commands, you'll always first need to run
-this command in any new shell:
+### Environment variables
 
-`eval $(docker-machine env)`
+Environment variables from your `.env` file are sourced 
+when the python containers starts 
+and when you [access the running python containers](#access-the-containers-shell). 
+Your local shell environment variables, however, 
+are not visible to applications running in Docker.
+To add new environment variables, simply add them to the `.env` file, 
+stop compose with ctrl-c, 
+and start it again with `docker-compose up`.
 
-It may be helpful to run `docker-machine env` by itself, so you understand
-what's happening. Those variables are what allows `docker-compose` and the
-`docker` command line tool, running natively on your Mac, to connect to the
-Docker server running inside VirtualBox.
+### Access the containers' shell
 
-If you use autoenv (described in the stand-alone intructions) or something
-similar, you might consider adding `eval $(docker-machine env)` to your .env
-file. You could also achieve the same results (and start the VM if it's not
-running yet) with `source mac-virtualbox-init.sh`
+- Python 2.7: `docker exec -it cfgov-refresh_python2_1 bash`
+- Python 3.6: `docker exec -it cfgov-refresh_python3_1 bash`
+- Elasticsearch: `docker exec -it cfgov-refresh_elasticsearch_1 bash`
+- PostgreSQL: `docker exec -it cfgov-refresh_postgres_1 bash`
 
-Any further Docker documentation will assume you are either in a shell where
-you have already run `eval $(docker-machine env)`, or you are in an environment
-where that's not neccessary.
+### Run management commands
 
-#### Run manage.py commands like migrate, shell, and dbshell, and shell scripts like refresh-data.sh
+Django `manage.py` commands can only be run after you've 
+[opened up a shell in one of the Python containers](](#access-the-containers-shell)). 
+From there commands like `cfgov/manage.py migrate` should run as expected.
 
-run `./shell.sh` to open up a shell *inside* the Python container. From there,
-commands like `cfgov/manage.py migrate` should run as expected.
-
-The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` –
+The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` —
 they will work as expected once you're inside the container.
 
-In addition you can run single commands by passing them as arguments to
-`shell.sh`, for example:
+### Update Python dependencies
 
-`./shell.sh cfgov/manage.py migrate`
+If the Python package requirements files have changed, 
+you will need to stop `docker-compose` (if it is running) 
+and rebuild the Python containers using:
 
-#### Use PDB
+- Python 2.7: `docker-compose build python2`
+- Python 3.6: `docker-compose build python3`
 
-Run `./attach.sh` to connect to the TTY session where `manage.py runserver` is
-running. If the app is paused at a PDB prompt, this is where you can access it.
+The next time you run `docker-compose up` the new requirements will be in place.
 
-#### Handle updates to Python requirements
+### Work on satellite apps
 
-If Compose is running, stop it with CTRL-C. Run:
+If you need to work on any of our 
+[satellite apps](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt), 
+you will need to perform a `git clone` in the 
+[`develop-apps` directory](https://github.com/cfpb/cfgov-refresh/tree/master/develop-apps).
+These will automatically be added to the
+[PYTHONPATH](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH) 
+in the Python containers, 
+and apps contained within will be importable from Python running in the containers. 
 
-`docker-compose build python`
+For any satellite apps that provide front-end assets that need to be built, 
+you will need to run that step seperately.
 
-This will update your Python image. The next time you run `docker-compose up`,
-the new requirements will be in place.
+For example, to work on [college-costs](https://github.com/cfpb/college-costs):
 
-#### Set environment variables
+```bash
+# Check out into develop-apps:
+cd develop-apps
+git clone https://github.com/cfpb/college-costs
 
-Environment variables from your `.env` file are sourced when the python container
-starts and when you access a running container with `./shell.sh` Your shell
-environment variables, however, are not visible to applications running in Docker.
-To add new environment variables, simply add them to the `.env` file, stop compose
-with ctrl-c, and start it again with `docker-compose up`.
-
-#### Get familiar with Docker Compose, and our configuration
-
-docker-compose.yml contains a sort of "recipe" for running the site. Each entry
-in the Compose file describes a component of our application stack (Postgres,
-Elasticsearch, and Python), and either points to a public image on Dockerhub,
-or to a Dockerfile in cfgov-refresh. You can learn a lot more about Compose
-files in [the docs](https://docs.docker.com/compose/compose-file/)
-
-Similarly, a Dockerfile contains instructions for transforming some base image,
-to one that suits our needs. The Dockerfile sitting in the top level of
-cfgov-refresh is probably the most interesting. It starts with
-[the public CentOS:7 image](https://hub.docker.com/_/centos/), and installs
-everything else neccessary to run our Python dependencies and the Django app
-itself.  This file will only be executed:
-
-- the first time you run `docker-compose up` (or the first time after you
-re-create the Docker Machine VM)
-- any time you run `docker-compose build`
-
-That's why you need to run `docker-compose build` after any changes to
-/requirements/
-
-There are other compose subcommands you might be interested in. Consider
-[learning about](https://docs.docker.com/compose/reference/overview/)
-`build`, `restarts`, `logs`, `ps`, `top`, and the `-d` option for `up`.
-
-#### Develop satellite apps
-
-Check out any apps you are developing into the develop-apps directory. These
-will automatically be added to the
-[PYTHONPATH](https://docs.python.org/2/using/cmdline.html#envvar-PYTHONPATH),
-and apps contained within will be importable from Python running in the
-container.
-
-For example, if your app is called 'foobar', in a repo called foobar-project,
-you could clone foobar-project in to develop apps:
-
-`git clone https://github.com/myorg/foobar-project`
-
-... which will create a directory at develop-apps/foobar-project. Assuming
-'foobar' is at the top-level of 'foobar-project', you should be able to
-import it from your python code:
-
-```python
-import foobar
+# Build the front-end:
+cd college-costs
+./setup.sh
 ```
-#### runserver has crashed! How do I start it again
 
-In a separate terminal window or tab, running `docker-compose up python` should
-restart the server.
+### Attach for debugging
+
+If you have inserted a [PDB breakpoint](https://docs.python.org/3/library/pdb.html) in your code 
+and need to interact with the running Django process when the breakpoint is reached 
+you can run [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach/):
+
+- Python 2.7: `docker attach cfgov-refresh_python2_1`
+- Python 3.6: `docker attach cfgov-refresh_python3_1`
+
+When you're done, you can detach with `CTRL-p CTRL-q`.
+
+
+#### Useful Docker commands
+
+For `docker-compose` commands, 
+`[CONTAINER]` is the container name that is defined in `docker-compose.yml`. 
+
+For `docker` commands, `[CONTAINER]` is the container name displayed with `docker ps`.
+
+- [`docker ps`](https://docs.docker.com/engine/reference/commandline/ps/)
+    will list all containers.
+- [`docker logs [CONTAINER]`](https://docs.docker.com/engine/reference/commandline/logs/)
+    will print the logs of a container.
+- [`docker top [CONTAINER]`](https://docs.docker.com/engine/reference/commandline/top/)
+    will display the running processes in a container.
+- [`docker-compose build [CONTAINER]`](https://docs.docker.com/compose/reference/build/)
+    will build any of our configured containers.
