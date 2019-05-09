@@ -672,6 +672,7 @@ class RegModelTests(DjangoTestCase):
             self.effective_version
         )
 
+
 class SectionNavTests(unittest.TestCase):
 
     def test_get_next_section(self):

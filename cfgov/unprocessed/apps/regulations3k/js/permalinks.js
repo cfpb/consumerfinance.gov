@@ -30,13 +30,14 @@ const wayfinderLink = find( '.o-regulations-wayfinder_link' );
 const init = () => {
   updateParagraphPositions();
   updateWayfinder( true );
-
-  bindEvent( wayfinderLink, {
-    click: event => {
-      event.preventDefault();
-      updateWayfinder( true );
-    }
-  } );
+  if ( wayfinderLink !== null ) {
+    bindEvent( wayfinderLink, {
+      click: event => {
+        event.preventDefault();
+        updateWayfinder( true );
+      }
+    } );
+  }
 
   debounce( 'resize', 300, updateParagraphPositions );
   debounce( 'click', 300, updateParagraphPositions );

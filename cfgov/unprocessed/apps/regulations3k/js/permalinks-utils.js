@@ -3,7 +3,7 @@ let paragraphPositions;
 const regs3kMainContent = document.querySelector( '.regulations3k' );
 const regs3kWayfinder = document.querySelector( '.o-regulations-wayfinder' );
 let wayfinderOffset = 0;
-if ( regs3kWayfinder != null ) {
+if ( regs3kWayfinder !== null ) {
   wayfinderOffset = regs3kWayfinder.scrollHeight + 10;
 }
 
@@ -103,25 +103,33 @@ const getCommentMarker = label => {
   let commentedSection;
   let commentedParagraph;
   let commentParagraph;
+  let commentedParagraphID = '';
+  let commentParagraphID = '';
+
   const splitCurrentParagraph = label.split( 'Interp' );
-  const commentedParagraphID = splitCurrentParagraph[0].split( '-' );
-  const commentParagraphID = splitCurrentParagraph[1]
-    .split( '-' );
-  commentedSection = commentedParagraphID[0];
-  if ( commentedSection.match( /[A-Z]/ ) ) {
-    commentedSection = 'app. ' + commentedParagraphID[0];
-    commentedParagraph = '';
-  } else {
-    commentedParagraph = commentedParagraphID
-      .slice( 1, -1 )
-      .join( ')(' );
-    commentedParagraph = '(' + commentedParagraph + ')';
+  if ( splitCurrentParagraph !== null ) {
+    commentedParagraphID = splitCurrentParagraph[0]
+      .split( '-' );
+    commentParagraphID = splitCurrentParagraph[1]
+      .split( '-' );
   }
-  commentParagraph = commentParagraphID
-    .slice( 1 )
-    .join( '.' );
-  if ( commentParagraph !== '' ) {
-    commentParagraph = '-' + commentParagraph;
+  if ( commentedParagraphID !== null ) {
+    commentedSection = commentedParagraphID[0];
+    if ( commentedSection.match( /[A-Z]/ ) ) {
+      commentedSection = 'app. ' + commentedParagraphID[0];
+      commentedParagraph = '';
+    } else {
+      commentedParagraph = commentedParagraphID
+        .slice( 1, -1 )
+        .join( ')(' );
+      commentedParagraph = '(' + commentedParagraph + ')';
+    }
+    commentParagraph = commentParagraphID
+      .slice( 1 )
+      .join( '.' );
+    if ( commentParagraph !== '' ) {
+      commentParagraph = '-' + commentParagraph;
+    }
   }
 
   return commentedSection + commentedParagraph + commentParagraph;
@@ -145,11 +153,17 @@ const getWayfinderInfo = ( label, sectionTitle ) => {
     paragraphMarker = getCommentMarker( label );
   } else if ( sectionTitle.indexOf( 'Appendix ' ) === 0 ) {
     // For appendices, the wayfinder should look like "Appendix A"
-    sectionFormattedTitle = sectionTitle.match( wayfinderRegex.appendixTitle )[0];
+    let match = sectionTitle.match( wayfinderRegex.appendixTitle );
+    if ( match !== null ) {
+      sectionFormattedTitle = match[0];
+    }
     paragraphMarker = '';
   } else {
     // For sections of the main regulation text, the wayfinder should look like "§ 1026.5(b)(2)(ii)(A)(1)""
-    sectionFormattedTitle = sectionTitle.match( wayfinderRegex.title )[0];
+    let match = sectionTitle.match( wayfinderRegex.title );
+    if ( match !== null ) {
+      sectionFormattedTitle = match[0];
+    }
     if ( label !== '' ) {
       paragraphMarker = '(' + label.replace( wayfinderRegex.marker, ')(' ) + ')';
     }
