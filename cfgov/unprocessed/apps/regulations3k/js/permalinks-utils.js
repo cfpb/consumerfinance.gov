@@ -22,6 +22,21 @@ const wayfinderRegex = {
 const scrollY = () => window.scrollY || window.pageYOffset;
 
 /**
+ * getFirstMatch - Get the first match of a REGEX
+ *
+ * @param {string} haystack - String to search
+ * @param {regex} needle - REGEX to search for
+ *
+ * @returns {string} Matched string or empty string
+ */
+const getFirstMatch = ( haystack, needle ) => {
+  if ( haystack !== null && haystack.match( needle ) !== null ) {
+    return haystack.match( needle )[0];
+  }
+  return '';
+};
+
+/**
  * getYLocation - Get Y location of provided element on the page.
  *
  * @param {node} el HTML element
@@ -153,17 +168,11 @@ const getWayfinderInfo = ( label, sectionTitle ) => {
     paragraphMarker = getCommentMarker( label );
   } else if ( sectionTitle.indexOf( 'Appendix ' ) === 0 ) {
     // For appendices, the wayfinder should look like "Appendix A"
-    let match = sectionTitle.match( wayfinderRegex.appendixTitle );
-    if ( match !== null ) {
-      sectionFormattedTitle = match[0];
-    }
+    sectionFormattedTitle = getFirstMatch( sectionTitle, wayfinderRegex.appendixTitle );
     paragraphMarker = '';
   } else {
     // For sections of the main regulation text, the wayfinder should look like "§ 1026.5(b)(2)(ii)(A)(1)""
-    let match = sectionTitle.match( wayfinderRegex.title );
-    if ( match !== null ) {
-      sectionFormattedTitle = match[0];
-    }
+    sectionFormattedTitle = getFirstMatch( sectionTitle, wayfinderRegex.title );
     if ( label !== '' ) {
       paragraphMarker = '(' + label.replace( wayfinderRegex.marker, ')(' ) + ')';
     }
@@ -257,6 +266,7 @@ module.exports = {
   getCommentMarker,
   getWayfinderInfo,
   getCurrentParagraph,
+  getFirstMatch,
   getParagraphPositions,
   getYLocation,
   scrollY,

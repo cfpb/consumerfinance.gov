@@ -185,6 +185,18 @@ describe( 'The Regs3K permalinks utils', () => {
 
   } );
 
+  describe( 'getFirstMatch', () => {
+    it( 'should find the first match', () => {
+      expect( utils.getFirstMatch( 'Appendix B for 999', /Appendix [^\s]+/ ) ).toEqual( 'Appendix B' );
+      expect( utils.getFirstMatch( '§ 1099.999 bah', /§ 10[0-9].\.[0-9]*/g ) ).toEqual( '§ 1099.999' );
+    } );
+
+    it( 'should survive an encounter with the dreaded null beast', () => {
+      expect( utils.getFirstMatch( null, /Appendix [^\s]+/ ) ).toEqual( '' );
+    } );
+
+  } );
+
   describe( 'getCommentMarker', () => {
 
     it( 'should format Comments correctly', () => {
@@ -207,6 +219,7 @@ describe( 'The Regs3K permalinks utils', () => {
       expect( utils.getWayfinderInfo( '33-a-2-Interp-2', 'Comment for 1026.33 - Requirements for Reverse Mortgages' ) )
         .toEqual( { formattedTitle: 'Comment ', paragraphMarker: '33(a)(2)-2' } );
     } );
+
   } );
 
   describe( 'updateWayfinder', () => {
@@ -227,5 +240,7 @@ describe( 'The Regs3K permalinks utils', () => {
     } );
 
   } );
+
+
 
 } );
