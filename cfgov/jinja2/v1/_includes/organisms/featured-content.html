@@ -8,7 +8,7 @@
 
    See [GHE]/CFPB/hubcap/wiki/Featured-Content-Module
 
-   Create a featured content molecule when given:   
+   Create a featured content molecule when given:
 
    value:                 Object defined from a StreamField block.
 
@@ -61,20 +61,14 @@
 <section class="o-featured-content-module
                 o-featured-content-module__center">
     <div class="o-featured-content-module_text">
-        {% if value.category %}
-            <div class="a-heading a-heading__icon">
-                {{ category_icon.render( fcm_label(value.category) ) | safe }}
-                {{ _(fcm_label( value.category )) }}
-            </div>
-        {% endif %}
-        <h2>{{ value.heading }}</h2>
+        <h2 class="h3">{{ value.heading }}</h2>
         {{ value.body | safe }}
         {% if (value.show_post_link and value.post)
            or (value.links[0] and value.links[0].text and value.links[0].url) %}
             <ul class="m-list m-list__links">
                 {% if value.show_post_link and value.post_link_text and value.post %}
                     <li class="m-list_item">
-                        <a class="m-list_link" href="{{ pageurl(value.post) }}">
+                        <a href="{{ pageurl(value.post) }}">
                             {{ value.post_link_text }}
                         </a>
                     </li>
@@ -83,7 +77,7 @@
                     {% for link in value.links %}
                         {% if link.text and link.url %}
                             <li class="m-list_item">
-                                <a class="m-list_link" href="{{ link.url }}">
+                                <a href="{{ link.url }}">
                                     {{ link.text }}
                                 </a>
                             </li>
