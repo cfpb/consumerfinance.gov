@@ -20,7 +20,7 @@ class AskContent(blocks.StreamBlock):
         ('content', blocks.RichTextBlock(
             features=[
                 'bold', 'italic', 'h3', 'link', 'ol', 'ul',
-                'document-link', 'image', 'embed'
+                'document-link', 'image', 'embed', 'edit-html'
             ],
             label='Text'
         ))
