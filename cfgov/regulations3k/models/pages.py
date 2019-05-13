@@ -440,6 +440,10 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             effective_version = self.regulation.effective_version
             section_query = self.get_section_query()
 
+        next_version = self.get_versions_query(request).filter(
+            effective_date__gt=effective_version.effective_date
+        ).first()
+
         kwargs = {}
         if date_str is not None:
             kwargs['date_str'] = date_str
@@ -471,6 +475,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
         context.update({
             'version': effective_version,
+            'next_version': next_version,
             'section': section,
             'content': content,
             'get_secondary_nav_items': partial(
