@@ -655,11 +655,22 @@ class RegModelTests(DjangoTestCase):
         test_context = self.reg_page.get_context(self.get_request())
         self.assertEqual(test_context['num_versions'], 2)
 
+    def test_reg_page_next_version_none(self):
+        response = self.client.get('/reg-landing/1002/4/')
+        self.assertIsNone(response.context_data['next_version'])
+
     def test_validate_order(self):
         request = HttpRequest()
         self.assertEqual(validate_order(request), 'relevance')
         request.GET.update({'order': 'regulation'})
         self.assertEqual(validate_order(request), 'regulation')
+
+    def test_reg_page_next_version(self):
+        response = self.client.get('/reg-landing/1002/2011-01-01/4/')
+        self.assertEqual(
+            response.context_data['next_version'],
+            self.effective_version
+        )
 
 
 class SectionNavTests(unittest.TestCase):

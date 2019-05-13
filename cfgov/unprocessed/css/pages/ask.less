@@ -115,46 +115,40 @@
     }
 
     .answer-text {
-        h2 {
-             margin-top: unit( @grid_gutter-width / @size-ii, em );
+        .row + .row {
+            margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         }
 
-        h3 {
-             margin-top: unit( @grid_gutter-width * 1.5 / @size-iii, em );
+        .video_player-row + .row,
+        .table_block-row + .row,
+        .row + .row > .o-table:first-child,
+        .row + .row > .video-player:first-child {
+          margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
         }
 
-        h4 {
-             margin-top: unit( @grid_gutter-width * 1.5 / @size-iv, em );
+        .row + .row h2,
+        .schema-block h2 {
+            margin-top: unit( @grid_gutter-width / @size-ii, em );
         }
 
-        .respond-to-min(@bp-sm-min, {
-            h2 {
+        .row + .row h3,
+        .schema-block h3 {
+            margin-top: unit( @grid_gutter-width / @size-iii, em );
+        }
+
+        .row + .row:not(.inset-row) h4 {
+            margin-top: unit( @grid_gutter-width / @size-iv, em );
+        }
+
+        .respond-to-min( @bp-lg-min, {
+            .row + .row h2,
+            .schema-block h2 {
                 margin-top: unit( @grid_gutter-width * 1.5 / @size-ii, em );
             }
         } );
 
-        .o-table:not(:first-child),
-        .video-player:not(:first-child) {
-            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-        }
-
-        .o-table:not(:last-child),
-        .video-player:not(:last-child) {
-            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-        }
-
-        .m-inset h4,
-        & > .inset-row:first-child .rich-text h2:first-child,
-        & > .inset-row:first-child .rich-text h3:first-child,
-        & > .rich-text:first-child h2:first-child,
-        & > .rich-text:first-child h3:first-child,
-        & > h2:first-child,
-        & > h3:first-child,
-        & > h4:first-child,
-        h2 + .o-table,
-        h3 + .o-table,
-        h4 + .o-table {
-            margin-top: 0 !important;
+        .schema-block > .schema-block_item:first-child > h2:first-child {
+            margin-top:0;
         }
     }  
 
@@ -300,6 +294,8 @@
     .responsive-object {
         position: relative;
         margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        clear: both;
     }
 
     .responsive-object iframe,
