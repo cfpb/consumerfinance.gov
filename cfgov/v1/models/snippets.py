@@ -69,15 +69,27 @@ class Contact(models.Model):
 @python_2_unicode_compatible
 @register_snippet
 class RelatedResource(index.Indexed, models.Model):
-    title = models.CharField(
-        max_length=255
-    )
-    text = RichTextField()
+    title = models.CharField(max_length=255)
+    title_es = models.CharField(max_length=255, blank=True, null=True)
+    text = RichTextField(blank=True, null=True)
+    text_es = RichTextField(blank=True, null=True)
 
     search_fields = [
         index.SearchField('title', partial_match=True),
         index.SearchField('text', partial_match=True),
+        index.SearchField('title_es', partial_match=True),
+        index.SearchField('text_es', partial_match=True),
     ]
+
+    def trans_title(self, language='en'):
+        if language == 'es':
+            return self.title_es
+        return self.title
+
+    def trans_text(self, language='en'):
+        if language == 'es':
+            return self.text_es
+        return self.text
 
     def __str__(self):
         return self.title
