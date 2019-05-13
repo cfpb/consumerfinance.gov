@@ -218,6 +218,7 @@ class LabeledParagraphProcessor(ParagraphProcessor):
             else:
                 el = util.etree.SubElement(parent, 'p')
             el.set('id', label)
+            el.set('data-label', label)
 
             # We use CSS classes to indent paragraph text. To get the correct
             # class, we count the number of dashes in the label to determine
@@ -254,6 +255,7 @@ class LabeledParagraphProcessor(ParagraphProcessor):
                 p = util.etree.SubElement(parent, 'p')
                 p.set('id', label)
                 p.set('class', class_name)
+                p.set('data-label', '')
 
                 p.text = text
 
