@@ -3,7 +3,7 @@
 {% import 'molecules/pagination.html' as pagination with context %}
 
 {% block content_modifiers -%}
-    {{ super() }} see-all-page
+    {{ super() }} ask-cfpb-page ask-cfpb-page__see-all
 {%- endblock %}
 
 {% block content_main %}
@@ -11,19 +11,16 @@
       {{ page.title }}
     </h1>
     {% if page.glossary_terms %}
-        <div class="terms" style="max-width: 41.875rem;">
+        <div class="terms">
         {% for term in page.glossary_terms %}
             {% if term.name(page.language) and term.definition(page.language) %}
-                <div class="u-mb45 {{'u-mt45' if loop.index == 1 else 'block block__border-top block__padded-top'}}"
-                     id="{{ term.anchor(page.language) }}"
-                     style="{{'padding-top:45px;' if loop.index != 1 else ''}}">
+                <div class="term {{'' if loop.index == 1 else 'block block__border-top block__padded-top'}}"
+                     id="{{ term.anchor(page.language) }}">
                 <h2>{{ term.name(page.language) }}</h2>
-                <p>
                     {{ term.definition(page.language) | richtext }}
                     {% if term.answer_page_en %}
-                        <a href="{{ term.answer_page_url(page.language) }}"> {{ _('Read more') }} </a>
+                        <p class="term-link"><a href="{{ term.answer_page_url(page.language) }}"> {{ _('Read more') }} </a></p>
                     {% endif %}
-                </p>
                 </div>
             {% endif %}
         {% endfor %}
