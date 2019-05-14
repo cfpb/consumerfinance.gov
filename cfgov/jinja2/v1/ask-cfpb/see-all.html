@@ -10,52 +10,69 @@
     <h1>
       {{ page.title }}
     </h1>
-    {% if not page.portal_category %}
-    <p class="lead-paragraph u-mt0">
-        {{ page.overview }}
-    </p>
-    {% endif %}
-    <aside class="search-bar">
-        <form method="get" action=".">
-            <label for="ask-search" class="a-label h4">
-                {{ _('Narrow your results') }}
-            </label>
-            <div class="m-form-field">
-                <input
-                    class="a-text-input a-text-input__full"
-                    type="text"
-                    aria-label="Search term"
-                    name="search_term"
-                    value="{{ search_term }}">
-                
-                    <button class="a-btn" id="ask-search" type="submit">
-                        {{ _('Search') }}
-                    </button>
-                    <a class="a-btn a-btn__link a-btn__warning"
-                       href=".">
-                        {{ _('Clear search') }}
-                    </a>
-            </div>
-        </form>
-    </aside>
-
-    <p class="results-message">{{ results_message }}</p>
-
-    <section class="results">
-        <div class="page-links">
-        {% for page in pages %}
-        <article>
-            <div class="h3 hover"><a href="{{page.url}}" class="hover">{{page.autocomplete}}</a></div>
-        </article>
+    {% if page.glossary_terms %}
+        <div class="terms" style="max-width: 41.875rem;">
+        {% for term in page.glossary_terms %}
+            {% if term.name(page.language) and term.definition(page.language) %}
+                <div class="u-mb45 {{'u-mt45' if loop.index == 1 else 'block block__border-top block__padded-top'}}"
+                     id="{{ term.anchor(page.language) }}"
+                     style="{{'padding-top:45px;' if loop.index != 1 else ''}}">
+                <h2>{{ term.name(page.language) }}</h2>
+                <p>{{ term.definition(page.language) | richtext }}</p>
+                {% if term.answer_page_en %}
+                <a href="{{ term.answer_page_url(page.language) }}"> {{ _('Read full answer') }} </a>
+                {% endif %}
+                </div>
+            {% endif %}
         {% endfor %}
-
-        <div class="block block__sub">
-            {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
         </div>
-    </section>
-    {% if not page.portal_category %}
-    <p class="ask-search-link h4">
-        {{ _("Don't see what you're looking for?") }} <span class="break"><a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a></span>
-    </p>
+    {% else %}
+        {% if not page.portal_category %}
+        <p class="lead-paragraph u-mt0">
+            {{ page.overview }}
+        </p>
+        {% endif %}
+        <aside class="search-bar">
+            <form method="get" action=".">
+                <label for="ask-search" class="a-label h4">
+                    {{ _('Narrow your results') }}
+                </label>
+                <div class="m-form-field">
+                    <input
+                        class="a-text-input a-text-input__full"
+                        type="text"
+                        aria-label="Search term"
+                        name="search_term"
+                        value="{{ search_term }}">
+                        <button class="a-btn" id="ask-search" type="submit">
+                            {{ _('Search') }}
+                        </button>
+                        <a class="a-btn a-btn__link a-btn__warning"
+                           href=".">
+                            {{ _('Clear search') }}
+                        </a>
+                </div>
+            </form>
+        </aside>
+
+        <p class="results-message">{{ results_message }}</p>
+
+        <section class="results">
+            <div class="page-links">
+            {% for page in pages %}
+            <article>
+                <div class="h3 hover"><a href="{{page.url}}" class="hover">{{page.autocomplete}}</a></div>
+            </article>
+            {% endfor %}
+
+            <div class="block block__sub">
+                {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
+            </div>
+        </section>
+        {% if not page.portal_category %}
+        <p class="ask-search-link h4">
+            {{ _("Don't see what you're looking for?") }} <span class="break"><a href="{{ _('/ask-cfpb/search/') }}">{{ _('Search our full library of answers') }}</a></span>
+        </p>
+        {% endif %}
     {% endif %}
 {% endblock %}

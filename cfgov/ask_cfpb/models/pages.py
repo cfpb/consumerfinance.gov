@@ -261,6 +261,7 @@ class PortalSearchPage(
         on_delete=models.SET_NULL)
     portal_category = None
     query_base = None
+    glossary_terms = None
     overview = models.TextField(blank=True)
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('portal_topic'),
@@ -373,7 +374,6 @@ class PortalSearchPage(
     def get_results(self, request):
         context = self.get_context(request)
         search_term = request.GET.get('search_term', '').strip()
-        heading = self.get_heading()
         if not search_term or len(unquote(search_term)) == 1:
             results = self.query_base
         else:
@@ -388,12 +388,11 @@ class PortalSearchPage(
                 search_term = search.search_term
         search_message = self.results_message(
             results.count(),
-            heading,
+            self.get_heading(),
             search_term)
         paginator = Paginator(results, 10)
         page_number = validate_page_number(request, paginator)
         context.update({
-            'heading': heading,
             'search_term': search_term,
             'results_message': search_message,
             'pages': paginator.page(page_number),
@@ -405,6 +404,11 @@ class PortalSearchPage(
             request,
             'ask-cfpb/see-all.html',
             context)
+
+    def get_glossary_terms(self):
+        if self.language == 'es':
+            return self.portal_topic.glossary_terms.order_by('name_es')
+        return self.portal_topic.glossary_terms.order_by('name_en')
 
     @route(r'^$')
     def portal_topic_page(self, request):
@@ -420,13 +424,22 @@ class PortalSearchPage(
         if category_slug not in self.category_map:
             raise Http404
         self.portal_category = self.category_map.get(category_slug)
+        self.title = "{} {}".format(
+            self.portal_topic.title(self.language),
+            self.portal_category.title(self.language).lower())
+        if self.portal_category.heading == 'Key terms':
+            self.glossary_terms = self.get_glossary_terms()
+            context = self.get_context(request)
+            context.update({
+                'get_secondary_nav_items': self.get_nav_items})
+            return TemplateResponse(
+                request,
+                'ask-cfpb/see-all.html',
+                context)
         self.query_base = SearchQuerySet().filter(
             portal_topics=self.portal_topic.heading,
             language=self.language,
             portal_categories=self.portal_category.heading)
-        self.title = "{} {}".format(
-            self.portal_topic.title(self.language),
-            self.portal_category.title(self.language).lower())
         return self.get_results(request)
 
 
