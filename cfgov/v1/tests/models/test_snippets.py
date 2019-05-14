@@ -10,7 +10,8 @@ from wagtail.wagtailcore.models import Site
 
 from v1.blocks import ReusableTextChooserBlock
 from v1.models.snippets import (
-    Contact, GlossaryTerm, RelatedResource, ReusableText)
+    Contact, GlossaryTerm, RelatedResource, ReusableText
+)
 
 
 class TestUnicodeCompatibility(TestCase):

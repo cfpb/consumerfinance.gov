@@ -72,7 +72,7 @@
                     </span>
                 </button>
             </div>
-        {% if page.related_resource and page.trans_title(page.language) %}
+        {% if page.related_resource and page.related_resource.trans_text(page.language) | striptags %}
             <div class="block next-steps">
                 <div class="o-well">
                 <h2 class="u-mb15">

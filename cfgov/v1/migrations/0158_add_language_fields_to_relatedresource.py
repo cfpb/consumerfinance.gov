@@ -9,7 +9,7 @@ import wagtail.wagtailcore.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0156_sublandingpage_portal_topic'),
+        ('v1', '0157_create_glossary_term'),
     ]
 
     operations = [
