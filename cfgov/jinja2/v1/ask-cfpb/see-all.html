@@ -18,10 +18,12 @@
                      id="{{ term.anchor(page.language) }}"
                      style="{{'padding-top:45px;' if loop.index != 1 else ''}}">
                 <h2>{{ term.name(page.language) }}</h2>
-                <p>{{ term.definition(page.language) | richtext }}</p>
-                {% if term.answer_page_en %}
-                <a href="{{ term.answer_page_url(page.language) }}"> {{ _('Read full answer') }} </a>
-                {% endif %}
+                <p>
+                    {{ term.definition(page.language) | richtext }}
+                    {% if term.answer_page_en %}
+                        <a href="{{ term.answer_page_url(page.language) }}"> {{ _('Read more') }} </a>
+                    {% endif %}
+                </p>
                 </div>
             {% endif %}
         {% endfor %}
