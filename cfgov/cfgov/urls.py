@@ -127,9 +127,6 @@ urlpatterns = [
         template_name='fair-lending/index.html'),
         name='fair-lending'),
 
-    url(r'^practitioner-resources/students/$', TemplateView.as_view(
-        template_name='students/index.html'),
-        name='students'),
     url(r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(
             template_name='students/knowbeforeyouowe/index.html'),
