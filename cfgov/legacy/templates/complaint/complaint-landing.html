@@ -16,12 +16,13 @@
 <div id="ccdb-landing">
     <div class="cf-notification cf-notification__warning {% if data_down %} show-data-notification {% elif narratives_down %} show-narratives-notification  {% endif %}">
     <div class="wrapper wrapper__match-content cf-notification_wrapper">
-      <span class="cf-notification_icon cf-notification_icon__warning cf-icon cf-icon-error-round"></span>
+      <!-- This icon includes the cf-notification_icon cf-notification_icon__warning classes. -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-notification_icon cf-notification_icon__warning cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm-49.7 234.6c0-27.6 22.4-50 50-50s50 22.4 50 50v328.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V339.8zm50 582.5c-39.6 0-71.7-32.1-71.7-71.7s32.1-71.7 71.7-71.7S572 811 572 850.6s-32.1 71.7-71.7 71.7z"></path></svg>
       <div class="cf-notification_text">
         <p class="data-text">We're currently experiencing technical issues that have delayed the refresh of data in the Consumer Complaint database.</p>
         <p class="narratives-text">We're currently experiencing technical issues that have delayed the refresh of consumer complaint narratives in the Consumer Complaint database.</p>
         <p class="short-desc">{% if technical_issues %}
-        We expect a refresh of the data and restoration of access soon. 
+        We expect a refresh of the data and restoration of access soon.
         {% else %}
         We expect to refresh the data in the next few days.
         {% endif %}</p>
