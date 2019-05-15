@@ -247,6 +247,13 @@ class PortalSearchPageTestCase(TestCase):
             primary_portal_topic_id=1,
         )
 
+    def test_bad_category_value_raises_404(self):
+        page = self.english_search_page
+        url = page.url + page.reverse_subpage(
+            'portal_category_page', kwargs={'category': 'how-to-gui'})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
     def test_get_ask_breadcrumbs_with_portal(self):
         with override_settings(
                 FLAGS={'ASK_CATEGORIES_OFF': [('boolean', True)]}):

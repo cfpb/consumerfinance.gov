@@ -417,6 +417,8 @@ class PortalSearchPage(
     @route(r'^(?P<category>[^/]+)/$')
     def portal_category_page(self, request, **kwargs):
         category_slug = kwargs.get('category')
+        if category_slug not in self.category_map:
+            raise Http404
         self.portal_category = self.category_map.get(category_slug)
         self.query_base = SearchQuerySet().filter(
             portal_topics=self.portal_topic.heading,
