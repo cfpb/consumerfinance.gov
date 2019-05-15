@@ -469,12 +469,37 @@ class PortalSearchPageTestCase(TestCase):
     def test_get_glossary_terms(self):
         page = self.english_search_page
         glossary_term = GlossaryTerm(
-            name_en='escrow',
+            name_en='Escrow',
             portal_topic=page.portal_topic)
         glossary_term.save()
         terms = page.get_glossary_terms()
         self.assertEqual(terms.count(), 1)
-        self.assertEqual(terms.first().name(), 'escrow')
+        self.assertEqual(terms.first().name(), 'Escrow')
+
+    def test_portal_category_page_key_terms(self):
+        page = self.english_search_page
+        glossary_term = GlossaryTerm(
+            name_en='Amortization',
+            definition_en='Definition',
+            portal_topic=page.portal_topic)
+        glossary_term.save()
+        url = "{}key-terms/".format(page.url)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Amortization')
+
+    def test_portal_category_page_key_terms_spanish(self):
+        page = self.spanish_search_page
+        glossary_term = GlossaryTerm(
+            name_en='Amortization',
+            name_es='Amortización',
+            definition_es='Definición',
+            portal_topic=page.portal_topic)
+        glossary_term.save()
+        url = "{}palabras-claves/".format(page.url)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Amortización')
 
 
 class AnswerPageTestCase(TestCase):
