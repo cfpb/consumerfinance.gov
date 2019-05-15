@@ -164,7 +164,7 @@ class AnswerLandingPage(LandingPage):
                 if topic_page:
                     url = topic_page.url
                 else:
-                    continue
+                    continue  # pragma: no cover
             portal_cards.append({
                 'topic': topic,
                 'title': topic.title(self.language),
