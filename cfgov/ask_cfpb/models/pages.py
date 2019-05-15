@@ -15,10 +15,12 @@ from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, MultiFieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
+    TabbedInterface
 )
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Orderable, Page
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
@@ -28,7 +30,7 @@ from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from ask_cfpb.models.search import AskSearch
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
+from v1.atomic_elements import atoms, molecules, organisms
 from v1.models import (
     CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic,
     SublandingPage
@@ -843,3 +845,142 @@ class AnswerPage(CFGOVPage):
     @property
     def split_test_id(self):
         return self.answer_base.id
+
+
+class ArticleLink(Orderable, models.Model):
+    text = models.CharField(max_length=255)
+    url = models.CharField(max_length=255)
+
+    article_page = ParentalKey(
+        'ArticlePage',
+        related_name='article_links'
+    )
+
+    panels = [
+        FieldPanel('text'),
+        FieldPanel('url'),
+    ]
+
+class ArticlePage(CFGOVPage):
+    """
+    General article page type.
+    """
+    category = models.CharField(
+        choices=[
+            ('basics', 'Basics'),
+            ('common_issues', 'Common issues'),
+            ('howto', 'How to'),
+            ('know_your_rights', 'Know your rights'),
+        ],
+        max_length=255,
+    )
+    heading = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    intro = models.TextField(blank=True)
+    inset_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Heading"
+    )
+    sections = StreamField([
+        ('section', blocks.StructBlock([
+            ('heading', blocks.CharBlock(
+                max_length=255,
+                required=True,
+                label='Section heading'
+            )),
+            ('summary', blocks.TextBlock(
+                required=False,
+                blank=True,
+                label='Section summary'
+            )),
+            ('link_text', blocks.CharBlock(
+                required=False,
+                blank=True,
+                label="Section link text"
+            )),
+            ('url', blocks.CharBlock(
+                required=False,
+                blank=True,
+                label='Section link URL',
+                max_length=255,
+            )),
+            ('subsections', blocks.ListBlock(
+                blocks.StructBlock([
+                    ('heading', blocks.CharBlock(
+                        max_length=255,
+                        required=False,
+                        blank=True,
+                        label='Subsection heading'
+                    )),
+                    ('summary', blocks.TextBlock(
+                        required=False,
+                        blank=True,
+                        label='Subsection summary'
+                    )),
+                    ('link_text', blocks.CharBlock(
+                        required=True,
+                        label='Subsection link text'
+                    )),
+                    ('url', blocks.CharBlock(
+                        required=True,
+                        label='Subsection link URL'
+                    ))
+                ])
+            ))
+        ]))
+    ])
+    content_panels = CFGOVPage.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('category'),
+            FieldPanel('heading'),
+            FieldPanel('intro')],
+            heading="Heading",
+            classname="collapsible"),
+        
+        MultiFieldPanel([
+            FieldPanel('inset_heading'),
+            InlinePanel(
+                'article_links',
+                label='Inset link',
+                max_num=2
+            ),],
+            heading="Inset links",
+            classname="collapsible"),
+        
+        StreamFieldPanel('sections'),
+    ]
+
+    sidebar = StreamField([
+        ('call_to_action', molecules.CallToAction()),
+        ('related_links', molecules.RelatedLinks()),
+        ('related_metadata', molecules.RelatedMetadata()),
+        ('email_signup', organisms.EmailSignUp()),
+        ('reusable_text', v1_blocks.ReusableTextChooserBlock(ReusableText)),
+    ], blank=True)
+
+    sidebar_panels = [StreamFieldPanel('sidebar'), ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField('title'),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(sidebar_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+
+    template = 'ask-cfpb/article-page.html'
+
+    objects = CFGOVPageManager()
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(ArticlePage, self).get_context(request)
+        context['about_us'] = get_standard_text(self.language, 'about_us')
+        return context
+
+    def __str__(self):
+        return self.title
