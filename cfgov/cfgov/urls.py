@@ -364,9 +364,6 @@ urlpatterns = [
     url(r'^es/nuestra-historia/$', TemplateView.as_view(
                  template_name='es/nuestra-historia/index.html')),
 
-    url(r'^es/presentar-una-queja/$', TemplateView.as_view(
-                 template_name='es/presentar-una-queja/index.html')),
-
     url(r'^es/quienes-somos/$', TemplateView.as_view(
                  template_name='es/quienes-somos/index.html')),
 
