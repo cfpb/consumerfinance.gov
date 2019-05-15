@@ -97,10 +97,13 @@
                         </a>
                     </li>
                     {% endfor %}
-                    {% if category %}
+                    {% if portal_page %}
                     <li class="m-list_item m-list_item__last">
-                        <a href="{{slugurl('category-' + category.slug)}}" class="m-list_link">
-                            <b>{{ _('Learn more about') }} {{ category.name_es | lower if page.language == 'es' else category.name | lower }}</b>
+                        <a href="{{ portal_page.url }}" class="m-list_link">
+                            <b>
+                                {{ _('Learn more about') }} 
+                                {{ portal_page.portal_topic.title(page.language) | lower }}
+                            </b>
                         </a>
                     </li>
                     {% endif %}
