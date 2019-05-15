@@ -1,5 +1,6 @@
-version: "3.3"
-
+version: "3.4"
+volumes:
+  postgres_data:
 services:
     elasticsearch:
         build:
@@ -11,6 +12,8 @@ services:
     postgres:
         image: postgres:10.3
         restart: always
+        volumes:
+          - postgres_data:/var/lib/postgresql/data/
         environment:
             POSTGRES_USER: cfpb
             POSTGRES_PASSWORD: cfpb
