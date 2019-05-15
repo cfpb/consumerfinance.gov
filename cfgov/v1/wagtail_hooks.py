@@ -20,7 +20,9 @@ from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
-from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.models.snippets import (
+    Contact, GlossaryTerm, RelatedResource, ReusableText
+)
 from v1.util import util
 
 
@@ -263,6 +265,14 @@ class RelatedResourceModelAdmin(ModelAdmin):
     search_fields = ('title', 'text')
 
 
+class GlossaryTermModelAdmin(ModelAdmin):
+    model = GlossaryTerm
+    menu_icon = 'snippet'
+    list_display = ('name_en', 'definition_en', 'portal_topic')
+    ordering = ('name_en',)
+    search_fields = ('name_en', 'definition_en', 'name_es', 'definition_es')
+
+
 class SnippetModelAdminGroup(ModelAdminGroup):
     menu_label = 'Snippets'
     menu_icon = 'snippet'
@@ -273,7 +283,8 @@ class SnippetModelAdminGroup(ModelAdminGroup):
         ReusableTextModelAdmin,
         RelatedResourceModelAdmin,
         PortalTopicModelAdmin,
-        PortalCategoryModelAdmin)
+        PortalCategoryModelAdmin,
+        GlossaryTermModelAdmin)
 
 
 modeladmin_register(SnippetModelAdminGroup)
@@ -296,7 +307,7 @@ def whitelister_element_rules():
         'itemtype': True,
     })
 
-    allowed_tags = ['aside', 'h4', 'p', 'span',
+    allowed_tags = ['aside', 'h4', 'h3', 'p', 'span',
                     'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
                     'col', 'colgroup']
 

@@ -197,6 +197,8 @@
                                 <h3 class="h4">
                                     {% if is_blog(post) %}
                                         {{ category_slug.render(category='blog', href=page_url) }}
+                                    {% elif is_event(post) %}
+                                        {{ category_slug.render(category='Events', href=page_url) }}
                                     {% elif is_report(post) %}
                                         {{ category_slug.render(category='report', href=page_url) }}
                                     {% else %}

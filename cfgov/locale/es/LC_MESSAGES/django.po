@@ -62,6 +62,10 @@ msgstr "No se encontraron resultados para"
 msgid "Please enter a search term in the box above."
 msgstr "Por favor escriba su búsqueda arriba"
 
+#: portals
+msgid "Featured"
+msgstr "Destacado"
+
 #: cfgov/jinja2/v1/ask-cfpb/answer-page.html
 msgid "updated"
 msgstr "actualizado"
@@ -78,8 +82,11 @@ msgstr "Leer más"
 msgid "Hide full answer"
 msgstr "Esconder la respuesta completa"
 
-msgid "Explore related resources"
-msgstr "Otros recursos"
+msgid "Browse related questions"
+msgstr "Otras preguntas"
+
+msgid "Take the next step"
+msgstr "Dar el siguiente paso"
 
 msgid "Related questions"
 msgstr "Otras preguntas"
@@ -136,6 +143,10 @@ msgstr "Busca de"
 #: cfgov/jinja2/v1/ask-cfpb/landing-page.html
 msgid "Browse questions by category"
 msgstr "Examinar las preguntas por categoría"
+
+#: cfgov/jinja2/v1/_includes/ask/tip.html
+msgid "Tip"
+msgstr "Consejo"
 
 #: cfgov/jinja2/v1/_includes/blocks/feedback.html
 msgid "Was this answer helpful to you?"
@@ -195,7 +206,6 @@ msgstr "respuestas"
 
 msgid "answers within"
 msgstr "respuestas dentro de"
-
 
 msgid " of "
 msgstr " de "

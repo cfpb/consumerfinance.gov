@@ -7,13 +7,21 @@
  *
  * As users scroll through the page we search the array for the paragraph
  * closest to the top of the viewport and update the URL hash accordingly.
+ *
+ * The wayfinder element uses the same paragraph IDs (and data-label) to
+ * populate its description.
  */
 
 import {
   debounce,
   updateParagraphPositions,
-  updateUrlHash
+  updateUrlHash,
+  updateWayfinder
 } from './permalinks-utils';
+import { bindEvent } from '../../../js/modules/util/dom-events';
+import { queryOne as find } from '../../../js/modules/util/dom-traverse';
+
+const wayfinderLink = find( '.o-regulations-wayfinder_link' );
 
 /**
  * init - Initialize the permalink functionality by cataloging all paragraph
@@ -21,9 +29,21 @@ import {
  */
 const init = () => {
   updateParagraphPositions();
+  updateWayfinder( true );
+  if ( wayfinderLink !== null ) {
+    bindEvent( wayfinderLink, {
+      click: event => {
+        event.preventDefault();
+        updateWayfinder( true );
+      }
+    } );
+  }
+
   debounce( 'resize', 300, updateParagraphPositions );
   debounce( 'click', 300, updateParagraphPositions );
   debounce( 'scroll', 100, updateUrlHash );
+  debounce( 'scroll', 100, updateWayfinder );
+
 };
 
 // Provide the no-JS experience to browsers without `replaceState`

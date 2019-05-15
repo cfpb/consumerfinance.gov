@@ -43,7 +43,7 @@ class RegulationsExtensionTestCase(TestCase):
         result = template.render()
         self.assertEqual(
             result,
-            '<p class="regdown-block" '
+            '<p class="regdown-block" data-label="" '
             'id="be34deef8eb9a480514ed3b4a5ebdaea61c711d2b11d40e830cb0656">'
             '<em>Hello</em></p>'
         )
