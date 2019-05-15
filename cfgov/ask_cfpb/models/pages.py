@@ -30,7 +30,7 @@ from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from ask_cfpb.models.search import AskSearch
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import atoms, molecules, organisms
+from v1.atomic_elements import molecules, organisms
 from v1.models import (
     CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic,
     SublandingPage
@@ -861,6 +861,7 @@ class ArticleLink(Orderable, models.Model):
         FieldPanel('url'),
     ]
 
+
 class ArticlePage(CFGOVPage):
     """
     General article page type.
@@ -939,17 +940,17 @@ class ArticlePage(CFGOVPage):
             FieldPanel('intro')],
             heading="Heading",
             classname="collapsible"),
-        
+
         MultiFieldPanel([
             FieldPanel('inset_heading'),
             InlinePanel(
                 'article_links',
                 label='Inset link',
                 max_num=2
-            ),],
+            ), ],
             heading="Inset links",
             classname="collapsible"),
-        
+
         StreamFieldPanel('sections'),
     ]
 

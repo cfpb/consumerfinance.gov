@@ -62,10 +62,6 @@ msgstr "No se encontraron resultados para"
 msgid "Please enter a search term in the box above."
 msgstr "Por favor escriba su búsqueda arriba"
 
-#: portals
-msgid "Featured"
-msgstr "Destacado"
-
 #: cfgov/jinja2/v1/ask-cfpb/answer-page.html
 msgid "updated"
 msgstr "actualizado"
@@ -82,11 +78,8 @@ msgstr "Leer más"
 msgid "Hide full answer"
 msgstr "Esconder la respuesta completa"
 
-msgid "Browse related questions"
-msgstr "Otras preguntas"
-
-msgid "Take the next step"
-msgstr "Dar el siguiente paso"
+msgid "Explore related resources"
+msgstr "Otros recursos"
 
 msgid "Related questions"
 msgstr "Otras preguntas"
@@ -94,6 +87,10 @@ msgstr "Otras preguntas"
 #: cfgov/jinja2/v1/ask-cfpb/landing-page.html
 msgid "Learn more about"
 msgstr "Sepa más sobre"
+
+#: cfgov/jinja2/v1/ask-cfpb/article-page.html
+msgid "In this article"
+msgstr "En este artículo"
 
 #: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
 msgid "Search our library of answers"
@@ -139,14 +136,6 @@ msgstr "Busca de"
 #: cfgov/jinja2/v1/ask-cfpb/landing-page.html
 msgid "Browse questions by category"
 msgstr "Examinar las preguntas por categoría"
-
-#: cfgov/jinja2/v1/ask-cfpb/article-page.html
-msgid "In this article"
-msgstr "En este artículo"
-
-#: cfgov/jinja2/v1/_includes/ask/tip.html
-msgid "Tip"
-msgstr "Consejo"
 
 #: cfgov/jinja2/v1/_includes/blocks/feedback.html
 msgid "Was this answer helpful to you?"
@@ -206,6 +195,7 @@ msgstr "respuestas"
 
 msgid "answers within"
 msgstr "respuestas dentro de"
+
 
 msgid " of "
 msgstr " de "
@@ -267,10 +257,10 @@ msgstr "Lo que debe saber"
 msgid "Common issues"
 msgstr "Problemas comunes"
 
-msgid "How to"
+msgid "How-to"
 msgstr "Paso a paso"
 
-msgid "How-to"
+msgid "How to"
 msgstr "Paso a paso"
 
 msgid "How-to guides"
