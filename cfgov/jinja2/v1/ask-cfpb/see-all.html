@@ -13,16 +13,14 @@
     {% if page.glossary_terms %}
         <div class="terms">
         {% for term in page.glossary_terms %}
-            {% if term.name(page.language) and term.definition(page.language) %}
-                <div class="term {{'' if loop.index == 1 else 'block block__border-top block__padded-top'}}"
-                     id="{{ term.anchor(page.language) }}">
-                <h2>{{ term.name(page.language) }}</h2>
-                    {{ term.definition(page.language) | richtext }}
-                    {% if term.answer_page_en %}
-                        <p class="term-link"><a href="{{ term.answer_page_url(page.language) }}"> {{ _('Read more') }} </a></p>
-                    {% endif %}
-                </div>
-            {% endif %}
+            <div class="term {{'' if loop.index == 1 else 'block block__border-top block__padded-top'}}"
+                 id="{{ term.anchor(page.language) }}">
+            <h2>{{ term.name(page.language) }}</h2>
+                {{ term.definition(page.language) | richtext }}
+                {% if term.answer_page_en %}
+                    <p class="term-link"><a href="{{ term.answer_page_url(page.language) }}"> {{ _('Read more') }} </a></p>
+                {% endif %}
+            </div>
         {% endfor %}
         </div>
     {% else %}

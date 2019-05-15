@@ -407,8 +407,12 @@ class PortalSearchPage(
 
     def get_glossary_terms(self):
         if self.language == 'es':
-            return self.portal_topic.glossary_terms.order_by('name_es')
-        return self.portal_topic.glossary_terms.order_by('name_en')
+            terms = self.portal_topic.glossary_terms.order_by('name_es')
+        else:
+            terms = self.portal_topic.glossary_terms.order_by('name_en')
+        for term in terms:
+            if term.name(self.language) and term.definition(self.language):
+                yield term
 
     @route(r'^$')
     def portal_topic_page(self, request):

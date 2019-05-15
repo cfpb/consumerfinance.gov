@@ -470,11 +470,11 @@ class PortalSearchPageTestCase(TestCase):
         page = self.english_search_page
         glossary_term = GlossaryTerm(
             name_en='Escrow',
+            definition_en='Definition',
             portal_topic=page.portal_topic)
         glossary_term.save()
         terms = page.get_glossary_terms()
-        self.assertEqual(terms.count(), 1)
-        self.assertEqual(terms.first().name(), 'Escrow')
+        self.assertEqual(next(terms).name('en'), 'Escrow')
 
     def test_portal_category_page_key_terms(self):
         page = self.english_search_page
