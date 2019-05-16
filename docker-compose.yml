@@ -1,5 +1,6 @@
-version: "3.3"
-
+version: "3.4"
+volumes:
+  postgres_data:
 services:
     elasticsearch:
         build:
@@ -11,12 +12,17 @@ services:
     postgres:
         image: postgres:10.3
         restart: always
+        volumes:
+          - postgres_data:/var/lib/postgresql/data/
         environment:
             POSTGRES_USER: cfpb
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
-    python:
-        build: .
+    python2:
+        build: 
+            context: ./
+            dockerfile: ./Dockerfile
+        image: python
         ports:
             - "8000:8000"
         environment:
@@ -26,7 +32,25 @@ services:
             - ./develop-apps:/src/develop-apps
         entrypoint:
             - sh
-            - /src/cfgov-refresh/cfgov/entrypoint.sh
+            - /src/cfgov-refresh/docker/python2/entrypoint.sh
+        depends_on:
+            - elasticsearch
+            - postgres
+        working_dir: /src/cfgov-refresh
+        stdin_open: true
+        tty: true
+    python3:
+        image: python
+        ports:
+            - "8333:8000"
+        environment:
+            ES_HOST: elasticsearch
+        volumes:
+            - ./:/src/cfgov-refresh
+            - ./develop-apps:/src/develop-apps
+        entrypoint:
+            - sh
+            - /src/cfgov-refresh/docker/python3/entrypoint.sh
         depends_on:
             - elasticsearch
             - postgres

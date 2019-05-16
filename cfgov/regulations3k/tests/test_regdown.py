@@ -16,7 +16,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{my-label} This is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-1" id="my-label">'
+            '<p class="regdown-block level-1" '
+            'data-label="my-label" id="my-label">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -25,6 +26,7 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         self.assertEqual(
             regdown(text),
             '<p class="regdown-block" '
+            'data-label="" '
             'id="e2cb7f25f263e65fc6737e03e0ecb90382398da3966b6da734b451be">'
             'This is a paragraph without a label.</p>'
         )
@@ -33,7 +35,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{my-label}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-1" id="my-label">'
+            '<p class="regdown-block level-1" '
+            'data-label="my-label" id="my-label">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -41,8 +44,9 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{my-label}\n\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<div class="regdown-block level-1" id="my-label"></div>\n'
-            '<p class="regdown-block" '
+            '<div class="regdown-block level-1" data-label="my-label" '
+            'id="my-label"></div>\n'
+            '<p class="regdown-block" data-label="" '
             'id="725445113243d57f132b6408fa8583122d2641e591a9001f04fcde08">'
             'This is a paragraph with a label.</p>'
         )
@@ -51,7 +55,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{1-a-Interp-1}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-0" id="1-a-Interp-1">'
+            '<p class="regdown-block level-0" '
+            'data-label="1-a-Interp-1" id="1-a-Interp-1">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -59,7 +64,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{1-a-Interp-1-i}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-1" id="1-a-Interp-1-i">'
+            '<p class="regdown-block level-1" '
+            'data-label="1-a-Interp-1-i" id="1-a-Interp-1-i">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -67,7 +73,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{1-a-Interp-1-i-a}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-2" id="1-a-Interp-1-i-a">'
+            '<p class="regdown-block level-2" '
+            'data-label="1-a-Interp-1-i-a" id="1-a-Interp-1-i-a">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -75,7 +82,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '{12-d-Interp-7-ii-c-A-7}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-4" id="12-d-Interp-7-ii-c-A-7">'
+            '<p class="regdown-block level-4" '
+            'data-label="12-d-Interp-7-ii-c-A-7" id="12-d-Interp-7-ii-c-A-7">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -84,12 +92,14 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text2 = '{31-a-1-i-Interp-1}\nThis is a paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-0" id="31-a-1-Interp-1">'
+            '<p class="regdown-block level-0" '
+            'data-label="31-a-1-Interp-1" id="31-a-1-Interp-1">'
             'This is a paragraph with a label.</p>'
         )
         self.assertEqual(
             regdown(text2),
-            '<p class="regdown-block level-0" id="31-a-1-i-Interp-1">'
+            '<p class="regdown-block level-0" '
+            'data-label="31-a-1-i-Interp-1" id="31-a-1-i-Interp-1">'
             'This is a paragraph with a label.</p>'
         )
 
@@ -101,7 +111,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
             '#### 30(b) Business Day'
         )
         self.assertIn(
-            '<div class="regdown-block level-2" id="30-b-Interp"></div>',
+            '<div class="regdown-block level-2" '
+            'data-label="30-b-Interp" id="30-b-Interp"></div>',
             regdown(text)
         )
 
@@ -111,17 +122,20 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text3 = '{A-2-d-1-v}\nThis is yet another paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-0" id="A-2-d">'
+            '<p class="regdown-block level-0" '
+            'data-label="A-2-d" id="A-2-d">'
             'This is a paragraph with a label.</p>'
         )
         self.assertEqual(
             regdown(text2),
-            '<p class="regdown-block level-1" id="A-2-d-1">'
+            '<p class="regdown-block level-1" '
+            'data-label="A-2-d-1" id="A-2-d-1">'
             'This is another paragraph with a label.</p>'
         )
         self.assertEqual(
             regdown(text3),
-            '<p class="regdown-block level-2" id="A-2-d-1-v">'
+            '<p class="regdown-block level-2" '
+            'data-label="A-2-d-1-v" id="A-2-d-1-v">'
             'This is yet another paragraph with a label.</p>'
         )
 
@@ -131,17 +145,20 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text3 = '{M1-1-a-1-i}\nThis is yet another paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-0" id="M1-1-a">'
+            '<p class="regdown-block level-0" '
+            'data-label="M1-1-a" id="M1-1-a">'
             'This is a paragraph with a label.</p>'
         )
         self.assertEqual(
             regdown(text2),
-            '<p class="regdown-block level-1" id="M1-1-a-1">'
+            '<p class="regdown-block level-1" '
+            'data-label="M1-1-a-1" id="M1-1-a-1">'
             'This is another paragraph with a label.</p>'
         )
         self.assertEqual(
             regdown(text3),
-            '<p class="regdown-block level-2" id="M1-1-a-1-i">'
+            '<p class="regdown-block level-2" '
+            'data-label="M1-1-a-1-i" id="M1-1-a-1-i">'
             'This is yet another paragraph with a label.</p>'
         )
 
@@ -151,17 +168,20 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text3 = '{B-h2-p2-1-i}\nThis is yet another paragraph with a label.'
         self.assertEqual(
             regdown(text),
-            '<p class="regdown-block level-0" id="B-h2-p2">'
+            '<p class="regdown-block level-0" '
+            'data-label="B-h2-p2" id="B-h2-p2">'
             'This is a paragraph with a label.</p>'
         )
         self.assertEqual(
             regdown(text2),
-            '<p class="regdown-block level-1" id="B-h2-p2-1">'
+            '<p class="regdown-block level-1" '
+            'data-label="B-h2-p2-1" id="B-h2-p2-1">'
             'This is another paragraph with a label.</p>'
         )
         self.assertEqual(
             regdown(text3),
-            '<p class="regdown-block level-2" id="B-h2-p2-1-i">'
+            '<p class="regdown-block level-2" '
+            'data-label="B-h2-p2-1-i" id="B-h2-p2-1-i">'
             'This is yet another paragraph with a label.</p>'
         )
 
@@ -169,7 +189,8 @@ class RegulationsExtensionTestCase(unittest.TestCase):
         text = '- {my-label} This is a paragraph in a list.'
         self.assertEqual(
             regdown(text),
-            '<ul>\n<li>\n<p class="regdown-block level-1" id="my-label">'
+            '<ul>\n<li>\n<p class="regdown-block level-1" '
+            'data-label="my-label" id="my-label">'
             'This is a paragraph in a list.'
             '</p>\n</li>\n</ul>'
         )

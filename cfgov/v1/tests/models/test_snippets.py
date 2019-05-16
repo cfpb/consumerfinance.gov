@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import six
 from unittest import skipIf
 
@@ -7,7 +9,9 @@ from wagtail.tests.testapp.models import SimplePage
 from wagtail.wagtailcore.models import Site
 
 from v1.blocks import ReusableTextChooserBlock
-from v1.models.snippets import Contact, ReusableText
+from v1.models.snippets import (
+    Contact, GlossaryTerm, RelatedResource, ReusableText
+)
 
 
 class TestUnicodeCompatibility(TestCase):
@@ -21,6 +25,38 @@ class TestUnicodeCompatibility(TestCase):
         contact = Contact(heading=u'Unicod\xeb')
         self.assertEqual(six.text_type(contact), u'Unicod\xeb')
         self.assertIsInstance(six.text_type(contact), six.text_type)
+
+
+class TestTranslations(TestCase):
+
+    def test_related_resource_translations(self):
+
+        test_resource = RelatedResource(
+            title='English title',
+            title_es='Spanish title',
+            text='English text.',
+            text_es='Spanish text.',
+        )
+        self.assertEqual(
+            str(test_resource), test_resource.title)
+        self.assertEqual(
+            test_resource.trans_title(), test_resource.title)
+        self.assertEqual(
+            test_resource.trans_text(), test_resource.text)
+        self.assertEqual(
+            test_resource.trans_title('es'), test_resource.title_es)
+        self.assertEqual(
+            test_resource.trans_text('es'), test_resource.text_es)
+
+
+class TestModelStrings(TestCase):
+
+    def test_reusable_text_string(self):
+        test_snippet = ReusableText(
+            title='Snippet title',
+            sidefoot_heading='Sidefoot heading',
+            text='Snippet text')
+        self.assertEqual(str(test_snippet), test_snippet.title)
 
 
 class TestReusableTextRendering(TestCase):
@@ -37,3 +73,19 @@ class TestReusableTextRendering(TestCase):
         html = '<a linktype="page" id="12345">Link</a>'
         block = ReusableTextChooserBlock(ReusableText)
         self.assertIn('<a>', block.render({'text': html}))
+
+
+class TestGlossaryTerm(TestCase):
+    def test_term(self):
+        glossary_term = GlossaryTerm(name_en='cool', name_es='chévere')
+        glossary_term.save()
+        self.assertEqual(glossary_term.name('es'), 'chévere')
+        self.assertEqual(glossary_term.name(), 'cool')
+        self.assertEqual(glossary_term.name('en'), 'cool')
+
+    def test_answer_page_url_no_answer_page(self):
+        glossary_term = GlossaryTerm(name_en='foo')
+        glossary_term.save()
+        self.assertIsNone(glossary_term.answer_page_url('es'))
+        self.assertIsNone(glossary_term.answer_page_url())
+        self.assertIsNone(glossary_term.answer_page_url('en'))

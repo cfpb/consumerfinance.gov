@@ -16,6 +16,30 @@ const HTML_SNIPPET2 = `
   <div class="regdown-block" id="e"></div>
 `;
 
+const HTML_SNIPPET3 = `
+  <div class="regulations3k">
+    <div class="o-regulations-wayfinder" data-section="Comment for 1026.33 - Requirements for Reverse Mortgages">
+        <div class="wrapper content_wrapper">
+            <div class="content_sidebar content__flush-top content__flush-bottom">
+                <span class="h4">
+                    Regulation FOO
+                </span>
+            </div>
+            <div class="content_main content__flush-top content__flush-bottom">
+                <div class="o-regulations-wayfinder__content">
+                    <div class="o-regulations-wayfinder__heading">
+                        <a href="#NOPE" class="h4 o-regulations-wayfinder_link">
+                            <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <p class="regdown-block level-0" data-label="33-a-2-Interp-2" id="33-a-2-Interp-2">Foo.</p>
+`;
+
 describe( 'The Regs3K permalinks utils', () => {
 
   describe( 'Debounce', () => {
@@ -160,5 +184,63 @@ describe( 'The Regs3K permalinks utils', () => {
     } );
 
   } );
+
+  describe( 'getFirstMatch', () => {
+    it( 'should find the first match', () => {
+      expect( utils.getFirstMatch( 'Appendix B for 999', /Appendix [^\s]+/ ) ).toEqual( 'Appendix B' );
+      expect( utils.getFirstMatch( '§ 1099.999 bah', /§ 10[0-9].\.[0-9]*/g ) ).toEqual( '§ 1099.999' );
+    } );
+
+    it( 'should survive an encounter with the dreaded null beast', () => {
+      expect( utils.getFirstMatch( null, /Appendix [^\s]+/ ) ).toEqual( '' );
+    } );
+
+  } );
+
+  describe( 'getCommentMarker', () => {
+
+    it( 'should format Comments correctly', () => {
+      expect( utils.getCommentMarker( '17-a-1-Interp-1' ) ).toEqual( '17(a)(1)-1' );
+      expect( utils.getCommentMarker( '3-d-Interp-1' ) ).toEqual( '3(d)-1' );
+      expect( utils.getCommentMarker( '3-c-2-Interp-1' ) ).toEqual( '3(c)(2)-1' );
+    } );
+
+  } );
+
+  describe( 'getWayfinderInfo', () => {
+
+    it( 'should proceess paragraph ids and turn them into wayfinder link text', () => {
+      expect( utils.getWayfinderInfo( 'a-1-iii', '§ 1026.47   Content of disclosures.' ) )
+        .toEqual( { formattedTitle: '§ 1026.47', paragraphMarker: '(a)(1)(iii)' } );
+      expect( utils.getWayfinderInfo( 'c', '§ 1012.225   Content of disclosures.' ) )
+        .toEqual( { formattedTitle: '§ 1012.225', paragraphMarker: '(c)' } );
+      expect( utils.getWayfinderInfo( 'abcdef1234567890abcdef', 'Appendix A to Part 1010 — Standard and Model Forms and Clauses' ) )
+        .toEqual( { formattedTitle: 'Appendix A', paragraphMarker: '' } );
+      expect( utils.getWayfinderInfo( '33-a-2-Interp-2', 'Comment for 1026.33 - Requirements for Reverse Mortgages' ) )
+        .toEqual( { formattedTitle: 'Comment ', paragraphMarker: '33(a)(2)-2' } );
+    } );
+
+  } );
+
+  describe( 'updateWayfinder', () => {
+
+    beforeEach( () => {
+      // Load HTML fixture
+      document.body.innerHTML = HTML_SNIPPET3;
+    } );
+
+    it( 'should update the wayfinder', () => {
+      utils.updateParagraphPositions();
+      let mainContent = document.querySelector( '.regulations3k' );
+      let wayfinder = document.querySelector( '.o-regulations-wayfinder' );
+
+      utils.updateWayfinder( false, wayfinder, mainContent );
+      expect( document.querySelector( '.o-regulations-wayfinder_link' ).textContent.trim() ).toEqual( 'Comment 33(a)(2)-2' );
+      expect( document.querySelector( '.o-regulations-wayfinder_link' ).href ).toEqual( 'http://localhost/#33-a-2-Interp-2' );
+    } );
+
+  } );
+
+
 
 } );
