@@ -72,14 +72,14 @@
                     </span>
                 </button>
             </div>
-        {% if page.related_resource and page.language != 'es' %}
+        {% if page.related_resource and page.related_resource.trans_text(page.language) | striptags %}
             <div class="block next-steps">
                 <div class="o-well">
                 <h2 class="u-mb15">
                     {{ _('Take the next step') }}
                 </h2>
-                <h3 class="u-mt15">{{ page.related_resource.title | safe }}</h3>
-                {{ page.related_resource.text | safe }}
+                <h3 class="u-mt15">{{ page.related_resource.trans_title(page.language) | safe }}</h3>
+                {{ page.related_resource.trans_text(page.language) | safe }}
                 </div>
             </div>
         {% endif %}
