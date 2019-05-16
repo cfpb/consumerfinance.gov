@@ -97,3 +97,11 @@ class HomePageExcludedUpdates(models.Model):
     panels = [
         PageChooserPanel('excluded_page'),
     ]
+
+
+class SpanishHomePage(HomePage):
+    parent_page_types = ['v1.HomePage']
+
+    template = 'index_es.html'
+
+    objects = PageManager()
