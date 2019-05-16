@@ -884,9 +884,11 @@ class ArticlePage(CFGOVPage):
     )
     heading = models.CharField(
         max_length=255,
-        blank=True,
+        blank=False,
     )
-    intro = models.TextField(blank=True)
+    intro = models.TextField(
+        blank=False
+    )
     inset_heading = models.CharField(
         max_length=255,
         blank=True,
