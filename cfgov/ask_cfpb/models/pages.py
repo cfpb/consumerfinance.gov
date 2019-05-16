@@ -95,30 +95,13 @@ def get_ask_breadcrumbs(language='en', portal_topic=None):
             'title': 'Ask CFPB', 'href': '/ask-cfpb/',
         }],
     }
-    PORTAL_CRUMBS = {
-        'es': [{
-            'title': '', 'href': '/es/obtener-respuestas/{}/',
-        }],
-        'en': [{
-            'title': '', 'href': '/consumer-tools/{}/',
-        }],
-    }
-
     if portal_topic:
         page = get_portal_or_portal_search_page(
             portal_topic=portal_topic, language=language)
-        portal_title = portal_topic.title(language=language)
-        portal_slug = slugify(portal_title)
-        crumbs = PORTAL_CRUMBS[language]
-        title = page.title
-        href = crumbs[0]['href'].format(portal_slug)
-        if page.__class__ == PortalSearchPage:
-            href = '{}{}/'.format(
-                crumbs[0]['href'].format(portal_slug), _('answers'))
-        crumbs[0].update({
-            'title': title,
-            'href': href
-        })
+        crumbs = [{
+            'title': page.title,
+            'href': page.url
+        }]
         return crumbs
     return DEFAULT_CRUMBS[language]
 
