@@ -83,13 +83,13 @@ class RelatedResource(index.Indexed, models.Model):
 
     def trans_title(self, language='en'):
         if language == 'es':
-            return self.title_es
-        return self.title
+            return self.title_es or ''
+        return self.title or ''
 
     def trans_text(self, language='en'):
         if language == 'es':
-            return self.text_es
-        return self.text
+            return self.text_es or ''
+        return self.text or ''
 
     def __str__(self):
         return self.title
