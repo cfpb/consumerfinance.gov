@@ -16,7 +16,7 @@ Feature: Pagination
     And I click on the previous button again
     Then the page url should contain "page=1"
 
-   Scenario: Navigate to nth Page
+  Scenario: Navigate to nth Page
     When I enter "2" in the page input field
     And I click on the next button again
     Then the page url should contain "page=2"
