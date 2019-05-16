@@ -76,6 +76,9 @@ msgstr "No incluya información confidencial, como su nombre, información de co
 msgid "Return to top"
 msgstr "Ir arriba"
 
+msgid "Read more"
+msgstr "Leer más"
+
 msgid "Read full answer"
 msgstr "Leer más"
 
