@@ -35,6 +35,7 @@ from ask_cfpb.scripts.export_ask_data import (
 from v1.models import (
     CFGOVImage, HomePage, PortalCategory, PortalTopic, SublandingPage
 )
+from v1.models.snippets import GlossaryTerm
 from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import get_free_path, get_or_create_page
 
@@ -464,6 +465,41 @@ class PortalSearchPageTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data['search_term'], 'hoodoo')
+
+    def test_get_glossary_terms(self):
+        page = self.english_search_page
+        glossary_term = GlossaryTerm(
+            name_en='Escrow',
+            definition_en='Definition',
+            portal_topic=page.portal_topic)
+        glossary_term.save()
+        terms = page.get_glossary_terms()
+        self.assertEqual(next(terms).name('en'), 'Escrow')
+
+    def test_portal_category_page_key_terms(self):
+        page = self.english_search_page
+        glossary_term = GlossaryTerm(
+            name_en='Amortization',
+            definition_en='Definition',
+            portal_topic=page.portal_topic)
+        glossary_term.save()
+        url = "{}key-terms/".format(page.url)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Amortization')
+
+    def test_portal_category_page_key_terms_spanish(self):
+        page = self.spanish_search_page
+        glossary_term = GlossaryTerm(
+            name_en='Amortization',
+            name_es='Amortización',
+            definition_es='Definición',
+            portal_topic=page.portal_topic)
+        glossary_term.save()
+        url = "{}palabras-claves/".format(page.url)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Amortización')
 
 
 class AnswerPageTestCase(TestCase):
