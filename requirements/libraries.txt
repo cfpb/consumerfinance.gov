@@ -26,8 +26,7 @@ pyelasticsearch==0.6.1
 python-dateutil==2.7.3
 # PyYAML is required by college-costs
 PyYAML==3.13
-# This will change to regdown==1.0.0 before merging.
-git+https://github.com/cfpb/regdown.git#egg=regdown
+regdown==1.0.0
 requests==2.21.0
 requests_toolbelt==0.8.0
 sha3==0.2.1
