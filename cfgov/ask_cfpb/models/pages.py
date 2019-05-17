@@ -22,7 +22,6 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
-from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
@@ -74,29 +73,20 @@ def get_reusable_text_snippet(snippet_title):
         pass
 
 
-def get_ask_nav_items(request, current_page):
-    from ask_cfpb.models import Category
-    items = []
-    for cat in Category.objects.all():
-        if current_page.language == 'es':
-            title = cat.name_es
-            url = '/es/obtener-respuestas/categoria-{}/'.format(cat.slug_es)
+def get_portal_or_portal_search_page(portal_topic, language='en'):
+    if portal_topic:
+        portal_page = portal_topic.portal_pages.filter(
+            language=language, live=True).first()
+        if portal_page:
+            return portal_page
         else:
-            title = cat.name
-            url = '/ask-cfpb/category-{}/'.format(cat.slug)
-        items.append({
-            'title': title,
-            'url': url,
-            'active': False if not hasattr(current_page, 'ask_category')
-            else cat.name == current_page.ask_category.name,
-            'expanded': True
-        })
-
-    return items, True
+            portal_search_page = portal_topic.portal_search_pages.filter(
+                language=language, live=True).first()
+            return portal_search_page
+    return None
 
 
-def get_ask_breadcrumbs(
-        request, language='en', category=None, portal_topic=None):
+def get_ask_breadcrumbs(language='en', portal_topic=None):
     DEFAULT_CRUMBS = {
         'es': [{
             'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/',
@@ -105,59 +95,14 @@ def get_ask_breadcrumbs(
             'title': 'Ask CFPB', 'href': '/ask-cfpb/',
         }],
     }
-    PORTAL_CRUMBS = {
-        'es': [{
-            'title': '', 'href': '/es/obtener-respuestas/{}/',
-        }],
-        'en': [{
-            'title': '', 'href': '/consumer-tools/{}/',
-        }],
-    }
-    CATEGORY_CRUMBS = {
-        'es': {
-            'title': '',
-            'href': '/es/obtener-respuestas/categoria-{}/',
-        },
-        'en': {
-            'title': '',
-            'href': '/ask-cfpb/category-{}/',
-        }
-    }
-
-    if portal_topic and flag_enabled('ASK_CATEGORIES_OFF', request=request):
-        portal_title = portal_topic.title(language=language)
-        portal_slug = slugify(portal_title)
-        crumbs = PORTAL_CRUMBS[language]
-        portal_page = portal_topic.portal_pages.filter(
-            language=language, live=True).first()
-        if portal_page:
-            title = portal_page.title
-            slug = portal_slug
-            crumbs[0].update({
-                'title': title,
-                'href': crumbs[0]['href'].format(slug)
-            })
-        else:
-            portal_search_page = portal_topic.portal_search_pages.get(
-                language=language)
-            title = portal_search_page.title
-            href = '{}{}/'.format(
-                crumbs[0]['href'].format(portal_slug), _('answers'))
-            crumbs[0].update({
-                'title': title,
-                'href': href
-            })
+    if portal_topic:
+        page = get_portal_or_portal_search_page(
+            portal_topic=portal_topic, language=language)
+        crumbs = [{
+            'title': page.title,
+            'href': page.url
+        }]
         return crumbs
-    if category:
-        crumb_list = DEFAULT_CRUMBS[language]
-        title = category.name_es if language == 'es' else category.name
-        slug = category.slug_es if language == 'es' else category.slug
-        category_crumb = CATEGORY_CRUMBS[language]
-        href = category_crumb['href'].format(slug)
-        category_crumb['title'] = title
-        category_crumb['href'] = href
-        crumb_list.append(category_crumb)
-        return crumb_list
     return DEFAULT_CRUMBS[language]
 
 
@@ -447,105 +392,6 @@ class PortalSearchPage(
         return self.get_results(request)
 
 
-class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
-                         CFGOVPage):
-    """
-    A routable page type for Ask CFPB category pages and their subcategories.
-    """
-    from ask_cfpb.models import Answer, Audience, Category, SubCategory
-
-    objects = CFGOVPageManager()
-    content = StreamField([], null=True)
-    ask_category = models.ForeignKey(
-        Category,
-        blank=True,
-        null=True,
-        on_delete=models.PROTECT,
-        related_name='category_page')
-    ask_subcategory = models.ForeignKey(
-        SubCategory,
-        blank=True,
-        null=True,
-        on_delete=models.PROTECT,
-        related_name='subcategory_page')
-    content_panels = CFGOVPage.content_panels + [
-        FieldPanel('ask_category', Category),
-        StreamFieldPanel('content'),
-    ]
-
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='Content'),
-        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
-    ])
-
-    template = 'ask-cfpb/category-page.html'
-
-    def set_language(self):
-        if self.language != 'en':
-            activate(self.language)
-        else:
-            deactivate_all()
-
-    def get_context(self, request, *args, **kwargs):
-        self.set_language()
-        context = super(
-            AnswerCategoryPage, self).get_context(request, *args, **kwargs)
-        answers = self.ask_category.answerpage_set.filter(
-            language=self.language, redirect_to_page=None, live=True).values(
-                'answer_base__id', 'question', 'slug', 'answer')
-        subcats = self.ask_category.subcategories.all()
-        paginator = Paginator(answers, 20)
-        page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
-        context.update({
-            'answers': answers,
-            'choices': subcats,
-            'results_count': answers.count(),
-            'get_secondary_nav_items': get_ask_nav_items,
-            'breadcrumb_items': get_ask_breadcrumbs(
-                request, language=self.language),
-            'about_us': get_standard_text(self.language, 'about_us'),
-            'disclaimer': get_standard_text(self.language, 'disclaimer'),
-            'paginator': paginator,
-            'current_page': page_number,
-            'questions': page,
-        })
-        return context
-
-    # Returns an image for the page's meta Open Graph tag
-    @property
-    def meta_image(self):
-        return self.ask_category.category_image
-
-    @route(r'^(?P<subcat>[^/]+)/$')
-    def subcategory_page(self, request, **kwargs):
-        subcat = self.SubCategory.objects.filter(
-            slug=kwargs.get('subcat')).first()
-        if subcat:
-            self.ask_subcategory = subcat
-        else:
-            raise Http404
-        context = self.get_context(request)
-        answers = self.ask_subcategory.answerpage_set.filter(
-            language=self.language, live=True, redirect_to_page=None)
-        paginator = Paginator(answers, 20)
-        page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
-        context.update({
-            'paginator': paginator,
-            'current_page': page_number,
-            'results_count': answers.count(),
-            'questions': page,
-            'breadcrumb_items': get_ask_breadcrumbs(
-                request,
-                language=self.language,
-                category=self.ask_category
-            )
-        })
-        return TemplateResponse(
-            request, self.template, context)
-
-
 class AnswerResultsPage(CFGOVPage):
 
     objects = CFGOVPageManager()
@@ -577,7 +423,6 @@ class AnswerResultsPage(CFGOVPage):
         context['results'] = results
         context['results_count'] = len(self.answers)
         context['breadcrumb_items'] = get_ask_breadcrumbs(
-            request,
             language=self.language)
         context['about_us'] = get_standard_text(self.language, 'about_us')
         context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
@@ -808,26 +653,14 @@ class AnswerPage(CFGOVPage):
             self.short_answer if self.short_answer
             else Truncator(self.answer).words(40, truncate=' ...'))
         context['last_edited'] = self.last_edited
-        context['category'] = self.category.first()
+        context['portal_page'] = get_portal_or_portal_search_page(
+            portal_topic, language=self.language)
         context['breadcrumb_items'] = get_ask_breadcrumbs(
-            request,
             language=self.language,
-            category=context['category'],
             portal_topic=portal_topic,
         )
         context['about_us'] = get_standard_text(self.language, 'about_us')
         context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
-        context['category'] = self.category.first()
-        if self.language == 'en':
-            subcategories = []
-            for subcat in self.subcategory.all():
-                if subcat.parent == context['category']:
-                    subcategories.append(subcat)
-                for related in subcat.related_subcategories.all():
-                    if related.parent == context['category']:
-                        subcategories.append(related)
-            context['subcategories'] = set(subcategories)
-
         return context
 
     def __str__(self):

@@ -6,12 +6,8 @@ from django.test import TestCase
 
 from wagtail.wagtailcore.models import Page, Site
 
-from ask_cfpb.models import (
-    Answer, AnswerLandingPage, AnswerPage, Category, SubCategory
-)
-from ask_cfpb.wagtail_hooks import (
-    CategoryModelAdmin, SubCategoryModelAdmin, create_answer_id, editor_css
-)
+from ask_cfpb.models import Answer, AnswerLandingPage, AnswerPage
+from ask_cfpb.wagtail_hooks import create_answer_id, editor_css
 
 
 class TestAskHooks(TestCase):
@@ -35,10 +31,6 @@ class TestAskHooks(TestCase):
         self.site_root.add_child(instance=self.english_landing_page)
         self.english_landing_page.save()
         self.english_landing_page.save_revision(user=self.user).publish()
-
-    def test_ask_hooks(self):
-        self.assertEqual(SubCategoryModelAdmin.model, SubCategory)
-        self.assertEqual(CategoryModelAdmin.model, Category)
 
     def test_js_functions(self):
         self.assertIn("css/question-tips.css", editor_css())
