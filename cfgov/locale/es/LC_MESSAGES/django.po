@@ -23,7 +23,7 @@ msgid "Search the CFPB"
 msgstr "Buscar la CFPB"
 
 msgid "Submit a Complaint"
-msgstr "Presentar una queja"
+msgstr "Enviar una queja"
 
 msgid "Mortgage"
 msgstr "Hipoteca"
