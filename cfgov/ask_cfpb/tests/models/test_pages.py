@@ -10,7 +10,7 @@ from django.apps import apps
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
-from django.http import Http404, HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.template.defaultfilters import slugify
 from django.test import RequestFactory, TestCase, override_settings
 from django.utils import html, timezone, translation
@@ -26,8 +26,8 @@ from ask_cfpb.models.django import (
     NextStep, SubCategory, generate_short_slug
 )
 from ask_cfpb.models.pages import (
-    PORTAL_CATEGORY_SORT_ORDER, REUSABLE_TEXT_TITLES, AnswerCategoryPage,
-    AnswerPage, PortalSearchPage, validate_page_number
+    PORTAL_CATEGORY_SORT_ORDER, REUSABLE_TEXT_TITLES, AnswerPage,
+    PortalSearchPage, validate_page_number
 )
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
@@ -256,28 +256,24 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_get_ask_breadcrumbs_with_portal(self):
-        with override_settings(
-                FLAGS={'ASK_CATEGORIES_OFF': [('boolean', True)]}):
-            response = self.client.get(self.answer_page_es.url)
-            self.assertEqual(response.status_code, 200)
-            self.assertEqual(
-                len(response.context_data['breadcrumb_items']), 1)
-            self.assertEqual(
-                response.context_data['breadcrumb_items'][0]['title'],
-                self.answer_page_es.primary_portal_topic.heading_es)
+        response = self.client.get(self.answer_page_es.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            len(response.context_data['breadcrumb_items']), 1)
+        self.assertEqual(
+            response.context_data['breadcrumb_items'][0]['title'],
+            self.answer_page_es.primary_portal_topic.heading_es)
 
     def test_get_ask_breadcrumbs_with_draft_portal(self):
         self.spanish_portal.unpublish()
         self.spanish_portal.save()
-        with override_settings(
-                FLAGS={'ASK_CATEGORIES_OFF': [('boolean', True)]}):
-            response = self.client.get(self.answer_page_es.url)
-            self.assertEqual(response.status_code, 200)
-            self.assertEqual(
-                len(response.context_data['breadcrumb_items']), 1)
-            self.assertEqual(
-                response.context_data['breadcrumb_items'][0]['title'],
-                self.spanish_search_page.title)
+        response = self.client.get(self.answer_page_es.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            len(response.context_data['breadcrumb_items']), 1)
+        self.assertEqual(
+            response.context_data['breadcrumb_items'][0]['title'],
+            self.spanish_search_page.title)
         self.spanish_portal.save_revision(user=self.test_user).publish()
 
     def test_get_english_topic_heading(self):
@@ -521,27 +517,6 @@ class AnswerPageTestCase(TestCase):
         page.save()
         return page
 
-    def create_category_page(self, **kwargs):
-        kwargs.setdefault(
-            'path', get_free_path(apps, self.english_parent_page))
-        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
-        kwargs.setdefault('slug', 'category-mortgages')
-        kwargs.setdefault('title', 'Mortgages')
-        kwargs.setdefault('language', 'en')
-        cat_page = AnswerCategoryPage(**kwargs)
-        self.english_parent_page.add_child(instance=cat_page)
-        cat_page.save()
-        return cat_page
-
-    def create_es_category_page(self, **kwargs):
-        kwargs.setdefault('slug', 'spanishcat')
-        kwargs.setdefault('title', 'Spanish mortgages')
-        kwargs.setdefault('language', 'es')
-        es_cat_page = AnswerCategoryPage(**kwargs)
-        self.spanish_parent_page.add_child(instance=es_cat_page)
-        es_cat_page.save()
-        return es_cat_page
-
     def setUp(self):
         self.test_user = User.objects.get(pk=1)
         self.factory = RequestFactory()
@@ -691,60 +666,6 @@ class AnswerPageTestCase(TestCase):
         self.assertEqual(
             test_context['about_us'],
             get_reusable_text_snippet('About us (For consumers)'))
-
-    def test_routable_category_page_view(self):
-        cat_page = self.create_category_page(
-            ask_category=self.category)
-        response = cat_page.serve(HttpRequest())
-        self.assertEqual(response.status_code, 200)
-
-    def test_es_routable_category_page_view(self):
-        es_cat_page = self.create_es_category_page(
-            ask_category=self.category)
-        response = es_cat_page.serve(HttpRequest())
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(es_cat_page.language, 'es')
-        self.assertEqual(es_cat_page.get_language_display(), 'Spanish')
-        self.assertEqual(
-            es_cat_page.template, 'ask-cfpb/category-page.html')
-
-    def test_routable_category_page_bad_pagination(self):
-        cat_page = self.create_category_page(
-            ask_category=self.category)
-        request = HttpRequest()
-        request.GET['page'] = 50
-        response = cat_page.serve(HttpRequest())
-        self.assertEqual(response.status_code, 200)
-
-    def test_routable_category_page_invalid_pagination(self):
-        cat_page = self.create_category_page(
-            ask_category=self.category)
-        request = HttpRequest()
-        request.GET['page'] = 'A50'
-        response = cat_page.serve(HttpRequest())
-        self.assertEqual(response.status_code, 200)
-
-    def test_routable_subcategory_page_view(self):
-        cat_page = self.create_category_page(
-            ask_category=self.category)
-        response = cat_page.subcategory_page(
-            HttpRequest(), subcat=self.subcategories[0].slug)
-        self.assertEqual(response.status_code, 200)
-
-    def test_routable_subcategory_page_bad_subcategory(self):
-        cat_page = self.create_category_page(
-            ask_category=self.category)
-        with self.assertRaises(Http404):
-            cat_page.subcategory_page(HttpRequest(), subcat=None)
-
-    def test_routable_subcategory_page_bad_pagination(self):
-        cat_page = self.create_category_page(
-            ask_category=self.category)
-        request = HttpRequest()
-        request.GET['page'] = 100
-        response = cat_page.subcategory_page(
-            request, subcat=self.subcategories[0].slug)
-        self.assertEqual(response.status_code, 200)
 
     def test_routable_tag_page_base_returns_404(self):
         page = self.tag_results_page_en
@@ -978,73 +899,11 @@ class AnswerPageTestCase(TestCase):
             self.assertEqual(
                 page1.status_string, ("redirected but not live"))
 
-    def test_get_ask_nav_items(self):
-        from ask_cfpb.models import get_ask_nav_items
-        mommy.make(Category, name='test_cat')
-        test_nav_items = get_ask_nav_items({}, self.page1)[0]
-        self.assertEqual(
-            len(test_nav_items),
-            Category.objects.count())
-
-    def test_get_es_ask_nav_items(self):
-        from ask_cfpb.models import get_ask_nav_items
-        mommy.make(Category, name='test_es_cat')
-        test_nav_items = get_ask_nav_items({}, self.page1_es)[0]
-        self.assertEqual(
-            len(test_nav_items),
-            Category.objects.count())
-
     def test_get_ask_breadcrumbs(self):
-        request = HttpRequest()
         from ask_cfpb.models import get_ask_breadcrumbs
-        breadcrumbs = get_ask_breadcrumbs(request)
+        breadcrumbs = get_ask_breadcrumbs()
         self.assertEqual(len(breadcrumbs), 1)
         self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
-
-    def test_get_ask_breadcrumbs_with_category(self):
-        request = HttpRequest()
-        from ask_cfpb.models import get_ask_breadcrumbs
-        test_category = mommy.make(Category, name='breadcrumb_cat')
-        breadcrumbs = get_ask_breadcrumbs(request, category=test_category)
-        self.assertEqual(len(breadcrumbs), 2)
-        self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
-        self.assertEqual(breadcrumbs[1]['title'], test_category.name)
-
-    def test_get_es_ask_breadcrumbs_with_category(self):
-        request = HttpRequest()
-        from ask_cfpb.models import get_ask_breadcrumbs
-        test_category = mommy.make(Category, name_es='es_breadcrumb_cat')
-        breadcrumbs = get_ask_breadcrumbs(
-            request, language='es', category=test_category)
-        self.assertEqual(len(breadcrumbs), 2)
-        self.assertEqual(breadcrumbs[0]['title'], 'Obtener respuestas')
-        self.assertEqual(breadcrumbs[1]['title'], test_category.name_es)
-
-    def test_legacy_answer_page_breadcrumb_no_referrer(self):
-        """ If no referrer, breadcrumbs should reflect first category."""
-        page = self.page1
-        test_category = mommy.make(Category, name='Test cat', slug='test-cat')
-        page.category.add(self.category)
-        page.category.add(test_category)
-        request = HttpRequest()
-        request.META['HTTP_REFERER'] = ''
-        context = page.get_context(request)
-        default_category = page.category.first()
-        self.assertEqual(context['category'], default_category)
-        self.assertEqual(len(context['breadcrumb_items']), 2)
-        self.assertEqual(context['breadcrumb_items'][1]['title'],
-                         default_category.name)
-
-    def test_category_page_context(self):
-        mock_site = mock.Mock()
-        mock_site.hostname = 'localhost'
-        mock_request = HttpRequest()
-        mock_request.site = mock_site
-        cat_page = self.create_category_page(ask_category=self.category)
-        test_context = cat_page.get_context(mock_request)
-        self.assertEqual(
-            test_context['choices'].count(),
-            self.category.subcategories.count())
 
     def test_landing_page_context_no_featured_answer(self):
         page = self.page1
@@ -1105,10 +964,6 @@ class AnswerPageTestCase(TestCase):
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context['portal_cards']), 0)
 
-    def test_category_page_add_js_function(self):
-        cat_page = self.create_category_page(ask_category=self.category)
-        self.assertEqual(cat_page.page_js, ['secondary-navigation.js'])
-
     def test_answer_language_page_exists(self):
         self.assertEqual(self.answer5678.english_page, self.page2)
 
@@ -1138,13 +993,6 @@ class AnswerPageTestCase(TestCase):
             get_standard_text('en', 'about_us'),
             test_snippet)
 
-    def test_category_meta_image_undefined(self):
-        """ Category page's meta image is undefined if the category has
-        no image
-        """
-        category_page = self.create_category_page(ask_category=self.category)
-        self.assertIsNone(category_page.meta_image)
-
     def test_social_sharing_image_used(self):
         from v1.models.images import CFGOVImage
         image = CFGOVImage.objects.last()
@@ -1152,12 +1000,6 @@ class AnswerPageTestCase(TestCase):
         page.social_sharing_image = image
         page.save_revision(user=self.test_user).publish()
         self.assertEqual(page.meta_image, image)
-
-    def test_category_meta_image_uses_category_image(self):
-        """ Category page's meta image is its category's image """
-        category = mommy.make(Category, category_image=self.test_image)
-        category_page = self.create_category_page(ask_category=category)
-        self.assertEqual(category_page.meta_image, self.test_image)
 
     def test_answer_meta_image_undefined(self):
         """ Answer page's meta image is undefined if social image is
@@ -1175,45 +1017,6 @@ class AnswerPageTestCase(TestCase):
         page.category.add(category)
         page.save_revision()
         self.assertEqual(page.meta_image, self.test_image)
-
-    def test_answer_page_context_collects_subcategories(self):
-        """ Answer page's context delivers all related subcategories """
-        page = self.page1
-        page.category.add(self.category)
-        related_subcat = mommy.make(
-            SubCategory,
-            name='related_subcat',
-            parent=self.category)
-        subcat1 = self.subcategories[0]
-        subcat1.related_subcategories.add(related_subcat)
-        for each in self.subcategories:
-            page.subcategory.add(each)
-        page.save_revision()
-        request = HttpRequest()
-        context = page.get_context(request)
-        self.assertEqual(len(context['subcategories']), 4)
-
-    def test_answer_page_context_collects_subcategories_with_same_parent(self):
-        """ Answer page's context delivers only subcategories that
-            share the selected parent category """
-        page = self.page1
-        test_category = mommy.make(
-            Category, name='Test cat', slug='test-cat')
-        test_subcategory = mommy.make(
-            SubCategory, name='test_subcat', parent=test_category)
-        test_category.subcategories.add(test_subcategory)
-        page.category.add(test_category)
-        page.subcategory.add(test_subcategory)
-        page.category.add(self.category)
-        for each in self.subcategories:
-            page.subcategory.add(each)
-        page.save_revision()
-        request = HttpRequest()
-        context = page.get_context(request)
-        first_category = page.category.first()
-        self.assertEqual(context['category'], first_category)
-        self.assertEqual(len(context['subcategories']),
-                         first_category.subcategories.count())
 
     def test_answer_split_testing_id(self):
         """Confirm AnswerPage's split_testing_id is set to its answer_base.id,
