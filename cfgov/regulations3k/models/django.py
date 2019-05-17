@@ -15,7 +15,7 @@ from django.utils.html import strip_tags
 from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 
-from regulations3k import regdown
+import regdown
 
 
 def sortable_label(label, separator='-'):
