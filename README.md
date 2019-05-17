@@ -13,10 +13,8 @@ and [Wagtail CMS](https://wagtail.io) for content administration.
 
 ## Quickstart
 
-Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
-and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions,
-including those for an alternative Docker-based local setup,
-are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
+Full installation and usage instructions are available in
+[our documentation](https://cfpb.github.io/cfgov-refresh).
 
 This project requires Python 2.7, Node 8, and Gulp 4. We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/).
 
