@@ -6,45 +6,13 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.utils.html import format_html
 
-from wagtail.contrib.modeladmin.options import (
-    ModelAdmin, ModelAdminGroup, modeladmin_register
-)
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailadmin.rich_text import HalloPlugin
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
 
-from ask_cfpb.models import Answer, AnswerPage, Category, SubCategory
+from ask_cfpb.models import Answer, AnswerPage
 from ask_cfpb.scripts import export_ask_data
-
-
-class SubCategoryModelAdmin(ModelAdmin):
-    model = SubCategory
-    menu_label = 'Subcategories'
-    menu_icon = 'list-ul'
-    list_display = (
-        'name', 'weight', 'parent'
-    )
-    search_fields = (
-        'name', 'weight')
-    list_filter = ('parent',)
-
-
-class CategoryModelAdmin(ModelAdmin):
-    model = Category
-    menu_label = 'Categories'
-    menu_icon = 'list-ul'
-    list_display = (
-        'name', 'name_es', 'intro', 'intro_es')
-
-
-@modeladmin_register
-class MyModelAdminGroup(ModelAdminGroup):
-    menu_label = 'Ask CFPB'
-    menu_icon = 'list-ul'
-    items = (
-        CategoryModelAdmin,
-        SubCategoryModelAdmin)
 
 
 def export_data(request):
