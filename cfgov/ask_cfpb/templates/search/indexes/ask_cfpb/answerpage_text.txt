@@ -1,6 +1,6 @@
 {% load accent_stripper %}
-{{ object.answer|striptags|safe }}
-{{ object.answer|striptags|stripaccents|safe }}
+{{ object.answer_content|striptags|safe }}
+{{ object.answer_content|striptags|stripaccents|safe }}
 {{ object.short_answer|striptags|safe }}
 {{ object.short_answer|striptags|stripaccents|safe }}
 {{ object.question }}

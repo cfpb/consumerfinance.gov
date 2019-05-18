@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 import datetime
 import six
-import unittest
 from six.moves import html_parser as HTMLParser
 
 from django.apps import apps
@@ -11,9 +10,8 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponse
-from django.template.defaultfilters import slugify
 from django.test import RequestFactory, TestCase, override_settings
-from django.utils import html, timezone, translation
+from django.utils import timezone, translation
 from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
 
@@ -22,8 +20,7 @@ from wagtail.tests.utils import WagtailTestUtils
 from model_mommy import mommy
 
 from ask_cfpb.models.django import (
-    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Audience, Category,
-    NextStep, SubCategory, generate_short_slug
+    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Category, NextStep
 )
 from ask_cfpb.models.pages import (
     PORTAL_CATEGORY_SORT_ORDER, REUSABLE_TEXT_TITLES, AnswerLandingPage,
@@ -80,36 +77,6 @@ def mock_queryset(count=0):
     return MockSearchQuerySet()
 
 
-class AnswerSlugCreationTest(unittest.TestCase):
-
-    def test_long_slug_string(self):
-        long_string = (
-            "This string is more than 100 characters long, I assure you. "
-            "No, really, more than 100 characters loooong.")
-        self.assertEqual(
-            generate_short_slug(long_string),
-            ('this-string-is-more-than-100-characters-long-'
-             'i-assure-you-no-really-more-than-100-characters'))
-
-    def test_short_slug_string(self):
-        short_string = "This string is less than 100 characters long."
-        self.assertEqual(
-            generate_short_slug(short_string), slugify(short_string))
-
-    def test_slug_string_that_will_end_with_a_hyphen(self):
-        """
-        It's possible for slug truncation to result in a slug that ends
-        on a hypthen. In that case the function should strip the ending hyphen.
-        """
-        will_end_with_hyphen = (
-            "This string is more than 100 characters long, I assure you. "
-            "No, really, more than 100 characters looong and end on a hyphen.")
-        self.assertEqual(
-            generate_short_slug(will_end_with_hyphen),
-            'this-string-is-more-than-100-characters-long-i-assure-you-'
-            'no-really-more-than-100-characters-looong')
-
-
 class ExportAskDataTests(TestCase, WagtailTestUtils):
 
     def setUp(self):
@@ -121,7 +88,6 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
             'Answer': "Long answer.",
             'URL': "fakeurl.com",
             'PortalTopics': "Category 5 Hurricane",
-            'PortalCategories': "Subcat1 | Subcat2",
             'RelatedQuestions': "1 | 2 | 3",
             'RelatedResources': "Owning a Home"}]
 
@@ -563,11 +529,6 @@ class AnswerPageTestCase(TestCase):
 
     fixtures = ['ask_tests', 'portal_topics']
 
-    def prepare_answer(self, **kwargs):
-        kwargs.setdefault('answer', 'Mock answer')
-        kwargs.setdefault('slug', 'mock-answer')
-        return mommy.prepare(Answer, **kwargs)
-
     def create_answer_page(self, **kwargs):
         kwargs.setdefault(
             'path', get_free_path(apps, self.english_parent_page))
@@ -582,12 +543,8 @@ class AnswerPageTestCase(TestCase):
         self.test_user = User.objects.get(pk=1)
         self.factory = RequestFactory()
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
-        self.audience = mommy.make(Audience, name='stub_audience')
         self.category = mommy.make(
             Category, name='stub_cat', name_es='que', slug='stub-cat')
-        self.subcategories = mommy.make(
-            SubCategory, name='stub_subcat', parent=self.category, _quantity=3)
-        self.category.subcategories.add(self.subcategories[0])
         self.category.save()
         self.test_image = mommy.make(CFGOVImage)
         self.test_image2 = mommy.make(CFGOVImage)
@@ -653,25 +610,14 @@ class AnswerPageTestCase(TestCase):
             ROOT_PAGE,
             language='es',
             live=True)
-        self.answer1234 = self.prepare_answer(
-            id=1234,
-            answer='Mock answer 1',
-            answer_es='Mock Spanish answer',
-            slug='mock-answer-en-1234',
-            slug_es='mock-spanish-answer-es-1234',
-            question='Mock question1',
-            question_es='Mock Spanish question1',
-            search_tags='hippodrome',
-            search_tags_es='hipotecas',
-            update_english_page=True,
-            update_spanish_page=True)
+        self.answer1234 = Answer(id=1234)
         self.answer1234.save()
         self.page1 = AnswerPage(
             language='en',
             answer_base=self.answer1234,
             slug='mock-question-en-1234',
             title='Mock question1',
-            answer='Mock answer 1',
+            answer_content='Mock answer 1',
             question='Mock question1',
             search_tags='hippodrome')
         self.english_parent_page.add_child(instance=self.page1)
@@ -681,24 +627,19 @@ class AnswerPageTestCase(TestCase):
             slug='mock-spanish-question1-es-1234',
             title='Mock Spanish question1',
             answer_base=self.answer1234,
-            answer='Mock Spanish answer',
+            answer_content='Mock Spanish answer',
             question='Mock Spanish question1',
             search_tags='hipotecas')
         self.spanish_parent_page.add_child(instance=self.page1_es)
         self.page1_es.save_revision().publish()
-        self.answer5678 = self.prepare_answer(
-            id=5678,
-            answer='Mock answer 2',
-            question='Mock question2',
-            search_tags='hippodrome',
-            search_tags_es='hipotecas')
+        self.answer5678 = Answer(id=5678)
         self.answer5678.save()
         self.page2 = AnswerPage(
             language='en',
             slug='mock-question2-en-5678',
             title='Mock question2',
             answer_base=self.answer5678,
-            answer='Mock answer 2',
+            answer_content='Mock answer 2',
             question='Mock question2',
             search_tags='hippodrome')
         self.english_parent_page.add_child(instance=self.page2)
@@ -825,60 +766,6 @@ class AnswerPageTestCase(TestCase):
         for name in ['Chutes', 'Ladders']:
             self.assertIn(name, taglist)
 
-    def test_category_text(self):
-        answer = self.prepare_answer()
-        answer.save()
-        answer.category.add(self.category)
-        answer.save()
-        self.assertEqual(answer.category_text(), [self.category.name])
-        self.assertEqual(answer.category_text_es(), [self.category.name_es])
-
-    def test_category_text_no_category(self):
-        answer = self.prepare_answer()
-        answer.save()
-        self.assertEqual(answer.category_text(), '')
-        self.assertEqual(answer.category_text_es(), '')
-
-    def test_answer_text(self):
-        raw_snippet = "<strong>Snippet</strong>."
-        raw_answer = "<span>Clean answer test&nbsp;</span>"
-        combo = "{} {}".format(raw_snippet, raw_answer)
-        clean = html.strip_tags(html_parser.unescape(combo)).strip()
-        answer = self.prepare_answer(
-            snippet=raw_snippet,
-            answer=raw_answer,
-            snippet_es=raw_snippet,
-            answer_es=raw_answer)
-        answer.save()
-        self.assertEqual(answer.answer_text, clean)
-        self.assertEqual(answer.answer_text_es, clean)
-
-    def test_cleaned_questions(self):
-        answer = self.prepare_answer(
-            question="<span>Clean question test&nbsp;</span>",
-            question_es="<span>Clean question test&nbsp;</span>")
-        raw = "<span>Clean question test&nbsp;</span>"
-        clean = html.strip_tags(html_parser.unescape(raw)).strip()
-        answer.save()
-        self.assertEqual(answer.cleaned_questions(), [clean])
-        self.assertEqual(answer.cleaned_questions_es(), [clean])
-
-    def test_answer_str(self):
-        answer = self.prepare_answer(question="Let's test an English slug")
-        answer.save()
-        self.assertEqual(
-            answer.__str__(),
-            answer.question)
-
-    def test_answer_str_no_english_question(self):
-        answer = self.prepare_answer(
-            question='',
-            question_es="Let's test with no English")
-        answer.save()
-        self.assertEqual(
-            answer.__str__(),
-            answer.question_es)
-
     def test_english_header_and_footer(self):
         english_answer_page_response = self.client.get(reverse(
             'ask-english-answer',
@@ -926,19 +813,9 @@ class AnswerPageTestCase(TestCase):
         page.save_revision().publish()
         self.assertIn(page, self.portal_topic.featured_answers('en'))
 
-    def test_subcategory_str(self):
-        subcategory = self.subcategories[0]
-        self.assertEqual(
-            subcategory.__str__(),
-            "{}: {}".format(self.category.name, subcategory.name))
-
     def test_nextstep_str(self):
         next_step = self.next_step
         self.assertEqual(next_step.__str__(), next_step.title)
-
-    def test_audience_str(self):
-        audience = self.audience
-        self.assertEqual(audience.__str__(), audience.name)
 
     def test_status_string(self):
         with translation.override('en'):
@@ -1066,7 +943,7 @@ class AnswerPageTestCase(TestCase):
         """ Answer page's meta image is undefined if social image is
         not provided
         """
-        answer = self.prepare_answer()
+        answer = Answer()
         answer.save()
         page = self.create_answer_page(answer_base=answer)
         self.assertIsNone(page.meta_image)
