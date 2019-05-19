@@ -15,10 +15,13 @@
 */
 
 // Variable used to set the size of the play button.
-@play-btn-size__px: 73px;
+@play-btn-size__px: 60px;
 
 // Variable used to set the play button image.
 @play-btn-url: '/static/img/video-play-btn.png';
+
+// Variable used to set the play button hover image.
+@play-btn-url_hover: '/static/img/video-play-btn_hover.png';
 
 // Variable used to help center the video container.
 @share-width__px: 130px;
@@ -38,13 +41,17 @@
 .video-player.video-playing {
     // @black not used because it's not totally black.
     background-color: #000;
+    overflow: visible;
 
     .hide-on_video-playing {
-        display: none;
+        opacity: 0;
+        height: 0;
     }
 
     .show-on_video-playing {
-        display: block;
+        opacity: 1;
+        height: 100%;
+        width: 100%;
     }
 }
 
@@ -75,8 +82,13 @@
     position: absolute;
     height: @play-btn-size__px;
     width: @play-btn-size__px;
-    background: url( @play-btn-url ) no-repeat;
+    background-image: url( @play-btn-url );
+    background-size: cover;
     z-index: 3;
+
+    &:hover {
+        background-image: url( @play-btn-url_hover )
+    }
 
     &__center {
         left: 50%;
@@ -97,7 +109,8 @@
 }
 
 .video-player_video-container {
-    display: none;
+    opacity: 0;
+    height: 0;
     margin: auto;
 }
 
@@ -214,14 +227,104 @@
 	}
 } );
 
-
 // Special styles for playing within an FCM
+.o-featured-content-module {
+    .video-player_video-actions-container {
+        margin: 0;
+        padding: 0;
+        right: -1px;
+        top: -35px;
+    }
+
+    .video-player_video-actions {
+        height: 35px;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .video-player_close-btn {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        display: block;
+        margin-top: 35px;
+    }
+}
+
 .respond-to-min( @fcm-bp-min, {
+    .o-featured-content-module.video-playing {
+        .u-flexible-container();
+        // animation: expandFromTop 10000ms;
+        // transform: scale(1);
+        transition: 1200ms all ease-in-out;
+        // animation: reduceMinHeight 1000ms;
+        min-height: 0;
+
+        .video-player {
+            background-color: transparent;
+        }
+
+        .video-player_close-btn {
+            margin-top: 0;
+            transition: 1000ms margin-top ease-in-out;
+        }
+    }
+
     .o-featured-content-module_visual.video-playing {
-        position: absolute;
-        top: 0;
+        // animation: expandFromTopRight 1000ms;
+        // Position the element to the right for the start of the transition
         right: 0;
-        bottom: 0;
-        left: 0;
+        width: 100%;
+        transition: 1200ms all ease-in-out;
+
+        .video-player_iframe-container,
+        .video-player_iframe {
+            height: 100%;
+            width: 100%;
+            // transform: scale(1);
+            // transition: 5s all ease;
+
+        }
     }
 } );
+//
+@keyframes slideUp {
+    from {
+        transform-origin: bottom center;
+        transform: scale(0.1);
+    }
+
+    to {
+        transform-origin: bottom center;
+        transform: scale(1);
+    }
+}
+
+@keyframes expandFromTop {
+    from {
+        transform-origin: top center;
+        transform: scale(.2);
+    }
+
+    to {
+        transform-origin: top center;
+        transform: scale(1);
+    }
+}
+
+@keyframes expandFromTopRight {
+    from {
+        transform-origin: top right;
+        transform: scale(.9);
+        // height: 220px;
+        // width: 270px;
+        // opacity: .01;
+    }
+
+    to {
+        transform-origin: top right;
+        transform: scale(1);
+        // height: 100%;
+        // width: 100%;
+        // opacity: 1;
+    }
+}

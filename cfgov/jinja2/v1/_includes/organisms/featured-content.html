@@ -91,6 +91,7 @@
     {% if value.video.url and
           value.video.id %}
         {% import 'macros/video-player.html' as video_player with context %}
+        {% do value.video.update({'is_fcm': true}) %}
         {{ video_player.render(value) }}
     {% elif value.image.upload %}
         <div class="o-featured-content-module_visual">
