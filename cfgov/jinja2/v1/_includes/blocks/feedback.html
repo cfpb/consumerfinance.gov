@@ -7,187 +7,199 @@
 {# JS-disabled result handling #}
 
 <div class="o-feedback block">
-  <form method="post"
-        action="."
-        class="o-form
-               {% if value.was_it_helpful_text %}
-               block
-               block__bg
-               block__border
-               block__padded-top
-               {% endif %}"
-        novalidate>
-  <div class="u-mb15">
-        {% if get_messages(request) %}
-        {% for message in get_messages(request) %}
-            {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
-        {% endfor %}
-        {% else %}
-            {{ notification.render('default', false, '') }}
-        {% endif %}
-    </div>
+    <form method="post"
+          action="."
+          class="o-form
+                 {% if value.was_it_helpful_text %}
+                 block
+                 block__bg
+                 block__border
+                 block__padded-top
+                 {% endif %}"
+          novalidate>
+        <div class="u-mb15">
+            {% if get_messages(request) %}
+            {% for message in get_messages(request) %}
+                {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
+            {% endfor %}
+            {% else %}
+                {{ notification.render('default', false, '') }}
+            {% endif %}
+        </div>
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <input type="hidden" name="form_id" value="{{ form_id }}">
         <input type="hidden" name="referrer" value="{{ settings.referrer }}">
         <input type="hidden" name="language" value="{{ page.language }}">
 
-    {% if value.was_it_helpful_text %}
-    <div class="o-form_group">
-        <fieldset class="o-form_fieldset">
-            <legend class="a-legend">
+        {% if value.was_it_helpful_text %}
+        <div class="o-form_group">
+            <h3>
                 {{ _(value.was_it_helpful_text) }}
-            </legend>
-
-            <ul class="content-l m-list m-list__unstyled">
-                <li class="content-l_col content-l_col-1-2">
-                    <div class="m-form-field
-                                m-form-field__radio
-                                m-form-field__lg-target">
-                        <input class="a-radio"
-                               id="is_helpful_1"
-                               type="radio"
-                               name="is_helpful"
-                               value='1'
-                               {{ 'checked' if request.POST.is_helpful == '1' else '' }}>
-                        <label class="a-label"
-                               for="is_helpful_1">
-                            {{ _('Yes') }}
-                        </label>
-                    </div>
-                </li>
-                <li class="content-l_col content-l_col-1-2">
-                    <div class="m-form-field
-                                m-form-field__radio
-                                m-form-field__lg-target">
+            </h3>
+            <fieldset class="o-form_fieldset">
+                <ul class="content-l m-list m-list__unstyled">
+                    <li class="content-l_col content-l_col-1-2">
+                        <div class="m-form-field
+                                    m-form-field__radio
+                                    m-form-field__lg-target">
                             <input class="a-radio"
-                                   id="is_helpful_0"
-                                   type="radio"
-                                   name="is_helpful"
-                                   value="0"
-                                   {{ 'checked' if request.POST.is_helpful == '0' else '' }}>
+                                    id="is_helpful_1"
+                                    type="radio"
+                                    name="is_helpful"
+                                    value='1'
+                                    {{ 'checked' if request.POST.is_helpful == '1' else '' }}>
                             <label class="a-label"
-                                   for="is_helpful_0">
-                                No
+                                    for="is_helpful_1">
+                                {{ _('Yes') }}
                             </label>
-                    </div>
-                </li>
-            </ul>
+                        </div>
+                    </li>
+                    <li class="content-l_col content-l_col-1-2">
+                        <div class="m-form-field
+                                    m-form-field__radio
+                                    m-form-field__lg-target">
+                                <input class="a-radio"
+                                        id="is_helpful_0"
+                                        type="radio"
+                                        name="is_helpful"
+                                        value="0"
+                                        {{ 'checked' if request.POST.is_helpful == '0' else '' }}>
+                                <label class="a-label" for="is_helpful_0">
+                                    No
+                                </label>
+                        </div>
+                    </li>
+                </ul>
 
-        </fieldset>
-    </div>
-    {% else %}
-    <input type="hidden"
-           name="is_helpful"
-           value="{{ request.GET.get('is_helpful') }}">
-    {% endif %}
-
-    <div class="o-form_group">
-        <div class="m-form-field">
-            <label class="a-label a-label__heading" for="comment">
-                {% if value.intro_text %}
-                    {{ value.intro_text }}
-                {% elif value.question_text %}
-                    {{ value.question_text }}
-                {% elif value.was_it_helpful_text %}
-                    {{ _('Additional comment') }}
-                    <small class="a-label_helper">({{ _('optional') }})</small>
-                {% endif %}
-            </label>
-            <p class="u-mb15"><small><em>
-                  {{ _('Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature.') }}
-            </em></small></p>
-            <textarea class="a-text-input a-text-input__full"
-                      id="comment"
-                      name="comment"
-                      rows="6"
-                      {%- if not value.was_it_helpful_text %}
-                      required
-                      {% endif -%}>
-                {{- form.comment.value() | default('', true) -}}
-            </textarea>
+            </fieldset>
         </div>
-    </div>
+        {% else %}
+        <input type="hidden"
+               name="is_helpful"
+               value="{{ request.GET.get('is_helpful') }}">
+        {% endif %}
 
-    {% if value.radio_intro and not value.was_it_helpful_text %}
-    <div class="o-form_group">
-        <h3>{{ value.radio_intro }}</h3>
-        <p>{{ value.radio_text }}</p>
-
-        <fieldset class="o-form_fieldset">
-            <legend class="a-legend">
-               {{ value.radio_question_1 }}
-            </legend>
-
-            <div class="m-form-field m-form-field__radio">
-                <input class="a-radio"
-                       id="radio-6-months"
-                       type="radio"
-                       name="expect_to_buy"
-                       value="next 6 months">
-                <label class="a-label" for="radio-6-months">I expect to buy a home in the next 6 months</label>
+        <div class="o-form_group">
+            <div class="m-form-field">
+                <label class="a-label a-label__heading" for="comment">
+                    {% if value.intro_text %}
+                        {{ value.intro_text }}
+                    {% elif value.question_text %}
+                        {{ value.question_text }}
+                    {% elif value.was_it_helpful_text %}
+                        {{ _('Additional comment') }}
+                        <small class="a-label_helper">({{ _('optional') }})</small>
+                    {% endif %}
+                </label>
+                <p class="u-mb15">
+                    {{ _('Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature.') }}
+                </p>
+                <textarea class="a-text-input a-text-input__full"
+                          id="comment"
+                          name="comment"
+                          rows="6"
+                          {%- if not value.was_it_helpful_text %}
+                          required
+                          {% endif -%}>
+                    {{- form.comment.value() | default('', true) -}}
+                </textarea>
             </div>
-            <div class="m-form-field m-form-field__radio">
-                <input class="a-radio"
-                       id="radio-6-to-12"
-                       type="radio"
-                       name="expect_to_buy"
-                       value="6 to 12 months">
-                <label class="a-label" for="radio-6-to-12">I expect to buy a home in 6 – 12 months</label>
-            </div>
-            <div class="m-form-field m-form-field__radio">
-                <input class="a-radio"
-                       id="do not expect"
-                       type="radio"
-                       name="expect_to_buy"
-                       value="not expecting">
-                <label class="a-label" for="do not expect">I don't expect to buy a home in the next 12 months</label>
-            </div>
-        </fieldset>
-    </div>
-
-    <div class="o-form_group">
-        <fieldset class="o-form_fieldset">
-            <legend class="a-legend">
-                {{ value.radio_question_2 }}
-            </legend>
-
-            <div class="m-form-field m-form-field__radio">
-                <input class="a-radio"
-                       id="never_owned"
-                       type="radio"
-                       name="currently_own"
-                       value='never owned'>
-                <label class="a-label" for="never_owned">I have never owned a home</label>
-            </div>
-            <div class="m-form-field m-form-field__radio">
-                <input class="a-radio"
-                       id="not_now"
-                       type="radio"
-                       name="currently_own"
-                       value='have owned'>
-                <label class="a-label" for="not_now">I have owned a home in the past, but don't own right now</label>
-            </div>
-            <div class="m-form-field m-form-field__radio">
-                <input class="a-radio"
-                       id="owner"
-                       type="radio"
-                       name="currently_own"
-                       value='currently_own'>
-                <label class="a-label" for="owner">I currently own a home</label>
-            </div>
-        </fieldset>
-    </div>
-
-    <div class="o-form_group">
-        <div class="m-form-field">
-            <label class="a-label a-label__heading" for="email">Contact email</label>
-            <input class="a-text-input" id="form_email" type="email" name="email">
-            <p>{{ value.contact_advisory }}</p>
         </div>
-    </div>
-    {% endif %}
 
-    <button class="a-btn" type="submit">{% if page.language == 'es' %}Enviar{% else %}{{ value.button_text }}{% endif %}</button>
-  </form>
+        {% if value.radio_intro and not value.was_it_helpful_text %}
+        <div class="o-form_group">
+            <h3>{{ value.radio_intro }}</h3>
+            <p>{{ value.radio_text }}</p>
+
+            <fieldset class="o-form_fieldset">
+                <legend class="a-legend">
+                    {{ value.radio_question_1 }}
+                </legend>
+
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="radio-6-months"
+                           type="radio"
+                           name="expect_to_buy"
+                           value="next 6 months">
+                    <label class="a-label" for="radio-6-months">
+                        I expect to buy a home in the next 6 months
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="radio-6-to-12"
+                           type="radio"
+                           name="expect_to_buy"
+                           value="6 to 12 months">
+                    <label class="a-label" for="radio-6-to-12">
+                        I expect to buy a home in 6 – 12 months
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="do not expect"
+                           type="radio"
+                           name="expect_to_buy"
+                           value="not expecting">
+                    <label class="a-label" for="do not expect">
+                        I don't expect to buy a home in the next 12 months
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="o-form_group">
+            <fieldset class="o-form_fieldset">
+                <legend class="a-legend">
+                    {{ value.radio_question_2 }}
+                </legend>
+
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="never_owned"
+                           type="radio"
+                           name="currently_own"
+                           value='never owned'>
+                    <label class="a-label" for="never_owned">
+                        I have never owned a home
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="not_now"
+                           type="radio"
+                           name="currently_own"
+                           value='have owned'>
+                    <label class="a-label" for="not_now">
+                        I have owned a home in the past, but don't own right now
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="owner"
+                           type="radio"
+                           name="currently_own"
+                           value='currently_own'>
+                    <label class="a-label" for="owner">
+                        I currently own a home
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="o-form_group">
+            <div class="m-form-field">
+                <label class="a-label a-label__heading" for="email">Contact email</label>
+                <input class="a-text-input" id="form_email" type="email" name="email">
+                <p>{{ value.contact_advisory }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <button class="a-btn" type="submit">
+            {% if page.language == 'es' %}Enviar{% else %}{{ value.button_text }}{% endif %}
+        </button>
+    </form>
 </div>
 {% endmacro %}
