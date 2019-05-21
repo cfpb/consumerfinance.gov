@@ -62,7 +62,13 @@ JOURNEY_PATHS = (
     '/owning-a-home/process',
 )
 # Custom sort for navigation, by PortalCategory primary keys
-PORTAL_CATEGORY_SORT_ORDER = [1, 4, 5, 2, 3]
+PORTAL_CATEGORY_SORT_ORDER = OrderedDict((
+    (1, 'Basics'),
+    (4, 'Key terms'),
+    (5, 'Common issues'),
+    (2, 'Know your rights'),
+    (3, 'How-to guides'),
+))
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -163,7 +169,7 @@ class AnswerLandingPage(LandingPage):
                     live=True).first()
                 if topic_page:
                     url = topic_page.url
-                else:
+                else:  # pragma: no cover
                     continue
             portal_cards.append({
                 'topic': topic,
@@ -231,7 +237,7 @@ class PortalSearchPage(
         """
         categories = PortalCategory.objects.order_by('pk')
         sorted_mapping = OrderedDict()
-        for i in PORTAL_CATEGORY_SORT_ORDER:
+        for i in list(PORTAL_CATEGORY_SORT_ORDER.keys()):
             sorted_mapping.update({
                 slugify(
                     categories[i - 1].title(self.language)

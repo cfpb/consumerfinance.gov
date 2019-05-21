@@ -329,7 +329,7 @@ class PortalSearchPageTestCase(TestCase):
     def test_category_map_sort_order(self):
         mapping = self.english_search_page.category_map
         self.assertEqual(
-            PORTAL_CATEGORY_SORT_ORDER,
+            list(PORTAL_CATEGORY_SORT_ORDER.keys()),
             [category.pk for slug, category in mapping.items()]
         )
 
