@@ -355,9 +355,6 @@ urlpatterns = [
     url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
 
-    url(r'^es/nuestra-historia/$', TemplateView.as_view(
-                 template_name='es/nuestra-historia/index.html')),
-
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
 
     url(
