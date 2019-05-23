@@ -44,7 +44,7 @@ Install third-party dependencies and build frontend assets:
 ./setup.sh
 ```
 
-Create a local database and add some basic pages:
+Create a local database, a Wagtail admin user, and a site homepage:
 
 ```sh
 ./initial-data.sh
