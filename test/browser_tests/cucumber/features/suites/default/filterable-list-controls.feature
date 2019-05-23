@@ -9,15 +9,15 @@ Feature: Filterable list controls
 # The posts should also have several different authors, including at least one with the author "CFPB Web Team".
 
 Background:
-	Given I load test blog post data
+	Given I load test blog post data		Given I goto URL "/about-us/blog/"
 	And I goto URL "about-us/blog/"
 	And I open the filterable list control
 
 @undefined
 Scenario: Item name search
-	When I enter “loan” in the item name input field
+	When I enter "loan" in the item name input field
 	And I apply filters
-	Then I should see only results with the word “loan” in the post title
+	Then I should see only results with the word "loan" in the post title
 
 @undefined
 Scenario: Select a category
@@ -33,15 +33,15 @@ Scenario: Select multiple categories
 
 @undefined
 Scenario: Date range to present
-	When I enter “1/1/2017” in the From date entry field
+	When I enter "01/01/2017" in the From date entry field
 	And I apply filters
 	Then I should see only results dated 1/1/2017 or later
 
 @undefined
 Scenario: Date range in past
-	When I enter “1/1/2016” in the From date entry field
-	And I enter “1/1/2017” in the To date entry field
-	Then I should see only results between 1/1/2016 and 1/1/2017, inclusive
+	When I enter "01/01/2016" in the From date entry field
+	And I enter "01/01/2017" in the To date entry field
+	Then I should see only results between 01/01/2016 and 01/01/2017, inclusive
 
 @undefined
 Scenario: Select a topic
@@ -57,8 +57,8 @@ Scenario: Select multiple topics
 
 @undefined
 Scenario: Type-ahead topics
-	When I type “mortgage” in the topic input box
-	Then the list of topics should show only tags that contain the word “mortgage”
+	When I type "mortgage" in the topic input box
+	Then the list of topics should show only tags that contain the word "mortgage"
 	And when I select a topic in the list
 	And I apply filters
 	Then I should see only results tagged with the selected topic
@@ -76,7 +76,7 @@ Scenario: Clear fliters
 	When I select a checkbox in the Topic list
 	And I apply filters
 	Then I should see only results that are both in the selected category and tagged with the selected topic
-	And when I click “clear filters”
+	And when I click "clear filters"
 	Then I should see the full list of results
 
 @undefined
@@ -93,36 +93,36 @@ Scenario: Select multiple authors
 
 @undefined
 Scenario: Type-ahead authors
-	When I type “CFPB” in the Author input box
-	Then the list of authors should show only items that contain “CFPB”
+	When I type "CFPB" in the Author input box
+	Then the list of authors should show only items that contain "CFPB"
 	And when I select a checkbox in the Author list
 	And I apply filters
 	Then I should see only results posted by the selected author
 
 @undefined
 Scenario: Name search plus category
-	When I type “loans” in the item name input box
+	When I type "loans" in the item name input box
 	And I select a checkbox in the Category list
 	And I apply filters
-	Then I should see only results in the selected category with “loans” in the post title
+	Then I should see only results in the selected category with "loans" in the post title
 
 @undefined
 Scenario: Name search plus topic
-	When I type “loans” in the item name input box
+	When I type "loans" in the item name input box
 	And I select a checkbox in the Topic list
 	And I apply filters
-	Then I should see only results tagged with the selected topic with “loans” in the post title
+	Then I should see only results tagged with the selected topic with "loans" in the post title
 
 @undefined
 Scenario: Name search plus date range
-	When I type “loans” in the item name input box
-	And I type “1/1/2017” in the From date entry field
+	When I type "loans" in the item name input box
+	And I type "01/01/2017" in the From date entry field
 	And I apply filters
-	Then I should see only results dated 1/1/2017 or later with “loans” in the post title
+	Then I should see only results dated 01/01/2017 or later with "loans" in the post title
 
 @undefined
 Scenario: Name search plus author
-	When I type “loans” in the item name input box
+	When I type "loans" in the item name input box
 	And I select a checkbox in the Author list
 	And I apply filters
-	Then I should see only results posted by the select author with “loans” in the post title
+	Then I should see only results posted by the select author with "loans" in the post title

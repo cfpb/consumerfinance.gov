@@ -59,6 +59,7 @@ function buildSearchResultsURL( base, params, opts ) {
  */
 function showLoading( el ) {
   el.style.opacity = 0.5;
+  el.className += ' is-loading';
   return el;
 }
 
@@ -70,6 +71,7 @@ function showLoading( el ) {
  */
 function hideLoading( el ) {
   el.style.opacity = 1;
+  el.className = el.className.replace( ' is-loading', '' );
   return el;
 }
 

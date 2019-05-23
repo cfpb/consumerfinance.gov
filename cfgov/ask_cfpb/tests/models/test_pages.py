@@ -26,8 +26,8 @@ from ask_cfpb.models.django import (
     NextStep, SubCategory, generate_short_slug
 )
 from ask_cfpb.models.pages import (
-    PORTAL_CATEGORY_SORT_ORDER, REUSABLE_TEXT_TITLES, AnswerPage,
-    PortalSearchPage, validate_page_number
+    PORTAL_CATEGORY_SORT_ORDER, REUSABLE_TEXT_TITLES, AnswerLandingPage,
+    AnswerPage, PortalSearchPage, validate_page_number
 )
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
@@ -194,11 +194,13 @@ class PortalSearchPageTestCase(TestCase):
             new_page.save()
             new_page.save_revision(user=self.test_user).publish()
             return new_page
+        self.portal_topic = PortalTopic.objects.get(pk=1)
+        self.portal_topic2 = PortalTopic.objects.get(pk=2)
         self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.test_user = User.objects.last()
         self.factory = RequestFactory()
         self.english_ask_parent = create_page(
-            SublandingPage,
+            AnswerLandingPage,
             'Ask CFPB',
             'ask-cfpb',
             self.ROOT_PAGE)
@@ -213,12 +215,24 @@ class PortalSearchPageTestCase(TestCase):
             'auto-loans',
             self.english_portal_parent,
             portal_topic_id=1)
+        self.english_portal2 = create_page(
+            SublandingPage,
+            'Bank accounts',
+            'bank-accounts',
+            self.english_portal_parent,
+            portal_topic_id=2)
         self.english_search_page = create_page(
             PortalSearchPage,
             'Auto loan answers',
             'answers',
             self.english_portal,
             portal_topic_id=1)
+        self.english_search_page2 = create_page(
+            PortalSearchPage,
+            'Bank account answers',
+            'answers',
+            self.english_portal2,
+            portal_topic_id=2)
         self.spanish_parent = create_page(
             SublandingPage,
             'Obtener respuestas',
@@ -239,6 +253,24 @@ class PortalSearchPageTestCase(TestCase):
             self.spanish_portal,
             language='es',
             portal_topic_id=1)
+        self.answer_page = create_page(
+            AnswerPage,
+            'English auto-loans question-8888?',
+            'english-auto-loans-question-en-8888',
+            self.english_ask_parent,
+            featured=True,
+        )
+        self.answer_page.portal_topic.add(self.portal_topic)
+        self.answer_page.save()
+        self.answer_page2 = create_page(
+            AnswerPage,
+            'English banks question-8889?',
+            'english-banks-question-en-8889',
+            self.english_ask_parent,
+            featured=True,
+        )
+        self.answer_page.portal_topic.add(self.portal_topic2)
+        self.answer_page.save()
         self.answer_page_es = create_page(
             AnswerPage,
             'Spanish test question-es-9999?',
@@ -496,6 +528,35 @@ class PortalSearchPageTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Amortización')
+
+    def test_landing_page_live_portal(self):
+        self.assertEqual(
+            len(self.english_ask_parent.get_portal_cards()), 2
+        )
+
+    def test_landing_page_draft_portal(self):
+        self.english_portal.unpublish()
+        self.assertFalse(self.english_portal.live)
+        self.english_ask_parent.refresh_from_db()
+        self.assertEqual(
+            len(self.english_ask_parent.get_portal_cards()), 2
+        )
+
+    def test_landing_page_draft_portals(self):
+        for sl_page in SublandingPage.objects.all():
+            sl_page.unpublish()
+        self.assertEqual(
+            len(self.english_ask_parent.get_portal_cards()), 2
+        )
+
+    def test_landing_page_draft_portals_draft_search(self):
+        for sl_page in SublandingPage.objects.all():
+            sl_page.unpublish()
+        for s_page in self.portal_topic.portal_search_pages.all():
+            s_page.unpublish()
+        for s_page in self.portal_topic2.portal_search_pages.all():
+            s_page.unpublish()
+        self.assertEqual(self.english_ask_parent.get_portal_cards(), [])
 
 
 class AnswerPageTestCase(TestCase):
