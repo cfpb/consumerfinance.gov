@@ -17,15 +17,17 @@ logger = logging.getLogger(__name__)
 @transaction.atomic
 def run():
     logger.info('Running script initial_data')
+    default_site = Site.objects.get(is_default_site=True)
 
-    admin_username = 'admin'
-    admin_password = 'admin'
-    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME',
-                                      'content.localhost')
-    http_port = os.environ.get('DJANGO_HTTP_PORT', '80')
+    admin_username = os.getenv('DJANGO_ADMIN_USERNAME', 'admin')
+    admin_password = os.getenv('DJANGO_ADMIN_PASSWORD', 'admin')
+    http_port = int(os.getenv('DJANGO_HTTP_PORT', default_site.port))
+
+    staging_hostname = os.getenv('DJANGO_STAGING_HOSTNAME')
 
     # Create admin user if it doesn't exist already.
     # Update existing one with admin password and active state.
+    logger.info('Configuring superuser, username: {}'.format(admin_username))
     User.objects.update_or_create(
         username=admin_username,
         defaults={
@@ -40,41 +42,45 @@ def run():
     try:
         home_page = HomePage.objects.get(slug='cfgov')
     except HomePage.DoesNotExist:
+        logger.info('Creating new cfgov home page')
+
+        # Create the new home page instance.
         home_page = HomePage(
             title='CFGov',
             slug='cfgov',
             live=True
         )
 
+        # Add the new home page as a child to the Wagtail root page.
         root_page = Page.objects.get(slug='root')
         root_page.add_child(instance=home_page)
 
-        home_page_revision = home_page.save_revision()
-        home_page_revision.publish()
-
-    # Make sure default site (either the one installed with Wagtail, or one
-    # that has since been manually setup) is running on the correct port and
-    # with the expected home page as its root.
-    default_site = Site.objects.get(is_default_site=True)
-    default_site.hostname = 'localhost'
-    default_site.port = http_port
+    # Configure the default Wagtail Site to point to the proper home page
+    # with the desired port.
     default_site.root_page_id = home_page.id
+    default_site.port = http_port
     default_site.save()
-
-    # Setup a sharing site if it doesn't exist already. Use the default
-    # Wagtail site.
-    SharingSite.objects.update_or_create(
-        site=default_site,
-        defaults={
-            'hostname': staging_hostname,
-            'port': http_port,
-        }
-    )
+    logger.info('Configured default Wagtail Site: {}'.format(default_site))
 
     # Delete the legacy Wagtail "hello world" page, if it exists.
+    # This page is created as part of the default Wagtail install.
+    # https://github.com/wagtail/wagtail/blob/v1.13.4/wagtail/wagtailcore/migrations/0002_initial_data.py#L33
     try:
-        hello_world = Page.objects.get(slug='home')
+        hello_world = Page.objects.get(slug='home', url_path='/home/')
     except Page.DoesNotExist:
         pass
     else:
+        logger.info('Deleting default Wagtail home page')
         hello_world.delete()
+
+    # Setup a sharing site for the default Wagtail site if a staging hostname
+    # has been configured in the environment.
+    if staging_hostname:
+        sharing_site, _ = SharingSite.objects.update_or_create(
+            site=default_site,
+            defaults={
+                'hostname': staging_hostname,
+                'port': http_port,
+            }
+        )
+        logger.info('Configured wagtail-sharing site: {}'.format(sharing_site))
