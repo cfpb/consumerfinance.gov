@@ -77,6 +77,14 @@ def mock_queryset(count=0):
     return MockSearchQuerySet()
 
 
+class AnswerStringTestCase(TestCase):
+
+    def test_answer_string_method(self):
+        test_answer = Answer(question="Test question?")
+        test_answer.save()
+        self.assertEqual(test_answer.__str__(), test_answer.question)
+
+
 class ExportAskDataTests(TestCase, WagtailTestUtils):
 
     def setUp(self):

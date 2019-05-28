@@ -86,7 +86,7 @@ class Answer(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return self.question or self.question_es
+        return self.question
 
     @property
     def english_page(self):
