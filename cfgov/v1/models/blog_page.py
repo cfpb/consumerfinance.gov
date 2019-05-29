@@ -17,6 +17,7 @@ class BlogPage(AbstractFilterPage):
         ('info_unit_group', organisms.InfoUnitGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
+        ('video_player', organisms.VideoPlayer()),
         ('email_signup', organisms.EmailSignUp()),
         ('feedback', v1_blocks.Feedback()),
     ])
