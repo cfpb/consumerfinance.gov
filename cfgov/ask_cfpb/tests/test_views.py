@@ -61,22 +61,14 @@ class AnswerPagePreviewCase(TestCase):
             self.ROOT_PAGE,
             language='es',
             live=True)
-        self.test_answer = mommy.make(
-            Answer,
-            answer="Test answer1.",
-            question="Test question1.",
-            slug='test-question1')
-        self.test_answer2 = mommy.make(
-            Answer,
-            answer="Test answer2.",
-            question="Test question2.",
-            slug='test-question2')
+        self.test_answer = mommy.make(Answer)
+        self.test_answer2 = mommy.make(Answer)
         self.english_answer_page = AnswerPage(
             answer_base=self.test_answer,
             language='en',
             slug='test-question1-en-{}'.format(self.test_answer.pk),
             title='Test question1',
-            answer='Test answer1.',
+            answer_content='Test answer1.',
             question='Test question1.')
         self.english_parent_page.add_child(instance=self.english_answer_page)
         self.english_answer_page.save_revision().publish()
@@ -85,7 +77,7 @@ class AnswerPagePreviewCase(TestCase):
             language='en',
             slug='test-question2-en-{}'.format(self.test_answer2.pk),
             title='Test question2',
-            answer='Test answer2.',
+            answer_content='Test answer2.',
             question='Test question2.')
         self.english_parent_page.add_child(instance=self.english_answer_page2)
         self.english_answer_page2.save_revision().publish()

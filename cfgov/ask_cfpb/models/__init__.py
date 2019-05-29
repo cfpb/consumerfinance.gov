@@ -1,7 +1,6 @@
 # flake8: noqa F401
 from ask_cfpb.models.django import (
-    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Audience, NextStep,
-    generate_short_slug
+    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, NextStep
 )
 from ask_cfpb.models.pages import (
     AnswerLandingPage, AnswerPage, AnswerResultsPage, PortalSearchPage,
