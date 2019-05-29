@@ -492,21 +492,6 @@ class AnswerPage(CFGOVPage):
         blank=True,
         features=['link', 'document-link'],
         help_text='Optional answer intro')
-    answer = RichTextField(
-        blank=True,
-        features=[
-            'bold', 'italic', 'h2', 'h3', 'h4', 'link', 'ol', 'ul',
-            'document-link', 'image', 'embed', 'ask-tips', 'edit-html'
-        ],
-        help_text=(
-            "Do not use H2 or H3 to style text. Only use the HTML Editor "
-            "for troubleshooting. To style tips, warnings and notes, "
-            "select the content that will go inside the rule lines "
-            "(so, title + paragraph) and click the Pencil button "
-            "to style it. Re-select the content and click the button "
-            "again to unstyle the tip."
-        )
-    )
     answer_content = StreamField(
         ask_blocks.AskAnswerContent(),
         blank=True,
@@ -536,12 +521,6 @@ class AnswerPage(CFGOVPage):
         help_text=(
             "Categorize this answer. "
             "Avoid putting into more than one category."))
-    subcategory = models.ManyToManyField(
-        'SubCategory',
-        blank=True,
-        help_text=(
-            "Choose only subcategories that belong "
-            "to one of the categories checked above."))
     search_tags = models.CharField(
         max_length=1000,
         blank=True,
@@ -631,7 +610,7 @@ class AnswerPage(CFGOVPage):
     sidebar_panels = [StreamFieldPanel('sidebar'), ]
 
     search_fields = Page.search_fields + [
-        index.SearchField('answer'),
+        index.SearchField('answer_content'),
         index.SearchField('short_answer')
     ]
 
@@ -651,7 +630,7 @@ class AnswerPage(CFGOVPage):
         context['related_questions'] = self.related_questions.all()
         context['description'] = (
             self.short_answer if self.short_answer
-            else Truncator(self.answer).words(40, truncate=' ...'))
+            else Truncator(self.answer_content).words(40, truncate=' ...'))
         context['last_edited'] = self.last_edited
         context['portal_page'] = get_portal_or_portal_search_page(
             portal_topic, language=self.language)
