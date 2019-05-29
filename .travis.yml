@@ -43,8 +43,6 @@ script:
 
 env:
   global:
-    - DJANGO_SETTINGS_MODULE=cfgov.settings.test
-    - DJANGO_STAGING_HOSTNAME=content.localhost
     - COVERALLS_PARALLEL=true
     - PGPORT=5433
     - TEST_DATABASE_URL=postgres://travis:travis@localhost:5433/travis
