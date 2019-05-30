@@ -1,8 +1,8 @@
 {% load accent_stripper %}
-{{ object.answer_content|striptags|safe }}
-{{ object.answer_content|striptags|stripaccents|safe }}
 {{ object.short_answer|striptags|safe }}
+{{ object.answer_text|safe }}
 {{ object.short_answer|striptags|stripaccents|safe }}
+{{ object.answer_unaccented|safe }}
 {{ object.question }}
 {{ object.question|stripaccents }}
 {% for tag in tags %}
