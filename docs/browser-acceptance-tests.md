@@ -232,3 +232,4 @@ There are a number of options to the command:
  - `gulp lint:scripts`: Lint only the project source scripts.
  - `--fix`: Add this flag (like `gulp lint --fix` or `gulp lint:build --fix`)
    to auto-fix some errors, where ESLint has support to do so.
+ - `--path`: Add this flags to specify a file to lint, rather than all files
