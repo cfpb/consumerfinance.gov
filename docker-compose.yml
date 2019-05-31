@@ -22,36 +22,27 @@ services:
         build: 
             context: ./
             dockerfile: ./Dockerfile
-            target: dev
-        image: python
+            target: cfgov-dev
+        image: cfgov-dev
         ports:
             - "8000:8000"
         environment:
             ES_HOST: elasticsearch
             PYTHON: /usr/bin/python2
-        volumes:
-            - ./:/src/cfgov-refresh
-            - ./develop-apps:/src/develop-apps
         depends_on:
             - elasticsearch
             - postgres
-        working_dir: /src/cfgov-refresh
         stdin_open: true
         tty: true
     python3:
-        image: python
+        image: cfgov-dev
         ports:
             - "8333:8000"
         environment:
             ES_HOST: elasticsearch
-            PYTHON: /usr/bin/python3
-        volumes:
-            - ./:/src/cfgov-refresh
-            - ./develop-apps:/src/develop-apps
         depends_on:
             - elasticsearch
             - postgres
-        working_dir: /src/cfgov-refresh
         stdin_open: true
         tty: true
     docs:

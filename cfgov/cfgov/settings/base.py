@@ -798,4 +798,4 @@ PARSE_LINKS_EXCLUSION_LIST = [
 # Required by django-extensions to determine the execution directory used by
 # scripts executed with the "runscript" management command.
 # See https://django-extensions.readthedocs.io/en/latest/runscript.html.
-BASE_DIR = 'scripts'
+BASE_DIR = REPOSITORY_ROOT.child('scripts')

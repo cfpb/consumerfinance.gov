@@ -1,4 +1,12 @@
-source /src/cfgov-refresh/.env
-source /etc/profile.d/extend-environment.sh
-ln -sf /usr/bin/python3.6 /usr/local/bin/python
-python3.6 /src/cfgov-refresh/cfgov/manage.py runserver 0.0.0.0:8000
+if [ -f /src/cfgov-refresh/.env ]; then
+    source /src/cfgov-refresh/.env
+    echo 'source /src/cfgov-refresh/.env' >> ~/.bashrc
+
+fi
+if [ -f /etc/profile.d/extend-environment ]; then
+    source /etc/profile.d/extend-environment.sh
+fi
+
+ln -sf $PYTHON /usr/local/bin/python
+
+exec "$@"
