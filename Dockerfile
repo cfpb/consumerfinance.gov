@@ -69,7 +69,7 @@ ENV ALLOWED_HOSTS='["*"]'
 # install optional apps
 RUN pip2 install -r /src/requirements/optional-public.txt
 
-# Commented out because retirement wheel is Python3 compatible yet
+# Commented out because retirement wheel is not Python3 compatible yet
 # RUN pip3.6 install -r /src/requirements/optional-public.txt
 
 RUN sh frontend.sh production
