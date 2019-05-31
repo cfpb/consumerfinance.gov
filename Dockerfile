@@ -44,7 +44,7 @@ RUN pip3.6 install -U pip setuptools
 RUN pip2.7 install -r /src/requirements/local.txt
 RUN pip3.6 install -r /src/requirements/local.txt
 
-ENV EXTRA_MOD_WSGI_ARGS "--reload-on-changes"
+ENV EXTRA_MODWSGI_ARGS "--reload-on-changes"
 
 FROM cfgov-dev as cfgov-build
 RUN mkdir /src/cfgov-refresh
