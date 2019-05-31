@@ -63,8 +63,8 @@ def assemble_output():
         output['RelatedResource'] = page['related_resource__title']
         output['Question'] = page['question'].replace('\x81', '')
         answer_streamfield = page['answer_content'].stream_data
-        answer_text = filter(
-            lambda item: item['type'] == 'text', answer_streamfield)
+        answer_text = list(filter(
+            lambda item: item['type'] == 'text', answer_streamfield))
         if answer_text:
             answer = answer_text[0].get('value').get('content')
         else:
