@@ -22,17 +22,16 @@ services:
         build: 
             context: ./
             dockerfile: ./Dockerfile
+            target: dev
         image: python
         ports:
             - "8000:8000"
         environment:
             ES_HOST: elasticsearch
+            PYTHON: /usr/bin/python2
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps
-        entrypoint:
-            - sh
-            - /src/cfgov-refresh/docker/python2/entrypoint.sh
         depends_on:
             - elasticsearch
             - postgres
@@ -45,12 +44,10 @@ services:
             - "8333:8000"
         environment:
             ES_HOST: elasticsearch
+            PYTHON: /usr/bin/python3
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps
-        entrypoint:
-            - sh
-            - /src/cfgov-refresh/docker/python3/entrypoint.sh
         depends_on:
             - elasticsearch
             - postgres

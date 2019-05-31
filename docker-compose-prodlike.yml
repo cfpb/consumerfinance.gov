@@ -1,0 +1,11 @@
+version: "3.4"
+
+services:
+    python2:
+        build: 
+            context: ./
+            dockerfile: ./Dockerfile
+            target: cfgov-deployment
+        image: cfgov-deployment
+    python3:
+        image: cfgov-deployment
