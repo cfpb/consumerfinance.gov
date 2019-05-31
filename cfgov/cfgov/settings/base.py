@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'treemodeladmin',
     'housing_counselor',
     'hmda',
+    'mod_wsgi.server',
 )
 
 OPTIONAL_APPS = [
@@ -421,7 +422,7 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     if os.environ.get('AWS_S3_CUSTOM_DOMAIN'):
         AWS_S3_CUSTOM_DOMAIN = os.environ['AWS_S3_CUSTOM_DOMAIN']
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_LOCATION, '')
+    #MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_LOCATION, '')
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')

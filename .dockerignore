@@ -3,9 +3,10 @@ develop-apps
 collectstatic
 *.sql
 .github
-gulp
 node_modules
+npm-packages-offline-cache
 docs
 .vendor
 html
 .git
+*.sql.gz
