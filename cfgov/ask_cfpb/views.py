@@ -103,7 +103,8 @@ def ask_search(request, language='en', as_json=False):
                 {
                     'question': result.autocomplete,
                     'url': result.url,
-                    'text': result.text
+                    'text': result.text,
+                    'preview': result.preview,
                 }
                 for result in search.queryset
             ]
@@ -115,7 +116,7 @@ def ask_search(request, language='en', as_json=False):
     results_page.result_query = search.search_term
     results_page.suggestion = search.suggestion
     results_page.answers = [
-        (result.url, result.autocomplete, result.text)
+        (result.url, result.autocomplete, result.preview)
         for result in search.queryset
     ]
     return results_page.serve(request)
