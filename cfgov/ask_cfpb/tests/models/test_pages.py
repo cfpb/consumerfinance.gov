@@ -16,6 +16,7 @@ from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
 
 from wagtail.tests.utils import WagtailTestUtils
+from wagtail.wagtailcore.blocks import StreamValue
 
 from model_mommy import mommy
 
@@ -107,6 +108,12 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
             title='Mock question1')
         page.answer_base = answer
         page.question = 'Mock question1'
+        page.answer_content = StreamValue(
+            page.answer_content.stream_block, [{
+                'type': 'text',
+                'value': 'Mock answer'
+            }], True
+        )
         helpers.publish_page(page)
 
         output = assemble_output()[0]
