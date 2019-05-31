@@ -34,6 +34,8 @@ services:
             - postgres
         stdin_open: true
         tty: true
+        # see also: docker-compose.override.yml, which will be processed by default
+        # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
     python3:
         image: cfgov-dev
         ports:
@@ -45,6 +47,8 @@ services:
             - postgres
         stdin_open: true
         tty: true
+        # see also: docker-compose.override.yml, which will be processed by default
+        # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
     docs:
         build:
             context: ./
