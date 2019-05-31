@@ -62,8 +62,20 @@ def assemble_output():
         output['Language'] = page['language']
         output['RelatedResource'] = page['related_resource__title']
         output['Question'] = page['question'].replace('\x81', '')
-        output['Answer'] = clean_and_strip(
-            page['answer_content']).replace('\x81', '')
+        answer_streamfield = page['answer_content'].stream_data
+        answer_text = filter(
+            lambda item: item['type'] == 'text', answer_streamfield)
+        if answer_text:
+            answer = answer_text[0].get('value').get('content')
+        else:
+            # If no text block is found,
+            # there is either a HowTo or FAQ schema block.
+            # Both define a description field, so we'll use that here.
+            answer_schema = filter(
+                lambda item: item['type'] == 'how_to_schema' or
+                item['type'] == 'faq_schema', answer_streamfield)
+            answer = answer_schema[0].get('value').get('description')
+        output['Answer'] = clean_and_strip(answer).replace('\x81', '')
         output['ShortAnswer'] = clean_and_strip(page['short_answer'])
         output['URL'] = page['url_path'].replace('/cfgov', '')
         output['Live'] = page['live']
