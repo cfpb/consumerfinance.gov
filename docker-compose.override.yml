@@ -1,0 +1,12 @@
+version: "3.4"
+volumes:
+  postgres_data:
+services:
+    python2:
+        volumes:
+            - ./:/src/cfgov-refresh
+            - ./develop-apps:/src/develop-apps
+    python3:
+        volumes:
+            - ./:/src/cfgov-refresh
+            - ./develop-apps:/src/develop-apps
