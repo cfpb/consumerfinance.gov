@@ -89,3 +89,4 @@ COPY --from=cfgov-build /src/cfgov-refresh/cfgov/ /src/cfgov-refresh/cfgov/
 COPY --from=cfgov-build /var/www/html/static /var/www/html/static
 WORKDIR /src/cfgov-refresh
 RUN chown -R apache:apache .
+EXPOSE 8000
