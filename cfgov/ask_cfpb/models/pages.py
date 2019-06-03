@@ -624,6 +624,15 @@ class AnswerPage(CFGOVPage):
 
     objects = CFGOVPageManager()
 
+    def get_sibling_url(self):
+        if self.answer_base:
+            if self.language == 'es':
+                sibling = self.answer_base.english_page
+            else:
+                sibling = self.answer_base.spanish_page
+            if sibling and sibling.live and not sibling.redirect_to_page:
+                return sibling.url
+
     def get_context(self, request, *args, **kwargs):
         portal_topic = self.primary_portal_topic or self.portal_topic.first()
         context = super(AnswerPage, self).get_context(request)
@@ -640,6 +649,7 @@ class AnswerPage(CFGOVPage):
         )
         context['about_us'] = get_standard_text(self.language, 'about_us')
         context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
+        context['sibling_url'] = self.get_sibling_url()
         return context
 
     def __str__(self):
