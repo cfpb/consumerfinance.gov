@@ -23,6 +23,7 @@ cache:
   pip: true
 
 before_install:
+  - sudo apt-get install -y # needed for pip install modwsgi
   - nvm install 10
   - nvm use 10
   - npm install --global yarn@1.15.2
