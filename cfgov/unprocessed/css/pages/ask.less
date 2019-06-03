@@ -140,11 +140,12 @@
         display: none;
     }
 
-    h2 {
-        max-width: 41.875rem;
-    }
-
     .answer-text {
+        h2,
+        h3,
+        h4 {
+            max-width: 41.875rem;
+        }
         .row + .row {
             margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         }
