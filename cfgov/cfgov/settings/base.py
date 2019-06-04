@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'taggit',
     'wagtailinventory',
     'wagtailsharing',
+    'college',
     'flags',
     'wagtailautocomplete',
     'wagtailflags',

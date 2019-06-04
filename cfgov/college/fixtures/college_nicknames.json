@@ -1,0 +1,7107 @@
+[
+    {
+        "schoo_id": 222178, 
+        "city": "Abilene", 
+        "state": "TX", 
+        "nickname": "Wildcats", 
+        "name": "Abilene Christian University"
+    }, 
+    {
+        "schoo_id": 126182, 
+        "city": "Alamosa", 
+        "state": "CO", 
+        "nickname": "Grizzlies", 
+        "name": "Adams State University"
+    }, 
+    {
+        "schoo_id": 188429, 
+        "city": "Garden City", 
+        "state": "NY", 
+        "nickname": "Panthers", 
+        "name": "Adelphi University"
+    }, 
+    {
+        "schoo_id": 168528, 
+        "city": "Adrian", 
+        "state": "MI", 
+        "nickname": "Bulldogs", 
+        "name": "Adrian College"
+    }, 
+    {
+        "schoo_id": 100654, 
+        "city": "Normal", 
+        "state": "AL", 
+        "nickname": "Bulldogs", 
+        "name": "Alabama A & M University"
+    }, 
+    {
+        "schoo_id": 100654, 
+        "city": "Normal", 
+        "state": "AL", 
+        "nickname": "Lady Bulldogs", 
+        "name": "Alabama A & M University"
+    }, 
+    {
+        "schoo_id": 100724, 
+        "city": "Montgomery", 
+        "state": "AL", 
+        "nickname": "Hornets", 
+        "name": "Alabama State University"
+    }, 
+    {
+        "schoo_id": 100724, 
+        "city": "Montgomery", 
+        "state": "AL", 
+        "nickname": "Lady Hornets", 
+        "name": "Alabama State University"
+    }, 
+    {
+        "schoo_id": 128498, 
+        "city": "New Haven", 
+        "state": "CT", 
+        "nickname": "Falcons", 
+        "name": "Albertus Magnus College"
+    }, 
+    {
+        "schoo_id": 210571, 
+        "city": "Reading", 
+        "state": "PA", 
+        "nickname": "Lions", 
+        "name": "Albright College"
+    }, 
+    {
+        "schoo_id": 175342, 
+        "city": "Alcorn State", 
+        "state": "MS", 
+        "nickname": "Braves", 
+        "name": "Alcorn State University"
+    }, 
+    {
+        "schoo_id": 175342, 
+        "city": "Alcorn State", 
+        "state": "MS", 
+        "nickname": "Lady Braves", 
+        "name": "Alcorn State University"
+    }, 
+    {
+        "schoo_id": 237118, 
+        "city": "Philippi", 
+        "state": "WV", 
+        "nickname": "Battlers", 
+        "name": "Alderson Broaddus University"
+    }, 
+    {
+        "schoo_id": 188641, 
+        "city": "Alfred", 
+        "state": "NY", 
+        "nickname": "Saxons", 
+        "name": "Alfred University"
+    }, 
+    {
+        "schoo_id": 156189, 
+        "city": "Pippa Passes", 
+        "state": "KY", 
+        "nickname": "Eagles", 
+        "name": "Alice Lloyd College"
+    }, 
+    {
+        "schoo_id": 210775, 
+        "city": "Reading", 
+        "state": "PA", 
+        "nickname": "Crusaders", 
+        "name": "Alvernia University"
+    }, 
+    {
+        "schoo_id": 164447, 
+        "city": "Springfield", 
+        "state": "MA", 
+        "nickname": "Yellowjackets", 
+        "name": "American International College"
+    }, 
+    {
+        "schoo_id": 131159, 
+        "city": "Washington", 
+        "state": "DC", 
+        "nickname": "Eagles", 
+        "name": "American University"
+    }, 
+    {
+        "schoo_id": 164465, 
+        "city": "Amherst", 
+        "state": "MA", 
+        "nickname": "Lord Jeffs", 
+        "name": "Amherst College"
+    }, 
+    {
+        "schoo_id": 150066, 
+        "city": "Anderson", 
+        "state": "IN", 
+        "nickname": "Ravens", 
+        "name": "Anderson University"
+    }, 
+    {
+        "schoo_id": 217633, 
+        "city": "Anderson", 
+        "state": "SC", 
+        "nickname": "Trojans", 
+        "name": "Anderson University"
+    }, 
+    {
+        "schoo_id": 222831, 
+        "city": "San Angelo", 
+        "state": "TX", 
+        "nickname": "Rams", 
+        "name": "Angelo State University"
+    }, 
+    {
+        "schoo_id": 222831, 
+        "city": "San Angelo", 
+        "state": "TX", 
+        "nickname": "'Belles", 
+        "name": "Angelo State University"
+    }, 
+    {
+        "schoo_id": 222831, 
+        "city": "San Angelo", 
+        "state": "TX", 
+        "nickname": "Rambelles", 
+        "name": "Angelo State University"
+    }, 
+    {
+        "schoo_id": 197869, 
+        "city": "Boone", 
+        "state": "NC", 
+        "nickname": "Mountaineers", 
+        "name": "Appalachian State University"
+    }, 
+    {
+        "schoo_id": 211088, 
+        "city": "Glenside", 
+        "state": "PA", 
+        "nickname": "Knights", 
+        "name": "Arcadia University"
+    }, 
+    {
+        "schoo_id": 448886, 
+        "city": "Phoenix", 
+        "state": "AZ", 
+        "nickname": "Sun Devils", 
+        "name": "Arizona State University-Downtown Phoenix"
+    }, 
+    {
+        "schoo_id": 106458, 
+        "city": "Jonesboro", 
+        "state": "AR", 
+        "nickname": "Red Wolves", 
+        "name": "Arkansas State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 106467, 
+        "city": "Russellville", 
+        "state": "AR", 
+        "nickname": "Wonder Boys", 
+        "name": "Arkansas Tech University"
+    }, 
+    {
+        "schoo_id": 106467, 
+        "city": "Russellville", 
+        "state": "AR", 
+        "nickname": "Golden Suns", 
+        "name": "Arkansas Tech University"
+    }, 
+    {
+        "schoo_id": 154022, 
+        "city": "Clinton", 
+        "state": "IA", 
+        "nickname": "Saints", 
+        "name": "Ashford University"
+    }, 
+    {
+        "schoo_id": 201104, 
+        "city": "Ashland", 
+        "state": "OH", 
+        "nickname": "Eagles", 
+        "name": "Ashland University"
+    }, 
+    {
+        "schoo_id": 164562, 
+        "city": "Worcester", 
+        "state": "MA", 
+        "nickname": "Greyhounds", 
+        "name": "Assumption College"
+    }, 
+    {
+        "schoo_id": 100858, 
+        "city": "Auburn University", 
+        "state": "AL", 
+        "nickname": "Tigers", 
+        "name": "Auburn University"
+    }, 
+    {
+        "schoo_id": 100858, 
+        "city": "Auburn University", 
+        "state": "AL", 
+        "nickname": "Plainsmen", 
+        "name": "Auburn University"
+    }, 
+    {
+        "schoo_id": 100830, 
+        "city": "Montgomery", 
+        "state": "AL", 
+        "nickname": "Senators", 
+        "name": "Auburn University at Montgomery"
+    }, 
+    {
+        "schoo_id": 173045, 
+        "city": "Minneapolis", 
+        "state": "MN", 
+        "nickname": "Auggies", 
+        "name": "Augsburg College"
+    }, 
+    {
+        "schoo_id": 143084, 
+        "city": "Rock Island", 
+        "state": "IL", 
+        "nickname": "Vikings", 
+        "name": "Augustana College"
+    }, 
+    {
+        "schoo_id": 143118, 
+        "city": "Aurora", 
+        "state": "IL", 
+        "nickname": "Spartans", 
+        "name": "Aurora University"
+    }, 
+    {
+        "schoo_id": 222983, 
+        "city": "Sherman", 
+        "state": "TX", 
+        "nickname": "Kangaroos", 
+        "name": "Austin College"
+    }, 
+    {
+        "schoo_id": 219602, 
+        "city": "Clarksville", 
+        "state": "TN", 
+        "nickname": "Governors", 
+        "name": "Austin Peay State University"
+    }, 
+    {
+        "schoo_id": 219602, 
+        "city": "Clarksville", 
+        "state": "TN", 
+        "nickname": "Lady Govs", 
+        "name": "Austin Peay State University"
+    }, 
+    {
+        "schoo_id": 446048, 
+        "city": "Ave Maria", 
+        "state": "FL", 
+        "nickname": "Gyrenes", 
+        "name": "Ave Maria University"
+    }, 
+    {
+        "schoo_id": 446048, 
+        "city": "Ave Maria", 
+        "state": "FL", 
+        "nickname": "Lady Gyrenes", 
+        "name": "Ave Maria University"
+    }, 
+    {
+        "schoo_id": 176628, 
+        "city": "Kansas City", 
+        "state": "MO", 
+        "nickname": "Eagles", 
+        "name": "Avila University"
+    }, 
+    {
+        "schoo_id": 164580, 
+        "city": "Wellesley", 
+        "state": "MA", 
+        "nickname": "Beavers", 
+        "name": "Babson College"
+    }, 
+    {
+        "schoo_id": 154688, 
+        "city": "Baldwin City", 
+        "state": "KS", 
+        "nickname": "Wildcats", 
+        "name": "Baker University"
+    }, 
+    {
+        "schoo_id": 201195, 
+        "city": "Berea", 
+        "state": "OH", 
+        "nickname": "Yellow Jackets", 
+        "name": "Baldwin Wallace University"
+    }, 
+    {
+        "schoo_id": 150136, 
+        "city": "Muncie", 
+        "state": "IN", 
+        "nickname": "Cardinals", 
+        "name": "Ball State University"
+    }, 
+    {
+        "schoo_id": 189088, 
+        "city": "Annandale-On-Hudson", 
+        "state": "NY", 
+        "nickname": "Raptors", 
+        "name": "Bard College"
+    }, 
+    {
+        "schoo_id": 167792, 
+        "city": "Great Barrington", 
+        "state": "MA", 
+        "nickname": "Llamas", 
+        "name": "Bard College at Simon's Rock"
+    }, 
+    {
+        "schoo_id": 132471, 
+        "city": "Miami", 
+        "state": "FL", 
+        "nickname": "Buccaneers", 
+        "name": "Barry University"
+    }, 
+    {
+        "schoo_id": 160977, 
+        "city": "Lewiston", 
+        "state": "ME", 
+        "nickname": "Bobcats", 
+        "name": "Bates College"
+    }, 
+    {
+        "schoo_id": 223232, 
+        "city": "Waco", 
+        "state": "TX", 
+        "nickname": "Bears", 
+        "name": "Baylor University"
+    }, 
+    {
+        "schoo_id": 223232, 
+        "city": "Waco", 
+        "state": "TX", 
+        "nickname": "Lady Bears", 
+        "name": "Baylor University"
+    }, 
+    {
+        "schoo_id": 180814, 
+        "city": "Bellevue", 
+        "state": "NE", 
+        "nickname": "Bruins", 
+        "name": "Bellevue University"
+    }, 
+    {
+        "schoo_id": 197984, 
+        "city": "Belmont", 
+        "state": "NC", 
+        "nickname": "Crusaders", 
+        "name": "Belmont Abbey College"
+    }, 
+    {
+        "schoo_id": 219709, 
+        "city": "Nashville", 
+        "state": "TN", 
+        "nickname": "Bruins", 
+        "name": "Belmont University"
+    }, 
+    {
+        "schoo_id": 238333, 
+        "city": "Beloit", 
+        "state": "WI", 
+        "nickname": "Buccaneers", 
+        "name": "Beloit College"
+    }, 
+    {
+        "schoo_id": 173124, 
+        "city": "Bemidji", 
+        "state": "MN", 
+        "nickname": "Beavers", 
+        "name": "Bemidji State University"
+    }, 
+    {
+        "schoo_id": 217721, 
+        "city": "Columbia", 
+        "state": "SC", 
+        "nickname": "Tigers", 
+        "name": "Benedict College"
+    }, 
+    {
+        "schoo_id": 154712, 
+        "city": "Atchison", 
+        "state": "KS", 
+        "nickname": "Ravens", 
+        "name": "Benedictine College"
+    }, 
+    {
+        "schoo_id": 164739, 
+        "city": "Waltham", 
+        "state": "MA", 
+        "nickname": "Falcons", 
+        "name": "Bentley University"
+    }, 
+    {
+        "schoo_id": 156295, 
+        "city": "Berea", 
+        "state": "KY", 
+        "nickname": "Mountaineers", 
+        "name": "Berea College"
+    }, 
+    {
+        "schoo_id": 154721, 
+        "city": "Lindsborg", 
+        "state": "KS", 
+        "nickname": "Swedes", 
+        "name": "Bethany College"
+    }, 
+    {
+        "schoo_id": 237181, 
+        "city": "Bethany", 
+        "state": "WV", 
+        "nickname": "Bison", 
+        "name": "Bethany College"
+    }, 
+    {
+        "schoo_id": 150145, 
+        "city": "Mishawaka", 
+        "state": "IN", 
+        "nickname": "Pilots", 
+        "name": "Bethel College-Indiana"
+    }, 
+    {
+        "schoo_id": 154749, 
+        "city": "North Newton", 
+        "state": "KS", 
+        "nickname": "Threshers", 
+        "name": "Bethel College-North Newton"
+    }, 
+    {
+        "schoo_id": 173160, 
+        "city": "Saint Paul", 
+        "state": "MN", 
+        "nickname": "Royals", 
+        "name": "Bethel University"
+    }, 
+    {
+        "schoo_id": 132602, 
+        "city": "Daytona Beach", 
+        "state": "FL", 
+        "nickname": "Wildcats", 
+        "name": "Bethune-Cookman University"
+    }, 
+    {
+        "schoo_id": 100937, 
+        "city": "Birmingham", 
+        "state": "AL", 
+        "nickname": "Panthers", 
+        "name": "Birmingham Southern College"
+    }, 
+    {
+        "schoo_id": 219046, 
+        "city": "Spearfish", 
+        "state": "SD", 
+        "nickname": "Yellow Jackets", 
+        "name": "Black Hills State University"
+    }, 
+    {
+        "schoo_id": 223427, 
+        "city": "Brenham", 
+        "state": "TX", 
+        "nickname": "Buccaneers", 
+        "name": "Blinn College"
+    }, 
+    {
+        "schoo_id": 183822, 
+        "city": "Bloomfield", 
+        "state": "NJ", 
+        "nickname": "Deacons", 
+        "name": "Bloomfield College"
+    }, 
+    {
+        "schoo_id": 211158, 
+        "city": "Bloomsburg", 
+        "state": "PA", 
+        "nickname": "Huskies", 
+        "name": "Bloomsburg University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 237215, 
+        "city": "Bluefield", 
+        "state": "WV", 
+        "nickname": "Big Blues", 
+        "name": "Bluefield State College"
+    }, 
+    {
+        "schoo_id": 237215, 
+        "city": "Bluefield", 
+        "state": "WV", 
+        "nickname": "Lady Blues", 
+        "name": "Bluefield State College"
+    }, 
+    {
+        "schoo_id": 201371, 
+        "city": "Bluffton", 
+        "state": "OH", 
+        "nickname": "Beavers", 
+        "name": "Bluffton University"
+    }, 
+    {
+        "schoo_id": 142115, 
+        "city": "Boise", 
+        "state": "ID", 
+        "nickname": "Broncos", 
+        "name": "Boise State University"
+    }, 
+    {
+        "schoo_id": 164924, 
+        "city": "Chestnut Hill", 
+        "state": "MA", 
+        "nickname": "Eagles", 
+        "name": "Boston College"
+    }, 
+    {
+        "schoo_id": 164988, 
+        "city": "Boston", 
+        "state": "MA", 
+        "nickname": "Terriers", 
+        "name": "Boston University"
+    }, 
+    {
+        "schoo_id": 161004, 
+        "city": "Brunswick", 
+        "state": "ME", 
+        "nickname": "Polar Bears", 
+        "name": "Bowdoin College"
+    }, 
+    {
+        "schoo_id": 162007, 
+        "city": "Bowie", 
+        "state": "MD", 
+        "nickname": "Bulldogs", 
+        "name": "Bowie State University"
+    }, 
+    {
+        "schoo_id": 201441, 
+        "city": "Bowling Green", 
+        "state": "OH", 
+        "nickname": "Falcons", 
+        "name": "Bowling Green State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 143358, 
+        "city": "Peoria", 
+        "state": "IL", 
+        "nickname": "Braves", 
+        "name": "Bradley University"
+    }, 
+    {
+        "schoo_id": 165015, 
+        "city": "Waltham", 
+        "state": "MA", 
+        "nickname": "Judges", 
+        "name": "Brandeis University"
+    }, 
+    {
+        "schoo_id": 189459, 
+        "city": "Bethpage", 
+        "state": "NY", 
+        "nickname": "Seahawks", 
+        "name": "Briarcliffe College"
+    }, 
+    {
+        "schoo_id": 230047, 
+        "city": "Laie", 
+        "state": "HI", 
+        "nickname": "Seasiders", 
+        "name": "Brigham Young University-Hawaii"
+    }, 
+    {
+        "schoo_id": 230038, 
+        "city": "Provo", 
+        "state": "UT", 
+        "nickname": "Cougars", 
+        "name": "Brigham Young University-Provo"
+    }, 
+    {
+        "schoo_id": 217156, 
+        "city": "Providence", 
+        "state": "RI", 
+        "nickname": "Bears", 
+        "name": "Brown University"
+    }, 
+    {
+        "schoo_id": 217165, 
+        "city": "Smithfield", 
+        "state": "RI", 
+        "nickname": "Bulldogs", 
+        "name": "Bryant University"
+    }, 
+    {
+        "schoo_id": 211291, 
+        "city": "Lewisburg", 
+        "state": "PA", 
+        "nickname": "Bison", 
+        "name": "Bucknell University"
+    }, 
+    {
+        "schoo_id": 153001, 
+        "city": "Storm Lake", 
+        "state": "IA", 
+        "nickname": "Beavers", 
+        "name": "Buena Vista University"
+    }, 
+    {
+        "schoo_id": 196130, 
+        "city": "Buffalo", 
+        "state": "NY", 
+        "nickname": "Bengals", 
+        "name": "Buffalo State SUNY"
+    }, 
+    {
+        "schoo_id": 150163, 
+        "city": "Indianapolis", 
+        "state": "IN", 
+        "nickname": "Bulldogs", 
+        "name": "Butler University"
+    }, 
+    {
+        "schoo_id": 190549, 
+        "city": "Brooklyn", 
+        "state": "NY", 
+        "nickname": "Bridges", 
+        "name": "CUNY Brooklyn College"
+    }, 
+    {
+        "schoo_id": 190600, 
+        "city": "New York", 
+        "state": "NY", 
+        "nickname": "Bloodhounds", 
+        "name": "CUNY John Jay College of Criminal Justice"
+    }, 
+    {
+        "schoo_id": 211352, 
+        "city": "Radnor", 
+        "state": "PA", 
+        "nickname": "Cavaliers", 
+        "name": "Cabrini College"
+    }, 
+    {
+        "schoo_id": 110413, 
+        "city": "Thousand Oaks", 
+        "state": "CA", 
+        "nickname": "Kingsmen", 
+        "name": "California Lutheran University"
+    }, 
+    {
+        "schoo_id": 110413, 
+        "city": "Thousand Oaks", 
+        "state": "CA", 
+        "nickname": "Regals", 
+        "name": "California Lutheran University"
+    }, 
+    {
+        "schoo_id": 111188, 
+        "city": "Vallejo", 
+        "state": "CA", 
+        "nickname": "Keelhaulers", 
+        "name": "California Maritime Academy"
+    }, 
+    {
+        "schoo_id": 110422, 
+        "city": "San Luis Obispo", 
+        "state": "CA", 
+        "nickname": "Mustangs", 
+        "name": "California Polytechnic State University-San Luis Obispo"
+    }, 
+    {
+        "schoo_id": 110529, 
+        "city": "Pomona", 
+        "state": "CA", 
+        "nickname": "Broncos", 
+        "name": "California State Polytechnic University-Pomona"
+    }, 
+    {
+        "schoo_id": 110486, 
+        "city": "Bakersfield", 
+        "state": "CA", 
+        "nickname": "Roadrunners", 
+        "name": "California State University-Bakersfield"
+    }, 
+    {
+        "schoo_id": 441937, 
+        "city": "Camarillo", 
+        "state": "CA", 
+        "nickname": "Dolphins", 
+        "name": "California State University-Channel Islands"
+    }, 
+    {
+        "schoo_id": 110538, 
+        "city": "Chico", 
+        "state": "CA", 
+        "nickname": "Wildcats", 
+        "name": "California State University-Chico"
+    }, 
+    {
+        "schoo_id": 110574, 
+        "city": "Hayward", 
+        "state": "CA", 
+        "nickname": "Pioneers", 
+        "name": "California State University-East Bay"
+    }, 
+    {
+        "schoo_id": 110556, 
+        "city": "Fresno", 
+        "state": "CA", 
+        "nickname": "Bulldogs", 
+        "name": "California State University-Fresno"
+    }, 
+    {
+        "schoo_id": 110565, 
+        "city": "Fullerton", 
+        "state": "CA", 
+        "nickname": "Titans", 
+        "name": "California State University-Fullerton"
+    }, 
+    {
+        "schoo_id": 110583, 
+        "city": "Long Beach", 
+        "state": "CA", 
+        "nickname": "49ers", 
+        "name": "California State University-Long Beach"
+    }, 
+    {
+        "schoo_id": 110592, 
+        "city": "Los Angeles", 
+        "state": "CA", 
+        "nickname": "Golden Eagles", 
+        "name": "California State University-Los Angeles"
+    }, 
+    {
+        "schoo_id": 110608, 
+        "city": "Northridge", 
+        "state": "CA", 
+        "nickname": "Matadors", 
+        "name": "California State University-Northridge"
+    }, 
+    {
+        "schoo_id": 110617, 
+        "city": "Sacramento", 
+        "state": "CA", 
+        "nickname": "Hornets", 
+        "name": "California State University-Sacramento"
+    }, 
+    {
+        "schoo_id": 110510, 
+        "city": "San Bernardino", 
+        "state": "CA", 
+        "nickname": "Coyotes", 
+        "name": "California State University-San Bernardino"
+    }, 
+    {
+        "schoo_id": 110495, 
+        "city": "Turlock", 
+        "state": "CA", 
+        "nickname": "Warriors", 
+        "name": "California State University-Stanislaus"
+    }, 
+    {
+        "schoo_id": 211361, 
+        "city": "California", 
+        "state": "PA", 
+        "nickname": "Vulcans", 
+        "name": "California University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 169080, 
+        "city": "Grand Rapids", 
+        "state": "MI", 
+        "nickname": "Knights", 
+        "name": "Calvin College"
+    }, 
+    {
+        "schoo_id": 169080, 
+        "city": "Grand Rapids", 
+        "state": "MI", 
+        "nickname": "Lady Knights", 
+        "name": "Calvin College"
+    }, 
+    {
+        "schoo_id": 198136, 
+        "city": "Buies Creek", 
+        "state": "NC", 
+        "nickname": "Fighting Camels", 
+        "name": "Campbell University"
+    }, 
+    {
+        "schoo_id": 189705, 
+        "city": "Buffalo", 
+        "state": "NY", 
+        "nickname": "Golden Griffins", 
+        "name": "Canisius College"
+    }, 
+    {
+        "schoo_id": 201548, 
+        "city": "Columbus", 
+        "state": "OH", 
+        "nickname": "Crusaders", 
+        "name": "Capital University"
+    }, 
+    {
+        "schoo_id": 238430, 
+        "city": "Milwaukee", 
+        "state": "WI", 
+        "nickname": "Wolves", 
+        "name": "Cardinal Stritch University"
+    }, 
+    {
+        "schoo_id": 173258, 
+        "city": "Northfield", 
+        "state": "MN", 
+        "nickname": "Knights", 
+        "name": "Carleton College"
+    }, 
+    {
+        "schoo_id": 211440, 
+        "city": "Pittsburgh", 
+        "state": "PA", 
+        "nickname": "Tartans", 
+        "name": "Carnegie Mellon University"
+    }, 
+    {
+        "schoo_id": 219806, 
+        "city": "Jefferson City", 
+        "state": "TN", 
+        "nickname": "Eagles", 
+        "name": "Carson-Newman University"
+    }, 
+    {
+        "schoo_id": 238476, 
+        "city": "Kenosha", 
+        "state": "WI", 
+        "nickname": "Red Men", 
+        "name": "Carthage College"
+    }, 
+    {
+        "schoo_id": 238476, 
+        "city": "Kenosha", 
+        "state": "WI", 
+        "nickname": "Lady Reds", 
+        "name": "Carthage College"
+    }, 
+    {
+        "schoo_id": 201645, 
+        "city": "Cleveland", 
+        "state": "OH", 
+        "nickname": "Spartans", 
+        "name": "Case Western Reserve University"
+    }, 
+    {
+        "schoo_id": 230834, 
+        "city": "Castleton", 
+        "state": "VT", 
+        "nickname": "Spartans", 
+        "name": "Castleton State College"
+    }, 
+    {
+        "schoo_id": 131283, 
+        "city": "Washington", 
+        "state": "DC", 
+        "nickname": "Cardinals", 
+        "name": "Catholic University of America"
+    }, 
+    {
+        "schoo_id": 189848, 
+        "city": "Cazenovia", 
+        "state": "NY", 
+        "nickname": "Wildcats", 
+        "name": "Cazenovia College"
+    }, 
+    {
+        "schoo_id": 158477, 
+        "city": "Shreveport", 
+        "state": "LA", 
+        "nickname": "Gentlemen", 
+        "name": "Centenary College of Louisiana"
+    }, 
+    {
+        "schoo_id": 158477, 
+        "city": "Shreveport", 
+        "state": "LA", 
+        "nickname": "Ladies", 
+        "name": "Centenary College of Louisiana"
+    }, 
+    {
+        "schoo_id": 153108, 
+        "city": "Pella", 
+        "state": "IA", 
+        "nickname": "Dutch", 
+        "name": "Central College"
+    }, 
+    {
+        "schoo_id": 128771, 
+        "city": "New Britain", 
+        "state": "CT", 
+        "nickname": "Blue Devils", 
+        "name": "Central Connecticut State University"
+    }, 
+    {
+        "schoo_id": 176947, 
+        "city": "Fayette", 
+        "state": "MO", 
+        "nickname": "Eagles", 
+        "name": "Central Methodist University-College of Liberal Arts and Sciences"
+    }, 
+    {
+        "schoo_id": 169248, 
+        "city": "Mount Pleasant", 
+        "state": "MI", 
+        "nickname": "Chippewas", 
+        "name": "Central Michigan University"
+    }, 
+    {
+        "schoo_id": 234827, 
+        "city": "Ellensburg", 
+        "state": "WA", 
+        "nickname": "Wildcats", 
+        "name": "Central Washington University"
+    }, 
+    {
+        "schoo_id": 156408, 
+        "city": "Danville", 
+        "state": "KY", 
+        "nickname": "Colonels", 
+        "name": "Centre College"
+    }, 
+    {
+        "schoo_id": 111887, 
+        "city": "Norwalk", 
+        "state": "CA", 
+        "nickname": "Falcons", 
+        "name": "Cerritos College"
+    }, 
+    {
+        "schoo_id": 180948, 
+        "city": "Chadron", 
+        "state": "NE", 
+        "nickname": "Eagles", 
+        "name": "Chadron State College"
+    }, 
+    {
+        "schoo_id": 141486, 
+        "city": "Honolulu", 
+        "state": "HI", 
+        "nickname": "Silverswords", 
+        "name": "Chaminade University of Honolulu"
+    }, 
+    {
+        "schoo_id": 111948, 
+        "city": "Orange", 
+        "state": "CA", 
+        "nickname": "Panthers", 
+        "name": "Chapman University"
+    }, 
+    {
+        "schoo_id": 217688, 
+        "city": "Charleston", 
+        "state": "SC", 
+        "nickname": "Buccaneers", 
+        "name": "Charleston Southern University"
+    }, 
+    {
+        "schoo_id": 217688, 
+        "city": "Charleston", 
+        "state": "SC", 
+        "nickname": "Lady Bucs", 
+        "name": "Charleston Southern University"
+    }, 
+    {
+        "schoo_id": 211556, 
+        "city": "Pittsburgh", 
+        "state": "PA", 
+        "nickname": "Cougars", 
+        "name": "Chatham University"
+    }, 
+    {
+        "schoo_id": 211583, 
+        "city": "Philadelphia", 
+        "state": "PA", 
+        "nickname": "Griffins", 
+        "name": "Chestnut Hill College"
+    }, 
+    {
+        "schoo_id": 211608, 
+        "city": "Cheyney", 
+        "state": "PA", 
+        "nickname": "Wolves", 
+        "name": "Cheyney University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 144005, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Cougars", 
+        "name": "Chicago State University"
+    }, 
+    {
+        "schoo_id": 219833, 
+        "city": "Memphis", 
+        "state": "TN", 
+        "nickname": "Buccaneers", 
+        "name": "Christian Brothers University"
+    }, 
+    {
+        "schoo_id": 231712, 
+        "city": "Newport News", 
+        "state": "VA", 
+        "nickname": "Captains", 
+        "name": "Christopher Newport University"
+    }, 
+    {
+        "schoo_id": 201858, 
+        "city": "Cincinnati", 
+        "state": "OH", 
+        "nickname": "Eagles", 
+        "name": "Cincinnati Christian University"
+    }, 
+    {
+        "schoo_id": 217864, 
+        "city": "Charleston", 
+        "state": "SC", 
+        "nickname": "Bulldogs", 
+        "name": "Citadel Military College of South Carolina"
+    }, 
+    {
+        "schoo_id": 211644, 
+        "city": "Clarion", 
+        "state": "PA", 
+        "nickname": "Golden Eagles", 
+        "name": "Clarion University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 153126, 
+        "city": "Dubuque", 
+        "state": "IA", 
+        "nickname": "Crusaders", 
+        "name": "Clarke University"
+    }, 
+    {
+        "schoo_id": 190044, 
+        "city": "Potsdam", 
+        "state": "NY", 
+        "nickname": "Golden Knights", 
+        "name": "Clarkson University"
+    }, 
+    {
+        "schoo_id": 217882, 
+        "city": "Clemson", 
+        "state": "SC", 
+        "nickname": "Tigers", 
+        "name": "Clemson University"
+    }, 
+    {
+        "schoo_id": 202134, 
+        "city": "Cleveland", 
+        "state": "OH", 
+        "nickname": "Vikings", 
+        "name": "Cleveland State University"
+    }, 
+    {
+        "schoo_id": 218724, 
+        "city": "Conway", 
+        "state": "SC", 
+        "nickname": "Chanticleers", 
+        "name": "Coastal Carolina University"
+    }, 
+    {
+        "schoo_id": 218724, 
+        "city": "Conway", 
+        "state": "SC", 
+        "nickname": "Lady Chants", 
+        "name": "Coastal Carolina University"
+    }, 
+    {
+        "schoo_id": 153144, 
+        "city": "Cedar Rapids", 
+        "state": "IA", 
+        "nickname": "Kohawks", 
+        "name": "Coe College"
+    }, 
+    {
+        "schoo_id": 217907, 
+        "city": "Hartsville", 
+        "state": "SC", 
+        "nickname": "Cobras", 
+        "name": "Coker College"
+    }, 
+    {
+        "schoo_id": 161086, 
+        "city": "Waterville", 
+        "state": "ME", 
+        "nickname": "White Mules", 
+        "name": "Colby College"
+    }, 
+    {
+        "schoo_id": 190099, 
+        "city": "Hamilton", 
+        "state": "NY", 
+        "nickname": "Raiders", 
+        "name": "Colgate University"
+    }, 
+    {
+        "schoo_id": 217819, 
+        "city": "Charleston", 
+        "state": "SC", 
+        "nickname": "Cougars", 
+        "name": "College of Charleston"
+    }, 
+    {
+        "schoo_id": 174747, 
+        "city": "Saint Joseph", 
+        "state": "MN", 
+        "nickname": "Blazers", 
+        "name": "College of Saint Benedict"
+    }, 
+    {
+        "schoo_id": 190558, 
+        "city": "Staten Island", 
+        "state": "NY", 
+        "nickname": "Dolphins", 
+        "name": "College of Staten Island CUNY"
+    }, 
+    {
+        "schoo_id": 231624, 
+        "city": "Williamsburg", 
+        "state": "VA", 
+        "nickname": "Tribe", 
+        "name": "College of William and Mary"
+    }, 
+    {
+        "schoo_id": 166124, 
+        "city": "Worcester", 
+        "state": "MA", 
+        "nickname": "Crusaders", 
+        "name": "College of the Holy Cross"
+    }, 
+    {
+        "schoo_id": 178697, 
+        "city": "Point Lookout", 
+        "state": "MO", 
+        "nickname": "Bobcats", 
+        "name": "College of the Ozarks"
+    }, 
+    {
+        "schoo_id": 126678, 
+        "city": "Colorado Springs", 
+        "state": "CO", 
+        "nickname": "Tigers", 
+        "name": "Colorado College"
+    }, 
+    {
+        "schoo_id": 127556, 
+        "city": "Grand Junction", 
+        "state": "CO", 
+        "nickname": "Mavericks", 
+        "name": "Colorado Mesa University"
+    }, 
+    {
+        "schoo_id": 127556, 
+        "city": "Grand Junction", 
+        "state": "CO", 
+        "nickname": "Lady Mavs", 
+        "name": "Colorado Mesa University"
+    }, 
+    {
+        "schoo_id": 126775, 
+        "city": "Golden", 
+        "state": "CO", 
+        "nickname": "Ore Diggers", 
+        "name": "Colorado School of Mines"
+    }, 
+    {
+        "schoo_id": 126818, 
+        "city": "Fort Collins", 
+        "state": "CO", 
+        "nickname": "Rams", 
+        "name": "Colorado State University-Fort Collins"
+    }, 
+    {
+        "schoo_id": 128106, 
+        "city": "Pueblo", 
+        "state": "CO", 
+        "nickname": "ThunderWolves", 
+        "name": "Colorado State University-Pueblo"
+    }, 
+    {
+        "schoo_id": 190150, 
+        "city": "New York", 
+        "state": "NY", 
+        "nickname": "Lions", 
+        "name": "Columbia University in the City of New York"
+    }, 
+    {
+        "schoo_id": 237330, 
+        "city": "Athens", 
+        "state": "WV", 
+        "nickname": "Mountain Lions", 
+        "name": "Concord University"
+    }, 
+    {
+        "schoo_id": 237330, 
+        "city": "Athens", 
+        "state": "WV", 
+        "nickname": "Lady Lions", 
+        "name": "Concord University"
+    }, 
+    {
+        "schoo_id": 101073, 
+        "city": "Selma", 
+        "state": "AL", 
+        "nickname": "Hornets", 
+        "name": "Concordia College Alabama"
+    }, 
+    {
+        "schoo_id": 173300, 
+        "city": "Moorhead", 
+        "state": "MN", 
+        "nickname": "Cobbers", 
+        "name": "Concordia College at Moorhead"
+    }, 
+    {
+        "schoo_id": 190248, 
+        "city": "Bronxville", 
+        "state": "NY", 
+        "nickname": "Clippers", 
+        "name": "Concordia College-New York"
+    }, 
+    {
+        "schoo_id": 169363, 
+        "city": "Ann Arbor", 
+        "state": "MI", 
+        "nickname": "Cardinals", 
+        "name": "Concordia University-Ann Arbor"
+    }, 
+    {
+        "schoo_id": 144351, 
+        "city": "River Forest", 
+        "state": "IL", 
+        "nickname": "Cougars", 
+        "name": "Concordia University-Chicago"
+    }, 
+    {
+        "schoo_id": 112075, 
+        "city": "Irvine", 
+        "state": "CA", 
+        "nickname": "Eagles", 
+        "name": "Concordia University-Irvine"
+    }, 
+    {
+        "schoo_id": 180984, 
+        "city": "Seward", 
+        "state": "NE", 
+        "nickname": "Bulldogs", 
+        "name": "Concordia University-Nebraska"
+    }, 
+    {
+        "schoo_id": 208488, 
+        "city": "Portland", 
+        "state": "OR", 
+        "nickname": "Cavaliers", 
+        "name": "Concordia University-Portland"
+    }, 
+    {
+        "schoo_id": 173328, 
+        "city": "Saint Paul", 
+        "state": "MN", 
+        "nickname": "Golden Bears", 
+        "name": "Concordia University-Saint Paul"
+    }, 
+    {
+        "schoo_id": 224004, 
+        "city": "Austin", 
+        "state": "TX", 
+        "nickname": "Tornadoes", 
+        "name": "Concordia University-Texas"
+    }, 
+    {
+        "schoo_id": 238616, 
+        "city": "Mequon", 
+        "state": "WI", 
+        "nickname": "Falcons", 
+        "name": "Concordia University-Wisconsin"
+    }, 
+    {
+        "schoo_id": 128902, 
+        "city": "New London", 
+        "state": "CT", 
+        "nickname": "Camels", 
+        "name": "Connecticut College"
+    }, 
+    {
+        "schoo_id": 162283, 
+        "city": "Baltimore", 
+        "state": "MD", 
+        "nickname": "Eagles", 
+        "name": "Coppin State University"
+    }, 
+    {
+        "schoo_id": 190415, 
+        "city": "Ithaca", 
+        "state": "NY", 
+        "nickname": "Big Red", 
+        "name": "Cornell University"
+    }, 
+    {
+        "schoo_id": 170037, 
+        "city": "Grand Rapids", 
+        "state": "MI", 
+        "nickname": "Golden Eagles", 
+        "name": "Cornerstone University"
+    }, 
+    {
+        "schoo_id": 181002, 
+        "city": "Omaha", 
+        "state": "NE", 
+        "nickname": "Blue Jays", 
+        "name": "Creighton University"
+    }, 
+    {
+        "schoo_id": 177144, 
+        "city": "Canton", 
+        "state": "MO", 
+        "nickname": "Wildcats", 
+        "name": "Culver-Stockton College"
+    }, 
+    {
+        "schoo_id": 219949, 
+        "city": "Lebanon", 
+        "state": "TN", 
+        "nickname": "Bulldogs", 
+        "name": "Cumberland University"
+    }, 
+    {
+        "schoo_id": 219082, 
+        "city": "Madison", 
+        "state": "SD", 
+        "nickname": "Trojans", 
+        "name": "Dakota State University"
+    }, 
+    {
+        "schoo_id": 224226, 
+        "city": "Dallas", 
+        "state": "TX", 
+        "nickname": "Patriots", 
+        "name": "Dallas Baptist University"
+    }, 
+    {
+        "schoo_id": 182670, 
+        "city": "Hanover", 
+        "state": "NH", 
+        "nickname": "Big Green", 
+        "name": "Dartmouth College"
+    }, 
+    {
+        "schoo_id": 169479, 
+        "city": "Grand Rapids", 
+        "state": "MI", 
+        "nickname": "Panthers", 
+        "name": "Davenport University"
+    }, 
+    {
+        "schoo_id": 198385, 
+        "city": "Davidson", 
+        "state": "NC", 
+        "nickname": "Wildcats", 
+        "name": "Davidson College"
+    }, 
+    {
+        "schoo_id": 237358, 
+        "city": "Elkins", 
+        "state": "WV", 
+        "nickname": "Senators", 
+        "name": "Davis & Elkins College"
+    }, 
+    {
+        "schoo_id": 144740, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Blue Demons", 
+        "name": "DePaul University"
+    }, 
+    {
+        "schoo_id": 150400, 
+        "city": "Greencastle", 
+        "state": "IN", 
+        "nickname": "Tigers", 
+        "name": "DePauw University"
+    }, 
+    {
+        "schoo_id": 202514, 
+        "city": "Defiance", 
+        "state": "OH", 
+        "nickname": "Yellow Jackets", 
+        "name": "Defiance College"
+    }, 
+    {
+        "schoo_id": 130934, 
+        "city": "Dover", 
+        "state": "DE", 
+        "nickname": "Hornets", 
+        "name": "Delaware State University"
+    }, 
+    {
+        "schoo_id": 211981, 
+        "city": "Doylestown", 
+        "state": "PA", 
+        "nickname": "Aggies", 
+        "name": "Delaware Valley College"
+    }, 
+    {
+        "schoo_id": 175616, 
+        "city": "Cleveland", 
+        "state": "MS", 
+        "nickname": "Statesmen", 
+        "name": "Delta State University"
+    }, 
+    {
+        "schoo_id": 175616, 
+        "city": "Cleveland", 
+        "state": "MS", 
+        "nickname": "Lady Statesmen", 
+        "name": "Delta State University"
+    }, 
+    {
+        "schoo_id": 202523, 
+        "city": "Granville", 
+        "state": "OH", 
+        "nickname": "Big Red", 
+        "name": "Denison University"
+    }, 
+    {
+        "schoo_id": 212009, 
+        "city": "Carlisle", 
+        "state": "PA", 
+        "nickname": "Red Devils", 
+        "name": "Dickinson College"
+    }, 
+    {
+        "schoo_id": 181020, 
+        "city": "Crete", 
+        "state": "NE", 
+        "nickname": "Tigers", 
+        "name": "Doane College-Crete"
+    }, 
+    {
+        "schoo_id": 153250, 
+        "city": "Sioux Center", 
+        "state": "IA", 
+        "nickname": "Defenders", 
+        "name": "Dordt College"
+    }, 
+    {
+        "schoo_id": 190770, 
+        "city": "Oakdale", 
+        "state": "NY", 
+        "nickname": "Golden Lions", 
+        "name": "Dowling College"
+    }, 
+    {
+        "schoo_id": 153269, 
+        "city": "Des Moines", 
+        "state": "IA", 
+        "nickname": "Bulldogs", 
+        "name": "Drake University"
+    }, 
+    {
+        "schoo_id": 184348, 
+        "city": "Madison", 
+        "state": "NJ", 
+        "nickname": "Rangers", 
+        "name": "Drew University"
+    }, 
+    {
+        "schoo_id": 212054, 
+        "city": "Philadelphia", 
+        "state": "PA", 
+        "nickname": "Dragons", 
+        "name": "Drexel University"
+    }, 
+    {
+        "schoo_id": 198419, 
+        "city": "Durham", 
+        "state": "NC", 
+        "nickname": "Blue Devils", 
+        "name": "Duke University"
+    }, 
+    {
+        "schoo_id": 212106, 
+        "city": "Pittsburgh", 
+        "state": "PA", 
+        "nickname": "Dukes", 
+        "name": "Duquesne University"
+    }, 
+    {
+        "schoo_id": 150455, 
+        "city": "Richmond", 
+        "state": "IN", 
+        "nickname": "Hustlin' Quakers", 
+        "name": "Earlham College"
+    }, 
+    {
+        "schoo_id": 198464, 
+        "city": "Greenville", 
+        "state": "NC", 
+        "nickname": "Pirates", 
+        "name": "East Carolina University"
+    }, 
+    {
+        "schoo_id": 113856, 
+        "city": "Monterey Park", 
+        "state": "CA", 
+        "nickname": "Huskies", 
+        "name": "East Los Angeles College"
+    }, 
+    {
+        "schoo_id": 113856, 
+        "city": "Monterey Park", 
+        "state": "CA", 
+        "nickname": "Lady Huskies", 
+        "name": "East Los Angeles College"
+    }, 
+    {
+        "schoo_id": 212115, 
+        "city": "East Stroudsburg", 
+        "state": "PA", 
+        "nickname": "Warriors", 
+        "name": "East Stroudsburg University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 220075, 
+        "city": "Johnson City", 
+        "state": "TN", 
+        "nickname": "Buccaneers", 
+        "name": "East Tennessee State University"
+    }, 
+    {
+        "schoo_id": 220075, 
+        "city": "Johnson City", 
+        "state": "TN", 
+        "nickname": "Lady Bucs", 
+        "name": "East Tennessee State University"
+    }, 
+    {
+        "schoo_id": 224527, 
+        "city": "Marshall", 
+        "state": "TX", 
+        "nickname": "Tigers", 
+        "name": "East Texas Baptist University"
+    }, 
+    {
+        "schoo_id": 104577, 
+        "city": "Thatcher", 
+        "state": "AZ", 
+        "nickname": "Gila Monsters", 
+        "name": "Eastern Arizona College"
+    }, 
+    {
+        "schoo_id": 129215, 
+        "city": "Willimantic", 
+        "state": "CT", 
+        "nickname": "Warriors", 
+        "name": "Eastern Connecticut State University"
+    }, 
+    {
+        "schoo_id": 144892, 
+        "city": "Charleston", 
+        "state": "IL", 
+        "nickname": "Fighting Panthers", 
+        "name": "Eastern Illinois University"
+    }, 
+    {
+        "schoo_id": 156620, 
+        "city": "Richmond", 
+        "state": "KY", 
+        "nickname": "Colonels\r\n", 
+        "name": "Eastern Kentucky University"
+    }, 
+    {
+        "schoo_id": 156620, 
+        "city": "Richmond", 
+        "state": "KY", 
+        "nickname": "Lady Colonels", 
+        "name": "Eastern Kentucky University"
+    }, 
+    {
+        "schoo_id": 169798, 
+        "city": "Ypsilanti", 
+        "state": "MI", 
+        "nickname": "Eagles", 
+        "name": "Eastern Michigan University"
+    }, 
+    {
+        "schoo_id": 165644, 
+        "city": "Quincy", 
+        "state": "MA", 
+        "nickname": "Lions", 
+        "name": "Eastern Nazarene College"
+    }, 
+    {
+        "schoo_id": 187648, 
+        "city": "Portales", 
+        "state": "NM", 
+        "nickname": "Greyhounds", 
+        "name": "Eastern New Mexico University-Main Campus"
+    }, 
+    {
+        "schoo_id": 187648, 
+        "city": "Portales", 
+        "state": "NM", 
+        "nickname": "Zias", 
+        "name": "Eastern New Mexico University-Main Campus"
+    }, 
+    {
+        "schoo_id": 212133, 
+        "city": "Saint Davids", 
+        "state": "PA", 
+        "nickname": "Eagles", 
+        "name": "Eastern University"
+    }, 
+    {
+        "schoo_id": 235097, 
+        "city": "Cheney", 
+        "state": "WA", 
+        "nickname": "Eagles", 
+        "name": "Eastern Washington University"
+    }, 
+    {
+        "schoo_id": 212160, 
+        "city": "Edinboro", 
+        "state": "PA", 
+        "nickname": "Fighting Scots", 
+        "name": "Edinboro University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 224642, 
+        "city": "El Paso", 
+        "state": "TX", 
+        "nickname": "Tejanos", 
+        "name": "El Paso Community College"
+    }, 
+    {
+        "schoo_id": 224642, 
+        "city": "El Paso", 
+        "state": "TX", 
+        "nickname": "Lady Tejanos", 
+        "name": "El Paso Community College"
+    }, 
+    {
+        "schoo_id": 198516, 
+        "city": "Elon", 
+        "state": "NC", 
+        "nickname": "Phoenix", 
+        "name": "Elon University"
+    }, 
+    {
+        "schoo_id": 133553, 
+        "city": "Daytona Beach", 
+        "state": "FL", 
+        "nickname": "Eagles", 
+        "name": "Embry-Riddle Aeronautical University-Daytona Beach"
+    }, 
+    {
+        "schoo_id": 139658, 
+        "city": "Atlanta", 
+        "state": "GA", 
+        "nickname": "Eagles", 
+        "name": "Emory University"
+    }, 
+    {
+        "schoo_id": 155025, 
+        "city": "Emporia", 
+        "state": "KS", 
+        "nickname": "Hornets", 
+        "name": "Emporia State University"
+    }, 
+    {
+        "schoo_id": 165699, 
+        "city": "Beverly", 
+        "state": "MA", 
+        "nickname": "Gulls", 
+        "name": "Endicott College"
+    }, 
+    {
+        "schoo_id": 217998, 
+        "city": "Due West", 
+        "state": "SC", 
+        "nickname": "Flying Fleet", 
+        "name": "Erskine College"
+    }, 
+    {
+        "schoo_id": 177339, 
+        "city": "Springfield", 
+        "state": "MO", 
+        "nickname": "Crusaders", 
+        "name": "Evangel University"
+    }, 
+    {
+        "schoo_id": 129242, 
+        "city": "Fairfield", 
+        "state": "CT", 
+        "nickname": "Stags", 
+        "name": "Fairfield University"
+    }, 
+    {
+        "schoo_id": 184694, 
+        "city": "Madison", 
+        "state": "NJ", 
+        "nickname": "Devils", 
+        "name": "Fairleigh Dickinson University-College at Florham"
+    }, 
+    {
+        "schoo_id": 184603, 
+        "city": "Teaneck", 
+        "state": "NJ", 
+        "nickname": "Knights", 
+        "name": "Fairleigh Dickinson University-Metropolitan Campus"
+    }, 
+    {
+        "schoo_id": 237367, 
+        "city": "Fairmont", 
+        "state": "WV", 
+        "nickname": "Falcons", 
+        "name": "Fairmont State University"
+    }, 
+    {
+        "schoo_id": 184612, 
+        "city": "Lodi", 
+        "state": "NJ", 
+        "nickname": "Golden Falcons", 
+        "name": "Felician College"
+    }, 
+    {
+        "schoo_id": 169910, 
+        "city": "Big Rapids", 
+        "state": "MI", 
+        "nickname": "Bulldogs", 
+        "name": "Ferris State University"
+    }, 
+    {
+        "schoo_id": 172440, 
+        "city": "Hancock", 
+        "state": "MI", 
+        "nickname": "Lions", 
+        "name": "Finlandia University"
+    }, 
+    {
+        "schoo_id": 220181, 
+        "city": "Nashville", 
+        "state": "TN", 
+        "nickname": "Bulldogs", 
+        "name": "Fisk University"
+    }, 
+    {
+        "schoo_id": 165820, 
+        "city": "Fitchburg", 
+        "state": "MA", 
+        "nickname": "Falcons", 
+        "name": "Fitchburg State University"
+    }, 
+    {
+        "schoo_id": 133711, 
+        "city": "Saint Augustine", 
+        "state": "FL", 
+        "nickname": "Saints", 
+        "name": "Flagler College-St Augustine"
+    }, 
+    {
+        "schoo_id": 133650, 
+        "city": "Tallahassee", 
+        "state": "FL", 
+        "nickname": "Rattlers", 
+        "name": "Florida Agricultural and Mechanical University"
+    }, 
+    {
+        "schoo_id": 133669, 
+        "city": "Boca Raton", 
+        "state": "FL", 
+        "nickname": "Owls", 
+        "name": "Florida Atlantic University"
+    }, 
+    {
+        "schoo_id": 433660, 
+        "city": "Fort Myers", 
+        "state": "FL", 
+        "nickname": "Eagles", 
+        "name": "Florida Gulf Coast University"
+    }, 
+    {
+        "schoo_id": 133881, 
+        "city": "Melbourne", 
+        "state": "FL", 
+        "nickname": "Panthers", 
+        "name": "Florida Institute of Technology"
+    }, 
+    {
+        "schoo_id": 133951, 
+        "city": "Miami", 
+        "state": "FL", 
+        "nickname": "Golden Panthers", 
+        "name": "Florida International University"
+    }, 
+    {
+        "schoo_id": 134097, 
+        "city": "Tallahassee", 
+        "state": "FL", 
+        "nickname": "Seminoles", 
+        "name": "Florida State University"
+    }, 
+    {
+        "schoo_id": 191241, 
+        "city": "Bronx", 
+        "state": "NY", 
+        "nickname": "Rams", 
+        "name": "Fordham University"
+    }, 
+    {
+        "schoo_id": 155061, 
+        "city": "Hays", 
+        "state": "KS", 
+        "nickname": "Tigers", 
+        "name": "Fort Hays State University"
+    }, 
+    {
+        "schoo_id": 139719, 
+        "city": "Fort Valley", 
+        "state": "GA", 
+        "nickname": "Wildcats", 
+        "name": "Fort Valley State University"
+    }, 
+    {
+        "schoo_id": 218061, 
+        "city": "Florence", 
+        "state": "SC", 
+        "nickname": "Patriots", 
+        "name": "Francis Marion University"
+    }, 
+    {
+        "schoo_id": 150604, 
+        "city": "Franklin", 
+        "state": "IN", 
+        "nickname": "Grizzlies", 
+        "name": "Franklin College"
+    }, 
+    {
+        "schoo_id": 202806, 
+        "city": "Columbus", 
+        "state": "OH", 
+        "nickname": "Raiders", 
+        "name": "Franklin University"
+    }, 
+    {
+        "schoo_id": 212577, 
+        "city": "Lancaster", 
+        "state": "PA", 
+        "nickname": "Diplomats", 
+        "name": "Franklin and Marshall College"
+    }, 
+    {
+        "schoo_id": 220215, 
+        "city": "Henderson", 
+        "state": "TN", 
+        "nickname": "Lions", 
+        "name": "Freed-Hardeman University"
+    }, 
+    {
+        "schoo_id": 220215, 
+        "city": "Henderson", 
+        "state": "TN", 
+        "nickname": "Lady Lions", 
+        "name": "Freed-Hardeman University"
+    }, 
+    {
+        "schoo_id": 114813, 
+        "city": "Fresno", 
+        "state": "CA", 
+        "nickname": "Sunbirds", 
+        "name": "Fresno Pacific University"
+    }, 
+    {
+        "schoo_id": 155089, 
+        "city": "Wichita", 
+        "state": "KS", 
+        "nickname": "Falcons", 
+        "name": "Friends University"
+    }, 
+    {
+        "schoo_id": 162584, 
+        "city": "Frostburg", 
+        "state": "MD", 
+        "nickname": "Bobcats", 
+        "name": "Frostburg State University"
+    }, 
+    {
+        "schoo_id": 218070, 
+        "city": "Greenville", 
+        "state": "SC", 
+        "nickname": "Paladins", 
+        "name": "Furman University"
+    }, 
+    {
+        "schoo_id": 212601, 
+        "city": "Erie", 
+        "state": "PA", 
+        "nickname": "Golden Knights", 
+        "name": "Gannon University"
+    }, 
+    {
+        "schoo_id": 191339, 
+        "city": "Batavia", 
+        "state": "NY", 
+        "nickname": "Cougars", 
+        "name": "Genesee Community College"
+    }, 
+    {
+        "schoo_id": 212656, 
+        "city": "Beaver Falls", 
+        "state": "PA", 
+        "nickname": "Golden Tornadoes", 
+        "name": "Geneva College"
+    }, 
+    {
+        "schoo_id": 232186, 
+        "city": "Fairfax", 
+        "state": "VA", 
+        "nickname": "Patriots", 
+        "name": "George Mason University"
+    }, 
+    {
+        "schoo_id": 131469, 
+        "city": "Washington", 
+        "state": "DC", 
+        "nickname": "Colonials", 
+        "name": "George Washington University"
+    }, 
+    {
+        "schoo_id": 131496, 
+        "city": "Washington", 
+        "state": "DC", 
+        "nickname": "Hoyas", 
+        "name": "Georgetown University"
+    }, 
+    {
+        "schoo_id": 447689, 
+        "city": "Lawrenceville", 
+        "state": "GA", 
+        "nickname": "Grizzlies", 
+        "name": "Georgia Gwinnett College"
+    }, 
+    {
+        "schoo_id": 139755, 
+        "city": "Atlanta", 
+        "state": "GA", 
+        "nickname": "Yellow Jackets", 
+        "name": "Georgia Institute of Technology-Main Campus"
+    }, 
+    {
+        "schoo_id": 139931, 
+        "city": "Statesboro", 
+        "state": "GA", 
+        "nickname": "Eagles", 
+        "name": "Georgia Southern University"
+    }, 
+    {
+        "schoo_id": 139931, 
+        "city": "Statesboro", 
+        "state": "GA", 
+        "nickname": "Lady Eagles", 
+        "name": "Georgia Southern University"
+    }, 
+    {
+        "schoo_id": 139940, 
+        "city": "Atlanta", 
+        "state": "GA", 
+        "nickname": "Panthers", 
+        "name": "Georgia State University"
+    }, 
+    {
+        "schoo_id": 184773, 
+        "city": "Lakewood", 
+        "state": "NJ", 
+        "nickname": "Lions", 
+        "name": "Georgian Court University"
+    }, 
+    {
+        "schoo_id": 212674, 
+        "city": "Gettysburg", 
+        "state": "PA", 
+        "nickname": "Bullets", 
+        "name": "Gettysburg College"
+    }, 
+    {
+        "schoo_id": 237385, 
+        "city": "Glenville", 
+        "state": "WV", 
+        "nickname": "Pioneers", 
+        "name": "Glenville State College"
+    }, 
+    {
+        "schoo_id": 237385, 
+        "city": "Glenville", 
+        "state": "WV", 
+        "nickname": "Lady Pioneers", 
+        "name": "Glenville State College"
+    }, 
+    {
+        "schoo_id": 235316, 
+        "city": "Spokane", 
+        "state": "WA", 
+        "nickname": "Bulldogs", 
+        "name": "Gonzaga University"
+    }, 
+    {
+        "schoo_id": 165936, 
+        "city": "Wenham", 
+        "state": "MA", 
+        "nickname": "Fighting Scots", 
+        "name": "Gordon College"
+    }, 
+    {
+        "schoo_id": 150668, 
+        "city": "Goshen", 
+        "state": "IN", 
+        "nickname": "Maple Leafs", 
+        "name": "Goshen College"
+    }, 
+    {
+        "schoo_id": 150677, 
+        "city": "Winona Lake", 
+        "state": "IN", 
+        "nickname": "Lancers", 
+        "name": "Grace College and Theological Seminary"
+    }, 
+    {
+        "schoo_id": 181093, 
+        "city": "Omaha", 
+        "state": "NE", 
+        "nickname": "Royals", 
+        "name": "Grace University"
+    }, 
+    {
+        "schoo_id": 153366, 
+        "city": "Lamoni", 
+        "state": "IA", 
+        "nickname": "Yellow Jackets", 
+        "name": "Graceland University-Lamoni"
+    }, 
+    {
+        "schoo_id": 159009, 
+        "city": "Grambling", 
+        "state": "LA", 
+        "nickname": "Tigers", 
+        "name": "Grambling State University"
+    }, 
+    {
+        "schoo_id": 159009, 
+        "city": "Grambling", 
+        "state": "LA", 
+        "nickname": "Lady Tigers", 
+        "name": "Grambling State University"
+    }, 
+    {
+        "schoo_id": 104717, 
+        "city": "Phoenix", 
+        "state": "AZ", 
+        "nickname": "Lopes", 
+        "name": "Grand Canyon University"
+    }, 
+    {
+        "schoo_id": 170082, 
+        "city": "Allendale", 
+        "state": "MI", 
+        "nickname": "Lakers", 
+        "name": "Grand Valley State University"
+    }, 
+    {
+        "schoo_id": 153375, 
+        "city": "Des Moines", 
+        "state": "IA", 
+        "nickname": "Vikings", 
+        "name": "Grand View University"
+    }, 
+    {
+        "schoo_id": 198598, 
+        "city": "Greensboro", 
+        "state": "NC", 
+        "nickname": "Pride", 
+        "name": "Greensboro College"
+    }, 
+    {
+        "schoo_id": 153384, 
+        "city": "Grinnell", 
+        "state": "IA", 
+        "nickname": "Pioneers", 
+        "name": "Grinnell College"
+    }, 
+    {
+        "schoo_id": 198613, 
+        "city": "Greensboro", 
+        "state": "NC", 
+        "nickname": "Quakers", 
+        "name": "Guilford College"
+    }, 
+    {
+        "schoo_id": 173647, 
+        "city": "Saint Peter", 
+        "state": "MN", 
+        "nickname": "Golden Gusties", 
+        "name": "Gustavus Adolphus College"
+    }, 
+    {
+        "schoo_id": 191515, 
+        "city": "Clinton", 
+        "state": "NY", 
+        "nickname": "Continentals", 
+        "name": "Hamilton College"
+    }, 
+    {
+        "schoo_id": 232265, 
+        "city": "Hampton", 
+        "state": "VA", 
+        "nickname": "Pirates", 
+        "name": "Hampton University"
+    }, 
+    {
+        "schoo_id": 107044, 
+        "city": "Searcy", 
+        "state": "AR", 
+        "nickname": "Bison", 
+        "name": "Harding University"
+    }, 
+    {
+        "schoo_id": 166027, 
+        "city": "Cambridge", 
+        "state": "MA", 
+        "nickname": "Crimson", 
+        "name": "Harvard University"
+    }, 
+    {
+        "schoo_id": 181127, 
+        "city": "Hastings", 
+        "state": "NE", 
+        "nickname": "Broncos", 
+        "name": "Hastings College"
+    }, 
+    {
+        "schoo_id": 203085, 
+        "city": "Tiffin", 
+        "state": "OH", 
+        "nickname": "Student Princes", 
+        "name": "Heidelberg University"
+    }, 
+    {
+        "schoo_id": 107071, 
+        "city": "Arkadelphia", 
+        "state": "AR", 
+        "nickname": "Reddies", 
+        "name": "Henderson State University"
+    }, 
+    {
+        "schoo_id": 107080, 
+        "city": "Conway", 
+        "state": "AR", 
+        "nickname": "Warriors", 
+        "name": "Hendrix College"
+    }, 
+    {
+        "schoo_id": 191612, 
+        "city": "Herkimer", 
+        "state": "NY", 
+        "nickname": "Generals", 
+        "name": "Herkimer County Community College"
+    }, 
+    {
+        "schoo_id": 198695, 
+        "city": "High Point", 
+        "state": "NC", 
+        "nickname": "Panthers", 
+        "name": "High Point University"
+    }, 
+    {
+        "schoo_id": 203128, 
+        "city": "Hiram", 
+        "state": "OH", 
+        "nickname": "Terriers", 
+        "name": "Hiram College"
+    }, 
+    {
+        "schoo_id": 191630, 
+        "city": "Geneva", 
+        "state": "NY", 
+        "nickname": "Herons", 
+        "name": "Hobart William Smith Colleges"
+    }, 
+    {
+        "schoo_id": 191630, 
+        "city": "Geneva", 
+        "state": "NY", 
+        "nickname": "Statesmen", 
+        "name": "Hobart William Smith Colleges"
+    }, 
+    {
+        "schoo_id": 191649, 
+        "city": "Hempstead", 
+        "state": "NY", 
+        "nickname": "Pride", 
+        "name": "Hofstra University"
+    }, 
+    {
+        "schoo_id": 170301, 
+        "city": "Holland", 
+        "state": "MI", 
+        "nickname": "Flying Dutchmen", 
+        "name": "Hope College"
+    }, 
+    {
+        "schoo_id": 131520, 
+        "city": "Washington", 
+        "state": "DC", 
+        "nickname": "Bison", 
+        "name": "Howard University"
+    }, 
+    {
+        "schoo_id": 115755, 
+        "city": "Arcata", 
+        "state": "CA", 
+        "nickname": "Lumberjacks", 
+        "name": "Humboldt State University"
+    }, 
+    {
+        "schoo_id": 115755, 
+        "city": "Arcata", 
+        "state": "CA", 
+        "nickname": "Jacks", 
+        "name": "Humboldt State University"
+    }, 
+    {
+        "schoo_id": 150941, 
+        "city": "Huntington", 
+        "state": "IN", 
+        "nickname": "Foresters", 
+        "name": "Huntington University"
+    }, 
+    {
+        "schoo_id": 142276, 
+        "city": "Pocatello", 
+        "state": "ID", 
+        "nickname": "Bengals", 
+        "name": "Idaho State University"
+    }, 
+    {
+        "schoo_id": 145691, 
+        "city": "Jacksonville", 
+        "state": "IL", 
+        "nickname": "Blue Boys", 
+        "name": "Illinois College"
+    }, 
+    {
+        "schoo_id": 145691, 
+        "city": "Jacksonville", 
+        "state": "IL", 
+        "nickname": "Lady Blues", 
+        "name": "Illinois College"
+    }, 
+    {
+        "schoo_id": 145725, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Scarlet Hawks", 
+        "name": "Illinois Institute of Technology"
+    }, 
+    {
+        "schoo_id": 145813, 
+        "city": "Normal", 
+        "state": "IL", 
+        "nickname": "Redbirds", 
+        "name": "Illinois State University"
+    }, 
+    {
+        "schoo_id": 145646, 
+        "city": "Bloomington", 
+        "state": "IL", 
+        "nickname": "Titans", 
+        "name": "Illinois Wesleyan University"
+    }, 
+    {
+        "schoo_id": 151324, 
+        "city": "Terre Haute", 
+        "state": "IN", 
+        "nickname": "Sycamores", 
+        "name": "Indiana State University"
+    }, 
+    {
+        "schoo_id": 213020, 
+        "city": "Indiana", 
+        "state": "PA", 
+        "nickname": "Crimson Hawks", 
+        "name": "Indiana University of Pennsylvania-Main Campus"
+    }, 
+    {
+        "schoo_id": 151351, 
+        "city": "Bloomington", 
+        "state": "IN", 
+        "nickname": "Hoosiers", 
+        "name": "Indiana University-Bloomington"
+    }, 
+    {
+        "schoo_id": 151102, 
+        "city": "Fort Wayne", 
+        "state": "IN", 
+        "nickname": "Mastodons", 
+        "name": "Indiana University-Purdue University-Fort Wayne"
+    }, 
+    {
+        "schoo_id": 151111, 
+        "city": "Indianapolis", 
+        "state": "IN", 
+        "nickname": "Jaguars", 
+        "name": "Indiana University-Purdue University-Indianapolis"
+    }, 
+    {
+        "schoo_id": 151379, 
+        "city": "New Albany", 
+        "state": "IN", 
+        "nickname": "Grenadiers", 
+        "name": "Indiana University-Southeast"
+    }, 
+    {
+        "schoo_id": 151801, 
+        "city": "Marion", 
+        "state": "IN", 
+        "nickname": "Wildcats", 
+        "name": "Indiana Wesleyan University"
+    }, 
+    {
+        "schoo_id": 191931, 
+        "city": "New Rochelle", 
+        "state": "NY", 
+        "nickname": "Gaels", 
+        "name": "Iona College"
+    }, 
+    {
+        "schoo_id": 153603, 
+        "city": "Ames", 
+        "state": "IA", 
+        "nickname": "Cyclones", 
+        "name": "Iowa State University"
+    }, 
+    {
+        "schoo_id": 153621, 
+        "city": "Mount Pleasant", 
+        "state": "IA", 
+        "nickname": "Tigers", 
+        "name": "Iowa Wesleyan College"
+    }, 
+    {
+        "schoo_id": 191968, 
+        "city": "Ithaca", 
+        "state": "NY", 
+        "nickname": "Bombers", 
+        "name": "Ithaca College"
+    }, 
+    {
+        "schoo_id": 175856, 
+        "city": "Jackson", 
+        "state": "MS", 
+        "nickname": "Tigers", 
+        "name": "Jackson State University"
+    }, 
+    {
+        "schoo_id": 175856, 
+        "city": "Jackson", 
+        "state": "MS", 
+        "nickname": "Lady Tigers", 
+        "name": "Jackson State University"
+    }, 
+    {
+        "schoo_id": 101480, 
+        "city": "Jacksonville", 
+        "state": "AL", 
+        "nickname": "Gamecocks", 
+        "name": "Jacksonville State University"
+    }, 
+    {
+        "schoo_id": 134945, 
+        "city": "Jacksonville", 
+        "state": "FL", 
+        "nickname": "Dolphins", 
+        "name": "Jacksonville University"
+    }, 
+    {
+        "schoo_id": 232423, 
+        "city": "Harrisonburg", 
+        "state": "VA", 
+        "nickname": "Dukes", 
+        "name": "James Madison University"
+    }, 
+    {
+        "schoo_id": 107141, 
+        "city": "Siloam Springs", 
+        "state": "AR", 
+        "nickname": "Golden Eagles", 
+        "name": "John Brown University"
+    }, 
+    {
+        "schoo_id": 203368, 
+        "city": "University Heights", 
+        "state": "OH", 
+        "nickname": "Blue Streaks", 
+        "name": "John Carroll University"
+    }, 
+    {
+        "schoo_id": 162928, 
+        "city": "Baltimore", 
+        "state": "MD", 
+        "nickname": "Blue Jays", 
+        "name": "Johns Hopkins University"
+    }, 
+    {
+        "schoo_id": 198756, 
+        "city": "Charlotte", 
+        "state": "NC", 
+        "nickname": "Golden Bulls", 
+        "name": "Johnson C Smith University"
+    }, 
+    {
+        "schoo_id": 146339, 
+        "city": "Elgin", 
+        "state": "IL", 
+        "nickname": "Eagles", 
+        "name": "Judson University"
+    }, 
+    {
+        "schoo_id": 170532, 
+        "city": "Kalamazoo", 
+        "state": "MI", 
+        "nickname": "Fighting Hornets", 
+        "name": "Kalamazoo College"
+    }, 
+    {
+        "schoo_id": 155399, 
+        "city": "Manhattan", 
+        "state": "KS", 
+        "nickname": "Wildcats", 
+        "name": "Kansas State University"
+    }, 
+    {
+        "schoo_id": 155414, 
+        "city": "Salina", 
+        "state": "KS", 
+        "nickname": "Coyotes", 
+        "name": "Kansas Wesleyan University"
+    }, 
+    {
+        "schoo_id": 185262, 
+        "city": "Union", 
+        "state": "NJ", 
+        "nickname": "Cougars", 
+        "name": "Kean University"
+    }, 
+    {
+        "schoo_id": 183062, 
+        "city": "Keene", 
+        "state": "NH", 
+        "nickname": "Owls", 
+        "name": "Keene State College"
+    }, 
+    {
+        "schoo_id": 140164, 
+        "city": "Kennesaw", 
+        "state": "GA", 
+        "nickname": "Owls", 
+        "name": "Kennesaw State University"
+    }, 
+    {
+        "schoo_id": 140164, 
+        "city": "Kennesaw", 
+        "state": "GA", 
+        "nickname": "Lady Owls", 
+        "name": "Kennesaw State University"
+    }, 
+    {
+        "schoo_id": 203517, 
+        "city": "Kent", 
+        "state": "OH", 
+        "nickname": "Golden Flashes", 
+        "name": "Kent State University at Kent"
+    }, 
+    {
+        "schoo_id": 157058, 
+        "city": "Frankfort", 
+        "state": "KY", 
+        "nickname": "Thorobreds", 
+        "name": "Kentucky State University"
+    }, 
+    {
+        "schoo_id": 157058, 
+        "city": "Frankfort", 
+        "state": "KY", 
+        "nickname": "Thorobrettes", 
+        "name": "Kentucky State University"
+    }, 
+    {
+        "schoo_id": 157076, 
+        "city": "Owensboro", 
+        "state": "KY", 
+        "nickname": "Panthers", 
+        "name": "Kentucky Wesleyan College"
+    }, 
+    {
+        "schoo_id": 203535, 
+        "city": "Gambier", 
+        "state": "OH", 
+        "nickname": "Lords", 
+        "name": "Kenyon College"
+    }, 
+    {
+        "schoo_id": 203535, 
+        "city": "Gambier", 
+        "state": "OH", 
+        "nickname": "Ladies", 
+        "name": "Kenyon College"
+    }, 
+    {
+        "schoo_id": 220516, 
+        "city": "Bristol", 
+        "state": "TN", 
+        "nickname": "Tornado", 
+        "name": "King University"
+    }, 
+    {
+        "schoo_id": 146427, 
+        "city": "Galesburg", 
+        "state": "IL", 
+        "nickname": "Prairie Fire", 
+        "name": "Knox College"
+    }, 
+    {
+        "schoo_id": 213349, 
+        "city": "Kutztown", 
+        "state": "PA", 
+        "nickname": "Golden Bears", 
+        "name": "Kutztown University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 213367, 
+        "city": "Philadelphia", 
+        "state": "PA", 
+        "nickname": "Explorers", 
+        "name": "La Salle University"
+    }, 
+    {
+        "schoo_id": 140234, 
+        "city": "Lagrange", 
+        "state": "GA", 
+        "nickname": "Panthers", 
+        "name": "LaGrange College"
+    }, 
+    {
+        "schoo_id": 213385, 
+        "city": "Easton", 
+        "state": "PA", 
+        "nickname": "Leopards", 
+        "name": "Lafayette College"
+    }, 
+    {
+        "schoo_id": 203580, 
+        "city": "Painesville", 
+        "state": "OH", 
+        "nickname": "Storm", 
+        "name": "Lake Erie College"
+    }, 
+    {
+        "schoo_id": 146481, 
+        "city": "Lake Forest", 
+        "state": "IL", 
+        "nickname": "Foresters", 
+        "name": "Lake Forest College"
+    }, 
+    {
+        "schoo_id": 170639, 
+        "city": "Sault Ste Marie", 
+        "state": "MI", 
+        "nickname": "Lakers", 
+        "name": "Lake Superior State University"
+    }, 
+    {
+        "schoo_id": 226091, 
+        "city": "Beaumont", 
+        "state": "TX", 
+        "nickname": "Cardinals", 
+        "name": "Lamar University"
+    }, 
+    {
+        "schoo_id": 226091, 
+        "city": "Beaumont", 
+        "state": "TX", 
+        "nickname": "Lady Cardinals", 
+        "name": "Lamar University"
+    }, 
+    {
+        "schoo_id": 207209, 
+        "city": "Langston", 
+        "state": "OK", 
+        "nickname": "Lions", 
+        "name": "Langston University"
+    }, 
+    {
+        "schoo_id": 207209, 
+        "city": "Langston", 
+        "state": "OK", 
+        "nickname": "Lady Lions", 
+        "name": "Langston University"
+    }, 
+    {
+        "schoo_id": 239017, 
+        "city": "Appleton", 
+        "state": "WI", 
+        "nickname": "Vikings", 
+        "name": "Lawrence University"
+    }, 
+    {
+        "schoo_id": 192323, 
+        "city": "Syracuse", 
+        "state": "NY", 
+        "nickname": "Dolphins", 
+        "name": "Le Moyne College"
+    }, 
+    {
+        "schoo_id": 220604, 
+        "city": "Memphis", 
+        "state": "TN", 
+        "nickname": "Magicians", 
+        "name": "Le Moyne-Owen College"
+    }, 
+    {
+        "schoo_id": 213507, 
+        "city": "Annville", 
+        "state": "PA", 
+        "nickname": "Flying Dutchmen", 
+        "name": "Lebanon Valley College"
+    }, 
+    {
+        "schoo_id": 213543, 
+        "city": "Bethlehem", 
+        "state": "PA", 
+        "nickname": "Mountain Hawks", 
+        "name": "Lehigh University"
+    }, 
+    {
+        "schoo_id": 166452, 
+        "city": "Cambridge", 
+        "state": "MA", 
+        "nickname": "Lynx", 
+        "name": "Lesley University"
+    }, 
+    {
+        "schoo_id": 232557, 
+        "city": "Lynchburg", 
+        "state": "VA", 
+        "nickname": "Flames", 
+        "name": "Liberty University"
+    }, 
+    {
+        "schoo_id": 232557, 
+        "city": "Lynchburg", 
+        "state": "VA", 
+        "nickname": "Lady Flames", 
+        "name": "Liberty University"
+    }, 
+    {
+        "schoo_id": 140252, 
+        "city": "Marietta", 
+        "state": "GA", 
+        "nickname": "Running Eagles", 
+        "name": "Life University"
+    }, 
+    {
+        "schoo_id": 146667, 
+        "city": "Lincoln", 
+        "state": "IL", 
+        "nickname": "Preachers & Angels", 
+        "name": "Lincoln Christian University"
+    }, 
+    {
+        "schoo_id": 220631, 
+        "city": "Harrogate", 
+        "state": "TN", 
+        "nickname": "Railsplitters", 
+        "name": "Lincoln Memorial University"
+    }, 
+    {
+        "schoo_id": 213598, 
+        "city": "Lincoln University", 
+        "state": "PA", 
+        "nickname": "Lions", 
+        "name": "Lincoln University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 177968, 
+        "city": "Saint Charles", 
+        "state": "MO", 
+        "nickname": "Lions", 
+        "name": "Lindenwood University"
+    }, 
+    {
+        "schoo_id": 157216, 
+        "city": "Columbia", 
+        "state": "KY", 
+        "nickname": "Blue Raiders", 
+        "name": "Lindsey Wilson College"
+    }, 
+    {
+        "schoo_id": 209065, 
+        "city": "McMinnville", 
+        "state": "OR", 
+        "nickname": "Wildcats", 
+        "name": "Linfield College-McMinnville Campus"
+    }, 
+    {
+        "schoo_id": 219976, 
+        "city": "Nashville", 
+        "state": "TN", 
+        "nickname": "Bisons", 
+        "name": "Lipscomb University"
+    }, 
+    {
+        "schoo_id": 219976, 
+        "city": "Nashville", 
+        "state": "TN", 
+        "nickname": "Lady Bisons", 
+        "name": "Lipscomb University"
+    }, 
+    {
+        "schoo_id": 198862, 
+        "city": "Salisbury", 
+        "state": "NC", 
+        "nickname": "Blue Bears", 
+        "name": "Livingstone College"
+    }, 
+    {
+        "schoo_id": 213613, 
+        "city": "Lock Haven", 
+        "state": "PA", 
+        "nickname": "Bald Eagles", 
+        "name": "Lock Haven University"
+    }, 
+    {
+        "schoo_id": 232566, 
+        "city": "Farmville", 
+        "state": "VA", 
+        "nickname": "Lancers", 
+        "name": "Longwood University"
+    }, 
+    {
+        "schoo_id": 153825, 
+        "city": "Dubuque", 
+        "state": "IA", 
+        "nickname": "Duhawks", 
+        "name": "Loras College"
+    }, 
+    {
+        "schoo_id": 117788, 
+        "city": "Los Angeles", 
+        "state": "CA", 
+        "nickname": "Cubs", 
+        "name": "Los Angeles City College"
+    }, 
+    {
+        "schoo_id": 117690, 
+        "city": "Wilmington", 
+        "state": "CA", 
+        "nickname": "Seahawks", 
+        "name": "Los Angeles Harbor College"
+    }, 
+    {
+        "schoo_id": 117867, 
+        "city": "Sylmar", 
+        "state": "CA", 
+        "nickname": "Eagles", 
+        "name": "Los Angeles Mission College"
+    }, 
+    {
+        "schoo_id": 117706, 
+        "city": "Woodland Hills", 
+        "state": "CA", 
+        "nickname": "Brahmas", 
+        "name": "Los Angeles Pierce College"
+    }, 
+    {
+        "schoo_id": 117715, 
+        "city": "Los Angeles", 
+        "state": "CA", 
+        "nickname": "Cougars", 
+        "name": "Los Angeles Southwest College"
+    }, 
+    {
+        "schoo_id": 117724, 
+        "city": "Los Angeles", 
+        "state": "CA", 
+        "nickname": "Beavers", 
+        "name": "Los Angeles Trade Technical College"
+    }, 
+    {
+        "schoo_id": 117733, 
+        "city": "Valley Glen", 
+        "state": "CA", 
+        "nickname": "Monarchs", 
+        "name": "Los Angeles Valley College"
+    }, 
+    {
+        "schoo_id": 159391, 
+        "city": "Baton Rouge", 
+        "state": "LA", 
+        "nickname": "Tigers", 
+        "name": "Louisiana State University and Agricultural & Mechanical College"
+    }, 
+    {
+        "schoo_id": 159391, 
+        "city": "Baton Rouge", 
+        "state": "LA", 
+        "nickname": "Lady Tigers", 
+        "name": "Louisiana State University and Agricultural & Mechanical College"
+    }, 
+    {
+        "schoo_id": 159647, 
+        "city": "Ruston", 
+        "state": "LA", 
+        "nickname": "Bulldogs", 
+        "name": "Louisiana Tech University"
+    }, 
+    {
+        "schoo_id": 159647, 
+        "city": "Ruston", 
+        "state": "LA", 
+        "nickname": "Lady Techsters", 
+        "name": "Louisiana Tech University"
+    }, 
+    {
+        "schoo_id": 117946, 
+        "city": "Los Angeles", 
+        "state": "CA", 
+        "nickname": "Lions", 
+        "name": "Loyola Marymount University"
+    }, 
+    {
+        "schoo_id": 146719, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Ramblers", 
+        "name": "Loyola University Chicago"
+    }, 
+    {
+        "schoo_id": 163046, 
+        "city": "Baltimore", 
+        "state": "MD", 
+        "nickname": "Greyhounds", 
+        "name": "Loyola University Maryland"
+    }, 
+    {
+        "schoo_id": 159656, 
+        "city": "New Orleans", 
+        "state": "LA", 
+        "nickname": "Wolfpack", 
+        "name": "Loyola University New Orleans"
+    }, 
+    {
+        "schoo_id": 226383, 
+        "city": "Lubbock", 
+        "state": "TX", 
+        "nickname": "Chaparrals", 
+        "name": "Lubbock Christian University"
+    }, 
+    {
+        "schoo_id": 153834, 
+        "city": "Decorah", 
+        "state": "IA", 
+        "nickname": "Norse", 
+        "name": "Luther College"
+    }, 
+    {
+        "schoo_id": 146825, 
+        "city": "Jacksonville", 
+        "state": "IL", 
+        "nickname": "Highlanders", 
+        "name": "MacMurray College"
+    }, 
+    {
+        "schoo_id": 173902, 
+        "city": "Saint Paul", 
+        "state": "MN", 
+        "nickname": "Scots", 
+        "name": "Macalester College"
+    }, 
+    {
+        "schoo_id": 203775, 
+        "city": "Canton", 
+        "state": "OH", 
+        "nickname": "Pioneers", 
+        "name": "Malone University"
+    }, 
+    {
+        "schoo_id": 151777, 
+        "city": "North Manchester", 
+        "state": "IN", 
+        "nickname": "Spartans", 
+        "name": "Manchester University"
+    }, 
+    {
+        "schoo_id": 192703, 
+        "city": "Riverdale", 
+        "state": "NY", 
+        "nickname": "Jaspers", 
+        "name": "Manhattan College"
+    }, 
+    {
+        "schoo_id": 192703, 
+        "city": "Riverdale", 
+        "state": "NY", 
+        "nickname": "Lady Jaspers", 
+        "name": "Manhattan College"
+    }, 
+    {
+        "schoo_id": 213783, 
+        "city": "Mansfield", 
+        "state": "PA", 
+        "nickname": "Mountaineers", 
+        "name": "Mansfield University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 203845, 
+        "city": "Marietta", 
+        "state": "OH", 
+        "nickname": "Pioneers", 
+        "name": "Marietta College"
+    }, 
+    {
+        "schoo_id": 192819, 
+        "city": "Poughkeepsie", 
+        "state": "NY", 
+        "nickname": "Red Foxes", 
+        "name": "Marist College"
+    }, 
+    {
+        "schoo_id": 239105, 
+        "city": "Milwaukee", 
+        "state": "WI", 
+        "nickname": "Golden Eagles", 
+        "name": "Marquette University"
+    }, 
+    {
+        "schoo_id": 237525, 
+        "city": "Huntington", 
+        "state": "WV", 
+        "nickname": "Thundering Herd", 
+        "name": "Marshall University"
+    }, 
+    {
+        "schoo_id": 232672, 
+        "city": "Staunton", 
+        "state": "VA", 
+        "nickname": "Fighting Squirrels", 
+        "name": "Mary Baldwin College"
+    }, 
+    {
+        "schoo_id": 213826, 
+        "city": "Scranton", 
+        "state": "PA", 
+        "nickname": "Pacers", 
+        "name": "Marywood University"
+    }, 
+    {
+        "schoo_id": 166683, 
+        "city": "Cambridge", 
+        "state": "MA", 
+        "nickname": "Engineers", 
+        "name": "Massachusetts Institute of Technology"
+    }, 
+    {
+        "schoo_id": 166683, 
+        "city": "Cambridge", 
+        "state": "MA", 
+        "nickname": "Engineers", 
+        "name": "Massachusetts Institute of Technology"
+    }, 
+    {
+        "schoo_id": 164270, 
+        "city": "Westminster", 
+        "state": "MD", 
+        "nickname": "Green Terror", 
+        "name": "McDaniel College"
+    }, 
+    {
+        "schoo_id": 226587, 
+        "city": "Abilene", 
+        "state": "TX", 
+        "nickname": "Indians", 
+        "name": "McMurry University"
+    }, 
+    {
+        "schoo_id": 159717, 
+        "city": "Lake Charles", 
+        "state": "LA", 
+        "nickname": "Cowboys", 
+        "name": "McNeese State University"
+    }, 
+    {
+        "schoo_id": 159717, 
+        "city": "Lake Charles", 
+        "state": "LA", 
+        "nickname": "Cowgirls", 
+        "name": "McNeese State University"
+    }, 
+    {
+        "schoo_id": 155511, 
+        "city": "McPherson", 
+        "state": "KS", 
+        "nickname": "Bulldogs", 
+        "name": "McPherson College"
+    }, 
+    {
+        "schoo_id": 192925, 
+        "city": "Buffalo", 
+        "state": "NY", 
+        "nickname": "Mavericks", 
+        "name": "Medaille College"
+    }, 
+    {
+        "schoo_id": 140447, 
+        "city": "Macon", 
+        "state": "GA", 
+        "nickname": "Bears", 
+        "name": "Mercer University"
+    }, 
+    {
+        "schoo_id": 213987, 
+        "city": "Erie", 
+        "state": "PA", 
+        "nickname": "Lakers", 
+        "name": "Mercyhurst University"
+    }, 
+    {
+        "schoo_id": 213996, 
+        "city": "Mechanicsburg", 
+        "state": "PA", 
+        "nickname": "Falcons", 
+        "name": "Messiah College"
+    }, 
+    {
+        "schoo_id": 127565, 
+        "city": "Denver", 
+        "state": "CO", 
+        "nickname": "Roadrunners", 
+        "name": "Metropolitan State University of Denver"
+    }, 
+    {
+        "schoo_id": 204024, 
+        "city": "Oxford", 
+        "state": "OH", 
+        "nickname": "RedHawks", 
+        "name": "Miami University-Oxford"
+    }, 
+    {
+        "schoo_id": 171128, 
+        "city": "Houghton", 
+        "state": "MI", 
+        "nickname": "Huskies", 
+        "name": "Michigan Technological University"
+    }, 
+    {
+        "schoo_id": 155520, 
+        "city": "Olathe", 
+        "state": "KS", 
+        "nickname": "Pioneers", 
+        "name": "MidAmerica Nazarene University"
+    }, 
+    {
+        "schoo_id": 220978, 
+        "city": "Murfreesboro", 
+        "state": "TN", 
+        "nickname": "Blue Raiders", 
+        "name": "Middle Tennessee State University"
+    }, 
+    {
+        "schoo_id": 230959, 
+        "city": "Middlebury", 
+        "state": "VT", 
+        "nickname": "Panthers", 
+        "name": "Middlebury College"
+    }, 
+    {
+        "schoo_id": 181330, 
+        "city": "Fremont", 
+        "state": "NE", 
+        "nickname": "Warriors", 
+        "name": "Midland University"
+    }, 
+    {
+        "schoo_id": 226833, 
+        "city": "Wichita Falls", 
+        "state": "TX", 
+        "nickname": "Mustangs", 
+        "name": "Midwestern State University"
+    }, 
+    {
+        "schoo_id": 226833, 
+        "city": "Wichita Falls", 
+        "state": "TX", 
+        "nickname": "Lady Mustangs", 
+        "name": "Midwestern State University"
+    }, 
+    {
+        "schoo_id": 221014, 
+        "city": "Milligan College", 
+        "state": "TN", 
+        "nickname": "Buffaloes", 
+        "name": "Milligan College"
+    }, 
+    {
+        "schoo_id": 118888, 
+        "city": "Oakland", 
+        "state": "CA", 
+        "nickname": "Cyclones", 
+        "name": "Mills College"
+    }, 
+    {
+        "schoo_id": 175980, 
+        "city": "Jackson", 
+        "state": "MS", 
+        "nickname": "Majors", 
+        "name": "Millsaps College"
+    }, 
+    {
+        "schoo_id": 173920, 
+        "city": "Mankato", 
+        "state": "MN", 
+        "nickname": "Mavericks", 
+        "name": "Minnesota State University-Mankato"
+    }, 
+    {
+        "schoo_id": 174358, 
+        "city": "Moorhead", 
+        "state": "MN", 
+        "nickname": "Dragons", 
+        "name": "Minnesota State University-Moorhead"
+    }, 
+    {
+        "schoo_id": 214069, 
+        "city": "Dallas", 
+        "state": "PA", 
+        "nickname": "Cougars", 
+        "name": "Misericordia University"
+    }, 
+    {
+        "schoo_id": 176080, 
+        "city": "Mississippi State", 
+        "state": "MS", 
+        "nickname": "Bulldogs", 
+        "name": "Mississippi State University"
+    }, 
+    {
+        "schoo_id": 176080, 
+        "city": "Mississippi State", 
+        "state": "MS", 
+        "nickname": "Lady Bulldogs", 
+        "name": "Mississippi State University"
+    }, 
+    {
+        "schoo_id": 176044, 
+        "city": "Itta Bena", 
+        "state": "MS", 
+        "nickname": "Delta Devils", 
+        "name": "Mississippi Valley State University"
+    }, 
+    {
+        "schoo_id": 176044, 
+        "city": "Itta Bena", 
+        "state": "MS", 
+        "nickname": "Devilettes", 
+        "name": "Mississippi Valley State University"
+    }, 
+    {
+        "schoo_id": 178341, 
+        "city": "Joplin", 
+        "state": "MO", 
+        "nickname": "Lions", 
+        "name": "Missouri Southern State University"
+    }, 
+    {
+        "schoo_id": 179566, 
+        "city": "Springfield", 
+        "state": "MO", 
+        "nickname": "Bears", 
+        "name": "Missouri State University-Springfield"
+    }, 
+    {
+        "schoo_id": 179566, 
+        "city": "Springfield", 
+        "state": "MO", 
+        "nickname": "Lady Bears", 
+        "name": "Missouri State University-Springfield"
+    }, 
+    {
+        "schoo_id": 178411, 
+        "city": "Rolla", 
+        "state": "MO", 
+        "nickname": "Miners", 
+        "name": "Missouri University of Science and Technology"
+    }, 
+    {
+        "schoo_id": 178369, 
+        "city": "Marshall", 
+        "state": "MO", 
+        "nickname": "Vikings", 
+        "name": "Missouri Valley College"
+    }, 
+    {
+        "schoo_id": 178387, 
+        "city": "Saint Joseph", 
+        "state": "MO", 
+        "nickname": "Griffons", 
+        "name": "Missouri Western State University"
+    }, 
+    {
+        "schoo_id": 185572, 
+        "city": "West Long Branch", 
+        "state": "NJ", 
+        "nickname": "Hawks", 
+        "name": "Monmouth University"
+    }, 
+    {
+        "schoo_id": 180461, 
+        "city": "Bozeman", 
+        "state": "MT", 
+        "nickname": "Bobcats", 
+        "name": "Montana State University"
+    }, 
+    {
+        "schoo_id": 214157, 
+        "city": "Bethlehem", 
+        "state": "PA", 
+        "nickname": "Greyhounds", 
+        "name": "Moravian College"
+    }, 
+    {
+        "schoo_id": 157386, 
+        "city": "Morehead", 
+        "state": "KY", 
+        "nickname": "Eagles", 
+        "name": "Morehead State University"
+    }, 
+    {
+        "schoo_id": 163453, 
+        "city": "Baltimore", 
+        "state": "MD", 
+        "nickname": "Bears", 
+        "name": "Morgan State University"
+    }, 
+    {
+        "schoo_id": 163453, 
+        "city": "Baltimore", 
+        "state": "MD", 
+        "nickname": "Lady Bears", 
+        "name": "Morgan State University"
+    }, 
+    {
+        "schoo_id": 154004, 
+        "city": "Sioux City", 
+        "state": "IA", 
+        "nickname": "Mustangs", 
+        "name": "Morningside College"
+    }, 
+    {
+        "schoo_id": 196051, 
+        "city": "Morrisville", 
+        "state": "NY", 
+        "nickname": "Mustangs", 
+        "name": "Morrisville State College"
+    }, 
+    {
+        "schoo_id": 154013, 
+        "city": "Cedar Rapids", 
+        "state": "IA", 
+        "nickname": "Mustangs", 
+        "name": "Mount Mercy University"
+    }, 
+    {
+        "schoo_id": 163462, 
+        "city": "Emmitsburg", 
+        "state": "MD", 
+        "nickname": "Mountaineers", 
+        "name": "Mount St Mary's University"
+    }, 
+    {
+        "schoo_id": 214175, 
+        "city": "Allentown", 
+        "state": "PA", 
+        "nickname": "Mules", 
+        "name": "Muhlenberg College"
+    }, 
+    {
+        "schoo_id": 157401, 
+        "city": "Murray", 
+        "state": "KY", 
+        "nickname": "Racers", 
+        "name": "Murray State University"
+    }, 
+    {
+        "schoo_id": 157401, 
+        "city": "Murray", 
+        "state": "KY", 
+        "nickname": "Lady Racers", 
+        "name": "Murray State University"
+    }, 
+    {
+        "schoo_id": 204264, 
+        "city": "New Concord", 
+        "state": "OH", 
+        "nickname": "Fighting Muskies", 
+        "name": "Muskingum University"
+    }, 
+    {
+        "schoo_id": 181446, 
+        "city": "Lincoln", 
+        "state": "NE", 
+        "nickname": "Prairie Wolves", 
+        "name": "Nebraska Wesleyan University"
+    }, 
+    {
+        "schoo_id": 185828, 
+        "city": "Newark", 
+        "state": "NJ", 
+        "nickname": "Highlanders", 
+        "name": "New Jersey Institute of Technology"
+    }, 
+    {
+        "schoo_id": 187967, 
+        "city": "Socorro", 
+        "state": "NM", 
+        "nickname": "Pygmies", 
+        "name": "New Mexico Institute of Mining and Technology"
+    }, 
+    {
+        "schoo_id": 188030, 
+        "city": "Las Cruces", 
+        "state": "NM", 
+        "nickname": "Aggies", 
+        "name": "New Mexico State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 193900, 
+        "city": "New York", 
+        "state": "NY", 
+        "nickname": "Violets", 
+        "name": "New York University"
+    }, 
+    {
+        "schoo_id": 193973, 
+        "city": "Niagara University", 
+        "state": "NY", 
+        "nickname": "Purple Eagles", 
+        "name": "Niagara University"
+    }, 
+    {
+        "schoo_id": 159966, 
+        "city": "Thibodaux", 
+        "state": "LA", 
+        "nickname": "Colonels", 
+        "name": "Nicholls State University"
+    }, 
+    {
+        "schoo_id": 232937, 
+        "city": "Norfolk", 
+        "state": "VA", 
+        "nickname": "Spartans", 
+        "name": "Norfolk State University"
+    }, 
+    {
+        "schoo_id": 199102, 
+        "city": "Greensboro", 
+        "state": "NC", 
+        "nickname": "Aggies", 
+        "name": "North Carolina A & T State University"
+    }, 
+    {
+        "schoo_id": 199157, 
+        "city": "Durham", 
+        "state": "NC", 
+        "nickname": "Eagles", 
+        "name": "North Carolina Central University"
+    }, 
+    {
+        "schoo_id": 199193, 
+        "city": "Raleigh", 
+        "state": "NC", 
+        "nickname": "Wolfpack", 
+        "name": "North Carolina State University at Raleigh"
+    }, 
+    {
+        "schoo_id": 200332, 
+        "city": "Fargo", 
+        "state": "ND", 
+        "nickname": "Bison", 
+        "name": "North Dakota State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 147679, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Vikings", 
+        "name": "North Park University"
+    }, 
+    {
+        "schoo_id": 207263, 
+        "city": "Tahlequah", 
+        "state": "OK", 
+        "nickname": "Riverhawks", 
+        "name": "Northeastern State University"
+    }, 
+    {
+        "schoo_id": 167358, 
+        "city": "Boston", 
+        "state": "MA", 
+        "nickname": "Huskies", 
+        "name": "Northeastern University"
+    }, 
+    {
+        "schoo_id": 105330, 
+        "city": "Flagstaff", 
+        "state": "AZ", 
+        "nickname": "Lumberjacks", 
+        "name": "Northern Arizona University"
+    }, 
+    {
+        "schoo_id": 147703, 
+        "city": "Dekalb", 
+        "state": "IL", 
+        "nickname": "Huskies", 
+        "name": "Northern Illinois University"
+    }, 
+    {
+        "schoo_id": 157447, 
+        "city": "Highland Heights", 
+        "state": "KY", 
+        "nickname": "Norse", 
+        "name": "Northern Kentucky University"
+    }, 
+    {
+        "schoo_id": 171456, 
+        "city": "Marquette", 
+        "state": "MI", 
+        "nickname": "Wildcats", 
+        "name": "Northern Michigan University"
+    }, 
+    {
+        "schoo_id": 188058, 
+        "city": "Espanola", 
+        "state": "NM", 
+        "nickname": "Eagles", 
+        "name": "Northern New Mexico College"
+    }, 
+    {
+        "schoo_id": 209409, 
+        "city": "Eugene", 
+        "state": "OR", 
+        "nickname": "Beacons", 
+        "name": "Northwest Christian University"
+    }, 
+    {
+        "schoo_id": 178624, 
+        "city": "Maryville", 
+        "state": "MO", 
+        "nickname": "Bearcats", 
+        "name": "Northwest Missouri State University"
+    }, 
+    {
+        "schoo_id": 160038, 
+        "city": "Natchitoches", 
+        "state": "LA", 
+        "nickname": "Demons", 
+        "name": "Northwestern State University of Louisiana"
+    }, 
+    {
+        "schoo_id": 160038, 
+        "city": "Natchitoches", 
+        "state": "LA", 
+        "nickname": "Lady Demons", 
+        "name": "Northwestern State University of Louisiana"
+    }, 
+    {
+        "schoo_id": 147767, 
+        "city": "Evanston", 
+        "state": "IL", 
+        "nickname": "Wildcats", 
+        "name": "Northwestern University"
+    }, 
+    {
+        "schoo_id": 136206, 
+        "city": "West Palm Beach", 
+        "state": "FL", 
+        "nickname": "Seahawks", 
+        "name": "Northwood University-Florida"
+    }, 
+    {
+        "schoo_id": 171492, 
+        "city": "Midland", 
+        "state": "MI", 
+        "nickname": "Timberwolves", 
+        "name": "Northwood University-Michigan"
+    }, 
+    {
+        "schoo_id": 230995, 
+        "city": "Northfield", 
+        "state": "VT", 
+        "nickname": "Cadets", 
+        "name": "Norwich University"
+    }, 
+    {
+        "schoo_id": 136215, 
+        "city": "Fort Lauderdale", 
+        "state": "FL", 
+        "nickname": "Sharks", 
+        "name": "Nova Southeastern University"
+    }, 
+    {
+        "schoo_id": 171571, 
+        "city": "Rochester Hills", 
+        "state": "MI", 
+        "nickname": "Golden Grizzlies", 
+        "name": "Oakland University"
+    }, 
+    {
+        "schoo_id": 147800, 
+        "city": "Des Plaines", 
+        "state": "IL", 
+        "nickname": "Raiders", 
+        "name": "Oakton Community College"
+    }, 
+    {
+        "schoo_id": 204501, 
+        "city": "Oberlin", 
+        "state": "OH", 
+        "nickname": "Yeomen", 
+        "name": "Oberlin College"
+    }, 
+    {
+        "schoo_id": 120254, 
+        "city": "Los Angeles", 
+        "state": "CA", 
+        "nickname": "Tigers", 
+        "name": "Occidental College"
+    }, 
+    {
+        "schoo_id": 140696, 
+        "city": "Atlanta", 
+        "state": "GA", 
+        "nickname": "Stormy Petrels", 
+        "name": "Oglethorpe University"
+    }, 
+    {
+        "schoo_id": 204635, 
+        "city": "Ada", 
+        "state": "OH", 
+        "nickname": "Polar Bears", 
+        "name": "Ohio Northern University"
+    }, 
+    {
+        "schoo_id": 204796, 
+        "city": "Columbus", 
+        "state": "OH", 
+        "nickname": "Buckeyes", 
+        "name": "Ohio State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 204857, 
+        "city": "Athens", 
+        "state": "OH", 
+        "nickname": "Bobcats", 
+        "name": "Ohio University-Main Campus"
+    }, 
+    {
+        "schoo_id": 237640, 
+        "city": "Vienna", 
+        "state": "WV", 
+        "nickname": "Fighting Scots", 
+        "name": "Ohio Valley University"
+    }, 
+    {
+        "schoo_id": 204909, 
+        "city": "Delaware", 
+        "state": "OH", 
+        "nickname": "Battlin' Bishops", 
+        "name": "Ohio Wesleyan University"
+    }, 
+    {
+        "schoo_id": 207458, 
+        "city": "Oklahoma City", 
+        "state": "OK", 
+        "nickname": "Stars", 
+        "name": "Oklahoma City University"
+    }, 
+    {
+        "schoo_id": 207351, 
+        "city": "Goodwell", 
+        "state": "OK", 
+        "nickname": "Aggies", 
+        "name": "Oklahoma Panhandle State University"
+    }, 
+    {
+        "schoo_id": 207388, 
+        "city": "Stillwater", 
+        "state": "OK", 
+        "nickname": "Cowboys", 
+        "name": "Oklahoma State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 207388, 
+        "city": "Stillwater", 
+        "state": "OK", 
+        "nickname": "Cowgirls", 
+        "name": "Oklahoma State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 206835, 
+        "city": "Bartlesville", 
+        "state": "OK", 
+        "nickname": "Eagles", 
+        "name": "Oklahoma Wesleyan University"
+    }, 
+    {
+        "schoo_id": 232982, 
+        "city": "Norfolk", 
+        "state": "VA", 
+        "nickname": "Monarchs", 
+        "name": "Old Dominion University"
+    }, 
+    {
+        "schoo_id": 232982, 
+        "city": "Norfolk", 
+        "state": "VA", 
+        "nickname": "Lady Monarchs", 
+        "name": "Old Dominion University"
+    }, 
+    {
+        "schoo_id": 147828, 
+        "city": "Bourbonnais", 
+        "state": "IL", 
+        "nickname": "Tigers", 
+        "name": "Olivet Nazarene University"
+    }, 
+    {
+        "schoo_id": 207582, 
+        "city": "Tulsa", 
+        "state": "OK", 
+        "nickname": "Golden Eagles", 
+        "name": "Oral Roberts University"
+    }, 
+    {
+        "schoo_id": 209506, 
+        "city": "Klamath Falls", 
+        "state": "OR", 
+        "nickname": "Hustlin' Owls", 
+        "name": "Oregon Institute of Technology"
+    }, 
+    {
+        "schoo_id": 209542, 
+        "city": "Corvallis", 
+        "state": "OR", 
+        "nickname": "Beavers", 
+        "name": "Oregon State University"
+    }, 
+    {
+        "schoo_id": 107512, 
+        "city": "Arkadelphia", 
+        "state": "AR", 
+        "nickname": "Tigers", 
+        "name": "Ouachita Baptist University"
+    }, 
+    {
+        "schoo_id": 194310, 
+        "city": "New York", 
+        "state": "NY", 
+        "nickname": "Setters", 
+        "name": "Pace University-New York"
+    }, 
+    {
+        "schoo_id": 236230, 
+        "city": "Tacoma", 
+        "state": "WA", 
+        "nickname": "Lutes", 
+        "name": "Pacific Lutheran University"
+    }, 
+    {
+        "schoo_id": 209612, 
+        "city": "Forest Grove", 
+        "state": "OR", 
+        "nickname": "Boxers", 
+        "name": "Pacific University"
+    }, 
+    {
+        "schoo_id": 214777, 
+        "city": "University Park", 
+        "state": "PA", 
+        "nickname": "Nittany Lions", 
+        "name": "Pennsylvania State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 214777, 
+        "city": "University Park", 
+        "state": "PA", 
+        "nickname": "Lady Lions", 
+        "name": "Pennsylvania State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 121150, 
+        "city": "Malibu", 
+        "state": "CA", 
+        "nickname": "Waves", 
+        "name": "Pepperdine University"
+    }, 
+    {
+        "schoo_id": 155681, 
+        "city": "Pittsburg", 
+        "state": "KS", 
+        "nickname": "Gorillas", 
+        "name": "Pittsburg State University"
+    }, 
+    {
+        "schoo_id": 121257, 
+        "city": "Claremont", 
+        "state": "CA", 
+        "nickname": "Sagehens", 
+        "name": "Pitzer College"
+    }, 
+    {
+        "schoo_id": 121309, 
+        "city": "San Diego", 
+        "state": "CA", 
+        "nickname": "Sea Lions", 
+        "name": "Point Loma Nazarene University"
+    }, 
+    {
+        "schoo_id": 121345, 
+        "city": "Claremont", 
+        "state": "CA", 
+        "nickname": "Sagehens", 
+        "name": "Pomona College"
+    }, 
+    {
+        "schoo_id": 209807, 
+        "city": "Portland", 
+        "state": "OR", 
+        "nickname": "Vikings", 
+        "name": "Portland State University"
+    }, 
+    {
+        "schoo_id": 227526, 
+        "city": "Prairie View", 
+        "state": "TX", 
+        "nickname": "Panthers", 
+        "name": "Prairie View A & M University"
+    }, 
+    {
+        "schoo_id": 227526, 
+        "city": "Prairie View", 
+        "state": "TX", 
+        "nickname": "Lady Panthers", 
+        "name": "Prairie View A & M University"
+    }, 
+    {
+        "schoo_id": 218539, 
+        "city": "Clinton", 
+        "state": "SC", 
+        "nickname": "Blue Hose", 
+        "name": "Presbyterian College"
+    }, 
+    {
+        "schoo_id": 186131, 
+        "city": "Princeton", 
+        "state": "NJ", 
+        "nickname": "Tigers", 
+        "name": "Princeton University"
+    }, 
+    {
+        "schoo_id": 217402, 
+        "city": "Providence", 
+        "state": "RI", 
+        "nickname": "Friars", 
+        "name": "Providence College"
+    }, 
+    {
+        "schoo_id": 152248, 
+        "city": "Hammond", 
+        "state": "IN", 
+        "nickname": "Peregrines", 
+        "name": "Purdue University-Calumet Campus"
+    }, 
+    {
+        "schoo_id": 243780, 
+        "city": "West Lafayette", 
+        "state": "IN", 
+        "nickname": "Boilermakers", 
+        "name": "Purdue University-Main Campus"
+    }, 
+    {
+        "schoo_id": 148131, 
+        "city": "Quincy", 
+        "state": "IL", 
+        "nickname": "Hawks", 
+        "name": "Quincy University"
+    }, 
+    {
+        "schoo_id": 130226, 
+        "city": "Hamden", 
+        "state": "CT", 
+        "nickname": "Bobcats", 
+        "name": "Quinnipiac University"
+    }, 
+    {
+        "schoo_id": 233277, 
+        "city": "Radford", 
+        "state": "VA", 
+        "nickname": "Highlanders", 
+        "name": "Radford University"
+    }, 
+    {
+        "schoo_id": 233295, 
+        "city": "Ashland", 
+        "state": "VA", 
+        "nickname": "Yellow Jackets", 
+        "name": "Randolph-Macon College"
+    }, 
+    {
+        "schoo_id": 209922, 
+        "city": "Portland", 
+        "state": "OR", 
+        "nickname": "Griffins", 
+        "name": "Reed College"
+    }, 
+    {
+        "schoo_id": 127918, 
+        "city": "Denver", 
+        "state": "CO", 
+        "nickname": "Rangers", 
+        "name": "Regis University"
+    }, 
+    {
+        "schoo_id": 140872, 
+        "city": "Waleska", 
+        "state": "GA", 
+        "nickname": "Eagles", 
+        "name": "Reinhardt University"
+    }, 
+    {
+        "schoo_id": 194824, 
+        "city": "Troy", 
+        "state": "NY", 
+        "nickname": "Redhawks", 
+        "name": "Rensselaer Polytechnic Institute"
+    }, 
+    {
+        "schoo_id": 194824, 
+        "city": "Troy", 
+        "state": "NY", 
+        "nickname": "Engineers", 
+        "name": "Rensselaer Polytechnic Institute"
+    }, 
+    {
+        "schoo_id": 217420, 
+        "city": "Providence", 
+        "state": "RI", 
+        "nickname": "Anchormen", 
+        "name": "Rhode Island College"
+    }, 
+    {
+        "schoo_id": 217493, 
+        "city": "Providence", 
+        "state": "RI", 
+        "nickname": "Nads", 
+        "name": "Rhode Island School of Design"
+    }, 
+    {
+        "schoo_id": 221351, 
+        "city": "Memphis", 
+        "state": "TN", 
+        "nickname": "Lynx", 
+        "name": "Rhodes College"
+    }, 
+    {
+        "schoo_id": 227757, 
+        "city": "Houston", 
+        "state": "TX", 
+        "nickname": "Owls", 
+        "name": "Rice University"
+    }, 
+    {
+        "schoo_id": 186283, 
+        "city": "Lawrenceville", 
+        "state": "NJ", 
+        "nickname": "Broncs", 
+        "name": "Rider University"
+    }, 
+    {
+        "schoo_id": 233426, 
+        "city": "Salem", 
+        "state": "VA", 
+        "nickname": "Maroons", 
+        "name": "Roanoke College"
+    }, 
+    {
+        "schoo_id": 215655, 
+        "city": "Moon Township", 
+        "state": "PA", 
+        "nickname": "Colonials", 
+        "name": "Robert Morris University"
+    }, 
+    {
+        "schoo_id": 148335, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Eagles", 
+        "name": "Robert Morris University Illinois"
+    }, 
+    {
+        "schoo_id": 195003, 
+        "city": "Rochester", 
+        "state": "NY", 
+        "nickname": "Tigers", 
+        "name": "Rochester Institute of Technology"
+    }, 
+    {
+        "schoo_id": 148380, 
+        "city": "Rockford", 
+        "state": "IL", 
+        "nickname": "Golden Eagles", 
+        "name": "Rock Valley College"
+    }, 
+    {
+        "schoo_id": 148405, 
+        "city": "Rockford", 
+        "state": "IL", 
+        "nickname": "Regents", 
+        "name": "Rockford University"
+    }, 
+    {
+        "schoo_id": 152318, 
+        "city": "Terre Haute", 
+        "state": "IN", 
+        "nickname": "Fightin' Engineers", 
+        "name": "Rose-Hulman Institute of Technology"
+    }, 
+    {
+        "schoo_id": 215691, 
+        "city": "Rosemont", 
+        "state": "PA", 
+        "nickname": "Ramblers", 
+        "name": "Rosemont College"
+    }, 
+    {
+        "schoo_id": 184782, 
+        "city": "Glassboro", 
+        "state": "NJ", 
+        "nickname": "Profs", 
+        "name": "Rowan University"
+    }, 
+    {
+        "schoo_id": 186371, 
+        "city": "Camden", 
+        "state": "NJ", 
+        "nickname": "Scarlet Raptors", 
+        "name": "Rutgers University-Camden"
+    }, 
+    {
+        "schoo_id": 186399, 
+        "city": "Newark", 
+        "state": "NJ", 
+        "nickname": "Scarlet Raiders", 
+        "name": "Rutgers University-Newark"
+    }, 
+    {
+        "schoo_id": 196121, 
+        "city": "Brockport", 
+        "state": "NY", 
+        "nickname": "Golden Eagles", 
+        "name": "SUNY College at Brockport"
+    }, 
+    {
+        "schoo_id": 196149, 
+        "city": "Cortland", 
+        "state": "NY", 
+        "nickname": "Red Dragons", 
+        "name": "SUNY College at Cortland"
+    }, 
+    {
+        "schoo_id": 196167, 
+        "city": "Geneseo", 
+        "state": "NY", 
+        "nickname": "Knights", 
+        "name": "SUNY College at Geneseo"
+    }, 
+    {
+        "schoo_id": 196194, 
+        "city": "Oswego", 
+        "state": "NY", 
+        "nickname": "Great Lakers", 
+        "name": "SUNY College at Oswego"
+    }, 
+    {
+        "schoo_id": 196246, 
+        "city": "Plattsburgh", 
+        "state": "NY", 
+        "nickname": "Cardinals", 
+        "name": "SUNY College at Plattsburgh"
+    }, 
+    {
+        "schoo_id": 196200, 
+        "city": "Potsdam", 
+        "state": "NY", 
+        "nickname": "Bears", 
+        "name": "SUNY College at Potsdam"
+    }, 
+    {
+        "schoo_id": 196103, 
+        "city": "Syracuse", 
+        "state": "NY", 
+        "nickname": "Mighty Oaks", 
+        "name": "SUNY College of Environmental Science and Forestry"
+    }, 
+    {
+        "schoo_id": 196112, 
+        "city": "Utica", 
+        "state": "NY", 
+        "nickname": "Wildcats", 
+        "name": "SUNY Institute of Technology at Utica-Rome"
+    }, 
+    {
+        "schoo_id": 196185, 
+        "city": "Oneonta", 
+        "state": "NY", 
+        "nickname": "Red Dragons", 
+        "name": "SUNY Oneonta"
+    }, 
+    {
+        "schoo_id": 196060, 
+        "city": "Albany", 
+        "state": "NY", 
+        "nickname": "Great Danes", 
+        "name": "SUNY at Albany"
+    }, 
+    {
+        "schoo_id": 196079, 
+        "city": "Vestal", 
+        "state": "NY", 
+        "nickname": "Bearcats", 
+        "name": "SUNY at Binghamton"
+    }, 
+    {
+        "schoo_id": 196158, 
+        "city": "Fredonia", 
+        "state": "NY", 
+        "nickname": "Blue Devils", 
+        "name": "SUNY at Fredonia"
+    }, 
+    {
+        "schoo_id": 130253, 
+        "city": "Fairfield", 
+        "state": "CT", 
+        "nickname": "Pioneers", 
+        "name": "Sacred Heart University"
+    }, 
+    {
+        "schoo_id": 154235, 
+        "city": "Davenport", 
+        "state": "IA", 
+        "nickname": "Fighting Bees", 
+        "name": "Saint Ambrose University"
+    }, 
+    {
+        "schoo_id": 154235, 
+        "city": "Davenport", 
+        "state": "IA", 
+        "nickname": "Queen Bees", 
+        "name": "Saint Ambrose University"
+    }, 
+    {
+        "schoo_id": 183239, 
+        "city": "Manchester", 
+        "state": "NH", 
+        "nickname": "Hawks", 
+        "name": "Saint Anselm College"
+    }, 
+    {
+        "schoo_id": 174783, 
+        "city": "Saint Cloud", 
+        "state": "MN", 
+        "nickname": "Huskies", 
+        "name": "Saint Cloud State University"
+    }, 
+    {
+        "schoo_id": 227845, 
+        "city": "Austin", 
+        "state": "TX", 
+        "nickname": "Hilltoppers", 
+        "name": "Saint Edward's University"
+    }, 
+    {
+        "schoo_id": 215743, 
+        "city": "Loretto", 
+        "state": "PA", 
+        "nickname": "Red Flash", 
+        "name": "Saint Francis University"
+    }, 
+    {
+        "schoo_id": 195720, 
+        "city": "Rochester", 
+        "state": "NY", 
+        "nickname": "Cardinals", 
+        "name": "Saint John Fisher College"
+    }, 
+    {
+        "schoo_id": 174792, 
+        "city": "Collegeville", 
+        "state": "MN", 
+        "nickname": "Johnnies", 
+        "name": "Saint Johns University"
+    }, 
+    {
+        "schoo_id": 195544, 
+        "city": "Brooklyn", 
+        "state": "NY", 
+        "nickname": "Bears", 
+        "name": "Saint Joseph's College-New York"
+    }, 
+    {
+        "schoo_id": 195544, 
+        "city": "Brooklyn", 
+        "state": "NY", 
+        "nickname": "Lady Bears", 
+        "name": "Saint Joseph's College-New York"
+    }, 
+    {
+        "schoo_id": 215770, 
+        "city": "Philadelphia", 
+        "state": "PA", 
+        "nickname": "Hawks", 
+        "name": "Saint Joseph's University"
+    }, 
+    {
+        "schoo_id": 152363, 
+        "city": "Rensselaer", 
+        "state": "IN", 
+        "nickname": "Pumas", 
+        "name": "Saint Josephs College"
+    }, 
+    {
+        "schoo_id": 179159, 
+        "city": "Saint Louis", 
+        "state": "MO", 
+        "nickname": "Billikens", 
+        "name": "Saint Louis University"
+    }, 
+    {
+        "schoo_id": 123554, 
+        "city": "Moraga", 
+        "state": "CA", 
+        "nickname": "Gaels", 
+        "name": "Saint Mary's College of California"
+    }, 
+    {
+        "schoo_id": 174817, 
+        "city": "Winona", 
+        "state": "MN", 
+        "nickname": "Cardinals", 
+        "name": "Saint Mary's University of Minnesota"
+    }, 
+    {
+        "schoo_id": 152381, 
+        "city": "Saint Mary of the Woods", 
+        "state": "IN", 
+        "nickname": "Pomeroys", 
+        "name": "Saint Mary-of-the-Woods College"
+    }, 
+    {
+        "schoo_id": 231059, 
+        "city": "Colchester", 
+        "state": "VT", 
+        "nickname": "Purple Knights", 
+        "name": "Saint Michael's College"
+    }, 
+    {
+        "schoo_id": 186432, 
+        "city": "Jersey City", 
+        "state": "NJ", 
+        "nickname": "Peacocks", 
+        "name": "Saint Peter's University"
+    }, 
+    {
+        "schoo_id": 186432, 
+        "city": "Jersey City", 
+        "state": "NJ", 
+        "nickname": "Peahens", 
+        "name": "Saint Peter's University"
+    }, 
+    {
+        "schoo_id": 148627, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Cougars", 
+        "name": "Saint Xavier University"
+    }, 
+    {
+        "schoo_id": 237783, 
+        "city": "Salem", 
+        "state": "WV", 
+        "nickname": "Tigers", 
+        "name": "Salem International University"
+    }, 
+    {
+        "schoo_id": 167729, 
+        "city": "Salem", 
+        "state": "MA", 
+        "nickname": "Vikings", 
+        "name": "Salem State University"
+    }, 
+    {
+        "schoo_id": 163851, 
+        "city": "Salisbury", 
+        "state": "MD", 
+        "nickname": "Seagulls", 
+        "name": "Salisbury University"
+    }, 
+    {
+        "schoo_id": 227881, 
+        "city": "Huntsville", 
+        "state": "TX", 
+        "nickname": "Bearkats", 
+        "name": "Sam Houston State University"
+    }, 
+    {
+        "schoo_id": 102049, 
+        "city": "Birmingham", 
+        "state": "AL", 
+        "nickname": "Bulldogs", 
+        "name": "Samford University"
+    }, 
+    {
+        "schoo_id": 122409, 
+        "city": "San Diego", 
+        "state": "CA", 
+        "nickname": "Aztecs", 
+        "name": "San Diego State University"
+    }, 
+    {
+        "schoo_id": 122597, 
+        "city": "San Francisco", 
+        "state": "CA", 
+        "nickname": "Gators", 
+        "name": "San Francisco State University"
+    }, 
+    {
+        "schoo_id": 122755, 
+        "city": "San Jose", 
+        "state": "CA", 
+        "nickname": "Spartans", 
+        "name": "San Jose State University"
+    }, 
+    {
+        "schoo_id": 122755, 
+        "city": "San Jose", 
+        "state": "CA", 
+        "nickname": "Spartans", 
+        "name": "San Jose State University"
+    }, 
+    {
+        "schoo_id": 122931, 
+        "city": "Santa Clara", 
+        "state": "CA", 
+        "nickname": "Broncos", 
+        "name": "Santa Clara University"
+    }, 
+    {
+        "schoo_id": 140951, 
+        "city": "Savannah", 
+        "state": "GA", 
+        "nickname": "Bees", 
+        "name": "Savannah College of Art and Design"
+    }, 
+    {
+        "schoo_id": 140960, 
+        "city": "Savannah", 
+        "state": "GA", 
+        "nickname": "Tigers", 
+        "name": "Savannah State University"
+    }, 
+    {
+        "schoo_id": 140960, 
+        "city": "Savannah", 
+        "state": "GA", 
+        "nickname": "Lady Tigers", 
+        "name": "Savannah State University"
+    }, 
+    {
+        "schoo_id": 105747, 
+        "city": "Scottsdale", 
+        "state": "AZ", 
+        "nickname": "Artichokes", 
+        "name": "Scottsdale Community College"
+    }, 
+    {
+        "schoo_id": 123165, 
+        "city": "Claremont", 
+        "state": "CA", 
+        "nickname": "Stags", 
+        "name": "Scripps College"
+    }, 
+    {
+        "schoo_id": 123165, 
+        "city": "Claremont", 
+        "state": "CA", 
+        "nickname": "Athenas", 
+        "name": "Scripps College"
+    }, 
+    {
+        "schoo_id": 236577, 
+        "city": "Seattle", 
+        "state": "WA", 
+        "nickname": "Falcons", 
+        "name": "Seattle Pacific University"
+    }, 
+    {
+        "schoo_id": 236595, 
+        "city": "Seattle", 
+        "state": "WA", 
+        "nickname": "Redhawks", 
+        "name": "Seattle University"
+    }, 
+    {
+        "schoo_id": 186584, 
+        "city": "South Orange", 
+        "state": "NJ", 
+        "nickname": "Pirates", 
+        "name": "Seton Hall University"
+    }, 
+    {
+        "schoo_id": 237792, 
+        "city": "Shepherdstown", 
+        "state": "WV", 
+        "nickname": "Rams", 
+        "name": "Shepherd University"
+    }, 
+    {
+        "schoo_id": 148849, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Flaming Smelts", 
+        "name": "Shimer College"
+    }, 
+    {
+        "schoo_id": 216010, 
+        "city": "Shippensburg", 
+        "state": "PA", 
+        "nickname": "Red Raiders", 
+        "name": "Shippensburg University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 195474, 
+        "city": "Loudonville", 
+        "state": "NY", 
+        "nickname": "Saints", 
+        "name": "Siena College"
+    }, 
+    {
+        "schoo_id": 461759, 
+        "city": "Louisville", 
+        "state": "KY", 
+        "nickname": "Panthers", 
+        "name": "Simmons College of Kentucky"
+    }, 
+    {
+        "schoo_id": 154350, 
+        "city": "Indianola", 
+        "state": "IA", 
+        "nickname": "Storm", 
+        "name": "Simpson College"
+    }, 
+    {
+        "schoo_id": 195526, 
+        "city": "Saratoga Springs", 
+        "state": "NY", 
+        "nickname": "Thoroughbreds", 
+        "name": "Skidmore College"
+    }, 
+    {
+        "schoo_id": 216038, 
+        "city": "Slippery Rock", 
+        "state": "PA", 
+        "nickname": "The Rock", 
+        "name": "Slippery Rock University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 123572, 
+        "city": "Rohnert Park", 
+        "state": "CA", 
+        "nickname": "Seawolves", 
+        "name": "Sonoma State University"
+    }, 
+    {
+        "schoo_id": 218733, 
+        "city": "Orangeburg", 
+        "state": "SC", 
+        "nickname": "Bulldogs", 
+        "name": "South Carolina State University"
+    }, 
+    {
+        "schoo_id": 219347, 
+        "city": "Rapid City", 
+        "state": "SD", 
+        "nickname": "Hardrockers", 
+        "name": "South Dakota School of Mines and Technology"
+    }, 
+    {
+        "schoo_id": 219356, 
+        "city": "Brookings", 
+        "state": "SD", 
+        "nickname": "Jackrabbits", 
+        "name": "South Dakota State University"
+    }, 
+    {
+        "schoo_id": 179557, 
+        "city": "Cape Girardeau", 
+        "state": "MO", 
+        "nickname": "Redhawks", 
+        "name": "Southeast Missouri State University"
+    }, 
+    {
+        "schoo_id": 160612, 
+        "city": "Hammond", 
+        "state": "LA", 
+        "nickname": "Lions", 
+        "name": "Southeastern Louisiana University"
+    }, 
+    {
+        "schoo_id": 160612, 
+        "city": "Hammond", 
+        "state": "LA", 
+        "nickname": "Lady Lions", 
+        "name": "Southeastern Louisiana University"
+    }, 
+    {
+        "schoo_id": 207847, 
+        "city": "Durant", 
+        "state": "OK", 
+        "nickname": "Savage Storm", 
+        "name": "Southeastern Oklahoma State University"
+    }, 
+    {
+        "schoo_id": 137564, 
+        "city": "Lakeland", 
+        "state": "FL", 
+        "nickname": "Fire", 
+        "name": "Southeastern University"
+    }, 
+    {
+        "schoo_id": 107983, 
+        "city": "Magnolia", 
+        "state": "AR", 
+        "nickname": "Muleriders", 
+        "name": "Southern Arkansas University Main Campus"
+    }, 
+    {
+        "schoo_id": 107983, 
+        "city": "Magnolia", 
+        "state": "AR", 
+        "nickname": "Lady Muleriders", 
+        "name": "Southern Arkansas University Main Campus"
+    }, 
+    {
+        "schoo_id": 130493, 
+        "city": "New Haven", 
+        "state": "CT", 
+        "nickname": "Owls", 
+        "name": "Southern Connecticut State University"
+    }, 
+    {
+        "schoo_id": 149222, 
+        "city": "Carbondale", 
+        "state": "IL", 
+        "nickname": "Salukis", 
+        "name": "Southern Illinois University-Carbondale"
+    }, 
+    {
+        "schoo_id": 149231, 
+        "city": "Edwardsville", 
+        "state": "IL", 
+        "nickname": "Cougars", 
+        "name": "Southern Illinois University-Edwardsville"
+    }, 
+    {
+        "schoo_id": 228246, 
+        "city": "Dallas", 
+        "state": "TX", 
+        "nickname": "Mustangs", 
+        "name": "Southern Methodist University"
+    }, 
+    {
+        "schoo_id": 228246, 
+        "city": "Dallas", 
+        "state": "TX", 
+        "nickname": "Mustangs", 
+        "name": "Southern Methodist University"
+    }, 
+    {
+        "schoo_id": 206862, 
+        "city": "Bethany", 
+        "state": "OK", 
+        "nickname": "Crimson Storm", 
+        "name": "Southern Nazarene University"
+    }, 
+    {
+        "schoo_id": 160621, 
+        "city": "Baton Rouge", 
+        "state": "LA", 
+        "nickname": "Jaguars", 
+        "name": "Southern University and A & M College"
+    }, 
+    {
+        "schoo_id": 230603, 
+        "city": "Cedar City", 
+        "state": "UT", 
+        "nickname": "Thunderbirds", 
+        "name": "Southern Utah University"
+    }, 
+    {
+        "schoo_id": 230603, 
+        "city": "Cedar City", 
+        "state": "UT", 
+        "nickname": "Lady Thunderbirds", 
+        "name": "Southern Utah University"
+    }, 
+    {
+        "schoo_id": 233611, 
+        "city": "Buena Vista", 
+        "state": "VA", 
+        "nickname": "Knights", 
+        "name": "Southern Virginia University"
+    }, 
+    {
+        "schoo_id": 179326, 
+        "city": "Bolivar", 
+        "state": "MO", 
+        "nickname": "Bearcats", 
+        "name": "Southwest Baptist University"
+    }, 
+    {
+        "schoo_id": 175078, 
+        "city": "Marshall", 
+        "state": "MN", 
+        "nickname": "Mustangs", 
+        "name": "Southwest Minnesota State University"
+    }, 
+    {
+        "schoo_id": 155900, 
+        "city": "Winfield", 
+        "state": "KS", 
+        "nickname": "Moundbuilders", 
+        "name": "Southwestern College"
+    }, 
+    {
+        "schoo_id": 228343, 
+        "city": "Georgetown", 
+        "state": "TX", 
+        "nickname": "Pirates", 
+        "name": "Southwestern University"
+    }, 
+    {
+        "schoo_id": 102234, 
+        "city": "Mobile", 
+        "state": "AL", 
+        "nickname": "Badgers", 
+        "name": "Spring Hill College"
+    }, 
+    {
+        "schoo_id": 167899, 
+        "city": "Springfield", 
+        "state": "MA", 
+        "nickname": "Pride", 
+        "name": "Springfield College"
+    }, 
+    {
+        "schoo_id": 195164, 
+        "city": "Saint Bonaventure", 
+        "state": "NY", 
+        "nickname": "Bonnies", 
+        "name": "St Bonaventure University"
+    }, 
+    {
+        "schoo_id": 195809, 
+        "city": "Queens", 
+        "state": "NY", 
+        "nickname": "Red Storm", 
+        "name": "St John's University-New York"
+    }, 
+    {
+        "schoo_id": 195216, 
+        "city": "Canton", 
+        "state": "NY", 
+        "nickname": "Saints", 
+        "name": "St Lawrence University"
+    }, 
+    {
+        "schoo_id": 179265, 
+        "city": "Saint Louis", 
+        "state": "MO", 
+        "nickname": "Eutectics", 
+        "name": "St Louis College of Pharmacy"
+    }, 
+    {
+        "schoo_id": 174844, 
+        "city": "Northfield", 
+        "state": "MN", 
+        "nickname": "Oles", 
+        "name": "St Olaf College"
+    }, 
+    {
+        "schoo_id": 137476, 
+        "city": "Miami Gardens", 
+        "state": "FL", 
+        "nickname": "Bobcats", 
+        "name": "St Thomas University"
+    }, 
+    {
+        "schoo_id": 243744, 
+        "city": "Stanford", 
+        "state": "CA", 
+        "nickname": "Cardinal", 
+        "name": "Stanford University"
+    }, 
+    {
+        "schoo_id": 196176, 
+        "city": "New Paltz", 
+        "state": "NY", 
+        "nickname": "Hawks", 
+        "name": "State University of New York at New Paltz"
+    }, 
+    {
+        "schoo_id": 228431, 
+        "city": "Nacogdoches", 
+        "state": "TX", 
+        "nickname": "Lumberjacks", 
+        "name": "Stephen F Austin State University"
+    }, 
+    {
+        "schoo_id": 228431, 
+        "city": "Nacogdoches", 
+        "state": "TX", 
+        "nickname": "Ladyjacks", 
+        "name": "Stephen F Austin State University"
+    }, 
+    {
+        "schoo_id": 137546, 
+        "city": "DeLand", 
+        "state": "FL", 
+        "nickname": "Mad Hatters", 
+        "name": "Stetson University"
+    }, 
+    {
+        "schoo_id": 164173, 
+        "city": "Stevenson", 
+        "state": "MD", 
+        "nickname": "Mustangs", 
+        "name": "Stevenson University"
+    }, 
+    {
+        "schoo_id": 167996, 
+        "city": "Easton", 
+        "state": "MA", 
+        "nickname": "Skyhawks", 
+        "name": "Stonehill College"
+    }, 
+    {
+        "schoo_id": 196097, 
+        "city": "Stony Brook", 
+        "state": "NY", 
+        "nickname": "Seawolves", 
+        "name": "Stony Brook University"
+    }, 
+    {
+        "schoo_id": 247603, 
+        "city": "Newton", 
+        "state": "NJ", 
+        "nickname": "Skylanders", 
+        "name": "Sussex County Community College"
+    }, 
+    {
+        "schoo_id": 233718, 
+        "city": "Sweet Briar", 
+        "state": "VA", 
+        "nickname": "Vixens", 
+        "name": "Sweet Briar College"
+    }, 
+    {
+        "schoo_id": 196413, 
+        "city": "Syracuse", 
+        "state": "NY", 
+        "nickname": "Orange", 
+        "name": "Syracuse University"
+    }, 
+    {
+        "schoo_id": 155973, 
+        "city": "Hillsboro", 
+        "state": "KS", 
+        "nickname": "Bluejays", 
+        "name": "Tabor College"
+    }, 
+    {
+        "schoo_id": 228529, 
+        "city": "Stephenville", 
+        "state": "TX", 
+        "nickname": "Texans", 
+        "name": "Tarleton State University"
+    }, 
+    {
+        "schoo_id": 228529, 
+        "city": "Stephenville", 
+        "state": "TX", 
+        "nickname": "Texanns", 
+        "name": "Tarleton State University"
+    }, 
+    {
+        "schoo_id": 152530, 
+        "city": "Upland", 
+        "state": "IN", 
+        "nickname": "Trojans", 
+        "name": "Taylor University"
+    }, 
+    {
+        "schoo_id": 216339, 
+        "city": "Philadelphia", 
+        "state": "PA", 
+        "nickname": "Owls", 
+        "name": "Temple University"
+    }, 
+    {
+        "schoo_id": 221838, 
+        "city": "Nashville", 
+        "state": "TN", 
+        "nickname": "Tigers", 
+        "name": "Tennessee State University"
+    }, 
+    {
+        "schoo_id": 221838, 
+        "city": "Nashville", 
+        "state": "TN", 
+        "nickname": "Lady Tigers", 
+        "name": "Tennessee State University"
+    }, 
+    {
+        "schoo_id": 221847, 
+        "city": "Cookeville", 
+        "state": "TN", 
+        "nickname": "Golden Eagles", 
+        "name": "Tennessee Technological University"
+    }, 
+    {
+        "schoo_id": 221856, 
+        "city": "Chattanooga", 
+        "state": "TN", 
+        "nickname": "Crusaders", 
+        "name": "Tennessee Temple University"
+    }, 
+    {
+        "schoo_id": 226152, 
+        "city": "Laredo", 
+        "state": "TX", 
+        "nickname": "Dustdevils", 
+        "name": "Texas A & M International University"
+    }, 
+    {
+        "schoo_id": 228723, 
+        "city": "College Station", 
+        "state": "TX", 
+        "nickname": "Aggies", 
+        "name": "Texas A & M University-College Station"
+    }, 
+    {
+        "schoo_id": 224554, 
+        "city": "Commerce", 
+        "state": "TX", 
+        "nickname": "Lions", 
+        "name": "Texas A & M University-Commerce"
+    }, 
+    {
+        "schoo_id": 224147, 
+        "city": "Corpus Christi", 
+        "state": "TX", 
+        "nickname": "Islanders", 
+        "name": "Texas A & M University-Corpus Christi"
+    }, 
+    {
+        "schoo_id": 228705, 
+        "city": "Kingsville", 
+        "state": "TX", 
+        "nickname": "Javelinas", 
+        "name": "Texas A & M University-Kingsville"
+    }, 
+    {
+        "schoo_id": 228875, 
+        "city": "Fort Worth", 
+        "state": "TX", 
+        "nickname": "Horned Frogs", 
+        "name": "Texas Christian University"
+    }, 
+    {
+        "schoo_id": 228981, 
+        "city": "Seguin", 
+        "state": "TX", 
+        "nickname": "Bulldogs", 
+        "name": "Texas Lutheran University"
+    }, 
+    {
+        "schoo_id": 229063, 
+        "city": "Houston", 
+        "state": "TX", 
+        "nickname": "Tigers", 
+        "name": "Texas Southern University"
+    }, 
+    {
+        "schoo_id": 228459, 
+        "city": "San Marcos", 
+        "state": "TX", 
+        "nickname": "Bobcats", 
+        "name": "Texas State University"
+    }, 
+    {
+        "schoo_id": 229115, 
+        "city": "Lubbock", 
+        "state": "TX", 
+        "nickname": "Red Raiders", 
+        "name": "Texas Tech University"
+    }, 
+    {
+        "schoo_id": 229115, 
+        "city": "Lubbock", 
+        "state": "TX", 
+        "nickname": "Lady Raiders", 
+        "name": "Texas Tech University"
+    }, 
+    {
+        "schoo_id": 229160, 
+        "city": "Fort Worth", 
+        "state": "TX", 
+        "nickname": "Rams", 
+        "name": "Texas Wesleyan University"
+    }, 
+    {
+        "schoo_id": 229160, 
+        "city": "Fort Worth", 
+        "state": "TX", 
+        "nickname": "Lady Rams", 
+        "name": "Texas Wesleyan University"
+    }, 
+    {
+        "schoo_id": 142294, 
+        "city": "Caldwell", 
+        "state": "ID", 
+        "nickname": "Coyotes", 
+        "name": "The College of Idaho"
+    }, 
+    {
+        "schoo_id": 187134, 
+        "city": "Ewing", 
+        "state": "NJ", 
+        "nickname": "Lions", 
+        "name": "The College of New Jersey"
+    }, 
+    {
+        "schoo_id": 206589, 
+        "city": "Wooster", 
+        "state": "OH", 
+        "nickname": "Fighting Scots", 
+        "name": "The College of Wooster"
+    }, 
+    {
+        "schoo_id": 235167, 
+        "city": "Olympia", 
+        "state": "WA", 
+        "nickname": "Geoducks", 
+        "name": "The Evergreen State College"
+    }, 
+    {
+        "schoo_id": 186876, 
+        "city": "Galloway", 
+        "state": "NJ", 
+        "nickname": "Ospreys", 
+        "name": "The Richard Stockton College of New Jersey"
+    }, 
+    {
+        "schoo_id": 100751, 
+        "city": "Tuscaloosa", 
+        "state": "AL", 
+        "nickname": "Crimson Tide", 
+        "name": "The University of Alabama"
+    }, 
+    {
+        "schoo_id": 180489, 
+        "city": "Missoula", 
+        "state": "MT", 
+        "nickname": "Grizzlies", 
+        "name": "The University of Montana"
+    }, 
+    {
+        "schoo_id": 137847, 
+        "city": "Tampa", 
+        "state": "FL", 
+        "nickname": "Spartans", 
+        "name": "The University of Tampa"
+    }, 
+    {
+        "schoo_id": 221740, 
+        "city": "Chattanooga", 
+        "state": "TN", 
+        "nickname": "Mocs", 
+        "name": "The University of Tennessee-Chattanooga"
+    }, 
+    {
+        "schoo_id": 221759, 
+        "city": "Knoxville", 
+        "state": "TN", 
+        "nickname": "Volunteers", 
+        "name": "The University of Tennessee-Knoxville"
+    }, 
+    {
+        "schoo_id": 221759, 
+        "city": "Knoxville", 
+        "state": "TN", 
+        "nickname": "Lady Volunteers", 
+        "name": "The University of Tennessee-Knoxville"
+    }, 
+    {
+        "schoo_id": 221759, 
+        "city": "Knoxville", 
+        "state": "TN", 
+        "nickname": "Vols", 
+        "name": "The University of Tennessee-Knoxville"
+    }, 
+    {
+        "schoo_id": 221768, 
+        "city": "Martin", 
+        "state": "TN", 
+        "nickname": "Skyhawks", 
+        "name": "The University of Tennessee-Martin"
+    }, 
+    {
+        "schoo_id": 228769, 
+        "city": "Arlington", 
+        "state": "TX", 
+        "nickname": "Mavericks", 
+        "name": "The University of Texas at Arlington"
+    }, 
+    {
+        "schoo_id": 228778, 
+        "city": "Austin", 
+        "state": "TX", 
+        "nickname": "Longhorns", 
+        "name": "The University of Texas at Austin"
+    }, 
+    {
+        "schoo_id": 227377, 
+        "city": "Brownsville", 
+        "state": "TX", 
+        "nickname": "Ocelots", 
+        "name": "The University of Texas at Brownsville"
+    }, 
+    {
+        "schoo_id": 228787, 
+        "city": "Richardson", 
+        "state": "TX", 
+        "nickname": "Comets", 
+        "name": "The University of Texas at Dallas"
+    }, 
+    {
+        "schoo_id": 228796, 
+        "city": "El Paso", 
+        "state": "TX", 
+        "nickname": "Miners", 
+        "name": "The University of Texas at El Paso"
+    }, 
+    {
+        "schoo_id": 229027, 
+        "city": "San Antonio", 
+        "state": "TX", 
+        "nickname": "Roadrunners", 
+        "name": "The University of Texas at San Antonio"
+    }, 
+    {
+        "schoo_id": 228802, 
+        "city": "Tyler", 
+        "state": "TX", 
+        "nickname": "Patriots", 
+        "name": "The University of Texas at Tyler"
+    }, 
+    {
+        "schoo_id": 229018, 
+        "city": "Odessa", 
+        "state": "TX", 
+        "nickname": "Falcons", 
+        "name": "The University of Texas of the Permian Basin"
+    }, 
+    {
+        "schoo_id": 227368, 
+        "city": "Edinburg", 
+        "state": "TX", 
+        "nickname": "Broncs", 
+        "name": "The University of Texas-Pan American"
+    }, 
+    {
+        "schoo_id": 227368, 
+        "city": "Edinburg", 
+        "state": "TX", 
+        "nickname": "Lady Broncs", 
+        "name": "The University of Texas-Pan American"
+    }, 
+    {
+        "schoo_id": 138354, 
+        "city": "Pensacola", 
+        "state": "FL", 
+        "nickname": "Argonauts", 
+        "name": "The University of West Florida"
+    }, 
+    {
+        "schoo_id": 157809, 
+        "city": "Crestview Hills", 
+        "state": "KY", 
+        "nickname": "Blue Rebels", 
+        "name": "Thomas More College"
+    }, 
+    {
+        "schoo_id": 141185, 
+        "city": "Toccoa Falls", 
+        "state": "GA", 
+        "nickname": "Eagles", 
+        "name": "Toccoa Falls College"
+    }, 
+    {
+        "schoo_id": 164076, 
+        "city": "Towson", 
+        "state": "MD", 
+        "nickname": "Tigers", 
+        "name": "Towson University"
+    }, 
+    {
+        "schoo_id": 157818, 
+        "city": "Lexington", 
+        "state": "KY", 
+        "nickname": "Pioneers", 
+        "name": "Transylvania University"
+    }, 
+    {
+        "schoo_id": 221892, 
+        "city": "Nashville", 
+        "state": "TN", 
+        "nickname": "Trojans", 
+        "name": "Trevecca Nazarene University"
+    }, 
+    {
+        "schoo_id": 152567, 
+        "city": "Angola", 
+        "state": "IN", 
+        "nickname": "Thunder", 
+        "name": "Trine University"
+    }, 
+    {
+        "schoo_id": 149505, 
+        "city": "Palos Heights", 
+        "state": "IL", 
+        "nickname": "Trolls", 
+        "name": "Trinity Christian College"
+    }, 
+    {
+        "schoo_id": 130590, 
+        "city": "Hartford", 
+        "state": "CT", 
+        "nickname": "Bantams", 
+        "name": "Trinity College"
+    }, 
+    {
+        "schoo_id": 229267, 
+        "city": "San Antonio", 
+        "state": "TX", 
+        "nickname": "Tigers", 
+        "name": "Trinity University"
+    }, 
+    {
+        "schoo_id": 102368, 
+        "city": "Troy", 
+        "state": "AL", 
+        "nickname": "Trojans", 
+        "name": "Troy University"
+    }, 
+    {
+        "schoo_id": 178615, 
+        "city": "Kirksville", 
+        "state": "MO", 
+        "nickname": "Bulldogs", 
+        "name": "Truman State University"
+    }, 
+    {
+        "schoo_id": 168148, 
+        "city": "Medford", 
+        "state": "MA", 
+        "nickname": "Jumbos", 
+        "name": "Tufts University"
+    }, 
+    {
+        "schoo_id": 160755, 
+        "city": "New Orleans", 
+        "state": "LA", 
+        "nickname": "Green Wave", 
+        "name": "Tulane University of Louisiana"
+    }, 
+    {
+        "schoo_id": 221953, 
+        "city": "Greeneville", 
+        "state": "TN", 
+        "nickname": "Pioneers", 
+        "name": "Tusculum College"
+    }, 
+    {
+        "schoo_id": 102377, 
+        "city": "Tuskegee", 
+        "state": "AL", 
+        "nickname": "Golden Tigers", 
+        "name": "Tuskegee University"
+    }, 
+    {
+        "schoo_id": 102377, 
+        "city": "Tuskegee", 
+        "state": "AL", 
+        "nickname": "Lady Tigers", 
+        "name": "Tuskegee University"
+    }, 
+    {
+        "schoo_id": 157863, 
+        "city": "Barbourville", 
+        "state": "KY", 
+        "nickname": "Bulldogs", 
+        "name": "Union College"
+    }, 
+    {
+        "schoo_id": 157863, 
+        "city": "Barbourville", 
+        "state": "KY", 
+        "nickname": "Lady Bulldogs", 
+        "name": "Union College"
+    }, 
+    {
+        "schoo_id": 157863, 
+        "city": "Barbourville", 
+        "state": "KY", 
+        "nickname": "Dutchmen", 
+        "name": "Union College"
+    }, 
+    {
+        "schoo_id": 157863, 
+        "city": "Barbourville", 
+        "state": "KY", 
+        "nickname": "Dutchwomen", 
+        "name": "Union College"
+    }, 
+    {
+        "schoo_id": 221971, 
+        "city": "Jackson", 
+        "state": "TN", 
+        "nickname": "Bulldogs", 
+        "name": "Union University"
+    }, 
+    {
+        "schoo_id": 221971, 
+        "city": "Jackson", 
+        "state": "TN", 
+        "nickname": "Lady Bulldogs", 
+        "name": "Union University"
+    }, 
+    {
+        "schoo_id": 128328, 
+        "city": "USAFA", 
+        "state": "CO", 
+        "nickname": "Falcons", 
+        "name": "United States Air Force Academy"
+    }, 
+    {
+        "schoo_id": 197036, 
+        "city": "West  Point", 
+        "state": "NY", 
+        "nickname": "Black Knights", 
+        "name": "United States Military Academy"
+    }, 
+    {
+        "schoo_id": 164155, 
+        "city": "Annapolis", 
+        "state": "MD", 
+        "nickname": "Midshipmen", 
+        "name": "United States Naval Academy"
+    }, 
+    {
+        "schoo_id": 196088, 
+        "city": "Buffalo", 
+        "state": "NY", 
+        "nickname": "Buffalo Bulls", 
+        "name": "University at Buffalo"
+    }, 
+    {
+        "schoo_id": 200800, 
+        "city": "Akron", 
+        "state": "OH", 
+        "nickname": "Zips", 
+        "name": "University of Akron Main Campus"
+    }, 
+    {
+        "schoo_id": 100663, 
+        "city": "Birmingham", 
+        "state": "AL", 
+        "nickname": "Blazers", 
+        "name": "University of Alabama at Birmingham"
+    }, 
+    {
+        "schoo_id": 100706, 
+        "city": "Huntsville", 
+        "state": "AL", 
+        "nickname": "Chargers", 
+        "name": "University of Alabama in Huntsville"
+    }, 
+    {
+        "schoo_id": 102553, 
+        "city": "Anchorage", 
+        "state": "AK", 
+        "nickname": "Seawolves", 
+        "name": "University of Alaska Anchorage"
+    }, 
+    {
+        "schoo_id": 102614, 
+        "city": "Fairbanks", 
+        "state": "AK", 
+        "nickname": "Nanooks", 
+        "name": "University of Alaska Fairbanks"
+    }, 
+    {
+        "schoo_id": 104179, 
+        "city": "Tucson", 
+        "state": "AZ", 
+        "nickname": "Wildcats", 
+        "name": "University of Arizona"
+    }, 
+    {
+        "schoo_id": 106397, 
+        "city": "Fayetteville", 
+        "state": "AR", 
+        "nickname": "Razorbacks", 
+        "name": "University of Arkansas"
+    }, 
+    {
+        "schoo_id": 106245, 
+        "city": "Little Rock", 
+        "state": "AR", 
+        "nickname": "Trojans", 
+        "name": "University of Arkansas at Little Rock"
+    }, 
+    {
+        "schoo_id": 106485, 
+        "city": "Monticello", 
+        "state": "AR", 
+        "nickname": "Boll Weevils", 
+        "name": "University of Arkansas at Monticello"
+    }, 
+    {
+        "schoo_id": 106485, 
+        "city": "Monticello", 
+        "state": "AR", 
+        "nickname": "Cotton Blossoms", 
+        "name": "University of Arkansas at Monticello"
+    }, 
+    {
+        "schoo_id": 106412, 
+        "city": "Pine Bluff", 
+        "state": "AR", 
+        "nickname": "Golden Lions", 
+        "name": "University of Arkansas at Pine Bluff"
+    }, 
+    {
+        "schoo_id": 110635, 
+        "city": "Berkeley", 
+        "state": "CA", 
+        "nickname": "Golden Bears", 
+        "name": "University of California-Berkeley"
+    }, 
+    {
+        "schoo_id": 110644, 
+        "city": "Davis", 
+        "state": "CA", 
+        "nickname": "Aggies", 
+        "name": "University of California-Davis"
+    }, 
+    {
+        "schoo_id": 110653, 
+        "city": "Irvine", 
+        "state": "CA", 
+        "nickname": "Anteaters", 
+        "name": "University of California-Irvine"
+    }, 
+    {
+        "schoo_id": 110662, 
+        "city": "Los Angeles", 
+        "state": "CA", 
+        "nickname": "Bruins", 
+        "name": "University of California-Los Angeles"
+    }, 
+    {
+        "schoo_id": 445188, 
+        "city": "Merced", 
+        "state": "CA", 
+        "nickname": "Golden Bobcats", 
+        "name": "University of California-Merced"
+    }, 
+    {
+        "schoo_id": 110671, 
+        "city": "Riverside", 
+        "state": "CA", 
+        "nickname": "Highlanders", 
+        "name": "University of California-Riverside"
+    }, 
+    {
+        "schoo_id": 110680, 
+        "city": "La Jolla", 
+        "state": "CA", 
+        "nickname": "Tritons", 
+        "name": "University of California-San Diego"
+    }, 
+    {
+        "schoo_id": 110705, 
+        "city": "Santa Barbara", 
+        "state": "CA", 
+        "nickname": "Gauchos", 
+        "name": "University of California-Santa Barbara"
+    }, 
+    {
+        "schoo_id": 110714, 
+        "city": "Santa Cruz", 
+        "state": "CA", 
+        "nickname": "Banana Slugs", 
+        "name": "University of California-Santa Cruz"
+    }, 
+    {
+        "schoo_id": 106704, 
+        "city": "Conway", 
+        "state": "AR", 
+        "nickname": "Bears", 
+        "name": "University of Central Arkansas"
+    }, 
+    {
+        "schoo_id": 106704, 
+        "city": "Conway", 
+        "state": "AR", 
+        "nickname": "Sugar Bears", 
+        "name": "University of Central Arkansas"
+    }, 
+    {
+        "schoo_id": 132903, 
+        "city": "Orlando", 
+        "state": "FL", 
+        "nickname": "Knights", 
+        "name": "University of Central Florida"
+    }, 
+    {
+        "schoo_id": 176965, 
+        "city": "Warrensburg", 
+        "state": "MO", 
+        "nickname": "Mules", 
+        "name": "University of Central Missouri"
+    }, 
+    {
+        "schoo_id": 176965, 
+        "city": "Warrensburg", 
+        "state": "MO", 
+        "nickname": "Jennies", 
+        "name": "University of Central Missouri"
+    }, 
+    {
+        "schoo_id": 206941, 
+        "city": "Edmond", 
+        "state": "OK", 
+        "nickname": "Broncos", 
+        "name": "University of Central Oklahoma"
+    }, 
+    {
+        "schoo_id": 237312, 
+        "city": "Charleston", 
+        "state": "WV", 
+        "nickname": "Golden Eagles", 
+        "name": "University of Charleston"
+    }, 
+    {
+        "schoo_id": 144050, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Maroons", 
+        "name": "University of Chicago"
+    }, 
+    {
+        "schoo_id": 201885, 
+        "city": "Cincinnati", 
+        "state": "OH", 
+        "nickname": "Bearcats", 
+        "name": "University of Cincinnati-Main Campus"
+    }, 
+    {
+        "schoo_id": 126614, 
+        "city": "Boulder", 
+        "state": "CO", 
+        "nickname": "Buffaloes", 
+        "name": "University of Colorado Boulder"
+    }, 
+    {
+        "schoo_id": 126580, 
+        "city": "Colorado Springs", 
+        "state": "CO", 
+        "nickname": "Mountain Lions", 
+        "name": "University of Colorado Colorado Springs"
+    }, 
+    {
+        "schoo_id": 129020, 
+        "city": "Storrs", 
+        "state": "CT", 
+        "nickname": "Huskies", 
+        "name": "University of Connecticut"
+    }, 
+    {
+        "schoo_id": 202480, 
+        "city": "Dayton", 
+        "state": "OH", 
+        "nickname": "Dayton Flyers", 
+        "name": "University of Dayton"
+    }, 
+    {
+        "schoo_id": 130943, 
+        "city": "Newark", 
+        "state": "DE", 
+        "nickname": "Fightin' Blue Hens", 
+        "name": "University of Delaware"
+    }, 
+    {
+        "schoo_id": 127060, 
+        "city": "Denver", 
+        "state": "CO", 
+        "nickname": "Pioneers", 
+        "name": "University of Denver"
+    }, 
+    {
+        "schoo_id": 169716, 
+        "city": "Detroit", 
+        "state": "MI", 
+        "nickname": "Titans", 
+        "name": "University of Detroit Mercy"
+    }, 
+    {
+        "schoo_id": 153278, 
+        "city": "Dubuque", 
+        "state": "IA", 
+        "nickname": "Spartans", 
+        "name": "University of Dubuque"
+    }, 
+    {
+        "schoo_id": 150534, 
+        "city": "Evansville", 
+        "state": "IN", 
+        "nickname": "Purple Aces", 
+        "name": "University of Evansville"
+    }, 
+    {
+        "schoo_id": 134130, 
+        "city": "Gainesville", 
+        "state": "FL", 
+        "nickname": "Gators", 
+        "name": "University of Florida"
+    }, 
+    {
+        "schoo_id": 139959, 
+        "city": "Athens", 
+        "state": "GA", 
+        "nickname": "Bulldogs", 
+        "name": "University of Georgia"
+    }, 
+    {
+        "schoo_id": 129525, 
+        "city": "West Hartford", 
+        "state": "CT", 
+        "nickname": "Hawks", 
+        "name": "University of Hartford"
+    }, 
+    {
+        "schoo_id": 141565, 
+        "city": "Hilo", 
+        "state": "HI", 
+        "nickname": "Vulcans", 
+        "name": "University of Hawaii at Hilo"
+    }, 
+    {
+        "schoo_id": 141574, 
+        "city": "Honolulu", 
+        "state": "HI", 
+        "nickname": "Rainbow Warriors", 
+        "name": "University of Hawaii at Manoa"
+    }, 
+    {
+        "schoo_id": 225511, 
+        "city": "Houston", 
+        "state": "TX", 
+        "nickname": "Gators", 
+        "name": "University of Houston"
+    }, 
+    {
+        "schoo_id": 225511, 
+        "city": "Houston", 
+        "state": "TX", 
+        "nickname": "Cougars", 
+        "name": "University of Houston"
+    }, 
+    {
+        "schoo_id": 225502, 
+        "city": "Victoria", 
+        "state": "TX", 
+        "nickname": "Jaguars", 
+        "name": "University of Houston-Victoria"
+    }, 
+    {
+        "schoo_id": 142285, 
+        "city": "Moscow", 
+        "state": "ID", 
+        "nickname": "Vandals", 
+        "name": "University of Idaho"
+    }, 
+    {
+        "schoo_id": 145600, 
+        "city": "Chicago", 
+        "state": "IL", 
+        "nickname": "Flames", 
+        "name": "University of Illinois at Chicago"
+    }, 
+    {
+        "schoo_id": 148654, 
+        "city": "Springfield", 
+        "state": "IL", 
+        "nickname": "Prairie Stars", 
+        "name": "University of Illinois at Springfield"
+    }, 
+    {
+        "schoo_id": 145637, 
+        "city": "Champaign", 
+        "state": "IL", 
+        "nickname": "Fighting Illini", 
+        "name": "University of Illinois at Urbana-Champaign"
+    }, 
+    {
+        "schoo_id": 151263, 
+        "city": "Indianapolis", 
+        "state": "IN", 
+        "nickname": "Greyhounds", 
+        "name": "University of Indianapolis"
+    }, 
+    {
+        "schoo_id": 153658, 
+        "city": "Iowa City", 
+        "state": "IA", 
+        "nickname": "Hawkeyes", 
+        "name": "University of Iowa"
+    }, 
+    {
+        "schoo_id": 200156, 
+        "city": "Jamestown", 
+        "state": "ND", 
+        "nickname": "Jimmies", 
+        "name": "University of Jamestown"
+    }, 
+    {
+        "schoo_id": 155317, 
+        "city": "Lawrence", 
+        "state": "KS", 
+        "nickname": "Jayhawks", 
+        "name": "University of Kansas"
+    }, 
+    {
+        "schoo_id": 157085, 
+        "city": "Lexington", 
+        "state": "KY", 
+        "nickname": "Wildcats", 
+        "name": "University of Kentucky"
+    }, 
+    {
+        "schoo_id": 160658, 
+        "city": "Lafayette", 
+        "state": "LA", 
+        "nickname": "Ragin' Cajuns", 
+        "name": "University of Louisiana at Lafayette"
+    }, 
+    {
+        "schoo_id": 159993, 
+        "city": "Monroe", 
+        "state": "LA", 
+        "nickname": "Warhawks", 
+        "name": "University of Louisiana at Monroe"
+    }, 
+    {
+        "schoo_id": 157289, 
+        "city": "Louisville", 
+        "state": "KY", 
+        "nickname": "Cardinals", 
+        "name": "University of Louisville"
+    }, 
+    {
+        "schoo_id": 161253, 
+        "city": "Orono", 
+        "state": "ME", 
+        "nickname": "Black Bears", 
+        "name": "University of Maine"
+    }, 
+    {
+        "schoo_id": 163268, 
+        "city": "Baltimore", 
+        "state": "MD", 
+        "nickname": "Retrievers", 
+        "name": "University of Maryland-Baltimore County"
+    }, 
+    {
+        "schoo_id": 163286, 
+        "city": "College Park", 
+        "state": "MD", 
+        "nickname": "Terrapins", 
+        "name": "University of Maryland-College Park"
+    }, 
+    {
+        "schoo_id": 166629, 
+        "city": "Amherst", 
+        "state": "MA", 
+        "nickname": "Minutemen", 
+        "name": "University of Massachusetts-Amherst"
+    }, 
+    {
+        "schoo_id": 166638, 
+        "city": "Boston", 
+        "state": "MA", 
+        "nickname": "Beacons", 
+        "name": "University of Massachusetts-Boston"
+    }, 
+    {
+        "schoo_id": 167987, 
+        "city": "North Dartmouth", 
+        "state": "MA", 
+        "nickname": "Corsairs", 
+        "name": "University of Massachusetts-Dartmouth"
+    }, 
+    {
+        "schoo_id": 166513, 
+        "city": "Lowell", 
+        "state": "MA", 
+        "nickname": "River Hawks", 
+        "name": "University of Massachusetts-Lowell"
+    }, 
+    {
+        "schoo_id": 220862, 
+        "city": "Memphis", 
+        "state": "TN", 
+        "nickname": "Tigers", 
+        "name": "University of Memphis"
+    }, 
+    {
+        "schoo_id": 220862, 
+        "city": "Memphis", 
+        "state": "TN", 
+        "nickname": "Lady Tigers", 
+        "name": "University of Memphis"
+    }, 
+    {
+        "schoo_id": 135726, 
+        "city": "Coral Gables", 
+        "state": "FL", 
+        "nickname": "Hurricanes", 
+        "name": "University of Miami"
+    }, 
+    {
+        "schoo_id": 170976, 
+        "city": "Ann Arbor", 
+        "state": "MI", 
+        "nickname": "Wolverines", 
+        "name": "University of Michigan-Ann Arbor"
+    }, 
+    {
+        "schoo_id": 174075, 
+        "city": "Crookston", 
+        "state": "MN", 
+        "nickname": "Golden Eagles", 
+        "name": "University of Minnesota-Crookston"
+    }, 
+    {
+        "schoo_id": 174233, 
+        "city": "Duluth", 
+        "state": "MN", 
+        "nickname": "Bulldogs", 
+        "name": "University of Minnesota-Duluth"
+    }, 
+    {
+        "schoo_id": 174251, 
+        "city": "Morris", 
+        "state": "MN", 
+        "nickname": "Cougars", 
+        "name": "University of Minnesota-Morris"
+    }, 
+    {
+        "schoo_id": 174066, 
+        "city": "Minneapolis", 
+        "state": "MN", 
+        "nickname": "Golden Gophers", 
+        "name": "University of Minnesota-Twin Cities"
+    }, 
+    {
+        "schoo_id": 176017, 
+        "city": "University", 
+        "state": "MS", 
+        "nickname": "Rebels", 
+        "name": "University of Mississippi"
+    }, 
+    {
+        "schoo_id": 178396, 
+        "city": "Columbia", 
+        "state": "MO", 
+        "nickname": "Tigers", 
+        "name": "University of Missouri-Columbia"
+    }, 
+    {
+        "schoo_id": 178402, 
+        "city": "Kansas City", 
+        "state": "MO", 
+        "nickname": "Kangaroos", 
+        "name": "University of Missouri-Kansas City"
+    }, 
+    {
+        "schoo_id": 178420, 
+        "city": "Saint Louis", 
+        "state": "MO", 
+        "nickname": "Tritons", 
+        "name": "University of Missouri-St Louis"
+    }, 
+    {
+        "schoo_id": 101693, 
+        "city": "Mobile", 
+        "state": "AL", 
+        "nickname": "Rams", 
+        "name": "University of Mobile"
+    }, 
+    {
+        "schoo_id": 101709, 
+        "city": "Montevallo", 
+        "state": "AL", 
+        "nickname": "Falcons", 
+        "name": "University of Montevallo"
+    }, 
+    {
+        "schoo_id": 204185, 
+        "city": "Alliance", 
+        "state": "OH", 
+        "nickname": "Purple Raiders", 
+        "name": "University of Mount Union"
+    }, 
+    {
+        "schoo_id": 181215, 
+        "city": "Kearney", 
+        "state": "NE", 
+        "nickname": "Lopers", 
+        "name": "University of Nebraska at Kearney"
+    }, 
+    {
+        "schoo_id": 181394, 
+        "city": "Omaha", 
+        "state": "NE", 
+        "nickname": "Mavericks", 
+        "name": "University of Nebraska at Omaha"
+    }, 
+    {
+        "schoo_id": 181464, 
+        "city": "Lincoln", 
+        "state": "NE", 
+        "nickname": "Cornhuskers", 
+        "name": "University of Nebraska-Lincoln"
+    }, 
+    {
+        "schoo_id": 182281, 
+        "city": "Las Vegas", 
+        "state": "NV", 
+        "nickname": "Runnin' Rebels", 
+        "name": "University of Nevada-Las Vegas"
+    }, 
+    {
+        "schoo_id": 182281, 
+        "city": "Las Vegas", 
+        "state": "NV", 
+        "nickname": "Lady Rebels", 
+        "name": "University of Nevada-Las Vegas"
+    }, 
+    {
+        "schoo_id": 182281, 
+        "city": "Las Vegas", 
+        "state": "NV", 
+        "nickname": "Rebels", 
+        "name": "University of Nevada-Las Vegas"
+    }, 
+    {
+        "schoo_id": 182290, 
+        "city": "Reno", 
+        "state": "NV", 
+        "nickname": "Wolf Pack", 
+        "name": "University of Nevada-Reno"
+    }, 
+    {
+        "schoo_id": 161457, 
+        "city": "Biddeford", 
+        "state": "ME", 
+        "nickname": "Nor'easters", 
+        "name": "University of New England"
+    }, 
+    {
+        "schoo_id": 183044, 
+        "city": "Durham", 
+        "state": "NH", 
+        "nickname": "Wildcats", 
+        "name": "University of New Hampshire-Main Campus"
+    }, 
+    {
+        "schoo_id": 129941, 
+        "city": "West Haven", 
+        "state": "CT", 
+        "nickname": "Chargers", 
+        "name": "University of New Haven"
+    }, 
+    {
+        "schoo_id": 187985, 
+        "city": "Albuquerque", 
+        "state": "NM", 
+        "nickname": "Lobos", 
+        "name": "University of New Mexico-Main Campus"
+    }, 
+    {
+        "schoo_id": 159939, 
+        "city": "New Orleans", 
+        "state": "LA", 
+        "nickname": "Privateers", 
+        "name": "University of New Orleans"
+    }, 
+    {
+        "schoo_id": 159939, 
+        "city": "New Orleans", 
+        "state": "LA", 
+        "nickname": "Lady Privateers", 
+        "name": "University of New Orleans"
+    }, 
+    {
+        "schoo_id": 101879, 
+        "city": "Florence", 
+        "state": "AL", 
+        "nickname": "Lions", 
+        "name": "University of North Alabama"
+    }, 
+    {
+        "schoo_id": 199184, 
+        "city": "Winston-Salem", 
+        "state": "NC", 
+        "nickname": "Fighting Pickles", 
+        "name": "University of North Carolina School of the Arts"
+    }, 
+    {
+        "schoo_id": 199218, 
+        "city": "Wilmington", 
+        "state": "NC", 
+        "nickname": "Seahawks", 
+        "name": "University of North Carolina Wilmington"
+    }, 
+    {
+        "schoo_id": 199111, 
+        "city": "Asheville", 
+        "state": "NC", 
+        "nickname": "Bulldogs", 
+        "name": "University of North Carolina at Asheville"
+    }, 
+    {
+        "schoo_id": 199120, 
+        "city": "Chapel Hill", 
+        "state": "NC", 
+        "nickname": "Tar Heels", 
+        "name": "University of North Carolina at Chapel Hill"
+    }, 
+    {
+        "schoo_id": 199139, 
+        "city": "Charlotte", 
+        "state": "NC", 
+        "nickname": "49ers", 
+        "name": "University of North Carolina at Charlotte"
+    }, 
+    {
+        "schoo_id": 199148, 
+        "city": "Greensboro", 
+        "state": "NC", 
+        "nickname": "Spartans", 
+        "name": "University of North Carolina at Greensboro"
+    }, 
+    {
+        "schoo_id": 199281, 
+        "city": "Pembroke", 
+        "state": "NC", 
+        "nickname": "Braves", 
+        "name": "University of North Carolina at Pembroke"
+    }, 
+    {
+        "schoo_id": 200280, 
+        "city": "Grand Forks", 
+        "state": "ND", 
+        "nickname": "North Dakota", 
+        "name": "University of North Dakota"
+    }, 
+    {
+        "schoo_id": 136172, 
+        "city": "Jacksonville", 
+        "state": "FL", 
+        "nickname": "Ospreys", 
+        "name": "University of North Florida"
+    }, 
+    {
+        "schoo_id": 482680, 
+        "city": "Dahlonega", 
+        "state": "GA", 
+        "nickname": "Nighthawks", 
+        "name": "University of North Georgia"
+    }, 
+    {
+        "schoo_id": 227216, 
+        "city": "Denton", 
+        "state": "TX", 
+        "nickname": "Mean Green", 
+        "name": "University of North Texas"
+    }, 
+    {
+        "schoo_id": 127741, 
+        "city": "Greeley", 
+        "state": "CO", 
+        "nickname": "Bears", 
+        "name": "University of Northern Colorado"
+    }, 
+    {
+        "schoo_id": 154095, 
+        "city": "Cedar Falls", 
+        "state": "IA", 
+        "nickname": "Panthers", 
+        "name": "University of Northern Iowa"
+    }, 
+    {
+        "schoo_id": 152080, 
+        "city": "Notre Dame", 
+        "state": "IN", 
+        "nickname": "Fighting Irish", 
+        "name": "University of Notre Dame"
+    }, 
+    {
+        "schoo_id": 207500, 
+        "city": "Norman", 
+        "state": "OK", 
+        "nickname": "Sooners", 
+        "name": "University of Oklahoma-Norman Campus"
+    }, 
+    {
+        "schoo_id": 209551, 
+        "city": "Eugene", 
+        "state": "OR", 
+        "nickname": "Ducks", 
+        "name": "University of Oregon"
+    }, 
+    {
+        "schoo_id": 215062, 
+        "city": "Philadelphia", 
+        "state": "PA", 
+        "nickname": "Quakers", 
+        "name": "University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 215266, 
+        "city": "Bradford", 
+        "state": "PA", 
+        "nickname": "Panthers", 
+        "name": "University of Pittsburgh-Bradford"
+    }, 
+    {
+        "schoo_id": 215275, 
+        "city": "Greensburg", 
+        "state": "PA", 
+        "nickname": "Bobcats", 
+        "name": "University of Pittsburgh-Greensburg"
+    }, 
+    {
+        "schoo_id": 215284, 
+        "city": "Johnstown", 
+        "state": "PA", 
+        "nickname": "Mountain Cats", 
+        "name": "University of Pittsburgh-Johnstown"
+    }, 
+    {
+        "schoo_id": 215293, 
+        "city": "Pittsburgh", 
+        "state": "PA", 
+        "nickname": "Panthers", 
+        "name": "University of Pittsburgh-Pittsburgh Campus"
+    }, 
+    {
+        "schoo_id": 215309, 
+        "city": "Titusville", 
+        "state": "PA", 
+        "nickname": "Panthers", 
+        "name": "University of Pittsburgh-Titusville"
+    }, 
+    {
+        "schoo_id": 209825, 
+        "city": "Portland", 
+        "state": "OR", 
+        "nickname": "Pilots", 
+        "name": "University of Portland"
+    }, 
+    {
+        "schoo_id": 243197, 
+        "city": "Mayaguez", 
+        "state": "PR", 
+        "nickname": "Tarzans", 
+        "name": "University of Puerto Rico-Mayaguez"
+    }, 
+    {
+        "schoo_id": 243197, 
+        "city": "Mayaguez", 
+        "state": "PR", 
+        "nickname": "Janes", 
+        "name": "University of Puerto Rico-Mayaguez"
+    }, 
+    {
+        "schoo_id": 121691, 
+        "city": "Redlands", 
+        "state": "CA", 
+        "nickname": "Bulldogs", 
+        "name": "University of Redlands"
+    }, 
+    {
+        "schoo_id": 217484, 
+        "city": "Kingston", 
+        "state": "RI", 
+        "nickname": "Rams", 
+        "name": "University of Rhode Island"
+    }, 
+    {
+        "schoo_id": 233374, 
+        "city": "University of Richmond", 
+        "state": "VA", 
+        "nickname": "Spiders", 
+        "name": "University of Richmond"
+    }, 
+    {
+        "schoo_id": 195030, 
+        "city": "Rochester", 
+        "state": "NY", 
+        "nickname": "Yellow Jackets", 
+        "name": "University of Rochester"
+    }, 
+    {
+        "schoo_id": 152336, 
+        "city": "Fort Wayne", 
+        "state": "IN", 
+        "nickname": "Cougars", 
+        "name": "University of Saint Francis-Fort Wayne"
+    }, 
+    {
+        "schoo_id": 152336, 
+        "city": "Fort Wayne", 
+        "state": "IN", 
+        "nickname": "Cougars", 
+        "name": "University of Saint Francis-Fort Wayne"
+    }, 
+    {
+        "schoo_id": 155812, 
+        "city": "Leavenworth", 
+        "state": "KS", 
+        "nickname": "Spires", 
+        "name": "University of Saint Mary"
+    }, 
+    {
+        "schoo_id": 122436, 
+        "city": "San Diego", 
+        "state": "CA", 
+        "nickname": "Toreros", 
+        "name": "University of San Diego"
+    }, 
+    {
+        "schoo_id": 122612, 
+        "city": "San Francisco", 
+        "state": "CA", 
+        "nickname": "Dons", 
+        "name": "University of San Francisco"
+    }, 
+    {
+        "schoo_id": 102094, 
+        "city": "Mobile", 
+        "state": "AL", 
+        "nickname": "Jaguars", 
+        "name": "University of South Alabama"
+    }, 
+    {
+        "schoo_id": 218663, 
+        "city": "Columbia", 
+        "state": "SC", 
+        "nickname": "Gamecocks", 
+        "name": "University of South Carolina-Columbia"
+    }, 
+    {
+        "schoo_id": 218742, 
+        "city": "Spartanburg", 
+        "state": "SC", 
+        "nickname": "Spartans", 
+        "name": "University of South Carolina-Upstate"
+    }, 
+    {
+        "schoo_id": 219471, 
+        "city": "Vermillion", 
+        "state": "SD", 
+        "nickname": "Coyotes", 
+        "name": "University of South Dakota"
+    }, 
+    {
+        "schoo_id": 137351, 
+        "city": "Tampa", 
+        "state": "FL", 
+        "nickname": "Bulls", 
+        "name": "University of South Florida-Main Campus"
+    }, 
+    {
+        "schoo_id": 123961, 
+        "city": "Los Angeles", 
+        "state": "CA", 
+        "nickname": "Trojans", 
+        "name": "University of Southern California"
+    }, 
+    {
+        "schoo_id": 123961, 
+        "city": "Los Angeles", 
+        "state": "CA", 
+        "nickname": "Women of Troy", 
+        "name": "University of Southern California"
+    }, 
+    {
+        "schoo_id": 151306, 
+        "city": "Evansville", 
+        "state": "IN", 
+        "nickname": "Screaming Eagles", 
+        "name": "University of Southern Indiana"
+    }, 
+    {
+        "schoo_id": 161554, 
+        "city": "Portland", 
+        "state": "ME", 
+        "nickname": "Huskies", 
+        "name": "University of Southern Maine"
+    }, 
+    {
+        "schoo_id": 176372, 
+        "city": "Hattiesburg", 
+        "state": "MS", 
+        "nickname": "Golden Eagles", 
+        "name": "University of Southern Mississippi"
+    }, 
+    {
+        "schoo_id": 174914, 
+        "city": "Saint Paul", 
+        "state": "MN", 
+        "nickname": "Tommies", 
+        "name": "University of St Thomas"
+    }, 
+    {
+        "schoo_id": 206084, 
+        "city": "Toledo", 
+        "state": "OH", 
+        "nickname": "Rockets", 
+        "name": "University of Toledo"
+    }, 
+    {
+        "schoo_id": 207971, 
+        "city": "Tulsa", 
+        "state": "OK", 
+        "nickname": "Golden Hurricane", 
+        "name": "University of Tulsa"
+    }, 
+    {
+        "schoo_id": 230764, 
+        "city": "Salt Lake City", 
+        "state": "UT", 
+        "nickname": "Utes", 
+        "name": "University of Utah"
+    }, 
+    {
+        "schoo_id": 230764, 
+        "city": "Salt Lake City", 
+        "state": "UT", 
+        "nickname": "Red Rocks", 
+        "name": "University of Utah"
+    }, 
+    {
+        "schoo_id": 230764, 
+        "city": "Salt Lake City", 
+        "state": "UT", 
+        "nickname": "Runnin' Utes", 
+        "name": "University of Utah"
+    }, 
+    {
+        "schoo_id": 231174, 
+        "city": "Burlington", 
+        "state": "VT", 
+        "nickname": "Catamounts", 
+        "name": "University of Vermont"
+    }, 
+    {
+        "schoo_id": 234076, 
+        "city": "Charlottesville", 
+        "state": "VA", 
+        "nickname": "Cavaliers", 
+        "name": "University of Virginia-Main Campus"
+    }, 
+    {
+        "schoo_id": 236948, 
+        "city": "Seattle", 
+        "state": "WA", 
+        "nickname": "Huskies", 
+        "name": "University of Washington-Seattle Campus"
+    }, 
+    {
+        "schoo_id": 101587, 
+        "city": "Livingston", 
+        "state": "AL", 
+        "nickname": "Tigers", 
+        "name": "University of West Alabama"
+    }, 
+    {
+        "schoo_id": 141334, 
+        "city": "Carrollton", 
+        "state": "GA", 
+        "nickname": "Wolves", 
+        "name": "University of West Georgia"
+    }, 
+    {
+        "schoo_id": 240268, 
+        "city": "Eau Claire", 
+        "state": "WI", 
+        "nickname": "Blugolds", 
+        "name": "University of Wisconsin-Eau Claire"
+    }, 
+    {
+        "schoo_id": 240277, 
+        "city": "Green Bay", 
+        "state": "WI", 
+        "nickname": "Phoenix", 
+        "name": "University of Wisconsin-Green Bay"
+    }, 
+    {
+        "schoo_id": 240277, 
+        "city": "Green Bay", 
+        "state": "WI", 
+        "nickname": "Phoenix", 
+        "name": "University of Wisconsin-Green Bay"
+    }, 
+    {
+        "schoo_id": 240329, 
+        "city": "La Crosse", 
+        "state": "WI", 
+        "nickname": "Eagles", 
+        "name": "University of Wisconsin-La Crosse"
+    }, 
+    {
+        "schoo_id": 240444, 
+        "city": "Madison", 
+        "state": "WI", 
+        "nickname": "Badgers", 
+        "name": "University of Wisconsin-Madison"
+    }, 
+    {
+        "schoo_id": 240453, 
+        "city": "Milwaukee", 
+        "state": "WI", 
+        "nickname": "Panthers", 
+        "name": "University of Wisconsin-Milwaukee"
+    }, 
+    {
+        "schoo_id": 240374, 
+        "city": "Kenosha", 
+        "state": "WI", 
+        "nickname": "Rangers", 
+        "name": "University of Wisconsin-Parkside"
+    }, 
+    {
+        "schoo_id": 240462, 
+        "city": "Platteville", 
+        "state": "WI", 
+        "nickname": "Pioneers", 
+        "name": "University of Wisconsin-Platteville"
+    }, 
+    {
+        "schoo_id": 240471, 
+        "city": "River Falls", 
+        "state": "WI", 
+        "nickname": "Falcons", 
+        "name": "University of Wisconsin-River Falls"
+    }, 
+    {
+        "schoo_id": 240480, 
+        "city": "Stevens Point", 
+        "state": "WI", 
+        "nickname": "Pointers", 
+        "name": "University of Wisconsin-Stevens Point"
+    }, 
+    {
+        "schoo_id": 240417, 
+        "city": "Menomonie", 
+        "state": "WI", 
+        "nickname": "Blue Devils", 
+        "name": "University of Wisconsin-Stout"
+    }, 
+    {
+        "schoo_id": 240426, 
+        "city": "Superior", 
+        "state": "WI", 
+        "nickname": "Yellowjackets", 
+        "name": "University of Wisconsin-Superior"
+    }, 
+    {
+        "schoo_id": 240189, 
+        "city": "Whitewater", 
+        "state": "WI", 
+        "nickname": "Warhawks", 
+        "name": "University of Wisconsin-Whitewater"
+    }, 
+    {
+        "schoo_id": 240727, 
+        "city": "Laramie", 
+        "state": "WY", 
+        "nickname": "Cowboys", 
+        "name": "University of Wyoming"
+    }, 
+    {
+        "schoo_id": 240727, 
+        "city": "Laramie", 
+        "state": "WY", 
+        "nickname": "Cowgirls", 
+        "name": "University of Wyoming"
+    }, 
+    {
+        "schoo_id": 156541, 
+        "city": "Williamsburg", 
+        "state": "KY", 
+        "nickname": "Patriots", 
+        "name": "University of the Cumberlands"
+    }, 
+    {
+        "schoo_id": 131399, 
+        "city": "Washington", 
+        "state": "DC", 
+        "nickname": "Firebirds", 
+        "name": "University of the District of Columbia"
+    }, 
+    {
+        "schoo_id": 131399, 
+        "city": "Washington", 
+        "state": "DC", 
+        "nickname": "Lady Firebirds", 
+        "name": "University of the District of Columbia"
+    }, 
+    {
+        "schoo_id": 225627, 
+        "city": "San Antonio", 
+        "state": "TX", 
+        "nickname": "College Cardinals", 
+        "name": "University of the Incarnate Word"
+    }, 
+    {
+        "schoo_id": 107558, 
+        "city": "Clarksville", 
+        "state": "AR", 
+        "nickname": "Eagles", 
+        "name": "University of the Ozarks"
+    }, 
+    {
+        "schoo_id": 120883, 
+        "city": "Stockton", 
+        "state": "CA", 
+        "nickname": "Tigers", 
+        "name": "University of the Pacific"
+    }, 
+    {
+        "schoo_id": 154493, 
+        "city": "Fayette", 
+        "state": "IA", 
+        "nickname": "Peacocks", 
+        "name": "Upper Iowa University"
+    }, 
+    {
+        "schoo_id": 230728, 
+        "city": "Logan", 
+        "state": "UT", 
+        "nickname": "Aggies", 
+        "name": "Utah State University"
+    }, 
+    {
+        "schoo_id": 230737, 
+        "city": "Orem", 
+        "state": "UT", 
+        "nickname": "Wolverines", 
+        "name": "Utah Valley University"
+    }, 
+    {
+        "schoo_id": 141264, 
+        "city": "Valdosta", 
+        "state": "GA", 
+        "nickname": "Blazers", 
+        "name": "Valdosta State University"
+    }, 
+    {
+        "schoo_id": 152600, 
+        "city": "Valparaiso", 
+        "state": "IN", 
+        "nickname": "Crusaders", 
+        "name": "Valparaiso University"
+    }, 
+    {
+        "schoo_id": 221999, 
+        "city": "Nashville", 
+        "state": "TN", 
+        "nickname": "Commodores", 
+        "name": "Vanderbilt University"
+    }, 
+    {
+        "schoo_id": 197133, 
+        "city": "Poughkeepsie", 
+        "state": "NY", 
+        "nickname": "Brewers", 
+        "name": "Vassar College"
+    }, 
+    {
+        "schoo_id": 216597, 
+        "city": "Villanova", 
+        "state": "PA", 
+        "nickname": "Wildcats", 
+        "name": "Villanova University"
+    }, 
+    {
+        "schoo_id": 152637, 
+        "city": "Vincennes", 
+        "state": "IN", 
+        "nickname": "Trailblazers", 
+        "name": "Vincennes University"
+    }, 
+    {
+        "schoo_id": 234030, 
+        "city": "Richmond", 
+        "state": "VA", 
+        "nickname": "Rams", 
+        "name": "Virginia Commonwealth University"
+    }, 
+    {
+        "schoo_id": 234085, 
+        "city": "Lexington", 
+        "state": "VA", 
+        "nickname": "Keydets", 
+        "name": "Virginia Military Institute"
+    }, 
+    {
+        "schoo_id": 233921, 
+        "city": "Blacksburg", 
+        "state": "VA", 
+        "nickname": "Hokies", 
+        "name": "Virginia Polytechnic Institute and State University"
+    }, 
+    {
+        "schoo_id": 234155, 
+        "city": "Petersburg", 
+        "state": "VA", 
+        "nickname": "Trojans", 
+        "name": "Virginia State University"
+    }, 
+    {
+        "schoo_id": 234164, 
+        "city": "Richmond", 
+        "state": "VA", 
+        "nickname": "Panthers", 
+        "name": "Virginia Union University"
+    }, 
+    {
+        "schoo_id": 234173, 
+        "city": "Norfolk", 
+        "state": "VA", 
+        "nickname": "Marlins", 
+        "name": "Virginia Wesleyan College"
+    }, 
+    {
+        "schoo_id": 240107, 
+        "city": "La Crosse", 
+        "state": "WI", 
+        "nickname": "V-Hawks", 
+        "name": "Viterbo University"
+    }, 
+    {
+        "schoo_id": 218919, 
+        "city": "Denmark", 
+        "state": "SC", 
+        "nickname": "Tigers", 
+        "name": "Voorhees College"
+    }, 
+    {
+        "schoo_id": 152673, 
+        "city": "Crawfordsville", 
+        "state": "IN", 
+        "nickname": "Little Giants", 
+        "name": "Wabash College"
+    }, 
+    {
+        "schoo_id": 197197, 
+        "city": "Staten Island", 
+        "state": "NY", 
+        "nickname": "Seahawks", 
+        "name": "Wagner College"
+    }, 
+    {
+        "schoo_id": 199847, 
+        "city": "Winston Salem", 
+        "state": "NC", 
+        "nickname": "Demon Deacons", 
+        "name": "Wake Forest University"
+    }, 
+    {
+        "schoo_id": 154518, 
+        "city": "Forest City", 
+        "state": "IA", 
+        "nickname": "Warriors", 
+        "name": "Waldorf College"
+    }, 
+    {
+        "schoo_id": 206437, 
+        "city": "North Canton", 
+        "state": "OH", 
+        "nickname": "Cavaliers", 
+        "name": "Walsh University"
+    }, 
+    {
+        "schoo_id": 138275, 
+        "city": "Lake Wales", 
+        "state": "FL", 
+        "nickname": "Royals", 
+        "name": "Warner University"
+    }, 
+    {
+        "schoo_id": 154527, 
+        "city": "Waverly", 
+        "state": "IA", 
+        "nickname": "Knights", 
+        "name": "Wartburg College"
+    }, 
+    {
+        "schoo_id": 156082, 
+        "city": "Topeka", 
+        "state": "KS", 
+        "nickname": "Ichabods", 
+        "name": "Washburn University"
+    }, 
+    {
+        "schoo_id": 156082, 
+        "city": "Topeka", 
+        "state": "KS", 
+        "nickname": "Lady Blues", 
+        "name": "Washburn University"
+    }, 
+    {
+        "schoo_id": 216667, 
+        "city": "Washington", 
+        "state": "PA", 
+        "nickname": "Presidents", 
+        "name": "Washington & Jefferson College"
+    }, 
+    {
+        "schoo_id": 236939, 
+        "city": "Pullman", 
+        "state": "WA", 
+        "nickname": "Cougars", 
+        "name": "Washington State University"
+    }, 
+    {
+        "schoo_id": 179867, 
+        "city": "Saint Louis", 
+        "state": "MO", 
+        "nickname": "Bears", 
+        "name": "Washington University in St Louis"
+    }, 
+    {
+        "schoo_id": 234207, 
+        "city": "Lexington", 
+        "state": "VA", 
+        "nickname": "Generals", 
+        "name": "Washington and Lee University"
+    }, 
+    {
+        "schoo_id": 229780, 
+        "city": "Plainview", 
+        "state": "TX", 
+        "nickname": "Pioneers", 
+        "name": "Wayland Baptist University"
+    }, 
+    {
+        "schoo_id": 181783, 
+        "city": "Wayne", 
+        "state": "NE", 
+        "nickname": "Wildcats", 
+        "name": "Wayne State College"
+    }, 
+    {
+        "schoo_id": 172644, 
+        "city": "Detroit", 
+        "state": "MI", 
+        "nickname": "Warriors", 
+        "name": "Wayne State University"
+    }, 
+    {
+        "schoo_id": 230782, 
+        "city": "Ogden", 
+        "state": "UT", 
+        "nickname": "Wildcats", 
+        "name": "Weber State University"
+    }, 
+    {
+        "schoo_id": 179894, 
+        "city": "Saint Louis", 
+        "state": "MO", 
+        "nickname": "Gorloks", 
+        "name": "Webster University"
+    }, 
+    {
+        "schoo_id": 168218, 
+        "city": "Wellesley", 
+        "state": "MA", 
+        "nickname": "Blue", 
+        "name": "Wellesley College"
+    }, 
+    {
+        "schoo_id": 168227, 
+        "city": "Boston", 
+        "state": "MA", 
+        "nickname": "Leopards", 
+        "name": "Wentworth Institute of Technology"
+    }, 
+    {
+        "schoo_id": 131098, 
+        "city": "Dover", 
+        "state": "DE", 
+        "nickname": "Wolverines", 
+        "name": "Wesley College"
+    }, 
+    {
+        "schoo_id": 130697, 
+        "city": "Middletown", 
+        "state": "CT", 
+        "nickname": "Cardinals", 
+        "name": "Wesleyan University"
+    }, 
+    {
+        "schoo_id": 216764, 
+        "city": "West Chester", 
+        "state": "PA", 
+        "nickname": "Golden Rams", 
+        "name": "West Chester University of Pennsylvania"
+    }, 
+    {
+        "schoo_id": 237932, 
+        "city": "West Liberty", 
+        "state": "WV", 
+        "nickname": "Hilltoppers", 
+        "name": "West Liberty University"
+    }, 
+    {
+        "schoo_id": 237932, 
+        "city": "West Liberty", 
+        "state": "WV", 
+        "nickname": "Lady Toppers", 
+        "name": "West Liberty University"
+    }, 
+    {
+        "schoo_id": 125471, 
+        "city": "Culver City", 
+        "state": "CA", 
+        "nickname": "Wildcats", 
+        "name": "West Los Angeles College"
+    }, 
+    {
+        "schoo_id": 229814, 
+        "city": "Canyon", 
+        "state": "TX", 
+        "nickname": "Buffaloes", 
+        "name": "West Texas A & M University"
+    }, 
+    {
+        "schoo_id": 237899, 
+        "city": "Institute", 
+        "state": "WV", 
+        "nickname": "Yellow Jackets", 
+        "name": "West Virginia State University"
+    }, 
+    {
+        "schoo_id": 238032, 
+        "city": "Morgantown", 
+        "state": "WV", 
+        "nickname": "Mountaineers", 
+        "name": "West Virginia University"
+    }, 
+    {
+        "schoo_id": 237950, 
+        "city": "Montgomery", 
+        "state": "WV", 
+        "nickname": "Golden Bears", 
+        "name": "West Virginia University Institute of Technology"
+    }, 
+    {
+        "schoo_id": 237950, 
+        "city": "Montgomery", 
+        "state": "WV", 
+        "nickname": "Lady Golden Bears", 
+        "name": "West Virginia University Institute of Technology"
+    }, 
+    {
+        "schoo_id": 237686, 
+        "city": "Parkersburg", 
+        "state": "WV", 
+        "nickname": "Riverhawks", 
+        "name": "West Virginia University at Parkersburg"
+    }, 
+    {
+        "schoo_id": 237969, 
+        "city": "Buckhannon", 
+        "state": "WV", 
+        "nickname": "Bobcats", 
+        "name": "West Virginia Wesleyan College"
+    }, 
+    {
+        "schoo_id": 237969, 
+        "city": "Buckhannon", 
+        "state": "WV", 
+        "nickname": "Lady Bobcats", 
+        "name": "West Virginia Wesleyan College"
+    }, 
+    {
+        "schoo_id": 200004, 
+        "city": "Cullowhee", 
+        "state": "NC", 
+        "nickname": "Catamounts", 
+        "name": "Western Carolina University"
+    }, 
+    {
+        "schoo_id": 200004, 
+        "city": "Cullowhee", 
+        "state": "NC", 
+        "nickname": "Lady Catamounts", 
+        "name": "Western Carolina University"
+    }, 
+    {
+        "schoo_id": 130776, 
+        "city": "Danbury", 
+        "state": "CT", 
+        "nickname": "Colonials", 
+        "name": "Western Connecticut State University"
+    }, 
+    {
+        "schoo_id": 149772, 
+        "city": "Macomb", 
+        "state": "IL", 
+        "nickname": "Fighting Leathernecks", 
+        "name": "Western Illinois University"
+    }, 
+    {
+        "schoo_id": 149772, 
+        "city": "Macomb", 
+        "state": "IL", 
+        "nickname": "Westerwinds", 
+        "name": "Western Illinois University"
+    }, 
+    {
+        "schoo_id": 157951, 
+        "city": "Bowling Green", 
+        "state": "KY", 
+        "nickname": "Hilltoppers", 
+        "name": "Western Kentucky University"
+    }, 
+    {
+        "schoo_id": 172699, 
+        "city": "Kalamazoo", 
+        "state": "MI", 
+        "nickname": "Broncos", 
+        "name": "Western Michigan University"
+    }, 
+    {
+        "schoo_id": 181817, 
+        "city": "Scottsbluff", 
+        "state": "NE", 
+        "nickname": "Cougars", 
+        "name": "Western Nebraska Community College"
+    }, 
+    {
+        "schoo_id": 210429, 
+        "city": "Monmouth", 
+        "state": "OR", 
+        "nickname": "Wolves", 
+        "name": "Western Oregon University"
+    }, 
+    {
+        "schoo_id": 229832, 
+        "city": "Snyder", 
+        "state": "TX", 
+        "nickname": "Westerners", 
+        "name": "Western Texas College"
+    }, 
+    {
+        "schoo_id": 229832, 
+        "city": "Snyder", 
+        "state": "TX", 
+        "nickname": "Lady Westerners", 
+        "name": "Western Texas College"
+    }, 
+    {
+        "schoo_id": 237011, 
+        "city": "Bellingham", 
+        "state": "WA", 
+        "nickname": "Vikings", 
+        "name": "Western Washington University"
+    }, 
+    {
+        "schoo_id": 149781, 
+        "city": "Wheaton", 
+        "state": "IL", 
+        "nickname": "Thunder", 
+        "name": "Wheaton College"
+    }, 
+    {
+        "schoo_id": 168281, 
+        "city": "Norton", 
+        "state": "MA", 
+        "nickname": "Lyons", 
+        "name": "Wheaton College"
+    }, 
+    {
+        "schoo_id": 238078, 
+        "city": "Wheeling", 
+        "state": "WV", 
+        "nickname": "Jesuit Cardinals", 
+        "name": "Wheeling Jesuit University"
+    }, 
+    {
+        "schoo_id": 237057, 
+        "city": "Walla Walla", 
+        "state": "WA", 
+        "nickname": "Missionaries", 
+        "name": "Whitman College"
+    }, 
+    {
+        "schoo_id": 125763, 
+        "city": "Whittier", 
+        "state": "CA", 
+        "nickname": "Poets", 
+        "name": "Whittier College"
+    }, 
+    {
+        "schoo_id": 156125, 
+        "city": "Wichita", 
+        "state": "KS", 
+        "nickname": "Shockers", 
+        "name": "Wichita State University"
+    }, 
+    {
+        "schoo_id": 216852, 
+        "city": "Chester", 
+        "state": "PA", 
+        "nickname": "Pride", 
+        "name": "Widener University-Main Campus"
+    }, 
+    {
+        "schoo_id": 216931, 
+        "city": "Wilkes-Barre", 
+        "state": "PA", 
+        "nickname": "Colonels", 
+        "name": "Wilkes University"
+    }, 
+    {
+        "schoo_id": 176479, 
+        "city": "Hattiesburg", 
+        "state": "MS", 
+        "nickname": "Crusaders", 
+        "name": "William Carey University"
+    }, 
+    {
+        "schoo_id": 179955, 
+        "city": "Liberty", 
+        "state": "MO", 
+        "nickname": "Cardinals", 
+        "name": "William Jewell College"
+    }, 
+    {
+        "schoo_id": 187444, 
+        "city": "Wayne", 
+        "state": "NJ", 
+        "nickname": "Pioneers", 
+        "name": "William Paterson University of New Jersey"
+    }, 
+    {
+        "schoo_id": 154590, 
+        "city": "Oskaloosa", 
+        "state": "IA", 
+        "nickname": "Statesmen", 
+        "name": "William Penn University"
+    }, 
+    {
+        "schoo_id": 154590, 
+        "city": "Oskaloosa", 
+        "state": "IA", 
+        "nickname": "Lady Statesmen", 
+        "name": "William Penn University"
+    }, 
+    {
+        "schoo_id": 168342, 
+        "city": "Williamstown", 
+        "state": "MA", 
+        "nickname": "Ephs", 
+        "name": "Williams College"
+    }, 
+    {
+        "schoo_id": 200341, 
+        "city": "Williston", 
+        "state": "ND", 
+        "nickname": "Tetons", 
+        "name": "Williston State College"
+    }, 
+    {
+        "schoo_id": 206507, 
+        "city": "Wilmington", 
+        "state": "OH", 
+        "nickname": "Fighting Quakers", 
+        "name": "Wilmington College"
+    }, 
+    {
+        "schoo_id": 175272, 
+        "city": "Winona", 
+        "state": "MN", 
+        "nickname": "Warriors", 
+        "name": "Winona State University"
+    }, 
+    {
+        "schoo_id": 199999, 
+        "city": "Winston-Salem", 
+        "state": "NC", 
+        "nickname": "Rams", 
+        "name": "Winston-Salem State University"
+    }, 
+    {
+        "schoo_id": 199999, 
+        "city": "Winston-Salem", 
+        "state": "NC", 
+        "nickname": "Lady Rams", 
+        "name": "Winston-Salem State University"
+    }, 
+    {
+        "schoo_id": 218964, 
+        "city": "Rock Hill", 
+        "state": "SC", 
+        "nickname": "Eagles", 
+        "name": "Winthrop University"
+    }, 
+    {
+        "schoo_id": 206525, 
+        "city": "Springfield", 
+        "state": "OH", 
+        "nickname": "Tigers", 
+        "name": "Wittenberg University"
+    }, 
+    {
+        "schoo_id": 218973, 
+        "city": "Spartanburg", 
+        "state": "SC", 
+        "nickname": "Terriers", 
+        "name": "Wofford College"
+    }, 
+    {
+        "schoo_id": 168421, 
+        "city": "Worcester", 
+        "state": "MA", 
+        "nickname": "Engineers", 
+        "name": "Worcester Polytechnic Institute"
+    }, 
+    {
+        "schoo_id": 168430, 
+        "city": "Worcester", 
+        "state": "MA", 
+        "nickname": "Lancers", 
+        "name": "Worcester State University"
+    }, 
+    {
+        "schoo_id": 206604, 
+        "city": "Dayton", 
+        "state": "OH", 
+        "nickname": "Raiders", 
+        "name": "Wright State University-Main Campus"
+    }, 
+    {
+        "schoo_id": 206622, 
+        "city": "Cincinnati", 
+        "state": "OH", 
+        "nickname": "Musketeers", 
+        "name": "Xavier University"
+    }, 
+    {
+        "schoo_id": 130794, 
+        "city": "New Haven", 
+        "state": "CT", 
+        "nickname": "Bulldogs", 
+        "name": "Yale University"
+    }, 
+    {
+        "schoo_id": 130794, 
+        "city": "New Haven", 
+        "state": "CT", 
+        "nickname": "Elis", 
+        "name": "Yale University"
+    }, 
+    {
+        "schoo_id": 197708, 
+        "city": "New York", 
+        "state": "NY", 
+        "nickname": "Maccabees", 
+        "name": "Yeshiva University"
+    }, 
+    {
+        "schoo_id": 217059, 
+        "city": "York", 
+        "state": "PA", 
+        "nickname": "Spartans", 
+        "name": "York College Pennsylvania"
+    }, 
+    {
+        "schoo_id": 206695, 
+        "city": "Youngstown", 
+        "state": "OH", 
+        "nickname": "Penguins", 
+        "name": "Youngstown State University"
+    }
+]

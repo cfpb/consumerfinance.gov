@@ -218,18 +218,14 @@ urlpatterns = [
         namespace='transcripts')),
     url(r'^paying-for-college/',
         include_if_app_enabled('comparisontool', 'comparisontool.urls')),
-    url(r'^paying-for-college2/',
-        include_if_app_enabled(
-            'paying_for_college', 'paying_for_college.config.urls')),
-    url(r'^credit-cards/agreements/',
-        include('agreements.urls')),
-
+    url(r'^paying-for-college2/', include(
+        'college.urls', namespace='college')),
+    url(r'^credit-cards/agreements/', include('agreements.urls')),
     url(r'^consumer-tools/retirement/', include_if_app_enabled(
         'retirement_api',
         'retirement_api.urls',
         namespace='retirement_api'
     )),
-
     url(r'^data-research/consumer-complaints/$',
         ComplaintLandingView.as_view(),
         name='complaint-landing'),
