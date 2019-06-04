@@ -48,7 +48,10 @@ def parse_links(html, encoding=None):
 
 class ParseLinksMiddleware(object):
     def process_response(self, request, response):
-        if self.should_parse_links(request.path, response['content-type']):
+        # static files served via django (in development) won't always have a
+        # content-type
+        if 'content-type' in response and self.should_parse_links(
+                request.path, response['content-type']):
             response.content = parse_links(
                 response.content,
                 encoding=response.charset

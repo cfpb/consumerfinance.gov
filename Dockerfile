@@ -5,16 +5,16 @@ RUN yum install -y https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-
     yum install -y epel-release mailcap which httpd && \
     yum install -y postgresql10  && \
     yum install -y python36 && \
-    yum clean all
-
-RUN mkdir -p /var/log/httpd
-RUN chown -R apache:apache /var/log/httpd
+    yum clean all && rm -rf /var/cache/yum
 
 ENV PYTHON /usr/bin/python3
 ENV PYTHONPATH=/src/cfgov-refresh/cfgov/
 COPY docker/python/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN mkdir /active-python/ && chown -R apache:apache /active-python
+
 ENTRYPOINT ["sh", "/usr/local/bin/entrypoint.sh"]
-CMD ["sh", "-c", "/usr/local/bin/python /src/cfgov-refresh/cfgov/manage.py runmodwsgi --port 8000 --user apache --group apache --log-to-terminal --working-directory /src/cfgov-refresh/  $EXTRA_MODWSGI_ARGS"]
+CMD ["sh", "-c", "/active-python/python /src/cfgov-refresh/cfgov/manage.py runmodwsgi --port 8000 --user apache --group apache --log-to-terminal --working-directory /src/cfgov-refresh/  $EXTRA_MODWSGI_ARGS"]
+EXPOSE 8000
 
 
 FROM cfgov-runtime AS cfgov-dev
@@ -26,7 +26,7 @@ RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum
 RUN yum install -y nodejs yarn make gcc gcc-c++ kernel-devel unzip && \
     yum install -y httpd-devel postgresql10-devel && \
     yum install -y python-devel python-pip python36-devel && \
-    yum clean all
+    yum clean all && rm -rf /var/cache/yum
 RUN npm install -g gulp
 
 # Copy over our requirement files to install
@@ -76,7 +76,9 @@ RUN sh frontend.sh production
 RUN mkdir static.in
 RUN unzip /tmp/fonts.zip -d ./static.in/
 RUN cfgov/manage.py collectstatic
-
+# this won't shrink *this* image, but should result in less unneccesssary 
+# files being transferred to the deployment image
+RUN rm -rf cfgov/unprocessed
 
 FROM cfgov-runtime as cfgov-deployment
 ENV DJANGO_SETTINGS_MODULE=cfgov.settings.production
@@ -85,8 +87,7 @@ COPY --from=cfgov-build /usr/lib64/python2.7/site-packages/ /usr/lib64/python2.7
 COPY --from=cfgov-build /usr/lib/python2.7/site-packages/ /usr/lib/python2.7/site-packages/
 COPY --from=cfgov-build /usr/local/lib64/python3.6/site-packages/ /usr/local/lib64/python3.6/site-packages/
 COPY --from=cfgov-build /usr/local/lib/python3.6/site-packages/ /usr/local/lib/python3.6/site-packages/
-COPY --from=cfgov-build /src/cfgov-refresh/cfgov/ /src/cfgov-refresh/cfgov/
-COPY --from=cfgov-build /var/www/html/static /var/www/html/static
+COPY --from=cfgov-build --chown=apache:apache /src/cfgov-refresh/cfgov/ /src/cfgov-refresh/cfgov/
+COPY --from=cfgov-build --chown=apache:apache /var/www/html/static /var/www/html/static
 WORKDIR /src/cfgov-refresh
-RUN chown -R apache:apache .
-EXPOSE 8000
+USER apache
