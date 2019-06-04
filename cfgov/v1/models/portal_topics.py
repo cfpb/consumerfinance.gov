@@ -59,7 +59,9 @@ class PortalCategoryTag(TaggedItemBase):
 class PortalCategory(ClusterableModel):
     heading = models.CharField(max_length=255, blank=True)
     heading_es = models.CharField(max_length=255, blank=True)
-
+    display_order = models.IntegerField(
+        default=0,
+        help_text="Controls sequence of categories in sidebar navigation.")
     tags = TaggableManager(
         through=PortalCategoryTag,
         blank=True,
@@ -69,6 +71,7 @@ class PortalCategory(ClusterableModel):
 
     class Meta:
         verbose_name_plural = "portal categories"
+        ordering = ['display_order']
 
     def title(self, language='en'):
         if language == 'es':

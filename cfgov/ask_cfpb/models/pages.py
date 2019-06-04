@@ -8,6 +8,7 @@ from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.html import format_html
 from django.utils.text import Truncator, slugify
 from django.utils.translation import activate, deactivate_all, gettext as _
@@ -63,8 +64,6 @@ JOURNEY_PATHS = (
     '/owning-a-home/close',
     '/owning-a-home/process',
 )
-# Custom sort for navigation, by PortalCategory primary keys
-PORTAL_CATEGORY_SORT_ORDER = [1, 4, 5, 2, 3]
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -224,20 +223,21 @@ class PortalSearchPage(
         """
         Return an ordered dictionary of translated-slug:object pairs.
 
-        We use this custom sequence for categories in the navigation sidebar:
+        We use this custom sequence for categories in the navigation sidebar,
+        controlled by the 'display_order' field of portal categories:
         - Basics
         - Key terms
         - Common issues
         - Know your rights
         - How-to guides
         """
-        categories = PortalCategory.objects.order_by('pk')
+        categories = PortalCategory.objects.all()
         sorted_mapping = OrderedDict()
-        for i in PORTAL_CATEGORY_SORT_ORDER:
+        for category in categories:
             sorted_mapping.update({
                 slugify(
-                    categories[i - 1].title(self.language)
-                ): categories[i - 1]
+                    category.title(self.language)
+                ): category
             })
         return sorted_mapping
 
@@ -710,6 +710,7 @@ class ArticleLink(Orderable, models.Model):
     ]
 
 
+@python_2_unicode_compatible
 class ArticlePage(CFGOVPage):
     """
     General article page type.

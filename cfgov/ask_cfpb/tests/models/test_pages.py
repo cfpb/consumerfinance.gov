@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponse
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import TestCase, override_settings
 from django.utils import timezone, translation
 from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
@@ -24,8 +24,8 @@ from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Category, NextStep
 )
 from ask_cfpb.models.pages import (
-    PORTAL_CATEGORY_SORT_ORDER, REUSABLE_TEXT_TITLES, AnswerLandingPage,
-    AnswerPage, PortalSearchPage, validate_page_number
+    REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, ArticlePage,
+    PortalSearchPage, get_standard_text, validate_page_number
 )
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
@@ -155,6 +155,60 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         self.assertContains(response, 'Download a spreadsheet')
 
 
+class ArticlePageTestCase(TestCase):
+
+    fixtures = ['ask_tests']
+
+    def setUp(self):
+
+        def create_page(model, title, slug, parent, language='en', **kwargs):
+            new_page = model(
+                live=False,
+                language=language,
+                title=title,
+                slug=slug)
+            for k, v in kwargs.items():
+                setattr(new_page, k, v)
+            parent.add_child(instance=new_page)
+            new_page.save()
+            new_page.save_revision(user=self.test_user).publish()
+            return new_page
+        self.test_user = User.objects.last()
+        self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.tools_parent = create_page(
+            SublandingPage,
+            'Consumer Tools',
+            'consumer-tools',
+            self.ROOT_PAGE)
+        self.article_page = create_page(
+            ArticlePage,
+            'Article title',
+            'article-title',
+            self.tools_parent,
+            category='basics',
+            heading='Article heading',
+            intro='Article itro.'
+        )
+
+    def test_article_page_str(self):
+        self.assertEqual(
+            self.article_page.title,
+            "{}".format(self.article_page)
+        )
+
+    def test_article_page_response(self):
+        response = self.client.get(self.article_page.url)
+        self.assertEqual(
+            response.status_code, 200)
+
+    def test_article_page_context(self):
+        response = self.client.get(self.article_page.url)
+        self.assertEqual(
+            get_standard_text(self.article_page.language, 'about_us'),
+            response.context_data.get('about_us')
+        )
+
+
 class PortalSearchPageTestCase(TestCase):
 
     fixtures = [
@@ -179,7 +233,6 @@ class PortalSearchPageTestCase(TestCase):
         self.portal_topic2 = PortalTopic.objects.get(pk=2)
         self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.test_user = User.objects.last()
-        self.factory = RequestFactory()
         self.english_ask_parent = create_page(
             AnswerLandingPage,
             'Ask CFPB',
@@ -342,7 +395,7 @@ class PortalSearchPageTestCase(TestCase):
     def test_category_map_sort_order(self):
         mapping = self.english_search_page.category_map
         self.assertEqual(
-            PORTAL_CATEGORY_SORT_ORDER,
+            [p.pk for p in PortalCategory.objects.all()],
             [category.pk for slug, category in mapping.items()]
         )
 
@@ -556,7 +609,6 @@ class AnswerPageTestCase(TestCase):
 
     def setUp(self):
         self.test_user = User.objects.get(pk=1)
-        self.factory = RequestFactory()
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.category = mommy.make(
             Category, name='stub_cat', name_es='que', slug='stub-cat')
