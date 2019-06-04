@@ -355,21 +355,6 @@ urlpatterns = [
     url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
 
-    url(r'^es/$', TemplateView.as_view(
-                 template_name='/es/index.html')),
-
-    url(r'^es/comprar-casa/$', TemplateView.as_view(
-                 template_name='es/comprar-casa/index.html')),
-
-    url(r'^es/nuestra-historia/$', TemplateView.as_view(
-                 template_name='es/nuestra-historia/index.html')),
-
-    url(r'^es/presentar-una-queja/$', TemplateView.as_view(
-                 template_name='es/presentar-una-queja/index.html')),
-
-    url(r'^es/quienes-somos/$', TemplateView.as_view(
-                 template_name='es/quienes-somos/index.html')),
-
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
 
     url(

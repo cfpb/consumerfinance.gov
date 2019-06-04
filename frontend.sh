@@ -44,11 +44,10 @@ clean() {
 
 # Install project dependencies.
 install() {
-  echo "Installing front-end dependencies…"
-
   if [ "$NODE_ENV" = "development" ]; then
 
-    yarn install --ignore-engines
+    echo "Installing frontend development dependencies…"
+    yarn install
 
     # Protractor = JavaScript acceptance testing framework.
     echo "Installing Protractor dependencies locally…"
@@ -59,6 +58,7 @@ install() {
     ./node_modules/protractor/bin/webdriver-manager update --gecko false --standalone false
 
   else
+    echo "Installing frontend production dependencies…"
     yarn install --production --ignore-optional
   fi
 }

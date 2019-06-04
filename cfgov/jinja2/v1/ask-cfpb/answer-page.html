@@ -86,7 +86,7 @@
         
         <div class="block related-questions">
             <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
-            {% if page.language != 'es' and related_questions %}
+            {% if related_questions %}
             <div class="block block__sub">
                 <h3>{{ _('Browse related questions') }} </h3>
                 <ul class="m-list m-list__unstyled m-list__links">
@@ -97,10 +97,13 @@
                         </a>
                     </li>
                     {% endfor %}
-                    {% if category %}
+                    {% if portal_page %}
                     <li class="m-list_item m-list_item__last">
-                        <a href="{{slugurl('category-' + category.slug)}}" class="m-list_link">
-                            <b>{{ _('Learn more about') }} {{ category.name_es | lower if page.language == 'es' else category.name | lower }}</b>
+                        <a href="{{ portal_page.url }}" class="m-list_link">
+                            <b>
+                                {{ _('Learn more about') }} 
+                                {{ portal_page.portal_topic.title(page.language) | lower }}
+                            </b>
                         </a>
                     </li>
                     {% endif %}
@@ -127,18 +130,36 @@
 {%- endblock %}
 
 {% block content_sidebar scoped  %}
-    <div class="block block__flush-top u-mb45 about-us-text">
+    {% if sibling_url %}
+        <a class="a-link a-link__jump" href="{{ sibling_url }}">
+            <span class="a-link_text">
+            {% if page.language == 'es'%}
+                View page in English
+            {% else %}
+                Ver página en español
+            {% endif %}
+            </span>
+        </a> 
+    {% endif %}
+    
     {% if about_us %}
+        <div class="block
+                {% if not sibling_url %}
+                block__flush-top
+                {% endif %}
+                about-us-text">
         {{ about_us.text | richtext }}
+        </div>
     {% endif %}
-    </div>
-    <div class="block block__border-top block__padded-top disclaimer-text">
-    {% if disclaimer %}
-        <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
-        {{ disclaimer.text | richtext }}
-    {% endif %}
-    </div>
+   
     {% if page.sidebar_panels %}
         {{ streamfield_sidefoot.render(page.sidebar) }}
+    {% endif %}
+
+    {% if disclaimer %}
+    <div class="disclaimer-text">
+        <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
+        {{ disclaimer.text | richtext }}
+    </div>
     {% endif %}
 {% endblock %}
