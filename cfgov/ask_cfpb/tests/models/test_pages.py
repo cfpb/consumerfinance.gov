@@ -684,6 +684,34 @@ class AnswerPageTestCase(TestCase):
             test_context['about_us'],
             get_reusable_text_snippet('About us (For consumers)'))
 
+    def test_english_page_sibling_url(self):
+        self.assertEqual(
+            self.page1.get_sibling_url(),
+            self.page1_es.url
+        )
+
+    def test_spanish_page_sibling_url(self):
+        self.assertEqual(
+            self.page1_es.get_sibling_url(),
+            self.page1.url
+        )
+
+    def test_no_sibling_url_returned_for_redirected_page(self):
+        self.page1_es.redirect_to_page = self.page2
+        self.page1_es.save()
+        self.page1_es.save_revision(user=self.test_user).publish()
+        self.assertEqual(
+            self.page1.get_sibling_url(),
+            None
+        )
+
+    def test_no_sibling_url_returned_for_draft_page(self):
+        self.page1.unpublish()
+        self.assertEqual(
+            self.page1_es.get_sibling_url(),
+            None
+        )
+
     def test_routable_tag_page_base_returns_404(self):
         page = self.tag_results_page_en
         response = self.client.get(

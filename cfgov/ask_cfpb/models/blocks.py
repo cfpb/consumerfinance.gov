@@ -20,7 +20,7 @@ class AskContent(blocks.StreamBlock):
         ('content', blocks.RichTextBlock(
             features=[
                 'bold', 'italic', 'h3', 'link', 'ol', 'ul',
-                'document-link', 'image', 'embed', 'edit-html'
+                'document-link', 'image', 'embed'
             ],
             label='Text'
         ))
@@ -37,8 +37,7 @@ class AskContent(blocks.StreamBlock):
 class HowTo(blocks.StructBlock):
     description = blocks.RichTextBlock(
         features=[
-            'ol', 'ul', 'bold', 'italic', 'link', 'document-link',
-            'edit-html'
+            'ol', 'ul', 'bold', 'italic', 'link', 'document-link'
         ],
         blank=True,
         required=False,
@@ -58,8 +57,7 @@ class HowTo(blocks.StructBlock):
 class FAQ(blocks.StructBlock):
     description = blocks.RichTextBlock(
         features=[
-            'ol', 'ul', 'bold', 'italic', 'link', 'document-link',
-            'edit-html'
+            'ol', 'ul', 'bold', 'italic', 'link', 'document-link'
         ],
         blank=True,
         required=False,
@@ -81,7 +79,7 @@ class AskAnswerContent(blocks.StreamBlock):
         ('content', blocks.RichTextBlock(
             features=[
                 'bold', 'italic', 'h2', 'h3', 'link', 'ol', 'ul',
-                'document-link', 'image', 'embed', 'edit-html'
+                'document-link', 'image', 'embed'
             ],
             label='Text'
         ))
