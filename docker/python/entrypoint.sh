@@ -7,6 +7,7 @@ if [ -f /etc/profile.d/extend-environment ]; then
     source /etc/profile.d/extend-environment.sh
 fi
 
-ln -sf $PYTHON /usr/local/bin/python
+export PATH=/active-python:$PATH
+ln -sf $PYTHON /active-python/python
 
 exec "$@"
