@@ -32,9 +32,9 @@
             </h2>
         </header>
     {% endif %}
-
+    {% if value.paragraph %}
     {{ value.paragraph | safe }}
-
+    {% endif %}
     {% if value.links %}
         <ul class="m-list m-list__links">
         {% for link in value.links %}
