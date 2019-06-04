@@ -327,7 +327,7 @@ with a slug of `cfgov`.
 set to 80.
 - If it doesn't already exist, creates a new
 [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
-a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and
+a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
 `DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump

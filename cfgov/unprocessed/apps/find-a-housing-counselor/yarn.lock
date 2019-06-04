@@ -10,18 +10,18 @@ babel-polyfill@^7.0.0-beta.3:
     core-js "^2.4.0"
     regenerator-runtime "^0.11.0"
 
-cf-core@8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/cf-core/-/cf-core-8.0.1.tgz#5aae92bc54d070b3730ac34ce8c8b618b51c3910"
-  integrity sha512-Qb2zZ9np0ygwkBVaOKgIfEOb/mpiBvd1YSlKTrq18X+y4JBTorGjm3GFL6iUiIoB7/Kyec3XmF9jxAJtVUDyGA==
+cf-core@10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/cf-core/-/cf-core-10.0.0.tgz#4e447a95c8b94b55c5ec16df8243173382fd321b"
+  integrity sha512-NrPhzfwWv+KRnMMLYfOzuuDBsLQ80uBOdNTsYLxEvJrItLa/aXNSBJ1T+JHCxlodKFjT8e54rWf5oRaOq5DiuA==
   dependencies:
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
 core-js@^2.4.0:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
-  integrity sha512-klh/kDpwX8hryYL14M9w/xei6vrv6sE8gTHDG7/T/+SEovB/G4ejwcfE/CBzO6Edsu+OETZMZ3wcX/EjUkrl5A==
+  version "2.6.8"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.8.tgz#dc3a1e633a04267944e0cb850d3880f340248139"
+  integrity sha512-RWlREFU74TEkdXzyl1bka66O3kYp8jeTXrvJZDzVVMH8AiHUSOFpL1yfhQJ+wHocAm1m+4971W1PPzfLuCv1vg==
 
 insert-css@0.0.0:
   version "0.0.0"

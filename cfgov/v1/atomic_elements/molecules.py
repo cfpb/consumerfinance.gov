@@ -162,12 +162,6 @@ class Hero(blocks.StructBlock):
 
 
 class Notification(blocks.StructBlock):
-    type = blocks.ChoiceBlock(choices=[
-        ('default', 'Default'),
-        ('success', 'Success'),
-        ('warning', 'Warning'),
-        ('error', 'Error'),
-    ], required=True, default='default')
     message = blocks.CharBlock(
         required=True,
         help_text='The main notification message to display.'

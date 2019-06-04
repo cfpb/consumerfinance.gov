@@ -44,7 +44,7 @@ def assemble_output():
     answer_pages = list(AnswerPage.objects.prefetch_related(
         *prefetch_fields).order_by('language', '-answer_base__id').values(
             'id', 'answer_base__id', 'question', 'short_answer',
-            'answer', 'url_path', 'live', 'redirect_to_page_id',
+            'answer_content', 'url_path', 'live', 'redirect_to_page_id',
             'related_resource__title', 'language', *prefetch_fields))
     output_rows = []
     seen = []
@@ -62,7 +62,20 @@ def assemble_output():
         output['Language'] = page['language']
         output['RelatedResource'] = page['related_resource__title']
         output['Question'] = page['question'].replace('\x81', '')
-        output['Answer'] = clean_and_strip(page['answer']).replace('\x81', '')
+        answer_streamfield = page['answer_content'].stream_data
+        answer_text = list(filter(
+            lambda item: item['type'] == 'text', answer_streamfield))
+        if answer_text:
+            answer = answer_text[0].get('value').get('content')
+        else:
+            # If no text block is found,
+            # there is either a HowTo or FAQ schema block.
+            # Both define a description field, so we'll use that here.
+            answer_schema = filter(
+                lambda item: item['type'] == 'how_to_schema' or
+                item['type'] == 'faq_schema', answer_streamfield)
+            answer = answer_schema[0].get('value').get('description')
+        output['Answer'] = clean_and_strip(answer).replace('\x81', '')
         output['ShortAnswer'] = clean_and_strip(page['short_answer'])
         output['URL'] = page['url_path'].replace('/cfgov', '')
         output['Live'] = page['live']
