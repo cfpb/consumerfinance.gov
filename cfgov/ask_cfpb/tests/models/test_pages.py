@@ -24,8 +24,8 @@ from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Category, NextStep
 )
 from ask_cfpb.models.pages import (
-    PORTAL_CATEGORY_SORT_ORDER, REUSABLE_TEXT_TITLES, AnswerLandingPage,
-    AnswerPage, PortalSearchPage, validate_page_number
+    REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, PortalSearchPage,
+    validate_page_number
 )
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
@@ -342,7 +342,7 @@ class PortalSearchPageTestCase(TestCase):
     def test_category_map_sort_order(self):
         mapping = self.english_search_page.category_map
         self.assertEqual(
-            PORTAL_CATEGORY_SORT_ORDER,
+            [p.pk for p in PortalCategory.objects.all()],
             [category.pk for slug, category in mapping.items()]
         )
 
