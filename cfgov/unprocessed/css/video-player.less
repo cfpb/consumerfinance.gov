@@ -17,11 +17,8 @@
 // Variable used to set the size of the play button.
 @play-btn-size__px: 60px;
 
-// Variable used to set the play button image.
-@play-btn-url: '/static/img/video-play-btn.png';
-
-// Variable used to set the play button hover image.
-@play-btn-url_hover: '/static/img/video-play-btn_hover.png';
+// Variable used to set the size of the play button's SVG icon.
+@play-btn-icon-size: 1.875em;
 
 // Variable used to help center the video container.
 @share-width__px: 130px;
@@ -29,9 +26,6 @@
 // Variable used for positioning of share icons
 @video-width__px: 568px;
 
-// Variables used for gutters.
-@gutter__em: unit(@grid_gutter-width / @base-font-size-px, em);
-@gutter-half__em: @gutter__em / 2;
 
 .video-player {
     overflow: hidden;
@@ -79,15 +73,18 @@
 }
 
 .video-player_play-btn {
-    position: absolute;
-    height: @play-btn-size__px;
     width: @play-btn-size__px;
-    background-image: url( @play-btn-url );
-    background-size: cover;
+    height: @play-btn-size__px;
+    border: 2px solid @gray-5;
+    border-radius: 100%;
+    position: absolute;
     z-index: 3;
+    background-color: rgba(16, 24, 32, 0.75); // CFPB Black at 80% opacity
+    color: @white;
+    font-size: @play-btn-icon-size;
 
     &:hover {
-        background-image: url( @play-btn-url_hover )
+        background-color: rgba(0, 114, 206, 0.75); // Pacific at 80% opacity
     }
 
     &__center {
@@ -97,8 +94,17 @@
     }
 
     &__bottomRight {
-        bottom: @gutter-half__em;
-        right: @gutter-half__em;
+        right: unit( @grid_gutter-width / 2 / ( @play-btn-icon-size * @base-font-size-px ), em );
+        bottom: unit( @grid_gutter-width / 2 / ( @play-btn-icon-size * @base-font-size-px ), em );
+    }
+
+    & > .cf-icon-svg {
+        // Ensuring play icon optically appears horizontally centered.
+        position: relative;
+        left: 0.09375em;
+
+        // Ensuring play icon is vertically centered.
+        vertical-align: bottom;
     }
 }
 
@@ -190,7 +196,7 @@
 .video-player .m-social-media,
 .video-player_video-actions {
     .respond-to-max( @bp-xs-max, {
-        margin-top: @gutter-half__em;
+        margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
     } );
 
     .respond-to-range( @bp-sm-min, @fcm-bp-max, {
@@ -211,8 +217,9 @@
 
 .respond-to-min( @bp-xl-min, {
     .video-player_iframe-container {
-        width: @video-width__px;
-        margin: 0 auto;
+        // width: @video-width__px;
+        height: 100%;
+        margin: 0;
     }
 
     .video-player_video-actions-container {
@@ -232,12 +239,15 @@
     .video-player_video-actions-container {
         margin: 0;
         padding: 0;
-        right: -1px;
-        top: -35px;
+        // Magic number: height of standard button + 1px border around FCM.
+        top: -37px;
     }
 
     .video-player_video-actions {
-        height: 35px;
+        // These properties are required to create a masked window for the
+        // close button to animate up into.
+        // Magic number: height of standard button.
+        height: 36px;
         margin: 0;
         overflow: hidden;
     }
@@ -246,85 +256,46 @@
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
         display: block;
-        margin-top: 35px;
+        // Pushes button out of maked window when not playing.
+        // Magic number: height of standard button.
+        margin-top: 36px;
     }
 }
 
 .respond-to-min( @fcm-bp-min, {
     .o-featured-content-module.video-playing {
         .u-flexible-container();
-        // animation: expandFromTop 10000ms;
-        // transform: scale(1);
-        transition: 1200ms all ease-in-out;
-        // animation: reduceMinHeight 1000ms;
+        transition: 0.5s all ease-out;
         min-height: 0;
 
-        .video-player {
-            background-color: transparent;
-        }
+        // .video-player {
+        //     background-color: transparent;
+        // }
 
         .video-player_close-btn {
+            // Moves button up into the masked window when playing.
             margin-top: 0;
-            transition: 1000ms margin-top ease-in-out;
+            transition: 0.5s margin-top ease-out;
         }
+    }
+
+    .o-featured-content-module_visual .video-player_iframe {
+        opacity: 0;
+        transition-delay: 0.5s;
+        transition-duration: 0s;
+        transition-property: opacity;
     }
 
     .o-featured-content-module_visual.video-playing {
-        // animation: expandFromTopRight 1000ms;
         // Position the element to the right for the start of the transition
         right: 0;
         width: 100%;
-        transition: 1200ms all ease-in-out;
+        transition: 0.5s all ease-out;
 
-        .video-player_iframe-container,
         .video-player_iframe {
             height: 100%;
             width: 100%;
-            // transform: scale(1);
-            // transition: 5s all ease;
-
+            opacity: 1;
         }
     }
 } );
-//
-@keyframes slideUp {
-    from {
-        transform-origin: bottom center;
-        transform: scale(0.1);
-    }
-
-    to {
-        transform-origin: bottom center;
-        transform: scale(1);
-    }
-}
-
-@keyframes expandFromTop {
-    from {
-        transform-origin: top center;
-        transform: scale(.2);
-    }
-
-    to {
-        transform-origin: top center;
-        transform: scale(1);
-    }
-}
-
-@keyframes expandFromTopRight {
-    from {
-        transform-origin: top right;
-        transform: scale(.9);
-        // height: 220px;
-        // width: 270px;
-        // opacity: .01;
-    }
-
-    to {
-        transform-origin: top right;
-        transform: scale(1);
-        // height: 100%;
-        // width: 100%;
-        // opacity: 1;
-    }
-}
