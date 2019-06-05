@@ -30,13 +30,13 @@
 {% if value.heading %}
     <header class="{{ 'm-slug-header' if value.default_heading else '' }}">
         <h2 class="{{ 'a-heading' if value.default_heading else 'h3' }} ">
-            {{ value.heading }}
+            {{ _(value.heading) }}
         </h2>
     </header>
 {% endif %}
 {% if value.text %}
     <p>
-        {{ value.text }}
+        {{ _(value.text) }}
     </p>
 {% endif %}
 
@@ -50,7 +50,7 @@
 
         <div class="m-form-field">
             <label class="a-label a-label__heading" for="{{ 'email_' ~ form_id }}">
-                Email address
+                {{ _('Email address') }}
             </label>
             <input class="a-text-input a-text-input__full"
                    id="{{ 'email_' ~ form_id }}"
@@ -61,12 +61,12 @@
         </div>
 
         <div class="m-btn-group">
-            <button class="a-btn">Sign up</button>
+            <button class="a-btn">{{ _('Sign up') }}</button>
             <a class="a-btn a-btn__link a-btn__secondary"
                href="{{ pageurl(value.disclaimer_page) if value.disclaimer_page else disclaimer_url }}"
                target="_blank"
                rel="noopener noreferrer">
-                See Privacy Act statement
+                {{ _('See Privacy Act statement') }}
             </a>
         </div>
 

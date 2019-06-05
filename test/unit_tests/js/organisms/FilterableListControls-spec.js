@@ -165,7 +165,7 @@ const HTML_SNIPPET = `
 
 </div>
 
-<div class="m-notification m-notification__default">
+<div class="m-notification">
     <div class="m-notification_content">
         <div class="h4 m-notification_message"></div></div>
 </div>

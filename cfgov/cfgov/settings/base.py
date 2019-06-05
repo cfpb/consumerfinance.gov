@@ -21,6 +21,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Deploy environment
 DEPLOY_ENVIRONMENT = os.getenv('DEPLOY_ENVIRONMENT')
 
+# In certain environments, we allow DEBUG to be enabled
+DEBUG = os.environ.get('DJANGO_DEBUG') == 'True'
+
 # signal that tells us that this is a proxied HTTPS request
 # effects how request.is_secure() responds
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -645,27 +648,12 @@ FLAGS = {
         {'condition': 'boolean', 'value': False}
     ],
 
-    # When enabled, use Wagtail for /company-signup/
-    # (instead of selfregistration app)
-    'WAGTAIL_COMPANY_SIGNUP': [],
-
-    # IA changes to mega menu for user testing
-    # When enabled, the mega menu under "Consumer Tools" is arranged by topic
-    'IA_USER_TESTING_MENU': [],
-
     # Fix for margin-top when using the text inset
     # When enabled, the top margin of full-width text insets is increased
     'INSET_TEST': [],
 
-    # When enabled, serves `/es/` pages from this
-    # repo ( excluding /obtener-respuestas/ pages ).
-    'ES_CONV_FLAG': [],
-
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': [],
-
-    # To be enabled when mortgage-performance data visualizations go live
-    'MORTGAGE_PERFORMANCE_RELEASE': [],
 
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
@@ -682,17 +670,12 @@ FLAGS = {
     # Search.gov API-based site-search
     'SEARCH_DOTGOV_API': [],
 
-    # The release of the new Financial Coaching pages
-    'FINANCIAL_COACHING': [],
-
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
     'TURBOLINKS': [],
 
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': [('environment is', 'production')],
-
-    'LEGACY_HUD_API': [('environment is', 'production')],
 
     # SPLIT TESTING FLAGS
 
@@ -715,7 +698,14 @@ FLAGS = {
     'HMDA_OUTAGE': [
         {'condition': 'parameter', 'value': 'hmda-outage', 'required': True},
         {'condition': 'path matches', 'value': r'^/data-research', 'required': True}
-    ]
+    ],
+    
+    # Add HowTo schema markup to answer page
+    # Intended for use with path conditions in admin for specific ask pages,
+    # such as: is enabled when path matches ^/ask-cfpb/what-is-an-ach-en-1065/
+    # Delete after Google schema pilot completes and schema usage is
+    # discontinued or implemented with a toggle in answer page admin.
+    'HOW_TO_SCHEMA': []
 }
 
 

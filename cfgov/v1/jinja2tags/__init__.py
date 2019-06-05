@@ -106,6 +106,7 @@ class V1Extension(Extension):
             'hmda_outage_banner': hmda_outage_banner,
             'image_alt_value': image_alt_value,
             'is_blog': ref.is_blog,
+            'is_event': ref.is_event,
             'is_report': ref.is_report,
             'is_filter_selected': contextfunction(is_filter_selected),
             'render_stream_child': contextfunction(render_stream_child),

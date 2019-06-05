@@ -28,13 +28,13 @@ Feature: MultiSelect Tags
 
   Scenario: Typing in search input, returning matched results
     When I enter "tag0" in the search input
-    Then the multiselect dropdown should display "tag0"
-    And the multiselect dropdown length should be 1
+    Then the multi-select dropdown should display "tag0"
+    And the multi-select dropdown length should be 1
 
   Scenario: Typing in search input, not returning unmatched results
     When I enter "tag0" in the search input
-    Then the multiselect dropdown shouldn't display "tag2"
-    And the multiselect dropdown length should be 1
+    Then the multi-select dropdown shouldn't display "tag2"
+    And the multi-select dropdown length should be 1
 
   Scenario: Typing in search input, clearing the input and closing results
     When I enter "tag0" in the search input

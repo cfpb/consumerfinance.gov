@@ -41,7 +41,7 @@
         <h1>{{section.title}}</h1>
 
         <div class="regulation-meta">
-            {% if section.subpart.version == regulation.effective_version %}
+            {% if version == regulation.effective_version %}
                 <div class="a-date">
                     This version is the current regulation
                 </div>
@@ -70,24 +70,53 @@
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message">This version is not the current regulation.</div>
                         <p class="m-notification_explanation">
-                        {% if section.subpart.version.effective_date < regulation.effective_version.effective_date %}
+                        {% if version.effective_date < regulation.effective_version.effective_date %}
                             You are viewing a previous version of this regulation with ammendments that went into effect on
                         {% endif %}
-                        {% if section.subpart.version.effective_date > regulation.effective_version.effective_date %}
+                        {% if version.effective_date > regulation.effective_version.effective_date %}
                             You are viewing a future version of this regulation with ammendments that will go into effect on
                         {% endif %}
-                        {{ ap_date(section.subpart.version.effective_date) }}. <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">View all versions of this regulation</a>
+                        {{ ap_date(version.effective_date) }}. <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">View all versions of this regulation</a>
                         </p>
                     </div>
                 </div>
             {% endif %}
         </div>
 
-        {% if section.subpart.version == regulation.effective_version %}
+        {% if version == regulation.effective_version %}
             <div class="a-rule-break m-full-width-text"></div>
         {% endif %}
 
         <section class="block block__flush-top">
+            <div class="o-regulations-wayfinder" aria-hidden="true" data-section="{{section}}">
+                <div class="wrapper content_wrapper">
+                    <div class="content_sidebar content__flush-top content__flush-bottom">
+                        <span class="h4">
+                            Regulation {{regulation.letter_code}}
+                        </span>
+                    </div>
+                    <div class="content_main content__flush-top content__flush-bottom">
+                        <div class="o-regulations-wayfinder__content">
+                            <div class="o-regulations-wayfinder__heading">
+                                <a href="#" class="h4 o-regulations-wayfinder_link">
+                                    <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
+                                </a>
+                            </div>
+                            <div class="o-regulations-wayfinder__version">
+                                {% if version.effective_date < regulation.effective_version.effective_date %}
+                                    Previous version (effective
+                                    {{ ap_date(version.effective_date) }} to
+                                    {{ ap_date(next_version.effective_date) }})
+                                {% endif %}
+                                {% if version.effective_date > regulation.effective_version.effective_date %}
+                                    Future version (effective
+                                    {{ ap_date(version.effective_date) }})
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {{content|safe}}
         </section>
 
@@ -204,12 +233,22 @@
                 <ul>
                     {% if previous_section %}
                     <li class="previous next-prev">
-                        <a href="{{ previous_url }}" class="navigation-link backward next-prev-link"><span class="cf-icon cf-icon-left"></span><span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label or previous_section.label}}</a> <span class="next-prev-title">{{previous_section.title_content}}</span>
+                        <a href="{{ previous_url }}"
+                           class="navigation-link backward next-prev-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M494.5 1090.7c-17.3 0-33.8-6.8-46-19L19 642.1c-25.4-25.4-25.4-66.5 0-91.9l429.5-429.5c25.6-25.1 66.8-24.8 91.9.8 24.8 25.3 24.8 65.8 0 91.1L156.9 596.2l383.6 383.6c25.4 25.4 25.4 66.5.1 91.9-12.3 12.2-28.8 19-46.1 19z"></path></svg>
+                            <span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label or previous_section.label}}
+                        </a>
+                        <span class="next-prev-title">{{previous_section.title_content}}</span>
                     </li>
                     {% endif %}
                     {% if next_section %}
                     <li class="next next-prev">
-                        <a href="{{ next_url }}" class="navigation-link forward next-prev-link"><span class="cf-icon cf-icon-right"></span><span class="next-prev-label">Next section - </span>{{next_section.numeric_label or next_section.label}}</a> <span class="next-prev-title">{{next_section.title_content}}</span>
+                        <a href="{{ next_url }}"
+                           class="navigation-link forward next-prev-link">
+                            <span class="next-prev-label">Next section - </span>{{next_section.numeric_label or next_section.label}}
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                        </a>
+                        <span class="next-prev-title">{{next_section.title_content}}</span>
                     </li>
                     {% endif %}
                 </ul>

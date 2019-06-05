@@ -25,6 +25,7 @@ from wagtail.wagtailcore.models import PageManager
 
 import requests
 from jinja2 import Markup
+from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import (
@@ -34,7 +35,6 @@ from regulations3k.models import (
     EffectiveVersion, Part, Section, SectionParagraph
 )
 from regulations3k.parser.integer_conversion import LETTER_CODES
-from regulations3k.regdown import regdown
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
@@ -66,10 +66,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     @route(r'^results/')
     def regulation_results_page(self, request):
         all_regs = Part.objects.order_by('part_number')
-        regs = []
-        order = request.GET.get('order', 'relevance')
-        if 'regs' in request.GET and request.GET.get('regs'):
-            regs = request.GET.getlist('regs')
+        regs = validate_regs_list(request)
+        order = validate_order(request)
         search_query = request.GET.get('q', '').strip()
         payload = {
             'search_query': search_query,
@@ -442,6 +440,10 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             effective_version = self.regulation.effective_version
             section_query = self.get_section_query()
 
+        next_version = self.get_versions_query(request).filter(
+            effective_date__gt=effective_version.effective_date
+        ).first()
+
         kwargs = {}
         if date_str is not None:
             kwargs['date_str'] = date_str
@@ -473,6 +475,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
         context.update({
             'version': effective_version,
+            'next_version': next_version,
             'section': section,
             'content': content,
             'get_secondary_nav_items': partial(
@@ -592,3 +595,23 @@ def validate_page_number(request, paginator):
     except InvalidPage:
         page_number = 1
     return page_number
+
+
+def validate_regs_list(request):
+    """
+    A utility for validating a RegulationsSearchPage request.
+
+    Validates that a list of regulation part numbers is alphanumeric.
+    """
+    if 'regs' in request.GET and request.GET.get('regs'):
+        regs_input_list = request.GET.getlist('regs')
+        return [reg for reg in regs_input_list if reg.isalnum()]
+    else:
+        return []
+
+
+def validate_order(request):
+    order = request.GET.get('order')
+    if order not in ('relevance', 'regulation'):
+        order = 'relevance'
+    return order

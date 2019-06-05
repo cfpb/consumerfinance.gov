@@ -23,13 +23,25 @@ msgid "Search the CFPB"
 msgstr "Buscar la CFPB"
 
 msgid "Submit a Complaint"
-msgstr "Presentar una queja"
+msgstr "Enviar una queja"
 
 msgid "Mortgage"
 msgstr "Hipoteca"
 
 msgid "Mortgages"
 msgstr "Hipotecas"
+
+msgid "Buying a Home?"
+msgstr "¿Quiere comprar una vivienda?"
+
+msgid "Buying a House?"
+msgstr "¿Quiere comprar una vivienda?"
+
+msgid "Sign up for email tips and info to help you through the process."
+msgstr "Suscríbase a nuestra lista de email con consejos útiles sobre hipotecas."
+
+msgid "Sign up for our 2-week Get Homebuyer Ready boot camp. We’ll take you step-by-step through the entire homebuying process."
+msgstr ""
 
 #: v1/ask-cfpb/category-page.html
 msgid "results"
@@ -62,6 +74,19 @@ msgstr "No se encontraron resultados para"
 msgid "Please enter a search term in the box above."
 msgstr "Por favor escriba su búsqueda arriba"
 
+#: portals
+msgid "Featured"
+msgstr "Destacado"
+
+msgid "Sign up"
+msgstr "Suscribir"
+
+msgid "See Privacy Act statement"
+msgstr "Lea la declaración de privacidad"
+
+msgid "Email address"
+msgstr "Dirección email"
+
 #: cfgov/jinja2/v1/ask-cfpb/answer-page.html
 msgid "updated"
 msgstr "actualizado"
@@ -72,19 +97,36 @@ msgstr "No incluya información confidencial, como su nombre, información de co
 msgid "Return to top"
 msgstr "Ir arriba"
 
+msgid "Read more"
+msgstr "Leer más"
+
 msgid "Read full answer"
 msgstr "Leer más"
 
 msgid "Hide full answer"
 msgstr "Esconder la respuesta completa"
 
-msgid "Explore related resources"
-msgstr "Otros recursos"
+msgid "Browse related questions"
+msgstr "Otras preguntas"
+
+msgid "Take the next step"
+msgstr "Dar el siguiente paso"
 
 msgid "Related questions"
 msgstr "Otras preguntas"
 
+#: cfgov/jinja2/v1/ask-cfpb/landing-page.html
+msgid "Learn more about"
+msgstr "Sepa más sobre"
+
+#: cfgov/jinja2/v1/ask-cfpb/article-page.html
+msgid "In this article"
+msgstr "En este artículo"
+
 #: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
+msgid "Search our library of answers"
+msgstr "Buscar en nuestra lista de respuestas"
+
 msgid "Can't find your question?"
 msgstr "¿No encuentra su pregunta?"
 
@@ -126,6 +168,10 @@ msgstr "Busca de"
 msgid "Browse questions by category"
 msgstr "Examinar las preguntas por categoría"
 
+#: cfgov/jinja2/v1/_includes/ask/tip.html
+msgid "Tip"
+msgstr "Consejo"
+
 #: cfgov/jinja2/v1/_includes/blocks/feedback.html
 msgid "Was this answer helpful to you?"
 msgstr "¿Te resultó útil esta respuesta?"
@@ -155,6 +201,9 @@ msgstr "¿No encuentra lo que busca?"
 msgid "Search for your question."
 msgstr "Busca su pregunta."
 
+msgid "Search for your question"
+msgstr "Busca su pregunta"
+
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"
 
@@ -181,7 +230,6 @@ msgstr "respuestas"
 
 msgid "answers within"
 msgstr "respuestas dentro de"
-
 
 msgid " of "
 msgstr " de "
@@ -244,6 +292,9 @@ msgid "Common issues"
 msgstr "Problemas comunes"
 
 msgid "How-to"
+msgstr "Paso a paso"
+
+msgid "How to"
 msgstr "Paso a paso"
 
 msgid "How-to guides"

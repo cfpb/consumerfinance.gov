@@ -157,11 +157,12 @@ Once it's installed, you can configure it to run as a service:
 brew services start postgresql
 ```
 
-Then create the database and associated user:
+Then create the database, associated user, and schema for that user:
 
 ```bash
 dropdb --if-exists cfgov && dropuser --if-exists cfpb
 createuser cfpb && createdb -O cfpb cfgov
+psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'
 ```
 
 If you absolutely need to use SQLite, you'll need to update your `.env` file
@@ -207,7 +208,7 @@ that you may want to perform before continuing.
 Want to know more about what the setup scripts are doing?
 [Read the detailed rundown.](#curious-about-what-the-setup-scripts-are-doing)
 
-**Continue following the [usage instructions](usage).**
+**Continue following the [usage instructions](../running-virtualenv/).**
 
 ## Docker-compose installation
 
@@ -221,8 +222,7 @@ Want to know more about what the setup scripts are doing?
   connected containers (like a web application and its database).
 - **Docker Machine**: In environments where Docker Engine is not available,
   Docker Machine can be used to create and manage Docker hosts on virtual
-  machines. For more information on Docker Machine, see the 'How do I use
-  Docker Machine' section in the [usage guide](usage#usage-docker).
+  machines.
 
 ### 1. Setup your Docker environment
 
@@ -310,7 +310,7 @@ working at [http://localhost:8000](http://localhost:8000)
 
 ### 4. Next Steps
 
-See the Docker section of the [usage](usage.md) page to continue after that.
+See [Running in Docker](../running-docker/) to continue after that.
 
 ## Optional steps
 
@@ -328,7 +328,7 @@ with a slug of `cfgov`.
 set to 80.
 - If it doesn't already exist, creates a new
 [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
-a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and
+a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
 `DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump

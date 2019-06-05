@@ -46,7 +46,6 @@
         .grid_push( 8 );
 
         background: @gray-5;
-        .u-webfont-regular();
 
         p:last-child,
         section p:last-child {
@@ -54,7 +53,7 @@
         }
 
         label {
-            .u-webfont-medium();
+            font-weight: 500;
 
             display: block;
             margin-bottom: unit( 4px / @base-font-size-px, em );
@@ -117,7 +116,7 @@
         span {
             display: block;
             margin-top: unit( 10px / @base-font-size-px, em );
-            .u-webfont-medium();
+            font-weight: 500;
         }
     }
 
@@ -262,7 +261,7 @@
         z-index: 9999;
 
         .lenders {
-            .u-webfont-demi();
+            font-weight: 600;
 
             display: inline-block;
             max-width: 30%;
@@ -281,8 +280,6 @@
         Compare interest rate costs
         --------------------------- */
     .compare {
-        .u-webfont-regular();
-
         margin-top: unit( 30px / @base-font-size-px, em );
         label {
             .u-visually-hidden;
@@ -378,8 +375,6 @@
     }
 
     .arm-info-comparison {
-        .u-webfont-regular();
-
         position: absolute;
         display: block;
         width: 200%;
@@ -407,7 +402,6 @@
     .next-steps-heading {
         margin-bottom: 1em;
         font-size: 1.125em;
-        .u-webfont-regular();
     }
 
 
@@ -441,7 +435,7 @@
         font-size: 12px;
         line-height: 20px;
         text-align: center;
-        .u-webfont-demi();
+        font-weight: 600;
     }
 
     /*
@@ -453,7 +447,6 @@
         top: 30%;
         padding: 1em 2em 1em 3em;
         background: @white;
-        .u-webfont-regular();
     }
 
     .chart-menu {
@@ -595,7 +588,7 @@
 
         .interest-cost {
             margin-bottom: .5em;
-            .u-webfont-demi();
+            font-weight: 600;
             color: @gray-60;
         }
     } );

@@ -1,6 +1,6 @@
 -r base.txt
 -r postgres.txt
-django-debug-toolbar==1.7
+django-debug-toolbar==1.11
 django-sslserver==0.20
 tox-pip-extensions==1.1.0
 tox==2.9.1

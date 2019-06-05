@@ -153,7 +153,7 @@ class HeadingBlock(blocks.StructBlock):
             'Input the name of an icon to appear to the left of the heading. '
             'E.g., approved, help-round, etc. '
             '<a href="https://cfpb.github.io/capital-framework/'
-            'components/cf-icons/#icons">See full list of icons</a>'
+            'components/cf-icons/#the-icons">See full list of icons</a>'
         ),
     )
 

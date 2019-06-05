@@ -15,7 +15,7 @@ docs() {
     pip install -r requirements/docs.txt
 }
 
-echo "installing $RUNTEST dependencies"
+echo "Installing $RUNTEST dependencies"
 if [ "$RUNTEST" == "frontend" ]; then
     frontend
     backend

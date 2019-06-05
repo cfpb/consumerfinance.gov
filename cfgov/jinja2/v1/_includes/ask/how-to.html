@@ -1,0 +1,44 @@
+
+{# ==========================================================================
+
+   How To block
+
+   ==========================================================================
+
+   Description:
+
+   Implements Google's recommended elements of HowTo schema when given:
+
+   value: Object defined from a Streamfield block.
+
+   value.description: 			  Text overview of how to.
+
+   value.steps: 	  			    List of steps
+
+   value.step.title:  			  Title of step
+
+   value.step.step_contents  	Output of streamblock
+
+   ========================================================================== #}
+
+
+<div class="schema-block schema-block__how-to">
+    {% if value.description %}
+  	<div itemprop="description" class="schema-block_description">
+  		{{ value.description | richtext }}
+  	</div>
+    {% endif %}
+  	{% for step in value.steps %}
+  		<div itemprop="step"
+           itemscope itemtype="http://schema.org/HowToStep"
+           class="schema-block_item">
+    		<h2 itemprop="name">{{ step.title }}</h2>
+    		<div itemprop="text">
+            {% include_block step.step_content %}
+    		</div>
+  		</div>
+  {% endfor %}
+</div>
+
+
+
