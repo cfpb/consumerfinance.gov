@@ -13,7 +13,11 @@ COPY docker/python/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN mkdir /active-python/ && chown -R apache:apache /active-python
 
 ENTRYPOINT ["sh", "/usr/local/bin/entrypoint.sh"]
-CMD ["sh", "-c", "/active-python/python /src/cfgov-refresh/cfgov/manage.py runmodwsgi --port 8000 --user apache --group apache --log-to-terminal --working-directory /src/cfgov-refresh/  $EXTRA_MODWSGI_ARGS"]
+CMD ["sh", "-c", "/active-python/python /src/cfgov-refresh/cfgov/manage.py runmodwsgi --port 8000 --user apache --group apache\
+                                                                                      --log-to-terminal\
+                                                                                      --working-directory /src/cfgov-refresh/\
+                                                                                      --include-file /src/cfgov-refresh/cfgov/apache/include.conf\
+                                                                                       $EXTRA_MODWSGI_ARGS"]
 EXPOSE 8000
 
 
