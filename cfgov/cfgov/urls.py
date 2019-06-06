@@ -460,7 +460,7 @@ category_redirects = [
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
         RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/',
+            url='/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/',  # noqa: E501
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
         RedirectView.as_view(
@@ -488,7 +488,7 @@ category_redirects = [
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
         RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/',
+            url='/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/',  # noqa: E501
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
         RedirectView.as_view(
