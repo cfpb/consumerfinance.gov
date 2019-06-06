@@ -45,11 +45,10 @@
                         {% for portal in portal_cards %}
                             <div class="content-l_col content-l_col-1-2 content-l_col__equal-height">
                                 <article class="m-card content-l_body__equal-height">
-
                                     <h2>
                                         <a href="{{ portal.url }}">
-                                        {{ category_icon.render( portal.topic ) }}
-                                        {{ portal.title }}
+                                        <span>{{ category_icon.render( portal.topic ) }}</span>
+                                        <span>{{ portal.title }}</span>
                                         </a>
                                     </h2>
 
@@ -100,15 +99,25 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-<div class="block block__flush-top u-mb45 about-us-text">
-    {% if about_us %}
-        {{ about_us.text | richtext }}
+<a class="a-link a-link__jump"
+   href="{{'/ask-cfpb/' if page.language == 'es' else '/es/obtener-respuestas'}}">
+    <span class="a-link_text">
+    {% if page.language == 'es'%}
+        View page in English
+    {% else %}
+        Ver página en español
     {% endif %}
+    </span>
+</a> 
+{% if about_us %}
+<div class="block u-mt45 u-mb45 about-us-text">
+    {{ about_us.text | richtext }}
 </div>
-<div class="block block__border-top block__padded-top disclaimer-text">
-    {% if disclaimer %}
-        <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
-        {{ disclaimer.text | richtext }}
-    {% endif %}
+{% endif %}
+{% if disclaimer %}
+<div class="block block__border-top block__padded-top disclaimer-text"> 
+    <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
+    {{ disclaimer.text | richtext }}
 </div>
+{% endif %}
 {%- endblock %}
