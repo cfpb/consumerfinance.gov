@@ -53,7 +53,7 @@
     "gulp-replace": "1.0.0",
     "gulp-sourcemaps": "2.6.5",
     "gulp-terser": "1.1.7",
-    "highcharts": "7.0.0",
+    "highcharts": "7.1.2",
     "less": "3.9.0",
     "lightbox2": "2.11.0",
     "lodash.throttle": "4.1.1",
