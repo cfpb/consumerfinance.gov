@@ -1,0 +1,15 @@
+{# ==========================================================================
+
+   Renders a <select> tag given a list of credit card agreement issuers.
+
+   issuers: List of credit card agreement issuers.
+
+   selected_issuer_slug: Slug of issuer to show as selected.
+
+   ========================================================================== #}
+<select data-placeholder="Choose an issuer"
+  class="chzn-select" tabindex="2" id="issuer_select">
+  {% for issuer in issuers %}
+  <option value="{{ issuer.slug }}" {% if issuer.slug == selected_issuer_slug %} selected{% endif %}>{{ issuer.name }}</option>
+  {% endfor -%}
+</select>

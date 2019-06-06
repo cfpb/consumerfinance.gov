@@ -410,4 +410,49 @@
     }
 }
 
+.ask-cfpb-page__article {
+    h1,
+    .lead-paragraph {
+        max-width: 41.875rem;
+    }
+
+    .lead-paragraph {
+        margin-bottom: unit( @grid_gutter-width / @size-iii, em );
+    }
+
+    .article {
+        .m-inset {
+            margin-top: unit( 5px / @base-font-size-px, em );
+        }
+
+        .article-section {
+            margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
+        }
+
+        .article-subsection {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
+    }
+
+    .respond-to-min(@bp-sm-min, {
+        .article-sections {
+            margin-top: unit( @grid_gutter-width * 2 / @base-font-size-px, em );
+        }
+    } ); 
+
+    .respond-to-max(@bp-xs-max, {
+        .lead-paragraph {
+            margin-top: unit( @grid_gutter-width / 2 / @size-iii, em );
+        }
+
+        .article {
+            display: flex;
+            flex-direction: column-reverse;
+
+            .m-inset {
+                margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
+            }
+        }
+    } ); 
+}
 

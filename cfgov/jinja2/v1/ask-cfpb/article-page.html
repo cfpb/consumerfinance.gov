@@ -1,0 +1,98 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_modifiers -%}
+    {{ super() }} ask-cfpb-page ask-cfpb-page__article
+{%- endblock %}
+
+{% block content_main %}
+    <div class="eyebrow">{{ _(page.get_category_display()) }}</div>
+    <h1>{{ page.heading }}</h1>
+    <div class="lead-paragraph">{{ page.intro }}</div>
+
+    <div class="article">
+        {% set inset_links = page.article_links.all() %}
+        {% if inset_links %}
+            {% set value = {
+                'heading': page.inset_heading,
+                'links': inset_links
+            }%}
+            <div class="m-inset">
+            {% include 'molecules/related-content.html' with context %}
+            </div>
+        {% endif %}
+
+        <div class="article-content">
+            <div class="article-toc">
+                <p>{{ _('In this article') ~':' }}</p>
+                <ul class="m-list m-list__links">
+                {% for block in page.sections %}
+                    <li class="m-list_item">
+                        <a href="#{{'section-'~loop.index}}"
+                           class="m-list_link">
+                            {{ block.value.heading }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="article-sections">
+                {% for block in page.sections %}
+                <div class="article-section" id="{{'section-'~loop.index}}">
+
+                    <h2>{{ block.value.heading }}</h2>
+                    {% if block.value.summary %}
+                        <p>{{ block.value.summary }}</p>
+                    {% endif %}
+                    {% if block.value.link_text and block.value.url %}
+                        <ul class="m-list m-list__links">
+                            <li class="m-list_item">
+                                <a href="{{ block.value.url }}"
+                                   class="m-list_link">
+                                    {{ block.value.link_text }}
+                                </a>
+                            </li>
+                        </ul>
+                    {% endif %}
+
+                    {% for item in block.value.subsections %}
+                        <div class="article-subsection">
+                        <h3>{{ item.heading }}</h3>
+                            {% if item.summary %}
+                                <p>{{ item.summary }}</p>
+                            {% endif %}
+                            {% if item.link_text and item.url %}
+                                <ul class="m-list m-list__links">
+                                    <li class="m-list_item">
+                                        <a href="{{ item.url }}"
+                                           class="m-list_link">
+                                            {{ item.link_text }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+    
+{% block content_sidebar scoped -%}
+<div class="block block__flush-top u-mb45 about-us-text">
+    {% if about_us %}
+        {{ about_us.text | richtext }}
+    {% endif %}
+</div>
+{% if page.sidebar_panels %}
+    {{ streamfield_sidefoot.render(page.sidebar) }}
+{% endif %}
+{%- endblock %}
