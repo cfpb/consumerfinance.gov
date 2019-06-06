@@ -452,23 +452,23 @@ category_redirects = [
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$',
         RedirectView.as_view(
-            url='/es/obtener-respuestas/prestamos-para-vehiculos/respuestas/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/',  # noqa: E501
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',  # noqa: E501
         RedirectView.as_view(
-            url='/es/obtener-respuestas/cuentas-bancarias/respuestas/',
+            url='/es/herramientas-del-consumidor/cuentas-bancarias/',
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
         RedirectView.as_view(
-            url='/es/obtener-respuestas/tarjetas-de-credito/respuestas/',
+            url='/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/',  # noqa: E501
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
         RedirectView.as_view(
-            url='/es/obtener-respuestas/informes-y-puntajes-de-credito/respuestas/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/',  # noqa: E501
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$',
         RedirectView.as_view(
-            url='/es/obtener-respuestas/cobro-de-deudas/respuestas/',
+            url='/es/herramientas-del-consumidor/cobro-de-deudas/',
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$',
         RedirectView.as_view(
@@ -476,23 +476,23 @@ category_redirects = [
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$',
         RedirectView.as_view(
-            url='/es/obtener-respuestas/transferencias-de-dinero/respuestas/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/',  # noqa: E501
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-comprar-una-casa/(.*)$',
         RedirectView.as_view(
-            url='/es/obtener-respuestas/hipotecas/respuestas/',
+            url='/es/herramientas-del-consumidor/hipotecas/',
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$',
         RedirectView.as_view(
-            url='/es/obtener-respuestas/prestamos-del-dia-de-pago/respuestas/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/',  # noqa: E501
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
         RedirectView.as_view(
-            url='/es/obtener-respuestas/tarjetas-prepagadas/respuestas/',
+            url='/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/',  # noqa: E501
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
         RedirectView.as_view(
-            url='/es/obtener-respuestas/prestamos-estudiantiles/respuestas/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/prestamos-estudiantiles/',  # noqa: E501
             permanent=True))
 ]
 urlpatterns = urlpatterns + category_redirects
