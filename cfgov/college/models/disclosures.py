@@ -137,7 +137,7 @@ class ConstantCap(models.Model):
 # GRADRATE -- now school.grad_rate
 # GRADRATERANK -- not needed, DELETE
 # INDICATORGROUP
-# KBYOSS (now school.KBYOSS) -- not needed, DELETE
+# KBYOSS (now school.kbyoss) -- not needed, DELETE
 # MEDIANDEBTCOMPLETER # new in 2015
 # NETPRICE110K -- not needed, DELETE
 # NETPRICE3OK -- not needed, DELETE
@@ -219,7 +219,7 @@ class School(models.Model):
     under_investigation = models.BooleanField(
         default=False,
         help_text="Heightened Cash Monitoring 2")
-    KBYOSS = models.BooleanField(default=False)  # shopping-sheet participant
+    kbyoss = models.BooleanField(default=False)  # shopping-sheet participant
     grad_rate_4yr = models.DecimalField(
         max_digits=5,
         decimal_places=3,

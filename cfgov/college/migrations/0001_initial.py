@@ -167,7 +167,7 @@ class Migration(migrations.Migration):
                 ('online_only', models.NullBooleanField()),
                 ('operating', models.BooleanField(default=True)),
                 ('under_investigation', models.BooleanField(default=False, help_text='Heightened Cash Monitoring 2')),
-                ('KBYOSS', models.BooleanField(default=False)),
+                ('kbyoss', models.BooleanField(default=False)),
                 ('grad_rate_4yr', models.DecimalField(blank=True, decimal_places=3, max_digits=5, null=True)),
                 ('grad_rate_lt4', models.DecimalField(blank=True, decimal_places=3, max_digits=5, null=True)),
                 ('grad_rate', models.DecimalField(blank=True, decimal_places=3, help_text='A 2-YEAR POOLED VALUE', max_digits=5, null=True)),
