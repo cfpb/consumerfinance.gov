@@ -1,6 +1,6 @@
 // Required modules.
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import * as footerButton from '../modules/footer-button';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 
 /**
  * Footer

@@ -1,7 +1,7 @@
 // Required modules.
+import * as treeTraversal from '../modules/util/tree-traversal';
 import EventObserver from '../modules/util/EventObserver';
 import MoveTransition from '../modules/transition/MoveTransition';
-import * as treeTraversal from '../modules/util/tree-traversal';
 
 /**
  * MegaMenuMobile

@@ -1,7 +1,7 @@
-import FormSubmit from './FormSubmit.js';
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import * as validators from '../modules/util/validators';
 import * as emailHelpers from '../modules/util/email-popup-helpers';
+import * as validators from '../modules/util/validators';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import FormSubmit from './FormSubmit.js';
 
 /**
  * EmailPopup

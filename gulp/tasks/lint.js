@@ -47,12 +47,13 @@ gulp.task( 'lint:scripts', () => _genericLint( configLint.src ) );
  * Lints all the js files for errors
  */
 gulp.task( 'lint',
-  // Checks to see if a flag for a specific file is present, if so, use it
-  // Else, returns a list of sane default tasks to run
-  (() => {
+
+  /* Checks to see if a flag for a specific file is present, if so, use it
+     Else, returns a list of sane default tasks to run */
+  ( () => {
     let UNDEFINED;
-    let argv = minimist( process.argv.slice( 3 ) );
-    if(argv.path !== UNDEFINED) {
+    const argv = minimist( process.argv.slice( 3 ) );
+    if ( argv.path !== UNDEFINED ) {
       return gulp.parallel( () => _genericLint( argv.path ) );
     }
     return gulp.parallel(
@@ -60,5 +61,5 @@ gulp.task( 'lint',
       'lint:tests',
       'lint:scripts'
     );
-  })()
+  } )()
 );

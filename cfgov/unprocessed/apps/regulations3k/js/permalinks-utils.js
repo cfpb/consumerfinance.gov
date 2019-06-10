@@ -161,9 +161,9 @@ const getWayfinderInfo = ( label, sectionTitle ) => {
   let sectionFormattedTitle;
   let paragraphMarker;
 
-  // For interpretations, the wayfinder should look like "Comment 4(a)-1.iv.A"
-  // Or like "Comment app. G-1.iv.A" for interpretations of appendices
-  if ( sectionTitle.indexOf( 'Comment for ' ) > -1 || label.indexOf('Interp') > -1 ) {
+  /* For interpretations, the wayfinder should look like "Comment 4(a)-1.iv.A"
+     Or like "Comment app. G-1.iv.A" for interpretations of appendices */
+  if ( sectionTitle.indexOf( 'Comment for ' ) > -1 || label.indexOf( 'Interp' ) > -1 ) {
     sectionFormattedTitle = 'Comment ';
     paragraphMarker = getCommentMarker( label );
   } else if ( sectionTitle.indexOf( 'Appendix ' ) === 0 ) {
