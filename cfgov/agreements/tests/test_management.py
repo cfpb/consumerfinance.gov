@@ -9,6 +9,7 @@ from django.core.management.base import CommandError
 from django.test import TestCase
 
 import mock
+
 from agreements.management.commands import _util
 from agreements.management.commands.import_agreements import empty_folder_test
 from agreements.models import Issuer

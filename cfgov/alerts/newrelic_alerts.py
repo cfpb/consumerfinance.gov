@@ -21,6 +21,7 @@ class NewRelicAlertViolations(object):
         violations_url = (self.newrelic_url +
                           'alerts_violations.json?only_open=true')
         r = requests.get(violations_url, headers=headers)
+        r.raise_for_status()
         response_json = r.json()
 
         # Filter on the policy name

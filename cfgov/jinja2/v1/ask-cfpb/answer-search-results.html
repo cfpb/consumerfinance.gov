@@ -50,7 +50,7 @@
                 {% else %}
                     <article class="question_summary question_summary__full">
                         <p class="question_title"><a href="{{ question[0] }}" class="kbq">{{ question[1]|safe }}</a></p>
-                        <p class="qans">{{ question[2] | safe | striptags | truncate }}</p>
+                        <p class="qans">{{ question[2] }}</p>
                     </article>
                 {% endif %}
                 {% endfor %}

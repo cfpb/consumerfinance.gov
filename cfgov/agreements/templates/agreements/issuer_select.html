@@ -1,5 +1,0 @@
-<select data-placeholder="Choose an issuer" class="chzn-select" tabindex="2" id="issuer_select">
-{% for i in issuers %}
-    <option value="{{ i.slug }}" {% ifequal selected i.slug %}selected{% endifequal %}>{{ i.name }}</option>
-{% endfor %}
-</select>

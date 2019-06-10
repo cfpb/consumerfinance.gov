@@ -157,11 +157,12 @@ Once it's installed, you can configure it to run as a service:
 brew services start postgresql
 ```
 
-Then create the database and associated user:
+Then create the database, associated user, and schema for that user:
 
 ```bash
 dropdb --if-exists cfgov && dropuser --if-exists cfpb
 createuser cfpb && createdb -O cfpb cfgov
+psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'
 ```
 
 If you absolutely need to use SQLite, you'll need to update your `.env` file
@@ -327,7 +328,7 @@ with a slug of `cfgov`.
 set to 80.
 - If it doesn't already exist, creates a new
 [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
-a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and
+a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
 `DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump
