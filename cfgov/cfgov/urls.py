@@ -220,7 +220,8 @@ urlpatterns = [
         include_if_app_enabled('comparisontool', 'comparisontool.urls')),
     url(r'^paying-for-college2/', include(
         'college.urls', namespace='college')),
-    url(r'^credit-cards/agreements/', include('agreements.urls')),
+    url(r'^credit-cards/agreements/', include(
+        'agreements.urls')),
     url(r'^consumer-tools/retirement/', include_if_app_enabled(
         'retirement_api',
         'retirement_api.urls',

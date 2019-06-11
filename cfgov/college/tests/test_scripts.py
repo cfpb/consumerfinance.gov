@@ -3,6 +3,7 @@ import os
 import six
 
 import django
+from django.conf import settings
 from django.utils import timezone
 
 import requests
@@ -25,7 +26,8 @@ else:  # pragma: no cover
     from unittest.mock import mock_open, patch
 
 
-PFC_ROOT = os.path.join(os.path.dirname(__file__), '../..')
+COLLEGE_ROOT = "{}/college".format(settings.PROJECT_ROOT)
+os.path.join(os.path.dirname(__file__), '../..')
 MOCK_YAML = """\
 completion_rate:\n\
   min: 0\n\
@@ -297,8 +299,8 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(mock_write.call_count, 3)
 
     def test_unzip_file(self):
-        test_zip = ('{}/college/data_sources/ipeds/'
-                    'test.txt.zip'.format(PFC_ROOT))
+        test_zip = ('{}/data_sources/ipeds/'
+                    'test.txt.zip'.format(COLLEGE_ROOT))
         self.assertTrue(update_ipeds.unzip_file(test_zip))
 
     @patch('college.disclosures.scripts.update_ipeds.requests.get')
