@@ -1,9 +1,9 @@
 from django.conf.urls import url
 
 from college.views import (
-    BaseTemplateView, ConstantsRepresentation,
-    ExpenseRepresentation, FeedbackView, OfferView, ProgramRepresentation,
-    SchoolRepresentation, StatsRepresentation, VerifyView, school_search_api
+    BaseTemplateView, ConstantsRepresentation, ExpenseRepresentation,
+    FeedbackView, OfferView, ProgramRepresentation, SchoolRepresentation,
+    StatsRepresentation, VerifyView, school_search_api
 )
 
 

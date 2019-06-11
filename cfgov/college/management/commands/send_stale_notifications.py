@@ -1,8 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from college.disclosures.scripts.notifications import (
-    send_stale_notifications
-)
+from college.disclosures.scripts.notifications import send_stale_notifications
 
 
 COMMAND_HELP = "Send_stale_notifications gathers up stale notifications -- "

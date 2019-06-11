@@ -1,8 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from college.disclosures.scripts.notifications import (
-    retry_notifications
-)
+from college.disclosures.scripts.notifications import retry_notifications
 
 
 COMMAND_HELP = (

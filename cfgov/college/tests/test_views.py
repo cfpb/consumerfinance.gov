@@ -12,9 +12,8 @@ from django.test import RequestFactory
 import mock
 from college.models import Program, School
 from college.views import (
-    EXPENSE_FILE, Feedback, get_json_file, get_program,
-    get_program_length, get_school, school_search_api, validate_oid,
-    validate_pid
+    EXPENSE_FILE, Feedback, get_json_file, get_program, get_program_length,
+    get_school, school_search_api, validate_oid, validate_pid
 )
 
 
