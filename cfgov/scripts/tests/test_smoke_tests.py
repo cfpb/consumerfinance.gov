@@ -50,7 +50,9 @@ class HttpTests(unittest.TestCase):
         mock_response.status_code = 200
         mock_get.return_value = mock_response
         http_smoke_test.check_urls('pro1', full=True)
-        self.assertEqual(mock_get.call_count, len(http_smoke_test.FULL_RUN))
+        self.assertEqual(mock_get.call_count,
+                         len(http_smoke_test.SHORT_RUN +
+                             http_smoke_test.FULL_RUN))
 
     @mock.patch('scripts.http_smoke_test.requests.get')
     def test_http_fail_short(self, mock_get):
@@ -66,7 +68,9 @@ class HttpTests(unittest.TestCase):
         mock_response.status_code = 404
         mock_get.return_value = mock_response
         http_smoke_test.check_urls('pro1', full=True)
-        self.assertEqual(mock_get.call_count, len(http_smoke_test.FULL_RUN))
+        self.assertEqual(mock_get.call_count,
+                         len(http_smoke_test.SHORT_RUN +
+                             http_smoke_test.FULL_RUN))
 
     @mock.patch('scripts.http_smoke_test.requests.get')
     def test_http_fail_timeout_short(self, mock_get):
@@ -78,7 +82,9 @@ class HttpTests(unittest.TestCase):
     def test_http_fail_timeout_full(self, mock_get):
         mock_get.side_effect = requests.exceptions.Timeout
         http_smoke_test.check_urls('pro1', full=True)
-        self.assertEqual(mock_get.call_count, len(http_smoke_test.FULL_RUN))
+        self.assertEqual(mock_get.call_count,
+                         len(http_smoke_test.SHORT_RUN +
+                             http_smoke_test.FULL_RUN))
 
     @mock.patch('scripts.http_smoke_test.requests.get')
     def test_allowed_timeouts(self, mock_get):

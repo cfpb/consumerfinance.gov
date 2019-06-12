@@ -4,7 +4,8 @@
     "pk": 1,
     "fields": {
         "heading": "Basics",
-        "heading_es": "Lo b\u00e1sico"
+        "heading_es": "Lo b\u00e1sico",
+        "display_order": 1
     }
 },
 {
@@ -12,7 +13,8 @@
     "pk": 2,
     "fields": {
         "heading": "Know your rights",
-        "heading_es": "Conozca sus derechos"
+        "heading_es": "Conozca sus derechos",
+        "display_order": 4
     }
 },
 {
@@ -20,7 +22,8 @@
     "pk": 3,
     "fields": {
         "heading": "How-to guides",
-        "heading_es": "Paso a paso"
+        "heading_es": "Paso a paso",
+        "display_order": 5
     }
 },
 {
@@ -28,7 +31,8 @@
     "pk": 4,
     "fields": {
         "heading": "Key terms",
-        "heading_es": "Palabras claves"
+        "heading_es": "Palabras claves",
+        "display_order": 2
     }
 },
 {
@@ -36,7 +40,8 @@
     "pk": 5,
     "fields": {
         "heading": "Common issues",
-        "heading_es": "Problemas comunes"
+        "heading_es": "Problemas comunes",
+        "display_order": 3
     }
 }
 ]

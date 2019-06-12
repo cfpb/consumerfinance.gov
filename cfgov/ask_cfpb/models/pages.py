@@ -8,6 +8,7 @@ from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.html import format_html
 from django.utils.text import Truncator, slugify
 from django.utils.translation import activate, deactivate_all, gettext as _
@@ -15,10 +16,12 @@ from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, MultiFieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
+    TabbedInterface
 )
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Orderable, Page
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
@@ -61,8 +64,6 @@ JOURNEY_PATHS = (
     '/owning-a-home/close',
     '/owning-a-home/process',
 )
-# Custom sort for navigation, by PortalCategory primary keys
-PORTAL_CATEGORY_SORT_ORDER = [1, 4, 5, 2, 3]
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -222,20 +223,21 @@ class PortalSearchPage(
         """
         Return an ordered dictionary of translated-slug:object pairs.
 
-        We use this custom sequence for categories in the navigation sidebar:
+        We use this custom sequence for categories in the navigation sidebar,
+        controlled by the 'display_order' field of portal categories:
         - Basics
         - Key terms
         - Common issues
         - Know your rights
         - How-to guides
         """
-        categories = PortalCategory.objects.order_by('pk')
+        categories = PortalCategory.objects.all()
         sorted_mapping = OrderedDict()
-        for i in PORTAL_CATEGORY_SORT_ORDER:
+        for category in categories:
             sorted_mapping.update({
                 slugify(
-                    categories[i - 1].title(self.language)
-                ): categories[i - 1]
+                    category.title(self.language)
+                ): category
             })
         return sorted_mapping
 
@@ -624,6 +626,15 @@ class AnswerPage(CFGOVPage):
 
     objects = CFGOVPageManager()
 
+    def get_sibling_url(self):
+        if self.answer_base:
+            if self.language == 'es':
+                sibling = self.answer_base.english_page
+            else:
+                sibling = self.answer_base.spanish_page
+            if sibling and sibling.live and not sibling.redirect_to_page:
+                return sibling.url
+
     def get_context(self, request, *args, **kwargs):
         portal_topic = self.primary_portal_topic or self.portal_topic.first()
         context = super(AnswerPage, self).get_context(request)
@@ -640,6 +651,7 @@ class AnswerPage(CFGOVPage):
         )
         context['about_us'] = get_standard_text(self.language, 'about_us')
         context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
+        context['sibling_url'] = self.get_sibling_url()
         return context
 
     def __str__(self):
@@ -681,3 +693,146 @@ class AnswerPage(CFGOVPage):
     @property
     def split_test_id(self):
         return self.answer_base.id
+
+
+class ArticleLink(Orderable, models.Model):
+    text = models.CharField(max_length=255)
+    url = models.CharField(max_length=255)
+
+    article_page = ParentalKey(
+        'ArticlePage',
+        related_name='article_links'
+    )
+
+    panels = [
+        FieldPanel('text'),
+        FieldPanel('url'),
+    ]
+
+
+@python_2_unicode_compatible
+class ArticlePage(CFGOVPage):
+    """
+    General article page type.
+    """
+    category = models.CharField(
+        choices=[
+            ('basics', 'Basics'),
+            ('common_issues', 'Common issues'),
+            ('howto', 'How to'),
+            ('know_your_rights', 'Know your rights'),
+        ],
+        max_length=255,
+    )
+    heading = models.CharField(
+        max_length=255,
+        blank=False,
+    )
+    intro = models.TextField(
+        blank=False
+    )
+    inset_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Heading"
+    )
+    sections = StreamField([
+        ('section', blocks.StructBlock([
+            ('heading', blocks.CharBlock(
+                max_length=255,
+                required=True,
+                label='Section heading'
+            )),
+            ('summary', blocks.TextBlock(
+                required=False,
+                blank=True,
+                label='Section summary'
+            )),
+            ('link_text', blocks.CharBlock(
+                required=False,
+                blank=True,
+                label="Section link text"
+            )),
+            ('url', blocks.CharBlock(
+                required=False,
+                blank=True,
+                label='Section link URL',
+                max_length=255,
+            )),
+            ('subsections', blocks.ListBlock(
+                blocks.StructBlock([
+                    ('heading', blocks.CharBlock(
+                        max_length=255,
+                        required=False,
+                        blank=True,
+                        label='Subsection heading'
+                    )),
+                    ('summary', blocks.TextBlock(
+                        required=False,
+                        blank=True,
+                        label='Subsection summary'
+                    )),
+                    ('link_text', blocks.CharBlock(
+                        required=True,
+                        label='Subsection link text'
+                    )),
+                    ('url', blocks.CharBlock(
+                        required=True,
+                        label='Subsection link URL'
+                    ))
+                ])
+            ))
+        ]))
+    ])
+    content_panels = CFGOVPage.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('category'),
+            FieldPanel('heading'),
+            FieldPanel('intro')],
+            heading="Heading",
+            classname="collapsible"),
+
+        MultiFieldPanel([
+            FieldPanel('inset_heading'),
+            InlinePanel(
+                'article_links',
+                label='Inset link',
+                max_num=2
+            ), ],
+            heading="Inset links",
+            classname="collapsible"),
+
+        StreamFieldPanel('sections'),
+    ]
+
+    sidebar = StreamField([
+        ('call_to_action', molecules.CallToAction()),
+        ('related_links', molecules.RelatedLinks()),
+        ('related_metadata', molecules.RelatedMetadata()),
+        ('email_signup', organisms.EmailSignUp()),
+        ('reusable_text', v1_blocks.ReusableTextChooserBlock(ReusableText)),
+    ], blank=True)
+
+    sidebar_panels = [StreamFieldPanel('sidebar'), ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField('title'),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(sidebar_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+
+    template = 'ask-cfpb/article-page.html'
+
+    objects = CFGOVPageManager()
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(ArticlePage, self).get_context(request)
+        context['about_us'] = get_standard_text(self.language, 'about_us')
+        return context
+
+    def __str__(self):
+        return self.title

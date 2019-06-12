@@ -69,12 +69,16 @@ def run():
             logger.info('Deleting default Wagtail home page')
             hello_world.delete()
 
-    # Configure the default Wagtail Site to point to the proper home page
-    # with the desired port.
-    default_site.root_page_id = home_page.id
-    default_site.port = http_port
-    default_site.save()
-    logger.info('Configured default Wagtail Site: {}'.format(default_site))
+    # If needed, configure the default Wagtail Site to point to the proper
+    # home page with the desired port.
+    if (
+        default_site.root_page_id != home_page.id or
+        default_site.port != http_port
+    ):
+        default_site.root_page_id = home_page.id
+        default_site.port = http_port
+        default_site.save()
+        logger.info('Configured default Wagtail Site: {}'.format(default_site))
 
     # Setup a sharing site for the default Wagtail site if a sharing hostname
     # has been configured in the environment.

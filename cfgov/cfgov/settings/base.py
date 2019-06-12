@@ -191,6 +191,7 @@ TEMPLATES = [
                 'flags.jinja2tags.flags',
 
                 'core.jinja2tags.filters',
+                'agreements.jinja2tags.agreements',
                 'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.datetimes_extension',
                 'v1.jinja2tags.fragment_cache_extension',
