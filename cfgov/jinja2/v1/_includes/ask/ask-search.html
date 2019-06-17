@@ -20,7 +20,7 @@
 
 {% macro render(q='', language='en', show_label=True, autocomplete=True) %}
 <aside class="o-search-bar">
-    <form method="get" action="{{ _('/ask-cfpb/search') }}">
+    <form method="get" action="{{ _('/ask-cfpb/search/') }}">
         {% if show_label %}
         <label for="o-search-bar_query">
             <h3>{{ _('Search for your question') }}</h3>
