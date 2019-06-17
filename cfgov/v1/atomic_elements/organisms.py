@@ -920,7 +920,6 @@ class VideoPlayer(blocks.StructBlock):
 class FeaturedContent(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
-    category = blocks.ChoiceBlock(choices=ref.fcm_types, required=False)
 
     post = blocks.PageChooserBlock(required=False)
     show_post_link = blocks.BooleanBlock(required=False,
