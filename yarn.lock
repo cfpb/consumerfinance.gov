@@ -2065,10 +2065,10 @@ cf-buttons@10.0.0, cf-buttons@^10.0.0:
     cf-core "^10.0.0"
     cf-icons "^10.0.0"
 
-cf-core@10.0.0, cf-core@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/cf-core/-/cf-core-10.0.0.tgz#4e447a95c8b94b55c5ec16df8243173382fd321b"
-  integrity sha512-NrPhzfwWv+KRnMMLYfOzuuDBsLQ80uBOdNTsYLxEvJrItLa/aXNSBJ1T+JHCxlodKFjT8e54rWf5oRaOq5DiuA==
+cf-core@10.1.0, cf-core@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/cf-core/-/cf-core-10.1.0.tgz#24022c7f48654274f4cda66e2f1f37ed673097b0"
+  integrity sha512-KuedDp+7G1/3gsrTvbasEoSUI+hvpgwdQcqOqF93Ne8idX3cb3kQOXpgJHEnwaogWRFKjF7AUOx4EXRUC7Mrsg==
   dependencies:
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
@@ -2077,6 +2077,14 @@ cf-core@4.10.0, cf-core@^4.0.0:
   version "4.10.0"
   resolved "https://registry.yarnpkg.com/cf-core/-/cf-core-4.10.0.tgz#7e35dcacfe5d194580369060a7a8a02cb38128a1"
   integrity sha512-PNWKMRTs3/yu0uS038QBt+e2Ivgp7hltQJi4Y4rP8+W/ayaHu5qQzf25ow5+E6fWYCY3bzNPgLqD2PR1mZhxsg==
+  dependencies:
+    normalize-css "^2.0.0"
+    normalize-legacy-addon "0.1.0"
+
+cf-core@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/cf-core/-/cf-core-10.0.0.tgz#4e447a95c8b94b55c5ec16df8243173382fd321b"
+  integrity sha512-NrPhzfwWv+KRnMMLYfOzuuDBsLQ80uBOdNTsYLxEvJrItLa/aXNSBJ1T+JHCxlodKFjT8e54rWf5oRaOq5DiuA==
   dependencies:
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
@@ -2130,12 +2138,12 @@ cf-icons@^4.0.0:
   dependencies:
     cf-core "^4.0.0"
 
-cf-layout@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/cf-layout/-/cf-layout-10.0.0.tgz#005d19eee2dca557dcafa39b9ca46eb12aeb5435"
-  integrity sha512-GYkemJYDA7cE4IaaVdm9UQar0azgw+7UVQ2Y+CWo6/9rnbsaMggm7+hDL8fP0sGKmR8AhkMQtvQCecQTXUm/YQ==
+cf-layout@10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/cf-layout/-/cf-layout-10.1.0.tgz#8c635ea908798c3d2a46babe0b79f73ee922e443"
+  integrity sha512-GzLBZs9FTWrGKluEwopZ9OfqHcoCE1fdELde+8myJMQ9Tdw8vGpJS4dDopyEO7bDCDuDpABxfdsAztztHj/MBA==
   dependencies:
-    cf-core "^10.0.0"
+    cf-core "^10.1.0"
     cf-grid "^10.0.0"
 
 cf-layout@5.0.0:
