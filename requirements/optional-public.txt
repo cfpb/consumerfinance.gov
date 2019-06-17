@@ -1,7 +1,7 @@
-https://github.com/cfpb/college-costs/releases/download/2.6.2/college_costs-2.6.2-py2.py3-none-any.whl
+https://github.com/cfpb/college-costs/releases/download/2.7.2/college_costs-2.7.2-py2.py3-none-any.whl
 https://github.com/cfpb/owning-a-home-api/releases/download/0.12.1/owning_a_home_api-0.12.1-py2.py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.9.0/retirement-0.9.0-py2-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.1.7/ccdb5_api-1.1.7-py2-none-any.whl
 https://github.com/cfpb/ccdb5-ui/releases/download/1.2.1/ccdb5_ui-1.2.1-py2.py3-none-any.whl
-https://github.com/cfpb/django-college-costs-comparison/releases/download/1.10.0/comparisontool-1.10.0-py2-none-any.whl
+https://github.com/cfpb/django-college-costs-comparison/releases/download/1.11.2/comparisontool-1.11.2-py2-none-any.whl
 https://github.com/cfpb/teachers-digital-platform/releases/download/1.1.2/teachers_digital_platform-1.1.2-py2.py3-none-any.whl
