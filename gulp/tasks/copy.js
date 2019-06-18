@@ -24,38 +24,43 @@ function _genericCopy( src, dest ) {
 }
 
 gulp.task( 'copy:icons:main', () => {
-  return _genericCopy(
+  const stream = _genericCopy(
     iconSrc,
     `${ paths.processed }/icons/`
   );
+  return stream;
 } );
 
 gulp.task( 'copy:icons:oah', () => {
-  return _genericCopy(
+  const stream = _genericCopy(
     iconSrc,
     `${ paths.processed }/apps/owning-a-home/icons/`
   );
+  return stream;
 } );
 
 gulp.task( 'copy:icons:r3k', () => {
-  return _genericCopy(
+  const stream = _genericCopy(
     iconSrc,
     `${ paths.processed }/apps/regulations3k/icons/`
   );
+  return stream;
 } );
 
 gulp.task( 'copy:json:code', () => {
-  return _genericCopy(
+  const stream = _genericCopy(
     'code.json',
     paths.processed
   );
+  return stream;
 } );
 
 gulp.task( 'copy:lightbox2', () => {
-  return _genericCopy(
+  const stream = _genericCopy(
     [ `${ paths.modules }/lightbox2/dist/**/*` ],
     `${ paths.processed }/lightbox2`
   );
+  return stream;
 } );
 
 
