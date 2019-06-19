@@ -3,8 +3,10 @@
    ========================================================================== */
 
 import * as jsLoader from './util/js-loader';
+
 import ERROR_MESSAGES from '../config/error-messages-config';
 import { assign } from './util/assign';
+import { closest } from './util/dom-traverse';
 import { noopFunct } from './util/standard-type';
 
 const DOM_INVALID = ERROR_MESSAGES.DOM.INVALID;
@@ -16,7 +18,8 @@ const CLASSES = Object.freeze( {
   IFRAME_CLASS_NAME:         'video-player_iframe',
   IFRAME_CONTAINER_SELECTOR: '.video-player_iframe-container',
   PLAY_BTN_SELECTOR:         '.video-player_play-btn',
-  CLOSE_BTN_SELECTOR:        '.video-player_close-btn'
+  CLOSE_BTN_SELECTOR:        '.video-player_close-btn',
+  FCM_CONTAINER_SELECTOR:    '.o-featured-content-module'
 } );
 
 
@@ -39,6 +42,7 @@ function VideoPlayer( element, options ) {
   _this = this;
   options = options || {};
   this.baseElement = _ensureElement( element, options.createIFrame );
+  this.fcmElement = closest( this.baseElement, CLASSES.FCM_CONTAINER_SELECTOR );
   this.iFrameProperties = assign(
     {},
     this.baseElement.dataset,
@@ -281,6 +285,9 @@ const API = {
    * Function used to play the video player.
    */
   play: function play( ) {
+    if ( this.fcmElement ) {
+      this.fcmElement.classList.add( CLASSES.VIDEO_PLAYING_STATE );
+    }
     this.baseElement.classList.add( CLASSES.VIDEO_PLAYING_STATE );
     this.state.setIsVideoPlaying( true );
   },
@@ -289,6 +296,9 @@ const API = {
    * Function used to stop the video player.
    */
   stop: function stop( ) {
+    if ( this.fcmElement ) {
+      this.fcmElement.classList.remove( CLASSES.VIDEO_PLAYING_STATE );
+    }
     this.baseElement.classList.remove( CLASSES.VIDEO_PLAYING_STATE );
     this.state.setIsVideoStopped( true );
   }
