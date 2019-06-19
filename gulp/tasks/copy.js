@@ -2,7 +2,6 @@ const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
 const configCopy = require( '../config' ).copy;
 const handleErrors = require( '../utils/handle-errors' );
-const del = require( 'del' );
 
 /**
  * Generic copy files flow from source to destination.

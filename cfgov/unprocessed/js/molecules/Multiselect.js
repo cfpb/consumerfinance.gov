@@ -1,11 +1,10 @@
 // Required modules.
 import * as arrayHelpers from '../modules/util/array-helpers';
 import * as atomicHelpers from '../modules/util/atomic-helpers';
-import { bindEvent } from '../modules/util/dom-events';
-import { create } from '../modules/util/dom-manipulators';
-import { stringMatch } from '../modules/util/strings';
 import EventObserver from '../modules/util/EventObserver';
 import MultiselectModel from './MultiselectModel';
+import { bindEvent } from '../modules/util/dom-events';
+import { create } from '../modules/util/dom-manipulators';
 
 const closeIcon = require(
   'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/close.svg'

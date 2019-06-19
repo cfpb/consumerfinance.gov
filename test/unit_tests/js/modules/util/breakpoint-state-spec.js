@@ -42,12 +42,15 @@ describe( 'breakpoint-state', () => {
       // eslint-disable-next-line guard-for-in
       let rangeKey;
       for ( rangeKey in breakpointsConfig ) {
-        width = breakpointsConfig[rangeKey].max ||
-                breakpointsConfig[rangeKey].min;
-        breakpointStateKey =
-          'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
+        if ( {}.hasOwnProperty.call( breakpointsConfig, rangeKey ) ) {
+          width = breakpointsConfig[rangeKey].max ||
+                  breakpointsConfig[rangeKey].min;
+          breakpointStateKey =
+            'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
 
-        expect( breakpointState.get( width )[breakpointStateKey] ).toBe( true );
+          expect( breakpointState.get( width )[breakpointStateKey] )
+            .toBe( true );
+        }
       }
     } );
 

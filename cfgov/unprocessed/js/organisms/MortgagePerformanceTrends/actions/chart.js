@@ -1,5 +1,5 @@
-import utils from '../utils';
 import defaultActionCreators from './default';
+import utils from '../utils';
 
 const chartActionCreators = defaultActionCreators();
 
@@ -85,8 +85,10 @@ chartActionCreators.fetchCountyStates = countyState => dispatch => utils.getCoun
   let countyStates = [];
   let reuseState = false;
   Object.keys( states ).forEach( state => {
-    const isValid = states[state].counties.reduce( ( prev, curr ) => prev || curr.valid || false
-      , false );
+    const isValid = states[state].counties.reduce(
+      ( prev, curr ) => prev || curr.valid || false,
+      false
+    );
     if ( isValid ) {
       reuseState = reuseState || countyState === state;
       countyStates.push( {
@@ -169,7 +171,9 @@ chartActionCreators.fetchMetros = ( metroState, includeComparison ) => dispatch 
   dispatch( chartActionCreators.requestMetros( metroState ) );
   return utils.getMetroData( data => {
     // Alphabetical order
-    let newMetros = data[metroState].metros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+    let newMetros = data[metroState].metros.sort(
+      ( a, b ) => ( a.name < b.name ? -1 : 1 )
+    );
     newMetros = newMetros.filter( metro => metro.valid );
     if ( !newMetros.length ) {
       newMetros = [ {

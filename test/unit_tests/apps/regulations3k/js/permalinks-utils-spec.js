@@ -231,8 +231,8 @@ describe( 'The Regs3K permalinks utils', () => {
 
     it( 'should update the wayfinder', () => {
       utils.updateParagraphPositions();
-      let mainContent = document.querySelector( '.regulations3k' );
-      let wayfinder = document.querySelector( '.o-regulations-wayfinder' );
+      const mainContent = document.querySelector( '.regulations3k' );
+      const wayfinder = document.querySelector( '.o-regulations-wayfinder' );
 
       utils.updateWayfinder( false, wayfinder, mainContent );
       expect( document.querySelector( '.o-regulations-wayfinder_link' ).textContent.trim() ).toEqual( 'Comment 33(a)(2)-2' );
@@ -240,7 +240,6 @@ describe( 'The Regs3K permalinks utils', () => {
     } );
 
   } );
-
 
 
 } );
