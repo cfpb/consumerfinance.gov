@@ -2,11 +2,10 @@
    Base Video Player Class
    ========================================================================== */
 
+import * as jsLoader from './util/js-loader';
+import ERROR_MESSAGES from '../config/error-messages-config';
 import { assign } from './util/assign';
 import { noopFunct } from './util/standard-type';
-import * as jsLoader from './util/js-loader';
-
-import ERROR_MESSAGES from '../config/error-messages-config';
 
 const DOM_INVALID = ERROR_MESSAGES.DOM.INVALID;
 
@@ -101,8 +100,6 @@ VideoPlayer.init = function init( selector ) {
 
 // Private Methods.
 
-// TODO Fix complexity issue
-/* eslint-disable complexity */
 /**
  * Function used to attach the video iframe.
  * @throws Will throw an error if no iframe element is found.
