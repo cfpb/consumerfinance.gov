@@ -11,7 +11,7 @@ EDMC_PROD = "https://exml.edmc.edu/cfpb"
 BIN = "https://httpbin.org/"
 BINPOST = "https://httpbin.org/post"
 BINGET = "https://httpbin.org/get"
-RBIN = "http://requestb.in/1ak4sxc1"
+RBIN = "http://requestb.in/{}"
 
 # test values
 OID = '9e0280139f3238cbc9702c7b0d62e5c238a835d0'
