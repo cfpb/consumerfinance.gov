@@ -119,7 +119,7 @@ class OfferView(TemplateView):
         warning = ''
         OID = ''
         if not request.GET:
-            return render(request, 'pfc_disclosure.html', {
+            return render(request, 'paying_for_college/disclosure.html', {
                 'data_js': "0",
                 'school': school,
                 'schoolData': school_data,
@@ -162,7 +162,7 @@ class OfferView(TemplateView):
                 warning = IPED_ERROR
         else:
             warning = IPED_ERROR
-        return render(request, 'pfc_disclosure.html', {
+        return render(request, 'paying_for_college/disclosure.html', {
             'data_js': "0",
             'school': school,
             'schoolData': school_data,
@@ -175,7 +175,7 @@ class OfferView(TemplateView):
 
 
 class FeedbackView(TemplateView):
-    template_name = "pfc_disclosure_feedback.html"
+    template_name = "paying_for_college/disclosure_feedback.html"
 
     @property
     def form(self):
@@ -197,9 +197,11 @@ class FeedbackView(TemplateView):
                 message=form.cleaned_data['message'][:2000],
                 url=request.build_absolute_uri())
             feedback.save()
-            return render(request, 'pfc_disclosure_feedback_thanks.html', {
-                'base_template': 'front/base_update.html'
-            })
+            return render(
+                request,
+                'paying_for_college/disclosure_feedback_thanks.html',
+                {'base_template': 'front/base_update.html'}
+            )
         else:
             return HttpResponseBadRequest("Invalid form")
 

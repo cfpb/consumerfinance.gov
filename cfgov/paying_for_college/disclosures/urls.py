@@ -20,7 +20,8 @@ urlpatterns = [
         name='pfc-feedback'),
 
     url(r'^about-this-tool/$',
-        BaseTemplateView.as_view(template_name="pfc_disclosure_technote.html"),
+        BaseTemplateView.as_view(
+            template_name="paying_for_college/disclosure_technote.html"),
         name='pfc-technote'),
 
     url(r'^api/search-schools.json',
