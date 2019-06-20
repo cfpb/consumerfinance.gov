@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import json
 
-from college.models import cdr
+from paying_for_college.models import cdr
 
 
 """
