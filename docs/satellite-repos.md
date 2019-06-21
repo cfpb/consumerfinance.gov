@@ -16,7 +16,7 @@ We have six satellite repos that are maintained outside of the cfgov-refresh cod
 - [teachers_digital_platform](https://github.com/cfpb/teachers-digital-platform)
 
 
-We import these satellite projects into cfgov-refresh by specifying wheel files for each in [`requirements/optional-public.txt`](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt).
+We import these satellite projects into cfgov-refresh by specifying wheel files for each in [`requirements/libraries.txt`](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/libraries.txt).
 
 ## Local setup and usage
 

@@ -49,14 +49,11 @@ Some projects fit within the cfgov-refresh architecture,
 but are not fully incorporated into the project.
 These are known as "satellite apps."
 
-Satellite apps are listed in the
-[optional-public.txt](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/optional-public.txt)
-requirements file.
+See [here](../satellite-apps) for a list and description of satellite apps.
 
 In addition to the aforementioned list,
-[HMDA Explorer](https://github.com/cfpb/hmda-explorer) and
-[Rural or Underserved](https://github.com/cfpb/rural-or-underserved-test),
-have their own installation requirements.
+[Rural or Underserved](https://github.com/cfpb/rural-or-underserved-test)
+has its own installation requirements.
 
 If using Docker, follow
 [these guidelines](../running-docker#work-on-satellite-apps).
