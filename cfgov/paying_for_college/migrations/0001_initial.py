@@ -183,15 +183,6 @@ class Migration(migrations.Migration):
                 ('contact', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='paying_for_college.Contact')),
             ],
         ),
-        migrations.CreateModel(
-            name='Worksheet',
-            fields=[
-                ('guid', models.CharField(max_length=64, primary_key=True, serialize=False)),
-                ('saved_data', models.TextField()),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-            ],
-        ),
         migrations.AddField(
             model_name='program',
             name='institution',
