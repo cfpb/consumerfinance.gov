@@ -60,7 +60,8 @@ gulp.task( 'copy:icons',
   gulp.parallel(
     'copy:icons:main',
     'copy:icons:oah',
-    'copy:icons:r3k'
+    'copy:icons:r3k',
+    'copy:icons:pfc'
   )
 );
 
