@@ -121,11 +121,20 @@
     margin: auto;
 }
 
+.video-player_iframe-container {
+    height: 100%;
+    margin: 0;
+}
+
+.video-player_video-actions-container {
+    right: 0;
+    left: auto;
+}
+
 .respond-to-min( @bp-sm-min, {
     .video-player_video-actions-container {
         position: absolute;
         top: 0;
-        left: @video-width__px;
     }
 
     .video-player .m-social-media,
@@ -210,20 +219,6 @@
         .u-flexible-container_inner();
     }
 } );
-
-
-.respond-to-min( @bp-xl-min, {
-    .video-player_iframe-container {
-        height: 100%;
-        margin: 0;
-    }
-
-    .video-player_video-actions-container {
-        right: 0;
-        left: auto;
-    }
-} );
-
 
 // Special styles for playing within an FCM
 .o-featured-content-module {
