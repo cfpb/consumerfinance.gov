@@ -176,8 +176,8 @@ class Contact(models.Model):
     contacts = models.TextField(
         help_text="COMMA-SEPARATED LIST OF EMAILS",
         blank=True)
-    endpoint = models.TextField(blank=True)
-    name = models.TextField(blank=True)
+    endpoint = models.CharField(max_length=255, blank=True)
+    name = models.CharField(max_length=255, blank=True)
     internal_note = models.TextField(blank=True)
 
     def __str__(self):
