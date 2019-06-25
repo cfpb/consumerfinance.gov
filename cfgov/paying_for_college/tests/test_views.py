@@ -110,7 +110,7 @@ class TestViews(django.test.TestCase):
     def test_technote(self):
         response = self.client.get(reverse(
             'paying_for_college:disclosures:pfc-technote'))
-        self.assertTrue('base_template' in response.context_data.keys())
+        self.assertTrue('url_root' in response.context_data.keys())
 
 
 # understanding-financial-aid-offers/api/search-schools.json?q=Kansas

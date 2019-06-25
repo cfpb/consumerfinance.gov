@@ -103,7 +103,6 @@ class BaseTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BaseTemplateView, self).get_context_data(**kwargs)
-        context['base_template'] = 'front/base_update.html'
         context['url_root'] = DISCLOSURE_ROOT
         return context
 
