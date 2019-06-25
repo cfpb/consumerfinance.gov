@@ -74,7 +74,7 @@ ENV ALLOWED_HOSTS='["*"]'
 RUN pip2 install -r /src/requirements/optional-public.txt
 
 # Commented out because retirement wheel is not Python3 compatible yet
-# RUN pip3.6 install -r /src/requirements/optional-public.txt
+RUN pip3.6 install -r /src/requirements/optional-public.txt
 
 RUN sh frontend.sh production
 RUN mkdir static.in
