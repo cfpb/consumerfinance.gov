@@ -120,6 +120,10 @@ coverage.xml
 .snyk
 protractorFailuresReport/
 
+# Temp data backups #
+###############
+cfgov/paying_for_college/fixtures/national_stats_backup.json
+
 # IDE Specifc #
 ###############
 *.idea
