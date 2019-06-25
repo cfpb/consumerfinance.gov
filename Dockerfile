@@ -31,7 +31,6 @@ RUN yum install -y nodejs yarn make gcc gcc-c++ kernel-devel unzip && \
     yum install -y httpd-devel postgresql10-devel && \
     yum install -y python-devel python-pip python36-devel && \
     yum clean all && rm -rf /var/cache/yum
-RUN npm install -g gulp
 
 # Copy over our requirement files to install
 COPY requirements /src/requirements
