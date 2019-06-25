@@ -1,9 +1,5 @@
 from __future__ import unicode_literals
 
-from uuid import UUID
-
-from django.core.exceptions import ValidationError
-
 
 WHITELIST_KEYS = {
     'alias': 'string',
@@ -182,10 +178,3 @@ def clean_yes_no(value):
         return 'Yes'
     else:
         return ''
-
-
-def validate_uuid4(value):
-    try:
-        UUID(value, version=4)
-    except ValueError:
-        raise ValidationError('{} is not a valid uuid4'.format(value))
