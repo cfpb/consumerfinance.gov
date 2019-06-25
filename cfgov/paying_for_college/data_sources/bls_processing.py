@@ -29,7 +29,7 @@ arguments:
 
 ```
 ./manage.py shell
-from college.data_sources.bls_processing import *
+from paying_for_college.data_sources.bls_processing import *
 create_bls_json_file()
 ```
 
