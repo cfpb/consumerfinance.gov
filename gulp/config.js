@@ -12,10 +12,10 @@ module.exports = {
       ' *              d$"                 $$\n' +
       ' *              $$                  $$\n' +
       ' *   ,adPYba.   $$$$$  $$.,dPYba.   $$.,dPYba.\n' +
-      ' *  aP\'    `$: $$     $$P\'   `$a  $$P\'    `$a\n' +
+      ' *  aP\'    `$:  $$     $$P\'    `$a  $$P\'    `$a\n' +
       ' *  $(          $$     $$(      )$  $$(      )$\n' +
       ' *  "b.    ,$:  $$     $$b.    ,$"  $$b.    ,$"\n' +
-      ' *   `"Ybd$"\'  $$     $$`"YbdP"\'  $$`"YbdP"\'\n' +
+      ' *   `"Ybd$"\'   $$     $$`"YbdP"\'   $$`"YbdP"\'\n' +
       ' *                     $$\n' +
       ' *                     $$\n' +
       ' *                     $$\n' +
@@ -102,9 +102,6 @@ module.exports = {
     },
     iconsR3K: {
       dest: paths.processed + '/apps/regulations3k/icons/'
-    },
-    iconsPFC: {
-      dest: paths.processed + '/apps/paying-for-college/icons/'
     },
     // TODO: Remove when icon font is entirely deprecated.
     iconsOld: {
