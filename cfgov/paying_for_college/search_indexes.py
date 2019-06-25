@@ -6,7 +6,7 @@ from paying_for_college.models import School
 class SchoolIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, model_attr='primary_alias')
     school_id = indexes.IntegerField(model_attr='school_id')
-    nicknames = indexes.CharField()
+    nicknames = indexes.CharField(model_attr='nicknames')
     city = indexes.CharField(model_attr='city')
     state = indexes.CharField(model_attr='state')
     autocomplete = indexes.EdgeNgramField()
@@ -16,9 +16,6 @@ class SchoolIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self, using=None):
         return self.get_model().objects.filter(operating=True)
-
-    def prepare_nicknames(self, obj):
-        return obj.nicknames
 
     def prepare_autocomplete(self, obj):
         alias_strings = [a.alias for a in obj.alias_set.all()]

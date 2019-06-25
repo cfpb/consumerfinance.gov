@@ -21,6 +21,3 @@ class SchoolIndexTest(TestCase):
             'Jayhawks',
             self.MOCK_INDEX.prepare_autocomplete(mock_obj)
         )
-        self.assertIn(
-            'Jayhawks',
-            self.MOCK_INDEX.prepare_nicknames(mock_obj))
