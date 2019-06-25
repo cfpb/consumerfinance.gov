@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 import datetime
-import json
 import six
 import smtplib
 import unittest
@@ -14,7 +13,7 @@ import requests
 from paying_for_college.apps import PayingForCollegeConfig
 from paying_for_college.models import (
     Alias, ConstantCap, ConstantRate, Contact, Feedback, Nickname,
-    Notification, Program, School, Worksheet, get_region, make_divisible_by_6
+    Notification, Program, School, get_region, make_divisible_by_6
 )
 
 
@@ -39,23 +38,6 @@ class MakeDivisibleTest(TestCase):
         self.assertTrue(make_divisible_by_6(test_value) == 6)
         test_value = 45
         self.assertTrue(make_divisible_by_6(test_value) == 48)
-
-
-class WorkSheetModelTest(TestCase):
-
-    def test_worksheet_creation(self):
-        test_worksheet = Worksheet(
-            guid='1A2B3C4D5E6F7890',
-            saved_data=json.dumps({"1": {
-                "netpriceok": "",
-                "gradraterank": "630"
-            }})
-        )
-        test_worksheet.save()
-        self.assertEqual(
-            datetime.date.today(),
-            test_worksheet.created.date()
-        )
 
 
 class SchoolRegionTest(TestCase):

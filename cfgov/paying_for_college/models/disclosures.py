@@ -759,13 +759,3 @@ class BAHRate(models.Model):
     """
     zip5 = models.CharField(max_length=5)
     value = models.IntegerField()
-
-
-class Worksheet(models.Model):
-    """
-    The saved state of a legacy comaprisontool worksheet
-    """
-    guid = models.CharField(max_length=64, primary_key=True)
-    saved_data = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)

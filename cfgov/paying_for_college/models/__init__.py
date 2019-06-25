@@ -5,8 +5,8 @@ from django.conf import settings
 from paying_for_college.models.disclosures import (
     CONTROL_MAP, HIGHEST_DEGREES, LEVELS, NOTIFICATION_TEMPLATE, REGION_MAP,
     REGION_NAMES, Alias, ConstantCap, ConstantRate, Contact, DisclosureBase,
-    Feedback, Nickname, Notification, Program, School, Worksheet, cdr, csw,
-    get_region, make_divisible_by_6
+    Feedback, Nickname, Notification, Program, School, cdr, csw, get_region,
+    make_divisible_by_6
 )
 
 
