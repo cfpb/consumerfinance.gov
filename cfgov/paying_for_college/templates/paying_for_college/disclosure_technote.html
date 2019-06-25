@@ -21,12 +21,11 @@
 {% block nemo_styles %}
 {% endblock %}
 {% block app_css %}
-<!--[if lt IE 9]>
-    <link rel="stylesheet" href="{% static "paying_for_college/disclosures/static/css/main.ie.css" %}">
-<![endif]-->
 <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="{% static "paying_for_college/disclosures/static/css/main.min.css" %}">
+    <link rel="stylesheet" href="{% static 'apps/paying-for-college/css/main.css' %}">
 <!--<![endif]-->
+
+
 {% endblock %}
 {% block responsive_nav %}
 <a class="toggle-menu" href="#">
