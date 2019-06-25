@@ -5,7 +5,7 @@ from paying_for_college.disclosures.scripts import nat_stats
 
 COMMAND_HELP = """update_pfc_national_stats gets the latest national statistics
  yaml file from collegescorecard, parses it and updates our local json file at
- college/fixtures/national_stats.json.
+ paying_for_college/fixtures/national_stats.json.
 """
 
 
