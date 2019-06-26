@@ -1,0 +1,299 @@
+[
+{
+    "pk": 1, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "Pell cap", 
+        "value": 5730, 
+        "slug": "pellCap"
+    }
+},
+{
+    "pk": 2, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized cap grad", 
+        "value": 20500, 
+        "slug": "unsubsidizedCapGrad"
+    }
+},
+{
+    "pk": 3, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized cap indep year 3", 
+        "value": 12500, 
+        "slug": "unsubsidizedCapIndepYearThree"
+    }
+},
+{
+    "pk": 4, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized cap indep year 2", 
+        "value": 10500, 
+        "slug": "unsubsidizedCapIndepYearTwo"
+    }
+},
+{
+    "pk": 5, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized cap indep year 1", 
+        "value": 9500, 
+        "slug": "unsubsidizedCapIndepYearOne"
+    }
+},
+{
+    "pk": 6, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized cap year 3", 
+        "value": 7500, 
+        "slug": "unsubsidizedCapYearThree"
+    }
+},
+{
+    "pk": 7, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized cap year 2", 
+        "value": 6500, 
+        "slug": "unsubsidizedCapYearTwo"
+    }
+},
+{
+    "pk": 8, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized cap year 1", 
+        "value": 5500, 
+        "slug": "unsubsidizedCapYearOne"
+    }
+},
+{
+    "pk": 9, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "subsidized cap year 1", 
+        "value": 3500, 
+        "slug": "subsidizedCapYearOne"
+    }
+},
+{
+    "pk": 10, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "subsidized cap year 2", 
+        "value": 4500, 
+        "slug": "subsidizedCapYearTwo"
+    }
+},
+{
+    "pk": 11, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "subsidized cap year 3", 
+        "value": 5500, 
+        "slug": "subsidizedCapYearThree"
+    }
+},
+{
+    "pk": 12, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "Perkins graduate cap", 
+        "value": 8000, 
+        "slug": "perkinsGradCap"
+    }
+},
+{
+    "pk": 13, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "Perkins undergraduate cap", 
+        "value": 5500, 
+        "slug": "perkinsUnderCap"
+    }
+},
+{
+    "pk": 14, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "This is the year we base API calls and calculations on. Should be updated when data is advanced.", 
+        "updated": "2015-12-19", 
+        "name": "API year", 
+        "value": 2013, 
+        "slug": "apiYear"
+    }
+},
+{
+    "pk": 15, 
+    "model": "paying_for_college.constantcap", 
+    "fields": {
+        "note": "Salary data apparently is available on a different schedule from school data, so the latest year with data can be different from overall school data.", 
+        "updated": "2015-12-19", 
+        "name": "Salary year", 
+        "value": 2011, 
+        "slug": "salaryYear"
+    }
+},
+{
+    "pk": 17,
+    "model": "paying_for_college.constantcap",
+    "fields": {
+        "note": "IF YOU ARE UPDATING CONSTANTS, update this year value. It will be used as the first year of an academic-year pair on the \"About this tool\" page to indicate which academic year the constants apply to.",
+        "updated": "2016-08-02",
+        "name": "Constants year",
+        "value": 2016,
+        "slug": "constantsYear"
+    }
+},
+{
+    "pk": 1, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "institutional loan rate", 
+        "value": "0.079", 
+        "slug": "institutionalLoanRate"
+    }
+},
+{
+    "pk": 2, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "private loan rate", 
+        "value": "0.079", 
+        "slug": "privateLoanRate"
+    }
+},
+{
+    "pk": 3, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "Plus origination fee", 
+        "value": "1.04292", 
+        "slug": "plusOriginationFee"
+    }
+},
+{
+    "pk": 4, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "Parent Plus rate", 
+        "value": "0.0721", 
+        "slug": "parentplusRate"
+    }
+},
+{
+    "pk": 5, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "Grad Plus rate", 
+        "value": "0.0721", 
+        "slug": "gradplusRate"
+    }
+},
+{
+    "pk": 6, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "DL origination fee", 
+        "value": "1.01073", 
+        "slug": "DLOriginationFee"
+    }
+},
+{
+    "pk": 7, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized rate for grads", 
+        "value": "0.0621", 
+        "slug": "unsubsidizedRateGrad"
+    }
+},
+{
+    "pk": 9, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized rate for undergrads", 
+        "value": "0.0466", 
+        "slug": "unsubsidizedRateUndergrad"
+    }
+},
+{
+    "pk": 10, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "unsubsidized loan rate", 
+        "value": "0", 
+        "slug": "unsubsidizedRate"
+    }
+},
+{
+    "pk": 11, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "subsidized loan rate", 
+        "value": "0.0466", 
+        "slug": "subsidizedRate"
+    }
+},
+{
+    "pk": 12, 
+    "model": "paying_for_college.constantrate", 
+    "fields": {
+        "note": "", 
+        "updated": "2015-11-14", 
+        "name": "Perkins rate", 
+        "value": "0.05", 
+        "slug": "perkinsRate"
+    }
+}
+]
