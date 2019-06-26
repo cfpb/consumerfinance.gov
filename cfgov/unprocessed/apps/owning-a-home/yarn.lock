@@ -131,10 +131,10 @@ json5@^0.5.0:
   resolved "https://registry.yarnpkg.com/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
   integrity sha1-Hq3nrMASA0rYTiOWdn6tn6VJWCE=
 
-jumbo-mortgage@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/jumbo-mortgage/-/jumbo-mortgage-2.0.0.tgz#0d3586717e714b88386abbecce918ce1208ec572"
-  integrity sha1-DTWGcX5xS4g4arvszpGM4SCOxXI=
+jumbo-mortgage@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/jumbo-mortgage/-/jumbo-mortgage-3.0.0.tgz#36333f126f4bc96a0945a9969b304a9093935d74"
+  integrity sha512-1xRmZmDzmCgJUimK0r82qoo5WZxRcLehMIPn+0mCoEYz9aKHCOpwqHGZzXHu30qj0pgLavWWUj6wBk7lw8ca9Q==
   dependencies:
     format-usd "~0.1.0"
 
