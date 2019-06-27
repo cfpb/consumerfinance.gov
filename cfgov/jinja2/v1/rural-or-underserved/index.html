@@ -1,0 +1,954 @@
+{% extends "base.html" %}
+{% import "_templates/expandable.html" as expandable %}
+{% set page={"search_description":"Use this tool throughout your homebuying process to see how your credit score, home price, down payment, and more can affect mortgage interest rates."} %}
+{% set active_page = "explore-rates" %}
+{% set page_js = "explore-rates" %}
+{% block title %}Rural and underserved areas tool > Consumer Financial Protection Bureau{% endblock title %}
+
+{% block metadescription %}
+Use this tool throughout your homebuying process to see how your credit score,
+home price, down payment, and more can affect mortgage interest rates.
+{% endblock metadescription %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ static('apps/rural-or-underserved-tool/css/main.css') }}">
+{% endblock css %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/rural-or-underserved-tool/js/common.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}
+
+{% block content %}
+
+<main class="content" lang="en">
+
+    <div class="wrapper">
+
+        <section class="content_intro">
+
+            <div class="content-l">
+                <div class="content-l_col content-l_col-1">
+                    <h5 class="report-date print-only"></h5>
+                    <h1>Rural and underserved areas tool</h1>
+                </div>
+            </div>
+
+            <div id="search-tool" class="content-l">
+                <div class="content-l_col content-l_col-1">
+                    {# Display errors here. #}
+                    <div id="fileError"
+                         class="block
+                                block__flush-top
+                                block__flush-bottom
+                                block__padded-bottom
+                                u-hidden">
+                        <div class="m-notification
+                                    m-notification__visible
+                                    m-notification__error">
+                            {{ svg_icon('error-round') }}
+                            <div class="m-notification_content">
+                                <div class="h4 m-notification_message">
+                                    Formatting error
+                                </div>
+                                <div class="m-notification_explanation">
+                                    <strong>We've noticed the following errors:</strong>
+                                    <div id="fileErrorDesc"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="processError"
+                         class="block
+                                block__flush-top
+                                block__flush-bottom
+                                block__padded-bottom
+                                u-hidden">
+                        <div class="m-notification
+                                    m-notification__visible
+                                    m-notification__error">
+                            {{ svg_icon('error-round') }}
+                            <div class="m-notification_content">
+                                <div class="h4 m-notification_message">
+                                    Processing error
+                                </div>
+                                <div class="m-notification_explanation">
+                                    <strong>The following addresses were not processed because the server was temporarily unavailable. To try again, start a new search.</strong>
+                                    <ul id="processErrorDesc"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>
+                        Check status of properties for loans extended in
+                        <small>
+                            <select id="year" name="year">
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option selected value="2019">2019</option>
+                            </select>
+                        </small>
+                    </h2>
+                </div>
+
+                <div class="content-l_col content-l_col-1-2">
+                    <div class="block block__border block__bg block__sub">
+                        <h4>Enter addresses manually</h4>
+                        <form id="geocode">
+                            <p>
+                                Include street address, city, state/territory
+                                and ZIP code for up to
+                                <strong>10</strong> properties.
+                            </p>
+
+                            <p class="input-container">
+                                <span class="m-form-field"
+                                     id="address1">
+                                    <label class="a-label u-visually-hidden" for="address1">
+                                        Street address, city, state/territory,
+                                        or ZIP code.
+                                    </label>
+                                    <input
+                                        class="a-text-input
+                                            a-text-input__full
+                                            input-address"
+                                        name="address1"
+                                        type="text" />
+                                </span>
+                            </p>
+                            <p>
+                                <a class="no-visit" href="#" id="add-another" title="Add another address">
+                                    Add another address
+                                </a>
+                            </p>
+                            <input class="a-btn" type="submit" value="Check addresses" />
+                        </form>
+                    </div>
+                </div>
+                <div class="content-l_col content-l_col-1-2">
+                    <div class="block block__border block__bg block__sub">
+                        <h4>Upload a CSV file</h4>
+                        <form id="geocode-csv">
+                            <p>
+                                To check on more than one loan, upload a Comma Separated Values (CSV) file with addresses for up to 250 properties. The file must use our CSV template:
+                                <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"
+                                   title="Download CSV template">
+                                    Download CSV template
+                                </a>.
+                            </p>
+
+                            <p>
+                                <div class="m-form-field m-form-field__file-input">
+                                    <!-- Actual hidden file upload component. -->
+                                    <label>
+                                        <input type="file" id="file">
+                                    </label>
+                                    <!-- Styled faux overlay component. -->
+                                    <button class="a-btn
+                                                   a-btn__secondary
+                                                   a-btn__flush-right">
+                                        Select file
+                                    </button>
+                                    <input id="file-name"
+                                           name="file-name"
+                                           class="a-text-input"
+                                           value="No file chosen">
+                                </div>
+                            </p>
+
+                            <p>
+                                <input class="a-btn" type="submit" value="Check addresses" />
+                            </p>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="content-l_col content-l_col-1 wrapper">
+                    Do not include personal information, such as names, phone numbers, and Social Security numbers.
+                    The CFPB will not retain any information submitted through this tool.
+                </div>
+
+            </div>
+
+            <!-- results -->
+            <section id="results" class="content-l u-hidden">
+                <div class="full-print content-l_col content-l_col-3-4">
+                    <h2 id="countMessage">
+                        <svg id="spinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 952.7 1200" class="cf-icon-svg cf-icon-svg__updating margin-right-quarter"><path d="M952.5 592.6c-.9-35.3-29.7-63.4-65-63.4h-1.6c-35.9.9-64.3 30.7-63.4 66.6.1 2.8.1 5.7.1 8.5s0 5.6-.1 8.3c-.9 35.9 27.5 65.7 63.4 66.6h1.6c35.3 0 64.1-28.1 65-63.4.1-3.8.1-7.6.1-11.5s0-7.8-.1-11.7zM873.1 730.4c-32-16.2-71.1-3.4-87.4 28.6-4.4 8.7-9.3 17.3-14.4 25.6-19.1 30.4-10 70.5 20.4 89.6 30.4 19.1 70.5 10 89.6-20.4.1-.2.3-.4.4-.7 7.1-11.5 13.8-23.4 19.9-35.4 16.3-31.9 3.5-71.1-28.5-87.3zM668.2 890.5c-11.7 7.6-23.9 14.6-36.5 20.7-32.6 15-46.9 53.6-31.9 86.2s53.6 46.9 86.2 31.9c1-.4 1.9-.9 2.9-1.4 17.4-8.5 34.2-18.1 50.4-28.6 29.8-20.1 37.6-60.5 17.5-90.2-19.7-29.1-58.9-37.3-88.6-18.6zM486.6 946.2h-.9c-14 .2-28-.5-41.9-2-35.7-3.7-67.6 22.3-71.3 58-3.6 35.4 21.8 67.1 57.1 71.2 17 1.9 34.1 2.8 51.3 2.8h6.6c35.9-.2 64.8-29.5 64.6-65.4-.3-35.9-29.6-64.8-65.5-64.6zM655.2 310.3l.6.4c30.8 18.5 70.7 8.6 89.2-22.2 18.5-30.8 8.6-70.7-22.2-89.2l-1.1-.7c-30.8-18.4-70.7-8.2-89.1 22.6-18.4 30.9-8.2 70.7 22.6 89.1zM490 132.6h-2.3c-35.9-.3-65.2 28.6-65.5 64.5s28.6 65.2 64.5 65.5h2.1c35.9.3 65.3-28.5 65.6-64.4.3-35.8-28.5-65.2-64.4-65.6zM778.5 436.4c17.7 31.2 57.4 42.2 88.6 24.4s42.2-57.4 24.4-88.6l-.5-.9c-17.1-31.6-56.6-43.3-88.1-26.2-31.6 17.1-43.3 56.6-26.2 88.1.4.7.8 1.5 1.3 2.2l.5 1zM298.8 893c-14.3-9-27.8-19-40.6-30-27.4-23.2-68.4-19.7-91.6 7.7-22.9 27.1-19.8 67.7 7 91 17.6 15.1 36.3 28.9 55.9 41.3 30.4 19.1 70.5 10 89.6-20.4 19.2-30.3 10.1-70.5-20.3-89.6zM168.8 742.8c-6.8-15.4-12.5-31.2-17-47.4-10.2-34.4-46.4-54.1-80.8-43.9-33.6 9.9-53.2 44.7-44.5 78.6 6.2 22.3 14 44.2 23.4 65.4 14.6 32.8 53 47.6 85.8 33.1 32.8-14.6 47.6-53 33.1-85.8zM275.9 180.2H65c-35.9 0-65 29.1-65 65s29.1 65 65 65h47.2c-47.2 59.2-79.4 128.9-94 203.1-6.9 35.2 16.1 69.4 51.3 76.3s69.4-16.1 76.3-51.3C156 486.1 178.3 437 211 395v61.3c0 35.9 29.1 65 65 65s65-29.1 65-65v-211c0-36-29.1-65.1-65.1-65.1.1 0 .1 0 0 0z"></path></svg>
+                        <strong class="counter" id="totalCnt">0</strong> of
+                        <strong class="counter" id="addressCount">0</strong> addresses processed for
+                        <strong class="chosenYear"></strong> rural or underserved area safe harbor designation.
+                    </h2>
+                </div>
+                <p class="hide-print content-l_col content-l_col-1-4">
+                    <a class="a-btn a-btn__secondary" href="/rural-or-underserved-tool/">
+                        Start a new search
+                    </a>
+                </p>
+
+                <div id="results-total" class="u-hidden block">
+                    <div class="content-l_col content-l_col-1-4">
+                        <h1>
+                            <strong>
+                                <a class="ruralCnt no-decoration counter no-decoration" href="#rural">
+                                    0
+                                </a>
+                            </strong>
+                        </h1>
+                        <h4>
+                            <span class="ruralVerb verb">are</span> designated as rural or underserved
+                        </h4>
+                    </div>
+                    <div class="content-l_col content-l_col-1-4">
+                        <h1>
+                            <strong>
+                                <a class="notRuralCnt no-decoration counter no-decoration" href="#notRural">
+                                    0
+                                </a>
+                            </strong>
+                        </h1>
+                        <h4>
+                            <span class="notRuralVerb verb">are</span> <strong>not</strong> designated as rural or underserved
+                        </h4>
+                    </div>
+                    <div class="content-l_col content-l_col-1-4">
+                        <h1>
+                            <strong>
+                                <a class="notFoundCnt no-decoration counter no-decoration" href="#notFound">
+                                    0
+                                </a>
+                            </strong>
+                        </h1>
+                        <h4>
+                            could not be identified
+                        </h4>
+                    </div>
+                    <div class="content-l_col content-l_col-1-4">
+                        <h1>
+                            <strong>
+                                <a class="duplicateCnt no-decoration counter no-decoration" href="#duplicate">
+                                    0
+                                </a>
+                            </strong>
+                        </h1>
+                        <h4>
+                            identified as duplicate
+                        </h4>
+                    </div>
+                </div>
+
+                <p class="content-l_col content-l_col-1">
+                    <a class="margin-right-quarter" href="#" id="print" title="Print results">Print results</a>
+                    |
+                    <a class="download-link margin-left-quarter" href="#" id="download" title="Download results"><span>Download results</span>&nbsp;</a>
+                </p>
+
+                {# Not a paragraph so that it is full-width. #}
+                <div class="content-l_col content-l_col-1">
+                    <em>If you are having problems with the download, please review the <a href="#faq-general-questions">“General questions” in the FAQ</a>.</em>
+                </div>
+
+                <div class="content-l_col content-l_col-1">
+                    <div id="rural" class="js-table u-hidden block block__flush-bottom">
+                        <h2 class="js-table-title">
+                            <strong><span class="ruralCnt counter">0</span></strong> <span class="ruralCase case">addresses are</span> designated as rural or underserved for
+                            <strong class="chosenYear"></strong>
+                        </h2>
+                        <p>
+                            First-lien covered transactions extended in <span class="chosenYear">2015</span> that are secured by these properties can be counted as rural or underserved in your determination of your first-lien covered transactions in <span class="chosenYear">2015</span> that are secured by properties located in rural or underserved areas.
+                        </p>
+
+                        <table class="table" style="border-width: 1px;" width="100%">
+                            <thead>
+                                <tr>
+                                <th width="31.5%">Address Entered</th>
+                                <th width="31.5%">Address Identified</th>
+                                <th width="15%">County</th>
+                                <th width="22%">Rural or Underserved?</th>
+                                </tr>
+                            </thead>
+                            <tbody class="data"></tbody>
+                        </table>
+
+                        <a data-table="rural" class="button-more u-hidden a-btn a-btn__secondary no-decoration" href="#" id="ruralMore">View 10 more</a>
+                        <a data-table="rural" class="margin-left-1 view-all u-hidden no-visit" href="#" id="ruralAll">View all</a>
+                    </div>
+
+                    <div id="notRural" class="js-table u-hidden block block__flush-bottom">
+                        <h2 class="js-table-title">
+                        <strong><span class="notRuralCnt counter">0</span></strong> <span class="notRuralCase case">addresses are</span>
+                        <strong>not</strong> designated as rural or underserved for
+                        <strong class="chosenYear"></strong>
+                        </h2>
+                        <p class="col-8">These properties <strong>cannot</strong> be counted as rural or underserved.</p>
+
+                        <table class="table" style="border-width: 1px;" width="100%">
+                        <thead>
+                            <tr>
+                            <th width="31.5%">Address Entered</th>
+                            <th width="31.5%">Address Identified</th>
+                            <th width="15%">County</th>
+                            <th width="22%">Rural or Underserved?</th>
+                            </tr>
+                        </thead>
+                        <tbody class="data"></tbody>
+                        </table>
+
+                        <a data-table="notRural" class="button-more u-hidden a-btn a-btn__secondary no-decoration" href="#" id="notRuralMore">View 10 more</a>
+                        <a data-table="notRural" class="margin-left-1 view-all u-hidden no-visit" href="#" id="notRuralAll">View all</a>
+                    </div>
+
+                    <div id="notFound" class="js-table u-hidden block block__flush-bottom">
+                        <h2 class="js-table-title">
+                            <strong><span class="notFoundCnt counter">0</span></strong> <span class="notFoundCase case">addresses are</span> not identified
+                        </h2>
+                        <p class="col-8">
+                            The locations of these addresses could not be identified because the information provided was not sufficient, the information could not be matched with an address or the information matches with multiple addresses.
+                        </p>
+                        <p class="col-8">
+                            To run your search again once you have updated the information for these addresses, return to the previous page and start a new search.
+                        </p>
+
+                        <table class="table" style="border-width: 1px;" width="100%">
+                            <thead>
+                                <tr>
+                                <th width="31.5%">Address Entered</th>
+                                <th width="31.5%">Address Identified</th>
+                                <th width="15%">County</th>
+                                <th width="22%">Rural or Underserved?</th>
+                                </tr>
+                            </thead>
+                            <tbody class="data"></tbody>
+                        </table>
+
+                        <a data-table="notFound" class="button-more u-hidden a-btn a-btn__secondary no-decoration" href="#" id="notFoundMore">View 10 more</a>
+                        <a data-table="notFound" class="margin-left-1 view-all u-hidden no-visit" href="#" id="notFoundAll">View all</a>
+                    </div>
+
+                    <div id="duplicate" class="js-table u-hidden block block__flush-bottom">
+                        <h2 class="js-table-title">
+                            <strong><span class="duplicateCnt counter">0</span></strong> <span class="duplicateCase case">addresses are</span> identified as duplicate
+                        </h2>
+                        <p class="col-8">
+                            These addresses have been identified as duplicate entries, and only the first instance of each address has been counted in the other three categories of results.
+                        </p>
+                        <p class="col-8">
+                            To update or remove the information for these addresses, start a new search.
+                        </p>
+
+                        <table class="table" style="border-width: 1px;" width="100%">
+                            <thead>
+                                <tr>
+                                <th width="31.5%">Address Entered</th>
+                                <th width="31.5%">Address Identified</th>
+                                <th width="15%">County</th>
+                                <th width="22%">Rural or Underserved?</th>
+                                </tr>
+                            </thead>
+                            <tbody class="data"></tbody>
+                        </table>
+
+                        <a data-table="duplicate" class="button-more u-hidden a-btn a-btn__secondary no-decoration" href="#" id="duplicateMore">View 10 more</a>
+                        <a data-table="duplicate" class="margin-left-1 view-all u-hidden no-visit" href="#" id="duplicateAll">View all</a>
+                    </div>
+                </div>
+
+            </section>
+
+        </section>
+
+    </div>
+
+    <div class="content_line"></div>
+
+    <div class="content__2-1 content__bleedbar">
+
+        <div class="wrapper content_wrapper">
+            <div class="content_main">
+
+                <div class="group sans border-top-2">
+                    <!-- about this tool -->
+                    <div id="about">
+                        <h2>About this tool</h2>
+                        <p>
+                        This tool is maintained by the Consumer Financial Protection Bureau (CFPB or Bureau) to help creditors determine which properties are located in a “rural” or “underserved” area as defined in 12 CFR 1026.35(b)(2)(iv)(A) and (B).  A creditor may rely on this tool to provide a safe harbor determination that a property is located in a rural or underserved area.  However, the tool is not applicable to the exemption from the § 1026.35(c)(4) requirement for an additional appraisal, which is based on “rural county” and not “rural area.”  The CFPB publishes a list of counties that are entirely rural to facilitate compliance with the exemption in § 1026.35(c)(4)(vii)(H).
+                        </p>
+
+                        <p class="margin-bottom-3">
+                        <a href="https://www.gpo.gov/fdsys/pkg/FR-2016-03-25/pdf/2016-06834.pdf" title="Lean more about this rule">Learn more about this rule</a>
+                        </p>
+
+                        <!-- faq -->
+                        <h2>Frequently asked questions</h2>
+                        <h3 class="margin-top-2">Questions on the tool</h3>
+
+                        {{ expandable.render(
+                            'What does this tool do?',
+                            'The tool identifies whether a property is
+                            located in a rural or underserved area in
+                            a particular calendar year.  Creditors can
+                            select a year and enter addresses into the tool,
+                            either one at a time or more than one at a time
+                            (a “batch upload”), and the tool
+                            provides a determination of whether each address
+                            is in a rural or underserved area for the year
+                            selected. You should keep a copy of your results
+                            that show the determination for each address run
+                            through the tool.'
+                        ) }}
+
+                        {{ expandable.render(
+                            'What is the safe harbor provided by the tool?',
+                            'The tool provides a safe harbor determination that a
+                            specific property securing a mortgage loan is located
+                            in a rural or underserved area.  For more information
+                            on the safe harbor, see 1026.35(b)(2)(iv)(C) and comment
+                            35(b)(2)(iv)-1.iii.D.'
+                        ) }}
+
+                        {{ expandable.render(
+                            'Which year should I select when I upload addresses?',
+                            'The year selected should be the year in which the
+                            creditor extended the loan.'
+                        ) }}
+
+                        {#
+                            This uses the expandable code directly instead of the
+                            template due to the markup in the content area.
+                        #}
+                        <div class="block
+                                    block__flush-top
+                                    block__flush-bottom
+                                    block__padded-bottom">
+                            <div class="o-expandable
+                                        o-expandable__padded
+                                        o-expandable__background
+                                        o-expandable__border">
+                                <button class="o-expandable_header o-expandable_target"
+                                        title="Expand content">
+                                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                                        How should I format the addresses that I upload to the tool?
+                                    </h3>
+                                    <span class="o-expandable_header-right o-expandable_link">
+                                        <span class="o-expandable_cue o-expandable_cue-open">
+                                            <span class="u-visually-hidden-on-mobile">Show</span>
+                                            {{ svg_icon('plus-round') }}
+                                        </span>
+                                        <span class="o-expandable_cue o-expandable_cue-close">
+                                            <span class="u-visually-hidden-on-mobile">Hide</span>
+                                            {{ svg_icon('minus-round') }}
+                                        </span>
+                                    </span>
+                                </button>
+                                <div class="o-expandable_content">
+                                    <p>
+                                        The tool provides a sample comma separated values (CSV) file to help you determine how to format the addresses for upload in the multiple address search tool.  For best results, the street address, city, state and ZIP Code should be included in the batch upload file or address entry.  The addresses within this CSV file should follow the rules set forth in Section 2, “Postal Addressing Standards” of the United States Postal Service Publication 28 - Postal Addressing Standards (<a href="http://pe.usps.gov/text/pub28/welcome.htm" title="Publication 28,">http://pe.usps.gov/text/pub28/welcome.htm</a>).  Per <a href="http://pe.usps.gov/text/pub28/28c2_001.htm" title="Publication 28, Sub-Section 21">Publication 28, Sub-Section 21</a>, a complete property address consists of the “Delivery Address Line” and the “Last Line.”  “Delivery Address Line,” in the example below and in the tool CSV file format, consists of the “Street address” while the “Last Line,” in the example below and in the tool CSV file format, consists of three fields, “City”, “State” and “ZIP”.
+                                    </p>
+                                    <p>
+                                        For example:<br />
+                                        <img src="/static/apps/rural-or-underserved-tool/img/address-example.png" alt="Example of addresses" />
+                                    </p>
+                                    <p>
+                                        <strong>Street Address.</strong>  Details regarding recommended formatting of the street address are described under “Delivery Address Line” found in <a href="http://pe.usps.gov/text/pub28/28c2_012.htm" title="Publication 28, Sub-Section 23">Publication 28, Sub-Section 23 Delivery Address Line</a>.  Address components include, as applicable, the following individual items:
+                                        <ol>
+                                            <li>
+                                            Primary Address Number
+                                            </li>
+                                            <li>
+                                            Predirectional
+                                            </li>
+                                            <li>
+                                            Street Name
+                                            </li>
+                                            <li>
+                                            Suffix
+                                            </li>
+                                            <li>
+                                            Postdirectional
+                                            </li>
+                                            <li>
+                                            Secondary Address identifier, such as suite
+                                            </li>
+                                            <li>
+                                            Secondary Address, such as suite number
+                                            </li>
+                                        </ol>
+                                    </p>
+                                    <p>
+                                        <strong>City.</strong> Enter the city.  This will be reported as one (1) data field.  Details regarding recommended formatting of the city are found in <a href="http://pe.usps.gov/text/pub28/28c2_006.htm" title="Publication 28, Sub-Section 22">Publication 28, Sub-Section 22 Last Line</a>.
+                                    </p>
+                                    <p>
+                                        <strong>State.</strong> Enter the state.  This will be reported as one (1) data field.  Details regarding recommended formatting of the state are found in <a href="http://pe.usps.gov/text/pub28/28c2_006.htm" title="Publication 28, Sub-Section 21">Publication 28, Sub-Section 22 Last Line</a>.
+                                    </p>
+                                    <p>
+                                        <strong>ZIP Code.</strong> Enter the ZIP Code.  This will be reported as one (1) data field.  Details regarding recommended formatting of the ZIP Code are found in <a href="http://pe.usps.gov/text/pub28/28c2_006.htm" title="Publication 28, Sub-Section 21">Publication 28, Sub-Section 22 Last Line</a>.
+                                    </p>
+                                    <p>
+                                        <strong>Non-Standard U.S. Addressing.</strong>  Recommended formatting for non-standard U.S. style addressing including rural route, Highway Contract Route, and Puerto Rico addresses are found in Sub-Section <a href="http://pe.usps.gov/text/pub28/28c2_021.htm" title="Publication 28, Sub-Section 24">24</a>, <a href="http://pe.usps.gov/text/pub28/28c2_027.htm" title="Publication 28, Sub-Section 25">25</a> and <a href="http://pe.usps.gov/text/pub28/28c2_041.htm" title="Publication 28, Sub-Section 29">29</a> respectively.
+                                    </p>
+                                    <p>
+                                        The following address formats are not recommended:
+                                        <ol>
+                                            <li>
+                                            General Delivery addresses, described in <a href="http://pe.usps.gov/text/pub28/28c2_033.htm" title="Publication 28, Sub-Section 26">Publication 28, Sub-section 26</a>.
+                                            </li>
+                                            <li>
+                                            United States Postal Service addresses, described in <a href="http://pe.usps.gov/text/pub28/28c2_035.htm" title="Publication 28, Sub-Section 27">Publication 28, Sub-section 27</a>.
+                                            </li>
+                                            <li>
+                                            Post Office Box addresses described in <a href="http://pe.usps.gov/text/pub28/28c2_037.htm" title="Publication 28, Sub-Section 28">Publication 28, Sub-section 28</a>.
+                                            </li>
+                                            <li>
+                                            Wedding invitation format, i.e., by spelling out all of the numbers in the address.
+                                            </li>
+                                        </ol>
+                                    </p>
+                                    <p>
+                                        Files should not contain any personal information about the loan applicant, such as name, phone number, and/or Social Security number.  The file should only contain the address fields requested in the CSV template.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ expandable.render(
+                            'What kinds of file formats does the tool accept for
+                            uploads?',
+                            'The tool only accepts address lookup files in a Comma
+                            Separated Values (CSV) format.'
+                        ) }}
+
+                        {{ expandable.render(
+                            'How do I upload multiple addresses from my database?',
+                            'To upload addresses, you will first need to extract
+                            the requested data fields (street address, city, state
+                            and ZIP Code) from your loan origination system or
+                            database into the Comma Separated Values (CSV) format
+                            that the multiple address upload feature requires.
+                            Once the CSV file is created, you click on the
+                            “upload a file” feature that the tool provides,
+                            select the file from your hard drive or internal drive
+                            and then click the “upload a file” button
+                            again to start the process.'
+                        ) }}
+
+                        {{ expandable.render(
+                            'When should I receive the results if I upload a file
+                            with multiple addresses?',
+                            'You should receive results on your multiple address
+                            batch request within a few minutes of the request,
+                            depending on the number of loans that you are
+                            requesting, the age of the computer and the operating
+                            system that you are using, and the network speed that
+                            you are experiencing during this request.'
+                        ) }}
+
+                        {{ expandable.render(
+                            'How will I receive my results?',
+                            'The results will be displayed on a web page after the
+                            processing completes.  The results page will display a
+                            summary at the top and show the results split into four
+                            categories: Rural/Underserved, Not Rural/Underserved,
+                            Could Not Be Identified, and Duplicates.  The results
+                            web page can be viewed online, and printed or downloaded
+                            as a PDF and/or Comma Separated Values (CSV) file.'
+                        ) }}
+
+                        {{ expandable.render(
+                            'How do I interpret the results?',
+                            'The results will be displayed on a web page after the
+                            processing completes in four categories:
+                            Rural/Underserved, Not Rural/Underserved,
+                            Could Not Be Identified, and Duplicates.
+                            The addresses that return in the Rural/Underserved
+                            category will qualify as being in rural or underserved
+                            areas.  Those in the Not Rural/Underserved category are
+                            addresses that are not in areas designated as rural or
+                            underserved.  Addresses in the Could Not Be Identified
+                            category will need to be researched further to determine
+                            if they are in rural or underserved areas
+                            (see “How do I resolve the addresses that could
+                            not be identified?” below).  For the Duplicates
+                            category, the properties are still counted in one of
+                            the three aforementioned categories.  The user must
+                            determine which entries are duplicates.  An institution
+                            should not count a property more than once unless more
+                            than one first-lien covered transaction was secured by
+                            the property in the same year.'
+                        ) }}
+
+
+                        {{ expandable.render(
+                            'What address should I use?',
+                            'You should only enter addresses for properties securing
+                            first-lien covered transactions extended in a single
+                            calendar year.  When you are determining rural or
+                            underserved status for the current year, you enter
+                            addresses for properties securing first-lien covered
+                            transactions extended in the preceding calendar year.
+                            For transactions with applications received before
+                            April 1 of the current year, you could also enter
+                            addresses for properties securing first-lien covered
+                            transactions extended in the calendar year before the
+                            preceding calendar year.'
+                        ) }}
+
+                        {{ expandable.render(
+                            'What is the difference between “Address Entered”
+                            and “Address Identified?”',
+                            '“Address Entered” will appear in the results as the
+                            address that you entered to search. “Address Identified”
+                            will appear in the results as the address for which the
+                            rural or underserved determination applies.  These two
+                            fields will more than likely match; however,
+                            on occasion, there may be differences in the address
+                            entered versus the address for which the designation
+                            was found.  These differences are displayed when these
+                            two fields do not match, for example, if the address
+                            entered is 123 S. Main St, Anywhereville, USA and the
+                            address for which the rural designation was identified
+                            was 123 S. Main Blvd, Anywhereville, USA.  It would then
+                            be up to you to determine if the match is accurate for
+                            the address entered, e.g., was there a typographical
+                            error in the system of record when the address was
+                            keyed in or are the two addresses actually different
+                            locations?'
+                        ) }}
+
+                        {{ expandable.render(
+                            'I typed in an address and a different
+                            address was found. Why?',
+                            'On occasion, there may be differences in the address
+                            entered versus the address for which a designation was
+                            found.  These differences are displayed when the
+                            “Address Entered” field and the “Address Identified”
+                            field do not match.  It is up to you to determine if
+                            this match is accurate for the address entered, e.g.,
+                            was there a typographical error in the system of record
+                            when the address was keyed in, or are the two addresses
+                            actually different locations?  The issue also might have
+                            occurred because one of the required fields was missing
+                            on the search.  For best results, the street address,
+                            city, state and ZIP Code should be included in the batch
+                            upload file or address entry.  If the address is correct
+                            as-is and the tool is not finding the address, please
+                            check the Census Bureau’s automated address search tool,
+                            use the rural or underserved counties lists, or check
+                            the form of the address on the United States Postal
+                            Service site
+                            (<a href="https://tools.usps.com/go/ZipLookupAction_input" title="United States Postal Service site">https://tools.usps.com/go/ZipLookupAction_input</a>).
+                            For instance, the address
+                            6009 JFK Blvd East, West New York, NJ 07093 cannot be
+                            located by the tool.  When the address is entered into
+                            the usps.com site, the proper address is given,
+                            6009 Kennedy Blvd E, West New York, NJ 07093-3740,
+                            and the address can now be identified in the tool.'
+                        ) }}
+
+                        {#
+                            This uses the expandable code directly instead of the
+                            template due to the markup in the content area.
+                        #}
+                        <div class="block
+                                    block__flush-top
+                                    block__flush-bottom
+                                    block__padded-bottom">
+                            <div class="o-expandable
+                                        o-expandable__padded
+                                        o-expandable__background
+                                        o-expandable__border">
+                                <button class="o-expandable_header o-expandable_target"
+                                        title="Expand content">
+                                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                                        How do I resolve the addresses that could not be identified?
+                                    </h3>
+                                    <span class="o-expandable_header-right o-expandable_link">
+                                        <span class="o-expandable_cue o-expandable_cue-open">
+                                            <span class="u-visually-hidden-on-mobile">Show</span>
+                                            {{ svg_icon('plus-round') }}
+                                        </span>
+                                        <span class="o-expandable_cue o-expandable_cue-close">
+                                            <span class="u-visually-hidden-on-mobile">Hide</span>
+                                            {{ svg_icon('minus-round') }}
+                                        </span>
+                                    </span>
+                                </button>
+                                <div class="o-expandable_content">
+                                    <p>
+                                        You should check to see if the address was mistyped, some information was missing in the address entered, or the address is too new for the tool to return a definite result.  First, verify the address is correct.  If it is correct, try the Census Bureau’s automated address search tool, use the rural or underserved counties lists, or check the form of the address on the United States Postal Service site (<a href="https://tools.usps.com/go/ZipLookupAction_input" title="United States Postal Service site">https://tools.usps.com/go/ZipLookupAction_input</a>).  For instance, the address 6009 JFK Blvd East, West New York, NJ 07093 cannot be located by the tool.  When the address is entered into the usps.com site, the proper address is given, 6009 Kennedy Blvd E, West New York, NJ 07093-3740, and the address can now be identified in the tool.
+                                    </p>
+                                    <p>
+                                        <img src="/static/apps/rural-or-underserved-tool/img/usps-site.png" alt="USPS" />
+                                    </p>
+                                    <p>
+                                        It is possible that some addresses are too new to appear in the tool, and addresses that could not be identified may be attempted again 60, 90 or 120 days later. If an update or change to an address is required, make the change in your systems of record first, then retry the upload.  For best results, include the street address, city, state and ZIP Code in the batch upload file or your address entry.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ expandable.render(
+                            'Can I use the map displayed with my results to
+                            determine if my address is in a rural
+                            or underserved area?',
+                            'No. The rural or underserved designation is identified
+                            by the categorization of the address and not based on
+                            the location of the address on the visual map that
+                            accompanies the search result.  The map exists as a
+                            visual aid only to show the geographic location of
+                            the property.'
+                        ) }}
+
+                        {{ expandable.render(
+                            'The address that I am checking in the tool is not
+                            designated as rural or underserved as I expected. Why?',
+                            'The tool designated the address entered as not rural
+                            or underserved as those terms are defined in
+                            12 CFR 1026.35(b)(2)(iv)(A) and (B), respectively.
+                            If the address is not designated in the tool as rural
+                            or underserved, lenders have the option to check the
+                            address on the Census Bureau’s automated address search
+                            tool and the rural or underserved counties lists.'
+                        ) }}
+
+                        <h3 class="margin-top-3">Questions on security</h3>
+
+                        {{ expandable.render(
+                            'How secure is the data that I am uploading
+                            to the site?',
+                            'The data transmitted through the tool should not
+                            contain any personal or identifying information.
+                            Communication with the server through application
+                            program interfaces (APIs) is done over https
+                            and is encrypted.'
+                        ) }}
+
+                        <h3 id="faq-general-questions">General questions</h3>
+
+                        {#
+                            This uses the expandable code directly instead of the
+                            template due to the markup in the content area.
+                        #}
+                        <div class="block
+                                    block__flush-top
+                                    block__flush-bottom
+                                    block__padded-bottom">
+                            <div class="o-expandable
+                                        o-expandable__padded
+                                        o-expandable__background
+                                        o-expandable__border">
+                                <button class="o-expandable_header o-expandable_target"
+                                        title="Expand content">
+                                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                                        What is CSV?
+                                    </h3>
+                                    <span class="o-expandable_header-right o-expandable_link">
+                                        <span class="o-expandable_cue o-expandable_cue-open">
+                                            <span class="u-visually-hidden-on-mobile">Show</span>
+                                            {{ svg_icon('plus-round') }}
+                                        </span>
+                                        <span class="o-expandable_cue o-expandable_cue-close">
+                                            <span class="u-visually-hidden-on-mobile">Hide</span>
+                                            {{ svg_icon('minus-round') }}
+                                        </span>
+                                    </span>
+                                </button>
+                                <div class="o-expandable_content">
+                                    <p>
+                                        A comma-separated values (CSV) file derives its name from a file containing multiple data fields separated by commas to distinguish where each field starts and ends.  Files are stored in plain text as numbers and letters with one record per line.
+                                    </p>
+
+                                    <p>
+                                        You can create a CSV file in Microsoft Excel. Use the headings and format provided in the sample CSV file to type in or export your address data. Select “Save as” and choose “CSV (Comma delimited)” in the <em>Save as type</em> field.
+                                    </p>
+
+                                    <img src="/static/apps/rural-or-underserved-tool/img/csv.png" alt="Saving a CSV" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {#
+                            This uses the expandable code directly instead of the
+                            template due to the markup in the content area.
+                        #}
+                        <div class="block
+                                    block__flush-top
+                                    block__flush-bottom
+                                    block__padded-bottom">
+                            <div class="o-expandable
+                                        o-expandable__padded
+                                        o-expandable__background
+                                        o-expandable__border">
+                                <button class="o-expandable_header o-expandable_target"
+                                        title="Expand content">
+                                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                                        My downloaded file is not opening in the
+                                        correct format in Excel.
+                                        How do I fix the format?
+                                    </h3>
+                                    <span class="o-expandable_header-right o-expandable_link">
+                                        <span class="o-expandable_cue o-expandable_cue-open">
+                                            <span class="u-visually-hidden-on-mobile">Show</span>
+                                            {{ svg_icon('plus-round') }}
+                                        </span>
+                                        <span class="o-expandable_cue o-expandable_cue-close">
+                                            <span class="u-visually-hidden-on-mobile">Hide</span>
+                                            {{ svg_icon('minus-round') }}
+                                        </span>
+                                    </span>
+                                </button>
+                                <div class="o-expandable_content">
+                                    <p>
+                                        If you used the ‘Download results’ link in Windows in either Chrome or Firefox and the file extension is not recognized on your computer, you will need to add a CSV extension to the end of the file in Windows Explorer before the file will launch in the correct format.
+                                    </p>
+                                    <p>
+                                        <img src="/static/apps/rural-or-underserved-tool/img/fix-csv-1.png" alt="Fix .csv - Find downloads" />
+                                    </p>
+                                    <p>
+                                        Select the ‘download’ file (single click on the file name), right click with your mouse on the file and select Rename.
+                                    </p>
+                                    <p>
+                                        <img src="/static/apps/rural-or-underserved-tool/img/fix-csv-2.png" alt="USFix .csv - Right click" />
+                                    </p>
+                                    <p>
+                                        Type .CSV at the end of the file name.
+                                    </p>
+                                    <p>
+                                        <img src="/static/apps/rural-or-underserved-tool/img/fix-csv-3.png" alt="Fix .csv - Add .CSV" />
+                                    </p>
+                                    <p>
+                                        The file extension should now be recognized. You can double click on the file to launch it and see the downloaded information in the proper format.
+                                    </p>
+                                    <p>
+                                        <img src="/static/apps/rural-or-underserved-tool/img/fix-csv-4.png" alt="Fix .csv - Open file" />
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ expandable.render(
+                            'How do I download a PDF reader so I can view my
+                            report in a PDF?',
+                            'A basic PDF reader can be downloaded
+                            from Adobe’s website.'
+                        ) }}
+
+                        {#
+                            This uses the expandable code directly instead of the
+                            template due to the markup in the content area.
+                        #}
+                        <div class="block
+                                    block__flush-top
+                                    block__flush-bottom
+                                    block__padded-bottom">
+                            <div class="o-expandable
+                                        o-expandable__padded
+                                        o-expandable__background
+                                        o-expandable__border">
+                                <button class="o-expandable_header o-expandable_target"
+                                        title="Expand content">
+                                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                                        My question is not answered here.
+                                        Where can I find more information?
+                                    </h3>
+                                    <span class="o-expandable_header-right o-expandable_link">
+                                        <span class="o-expandable_cue o-expandable_cue-open">
+                                            <span class="u-visually-hidden-on-mobile">Show</span>
+                                            {{ svg_icon('plus-round') }}
+                                        </span>
+                                        <span class="o-expandable_cue o-expandable_cue-close">
+                                            <span class="u-visually-hidden-on-mobile">Hide</span>
+                                            {{ svg_icon('minus-round') }}
+                                        </span>
+                                    </span>
+                                </button>
+                                <div class="o-expandable_content">
+                                    <p>
+                                        Information about this automated tool and other safe
+                                        harbor tools is provided by the Bureau’s regulation
+                                        at 1026.35(b)(2)(iv)(C) and comment 35(b)(2)(iv)-1.
+                                        You may also visit the Bureau’s
+                                        <a href="http://www.consumerfinance.gov/regulatory-implementation/title-xiv/" alt="Regulation Implementation site for Title XIV rules">Regulation Implementation site for Title XIV rules</a>
+                                        for additional information.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+            </div>
+
+        </div>
+        <aside class="content_sidebar o-sidebar-content">
+            <div class="block block__flush-top">
+                <div class="m-reusable-text-snippet">
+                    <header class="m-slug-header">
+                        <h2 class="a-heading">
+                            Related information
+                        </h2>
+                    </header>
+                    <p>
+                        In the final rule published in the Federal Register on
+                        October 2, 2015 (80 FR 59944), the Bureau revised its
+                        regulatory definitions of small creditor, and rural areas,
+                        for purposes of certain special provisions and exemptions
+                        from various requirements provided to certain small
+                        creditors under the Bureau’s rules.  The revisions to
+                        Regulation Z (Truth in Lending) will go into effect on
+                        January 1, 2016.
+                    </p>
+                </div>
+            </div>
+            <div class="block">
+                <div class="m-related-links">
+                    <header class="m-slug-header">
+                        <h2 class="a-heading">
+                            Related links
+                        </h2>
+                    </header>
+                    <ul class="m-list m-list__links">
+                        <li class="m-list_item">
+                            <a href="http://www.consumerfinance.gov/eregulations/1026" title="Truth in Lending Act (Regulation Z)">Truth in Lending Act (Regulation Z)</a>
+                        </li>
+                        <li class="m-list_item">
+                            <a href="http://www.consumerfinance.gov/regulatory-implementation/title-xiv/" title="Title XIV Rule Implementation Site">Title XIV Rule Implementation Site</a>
+                        </li>
+                        <li class="m-list_item">
+                            <a href="http://www.consumerfinance.gov/regulatory-implementation/title-xiv/#resources" title="Ability to Repay / Qualified Mortgage Rule Small Entity Compliance Guide">Ability to Repay / Qualified Mortgage Rule Small Entity Compliance Guide</a>
+                        </li>
+                        <li class="m-list_item">
+                            <a href="http://www.consumerfinance.gov/regulatory-implementation/title-xiv/#resources" title="2013 HOEPA Rule Small Entity Compliance Guide">2013 HOEPA Rule Small Entity Compliance Guide</a>
+                        </li>
+                        <li class="m-list_item">
+                            <a href="http://www.consumerfinance.gov/regulatory-implementation/title-xiv/#resources" title="Higher-Priced Mortgage Loans Escrow Rule Entity Compliance Guide">Higher-Priced Mortgage Loans Escrow Rule Entity Compliance Guide</a>
+                        </li>
+                        <li class="m-list_item">
+                            <a href="http://www.consumerfinance.gov/guidance/#compliance" title="Rural or Underserved Counties List">Rural or Underserved Counties List</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+</main>
+
+{% endblock %}

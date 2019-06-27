@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Rural or underserved tool
+   Master Less file
+   ========================================================================== */
+
+@import (less) 'cf-core.less';
+@import (less) './file-input.less';
+
+// Loading icon color.
+#countMessage .cf-icon-svg {
+    color: @green;
+}
+
+// Error coloring.
+.warn {
+    background-color: @gold-20;
+    border-color: @gold;
+}
+.error {
+    background-color: @red-20;
+    border-color: @red;
+}
+
+// Position search result totals.
+#results-total .content-l_col {
+    display: inline-grid;
+    grid-template-columns: 3em auto;
+
+    & h4 {
+        margin-top: 0.5em;
+    }
+}
+
+// Map in the results table.
+.map {
+    overflow: hidden;
+    height: 200px;
+    width: 100%;
+}
+
+// Print-related styling.
+@import (less) './print.less';
+
+.print-only {
+    display: none;
+}

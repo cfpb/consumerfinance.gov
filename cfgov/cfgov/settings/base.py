@@ -527,6 +527,8 @@ CSP_SCRIPT_SRC = (
     'universal.iperceptions.com',
     'cdn.mouseflow.com',
     'n2.mouseflow.com',
+    'geocoding.geo.census.gov',
+    'tigerweb.geo.census.gov',
     'about:',
     'connect.facebook.net',
     'www.federalregister.gov',
@@ -696,7 +698,7 @@ FLAGS = {
         {'condition': 'parameter', 'value': 'hmda-outage', 'required': True},
         {'condition': 'path matches', 'value': r'^/data-research', 'required': True}
     ],
-    
+
     # Add HowTo schema markup to answer page
     # Intended for use with path conditions in admin for specific ask pages,
     # such as: is enabled when path matches ^/ask-cfpb/what-is-an-ach-en-1065/

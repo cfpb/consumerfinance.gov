@@ -1,0 +1,47 @@
+
+{# ==========================================================================
+
+   expandable.render( heading, content )
+
+   ==========================================================================
+
+   Description:
+
+   Renders An expandable.
+
+   heading: The heading of the expandable.
+
+   content: The content of the expandable.
+
+   ========================================================================== #}
+
+{% macro render( heading, content ) %}
+<div class="block block__flush-top block__flush-bottom block__padded-bottom">
+    <div class="o-expandable
+                o-expandable__padded
+                o-expandable__background
+                o-expandable__border">
+        <button class="o-expandable_header o-expandable_target"
+                title="Expand content">
+            <h3 class="h4 o-expandable_header-left o-expandable_label">
+                {{ heading }}
+            </h3>
+            <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue o-expandable_cue-open">
+                    <span class="u-visually-hidden-on-mobile">Show</span>
+                    {{ svg_icon('plus-round') }}
+                </span>
+                <span class="o-expandable_cue o-expandable_cue-close">
+                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                    {{ svg_icon('minus-round') }}
+                </span>
+            </span>
+        </button>
+        <div class="o-expandable_content">
+            <p>
+                {{ content }}
+            </p>
+        </div>
+    </div>
+</div>
+{% endmacro %}
