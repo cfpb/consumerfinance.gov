@@ -78,9 +78,6 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
       // show it
       DT.removeClass( mapRow, 'u-hidden' );
 
-      // remove border to better associate map with row
-      DT.addClass( mapTDs, 'no-border' );
-
       // change text
       DT.changeElHTML(
         toggleMapLink,
@@ -117,9 +114,6 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
 
       // hide it
       DT.addClass( mapRow, 'u-hidden' );
-
-      // add border back
-      DT.removeClass( mapTDs, 'no-border' );
 
       // change text
       DT.changeElHTML(
