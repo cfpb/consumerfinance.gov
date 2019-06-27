@@ -53,6 +53,7 @@
     "gulp-replace": "1.0.0",
     "gulp-sourcemaps": "2.6.5",
     "gulp-terser": "1.1.7",
+    "hash-router": "0.4.0",
     "highcharts": "7.0.0",
     "less": "3.9.0",
     "lightbox2": "2.11.0",
