@@ -84,16 +84,16 @@ and apps contained within will be importable from Python running in the containe
 
 For any satellite apps that provide front-end assets that need to be built, 
 you will need to run that step seperately. 
-For example, to work on [college-costs](https://github.com/cfpb/college-costs):
+For example, to work on [retirement](https://github.com/cfpb/retirement):
 
 ```bash
 # Check out into develop-apps:
 cd develop-apps
-git clone https://github.com/cfpb/college-costs
+git clone https://github.com/cfpb/retirement
 
 # Build the front-end:
-cd college-costs
-./setup.sh
+cd retirement
+./frontendbuild.sh
 ```
 
 If the satellite app needs any Python requirements that are not specified in 
