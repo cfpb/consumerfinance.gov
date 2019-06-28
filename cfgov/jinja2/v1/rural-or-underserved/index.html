@@ -96,7 +96,8 @@ home price, down payment, and more can affect mortgage interest rates.
                         Check status of properties for loans extended in
                         <small class="u-inline-select">
                             <div class="m-form-field m-form-field__select">
-                                <label class="a-label a-label__heading u-visually-hidden" for="test_select_default">
+                                <label class="u-visually-hidden"
+                                       for="year">
                                     Year of loan
                                 </label>
                                 <div class="a-select">
@@ -127,14 +128,16 @@ home price, down payment, and more can affect mortgage interest rates.
                             <p class="input-container">
                                 <span class="m-form-field"
                                      id="address1">
-                                    <label class="a-label u-visually-hidden" for="address1">
+                                    <label class="u-visually-hidden"
+                                           for="address1-input">
                                         Street address, city, state/territory,
                                         or ZIP code.
                                     </label>
                                     <input
                                         class="a-text-input
-                                            a-text-input__full
-                                            input-address"
+                                               a-text-input__full
+                                               input-address"
+                                        id="address1-input"
                                         name="address1"
                                         type="text" />
                                 </span>
@@ -144,7 +147,9 @@ home price, down payment, and more can affect mortgage interest rates.
                                     Add another address
                                 </a>
                             </p>
-                            <input class="a-btn" type="submit" value="Check addresses" />
+                            <button class="a-btn" type="submit">
+                                Check addresses
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -172,6 +177,10 @@ home price, down payment, and more can affect mortgage interest rates.
                                                    a-btn__flush-right">
                                         Select file
                                     </button>
+                                    <label class="u-visually-hidden"
+                                           for="file-name">
+                                        Choose a file to upload
+                                    </label>
                                     <input id="file-name"
                                            name="file-name"
                                            class="a-text-input"
@@ -180,7 +189,9 @@ home price, down payment, and more can affect mortgage interest rates.
                             </p>
 
                             <p>
-                                <input class="a-btn" type="submit" value="Check addresses" />
+                                <button class="a-btn" type="submit">
+                                    Check addresses
+                                </button>
                             </p>
                         </form>
                     </div>
