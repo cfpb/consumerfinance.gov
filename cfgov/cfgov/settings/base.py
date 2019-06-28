@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'jobmanager',
     'wellbeing',
     'search',
+    'paying_for_college',
     'regulations3k',
     'treemodeladmin',
     'housing_counselor',
@@ -96,10 +97,6 @@ INSTALLED_APPS = (
 
 OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
-    {
-        'import': 'paying_for_college',
-        'apps': ('paying_for_college', 'haystack',)
-    },
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},

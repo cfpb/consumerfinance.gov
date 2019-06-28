@@ -218,9 +218,9 @@ urlpatterns = [
         namespace='transcripts')),
     url(r'^paying-for-college/',
         include_if_app_enabled('comparisontool', 'comparisontool.urls')),
-    url(r'^paying-for-college2/',
-        include_if_app_enabled(
-            'paying_for_college', 'paying_for_college.config.urls')),
+    url(r'^paying-for-college2/', include(
+        'paying_for_college.urls', namespace='paying_for_college')),
+
     url(r'^credit-cards/agreements/',
         include('agreements.urls')),
 
@@ -229,7 +229,6 @@ urlpatterns = [
         'retirement_api.urls',
         namespace='retirement_api'
     )),
-
     url(r'^data-research/consumer-complaints/$',
         ComplaintLandingView.as_view(),
         name='complaint-landing'),
