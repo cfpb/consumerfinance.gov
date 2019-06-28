@@ -49,15 +49,6 @@ page_types = [
     ('cfpb-researchers', 'CFPB Researchers'),
 ]
 
-fcm_types = [
-    ('featured-event', 'Featured event'),
-    ('featured-blog', 'Featured blog'),
-    ('featured-video', 'Featured video'),
-    ('featured-tool', 'Featured tool'),
-    ('featured-news', 'Featured news'),
-    ('featured', 'Featured'),
-]
-
 categories = [
     ('Administrative adjudication docket', (
         ('administrative-adjudication', 'Administrative adjudication'),
@@ -245,12 +236,6 @@ def category_label(category):
         for slug, name in children:
             if category == slug:
                 return name
-
-
-def fcm_label(category):
-    for slug, name in fcm_types:
-        if slug == category:
-            return name
 
 
 def is_blog(page):

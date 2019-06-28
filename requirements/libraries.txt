@@ -6,6 +6,8 @@ django-csp==3.4
 django-extensions==2.1.3
 django-flags==4.1.0
 django-haystack==2.7.0
+# django-js-asset is required by teachers-digital-platform
+django-js-asset==1.1.0
 django-localflavor==1.6.2
 # django-mptt is required by teachers-digital-platform
 django-mptt==0.9.0
@@ -24,7 +26,6 @@ ntplib==0.3.3
 openpyxl==2.5.8
 pyelasticsearch==0.6.1
 python-dateutil==2.7.3
-# PyYAML is required by college-costs
 PyYAML==3.13
 regdown==1.0.1
 requests==2.22.0
