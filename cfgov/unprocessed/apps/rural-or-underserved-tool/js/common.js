@@ -13,7 +13,6 @@ import contentControl from './content-control';
 import count from './count';
 import DT from './dom-tools';
 import fileInput from './file-input';
-const hashRouter = require( 'hash-router' );
 const Papaparse = require( 'papaparse' );
 import ruralCounties from './get-rural-counties';
 import textInputs from './text-inputs';
@@ -21,38 +20,6 @@ import tiger from './call-tiger';
 
 require( 'es6-promise' ).polyfill();
 require( './show-map' );
-
-
-function _rootHandler() {
-  fileInput.resetError();
-
-  // show search tool content
-  contentControl.showSearchTool();
-
-  // clear remove inputs
-  textInputs.reset();
-
-  // reset counts
-  count.reset();
-  fileInput.resetError();
-
-  // clear tables
-  contentControl.resetHTML();
-}
-
-function initRouter() {
-  const router = hashRouter();
-  router.addRoute( '/', _rootHandler );
-  router.addRoute( '#', _rootHandler );
-
-  window.addEventListener( 'hashchange', router );
-  router(); // start the router
-}
-
-
-document.addEventListener( 'DOMContentLoaded', function() {
-  initRouter();
-} );
 
 window.callbacks = {};
 window.callbacks.censusAPI = function( data, rural ) {
