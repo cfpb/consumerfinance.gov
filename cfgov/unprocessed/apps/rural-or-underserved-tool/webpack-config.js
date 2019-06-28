@@ -2,7 +2,6 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-const BROWSER_LIST = require( '../../../../config/browser-list-config' );
 const webpack = require( 'webpack' );
 const TerserPlugin = require( 'terser-webpack-plugin' );
 const path = require( 'path' );
@@ -49,17 +48,8 @@ const COMMON_MODULE_CONFIG = {
         } ] ]
       }
     }
-  }, {
-    test: /\.hbs$/,
-    use: {
-      loader: 'handlebars-loader'
-    }
   } ]
 };
-
-const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
-  name: COMMON_BUNDLE_NAME
-} );
 
 const STATS_CONFIG  = {
   stats: {
@@ -73,22 +63,8 @@ const conf = {
   mode: 'production',
   output: {
     filename: '[name]',
-    jsonpFunction: 'oah'
+    jsonpFunction: 'rout'
   },
-  resolveLoader: {
-    alias: {
-      'handlebars-loader': path.resolve(
-        __dirname, 'node_modules', 'handlebars-loader'
-      )
-    },
-    mainFields: [ 'loader', 'main' ]
-  },
-  resolve: {
-    symlinks: false
-  },
-  plugins: [
-    COMMON_CHUNK_CONFIG
-  ],
   optimization: {
     minimizer: [
       COMMON_MINIFICATION_CONFIG
