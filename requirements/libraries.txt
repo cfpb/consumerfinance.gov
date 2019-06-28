@@ -36,7 +36,7 @@ unicodecsv==0.14.1
 unipath>=1.1,<=2.0
 urllib3==1.25.2
 wagtail-autocomplete==0.1.1
-wagtail-flags==4.1.0b1
+wagtail-flags==4.1.0b2
 wagtail-inventory==0.7
 wagtail-sharing==0.7
 wagtail-treemodeladmin==1.0.4
