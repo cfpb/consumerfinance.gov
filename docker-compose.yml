@@ -24,6 +24,9 @@ services:
             dockerfile: ./Dockerfile
             target: cfgov-dev
         image: cfgov-dev
+        volumes:
+            - ./:/src/cfgov-refresh
+            - ./develop-apps:/src/develop-apps
         ports:
             - "8000:8000"
         environment:
@@ -38,6 +41,9 @@ services:
         # https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
     python3:
         image: cfgov-dev
+        volumes:
+            - ./:/src/cfgov-refresh
+            - ./develop-apps:/src/develop-apps
         ports:
             - "8333:8000"
         environment:

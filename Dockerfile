@@ -7,8 +7,9 @@ RUN yum install -y https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-
     yum install -y python36 && \
     yum clean all && rm -rf /var/cache/yum
 
-ENV PYTHON /usr/bin/python3
+ENV PYTHON /usr/bin/python36
 ENV PYTHONPATH=/src/cfgov-refresh/cfgov/
+RUN echo "export PATH=/active-python:$PATH" > /etc/profile.d/active-python.sh
 COPY docker/python/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN mkdir /active-python/ && chown -R apache:apache /active-python
 
@@ -38,7 +39,7 @@ COPY requirements /src/requirements
 # Copy over the script that extends the Python environment with develop-apps
 COPY extend-environment.sh /etc/profile.d/extend-environment.sh
 
-# Make sure pip is installed
+# Make sure pip and setuptools current
 RUN pip2 install -U pip setuptools
 RUN python3.6 -m ensurepip
 RUN pip3.6 install -U pip setuptools
@@ -64,33 +65,22 @@ COPY gulp gulp
 COPY config config
 COPY jest.config.js .
 COPY cfgov/ ./cfgov/
-COPY cfgov-fonts-master.zip /tmp/fonts.zip
-
-ENV DJANGO_SETTINGS_MODULE=cfgov.settings.minimal_collectstatic
-ENV ALLOWED_HOSTS='["*"]'
-
-# install optional apps
-RUN pip2 install -r /src/requirements/optional-public.txt
-
-# Commented out because retirement wheel is not Python3 compatible yet
-RUN pip3.6 install -r /src/requirements/optional-public.txt
 
 RUN sh frontend.sh production
-RUN mkdir static.in
-RUN unzip /tmp/fonts.zip -d ./static.in/
-RUN cfgov/manage.py collectstatic
-# this won't shrink *this* image, but should result in less unneccesssary 
-# files being transferred to the deployment image
-RUN rm -rf cfgov/unprocessed
+
+COPY requirements/ ./requirements/
+COPY cfgov-fonts-master.zip .
+RUN mkdir static.in && unzip cfgov-fonts-master.zip -d ./static.in/
+COPY build-artifact.sh .
+RUN ./build-artifact.sh docker
 
 FROM cfgov-runtime as cfgov-deployment
 ENV DJANGO_SETTINGS_MODULE=cfgov.settings.production
 ENV ALLOWED_HOSTS='["*"]'
-COPY --from=cfgov-build /usr/lib64/python2.7/site-packages/ /usr/lib64/python2.7/site-packages/
-COPY --from=cfgov-build /usr/lib/python2.7/site-packages/ /usr/lib/python2.7/site-packages/
-COPY --from=cfgov-build /usr/local/lib64/python3.6/site-packages/ /usr/local/lib64/python3.6/site-packages/
-COPY --from=cfgov-build /usr/local/lib/python3.6/site-packages/ /usr/local/lib/python3.6/site-packages/
-COPY --from=cfgov-build --chown=apache:apache /src/cfgov-refresh/cfgov/ /src/cfgov-refresh/cfgov/
-COPY --from=cfgov-build --chown=apache:apache /var/www/html/static /var/www/html/static
-WORKDIR /src/cfgov-refresh
+COPY --from=cfgov-build /src/cfgov-refresh/build/docker.tgz /tmp/docker.tgz
+WORKDIR /
+RUN tar -zxvf /tmp/docker.tgz
+RUN which python
+RUN /srv/cfgov/docker/activate.sh
 USER apache
+CMD ["/etc/cfgov-apache/apachectl", "-D", "FOREGROUND"]

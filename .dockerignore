@@ -4,9 +4,11 @@ collectstatic
 *.sql
 .github
 node_modules
+build
 npm-packages-offline-cache
 docs
 .vendor
 html
 .git
 *.sql.gz
+cache

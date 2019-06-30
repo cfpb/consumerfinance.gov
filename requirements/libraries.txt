@@ -22,7 +22,6 @@ Jinja2==2.10.1
 jsonfield==2.0.2
 lxml==4.2.5
 Markdown==3.1
-mod_wsgi==4.6.5
 ntplib==0.3.3
 openpyxl==2.5.8
 pyelasticsearch==0.6.1
