@@ -78,9 +78,9 @@ FROM cfgov-runtime as cfgov-deployment
 ENV DJANGO_SETTINGS_MODULE=cfgov.settings.production
 ENV ALLOWED_HOSTS='["*"]'
 COPY --from=cfgov-build /src/cfgov-refresh/build/docker.tgz /tmp/docker.tgz
-WORKDIR /
+WORKDIR /srv/cfgov
 RUN tar -zxvf /tmp/docker.tgz
 RUN which python
 RUN /srv/cfgov/docker/activate.sh
 USER apache
-CMD ["/etc/cfgov-apache/apachectl", "-D", "FOREGROUND"]
+CMD ["/srv/cfgov/docker/foreground.sh"]
