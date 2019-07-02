@@ -166,9 +166,9 @@ $DESTINATION_ROOT/venv/bin/mod_wsgi-express start-server \
 EOF
 
 # provide a predicatable script location for running migrations for the most recently deployed version
-cat <<EOF > $TMP_DIR/cfgov-migrate-next.sh
+cat <<EOF > $TMP_DIR/cfgov-manage.sh
 #!/usr/bin/env bash
-$DESTINATION_ROOT/venv/bin/django-admin migrate
+$DESTINATION_ROOT/venv/bin/django-admin "$@"
 EOF
 
 # provide a predicatable script location for activating the most recently deployed version
