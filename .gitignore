@@ -137,3 +137,4 @@ cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js
 ##########
 cfgov/apache/logs/*
 cfgov/apache/modules
+cfgov/apache/conf.d/alias.conf
