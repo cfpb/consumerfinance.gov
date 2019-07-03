@@ -181,7 +181,9 @@ describe( 'FilterableListControls', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     filterableListControlsDom = document.querySelector( `.${ BASE_CLASS }` );
-    filterableListControls = new FilterableListControls( filterableListControlsDom );
+    filterableListControls = new FilterableListControls(
+      filterableListControlsDom
+    );
   } );
 
   describe( 'init()', () => {

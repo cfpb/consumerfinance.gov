@@ -230,5 +230,8 @@ There are a number of options to the command:
  - `gulp lint:build`: Lint only the gulp build scripts.
  - `gulp lint:test`: Lint only the test scripts.
  - `gulp lint:scripts`: Lint only the project source scripts.
- - `--fix`: Add this flag (like `gulp lint --fix` or `gulp lint:build --fix`)
+ - `--fix`: Add this flag (like `gulp lint --fix` or `gulp lint:build --fix`).
    to auto-fix some errors, where ESLint has support to do so.
+ - `--path`: Add this flag to specify a file to lint,
+   rather than all files. Path is relative to the project root,
+   such as `gulp lint --path=cfgov/unprocessed/js/modules/Analytics.js`.

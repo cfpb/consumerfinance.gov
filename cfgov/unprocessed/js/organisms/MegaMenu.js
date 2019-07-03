@@ -1,7 +1,5 @@
 // Required modules.
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import { isInDesktop } from '../modules/util/breakpoint-state';
-import { contains } from '../modules/util/data-hook';
 import EventObserver from '../modules/util/EventObserver';
 import FlyoutMenu from '../modules/behavior/FlyoutMenu';
 import MegaMenuDesktop from '../organisms/MegaMenuDesktop';
@@ -9,6 +7,8 @@ import MegaMenuMobile from '../organisms/MegaMenuMobile';
 import MoveTransition from '../modules/transition/MoveTransition';
 import TabTrigger from '../modules/TabTrigger';
 import Tree from '../modules/Tree';
+import { contains } from '../modules/util/data-hook';
+import { isInDesktop } from '../modules/util/breakpoint-state';
 
 /**
  * MegaMenu

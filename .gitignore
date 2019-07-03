@@ -26,6 +26,7 @@ cfgov/static_built/*
 
 !cfgov/agreements/tests/empty-folder-agreements.zip
 !cfgov/agreements/tests/UTF_agreements.zip
+!cfgov/paying_for_college/data_sources/ipeds/test.txt.zip
 
 
 # Logs and databases #
@@ -118,6 +119,10 @@ nosetests.xml
 coverage.xml
 .snyk
 protractorFailuresReport/
+
+# Temp data backups #
+###############
+cfgov/paying_for_college/fixtures/national_stats_backup.json
 
 # IDE Specifc #
 ###############

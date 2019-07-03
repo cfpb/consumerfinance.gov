@@ -1,8 +1,14 @@
 const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
-const configCopy = require( '../config' ).copy;
 const handleErrors = require( '../utils/handle-errors' );
-const del = require( 'del' );
+const paths = require( '../../config/environment' ).paths;
+
+/*
+  Path to the cf-icons SVG icons folder,
+  which gets copied into the static directory on production
+  so SVG references in CSS get resolved.
+*/
+const iconSrc = `${ paths.modules }/cf-icons/src/icons/*.svg`;
 
 /**
  * Generic copy files flow from source to destination.
@@ -18,36 +24,43 @@ function _genericCopy( src, dest ) {
 }
 
 gulp.task( 'copy:icons:main', () => {
-  const icons = configCopy.icons;
-  return _genericCopy( icons.src, icons.dest );
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/icons/`
+  );
+  return stream;
 } );
 
 gulp.task( 'copy:icons:oah', () => {
-  const icons = configCopy.icons;
-  const iconsOAH = configCopy.iconsOAH;
-  return _genericCopy( icons.src, iconsOAH.dest );
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/apps/owning-a-home/icons/`
+  );
+  return stream;
 } );
 
 gulp.task( 'copy:icons:r3k', () => {
-  const icons = configCopy.icons;
-  const iconsR3K = configCopy.iconsR3K;
-  return _genericCopy( icons.src, iconsR3K.dest );
-} );
-
-// TODO: Remove when icon font is entirely deprecated.
-gulp.task( 'copy:icons:old', () => {
-  const icons = configCopy.iconsOld;
-  return _genericCopy( icons.src, icons.dest );
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/apps/regulations3k/icons/`
+  );
+  return stream;
 } );
 
 gulp.task( 'copy:json:code', () => {
-  const jsonCode = configCopy.jsonCode;
-  return _genericCopy( jsonCode.src, jsonCode.dest );
+  const stream = _genericCopy(
+    'code.json',
+    paths.processed
+  );
+  return stream;
 } );
 
 gulp.task( 'copy:lightbox2', () => {
-  const lightbox2 = configCopy.lightbox2;
-  return _genericCopy( lightbox2.src, lightbox2.dest );
+  const stream = _genericCopy(
+    `${ paths.modules }/lightbox2/dist/**/*`,
+    `${ paths.processed }/lightbox2`
+  );
+  return stream;
 } );
 
 
@@ -62,8 +75,6 @@ gulp.task( 'copy:icons',
 gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
-    // TODO: Remove when icon font is entirely deprecated.
-    'copy:icons:old',
     'copy:json:code',
     'copy:lightbox2'
   )

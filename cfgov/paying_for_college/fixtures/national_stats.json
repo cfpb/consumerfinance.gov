@@ -1,0 +1,201 @@
+{
+    "completion_rate": {
+        "average_range": [
+            0.30461335, 
+            0.54543942
+        ], 
+        "max": 1, 
+        "median": 0.42316574, 
+        "min": 0
+    }, 
+    "completion_rate_4": {
+        "average_range": [
+            0.3781, 
+            0.5608
+        ], 
+        "max": 1, 
+        "median": 0.4778, 
+        "min": 0
+    }, 
+    "completion_rate_l4": {
+        "average_range": [
+            0.2329, 
+            0.3467
+        ], 
+        "max": 1, 
+        "median": 0.3393, 
+        "min": 0
+    }, 
+    "earnings_gt_25k": {
+        "average_range": [
+            0.474, 
+            0.624
+        ], 
+        "max": 1, 
+        "median": 0.549, 
+        "min": 0
+    }, 
+    "earnings_gt_25k_4": {
+        "average_range": [
+            0.5983, 
+            0.6529
+        ], 
+        "max": 1, 
+        "median": 0.63, 
+        "min": 0
+    }, 
+    "earnings_gt_25k_l4": {
+        "average_range": [
+            0.4449, 
+            0.5383
+        ], 
+        "max": 1, 
+        "median": 0.49, 
+        "min": 0
+    }, 
+    "median_earnings": {
+        "average_range": [
+            29200, 
+            38100
+        ], 
+        "max": 100000, 
+        "median": 33400, 
+        "min": 0
+    }, 
+    "median_earnings_4": {
+        "average_range": [
+            37100, 
+            40700
+        ], 
+        "max": 100000, 
+        "median": 42051, 
+        "min": 0
+    }, 
+    "median_earnings_l4": {
+        "average_range": [
+            27700, 
+            33000
+        ], 
+        "max": 100000, 
+        "median": 31080, 
+        "min": 0
+    }, 
+    "median_monthly_loan": {
+        "average_range": [
+            210.94, 
+            286.8
+        ], 
+        "max": 570.37, 
+        "median": 238.27, 
+        "min": 3.44
+    }, 
+    "median_monthly_loan_4": {
+        "average_range": [
+            249.8, 
+            299.76
+        ], 
+        "median": 270.44
+    }, 
+    "median_monthly_loan_l4": {
+        "average_range": [
+            127.67, 
+            222.04
+        ], 
+        "median": 181.96
+    }, 
+    "net_price": {
+        "average_range": [
+            11175, 
+            19587
+        ], 
+        "max": 40000, 
+        "median": 16190, 
+        "min": -19360
+    }, 
+    "net_price_4": {
+        "average_range": [
+            15487, 
+            21298
+        ], 
+        "median": 18824
+    }, 
+    "net_price_l4": {
+        "average_range": [
+            7910, 
+            18527
+        ], 
+        "median": 14052
+    }, 
+    "net_price_private": {
+        "average_range": [
+            18516, 
+            23079
+        ], 
+        "max": 87414, 
+        "median": 20761, 
+        "min": -19360
+    }, 
+    "net_price_public": {
+        "average_range": [
+            7441, 
+            11560
+        ], 
+        "max": 32921, 
+        "median": 9954, 
+        "min": -6359
+    }, 
+    "repayment_rate": {
+        "average_range": [
+            0.55749129, 
+            0.79727685
+        ], 
+        "max": 1, 
+        "median": 0.67900875, 
+        "min": 0.05
+    }, 
+    "repayment_rate_4": {
+        "average_range": [
+            0.7463, 
+            0.8652
+        ], 
+        "max": 1, 
+        "median": 0.7586, 
+        "min": 0.05
+    }, 
+    "repayment_rate_l4": {
+        "average_range": [
+            0.4589, 
+            0.6178
+        ], 
+        "max": 1, 
+        "median": 0.5402, 
+        "min": 0.05
+    }, 
+    "retention_rate": {
+        "average_range": [
+            0.60070002, 
+            0.75470001
+        ], 
+        "max": 1, 
+        "median": 0.67769998, 
+        "min": 0
+    }, 
+    "retention_rate_4": {
+        "average_range": [
+            0.663, 
+            0.7896
+        ], 
+        "max": 1, 
+        "median": 0.6973, 
+        "min": 0
+    }, 
+    "retention_rate_l4": {
+        "average_range": [
+            0.5473, 
+            0.6311
+        ], 
+        "max": 1, 
+        "median": 0.5959, 
+        "min": 0
+    }
+}

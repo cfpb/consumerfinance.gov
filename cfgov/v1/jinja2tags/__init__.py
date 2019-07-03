@@ -99,7 +99,6 @@ class V1Extension(Extension):
             'email_popup': email_popup,
             'complaint_issue_banner': complaint_issue_banner,
             'complaint_maintenance_banner': complaint_maintenance_banner,
-            'fcm_label': ref.fcm_label,
             'get_menu_items': get_menu_items,
             'get_model': get_model,
             'get_unique_id': get_unique_id,

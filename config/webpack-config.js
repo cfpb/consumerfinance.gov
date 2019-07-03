@@ -22,7 +22,7 @@ const COMMON_MODULE_CONFIG = {
        Regex test: https://regex101.com/r/zizz3V/5 */
     exclude: {
       test: /node_modules/,
-      exclude: /node_modules\/(?:cf\-.+|cfpb\-.+)/
+      exclude: /node_modules\/(?:cf-.+|cfpb-.+)/
     },
     use: {
       loader: 'babel-loader?cacheDirectory=true',
@@ -193,7 +193,9 @@ if ( envvars.NODE_ENV === 'development' ) {
   // eslint-disable-next-line guard-for-in
   let key;
   for ( key in configExports ) {
-    Object.assign( configExports[key], devConf );
+    if ( {}.hasOwnProperty.call( configExports, key ) ) {
+      Object.assign( configExports[key], devConf );
+    }
   }
 }
 
