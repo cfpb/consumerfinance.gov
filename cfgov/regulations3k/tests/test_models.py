@@ -6,7 +6,7 @@ import unittest
 
 # from django.core.urlresolvers import reverse
 from django.contrib.auth.models import AnonymousUser, User
-from django.core.exceptions import PermissionDenied, ValidationError
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, QueryDict
 from django.test import (
@@ -57,8 +57,10 @@ class RegModelTests(DjangoTestCase):
             Part,
             part_number='1030',
             title='Truth In Savings',
-            letter_code='DD', chapter='X'
+            letter_code='DD',
+            chapter='X'
         )
+
         self.effective_version = mommy.make(
             EffectiveVersion,
             effective_date=datetime.date(2014, 1, 18),
@@ -75,6 +77,7 @@ class RegModelTests(DjangoTestCase):
             part=self.part_1002,
             draft=True,
         )
+
         self.subpart = mommy.make(
             Subpart,
             label='Subpart General',
@@ -296,7 +299,7 @@ class RegModelTests(DjangoTestCase):
     def test_get_secondary_nav_items(self):
         request = self.get_request()
         request.path = '/regulations/1002/4/'
-        sections = list(self.reg_page.get_section_query().all())
+        sections = list(self.reg_page.get_section_query(request).all())
         test_nav_items = get_secondary_nav_items(
             request, self.reg_page, sections
         )[0]
@@ -499,7 +502,7 @@ class RegModelTests(DjangoTestCase):
     def test_get_effective_version_not_draft(self):
         request = self.get_request()
         effective_version = self.reg_page.get_effective_version(
-            request, '2014-01-18'
+            request, date_str='2014-01-18'
         )
         self.assertEqual(effective_version, self.effective_version)
 
@@ -507,22 +510,22 @@ class RegModelTests(DjangoTestCase):
         request = self.get_request()
         request.user = self.superuser
         effective_version = self.reg_page.get_effective_version(
-            request, '2020-01-01'
+            request, date_str='2020-01-01'
         )
         self.assertEqual(effective_version, self.draft_effective_version)
 
     def test_get_effective_version_draft_without_perm(self):
         request = self.get_request()
-        with self.assertRaises(PermissionDenied):
+        with self.assertRaises(Http404):
             self.reg_page.get_effective_version(
-                request, '2020-01-01'
+                request, date_str='2020-01-01'
             )
 
     def test_get_effective_version_dne(self):
         request = self.get_request()
         with self.assertRaises(Http404):
             self.reg_page.get_effective_version(
-                request, '2050-01-01'
+                request, date_str='2050-01-01'
             )
 
     def test_index_page_with_effective_date(self):
