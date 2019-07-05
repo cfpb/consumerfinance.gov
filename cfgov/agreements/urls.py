@@ -1,9 +1,10 @@
 from django.conf.urls import url
 
-from agreements.views import index, issuer_search
+from agreements.views import index, issuer_search, prepaid
 
 
 urlpatterns = [
+    url(r'^$', prepaid, name='prepaid'),
     url(r'^$', index, name='agreements_home'),
     url(r'^issuer/(?P<issuer_slug>.*)/$',
         issuer_search,

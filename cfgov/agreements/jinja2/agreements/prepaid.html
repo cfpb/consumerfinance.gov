@@ -1,0 +1,357 @@
+{% extends 'layout-full.html' %}
+{% import 'atoms/checkbox.html' as checkbox %}
+{% import 'atoms/radio-button.html' as radio %}
+{% import 'atoms/tag.html' as tag %}
+<!-- {% import 'regulations3k/regulations3k-search-bar.html' as search_bar %} -->
+{% import 'agreements/search_result_item.html' as search_item %}
+{% import 'molecules/pagination.html' as pagination with context %}
+{% from 'organisms/expandable.html' import expandable with context %}
+
+{# HEAD items #}
+
+{% block title -%}
+    Prepaid Agreements Search | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block desc -%}
+    Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.
+{%- endblock desc %}
+
+{% block og_image -%}
+    <meta property="og:image" content="{{ meta_image_url }}">
+    <meta property="twitter:image" content="{{ meta_image_url }}">
+    {# Optional property if you want to use Twitter's large card format
+       https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary-card-with-large-image
+    <meta name="twitter:card" content="summary_large_image">
+    #}
+{%- endblock og_image %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/agreements/css/main.css') }}">
+{%- endblock css %}
+
+
+{# BODY items #}
+
+{% block body_classes %}
+    {{ super() }}
+{% endblock body_classes %}
+
+{% block content_main_modifiers -%}
+    content__1-3
+{%- endblock %}
+
+{% block content_main scoped %}
+    <div class="content_wrapper">
+    <div class="block block__flush-top">
+    <h1>Prepaid agreement database</h1>
+    <div class="lead-paragraph" style="max-width: 41.875rem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+    </div>
+    <div>
+    <div>
+        <h2>Search prepaid account agreements (April 2019 - present)</h2>
+        <p>You may also choose to download all prepaid agreements as a single compressed file.</p>
+    </div>
+    <form class="u-mt30" method="get" action="." >
+        <div class="o-form__input-w-btn">
+            <div class="o-form__input-w-btn_input-container">
+                <div class="m-btn-inside-input input-contains-label">
+                    <label for="searchText" class="input-contains-label_before input-contains-label_before__search">
+                        {{ svg_icon('search') }}
+                        <span class="u-visually-hidden">The term to search for</span>
+                    </label>
+                    <input id="searchText" type="text" autocomplete="off" class="a-text-input" name="q"
+                            placeholder="Enter your search term(s)"
+                            value="{{ query if query else ''}}">
+                </div>
+            </div>
+            <div class="o-form__input-w-btn_btn-container">
+                <button class="a-btn">Search</button>
+            </div>
+        </div>
+    </form>
+    {% if results %}
+    
+    <div class="search_results">
+        <div class="block u-mt0">
+            <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters" style="padding-top:20px;">
+                <div class="o-filterable-list-controls">
+                <h3>Filter results by...</h3>
+                <form method="get" action="." class="o-form ">
+
+
+                    
+
+
+                        {% set expandable_settings = {
+                            'label': 'Issuer name',
+                            'is_expanded': false,
+                            'is_midtone': true,
+                            'hide_cue_label': true
+                        } %}
+                        {% call() expandable(expandable_settings) %}
+                        <div class="o-form_group">
+                         <div class="m-form-field u-mb5">
+                            
+                            <select name="issuers" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer" class="o-multiselect">
+                                {% for issuer in issuers %}
+                                <option value="{{ issuer.salesforce_id }}">{{ issuer.name | lower | title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        </div>
+                        {% endcall %}
+                        
+
+                        <!-- <div class="m-form-field u-mb15">
+                            <label class="a-label a-label__heading"
+                                   for="card_type">
+                                Prepaid account type
+                            </label>
+                            <select name="card_type" multiple="multiple" placeholder="Select prepaid account type" id="card_type" class="o-multiselect">
+                                <option value="gpr">GPR (General Purpose Reloadable)</option>
+                                <option value="payroll">Payroll card</option>
+                            </select>
+                        </div> -->
+
+
+                        {% set expandable_settings = {
+                            'label': 'Prepaid account type',
+                            'is_expanded': false,
+                            'is_midtone': true,
+                            'hide_cue_label': true
+                        } %}
+                        {% call() expandable(expandable_settings) %}
+                         <div class="o-form_group">
+                            <fieldset class="o-form_fieldset">
+                                <ul class="m-list m-list__unstyled">
+                                    {% set types = [ 
+                                        ['p2p', 'Digital wallet/P2P'],
+                                        ['benefits', 'Government Benefits'],
+                                        ['gpr', 'GPR (General Purpose Reloadable)'],
+                                        ['payroll', 'Payroll'],
+                                        ['other', 'Other'],
+                                        ['prison', 'Prison release'],
+                                        ['refunds', 'Refunds'],
+                                        ['student', 'Student'],
+                                        ['tax', 'Tax'],
+                                        ['travel', 'Travel'],
+                                    ]%}
+                                    {% for type in types %}
+                                    <li>
+                                        {{ checkbox.render({
+                                            'label': type[1],
+                                            'value': type[0],
+                                            'id': type[0],
+                                            'name': 'card_type',
+                                            'class': 'test'
+                                            
+                                        }) }}
+                                        <!-- <div class="num-results">{{ num_results }}</div> -->
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </fieldset>
+                        </div>
+                        {% endcall %}
+
+                        <!-- <div class="m-form-field m-form-field__select">
+                            <label class="a-label a-label__heading"
+                                   for="product_status">
+                                Status
+                            </label>
+                            <div class="a-select">
+                                <select name="product_status"
+                                        id="product_status"
+                                        placeholder="">
+                                    <option value="gpr">Show all</option>
+                                    <option value="gpr">Active</option>
+                                    <option value="payroll">Withdrawn</option>
+                                </select>
+                            </div>
+                        </div> -->
+
+                        
+
+                        <!-- <div class="m-form-field u-mb15">
+                            <label class="a-label a-label__heading"
+                                   for="card_status">
+                                Current status
+                            </label>
+                            <select name="card_status" multiple="multiple" placeholder="-" id="card_status" class="o-multiselect">
+                                <option value="gpr">Active</option>
+                                <option value="payroll">Withdrawn</option>
+                            </select>
+                        </div>
+ -->
+                        {% set expandable_settings = {
+                            'label': 'Current status',
+                            'is_expanded': false,
+                            'is_midtone': true,
+                            'hide_cue_label': true,
+                            'paragraph': 'This will be either active or withdrawn.'
+                        } %}
+                        {% call() expandable(expandable_settings) %}
+                         <div class="o-form_group">
+                            <fieldset class="o-form_fieldset">
+
+                                <ul class="m-list m-list__unstyled">
+                                
+                                    <li>
+                                        {{ checkbox.render({
+                                            'label': 'Active',
+                                            'value': 'active',
+                                            'id': 'active',
+                                            'name': 'card_status',
+                                            
+                                        }) }}
+                                        <!-- <div class="num-results">{{ num_results }}</div> -->
+                                    </li>
+                                    <li>
+                                        {{ checkbox.render({
+                                            'label': 'Withdrawn',
+                                            'value': 'withdrawn',
+                                            'id': 'withdrawn',
+                                            'name': 'card_status',
+                                            
+                                        }) }}
+                                        <!-- <div class="num-results">{{ num_results }}</div> -->
+                                    </li>
+                                </ul>
+                            </fieldset>
+                        </div>
+                        {% endcall %}
+
+                        
+
+                        {% set expandable_settings = {
+                            'label': 'Agreement effective date',
+                            'is_expanded': false,
+                            'is_midtone': true,
+                            'hide_cue_label': true
+                        } %}
+                        {% call() expandable(expandable_settings) %}
+                        <div class="o-form_group">
+                            
+                            <div class="m-form-field">
+                            <input class="a-text-input a-text-input__full"
+                               id="start_date"
+                               name="start_date"
+                               type="text"
+                               placeholder="mm/dd/yyyy"
+                               style="max-width:10em">
+                            </div>
+                        </div>
+                        {% endcall %}
+
+                        
+
+                      <!-- <div class="m-form-field m-form-field__select">
+                            <label class="a-label a-label__heading"
+                                   for="card_type">
+                                Prepaid type
+                            </label>
+                            <div class="a-select">
+                                <select name="card_type"
+                                        id="card_type">
+                                    <option value="" disabled selected>Select prepaid card or account type<option>
+                                    <option value="gpr">GPR (General Purpose Reloadable)</option>
+                                    <option value="payroll">Payroll card</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div> -->
+                    <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
+
+
+
+                </form>
+            </aside>
+
+            <div class="content_main content__flush-all-on-small content__flush-bottom">
+                <div class="results_header">
+                    {% if ( current_count and current_count > 0 ) or total_count > 0 %}
+                        <div class="results_count">
+                            <h3>Showing
+                                {% if total_count > current_count  %}
+                                     {{ current_count }}
+                                    match{% if current_count > 1 %}es{% endif %}
+                                    out of
+                                {% endif %}
+                                {{ total_count }} total agreements
+                            </h3>
+                        </div>
+                    {% else %}
+                        <div class="results_count results_count__empty" data-results-count="0">
+                            <h3>No results match your search.</h3>
+                            <<p>Try adjusting your filters or searching for different terms.</p>
+                        </div>
+                    {% endif %}
+
+                    {% if show_filters %}
+                    <div class="filters_applied">
+                        <span class="filters_applied-label">
+                            Filters applied:
+                        </span>
+                        <div class="filters_tags"></div>
+                        <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear"
+                                data-js-hook="behavior_clear-all">
+                            Clear all filters
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+                {% set show_filters = True %}
+                {% if show_filters %}
+                    <div class="filters_applied">
+                        <span class="filters_applied-label">
+                            Filters applied:
+                        </span>
+                        <div class="filters_tags">
+                            {{ tag.render({
+                                'label': 'A filter',
+                                'value': 'val',
+                                'behavior': 'clear-filter'
+                            }) }}
+                            <button class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
+                                    data-js-hook="behavior_clear-all">
+                                Clear all filters
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="results_list">
+                {% for result in results %}
+                    {{ search_item.render( result ) }}
+                {% endfor %}
+                </div>
+                <div class="results_paginator">
+                    {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+            console.log('running!')
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/agreements/js/search.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}
