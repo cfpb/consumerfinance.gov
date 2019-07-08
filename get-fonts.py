@@ -1,6 +1,7 @@
 import argparse
 import os
 import os.path
+import sys
 
 import requests
 
@@ -52,3 +53,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.agree and args.agree == "yes":
         download_fonts()
+    else:
+        parser.print_help()
+        sys.exit(1)
