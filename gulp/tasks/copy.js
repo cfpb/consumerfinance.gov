@@ -55,6 +55,33 @@ gulp.task( 'copy:icons:r3k', () => {
   return stream;
 } );
 
+
+gulp.task( 'copy:icons:r3k', () => {
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/apps/regulations3k/icons/`
+  );
+  return stream;
+} );
+
+gulp.task( 'copy:icons:agreements', () => {
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/apps/agreements/icons/`
+  );
+  return stream;
+} );
+
+
+gulp.task( 'copy:json:code', () => {
+  const stream = _genericCopy(
+    'code.json',
+    paths.processed
+  );
+  return stream;
+} );
+
+
 gulp.task( 'copy:lightbox2', () => {
   const stream = _genericCopy(
     `${ paths.modules }/lightbox2/dist/**/*`,
@@ -68,7 +95,8 @@ gulp.task( 'copy:icons',
   gulp.parallel(
     'copy:icons:main',
     'copy:icons:oah',
-    'copy:icons:r3k'
+    'copy:icons:r3k',
+    'copy:icons:agreements'
   )
 );
 
