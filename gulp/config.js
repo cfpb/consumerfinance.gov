@@ -87,32 +87,5 @@ module.exports = {
       paths.legacy + '/nemo/_/js/main.js',
       paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
     ]
-  },
-  copy: {
-    jsonCode: {
-      src:  'code.json',
-      dest: paths.processed
-    },
-    icons: {
-      src:  paths.modules + '/cf-icons/src/icons/*.svg',
-      dest: paths.processed + '/icons/'
-    },
-    iconsOAH: {
-      dest: paths.processed + '/apps/owning-a-home/icons/'
-    },
-    iconsR3K: {
-      dest: paths.processed + '/apps/regulations3k/icons/'
-    },
-    // TODO: Remove when icon font is entirely deprecated.
-    iconsOld: {
-      src:  paths.modules + '/cf-icons/src/fonts/*',
-      dest: paths.processed + '/fonts/'
-    },
-    lightbox2: {
-      src: [
-        paths.modules + '/lightbox2/dist/**/*'
-      ],
-      dest: paths.processed + '/lightbox2'
-    }
   }
 };

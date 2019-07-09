@@ -41,7 +41,7 @@
         <h1>{{section.title}}</h1>
 
         <div class="regulation-meta">
-            {% if version == regulation.effective_version %}
+            {% if requested_version == current_version %}
                 <div class="a-date">
                     This version is the current regulation
                 </div>
@@ -70,20 +70,20 @@
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message">This version is not the current regulation.</div>
                         <p class="m-notification_explanation">
-                        {% if version.effective_date < regulation.effective_version.effective_date %}
+                        {% if requested_version.effective_date < current_version.effective_date %}
                             You are viewing a previous version of this regulation with ammendments that went into effect on
                         {% endif %}
-                        {% if version.effective_date > regulation.effective_version.effective_date %}
+                        {% if requested_version.effective_date > current_version.effective_date %}
                             You are viewing a future version of this regulation with ammendments that will go into effect on
                         {% endif %}
-                        {{ ap_date(version.effective_date) }}. <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">View all versions of this regulation</a>
+                        {{ ap_date(requested_version.effective_date) }}. <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">View all versions of this regulation</a>
                         </p>
                     </div>
                 </div>
             {% endif %}
         </div>
 
-        {% if version == regulation.effective_version %}
+        {% if requested_version == current_version %}
             <div class="a-rule-break m-full-width-text"></div>
         {% endif %}
 
@@ -103,14 +103,14 @@
                                 </a>
                             </div>
                             <div class="o-regulations-wayfinder__version">
-                                {% if version.effective_date < regulation.effective_version.effective_date %}
+                                {% if requested_version.effective_date < current_version.effective_date %}
                                     Previous version (effective
-                                    {{ ap_date(version.effective_date) }} to
+                                    {{ ap_date(requested_version.effective_date) }} to
                                     {{ ap_date(next_version.effective_date) }})
                                 {% endif %}
-                                {% if version.effective_date > regulation.effective_version.effective_date %}
+                                {% if requested_version.effective_date > current_version.effective_date %}
                                     Future version (effective
-                                    {{ ap_date(version.effective_date) }})
+                                    {{ ap_date(requested_version.effective_date) }})
                                 {% endif %}
                             </div>
                         </div>
@@ -127,7 +127,7 @@
         {% for version in versions %}
             <li>
                 {% if section_label %}
-                    {% if version.effective_date == page.regulation.effective_version.effective_date  %}
+                    {% if version.effective_date == current_version.effective_date  %}
                         <a href="{{ routablepageurl(page, 'section', section_label=section_label) }}">
                     {% else %}
                         <a href="{{ routablepageurl(page, 'section', date_str=version.date_str, section_label=section_label) }}">
@@ -138,7 +138,7 @@
                    {{ ap_date(version.effective_date) }}
                 </a>
 
-                {% if version.effective_date == page.regulation.effective_version.effective_date %}
+                {% if version.effective_date == current_version.effective_date %}
                 (current regulation)
                 {% elif version.draft %}
                 (draft)
@@ -150,10 +150,10 @@
     {% else %}
         <div class="block block__flush-top block__flush-bottom">
             <h1>{{ page.title }}</h1>
-            {% if version == regulation.effective_version %}
+            {% if requested_version == current_version %}
                 <div class="regulation-meta">
                     <div class="a-date">
-                            Most recently amended {{ ap_date(version.effective_date) }}
+                            Most recently amended {{ ap_date(requested_version.effective_date) }}
                     </div>
                 </div>
             {% endif %}
@@ -163,7 +163,7 @@
             {{ render_block.render(block, loop.index) }}
         {%- endfor %}
 
-        {% if version != regulation.effective_version %}
+        {% if requested_version != current_version %}
         <div class="block block__flush-regs3k">
             <div class="m-full-width-text
                         m-notification
@@ -173,11 +173,11 @@
                 <div class="m-notification_content">
                     <div class="h4 m-notification_message">This version is not the current regulation.</div>
                     <p class="m-notification_explanation">
-                        {% if version.effective_date < regulation.effective_version.effective_date %}
-                            You are viewing a previous version of this regulation with ammendments that went into effect on {{ ap_date(version.effective_date) }}.
+                        {% if requested_version.effective_date < current_version.effective_date %}
+                            You are viewing a previous version of this regulation with ammendments that went into effect on {{ ap_date(requested_version.effective_date) }}.
                         {% endif %}
-                        {% if version.effective_date > regulation.effective_version.effective_date %}
-                            You are viewing a future version of this regulation with ammendments that will go into effect on {{ ap_date(version.effective_date) }}.
+                        {% if requested_version.effective_date > current_version.effective_date %}
+                            You are viewing a future version of this regulation with ammendments that will go into effect on {{ ap_date(requested_version.effective_date) }}.
                         {% endif %}
                     </p>
                 </div>
@@ -187,7 +187,7 @@
 
         <div class="block block__flush-regs3k">
                 <ul class="m-list m-list__links m-full-width-text">
-                    {% if version == regulation.effective_version %}
+                    {% if requested_version == current_version %}
                         <li class="m-list_item">
                             <a class="m-list_link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label) }}">
                                 View current regulation
@@ -209,7 +209,7 @@
                         </li>
                     {% endif %}
 
-                    {% if version == regulation.effective_version %}
+                    {% if requested_version == current_version %}
                         <li class="m-list_item">
                             <a class="m-list_link" href="{{ search_url }}">
                                 Search this regulation
