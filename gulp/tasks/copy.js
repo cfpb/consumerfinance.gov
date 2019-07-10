@@ -23,6 +23,14 @@ function _genericCopy( src, dest ) {
     .pipe( gulp.dest( dest ) );
 }
 
+gulp.task( 'copy:root', () => {
+  const stream = _genericCopy(
+    `${ paths.unprocessed }/root/**/*`,
+    paths.processed
+  );
+  return stream;
+} );
+
 gulp.task( 'copy:icons:main', () => {
   const stream = _genericCopy(
     iconSrc,
@@ -47,14 +55,6 @@ gulp.task( 'copy:icons:r3k', () => {
   return stream;
 } );
 
-gulp.task( 'copy:json:code', () => {
-  const stream = _genericCopy(
-    'code.json',
-    paths.processed
-  );
-  return stream;
-} );
-
 gulp.task( 'copy:lightbox2', () => {
   const stream = _genericCopy(
     `${ paths.modules }/lightbox2/dist/**/*`,
@@ -75,7 +75,7 @@ gulp.task( 'copy:icons',
 gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
-    'copy:json:code',
-    'copy:lightbox2'
+    'copy:lightbox2',
+    'copy:root'
   )
 );
