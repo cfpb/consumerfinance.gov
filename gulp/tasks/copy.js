@@ -23,9 +23,9 @@ function _genericCopy( src, dest ) {
     .pipe( gulp.dest( dest ) );
 }
 
-gulp.task( 'copy:extra', () => {
+gulp.task( 'copy:root', () => {
   const stream = _genericCopy(
-    `${ paths.unprocessed }/extra/**/*`,
+    `${ paths.unprocessed }/root/**/*`,
     paths.processed
   );
   return stream;
@@ -74,8 +74,8 @@ gulp.task( 'copy:icons',
 
 gulp.task( 'copy',
   gulp.parallel(
-    'copy:extra',
     'copy:icons',
-    'copy:lightbox2'
+    'copy:lightbox2',
+    'copy:root'
   )
 );
