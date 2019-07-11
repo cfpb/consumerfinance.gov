@@ -8,9 +8,9 @@ import VideoPlayer from './VideoPlayer';
 let YoutubePlayer;
 
 const CLASSES = Object.freeze( {
-  VIDEO_PLAYER_SELECTOR: '.video-player__youtube',
-  IFRAME_CLASS_NAME:     'video-player_iframe__youtube',
-  IMAGE_LOADED_STATE:    'video-player_image-loaded'
+  VIDEO_PLAYER_SELECTOR: '.o-video-player__youtube',
+  IFRAME_CLASS_NAME:     'o-video-player_iframe__youtube',
+  IMAGE_LOADED_STATE:    'o-video-player_image-loaded'
 } );
 
 const API = {

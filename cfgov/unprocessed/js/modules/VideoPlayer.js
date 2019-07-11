@@ -12,13 +12,13 @@ import { noopFunct } from './util/standard-type';
 const DOM_INVALID = ERROR_MESSAGES.DOM.INVALID;
 
 const CLASSES = Object.freeze( {
-  VIDEO_PLAYER_SELECTOR:     '.video-player',
+  VIDEO_PLAYER_SELECTOR:     '.o-video-player',
   VIDEO_PLAYING_STATE:       'video-playing',
-  IMAGE_SELECTOR:            '.video-player_image',
-  IFRAME_CLASS_NAME:         'video-player_iframe',
-  IFRAME_CONTAINER_SELECTOR: '.video-player_iframe-container',
-  PLAY_BTN_SELECTOR:         '.video-player_play-btn',
-  CLOSE_BTN_SELECTOR:        '.video-player_close-btn',
+  IMAGE_SELECTOR:            '.o-video-player_image',
+  IFRAME_CLASS_NAME:         'o-video-player_iframe',
+  IFRAME_CONTAINER_SELECTOR: '.o-video-player_iframe-container',
+  PLAY_BTN_SELECTOR:         '.o-video-player_play-btn',
+  CLOSE_BTN_SELECTOR:        '.o-video-player_close-btn',
   FCM_CONTAINER_SELECTOR:    '.o-featured-content-module'
 } );
 
