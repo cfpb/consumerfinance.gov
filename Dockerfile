@@ -17,7 +17,7 @@ RUN yum install -y epel-release && \
     yum install -y make gcc gcc-c++ kernel-devel mailcap which && \
     yum install -y postgresql10 postgresql10-devel && \
     yum install -y python-devel python36 python36-devel && \
-    yum install -y httpd mod_wsgi && \
+    yum install -y httpd python27-mod_wsgi && \
     yum clean all
 
 # Copy over our requirement files to install
