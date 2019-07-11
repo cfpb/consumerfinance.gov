@@ -12,7 +12,7 @@ release_artifact="${artifact_name}_${artifact_label}_${artifact_release}.zip"
 cfgov_refresh_volume=/cfgov
 webfonts_path="$cfgov_refresh_volume/static.in/cfgov-fonts"
 
-# Verify that source volume has been mapped.
+# Verify that the source volume has been mapped.
 if [ ! -d "$cfgov_refresh_volume" ]; then
     echo "Source directory $cfgov_refresh_volume does not exist."
     echo "Did you forget to mount the Docker volume?"

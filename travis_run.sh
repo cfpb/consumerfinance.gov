@@ -13,6 +13,8 @@ if [ "$RUNTEST" == "frontend" ]; then
 elif [ "$RUNTEST" == "backend" ]; then
     TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox
     bash <(curl -s https://codecov.io/bash) -F backend
+elif [ "$RUNTEST" == "drama-free-django" ]; then
+    ./docker/drama-free-django/travis.sh
 elif [ "$RUNTEST" == "docs" ]; then
     mkdocs build
 fi
