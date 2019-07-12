@@ -43,13 +43,11 @@ function Notification( element ) {
   let _currentType;
 
   /**
-   * @returns {Notification|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Notification} An instance.
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+      return this;
     }
 
     // Check and set default type of notification.
