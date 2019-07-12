@@ -213,6 +213,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
     content = StreamField([
         ('info_unit_group', organisms.InfoUnitGroup()),
+        ('full_width_text', organisms.FullWidthText()),
     ], null=True, blank=True)
 
     regulation = models.ForeignKey(
