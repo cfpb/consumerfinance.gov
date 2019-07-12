@@ -43,32 +43,6 @@ The structure looks like this:
     by including the required dependencies, polyfills, etc. in its
     template's `{% block css %}` or `{% block javascript scoped %}` blocks.
 
-
-### TIP: Loading satellite apps
-Some projects fit within the cfgov-refresh architecture,
-but are not fully incorporated into the project.
-These are known as "satellite apps."
-
-See [here](../satellite-apps) for a list and description of satellite apps.
-
-In addition to the aforementioned list,
-[Rural or Underserved](https://github.com/cfpb/rural-or-underserved-test)
-has its own installation requirements.
-
-If using Docker, follow
-[these guidelines](../running-docker#work-on-satellite-apps).
-
-Otherwise, if not using Docker, follow these guidelines:
-
-1. Build the third-party projects per their directions
-1. Stop the web server and return to `cfgov-refresh`
-1. Run `pip install -e ../<sibling>` to load the projects' dependencies
-
-!!! note
-    Do not install the projects directly into the `cfgov-refresh` directory.
-    Clone and install the projects as siblings to `cfgov-refresh`,
-    so that they share the same parent directory (`~/Projects` or similar).
-
 ### TIP: Working with the templates
 
 #### Front-End Template/Asset Locations

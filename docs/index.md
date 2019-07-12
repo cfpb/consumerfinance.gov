@@ -1,6 +1,6 @@
 # Introduction to cfgov-refresh
 
-This is the documentation for the cfgov-refresh project, a redesign of the [www.consumerfinance.gov](https://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
+This is the documentation for the cfgov-refresh project that powers the [www.consumerfinance.gov](https://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
 
 ## Disclaimer
 
