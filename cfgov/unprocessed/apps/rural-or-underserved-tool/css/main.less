@@ -3,8 +3,9 @@
    Master Less file
    ========================================================================== */
 
-@import (less) 'cf-core.less';
+@import (reference) 'cf-core.less';
 @import (less) './file-input.less';
+
 
 // Select menu inside the h2 header on the search tool view.
 .u-inline-select {
@@ -63,6 +64,10 @@ tr.data + tr[class=""] {
 // Print-related styling.
 @import (less) './print.less';
 
+// u-hidden is duplicated from cf-core,
+// but since we only import cf-core by reference it gets overridden by cf-grid,
+// making it necessary to define here so it overrides cf-grid display: block.
+.u-hidden,
 .print-only {
     display: none;
 }
