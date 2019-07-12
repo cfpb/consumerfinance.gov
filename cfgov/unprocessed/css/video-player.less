@@ -1,7 +1,7 @@
 
 /* ==========================================================================
    cfgov-refresh
-   video-player
+   o-video-player
    ========================================================================== */
 
 /* topdoc
@@ -20,19 +20,15 @@
 // Variable used to set the size of the play button's SVG icon.
 @play-btn-icon-size: 1.875em;
 
-// Variable used to help center the video container.
-@share-width__px: 130px;
+// Magic number: height of standard button.
+@standard-btn-height__px: 36px;
 
-// Variable used for positioning of share icons
-@video-width__px: 568px;
-
-
-.video-player {
+.o-video-player {
     overflow: hidden;
     background: @white;
 }
 
-.video-player.video-playing {
+.o-video-player.video-playing {
     overflow: visible;
 
     .hide-on_video-playing {
@@ -50,7 +46,7 @@
 
 // Video image related styles
 
-.video-player_image-container {
+.o-video-player_image-container {
     position: relative;
     // @black not used because it's not totally black.
     background-color: #000;
@@ -59,8 +55,8 @@
     width: 100%;
 }
 
-.video-player_image {
-    // Remove space below image created by inline display spacing
+.o-video-player_image {
+    // Remove space below image created by inline display spacing.
     display: block;
     opacity: 0;
     transition: opacity .25s;
@@ -71,25 +67,25 @@
     }
 }
 
-.video-player_play-btn {
+.o-video-player_play-btn {
     width: @play-btn-size__px;
     height: @play-btn-size__px;
     border: 2px solid @gray-5;
     border-radius: 100%;
     position: absolute;
     z-index: 3;
-    background-color: rgba(16, 24, 32, 0.75); // CFPB Black (#101820) at 80% opacity
+    background-color: rgba( 16, 24, 32, 0.75 ); // CFPB Black (#101820) at 80% opacity
     color: @white;
     font-size: @play-btn-icon-size;
 
     &:hover {
-        background-color: rgba(0, 114, 206, 0.75); // Pacific (#0072ce) at 80% opacity
+        background-color: rgba( 0, 114, 206, 0.75 ); // Pacific (#0072ce) at 80% opacity
     }
 
     &__center {
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate( -50%, -50% );
     }
 
     &__bottomRight {
@@ -108,12 +104,12 @@
 }
 
 .lt-ie9 {
-    .video-player_play-btn {
+    .o-video-player_play-btn {
         margin-left: -1 * @play-btn-size__px;
     }
 }
 
-.video-player_video-container {
+.o-video-player_video-container {
     opacity: 0;
     height: 0;
     margin: auto;
@@ -121,39 +117,39 @@
     background-color: #000;
 }
 
-.video-player_iframe-container {
+.o-video-player_iframe-container {
     height: 100%;
     margin: 0;
 }
 
-.video-player_video-actions-container {
+.o-video-player_video-actions-container {
     right: 0;
     left: auto;
 }
 
 .respond-to-min( @bp-sm-min, {
-    .video-player_video-actions-container {
+    .o-video-player_video-actions-container {
         position: absolute;
         top: 0;
     }
 
-    .video-player .m-social-media,
-    .video-player_video-actions {
+    .o-video-player .m-social-media,
+    .o-video-player_video-actions {
         margin-bottom: @grid_gutter-width;
     }
 } );
 
-.video-player_video-container__flexible {
-    .video-player_iframe-container {
+.o-video-player_video-container__flexible {
+    .o-video-player_iframe-container {
         width: auto;
         .u-flexible-container();
     }
 
-    .video-player_iframe {
+    .o-video-player_iframe {
         .u-flexible-container_inner();
     }
 
-    .video-player_video-actions-container {
+    .o-video-player_video-actions-container {
         position: relative;
         top: 0;
         left: 0;
@@ -167,7 +163,7 @@
     }
 
     .m-social-media,
-    .video-player_video-actions {
+    .o-video-player_video-actions {
         margin-bottom: 0;
         .grid_column(6);
 
@@ -177,7 +173,7 @@
     }
 }
 
-.video-player_video-actions-container {
+.o-video-player_video-actions-container {
     .grid_wrapper();
 
     padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -193,7 +189,7 @@
     }
 }
 
-.video-player .m-social-media {
+.o-video-player .m-social-media {
     .cf-icon-svg {
         fill: @white;
     }
@@ -204,53 +200,51 @@
     }
 }
 
-.video-player .m-social-media,
-.video-player_video-actions {
+.o-video-player .m-social-media,
+.o-video-player_video-actions {
     .respond-to-max( @bp-xs-max, {
         margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
     } );
 }
 
 .respond-to-max( @bp-xs-max, {
-    .video-player_iframe-container {
+    .o-video-player_iframe-container {
         .u-flexible-container();
     }
 
-    .video-player_iframe {
+    .o-video-player_iframe {
         .u-flexible-container_inner();
     }
 } );
 
-// Special styles for playing within an FCM
+// Special styles for playing within a Featured Content Module (FCM).
 .o-featured-content-module {
-    .video-player_video-actions-container {
+    .o-video-player_video-actions-container {
         margin: 0;
         padding: 0;
-        // Magic number: height of standard button + 1px border around FCM.
-        top: -37px;
+        // Magic number: height of standard button and 1px border around FCM.
+        top: ( @standard-btn-height__px + 1px ) * -1;
     }
 
-    .video-player_video-actions {
+    .o-video-player_video-actions {
         // These properties are required to create a masked window for the
         // close button to animate up into.
-        // Magic number: height of standard button.
-        height: 36px;
+        height: @standard-btn-height__px;
         margin: 0;
         overflow: hidden;
     }
 
-    .video-player_close-btn {
+    .o-video-player_close-btn {
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
         display: block;
         // Pushes button out of masked window when not playing.
-        // Magic number: height of standard button.
-        margin-top: 36px;
+        margin-top: @standard-btn-height__px;
     }
 }
 
 .respond-to-max( @bp-xs-max, {
-    .o-featured-content-module .video-player_video-actions-container {
+    .o-featured-content-module .o-video-player_video-actions-container {
         display: none;
     }
 } );
@@ -261,14 +255,14 @@
         transition: 0.5s all ease-out;
         min-height: 0;
 
-        .video-player_close-btn {
+        .o-video-player_close-btn {
             // Moves button up into the masked window when playing.
             margin-top: 0;
             transition: 0.5s margin-top ease-out;
         }
     }
 
-    .o-featured-content-module_visual .video-player_iframe {
+    .o-featured-content-module_visual .o-video-player_iframe {
         opacity: 0;
         transition-delay: 0.5s;
         transition-duration: 0s;
@@ -281,7 +275,7 @@
         width: 100%;
         transition: 0.5s all ease-out;
 
-        .video-player_iframe {
+        .o-video-player_iframe {
             height: 100%;
             width: 100%;
             opacity: 1;
