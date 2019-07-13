@@ -30,11 +30,16 @@
 
 // Position search result totals.
 #results-total .content-l_col {
-    display: inline-grid;
-    grid-template-columns: 3em auto;
+    display: inline-flex;
+    min-width: 12em;
 
-    & h4 {
+    & > h1 {
+        text-align: right;
+    }
+
+    & > h4 {
         margin-top: 0.5em;
+        margin-left: 1em;
     }
 }
 
@@ -49,6 +54,11 @@
 // Map in the results table.
 .hide-print.right {
     float: right;
+}
+
+// Override .o-table-wrapper__scrolling table added border.
+.o-table table {
+    border: none;
 }
 
 tr.data + tr[class=""] {
