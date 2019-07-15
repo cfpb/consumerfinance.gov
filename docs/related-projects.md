@@ -119,7 +119,7 @@ Any packages put there (e.g. via a `git clone` of a satellite apps' repo)
 will be automatically added to the
 [PYTHONPATH](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH) 
 in the Python containers.
-Apps ntained within will be importable from Python running in the Docker
+Apps located within will be importable from Python running in the Docker
 containers, and will take precedence over any versions installed from
 requirements files as part of the Docker images.
 
