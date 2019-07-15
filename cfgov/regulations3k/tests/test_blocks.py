@@ -9,7 +9,7 @@ from wagtail.wagtailcore.models import Page
 
 from model_mommy import mommy
 
-from regulations3k.blocks import NotificationBlock, RegulationsList
+from regulations3k.blocks import RegulationsList
 from regulations3k.models.django import EffectiveVersion, Part
 from regulations3k.models.pages import RegulationLandingPage, RegulationPage
 
@@ -109,40 +109,3 @@ class RegulationsListTestCase(TestCase):
         response = self.client.get('/regulations/')
         self.assertContains(response, 'Full width text content')
         self.assertContains(response, 'Reg B')
-
-
-class NotificationBlockTestCase(TestCase):
-
-    def test_notification_block(self):
-        block = NotificationBlock()
-        result = block.render(block.to_python({
-            'message': 'Test notification',
-            'explanation': 'For testing',
-            'notification_type': 'warning',
-        }))
-        self.assertIn('m-notification__warning', result)
-        self.assertIn(
-            '<div class="h4 m-notification_message">Test notification</div>',
-            result
-        )
-        self.assertIn(
-            '<p class="m-notification_explanation">For testing</p>',
-            result
-        )
-
-    def test_notification_block_without_explanation(self):
-        block = NotificationBlock()
-        result = block.render(block.to_python({
-            'message': 'Test notification',
-            'notification_type': 'warning',
-        }))
-        self.assertNotIn('m-notification_explanation', result)
-
-    def test_notification_block_success(self):
-        block = NotificationBlock()
-        result = block.render(block.to_python({
-            'message': 'Test notification',
-            'explanation': 'For testing',
-            'notification_type': 'success',
-        }))
-        self.assertIn('cf-icon-svg', result)
