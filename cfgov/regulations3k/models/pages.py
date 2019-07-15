@@ -28,9 +28,7 @@ from jinja2 import Markup
 from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
-from regulations3k.blocks import (
-    RegulationsFullWidthText, RegulationsListingFullWidthText
-)
+from regulations3k.blocks import RegulationsListingFullWidthText
 from regulations3k.models import Part, Section, SectionParagraph
 from regulations3k.parser.integer_conversion import LETTER_CODES
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
@@ -152,6 +150,7 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
         ('hero', molecules.Hero()),
     ], blank=True)
     content = StreamField([
+        ('notification', molecules.Notification()),
         ('full_width_text', RegulationsListingFullWidthText()),
     ], blank=True)
 
@@ -214,7 +213,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
     content = StreamField([
         ('info_unit_group', organisms.InfoUnitGroup()),
-        ('full_width_text', RegulationsFullWidthText()),
+        ('full_width_text', organisms.FullWidthText()),
     ], null=True, blank=True)
 
     regulation = models.ForeignKey(
