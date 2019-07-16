@@ -2,6 +2,7 @@ FROM centos:7
 
 # Set envvars required by apache
 ENV CFGOV_PATH=/src/cfgov-refresh\
+    CFGOV_CURRENT=/src/cfgov-refresh\
     STATIC_PATH=/src/cfgov-refresh/static/\
     APACHE_SERVER_ROOT=/src/cfgov-refresh/cfgov/apache\
     APACHE_WWW_PATH=/src/cfgov-refresh/cfgov/apache/www\
