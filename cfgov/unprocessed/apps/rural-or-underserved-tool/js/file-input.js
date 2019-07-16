@@ -1,7 +1,5 @@
 import DT from './dom-tools';
 
-const uploadName = '';
-
 /**
  * Reset the file input value.
  */
@@ -29,12 +27,10 @@ function resetError() {
 /**
  * Display an error message.
  * @param {string} message - An error message.
- * @param {string} type - A CSS class name.
  */
-function setError( message, type ) {
+function setError( message ) {
   DT.changeElHTML( '#fileErrorDesc', message );
-  DT.removeClass( '#fileError', 'u-hidden', 'warn', 'error' );
-  DT.addClass( '#fileError', type );
+  DT.removeClass( '#fileError', 'u-hidden' );
 }
 
 /**
