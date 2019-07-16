@@ -43,7 +43,6 @@ build_args=(
     "$artifact_name"
     "$artifact_label"
     -f
-    -r "$cfgov_refresh_volume/requirements/optional-public.txt"
     -r "$cfgov_refresh_volume/requirements/deployment.txt"
 )
 
