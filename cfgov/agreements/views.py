@@ -6,7 +6,15 @@ from django.shortcuts import render
 
 from agreements import RESULTS_PER_PAGE
 from agreements.models import Agreement, Entity, Issuer, Prepaid
+from v1.models.snippets import RelatedResource, ReusableText
 
+def get_disclaimer():
+    try:
+        return ReusableText.objects.get(
+            title='Legal disclaimer for consumer materials')
+    except ReusableText.DoesNotExist:
+        pass
+    
 
 def index(request):
     return render(request, 'agreements/index.html', {
@@ -80,3 +88,11 @@ def prepaid(request):
         'current_count': '',
         'query': ''
     })
+
+def detail(request):
+    return render(request, 'agreements/detail.html', {
+        'product': Prepaid.objects.exclude(issuer_name__contains='**').first(),
+        'disclaimer': get_disclaimer()
+    })
+
+

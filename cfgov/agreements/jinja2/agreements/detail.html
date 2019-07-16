@@ -1,0 +1,60 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/agreements/css/main.css') }}">
+{%- endblock css %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom prepaid-detail
+{%- endblock %}
+
+{% block content_main %}
+<h1>{{ product.product_name }}</h1>
+<div class="content-l">
+        <div class="content-l_col content-l_col-1-2">
+            <dl>
+                <dt><h2>Issuer Name</h2></dt>
+                <dd>{{ product.issuer_name | lower | title }}</dd>
+                <dt><h2>Prepaid Type</h2></dt>
+                <dd>{{ product.program_type }}</dd>
+            </dl>
+        </div>
+        <div class="content-l_col content-l_col-1-2">
+            <dl>
+                <dt><h2>Program manager</h2></dt>
+                <dd>{{ product.program_manager }}</dd>
+                <dt><h2>Status</h2></dt>
+                <dd>{{ product.status }}</dd>
+            </dl>
+        </div>
+    </div>
+        <dl>
+            <dt><h2>Other relevant parties</h2></dt>
+            <dd>{{ product.other_relevant_parties if product.other_relevant_parties else 'No information provided' }}</dd> 
+        </dl>
+<div class="block u-mt45 u-mb45">
+    <h2 class="h3"> Download most recent agreement files</h2>
+    <p style="margin-bottom:5px;">Agreement effective date: 7/1/19</p>
+    <p><a href="#">Compressed file</a></p>
+</div>
+
+<div class="block u-mt45">
+<h2 class="h3"> Download older agreements</h2>
+    <p style="margin-bottom:5px;">Agreement effective date: 8/1/18</p>
+    <p><a href="#">Compressed file</a></p>
+</div>
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+<header class="m-slug-header">
+  <h2 class="a-heading">
+      More on the prepaid account agreement database
+  </h2>
+</header>
+{{ disclaimer.text | safe }}
+{%- endblock %}
