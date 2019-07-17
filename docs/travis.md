@@ -4,6 +4,7 @@
 We use [Travis CI](https://travis-ci.org/) on cfgov-refresh to perform the following tasks:
 
 - Run automated unit tests and acceptance tests.
+- Build and validate a [deploy artifact](../deployment/).
 - Deploy this documentation website to GitHub on the [`gh-pages` branch](https://github.com/cfpb/cfgov-refresh/tree/gh-pages).
 
 ## How Travis is configured
@@ -20,6 +21,6 @@ To customize Travis to fit the above constraints, we use a combination of:
 
 ## An extra task for satellite repositories
 
-For our [satellite apps](https://cfpb.github.io/cfgov-refresh/satellite-repos/), Travis is also used to build and attach a deployment wheel file to every release.  
+For our [satellite apps](../related-projects/#satellite-apps), Travis is also used to build and attach a deployment wheel file to every release.
 
 An example is the `.whl` file on [this release of the retirement app](https://github.com/cfpb/retirement/releases/tag/0.7.6).
