@@ -3,6 +3,9 @@
 # Fail when any command fails.
 set -e
 
+# Echo commands.
+set -x
+
 artifact_filename=cfgov_current_build.zip
 artifact_volume=/cfgov
 

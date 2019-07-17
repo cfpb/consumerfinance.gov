@@ -3,6 +3,9 @@
 # Fail when any command fails.
 set -e
 
+# Echo commands.
+set -x
+
 artifact_name=cfgov
 artifact_label=current
 artifact_release=build
