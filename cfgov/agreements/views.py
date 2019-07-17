@@ -73,7 +73,11 @@ def validate_page_number(request, paginator):
 
 
 def prepaid(request):
-    products = Prepaid.objects.exclude(issuer_name__contains='**')
+    filters = request.GET
+    if filters:
+        products = Prepaid.objects.filter(**filters.dict())
+    else:
+        products = Prepaid.objects.exclude(issuer_name__contains='**')
     total_count = len(products)
     paginator = Paginator(products, 20)
     page_number = validate_page_number(request, paginator)
