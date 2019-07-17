@@ -1,3 +1,4 @@
+from django.contrib.postgres.search import SearchVector
 from django.core.paginator import (
     EmptyPage, InvalidPage, PageNotAnInteger, Paginator
 )
@@ -6,7 +7,8 @@ from django.shortcuts import render
 
 from agreements import RESULTS_PER_PAGE
 from agreements.models import Agreement, Entity, Issuer, Prepaid
-from v1.models.snippets import RelatedResource, ReusableText
+from v1.models.snippets import ReusableText
+
 
 def get_disclaimer():
     try:
@@ -14,7 +16,7 @@ def get_disclaimer():
             title='Legal disclaimer for consumer materials')
     except ReusableText.DoesNotExist:
         pass
-    
+
 
 def index(request):
     return render(request, 'agreements/index.html', {
@@ -75,28 +77,37 @@ def validate_page_number(request, paginator):
 def prepaid(request):
     filters = request.GET
     if filters:
-        products = Prepaid.objects.filter(**filters.dict())
+        if 'q' in filters.keys():
+            products = Prepaid.objects.annotate(
+                search=SearchVector(
+                    'issuer_name',
+                    'other_relevant_parties',
+                    'product_name',
+                    'program_manager',
+                ),
+            ).filter(search=(filters['q']))
+        else:
+            products = Prepaid.objects.filter(**filters.dict())
     else:
         products = Prepaid.objects.exclude(issuer_name__contains='**')
     total_count = len(products)
     paginator = Paginator(products, 20)
     page_number = validate_page_number(request, paginator)
     page = paginator.page(page_number)
+    issuers = Entity.objects.exclude(name__contains='**').order_by('name')
     return render(request, 'agreements/prepaid.html', {
         'current_page': page_number,
         'results': page,
         'total_count': total_count,
         'paginator': paginator,
-        'issuers': Entity.objects.exclude(
-            name__contains='**').order_by('name'),
+        'issuers': issuers,
         'current_count': '',
         'query': ''
     })
+
 
 def detail(request, product_id):
     return render(request, 'agreements/detail.html', {
         'product': Prepaid.objects.get(id=product_id),
         'disclaimer': get_disclaimer()
     })
-
-
