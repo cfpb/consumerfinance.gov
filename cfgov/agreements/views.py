@@ -89,9 +89,9 @@ def prepaid(request):
         'query': ''
     })
 
-def detail(request):
+def detail(request, product_id):
     return render(request, 'agreements/detail.html', {
-        'product': Prepaid.objects.exclude(issuer_name__contains='**').first(),
+        'product': Prepaid.objects.get(id=product_id),
         'disclaimer': get_disclaimer()
     })
 
