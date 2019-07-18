@@ -67,7 +67,7 @@
                     </label>
                     <input id="searchText" type="text" autocomplete="off" class="a-text-input" name="q"
                             placeholder="Enter your search term(s)"
-                            value="{{ filters['q'] or ''}}">
+                            value="{{ query or ''}}">
                 </div>
             </div>
             <div class="o-form__input-w-btn_btn-container">
@@ -84,10 +84,9 @@
                 <h3>Filter results by...</h3>
                 <form method="get" action="." class="o-form ">
 
-
-                    
-
-
+                        {% if query %}
+                        <input type="hidden" name="q" value="{{ query }}">
+                        {% endif %}
                         {% set expandable_settings = {
                             'label': 'Issuer name',
                             'is_expanded': false,
@@ -119,10 +118,10 @@
                             </select>
                         </div> -->
 
-
+                        {% set selections = filters['program_type'] %}
                         {% set expandable_settings = {
                             'label': 'Prepaid account type',
-                            'is_expanded': false,
+                            'is_expanded': selections | length > 0,
                             'is_midtone': true,
                             'hide_cue_label': true
                         } %}
@@ -142,6 +141,7 @@
                                         ['tax', 'Tax'],
                                         ['travel', 'Travel'],
                                     ]%}
+                                    
                                     {% for type in types %}
                                     <li>
                                         {{ checkbox.render({
@@ -149,8 +149,8 @@
                                             'value': type[1],
                                             'id': type[0],
                                             'name': 'program_type',
-                                            'class': 'test'
-                                            
+                                            'class': 'test',
+                                            'selected': type[1] in selections
                                         }) }}
                                         <!-- <div class="num-results">{{ num_results }}</div> -->
                                     </li>
@@ -189,9 +189,10 @@
                             </select>
                         </div>
  -->
+                        {% set selections = filters['status'] %}
                         {% set expandable_settings = {
                             'label': 'Current status',
-                            'is_expanded': false,
+                            'is_expanded': selections | length > 0,
                             'is_midtone': true,
                             'hide_cue_label': true,
                             'paragraph': 'This will be either active or withdrawn.'
@@ -199,7 +200,7 @@
                         {% call() expandable(expandable_settings) %}
                          <div class="o-form_group">
                             <fieldset class="o-form_fieldset">
-
+                                
                                 <ul class="m-list m-list__unstyled">
                                 
                                     <li>
@@ -208,7 +209,7 @@
                                             'value': 'Active',
                                             'id': 'active',
                                             'name': 'status',
-                                            
+                                            'selected': 'Active' in selections
                                         }) }}
                                         <!-- <div class="num-results">{{ num_results }}</div> -->
                                     </li>
@@ -218,6 +219,7 @@
                                             'value': 'Withdrawn',
                                             'id': 'withdrawn',
                                             'name': 'status',
+                                            'selected': 'Withdrawn' in selections
                                             
                                         }) }}
                                         <!-- <div class="num-results">{{ num_results }}</div> -->
@@ -294,35 +296,29 @@
                         </div>
                     {% endif %}
 
-                    {% if show_filters %}
-                    <div class="filters_applied">
-                        <span class="filters_applied-label">
-                            Filters applied:
-                        </span>
-                        <div class="filters_tags"></div>
-                        <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear"
-                                data-js-hook="behavior_clear-all">
-                            Clear all filters
-                        </button>
-                    </div>
-                    {% endif %}
+                    
                 </div>
-                {% set show_filters = True %}
-                {% if show_filters %}
+                {% if filters %}
                     <div class="filters_applied">
-                        <span class="filters_applied-label">
+                        
+                        <div class="filters_tags">
+                            <span class="filters_applied-label">
                             Filters applied:
                         </span>
-                        <div class="filters_tags">
-                            {{ tag.render({
-                                'label': 'A filter',
-                                'value': 'val',
-                                'behavior': 'clear-filter'
-                            }) }}
-                            <button class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
-                                    data-js-hook="behavior_clear-all">
+                            {% for filter in filters %}
+                                {% for val in filters[filter] %}
+                                {{ tag.render({
+                                    'label': val,
+                                    'value': val,
+                                    'behavior': 'clear-filter'
+                                }) }}
+
+                                {% endfor %}
+                            {% endfor %}
+                            <a class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
+                                    data-js-hook="behavior_clear-all" href=".">
                                 Clear all filters
-                            </button>
+                            </a>
                         </div>
                     </div>
                 {% endif %}
