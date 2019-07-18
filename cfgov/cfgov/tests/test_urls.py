@@ -128,3 +128,14 @@ class HandleErrorTestCase(TestCase):
         mock_render.assert_called_with(
             request, '404.html', context={'request': request}, status=404
         )
+
+
+class TestBetaRefreshEndpoint(TestCase):
+    def test_beta_testing_endpoint_returns_404_when_disabled(self):
+        response = self.client.get('/beta_external_testing/')
+        self.assertEqual(response.status_code, 404)
+
+    @override_settings(FLAGS={'BETA_EXTERNAL_TESTING': [('boolean', True)]})
+    def test_beta_testing_endpoint_returns_200_when_enabled(self):
+        response = self.client.get('/beta_external_testing/')
+        self.assertEqual(response.status_code, 200)

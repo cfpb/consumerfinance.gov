@@ -69,6 +69,10 @@ def flagged_wagtail_only_view(flag_name, regex_path, url_name=None):
     )
 
 
+def empty_200_response(request, *args, **kwargs):
+    return HttpResponse(status=200)
+
+
 urlpatterns = [
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
@@ -383,6 +387,13 @@ urlpatterns = [
 
     # Explicitly redirect eRegulations URLs to Regulations3000
     url(r'^eregulations/.*', redirect_eregs, name='eregs-redirect'),
+
+    # Manually enabled when Beta is being used for an external test.
+    # Jenkins job check this endpoint to determine whether to refresh
+    # Beta database.
+    flagged_url('BETA_EXTERNAL_TESTING',
+            r'^beta_external_testing/',
+            empty_200_response),
 
     # put financial well-being pages behind feature flag for testing
     flagged_wagtail_only_view(
