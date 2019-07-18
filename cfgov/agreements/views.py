@@ -96,8 +96,8 @@ def prepaid(request):
     page = paginator.page(page_number)
     issuers = Entity.objects.exclude(name__contains='**').order_by('name')
     
-    x = dict(filters.iterlists())
-    query = x.pop('q')[0] if 'q' in x else ''
+    filter_dict = dict(filters.iterlists())
+    query = filter_dict.pop('q')[0] if 'q' in filter_dict else ''
    
     return render(request, 'agreements/prepaid.html', {
         'current_page': page_number,
@@ -106,7 +106,7 @@ def prepaid(request):
         'paginator': paginator,
         'issuers': issuers,
         'current_count': '',
-        'filters': x,
+        'filters': filter_dict,
         'query': query
     })
 
