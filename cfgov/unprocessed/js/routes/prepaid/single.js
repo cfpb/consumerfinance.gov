@@ -1,8 +1,16 @@
-import FilterableListControls from '../../organisms/FilterableListControls';
-import { checkDom, setInitFlag } from '../../modules/util/atomic-helpers';
-const _dom = document.querySelector('.filters')
-let _filterableListControls = new FilterableListControls(
-     _dom.querySelector( `.${ FilterableListControls.BASE_CLASS }` )
-);
-    
-_filterableListControls.init();
+import {
+	checkDom,
+	instantiateAll
+} from '../../modules/util/atomic-helpers';
+import Expandable from 'cf-expandables/src/Expandable';
+import Multiselect from '../../molecules/Multiselect';
+
+const element = document.querySelector('.search_results');
+const BASE_CLASS = 'filters';
+
+const _dom = checkDom( element, BASE_CLASS );
+const multiSelectsSelector = `.${ BASE_CLASS } .${ Multiselect.BASE_CLASS }`;
+
+instantiateAll( multiSelectsSelector, Multiselect );
+
+Expandable.init( _dom );

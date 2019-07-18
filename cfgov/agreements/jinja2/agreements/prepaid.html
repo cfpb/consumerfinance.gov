@@ -75,36 +75,36 @@
             </div>
         </div>
     </form>
-    {% if results %}
     
     <div class="search_results">
         <div class="block u-mt0">
             <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters" style="padding-top:20px;">
-                <div class="o-filterable-list-controls">
+                <div>
                 <h3>Filter results by...</h3>
                 <form method="get" action="." class="o-form ">
 
                         {% if query %}
                         <input type="hidden" name="q" value="{{ query }}">
                         {% endif %}
-                        {% set expandable_settings = {
-                            'label': 'Issuer name',
-                            'is_expanded': false,
-                            'is_midtone': true,
-                            'hide_cue_label': true
-                        } %}
-                        {% call() expandable(expandable_settings) %}
-                        <div class="o-form_group">
-                         <div class="m-form-field u-mb5">
-                            
-                            <select name="issuers" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer" class="o-multiselect">
+                        
+
+
+                        <div class="m-form-field u-mb15">
+                            <label class="a-label a-label__heading"
+                                   for="card_type">
+                                Issuer name
+                            </label>
+                            {% set selections = filters['issuer'] %}
+                            <select name="issuer" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer" class="o-multiselect">
                                 {% for issuer in issuers %}
-                                <option value="{{ issuer.salesforce_id }}">{{ issuer.name | lower | title }}</option>
+                                <option 
+                                    value="{{ issuer.name }}"
+                                    {{ ' selected' if issuer.name in selections else '' }}>
+                                        {{ issuer.name | lower | title }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>
-                        </div>
-                        {% endcall %}
                         
 
                         <!-- <div class="m-form-field u-mb15">
@@ -117,7 +117,7 @@
                                 <option value="payroll">Payroll card</option>
                             </select>
                         </div> -->
-
+                        <div class="filter-section">
                         {% set selections = filters['program_type'] %}
                         {% set expandable_settings = {
                             'label': 'Prepaid account type',
@@ -159,6 +159,7 @@
                             </fieldset>
                         </div>
                         {% endcall %}
+                        </div>
 
                         <!-- <div class="m-form-field m-form-field__select">
                             <label class="a-label a-label__heading"
@@ -189,6 +190,7 @@
                             </select>
                         </div>
  -->
+                        <div class="filter-section">
                         {% set selections = filters['status'] %}
                         {% set expandable_settings = {
                             'label': 'Current status',
@@ -228,7 +230,7 @@
                             </fieldset>
                         </div>
                         {% endcall %}
-
+                        </div>
                         
 <!-- 
                         {% set expandable_settings = {
@@ -305,15 +307,17 @@
                             <span class="filters_applied-label">
                             Filters applied:
                         </span>
+                            {% set valid_filters = ['issuer', 'program_type', 'status'] %}
                             {% for filter in filters %}
-                                {% for val in filters[filter] %}
-                                {{ tag.render({
-                                    'label': val,
-                                    'value': val,
-                                    'behavior': 'clear-filter'
-                                }) }}
-
-                                {% endfor %}
+                                {% if filter in valid_filters %}
+                                    {% for val in filters[filter] %}
+                                        {{ tag.render({
+                                            'label': val,
+                                            'value': val,
+                                            'behavior': 'clear-filter'
+                                        }) }}
+                                    {% endfor %}
+                                {% endif %}
                             {% endfor %}
                             <a class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
                                     data-js-hook="behavior_clear-all" href=".">
@@ -333,7 +337,6 @@
             </div>
         </div>
     </div>
-    {% endif %}
 {% endblock %}
 
 {% block javascript scoped %}
