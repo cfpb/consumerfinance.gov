@@ -67,7 +67,7 @@
                     </label>
                     <input id="searchText" type="text" autocomplete="off" class="a-text-input" name="q"
                             placeholder="Enter your search term(s)"
-                            value="{{ query if query else ''}}">
+                            value="{{ filters['q'] or ''}}">
                 </div>
             </div>
             <div class="o-form__input-w-btn_btn-container">

@@ -85,7 +85,7 @@ def prepaid(request):
                     'product_name',
                     'program_manager',
                 ),
-            ).filter(search=(filters['q']))
+            ).filter(search=filters['q'])
         else:
             products = Prepaid.objects.filter(**filters.dict())
     else:
@@ -102,7 +102,7 @@ def prepaid(request):
         'paginator': paginator,
         'issuers': issuers,
         'current_count': '',
-        'query': ''
+        'filters': filters,
     })
 
 
