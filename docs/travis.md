@@ -4,7 +4,6 @@
 We use [Travis CI](https://travis-ci.org/) on cfgov-refresh to perform the following tasks:
 
 - Run automated unit tests and acceptance tests.
-- Build and validate a [deploy artifact](../deployment/).
 - Deploy this documentation website to GitHub on the [`gh-pages` branch](https://github.com/cfpb/cfgov-refresh/tree/gh-pages).
 
 ## How Travis is configured
