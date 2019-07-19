@@ -96,7 +96,8 @@ def prepaid(request):
             active_filters = {'program_type': [], 'status': [], 'issuer': []}
             for product in products:
                 if product.program_type not in active_filters['program_type']:
-                    active_filters['program_type'].append(product.program_type)
+                    if product.program_type != '':
+                        active_filters['program_type'].append(product.program_type)
                 if product.status not in active_filters['status']:
                     active_filters['status'].append(product.status)
                 if product.issuer_name not in active_filters['issuer']:
