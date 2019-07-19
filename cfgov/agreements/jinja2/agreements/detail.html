@@ -36,7 +36,7 @@
 <div class="block u-mt45 u-mb45">
     <h2 class="h3"> Download most recent agreement files</h2>
     <p style="margin-bottom:5px;">Agreement effective date: 7/1/19</p>
-    <p><a href="#">Compressed file</a></p>
+    <p><a href="#">Link to compressed file on S3</a></p>
 </div>
 
 <div class="block u-mt45">
@@ -54,7 +54,7 @@
     {% for agreement in older_agreements %}
         <div class="block block__sub {{ 'block__flush-top' if loop.counter == 1 else '' }}">
             <p style="margin-bottom:5px;">Agreement effective date: {{ agreement.effective_date }}</p>
-            <p><a href="{{ agreement.url }}">Compressed file</a></p>
+            <p><a href="{{ agreement.url }}">Link to compressed file on S3</a></p>
         </div>
     {% endfor %}
     
