@@ -41,8 +41,23 @@
 
 <div class="block u-mt45">
 <h2 class="h3"> Download older agreements</h2>
-    <p style="margin-bottom:5px;">Agreement effective date: 8/1/18</p>
-    <p><a href="#">Compressed file</a></p>
+    {% set older_agreements = [
+        {
+            'effective_date': '8/1/18',
+            'url': '#'
+        },
+        {
+            'effective_date': '7/2/17',
+            'url': '#'
+        }
+    ] %}
+    {% for agreement in older_agreements %}
+        <div class="block block__sub {{ 'block__flush-top' if loop.counter == 1 else '' }}">
+            <p style="margin-bottom:5px;">Agreement effective date: {{ agreement.effective_date }}</p>
+            <p><a href="{{ agreement.url }}">Compressed file</a></p>
+        </div>
+    {% endfor %}
+    
 </div>
 {% endblock %}
 
