@@ -704,7 +704,12 @@ FLAGS = {
     # such as: is enabled when path matches ^/ask-cfpb/what-is-an-ach-en-1065/
     # Delete after Google schema pilot completes and schema usage is
     # discontinued or implemented with a toggle in answer page admin.
-    'HOW_TO_SCHEMA': []
+    'HOW_TO_SCHEMA': [],
+
+    # Manually enabled when Beta is being used for an external test.
+    # Controls the /beta_external_testing endpoint, which Jenkins jobs
+    # query to determine whether to refresh Beta database.
+    'BETA_EXTERNAL_TESTING': [],
 }
 
 

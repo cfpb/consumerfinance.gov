@@ -20,6 +20,6 @@ To customize Travis to fit the above constraints, we use a combination of:
 
 ## An extra task for satellite repositories
 
-For our [satellite apps](https://cfpb.github.io/cfgov-refresh/satellite-repos/), Travis is also used to build and attach a deployment wheel file to every release.  
+For our [satellite apps](../related-projects/#satellite-apps), Travis is also used to build and attach a deployment wheel file to every release.
 
 An example is the `.whl` file on [this release of the retirement app](https://github.com/cfpb/retirement/releases/tag/0.7.6).
