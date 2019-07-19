@@ -2,6 +2,7 @@ from django.contrib.postgres.search import SearchVector
 from django.core.paginator import (
     EmptyPage, InvalidPage, PageNotAnInteger, Paginator
 )
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 
@@ -75,30 +76,52 @@ def validate_page_number(request, paginator):
 
 
 def prepaid(request):
-    filters = request.GET
+    filters = dict(request.GET.iterlists())
+    active_filters = {}
+    search_term = None
+    products = Prepaid.objects.exclude(issuer_name__contains='**')
     if filters:
-        if 'q' in filters.keys():
-            products = Prepaid.objects.annotate(
+        search_term = filters.pop('q', None)
+        if search_term:
+            search_term = search_term[0]
+            products = products.annotate(
                 search=SearchVector(
                     'issuer_name',
                     'other_relevant_parties',
                     'product_name',
-                    'program_manager',
+                    'program_manager'
                 ),
-            ).filter(search=filters['q'])
-        else:
-            products = Prepaid.objects.filter(**filters.dict())
-    else:
-        products = Prepaid.objects.exclude(issuer_name__contains='**')
+            ).filter(search=search_term)
+            active_filters = {'program_type': [], 'status': [], 'issuer': []}
+            for product in products:
+                if product.program_type not in active_filters['program_type']:
+                    active_filters['program_type'].append(product.program_type)
+                if product.status not in active_filters['status']:
+                    active_filters['status'].append(product.status)
+                if product.issuer_name not in active_filters['issuer']:
+                    active_filters['issuer'].append(product.issuer_name)
+
+        if 'issuer' in filters:
+            issuers = Q()
+            for issuer in filters['issuer']:
+                issuers |= Q(issuer_name=issuer)
+            products = products.filter(issuers)
+
+        if 'program_type' in filters:
+            programs = Q()
+            for program in filters['program_type']:
+                programs |= Q(program_type=program)
+            products = products.filter(programs)
+
+        if 'status' in filters:
+            products = products.filter(status=filters['status'][0])
+
     total_count = len(products)
     paginator = Paginator(products, 20)
     page_number = validate_page_number(request, paginator)
     page = paginator.page(page_number)
     issuers = Entity.objects.exclude(name__contains='**').order_by('name')
-    
-    filter_dict = dict(filters.iterlists())
-    query = filter_dict.pop('q')[0] if 'q' in filter_dict else ''
-   
+
     return render(request, 'agreements/prepaid.html', {
         'current_page': page_number,
         'results': page,
@@ -106,8 +129,9 @@ def prepaid(request):
         'paginator': paginator,
         'issuers': issuers,
         'current_count': '',
-        'filters': filter_dict,
-        'query': query
+        'filters': filters,
+        'query': search_term or '',
+        'active_filters': active_filters,
     })
 
 
