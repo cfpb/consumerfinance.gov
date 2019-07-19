@@ -67,7 +67,7 @@
                     </label>
                     <input id="searchText" type="text" autocomplete="off" class="a-text-input" name="q"
                             placeholder="Enter your search term(s)"
-                            value="{{ query or ''}}">
+                            value="{{ query }}">
                 </div>
             </div>
             <div class="o-form__input-w-btn_btn-container">
@@ -87,24 +87,33 @@
                         <input type="hidden" name="q" value="{{ query }}">
                         {% endif %}
                         
-
-
+                        {% set issuer_selections = filters['issuer'] %}
                         <div class="m-form-field u-mb15">
                             <label class="a-label a-label__heading"
                                    for="card_type">
                                 Issuer name
                             </label>
-                            {% set selections = filters['issuer'] %}
                             <select name="issuer" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer" class="o-multiselect">
-                                {% for issuer in issuers %}
-                                <option 
-                                    value="{{ issuer.name }}"
-                                    {{ ' selected' if issuer.name in selections else '' }}>
-                                        {{ issuer.name | lower | title }}
-                                </option>
-                                {% endfor %}
+                                {% if 'issuer' in active_filters and active_filters['issuer'] | length %}
+                                    {% for issuer in active_filters['issuer'] %}
+                                    <option 
+                                        value="{{ issuer }}"
+                                        {{ ' selected' if issuer in selections else '' }}>
+                                            {{ issuer | lower | title }}
+                                    </option>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for issuer in issuers %}
+                                    <option 
+                                        value="{{ issuer.name }}"
+                                        {{ ' selected' if issuer.name in issuer_selections else '' }}>
+                                            {{ issuer.name | lower | title }}
+                                    </option>
+                                    {% endfor %}
+                                {% endif %}
                             </select>
                         </div>
+                            
                         
 
                         <!-- <div class="m-form-field u-mb15">
@@ -129,28 +138,30 @@
                          <div class="o-form_group">
                             <fieldset class="o-form_fieldset">
                                 <ul class="m-list m-list__unstyled">
-                                    {% set types = [ 
-                                        ['p2p', 'Digital wallet/P2P'],
-                                        ['benefits', 'Government Benefits'],
-                                        ['gpr', 'GPR (General Purpose Reloadable)'],
-                                        ['payroll', 'Payroll'],
-                                        ['other', 'Other'],
-                                        ['prison', 'Prison release'],
-                                        ['refunds', 'Refunds'],
-                                        ['student', 'Student'],
-                                        ['tax', 'Tax'],
-                                        ['travel', 'Travel'],
+                                    {% set default_types = [ 
+                                        'Digital wallet/P2P',
+                                        'Government Benefits',
+                                        'GPR (General Purpose Reloadable)',
+                                        'Payroll',
+                                        'Other',
+                                        'Prison release',
+                                        'Refunds',
+                                        'Student',
+                                        'Tax',
+                                        'Travel',
                                     ]%}
+
+                                    {% set type_options = active_filters['program_type'] if 'program_type' in active_filters else default_types %}
                                     
-                                    {% for type in types %}
+                                    {% for type in type_options %}
                                     <li>
                                         {{ checkbox.render({
-                                            'label': type[1],
-                                            'value': type[1],
-                                            'id': type[0],
+                                            'label': type,
+                                            'value': type,
+                                            'id': 'type_' ~ loop.index,
                                             'name': 'program_type',
                                             'class': 'test',
-                                            'selected': type[1] in selections
+                                            'selected': type in selections
                                         }) }}
                                         <!-- <div class="num-results">{{ num_results }}</div> -->
                                     </li>
@@ -200,32 +211,30 @@
                             'paragraph': 'This will be either active or withdrawn.'
                         } %}
                         {% call() expandable(expandable_settings) %}
+                        {% set default_statuses = [ 
+                            'Active',
+                            'Withdrawn',
+                                        
+                        ]%}
+
+                        {% set status_options = active_filters['status'] if 'status' in active_filters else default_statuses %}
+
                          <div class="o-form_group">
                             <fieldset class="o-form_fieldset">
                                 
                                 <ul class="m-list m-list__unstyled">
-                                
+                                    {% for option in status_options %}
                                     <li>
                                         {{ checkbox.render({
-                                            'label': 'Active',
-                                            'value': 'Active',
-                                            'id': 'active',
+                                            'label': option,
+                                            'value': option,
+                                            'id': 'status_' ~ loop.index,
                                             'name': 'status',
-                                            'selected': 'Active' in selections
+                                            'selected': option in selections
                                         }) }}
                                         <!-- <div class="num-results">{{ num_results }}</div> -->
                                     </li>
-                                    <li>
-                                        {{ checkbox.render({
-                                            'label': 'Withdrawn',
-                                            'value': 'Withdrawn',
-                                            'id': 'withdrawn',
-                                            'name': 'status',
-                                            'selected': 'Withdrawn' in selections
-                                            
-                                        }) }}
-                                        <!-- <div class="num-results">{{ num_results }}</div> -->
-                                    </li>
+                                    {% endfor %}
                                 </ul>
                             </fieldset>
                         </div>
@@ -292,10 +301,11 @@
                             </h3>
                         </div>
                     {% else %}
-                        <div class="results_count results_count__empty" data-results-count="0">
+                        <div class="results_count no-results" data-results-count="0">
                             <h3>No results match your search.</h3>
                             <p>Try adjusting your filters or searching for different terms.</p>
                         </div>
+
                     {% endif %}
 
                     
@@ -320,7 +330,7 @@
                                 {% endif %}
                             {% endfor %}
                             <a class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
-                                    data-js-hook="behavior_clear-all" href=".">
+                                    data-js-hook="behavior_clear-all" href="{{ '?q='~query if query else '.' }}">
                                 Clear all filters
                             </a>
                         </div>

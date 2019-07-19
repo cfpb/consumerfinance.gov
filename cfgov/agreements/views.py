@@ -80,6 +80,7 @@ def prepaid(request):
     active_filters = {}
     search_term = None
     products = Prepaid.objects.exclude(issuer_name__contains='**')
+    total_count = len(products)
     if filters:
         search_term = filters.pop('q', None)
         if search_term:
@@ -116,7 +117,7 @@ def prepaid(request):
         if 'status' in filters:
             products = products.filter(status=filters['status'][0])
 
-    total_count = len(products)
+    current_count = len(products)
     paginator = Paginator(products, 20)
     page_number = validate_page_number(request, paginator)
     page = paginator.page(page_number)
@@ -128,7 +129,7 @@ def prepaid(request):
         'total_count': total_count,
         'paginator': paginator,
         'issuers': issuers,
-        'current_count': '',
+        'current_count': current_count,
         'filters': filters,
         'query': search_term or '',
         'active_filters': active_filters,
