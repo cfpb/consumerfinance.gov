@@ -348,19 +348,3 @@
         </div>
     </div>
 {% endblock %}
-
-{% block javascript scoped %}
-    {{ super() }}
-    <script async>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-            console.log('running!')
-          {# Include site-wide JavaScript. #}
-          var s = [
-            '{{ static('apps/agreements/js/search.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
-    </script>
-{% endblock javascript %}
