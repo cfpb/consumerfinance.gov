@@ -55,7 +55,8 @@ grep -Eho \
     | xargs touch
 
 # Now that we're sure that we have webfont files, we can test collectstatic.
-./venv/bin/django-admin collectstatic
+#./venv/bin/django-admin collectstatic
+./manage.py collectstatic
 
 # It'd be nice to do additional verification of the build artifact here, for
 # example by actually running a webserver and making some requests.
