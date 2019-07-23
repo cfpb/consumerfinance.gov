@@ -15,19 +15,6 @@ import dotenv
 this_dir = os.path.dirname(os.path.abspath(__file__))
 
 
-def initialize_environment():
-    environment_candidates = [
-        os.path.join(this_dir, '../.env'),
-        os.path.join(this_dir, '../../.env'),
-        os.path.join(os.getcwd(), '.env')
-    ]
-
-    for candidate in environment_candidates:
-        if os.path.exists(candidate):
-                dotenv.read_dotenv(candidate)
-                return
-
-
 def initialize_new_relic():
     if os.getenv('NEW_RELIC_LICENSE_KEY'):
         new_relic_config_file = os.path.abspath(
@@ -41,7 +28,9 @@ def initialize_new_relic():
         newrelic.agent.initialize(new_relic_config_file)
 
 
-initialize_environment()
+envfile_path = os.path.join(this_dir, '../../.env'),
+dotenv.read_dotenv(envfile_path)
+
 initialize_new_relic()
 
 

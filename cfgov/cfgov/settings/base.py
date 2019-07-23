@@ -5,7 +5,7 @@ from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
-from unipath import Path
+from unipath import Path, DIRS
 
 from cfgov.util import admin_emails
 
@@ -265,11 +265,8 @@ STATICFILES_DIRS = [
     PROJECT_ROOT.child('templates', 'wagtailadmin')
 ]
 
-if 'DJANGO_STATICFILES_IN' in os.environ:
-    pattern = os.path.join(
-        os.environ['DJANGO_STATICFILES_IN'],
-        '*/')
-    STATICFILES_DIRS += [d for d in glob.glob(pattern) if os.path.isdir(d)]
+static_in = REPOSITORY_ROOT.child('static.in')
+STATICFILES_DIRS += [str(d) for d in static_in.listdir(filter=DIRS)]
 
 ALLOWED_HOSTS = ['*']
 
