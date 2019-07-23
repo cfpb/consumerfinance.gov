@@ -329,7 +329,7 @@ class RelatedPosts(blocks.StructBlock):
         specific_categories = value['specific_categories']
         limit = int(value['limit'])
         queryset = AbstractFilterPage.objects.live().exclude(
-            id=page.id).order_by('-date_published').distinct()
+            id=page.id).order_by('-date_published').distinct().specific()
 
         for parent in related_types:  # blog, newsroom or events
             # Include children of this slug that match at least 1 tag
