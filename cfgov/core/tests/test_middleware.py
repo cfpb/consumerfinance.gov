@@ -122,3 +122,10 @@ class TestParseLinks(TestCase):
         encoding = 'gb2312'
         parsed = parse_links(s.encode(encoding), encoding=encoding)
         self.assertEqual(parsed, s)
+
+    def test_external_link_with_attribute(self):
+        s = '<a href="https://somewhere/foo" data-thing="something">Link</a>'
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertIn('cf-icon-svg', output)
+

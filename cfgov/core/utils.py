@@ -1,5 +1,4 @@
 import re
-from six import text_type as str
 from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
@@ -23,6 +22,9 @@ DOWNLOAD_LINKS = re.compile(
 LINK_ICON_CLASSES = 'a-link a-link__icon'
 
 LINK_ICON_TEXT_CLASSES = 'a-link_text'
+
+A_TAG = re.compile(r'<a[^>]*>.+?</a>')
+IMG_TAG = re.compile(r'<img[^>]*>')
 
 
 def append_query_args_to_url(base_url, args_dict):
@@ -67,18 +69,17 @@ def format_file_size(bytecount, suffix='B'):
     return "{:.0f} {}{}".format(bytecount, 'T', suffix)
 
 
-def get_link_tags(soup):
+def get_link_tags(html):
     tags = []
-    for a in soup.find_all('a', href=True):
+    for a in A_TAG.findall(html):
         if not is_image_tag(a):
             tags.append(a)
     return tags
 
 
 def is_image_tag(tag):
-    for child in tag.children:
-        if child.name in ['img', 'svg']:
-            return True
+    if IMG_TAG.search(tag):
+        return True
     return False
 
 
@@ -91,6 +92,11 @@ def add_link_markup(tag):
     Otherwise (internal link that is not a file), return None.
     """
     icon = False
+
+    tag = BeautifulSoup(tag, 'html.parser').find('a', href=True)
+
+    if tag is None:
+        return None
 
     if not tag.attrs.get('class', None):
         tag.attrs.update({'class': []})
