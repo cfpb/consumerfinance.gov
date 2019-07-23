@@ -1,3 +1,4 @@
+import glob
 import os
 
 from django.conf import global_settings
@@ -264,6 +265,11 @@ STATICFILES_DIRS = [
     PROJECT_ROOT.child('templates', 'wagtailadmin')
 ]
 
+if 'DJANGO_STATICFILES_IN' in os.environ:
+    pattern = os.path.join(
+        os.environ['DJANGO_STATICFILES_IN'],
+        '*/')
+    STATICFILES_DIRS += [d for d in glob.glob(pattern) if os.path.isdir(d)]
 
 ALLOWED_HOSTS = ['*']
 
