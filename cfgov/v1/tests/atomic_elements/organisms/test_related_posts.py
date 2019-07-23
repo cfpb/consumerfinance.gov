@@ -8,7 +8,9 @@ from wagtail.wagtailcore.models import Page, Site
 
 from v1.atomic_elements.organisms import RelatedPosts
 from v1.models.base import CFGOVPage, CFGOVPageCategory
-from v1.models.learn_page import AbstractFilterPage
+from v1.models.blog_page import BlogPage
+from v1.models.learn_page import AbstractFilterPage, EventPage
+from v1.models.newsroom_page import NewsroomPage
 from v1.tests.wagtail_pages import helpers
 
 
@@ -34,10 +36,18 @@ class RelatedPostsTestCase(TestCase):
         # set up parent pages for the different types of related
         # posts we can have
 
-        self.blog_parent = CFGOVPage(slug='blog', title='blog parent')
-        self.newsroom_parent = CFGOVPage(slug='newsroom', title='newsroom parent')
-        self.events_parent = CFGOVPage(slug='events', title='events parent')
-        self.archive_events_parent = CFGOVPage(slug='archive-past-events', title='archive past events parent')
+        self.blog_parent = CFGOVPage(
+            slug='blog', title='blog parent'
+        )
+        self.newsroom_parent = CFGOVPage(
+            slug='newsroom', title='newsroom parent'
+        )
+        self.events_parent = CFGOVPage(
+            slug='events', title='events parent'
+        )
+        self.archive_events_parent = CFGOVPage(
+            slug='archive-past-events', title='archive past events parent'
+        )
 
         helpers.save_new_page(self.blog_parent)
         helpers.save_new_page(self.newsroom_parent)
@@ -47,27 +57,47 @@ class RelatedPostsTestCase(TestCase):
         # set up children of the parent pages and give them some tags
         # and some categories
 
-        self.blog_child1 = AbstractFilterPage(title='blog child 1', date_published=dt.date(2016, 9, 1))
+        self.blog_child1 = BlogPage(
+            title='blog child 1', date_published=dt.date(2016, 9, 1)
+        )
         self.blog_child1.tags.add('tag 1')
-        self.blog_child1.categories.add(CFGOVPageCategory(name='info-for-consumers'))
+        self.blog_child1.categories.add(
+            CFGOVPageCategory(name='info-for-consumers')
+        )
 
-        self.blog_child2 = AbstractFilterPage(title='blog child 2', date_published=dt.date(2016, 9, 2))
+        self.blog_child2 = BlogPage(
+            title='blog child 2', date_published=dt.date(2016, 9, 2)
+        )
         self.blog_child2.tags.add('tag 2')
-        self.blog_child2.categories.add(CFGOVPageCategory(name='policy_compliance'))
+        self.blog_child2.categories.add(
+            CFGOVPageCategory(name='policy_compliance')
+        )
 
-        self.newsroom_child1 = AbstractFilterPage(title='newsroom child 1', date_published=dt.date(2016, 9, 2))
+        self.newsroom_child1 = NewsroomPage(
+            title='newsroom child 1', date_published=dt.date(2016, 9, 2)
+        )
         self.newsroom_child1.tags.add('tag 1')
         self.newsroom_child1.tags.add('tag 2')
-        self.newsroom_child1.categories.add(CFGOVPageCategory(name='op-ed'))
+        self.newsroom_child1.categories.add(
+            CFGOVPageCategory(name='op-ed')
+        )
 
-        self.newsroom_child2 = AbstractFilterPage(title='newsroom child 2', date_published=dt.date(2016, 9, 3))
+        self.newsroom_child2 = NewsroomPage(
+            title='newsroom child 2', date_published=dt.date(2016, 9, 3)
+        )
         self.newsroom_child2.tags.add('tag 2')
-        self.newsroom_child2.categories.add(CFGOVPageCategory(name='some-other-category'))
+        self.newsroom_child2.categories.add(
+            CFGOVPageCategory(name='some-other-category')
+        )
 
-        self.events_child1 = AbstractFilterPage(title='events child 1', date_published=dt.date(2016, 9, 7))
+        self.events_child1 = EventPage(
+            title='events child 1', date_published=dt.date(2016, 9, 7)
+        )
         self.events_child1.tags.add('tag 1')
 
-        self.events_child2 = AbstractFilterPage(title='events child 2', date_published=dt.date(2016, 9, 5))
+        self.events_child2 = EventPage(
+            title='events child 2', date_published=dt.date(2016, 9, 5)
+        )
         self.events_child2.tags.add('tag 2')
 
         helpers.save_new_page(self.blog_child1, self.blog_parent)
@@ -102,7 +132,9 @@ class RelatedPostsTestCase(TestCase):
         self.block_value['relate_posts'] = True
         self.block_value['relate_newsroom'] = False
         self.block_value['relate_events'] = False
-        self.block_value['specific_categories'] = ['Info for Consumers', 'Policy &amp; Compliance']
+        self.block_value['specific_categories'] = [
+            'Info for Consumers', 'Policy &amp; Compliance'
+        ]
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors,
@@ -113,6 +145,9 @@ class RelatedPostsTestCase(TestCase):
         self.assertEqual(len(related_posts['Blog']), 2)
         self.assertEqual(related_posts['Blog'][0], self.blog_child2)
         self.assertEqual(related_posts['Blog'][1], self.blog_child1)
+        self.assertEqual(
+            related_posts['Blog'][0].content_type.model, 'blogpage'
+        )
         self.assertNotIn('Newsroom', related_posts)
         self.assertNotIn('Events', related_posts)
 
@@ -129,7 +164,9 @@ class RelatedPostsTestCase(TestCase):
         self.block_value['relate_newsroom'] = False
         self.block_value['relate_events'] = False
         self.block_value['limit'] = 1
-        self.block_value['specific_categories'] = ['Info for Consumers', 'Policy &amp; Compliance']
+        self.block_value['specific_categories'] = [
+            'Info for Consumers', 'Policy &amp; Compliance'
+        ]
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors,
@@ -207,6 +244,9 @@ class RelatedPostsTestCase(TestCase):
         self.assertIn('Newsroom', related_posts)
         self.assertEqual(len(related_posts['Newsroom']), 1)
         self.assertEqual(related_posts['Newsroom'][0], self.newsroom_child1)
+        self.assertEqual(
+            related_posts['Newsroom'][0].content_type.model, 'newsroompage'
+        )
         self.assertNotIn('Blog', related_posts)
         self.assertNotIn('Events', related_posts)
 
@@ -222,7 +262,9 @@ class RelatedPostsTestCase(TestCase):
         self.block_value['relate_posts'] = False
         self.block_value['relate_newsroom'] = False
         self.block_value['relate_events'] = True
-        self.block_value['specific_categories'] = ['anything', 'can', 'be', 'here']
+        self.block_value['specific_categories'] = [
+            'anything', 'can', 'be', 'here'
+        ]
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors,
@@ -232,6 +274,9 @@ class RelatedPostsTestCase(TestCase):
         self.assertIn('Events', related_posts)
         self.assertEqual(len(related_posts), 1)
         self.assertEqual(related_posts['Events'][0], self.events_child1)
+        self.assertEqual(
+            related_posts['Events'][0].content_type.model, 'eventpage'
+        )
         self.assertNotIn('Blog', related_posts)
         self.assertNotIn('Newsroom', related_posts)
 
@@ -250,7 +295,9 @@ class RelatedPostsTestCase(TestCase):
         self.block_value['relate_posts'] = False
         self.block_value['relate_newsroom'] = False
         self.block_value['relate_events'] = True
-        self.block_value['specific_categories'] = ['anything', 'can', 'be', 'here']
+        self.block_value['specific_categories'] = [
+            'anything', 'can', 'be', 'here'
+        ]
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors,
