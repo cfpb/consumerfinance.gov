@@ -129,3 +129,8 @@ class TestParseLinks(TestCase):
         self.assertIn('external-site', output)
         self.assertIn('cf-icon-svg', output)
 
+    def test_external_link_with_img(self):
+        s = '<a href="https://somewhere/foo"><img src="some.png"></a>'
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertIn('cf-icon-svg', output)

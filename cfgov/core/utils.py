@@ -72,14 +72,14 @@ def format_file_size(bytecount, suffix='B'):
 def get_link_tags(html):
     tags = []
     for a in A_TAG.findall(html):
-        if not is_image_tag(a):
-            tags.append(a)
+        tags.append(a)
     return tags
 
 
 def is_image_tag(tag):
-    if IMG_TAG.search(tag):
-        return True
+    for child in tag.children:
+        if child.name in ['img', 'svg']:
+            return True
     return False
 
 
@@ -132,6 +132,9 @@ def add_link_markup(tag):
         tag.contents = [span, NavigableString(' ')]
         # Appends the SVG icon
         tag.contents.append(BeautifulSoup(svg_icon(icon), 'html.parser'))
+        return str(tag)
+
+    elif is_image_tag(tag):
         return str(tag)
 
     return None
