@@ -21,6 +21,14 @@ class FilterableListMixin(object):
     do_not_index = False
     """Determines whether we tell crawlers to index the page or not."""
 
+    @staticmethod
+    def get_model_class():
+        return AbstractFilterPage
+
+    @staticmethod
+    def get_form_class():
+        return FilterableListForm
+
     def filterable_pages(self):
         """Return pages that are eligible to be filtered by this page.
 
@@ -42,9 +50,9 @@ class FilterableListMixin(object):
         site = self.get_site()
 
         if not site:
-            return AbstractFilterPage.objects.none()
+            return self.get_model_class().objects.none()
 
-        pages = AbstractFilterPage.objects.in_site(site).live()
+        pages = self.get_model_class().objects.in_site(site).live()
 
         if self.filterable_categories:
             category_names = get_category_children(self.filterable_categories)
@@ -61,7 +69,7 @@ class FilterableListMixin(object):
         )
 
         form_data, has_active_filters = self.get_form_data(request.GET)
-        form = FilterableListForm(
+        form = self.get_form_class()(
             form_data,
             filterable_pages=self.filterable_pages()
         )
@@ -107,7 +115,7 @@ class FilterableListMixin(object):
     def get_form_data(self, request_dict):
         form_data = {}
         has_active_filters = False
-        for field in FilterableListForm.declared_fields:
+        for field in self.get_form_class().declared_fields:
             if field in ['categories', 'topics', 'authors']:
                 value = request_dict.getlist(field, [])
             else:
