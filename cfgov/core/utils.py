@@ -70,10 +70,7 @@ def format_file_size(bytecount, suffix='B'):
 
 
 def get_link_tags(html):
-    tags = []
-    for a in A_TAG.findall(html):
-        tags.append(a)
-    return tags
+    return A_TAG.findall(html)
 
 
 def is_image_tag(tag):
