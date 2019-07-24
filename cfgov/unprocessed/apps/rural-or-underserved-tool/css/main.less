@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Rural or underserved tool
+   Master Less file
+   ========================================================================== */
+
+@import (reference) 'cf-core.less';
+@import (less) './file-input.less';
+
+
+// Select menu inside the h2 header on the search tool view.
+.u-inline-select {
+    display: inline-block;
+    width: 130px;
+}
+
+// Loading icon color.
+#countMessage .cf-icon-svg {
+    color: @green;
+}
+
+// Error coloring.
+.warn {
+    background-color: @gold-20;
+    border-color: @gold;
+}
+.error {
+    background-color: @red-20;
+    border-color: @red;
+}
+
+// Position search result totals.
+#results-total .content-l_col {
+    display: inline-flex;
+    min-width: 12em;
+
+    & > h1 {
+        text-align: right;
+    }
+
+    & > h4 {
+        margin-top: 0.5em;
+        margin-left: 1em;
+    }
+}
+
+// Result counts.
+#results-total .ruralCnt,
+#results-total .notRuralCnt,
+#results-total .notFoundCnt,
+#results-total .duplicateCnt {
+    font-size: 3rem;
+}
+
+// Map in the results table.
+.hide-print.right {
+    float: right;
+}
+
+// TODO: Overrides to cf-tables should be incorporated into the available
+//       cf-tables styles.
+
+// Override .o-table-wrapper__scrolling table added border.
+.o-table table {
+    border: none;
+    width: 100%;
+}
+// Override zebra-striping of table rows.
+.o-table-wrapper__scrolling table>tbody>tr:nth-child(even)>td {
+    background: #fff;
+}
+
+tr.data + tr[class=""] {
+    border-top: 2px solid @white;
+}
+
+.map {
+    overflow: hidden;
+    height: 200px;
+    width: 100%;
+}
+
+// Print-related styling.
+@import (less) './print.less';
+
+// u-hidden is duplicated from cf-core,
+// but since we only import cf-core by reference it gets overridden by cf-grid,
+// making it necessary to define here so it overrides cf-grid display: block.
+.u-hidden,
+.print-only {
+    display: none;
+}
