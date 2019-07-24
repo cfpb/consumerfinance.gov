@@ -26,6 +26,33 @@ function addEventListenerToElem( elem, event, callback ) {
 }
 
 /**
+ * Query a selector and remove listeners from returned elements.
+ * @param {string} selector - A dom selector.
+ * @param {string} event - An event string, probably a "MouseEvent."
+ * @param {Function} callback - The event handler.
+ */
+function removeEventListenerFromSelector( selector, event, callback ) {
+  const elems = document.querySelectorAll( selector );
+  for ( let i = 0, len = elems.length; i < len; i++ ) {
+    removeEventListenerFromElem( elems[i], event, callback );
+  }
+}
+
+/**
+ * Check if an element exists on the page, and if it does, remove listeners.
+ * @param {[type]}   elem     [description]
+ * @param {[type]}   event    [description]
+ * @param {Function} callback [description]
+ */
+function removeEventListenerFromElem( elem, event, callback ) {
+  if ( elem ) {
+    elem.removeEventListener( event, callback );
+  } else {
+    analyticsLog( `${ elem } doesn't exist!` );
+  }
+}
+
+/**
  * Log a message to the console if the `debug-gtm` URL parameter is set.
  * @param {string} msg - Message to load to the console.
  */
@@ -113,6 +140,8 @@ function getQueryParameter( key ) {
 module.exports = {
   addEventListenerToSelector,
   addEventListenerToElem,
+  removeEventListenerFromSelector,
+  removeEventListenerFromElem,
   analyticsLog,
   Delay,
   getQueryParameter,
