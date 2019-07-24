@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.test import TestCase, override_settings
 
 import mock
+from bs4 import BeautifulSoup
 
 from core.middleware import ParseLinksMiddleware, parse_links
 from v1.models import CFGOVPage
@@ -122,3 +123,33 @@ class TestParseLinks(TestCase):
         encoding = 'gb2312'
         parsed = parse_links(s.encode(encoding), encoding=encoding)
         self.assertEqual(parsed, s)
+
+    def test_external_link_with_attribute(self):
+        s = '<a href="https://somewhere/foo" data-thing="something">Link</a>'
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertIn('cf-icon-svg', output)
+
+    def test_external_link_with_img(self):
+        s = '<a href="https://somewhere/foo"><img src="some.png"></a>'
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertNotIn('cf-icon-svg', output)
+
+    def test_multiline_external_gov_link(self):
+        s = '''<a class="m-list_link a-link"
+        href="https://usa.gov/">
+        <span>
+        USA
+        .gov</span>
+        </a>
+        '''
+        output = parse_links(s)
+        self.assertIn('cf-icon-svg', output)
+
+    def test_multiple_links(self):
+        s = ('<a href="https://first.com">one</a>'
+             '<a href="https://second.com">two</a>')
+        output = parse_links(s)
+        soup = BeautifulSoup(output, 'html.parser')
+        self.assertEqual(len(soup.find_all('a')), 2)
