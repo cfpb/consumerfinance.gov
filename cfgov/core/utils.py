@@ -23,8 +23,8 @@ LINK_ICON_CLASSES = 'a-link a-link__icon'
 
 LINK_ICON_TEXT_CLASSES = 'a-link_text'
 
-A_TAG = re.compile(r'<a[^>]*>.+?</a>')
-IMG_TAG = re.compile(r'<img[^>]*>')
+A_TAG = re.compile(r'<a [^>]*?>.+?(?=</a>)</a>(?s)(?i)')
+IMG_TAG = re.compile(r'<img[^>]*>(?i)')
 
 
 def append_query_args_to_url(base_url, args_dict):
