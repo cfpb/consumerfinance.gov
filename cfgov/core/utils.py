@@ -85,7 +85,8 @@ def add_link_markup(tag):
 
     Add an external link icon if the input is not a CFPB (internal) link.
     Add an external link redirect if the input is not a gov link.
-    Add a download icon if the input is a file.
+    If it contains an image tag, return the (potentially modified) link.
+    If not, add a download icon if the input is a file.
     Otherwise (internal link that is not a file), return None.
     """
     icon = False
@@ -119,6 +120,12 @@ def add_link_markup(tag):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
 
+    if is_image_tag(tag):
+        # This may be an external link, so it would've been modified
+        # accordingly above, but because it contains an image tag it doesn't
+        # get the icon.
+        return str(tag)
+
     if icon:
         tag.attrs['class'].append(LINK_ICON_CLASSES)
         # Wraps the link text in a span that provides the underline
@@ -129,9 +136,6 @@ def add_link_markup(tag):
         tag.contents = [span, NavigableString(' ')]
         # Appends the SVG icon
         tag.contents.append(BeautifulSoup(svg_icon(icon), 'html.parser'))
-        return str(tag)
-
-    elif is_image_tag(tag):
         return str(tag)
 
     return None

@@ -134,7 +134,7 @@ class TestParseLinks(TestCase):
         s = '<a href="https://somewhere/foo"><img src="some.png"></a>'
         output = parse_links(s)
         self.assertIn('external-site', output)
-        self.assertIn('cf-icon-svg', output)
+        self.assertNotIn('cf-icon-svg', output)
 
     def test_multiline_external_gov_link(self):
         s = '''<a class="m-list_link a-link"
