@@ -24,6 +24,9 @@ LINK_ICON_CLASSES = 'a-link a-link__icon'
 
 LINK_ICON_TEXT_CLASSES = 'a-link_text'
 
+A_TAG = re.compile(r'<a [^>]*?>.+?(?=</a>)</a>(?s)(?i)')
+IMG_TAG = re.compile(r'<img[^>]*>(?i)')
+
 
 def append_query_args_to_url(base_url, args_dict):
     return "{0}?{1}".format(base_url, urlencode(args_dict))
@@ -67,12 +70,8 @@ def format_file_size(bytecount, suffix='B'):
     return "{:.0f} {}{}".format(bytecount, 'T', suffix)
 
 
-def get_link_tags(soup):
-    tags = []
-    for a in soup.find_all('a', href=True):
-        if not is_image_tag(a):
-            tags.append(a)
-    return tags
+def get_link_tags(html):
+    return A_TAG.findall(html)
 
 
 def is_image_tag(tag):
@@ -87,10 +86,16 @@ def add_link_markup(tag):
 
     Add an external link icon if the input is not a CFPB (internal) link.
     Add an external link redirect if the input is not a gov link.
-    Add a download icon if the input is a file.
+    If it contains an image tag, return the (potentially modified) link.
+    If not, add a download icon if the input is a file.
     Otherwise (internal link that is not a file), return None.
     """
     icon = False
+
+    tag = BeautifulSoup(tag, 'html.parser').find('a', href=True)
+
+    if tag is None:
+        return None
 
     if not tag.attrs.get('class', None):
         tag.attrs.update({'class': []})
@@ -115,6 +120,12 @@ def add_link_markup(tag):
     elif DOWNLOAD_LINKS.search(tag['href']):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
+
+    if is_image_tag(tag):
+        # This may be an external link, so it would've been modified
+        # accordingly above, but because it contains an image tag it doesn't
+        # get the icon.
+        return str(tag)
 
     if icon:
         tag.attrs['class'].append(LINK_ICON_CLASSES)
