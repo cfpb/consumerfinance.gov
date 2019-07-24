@@ -32,14 +32,14 @@ class RegulationsListTestCase(TestCase):
             Part,
             part_number='1002',
             title='Equal Credit Opportunity Act',
-            letter_code='B',
+            short_name='Regulation B',
             chapter='X'
         )
         self.part_1003 = mommy.make(
             Part,
             part_number='1003',
             title='Home Mortgage Disclosure',
-            letter_code='C',
+            short_name='Regulation C',
             chapter='X'
         )
         self.effective_version = mommy.make(
