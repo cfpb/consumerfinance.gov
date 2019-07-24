@@ -1,4 +1,4 @@
-"""Test the dployment http and static resource smoke tests"""
+"""Test the dployment http and static resource smoke tests."""
 import unittest
 
 import mock
@@ -37,54 +37,86 @@ class HttpTests(unittest.TestCase):
     """Tests for the http smoke tests"""
 
     @mock.patch('scripts.http_smoke_test.requests.get')
+    def test_get_full_list(self, mock_get):
+        mock_response = mock.Mock()
+        mock_response.json.return_value = {
+            'top20': [']url1'],
+            'apps': ['url2']
+        }
+        mock_get.return_value = mock_response
+        full_list = http_smoke_test.get_full_list()
+        self.assertEqual(len(full_list), 2)
+        self.assertEqual(mock_get.call_count, 1)
+
+    @mock.patch('scripts.http_smoke_test.requests.get')
+    def test_get_full_list_fallback(self, mock_get):
+        """Check that script falls back to hard-coded list."""
+        mock_get.side_effect = ValueError
+        full_list = http_smoke_test.get_full_list()
+        self.assertEqual(len(full_list), len(http_smoke_test.FULL_RUN))
+
+    @mock.patch('scripts.http_smoke_test.requests.get')
     def test_http_success_short(self, mock_get):
         mock_response = mock.Mock()
         mock_response.status_code = 200
         mock_get.return_value = mock_response
         http_smoke_test.check_urls('pro1')
-        self.assertEqual(mock_get.call_count, len(http_smoke_test.SHORT_RUN))
+        self.assertEqual(
+            mock_get.call_count,
+            len(http_smoke_test.SHORT_RUN)
+        )
 
     @mock.patch('scripts.http_smoke_test.requests.get')
-    def test_http_success_full(self, mock_get):
+    @mock.patch('scripts.http_smoke_test.get_full_list')
+    def test_http_success_full(self, mock_list, mock_get):
+        mock_list.return_value = http_smoke_test.FULL_RUN
         mock_response = mock.Mock()
         mock_response.status_code = 200
         mock_get.return_value = mock_response
         http_smoke_test.check_urls('pro1', full=True)
-        self.assertEqual(mock_get.call_count,
-                         len(http_smoke_test.SHORT_RUN +
-                             http_smoke_test.FULL_RUN))
+        self.assertEqual(mock_get.call_count, len(http_smoke_test.FULL_RUN))
 
     @mock.patch('scripts.http_smoke_test.requests.get')
     def test_http_fail_short(self, mock_get):
         mock_response = mock.Mock()
         mock_response.status_code = 404
         mock_get.return_value = mock_response
+        mock_response.json.return_value = []
         http_smoke_test.check_urls('pro1')
-        self.assertEqual(mock_get.call_count, len(http_smoke_test.SHORT_RUN))
+        self.assertEqual(
+            mock_get.call_count,
+            len(http_smoke_test.SHORT_RUN)
+        )
 
     @mock.patch('scripts.http_smoke_test.requests.get')
-    def test_http_fail_full(self, mock_get):
+    @mock.patch('scripts.http_smoke_test.get_full_list')
+    def test_http_fail_full(self, mock_list, mock_get):
         mock_response = mock.Mock()
+        mock_list.return_value = http_smoke_test.FULL_RUN
         mock_response.status_code = 404
         mock_get.return_value = mock_response
         http_smoke_test.check_urls('pro1', full=True)
-        self.assertEqual(mock_get.call_count,
-                         len(http_smoke_test.SHORT_RUN +
-                             http_smoke_test.FULL_RUN))
+        self.assertEqual(
+            mock_get.call_count,
+            len(http_smoke_test.FULL_RUN)
+        )
 
     @mock.patch('scripts.http_smoke_test.requests.get')
     def test_http_fail_timeout_short(self, mock_get):
         mock_get.side_effect = requests.exceptions.Timeout
         http_smoke_test.check_urls('pro1')
-        self.assertEqual(mock_get.call_count, len(http_smoke_test.SHORT_RUN))
+        self.assertEqual(
+            mock_get.call_count,
+            len(http_smoke_test.SHORT_RUN)
+        )
 
     @mock.patch('scripts.http_smoke_test.requests.get')
-    def test_http_fail_timeout_full(self, mock_get):
+    @mock.patch('scripts.http_smoke_test.get_full_list')
+    def test_http_fail_timeout_full(self, mock_list, mock_get):
         mock_get.side_effect = requests.exceptions.Timeout
+        mock_list.json.return_value = http_smoke_test.FULL_RUN
         http_smoke_test.check_urls('pro1', full=True)
-        self.assertEqual(mock_get.call_count,
-                         len(http_smoke_test.SHORT_RUN +
-                             http_smoke_test.FULL_RUN))
+        self.assertEqual(mock_get.call_count, 0)
 
     @mock.patch('scripts.http_smoke_test.requests.get')
     def test_allowed_timeouts(self, mock_get):
@@ -102,10 +134,17 @@ class HttpTests(unittest.TestCase):
     def test_http_fail_connection_error(self, mock_get):
         mock_get.side_effect = requests.exceptions.ConnectionError
         http_smoke_test.check_urls('pro1')
-        self.assertEqual(mock_get.call_count, len(http_smoke_test.SHORT_RUN))
+        self.assertEqual(
+            mock_get.call_count,
+            len(http_smoke_test.SHORT_RUN)
+        )
 
     @mock.patch('scripts.http_smoke_test.requests.get')
-    def test_http_fail_request_error(self, mock_get):
+    @mock.patch('scripts.http_smoke_test.get_full_list')
+    def test_http_fail_request_error(self, mock_list, mock_get):
         mock_get.side_effect = requests.exceptions.RequestException
         http_smoke_test.check_urls('pro1')
-        self.assertEqual(mock_get.call_count, len(http_smoke_test.SHORT_RUN))
+        self.assertEqual(
+            mock_get.call_count,
+            len(http_smoke_test.SHORT_RUN)
+        )
