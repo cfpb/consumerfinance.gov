@@ -434,7 +434,7 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    `gulp build`.
 
 !!! note
-    If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://www.ghacks.net/2016/03/02/manage-service-workers-in-firefox-and-chrome/).
+    If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
 
 
 ### 2. `backend.sh`
