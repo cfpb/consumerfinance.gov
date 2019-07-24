@@ -204,10 +204,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         } );
 
         create( 'label', {
-          'for':         option.value,
-          'textContent': option.text,
-          'className':   BASE_CLASS + '_label',
-          'inside':      selectionsItemDom
+          'for':       option.value,
+          'innerHTML': option.text + closeIcon,
+          'className': BASE_CLASS + '_label',
+          'inside':    selectionsItemDom
         } );
 
         _selectionsDom.appendChild( selectionsItemDom );
