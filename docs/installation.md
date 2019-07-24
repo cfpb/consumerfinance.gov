@@ -433,6 +433,10 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    builds for `ondemand` and `nemo`, which aren't part of a standard
    `gulp build`.
 
+!!! note
+    If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
+
+
 ### 2. `backend.sh`
 
 !!! note
