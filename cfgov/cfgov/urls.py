@@ -74,6 +74,11 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
+    url(r'^rural-or-underserved-tool/$',
+        TemplateView.as_view(
+            template_name='rural-or-underserved/index.html'),
+            name='rural-or-underserved'
+    ),
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
