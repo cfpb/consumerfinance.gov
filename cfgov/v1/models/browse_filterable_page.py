@@ -12,6 +12,7 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.feeds import FilterableFeedPageMixin
 from v1.models.base import CFGOVPage
+from v1.models.learn_page import EventPage
 from v1.util.filterable_list import FilterableListMixin
 
 
@@ -79,6 +80,10 @@ class EventArchivePage(BrowseFilterablePage):
     template = 'browse-filterable/index.html'
 
     objects = PageManager()
+
+    @staticmethod
+    def get_model_class():
+        return EventPage
 
     @staticmethod
     def get_form_class():

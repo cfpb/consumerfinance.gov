@@ -23,7 +23,7 @@
     {%- set street =  event.venue_street | default('', true) -%}
     {%- set suite  =  event.venue_suite  | default('', true) -%}
     {%- set name   =  event.venue_name   | default('', true) -%}
-    {%- set zip    =  event.venue_zip    | default('', true) -%}
+    {%- set zip    =  event.venue_zipcode | default('', true) -%}
     <p class="event-meta_address h-adr">
         {%- macro _city() %}
             <span class="event-meta_city p-locality">{{ city }}</span>
