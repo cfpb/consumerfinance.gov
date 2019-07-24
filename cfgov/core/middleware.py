@@ -1,5 +1,4 @@
 import re
-from six import text_type as str
 
 from django.conf import settings
 from django.utils.encoding import force_text
