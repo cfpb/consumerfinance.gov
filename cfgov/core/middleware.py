@@ -1,12 +1,9 @@
 import re
-from six import text_type as str
 
 from django.conf import settings
 from django.utils.encoding import force_text
 
 from wagtail.wagtailcore.rich_text import expand_db_html
-
-from bs4 import BeautifulSoup
 
 from core.utils import add_link_markup, get_link_tags
 
@@ -32,15 +29,13 @@ def parse_links(html, encoding=None):
     # Wagtail pages, documents, and images to their proper link URLs.
     expanded_html = expand_db_html(html_as_text)
 
-    soup = BeautifulSoup(expanded_html, 'html.parser')
-    link_tags = get_link_tags(soup)
+    link_tags = get_link_tags(expanded_html)
     for tag in link_tags:
-        original_link = str(tag)
-        link_with_markup = add_link_markup(tag)
-        if link_with_markup:
+        tag_with_markup = add_link_markup(tag)
+        if tag_with_markup:
             expanded_html = expanded_html.replace(
-                original_link,
-                link_with_markup
+                tag,
+                tag_with_markup
             )
 
     return expanded_html

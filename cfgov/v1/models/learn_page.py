@@ -228,7 +228,6 @@ class EventPage(AbstractFilterPage):
     venue_suite = models.CharField(max_length=100, blank=True)
     venue_city = models.CharField(max_length=100, blank=True)
     venue_state = USStateField(blank=True)
-    venue_zip = models.IntegerField(blank=True, null=True)
     venue_zipcode = models.CharField(max_length=12, blank=True)
     agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
 
