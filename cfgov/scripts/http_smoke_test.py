@@ -1,6 +1,5 @@
 import argparse
 import logging
-# import subprocess
 import sys
 import time
 
@@ -146,7 +145,6 @@ def get_full_list():
             'Using fallback because request for S3 list failed: {}'.format(e))
         full_run = FULL_RUN
     else:
-        print("URLs acquired from S3")
         full_run = sorted(set(url_data.get('top20') + url_data.get('apps')))
     return full_run
 
