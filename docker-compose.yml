@@ -27,8 +27,9 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+            target: cfgov-develop
             args:
-                scl_python_version: rh-python36
+                scl_python_version: python27
         environment: 
             INIT_DB: 'ON'
         ports:
@@ -46,6 +47,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+            target: cfgov-develop
             args:
                 scl_python_version: rh-python36
         environment: 
