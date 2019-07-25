@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
 
-docker run -v `pwd`:/cfgov centos:6 /cfgov/docker/drama-free-django/_test.sh
+set -e
+
+docker build -t cfgov-dfd-builder docker/drama-free-django
+
+docker run \
+  --rm \
+  -u $(id -u):$(id -g) \
+  -v $(pwd):/cfgov:cached \
+  cfgov-dfd-builder ./_test.sh
