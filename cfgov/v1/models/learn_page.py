@@ -228,7 +228,7 @@ class EventPage(AbstractFilterPage):
     venue_suite = models.CharField(max_length=100, blank=True)
     venue_city = models.CharField(max_length=100, blank=True)
     venue_state = USStateField(blank=True)
-    venue_zip = models.IntegerField(blank=True, null=True)
+    venue_zipcode = models.CharField(max_length=12, blank=True)
     agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
 
     objects = CFGOVPageManager()
@@ -274,7 +274,7 @@ class EventPage(AbstractFilterPage):
             FieldPanel('venue_suite'),
             FieldPanel('venue_city'),
             FieldPanel('venue_state'),
-            FieldPanel('venue_zip'),
+            FieldPanel('venue_zipcode'),
         ], heading='Venue Address'),
     ]
     # Agenda content tab

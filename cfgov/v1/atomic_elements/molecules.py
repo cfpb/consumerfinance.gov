@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
@@ -247,22 +248,35 @@ class ContactEmail(blocks.StructBlock):
         label = 'Email'
 
 
+def phone_number_format_validator():
+    return RegexValidator(
+        regex=r'^\d*$',
+        message="Enter a numeric phone number, without punctuation.")
+
+
 class ContactPhone(blocks.StructBlock):
     fax = blocks.BooleanBlock(default=False, required=False,
                               label='Is this number a fax?')
     phones = blocks.ListBlock(
         blocks.StructBlock([
-            ('number', blocks.CharBlock(max_length=15)),
+            ('number', blocks.CharBlock(
+                max_length=15,
+                help_text='Do not include spaces or dashes. Ex. 8554112372',
+                validators=[phone_number_format_validator()]
+            )),
             ('extension', blocks.CharBlock(max_length=4, required=False)),
             ('vanity', blocks.CharBlock(
                 max_length=15,
                 required=False,
-                help_text='A phoneword version of the above number'
+                help_text='A phoneword version of the above number. '
+                          'Include any formatting. Ex. (555) 222-CFPB'
             )),
             ('tty', blocks.CharBlock(
                 max_length=15,
                 required=False,
-                label="TTY"
+                label="TTY",
+                help_text='Do not include spaces or dashes. Ex. 8554112372',
+                validators=[phone_number_format_validator()]
             )),
             ('tty_ext', blocks.CharBlock(
                 max_length=4,
