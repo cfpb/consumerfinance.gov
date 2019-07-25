@@ -17,7 +17,6 @@ services:
         restart: always
         volumes:
             - postgres_data:/var/lib/postgresql/data/
-            - ./docker/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
         environment:
             POSTGRES_USER: cfpb
             POSTGRES_PASSWORD: cfpb
