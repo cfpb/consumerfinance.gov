@@ -7,6 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 """
 
+import json
 import os
 
 
@@ -19,7 +20,7 @@ def initialize_new_relic():
     if os.getenv('NEW_RELIC_LICENSE_KEY'):
         new_relic_config_file = os.path.abspath(
             os.path.join(
-                os.path.dirname(os.path.abspath(__file__)),
+                this_dir,
                 '../newrelic.ini'
             )
         )
@@ -29,7 +30,15 @@ def initialize_new_relic():
 
 
 envfile_path = os.path.join(this_dir, '../../.env'),
-dotenv.read_dotenv(envfile_path)
+environmentdotjson_path = os.path.join(this_dir, '../../environment.json')
+
+if os.path.exists(envfile_path):
+    dotenv.read_dotenv(envfile_path)
+
+elif os.path.exists(environmentdotjson_path):
+    with open(environmentdotjson_path) as environmentdotjson:
+        new_env_vars = json.load(environmentdotjson)
+        os.environ.update(new_env_vars)
 
 initialize_new_relic()
 
