@@ -266,7 +266,7 @@ STATICFILES_DIRS = [
 ]
 
 static_in = REPOSITORY_ROOT.child('static.in')
-STATICFILES_DIRS += [str(d) for d in static_in.listdir(filter=DIRS)]
+STATICFILES_DIRS += map(str, static_in.listdir(filter=DIRS))
 
 ALLOWED_HOSTS = ['*']
 
