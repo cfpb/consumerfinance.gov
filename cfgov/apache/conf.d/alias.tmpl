@@ -11,10 +11,3 @@ Alias /robots.txt ${STATIC_PATH}/robots.txt
 Alias /static/f/ ${STATIC_PATH}/nemo/_/f/
 # Preserves legacy URL compatibility, but this is not actually using Wordpress
 Alias /wp-content/themes/cfpb_nemo/_/  ${STATIC_PATH}/nemo/_/
-
-# Static assets served from files on disk.
-<Directory ${APACHE_WWW_PATH}/staticsites>
-   Require all granted
-</Directory>
-
-Alias /rural-or-underserved-tool ${APACHE_WWW_PATH}/staticsites/rural-or-underserved-tool
