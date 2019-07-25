@@ -10,8 +10,8 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 import json
 import os
 
-
 import dotenv
+
 
 this_dir = os.path.dirname(os.path.abspath(__file__))
 

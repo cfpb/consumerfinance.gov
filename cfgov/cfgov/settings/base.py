@@ -5,7 +5,7 @@ from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
-from unipath import Path, DIRS
+from unipath import DIRS, Path
 
 from cfgov.util import admin_emails
 

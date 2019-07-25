@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-import os
 import json
+import os
 import sys
 
 import dotenv
