@@ -42,8 +42,6 @@ export DJANGO_SETTINGS_MODULE=cfgov.settings.production
 # commands do nothing.
 mkdir -p static.in/0/fonts
 
-export DJANGO_STATICFILES_IN=/tmp/current/static.in
-
 # 1. Use grep to find all .woff and .woff2 files referenced in CSS files.
 # 2. Reduce these to a list of unique webfont filenames.
 # 3. Touch each filename in static.in/0/fonts, causing it to be created as an

@@ -33,7 +33,7 @@ envfile_path = os.path.join(this_dir, '../../.env'),
 environmentdotjson_path = os.path.join(this_dir, '../../environment.json')
 
 if os.path.exists(envfile_path):
-    dotenv.read_dotenv(envfile_path)
+    dotenv.read_dotenv(envfile_path, override=True)
 
 elif os.path.exists(environmentdotjson_path):
     with open(environmentdotjson_path) as environmentdotjson:
