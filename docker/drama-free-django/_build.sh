@@ -29,7 +29,7 @@ yum install -y gcc git python27
 source /opt/rh/python27/enable
 
 pip install -U pip
-pip install -U git+https://github.com/cfpb/drama-free-django.git@more-subtle-magic-removal
+pip install -U git+https://github.com/cfpb/drama-free-django.git@magic-removal-branch
 
 curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
