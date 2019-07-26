@@ -1,6 +1,7 @@
-FROM centos:7
+FROM centos:6
 
 ENV SCL_PYTHON_VERSION python27
+ENV PIP_NO_CACHE_DIR true
 
 ENV DFD_DIR /src/cfgov-refresh
 
@@ -20,4 +21,4 @@ RUN yum install -y centos-release-scl && \
 
 COPY _build.sh _test.sh docker-entrypoint.sh ./
 
-ENTRYPOINT [ "./docker-entrypoint.sh"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
