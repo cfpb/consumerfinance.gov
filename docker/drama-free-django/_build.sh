@@ -50,13 +50,13 @@ echo "{}" > ./dfd_env.json
 
 # This is used by DFD to set Django's settings.STATIC_ROOT.
 # Q: Why do we need to override the default?
-# echo '{"static_out": "../static"}' > ./dfd_paths.json
+echo '{"static_out": "../../../static"}' > ./dfd_paths.json
 
 no-drama release \
     "./$build_artifact" \
     ./dfd_env.json \
-    "$artifact_release" #\
-    #--paths ./dfd_paths.json
+    "$artifact_release" \
+    --paths ./dfd_paths.json
 
 # Copy release artifact to source directory.
 cp "$release_artifact" "$cfgov_refresh_volume"
