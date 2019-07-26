@@ -31,7 +31,7 @@ A_TAG = re.compile(
     # And match everything inside
     r'.+?'
     # As long as it's not a </a>, then match '</a>'
-    '(?=</a>)</a>'
+    r'(?=</a>)</a>'
     # Make '.' match new lines, ignore case
     r'(?s)(?i)'
 )
