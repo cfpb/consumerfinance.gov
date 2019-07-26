@@ -17,7 +17,7 @@ WORKDIR ${DFD_DIR}
 RUN yum install -y centos-release-scl && \
     curl -sL https://rpm.nodesource.com/setup_10.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
-    yum install -y ${SCL_PYTHON_VERSION} gcc git nodejs which yarn && \
+    yum install -y ${SCL_PYTHON_VERSION} gcc git nodejs yarn && \
     echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/scl_python.sh && \
     source /etc/profile && \
     pip install --no-cache-dir -U pip && \
