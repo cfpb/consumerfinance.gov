@@ -49,7 +49,6 @@ no-drama build "${build_args[@]}"
 echo "{}" > ./dfd_env.json
 
 # This is used by DFD to set Django's settings.STATIC_ROOT.
-# Q: Why do we need to override the default?
 echo '{"static_out": "../../../static"}' > ./dfd_paths.json
 
 no-drama release \
