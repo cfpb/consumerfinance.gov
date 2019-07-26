@@ -7,10 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 """
 
-import json
 import os
-
-import dotenv
 
 
 this_dir = os.path.dirname(os.path.abspath(__file__))
@@ -28,17 +25,6 @@ def initialize_new_relic():
         import newrelic.agent
         newrelic.agent.initialize(new_relic_config_file)
 
-
-envfile_path = os.path.join(this_dir, '../../.env'),
-environmentdotjson_path = os.path.join(this_dir, '../../environment.json')
-
-if os.path.exists(envfile_path):
-    dotenv.read_dotenv(envfile_path, override=True)
-
-elif os.path.exists(environmentdotjson_path):
-    with open(environmentdotjson_path) as environmentdotjson:
-        new_env_vars = json.load(environmentdotjson)
-        os.environ.update(new_env_vars)
 
 initialize_new_relic()
 

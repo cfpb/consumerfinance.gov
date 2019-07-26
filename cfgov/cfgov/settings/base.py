@@ -1,9 +1,11 @@
 import glob
+import json
 import os
 
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import dotenv
 import dj_database_url
 from unipath import DIRS, Path
 
@@ -12,6 +14,18 @@ from cfgov.util import admin_emails
 
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
+
+
+# populate os.environ from an .env file OR environment.json
+envfile_path = REPOSITORY_ROOT.child('.env')
+environmentdotjson_path = REPOSITORY_ROOT.child('environment.json')
+if envfile_path.exists():
+    dotenv.read_dotenv(envfile_path, override=True)
+
+elif environmentdotjson_path.exists():
+    with open(environmentdotjson_path) as environmentdotjson:
+        new_env_vars = json.load(environmentdotjson)
+        os.environ.update(new_env_vars)
 
 # This is the root of the Django project, 'cfgov'
 PROJECT_ROOT = REPOSITORY_ROOT.child('cfgov')

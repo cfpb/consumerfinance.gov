@@ -27,6 +27,7 @@ services:
             - "8000:8000"
         environment:
             ES_HOST: elasticsearch
+            DATABASE_URL: "postgres://cfpb:cfpb@postgres/cfgov"
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps
@@ -45,6 +46,7 @@ services:
             - "8333:8000"
         environment:
             ES_HOST: elasticsearch
+            DATABASE_URL: "postgres://cfpb:cfpb@postgres/cfgov"
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps

@@ -54,8 +54,5 @@ grep -Eho \
     | sed 's|^|static.in/0/fonts/|' \
     | xargs touch
 
-# Now that we're sure that we have webfont files, we can test collectstatic.
-./manage.py collectstatic
-
 # It'd be nice to do additional verification of the build artifact here, for
 # example by actually running a webserver and making some requests.
