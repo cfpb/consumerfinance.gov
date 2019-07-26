@@ -44,7 +44,7 @@ wagtail-treemodeladmin==1.0.4
 
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.12.1/owning_a_home_api-0.12.1-py2.py3-none-any.whl
-https://github.com/cfpb/retirement/releases/download/0.10.0/retirement-0.10.0-py2.py3-none-any.whl
+https://github.com/cfpb/retirement/releases/download/0.10.2/retirement-0.10.2-py2.py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.1.10/ccdb5_api-1.1.10-py2.py3-none-any.whl
 https://github.com/cfpb/ccdb5-ui/releases/download/1.3.4/ccdb5_ui-1.3.4-py2.py3-none-any.whl
 https://github.com/cfpb/django-college-costs-comparison/releases/download/1.12.0/comparisontool-1.12.0-py2.py3-none-any.whl
