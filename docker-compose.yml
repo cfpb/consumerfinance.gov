@@ -29,8 +29,6 @@ services:
             target: cfgov-develop
             args:
                 scl_python_version: python27
-        environment: 
-            INIT_DB: 'ON'
         ports:
             - "8000:8000"
         volumes:
@@ -49,8 +47,6 @@ services:
             target: cfgov-develop
             args:
                 scl_python_version: rh-python36
-        environment: 
-            INIT_DB: 'OFF'
         ports:
             - "8333:8000"
         volumes:

@@ -16,17 +16,5 @@ fi
 
 env | sort
 
-# $INIT_DB specifies whether or not to run the initial-data.sh
-if [[ ${INIT_DB} == 'ON' ]]; then
-    echo 'Database init starting...'
-    ${APP_HOME}/initial-data.sh
-    echo 'Database init complete.'
-elif [[ ${INIT_DB} == 'OFF' ]]; then
-    echo 'Database init disabled.'
-else
-    echo "INIT_DB value '${INIT_DB}' invalid.  Must be 'ON' or 'OFF'."
-    exit 1
-fi
-
 # Execute the Docker CMD
 exec "$@"
