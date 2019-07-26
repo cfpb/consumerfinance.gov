@@ -24,7 +24,7 @@ RUN yum -y install \
         which
 
 # Specify SCL-based Python version.
-# Curretnly used options: python27, rh-python36
+# Currently used options: python27, rh-python36
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
 ARG scl_python_version
 ENV SCL_PYTHON_VERSION ${scl_python_version}
