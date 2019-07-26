@@ -23,10 +23,17 @@ This will run a CentOS 6 container to validate the built artifact by extracting 
 
 ## Notes
 
-1. When running the container as a user that exists on the host, but not in the container, you may notice a warning similar to:
+1. When running the container as a user that exists on the host, but not in the container, you may notice a warnings similar to:
 
     ```
     /usr/bin/id: cannot find name for user ID 502
+    ```
+
+    ...and...
+
+    ```
+    warning Skipping preferred cache folder "/.cache/yarn" because it is not writable.
+    warning Selected the next writable cache folder in the list, will be "/tmp/.yarn-cache-501".
     ```
 
     This is not anything to worry about. It simply means the uid/gid don't match any users/groups setup in the container.
