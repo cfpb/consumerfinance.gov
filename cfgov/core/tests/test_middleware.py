@@ -136,6 +136,20 @@ class TestParseLinks(TestCase):
         self.assertIn('external-site', output)
         self.assertNotIn('cf-icon-svg', output)
 
+    def test_external_link_with_background_img(self):
+        s = ('<a href="https://somewhere/foo"><span>'
+             '<div style="background-image: url(\'some.png\')"></div>'
+             '</span></a>')
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertNotIn('cf-icon-svg', output)
+
+    def test_external_link_with_header(self):
+        s = '<a href="https://somewhere/foo"><h3>Header</h3></a>'
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertNotIn('cf-icon-svg', output)
+
     def test_multiline_external_gov_link(self):
         s = '''<a class="m-list_link a-link"
         href="https://usa.gov/">
