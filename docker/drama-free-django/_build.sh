@@ -29,7 +29,7 @@ yum install -y gcc git python27
 source /opt/rh/python27/enable
 
 pip install -U pip
-pip install -U git+https://github.com/cfpb/drama-free-django.git@magic-removal-branch
+pip install -U git+https://github.com/cfpb/drama-free-django.git@more-subtle-magic-removal
 
 curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
@@ -58,11 +58,15 @@ no-drama build "${build_args[@]}"
 
 # drama-free-django release step.
 
+# This is just a placeholder that gets replaced by Ansible.
+echo "{}" > ./dfd_env.json
+
 # This is used by DFD to set Django's settings.STATIC_ROOT.
 echo '{"static_out": "../../../static"}' > ./dfd_paths.json
 
 no-drama release \
     "./$build_artifact" \
+    ./dfd_env.json \
     "$artifact_release" \
     --paths ./dfd_paths.json
 
