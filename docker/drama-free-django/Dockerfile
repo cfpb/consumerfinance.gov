@@ -11,6 +11,11 @@ ENV DFD_DIR /src/cfgov-refresh
 RUN mkdir -p ${DFD_DIR} && chmod 777 ${DFD_DIR}
 WORKDIR ${DFD_DIR}
 
+# Sets a consistent $HOME no matter which user the container runs under.  This prevents
+# permissions issues caused by Docker's default `/` home directory.
+ENV HOME /tmp/dfd-home
+RUN mkdir -p ${HOME} && chmod 777 ${HOME}
+
 # Install dependencies
 # NOTE: You MUST upgrade pip before using it further.  The version packaged with SCL has issues
 # with both setuptools and the PIP_NO_CACHE_DIR envvar (hence the --no-cache-dir override).
