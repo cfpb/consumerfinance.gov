@@ -49,24 +49,24 @@ class Part(models.Model):
     part_number = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     letter_code = models.CharField(max_length=10)
+    short_name = models.CharField(max_length=255, blank=True)
 
     panels = [
         FieldPanel('cfr_title_number'),
         FieldPanel('title'),
         FieldPanel('part_number'),
-        FieldPanel('letter_code'),
+        FieldPanel('short_name'),
         FieldPanel('chapter'),
     ]
 
     @property
     def cfr_title(self):
-        return "{} CFR Part {} (Regulation {})".format(
-            self.cfr_title_number, self.part_number, self.letter_code)
+        return str(self)
 
     def __str__(self):
-        name = "12 CFR Part {}".format(self.part_number)
-        if self.letter_code:
-            name += " (Regulation {})".format(self.letter_code)
+        name = "{} CFR Part {}".format(self.cfr_title_number, self.part_number)
+        if self.short_name:
+            name += " ({})".format(self.short_name)
         return name
 
     class Meta:
