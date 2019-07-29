@@ -2,7 +2,7 @@ FROM centos:6
 
 ENV SCL_PYTHON_VERSION python27
 
-# Disables pip cache, which reduces build time, and suppresses warnings when run a non-root.
+# Disables pip cache, which reduces build time, and suppresses warnings when run as non-root.
 ENV PIP_NO_CACHE_DIR true
 
 ENV DFD_DIR /src/cfgov-refresh
