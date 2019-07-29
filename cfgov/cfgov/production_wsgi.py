@@ -9,6 +9,6 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 
 import os
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cfgov.settings.local')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cfgov.settings.production')
 
 from cfgov.wsgi import application
