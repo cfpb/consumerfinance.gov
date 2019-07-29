@@ -8,6 +8,7 @@ set -x
 
 artifact_filename=cfgov_current_build.zip
 artifact_volume=/cfgov
+dfd_test_dir=/tmp/dfd-test/release
 
 # Verify that the artifact volume has been mapped.
 if [ ! -d "$artifact_volume" ]; then
@@ -16,15 +17,11 @@ if [ ! -d "$artifact_volume" ]; then
     exit 1
 fi
 
-# Install runtime requirements.
-yum install -y centos-release-scl
-yum install -y python27
-
-source /opt/rh/python27/enable
 
 # Extract the artifact in /tmp.
-cp "$artifact_volume/$artifact_filename" /tmp
-cd /tmp
+mkdir -p $dfd_test_dir
+cp "$artifact_volume/$artifact_filename" $dfd_test_dir
+cd $dfd_test_dir
 python "./$artifact_filename"
 
 cd current
