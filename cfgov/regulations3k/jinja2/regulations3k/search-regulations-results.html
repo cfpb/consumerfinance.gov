@@ -28,6 +28,7 @@
             {% for reg in page.results.all_regs %}
                 {% if reg.selected %}
                     {%- set reg_name = '(Reg<span class="u-hide-on-mobile">ulation</span> ' ~ reg.letter_code ~ ')' -%}
+                    {%- set reg_name = '(' ~ reg.short_name | regs_hide_on_mobile ~ ')' -%}
                     {{ tag.render({
                         'label': reg.id ~ ' ' ~ reg_name | safe,
                         'value': reg.id,
