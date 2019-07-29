@@ -6,7 +6,7 @@ import unittest
 from django.apps import apps
 from django.core.urlresolvers import NoReverseMatch, reverse
 from django.http import Http404, HttpRequest, QueryDict
-from django.test import TestCase, override_settings
+from django.test import RequestFactory, TestCase, override_settings
 from django.utils import timezone
 
 from wagtail.wagtailcore.models import Site
@@ -16,11 +16,13 @@ import mock
 from model_mommy import mommy
 
 from ask_cfpb.models import (
-    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerPage
+    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, AnswerPage
 )
 from ask_cfpb.models.search import make_safe
 from ask_cfpb.tests.models.test_pages import mock_queryset
-from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
+from ask_cfpb.views import (
+    annotate_links, ask_search, redirect_ask_search, view_answer
+)
 from v1.util.migrations import get_or_create_page
 
 
@@ -38,92 +40,133 @@ class AskSearchSafetyCase(unittest.TestCase):
 
 
 class AnswerPagePreviewCase(TestCase):
-
     def setUp(self):
-        from v1.models import HomePage
-        from ask_cfpb.models import Answer
-        self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.default_site = Site.objects.get(is_default_site=True)
         self.english_parent_page = get_or_create_page(
             apps,
             'ask_cfpb',
             'AnswerLandingPage',
             'Ask CFPB',
             ENGLISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+            self.default_site.root_page,
             language='en',
             live=True)
-        self.spanish_parent_page = get_or_create_page(
-            apps,
-            'ask_cfpb',
-            'AnswerLandingPage',
-            'Obtener respuestas',
-            SPANISH_PARENT_SLUG,
-            self.ROOT_PAGE,
-            language='es',
-            live=True)
-        self.test_answer = mommy.make(Answer)
-        self.test_answer2 = mommy.make(Answer)
-        self.english_answer_page = AnswerPage(
-            answer_base=self.test_answer,
-            language='en',
-            slug='test-question1-en-{}'.format(self.test_answer.pk),
-            title='Test question1',
-            answer_content='Test answer1.',
-            question='Test question1.')
-        self.english_parent_page.add_child(instance=self.english_answer_page)
-        self.english_answer_page.save_revision().publish()
-        self.english_answer_page2 = AnswerPage(
-            answer_base=self.test_answer2,
-            language='en',
-            slug='test-question2-en-{}'.format(self.test_answer2.pk),
-            title='Test question2',
-            answer_content='Test answer2.',
-            question='Test question2.')
-        self.english_parent_page.add_child(instance=self.english_answer_page2)
-        self.english_answer_page2.save_revision().publish()
-        self.site = mommy.make(
-            Site,
-            root_page=self.ROOT_PAGE,
-            hostname='localhost',
-            port=8000,
-            is_default_site=True)
-        self.sharing_site = mommy.make(
-            SharingSite,
-            site=self.site,
-            hostname='preview.localhost',
-            port=8000)
 
-    @mock.patch('ask_cfpb.views.ServeView.serve_latest_revision')
-    def test_preview_page(self, mock_serve):
-        from ask_cfpb.views import view_answer
-        test_request = HttpRequest()
-        test_request.META['SERVER_NAME'] = 'preview.localhost'
-        test_request.META['SERVER_PORT'] = 8000
-        view_answer(
-            test_request, 'test-question1', 'en', self.test_answer.pk)
-        self.assertEqual(mock_serve.call_count, 1)
+    def make_request(self, slug, **kwargs):
+        path = '/{}/{}/'.format(ENGLISH_PARENT_SLUG, slug)
+        request = RequestFactory().get(path, **kwargs)
+        request.site = self.default_site
+        return request
 
-    def test_answer_page_not_live(self):
-        from ask_cfpb.views import view_answer
-        page = self.test_answer.english_page
-        page.unpublish()
-        test_request = HttpRequest()
+    def test_view_answer_for_nonexistent_page_raises_404(self):
         with self.assertRaises(Http404):
             view_answer(
-                test_request,
-                'test-question',
-                'en',
-                self.test_answer.pk)
+                self.make_request('this-doesnt-exist-en-9999'),
+                slug='this-doesnt-exist',
+                language='en',
+                answer_id=9999
+            )
 
-    def test_page_redirected(self):
-        page = self.english_answer_page
-        page.get_latest_revision().publish()
-        page.redirect_to_page = self.english_answer_page2
-        page.save()
-        page.save_revision().publish()
-        response = self.client.get(page.url)
+    def test_view_answer_for_unpublished_page_raises_404(self):
+        answer = mommy.make(Answer)
+        answer_page = AnswerPage(
+            title='question1',
+            answer_base=answer,
+            slug='question1-en-{}'.format(answer.pk),
+            question='Question 1',
+            live=False
+        )
+        self.english_parent_page.add_child(instance=answer_page)
+
+        with self.assertRaises(Http404):
+            view_answer(
+                self.make_request(answer_page.slug),
+                slug='question1',
+                language='en',
+                answer_id=answer.pk
+            )
+
+    def test_view_answer_for_live_page_returns_correct_content(self):
+        answer = mommy.make(Answer)
+        answer_page = AnswerPage(
+            title='question1',
+            answer_base=answer,
+            slug='question1-en-{}'.format(answer.pk),
+            question='Question 1',
+            live=True
+        )
+        self.english_parent_page.add_child(instance=answer_page)
+
+        response = view_answer(
+            self.make_request(answer_page.slug),
+            'question1',
+            'en',
+            answer.pk
+        )
+        self.assertContains(response, 'Question 1')
+
+    def test_view_answer_using_wagtail_sharing_returns_draft_content(self):
+        answer = mommy.make(Answer)
+        answer_page = AnswerPage(
+            title='question1',
+            answer_base=answer,
+            slug='question1-en-{}'.format(answer.pk),
+            question='Question 1',
+            live=True
+        )
+        self.english_parent_page.add_child(instance=answer_page)
+
+        answer_page.question = 'Draft!!!'
+        answer_page.save_revision()
+
+        live_request = self.make_request(answer_page.slug)
+
+        live_response = view_answer(
+            live_request,
+            'question1',
+            'en',
+            answer.pk
+        )
+        self.assertNotContains(live_response, 'Draft!!!')
+
+        sharing_site = SharingSite.objects.get(site=self.default_site)
+        draft_request = self.make_request(
+            answer_page.slug,
+            SERVER_NAME=sharing_site.hostname,
+            SERVER_PORT=sharing_site.port
+        )
+
+        draft_response = view_answer(
+            draft_request,
+            'question1',
+            'en',
+            answer.pk
+        )
+        self.assertContains(draft_response, 'Draft!!!')
+
+    def test_view_answer_page_redirected_to_other_page(self):
+        answer2 = mommy.make(Answer)
+        answer_page2 = AnswerPage(
+            title='Question 2',
+            answer_base=answer2,
+            slug='question2-en-{}'.format(answer2.pk),
+            live=True
+        )
+        self.english_parent_page.add_child(instance=answer_page2)
+
+        answer1 = mommy.make(Answer)
+        answer_page1 = AnswerPage(
+            title='Question 1',
+            answer_base=answer1,
+            redirect_to_page=answer_page2,
+            slug='question1-en-{}'.format(answer1.pk),
+            live=True
+        )
+        self.english_parent_page.add_child(instance=answer_page1)
+
+        response = self.client.get(answer_page1.url)
         self.assertEqual(response.status_code, 301)
-        self.assertEqual(response.url, self.english_answer_page2.url)
+        self.assertEqual(response.url, answer_page2.url)
 
 
 class AnswerViewTestCase(TestCase):
