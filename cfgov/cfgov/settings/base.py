@@ -20,7 +20,7 @@ REPOSITORY_ROOT = Path(__file__).ancestor(4)
 envfile_path = REPOSITORY_ROOT.child('.env')
 environmentdotjson_path = REPOSITORY_ROOT.child('environment.json')
 if envfile_path.exists():
-    dotenv.read_dotenv(envfile_path, override=True)
+    dotenv.read_dotenv(envfile_path)
 
 elif environmentdotjson_path.exists():
     with open(environmentdotjson_path) as environmentdotjson:
