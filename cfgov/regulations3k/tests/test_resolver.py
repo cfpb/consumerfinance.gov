@@ -42,7 +42,7 @@ class ReferenceResolutionTestCase(TestCase):
             Part,
             part_number='1002',
             title='Equal Credit Opportunity Act',
-            letter_code='B',
+            short_name='Regulation B',
             chapter='X'
         )
         self.effective_version = mommy.make(
