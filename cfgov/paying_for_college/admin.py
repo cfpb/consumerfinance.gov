@@ -42,11 +42,15 @@ class NicknameAdmin(admin.ModelAdmin):
     search_fields = ['nickname']
 
 
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'contacts', 'endpoint')
+
+
 admin.site.register(ConstantRate, ConstantRateAdmin)
 admin.site.register(ConstantCap, ConstantCapAdmin)
 admin.site.register(School, SchoolAdmin)
 admin.site.register(Alias, AliasAdmin)
 admin.site.register(Feedback)
-admin.site.register(Contact)
+admin.site.register(Contact, ContactAdmin)
 admin.site.register(Nickname, NicknameAdmin)
 admin.site.register(Program)
