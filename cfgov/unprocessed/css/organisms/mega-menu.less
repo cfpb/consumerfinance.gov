@@ -265,10 +265,10 @@ body {
     .respond-to-max( @bp-sm-max, {
         &_trigger {
             display: none;
-            height: unit( @mobile_trigger_ht__px / 18px, em );
-            min-width: unit( @mobile_trigger_ht__px / 18px, em );
-            padding-top: unit( @grid_gutter-width / 2 / 18px, em );
-            padding-bottom: unit( @grid_gutter-width / 2 / 18px, em );
+            height: @mobile_trigger_ht__px;
+            min-width: @mobile_trigger_ht__px;
+            padding-top: 14px;
+            padding-bottom: 14px;
 
             position: absolute;
             top: 0;
@@ -278,7 +278,7 @@ body {
             border: none;
             border-right: 1px solid @gray-40;
             color: @black;
-            font-size: unit( 18px / @base-font-size-px, em );
+            font-size: 18px;
 
             .js & {
                 display: block;

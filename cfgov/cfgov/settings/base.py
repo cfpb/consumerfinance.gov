@@ -663,9 +663,6 @@ FLAGS = {
     'EMAIL_POPUP_OAH': [('boolean', True)],
     'EMAIL_POPUP_DEBT': [('boolean', True)],
 
-    # The release of new Whistleblowers content/pages
-    'WHISTLEBLOWER_RELEASE': [],
-
     # Search.gov API-based site-search
     'SEARCH_DOTGOV_API': [],
 

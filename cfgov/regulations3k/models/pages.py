@@ -30,7 +30,6 @@ from regdown import regdown
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
 from regulations3k.models import Part, Section, SectionParagraph
-from regulations3k.parser.integer_conversion import LETTER_CODES
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
@@ -81,7 +80,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         sqs = SearchQuerySet().filter(content=search_query)
         payload.update({
             'all_regs': [{
-                'letter_code': reg.letter_code,
+                'short_name': reg.short_name,
                 'id': reg.part_number,
                 'num_results': sqs.filter(
                     part=reg.part_number).models(SectionParagraph).count(),
@@ -107,11 +106,12 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                     "Query string {} produced a TypeError: {}".format(
                         search_query, e))
                 continue
-            letter_code = LETTER_CODES.get(hit.part)
+
+            short_name = all_regs.get(part_number=hit.part).short_name
             hit_payload = {
                 'id': hit.paragraph_id,
                 'part': hit.part,
-                'reg': 'Regulation {}'.format(letter_code),
+                'reg': short_name,
                 'label': hit.title,
                 'snippet': snippet,
                 'url': "{}{}/{}/#{}".format(
@@ -119,6 +119,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                     hit.section_label, hit.paragraph_id),
             }
             payload['results'].append(hit_payload)
+
         payload.update({'current_count': sqs.count()})
         self.results = payload
         context = self.get_context(request)
