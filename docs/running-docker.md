@@ -40,10 +40,10 @@ and start it again with `docker-compose up`.
 
 ### Access a container's shell
 
-- Python 2.7: `docker exec -it cfgov-refresh_python2_1 bash`
-- Python 3.6: `docker exec -it cfgov-refresh_python3_1 bash`
-- Elasticsearch: `docker exec -it cfgov-refresh_elasticsearch_1 bash`
-- PostgreSQL: `docker exec -it cfgov-refresh_postgres_1 bash`
+- Python 2.7: `docker-compose exec python2 bash`
+- Python 3.6: `docker-compose exec python3 bash`
+- Elasticsearch: `docker-compose exec elasticsearch bash`
+- PostgreSQL: `docker-compose exec postgres bash`
 
 ### Run Django management commands
 
@@ -66,10 +66,9 @@ If the Python package requirements files have changed,
 you will need to stop `docker-compose` (if it is running) 
 and rebuild the Python containers using:
 
-- Python 2.7: `docker-compose build python2`
-- Python 3.6: `docker-compose build python3`
-
-The next time you run `docker-compose up` the new requirements will be in place.
+```
+docker-compose up --build python2 python3
+```
 
 ### Work on satellite apps
 
@@ -90,7 +89,7 @@ When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 ### Useful Docker commands
 
 For `docker-compose` commands, 
-`[CONTAINER]` is the container name that is defined in `docker-compose.yml`. 
+`[SERVICE]` is the service name that is defined in `docker-compose.yml`.
 
 For `docker` commands, `[CONTAINER]` is the container name displayed with `docker ps`.
 
@@ -100,5 +99,5 @@ For `docker` commands, `[CONTAINER]` is the container name displayed with `docke
     will print the logs of a container.
 - [`docker top [CONTAINER]`](https://docs.docker.com/engine/reference/commandline/top/)
     will display the running processes in a container.
-- [`docker-compose build [CONTAINER]`](https://docs.docker.com/compose/reference/build/)
+- [`docker-compose build [SERVICE]`](https://docs.docker.com/compose/reference/build/)
     will build any of our configured containers.
