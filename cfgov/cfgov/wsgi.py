@@ -29,7 +29,7 @@ def initialize_new_relic():
 initialize_new_relic()
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cfgov.settings.local')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cfgov.settings.production')
 
 
 # We don't want to import this module until after initializing New Relic.
