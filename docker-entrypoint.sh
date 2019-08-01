@@ -1,5 +1,5 @@
-#!/bin/bash -i
-# NOTE: By using -i (interactive), it guarantees /etc/profile is always sourced,
+#!/bin/bash --login
+# NOTE: By forcing a login shell, /etc/profile is always sourced,
 # unlike the non-interactive shell you get by default with `docker run`.
 
 set -e
