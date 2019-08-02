@@ -48,7 +48,6 @@ class Part(models.Model):
     chapter = models.CharField(max_length=255)
     part_number = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    letter_code = models.CharField(max_length=10)
     short_name = models.CharField(max_length=255, blank=True)
 
     panels = [
