@@ -105,9 +105,9 @@
                                 {% else %}
                                     {% for issuer in issuers %}
                                     <option 
-                                        value="{{ issuer.name }}"
-                                        {{ ' selected' if issuer.name in issuer_selections else '' }}>
-                                            {{ issuer.name | lower | title }}
+                                        value="{{ issuer.issuer_name }}"
+                                        {{ ' selected' if issuer.issuer_name in issuer_selections else '' }}>
+                                            {{ issuer.issuer_name | lower | title }}
                                     </option>
                                     {% endfor %}
                                 {% endif %}
@@ -127,7 +127,7 @@
                             </select>
                         </div> -->
                         <div class="filter-section">
-                        {% set selections = filters['program_type'] %}
+                        {% set selections = filters['prepaid_type'] %}
                         {% set expandable_settings = {
                             'label': 'Prepaid account type',
                             'is_expanded': selections | length > 0,
@@ -151,7 +151,7 @@
                                         'Travel',
                                     ]%}
 
-                                    {% set type_options = active_filters['program_type'] if 'program_type' in active_filters else default_types %}
+                                    {% set type_options = active_filters['prepaid_type'] if 'prepaid_type' in active_filters else default_types %}
                                     
                                     {% for type in type_options %}
                                     <li>
@@ -159,7 +159,7 @@
                                             'label': type,
                                             'value': type,
                                             'id': 'type_' ~ loop.index,
-                                            'name': 'program_type',
+                                            'name': 'prepaid_type',
                                             'class': 'test',
                                             'selected': type in selections
                                         }) }}
@@ -317,7 +317,7 @@
                             <span class="filters_applied-label">
                             Filters applied:
                         </span>
-                            {% set valid_filters = ['issuer', 'program_type', 'status'] %}
+                            {% set valid_filters = ['issuer', 'prepaid_type', 'status'] %}
                             {% for filter in filters %}
                                 {% if filter in valid_filters %}
                                     {% for val in filters[filter] %}

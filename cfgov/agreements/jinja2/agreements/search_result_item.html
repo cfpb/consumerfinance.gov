@@ -2,7 +2,7 @@
 
 <article class="results_item">
     <h2>
-      <a href="detail/{{result.id}}">{{ result.product_name }}</a>
+      <a href="detail/{{result.id}}">{{ result.name }}</a>
     </h2>
     <div class="content-l">
         <div class="content-l_col content-l_col-1-2">
@@ -10,7 +10,7 @@
                 <dt>Issuer Name</dt>
                 <dd>{{ result.issuer_name | lower | title }}</dd>
                 <dt>Prepaid Type</dt>
-                <dd>{{ result.program_type }}</dd>
+                <dd>{{ result.prepaid_type }}</dd>
                 <dt>Program manager</dt>
                 <dd>{{ result.program_manager if result.program_manager else 'No information provided'}}</dd>
                 <dt>Other relevant parties</dt>
@@ -21,7 +21,8 @@
         </div>
         <div class="content-l_col content-l_col-1-2">
             <h4 style="margin-bottom:5px;">Download most recent agreement</h4>
-            <p><a href="#">Link to compressed file on S3</a></p>
+            {% set recent_agreement = result.prepaidagreement_set.order_by('-effective_date').first() %}
+            <p><a href="{{ recent_agreement.agreements_files_location }}">{{ recent_agreement.agreements_files_location }}</a></p>
         </div>
     </div>
 

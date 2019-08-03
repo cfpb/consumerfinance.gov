@@ -14,21 +14,26 @@ class Agreement(models.Model):
     description = models.TextField()
 
 
-class Prepaid(models.Model):
+class PrepaidProduct(models.Model):
     name = models.CharField(blank=True, max_length=255)
-    product_name = models.CharField(blank=True, max_length=255)
-    other_relevant_parties = models.TextField(blank=True)
-    status = models.TextField(blank=True)
-    issuer = models.CharField(max_length=255, blank=True)
     issuer_name = models.CharField(max_length=255, blank=True)
-    program_type = models.CharField(max_length=255, blank=True)
+    prepaid_type = models.CharField(max_length=255, blank=True, null=True)
+    program_manager = models.CharField(max_length=255, blank=True, null=True)
+    other_relevant_parties = models.TextField(blank=True, null=True)
+    status = models.TextField(blank=True, null=True)
     withdrawal_date = models.DateField(blank=True, null=True)
-    program_manager = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
-        ordering = ['product_name']
+        ordering = ['name']
 
 
-class Entity(models.Model):
-    name = models.CharField(max_length=255, blank=True)
-    salesforce_id = models.CharField(max_length=255, blank=True)
+class PrepaidAgreement(models.Model):
+    product = models.ForeignKey(PrepaidProduct, on_delete=models.CASCADE)
+    effective_date = models.DateField(blank=True, null=True)
+    agreements_files_location = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.agreements_files_location

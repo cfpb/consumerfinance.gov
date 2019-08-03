@@ -7,7 +7,7 @@ from django.http import Http404
 from django.shortcuts import render
 
 from agreements import RESULTS_PER_PAGE
-from agreements.models import Agreement, Entity, Issuer, Prepaid
+from agreements.models import Agreement, Issuer, PrepaidProduct
 from v1.models.snippets import ReusableText
 
 
@@ -79,7 +79,7 @@ def prepaid(request):
     filters = dict(request.GET.iterlists())
     active_filters = {}
     search_term = None
-    products = Prepaid.objects.exclude(issuer_name__contains='**')
+    products = PrepaidProduct.objects.exclude(issuer_name__contains='**')
     total_count = len(products)
     if filters:
         search_term = filters.pop('q', None)
@@ -89,15 +89,16 @@ def prepaid(request):
                 search=SearchVector(
                     'issuer_name',
                     'other_relevant_parties',
-                    'product_name',
+                    'name',
                     'program_manager'
                 ),
             ).filter(search=search_term)
-            active_filters = {'program_type': [], 'status': [], 'issuer': []}
+            active_filters = {'prepaid_type': [], 'status': [], 'issuer': []}
             for product in products:
-                if product.program_type not in active_filters['program_type']:
-                    if product.program_type != '':
-                        active_filters['program_type'].append(product.program_type)
+                if product.prepaid_type not in active_filters['prepaid_type']:
+                    if product.prepaid_type != '':
+                        active_filters['prepaid_type'].append(
+                            product.prepaid_type)
                 if product.status not in active_filters['status']:
                     active_filters['status'].append(product.status)
                 if product.issuer_name not in active_filters['issuer']:
@@ -109,11 +110,11 @@ def prepaid(request):
                 issuers |= Q(issuer_name=issuer)
             products = products.filter(issuers)
 
-        if 'program_type' in filters:
-            programs = Q()
-            for program in filters['program_type']:
-                programs |= Q(program_type=program)
-            products = products.filter(programs)
+        if 'prepaid_type' in filters:
+            prepaid_types = Q()
+            for prepaid_type in filters['prepaid_type']:
+                prepaid_types |= Q(prepaid_type=prepaid_type)
+            products = products.filter(prepaid_types)
 
         if 'status' in filters:
             products = products.filter(status=filters['status'][0])
@@ -122,7 +123,8 @@ def prepaid(request):
     paginator = Paginator(products, 20)
     page_number = validate_page_number(request, paginator)
     page = paginator.page(page_number)
-    issuers = Entity.objects.exclude(name__contains='**').order_by('name')
+    issuers = PrepaidProduct.objects.order_by(
+        'issuer_name').values('issuer_name').distinct()
 
     return render(request, 'agreements/prepaid.html', {
         'current_page': page_number,
@@ -139,6 +141,6 @@ def prepaid(request):
 
 def detail(request, product_id):
     return render(request, 'agreements/detail.html', {
-        'product': Prepaid.objects.get(id=product_id),
+        'product': PrepaidProduct.objects.get(id=product_id),
         'disclaimer': get_disclaimer()
     })
