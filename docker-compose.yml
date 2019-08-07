@@ -18,6 +18,8 @@ services:
             POSTGRES_USER: cfpb
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
+        volumes:
+        - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
     python2:
         build: 
             context: ./
