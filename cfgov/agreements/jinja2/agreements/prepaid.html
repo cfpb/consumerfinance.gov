@@ -49,7 +49,7 @@
 {% block content_main scoped %}
     <div class="content_wrapper">
     <div class="block block__flush-top">
-    <h1>Prepaid agreement database</h1>
+    <h1>Prepaid account agreements database</h1>
     <div class="lead-paragraph" style="max-width: 41.875rem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
     </div>
     <div>
@@ -58,8 +58,30 @@
         <p>You may also choose to download all prepaid agreements as a single compressed file.</p>
     </div>
     <form class="u-mt30" method="get" action="." >
-        <div class="o-form__input-w-btn">
-            <div class="o-form__input-w-btn_input-container">
+        <h3 class="h4" style="margin-bottom:10px;">Search Within</h3>
+        <div class="layout-row u-mb30">
+            <div class="cf-select flex-fixed">
+                {% set opts = [
+                    ('All fields', 'all'),
+                    ('Product name', 'name'),
+                    ('Program manager', 'program_manager'),
+                    ('Other relevant parties', 'other_relevant_parties'),
+                    ('Issuer name', 'issuer_name'),
+                ]%}
+                <select aria-label="Choose which field will be searched"
+                        id="search_field"
+                        name="search_field">
+                    <optgroup label="Search within">
+                        {% for label, val in opts %}
+                        <option value="{{ val }}"
+                                {{ 'selected' if search_field == val else '' }}>
+                            {{ label }}
+                        </option>
+                        {% endfor %}
+                    </optgroup>
+                </select>
+            </div>
+            <div class="flex-all">
                 <div class="m-btn-inside-input input-contains-label">
                     <label for="searchText" class="input-contains-label_before input-contains-label_before__search">
                         {{ svg_icon('search') }}
@@ -68,11 +90,10 @@
                     <input id="searchText" type="text" autocomplete="off" class="a-text-input" name="q"
                             placeholder="Enter your search term(s)"
                             value="{{ query }}">
+                    <button class="a-btn a-btn__link">{{ svg_icon('remove') }} Clear</button>
                 </div>
             </div>
-            <div class="o-form__input-w-btn_btn-container">
-                <button class="a-btn">Search</button>
-            </div>
+            <button class="a-btn flex-fixed">Search</button>
         </div>
     </form>
     
@@ -80,7 +101,7 @@
         <div class="block u-mt0">
             <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters" style="padding-top:20px;">
                 <div>
-                <h3>Filter results by...</h3>
+                <h3>Narrow results by...</h3>
                 <form method="get" action="." class="o-form ">
 
                         {% if query %}
@@ -114,18 +135,6 @@
                             </select>
                         </div>
                             
-                        
-
-                        <!-- <div class="m-form-field u-mb15">
-                            <label class="a-label a-label__heading"
-                                   for="card_type">
-                                Prepaid account type
-                            </label>
-                            <select name="card_type" multiple="multiple" placeholder="Select prepaid account type" id="card_type" class="o-multiselect">
-                                <option value="gpr">GPR (General Purpose Reloadable)</option>
-                                <option value="payroll">Payroll card</option>
-                            </select>
-                        </div> -->
                         <div class="filter-section">
                         {% set selections = filters['prepaid_type'] %}
                         {% set expandable_settings = {
@@ -154,6 +163,7 @@
                                     {% set type_options = active_filters['prepaid_type'] if 'prepaid_type' in active_filters else default_types %}
                                     
                                     {% for type in type_options %}
+                                    {% if type != None %}
                                     <li>
                                         {{ checkbox.render({
                                             'label': type,
@@ -165,6 +175,7 @@
                                         }) }}
                                         <!-- <div class="num-results">{{ num_results }}</div> -->
                                     </li>
+                                    {% endif %}
                                     {% endfor %}
                                 </ul>
                             </fieldset>
@@ -241,45 +252,6 @@
                         {% endcall %}
                         </div>
                         
-<!-- 
-                        {% set expandable_settings = {
-                            'label': 'Agreement effective date',
-                            'is_expanded': false,
-                            'is_midtone': true,
-                            'hide_cue_label': true
-                        } %}
-                        {% call() expandable(expandable_settings) %}
-                        <div class="o-form_group">
-                            
-                            <div class="m-form-field">
-                            <input class="a-text-input a-text-input__full"
-                               id="start_date"
-                               name="start_date"
-                               type="text"
-                               placeholder="mm/dd/yyyy"
-                               style="max-width:10em">
-                            </div>
-                        </div>
-                        {% endcall %} -->
-
-                        
-
-                      <!-- <div class="m-form-field m-form-field__select">
-                            <label class="a-label a-label__heading"
-                                   for="card_type">
-                                Prepaid type
-                            </label>
-                            <div class="a-select">
-                                <select name="card_type"
-                                        id="card_type">
-                                    <option value="" disabled selected>Select prepaid card or account type<option>
-                                    <option value="gpr">GPR (General Purpose Reloadable)</option>
-                                    <option value="payroll">Payroll card</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div> -->
                     <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
 
 
@@ -310,7 +282,7 @@
 
                     
                 </div>
-                {% if filters %}
+                {% if filters | length %}
                     <div class="filters_applied">
                         
                         <div class="filters_tags">

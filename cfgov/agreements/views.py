@@ -79,18 +79,26 @@ def prepaid(request):
     filters = dict(request.GET.iterlists())
     active_filters = {}
     search_term = None
+    search_field = None
     products = PrepaidProduct.objects.exclude(issuer_name__contains='**')
     total_count = len(products)
     if filters:
+        filters.pop('page')
         search_term = filters.pop('q', None)
+        search_field = filters.pop('search_field', None)
         if search_term:
             search_term = search_term[0]
+            search_fields = [
+                'issuer_name',
+                'other_relevant_parties',
+                'name',
+                'program_manager'
+            ]
+            if search_field and search_field[0] in search_fields:
+                search_fields = [search_field[0]]
             products = products.annotate(
                 search=SearchVector(
-                    'issuer_name',
-                    'other_relevant_parties',
-                    'name',
-                    'program_manager'
+                    *search_fields
                 ),
             ).filter(search=search_term)
             active_filters = {'prepaid_type': [], 'status': [], 'issuer': []}
@@ -136,6 +144,7 @@ def prepaid(request):
         'filters': filters,
         'query': search_term or '',
         'active_filters': active_filters,
+        'search_field': search_field[0] if search_field else 'all'
     })
 
 
