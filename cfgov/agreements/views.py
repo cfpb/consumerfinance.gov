@@ -83,7 +83,7 @@ def prepaid(request):
     products = PrepaidProduct.objects.exclude(issuer_name__contains='**')
     total_count = len(products)
     if filters:
-        filters.pop('page')
+        filters.pop('page', None)
         search_term = filters.pop('q', None)
         search_field = filters.pop('search_field', None)
         if search_term:

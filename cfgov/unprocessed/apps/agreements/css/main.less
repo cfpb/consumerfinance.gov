@@ -31,6 +31,10 @@
     display: inline-block;
 }
 
+
+
+
+
 .layout-row {
     display: flex;
     flex-direction: row;
@@ -50,26 +54,59 @@
     flex: 1 0 auto;
 }
 
-.lt-ie10 {
-    .layout-row {
-        display: table;
-    }
-
-    .layout-column {
-        display: table;
-    }
-
-    .flex-fixed {
-        float: left;
-    }
-
-    .flex-all {
-        float: left;
-    }
+button.a-btn.flex-fixed {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 
+.lt-ie10 {
+    button.a-btn.flex-fixed {
+        border-radius: .25em;
+    }
 
+    .cf-select {
+        margin-bottom: 20px;
+    }
+
+    .flex-all {
+        margin-bottom: 15px;
+    }
+    .respond-to-min( @bp-med-min, {
+        .cf-select,
+        .flex-all {
+            margin-bottom: 0;
+        }
+        .layout-row {
+            display: table;
+            width: 100%;
+
+            .cf-select{
+                display: table-cell;
+                width: 25%;
+            }
+
+            .flex-all {
+                width: 100%;
+                display: table-cell;
+            }
+
+            .a-btn {
+                display:table-cell;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    });
+}
+
+
+.respond-to-max( @bp-sm-max, {
+    .cf-select {
+        margin-bottom: 15px;
+        width: 100%;        
+    }
+});
 
  // select
 @select-border:     @gray-40;
@@ -175,21 +212,20 @@
     }
 }
 
-button.a-btn.flex-fixed {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
 
 
 
-.content__1-3 .content_sidebar {
-    width: 33% !important;
-}
 
-.content__1-3 .content_main {
-    width: 67% !important;
-}
 
+.respond-to-min( @bp-lg-min, {
+    .content__1-3 .content_sidebar {
+        width: 33% !important;
+    }
+
+    .content__1-3 .content_main {
+        width: 67% !important;
+    }
+});
 dt, dd {
     display: block;
     margin-left: 0;
@@ -279,7 +315,12 @@ dd + dt {
         }
     }
     .results_item {
-        margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
+
+        .respond-to-min( @bp-med-min, {
+            margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        });
+        
         &+ .results_item {
             margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
             padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
