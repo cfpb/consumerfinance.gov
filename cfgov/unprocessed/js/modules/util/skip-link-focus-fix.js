@@ -10,19 +10,25 @@ function skipLinkFocusFix( ) {
   const skipNavLink = document.querySelector( '.skip-nav .skip-nav_link' ).getAttribute( 'href');
   const skipNavEl = document.querySelector( skipNavLink );
   console.log ( skipNavEl );
-    
+  focusOnElement( skipNavEl );
+
+  // if the hash has been changed (activation of an in-page link)
+  // @todo this will only work if the "back-to-top" link has a value instead of # :(
+  // i can call focusEl manually on that link..
+  window.addEventListener('hashchange', function() {
+    console.log('The hash has changed!');
+    let hash = '#' + window.location.hash.replace( /^#/, '' );
+    let focusEl = document.querySelector( hash );
+    focusOnElement( focusEl );
+    // console.log ( focusEl );
+
+  }, false);
+   
     // $(document).ready(function(){
     //   // if there is a '#' in the URL (someone linking directly to a page with an anchor)
     //   if (document.location.hash) {
     //     focusOnElement($(document.location.hash));
     //   }
-
-    //   // if the hash has been changed (activation of an in-page link)
-    //   $(window).bind('hashchange', function() {
-    //     var hash = "#"+window.location.hash.replace(/^#/,'');
-    //     focusOnElement($(hash));
-    //   });
-    // });
 
     // jQuery.extend(jQuery.expr[':'], {
     //   focusable: function(el, index, selector){
@@ -31,11 +37,12 @@ function skipLinkFocusFix( ) {
     //   }
     // });
 
-  focusOnElement( skipNavEl );
 }
 
 function focusOnElement( $element ) {
-  if ( !$element.length ) {
+  if ( !$element ) {
+    console.log ( 'no' );
+    console.log ( $element );
     return;
   }
 
@@ -43,6 +50,7 @@ function focusOnElement( $element ) {
   // if ( !$element.is( ':focusable' ) ) {
     // add tabindex to make focusable and remove again
   $element.setAttribute( 'tabindex', '-1' );
+  $element.style.background = 'aqua';
 
   $element.addEventListener( 'focusout', event => {
     event.target.style.background = 'magenta';
