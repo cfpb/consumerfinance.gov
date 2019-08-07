@@ -14,12 +14,11 @@ services:
         restart: always
         volumes:
           - postgres_data:/var/lib/postgresql/data/
+          - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
         environment:
             POSTGRES_USER: cfpb
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
-        volumes:
-        - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
     python2:
         build: 
             context: ./
@@ -29,6 +28,7 @@ services:
             - "8000:8000"
         environment:
             ES_HOST: elasticsearch
+            DATABASE_URL: postgresql://cfpb:cfpb@postgres/cfgov
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps
@@ -47,6 +47,7 @@ services:
             - "8333:8000"
         environment:
             ES_HOST: elasticsearch
+            DATABASE_URL: postgresql://cfpb:cfpb@postgres/cfgov
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps
