@@ -954,7 +954,7 @@ class FeaturedContent(blocks.StructBlock):
         classname = 'block__flush'
 
     class Media:
-        js = ['video-player.js']
+        js = ['featured-content-module.js']
 
 
 class ChartBlock(blocks.StructBlock):

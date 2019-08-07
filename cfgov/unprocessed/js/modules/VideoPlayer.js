@@ -6,8 +6,8 @@ import * as jsLoader from './util/js-loader';
 
 import ERROR_MESSAGES from '../config/error-messages-config';
 import { assign } from './util/assign';
-import { closest } from './util/dom-traverse';
 import { noopFunct } from './util/standard-type';
+import EventObserver from '../modules/util/EventObserver';
 
 const DOM_INVALID = ERROR_MESSAGES.DOM.INVALID;
 
@@ -18,8 +18,7 @@ const CLASSES = Object.freeze( {
   IFRAME_CLASS_NAME:         'o-video-player_iframe',
   IFRAME_CONTAINER_SELECTOR: '.o-video-player_iframe-container',
   PLAY_BTN_SELECTOR:         '.o-video-player_play-btn',
-  CLOSE_BTN_SELECTOR:        '.o-video-player_close-btn',
-  FCM_CONTAINER_SELECTOR:    '.o-featured-content-module'
+  CLOSE_BTN_SELECTOR:        '.o-video-player_close-btn'
 } );
 
 
@@ -39,10 +38,16 @@ let _this;
  * @param {Object} options - attributes used to extend the video player
  */
 function VideoPlayer( element, options ) {
+
+  // Attach event methods.
+  const eventObserver = new EventObserver();
+  this.addEventListener = eventObserver.addEventListener;
+  this.dispatchEvent = eventObserver.dispatchEvent;
+  this.removeEventListener = eventObserver.removeEventListener;
+
   _this = this;
   options = options || {};
   this.baseElement = _ensureElement( element, options.createIFrame );
-  this.fcmElement = closest( this.baseElement, CLASSES.FCM_CONTAINER_SELECTOR );
   this.iFrameProperties = assign(
     {},
     this.baseElement.dataset,
@@ -285,9 +290,6 @@ const API = {
    * Function used to play the video player.
    */
   play: function play( ) {
-    if ( this.fcmElement ) {
-      this.fcmElement.classList.add( CLASSES.VIDEO_PLAYING_STATE );
-    }
     this.baseElement.classList.add( CLASSES.VIDEO_PLAYING_STATE );
     this.state.setIsVideoPlaying( true );
   },
@@ -296,9 +298,6 @@ const API = {
    * Function used to stop the video player.
    */
   stop: function stop( ) {
-    if ( this.fcmElement ) {
-      this.fcmElement.classList.remove( CLASSES.VIDEO_PLAYING_STATE );
-    }
     this.baseElement.classList.remove( CLASSES.VIDEO_PLAYING_STATE );
     this.state.setIsVideoStopped( true );
   }

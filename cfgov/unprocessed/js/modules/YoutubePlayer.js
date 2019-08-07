@@ -5,6 +5,7 @@
 
 import { noopFunct } from './util/standard-type';
 import VideoPlayer from './VideoPlayer';
+
 let YoutubePlayer;
 
 const CLASSES = Object.freeze( {
@@ -135,6 +136,7 @@ const API = {
    * Action function used to play the Youtube video.
    */
   play: function() {
+    this.dispatchEvent( 'onPlay' );
     this._super.play.call( this );
     if ( this.state.isPlayerInitialized && this.player ) {
       this.player.seekTo( 0 );
@@ -148,6 +150,7 @@ const API = {
    * Action function used to play the Youtube video.
    */
   stop: function() {
+    this.dispatchEvent( 'onStop' );
     this._super.stop.call( this );
     if ( this.state.isPlayerInitialized && this.player ) {
       this.player.stopVideo();
