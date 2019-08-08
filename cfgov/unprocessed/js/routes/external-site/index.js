@@ -3,5 +3,8 @@
    ========================================================================== */
 
 import ExternalSite from '../../modules/ExternalSite';
-const externalSite = new ExternalSite( document.querySelector( '.external-site_container' ) );
+const externalSiteDom = document.querySelector(
+  `.${ ExternalSite.BASE_CLASS }`
+);
+const externalSite = new ExternalSite( externalSiteDom );
 externalSite.init();
