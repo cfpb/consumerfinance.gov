@@ -80,13 +80,11 @@ function EmailPopup( element ) {
 
   /**
    * Function used to instatiate and initialize components.
-   * @returns {EmailPopup|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {EmailPopup} An instance.
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+      return this;
     }
 
     // Ensure EmailPopup is definitely hidden on initialization.

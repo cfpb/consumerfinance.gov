@@ -1,5 +1,5 @@
 // Required modules.
-import * as atomicHelpers from '../modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import * as breakpointState from '../modules/util/breakpoint-state';
 import ClearableInput from '../modules/ClearableInput';
 import EventObserver from '../modules/util/EventObserver';
@@ -20,7 +20,7 @@ import TabTrigger from '../modules/TabTrigger';
 function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
   const BASE_CLASS = 'm-global-search';
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
   const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   const _flyoutMenu = new FlyoutMenu( _dom );
   let _searchInputDom;
@@ -32,13 +32,11 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   const _tabTrigger = new TabTrigger( _dom );
 
   /**
-   * @returns {GlobalSearch|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {GlobalSearch} An instance.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     // Set initial appearance.
