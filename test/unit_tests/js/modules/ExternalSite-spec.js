@@ -5,7 +5,7 @@ const HTML_SNIPPET = `
     <div class="wrapper content_wrapper">
         <div class="content_main ">
             <section>
-                <div class="external-site_container">
+                <div class="external-site">
                     <h1>Thank you for visiting consumerfinance.gov.</h1>
                     <p class="lead-paragraph">
                         You are leaving the CFPB web server.
@@ -19,11 +19,11 @@ const HTML_SNIPPET = `
                         <span class="external-site_reload-container"></span>
                     </p>
                     <form method="POST" action="/external-site/" id="proceed">
-                    <button class="a-btn
-                                   a-btn__full-on-xs
-                                   external-site_proceed-btn">
-                        Proceed to external site
-                    </button>
+                        <button id="external-site_proceed-btn"
+                                class="a-btn
+                                      a-btn__full-on-xs">
+                            Proceed to external site
+                        </button>
                     <input id="id_ext_url" name="ext_url" type="hidden">
                     <input id="id_signature" name="signature" type="hidden">
                     </form>
