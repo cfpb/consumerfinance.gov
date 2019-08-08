@@ -567,6 +567,7 @@ CSP_IMG_SRC = (
     'api.mapbox.com',
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
+    'blob:',
     'data:',
     'www.facebook.com',
     'www.gravatar.com',
