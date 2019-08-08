@@ -41,7 +41,7 @@ describe( 'ExternalSite', () => {
   } );
 
   it( 'should initialize and count down', () => {
-    const dom = document.querySelector( '.external-site_container' );
+    const dom = document.querySelector( '.external-site' );
     const externalSite = new ExternalSite( dom );
     externalSite.init();
     expect( dom.querySelectorAll( '.external-site_reload-duration' ).length )
