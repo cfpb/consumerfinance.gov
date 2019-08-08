@@ -18,9 +18,9 @@ const INTERVAL = 1000;
  * @param {HTMLElement} element DOM Element.
  */
 function ExternalSite( element ) {
-  const _dom = checkDom( element, `${ BASE_CLASS }_container` );
+  const _dom = checkDom( element, BASE_CLASS );
   const _durationEl = _dom.querySelector( `.${ BASE_CLASS }_reload-container` );
-  const _directEl = _dom.querySelector( `.${ BASE_CLASS }_proceed-btn` );
+  const _proceedBtnEl = _dom.querySelector( `#${ BASE_CLASS }_proceed-btn` );
   let _duration = TOTAL_DURATION;
   let _intervalId;
 
@@ -29,7 +29,7 @@ function ExternalSite( element ) {
    */
   function init() {
     _intervalId = setInterval( _tick, INTERVAL );
-    _directEl.addEventListener( 'click', _proceedClicked );
+    _proceedBtnEl.addEventListener( 'click', _proceedClickedHandler );
   }
 
   /**
@@ -65,7 +65,7 @@ function ExternalSite( element ) {
    * Proceed to external site button was clicked.
    * @param {Object} event Click event object.
    */
-  function _proceedClicked( event ) {
+  function _proceedClickedHandler( event ) {
     event.stopImmediatePropagation();
     _gotoUrl();
   }
@@ -74,6 +74,8 @@ function ExternalSite( element ) {
 
   return this;
 }
+
+ExternalSite.BASE_CLASS = BASE_CLASS;
 
 // Expose public methods.
 export default ExternalSite;
