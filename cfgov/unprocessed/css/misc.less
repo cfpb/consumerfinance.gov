@@ -100,58 +100,6 @@
 
 
 /* topdoc
-  name: Padded container
-  family: cfgov-misc
-  notes:
-    - ".padded-container is meant to contain anything you want with consistent
-      padding. It uses a margin collapsing trick in CSS to achieve this
-      consistency which this is why .line-container_body is needed. The only
-      caveat to this consistency is if you place something inside of it that has
-      a bottom-margin that is larger than the .padded-container padding."
-  patterns:
-    - name: Basic padded container
-      markup: |
-        <div class="padded-container">
-            <div class="padded-container_body">
-                <p>
-                    ¯\_(ツ)_/¯<br>
-                    There is padding all around me!
-                </p>
-            </div>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .padded-container
-            .padded-container_body
-  tags:
-    - cfgov-misc
-*/
-
-// TODO: `padded-container` is only used on external-site/index.html.
-//       Refactor to use CF classes.
-
-.padded-container {
-    margin-bottom: unit(30px / @base-font-size-px, em);
-    // Use pixels here, Opera doesn't like 1px represented as an em.
-    // Maybe it rounds down or something?
-    padding: 1px;
-    background: @gray-10;
-
-    &_body {
-        // 23px is eyeballed to 30px when considering line heights of potential
-        // children. One pixel has been taken off of each value to account for
-        // the 1px padding on the parent. This padding stops margin collapsing
-        // from extending outside of the padded box.
-        margin: unit(23px / @base-font-size-px, em)
-                unit(29px / @base-font-size-px, em)
-                unit(23px / @base-font-size-px, em);
-    }
-}
-
-
-/* topdoc
   name: Character icons
   family: cfgov-misc
   notes:
