@@ -22,15 +22,10 @@ describe( 'Notification', () => {
   } );
 
   describe( 'init()', () => {
-    it( 'should return the Notification instance when initialized', () => {
-      expect( typeof notification.init() ).toBe( 'object' );
+    it( 'should return the instance when initialized', () => {
+      expect( notification.init() ).toBeInstanceOf( Notification );
       expect( notificationElem.dataset.jsHook ).toBe( 'state_atomic_init' );
-    } );
-
-    it( 'should return undefined if already initialized', () => {
-      notification.init();
-
-      expect( notification.init() ).toBeUndefined();
+      expect( notification.init() ).toBeInstanceOf( Notification );
     } );
 
     it( 'should return the Notification instance if it has a success class',

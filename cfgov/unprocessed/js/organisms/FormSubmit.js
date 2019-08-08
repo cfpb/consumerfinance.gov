@@ -24,7 +24,6 @@ const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
  */
 function FormSubmit( element, baseClass, opts ) {
   opts = opts || {};
-  let UNDEFINED;
   const _baseElement = checkDom( element, baseClass );
   const _formElement = _baseElement.querySelector( 'form' );
   const _notificationElement = _baseElement.querySelector(
@@ -39,12 +38,11 @@ function FormSubmit( element, baseClass, opts ) {
   this.dispatchEvent = eventObserver.dispatchEvent;
 
   /**
-   * @returns {FormSubmit|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {FormSubmit} An instance.
    */
   function init() {
     if ( !setInitFlag( _baseElement ) ) {
-      return UNDEFINED;
+      return this;
     }
     _cachedFields = _cacheFields();
     _formElement.addEventListener( 'submit', _onSubmit );
@@ -80,6 +78,7 @@ function FormSubmit( element, baseClass, opts ) {
     if ( typeof opts.validator === 'function' ) {
       return opts.validator( _cachedFields );
     }
+    let UNDEFINED;
     return UNDEFINED;
   }
 
