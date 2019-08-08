@@ -51,8 +51,8 @@ function requireTask( taskPath ) {
  * @returns {string|undefined} File name that exists, otherwise undefined.
  */
 function fileExists( filePattern ) {
-  let UNDEFINED;
   if ( !filePattern ) {
+    let UNDEFINED;
     return UNDEFINED;
   }
   const checkFile = `${ TASK_PATH }${ filePattern }.js`;

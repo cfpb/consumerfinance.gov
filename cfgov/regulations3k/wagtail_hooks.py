@@ -119,7 +119,7 @@ class PartModelAdmin(TreeModelAdmin):
     list_display = (
         'part_number',
         'title',
-        'letter_code'
+        'short_name'
     )
     child_field = 'versions'
     child_model_admin = EffectiveVersionModelAdmin

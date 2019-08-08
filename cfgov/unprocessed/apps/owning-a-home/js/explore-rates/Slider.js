@@ -37,13 +37,11 @@ function Slider( element ) {
   /**
    * @param {Object} options - Options to pass to rangeslider-js
    *   (see https://github.com/stbaer/rangeslider-js#options).
-   * @returns {Slider|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Slider} An instance.
    */
   function init( options ) {
     if ( !setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+      return this;
     }
 
     _options = options;

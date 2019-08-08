@@ -54,48 +54,5 @@ class RegulationsList(organisms.ModelBlock):
         template = 'regulations3k/regulations-listing.html'
 
 
-class NotificationBlock(blocks.StructBlock):
-    message = blocks.CharBlock(
-        required=True,
-        help_text='Main message of the notification'
-    )
-    explanation = blocks.TextBlock(
-        required=False,
-        help_text='An explanation for the notification'
-    )
-    notification_type = blocks.ChoiceBlock(
-        required=True,
-        choices=[
-            ('success', 'Success'),
-            ('warning', 'Warning'),
-            ('error', 'Error'),
-        ],
-        default='warning'
-    )
-
-    def get_context(self, value, parent_context=None):
-        context = super(NotificationBlock, self).get_context(
-            value, parent_context=parent_context
-        )
-
-        if value.get('notification_type') == 'success':
-            context['notification_icon'] = 'approved-round'
-        else:
-            context['notification_icon'] = (
-                value.get('notification_type') + '-round'
-            )
-
-        return context
-
-    class Meta:
-        icon = 'warning'
-        template = 'regulations3k/notification.html'
-
-
 class RegulationsListingFullWidthText(organisms.FullWidthText):
-    notification = NotificationBlock()
     regulations_list = RegulationsList()
-
-
-class RegulationsFullWidthText(organisms.FullWidthText):
-    notification = NotificationBlock()

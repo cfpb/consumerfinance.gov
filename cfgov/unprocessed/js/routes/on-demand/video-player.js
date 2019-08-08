@@ -3,4 +3,4 @@
    ========================================================================== */
 
 import YoutubePlayer from '../../modules/YoutubePlayer';
-YoutubePlayer.init( '.video-player__youtube' );
+YoutubePlayer.init( '.o-video-player__youtube' );

@@ -527,6 +527,8 @@ CSP_SCRIPT_SRC = (
     'universal.iperceptions.com',
     'cdn.mouseflow.com',
     'n2.mouseflow.com',
+    'geocoding.geo.census.gov',
+    'tigerweb.geo.census.gov',
     'about:',
     'connect.facebook.net',
     'www.federalregister.gov',
@@ -661,9 +663,6 @@ FLAGS = {
     'EMAIL_POPUP_OAH': [('boolean', True)],
     'EMAIL_POPUP_DEBT': [('boolean', True)],
 
-    # The release of new Whistleblowers content/pages
-    'WHISTLEBLOWER_RELEASE': [],
-
     # Search.gov API-based site-search
     'SEARCH_DOTGOV_API': [],
 
@@ -696,13 +695,18 @@ FLAGS = {
         {'condition': 'parameter', 'value': 'hmda-outage', 'required': True},
         {'condition': 'path matches', 'value': r'^/data-research', 'required': True}
     ],
-    
+
     # Add HowTo schema markup to answer page
     # Intended for use with path conditions in admin for specific ask pages,
     # such as: is enabled when path matches ^/ask-cfpb/what-is-an-ach-en-1065/
     # Delete after Google schema pilot completes and schema usage is
     # discontinued or implemented with a toggle in answer page admin.
-    'HOW_TO_SCHEMA': []
+    'HOW_TO_SCHEMA': [],
+
+    # Manually enabled when Beta is being used for an external test.
+    # Controls the /beta_external_testing endpoint, which Jenkins jobs
+    # query to determine whether to refresh Beta database.
+    'BETA_EXTERNAL_TESTING': [],
 }
 
 

@@ -71,10 +71,10 @@
                         <div class="h4 m-notification_message">This version is not the current regulation.</div>
                         <p class="m-notification_explanation">
                         {% if requested_version.effective_date < current_version.effective_date %}
-                            You are viewing a previous version of this regulation with ammendments that went into effect on
+                            You are viewing a previous version of this regulation with amendments that went into effect on
                         {% endif %}
                         {% if requested_version.effective_date > current_version.effective_date %}
-                            You are viewing a future version of this regulation with ammendments that will go into effect on
+                            You are viewing a future version of this regulation with amendments that will go into effect on
                         {% endif %}
                         {{ ap_date(requested_version.effective_date) }}. <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">View all versions of this regulation</a>
                         </p>
@@ -92,7 +92,7 @@
                 <div class="wrapper content_wrapper">
                     <div class="content_sidebar content__flush-top content__flush-bottom">
                         <span class="h4">
-                            Regulation {{regulation.letter_code}}
+                            {{ regulation.short_name }}
                         </span>
                     </div>
                     <div class="content_main content__flush-top content__flush-bottom">
@@ -174,10 +174,10 @@
                     <div class="h4 m-notification_message">This version is not the current regulation.</div>
                     <p class="m-notification_explanation">
                         {% if requested_version.effective_date < current_version.effective_date %}
-                            You are viewing a previous version of this regulation with ammendments that went into effect on {{ ap_date(requested_version.effective_date) }}.
+                            You are viewing a previous version of this regulation with amendments that went into effect on {{ ap_date(requested_version.effective_date) }}.
                         {% endif %}
                         {% if requested_version.effective_date > current_version.effective_date %}
-                            You are viewing a future version of this regulation with ammendments that will go into effect on {{ ap_date(requested_version.effective_date) }}.
+                            You are viewing a future version of this regulation with amendments that will go into effect on {{ ap_date(requested_version.effective_date) }}.
                         {% endif %}
                     </p>
                 </div>

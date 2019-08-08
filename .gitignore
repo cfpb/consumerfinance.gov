@@ -26,6 +26,7 @@ cfgov/static_built/*
 
 !cfgov/agreements/tests/empty-folder-agreements.zip
 !cfgov/agreements/tests/UTF_agreements.zip
+!cfgov/legacy/static/foia/quarterly/*.zip
 !cfgov/paying_for_college/data_sources/ipeds/test.txt.zip
 
 
@@ -131,3 +132,8 @@ cfgov/paying_for_college/fixtures/national_stats_backup.json
 # Auto-generated service workers #
 ##################################
 cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js
+
+# Apache #
+##########
+cfgov/apache/logs
+cfgov/apache/modules

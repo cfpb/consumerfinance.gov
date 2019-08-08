@@ -59,8 +59,8 @@ To finish the installation, source activate.sh in your shell:
 ```
 
 Run that now for your initial setup.
-Any time you run the project you’ll need to run that last line, so
-if you’ll be working with the project consistently,
+Any time you run the project you’ll need to run that last line,
+so if you’ll be working with the project consistently,
 we suggest adding it to your Bash profile by running:
 
 ```bash
@@ -73,7 +73,6 @@ If you need to find this info again later, you can run:
 brew info autoenv
 ```
 
-
 !!! note
     If you use Zsh you’ll need to use
     [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
@@ -81,25 +80,20 @@ brew info autoenv
 
 #### Front-end dependencies
 
-The cfgov-refresh front end currently uses the following frameworks / tools:
+The cfgov-refresh front-end build process currently
+includes the following frameworks / tools:
 
 - [Gulp](https://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Less](http://lesscss.org): CSS pre-processor.
 - [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
   User interface pattern-library produced by the CFPB.
-
-!!! note
-    If you’re new to Capital Framework, we encourage you to
-    [start here](https://cfpb.github.io/capital-framework/getting-started).
-
-1. Install [Node.js](https://nodejs.org) however you’d like.
-   We recommend using [nvm](https://github.com/creationix/nvm), though.
-
-!!! note
-    This project requires Node.js v8.5 or higher, and npm v5.2 or higher.
-2. Install [yarn](https://yarnpkg.com/en/docs/install). We recommend using [Homebrew](https://brew.sh):
-
+- [Node.js](https://nodejs.org). Install however you’d like.
+  We recommend using [nvm](https://github.com/creationix/nvm), though.
+  If your node version is outdated you should receive a console error to upgrade
+  while attempting to build the project.
+- [Yarn](https://yarnpkg.com).
+  We recommend installing using [Homebrew](https://brew.sh):
 
 ```bash
 # Use --ignore-dependencies to use your system installed node version
@@ -438,6 +432,10 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    If this is the production environment, it also triggers style and script
    builds for `ondemand` and `nemo`, which aren't part of a standard
    `gulp build`.
+
+!!! note
+    If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
+
 
 ### 2. `backend.sh`
 

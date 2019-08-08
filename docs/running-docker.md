@@ -73,49 +73,7 @@ The next time you run `docker-compose up` the new requirements will be in place.
 
 ### Work on satellite apps
 
-If you need to work on any of our 
-[satellite apps](/satellite-repos/), 
-you will need to perform a `git clone` in the 
-[`develop-apps` directory](https://github.com/cfpb/cfgov-refresh/tree/master/develop-apps).
-These will automatically be added to the
-[PYTHONPATH](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH) 
-in the Python containers, 
-and apps contained within will be importable from Python running in the containers. 
-
-For any satellite apps that provide front-end assets that need to be built, 
-you will need to run that step seperately. 
-For example, to work on [retirement](https://github.com/cfpb/retirement):
-
-```bash
-# Check out into develop-apps:
-cd develop-apps
-git clone https://github.com/cfpb/retirement
-
-# Build the front-end:
-cd retirement
-./frontendbuild.sh
-```
-
-If the satellite app needs any Python requirements that are not specified in 
-[the cfgov-refresh requirements](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/), 
-they will need to be installed seperately by 
-[access the Python containers' shell](#access-the-containers-shell) 
-and using `pip`:
-
-Python 2.7: 
-
-```bash
-docker exec -it cfgov-refresh_python2_1 bash
-pip2.7 install [PACKAGE NAME]
-```
-
-Python 3.6: 
-
-```bash
-docker exec -it cfgov-refresh_python3_1 bash
-pip3.6 install [package name]
-```
-
+See [Related Projects#Using Docker](../related-projects/#using-docker).
 
 ### Attach for debugging
 

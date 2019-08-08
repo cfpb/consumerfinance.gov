@@ -1,14 +1,42 @@
+.hud-search-container {
+    background: @gray-5;
+}
+
+.hud-search-container_text {
+    padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+}
+
+#hud_hca_api_map_canvas {
+    height: 320px;
+}
+
+.respond-to-min( @bp-med-min, {
+    .hud-search-container {
+        display: flex;
+    }
+
+    .hud-search-container_text {
+        flex: 1;
+        // Magic number of 270px below keeps full input placeholder in view.
+        min-width: unit( 270px / @base-font-size-px, em );
+        padding: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+
+    .hud-search-container_map {
+        flex: 2;
+    }
+
+    #hud_hca_api_map_canvas {
+        height: 440px;
+    }
+} );
+
+
 #hud_hca_api_map_container {
     /* Prevent map controls from appearing on top of mega menu. */
     z-index: 0;
 }
 
-#hud_hca_api_map_canvas {
-    position: relative;
-    top: -2em;
-    height: 443px;
-    width: 678px;
-}
 
 #hud_hca_api_map_canvas img {
     max-width: none;

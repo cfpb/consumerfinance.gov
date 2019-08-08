@@ -58,7 +58,9 @@ def check_static(url):
             final_url = "{}{}".format(CFPB_BASE, link)
         else:
             final_url = "{}{}".format(url, link)
-        code = requests.get(final_url).status_code
+        code = requests.get(
+            final_url,
+            headers={'referer': CFPB_BASE}).status_code
         if code == 200:
             logger.info("checked {}".format(final_url))
         else:

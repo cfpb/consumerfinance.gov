@@ -3,7 +3,7 @@ import datetime
 from django.template import engines
 from django.test import TestCase
 
-from regulations3k.jinja2tags import ap_date
+from regulations3k.jinja2tags import ap_date, regs_hide_on_mobile
 
 
 class RegulationsExtensionTestCase(TestCase):
@@ -46,4 +46,11 @@ class RegulationsExtensionTestCase(TestCase):
             '<p class="regdown-block" data-label="" '
             'id="be34deef8eb9a480514ed3b4a5ebdaea61c711d2b11d40e830cb0656">'
             '<em>Hello</em></p>'
+        )
+
+    def test_regs_hide_on_mobile(self):
+        test_str = 'Regulation C'
+        result = regs_hide_on_mobile(test_str)
+        self.assertEqual(
+            result, 'Reg<span class="u-hide-on-mobile">ulation</span> C'
         )

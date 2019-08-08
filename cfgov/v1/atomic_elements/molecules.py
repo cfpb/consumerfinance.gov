@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
@@ -116,43 +117,75 @@ class TextIntroduction(blocks.StructBlock):
 class Hero(blocks.StructBlock):
     heading = blocks.CharBlock(
         required=False,
-        help_text='Maximum character count: 25 (including spaces)'
+        help_text=mark_safe(
+            'For complete guidelines on creating heroes, visit our '
+            '<a href="https://cfpb.github.io/design-manual/global-elements/heroes.html">'  # noqa: E501
+            'Design Manual</a>.'
+            '<ul class="help">Character counts (including spaces) at largest '
+            'breakpoint:'
+            '<li>&bull; 41 characters max (one-line heading)</li>'
+            '<li>&bull; 82 characters max (two-line heading)</li></ul>')
     )
     body = blocks.RichTextBlock(
+        label="Sub-heading",
         required=False,
-        help_text='Maximum character count: 185 (including spaces)'
-    )
-    background_color = blocks.CharBlock(
-        required=False,
-        help_text='Specify a hex value (with the # sign) '
-                  'from our official palette: '
-                  'https://github.com/cfpb/cf-theme-cfpb/blob/'
-                  'master/src/color-palette.less'
-    )
-    is_white_text = blocks.BooleanBlock(
-        required=False,
-        help_text='Turns the hero text white. Useful if using '
-                  'a dark background color or background image.'
+        help_text=mark_safe(
+            '<ul class="help">Character counts (including spaces) at largest '
+            'breakpoint:'
+            '<li>&bull; 165-186 characters (after a one-line heading)</li>'
+            '<li>&bull; 108-124 characters (after a two-line heading)</li>'
+            '</ul>')
     )
     image = ImageChooserBlock(
+        label="Large image",
         required=False,
-        help_text='Should be exactly 390px tall, and up to 940px wide, '
-                  'unless this is an overlay or bleeding style hero.'
-    )
-    is_overlay = blocks.BooleanBlock(
-        required=False,
-        help_text='Select if you want the provided image to be '
-                  'a background image under the entire hero.'
-    )
-    is_bleeding = blocks.BooleanBlock(
-        required=False,
-        help_text='Select if you want the provided image to bleed '
-                  'vertically off the top and bottom of the hero.'
+        help_text=mark_safe(
+            'When saving illustrations, use a transparent background. '
+            '<a href="https://cfpb.github.io/design-manual/global-elements/heroes.html#style">'  # noqa: E501
+            'See image dimension guidelines.</a>')
     )
     small_image = ImageChooserBlock(
         required=False,
-        help_text='Provide an alternate image for small displays '
-                  'when using a bleeding or overlay hero.'
+        help_text=mark_safe(
+            '<b>Optional.</b> Provides an alternate image for '
+            'small displays when using a photo or bleeding hero. '
+            'Not required for the standard illustration. '
+            '<a href="https://cfpb.github.io/design-manual/global-elements/heroes.html#style">'  # noqa:E501
+            'See image dimension guidelines.</a>')
+    )
+    background_color = blocks.CharBlock(
+        required=False,
+        help_text=mark_safe(
+            'Specify a hex value (with the # sign) from our '
+            '<a href="https://cfpb.github.io/design-manual/brand-guidelines/color-principles.html">'  # noqa: E501
+            'official color palette</a>.')
+    )
+    is_overlay = blocks.BooleanBlock(
+        label="Photo",
+        required=False,
+        help_text=mark_safe(
+            '<b>Optional.</b> Uses the large image as a background under '
+            'the entire hero, creating the "Photo" style of hero (see '
+            '<a href="https://cfpb.github.io/design-manual/global-elements/heroes.html">'  # noqa: E501
+            'Design Manual</a> for details). When using this option, '
+            'make sure to specify a background color (above) for the '
+            'left/right margins that appear when screens are wider than '
+            '1200px and for the text section when the photo and text '
+            'stack at mobile sizes.')
+    )
+    is_white_text = blocks.BooleanBlock(
+        label="White text",
+        required=False,
+        help_text=mark_safe(
+            '<b>Optional.</b> Turns the hero text white. Useful if using '
+            'a dark background color or background image.')
+    )
+    is_bleeding = blocks.BooleanBlock(
+        label="Bleed",
+        required=False,
+        help_text=mark_safe(
+            '<b>Optional.</b> Select if you want the illustration to bleed '
+            'vertically off the top and bottom of the hero space.')
     )
 
     class Meta:
@@ -215,22 +248,35 @@ class ContactEmail(blocks.StructBlock):
         label = 'Email'
 
 
+def phone_number_format_validator():
+    return RegexValidator(
+        regex=r'^\d*$',
+        message="Enter a numeric phone number, without punctuation.")
+
+
 class ContactPhone(blocks.StructBlock):
     fax = blocks.BooleanBlock(default=False, required=False,
                               label='Is this number a fax?')
     phones = blocks.ListBlock(
         blocks.StructBlock([
-            ('number', blocks.CharBlock(max_length=15)),
+            ('number', blocks.CharBlock(
+                max_length=15,
+                help_text='Do not include spaces or dashes. Ex. 8554112372',
+                validators=[phone_number_format_validator()]
+            )),
             ('extension', blocks.CharBlock(max_length=4, required=False)),
             ('vanity', blocks.CharBlock(
                 max_length=15,
                 required=False,
-                help_text='A phoneword version of the above number'
+                help_text='A phoneword version of the above number. '
+                          'Include any formatting. Ex. (555) 222-CFPB'
             )),
             ('tty', blocks.CharBlock(
                 max_length=15,
                 required=False,
-                label="TTY"
+                label="TTY",
+                help_text='Do not include spaces or dashes. Ex. 8554112372',
+                validators=[phone_number_format_validator()]
             )),
             ('tty_ext', blocks.CharBlock(
                 max_length=4,

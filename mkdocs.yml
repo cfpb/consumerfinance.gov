@@ -19,7 +19,6 @@ nav:
 - Supporting Features:
     - Caching: caching.md
     - Feature Flags: feature-flags.md
-    - Satellite Repos: satellite-repos.md
     - Split Testing: split-testing.md
     - Translation: translation.md
 - Testing:
@@ -29,6 +28,7 @@ nav:
 - Contributing:
     - Branching and Merging: branching-merging.md
     - Contributing to the Docs: contributing-docs.md
+    - Related Projects: related-projects.md
     - Development Tips: development-tips.md
     - How We Use Travis CI: travis.md
 - Public APIs and Data:
