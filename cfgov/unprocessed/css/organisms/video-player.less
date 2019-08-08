@@ -74,6 +74,7 @@
     border-radius: 100%;
     position: absolute;
     z-index: 3;
+    opacity: 0;
     background-color: rgba( 16, 24, 32, 0.75 ); // CFPB Black (#101820) at 80% opacity
     color: @white;
     font-size: @play-btn-icon-size;
@@ -102,6 +103,11 @@
         vertical-align: bottom;
     }
 }
+
+.o-video-player__loaded .o-video-player_play-btn {
+    opacity: 1;
+}
+
 
 .lt-ie9 {
     .o-video-player_play-btn {

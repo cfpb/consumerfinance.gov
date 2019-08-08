@@ -23,4 +23,4 @@ function loadScript( url, callback ) {
 }
 
 // Expose public methods.
-export { loadScript };
+export default { loadScript };
