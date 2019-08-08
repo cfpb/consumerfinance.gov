@@ -14,13 +14,13 @@
 
 {% block body_class %}page paying-for-college{% endblock %}
 
-{% block content %}     
-<div id="comparison-tool" class="comparison-tool sub-page-wrapper">     
+{% block content %}
+<div id="comparison-tool" class="comparison-tool sub-page-wrapper">
     <header id="comparison-tool-header" class="feedback-header">
             <h1>Paying for College</h1>
-        <span>Understanding your financial aid offer</span>             
+        <span>Understanding your financial aid offer</span>
     </header><!-- end #comparison-tool-header -->
-    
+
     <section class="feedback-section clearfix">
         <div class="col col7 suf5">
             <hr>
@@ -29,6 +29,7 @@
             </header>
             <div>
                 <p>We’ll be sure to review your ideas and input, which will help us make the financial aid tool even more helpful!</p>
+                {% comment %}
                 <p class="medium">Stay informed about CFPB updates by joining our mailing list.</p>
                 <form class="signup inlineSignup pfc-signup" action="https://public.govdelivery.com/service/process_ss.xml" method="GET" data-thanks="Thanks!">
                     <fieldset>
@@ -38,8 +39,9 @@
                         <p class="pfc-send-email"><button id="pfc-send-email">Send me email updates</button></p>
                     </fieldset>
                 </form>
+                {% endcomment %}
             </div>
-        </div>      
-    </section><!-- end .feedback-section -->            
+        </div>
+    </section><!-- end .feedback-section -->
 </div><!-- end #comparison-tool .comparison-tool -->
 {% endblock content %}
