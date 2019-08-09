@@ -129,7 +129,8 @@ const TabNavigationTracking = ( () => {
           break;
         case 1:
           navigationType = 'RELOAD';
-          if ( navPath.length === 0 || navPath[navPath.length - 1] !== curPage ) {
+          if ( navPath.length === 0 ||
+               navPath[navPath.length - 1] !== curPage ) {
             navPath.push( curPage );
           }
           break;

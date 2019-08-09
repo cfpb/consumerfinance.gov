@@ -1,17 +1,19 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
 import {
   Delay,
   analyticsLog,
   track
 } from './util/analytics-util';
 
+// TODO: Remove jquery.
+import $ from 'jquery';
+
 // Paying for College custom analytics file
 
 const PFCAnalytics = ( function() {
 
-  // -- findEmptyColumn() - finds the first empty column, returns column number [1-3] --//
+  /**
+   * Finds the first empty column, returns column number [1-3].
+   */
   function findEmptyColumn() {
     let column = false;
     for ( let x = 1; x <= 3; x++ ) {
@@ -156,7 +158,9 @@ const PFCAnalytics = ( function() {
     );
   } );
 
-  // Fire an event when adding a school.
+  /**
+   * Fire an event when adding a school.
+   */
   function newSchoolEvent() {
     const schoolID = $( '#school-name-search' ).attr( 'data-schoolid' );
     const program = $( '#step-two input:radio[name="program"]:checked' ).val();
