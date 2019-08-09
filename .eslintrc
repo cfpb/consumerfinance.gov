@@ -364,7 +364,10 @@ rules:
   no-proto: 2
 
   # Disallows declaring the same variable more then once.
-  no-redeclare: 2
+  no-redeclare:
+    - 2
+    -
+      builtinGlobals: true
 
   # Disallow certain properties on certain objects.
   no-restricted-properties:
@@ -859,7 +862,9 @@ rules:
       capIsNewExceptions: []
 
   # Disallows omission of parentheses when invoking a constructor with no arguments.
-  new-parens: 2
+  new-parens:
+    - 2
+    - always
 
   # Require a newline after each call in a method chain.
   newline-per-chained-call:
@@ -1059,6 +1064,7 @@ rules:
     - asc
     -
       caseSensitive: true
+      minKeys: 2
       natural: false
 
   # Enforces sorting variables within the same declaration block.

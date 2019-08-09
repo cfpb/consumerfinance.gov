@@ -75,7 +75,7 @@
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "cucumber": "5.1.0",
-    "gulp-eslint": "5.0.0",
+    "gulp-eslint": "6.0.0",
     "jest": "24.8.0",
     "jest-cli": "24.8.0",
     "jsdoc": "3.6.2",

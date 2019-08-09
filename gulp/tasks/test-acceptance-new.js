@@ -172,7 +172,7 @@ async function spawnProtractor( cb ) {
       await stopSauceTunnel();
     }
 
-    cb(); // eslint-disable-line callback-return, inline-comments
+    cb(); // eslint-disable-line callback-return
     process.exit( 1 );
   }
 
@@ -188,7 +188,7 @@ async function spawnProtractor( cb ) {
     if ( args.sauceTunnel ) {
       await stopSauceTunnel();
     }
-    cb(); // eslint-disable-line callback-return, inline-comments
+    cb(); // eslint-disable-line callback-return
     process.exit( 0 );
   }
 
