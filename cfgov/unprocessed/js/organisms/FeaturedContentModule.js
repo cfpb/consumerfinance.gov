@@ -30,8 +30,7 @@ function FeaturedContentModule( element ) {
 }
 
 /**
- * @returns {VideoPlayer} An instance,
- *   or undefined if it was already initialized.
+ * @returns {FeaturedContentModule} An instance.
  */
 function init() {
   setInitFlag( _dom );
