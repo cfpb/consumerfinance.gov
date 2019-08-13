@@ -84,6 +84,8 @@ EMAIL_HOST = os.getenv('EMAIL_HOST')
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
+STATIC_ROOT = os.environ['DJANGO_STATIC_ROOT']
+
 CACHES.update({
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
