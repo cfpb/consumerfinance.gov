@@ -64,10 +64,7 @@ describe( 'FormSubmit', () => {
     it( 'should return the FormSubmit instance when initialized', () => {
       expect( typeof thisFormSubmit ).toStrictEqual( 'object' );
       expect( signupForm.dataset.jsHook ).toStrictEqual( 'state_atomic_init' );
-    } );
-
-    it( 'should return undefined if already initialized', () => {
-      expect( formSubmit.init() ).toBeUndefined();
+      expect( formSubmit.init() ).toBeInstanceOf( FormSubmit );
     } );
   } );
 } );
