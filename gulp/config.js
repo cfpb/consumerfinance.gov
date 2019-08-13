@@ -47,6 +47,7 @@ module.exports = {
     src: paths.unprocessed + '/js/**/*.js',
     otherBuildTriggerFiles: [
       paths.unprocessed + '/js/**/*.js',
+      paths.unprocessed + '/apps/**/js/**/*.js',
       paths.modules,
       './config/**/*.js',
       './gulp/**/*.js'
