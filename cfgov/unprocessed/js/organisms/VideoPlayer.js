@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Base Video Player Class
+   Video Player Class
    ========================================================================== */
 
 // Required modules.
@@ -13,13 +13,12 @@ let _dom;
 let _imageDom;
 let _defaultImageURL;
 let _videoId;
+let _playLinkDom;
 let _playBtnDom;
 let _closeBtnDom;
 let _iframeDom;
 let _player;
 
-let _playBtnClickedHandlerBinded;
-let _closeBtnClickedHandlerBinded;
 let _playVideoBinded;
 let _stopVideoBinded;
 
@@ -34,6 +33,7 @@ let _stopVideoBinded;
  * @returns {VideoPlayer} An instance.
  */
 function VideoPlayer( element ) {
+
   // Attach event methods.
   const eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
@@ -44,12 +44,11 @@ function VideoPlayer( element ) {
   _videoId = _dom.getAttribute( 'data-id' );
   _imageDom = _dom.querySelector( `.${ BASE_CLASS }_image` );
   _defaultImageURL = _imageDom.src;
-  _playBtnDom = _dom.querySelector( `.${ BASE_CLASS }_play-btn` );
+  _playLinkDom = _dom.querySelector( `a.${ BASE_CLASS }_play-btn` );
+  _playBtnDom = _dom.querySelector( `button.${ BASE_CLASS }_play-btn` );
   _closeBtnDom = _dom.querySelector( `.${ BASE_CLASS }_close-btn` );
   _iframeDom = _dom.querySelector( `.${ BASE_CLASS }_iframe` );
 
-  _playBtnClickedHandlerBinded = _playBtnClickedHandler.bind( this );
-  _closeBtnClickedHandlerBinded = _closeBtnClickedHandler.bind( this );
   _playVideoBinded = playVideo.bind( this );
   _stopVideoBinded = stopVideo.bind( this );
 
@@ -65,7 +64,12 @@ function VideoPlayer( element ) {
 function init() {
   setInitFlag( _dom );
 
-  _imageLoad();
+  // Retrieve the image URL and load the image.
+  let imageURL = '';
+  if ( _videoId !== null ) {
+    imageURL = youTubeAPI.fetchImageURL( _videoId );
+  }
+  _imageLoad( imageURL );
 
   youTubeAPI.attachAPIReadyCallback( _videoAPIReady );
   youTubeAPI.embedVideoScript();
@@ -83,14 +87,25 @@ function _videoAPIReady() {
  * Event handler for the when the video is ready.
  */
 function _videoPlayerReadyHandler() {
+
+  // On page load we show a play link that links directly to the video, so that
+  // the user can still access the video with no JavaScript.
+  // We need to hide the link and show the play button for the embedded video.
+  _playLinkDom.classList.add( 'u-hidden' );
+  _playBtnDom.classList.remove( 'u-hidden' );
+
   // Add events.
-  _playBtnDom.addEventListener( 'click', _playBtnClickedHandlerBinded );
-  _closeBtnDom.addEventListener( 'click', _closeBtnClickedHandlerBinded );
+  _playBtnDom.addEventListener( 'click', _playBtnClickedHandler );
+  _closeBtnDom.addEventListener( 'click', _closeBtnClickedHandler );
 
   // The video has loaded.
   _dom.classList.add( `${ BASE_CLASS }__loaded` );
 }
 
+/**
+ * Handler for when the video changes state.
+ * @param {Event} event - Event object for the YouTube video.
+ */
 function _videoStateChangeHandler( event ) {
   if ( event.data === window.YT.PlayerState.ENDED ) {
     _stopVideoBinded();
@@ -105,14 +120,10 @@ function _videoStateChangeHandler( event ) {
  * Load Youtube max res image if it exists.
  * TODO: Replace this method by calling the YouTube data API.
  * https://developers.google.com/youtube/v3/getting-started#fields
+ *
+ * @param {string} imageURL - The URL to load in the image.
  */
-function _imageLoad() {
-  let imageURL = '';
-
-  if ( _videoId ) {
-    imageURL = youTubeAPI.fetchImageURL( _videoId );
-  }
-
+function _imageLoad( imageURL ) {
   _imageDom.addEventListener( 'load', _imageLoadedHandler );
   _imageDom.addEventListener( 'error', () => { _imageLoadDefault(); } );
 

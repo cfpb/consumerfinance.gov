@@ -70,13 +70,14 @@
 .o-video-player_play-btn {
     width: @play-btn-size__px;
     height: @play-btn-size__px;
-    border: 2px solid @gray-5;
+    // !important is needed for when this is applied to a link.
+    border: 2px solid @gray-5 !important;
     border-radius: 100%;
     position: absolute;
     z-index: 3;
-    opacity: 0;
-    background-color: rgba( 16, 24, 32, 0.75 ); // CFPB Black (#101820) at 80% opacity
-    color: @white;
+    // !important is needed for when this is applied to a link.
+    background-color: rgba( 16, 24, 32, 0.75 ) !important; // CFPB Black (#101820) at 80% opacity
+    color: @white !important;
     font-size: @play-btn-icon-size;
 
     &:hover {
@@ -95,19 +96,23 @@
     }
 
     & > .cf-icon-svg {
-        // Ensuring play icon optically appears horizontally centered.
-        position: relative;
-        left: 0.09375em;
-
-        // Ensuring play icon is vertically centered.
-        vertical-align: bottom;
+        // Size and position visually centers the play arrow.
+        position: absolute;
+        left: 55%;
+        top: 50%;
+        transform: translate( -50%, -50% );
+        font-size: 30px;
     }
 }
 
-.o-video-player__loaded .o-video-player_play-btn {
-    opacity: 1;
+button.o-video-player_play-btn,
+.o-video-player__loaded a.o-video-player_play-btn {
+    display: none;
 }
 
+.o-video-player__loaded button.o-video-player_play-btn {
+    display: block;
+}
 
 .lt-ie9 {
     .o-video-player_play-btn {

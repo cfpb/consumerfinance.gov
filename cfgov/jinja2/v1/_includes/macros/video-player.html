@@ -25,7 +25,7 @@
 
 {% macro render(options={}) -%}
     {% set video_url = options.video.url | default('/') %}
-    {% set image_url = static('img/cfpb_video_cover_card_1380x776.png') %}
+    {% set image_url = static( 'img/cfpb_video_cover_card_1380x776.png' ) %}
     {% set video_id = options.video.id | default('') %}
 
     {# TODO: Move the advanced Jinja logic into Django. #}
@@ -88,15 +88,30 @@
         </div>
         <div class="o-video-player_image-container
                     hide-on_video-playing">
-            <button class="o-video-player_play-btn o-video-player_play-btn__{{ button_pos }}"
+
+            {#
+                This link is for the default, no-js, state of the video player.
+            #}
+            <a class="o-video-player_play-btn
+                      o-video-player_play-btn__{{ button_pos }}"
                href="{{ video_url }}"
                target="_blank"
                rel="noopener noreferrer">
+                {{ svg_icon('play') }}
+            </a>
+
+            {#
+                This button is for when the video player has loaded.
+            #}
+            <button class="o-video-player_play-btn
+                           o-video-player_play-btn__{{ button_pos }}
+                           u-hidden">
                 {{ svg_icon('play') }}
                 {# TODO: Figure out how to pull video title from API and put it
                    in hidden element below for screen readers. #}
                 <span class="u-visually-hidden">Play video</span>
             </button>
+
             <img class="o-video-player_image
                         {{ image_loaded_class | default }}
                         {{ 'o-featured-content-module_img' if is_flexible == false else '' }}"

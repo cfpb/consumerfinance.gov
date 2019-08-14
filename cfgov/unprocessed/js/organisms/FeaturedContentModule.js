@@ -35,7 +35,14 @@ function FeaturedContentModule( element ) {
 function init() {
   setInitFlag( _dom );
 
-  _videoPlayer = new VideoPlayer( _dom.querySelector( `.${ VideoPlayer.BASE_CLASS }` ) );
+  const videoPlayerDom = _dom.querySelector( `.${ VideoPlayer.BASE_CLASS }` );
+
+  // If we don't have a video in this FCM, bail out.
+  if ( videoPlayerDom === null ) {
+    return this;
+  }
+
+  _videoPlayer = new VideoPlayer( videoPlayerDom );
   _videoPlayer.addEventListener( 'onPlay', _videoPlayHandler );
   _videoPlayer.addEventListener( 'onStop', _videoStopHandler );
   _videoPlayer.init();
