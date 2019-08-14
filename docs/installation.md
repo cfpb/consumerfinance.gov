@@ -277,7 +277,11 @@ browser, and see a database error.
 
 ### 3. Setup the database
 
-Run `./shell.sh`. This opens a bash shell inside your Python container.
+Open a bash shell inside your Python container.
+
+```bash
+docker-compose exec python2 bash
+```
 
 You can either [load initial data](#load-initial-data-into-database) per the
 instructions below, or load a database dump.
