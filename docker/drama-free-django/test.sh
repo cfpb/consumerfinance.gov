@@ -2,7 +2,7 @@
 
 set -e
 
-docker build -t cfgov-dfd-builder docker/drama-free-django
+docker build --build-arg "CACHEBUST=$(date)" -t cfgov-dfd-builder docker/drama-free-django
 
 docker run \
   --rm \

@@ -25,9 +25,12 @@ RUN yum install -y centos-release-scl && \
     yum install -y ${SCL_PYTHON_VERSION} gcc git nodejs yarn && \
     echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/scl_python.sh && \
     source /etc/profile && \
-    pip install --no-cache-dir -U pip && \
-    pip install -U git+https://github.com/cfpb/drama-free-django.git
+    pip install --no-cache-dir -U pip
 
+# Set cache-busting arg, a unique value should be provided when the build is invoked
+ARG CACHEBUST
+
+RUN pip install -U git+https://github.com/cfpb/drama-free-django.git
 COPY _build.sh _test.sh docker-entrypoint.sh ./
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
