@@ -30,7 +30,7 @@ RUN yum install -y centos-release-scl && \
 # Set cache-busting arg, a unique value should be provided when the build is invoked
 ARG CACHEBUST
 
-RUN pip install -U git+https://github.com/cfpb/drama-free-django.git
+RUN source /etc/profile && pip install -U git+https://github.com/cfpb/drama-free-django.git
 COPY _build.sh _test.sh docker-entrypoint.sh ./
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
