@@ -92,9 +92,9 @@ function _videoAPIReady() {
  */
 function _videoPlayerReadyHandler() {
 
-  // On page load we show a play link that links directly to the video, so that
-  // the user can still access the video with no JavaScript.
-  // We need to hide the link and show the play button for the embedded video.
+  /* On page load we show a play link that links directly to the video, so that
+     the user can still access the video with no JavaScript.
+     We need to hide the link and show the play button for the embedded video. */
   _playLinkDom.classList.add( 'u-hidden' );
   _playBtnDom.classList.remove( 'u-hidden' );
 
