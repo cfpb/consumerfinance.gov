@@ -13,7 +13,6 @@ INSTALLED_APPS += (
 )
 
 STATIC_ROOT = REPOSITORY_ROOT.child('collectstatic')
-STATICFILES_DIRS += [str(d) for d in REPOSITORY_ROOT.child('static.in').listdir(filter=DIRS)]
 
 ALLOW_ADMIN_URL = DEBUG or os.environ.get('ALLOW_ADMIN_URL', False)
 
