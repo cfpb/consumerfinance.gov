@@ -4,8 +4,8 @@
 
 // Required modules.
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import youTubeAPI from '../modules/youtube-api';
 import EventObserver from '../modules/util/EventObserver';
+import youTubeAPI from '../modules/youtube-api';
 
 const BASE_CLASS = 'o-video-player';
 
@@ -77,6 +77,10 @@ function init() {
   return this;
 }
 
+/**
+ * Handler for when the video API has loaded and is ready, in this case when the
+ * YouTube IFrame API is done loading.
+ */
 function _videoAPIReady() {
   _player = youTubeAPI.instantiatePlayer( _iframeDom, _videoId );
   _player.addEventListener( 'onReady', _videoPlayerReadyHandler );
@@ -104,7 +108,8 @@ function _videoPlayerReadyHandler() {
 
 /**
  * Handler for when the video changes state.
- * @param {Event} event - Event object for the YouTube video.
+ * @param {Event} event - Event object for the changed state,
+ *   which contains a data property for the state.
  */
 function _videoStateChangeHandler( event ) {
   if ( event.data === window.YT.PlayerState.ENDED ) {

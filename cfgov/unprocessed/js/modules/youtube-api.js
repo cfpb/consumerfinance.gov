@@ -46,6 +46,9 @@ function fetchImageURL( videoId ) {
 }
 
 /**
+ * Configure and load a new YouTube Player instance into a supplied <iframe>
+ * from the YouTube embed API, which should have been set on the
+ * global window object.
  *
  * @param {HTMLNode} iframeContainerDom -
  *   A reference to <iframe> to embed the video.
