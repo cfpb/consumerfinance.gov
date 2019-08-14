@@ -159,6 +159,10 @@ function _imageShow() {
 }
 
 /**
+ * HANDLE VIDEO INTERACTIONS.
+ */
+
+/**
  * Handler for clicking of the play button.
  */
 function _playBtnClickedHandler() {
