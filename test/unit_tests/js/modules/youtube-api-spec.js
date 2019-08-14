@@ -16,9 +16,9 @@ describe( 'youtube-api', () => {
   } );
 
   describe( '.instantiatePlayer()', () => {
-    it( 'should throw an error when YouTube iFrame API is not loaded', () => {
+    it( 'should throw an error when YouTube IFrame API is not loaded', () => {
       expect( () => { youTubeAPI.instantiatePlayer(); } )
-        .toThrow( 'YouTube iFrame API is not loaded!' );
+        .toThrow( 'YouTube IFrame API is not loaded!' );
     } );
   } );
 

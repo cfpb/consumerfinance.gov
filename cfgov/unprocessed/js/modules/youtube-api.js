@@ -9,7 +9,7 @@ const SCRIPT_API = 'https://www.youtube.com/iframe_api';
 
 /**
  * The "onYouTubeIframeAPIReady" function is automatically called when the
- * YouTube iFrame API is done loading.
+ * YouTube IFrame API is done loading.
  * See https://developers.google.com/youtube/iframe_api_reference
  * @param {Function} callback - function to call when the API is ready.
  */
@@ -18,7 +18,7 @@ function attachAPIReadyCallback( callback ) {
 }
 
 /**
- * Embed the YouTube iFrame API.
+ * Embed the YouTube IFrame API.
  * @param {Function} [callback] - function to call when the script is loaded.
  */
 function embedVideoScript( callback ) {
@@ -51,11 +51,11 @@ function fetchImageURL( videoId ) {
  *   A reference to <iframe> to embed the video.
  * @param {string} videoId - A YouTube video ID.
  * @returns {YT.Player} A YouTube Player instance.
- * @throws {Error} If the iFrame API has not loaded.
+ * @throws {Error} If the IFrame API has not loaded.
  */
 function instantiatePlayer( iframeContainerDom, videoId ) {
   if ( typeof window.YT === 'undefined' ) {
-    throw new Error( 'YouTube iFrame API is not loaded!' );
+    throw new Error( 'YouTube IFrame API is not loaded!' );
   }
 
   const YouTubePlayer = window.YT;
