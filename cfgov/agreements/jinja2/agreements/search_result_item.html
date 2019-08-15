@@ -1,4 +1,4 @@
-{% macro render(result) %}
+{% macro render(result, s3_path) %}
 {% set default_text = 'No information provided' %}
 <article class="results_item">
     <h3>
@@ -22,7 +22,7 @@
         <div class="content-l_col content-l_col-1-2">
             <h4 style="margin-bottom:5px;">Download most recent agreement files</h4>
             {% set recent_agreement = result.prepaidagreement_set.order_by('-effective_date').first() %}
-            <p><a href="{{ recent_agreement.agreements_files_location }}">{{ recent_agreement.agreements_files_location }}</a></p>
+            <p><a href="{{ s3_path }}{{ recent_agreement.agreements_files_location }}">{{ recent_agreement.agreements_files_location }}</a></p>
             <div class="block block__sub">
             <p><a href="detail/{{result.id}}">View all agreements for {{ result.name }}</a></p>
             </div>

@@ -53,7 +53,7 @@
     {% for agreement in product.prepaidagreement_set.order_by('-effective_date') %}
         <div class="block block__sub {{ 'block__flush-top' if loop.counter == 1 else '' }}">
             <p style="margin-bottom:5px;">Agreement effective date: {{ agreement.effective_date }}</p>
-            <p><a href="{{ agreement.agreements_files_location }}">{{ agreement.agreements_files_location }}</a></p>
+            <p><a href="{{ s3_path }}{{ agreement.agreements_files_location }}">{{ agreement.agreements_files_location }}</a></p>
         </div>
     {% endfor %}
     

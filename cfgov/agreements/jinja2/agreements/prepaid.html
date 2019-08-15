@@ -310,7 +310,7 @@
                 {% endif %}
                 <div class="results_list">
                 {% for result in results %}
-                    {{ search_item.render( result ) }}
+                    {{ search_item.render( result, s3_path ) }}
                 {% endfor %}
                 </div>
                 <div class="results_paginator">
