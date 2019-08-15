@@ -12,6 +12,17 @@ const closeIcon = require(
 
 const BASE_CLASS = 'o-multiselect';
 
+function contains(container, element) {
+     var node = element;
+     while (node != null) {
+         if (node == container) {
+             return true;
+         }
+         node = node.parentNode;
+     }
+     return false;
+}
+
 /**
  * Multiselect
  * @class
@@ -97,6 +108,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements
 
     return this;
   }
+  
+  function documentEventHandler(event) {
+    if ( !contains( _containerDom, event.target ) ){
+        collapse();
+    }
+  }
 
   /**
    * Expand the multiselect drop down.
@@ -107,7 +124,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements
     _fieldsetDom.classList.remove( 'u-invisible' );
     _fieldsetDom.setAttribute( 'aria-hidden', false );
     _instance.dispatchEvent( 'expandBegin', { target: _instance } );
-
+    document.addEventListener('click', documentEventHandler);
+    document.addEventListener('keyup', documentEventHandler);
+    
     return _instance;
   }
 
@@ -121,6 +140,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements
     _fieldsetDom.setAttribute( 'aria-hidden', true );
     _model.resetIndex();
     _instance.dispatchEvent( 'expandEnd', { target: _instance } );
+    document.removeEventListener('click', documentEventHandler);
+    document.removeEventListener('keyup', documentEventHandler);
 
     return _instance;
   }
