@@ -115,17 +115,17 @@ def prepaid(request):
         if 'issuer' in filters:
             issuers = Q()
             for issuer in filters['issuer']:
-                issuers |= Q(issuer_name=issuer)
+                issuers |= Q(issuer_name__iexact=issuer)
             products = products.filter(issuers)
 
         if 'prepaid_type' in filters:
             prepaid_types = Q()
             for prepaid_type in filters['prepaid_type']:
-                prepaid_types |= Q(prepaid_type=prepaid_type)
+                prepaid_types |= Q(prepaid_type__iexact=prepaid_type.title())
             products = products.filter(prepaid_types)
 
         if 'status' in filters:
-            products = products.filter(status=filters['status'][0])
+            products = products.filter(status__iexact=filters['status'][0])
 
     current_count = len(products)
     paginator = Paginator(products, 20)
@@ -144,12 +144,14 @@ def prepaid(request):
         'filters': filters,
         'query': search_term or '',
         'active_filters': active_filters,
-        'search_field': search_field[0] if search_field else 'all'
+        'search_field': search_field[0] if search_field else 'all',
+        's3_path': 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/',
     })
 
 
 def detail(request, product_id):
     return render(request, 'agreements/detail.html', {
         'product': PrepaidProduct.objects.get(id=product_id),
-        'disclaimer': get_disclaimer()
+        'disclaimer': get_disclaimer(),
+        's3_path': 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/',
     })
