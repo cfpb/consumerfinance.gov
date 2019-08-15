@@ -40,9 +40,11 @@ def import_agreements_data(agreements_data):
             agreement = PrepaidAgreement(pk=pk)
 
         effective_date = item['effective_date']
-        if effective_date:
+        if effective_date and effective_date != 'None':
             effective_date = datetime.datetime.strptime(
                 effective_date, "%m/%d/%Y").date()
+        else:
+            effective_date = None
 
         product_id = item['product_id'].replace('PRODUCT-', '')
         product = PrepaidProduct.objects.get(pk=product_id)
