@@ -18,7 +18,7 @@
 @play-btn-size__px: 60px;
 
 // Variable used to set the size of the play button's SVG icon.
-@play-btn-icon-size: 1.875em;
+@play-btn-icon-size: 30px;
 
 // Magic number: height of standard button.
 @standard-btn-height__px: 36px;
@@ -68,6 +68,7 @@
 }
 
 .o-video-player_play-btn {
+    box-sizing: border-box;
     width: @play-btn-size__px;
     height: @play-btn-size__px;
     // !important is needed for when this is applied to a link.
@@ -101,7 +102,6 @@
         left: 55%;
         top: 50%;
         transform: translate( -50%, -50% );
-        font-size: 30px;
     }
 }
 
