@@ -4,7 +4,7 @@ from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
-from unipath import Path
+from unipath import DIRS, Path
 
 from cfgov.util import admin_emails
 
@@ -121,7 +121,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
@@ -240,9 +239,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/static/'
 
-# Absolute path to the directory static files should be collected to.
-STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
-
 MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
@@ -264,6 +260,8 @@ STATICFILES_DIRS = [
     PROJECT_ROOT.child('templates', 'wagtailadmin')
 ]
 
+# Also include any directories under static.in.
+STATICFILES_DIRS += REPOSITORY_ROOT.child('static.in').listdir(filter=DIRS)
 
 ALLOWED_HOSTS = ['*']
 
@@ -568,6 +566,7 @@ CSP_IMG_SRC = (
     'api.mapbox.com',
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
+    'blob:',
     'data:',
     'www.facebook.com',
     'www.gravatar.com',

@@ -1,6 +1,6 @@
 // Required modules.
 import * as arrayHelpers from '../modules/util/array-helpers';
-import * as atomicHelpers from '../modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import EventObserver from '../modules/util/EventObserver';
 import MultiselectModel from './MultiselectModel';
 import { bindEvent } from '../modules/util/dom-events';
@@ -46,7 +46,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   const KEY_TAB = 9;
 
   // Internal vars.
-  let _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  let _dom = checkDom( element, BASE_CLASS );
   let _isBlurSkipped = false;
   let _name;
   let _placeholder;
@@ -66,13 +66,11 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   /**
    * Set up and create the multiselect.
-   * @returns {Multiselect|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Multiselect} An instance.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     _instance = this;
@@ -92,7 +90,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
       /* We need to set init flag again since we've created a new <div>
          to replace the <select> element. */
-      atomicHelpers.setInitFlag( _dom );
+      setInitFlag( _dom );
 
       _bindEvents();
     }

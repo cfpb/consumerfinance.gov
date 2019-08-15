@@ -103,8 +103,7 @@
                         <p> </p>
                         <ul class="m-list m-list__unstyled">
                         {% for reg in page.results.all_regs %}
-                            {%- set reg_name = '(Reg<span class="u-hide-on-tablet">ulation</span> ' ~ reg.letter_code ~ ')' -%}
-                            {%- set reg_name = '(' ~ reg.short_name ~ ')' -%}
+                            {%- set reg_name = '(' ~ reg.short_name | regs_hide_on_mobile ~ ')' -%}
                             <li>
                                 {{ checkbox.render({
                                     'label': reg.id ~ ' ' ~ reg_name | safe,

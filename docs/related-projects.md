@@ -145,16 +145,16 @@ they will need to be installed seperately by
 [accessing the Python containers' shell](#access-the-containers-shell) 
 and using `pip`:
 
-Python 2.7: 
+Python 2.7:
 
 ```bash
-docker exec -it cfgov-refresh_python2_1 bash
-pip2.7 install [PACKAGE NAME]
+docker-compose exec python2 bash
+pip install [PACKAGE NAME]
 ```
 
-Python 3.6: 
+Python 3.6:
 
 ```bash
-docker exec -it cfgov-refresh_python3_1 bash
-pip3.6 install [package name]
+docker-compose exec python3 bash
+pip install [PACKAGE NAME]
 ```
