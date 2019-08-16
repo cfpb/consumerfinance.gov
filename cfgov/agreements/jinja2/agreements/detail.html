@@ -48,7 +48,7 @@
             <dd>{{ product.other_relevant_parties if product.other_relevant_parties else default_text }}</dd> 
         </dl>
 
-{% set agreements = product.prepaidagreement_set.order_by('-effective_date') %}
+{% set agreements = product.prepaidagreement_set.all() %}
 {% if agreements | length %}
 
     <div class="block u-mt45">

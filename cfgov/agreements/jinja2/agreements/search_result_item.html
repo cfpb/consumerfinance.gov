@@ -21,10 +21,10 @@
         </div>
         <div class="content-l_col content-l_col-1-2">
             <h4 style="margin-bottom:5px;">Download most recent agreement files</h4>
-            {% set recent_agreement = result.prepaidagreement_set.order_by('-effective_date').first() %}
+            {% set latest_agreement = result.latest_agreement %}
             <p class="break-word">
-                <a href="{{ s3_path }}{{ recent_agreement.agreements_files_location }}">
-                    {{ recent_agreement.agreements_files_location }}
+                <a href="{{ s3_path }}{{ latest_agreement.agreements_files_location }}">
+                    {{ latest_agreement.agreements_files_location }}
                 </a>
             </p>
             <div class="block block__sub">

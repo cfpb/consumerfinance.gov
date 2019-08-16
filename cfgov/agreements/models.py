@@ -26,6 +26,10 @@ class PrepaidProduct(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def latest_agreement(self):
+        return self.prepaidagreement_set.order_by('-pk').first()
+
     class Meta:
         ordering = ['name']
 
@@ -36,4 +40,7 @@ class PrepaidAgreement(models.Model):
     agreements_files_location = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.agreements_files_location
+        return 'IFL-' + str(self.pk)
+
+    class Meta:
+        ordering = ['-pk']
