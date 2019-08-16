@@ -30,13 +30,13 @@
             <dl>
                 <dt><h2>Issuer name</h2></dt>
                 <dd>{{ product.issuer_name | lower | title }}</dd>
-                <dt><h2>Prepaid account type</h2></dt>
+                <dt><h2>Prepaid product type</h2></dt>
                 <dd>{{ product.prepaid_type if product.prepaid_type else default_text }}</dd>
             </dl>
         </div>
         <div class="content-l_col content-l_col-1-2">
             <dl>
-                <dt><h2>Program manager name</h2></dt>
+                <dt><h2>Program manager</h2></dt>
                 <dd>{{ product.program_manager if product.program_manager else default_text }}</dd>
                 <dt><h2>Current status</h2></dt>
                 <dd>{{ product.status if product.status else default_text }}</dd>
