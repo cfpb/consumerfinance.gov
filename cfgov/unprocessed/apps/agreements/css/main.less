@@ -347,3 +347,39 @@ dd + dt {
         }
     }
 });
+
+.break-word {
+    word-break: break-word;
+}
+
+.flush-top {
+    padding-top: 0 !important;
+}
+
+
+.agreement-effective-date {
+    margin-bottom: 5px;
+}
+
+
+.respond-to-max( @bp-sm-max, {
+    .prepaid-agreements-database {
+        #searchText {
+            &::-webkit-input-placeholder { /* WebKit browsers */
+                color: transparent;
+            }
+            &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+               color: transparent;
+            }
+            &::-moz-placeholder { /* Mozilla Firefox 19+ */
+               color: transparent;
+            }
+           & :-ms-input-placeholder { /* Internet Explorer 10+ */
+               color: transparent;
+            }
+        }
+    }
+});
+
+
+

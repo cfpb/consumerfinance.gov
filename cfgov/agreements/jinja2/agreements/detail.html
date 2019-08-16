@@ -11,7 +11,7 @@
     {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
     {% set breadcrumb_items = [{
         'href': '/prepaid-agreements/',
-        'title': 'Prepaid account agreements database'
+        'title': 'Prepaid Product Agreements Database'
     }]%}
     {{ breadcrumbs.render(breadcrumb_items) }}
 </div>
@@ -48,16 +48,39 @@
             <dd>{{ product.other_relevant_parties if product.other_relevant_parties else default_text }}</dd> 
         </dl>
 
-<div class="block u-mt45">
-<h2 class="h3"> Download agreements</h2>
-    {% for agreement in product.prepaidagreement_set.order_by('-effective_date') %}
-        <div class="block block__sub {{ 'block__flush-top' if loop.counter == 1 else '' }}">
-            <p style="margin-bottom:5px;">Agreement effective date: {{ agreement.effective_date }}</p>
-            <p><a href="{{ s3_path }}{{ agreement.agreements_files_location }}">{{ agreement.agreements_files_location }}</a></p>
+{% set agreements = product.prepaidagreement_set.order_by('-effective_date') %}
+{% if agreements | length %}
+
+    <div class="block u-mt45">
+        <h2 class="h3"> Download most recent agreement files</h2>
+        {% set agreement = agreements | first  %}
+        <div class="block block__sub block__flush-top">
+            <p class="agreement-effective-date"><span>Agreement effective date:</span> {{ agreement.effective_date }}</p>
+            <p class="break-word">
+                <a href="{{ s3_path }}{{ agreement.agreements_files_location }}">
+                    {{ agreement.agreements_files_location }}
+                </a>
+            </p>
         </div>
-    {% endfor %}
-    
-</div>
+    </div>
+
+    {% if agreements | length > 1 %}
+    <div class="block u-mt45">
+        <h2 class="h3"> Download older agreements</h2>
+        {% for agreement in agreements[1:] %}
+            <div class="block block__sub {{ 'block__flush-top' if loop.index == 1 else '' }}">
+                <p class="agreement-effective-date"><span>Agreement effective date:</span> {{ agreement.effective_date }}</p>
+                <p class="break-word">
+                    <a href="{{ s3_path }}{{ agreement.agreements_files_location }}">
+                        {{ agreement.agreements_files_location }}
+                    </a>
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endif %}
+
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}

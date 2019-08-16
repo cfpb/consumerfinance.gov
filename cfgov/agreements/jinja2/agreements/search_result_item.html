@@ -9,9 +9,9 @@
             <dl>
                 <dt>Issuer name</dt>
                 <dd>{{ result.issuer_name | lower | title }}</dd>
-                <dt>Prepaid account type</dt>
+                <dt>Prepaid product type</dt>
                 <dd>{{ result.prepaid_type if result.prepaid_type else default_text }}</dd>
-                <dt>Program manager name</dt>
+                <dt>Program manager</dt>
                 <dd>{{ result.program_manager if result.program_manager else default_text }}</dd>
                 <dt>Other relevant parties</dt>
                 <dd>{{ result.other_relevant_parties | truncate(75) if result.other_relevant_parties else default_text }}</dd>
@@ -22,8 +22,13 @@
         <div class="content-l_col content-l_col-1-2">
             <h4 style="margin-bottom:5px;">Download most recent agreement files</h4>
             {% set recent_agreement = result.prepaidagreement_set.order_by('-effective_date').first() %}
-            <p><a href="{{ s3_path }}{{ recent_agreement.agreements_files_location }}">{{ recent_agreement.agreements_files_location }}</a></p>
+            <p class="break-word">
+                <a href="{{ s3_path }}{{ recent_agreement.agreements_files_location }}">
+                    {{ recent_agreement.agreements_files_location }}
+                </a>
+            </p>
             <div class="block block__sub">
+                <h4 style="margin-bottom:5px;">View all agreement files</h4>
             <p><a href="detail/{{result.id}}">View all agreements for {{ result.name }}</a></p>
             </div>
         </div>
