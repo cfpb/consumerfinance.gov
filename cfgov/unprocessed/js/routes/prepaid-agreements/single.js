@@ -5,12 +5,16 @@ import {
 import Expandable from 'cf-expandables/src/Expandable';
 import Multiselect from '../../molecules/Multiselect';
 
-const element = document.querySelector('.search_results');
 const BASE_CLASS = 'filters';
+const element = document.querySelector('.search_results');
 
-const _dom = checkDom( element, BASE_CLASS );
-const multiSelectsSelector = `.${ BASE_CLASS } .${ Multiselect.BASE_CLASS }`;
+if (element) {
+	const _dom = checkDom( element, BASE_CLASS );
+	const multiSelectsSelector = `.${ BASE_CLASS } .${ Multiselect.BASE_CLASS }`;
 
-instantiateAll( multiSelectsSelector, Multiselect );
+	instantiateAll( multiSelectsSelector, Multiselect );
 
-Expandable.init( _dom );
+	Expandable.init( _dom );
+}
+
+

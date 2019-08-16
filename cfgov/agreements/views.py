@@ -11,14 +11,6 @@ from agreements.models import Agreement, Issuer, PrepaidProduct
 from v1.models.snippets import ReusableText
 
 
-def get_disclaimer():
-    try:
-        return ReusableText.objects.get(
-            title='Legal disclaimer for consumer materials')
-    except ReusableText.DoesNotExist:
-        pass
-
-
 def index(request):
     return render(request, 'agreements/index.html', {
         'agreement_count': Agreement.objects.all().count(),
@@ -152,6 +144,5 @@ def prepaid(request):
 def detail(request, product_id):
     return render(request, 'agreements/detail.html', {
         'product': PrepaidProduct.objects.get(id=product_id),
-        'disclaimer': get_disclaimer(),
         's3_path': 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/',
     })
