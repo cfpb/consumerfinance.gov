@@ -149,13 +149,7 @@ class FilterableListForm(forms.Form):
             v1_cfgovtaggedpages_items__content_object__id__in=page_ids
         ).values_list('slug', 'name')
 
-        options = self.prepare_options(arr=tags)
-        most = options[:3]
-        other = options[3:]
-
-        self.fields['topics'].choices = \
-            (('Most frequent', most),
-             ('All other topics', other))
+        self.fields['topics'].choices = self.prepare_options(arr=tags)
 
     # Populate Authors' choices
     def set_authors(self, page_ids):
