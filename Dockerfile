@@ -1,4 +1,3 @@
-# Base image inherited by all cfgov-refresh child images
 FROM centos:7 AS cfgov-base
 
 SHELL ["/bin/bash", "--login", "-c"]
@@ -53,3 +52,34 @@ COPY extend-environment.sh /etc/profile.d/extend-environment.sh
 RUN pip install --no-cache-dir -r requirements/local.txt
 
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
+
+FROM cfgov-develop as cfgov-build
+
+# add node and yarn repos
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
+
+RUN yum install -y nodejs yarn  && \
+    yum clean all && rm -rf /var/cache/yum
+
+WORKDIR /src/cfgov-refresh
+
+COPY scripts scripts
+COPY frontend.sh .
+COPY package.json .
+COPY yarn.lock .
+COPY babel.config.js .
+COPY gulpfile.js .
+COPY gulp ./gulp
+COPY config ./config
+COPY jest.config.js .
+COPY cfgov/ ./cfgov/
+COPY static.in ./static.in
+
+ENV DJANGO_SETTINGS_MODULE=cfgov.settings.minimal_collectstatic
+ENV ALLOWED_HOSTS='["*"]'
+ENTRYPOINT []
+
+RUN sh ./frontend.sh production
+
+RUN DJANGO_STATIC_ROOT=/var/www/html/static cfgov/manage.py collectstatic
