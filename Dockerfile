@@ -76,10 +76,11 @@ COPY jest.config.js .
 COPY cfgov/ ./cfgov/
 COPY static.in ./static.in
 
-ENV DJANGO_SETTINGS_MODULE=cfgov.settings.minimal_collectstatic
+ENV DJANGO_SETTINGS_MODULE=cfgov.settings.production
 ENV ALLOWED_HOSTS='["*"]'
-ENTRYPOINT []
 
 RUN sh ./frontend.sh production
 
 RUN DJANGO_STATIC_ROOT=/var/www/html/static cfgov/manage.py collectstatic
+
+ENTRYPOINT []
