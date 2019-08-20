@@ -1,7 +1,6 @@
-# Base image inherited by all cfgov-refresh child images
 FROM centos:7 AS cfgov-base
 
-SHELL ["/bin/bash", "--login", "-c"]
+SHELL ["/bin/bash", "--login", "-o", "pipefail", "-c"]
 
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
@@ -53,3 +52,29 @@ COPY extend-environment.sh /etc/profile.d/extend-environment.sh
 RUN pip install --no-cache-dir -r requirements/local.txt
 
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
+
+FROM cfgov-develop as cfgov-build
+
+# add node and yarn repos
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
+
+RUN yum install -y nodejs yarn  && \
+    yum clean all && rm -rf /var/cache/yum
+
+
+COPY cfgov/ ./cfgov
+COPY config/ ./config
+COPY gulp ./gulp
+COPY static.in ./static.in
+COPY scripts ./scripts
+
+COPY docker-entrypoint.sh frontend.sh gulpfile.js jest.config.js package.json yarn.lock /src/cfgov-refresh/
+
+ENV DJANGO_SETTINGS_MODULE=cfgov.settings.production
+ENV DJANGO_STATIC_ROOT=/var/www/html/static
+ENV ALLOWED_HOSTS='["*"]'
+
+RUN sh ./frontend.sh production
+
+RUN cfgov/manage.py collectstatic
