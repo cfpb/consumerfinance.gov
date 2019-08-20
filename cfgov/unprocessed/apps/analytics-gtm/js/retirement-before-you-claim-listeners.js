@@ -22,7 +22,7 @@ const BYCAnalytics = ( function() {
    * @returns {number} The age, in years, based on current date.
    */
   function calculateAge( month, day, year ) {
-    let now = new Date();
+    const now = new Date();
     const birthdate = new Date( year, Number( month ) - 1, day );
     let age = now.getFullYear() - birthdate.getFullYear();
     const m = now.getMonth() - birthdate.getMonth();

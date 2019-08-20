@@ -13,12 +13,13 @@ const PFCAnalytics = ( function() {
 
   /**
    * Finds the first empty column, returns column number [1-3].
+   * @returns {number|boolean} Empty column number, or false if none is found.
    */
   function findEmptyColumn() {
     let column = false;
     for ( let x = 1; x <= 3; x++ ) {
-      const school_id = $( "#institution-row [data-column='" + x + "']" ).attr( 'data-schoolid' );
-      if ( school_id === '' ) {
+      const schoolID = $( "#institution-row [data-column='" + x + "']" ).attr( 'data-schoolid' );
+      if ( schoolID === '' ) {
         column = x;
         break;
       }
