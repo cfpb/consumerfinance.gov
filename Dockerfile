@@ -1,6 +1,6 @@
 FROM centos:7 AS cfgov-base
 
-SHELL ["/bin/bash", "--login", "-c"]
+SHELL ["/bin/bash", "--login", "-o", "pipefail", "-c"]
 
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
@@ -62,25 +62,19 @@ RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum
 RUN yum install -y nodejs yarn  && \
     yum clean all && rm -rf /var/cache/yum
 
-WORKDIR /src/cfgov-refresh
 
-COPY scripts scripts
-COPY frontend.sh .
-COPY package.json .
-COPY yarn.lock .
-COPY babel.config.js .
-COPY gulpfile.js .
+COPY cfgov/ ./cfgov
+COPY config/ ./config
 COPY gulp ./gulp
-COPY config ./config
-COPY jest.config.js .
-COPY cfgov/ ./cfgov/
 COPY static.in ./static.in
+COPY scripts ./scripts
+
+COPY frontend.sh gulpfile.js jest.config.js package.json yarn.lock /src/cfgov-refresh/
 
 ENV DJANGO_SETTINGS_MODULE=cfgov.settings.production
+ENV DJANGO_STATIC_ROOT=/var/www/html/static
 ENV ALLOWED_HOSTS='["*"]'
 
 RUN sh ./frontend.sh production
 
-RUN DJANGO_STATIC_ROOT=/var/www/html/static cfgov/manage.py collectstatic
-
-ENTRYPOINT []
+RUN cfgov/manage.py collectstatic
