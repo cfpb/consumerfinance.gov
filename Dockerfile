@@ -57,7 +57,7 @@ FROM cfgov-develop as cfgov-build
 
 # add node and yarn repos
 RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
+RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
 
 RUN yum install -y nodejs yarn  && \
     yum clean all && rm -rf /var/cache/yum
@@ -69,7 +69,7 @@ COPY gulp ./gulp
 COPY static.in ./static.in
 COPY scripts ./scripts
 
-COPY frontend.sh gulpfile.js jest.config.js package.json yarn.lock /src/cfgov-refresh/
+COPY docker-entrypoint.sh frontend.sh gulpfile.js jest.config.js package.json yarn.lock /src/cfgov-refresh/
 
 ENV DJANGO_SETTINGS_MODULE=cfgov.settings.production
 ENV DJANGO_STATIC_ROOT=/var/www/html/static
