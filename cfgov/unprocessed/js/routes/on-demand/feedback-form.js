@@ -10,6 +10,10 @@ let requiredKey = 'REQUIRED';
 let UNDEFINED;
 const element = document.body.querySelector( '.' + BASE_CLASS );
 
+/**
+ * @param {Object} fields - Map of field options to validate.
+ * @returns {string|undefined} The validator's message, or undefined.
+ */
 function validateFeedback( fields ) {
   if ( fields.comment ) {
     if ( fields.comment.value ) {

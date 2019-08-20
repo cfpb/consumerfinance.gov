@@ -50,7 +50,7 @@ Then( 'the mega-menu organism shouldn\'t show the first link immediately',
   async function() {
     function _modifyTransitionDuration( duration ) {
       duration = duration || 'inherit';
-      var style = document.createElement( 'style' ); // eslint-disable-line no-var, inline-comments
+      var style = document.createElement( 'style' ); // eslint-disable-line no-var
       style.type = 'text/css';
       style.innerHTML = '* { transition-delay: ' + duration + ' !important; }';
       document.body.appendChild( style );

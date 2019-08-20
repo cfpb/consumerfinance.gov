@@ -22,8 +22,8 @@
 
 
 // Required modules.
-import { BEHAVIOR_PREFIX, JS_HOOK } from './standard-type';
 import * as dataHook from '../../modules/util/data-hook';
+import { BEHAVIOR_PREFIX, JS_HOOK } from './standard-type';
 
 
 /**

@@ -218,10 +218,15 @@ function updateView() {
 }
 
 /**
- * Updates the sentence above the chart
+ * Updates the sentence above the chart.
  * @param {Array} totalVals - List of interest rates.
  */
 function updateLanguage( totalVals ) {
+
+  /**
+   * Set the state text in the sentence above the chart to be the same as
+   * the state drop-down selected.
+   */
   function renderLocation() {
     const stateDropDown = document.querySelector( '#location' );
     const selectedDropDown = stateDropDown.options[stateDropDown.selectedIndex];
@@ -233,10 +238,13 @@ function updateLanguage( totalVals ) {
     }
   }
 
+  /**
+   * Set the loan length text in the summary below the chart.
+   */
   function updateTerm() {
     const termVal = getSelection( 'loan-term' );
     $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
-    // change from 5 years to x if an ARM
+    // Change from 5 years to x if an ARM.
     if ( getSelection( 'rate-structure' ) === 'arm' ) {
       const armVal = getSelection( 'arm-type' );
       const term = armVal.match( /[^-]*/i )[0];
@@ -864,9 +872,10 @@ function registerEvents() {
       96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 188, 190
     ];
 
-    /* If it's not an allowed key OR the shift key is held down (and they're not tabbing)
-       stop everything. */
-    if ( allowedKeys.indexOf( key ) === -1 || ( event.shiftKey && key !== 9 ) ) {
+    /* If it's not an allowed key OR the shift key is held down
+       (and they're not tabbing) stop everything. */
+    if ( allowedKeys.indexOf( key ) === -1 ||
+         ( event.shiftKey && key !== 9 ) ) {
       event.preventDefault();
     }
   } );

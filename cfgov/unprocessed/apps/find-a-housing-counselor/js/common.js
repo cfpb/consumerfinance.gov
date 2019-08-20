@@ -150,7 +150,10 @@ function updateMap( data ) {
         iconSize: [ 27, 32 ]
       } );
 
-      const marker = new window.L.Marker( position, { icon: icon } ).addTo( map );
+      const marker = new window.L.Marker(
+        position,
+        { icon: icon }
+      ).addTo( map );
       marker_array[i] = marker;
 
       marker.on( 'click', function() {

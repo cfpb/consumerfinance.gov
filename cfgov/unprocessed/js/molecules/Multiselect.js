@@ -22,7 +22,7 @@ const BASE_CLASS = 'o-multiselect';
  *   The DOM element within which to search for the molecule.
  * @returns {Multiselect} An instance.
  */
-function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
+function Multiselect( element ) { // eslint-disable-line max-statements
 
   const LIST_CLASS = 'm-list';
   const CHECKBOX_INPUT_CLASS = 'a-checkbox';
