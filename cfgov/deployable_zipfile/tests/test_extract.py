@@ -5,7 +5,7 @@ import tempfile
 from unittest import TestCase
 
 import mock
-from scripts.extract_deployable_zip import extract_zipfile
+from deployable_zipfile.extract import extract_zipfile
 
 
 class TestExtractZipFile(TestCase):
@@ -22,6 +22,8 @@ class TestExtractZipFile(TestCase):
 
         extract_location = os.path.join(self.tempdir, 'extracted')
         extract_zipfile(test_zip, extract_location)
+
+        extract_location = os.path.join(extract_location, 'current')
 
         # Verify that all files are extracted properly.
         self.assertEqual(
@@ -41,15 +43,15 @@ class TestExtractZipFile(TestCase):
             ]
         )
 
-        # Verify that the virtual environment was created, and that all wheels
-        # were installed into it as expected.
+        # Verify that the virtual environment was created and that the setup
+        # script was called appropriately.
         check_call.assert_has_calls([
             # First call should create the virtual environment.
             mock.call([
                 sys.executable,
                 '-m',
                 'virtualenv',
-                '--no-download',
+                '--never-download',
                 '--no-wheel',
                 '--extra-search-dir=%s' % os.path.join(
                     extract_location,
@@ -58,17 +60,10 @@ class TestExtractZipFile(TestCase):
                 os.path.join(extract_location, 'venv'),
             ]),
 
-            # Second call should install the wheels from the zipfile using the
-            # Python binary in the virtual environment.
+            # Second call should invoke the setup script using the Python
+            # binary in the virtual environment.
             mock.call([
                 os.path.join(extract_location, 'venv', 'bin', 'python'),
-                '-m',
-                'pip',
-                'install',
-                os.path.join(
-                    extract_location,
-                    'wheels',
-                    'test-0.0.1-py2.py3-none-any.whl'
-                ),
+                os.path.join(extract_location, 'setup.py'),
             ])
         ])

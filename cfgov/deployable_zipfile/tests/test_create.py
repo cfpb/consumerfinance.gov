@@ -6,13 +6,14 @@ from unittest import TestCase
 from zipfile import ZipFile
 
 import mock
-from scripts.create_deployable_zip import create_zipfile, save_wheels
+from deployable_zipfile.create import create_zipfile, save_wheels
 
 
 class TestSaveWheels(TestCase):
     @mock.patch('subprocess.check_call')
     def test_save_wheels_calls_pip_wheel(self, check_call):
         save_wheels(
+            sys.executable,
             '/destination/path',
             'django',
             'wagtail',
@@ -25,6 +26,7 @@ class TestSaveWheels(TestCase):
             'pip',
             'wheel',
             '--wheel-dir=/destination/path',
+            '--find-links=/destination/path',
             'django',
             'wagtail',
             '-rrequirements.txt',
@@ -33,7 +35,7 @@ class TestSaveWheels(TestCase):
     @mock.patch('subprocess.check_call', side_effect=RuntimeError)
     def test_save_wheels_re_raises_pip_wheel_exception(self, check_call):
         with self.assertRaises(RuntimeError):
-            save_wheels('/destination/path')
+            save_wheels(sys.executable, '/destination/path')
 
 
 class TestCreateDeployableZip(TestCase):
@@ -48,14 +50,16 @@ class TestCreateDeployableZip(TestCase):
     def tearDown(self):
         shutil.rmtree(self.tempdir)
 
-    @mock.patch('scripts.create_deployable_zip.save_wheels')
+    @mock.patch('deployable_zipfile.create.save_wheels')
     def test_create_zipfile(self, save_wheels):
         zipfile_basename = os.path.join(self.tempdir, 'archive')
 
         zipfile_filename = create_zipfile(
             self.zip_source,
             self.requirements_file,
-            zipfile_basename
+            zipfile_basename,
+            extra_static=None,
+            extra_python=None
         )
 
         # save_wheels should be called twice; once for the bootstrap wheels
@@ -66,8 +70,13 @@ class TestCreateDeployableZip(TestCase):
 
         archive = ZipFile(zipfile_filename)
         self.assertEqual(sorted(archive.namelist()), [
+            '__main__.py',
+            'deployable_zip.pth',
             'deployable_zip/',
             'deployable_zip/foo.txt',
             'deployable_zip/subdir/',
             'deployable_zip/subdir/bar.txt',
+            'loadenv-init.pth',
+            'loadenv.py',
+            'setup.py',
         ])
