@@ -1,0 +1,34 @@
+FROM centos:6
+
+# Disables pip cache, which reduces build time, and suppresses warnings when
+# run as non-root.
+ENV PIP_NO_CACHE_DIR true
+
+ENV BUILD_DIR /src/cfgov-refresh
+
+# Must be world writable since alternate uid:gid may be patched in at `docker
+# run` time.
+RUN mkdir -p ${BUILD_DIR} && chmod 777 ${BUILD_DIR}
+WORKDIR ${BUILD_DIR}
+
+# Sets a consistent $HOME no matter which user the container runs under. This
+# prevents permissions issues caused by Docker's default `/` home directory.
+ENV HOME /tmp/dfd-home
+RUN mkdir -p ${HOME} && chmod 777 ${HOME}
+
+# Install all build requirements including both Python 2 and 3 and the latest
+# versions of the Python packages pip, setuptools, and wheel. Configure both
+# Python 2 and 3 to be enabled at login.
+RUN yum install -y centos-release-scl && \
+    curl -sL https://rpm.nodesource.com/setup_10.x | bash - && \
+    curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
+    yum install -y python27 rh-python36 gcc git nodejs yarn && \
+    echo "source scl_source enable rh-python36" > /etc/profile.d/scl_python.sh && \
+    echo "source scl_source enable python27" >> /etc/profile.d/scl_python.sh && \
+    source /etc/profile && \
+    pip install --no-cache-dir -U pip setuptools wheel && \
+    pip3 install --no-cache-dir -U pip setuptools wheel
+
+COPY _build.sh docker-entrypoint.sh ./
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
