@@ -47,6 +47,7 @@ class TestCreateDeployableZip(TestCase):
 
         self.zip_source = os.path.join(test_data, 'deployable_zip')
         self.requirements_file = os.path.join(test_data, 'requirements.txt')
+        self.extra_static = os.path.join(test_data, 'extra_static')
 
     def tearDown(self):
         shutil.rmtree(self.tempdir)
@@ -59,13 +60,14 @@ class TestCreateDeployableZip(TestCase):
             self.zip_source,
             self.requirements_file,
             zipfile_basename,
-            extra_static=None,
-            extra_python=None
+            extra_static=[self.extra_static],
+            extra_python='python4'
         )
 
-        # save_wheels should be called twice; once for the bootstrap wheels
-        # (virtualenv, pip, setuptools) and once for the requirements file.
-        self.assertEqual(save_wheels.call_count, 2)
+        # save_wheels should be called three times; once for the bootstrap
+        # wheels (pip, setuptools), and once per Python version for the
+        # requirements file.
+        self.assertEqual(save_wheels.call_count, 3)
 
         self.assertEqual(zipfile_filename, '%s.zip' % zipfile_basename)
 
@@ -83,5 +85,8 @@ class TestCreateDeployableZip(TestCase):
                 'loadenv-init.pth',
                 'loadenv.py',
                 'setup.py',
+                'static.in/',
+                'static.in/0/',
+                'static.in/0/extra.css',
             ]
         )
