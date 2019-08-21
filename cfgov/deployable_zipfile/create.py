@@ -120,11 +120,11 @@ def create_zipfile(project_path, requirements_file, zipfile_basename,
         # This requires both prepending the file with the shebang
         # "#!/usr/bin/env/python", as well as making it executable, doing
         # the equivalent of "chmod +x archive.zip".
-        with open(zipfile, 'r') as f:
+        with open(zipfile, 'rb') as f:
             zipfile_data = f.read()
 
-        with open(zipfile, 'w') as f:
-            f.write('#!/usr/bin/env python\n')
+        with open(zipfile, 'wb') as f:
+            f.write(b'#!/usr/bin/env python\n')
             f.write(zipfile_data)
 
         existing_st_mode = os.stat(zipfile)[0]

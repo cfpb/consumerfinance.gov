@@ -1,5 +1,6 @@
 import os
 import shutil
+import six
 import sys
 import tempfile
 from unittest import TestCase
@@ -26,7 +27,8 @@ class TestExtractZipFile(TestCase):
         extract_location = os.path.join(extract_location, 'current')
 
         # Verify that all files are extracted properly.
-        self.assertEqual(
+        six.assertCountEqual(
+            self,
             [
                 os.path.join(root, name)
                 for root, __, files in os.walk(extract_location)

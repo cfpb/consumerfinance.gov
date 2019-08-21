@@ -1,5 +1,6 @@
 import os
 import shutil
+import six
 import sys
 import tempfile
 from unittest import TestCase
@@ -69,14 +70,18 @@ class TestCreateDeployableZip(TestCase):
         self.assertEqual(zipfile_filename, '%s.zip' % zipfile_basename)
 
         archive = ZipFile(zipfile_filename)
-        self.assertEqual(sorted(archive.namelist()), [
-            '__main__.py',
-            'deployable_zip.pth',
-            'deployable_zip/',
-            'deployable_zip/foo.txt',
-            'deployable_zip/subdir/',
-            'deployable_zip/subdir/bar.txt',
-            'loadenv-init.pth',
-            'loadenv.py',
-            'setup.py',
-        ])
+        six.assertCountEqual(
+            self,
+            archive.namelist(),
+            [
+                '__main__.py',
+                'deployable_zip.pth',
+                'deployable_zip/',
+                'deployable_zip/foo.txt',
+                'deployable_zip/subdir/',
+                'deployable_zip/subdir/bar.txt',
+                'loadenv-init.pth',
+                'loadenv.py',
+                'setup.py',
+            ]
+        )
