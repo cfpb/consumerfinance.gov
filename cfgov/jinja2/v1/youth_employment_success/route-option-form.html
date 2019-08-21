@@ -1,0 +1,96 @@
+{% from 'atoms/checkbox.html' import render with context %}
+{% set labels = ['Walk', 'Drive', 'Bike', 'Public transit', 'Get dropped off'] %}
+
+<form class="o-yes-route-option">
+  <span class="a-label__heading u-mb0">
+    <b>What type of transportation will you take?</b>
+  </span>
+  <span class="a-label_helper__block a-micro-copy u-mt0">
+    Choose one
+  </span>
+  {% for label in labels | batch(2) %}
+    <div class="content-l block__sub-micro">
+      {% set field_name_l = ['yes-route', label[0]] | join('-') %}
+      {{
+        render({
+          'class': 'content-l_col-1-2 m-form-field__lg-target a-yes-route-mode',
+          'name': field_name_l,
+          'label': label[0]
+        })
+      }}
+
+      {% if label[1] %}
+        {% set field_name_r = ['yes-route', label[1]] | join('-') %}
+        {{
+          render({
+            'class': 'content-l_col-1-2 m-form-field__lg-target a-yes-route-mode',
+            'name': field_name_r,
+            'label': label[1]
+          })
+        }}
+      {% endif %}
+    </div>
+  {% endfor %}
+  {% include "route-questions/miles.html" %}
+  {% include "route-questions/average-daily-cost.html" %}
+  {% include "route-questions/days-per-week.html" %}
+  <div class="content-l content-l_col-2-3">
+    <span class="h4">Totals for option {{id}}</span>
+    <div class="content_line-bold"></div>
+
+    <div class="block__sub-micro">
+      <p class="content-l content-l_col-3-4"><b>Money left in your budget</b></p>
+      <p class="content-l content-l_col-1-4" style="text-align: right;">
+        <!-- todo: go in an remove these <b>s with actual styling -->
+        <b class="content-l_col">$</b>
+        <b class="content-l_col-2-3">122</b>
+      </p>
+      <div class="content-l content-l_col-3-4">
+        <p class="u-mb0">
+          <b>Option 1 average monthly cost</b>
+        </p>
+        <span class="a-label_helper">
+          <small>Based on {n} days a week you will make this trip</small>
+        </span>
+      </div>
+      <p class="content-l content-l_col-1-4" style="text-align: right;">
+        <!-- todo: go in an remove these <b>s with actual styling -->
+        <b class="content-l_col">$</b>
+        <b class="content-l_col-2-3">122</b>
+      </p>
+    </div>
+
+    <div class="content_line-bold"></div>
+
+    <div class="block__sub-micro">
+      <div class="content-l content-l_col-3-4">
+        <p class="u-mb0">
+          <b>Total left in your budget after transportation costs</b>
+        </p>
+        <span class="a-label_helper">
+          <small>This option in out of budget</small>
+        </span>
+      </div>
+      <p class="content-l content-l_col-1-4" style="text-align: right;">
+        <!-- todo: go in an remove these <b>s with actual styling -->
+        <b class="content-l_col">$</b>
+        <b class="content-l_col-2-3">122</b>
+      </p>
+    </div>
+    <div class="block__sub-micro">
+      <p class="content-l content-l_col-1-3"><b>Total time to get to work</b></p>
+      <p class="content-l content-l_col-2-3" style="text-align: right;">
+        <!-- todo: go in an remove these <b>s with actual styling -->
+        <b class="content-l_col-1-2">0 hours</b>
+        <b class="content-l_col-1-2">0 minutes</b>
+      </p>
+    </div>
+  </div>
+  <div class="content-l content-l_col-2-3">
+    <span class="h4">Actions for completing this option</span>
+    <div class="content_line-bold"></div>
+    <ul class="block__sub-micro">
+      <li>actions go here</li>
+    </ul>
+  </div>
+</form>
