@@ -26,8 +26,21 @@ def get_supported_wheels(wheel_directory):
     return [req.link.path for req in requirement_set.requirements.values()]
 
 
+def find_wsgi_py(search_root):
+    for root, dirnames, filenames in os.walk(search_root):
+        if 'wsgi.py' in filenames:
+            return os.path.join(root, 'wsgi.py')
+
+
 def setup_virtualenv():
     extract_location = os.path.realpath(os.path.dirname(__file__))
+
+    # If there's a wsgi.py file in the deployed code, create a symlink for it
+    # from the root. This makes it easier to target using Apache.
+    wsgi_py_filename = find_wsgi_py(extract_location)
+
+    if wsgi_py_filename:
+        os.symlink(wsgi_py_filename, os.path.join(extract_location, 'wsgi.py'))
 
     # Identify this virtual environment's site-packages. At this point before
     # any packages have been installed, this will always be the last entry in
