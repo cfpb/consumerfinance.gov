@@ -113,7 +113,13 @@ def create_zipfile(project_path, requirements_file, zipfile_basename,
 
         zipfile = shutil.make_archive(zipfile_basename, 'zip', temp_dir)
 
-        # Make zipfile executable.
+        # Make zipfile executable, so that it can be executed directly
+        # (./archive.zip ...) instead of having to invoke Python
+        # (python ./archive.zip ...).
+        #
+        # This requires both prepending the file with the shebang
+        # "#!/usr/bin/env/python", as well as making it executable, doing
+        # the equivalent of "chmod +x archive.zip".
         with open(zipfile, 'r') as f:
             zipfile_data = f.read()
 
@@ -123,7 +129,7 @@ def create_zipfile(project_path, requirements_file, zipfile_basename,
 
         existing_st_mode = os.stat(zipfile)[0]
         new_st_mode = existing_st_mode \
-            | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXUSR
+            | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
         os.chmod(zipfile, new_st_mode)
 
         return zipfile
