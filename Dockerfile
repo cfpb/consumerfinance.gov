@@ -82,6 +82,6 @@ RUN cfgov/manage.py collectstatic
 
 FROM cfgov-base as cfgov-deploy
 
-COPY --from=cfgov-build /opt/rh/*/root/usr/*/python*/site-packages/  /src/site-packages/
+COPY --from=cfgov-build /opt/rh/*/root/usr/*/python*/site-packages/*  /src/site-packages/
 COPY --from=cfgov-build --chown=apache:apache /src/cfgov-refresh/cfgov/ /src/cfgov-refresh/cfgov/
 COPY --from=cfgov-build --chown=apache:apache /var/www/html/static /var/www/html/static
