@@ -81,7 +81,10 @@ RUN sh ./frontend.sh production
 RUN cfgov/manage.py collectstatic
 
 FROM cfgov-base as cfgov-deploy
+ENV PY_LIB_DIR /opt/rh/${SCL_PYTHON_VERSION}/root/usr/lib/
+ENV PY_LIB64_DIR /opt/rh/${SCL_PYTHON_VERSION}/root/usr/lib64/
 
-COPY --from=cfgov-build /opt/rh/*/root/usr/*/python*/site-packages/*  /src/site-packages/
+COPY --from=cfgov-build ${PY_LIB_DIR} ${PY_LIB_DIR}
+COPY --from=cfgov-build ${PY_LIB64_DIR} ${PY_LIB64_DIR}
 COPY --from=cfgov-build --chown=apache:apache /src/cfgov-refresh/cfgov/ /src/cfgov-refresh/cfgov/
 COPY --from=cfgov-build --chown=apache:apache /var/www/html/static /var/www/html/static
