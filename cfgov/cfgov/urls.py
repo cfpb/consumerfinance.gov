@@ -74,11 +74,6 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
-    url(r'^resources-youth-employment-programs/transportation-tool/$',
-        TemplateView.as_view(
-            template_name='youth_employment_success/index.html'),
-            name='youth_employment_success'
-    ),
     url(r'^rural-or-underserved-tool/$',
         TemplateView.as_view(
             template_name='rural-or-underserved/index.html'),
@@ -310,6 +305,13 @@ urlpatterns = [
             RedirectView.as_view(
                 url='/consumer-tools/money-as-you-grow/%(path)s',
                 permanent=True)),
+    url(r'^resources-youth-employment-programs/transportation-tool/$',
+        FlaggedTemplateView.as_view(
+            flag_name='YOUTH_EMPLOYMENT_SUCCESS',
+            template_name='youth_employment_success/index.html'
+        ),
+        name='youth_employment_success'
+    ),
 
     # retirement redirects
     url(r'^retirement/(?P<path>.*)$', RedirectView.as_view(
