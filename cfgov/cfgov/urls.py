@@ -74,7 +74,7 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
-    url(r'/resources-youth-employment-programs/transportation-tool/$',
+    url(r'^resources-youth-employment-programs/transportation-tool/$',
         TemplateView.as_view(
             template_name='youth_employment_success/index.html'),
             name='youth_employment_success'
