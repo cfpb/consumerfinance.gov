@@ -1,5 +1,6 @@
 import {
   UNDEFINED,
+  actionCreator,
   assign,
   combineReducers
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
@@ -42,6 +43,22 @@ const reducerB = ( () => ( state = reducerStateB, action ) => {
 } )();
 
 describe( 'YES utility functions', () => {
+  describe( 'action', () => {
+    const actionType = 'MY_ACTION';
+
+    it( 'returns a curried function', () => {
+      expect( typeof actionCreator( actionType ) === 'function' ).toBeTruthy();
+    } );
+
+    it( 'returns an action object when the curried fn is called', () => {
+      const data = 'hello';
+      const actionObj = actionCreator( actionType )( data );
+
+      expect( actionObj.type ).toBe( actionType );
+      expect( actionObj.data ).toBe( data );
+    } );
+  } );
+
   describe( 'assign', () => {
     const originalObject = {
       agency: 'CFPB'

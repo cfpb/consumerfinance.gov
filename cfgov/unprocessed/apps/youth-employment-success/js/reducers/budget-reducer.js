@@ -1,4 +1,4 @@
-import { assign } from '../util';
+import { actionCreator, assign } from '../util';
 
 export const initialState = {
   earned: '',
@@ -10,13 +10,8 @@ export const actionTypes = {
   UPDATE_SPENT: 'UPDATE_SPENT'
 };
 
-const updateAction = actionType => amount => ( {
-  type: actionType,
-  data: amount
-} );
-
-export const updateEarnedAction = updateAction( actionTypes.UPDATE_EARNED );
-export const updateSpentAction = updateAction( actionTypes.UPDATE_SPENT );
+export const updateEarnedAction = actionCreator( actionTypes.UPDATE_EARNED );
+export const updateSpentAction = actionCreator( actionTypes.UPDATE_SPENT );
 
 /**
  *

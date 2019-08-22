@@ -1,7 +1,22 @@
 let UNDEFINED;
 
 const REDUCER_RETURN_ERROR = 'Reducer must return a state object';
-const INVALID_ARG_ERROR = 'reducers argument must be an object, where each value is a reducer function';
+const INVALID_ARG_ERROR = 'The "reducers" argument must be an object, where each value is a reducer function';
+
+/**
+ * Helper method to generate an action creator
+ * @param {string} actionType The name of the action to be dispatched
+ * @returns {function} Curried action creator function that accepts a
+ *   data argument and returns an action
+ */
+function actionCreator( actionType ) {
+  return function( data ) {
+    return {
+      type: actionType,
+      data
+    };
+  };
+}
 
 /**
  *
@@ -59,7 +74,7 @@ const processStateFromReducers = reducers => (
   return hasChanged ? finalState : state;
 };
 
-export const combineReducers = reducers => {
+const combineReducers = reducers => {
   if ( reducers && typeof reducers !== 'object' ) {
     throw new TypeError( INVALID_ARG_ERROR );
   }
@@ -105,6 +120,8 @@ function assign( output = {}, source ) {
 }
 
 export {
+  actionCreator,
   assign,
+  combineReducers,
   UNDEFINED
 };
