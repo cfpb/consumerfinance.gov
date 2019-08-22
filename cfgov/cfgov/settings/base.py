@@ -706,6 +706,9 @@ FLAGS = {
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
     'BETA_EXTERNAL_TESTING': [],
+
+    # Used to hide new youth employment success pages prior to public launch.
+    'YOUTH_EMPLOYMENT_SUCCESS':  [],
 }
 
 
