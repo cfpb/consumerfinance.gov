@@ -1,5 +1,6 @@
-import budgetFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/budget-form-view';
 import { simulateEvent } from '../../../../util/simulate-event';
+import budgetFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/budget-form-view';
+import { configureStore } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/store';
 
 const HTML = `
 <section class="block o-yes-budget">
@@ -75,10 +76,12 @@ const HTML = `
 describe( 'BudgetFormView', () => {
   const CLASSES = budgetFormView.CLASSES;
   let view;
+  let store;
 
   beforeEach( () => {
     document.body.innerHTML = HTML;
-    view = budgetFormView( document.querySelector( `.${ CLASSES.FORM }` ) );
+    store = configureStore();
+    view = budgetFormView( document.querySelector( `.${ CLASSES.FORM }` ), { store } );
     view.init();
   } );
 
@@ -94,14 +97,17 @@ describe( 'BudgetFormView', () => {
 
     moneyEarnedEl.value = '100';
     simulateEvent( 'input', moneyEarnedEl );
-    simulateEvent( 'blur', moneyEarnedEl );
 
     expect( totalEl.textContent ).toEqual( '100' );
 
     moneySpentEl.value = '100';
     simulateEvent( 'input', moneySpentEl );
-    simulateEvent( 'blur', moneySpentEl );
 
+    expect( totalEl.textContent ).toEqual( '0' );
+  } );
+
+  it( 'defaults the `total` value to zero when no input has been received', () => {
+    const totalEl = document.querySelector( `.${ CLASSES.REMAINING }` );
     expect( totalEl.textContent ).toEqual( '0' );
   } );
 
@@ -111,13 +117,11 @@ describe( 'BudgetFormView', () => {
 
     moneySpentEl.value = '100';
     simulateEvent( 'input', moneySpentEl );
-    simulateEvent( 'blur', moneySpentEl );
 
     view.destroy();
 
     moneySpentEl.value = '5';
     simulateEvent( 'input', moneySpentEl );
-    simulateEvent( 'blur', moneySpentEl );
 
     expect( totalEl.textContent ).toEqual( '-100' );
   } );

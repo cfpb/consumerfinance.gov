@@ -1,21 +1,13 @@
-import { combineReducers } from './util';
-import budgetFormView from './budget-form-view';
-import budgetReducer from './reducers/budget-reducer';
 import Expandable from 'cf-expandables/src/Expandable';
+import budgetFormView from './budget-form-view';
 import routeOptionFormView from './route-option-view';
-import YesStore from './yes-store';
-
-const appStore = new YesStore(
-  combineReducers( {
-    budget: budgetReducer
-  } )
-);
+import store from './store';
 
 const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
 
 const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
-const budgetForm = budgetFormView( budgetFormEl );
+const budgetForm = budgetFormView( budgetFormEl, { store } );
 
 const routeOptionsEl = document.querySelector( `.${ OPTION_CLASSES.FORM }` );
 const routeOptionsForm = routeOptionFormView( routeOptionsEl );
