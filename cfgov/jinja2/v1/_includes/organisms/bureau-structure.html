@@ -267,6 +267,7 @@
               block__border-top
               o-bureau-structure_footer">
     <div class="content-l content-l__main">
+    {% if download_image_url %}
         <div class="content-l_col content-l_col-1-2"
              data-qa-hook="org-chart-download-info">
             <h2 class="h3">Download a copy</h2>
@@ -282,6 +283,7 @@
                 Download PDF
              </a>
         </div>
+    {% endif %}
         <div class="content-l_col content-l_col-1-2">
             <h2 class="h3">Request speaking info</h2>
             <p>
