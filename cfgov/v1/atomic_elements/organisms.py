@@ -444,7 +444,7 @@ class BureauStructureOffice(BureauStructurePosition):
 
 class BureauStructure(blocks.StructBlock):
     last_updated_date = blocks.DateBlock(required=False)
-    download_image = DocumentChooserBlock(icon='image')
+    download_image = DocumentChooserBlock(icon='image', required=False)
     director = blocks.CharBlock()
     divisions = blocks.ListBlock(BureauStructureDivision())
     office_of_the_director = blocks.ListBlock(
