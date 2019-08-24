@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime as dt
+import re
 
 from django.test import RequestFactory, TestCase
 
@@ -48,11 +49,15 @@ class RelatedPostsTestCase(TestCase):
         self.archive_events_parent = CFGOVPage(
             slug='archive-past-events', title='archive past events parent'
         )
+        self.activity_log = CFGOVPage(
+            slug='activity-log', title='activity log'
+        )
 
         helpers.save_new_page(self.blog_parent)
         helpers.save_new_page(self.newsroom_parent)
         helpers.save_new_page(self.events_parent)
         helpers.save_new_page(self.archive_events_parent)
+        helpers.save_new_page(self.activity_log)
 
         # set up children of the parent pages and give them some tags
         # and some categories
@@ -343,6 +348,28 @@ class RelatedPostsTestCase(TestCase):
         self.assertEqual(related_posts['Blog'][1], self.blog_child1)
         self.assertEqual(related_posts['Events'][0], self.events_child1)
         self.assertEqual(related_posts['Newsroom'][0], self.newsroom_child1)
+
+    def test_related_posts_rendering(self):
+        block_value = {
+            'and_filtering': False,
+            'alternate_view_more_url': None,
+            'limit': 3,
+            'relate_events': True,
+            'relate_newsroom': True,
+            'relate_posts': True,
+            'specific_categories': [],
+        }
+
+        context = {
+            'page': self.page_with_authors,
+            'request': RequestFactory().get('/'),
+        }
+
+        html = RelatedPosts().render(block_value, context=context)
+
+        # Rendered HTML should contain 5 results, because the limit only
+        # applies to each type of post, not the total number.
+        self.assertEqual(len(re.findall('m-list_item', html)), 5)
 
 
 class TestGenerateViewMoreUrl(TestCase):
