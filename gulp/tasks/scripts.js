@@ -208,7 +208,7 @@ function scriptsApps() {
         console.log(
           '\x1b[31m%s\x1b[0m',
           'App dependencies not installed, please run from project root:',
-          `yarn --cwd ${ appsPath } install ${ appsPath }`
+          `yarn --cwd ${ appsPath }`
         );
       }
     }
