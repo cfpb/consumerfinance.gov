@@ -26,11 +26,12 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-            target: cfgov-develop
+            target: cfgov-${CFGOV_BUILD_STAGE:-development}
             args:
                 scl_python_version: python27
         ports:
             - "8000:8000"
+            - "80:80"
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps
@@ -45,11 +46,12 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-            target: cfgov-develop
+            target: cfgov-${CFGOV_BUILD_STAGE:-development}
             args:
                 scl_python_version: rh-python36
         ports:
             - "8333:8000"
+            - "83:80"
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps
