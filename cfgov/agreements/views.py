@@ -8,7 +8,6 @@ from django.shortcuts import render
 
 from agreements import RESULTS_PER_PAGE
 from agreements.models import Agreement, Issuer, PrepaidProduct
-from v1.models.snippets import ReusableText
 
 
 def index(request):
@@ -67,6 +66,33 @@ def validate_page_number(request, paginator):
     return page_number
 
 
+def search_products(search_term, search_field, products):
+    search_fields = [
+        'issuer_name',
+        'other_relevant_parties',
+        'name',
+        'program_manager'
+    ]
+    if search_field and search_field[0] in search_fields:
+        search_fields = [search_field[0]]
+    products = products.annotate(
+        search=SearchVector(
+            *search_fields
+        ),
+    ).filter(search=search_term)
+    active_filters = {'prepaid_type': [], 'status': [], 'issuer': []}
+    for product in products:
+        if product.prepaid_type not in active_filters['prepaid_type']:
+            if product.prepaid_type != '':
+                active_filters['prepaid_type'].append(
+                    product.prepaid_type)
+        if product.status not in active_filters['status']:
+            active_filters['status'].append(product.status)
+        if product.issuer_name not in active_filters['issuer']:
+            active_filters['issuer'].append(product.issuer_name)
+    return products, active_filters
+
+
 def prepaid(request):
     filters = dict(request.GET.iterlists())
     active_filters = {}
@@ -78,31 +104,13 @@ def prepaid(request):
         filters.pop('page', None)
         search_term = filters.pop('q', None)
         search_field = filters.pop('search_field', None)
+
         if search_term:
-            search_term = search_term[0]
-            search_fields = [
-                'issuer_name',
-                'other_relevant_parties',
-                'name',
-                'program_manager'
-            ]
-            if search_field and search_field[0] in search_fields:
-                search_fields = [search_field[0]]
-            products = products.annotate(
-                search=SearchVector(
-                    *search_fields
-                ),
-            ).filter(search=search_term)
-            active_filters = {'prepaid_type': [], 'status': [], 'issuer': []}
-            for product in products:
-                if product.prepaid_type not in active_filters['prepaid_type']:
-                    if product.prepaid_type != '':
-                        active_filters['prepaid_type'].append(
-                            product.prepaid_type)
-                if product.status not in active_filters['status']:
-                    active_filters['status'].append(product.status)
-                if product.issuer_name not in active_filters['issuer']:
-                    active_filters['issuer'].append(product.issuer_name)
+            search_term = search_term[0].strip()
+            if search_term != '':
+                products, active_filters = search_products(
+                    search_term, search_field, products
+                )
 
         if 'issuer' in filters:
             issuers = Q()
