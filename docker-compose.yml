@@ -34,6 +34,7 @@ services:
         volumes:
             - ./:/src/cfgov-refresh
             - ./develop-apps:/src/develop-apps
+            - ./extend-environment.sh:/etc/profile.d/extend-environment.sh
         depends_on:
             - elasticsearch
             - postgres
