@@ -1,4 +1,4 @@
-FROM centos:7 AS cfgov-develop
+FROM centos:7 AS cfgov-dev
 
 # Specify SCL-based Python version.
 # Currently used options: python27, rh-python36
@@ -52,7 +52,7 @@ CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 
 
-FROM cfgov-develop as cfgov-production
+FROM cfgov-dev as cfgov-prod
 
 ENV SCL_HTTPD_VERSION httpd24
 ENV SCL_HTTPD_ROOT /opt/rh/${SCL_HTTPD_VERSION}/root
