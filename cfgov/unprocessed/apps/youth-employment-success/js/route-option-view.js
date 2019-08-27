@@ -1,6 +1,7 @@
 import { checkDom, destroyInitFlag, setInitFlag } from '../../../js/modules/util/atomic-helpers';
 import inputView from './input-view';
 import {
+  routeSelector,
   updateDailyCostAction,
   updateDaysPerWeekAction,
   updateMilesAction,
@@ -29,12 +30,12 @@ const actionMap = Object.freeze( {
  *  The root DOM element for this view
  * @returns {Object} The view's public methods
  */
-function RouteOptionFormView( element, { store } ) {
+function RouteOptionFormView( element, { store, routeIndex } ) {
   const _dom = checkDom( element, CLASSES.FORM );
-  const _transportationTypes = Array.prototype.slice.call(
+  const _transportationOptionEls = Array.prototype.slice.call(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_CHECKBOX }` )
   );
-  const _textInputs = Array.prototype.slice.call(
+  const _textInputEls = Array.prototype.slice.call(
     _dom.querySelectorAll( `.${ CLASSES.QUESTION_INPUT }` )
   );
 
@@ -43,29 +44,35 @@ function RouteOptionFormView( element, { store } ) {
    * @param {object} updateObject object with DOM event and field name
    */
   function _setQuestionResponse( { name, event } ) {
-    const method = actionMap[name];
+    const action = actionMap[name];
+    const { target: { value } } = event;
 
-    if ( method ) {
-      store.dispatch( method( event.target.value ) );
+    if ( action ) {
+      store.dispatch( action( {
+        routeIndex,
+        value
+      } ) );
     }
   }
 
   /**
-   * Updates state from child input checkbox nodes
+   * Updates state from child input radio nodes
    * @param {object} updateObject object with DOM event and field name
    */
-  function _setChecked( { event } ) {
-    const { target: { value }} = event;
+  function _setSelected( { event } ) {
+    const { target: { value } } = event;
 
-    store.dispatch( updateTransportationAction( value ) );
+    store.dispatch( updateTransportationAction( {
+      routeIndex,
+      value } ) );
   }
 
   /**
    * Initialize checkbox nodes this form view manages
    */
   function _initRouteOptions() {
-    _transportationTypes.forEach( node => inputView( node, {
-      events: { click: _setChecked },
+    _transportationOptionEls.forEach( node => inputView( node, {
+      events: { click: _setSelected },
       type: 'radio'
     } )
       .init()
@@ -76,7 +83,7 @@ function RouteOptionFormView( element, { store } ) {
    * Initialize input nodes this form view manages
    */
   function _initQuestions() {
-    _textInputs.forEach( node => inputView( node, {
+    _textInputEls.forEach( node => inputView( node, {
       events: { input: _setQuestionResponse }
     } )
       .init()

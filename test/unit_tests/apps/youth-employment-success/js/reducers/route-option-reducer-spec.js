@@ -1,5 +1,8 @@
+import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route';
 import routeOptionReducer, {
+  addRouteOptionAction,
   initialState,
+  routeSelector,
   updateDailyCostAction,
   updateDaysPerWeekAction,
   updateMilesAction,
@@ -17,54 +20,103 @@ describe( 'routeOptionReducer', () => {
     expect( state ).toEqual( initialState );
   } );
 
-  it( 'reduces .updateDailyCostAction', () => {
-    const state = routeOptionReducer(
-      UNDEFINED,
-      updateDailyCostAction( nextValue )
-    );
-    const { dailyCost, ...rest } = state;
+  it( 'reduces .addRouteOptionAction', () => {
+    const state = routeOptionReducer( UNDEFINED, addRouteOptionAction( {} ) );
 
-    expect( dailyCost ).toBe( nextValue );
-    Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
-    );
+    expect( state.routes.length ).toBe( 1 );
   } );
 
-  it( 'reduces .updateDaysPerWeekAction', () => {
-    const state = routeOptionReducer(
-      UNDEFINED,
-      updateDaysPerWeekAction( nextValue )
+  it( 'does not reduce routes for which it did not receive an index', () => {
+    const transportationType = 'Walk';
+    const state = routeOptionReducer( {
+      routes: [ createRoute(), createRoute() ]
+    },
+    updateTransportationAction( { routeIndex: 0, value: transportationType } )
     );
-    const { daysPerWeek, ...rest } = state;
 
-    expect( daysPerWeek ).toBe( nextValue );
-    Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
-    );
+    expect( state.routes[0].transportation ).toBe( transportationType );
+    expect( state.routes[1].transportation ).toBe( '' );
   } );
 
-  it( 'reduces .updateMilesAction', () => {
-    const state = routeOptionReducer(
-      UNDEFINED,
-      updateMilesAction( nextValue )
+  it( 'exposes a selector to decouple data from reducer shape', () => {
+    const state = routeOptionReducer( {
+      routes: [ createRoute(), createRoute( { transportation: 'Walk' } ) ]
+    },
+    { type: null }
     );
-    const { miles, ...rest } = state;
-    expect( miles ).toBe( nextValue );
-    Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
-    );
+
+    expect( routeSelector( state, 1 ).transportation ).toBe( 'Walk' );
   } );
 
-  it( 'reduces .updateTransportation', () => {
-    let state = routeOptionReducer(
-      initialState,
-      updateTransportationAction( 'Walk' )
-    );
+  describe( 'updating a specific route', () => {
+    let initial;
 
-    expect( state.transportation ).toBe( 'Walk' );
+    beforeEach( () => {
+      initial = routeOptionReducer( UNDEFINED, addRouteOptionAction( {} ) );
+    } );
 
-    state = routeOptionReducer(
-      state,
-      updateTransportationAction( 'Drive' )
-    );
+    it( 'reduces .updateDailyCostAction', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateDailyCostAction( {
+          routeIndex: 0,
+          value: nextValue
+        } )
+      );
+      const { dailyCost, ...rest } = state.routes[0];
 
-    expect( state.transportation ).toBe( 'Drive' );
+      expect( dailyCost ).toBe( nextValue );
+      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
+      );
+    } );
+
+    it( 'reduces .updateDaysPerWeekAction', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateDaysPerWeekAction( {
+          routeIndex: 0,
+          value: nextValue } )
+      );
+      const { daysPerWeek, ...rest } = state.routes[0];
+
+      expect( daysPerWeek ).toBe( nextValue );
+      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
+      );
+    } );
+
+    it( 'reduces .updateMilesAction', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateMilesAction( {
+          routeIndex: 0,
+          value: nextValue } )
+      );
+      const { miles, ...rest } = state.routes[0];
+      expect( miles ).toBe( nextValue );
+      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
+      );
+    } );
+
+    it( 'reduces .updateTransportation', () => {
+      let state = routeOptionReducer(
+        initial,
+        updateTransportationAction( {
+          routeIndex: 0,
+          value: 'Walk' } )
+      );
+
+      let route = state.routes[0];
+      expect( route.transportation ).toBe( 'Walk' );
+
+      state = routeOptionReducer(
+        state,
+        updateTransportationAction( {
+          routeIndex: 0,
+          value: 'Drive' } )
+      );
+
+      route = state.routes[0];
+      expect( route.transportation ).toBe( 'Drive' );
+    } );
   } );
 } );
