@@ -1,5 +1,5 @@
-import { setInitFlag } from '../../../js/modules/util/atomic-helpers';
 import { UNDEFINED } from './util';
+import { setInitFlag } from '../../../js/modules/util/atomic-helpers';
 
 const defaultProps = {
   type: 'text'
