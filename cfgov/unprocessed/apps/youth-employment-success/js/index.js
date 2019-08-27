@@ -10,7 +10,7 @@ const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
 const budgetForm = budgetFormView( budgetFormEl, { store } );
 
 const routeOptionsEl = document.querySelector( `.${ OPTION_CLASSES.FORM }` );
-const routeOptionsForm = routeOptionFormView( routeOptionsEl );
+const routeOptionsForm = routeOptionFormView( routeOptionsEl, { store } );
 
 budgetForm.init();
 const expandables = Expandable.init();
