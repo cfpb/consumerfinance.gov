@@ -89,6 +89,7 @@ INSTALLED_APPS = (
     'wellbeing',
     'search',
     'paying_for_college',
+    'prepaid_agreements',
     'regulations3k',
     'treemodeladmin',
     'housing_counselor',

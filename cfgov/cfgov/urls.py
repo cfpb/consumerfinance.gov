@@ -230,8 +230,11 @@ urlpatterns = [
     url(r'^paying-for-college2/', include(
         'paying_for_college.urls', namespace='paying_for_college')),
 
-    url(r'^prepaid-agreements/',
+    url(r'^credit-cards/agreements/',
         include('agreements.urls')),
+
+    url(r'^prepaid-agreements/',
+        include('prepaid_agreements.urls')),
 
     url(r'^consumer-tools/retirement/', include_if_app_enabled(
         'retirement_api',

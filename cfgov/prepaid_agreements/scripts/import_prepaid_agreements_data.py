@@ -4,7 +4,7 @@ import datetime
 
 import requests
 
-from agreements.models import PrepaidAgreement, PrepaidProduct
+from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
 
 METADATA_SOURCE = 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/prepaid_metadata.json'
