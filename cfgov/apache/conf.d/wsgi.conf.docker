@@ -1,0 +1,25 @@
+ServerName consumerfinance.gov
+
+LoadModule wsgi_module modules/mod_${SCL_PYTHON_VERSION}-wsgi.so
+
+WSGIApplicationGroup %{GLOBAL}
+WSGIDaemonProcess django home=${CFGOV_CURRENT} processes=${APACHE_PROCESS_COUNT} threads=15 display-name=%{GROUP}
+WSGIProcessGroup django
+WSGIScriptAlias / ${CFGOV_CURRENT}/cfgov/cfgov/wsgi.py
+
+# FIXME: Do we need this Directory?  It's /srv/cfgov in Ansible setup, and the parent dir of the two below.
+# There's no equivalent in the Docker setup.  Is it there to make sure certain configs are shared across the two?
+# If yes, could we just setup the two individually with the Options they need?
+<Directory ${CFGOV_PATH}>
+    Require all granted
+    Options +FollowSymLinks -Indexes
+</Directory>
+
+<Directory ${CFGOV_CURRENT}>
+    Require all granted
+    Options +FollowSymLinks
+</Directory>
+
+<Directory ${STATIC_PATH}>
+    Require all granted
+</Directory>
