@@ -57,25 +57,14 @@ describe( 'routeOptionReducer', () => {
       initialState,
       updateTransportationAction( 'Walk' )
     );
-    const { selectedTransportation: transportation } = state;
 
-    expect( transportation.length ).toBe( 1 );
-    expect( transportation[0] ).toBe( 'Walk' );
+    expect( state.transportation ).toBe( 'Walk' );
 
     state = routeOptionReducer(
       state,
       updateTransportationAction( 'Drive' )
     );
 
-    expect( transportation.length ).toBe( 2 );
-    expect( transportation[1] ).toBe( 'Drive' );
-
-    state = routeOptionReducer(
-      state,
-      updateTransportationAction( 'Walk' )
-    );
-
-    expect( transportation.length ).toBe( 1 );
-    expect( transportation[0] ).toBe( 'Drive' );
+    expect( state.transportation ).toBe( 'Drive' );
   } );
 } );
