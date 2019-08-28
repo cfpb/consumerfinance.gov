@@ -26,28 +26,6 @@ describe( 'routeOptionReducer', () => {
     expect( state.routes.length ).toBe( 1 );
   } );
 
-  it( 'does not reduce routes for which it did not receive an index', () => {
-    const transportationType = 'Walk';
-    const state = routeOptionReducer( {
-      routes: [ createRoute(), createRoute() ]
-    },
-    updateTransportationAction( { routeIndex: 0, value: transportationType } )
-    );
-
-    expect( state.routes[0].transportation ).toBe( transportationType );
-    expect( state.routes[1].transportation ).toBe( '' );
-  } );
-
-  it( 'exposes a selector to decouple data from reducer shape', () => {
-    const state = routeOptionReducer( {
-      routes: [ createRoute(), createRoute( { transportation: 'Walk' } ) ]
-    },
-    { type: null }
-    );
-
-    expect( routeSelector( state, 1 ).transportation ).toBe( 'Walk' );
-  } );
-
   describe( 'updating a specific route', () => {
     let initial;
 
@@ -117,6 +95,18 @@ describe( 'routeOptionReducer', () => {
 
       route = state.routes[0];
       expect( route.transportation ).toBe( 'Drive' );
+    } );
+
+    it( 'does not reduce routes for which it did not receive an index', () => {
+      const transportationType = 'Walk';
+      const state = routeOptionReducer( {
+        routes: [ createRoute(), createRoute() ]
+      },
+      updateTransportationAction( { routeIndex: 0, value: transportationType } )
+      );
+
+      expect( state.routes[0].transportation ).toBe( transportationType );
+      expect( state.routes[1].transportation ).toBe( '' );
     } );
   } );
 } );
