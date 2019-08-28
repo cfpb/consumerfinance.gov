@@ -1,7 +1,7 @@
 import { actionCreator, assign } from '../util';
 
 const initialState = {
-  selectedTransportation: [],
+  transportation: '',
   daysPerWeek: '',
   miles: '',
   dailyCost: ''
@@ -28,26 +28,6 @@ const updateDailyCostAction = actionCreator(
 
 /**
  *
- * @param {object} state the current state of the reducer
- * @param {string} nextSelection the item to add or remove from the
- *  array of selected transportation options
- * @returns {array} the new transportation option array
- */
-function updateTransportation( state, nextSelection ) {
-  const { selectedTransportation: transportation } = state;
-  const index = transportation.indexOf( nextSelection );
-
-  if ( index > -1 ) {
-    transportation.splice( index, 1 );
-  } else {
-    transportation.push( nextSelection );
-  }
-
-  return transportation;
-}
-
-/**
- *
  * @param {object} state the current values for this slice of app state
  * @param {object} action instructs reducer which state update to apply
  * @returns {object} the updated state object
@@ -67,7 +47,7 @@ function routeOptionReducer( state = initialState, action ) {
     }
     case actionTypes.UPDATE_TRANSPORTATION: {
       return assign( state, {
-        selectedTransportation: updateTransportation( state, data )
+        transportation: data
       } );
     }
     default:

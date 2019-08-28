@@ -1,0 +1,37 @@
+{% from 'atoms/checkbox.html' import render as render_checkbox with context %}
+{% from 'atoms/radio-button.html' import render as render_radio with context %}
+{% from 'input.html' import render as render_input with context %}
+
+<div class="content-l content-l_col-2-3 block__sub-micro a-yes-question">
+  {{
+    render_input({
+      'data_js_name': 'averageCost',
+      'helperText': "If it's free, enter 0",
+      'label': "What's the average cost?",
+      'size': '1-4',
+      'type': 'text',
+      'value': ''
+    })
+  }}
+  {{
+    render_radio({
+      'name': 'average-cost',
+      'label': "Daily",
+      'value': 'daily'
+    })
+  }}
+  {{
+    render_radio({
+      'name': 'average-cost',
+      'label': "Monthly",
+      'value': 'monthly'
+    })
+  }}
+  {{ 
+    render_checkbox({
+      'class': 'block__sub-micro',
+      'label': "I'm not sure, add this to my to-do list to look up later",
+      'name': "yes-miles-unsure"
+     })
+  }}
+</div>
