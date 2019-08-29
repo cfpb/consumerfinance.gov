@@ -109,6 +109,7 @@
             </div>
             {% endif %}
         </div>
+
         {% cache post.post_preview_cache_key, 'post_preview' %}
         {% set post_url = pageurl(post) %}
         {% if 'EventPage' in post.specific_class.__name__ %}
@@ -136,14 +137,18 @@
                      alt="{{ image_alt_value(photo) }}">
             </div>
         {% endif %}
+
         <div class="o-post-preview_content">
-        {% if event.start_dt %}
-            <time class="calendar-icon"
-                  data-month="{{ event.start_dt | date('%b') }}"
-                  data-day="{{ event.start_dt | date('%-d') }}"
-                  datetime="{{ event.start_dt | date('%c') }}">
-                <span class="u-visually-hidden">{{ event.start_dt| date('%b %-d, %Y') }}</span>
-            </time>
+        {% if 'EventPage' in post.specific_class.__name__ %}
+            {% set event = post.specific %}
+            {% if event.start_dt %}
+                <time class="calendar-icon"
+                      data-month="{{ event.start_dt | date('%b') }}"
+                      data-day="{{ event.start_dt | date('%-d') }}"
+                      datetime="{{ event.start_dt | date('%c') }}">
+                    <span class="u-visually-hidden">{{ event.start_dt | date('%b %-d, %Y') }}</span>
+                </time>
+            {% endif %}
         {% endif %}
 
             <h3 class="o-post-preview_title">
@@ -153,15 +158,16 @@
             </h3>
 
             {% if 'EventPage' in post.specific_class.__name__ %}
-                {% if post.specific.start_dt %}
+                {% set event = post.specific %}
+                {% if event.start_dt %}
                     <div class="o-post-preview_subtitle">
-                    {% if post.specific.venue_city and post.specific.venue_state %}
-                        {{ post.specific.venue_city }}, {{ post.specific.venue_state }}
+                    {% if event.venue_city and event.venue_state %}
+                        {{ event.venue_city }}, {{ event.venue_state }}
                     {% endif %}
-                            {{ post.specific.venue_name if post.specific.venue_name else '' }}
-                    {{ 'Livecast' if post.specific.live_stream_url else '' }}
+                            {{ event.venue_name if event.venue_name else '' }}
+                    {{ 'Livecast' if event.live_stream_url else '' }}
                      -
-                    {{ time.render(post.specific.start_dt) }}
+                    {{ time.render(event.start_dt) }}
                     </div>
                 {% endif %}
             {% endif %}
