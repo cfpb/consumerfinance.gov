@@ -1,0 +1,23 @@
+version: "3.4"
+
+services:
+
+    python2:
+        build:
+            target: cfgov-dev
+        ports:
+            - "8000:8000" # Django
+        volumes:
+            - ./:/src/cfgov-refresh
+            - ./develop-apps:/src/develop-apps
+            - ./extend-environment.sh:/etc/profile.d/extend-environment.sh
+
+    python3:
+        build:
+            target: cfgov-dev
+        ports:
+            - "8333:8000" # Django
+        volumes:
+            - ./:/src/cfgov-refresh
+            - ./develop-apps:/src/develop-apps
+            - ./extend-environment.sh:/etc/profile.d/extend-environment.sh
