@@ -82,7 +82,8 @@
     font-size: @play-btn-icon-size;
 
     &:hover {
-        background-color: rgba( 0, 114, 206, 0.75 ); // Pacific (#0072ce) at 80% opacity
+        // !important is needed to override non-hover background.
+        background-color: rgba( 0, 114, 206, 0.75 ) !important; // Pacific (#0072ce) at 80% opacity
     }
 
     &__center {
@@ -92,8 +93,8 @@
     }
 
     &__bottomRight {
-        right: unit( @grid_gutter-width / 2 / ( @play-btn-icon-size * @base-font-size-px ), em );
-        bottom: unit( @grid_gutter-width / 2 / ( @play-btn-icon-size * @base-font-size-px ), em );
+        right: unit( @grid_gutter-width / 2 / @play-btn-icon-size, em );
+        bottom: unit( @grid_gutter-width / 2 / @play-btn-icon-size, em );
     }
 
     & > .cf-icon-svg {

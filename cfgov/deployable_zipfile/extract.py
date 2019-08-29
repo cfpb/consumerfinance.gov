@@ -8,10 +8,6 @@ from zipfile import ZipFile
 
 
 def extract_zipfile(zipfile_filename, extract_location):
-    # This supports legacy drama-free-django behavior. The zipfile is always
-    # extracted into a subdirectory of the specified extract location.
-    extract_location = os.path.join(extract_location, 'current')
-
     ZipFile(zipfile_filename).extractall(extract_location)
 
     # Create a new virtual environment with pip and setuptools from the
