@@ -97,7 +97,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements
 
     return this;
   }
-  
+
   /**
    * Expand the multiselect drop down.
    * @returns {Multiselect} An instance.
@@ -107,7 +107,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements
     _fieldsetDom.classList.remove( 'u-invisible' );
     _fieldsetDom.setAttribute( 'aria-hidden', false );
     _instance.dispatchEvent( 'expandBegin', { target: _instance } );
-    
+
     return _instance;
   }
 

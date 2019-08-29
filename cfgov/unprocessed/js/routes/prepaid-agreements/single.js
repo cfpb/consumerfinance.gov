@@ -13,8 +13,8 @@ if (element) {
 	const multiSelectsSelector = `.${ BASE_CLASS } .${ Multiselect.BASE_CLASS }`;
 
 	instantiateAll( multiSelectsSelector, Multiselect );
-
-	Expandable.init( _dom );
 }
+
+Expandable.init();
 
 
