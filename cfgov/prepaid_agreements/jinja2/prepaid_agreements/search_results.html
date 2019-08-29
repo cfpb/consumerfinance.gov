@@ -1,0 +1,174 @@
+{% import 'atoms/checkbox.html' as checkbox %}
+{% import 'atoms/radio-button.html' as radio %}
+{% import 'atoms/tag.html' as tag %}
+{% import 'search_result_item.html' as search_item %}
+{% import 'molecules/pagination.html' as pagination with context %}
+{% from 'organisms/expandable.html' import expandable with context %}
+
+<aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
+    <h3>Narrow results by...</h3>
+    
+    <form method="get" action="." class="o-form ">
+        {% if query %}
+            <input type="hidden" name="q" value="{{ query }}">
+        {% endif %}
+
+        <div class="m-form-field u-mb15">
+            {% set selections = filters['issuer_name'] %}
+            <label class="a-label a-label__heading"
+                   for="card_type">
+                Issuer name
+            </label>
+            <select name="issuer_name" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer_name" class="o-multiselect">
+                {% for issuer in active_filters['issuer_name'] %}
+                    <option 
+                        value="{{ issuer }}"
+                        {{ ' selected' if issuer in selections else '' }}>
+                            {{ issuer | lower | title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+                
+        <div class="filter-section">
+            {% set selections = filters['prepaid_type'] %}
+            {% set expandable_settings = {
+                'label': 'Prepaid product type',
+                'is_expanded': selections | length > 0,
+                'is_midtone': true,
+                'hide_cue_label': true
+            } %}
+            {% call() expandable(expandable_settings) %}
+             <div class="o-form_group">
+                <fieldset class="o-form_fieldset">
+                    <ul class="m-list m-list__unstyled">
+                        {% for type in active_filters['prepaid_type'] %}
+                            {% if type != None %}
+                                <li>
+                                    {{ checkbox.render({
+                                        'label': type,
+                                        'value': type,
+                                        'id': 'type_' ~ loop.index,
+                                        'name': 'prepaid_type',
+                                        'class': 'test',
+                                        'selected': type in selections
+                                    }) }}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </fieldset>
+            </div>
+            {% endcall %}
+        </div>
+
+        <div class="filter-section">
+            {% set selections = filters['status'] %}
+            {% set expandable_settings = {
+                'label': 'Current status',
+                'is_expanded': selections | length > 0,
+                'is_midtone': true,
+                'hide_cue_label': true,
+                'paragraph': 'This will be either active or withdrawn.'
+            } %}
+            {% call() expandable(expandable_settings) %}
+            
+             <div class="o-form_group">
+                <fieldset class="o-form_fieldset">
+                    <ul class="m-list m-list__unstyled">
+                        {% for option in active_filters['status'] %}
+                        <li>
+                            {{ checkbox.render({
+                                'label': option,
+                                'value': option,
+                                'id': 'status_' ~ loop.index,
+                                'name': 'status',
+                                'selected': option in selections
+                            }) }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </fieldset>
+            </div>
+            {% endcall %}
+        </div>
+            
+        <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
+    </form>
+</aside>
+
+<div class="content_main content__flush-all-on-small content__flush-bottom">
+    <div class="results_header">
+        {% if current_count and current_count > 0  %}
+            <div class="results_count">
+                <h3>Showing
+                    {% if total_count > current_count  %}
+                         {{ current_count }}
+                        match{% if current_count > 1 %}es{% endif %}
+                        out of
+                    {% endif %}
+                    {{ total_count }} total products
+                </h3>
+            </div>
+        {% else %}
+            <div class="results_count no-results" data-results-count="0">
+                <h3>No results match your search.</h3>
+                <p>Try adjusting your filters or searching for different terms.</p>
+            </div>
+        {% endif %}
+    </div>
+    
+    {% if filters | length %}
+    
+        <div class="filters_applied">
+            <div class="filters_tags">
+                <span class="filters_applied-label">
+                Filters applied:
+            </span>
+                {% set filters_to_remove = [] %}
+                {% for filter in filters %}
+                    {% if filter in valid_filters %}
+                        {% for val in filters[filter] %}
+                            {% set href = remove_url_parameter(request, {filter: [val]}) %}
+                            {{ tag.render({
+                                'label': val,
+                                'value': val,
+                                'behavior': 'clear-filter',
+                                'href': href if href else '.'
+                            }) }}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+
+                {% set clear_url = remove_url_parameter(request, filters) %}
+                <a class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
+                        data-js-hook="behavior_clear-all" href="{{ clear_url if clear_url else '.' }}">
+                    Clear all filters
+                </a>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="results_list">
+        {% for result in results %}
+            {{ search_item.render( result, s3_path ) }}
+        {% endfor %}
+    </div>
+
+    <div class="results_paginator">
+        {% if paginator.num_pages > 1 %}
+            <div class="block block__flush-top">
+                {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="database-disclaimer">
+        <div class="o-well">
+            <h4>Database disclaimer</h4>
+            <p>We will display the prepaid agreements in this database as the respective issuers submitted them. The CFPB is not responsible for the content of the agreements, including any discrepancies between an agreement as presented in this database and the agreement as offered to the public, or for any omissions or other errors in the agreement as submitted by the issuer.</p>
+            <p>The agreements on file will have general terms and conditions, pricing, and fee information. They are not specific to an individual's account information.</p>
+            <p>If you have questions about the agreements themselves, contact the prepaid issuer directly.</p>
+        </div>
+    </div>
+</div>

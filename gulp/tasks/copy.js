@@ -55,32 +55,13 @@ gulp.task( 'copy:icons:r3k', () => {
   return stream;
 } );
 
-
-gulp.task( 'copy:icons:r3k', () => {
+gulp.task( 'copy:icons:prepaid', () => {
   const stream = _genericCopy(
     iconSrc,
-    `${ paths.processed }/apps/regulations3k/icons/`
+    `${ paths.processed }/apps/prepaid_agreements/icons/`
   );
   return stream;
 } );
-
-gulp.task( 'copy:icons:agreements', () => {
-  const stream = _genericCopy(
-    iconSrc,
-    `${ paths.processed }/apps/agreements/icons/`
-  );
-  return stream;
-} );
-
-
-gulp.task( 'copy:json:code', () => {
-  const stream = _genericCopy(
-    'code.json',
-    paths.processed
-  );
-  return stream;
-} );
-
 
 gulp.task( 'copy:lightbox2', () => {
   const stream = _genericCopy(
@@ -96,7 +77,7 @@ gulp.task( 'copy:icons',
     'copy:icons:main',
     'copy:icons:oah',
     'copy:icons:r3k',
-    'copy:icons:agreements'
+    'copy:icons:prepaid'
   )
 );
 

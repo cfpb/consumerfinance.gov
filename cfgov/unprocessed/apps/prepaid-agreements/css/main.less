@@ -1,385 +1,119 @@
-@import (less) '../../../css/main.less';
-@import (less) './search.less';
+@import (reference) '../../../css/main.less';
+@import (less) '../../../css/search.less';
+@import (less) './search-bar.less';
 
-.prepaid-detail {
-    dt h2 {
-        .h4();
-        margin-bottom: 5px;
-    }
-    dd {
-        margin-bottom: 20px;
-    }
+.u-readable-width {
+    max-width: 41.875rem;
 }
 
-.filters {
-    .o-multiselect_choices {
-        display: none;
-  }
- }
-
-.filters_applied {
-    padding: 15px;
-    border-bottom: 1px solid @gray-40;
-    &-label {
-        display: inline-block;
-        margin-right: 15px;
-        font-weight: 600;
-    }
-}
-
-.filters_tags {
-    display: inline-block;
-}
-
-
-
-
-
-.layout-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.layout-column {
-    display: flex;
-    flex-direction: column;
-}
-
-.flex-fixed {
-    flex: none;
-}
-
-.flex-all {
-    flex: 1 0 auto;
-}
-
-button.a-btn.flex-fixed {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-
-.lt-ie10 {
-    button.a-btn.flex-fixed {
-        border-radius: .25em;
-    }
-
-    .cf-select {
-        margin-bottom: 20px;
-    }
-
-    .flex-all {
-        margin-bottom: 15px;
-    }
-    .respond-to-min( @bp-med-min, {
-        .cf-select,
-        .flex-all {
-            margin-bottom: 0;
-        }
-        .layout-row {
-            display: table;
-            width: 100%;
-
-            .cf-select{
-                display: table-cell;
-                width: 25%;
-            }
-
-            .flex-all {
-                width: 100%;
-                display: table-cell;
-            }
-
-            .a-btn {
-                display:table-cell;
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-        }
-    });
-}
-
-
-.respond-to-max( @bp-sm-max, {
-    .cf-select {
-        margin-bottom: 15px;
-        width: 100%;        
-    }
-});
-
- // select
-@select-border:     @gray-40;
-@select-icon:       @gray-80;
-@select-icon-bg:    @gray-5;
-@select-height:     @size-ii;
-
-@input-border__focused: @btn-bg;
-@input-text__disabled:  @btn__disabled-text;
-@input-bg__disabled:    @btn__disabled-bg;
-
-.cf-select {
-    position: relative;
-    border: 1px solid @select-border;
-
-    select {
-        width: 100%;
-        padding: unit( 4px / @base-font-size-px, em )
-                 unit( 6px / @base-font-size-px, em );
-
-        // Save room for the drop-arrow
-        padding-right: unit( @select-height * 1.1 / @base-font-size-px, em );
-
-        border: 0;
-        border-radius: 0;
-
-        appearance: none;
-        background-color: @input-bg;
-        color: @text;
-
-        &:hover,
-        &.hover,
-        &:active,
-        &:focus {
-            outline: 2px solid @input-border__focused;
-            outline-offset: 0;
-        }
-    }
-
-    select::-ms-expand {
-        display: none;
-    }
-
-    &:after {
-        height: 100%;
-        width: unit( @select-height / @base-font-size-px, em );
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-color: @select-icon-bg;
-        color: @select-icon;
-        content: "\25BE";
-        line-height: unit( @select-height / @base-font-size-px, em );
-        text-align: center;
-        vertical-align: middle;
-        pointer-events: none;
-    }
-}
-
-
-// TODO Add modernizr to CF so this works
-// Right now modern IE doesn't support pointer events causing nothing
-// to happen when you click on the dropdown error.
-
-.no-csspointerevents .my-select {
-    &:after {
-        height: 0;
-        width: 0;
-        border: 0;
-        content: '';
-    }
-}
-
-// Hide the drop arrow in IE9
-.lt-ie10 .cf-select select {
-    padding-right: unit( 6px / @base-font-size-px, em );
-}
-@gutter-minimum: @grid_gutter-width / 6; 
-@gutter-normal: @grid_gutter-width / 2;
-
-
-
-.cf-select {
-    display: flex;
-    box-sizing: border-box;
-
-    background-color: @gray;
-    flex-direction: column;
-    justify-content: center;
-
-    select {
-      background-color: @gray;
-      color: @white;
-
-      &:focus {
-        outline: none;
-      }
-    }
-
-    &:after {
-      background-color: @gray;
-      color: @white;
-    }
-}
-
-
-
-
-
-
-.respond-to-min( @bp-lg-min, {
-    .content__1-3 .content_sidebar {
-        width: 33% !important;
-    }
-
-    .content__1-3 .content_main {
-        width: 67% !important;
-    }
-});
-dt, dd {
-    display: block;
-    margin-left: 0;
-}
-
-dt {
-    letter-spacing: 0;
-    font-weight: normal;
-    text-transform: none;
-    font-size: inherit;
-    .heading-4;
-    margin-bottom: 5px;
-
-    &:last-of-type {
-        margin-bottom: 5px;
-    }
-}
-
-dd + dt {
-    margin-top: 15px;
-}
-
-.search_results {
-    .content_sidebar {
-        padding: 45px 15px 0;
-        border: 1px solid @gray-40;
-        background-color: #f7f8f9;
-
-        .o-expandable_content,
-        .o-expandable_target {
-            border: 0;
-            padding: 0;
-            &:before,
-            &:after {
-                border: 0;
-                padding: 0;
-            }
-        }
-
-        .reg-checkbox {
-            display: inline-block;
-        }
-        .num-results {
-            float: right;
-        }
-        .o-expandable {
-            padding-bottom: 15px;
-            border-bottom: 1px solid @gray-40;
-            margin-bottom: 15px;
-            &:nth-child(4n) {
-                border-bottom: none;
-            }
-        }
-        .o-form_group {
-            margin-bottom: 0;
-        }
-        .o-expandable_content__expanded {
-            padding-top:10px
-        }
-    }
-    .content_main {
-        &:after {
-            border: 0;
-        }
-        border: 0;
-        border-top: 1px solid @gray-40;
-        padding-top: 0;
-    }
-    .results_count {
-        padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em )
-                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em )
-                 0
-                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        border-right: 1px solid @gray-40;
-        border-bottom: 1px solid @gray-40;
-        background-color: @green-20;
-        &.no-results {
-            background-color: @red-20;
-            padding-bottom: 15px;
-        }
-    }
-    .results_list {
-        padding: unit( @grid_gutter-width / @base-font-size-px, em )
-                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        li {
-            list-style-type: none;
-        }
-    }
-    .results_item {
-        margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
-
-        .respond-to-min( @bp-med-min, {
-            margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        });
-        
-        &+ .results_item {
-            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-            padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
-            border-top: 1px solid @gray-40;
-        }
-    }
-    .results_paginator {
-        margin: 0 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        padding: 0 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        max-width: 41.875rem;
-    }
-}
-
-.respond-to-max( @bp-sm-max, {
-    .search_results {
-        .content_sidebar {
-            padding-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        }
-        .content_main {
-            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        }
-        .results_count {
-            border-left: 1px solid @gray-40;
-        }
-    }
-});
-
-.break-word {
+.u-break-word {
     word-break: break-word;
 }
 
-.flush-top {
+.prepaid-agreements {
+    dt, dd {
+        display: block;
+        margin-left: 0;
+    }
+
+    dt {
+        letter-spacing: 0;
+        font-weight: normal;
+        text-transform: none;
+        font-size: inherit;
+        .heading-4;
+        margin-bottom: unit( @grid_gutter-width / 6 / @base-font-size-px, em );;
+
+        &:last-of-type {
+            margin-bottom: unit( @grid_gutter-width / 6 / @base-font-size-px, em );;
+        }
+    }
+
+    dd + dt {
+        margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    }
+}
+
+.prepaid-agreements-search {
+    .o-multiselect_label {
+        word-break: break-word;
+    }
+
     padding-top: 0 !important;
-}
 
+    .filters {
+        &_applied {
+            padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        }
+        .o-multiselect_choices {
+            display: none;
+        }
+    }
 
-.agreement-effective-date {
-    margin-bottom: 5px;
-}
+    .respond-to-min( @bp-lg-min, {
+        .content_sidebar {
+            width: 33% !important;
+        }
 
+        .content_main {
+            width: 67% !important;
+        }
+    });
 
-.respond-to-max( @bp-sm-max, {
-    .prepaid-agreements-database {
-        #searchText {
-            &::-webkit-input-placeholder { /* WebKit browsers */
-                color: transparent;
+    .search_wrapper {
+        label.h2 {
+            display: block;
+            max-width: none;
+            margin-bottom: unit( @grid_gutter-width * 2/3 / @base-font-size-px, em );
+        }
+    }
+
+    .search_results {
+        .content_sidebar {
+            .o-expandable {
+                &:nth-child(4n) {
+                    border-bottom: none;
+                }
             }
-            &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-               color: transparent;
+            
+            .o-expandable_content__expanded {
+                padding-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
             }
-            &::-moz-placeholder { /* Mozilla Firefox 19+ */
-               color: transparent;
-            }
-           & :-ms-input-placeholder { /* Internet Explorer 10+ */
-               color: transparent;
+        }
+
+        .results_item {
+            h4 {
+                max-width: none;
             }
         }
     }
-});
 
+    .database-disclaimer {
+        padding: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+}
 
+.prepaid-agreements-detail {
+    dt h2 {
+        .h4();
+        margin-bottom: unit( @grid_gutter-width / 6 / @base-font-size-px, em );
+    }
 
+    dd {
+        margin-bottom: unit( @grid_gutter-width * 2/3 / @base-font-size-px, em );
+    }
+    
+    .o-expandable_content__collapsed {
+        // shows approx. 4 lines of content
+        max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .o-expandable_target {
+        display: inline;
+        width: auto;
+        border-width: 0;
+        margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+    }
+}

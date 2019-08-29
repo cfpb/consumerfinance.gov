@@ -1,11 +1,4 @@
 {% extends 'layout-full.html' %}
-{% import 'atoms/checkbox.html' as checkbox %}
-{% import 'atoms/radio-button.html' as radio %}
-{% import 'atoms/tag.html' as tag %}
-<!-- {% import 'regulations3k/regulations3k-search-bar.html' as search_bar %} -->
-{% import 'prepaid_agreements/search_result_item.html' as search_item %}
-{% import 'molecules/pagination.html' as pagination with context %}
-{% from 'organisms/expandable.html' import expandable with context %}
 
 {# HEAD items #}
 
@@ -13,337 +6,96 @@
     Prepaid Agreements Search | Consumer Financial Protection Bureau
 {%- endblock title %}
 
-{% block desc -%}
-    Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.
-{%- endblock desc %}
-
-{% block og_image -%}
-    <meta property="og:image" content="{{ meta_image_url }}">
-    <meta property="twitter:image" content="{{ meta_image_url }}">
-    {# Optional property if you want to use Twitter's large card format
-       https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary-card-with-large-image
-    <meta name="twitter:card" content="summary_large_image">
-    #}
-{%- endblock og_image %}
-
-{% block og_desc -%}
-    {{ self.desc() }}
-{%- endblock og_desc %}
-
 {% block css -%}
     {{ super() }}
-    <link rel="stylesheet" href="{{ static('apps/agreements/css/main.css') }}">
+    <link rel="stylesheet" href="{{ static('apps/prepaid-agreements/css/main.css') }}">
 {%- endblock css %}
-
 
 {# BODY items #}
 
-{% block body_classes %}
-    {{ super() }}
-{% endblock body_classes %}
-
 {% block content_main_modifiers -%}
-    content__1-3 flush-top prepaid-agreements-database
+    content__1-3 prepaid-agreements prepaid-agreements-search
 {%- endblock %}
 
 {% block content_main scoped %}
     {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
-        {% set breadcrumb_items = [{
-            'href': '/data-research/prepaid-agreements/',
-            'title': 'Prepaid account agreements'
-        }]%}
-        {{ breadcrumbs.render(breadcrumb_items) }}
-    <div class="content_wrapper">
-        
+    {% set breadcrumb_items = [{
+        'href': '/data-research/prepaid-agreements/',
+        'title': 'Prepaid account agreements'
+    }]%}
+    {{ breadcrumbs.render(breadcrumb_items) }}
 
-    <div class="block u-mt45">
-    <h1>Prepaid account agreements database</h1>
-    <div class="lead-paragraph" style="max-width: 41.875rem">Find prepaid product agreements from more than 80 issuers. You can search agreements by issuer name, product name, prepaid account type, and other critera.</div>
-    <p>Note that we are unable to do a full-text search of agreement files.</p>
-    <p>You may also choose to download all prepaid agreements as a <a href="https://files.consumerfinance.gov/a/assets/prepaid-agreements/bulk.zip">single compressed file</a> (1.3 GB, updated nightly).
-    </div>
-    <div>
-    <div>
-        <h2>Search prepaid product agreements (April 2019 - present)</h2>
-    </div>
-    <form class="u-mt15" method="get" action="." >
-        <h3 class="h4" style="margin-bottom:5px;">Search within</h3>
+    <div class="content_wrapper search_form">
+        <div class="block block__sub search_intro">
+            <h1>Prepaid account agreements database</h1>
+            <div class="lead-paragraph u-readable-width">
+                Find prepaid product agreements from more than 80 issuers. You can search agreements by issuer name, product name, prepaid account type, and other critera.
+            </div>
+            <p>Note that we are unable to do a full-text search of agreement files.</p>
+            <p>You may also choose to download all prepaid agreements as a <a href="https://files.consumerfinance.gov/a/assets/prepaid-agreements/bulk.zip">single compressed file</a> (1.3 GB, updated nightly).
+        </div>
 
-        <div class="layout-row u-mb30">
-            <div class="cf-select flex-fixed">
-                {% set opts = [
-                    ('All fields', 'all'),
-                    ('Product name', 'name'),
-                    ('Program manager', 'program_manager'),
-                    ('Other relevant party', 'other_relevant_parties'),
-                    ('Issuer name', 'issuer_name'),
-                ]%}
-                <select aria-label="Choose which field will be searched"
-                        id="search_field"
-                        name="search_field">
-                    <optgroup label="Search within">
-                        {% for label, val in opts %}
-                        <option value="{{ val }}"
-                                {{ 'selected' if search_field == val else '' }}>
-                            {{ label }}
-                        </option>
+        <div class="search_wrapper u-mt30">
+            <form class="u-mt15" method="get" action="." >
+                <!-- <div id="search-hidden-filters">
+                {% for filter in filters %}
+                    {% if filter in valid_filters %}
+                        {% for val in filters[filter] %}
+                            <input type="hidden" name="{{ filter }}" value="{{ val }}">
                         {% endfor %}
-                    </optgroup>
-                </select>
-            </div>
-            <div class="flex-all">
-                <div class="m-btn-inside-input input-contains-label">
-                    <label for="searchText" class="input-contains-label_before input-contains-label_before__search">
-                        {{ svg_icon('search') }}
-                        <span class="u-visually-hidden">The term to search for</span>
-                    </label>
-                    <input id="searchText" 
-                           type="text"
-                           autocomplete="off"
-                           class="a-text-input"
-                           name="q"
-                           placeholder="Issuer name, product name, program manager, relevant party"
-                           value="{{ query }}">
-                    <button class="a-btn a-btn__link">{{ svg_icon('remove') }} Clear</button>
-                </div>
-            </div>
-            <button class="a-btn flex-fixed">Search</button>
-        </div>
-    </form>
-    <p class="u-mt30 u-mb15">
-        <a href="">View frequently used terms</a>
-    </p>
-
-    <div class="search_results">
-        <div class="block u-mt0">
-            <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters" style="padding-top:20px;">
-                <div>
-                <h3>Narrow results by...</h3>
-                <form method="get" action="." class="o-form ">
-
-                        {% if query %}
-                        <input type="hidden" name="q" value="{{ query }}">
-                        {% endif %}
-                        
-                        {% set issuer_selections = filters['issuer'] %}
-                        <div class="m-form-field u-mb15">
-                            <label class="a-label a-label__heading"
-                                   for="card_type">
-                                Issuer name
-                            </label>
-                            <select name="issuer" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer" class="o-multiselect">
-                                {% if 'issuer' in active_filters and active_filters['issuer'] | length %}
-                                    {% for issuer in active_filters['issuer'] %}
-                                    <option 
-                                        value="{{ issuer }}"
-                                        {{ ' selected' if issuer in selections else '' }}>
-                                            {{ issuer | lower | title }}
-                                    </option>
-                                    {% endfor %}
-                                {% else %}
-                                    {% for issuer in issuers %}
-                                    <option 
-                                        value="{{ issuer.issuer_name }}"
-                                        {{ ' selected' if issuer.issuer_name in issuer_selections else '' }}>
-                                            {{ issuer.issuer_name | lower | title }}
-                                    </option>
-                                    {% endfor %}
-                                {% endif %}
-                            </select>
-                        </div>
-                            
-                        <div class="filter-section">
-                        {% set selections = filters['prepaid_type'] %}
-                        {% set expandable_settings = {
-                            'label': 'Prepaid product type',
-                            'is_expanded': selections | length > 0,
-                            'is_midtone': true,
-                            'hide_cue_label': true
-                        } %}
-                        {% call() expandable(expandable_settings) %}
-                         <div class="o-form_group">
-                            <fieldset class="o-form_fieldset">
-                                <ul class="m-list m-list__unstyled">
-                                    {% set default_types = [ 
-                                        'Digital wallet/P2P',
-                                        'Government Benefits',
-                                        'GPR (General Purpose Reloadable)',
-                                        'Payroll',
-                                        'Other',
-                                        'Prison release',
-                                        'Refunds',
-                                        'Student',
-                                        'Tax',
-                                        'Travel',
-                                    ]%}
-
-                                    {% set type_options = active_filters['prepaid_type'] if 'prepaid_type' in active_filters else default_types %}
-                                    
-                                    {% for type in type_options %}
-                                    {% if type != None %}
-                                    <li>
-                                        {{ checkbox.render({
-                                            'label': type,
-                                            'value': type,
-                                            'id': 'type_' ~ loop.index,
-                                            'name': 'prepaid_type',
-                                            'class': 'test',
-                                            'selected': type in selections
-                                        }) }}
-                                        <!-- <div class="num-results">{{ num_results }}</div> -->
-                                    </li>
-                                    {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </fieldset>
-                        </div>
-                        {% endcall %}
-                        </div>
-
-                        <!-- <div class="m-form-field m-form-field__select">
-                            <label class="a-label a-label__heading"
-                                   for="product_status">
-                                Status
-                            </label>
-                            <div class="a-select">
-                                <select name="product_status"
-                                        id="product_status"
-                                        placeholder="">
-                                    <option value="gpr">Show all</option>
-                                    <option value="gpr">Active</option>
-                                    <option value="payroll">Withdrawn</option>
-                                </select>
-                            </div>
-                        </div> -->
-
-                        
-
-                        <!-- <div class="m-form-field u-mb15">
-                            <label class="a-label a-label__heading"
-                                   for="card_status">
-                                Current status
-                            </label>
-                            <select name="card_status" multiple="multiple" placeholder="-" id="card_status" class="o-multiselect">
-                                <option value="gpr">Active</option>
-                                <option value="payroll">Withdrawn</option>
-                            </select>
-                        </div>
- -->
-                        <div class="filter-section">
-                        {% set selections = filters['status'] %}
-                        {% set expandable_settings = {
-                            'label': 'Current status',
-                            'is_expanded': selections | length > 0,
-                            'is_midtone': true,
-                            'hide_cue_label': true,
-                            'paragraph': 'This will be either active or withdrawn.'
-                        } %}
-                        {% call() expandable(expandable_settings) %}
-                        {% set default_statuses = [ 
-                            'Active',
-                            'Withdrawn',
-                                        
-                        ]%}
-
-                        {% set status_options = active_filters['status'] if 'status' in active_filters else default_statuses %}
-
-                         <div class="o-form_group">
-                            <fieldset class="o-form_fieldset">
-                                
-                                <ul class="m-list m-list__unstyled">
-                                    {% for option in status_options %}
-                                    <li>
-                                        {{ checkbox.render({
-                                            'label': option,
-                                            'value': option,
-                                            'id': 'status_' ~ loop.index,
-                                            'name': 'status',
-                                            'selected': option in selections
-                                        }) }}
-                                        <!-- <div class="num-results">{{ num_results }}</div> -->
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </fieldset>
-                        </div>
-                        {% endcall %}
-                        </div>
-                        
-                    <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
-
-
-
-                </form>
-            </aside>
-
-            <div class="content_main content__flush-all-on-small content__flush-bottom">
-                <div class="results_header">
-                    {% if current_count and current_count > 0  %}
-                        <div class="results_count">
-                            <h3>Showing
-                                {% if total_count > current_count  %}
-                                     {{ current_count }}
-                                    match{% if current_count > 1 %}es{% endif %}
-                                    out of
-                                {% endif %}
-                                {{ total_count }} total products
-                            </h3>
-                        </div>
-                    {% else %}
-                        <div class="results_count no-results" data-results-count="0">
-                            <h3>No results match your search.</h3>
-                            <p>Try adjusting your filters or searching for different terms.</p>
-                        </div>
-
                     {% endif %}
-
-                    
-                </div>
-                {% if filters | length %}
-                    <div class="filters_applied">
-                        
-                        <div class="filters_tags">
-                            <span class="filters_applied-label">
-                            Filters applied:
-                        </span>
-                            {% set valid_filters = ['issuer', 'prepaid_type', 'status'] %}
-                            {% for filter in filters %}
-                                {% if filter in valid_filters %}
-                                    {% for val in filters[filter] %}
-                                        {{ tag.render({
-                                            'label': val,
-                                            'value': val,
-                                            'behavior': 'clear-filter'
-                                        }) }}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
-                            <a class="a-btn a-btn__link a-btn__warning a-micro-copy results_filters-clear u-mb10"
-                                    data-js-hook="behavior_clear-all" href="{{ '?q='~query if query else '.' }}">
-                                Clear all filters
-                            </a>
-                        </div>
-                    </div>
-                {% endif %}
-                <div class="results_list">
-                {% for result in results %}
-                    {{ search_item.render( result, s3_path ) }}
                 {% endfor %}
-                </div>
-                <div class="results_paginator">
-                    {% if paginator.num_pages > 1 %}
-                    <div class="block block__flush-top">
-                    {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
+                </div> -->
+
+                <h3 class="h4 u-mb5">Search within</h3>
+                <div class="layout-row u-mb30">
+                    <div class="a-select flex-fixed">
+                        {% set opts = [
+                            ('All fields', 'all'),
+                            ('Product name', 'name'),
+                            ('Program manager', 'program_manager'),
+                            ('Other relevant party', 'other_relevant_parties'),
+                            ('Issuer name', 'issuer_name'),
+                        ]%}
+                        <select aria-label="Choose which field will be searched"
+                                id="search_field"
+                                name="search_field">
+                            <optgroup label="Search within">
+                                {% for label, val in opts %}
+                                <option value="{{ val }}"
+                                        {{ 'selected' if search_field == val else '' }}>
+                                    {{ label }}
+                                </option>
+                                {% endfor %}
+                            </optgroup>
+                        </select>
                     </div>
-                    {% endif %}
-                    <div class="o-well">
-                        <h4>Database disclaimer</h4>
-                        <p>We will display the prepaid agreements in this database as the respective issuers submitted them. The CFPB is not responsible for the content of the agreements, including any discrepancies between an agreement as presented in this database and the agreement as offered to the public, or for any omissions or other errors in the agreement as submitted by the issuer.</p>
-                        <p>The agreements on file will have general terms and conditions, pricing, and fee information. They are not specific to an individual's account information.</p>
-                        <p>If you have questions about the agreements themselves, contact the prepaid issuer directly.</p>
+                    <div class="flex-all">
+                        <div class="m-btn-inside-input input-contains-label">
+                            <label for="searchText" class="input-contains-label_before input-contains-label_before__search">
+                                {{ svg_icon('search') }}
+                                <span class="u-visually-hidden">The term to search for</span>
+                            </label>
+                            <input id="searchText" 
+                                   type="text"
+                                   autocomplete="off"
+                                   class="a-text-input"
+                                   name="q"
+                                   placeholder="Enter search term"
+                                   value="{{ query }}">
+                            <a class="a-btn a-btn__link" href="{{ remove_url_parameter(request, {'q': [query], 'search_field': search_field}) }}">{{ svg_icon('remove') }} Clear</a>
+                        </div>
                     </div>
+                    <button class="a-btn flex-fixed">Search</button>
                 </div>
-            </div>
+            </form>
+            <p class="u-mt30 u-mb15">
+                <a href="">View frequently used terms</a>
+            </p>
         </div>
+    </div>
+
+    <div class="content_wrapper search_results">
+        {% include 'search_results.html' %}
     </div>
 {% endblock %}

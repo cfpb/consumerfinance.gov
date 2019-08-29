@@ -189,6 +189,7 @@ TEMPLATES = [
 
                 'core.jinja2tags.filters',
                 'agreements.jinja2tags.agreements',
+                'prepaid_agreements.jinja2tags.prepaid_agreements',
                 'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.datetimes_extension',
                 'v1.jinja2tags.fragment_cache_extension',

@@ -1,9 +1,9 @@
 {% macro render(result, s3_path) %}
 {% set default_text = 'No information provided' %}
 <article class="results_item">
-    <h3>
+    <h4 class="h3">
       <a href="detail/{{result.id}}">{{ result.name }}</a>
-    </h3>
+    </h4>
     <div class="content-l">
         <div class="content-l_col content-l_col-1-2">
             <dl>
@@ -14,26 +14,25 @@
                 <dt>Program manager</dt>
                 <dd>{{ result.program_manager if result.program_manager else default_text }}</dd>
                 <dt>Other relevant parties</dt>
-                <dd>{{ result.other_relevant_parties | truncate(75) | replace('\n', '; ') if result.other_relevant_parties else default_text }}</dd>
+                <dd>{{ result.other_relevant_parties | truncate(75) if result.other_relevant_parties else default_text }}</dd>
                 <dt>Current status</dt>
                 <dd>{{ result.status if result.status else default_text }}</dd>
             </dl>
         </div>
         <div class="content-l_col content-l_col-1-2">
-            <h4 style="margin-bottom:5px;">Download most recent agreement files</h4>
+            <h5 class="h4 u-mb5">Download most recent agreement files</h5>
             {% set latest_agreement = result.latest_agreement %}
-            <p class="break-word">
+            <p class="u-break-word">
                 <a href="{{ s3_path }}{{ latest_agreement.agreements_files_location }}">
                     {{ latest_agreement.agreements_files_location }}
                 </a>
             </p>
             <div class="block block__sub">
-                <h4 style="margin-bottom:5px;">View all agreement files</h4>
+                <h5 class="h4 u-mb5">View all agreement files</h5>
             <p><a href="detail/{{result.id}}">View all agreements for {{ result.name }}</a></p>
             </div>
         </div>
     </div>
 
 </article>
-
 {% endmacro %}
