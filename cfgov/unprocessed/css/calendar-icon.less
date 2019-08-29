@@ -33,8 +33,8 @@
     @scale [Number] A multiplier for the size of the icon (1 is the default). */
 .cf-calendar-icon( @month, @date, @background-color, @foreground-color, @scale ) {
     // Display & Box Model.
-    display: inline-block;
-    min-width: 3em * @scale;
+    display: block;
+    width: 3em * @scale;
     border: 0.25em solid @background-color;
     border-radius: 0.375em * @scale;
 

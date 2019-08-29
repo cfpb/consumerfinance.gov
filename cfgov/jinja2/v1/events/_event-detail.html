@@ -73,6 +73,9 @@
         {% elif (event_state == 'future') %}
             {{ page.future_body | safe }}
         {% endif %}
+        {% for block in page.persistent_body %}
+            {% include_block block %}
+        {% endfor %}
     </div>
     {% if page.tags.names() | length %}
     <footer>
