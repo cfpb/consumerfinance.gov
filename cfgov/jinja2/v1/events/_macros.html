@@ -105,8 +105,8 @@
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
-                {% if ( event_state == 'past' and not event.youtube_url ) %}
-                    Video Replay will be<br> available shortly
+                {% if event_state == 'past' and event.live_stream_availability and not event.youtube_url %}
+                    Video replay will be<br> available shortly
                 {% else %}
                     {% import 'macros/time.html' as time %}
                     {% if event.start_dt %}
@@ -116,49 +116,72 @@
                 </div>
           </div>
         </div>
+    {% if event.venue_image != 'none'
+       or (event_state == 'past' and event.youtube_url)
+       or (event_state == 'present' and event.live_stream_url) %}
         <footer>
             <figure class="event-media_container">
-            {% if (event_state == 'past' and event.youtube_url ) %}
-                {% import 'macros/video-player.html' as video_player with context %}
-                {% set image_url  = event.flickr_url %}
-                {% set video_id   = event.video_id | default( '' ) %}
-                {{ video_player.render({
-                      'button_pos': 'bottomRight',
-                      'image': {
-                          'url': image_url,
-                      },
-                      'video': {
-                          'id': video_id,
-                          'url': event.youtube_url
-                      }
-                   })
-                }}
-            {% elif event_state == 'past' %}
-                {% set image_url = event.archive_image or static('img/cfpb_video_cover_card_1380x776.png') %}
-                <img src=" {{ image_url }}" alt="Video placeholder image" />
-            {% elif event_state == 'present' and event.live_stream_url  %}
-                {% import 'macros/video-player.html' as video_player with context %}
-                {% set video_id = event.video_id | default( '' ) %}
-                {{ video_player.render({
-                    'button_pos': 'bottomRight',
-                    'image': {
-                        'url': '',
-                    },
-                    'video': {
-                        'id':     video_id,
-                        'url':    event.live_stream_url
-                    }
-                }) }}
-            {% elif event_state == 'present' and request.path == '/about-us/events/town-hall-baton-rouge-la-preventing-elder-financial-exploitation/' %}
-                <iframe alt="Preventing elder financial exploitation."
-                        style="display: block; width: 100%; min-height: 470px; border: none;" src="https://mediasite.yorkcast.com/webcast/Play/49307158a39a454d913b39a9469428cc1d?autostart=true"></iframe>
-            {% else %}
-              <img src="{{ event.location_image_url(size='640x320') }}"
-                   alt="Map image of
-                        {{ event.venue_city }}{{ ', ' ~ event.venue_state if event.venue_state else '' }}">
-            {% endif %}
+                {% if event_state == 'present' and event.live_stream_url %}
+                    {# DISPLAY LIVESTREAM #}
+                    {% import 'macros/video-player.html' as video_player with context %}
+                    {# TODO: Extract the video_id from the URL. #}
+                    {% set video_id = event.video_id | default( '' ) %}
+                    {{ video_player.render({
+                        'button_pos': 'bottomRight',
+                        'image': {
+                            'url': '',
+                        },
+                        'video': {
+                            'id': video_id,
+                            'url': event.live_stream_url
+                        }
+                    }) }}
+                {% elif event_state == 'past' %}
+                    {% if event.youtube_url %}
+                        {# DISPLAY VIDEO RECORDING #}
+                        {% import 'macros/video-player.html' as video_player with context %}
+                        {# TODO: Figure out what's happening with this image_url, if anything. #}
+                        {% set image_url  = event.flickr_url %}
+                        {# TODO: Extract the video_id from the URL. #}
+                        {% set video_id   = event.video_id | default( '' ) %}
+                        {{ video_player.render({
+                              'button_pos': 'bottomRight',
+                              'image': {
+                                  'url': image_url,
+                              },
+                              'video': {
+                                  'id': video_id,
+                                  'url': event.youtube_url
+                              }
+                           })
+                        }}
+                    {% elif event.post_event_image_type == 'image' %}
+                        {# DISPLAY SPECIFICALLY-CHOSEN POST-EVENT IMAGE #}
+                        {% set img = image(event.post_event_image, 'width-1416') %}
+                        <img class="o-post-preview_image"
+                             src="{{ img.url }}"
+                             alt="{{ image_alt_value(img) }}">
+                    {% else %}
+                        {# DISPLAY PLACEHOLDER POST-EVENT IMAGE #}
+                        {% set img = image(event.post_event_image, 'width-1416') %}
+                        <img class="o-post-preview_image"
+                             src="{{ static('img/cfpb_video_cover_card_1380x776.png') }}"
+                             alt="">
+                    {% endif %}
+                {% elif event.venue_image_type == 'map' %}
+                    {# DISPLAY MAP IMAGE #}
+                    {# Note: Max dimesions for Mapbox static image API: 1280x1280. #}
+                    <img src="{{ event.location_image_url(size='708x398') }}" alt="">
+                {% elif event.venue_image_type == 'image' %}
+                    {# DISPLAY SPECIFICALLY-CHOSEN VENUE IMAGE #}
+                    {% set img = image(event.venue_image, 'width-1416') %}
+                    <img class="o-post-preview_image"
+                         src="{{ img.url }}"
+                         alt="{{ image_alt_value(img) }}">
+                {% endif %}
             </figure>
         </footer>
+    {% endif %}
     </section>
 {% endmacro %}
 

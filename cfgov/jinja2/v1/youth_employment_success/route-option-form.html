@@ -1,4 +1,4 @@
-{% from 'atoms/checkbox.html' import render with context %}
+{% from 'atoms/radio-button.html' import render with context %}
 {% set labels = ['Walk', 'Drive', 'Bike', 'Public transit', 'Get dropped off'] %}
 
 <form class="o-yes-route-option">
@@ -10,30 +10,32 @@
   </span>
   {% for label in labels | batch(2) %}
     <div class="content-l block__sub-micro">
-      {% set field_name_l = ['yes-route', label[0]] | join('-') %}
       {{
         render({
           'class': 'content-l_col-1-2 m-form-field__lg-target a-yes-route-mode',
-          'name': field_name_l,
-          'label': label[0]
+          'name':  "yes-transportation-option",
+          'label': label[0],
+          'value': label[0]
         })
       }}
 
       {% if label[1] %}
-        {% set field_name_r = ['yes-route', label[1]] | join('-') %}
         {{
           render({
             'class': 'content-l_col-1-2 m-form-field__lg-target a-yes-route-mode',
-            'name': field_name_r,
-            'label': label[1]
+            'name': "yes-transportation-option",
+            'label': label[1],
+            'value': label[1]
           })
         }}
       {% endif %}
     </div>
   {% endfor %}
-  {% include "route-questions/miles.html" %}
+  {% include "route-questions/average-total-cost.html" %}
   {% include "route-questions/average-daily-cost.html" %}
+  {% include "route-questions/miles.html" %}
   {% include "route-questions/days-per-week.html" %}
+  {% include "route-questions/transit-time.html" %}
   <div class="content-l content-l_col-2-3">
     <span class="h4">Totals for option {{id}}</span>
     <div class="content_line-bold"></div>

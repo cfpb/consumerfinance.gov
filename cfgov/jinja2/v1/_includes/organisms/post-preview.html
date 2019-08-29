@@ -109,27 +109,23 @@
             </div>
             {% endif %}
         </div>
+
         {% cache post.post_preview_cache_key, 'post_preview' %}
         {% set post_url = pageurl(post) %}
         {% if 'EventPage' in post.specific_class.__name__ %}
             {% set event = post.specific %}
-            {% if event.start_dt %}
+            {% if event.venue_image_type != 'none' %}
                 <div class="o-post-preview_image-container">
-                    <time class="calendar-icon"
-                          data-month="{{ event.start_dt | date('%b') }}"
-                          data-day="{{ event.start_dt | date('%-d') }}"
-                          datetime="{{ event.start_dt | date('%c') }}">
-                        <span class="u-visually-hidden">{{ event.start_dt| date('%b %-d, %Y') }}</span>
-                    </time>
-                    {% if event.live_stream_link %}
-                        <img class="o-post-preview_image"
-                             src="https://placehold.it/160x90"
-                             alt="Livestream event">
-                    {% else %}
+                    {% if event.venue_image_type == 'map' %}
                         {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
                         <img class="o-post-preview_image"
                              src="{{ event.location_image_url() }}"
-                             alt="Map image of {{ event.venue_name }}">
+                             alt="">
+                    {% elif event.venue_image_type == 'image' and event.venue_image %}
+                        {% set img = image(event.venue_image, 'width-540') %}
+                        <img class="o-post-preview_image"
+                             src="{{ img.url }}"
+                             alt="{{ image_alt_value(img) }}">
                     {% endif %}
                 </div>
             {% endif %}
@@ -141,7 +137,19 @@
                      alt="{{ image_alt_value(photo) }}">
             </div>
         {% endif %}
+
         <div class="o-post-preview_content">
+        {% if 'EventPage' in post.specific_class.__name__ %}
+            {% set event = post.specific %}
+            {% if event.start_dt %}
+                <time class="calendar-icon"
+                      data-month="{{ event.start_dt | date('%b') }}"
+                      data-day="{{ event.start_dt | date('%-d') }}"
+                      datetime="{{ event.start_dt | date('%c') }}">
+                    <span class="u-visually-hidden">{{ event.start_dt | date('%b %-d, %Y') }}</span>
+                </time>
+            {% endif %}
+        {% endif %}
 
             <h3 class="o-post-preview_title">
                 <a href="{{ post_url }}">
@@ -150,25 +158,26 @@
             </h3>
 
             {% if 'EventPage' in post.specific_class.__name__ %}
-                {% if post.specific.start_dt %}
-                    <span class="o-post-preview_subtitle h6">
-                    {% if post.specific.venue_city and post.specific.venue_state %}
-                        {{ post.specific.venue_city }}, {{ post.specific.venue_state }}
+                {% set event = post.specific %}
+                {% if event.start_dt %}
+                    <div class="o-post-preview_subtitle">
+                    {% if event.venue_city and event.venue_state %}
+                        {{ event.venue_city }}, {{ event.venue_state }}
                     {% endif %}
-                            {{ post.specific.venue_name if post.specific.venue_name else '' }}
-                    {{ 'Livecast' if post.specific.live_stream_url else '' }}
+                            {{ event.venue_name if event.venue_name else '' }}
+                    {{ 'Livecast' if event.live_stream_url else '' }}
                      -
-                    {{ time.render(post.specific.start_dt) }}
-                    </span>
+                    {{ time.render(event.start_dt) }}
+                    </div>
                 {% endif %}
             {% endif %}
             {% if post.comments_close_date %}
-                <span class="o-post-preview_subtitle h6">
+                <div class="o-post-preview_subtitle">
                     Comments close {{ time.render(post.comments_close_date, {'date':true}) }}
-                </span>
+                </div>
             {% endif %}
             {% if post.preview_subheading %}
-                <div class="o-post-preview_subtitle h6">
+                <div class="o-post-preview_subtitle">
                     {{ post.preview_subheading }}
                 </div>
             {% endif %}
@@ -177,23 +186,25 @@
                     {{ post.preview_description | safe }}
                 </div>
             {% endif %}
-            <div class="o-post-preview_byline-group">
-            {% for author in post.get_authors() %}
-                {% if loop.index == 1  %}
-                    By <a href="{{ url }}?authors={{ author.slug }}">
-                       {{ author.name }}
-                       </a>
-                {% elif loop.last == true %}
-                    and <a href="{{ url }}?authors={{ author.slug }}">
-                        {{ author.name }}
-                        </a>
-                {% else %}
-                    , <a href="{{ url }}?authors={{ author.slug }}">
-                      {{ author.name }}
-                      </a>
-                {% endif %}
-            {% endfor %}
-            </div>
+            {% if post.get_authors() %}
+                <div class="o-post-preview_byline-group">
+                {% for author in post.get_authors() %}
+                    {% if loop.index == 1  %}
+                        By <a href="{{ url }}?authors={{ author.slug }}">
+                           {{ author.name }}
+                           </a>
+                    {% elif loop.last == true %}
+                        and <a href="{{ url }}?authors={{ author.slug }}">
+                            {{ author.name }}
+                            </a>
+                    {% else %}
+                        , <a href="{{ url }}?authors={{ author.slug }}">
+                          {{ author.name }}
+                          </a>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            {% endif %}
 
             {% if show_tags and post.tags.exists() %}
                 {%- import 'tags.html' as tags %}

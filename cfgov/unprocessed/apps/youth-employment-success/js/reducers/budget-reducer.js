@@ -1,17 +1,17 @@
 import { actionCreator, assign } from '../util';
 
-export const initialState = {
+const initialState = {
   earned: '',
   spent: ''
 };
 
-export const actionTypes = {
+const actionTypes = {
   UPDATE_EARNED: 'UPDATE_EARNED',
   UPDATE_SPENT: 'UPDATE_SPENT'
 };
 
-export const updateEarnedAction = actionCreator( actionTypes.UPDATE_EARNED );
-export const updateSpentAction = actionCreator( actionTypes.UPDATE_SPENT );
+const updateEarnedAction = actionCreator( actionTypes.UPDATE_EARNED );
+const updateSpentAction = actionCreator( actionTypes.UPDATE_SPENT );
 
 /**
  *
@@ -34,4 +34,10 @@ function budgetReducer( state = initialState, action ) {
   }
 }
 
+export {
+  initialState,
+  actionTypes,
+  updateEarnedAction,
+  updateSpentAction
+};
 export default budgetReducer;
