@@ -88,7 +88,7 @@ RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
 COPY . .
 
 # Build frontend
-RUN ls -la && yum -y install nodejs yarn  && \
+RUN yum -y install nodejs yarn  && \
     ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
