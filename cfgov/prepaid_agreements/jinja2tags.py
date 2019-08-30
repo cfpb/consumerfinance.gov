@@ -1,4 +1,3 @@
-from six import iteritems
 from six.moves.urllib.parse import urlencode
 
 from jinja2.ext import Extension
