@@ -24,7 +24,7 @@
                     <option 
                         value="{{ issuer }}"
                         {{ ' selected' if issuer in selections else '' }}>
-                            {{ issuer | lower | title }}
+                            {{ issuer }}
                     </option>
                 {% endfor %}
             </select>

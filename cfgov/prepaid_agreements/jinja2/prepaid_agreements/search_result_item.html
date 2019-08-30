@@ -8,7 +8,7 @@
         <div class="content-l_col content-l_col-1-2">
             <dl>
                 <dt>Issuer name</dt>
-                <dd>{{ result.issuer_name | lower | title }}</dd>
+                <dd>{{ result.issuer_name }}</dd>
                 <dt>Prepaid product type</dt>
                 <dd>{{ result.prepaid_type if result.prepaid_type else default_text }}</dd>
                 <dt>Program manager</dt>
