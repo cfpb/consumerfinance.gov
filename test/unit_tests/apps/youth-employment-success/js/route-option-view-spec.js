@@ -1,7 +1,6 @@
 import { simulateEvent } from '../../../../util/simulate-event';
 import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
 import {
-  addRouteOptionAction,
   updateDailyCostAction,
   updateDaysPerWeekAction,
   updateMilesAction,

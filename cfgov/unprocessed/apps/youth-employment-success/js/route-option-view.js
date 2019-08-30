@@ -1,12 +1,11 @@
-import { checkDom, destroyInitFlag, setInitFlag } from '../../../js/modules/util/atomic-helpers';
-import inputView from './input-view';
+import { checkDom, setInitFlag } from '../../../js/modules/util/atomic-helpers';
 import {
-  routeSelector,
   updateDailyCostAction,
   updateDaysPerWeekAction,
   updateMilesAction,
   updateTransportationAction
 } from './reducers/route-option-reducer';
+import inputView from './input-view';
 
 const CLASSES = Object.freeze( {
   FORM: 'o-yes-route-option',
