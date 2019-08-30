@@ -26,6 +26,7 @@ class PrepaidAgreement(models.Model):
     effective_date = models.DateField(blank=True, null=True)
     compressed_files_url = models.TextField(blank=True, null=True)
     bulk_download_path = models.TextField(blank=True, null=True)
+    filename = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return 'IFL-' + str(self.pk)
