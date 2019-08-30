@@ -1,4 +1,4 @@
-import { UNDEFINED } from './util';
+import { UNDEFINED, assign } from './util';
 import { setInitFlag } from '../../../js/modules/util/atomic-helpers';
 
 const defaultProps = {
@@ -34,20 +34,17 @@ function resolve( element, type ) {
  * Generic view for input elements
  * @class
  *
- * @classdesc Initializes the organism.
+ * @classdesc Initializes the molecule.
  *
  * @param {HTMLNode} element The root DOM element for this view
  * @param {Object} props Properties the view should be initialized with
  * @returns {Object} The view's public methods
  */
 function InputView( element, props = {} ) {
-  const finalProps = {
-    ...defaultProps,
-    ...props
-  };
-  const _dom = resolve( element, finalProps.type );
+  const _finalProps = assign( {}, defaultProps, props );
+  const _dom = resolve( element, _finalProps.type );
 
-  const eventsMap = {};
+  const _eventsMap = {};
 
   if ( !_dom ) {
     throw new Error( NODE_MISSING_ERROR );
@@ -61,15 +58,15 @@ function InputView( element, props = {} ) {
    */
   const eventHandler = handler => event => {
     const { target } = event;
-    // jinja2 auto double quotes attributes?
-    const dataName = target.getAttribute( 'data-js-name' );
-    const fieldName = ( dataName && dataName.slice( 1, -1 ) ) || target.name;
+    const fieldName = target.getAttribute( 'data-js-name' ) || target.name;
 
     return handler( { name: fieldName, event } );
   };
 
   /**
    * Bind event handers to nodes this view manages
+   * Each event is stored in an object to facilitate unbinding when
+   * necessary
    */
   function _bindEvents() {
     const { events = {}} = props;
@@ -83,13 +80,13 @@ function InputView( element, props = {} ) {
     }
 
     eventHandlers.forEach( ( [ event, handler ] ) => {
-      const handlerCache = eventsMap[event] || [];
+      const handlerCache = _eventsMap[event] || [];
       const delegate = eventHandler( handler );
       handlerCache.push( delegate );
 
       _dom.addEventListener( event, delegate );
 
-      eventsMap[event] = handlerCache;
+      _eventsMap[event] = handlerCache;
     } );
   }
 
@@ -99,9 +96,9 @@ function InputView( element, props = {} ) {
   function _unbindEvents() {
     const events = [];
 
-    for ( const event in eventsMap ) {
-      if ( eventsMap.hasOwnProperty( event ) ) {
-        const handlers = eventsMap[event];
+    for ( const event in _eventsMap ) {
+      if ( _eventsMap.hasOwnProperty( event ) ) {
+        const handlers = _eventsMap[event];
 
         events.push( [ event, handlers ] );
       }

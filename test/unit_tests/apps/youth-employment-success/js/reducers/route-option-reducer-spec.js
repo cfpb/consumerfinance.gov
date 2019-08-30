@@ -6,6 +6,9 @@ import routeOptionReducer, {
   updateDailyCostAction,
   updateDaysPerWeekAction,
   updateMilesAction,
+  updateTimeToActionPlan,
+  updateTransitTimeHoursAction,
+  updateTransitTimeMinutesAction,
   updateTransportationAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
@@ -24,6 +27,18 @@ describe( 'routeOptionReducer', () => {
     const state = routeOptionReducer( UNDEFINED, addRouteOptionAction( {} ) );
 
     expect( state.routes.length ).toBe( 1 );
+  } );
+
+  it( 'exposes a selector to decouple state form state shape', () => {
+    const initialRoutes = routeOptionReducer( UNDEFINED, addRouteOptionAction( createRoute() ) );
+    const appState = {
+      routes: initialRoutes
+    };
+
+    expect( typeof routeSelector === 'function' ).toBeTruthy();
+    expect( routeSelector( appState.routes, 0 ) ).toEqual( initialRoutes.routes[0] );
+    expect( routeSelector( appState.routes, 1 ) ).toStrictEqual( {} );
+
   } );
 
   describe( 'updating a specific route', () => {
@@ -58,6 +73,7 @@ describe( 'routeOptionReducer', () => {
       const { daysPerWeek, ...rest } = state.routes[0];
 
       expect( daysPerWeek ).toBe( nextValue );
+
       Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
       );
     } );
@@ -70,7 +86,9 @@ describe( 'routeOptionReducer', () => {
           value: nextValue } )
       );
       const { miles, ...rest } = state.routes[0];
+
       expect( miles ).toBe( nextValue );
+
       Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
       );
     } );
@@ -107,6 +125,42 @@ describe( 'routeOptionReducer', () => {
 
       expect( state.routes[0].transportation ).toBe( transportationType );
       expect( state.routes[1].transportation ).toBe( '' );
+    } );
+
+    it( 'reduces the .updateTransitTimeHours action', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateTransitTimeHoursAction( {
+          routeIndex: 0,
+          value: nextValue } )
+      );
+      const { transitTimeHours } = state.routes[0];
+
+      expect( transitTimeHours ).toBe( nextValue );
+    } );
+
+    it( 'reduces the .updateTransitTimeMinutes action', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateTransitTimeMinutesAction( {
+          routeIndex: 0,
+          value: nextValue } )
+      );
+      const { transitTimeMinutes } = state.routes[0];
+
+      expect( transitTimeMinutes ).toBe( nextValue );
+    } );
+
+    it( 'reduces the .updateTimeToActionPlan action', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateTimeToActionPlan( {
+          routeIndex: 0,
+          value: true } )
+      );
+      const { timeToActionPlan } = state.routes[0];
+
+      expect( timeToActionPlan ).toBeTruthy();
     } );
   } );
 } );
