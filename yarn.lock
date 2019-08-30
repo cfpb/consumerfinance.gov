@@ -2283,16 +2283,16 @@ cf-typography@11.0.1:
     cf-core "^11.0.0"
     cf-icons "^11.0.1"
 
-cfpb-chart-builder@6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-6.1.1.tgz#e625a0d7e8c33f737fea080ec29aa8c69eccd659"
-  integrity sha512-tX4dC2VrdFahXL18yKGR7fR8892KeUAl0nWMzgLO43QLReyRbJqV5o3rcG/z6YEheQtyx8hM5CJt6/ZeI4obuw==
+cfpb-chart-builder@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-6.1.2.tgz#bdbda1a2c795624f12695cd7f87eacbdba5f88ed"
+  integrity sha512-vFNjB7bxdEkBwfWwUchd/Jn57Opp+ozDbqBPvaP2kloml7dBoYszM7c5FFvLvvHD56k3kTnxHmAh52zt9Z4+5Q==
   dependencies:
     cf-core "11.0.0"
     cf-layout "11.0.0"
     cf-typography "11.0.1"
-    core-js "3.1.4"
-    highcharts "7.1.2"
+    core-js "3.2.1"
+    highcharts "7.1.3"
     xdr "0.5.3"
 
 chai-as-promised@5.x:
@@ -2736,11 +2736,6 @@ core-js-compat@^3.1.1:
   dependencies:
     browserslist "^4.6.6"
     semver "^6.3.0"
-
-core-js@3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.1.4.tgz#3a2837fc48e582e1ae25907afcd6cf03b0cc7a07"
-  integrity sha512-YNZN8lt82XIMLnLirj9MhKDFZHalwzzrL9YLt6eb0T5D0EDl4IQ90IGkua8mHbnxNrkj1d8hbdizMc0Qmg1WnQ==
 
 core-js@3.2.1:
   version "3.2.1"
@@ -4624,10 +4619,10 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-highcharts@7.1.2:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-7.1.2.tgz#f337e75cf0614f58f87fb28fbab48e1096265b5d"
-  integrity sha512-diSTVxWKefQzShi22gaV63pdrIFlQAsTGe3f328Ur7cqBoYFvHMtiMP+q+VOFdM2mdGVtlUR0QQSxj62LLsPpg==
+highcharts@7.1.3:
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-7.1.3.tgz#ea3bb16dcdd780e757ab10e90466c64a82b6d285"
+  integrity sha512-aHAzlSf/czqJlpVt96jYkirWrIV1ZNHgxsTAyk2R5CcG/0V1G8Ge65p76eFqZQp7C8+cA8e6g1xsAPj51MsJ3Q==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
