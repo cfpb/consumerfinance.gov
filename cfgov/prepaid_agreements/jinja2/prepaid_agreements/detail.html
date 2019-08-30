@@ -56,7 +56,7 @@
                          class="o-expandable">
                         <div class="o-expandable_content">
                 {% endif%}
-                            {{ product.other_relevant_parties }}
+                {{ product.other_relevant_parties | replace('\n', '; ') }}
                 {% if product.other_relevant_parties | length > 500 %}
                         </div>
                         <button class="a-btn a-btn__link

@@ -14,7 +14,7 @@
                 <dt>Program manager</dt>
                 <dd>{{ result.program_manager if result.program_manager else default_text }}</dd>
                 <dt>Other relevant parties</dt>
-                <dd>{{ result.other_relevant_parties | truncate(75) if result.other_relevant_parties else default_text }}</dd>
+                <dd>{{ result.other_relevant_parties | truncate(75) | replace('\n', '; ') if result.other_relevant_parties else default_text }}</dd>
                 <dt>Current status</dt>
                 <dd>{{ result.status if result.status else default_text }}</dd>
             </dl>
