@@ -1,5 +1,3 @@
-from six.moves.urllib.parse import urlparse
-
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import InvalidPage, Paginator
 from django.db.models import Q
@@ -32,7 +30,7 @@ def search_products(search_term, search_field, products):
         'other_relevant_parties',
         'name',
         'program_manager',
-        'prepaid_type'
+        'prepaid_type',
     ]
     if search_field and search_field[0] in search_fields:
         search_fields = [search_field[0]]
@@ -112,7 +110,6 @@ def index(request):
         'filters': filters,
         'query': search_term or '',
         'active_filters': active_filters,
-        's3_path': 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/',
         'valid_filters': valid_filters,
         'search_field': search_field,
     })
@@ -120,6 +117,5 @@ def index(request):
 
 def detail(request, product_id):
     return render(request, 'prepaid_agreements/detail.html', {
-        'product': PrepaidProduct.objects.get(id=product_id),
-        's3_path': 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/',
+        'product': PrepaidProduct.objects.get(id=product_id)
     })

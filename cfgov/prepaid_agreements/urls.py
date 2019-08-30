@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from prepaid_agreements.views import index, detail
+from prepaid_agreements.views import detail, index
 
 
 urlpatterns = [

@@ -1,13 +1,13 @@
 from __future__ import unicode_literals
 
-import datetime
+from datetime import datetime, timedelta
 
 import requests
-
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
 
-METADATA_SOURCE = 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/prepaid_metadata.json'
+S3_PATH = 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/'
+METADATA_FILENAME = 'prepaid_metadata.json'
 
 
 def import_products_data(products_data):
@@ -19,13 +19,14 @@ def import_products_data(products_data):
 
         withdrawal_date = item['withdrawal_date']
         if withdrawal_date:
-            withdrawal_date = datetime.datetime.strptime(
+            withdrawal_date = datetime.strptime(
                 withdrawal_date, "%m/%d/%Y").date()
 
         product.name = item['product_name']
         product.issuer_name = item['issuer_name']
         product.prepaid_type = item['prepaid_type']
         product.program_manager = item['program_manager']
+        product.program_manager_exists = item['program_manager_exists']
         product.other_relevant_parties = item['other_relevant_parties']
         product.status = item['status']
         product.withdrawal_date = withdrawal_date
@@ -41,22 +42,29 @@ def import_agreements_data(agreements_data):
 
         effective_date = item['effective_date']
         if effective_date and effective_date != 'None':
-            effective_date = datetime.datetime.strptime(
+            effective_date = datetime.strptime(
                 effective_date, "%m/%d/%Y").date()
         else:
             effective_date = None
 
         product_id = item['product_id'].replace('PRODUCT-', '')
         product = PrepaidProduct.objects.get(pk=product_id)
+        url = S3_PATH + item['agreements_files_location']
 
         agreement.product = product
         agreement.effective_date = effective_date
-        agreement.agreements_files_location = item['agreements_files_location']
+        agreement.compressed_files_url = url
+        agreement.path = item['path']
         agreement.save()
 
 
 def run(*args):
-    resp = requests.get(url=METADATA_SOURCE)
+    source_url = S3_PATH + METADATA_FILENAME
+    resp = requests.get(url=source_url)
     data = resp.json()
-    import_products_data(data['product'])
-    import_agreements_data(data['agreement'])
+    last_updated = datetime.strptime(
+        data['data_last_updated'], '%Y-%m-%d %H:%M:%S')
+    # Only import data if the data has been updated in the past 24 hours
+    if datetime.now() - last_updated <= timedelta(hours=24):
+        import_products_data(data['products'])
+        import_agreements_data(data['agreements'])

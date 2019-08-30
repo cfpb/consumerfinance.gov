@@ -1,4 +1,4 @@
-{% macro render(result, s3_path) %}
+{% macro render(result) %}
 {% set default_text = 'No information provided' %}
 <article class="results_item">
     <h4 class="h3">
@@ -23,8 +23,8 @@
             <h5 class="h4 u-mb5">Download most recent agreement files</h5>
             {% set latest_agreement = result.latest_agreement %}
             <p class="u-break-word">
-                <a href="{{ s3_path }}{{ latest_agreement.agreements_files_location }}">
-                    {{ latest_agreement.agreements_files_location }}
+                <a href="{{ latest_agreement.compressed_files_url }}">
+                    {{ latest_agreement.compressed_files_url }}
                 </a>
             </p>
             <div class="block block__sub">

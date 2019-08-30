@@ -92,8 +92,8 @@
         <div class="block block__sub block__flush-top">
             <p class="u-mb5"><span>Agreement effective date:</span> {{ agreement.effective_date }}</p>
             <p class="break-word">
-                <a href="{{ s3_path }}{{ agreement.agreements_files_location }}">
-                    {{ agreement.agreements_files_location }}
+                <a href="{{ agreement.compressed_files_url }}">
+                    {{ agreement.compressed_files_url }}
                 </a>
             </p>
         </div>
@@ -106,8 +106,8 @@
             <div class="block block__sub {{ 'block__flush-top' if loop.index == 1 else '' }}">
                 <p class="agreement-effective-date"><span>Agreement effective date:</span> {{ agreement.effective_date }}</p>
                 <p class="break-word">
-                    <a href="{{ s3_path }}{{ agreement.agreements_files_location }}">
-                        {{ agreement.agreements_files_location }}
+                    <a href="{{ agreement.compressed_files_url }}">
+                        {{ agreement.compressed_files_url }}
                     </a>
                 </p>
             </div>

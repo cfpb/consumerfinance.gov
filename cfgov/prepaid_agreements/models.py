@@ -24,7 +24,8 @@ class PrepaidProduct(models.Model):
 class PrepaidAgreement(models.Model):
     product = models.ForeignKey(PrepaidProduct, on_delete=models.CASCADE)
     effective_date = models.DateField(blank=True, null=True)
-    agreements_files_location = models.TextField(blank=True, null=True)
+    compressed_files_url = models.TextField(blank=True, null=True)
+    bulk_download_path = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return 'IFL-' + str(self.pk)
