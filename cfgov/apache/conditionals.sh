@@ -17,13 +17,13 @@ Alias /wp-content/uploads ${APACHE_WWW_PATH}/html/wordpress/wp-content/uploads
 </Directory>"
 fi
 
-if ! [ -z ${APACHE_HTTPS_FORWARDED_HOST+x} ]
+if ! [ -z "$APACHE_HTTPS_FORWARDED_HOST" ]
 then
 echo "RequestHeader set X-Forwarded-Proto https
 RequestHeader set X-Forwarded-Host $APACHE_HTTPS_FORWARDED_HOST"
 fi
 
-if ! [ -z ${APACHE_COMMON_LOGIN_ALIAS+x} ]
+if ! [ -z "$APACHE_COMMON_LOGIN_ALIAS" ]
 then
 echo "Redirect /common/login /django-admin/login"
 fi
