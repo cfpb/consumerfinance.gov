@@ -3,21 +3,20 @@ from six.moves.urllib.parse import urlencode
 from jinja2.ext import Extension
 
 
-def remove_url_parameter(request, params_to_remove):
+def remove_url_parameter(request, discards):
     """
     Removes specified params from request query
     and returns updated querystring.
-    Params for removal should be in format:
-         {param_name: [values]}
+    Discards should be a dict of lists:
+         {param: [values]}
     """
     query = request.GET.copy()
-    current_params = dict(query.iterlists())
-    for key in params_to_remove:
-        if key in current_params:
-            for val in params_to_remove[key]:
-                if val in current_params[key]:
-                    current_params[key].remove(val)
-    querystring = urlencode(current_params, 'utf-8')
+    params = dict(query.iterlists())
+    for key in discards:
+        if key in params:
+            params[key] = [item for item in params[key]
+                           if item not in discards[key]]
+    querystring = urlencode(params, 'utf-8')
     return '?{}'.format(querystring) if querystring else ''
 
 
