@@ -1,4 +1,5 @@
 from six.moves.urllib.parse import urlencode
+from django.utils.six import iterlists
 
 from jinja2.ext import Extension
 
@@ -11,7 +12,7 @@ def remove_url_parameter(request, discards):
          {param: [values]}
     """
     query = request.GET.copy()
-    params = dict(query.iterlists())
+    params = dict(iterlists(query))
     for key in discards:
         if key in params:
             params[key] = [item for item in params[key]
