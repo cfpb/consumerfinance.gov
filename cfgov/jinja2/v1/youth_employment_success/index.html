@@ -34,7 +34,9 @@
 {% block javascript scoped %}
     {{ super() }}
     <script async>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+      var htmlEl = document.documentElement;
+
+      if (htmlEl.className.indexOf('no-js') === -1) {
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [

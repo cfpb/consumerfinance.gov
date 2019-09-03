@@ -47,7 +47,7 @@ const BureauStructure = BS = {
     );
 
     let expandable;
-    for ( let index in expandables ) {
+    for ( const index in expandables ) {
       expandable = expandables[index];
       expandable.transition.addEventListener(
         'expandEnd', BS.eventListeners.heightChange

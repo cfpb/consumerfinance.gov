@@ -73,8 +73,16 @@ function InputView( element, props = {} ) {
    */
   function _bindEvents() {
     const { events = {}} = props;
+    const eventHandlers = [];
 
-    Object.entries( events ).forEach( ( [ event, handler = noop ] ) => {
+    for ( const event in events ) {
+      if ( events.hasOwnProperty( event ) ) {
+        const handler = events[event] || noop;
+        eventHandlers.push( [ event, handler ] );
+      }
+    }
+
+    eventHandlers.forEach( ( [ event, handler ] ) => {
       const handlerCache = eventsMap[event] || [];
       const delegate = eventHandler( handler );
       handlerCache.push( delegate );
@@ -89,7 +97,17 @@ function InputView( element, props = {} ) {
    * Unbind all event handlers from the input
    */
   function _unbindEvents() {
-    Object.entries( eventsMap ).forEach( ( [ event, handlers ] ) => {
+    const events = [];
+
+    for ( const event in eventsMap ) {
+      if ( eventsMap.hasOwnProperty( event ) ) {
+        const handlers = eventsMap[event];
+
+        events.push( [ event, handlers ] );
+      }
+    }
+
+    events.forEach( ( [ event, handlers ] ) => {
       handlers.forEach( handler => _dom.removeEventListener( event, handler ) );
     } );
   }

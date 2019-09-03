@@ -79,7 +79,15 @@ const combineReducers = reducers => {
     throw new TypeError( INVALID_ARG_ERROR );
   }
 
-  const entries = Object.entries( reducers );
+  const entries = [];
+
+  for ( const reducerName in reducers ) {
+    if ( reducers.hasOwnProperty( reducerName ) ) {
+      const reducerFunc = reducers[reducerName];
+      entries.push( [ reducerName, reducerFunc ] );
+    }
+  }
+
   const combinedReducers = entries.reduce( ( memo, [ name, maybeFunc ] ) => {
     if ( typeof maybeFunc === 'function' ) {
       memo[name] = maybeFunc;
