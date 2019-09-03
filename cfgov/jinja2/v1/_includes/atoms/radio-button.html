@@ -21,6 +21,8 @@
 
    el_wrapper:  Element to wrap the radio in. Defaults to div.
 
+   disabled:    Whether the field is disabled. Defaults to false.
+
    ========================================================================== #}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
 
@@ -38,7 +40,8 @@
            value="{{ val }}"
            id="{{ id }}"
            name="{{ name }}"
-           {{ checked }}>
+           {{ checked }}
+           {{ 'disabled' if value.disabled else ''}}>
     <label class="a-label"
            for="{{ id }}">
         {{ value.label }}
