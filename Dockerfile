@@ -58,19 +58,14 @@ ENV SCL_HTTPD_VERSION httpd24
 ENV SCL_HTTPD_ROOT /opt/rh/${SCL_HTTPD_VERSION}/root
 
 # Apache HTTPD settings
-ENV APACHE_SERVER_ROOT ${SCL_HTTPD_ROOT}/etc/httpd
-# FIXME: 
-#ENV APACHE_SERVER_ROOT ${APP_HOME}/cfgov/apache
-ENV APACHE_WWW_PATH ${SCL_HTTPD_ROOT}/var/www/html
+#ENV APACHE_SERVER_ROOT ${SCL_HTTPD_ROOT}/etc/httpd
+ENV APACHE_SERVER_ROOT ${APP_HOME}/cfgov/apache
 ENV APACHE_PROCESS_COUNT 4
 ENV ACCESS_LOG /dev/stdout
 ENV ERROR_LOG /dev/stderr
-ENV STATIC_PATH ${APACHE_WWW_PATH}/static
-# FIXME: Figure out what to do this this!
-ENV CFGOV_SANDBOX ???
+ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 
 # mod_wsgi settings
-# FIXME: Can we get rid of this?  See wsgi.conf.
 ENV CFGOV_PATH ${APP_HOME}
 ENV CFGOV_CURRENT ${APP_HOME}
 ENV PYTHONPATH ${APP_HOME}/cfgov
@@ -79,6 +74,9 @@ ENV PYTHONPATH ${APP_HOME}/cfgov
 ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
+
+# Q: Should this be a runtime ENV?
+ENV MEDIA_ROOT ${APP_HOME}/cfgov/f/
 
 RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
     yum clean all && rm -rf /var/cache/yum && \
@@ -95,20 +93,12 @@ RUN yum -y install nodejs yarn  && \
     yum -y remove nodejs yarn && \
     yum clean all && rm -rf /var/cache/yum && \
     rm -rf \
-        ${APACHE_SERVER_ROOT}/conf.d/* \
-        ${APACHE_SERVER_ROOT}/conf.modules.d/* \
-        cfgov/apache/conf.d/wsgi.conf \
         cfgov/apache/www \
         cfgov/unprocessed \
         node_modules && \
-    mv cfgov/apache/conf.d/wsgi.conf.docker cfgov/apache/conf.d/wsgi.conf && \
-    unalias cp && cp -R cfgov/apache/* ${APACHE_SERVER_ROOT}
-# FIXME: If we go with a separate docker-compose.yml without the volumes, we could symlink httpd configs
-#    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
-#    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/conf/magic ${APACHE_SERVER_ROOT}/conf/magic
+    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
+    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/conf/magic ${APACHE_SERVER_ROOT}/conf/magic
 
 EXPOSE 80
 
-CMD ["httpd", "-D", "FOREGROUND"]
-#CMD ["httpd", "-d", "./cfgov/apache", "-D", "FOREGROUND"]
-
+CMD ["httpd", "-d", "./cfgov/apache", "-D", "FOREGROUND"]
