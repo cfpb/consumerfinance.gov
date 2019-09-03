@@ -1,4 +1,5 @@
 from six.moves.urllib.parse import urlencode
+
 from django.utils.six import iterlists
 
 from jinja2.ext import Extension
