@@ -9,5 +9,3 @@ if ( document.querySelector( multiSelectsSelector ) ) {
 }
 
 Expandable.init();
-
-

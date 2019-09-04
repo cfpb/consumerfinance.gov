@@ -60,8 +60,8 @@
                 {% if product.other_relevant_parties | length > 500 %}
                         </div>
                         <button class="a-btn a-btn__link
-                                        o-expandable_header
-                                        o-expandable_target">
+                                       o-expandable_header
+                                       o-expandable_target">
                             <span class="o-expandable_link">
                                 <span class="o-expandable_cue o-expandable_cue-open">
                                     Show full list of relevant parties
@@ -85,11 +85,11 @@
 {% if agreements | length %}
 
     <div class="block u-mt45">
-        <h2 class="h3"> Download most recent agreement files</h2>
+        <h2 class="h3">Download most recent agreement files</h2>
         {% set agreement = agreements | first  %}
         <div class="block block__sub block__flush-top">
             <p class="u-mb5"><span>Agreement effective date:</span> {{ agreement.effective_date }}</p>
-            <p class="break-word">
+            <p class="u-break-word">
                 <a href="{{ agreement.compressed_files_url }}">
                     {{ agreement.filename }}
                 </a>
@@ -99,11 +99,11 @@
 
     {% if agreements | length > 1 %}
     <div class="block u-mt45">
-        <h2 class="h3"> Download older agreements</h2>
+        <h2 class="h3">Download older agreements</h2>
         {% for agreement in agreements[1:] %}
             <div class="block block__sub {{ 'block__flush-top' if loop.index == 1 else '' }}">
                 <p class="agreement-effective-date"><span>Agreement effective date:</span> {{ agreement.effective_date }}</p>
-                <p class="break-word">
+                <p class="u-break-word">
                     <a href="{{ agreement.compressed_files_url }}">
                         {{ agreement.filename }}
                     </a>

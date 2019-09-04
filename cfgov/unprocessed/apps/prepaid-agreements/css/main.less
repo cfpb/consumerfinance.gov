@@ -3,6 +3,7 @@
 @import (less) './search-bar.less';
 
 .u-readable-width {
+    // Magic number: matches max-width for content set in cf-layout
     max-width: 41.875rem;
 }
 
@@ -21,7 +22,7 @@
         font-weight: normal;
         text-transform: none;
         font-size: inherit;
-        .heading-4;
+        .heading-4();
         margin-bottom: unit( @grid_gutter-width / 6 / @base-font-size-px, em );;
 
         &:last-of-type {
