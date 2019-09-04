@@ -7,6 +7,7 @@ import daysPerWeekView from './views/days-per-week';
 import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
 import routeDetailsView from './views/route-details';
+import expandableView from './views/expandable';
 import store from './store';
 
 Array.prototype.slice.call(
@@ -25,6 +26,13 @@ const budgetForm = budgetFormView( budgetFormEl, { store } );
 budgetForm.init();
 
 const expandables = Expandable.init();
+
+expandables.forEach( expandable => {
+  expandableView( expandable.element, {
+    expandable
+  } ).init();
+} );
+
 const routeOptionForms = expandables.map( ( expandable, index ) => {
   store.dispatch( addRouteOptionAction( createRoute() ) );
 
@@ -38,8 +46,10 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
   } );
 } );
 
-/* only initialize the first form, the other gets initialized when
-  the user clicks 'add another option' button */
+/**
+ * Only initialize the first route option form, the second is initialized when
+ * the user clicks the 'add another option' button.
+*/
 routeOptionForms[0].init();
 routeOptionToggleView(
   document.querySelector( `.${ OPTION_TOGGLE_CLASSES.BUTTON }` ), {
@@ -49,7 +59,6 @@ routeOptionToggleView(
 ).init();
 
 expandables[0].element.querySelector( '.o-expandable_target' ).click();
-// target the last element, reverse is destructive
 expandables[1].element.classList.add( 'u-hidden' );
 
 window.onbeforeunload = () => {
