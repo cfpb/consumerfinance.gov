@@ -101,3 +101,47 @@ For `docker` commands, `[CONTAINER]` is the container name displayed with `docke
     will display the running processes in a container.
 - [`docker-compose build [SERVICE]`](https://docs.docker.com/compose/reference/build/)
     will build any of our configured containers.
+
+# Production-like Docker Image
+
+This repository includes code for generating a "production-like" Docker Image. 
+
+## How do I use it?
+
+You can generate and run it locally via docker-compose with:
+
+`docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build`
+
+(This will create images running both Python 2.7 and 3.6, and also spin up containers for Postgres and Elasticsearch, much like the development 'compose' environment.)
+
+If you just want to generate an image using , you can use:
+
+`docker build . --build-arg scl_python_version=rh-python36 -t your-desired-image-name`
+
+The 'scl_python_version' build argument refers to the the [Python Software Collection](https://www.softwarecollections.org/en/scls/?search=python) to use. We've tested this against `python27` and `rh-python36`.
+
+Once you've generated the image, you'll probably want to [`docker push`](https://docs.docker.com/engine/reference/commandline/push/) it to the repository of your choice. From there, it should be deployable (with some configuration) on any platform that supports Docker images.
+
+## What's inside?
+
+The image includes:
+
+- the `cfgov` django project, and all Python dependencies, built against the selected scl_python_version
+- Apache, configured to run with the apache configuration included in cfgov-refresh, including a mod_wsgi version that matches scl_python_version.
+- The results of running the cfgov-refresh front-end build (`./frontend.sh production`) and the django 'collectstatic' command.
+
+## How does it work?
+
+The production image *starts* with our development image. If you look at the Dockerfile, this is spelled out by the line:
+
+`FROM cfgov-dev as cfgov-prod`
+
+Both 'cfgov-dev' and 'cfgov-prod' are called "[build stages](https://docs.docker.com/develop/develop-images/multistage-build/)". That line means, "create a new stage, starting from cfgov-dev, called cfgov-prod".
+
+From there, we:
+- set a bunch of environment variables-
+- install Apache, and the mod_wsgi version appropriate for our chosen `scl_python_version`
+- *temporarily* install node and yarn
+- run frontend.sh, Django's collectstatic command, and then *uninstall* node and yarn.
+- clean up some unnecessary files, and create a few symbolic links
+- Set the default command on container startup to `httpd -d ./cfgov/apache -D FOREGROUND`, which runs apache using the [configuration in cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/apache), in the foreground (instead of as a background service. This is typical when running Apache in a container).
