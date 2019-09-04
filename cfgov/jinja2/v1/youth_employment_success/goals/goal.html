@@ -1,0 +1,54 @@
+{# ==========================================================================
+
+  form.textarea()
+
+  ==========================================================================
+
+  Description: Builds form textarea field.
+
+  label:       Name of the field.
+
+  labelClass:  Additional classes to control the appearance of the label
+  
+  helperText:  String for helper text. Defaults to false.
+  
+  required:    Whether the field is required. Defaults to false.
+
+  disabled:    Whether the field is disabled. Defaults to false.
+
+  ========================================================================== #}
+{% from 'macros/util/format/url.html' import slugify as slugify %}
+
+{% macro renderTextarea(value) -%}
+
+{%- set id = get_unique_id('textarea_', '_') ~ slugify( value.label ) -%}
+{%- set ht_id = get_unique_id('textarea_ht_', '_') ~ slugify( value.label ) -%}
+{%- set label_class = value.labelClass if value.labelClass else '' -%}
+{%- set rows = value.rows if value.rows else '6' -%}
+{%- set cols = value.cols if value.cols else '80' -%}
+
+<div class="form-l_col form-l_col-1">
+   <label for="{{ id }}" class="a-label {{ label_class }} u-mb0">
+       <b>{{ value.label }}</b>
+       {%- if value.required == false -%}
+           &nbsp;<small class="a-label_helper">(optional)</small>
+       {%- endif -%}
+   </label>
+  {%- if value.helperText -%}
+    <p id="{{ ht_id }}">
+      <small>{{ value.helperText | safe }}</small>
+    </p>
+   {%- endif -%}
+   <textarea class="content-l_col-2-3"
+             id="{{ id }}"
+             {%- if value.name -%} name="{{ value.name }}" {%- endif -%}
+             {{ 'required' if value.required else '' }}
+             {{ 'disabled' if value.disabled else '' }}
+             {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}
+             rows="{{ rows }}"
+             cols="{{ cols }}">
+       {{- value.value | default('', true) -}}
+   </textarea>
+</div>
+
+{%- endmacro %}
