@@ -62,7 +62,6 @@ def index(request):
     valid_filters = [
         'prepaid_type', 'status', 'issuer_name'
     ]
-    active_filters_populated = False
     if filters:
         filters.pop('page', None)
         search_term = filters.pop('q', None)
@@ -74,7 +73,6 @@ def index(request):
                 products, active_filters = search_products(
                     search_term, search_field, products
                 )
-            active_filters_populated = True
 
         if 'issuer_name' in filters:
             issuers = Q()
@@ -96,7 +94,7 @@ def index(request):
     page_number = validate_page_number(request, paginator)
     page = paginator.page(page_number)
 
-    if not active_filters_populated:
+    if not active_filters:
         for filter_name in valid_filters:
             active_filters[filter_name] = PrepaidProduct.objects.order_by(
                 filter_name).values_list(filter_name, flat=True).distinct()

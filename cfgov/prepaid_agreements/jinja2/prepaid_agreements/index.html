@@ -82,7 +82,7 @@
                                    name="q"
                                    placeholder="Enter search term"
                                    value="{{ query }}">
-                            <a class="a-btn a-btn__link" href="{{ remove_url_parameter(request, {'q': [query], 'search_field': search_field}) }}">{{ svg_icon('remove') }} Clear</a>
+                            <a class="a-btn a-btn__link" href="{{ remove_url_parameter(request, { 'q': [query] }) }}">{{ svg_icon('remove') }} Clear</a>
                         </div>
                     </div>
                     <button class="a-btn flex-fixed">Search</button>
