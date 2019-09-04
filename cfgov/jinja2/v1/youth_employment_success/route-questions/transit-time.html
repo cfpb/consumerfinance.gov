@@ -11,7 +11,8 @@
       'label': 'Hours',
       'size': '1-4',
       'type': 'text',
-      'value': ''
+      'value': '',
+      'disabled': true
     })
   }}
   {{
@@ -20,14 +21,16 @@
       'label': 'Minutes',
       'size': '1-4',
       'type': 'text',
-      'value': ''
+      'value': '',
+      'disabled': true
     })
   }}
   {{ 
     render_checkbox({
       'class': 'block__sub-micro',
       'label': "I'm not sure, add this to my to-do list to look up later ",
-      'name': "yes-miles-unsure"
+      'name': "yes-miles-unsure",
+      'disabled': true
      })
   }}
 </div>
