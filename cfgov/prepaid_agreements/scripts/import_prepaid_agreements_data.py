@@ -54,7 +54,7 @@ def import_agreements_data(agreements_data):
         agreement.product = product
         agreement.effective_date = effective_date
         agreement.compressed_files_url = url
-        agreement.path = item['path']
+        agreement.bulk_download_path = item['path']
         agreement.filename = item['agreements_files_location']
         agreement.save()
 
