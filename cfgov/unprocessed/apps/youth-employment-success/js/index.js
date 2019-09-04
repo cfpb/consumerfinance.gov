@@ -9,7 +9,7 @@ import store from './store';
 Array.prototype.slice.call(
   document.querySelectorAll( 'input' )
 ).forEach( input => {
-  input.disabled = false;
+  input.removeAttribute( 'disabled' );
 } );
 
 const BUDGET_CLASSES = budgetFormView.CLASSES;
