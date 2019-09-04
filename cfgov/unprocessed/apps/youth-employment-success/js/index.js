@@ -4,6 +4,7 @@ import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
 import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
+import expandableView from './expandable-view';
 import store from './store';
 
 Array.prototype.slice.call(
@@ -21,6 +22,10 @@ const budgetForm = budgetFormView( budgetFormEl, { store } );
 budgetForm.init();
 
 const expandables = Expandable.init();
+console.log(expandables)
+
+expandables.forEach(e => expandableView(e.element, { expandable: e }).init())
+
 const routeOptionForms = expandables.map( ( expandable, index ) => {
   store.dispatch( addRouteOptionAction( createRoute() ) );
 
