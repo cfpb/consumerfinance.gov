@@ -1,5 +1,5 @@
 This repository includes code for generating a self-zip archive
-of the code and all of it's Python dependencies. We use these
+of the code and all of its Python dependencies. We use these
 archives to deploy the site to a Linux server.
 
 # What's an artifact?
