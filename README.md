@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=master)](https://travis-ci.org/cfpb/cfgov-refresh?branch=master)
 [![codecov](https://codecov.io/gh/cfpb/cfgov-refresh/branch/master/graph/badge.svg)](https://codecov.io/gh/cfpb/cfgov-refresh)
 
-The redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website.
+The redesign of the [www.consumerfinance.gov](https://www.consumerfinance.gov) website.
 This Django project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
 and [Wagtail CMS](https://wagtail.io) for content administration.
