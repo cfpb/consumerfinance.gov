@@ -33,7 +33,7 @@ The `wheels/` directory contains all of our python dependencies, while
 everything.
 
 `loadenv.py` and `loadenv-init.pth` are used to load environment variables from
-a `environment.json` file, deployed seperately. An environment.json file l
+a `environment.json` file, deployed seperately.
 
 # Generating a deployment artifact
 
