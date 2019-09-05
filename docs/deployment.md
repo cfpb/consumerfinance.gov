@@ -14,8 +14,7 @@ be compiled for the same environment they will be run in.
 
 # What's in an artifact?
 
-It's a zip file, that is executable and includes a Python "shebang" line. Here's a
-(very abbreviated) peek into what's *in* the zip file:
+Here's a (very abbreviated) peek into what's *in* the zip file:
 
 ```
 __main__.py
@@ -44,6 +43,10 @@ everything.
 
 `loadenv.py` and `loadenv-init.pth` are used to load environment variables from
 a `environment.json` file, deployed seperately.
+
+Before the final version of the zip file is saved, we prepend a python "shebang" line,
+`#!/usr/bin/env python`. This, combined with `__main__.py` described above, is what makes
+the file executable and self-extracting.
 
 # Deploying an artifact
 
