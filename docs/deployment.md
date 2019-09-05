@@ -25,7 +25,7 @@ bootstrap_wheels/pip-19.2.3-py2.py3-none-any.whl
 cfgov/...
 ```
 
-The `__main__.py` file contains [the code that runs when the zipfile is invoked
+The `__main__.py` file contains [the code that runs when the zip file is invoked
 as a Python module](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/deployable_zipfile/extract.py)
 
 The `wheels/` directory contains all of our python dependencies, while
