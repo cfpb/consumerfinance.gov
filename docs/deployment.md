@@ -40,19 +40,22 @@ a `environment.json` file, deployed seperately.
 Running the script at `./docker/deployable-zipfile/build.sh` will start a CentOS 6
 container, generate the artifact, and save it to `./cfgov_current_build.zip`.
 
+We use CentOS 6 here, so that the Python modules that include compiled code, will
+be compiled for the same environment they will be run in.
+
 # Deploying an artifact
 
 We currently use Ansible to prepare servers to run an artifact, and to do the actual deployment.
 If we ignore some specifics and quirks of our environment, the basic steps look something like this:
 
-- copy the artifact to the system
-- execute the artifact, with the -d (destination) argument, `./artifact.zip -d destination-dir`. This
-will unpack the files, create a new virtualenv, and install all of the wheels in `wheels/` into that
-virtualenv. **Important Note:** This should be done with the same Python interpreter that will run the
-application. For example, on our servers this means using [`scl enable`](https://linux.die.net/man/1/scl)
-to specify a particular Python version from 
-[Software Collections](https://www.softwarecollections.org/en/scls/?search=python).
-- put an `environment.json` file in place, in your `destination-dir`
-- run Django utilities like 'collectstatic' and 'migrate'
-- update a symlink to point to the latest release
-- restart your WSGI server.
+1. copy the artifact to the system
+2. execute the artifact, with the -d (destination) argument, `./artifact.zip -d destination-dir`. This
+   will unpack the files, create a new virtualenv, and install all of the wheels in `wheels/` into that
+   virtualenv. **Important Note:** This should be done with the same Python interpreter that will run the
+   application. For example, on our servers this means using [`scl enable`](https://linux.die.net/man/1/scl)
+   to specify a particular Python version from 
+   [Software Collections](https://www.softwarecollections.org/en/scls/?search=python).
+3. put an `environment.json` file in place, in your `destination-dir`
+4. run Django utilities like 'collectstatic' and 'migrate'
+5. update a symlink to point to the latest release
+6. restart your WSGI server.
