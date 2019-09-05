@@ -8,14 +8,14 @@ import { assign } from './util';
  */
 function createRoute( route = {} ) {
   return assign( {}, {
-    averageCost: '',
     transportation: '',
     daysPerWeek: '',
     miles: '',
-    dailyCost: '',
+    averageCost: '',
+    isMonthlyCost: null,
     transitTimeHours: '',
     transitTimeMinutes: '',
-    timeToActionPlan: false
+    actionPlanItems: []
   }, route );
 }
 

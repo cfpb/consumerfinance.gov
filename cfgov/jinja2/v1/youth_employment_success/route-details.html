@@ -1,0 +1,90 @@
+{% from 'alert.html' import render as renderAlert with context %}
+<div class="content-l content-l_col-2-3 yes-route-details">
+    <p class="h4 u-mt0">
+      Totals for <span class="js-transportation-type"></span>
+    </p>
+
+    <div class="content_line-bold"></div>
+  
+    <div class="block__sub-micro">
+      <p class="content-l content-l_col-3-4">
+        <b>Money left in your monthly budget</b>
+      </p>
+      <p class="content-l content-l_col-1-4" style="text-align: right;">
+        <b class="content-l_col">$</b>
+        <b class="content-l_col-2-3 js-budget"></b>
+      </p>
+      <div class="content-l content-l_col-3-4">
+        <p class="u-mb0">
+          <b>
+            Average monthly cost of <span class="js-transportation-type"></span>
+          </b>
+        </p>
+        <span class="a-label_helper">
+          <small>
+            Based on <span class="js-days-per-week"></span> days a week you will make this trip
+          </small>
+        </span>
+      </div>
+      <p class="content-l content-l_col-1-4" style="text-align: right;">
+        <b class="content-l_col">$</b>
+        <b class="content-l_col-2-3 js-total-cost"></b>
+      </p>
+    </div>
+  
+    <div class="content_line-bold"></div>
+  
+    <div class="block__sub-micro">
+      <div class="content-l content-l_col-3-4">
+        <p class="u-mb0">
+          <b>
+            Total left in your budget after <span class="js-transportation-type"></span>
+          </b>
+        </p>
+      </div>
+      <p class="content-l content-l_col-1-4" style="text-align: right;">
+        <b class="content-l_col">$</b>
+        <b class="content-l_col-2-3 js-budget-left"></b>
+      </p>
+      <div class="js-route-incomplete">
+        {{
+          renderAlert({
+            'fill': 'warning',
+            'content': 'To see if this option fits your budget, complete the items in your to-do list and enter the missing amounts above.',
+            'visible': true
+          })
+        }}
+      </div>
+      <!-- <p class="a-label_helper js-route-in-budget">
+        <small>
+          This option is in budget, and may be a good choice for you to get to work.
+        </small>
+      </p> -->
+      <div class="js-route-oob block__sub-micro">
+        {{
+          renderAlert({
+            'content': 'This option is out of budget. Talk to your caseworker about ways you might be able to rethink your budget so this can be an option for you.',
+            'fill': 'danger'
+          })
+        }}
+      </div>
+    </div>
+    <div class="block__sub-micro">
+      <p class="content-l content-l_col-1-3"><b>Total time to get to work</b></p>
+      <p class="content-l content-l_col-2-3" style="text-align: right;">
+        <b class="content-l_col-1-2">
+          <span class="js-time-hours"></span> hours
+        </b>
+        <b class="content-l_col-1-2">
+          <span class="js-time-minutes"></span> minutes
+        </b>
+      </p>
+    </div>
+  
+    <div class="content-l content-l_col-2-3">
+      <span class="h4">MY TO-DO LIST</span>
+      <div class="content_line-bold"></div>
+      <ul class="block__sub-micro js-todo-items">
+      </ul>
+    </div>
+  </div>

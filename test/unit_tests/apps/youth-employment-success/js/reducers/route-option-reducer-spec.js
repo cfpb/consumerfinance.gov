@@ -3,7 +3,7 @@ import routeOptionReducer, {
   addRouteOptionAction,
   initialState,
   routeSelector,
-  updateDailyCostAction,
+  updateAverageCostAction,
   updateDaysPerWeekAction,
   updateMilesAction,
   updateTimeToActionPlan,
@@ -45,21 +45,21 @@ describe( 'routeOptionReducer', () => {
     let initial;
 
     beforeEach( () => {
-      initial = routeOptionReducer( UNDEFINED, addRouteOptionAction( {} ) );
+      initial = routeOptionReducer( UNDEFINED, addRouteOptionAction( createRoute() ) );
     } );
 
-    it( 'reduces .updateDailyCostAction', () => {
+    it( 'reduces .updateAverageCostAction', () => {
       const state = routeOptionReducer(
         initial,
-        updateDailyCostAction( {
+        updateAverageCostAction( {
           routeIndex: 0,
           value: nextValue
         } )
       );
-      const { dailyCost, ...rest } = state.routes[0];
+      const { averageCost, ...rest } = state.routes[0];
 
-      expect( dailyCost ).toBe( nextValue );
-      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
+      expect( averageCost ).toBe( nextValue );
+      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initial.routes[0][key] )
       );
     } );
 
@@ -74,7 +74,7 @@ describe( 'routeOptionReducer', () => {
 
       expect( daysPerWeek ).toBe( nextValue );
 
-      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
+      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initial.routes[0][key] )
       );
     } );
 
@@ -89,7 +89,7 @@ describe( 'routeOptionReducer', () => {
 
       expect( miles ).toBe( nextValue );
 
-      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initialState[key] )
+      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initial.routes[0][key] )
       );
     } );
 
@@ -158,9 +158,10 @@ describe( 'routeOptionReducer', () => {
           routeIndex: 0,
           value: true } )
       );
-      const { timeToActionPlan } = state.routes[0];
 
-      expect( timeToActionPlan ).toBeTruthy();
+      const { actionPlanItems } = state.routes[0];
+
+      expect( actionPlanItems.length ).toBe( 1 );
     } );
   } );
 } );

@@ -1,9 +1,9 @@
 import { simulateEvent } from '../../../../../util/simulate-event';
 import transitTimeView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/transit-time';
 import {
+  updateTimeToActionPlan,
   updateTransitTimeHoursAction,
-  updateTransitTimeMinutesAction,
-  updateTimeToActionPlan
+  updateTransitTimeMinutesAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 
 const HTML = `
@@ -30,7 +30,7 @@ const HTML = `
   </div>
 `;
 
-describe('transitTimeView', () => {
+describe( 'transitTimeView', () => {
   const routeIndex = 0;
   const CLASSES = transitTimeView.CLASSES;
   const dispatch = jest.fn();
@@ -53,54 +53,54 @@ describe('transitTimeView', () => {
     view = null;
   } );
 
-  it('dispatches the correct event when hours field is changed', () => {
-    const hoursEl = document.querySelector('[data-js-name="transitTimeHours"]');
+  it( 'dispatches the correct event when hours field is changed', () => {
+    const hoursEl = document.querySelector( '[data-js-name="transitTimeHours"]' );
     const hours = '1';
 
     hoursEl.value = hours;
 
-    simulateEvent('input', hoursEl);
+    simulateEvent( 'input', hoursEl );
 
     const mock = store.dispatch.mock;
 
-    expect(mock.calls.length).toBe(1);
-    expect(mock.calls[0][0]).toEqual(
-      updateTransitTimeHoursAction({
+    expect( mock.calls.length ).toBe( 1 );
+    expect( mock.calls[0][0] ).toEqual(
+      updateTransitTimeHoursAction( {
         routeIndex, value: hours
-      })
+      } )
     );
-  });
+  } );
 
-  it('dispatches the correct event when the minutes field is updated', () => {
-    const minutesEl = document.querySelector('[data-js-name="transitTimeMinutes"]');
+  it( 'dispatches the correct event when the minutes field is updated', () => {
+    const minutesEl = document.querySelector( '[data-js-name="transitTimeMinutes"]' );
     const minutes = '20';
 
     minutesEl.value = minutes;
 
-    simulateEvent('input', minutesEl);
+    simulateEvent( 'input', minutesEl );
 
     const mock = store.dispatch.mock;
 
-    expect(mock.calls.length).toBe(1);
-    expect(mock.calls[0][0]).toEqual(
-      updateTransitTimeMinutesAction({
+    expect( mock.calls.length ).toBe( 1 );
+    expect( mock.calls[0][0] ).toEqual(
+      updateTransitTimeMinutesAction( {
         routeIndex, value: minutes
-      })
+      } )
     );
-  });
+  } );
 
-  it('dispatches the correct event when the not sure checkbox is clicked', () => {
-    const checkboxEl = document.querySelector('[name="timeToActionPlan"]');
+  it( 'dispatches the correct event when the not sure checkbox is clicked', () => {
+    const checkboxEl = document.querySelector( '[name="timeToActionPlan"]' );
 
-    simulateEvent('click', checkboxEl);
+    simulateEvent( 'click', checkboxEl );
 
     const mock = store.dispatch.mock;
 
-    expect(mock.calls.length).toBe(1);
-    expect(mock.calls[0][0]).toEqual(
-      updateTimeToActionPlan({
+    expect( mock.calls.length ).toBe( 1 );
+    expect( mock.calls[0][0] ).toEqual(
+      updateTimeToActionPlan( {
         routeIndex, value: true
-      })
+      } )
     );
-  });
-});
+  } );
+} );

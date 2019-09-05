@@ -1,27 +1,36 @@
 import { simulateEvent } from '../../../../util/simulate-event';
 import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
 import {
-  updateDailyCostAction,
+  updateAverageCostAction,
   updateDaysPerWeekAction,
   updateMilesAction,
   updateTransportationAction
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 
+let UNDEFINED;
+
 const HTML = `
   <form class="o-yes-route-option">
     <input type="text" name="miles" data-js-name="miles" class="a-yes-question">
-    <input type="text" name="dailyCost" data-js-name="dailyCost" class="a-yes-question">
+    <input type="text" name="averageCost" data-js-name="averageCost" class="a-yes-question">
     <input type="text" name="daysPerWeek" data-js-name="daysPerWeek" class="a-yes-question">
     <input type="text" name="averageCost" data-js-name="averageCost" class="a-yes-question">
     <input type="radio" name="transpo" class="a-yes-route-mode" value="Bus">
     <input type="radio" name="transpo" class="a-yes-route-mode" value="Drive">
     <div class="m-yes-transit-time"></div>
+    <div class="yes-route-details"></div>
   </form>
 `;
 
 describe( 'routeOptionFormView', () => {
   const CLASSES = routeOptionFormView.CLASSES;
   const dispatch = jest.fn();
+  const detailsInit = jest.fn();
+  const detailsRender = jest.fn();
+  const detailsView = {
+    init: detailsInit,
+    render: detailsRender
+  };
   const mockStore = () => ( {
     dispatch,
     subscribe( fn ) {
@@ -46,7 +55,11 @@ describe( 'routeOptionFormView', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML;
     store = mockStore();
-    view = routeOptionFormView( document.querySelector( `.${ CLASSES.FORM }` ), { store, routeIndex: 0 } );
+    view = routeOptionFormView( document.querySelector( `.${ CLASSES.FORM }` ), {
+      store,
+      routeIndex: 0,
+      detailsView
+    } );
     view.init();
   } );
 
@@ -71,18 +84,18 @@ describe( 'routeOptionFormView', () => {
       value } ) );
   } );
 
-  it( 'dispatches an action to update `dailyCost` input', () => {
-    const dailyCostEl = document.querySelector( 'input[name="dailyCost"]' );
+  it( 'dispatches an action to update `averageCost` input', () => {
+    const averageCostEl = document.querySelector( 'input[name="averageCost"]' );
     const value = '200';
 
-    dailyCostEl.value = value;
+    averageCostEl.value = value;
 
-    simulateEvent( 'input', dailyCostEl );
+    simulateEvent( 'input', averageCostEl );
 
     const mock = store.dispatch.mock;
 
     expect( mock.calls.length ).toBe( 1 );
-    expect( mock.calls[0][0] ).toEqual( updateDailyCostAction( { routeIndex: 0, value } ) );
+    expect( mock.calls[0][0] ).toEqual( updateAverageCostAction( { routeIndex: 0, value } ) );
   } );
 
   it( 'dispatches an action to update `daysPerWeek` input', () => {
@@ -112,11 +125,9 @@ describe( 'routeOptionFormView', () => {
 
   describe( 'conditional fields', () => {
     it( 'hides conditional fields on init', () => {
-      const averageCostEl = document.querySelector( 'input[name="averageCost"]' );
       const milesEl = document.querySelector( 'input[name="miles"]' );
       const daysPerWeekEl = document.querySelector( 'input[name="daysPerWeek"]' );
 
-      expect( averageCostEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
       expect( milesEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
       expect( daysPerWeekEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
     } );
