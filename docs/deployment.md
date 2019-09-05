@@ -48,7 +48,7 @@ If we ignore some specifics and quirks of our environment, the basic steps look 
 - copy the artifact to the system
 - execute the artifact, with the -d (destination) argument, `./artifact.zip -d destination-dir`. This
 will unpack the files, create a new virtualenv, and install all of the wheels in `wheels/` into that
-virtualenv. **Important Note:** This should be done with the same python interpreter that will run the
+virtualenv. **Important Note:** This should be done with the same Python interpreter that will run the
 application. For example, on our servers this means using [`scl enable`](https://linux.die.net/man/1/scl)
 to specify a particular Python version from 
 [Software Collections](https://www.softwarecollections.org/en/scls/?search=python).
