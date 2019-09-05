@@ -1,18 +1,10 @@
-import { UNDEFINED, assign } from './util';
+import { assign, entries } from './util';
 import { setInitFlag } from '../../../js/modules/util/atomic-helpers';
 
 const defaultProps = {
   type: 'text'
 };
 const NODE_MISSING_ERROR = 'InputView expects to be initialized with an input node matching the supplied `type` prop';
-
-/**
- * Noop fallback for undefined event handlers
- * @returns {undefined} undefined
- */
-function noop() {
-  return UNDEFINED;
-}
 
 /**
  * Get the correct DOM node this view controls
@@ -70,14 +62,7 @@ function InputView( element, props = {} ) {
    */
   function _bindEvents() {
     const { events = {}} = props;
-    const eventHandlers = [];
-
-    for ( const event in events ) {
-      if ( events.hasOwnProperty( event ) ) {
-        const handler = events[event] || noop;
-        eventHandlers.push( [ event, handler ] );
-      }
-    }
+    const eventHandlers = entries( events );
 
     eventHandlers.forEach( ( [ event, handler ] ) => {
       const handlerCache = _eventsMap[event] || [];
@@ -94,15 +79,7 @@ function InputView( element, props = {} ) {
    * Unbind all event handlers from the input
    */
   function _unbindEvents() {
-    const events = [];
-
-    for ( const event in _eventsMap ) {
-      if ( _eventsMap.hasOwnProperty( event ) ) {
-        const handlers = _eventsMap[event];
-
-        events.push( [ event, handlers ] );
-      }
-    }
+    const events = entries( _eventsMap );
 
     events.forEach( ( [ event, handlers ] ) => {
       handlers.forEach( handler => _dom.removeEventListener( event, handler ) );
