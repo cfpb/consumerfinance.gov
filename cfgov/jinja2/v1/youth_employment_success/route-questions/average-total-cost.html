@@ -10,28 +10,32 @@
       'label': "What's the average cost?",
       'size': '1-4',
       'type': 'text',
-      'value': ''
+      'value': '',
+      'disabled': true
     })
   }}
   {{
     render_radio({
       'name': 'average-cost',
       'label': "Daily",
-      'value': 'daily'
+      'value': 'daily',
+      'disabled': true
     })
   }}
   {{
     render_radio({
       'name': 'average-cost',
       'label': "Monthly",
-      'value': 'monthly'
+      'value': 'monthly',
+      'disabled': true
     })
   }}
   {{ 
     render_checkbox({
       'class': 'block__sub-micro',
       'label': "I'm not sure, add this to my to-do list to look up later",
-      'name': "yes-miles-unsure"
+      'name': "yes-miles-unsure",
+      'disabled': true
      })
   }}
 </div>

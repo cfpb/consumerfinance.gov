@@ -44,7 +44,7 @@ function RouteOptionFormView( element, { store, routeIndex } ) {
    */
   function _setQuestionResponse( { name, event } ) {
     const action = actionMap[name];
-    const { target: { value } } = event;
+    const { target: { value }} = event;
 
     if ( action ) {
       store.dispatch( action( {
@@ -59,7 +59,7 @@ function RouteOptionFormView( element, { store, routeIndex } ) {
    * @param {object} updateObject object with DOM event and field name
    */
   function _setSelected( { event } ) {
-    const { target: { value } } = event;
+    const { target: { value }} = event;
 
     store.dispatch( updateTransportationAction( {
       routeIndex,
