@@ -1,4 +1,4 @@
-This repository includes code for generating a self-zip archive
+This repository includes code for generating a self-extracting zip archive
 of the code and all of its Python dependencies. We use these
 archives to deploy the site to a Linux server.
 
@@ -36,7 +36,7 @@ cfgov/...
 ```
 
 The `__main__.py` file contains [the code that runs when the zip file is invoked
-as a Python module](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/deployable_zipfile/extract.py)
+as a Python module](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/deployable_zipfile/extract.py).
 
 The `wheels/` directory contains all of our python dependencies, while
 `bootstrap_wheels/` contains modules needed at deployment time, to install
@@ -51,7 +51,7 @@ We currently use Ansible to prepare servers to run an artifact, and to do the ac
 If we ignore some specifics and quirks of our environment, the basic steps look something like this:
 
 1. copy the artifact to the system
-2. Execute the artifact, with the -d (destination) argument, `./artifact.zip -d destination-dir`. This
+2. execute the artifact, with the -d (destination) argument, `./artifact.zip -d destination-dir`. This
    will unpack the files, create a new virtualenv, and install all of the wheels in `wheels/` into that
    virtualenv. **Important Note:** This should be done with the same Python interpreter that will run the
    application. For example, on our servers this means using [`scl enable`](https://linux.die.net/man/1/scl)
