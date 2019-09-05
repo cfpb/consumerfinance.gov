@@ -16,9 +16,11 @@
 !docker-entrypoint.sh
 !frontend.sh
 !gulpfile.js
+!initial-data.sh
 !jest.config.js
 !npm-packages-offline-cache
 !package.json
+!refresh-data.sh
 !yarn.lock
 
 # ...but DO ignore these others
