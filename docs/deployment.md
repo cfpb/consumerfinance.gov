@@ -2,7 +2,15 @@ This repository includes code for generating a self-zip archive
 of the code and all of its Python dependencies. We use these
 archives to deploy the site to a Linux server.
 
-# What's an artifact?
+# Generating a deployment artifact
+
+Running the script at `./docker/deployable-zipfile/build.sh` will start a CentOS 6
+container, generate the artifact, and save it to `./cfgov_current_build.zip`.
+
+We use CentOS 6 here, so that the Python modules that include compiled code, will
+be compiled for the same environment they will be run in.
+
+# What's in an artifact?
 
 It's a zip file, that is executable and includes a Python "shebang" line. Here's a
 (very abbreviated) peek into what's *in* the zip file:
@@ -34,14 +42,6 @@ everything.
 
 `loadenv.py` and `loadenv-init.pth` are used to load environment variables from
 a `environment.json` file, deployed seperately.
-
-# Generating a deployment artifact
-
-Running the script at `./docker/deployable-zipfile/build.sh` will start a CentOS 6
-container, generate the artifact, and save it to `./cfgov_current_build.zip`.
-
-We use CentOS 6 here, so that the Python modules that include compiled code, will
-be compiled for the same environment they will be run in.
 
 # Deploying an artifact
 
