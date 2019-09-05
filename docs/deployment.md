@@ -53,6 +53,6 @@ application. For example, on our servers this means using [`scl enable`](https:/
 to specify a particular Python version from 
 [Software Collections](https://www.softwarecollections.org/en/scls/?search=python).
 - put an 'environment.json' file in place, in your destination-dir
-- run django utilities like 'collectstatic' and 'migrate'
+- run Django utilities like 'collectstatic' and 'migrate'
 - update a symlink to point to the latest release
 - restart your WSGI server.
