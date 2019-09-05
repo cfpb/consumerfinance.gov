@@ -109,8 +109,8 @@ urlpatterns = [
             name='loan-estimate'
     ),
 
-    # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
-    # TODO: change to redirects after 2018 homebuying campaign.
+    # Temporarily serve Wagtail OAH journey pages at `/process/` urls
+    # TODO: change to redirects after 2018 homebuying campaign
     url(r'^owning-a-home/process/(?P<path>.*)$',
         lambda req, path: ServeView.as_view()(
             req, 'owning-a-home/{}'.format(path or 'prepare/')
@@ -128,33 +128,53 @@ urlpatterns = [
             url='/owning-a-home/loan-options/fha-loans/', permanent=True)),
 
     # policy-compliance redirects
-    url(r'^policy-compliance/enforcement/petitions/candy-kern-fuller-and-howard-sutter-iii/$',
+    url(r'^policy-compliance/enforcement/petitions/'
+         'candy-kern-fuller-and-howard-sutter-iii/$',
         RedirectView.as_view(
-            url='/policy-compliance/enforcement/petitions/candy-kern-fuller-and-howard-sutter-III/',
+            url='/policy-compliance/enforcement/petitions/'
+                'candy-kern-fuller-and-howard-sutter-III/',
             permanent=True)),
-    url(r'^policy-compliance/guidance/supervision-examinations/supervisory-highlights-mortgage-servicing-special-edition-issue-11/$',
+    url(r'^policy-compliance/guidance/supervision-examinations/'
+         'supervisory-highlights-mortgage-'
+         'servicing-special-edition-issue-11/$',
         RedirectView.as_view(
             url='/policy-compliance/guidance/supervisory-highlights/',
             permanent=True)),
-    url(r'^policy-compliance/guidance/supervisory-guidance/bulletin-safe-act-transitional-licensing-mortgage-loan-originators/$',
+    url(r'^policy-compliance/guidance/supervisory-guidance/'
+         'bulletin-safe-act-transitional-'
+         'licensing-mortgage-loan-originators/$',
         RedirectView.as_view(
             url='/policy-compliance/guidance/loan-originator-rule/',
             permanent=True)),
-    url(r'^policy-compliance/notice-opportunities-comment/open-notices/consumer-leasing-regulation-m/$',
+    url(r'^policy-compliance/notice-opportunities-comment/'
+         'open-notices/consumer-leasing-regulation-m/$',
         RedirectView.as_view(
-            url='/policy-compliance/notice-opportunities-comment/archive-closed/consumer-leasing-regulation-m/',
+            url='/policy-compliance/notice-opportunities-comment/'
+                'archive-closed/consumer-leasing-regulation-m/',
             permanent=True)),
-    url(r'^policy-compliance/notice-opportunities-comment/open-notices/notice-proposed-rulemaking-payday-vehicle-title-and-certain-high-cost-installment-loans/$',
+    url(r'^policy-compliance/notice-opportunities-comment/open-notices/'
+         'notice-proposed-rulemaking-payday-vehicle-title-'
+         'and-certain-high-cost-installment-loans/$',
         RedirectView.as_view(
-            url='/policy-compliance/notice-opportunities-comment/archive-closed/notice-proposed-rulemaking-payday-vehicle-title-and-certain-high-cost-installment-loans/',
+            url='/policy-compliance/notice-opportunities-comment/'
+                'archive-closed/notice-proposed-rulemaking-payday-vehicle-'
+                'title-and-certain-high-cost-installment-loans/',
             permanent=True)),
-    url(r'^policy-compliance/notice-opportunities-comment/open-notices/request-information-regarding-use-alternative-data-and-modeling-techniques-credit-process/$',
+    url(r'^policy-compliance/notice-opportunities-comment/open-notices/'
+         'request-information-regarding-use-alternative-data-'
+         'and-modeling-techniques-credit-process/$',
         RedirectView.as_view(
-            url='/policy-compliance/notice-opportunities-comment/archive-closed/request-information-regarding-use-alternative-data-and-modeling-techniques-credit-process/',
+            url='/policy-compliance/notice-opportunities-comment/'
+                'archive-closed/request-information-regarding-use-'
+                'alternative-data-and-modeling-techniques-credit-process/',
             permanent=True)),
-    url(r'^policy-compliance/rulemaking/rules-under-development/amendments-equal-credit-opportunity-act-regulation-b-ethnicity-and-race-information-collection/$',
+    url(r'^policy-compliance/rulemaking/rules-under-development/'
+         'amendments-equal-credit-opportunity-act-'
+         'regulation-b-ethnicity-and-race-information-collection/$',
         RedirectView.as_view(
-            url='/policy-compliance/notice-opportunities-comment/archive-closed/amendments-equal-credit-opportunity-act-regulation-b-ethnicity-and-race-information-collection/',
+            url='/policy-compliance/notice-opportunities-comment/'
+                'archive-closed/amendments-equal-credit-opportunity-act-'
+                'regulation-b-ethnicity-and-race-information-collection/',
             permanent=True)),
 
     url(r'^know-before-you-owe/$',
@@ -271,7 +291,8 @@ urlpatterns = [
             name='user_error'),
         url(r'^server-error/$',
             TemplateView.as_view(
-                template_name='govdelivery-subscribe/server-error/index.html'),
+                template_name='govdelivery-subscribe/'
+                              'server-error/index.html'),
             name='server_error')],
         namespace='govdelivery')),
 
@@ -308,7 +329,8 @@ urlpatterns = [
     url(r'^transcripts/', include([
         url(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$',
             TemplateView.as_view(
-                template_name='transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/index.html'),  # noqa: E501
+                template_name='transcripts/how-to-apply-for-a-'
+                              'federal-job-with-the-cfpb/index.html'),
                 name='how-to-apply-for-a-federal-job-with-the-cfpb'), ],
         namespace='transcripts')),
     url(r'^paying-for-college/',
@@ -323,7 +345,8 @@ urlpatterns = [
     url(r'^consumer-tools/debt-collection/if-creditor-sues-you/$',
         RedirectView.as_view(
             url='/ask-cfpb/'
-                'what-should-i-do-if-a-creditor-or-debt-collector-sues-me-en-334/',
+                'what-should-i-do-if-a-creditor-or-'
+                'debt-collector-sues-me-en-334/',
             permanent=True)),
     url(r'^consumer-tools/everyone-has-a-story/'
          'dani-struggling-repay-student-debt/$',
@@ -414,7 +437,8 @@ urlpatterns = [
             RedirectView.as_view(
                 url='/consumer-tools/money-as-you-grow/%(path)s',
                 permanent=True)),
-    url(r'^practitioner-resources/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
+    url(r'^practitioner-resources/'
+         'resources-youth-employment-programs/transportation-tool/$',
         FlaggedTemplateView.as_view(
             flag_name='YOUTH_EMPLOYMENT_SUCCESS',
             template_name='youth_employment_success/index.html'
@@ -448,7 +472,8 @@ urlpatterns = [
         RedirectView.as_view(
             url='/ask-cfpb/',
             permanent=True)),
-    url(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
+    url(r'^(?P<language>es)/obtener-respuestas/'
+         'c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',
          RedirectView.as_view(
              url='/es/obtener-respuestas/slug-es-%(ask_id)s',
              permanent=True)),
@@ -589,19 +614,23 @@ category_redirects = [
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$',
         RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/'
+                'prestamos-para-vehiculos/respuestas/',
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',  # noqa: E501
+    url(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cuentas-bancarias/',
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
+    url(r'^es/obtener-respuestas/'
+         'categoria-obtener-una-tarjeta-de-credito/(.*)$',
         RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/'
+                'tarjetas-de-credito/respuestas/',
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
         RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/'
+                'informes-y-puntajes-de-credito/',
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$',
         RedirectView.as_view(
@@ -613,7 +642,8 @@ category_redirects = [
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$',
         RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/'
+                'transferencias-de-dinero/respuestas/',
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-comprar-una-casa/(.*)$',
         RedirectView.as_view(
@@ -621,15 +651,17 @@ category_redirects = [
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$',
         RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/',
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
+    url(r'^es/obtener-respuestas/'
+         'categoria-escoger-una-tarjeta-prepagada/(.*)$',
         RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/'
+                'tarjetas-prepagadas/respuestas/',
             permanent=True)),
     url(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
         RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/prestamos-estudiantiles/',  # noqa: E501
+            url='/es/herramientas-del-consumidor/prestamos-estudiantiles/',
             permanent=True))
 ]
 urlpatterns = urlpatterns + category_redirects
@@ -658,7 +690,8 @@ if settings.ALLOW_ADMIN_URL:
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([
-            url(r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',  # noqa: E501
+            url(r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/'
+                 '(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
                 password_reset_confirm,
                 name='password_reset_confirm')
         ])),
@@ -700,7 +733,7 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-# Catch remaining URL patterns that did not match a route thus far.
+# Catch remaining URL patterns that did not match a route thus far
 urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 # urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
@@ -712,7 +745,7 @@ def handle_error(code, request, exception=None):
     except AttributeError:
         # for certain URL's, it seems like our middleware doesn't run
         # Thankfully, these are probably not errors real users see -- usually
-        # the results of a security scan, or a malformed static file reference.
+        # the results of a security scan, or a malformed static file reference
 
         return HttpResponse("This request could not be processed, "
                             "HTTP Error %s." % str(code), status=code)
