@@ -77,8 +77,8 @@ urlpatterns = [
     url(r'^rural-or-underserved-tool/$',
         TemplateView.as_view(
             template_name='rural-or-underserved/index.html'),
-            name='rural-or-underserved'
-    ),
+        name='rural-or-underserved'),
+
     url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
         name='wagtaildocs_serve'),
@@ -96,18 +96,15 @@ urlpatterns = [
     url(r'^owning-a-home/closing-disclosure/$',
         TemplateView.as_view(
             template_name='owning-a-home/closing-disclosure/index.html'),
-            name='closing-disclosure'
-    ),
+        name='closing-disclosure'),
     url(r'^owning-a-home/explore-rates/',
         TemplateView.as_view(
             template_name='owning-a-home/explore-rates/index.html'),
-            name='explore-rates'
-    ),
+        name='explore-rates'),
     url(r'^owning-a-home/loan-estimate/$',
         TemplateView.as_view(
             template_name='owning-a-home/loan-estimate/index.html'),
-            name='loan-estimate'
-    ),
+        name='loan-estimate'),
 
     # Temporarily serve Wagtail OAH journey pages at `/process/` urls
     # TODO: change to redirects after 2018 homebuying campaign
@@ -117,6 +114,7 @@ urlpatterns = [
         ),
     ),
     # END TODO
+
     url(r'^how-to-prepare-your-finances-for-buying-a-home/',
         RedirectView.as_view(
             url='/owning-a-home/process/prepare/', permanent=True)),
@@ -129,48 +127,48 @@ urlpatterns = [
 
     # policy-compliance redirects
     url(r'^policy-compliance/enforcement/petitions/'
-         'candy-kern-fuller-and-howard-sutter-iii/$',
+        'candy-kern-fuller-and-howard-sutter-iii/$',
         RedirectView.as_view(
             url='/policy-compliance/enforcement/petitions/'
                 'candy-kern-fuller-and-howard-sutter-III/',
             permanent=True)),
     url(r'^policy-compliance/guidance/supervision-examinations/'
-         'supervisory-highlights-mortgage-'
-         'servicing-special-edition-issue-11/$',
+        'supervisory-highlights-mortgage-'
+        'servicing-special-edition-issue-11/$',
         RedirectView.as_view(
             url='/policy-compliance/guidance/supervisory-highlights/',
             permanent=True)),
     url(r'^policy-compliance/guidance/supervisory-guidance/'
-         'bulletin-safe-act-transitional-'
-         'licensing-mortgage-loan-originators/$',
+        'bulletin-safe-act-transitional-'
+        'licensing-mortgage-loan-originators/$',
         RedirectView.as_view(
             url='/policy-compliance/guidance/loan-originator-rule/',
             permanent=True)),
     url(r'^policy-compliance/notice-opportunities-comment/'
-         'open-notices/consumer-leasing-regulation-m/$',
+        'open-notices/consumer-leasing-regulation-m/$',
         RedirectView.as_view(
             url='/policy-compliance/notice-opportunities-comment/'
                 'archive-closed/consumer-leasing-regulation-m/',
             permanent=True)),
     url(r'^policy-compliance/notice-opportunities-comment/open-notices/'
-         'notice-proposed-rulemaking-payday-vehicle-title-'
-         'and-certain-high-cost-installment-loans/$',
+        'notice-proposed-rulemaking-payday-vehicle-title-'
+        'and-certain-high-cost-installment-loans/$',
         RedirectView.as_view(
             url='/policy-compliance/notice-opportunities-comment/'
                 'archive-closed/notice-proposed-rulemaking-payday-vehicle-'
                 'title-and-certain-high-cost-installment-loans/',
             permanent=True)),
     url(r'^policy-compliance/notice-opportunities-comment/open-notices/'
-         'request-information-regarding-use-alternative-data-'
-         'and-modeling-techniques-credit-process/$',
+        'request-information-regarding-use-alternative-data-'
+        'and-modeling-techniques-credit-process/$',
         RedirectView.as_view(
             url='/policy-compliance/notice-opportunities-comment/'
                 'archive-closed/request-information-regarding-use-'
                 'alternative-data-and-modeling-techniques-credit-process/',
             permanent=True)),
     url(r'^policy-compliance/rulemaking/rules-under-development/'
-         'amendments-equal-credit-opportunity-act-'
-         'regulation-b-ethnicity-and-race-information-collection/$',
+        'amendments-equal-credit-opportunity-act-'
+        'regulation-b-ethnicity-and-race-information-collection/$',
         RedirectView.as_view(
             url='/policy-compliance/notice-opportunities-comment/'
                 'archive-closed/amendments-equal-credit-opportunity-act-'
@@ -179,15 +177,15 @@ urlpatterns = [
 
     url(r'^know-before-you-owe/$',
         TemplateView.as_view(
-        template_name='know-before-you-owe/index.html'),
+            template_name='know-before-you-owe/index.html'),
         name='know-before-you-owe'),
     url(r'^know-before-you-owe/timeline/$',
         TemplateView.as_view(
-        template_name='know-before-you-owe/timeline/index.html'),
+            template_name='know-before-you-owe/timeline/index.html'),
         name='kbyo-timeline'),
     url(r'^know-before-you-owe/compare/$',
         TemplateView.as_view(
-        template_name='know-before-you-owe/compare/index.html'),
+            template_name='know-before-you-owe/compare/index.html'),
         name='kbyo-compare'),
 
     url(r'^your-story/$', TemplateView.as_view(
@@ -199,13 +197,13 @@ urlpatterns = [
     url(r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(
             template_name='students/knowbeforeyouowe/index.html'),
-            name='students-knowbeforeyouowe'),
+        name='students-knowbeforeyouowe'),
     url(r'^practitioner-resources/students/'
          'helping-borrowers-find-ways-to-stay-afloat/$',
             TemplateView.as_view(
                 template_name='students/helping-borrowers-find-'
                               'ways-to-stay-afloat/index.html'),
-                name='students-helping-borrowers'),
+            name='students-helping-borrowers'),
     # practitioner-resources redirects
     url(r'^practitioner-resources/students/knowbeforeyouowe/about/$',
         RedirectView.as_view(
@@ -216,7 +214,7 @@ urlpatterns = [
             url='/paying-for-college/repay-student-debt/',
             permanent=True)),
     url(r'^practitioner-resources/students/'
-         'request-for-information-on-student-loan-servicing/$',
+        'request-for-information-on-student-loan-servicing/$',
         RedirectView.as_view(
             url='/paying-for-college/choose-a-student-loan/',
             permanent=True)),
@@ -230,13 +228,14 @@ urlpatterns = [
     url(r'^newsroom/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/newsroom/%(path)s', permanent=True)),
+
     # pressrelease redirects
     url(r'^pressrelease/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/newsroom/%(path)s', permanent=True)),
     url(r'^pressrelease/'
-         'treasury-department-announces-senior-leadership-hires-'
-         'for-the-consumer-financial-protection-bureau/$',
+        'treasury-department-announces-senior-leadership-hires-'
+        'for-the-consumer-financial-protection-bureau/$',
         RedirectView.as_view(
             url='/about-us/newsroom/'''
                 'treasury-department-announces-senior-leadership-hires-'
@@ -245,16 +244,16 @@ urlpatterns = [
 
     # about-us redirects
     url(r'^the-bureau/(?P<path>.*)$',
-            RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
-                                 permanent=True)
-    ),
+        RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
+                             permanent=True)),
+
     url(r'^about-us/advisory-groups/$', RedirectView.as_view(
         url='/about-us/advisory-committees/', permanent=True)),
     url(r'^about-us/blog/'
-         'understand-your-options-tips-student-loan-borrowers-disabilities/$',
-            RedirectView.as_view(
-                url='/about-us/blog/tips-student-loan-borrowers/',
-                permanent=True)),
+        'understand-your-options-tips-student-loan-borrowers-disabilities/$',
+        RedirectView.as_view(
+            url='/about-us/blog/tips-student-loan-borrowers/',
+            permanent=True)),
     url(r'^about-us/leadership-calendar/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/the-bureau/leadership-calendar/%(path)s',
         permanent=True)),
@@ -266,7 +265,6 @@ urlpatterns = [
         RedirectView.as_view(
             url='/about-us/innovation/trial-disclosure-program/',
             permanent=True)),
-
     url(r'^about-us/doing-business-with-us/small-businesses/$',
         RedirectView.as_view(
             url='/about-us/doing-business-with-us/small-minority-businesses/',
@@ -331,7 +329,7 @@ urlpatterns = [
             TemplateView.as_view(
                 template_name='transcripts/how-to-apply-for-a-'
                               'federal-job-with-the-cfpb/index.html'),
-                name='how-to-apply-for-a-federal-job-with-the-cfpb'), ],
+            name='how-to-apply-for-a-federal-job-with-the-cfpb'), ],
         namespace='transcripts')),
     url(r'^paying-for-college/',
         include_if_app_enabled('comparisontool', 'comparisontool.urls')),
@@ -349,7 +347,7 @@ urlpatterns = [
                 'debt-collector-sues-me-en-334/',
             permanent=True)),
     url(r'^consumer-tools/everyone-has-a-story/'
-         'dani-struggling-repay-student-debt/$',
+        'dani-struggling-repay-student-debt/$',
         RedirectView.as_view(
             url='/consumer-tools/everyone-has-a-story/'
                 'dani-struggling-to-repay-student-debt/',
@@ -414,10 +412,10 @@ urlpatterns = [
         name='technology_innovation_fellows'),
 
     # credit cards KBYO
-
     url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(
         template_name='knowbeforeyouowe/creditcards/tool.html'),
         name='cckbyo'),
+
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
@@ -429,27 +427,26 @@ urlpatterns = [
     url(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
         url='/practitioner-resources/%(path)s', permanent=True)),
     url(r'^practitioner-resources/resources-for-older-adults' +
-         '/managing-someone-elses-money/(?P<path>.*)$',
-            RedirectView.as_view(
-                url='/consumer-tools/managing-someone-elses-money/%(path)s',
-                permanent=True)),
+        '/managing-someone-elses-money/(?P<path>.*)$',
+        RedirectView.as_view(
+            url='/consumer-tools/managing-someone-elses-money/%(path)s',
+            permanent=True)),
     url(r'^practitioner-resources/money-as-you-grow/(?P<path>.*)$',
-            RedirectView.as_view(
-                url='/consumer-tools/money-as-you-grow/%(path)s',
-                permanent=True)),
+        RedirectView.as_view(
+            url='/consumer-tools/money-as-you-grow/%(path)s',
+            permanent=True)),
     url(r'^practitioner-resources/'
-         'resources-youth-employment-programs/transportation-tool/$',
+        'resources-youth-employment-programs/transportation-tool/$',
         FlaggedTemplateView.as_view(
             flag_name='YOUTH_EMPLOYMENT_SUCCESS',
             template_name='youth_employment_success/index.html'
         ),
-        name='youth_employment_success'
-    ),
+        name='youth_employment_success'),
 
     # retirement redirects
     url(r'^retirement/(?P<path>.*)$', RedirectView.as_view(
-            url='/consumer-tools/retirement/%(path)s',
-            permanent=True)),
+        url='/consumer-tools/retirement/%(path)s',
+        permanent=True)),
 
     # regulations redirects
     url(r'^regulations/final-remittance-rule-amendment-regulation-e/$',
@@ -459,28 +456,28 @@ urlpatterns = [
 
     # empowerment redirects
     url(r'^empowerment/$', RedirectView.as_view(
-            url='/practitioner-resources/economically-vulnerable/',
-            permanent=True)),
+        url='/practitioner-resources/economically-vulnerable/',
+        permanent=True)),
 
     # students redirects
     url(r'^students/(?P<path>.*)$', RedirectView.as_view(
-            url='/practitioner-resources/students/%(path)s',
-            permanent=True)),
+        url='/practitioner-resources/students/%(path)s',
+        permanent=True)),
 
-    # ask-cfpb
+    # ask-cfpb redirects
     url(r'^askcfpb/$',
         RedirectView.as_view(
             url='/ask-cfpb/',
             permanent=True)),
     url(r'^(?P<language>es)/obtener-respuestas/'
-         'c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',
-         RedirectView.as_view(
-             url='/es/obtener-respuestas/slug-es-%(ask_id)s',
-             permanent=True)),
+        'c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',
+        RedirectView.as_view(
+            url='/es/obtener-respuestas/slug-es-%(ask_id)s',
+            permanent=True)),
     url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
-         RedirectView.as_view(
-             url='/ask-cfpb/slug-en-%(ask_id)s',
-             permanent=True)),
+        RedirectView.as_view(
+            url='/ask-cfpb/slug-en-%(ask_id)s',
+            permanent=True)),
     url(r'^askcfpb/search/',
         redirect_ask_search,
         name='redirect-ask-search'),
@@ -532,8 +529,8 @@ urlpatterns = [
     url(
         r'^regulations3k-service-worker.js',
         TemplateView.as_view(
-        template_name='regulations3k/regulations3k-service-worker.js',
-        content_type='application/javascript'),
+            template_name='regulations3k/regulations3k-service-worker.js',
+            content_type='application/javascript'),
         name='regulations3k-service-worker.js'
     ),
 
@@ -544,8 +541,8 @@ urlpatterns = [
     # Jenkins job check this endpoint to determine whether to refresh
     # Beta database.
     flagged_url('BETA_EXTERNAL_TESTING',
-            r'^beta_external_testing/',
-            empty_200_response),
+        r'^beta_external_testing/',
+        empty_200_response),
 
     # put financial well-being pages behind feature flag for testing
     flagged_wagtail_only_view(
@@ -561,9 +558,7 @@ urlpatterns = [
             flag_name='HMDA_LEGACY_PUBLISH',
             template_name='hmda/orange-explorer.html'
         ),
-        name='legacy_explorer_published'
-    ),
-
+        name='legacy_explorer_published'),
 ]
 
 # Ask CFPB category and subcategory redirects
@@ -622,7 +617,7 @@ category_redirects = [
             url='/es/herramientas-del-consumidor/cuentas-bancarias/',
             permanent=True)),
     url(r'^es/obtener-respuestas/'
-         'categoria-obtener-una-tarjeta-de-credito/(.*)$',
+        'categoria-obtener-una-tarjeta-de-credito/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/'
                 'tarjetas-de-credito/respuestas/',
@@ -654,7 +649,7 @@ category_redirects = [
             url='/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/',
             permanent=True)),
     url(r'^es/obtener-respuestas/'
-         'categoria-escoger-una-tarjeta-prepagada/(.*)$',
+        'categoria-escoger-una-tarjeta-prepagada/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/'
                 'tarjetas-prepagadas/respuestas/',
@@ -682,7 +677,6 @@ if settings.ALLOW_ADMIN_URL:
             RedirectView.as_view(url='/login/',
                                  permanent=True,
                                  query_string=True)),
-
         url(r'^django-admin/password_change',
             change_password,
             name='django_admin_account_change_password'),
@@ -691,7 +685,7 @@ if settings.ALLOW_ADMIN_URL:
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([
             url(r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/'
-                 '(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+                '(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
                 password_reset_confirm,
                 name='password_reset_confirm')
         ])),
@@ -706,7 +700,6 @@ if settings.ALLOW_ADMIN_URL:
             name='wagtailadmin_account_change_password'),
         url(r'^admin/autocomplete/', include(autocomplete_admin_urls)),
         url(r'^admin/', include(wagtailadmin_urls)),
-
     ]
 
     urlpatterns = patterns + urlpatterns
@@ -735,7 +728,6 @@ if settings.DEBUG:
 
 # Catch remaining URL patterns that did not match a route thus far
 urlpatterns.append(url(r'', include(wagtailsharing_urls)))
-# urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
 
 def handle_error(code, request, exception=None):
