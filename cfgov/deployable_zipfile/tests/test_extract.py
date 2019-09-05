@@ -34,8 +34,6 @@ class TestExtractZipFile(TestCase):
             ],
             [
                 os.path.join(extract_location, f) for f in [
-                    'bootstrap_wheels/pip-19.2.2-py2.py3-none-any.whl',
-                    'bootstrap_wheels/setuptools-41.1.0-py2.py3-none-any.whl',
                     'deployable_zip/foo.txt',
                     'deployable_zip/subdir/bar.txt',
                     'wheels/test-0.0.1-py2.py3-none-any.whl',
