@@ -6,6 +6,11 @@ import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
 import store from './store';
 
+Array.prototype.slice.call(
+  document.querySelectorAll( 'input' )
+).forEach( input => {
+  input.removeAttribute( 'disabled' );
+} );
 
 const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
