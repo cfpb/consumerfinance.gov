@@ -26,7 +26,7 @@ cfgov/...
 ```
 
 The `__main__.py` file contains [the code that runs when the zipfile is invoked
-as a python module](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/deployable_zipfile/extract.py)
+as a Python module](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/deployable_zipfile/extract.py)
 
 The `wheels/` directory contains all of our python dependencies, while
 `bootstrap_wheels/` contains modules needed at deployment time, to install
