@@ -52,7 +52,7 @@ virtualenv. **Important Note:** This should be done with the same Python interpr
 application. For example, on our servers this means using [`scl enable`](https://linux.die.net/man/1/scl)
 to specify a particular Python version from 
 [Software Collections](https://www.softwarecollections.org/en/scls/?search=python).
-- put an 'environment.json' file in place, in your destination-dir
+- put an `environment.json` file in place, in your `destination-dir`
 - run Django utilities like 'collectstatic' and 'migrate'
 - update a symlink to point to the latest release
 - restart your WSGI server.
