@@ -29,7 +29,7 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
 } );
 
 /* only initialize the first form, the other gets initialized when
-   the user clicks 'add another option' button */
+  the user clicks 'add another option' button */
 routeOptionForms[0].init();
 routeOptionToggleView(
   document.querySelector( `.${ OPTION_TOGGLE_CLASSES.BUTTON }` ), {
