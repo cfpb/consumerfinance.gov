@@ -218,4 +218,4 @@ def redirect_ask_search(request, language='en'):
                         '+', '_')
                     return redirect_to_tag(tag, language)
 
-        return redirect('/ask-cfpb/search')
+        return redirect('/ask-cfpb/search/')
