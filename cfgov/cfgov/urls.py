@@ -114,66 +114,6 @@ urlpatterns = [
         )),
     # END TODO
 
-    url(r'^how-to-prepare-your-finances-for-buying-a-home/',
-        RedirectView.as_view(
-            url='/owning-a-home/process/prepare/', permanent=True)),
-    url(r'^owning-a-home/help-us-improve/$',
-        RedirectView.as_view(
-            url='/owning-a-home/', permanent=True)),
-    url(r'^owning-a-home/loan-options/FHA-loans/$',
-        RedirectView.as_view(
-            url='/owning-a-home/loan-options/fha-loans/', permanent=True)),
-
-    # policy-compliance redirects
-    url(r'^policy-compliance/enforcement/petitions/'
-        'candy-kern-fuller-and-howard-sutter-iii/$',
-        RedirectView.as_view(
-            url='/policy-compliance/enforcement/petitions/'
-                'candy-kern-fuller-and-howard-sutter-III/',
-            permanent=True)),
-    url(r'^policy-compliance/guidance/supervision-examinations/'
-        'supervisory-highlights-mortgage-'
-        'servicing-special-edition-issue-11/$',
-        RedirectView.as_view(
-            url='/policy-compliance/guidance/supervisory-highlights/',
-            permanent=True)),
-    url(r'^policy-compliance/guidance/supervisory-guidance/'
-        'bulletin-safe-act-transitional-'
-        'licensing-mortgage-loan-originators/$',
-        RedirectView.as_view(
-            url='/policy-compliance/guidance/loan-originator-rule/',
-            permanent=True)),
-    url(r'^policy-compliance/notice-opportunities-comment/'
-        'open-notices/consumer-leasing-regulation-m/$',
-        RedirectView.as_view(
-            url='/policy-compliance/notice-opportunities-comment/'
-                'archive-closed/consumer-leasing-regulation-m/',
-            permanent=True)),
-    url(r'^policy-compliance/notice-opportunities-comment/open-notices/'
-        'notice-proposed-rulemaking-payday-vehicle-title-'
-        'and-certain-high-cost-installment-loans/$',
-        RedirectView.as_view(
-            url='/policy-compliance/notice-opportunities-comment/'
-                'archive-closed/notice-proposed-rulemaking-payday-vehicle-'
-                'title-and-certain-high-cost-installment-loans/',
-            permanent=True)),
-    url(r'^policy-compliance/notice-opportunities-comment/open-notices/'
-        'request-information-regarding-use-alternative-data-'
-        'and-modeling-techniques-credit-process/$',
-        RedirectView.as_view(
-            url='/policy-compliance/notice-opportunities-comment/'
-                'archive-closed/request-information-regarding-use-'
-                'alternative-data-and-modeling-techniques-credit-process/',
-            permanent=True)),
-    url(r'^policy-compliance/rulemaking/rules-under-development/'
-        'amendments-equal-credit-opportunity-act-'
-        'regulation-b-ethnicity-and-race-information-collection/$',
-        RedirectView.as_view(
-            url='/policy-compliance/notice-opportunities-comment/'
-                'archive-closed/amendments-equal-credit-opportunity-act-'
-                'regulation-b-ethnicity-and-race-information-collection/',
-            permanent=True)),
-
     url(r'^know-before-you-owe/$',
         TemplateView.as_view(
             template_name='know-before-you-owe/index.html'),
@@ -203,20 +143,6 @@ urlpatterns = [
             template_name='students/helping-borrowers-find-'
                           'ways-to-stay-afloat/index.html'),
         name='students-helping-borrowers'),
-    # practitioner-resources redirects
-    url(r'^practitioner-resources/students/knowbeforeyouowe/about/$',
-        RedirectView.as_view(
-            url='/practitioner-resources/students/knowbeforeyouowe/',
-            permanent=True)),
-    url(r'^practitioner-resources/students/repay/$',
-        RedirectView.as_view(
-            url='/paying-for-college/repay-student-debt/',
-            permanent=True)),
-    url(r'^practitioner-resources/students/'
-        'request-for-information-on-student-loan-servicing/$',
-        RedirectView.as_view(
-            url='/paying-for-college/choose-a-student-loan/',
-            permanent=True)),
 
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
@@ -232,42 +158,15 @@ urlpatterns = [
     url(r'^pressrelease/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/newsroom/%(path)s', permanent=True)),
-    url(r'^pressrelease/'
-        'treasury-department-announces-senior-leadership-hires-'
-        'for-the-consumer-financial-protection-bureau/$',
-        RedirectView.as_view(
-            url='/about-us/newsroom/'''
-                'treasury-department-announces-senior-leadership-hires-'
-                'for-the-consumer-financial-protection-bureau/',
-            permanent=True)),
 
     # about-us redirects
     url(r'^the-bureau/(?P<path>.*)$',
         RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
                              permanent=True)),
 
-    url(r'^about-us/advisory-groups/$', RedirectView.as_view(
-        url='/about-us/advisory-committees/', permanent=True)),
-    url(r'^about-us/blog/'
-        'understand-your-options-tips-student-loan-borrowers-disabilities/$',
-        RedirectView.as_view(
-            url='/about-us/blog/tips-student-loan-borrowers/',
-            permanent=True)),
     url(r'^about-us/leadership-calendar/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/the-bureau/leadership-calendar/%(path)s',
         permanent=True)),
-    url(r'^about-us/newsroom/student-debt-domino-effect/$',
-        RedirectView.as_view(
-            url='/about-us/blog/student-debt-domino-effect/',
-            permanent=True)),
-    url(r'^about-us/project-catalyst/run-a-trial-disclosure/$',
-        RedirectView.as_view(
-            url='/about-us/innovation/trial-disclosure-program/',
-            permanent=True)),
-    url(r'^about-us/doing-business-with-us/small-businesses/$',
-        RedirectView.as_view(
-            url='/about-us/doing-business-with-us/small-minority-businesses/',
-            permanent=True)),
     url(r'^doing-business-with-us/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
@@ -339,22 +238,6 @@ urlpatterns = [
         include('agreements.urls')),
 
     # consumer-tools redirects
-    url(r'^consumer-tools/debt-collection/if-creditor-sues-you/$',
-        RedirectView.as_view(
-            url='/ask-cfpb/'
-                'what-should-i-do-if-a-creditor-or-'
-                'debt-collector-sues-me-en-334/',
-            permanent=True)),
-    url(r'^consumer-tools/everyone-has-a-story/'
-        'dani-struggling-repay-student-debt/$',
-        RedirectView.as_view(
-            url='/consumer-tools/everyone-has-a-story/'
-                'dani-struggling-to-repay-student-debt/',
-            permanent=True)),
-    url(r'^consumer-tools/money-as-you-grow/book-club/discussion-guides/$',
-        RedirectView.as_view(
-            url='/consumer-tools/money-as-you-grow/bookshelf/',
-            permanent=True)),
     url(r'^consumer-tools/retirement/', include_if_app_enabled(
         'retirement_api',
         'retirement_api.urls',
@@ -446,12 +329,6 @@ urlpatterns = [
     url(r'^retirement/(?P<path>.*)$', RedirectView.as_view(
         url='/consumer-tools/retirement/%(path)s',
         permanent=True)),
-
-    # regulations redirects
-    url(r'^regulations/final-remittance-rule-amendment-regulation-e/$',
-        RedirectView.as_view(
-            url='/policy-compliance/rulemaking/regulations/1005/',
-            permanent=True)),
 
     # empowerment redirects
     url(r'^empowerment/$', RedirectView.as_view(
