@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 
 import requests
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
+from pytz import timezone
 
 
 S3_PATH = 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/'
@@ -43,15 +44,19 @@ def import_agreements_data(agreements_data):
         effective_date = item['effective_date']
         if effective_date and effective_date != 'None':
             effective_date = datetime.strptime(
-                effective_date, "%m/%d/%Y").date()
+                effective_date, '%m/%d/%Y').date()
         else:
             effective_date = None
 
+        created_date = item['created_date']
+        created_date = datetime.strptime(
+            created_date, '%Y-%m-%d %H:%M:%S').date()
         product_id = item['product_id'].replace('PRODUCT-', '')
         product = PrepaidProduct.objects.get(pk=product_id)
         url = S3_PATH + item['agreements_files_location']
 
         agreement.product = product
+        agreement.created_date = created_date
         agreement.effective_date = effective_date
         agreement.compressed_files_url = url
         agreement.bulk_download_path = item['path']
@@ -65,7 +70,8 @@ def run(*args):
     data = resp.json()
     last_updated = datetime.strptime(
         data['data_last_updated'], '%Y-%m-%d %H:%M:%S')
+    last_updated = last_updated.replace(tzinfo=timezone('EST'))
     # Only import data if the data has been updated in the past 24 hours
-    if datetime.now() - last_updated <= timedelta(hours=24):
+    if datetime.now(timezone('EST')) - last_updated <= timedelta(hours=24):
         import_products_data(data['products'])
         import_agreements_data(data['agreements'])
