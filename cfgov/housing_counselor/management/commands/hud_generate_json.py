@@ -10,6 +10,7 @@ from housing_counselor.generator import generate_counselor_json
 from housing_counselor.geocoder import (
     GazetteerZipCodeFile, GeocodedZipCodeCsv, geocode_counselors
 )
+from housing_counselor.results_archiver import save_list
 
 
 logger = logging.getLogger(__name__)
@@ -24,10 +25,13 @@ class Command(BaseCommand):
                             help='CSV containing zipcode lat/lngs')
         parser.add_argument('--zipcode-gazetteer-file',
                             help='Census Gazetteer zipcode file')
+        parser.add_argument('--archive-file-name',
+                            help='Archive file output path', required=True)
 
     def handle(self, *args, **options):
         zipcode_csv_file = options['zipcode_csv_file']
         zipcode_gazetteer_file = options['zipcode_gazetteer_file']
+        archive_file_name = options['archive_file_name']
 
         if zipcode_csv_file:
             zipcodes = GeocodedZipCodeCsv.read(zipcode_csv_file)
@@ -42,6 +46,9 @@ class Command(BaseCommand):
 
         # Retrieve counselors from the HUD website.
         counselors = fetch_counselors()
+
+        # Save the full list, for archive purposes
+        save_list(counselors, archive_file_name)
 
         # Standardize formatting of counselor data.
         counselors = clean_counselors(counselors)

@@ -2,7 +2,8 @@ import {
   UNDEFINED,
   actionCreator,
   assign,
-  combineReducers
+  combineReducers,
+  entries
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
 const reducerStateA = {
@@ -43,7 +44,7 @@ const reducerB = ( () => ( state = reducerStateB, action ) => {
 } )();
 
 describe( 'YES utility functions', () => {
-  describe( 'action', () => {
+  describe( 'actionCreator', () => {
     const actionType = 'MY_ACTION';
 
     it( 'returns a curried function', () => {
@@ -135,6 +136,29 @@ describe( 'YES utility functions', () => {
       } );
 
       expect( nextState.b ).toEqual( reducerStateB );
+    } );
+  } );
+
+  describe( '.entries', () => {
+    it( 'throws an error when it receives a value that isn\'t an object', () => {
+      const invalidArgs = [ function() { return 'a'; }, null, 1, 'bad', [] ];
+
+      invalidArgs.forEach( invalidArg => expect( () => entries( invalidArg ) ).toThrow()
+      );
+    } );
+
+    it( 'reduces an object into an array of arays form key/value pairs', () => {
+      const pet = {
+        name: 'buddy',
+        type: 'cat'
+      };
+
+      const objectEntries = entries( pet );
+
+      expect( objectEntries[0][0] ).toBe( 'name' );
+      expect( objectEntries[0][1] ).toBe( pet.name );
+      expect( objectEntries[1][0] ).toBe( 'type' );
+      expect( objectEntries[1][1] ).toBe( pet.type );
     } );
   } );
 } );

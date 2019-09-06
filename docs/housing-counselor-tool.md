@@ -62,9 +62,10 @@ This step calls the [`hud_generate_json`](https://github.com/cfpb/cfgov-refresh/
 which performs the following steps:
 
   1. fetch agency listings from HUD
-  2. clean the results
-  3. fill in any missing latitude and longitude values
-  4. create files of the 10 nearest results for each U.S. ZIP code
+  2. save a copy of the full results, for our records
+  3. clean the results
+  4. fill in any missing latitude and longitude values
+  5. create files of the 10 nearest results for each U.S. ZIP code
 
 
 #### Fetch agency listings
@@ -112,13 +113,20 @@ It returns thousands of results like this:
 },
 ```
 
-#### Clean the results
-
-(_in [`fetcher.py`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/housing_counselor/fetcher.py)_)
-
-We replace the `languages` value with the full language names.
+Next, we replace the `languages` value with the full language names.
 We replace the `services` value with fully spelled out service descriptions.
 Both of these mappings come from the HUD API.
+
+#### Save the results
+
+(_in [`results_archiver.py`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/housing_counselor/results_archiver.py)_)
+
+Save a copy of the full set of results as a zip file in the home directory.
+The Jenkins job then transfers the zip file to S3 as part of the `MAKE JSON` step.
+The file is saved in S3 at `/archive/{date}.zip`.
+This copy can be used as the canonical set of HUD data that day in case of an enforcement action.
+
+#### Clean the results
 
 (_in [`cleaner.py`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/housing_counselor/cleaner.py)_)
 
