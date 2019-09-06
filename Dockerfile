@@ -75,9 +75,6 @@ ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
 
-# Q: Should this be a runtime ENV?
-ENV MEDIA_ROOT ${APP_HOME}/cfgov/f/
-
 RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh
@@ -85,7 +82,7 @@ RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
 # See .dockerignore for details on which files are included
 COPY . .
 
-# Build frontend
+# Build frontend, cleanup excess file, and setup filesystem
 RUN yum -y install nodejs yarn  && \
     ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
@@ -96,7 +93,9 @@ RUN yum -y install nodejs yarn  && \
         cfgov/apache/www \
         cfgov/unprocessed \
         node_modules && \
-    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules
+    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
+    mkdir cfgov/f/ && chown apache:apache cfgov/f/ && \
+    mkdir /tmp/eregs_cache && chown apache:apache /tmp/eregs_cache
 
 EXPOSE 80
 

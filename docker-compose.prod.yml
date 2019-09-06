@@ -10,18 +10,19 @@ services:
             target: cfgov-prod
         environment: &python_env
             ALLOW_ADMIN_URL: 'True'
+            APACHE_UPLOADS_F_ALIAS: ${CFGOV_APACHE_UPLOADS_F_ALIAS:-/src/cfgov-refresh/cfgov/f/}
             DATABASE_URL: postgres://cfpb@postgres/cfgov
             DJANGO_ADMIN_USERNAME: admin
             DJANGO_ADMIN_PASSWORD: admin
-            DJANGO_HTTP_PORT: 8000
+            SECRET_KEY: abcdefghijklmnopqrstuvwxyz
+            MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
             PGPASSWORD: cfpb
         ports:
             - "8000:80"
-        #volumes:
-        #    - ./cfgov/apache/conf/:/src/cfgov-refresh/cfgov/apache/conf/
-        #    - ./cfgov/apache/conf.d/:/src/cfgov-refresh/cfgov/apache/conf.d/
-        #    - ./cfgov/apache/conf.modules.d/:/src/cfgov-refresh/cfgov/apache/conf.modules.d/
-        #    - ./docker/postgres/docker-entrypoint-initdb.d/:/tmp/docker-entrypoint-initdb.d/
+        volumes:
+            - ./cfgov/apache/conf/:/src/cfgov-refresh/cfgov/apache/conf/
+            - ./cfgov/apache/conf.d/:/src/cfgov-refresh/cfgov/apache/conf.d/
+            - ./cfgov/apache/conf.modules.d/:/src/cfgov-refresh/cfgov/apache/conf.modules.d/
 
     python3:
         build:
