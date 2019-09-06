@@ -102,7 +102,7 @@ def create_zipfile(project_path, requirements_file, zipfile_basename,
             os.path.join(temp_dir, '__main__.py')
         )
 
-        shutil.copy(os.path.join(script_dir, 'setup.py'), temp_dir)
+        shutil.copy(os.path.join(script_dir, 'install_wheels.py'), temp_dir)
 
         # Add any static file directories, if provided.
         for i, static_dir in enumerate(extra_static or []):

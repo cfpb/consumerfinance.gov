@@ -62,6 +62,6 @@ class TestExtractZipFile(TestCase):
             # binary in the virtual environment.
             mock.call([
                 os.path.join(extract_location, 'venv', 'bin', 'python'),
-                os.path.join(extract_location, 'setup.py'),
+                os.path.join(extract_location, 'install_wheels.py'),
             ])
         ])
