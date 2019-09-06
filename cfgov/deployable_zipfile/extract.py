@@ -14,7 +14,7 @@ def locate_virtualenv_site_packages(virtualenv_python):
         virtualenv_python,
         '-c',
         'import sys; print(sys.path[-1])',
-    ]).decode(sys.stdout.encoding).strip()
+    ]).decode(sys.stdout.encoding or 'utf-8').strip()
 
 
 def extract_zipfile(zipfile_filename, extract_location):
