@@ -96,8 +96,7 @@ RUN yum -y install nodejs yarn  && \
         cfgov/apache/www \
         cfgov/unprocessed \
         node_modules && \
-    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
-    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/conf/magic ${APACHE_SERVER_ROOT}/conf/magic
+    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules
 
 EXPOSE 80
 
