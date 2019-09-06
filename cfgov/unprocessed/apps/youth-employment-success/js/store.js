@@ -1,7 +1,7 @@
-import { combineReducers } from './util';
-import budgetReducer from './reducers/budget-reducer';
-import routeOptionReducer from './reducers/route-option-reducer';
 import YesStore from './yes-store';
+import budgetReducer from './reducers/budget-reducer';
+import { combineReducers } from './util';
+import routeOptionReducer from './reducers/route-option-reducer';
 
 /**
  * Function to create a new store instance
@@ -11,7 +11,7 @@ function configureStore() {
   return new YesStore(
     combineReducers( {
       budget: budgetReducer,
-      route: routeOptionReducer
+      routes: routeOptionReducer
     } )
   );
 }

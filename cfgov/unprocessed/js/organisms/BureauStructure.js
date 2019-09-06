@@ -4,7 +4,7 @@
    ========================================================================== */
 
 import BreakpointHandler from '../modules/BreakpointHandler';
-require( 'cf-expandables/src/Expandable' ).init();
+import Expandable from 'cf-expandables/src/Expandable';
 
 let BS;
 
@@ -27,6 +27,7 @@ const BureauStructure = BS = {
    */
   initialize: function initialize() {
     BS.setElements();
+    BS.initializeExpandables();
     BS.slideCount = BS.elements.branches.length;
 
     new BreakpointHandler( {
@@ -35,6 +36,26 @@ const BureauStructure = BS = {
       enter:      BS.eventListeners.enterMobile,
       leave:      BS.eventListeners.leaveMobile
     } );
+  },
+
+  /**
+   * Initialize the expandables and the expand/collapse event listeners.
+   */
+  initializeExpandables: function initializeExpandables() {
+    const expandables = Expandable.init(
+      document.querySelector( '.o-bureau-structure' )
+    );
+
+    let expandable;
+    for ( const index in expandables ) {
+      expandable = expandables[index];
+      expandable.transition.addEventListener(
+        'expandEnd', BS.eventListeners.heightChange
+      );
+      expandable.transition.addEventListener(
+        'collapseEnd', BS.eventListeners.heightChange
+      );
+    }
   },
 
   /**
@@ -157,8 +178,9 @@ const BureauStructure = BS = {
    */
   removeEventListeners: function removeEventListeners() {
     window.removeEventListener( 'resize', BS.eventListeners.resize );
-    BS.elements.branch.removeEventListener( 'click',
-      BS.eventListeners.navClick );
+    BS.elements.branch.removeEventListener(
+      'click', BS.eventListeners.navClick
+    );
   },
 
   eventListeners: {

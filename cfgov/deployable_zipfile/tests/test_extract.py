@@ -24,8 +24,6 @@ class TestExtractZipFile(TestCase):
         extract_location = os.path.join(self.tempdir, 'extracted')
         extract_zipfile(test_zip, extract_location)
 
-        extract_location = os.path.join(extract_location, 'current')
-
         # Verify that all files are extracted properly.
         six.assertCountEqual(
             self,
