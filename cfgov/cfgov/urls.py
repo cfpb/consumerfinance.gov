@@ -111,8 +111,7 @@ urlpatterns = [
     url(r'^owning-a-home/process/(?P<path>.*)$',
         lambda req, path: ServeView.as_view()(
             req, 'owning-a-home/{}'.format(path or 'prepare/')
-        ),
-    ),
+        )),
     # END TODO
 
     url(r'^how-to-prepare-your-finances-for-buying-a-home/',
@@ -199,11 +198,11 @@ urlpatterns = [
             template_name='students/knowbeforeyouowe/index.html'),
         name='students-knowbeforeyouowe'),
     url(r'^practitioner-resources/students/'
-         'helping-borrowers-find-ways-to-stay-afloat/$',
-            TemplateView.as_view(
-                template_name='students/helping-borrowers-find-'
-                              'ways-to-stay-afloat/index.html'),
-            name='students-helping-borrowers'),
+        'helping-borrowers-find-ways-to-stay-afloat/$',
+        TemplateView.as_view(
+            template_name='students/helping-borrowers-find-'
+                          'ways-to-stay-afloat/index.html'),
+        name='students-helping-borrowers'),
     # practitioner-resources redirects
     url(r'^practitioner-resources/students/knowbeforeyouowe/about/$',
         RedirectView.as_view(
@@ -541,8 +540,8 @@ urlpatterns = [
     # Jenkins job check this endpoint to determine whether to refresh
     # Beta database.
     flagged_url('BETA_EXTERNAL_TESTING',
-        r'^beta_external_testing/',
-        empty_200_response),
+                r'^beta_external_testing/',
+                empty_200_response),
 
     # put financial well-being pages behind feature flag for testing
     flagged_wagtail_only_view(
