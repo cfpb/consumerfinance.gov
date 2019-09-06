@@ -47,7 +47,7 @@
           name="{{ id }}"
           type="{{ value.type }}"
           value="{{ value.value }}"
-          {{ 'data-js-name="' ~ value.data_js_name ~ '"' if value.data_js_name else '' }}
+          {{ 'data-js-name=' ~ value.data_js_name ~ '' if value.data_js_name else '' }}
           {{ 'required' if value.required else '' }}
           {{ 'disabled' if value.disabled else ''}}
           {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}

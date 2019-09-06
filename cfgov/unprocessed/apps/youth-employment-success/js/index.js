@@ -6,6 +6,11 @@ import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
 import store from './store';
 
+Array.prototype.slice.call(
+  document.querySelectorAll( 'input' )
+).forEach( input => {
+  input.removeAttribute( 'disabled' );
+} );
 
 const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
@@ -24,7 +29,7 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
 } );
 
 /* only initialize the first form, the other gets initialized when
-   the user clicks 'add another option' button */
+  the user clicks 'add another option' button */
 routeOptionForms[0].init();
 routeOptionToggleView(
   document.querySelector( `.${ OPTION_TOGGLE_CLASSES.BUTTON }` ), {

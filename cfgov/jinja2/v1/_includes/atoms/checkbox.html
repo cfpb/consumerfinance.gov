@@ -23,6 +23,8 @@
 
    el_wrapper:  Element to wrap the checkbox in. Defaults to div.
 
+   disabled:    Whether the field is disabled. Defaults to false.
+
    ========================================================================== #}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
 
@@ -42,7 +44,8 @@
            id="{{ id }}"
            name="{{ name }}"
            {{ behavior }}
-           {{ checked }}>
+           {{ checked }}
+           {{ 'disabled' if value.disabled else ''}}>
     <label class="a-label"
            for="{{ id }}">
         <span>{{ value.label }}</span>
