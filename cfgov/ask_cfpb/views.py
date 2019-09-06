@@ -163,7 +163,7 @@ def redirect_ask_search(request, language='en'):
     else:
         facets = request.GET.getlist('selected_facets')
         if not facets or not facets[0]:
-            return redirect('/ask-cfpb/search')
+            return redirect('/ask-cfpb/search/')
 
         def redirect_to_category(category, language):
             if language == 'es':
