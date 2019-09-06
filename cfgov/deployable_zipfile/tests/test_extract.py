@@ -1,30 +1,61 @@
 import os
 import shutil
 import six
-import sys
 import tempfile
 from unittest import TestCase
 
 import mock
-from deployable_zipfile.extract import extract_zipfile
+from deployable_zipfile.extract import (
+    extract_zipfile, locate_virtualenv_site_packages
+)
+
+
+class TestLocateVirtualenvSitePackages(TestCase):
+    @mock.patch('subprocess.check_output', return_value=b'somewhere\n')
+    def test_calls_python_to_print_path(self, check_output):
+        python_executable = '/path/to/python'
+
+        # This should return the stripped result of the Python call.
+        self.assertEqual(
+            locate_virtualenv_site_packages(python_executable),
+            'somewhere'
+        )
+
+        # This should have called Python to print the last element in the path.
+        check_output.assert_called_once_with([
+            python_executable,
+            '-c',
+            'import sys; print(sys.path[-1])'
+        ])
 
 
 class TestExtractZipFile(TestCase):
     def setUp(self):
         self.tempdir = tempfile.mkdtemp()
-
-    def tearDown(self):
-        shutil.rmtree(self.tempdir)
+        self.addCleanup(shutil.rmtree, self.tempdir)
 
     @mock.patch('subprocess.check_call')
     def test_extract_zipfile(self, check_call):
         test_data = os.path.join(os.path.dirname(__file__), 'data')
-        test_zip = os.path.join(test_data, 'deployable_with_wheels.zip')
+        test_zip = os.path.join(test_data, 'test.zip')
 
         extract_location = os.path.join(self.tempdir, 'extracted')
-        extract_zipfile(test_zip, extract_location)
 
-        # Verify that all files are extracted properly.
+        # Since we're not really creating a virtual environment, we mock the
+        # location of site-packages so we can confirm the files that should
+        # be copied there.
+        site_packages = os.path.join(extract_location, 'site-packages')
+        os.makedirs(site_packages)
+
+        with mock.patch(
+            'deployable_zipfile.extract.locate_virtualenv_site_packages',
+            return_value=site_packages
+        ):
+            extract_zipfile(test_zip, extract_location)
+
+        # Verify that all files are extracted properly, that the appropriate
+        # files are copied to site-packages, and that all unnecessary files are
+        # cleaned up from the extract location.
         six.assertCountEqual(
             self,
             [
@@ -36,32 +67,9 @@ class TestExtractZipFile(TestCase):
                 os.path.join(extract_location, f) for f in [
                     'deployable_zip/foo.txt',
                     'deployable_zip/subdir/bar.txt',
-                    'wheels/test-0.0.1-py2.py3-none-any.whl',
+                    'site-packages/deployable_zip.pth',
+                    'site-packages/loadenv.pth',
+                    'site-packages/loadenv.py',
                 ]
             ]
         )
-
-        # Verify that the virtual environment was created and that the setup
-        # script was called appropriately.
-        check_call.assert_has_calls([
-            # First call should create the virtual environment.
-            mock.call([
-                sys.executable,
-                '-m',
-                'virtualenv',
-                '--never-download',
-                '--no-wheel',
-                '--extra-search-dir=%s' % os.path.join(
-                    extract_location,
-                    'bootstrap_wheels'
-                ),
-                os.path.join(extract_location, 'venv'),
-            ]),
-
-            # Second call should invoke the setup script using the Python
-            # binary in the virtual environment.
-            mock.call([
-                os.path.join(extract_location, 'venv', 'bin', 'python'),
-                os.path.join(extract_location, 'install_wheels.py'),
-            ])
-        ])
