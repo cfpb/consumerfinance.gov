@@ -44,8 +44,7 @@ def search_products(search_term, search_field, products):
     for product in products:
         if product.prepaid_type not in active_filters['prepaid_type']:
             if product.prepaid_type != '':
-                active_filters['prepaid_type'].append(
-                    product.prepaid_type)
+                active_filters['prepaid_type'].append(product.prepaid_type)
         if product.status not in active_filters['status']:
             active_filters['status'].append(product.status)
         if product.issuer_name not in active_filters['issuer_name']:
@@ -53,8 +52,26 @@ def search_products(search_term, search_field, products):
     return products, active_filters, search_field
 
 
+def filter_products(filters, products):
+    if 'issuer_name' in filters:
+        issuers = Q()
+        for issuer in filters['issuer_name']:
+            issuers |= Q(issuer_name__iexact=issuer)
+        products = products.filter(issuers)
+
+    if 'prepaid_type' in filters:
+        prepaid_types = Q()
+        for prepaid_type in filters['prepaid_type']:
+            prepaid_types |= Q(prepaid_type__iexact=prepaid_type.title())
+        products = products.filter(prepaid_types)
+
+    if 'status' in filters:
+        products = products.filter(status__iexact=filters['status'][0])
+
+    return products
+
 def index(request):
-    filters = dict(request.GET.iterlists())
+    params = dict(request.GET.iterlists())
     active_filters = {}
     search_term = None
     search_field = None
@@ -63,10 +80,10 @@ def index(request):
     valid_filters = [
         'prepaid_type', 'status', 'issuer_name'
     ]
-    if filters:
-        filters.pop('page', None)
-        search_term = filters.pop('q', None)
-        search_field = filters.pop('search_field', None)
+    if params:
+        params.pop('page', None)
+        search_term = params.pop('q', None)
+        search_field = params.pop('search_field', None)
 
         if search_term:
             search_term = search_term[0].strip()
@@ -74,21 +91,7 @@ def index(request):
                 products, active_filters, search_field = search_products(
                     search_term, search_field, products
                 )
-
-        if 'issuer_name' in filters:
-            issuers = Q()
-            for issuer in filters['issuer_name']:
-                issuers |= Q(issuer_name__iexact=issuer)
-            products = products.filter(issuers)
-
-        if 'prepaid_type' in filters:
-            prepaid_types = Q()
-            for prepaid_type in filters['prepaid_type']:
-                prepaid_types |= Q(prepaid_type__iexact=prepaid_type.title())
-            products = products.filter(prepaid_types)
-
-        if 'status' in filters:
-            products = products.filter(status__iexact=filters['status'][0])
+        products = filter_products(params, products)
 
     current_count = products.count()
     paginator = Paginator(products.all(), 20)
@@ -106,7 +109,7 @@ def index(request):
         'total_count': total_count,
         'paginator': paginator,
         'current_count': current_count,
-        'filters': filters,
+        'filters': params,
         'query': search_term or '',
         'active_filters': active_filters,
         'valid_filters': valid_filters,
