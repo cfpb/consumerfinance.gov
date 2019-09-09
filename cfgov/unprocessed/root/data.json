@@ -34,7 +34,7 @@
 
       },
 
-      "describedBy": "http://www.consumerfinance.gov/complaintdatabase/technical-documentation/#field-reference",
+      "describedBy": "https://www.consumerfinance.gov/complaintdatabase/technical-documentation/#field-reference",
 
       "description": "These are complaints we’ve received about financial products and services.",
 
@@ -64,7 +64,7 @@
 
           "@type": "dcat:Distribution",
 
-          "downloadURL": "http://data.consumerfinance.gov/api/views.json",
+          "downloadURL": "https://data.consumerfinance.gov/api/views.json",
 
           "mediaType": "application/json"
 
@@ -74,7 +74,7 @@
 
           "@type": "dcat:Distribution",
 
-          "downloadURL": "http://data.consumerfinance.gov/api/views.xml",
+          "downloadURL": "https://data.consumerfinance.gov/api/views.xml",
 
           "mediaType": "application/xml"
 
@@ -86,7 +86,7 @@
 
           "format": "API",
 
-          "accessURL": "http://data.consumerfinance.gov/api/views/s6ew-h6mp.json"
+          "accessURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp.json"
 
         }
 
@@ -122,7 +122,7 @@
 
       ],
 
-      "landingPage": "http://www.consumerfinance.gov/complaintdatabase",
+      "landingPage": "https://www.consumerfinance.gov/complaintdatabase",
 
       "modified": "2013-11-06",
 
@@ -248,7 +248,7 @@
 
       ],
 
-      "landingPage": "http://www.consumerfinance.gov/hmda/",
+      "landingPage": "https://www.consumerfinance.gov/hmda/",
 
       "modified": "2014-09-22",
 
