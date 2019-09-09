@@ -234,7 +234,7 @@ urlpatterns = [
         include('agreements.urls')),
 
     flagged_url('PREPAID_AGREEMENTS_SEARCH',
-                r'^data-research/prepaid-agreements/',
+                r'^data-research/prepaid-accounts/search-agreements/',
                 include('prepaid_agreements.urls')),
 
     url(r'^consumer-tools/retirement/', include_if_app_enabled(

@@ -14,7 +14,7 @@
 
     {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
     {% set breadcrumb_items = [{
-        'href': '/prepaid-agreements/',
+        'href': '/data-research/prepaid-accounts/search-agreements/',
         'title': 'Prepaid Product Agreements Database'
     }]%}
     {{ breadcrumbs.render(breadcrumb_items) }}
@@ -132,3 +132,18 @@
 <p>If you have questions about the agreements themselves, contact the prepaid issuer directly.</p>
 </div>
 {%- endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('js/routes/data-research/prepaid-accounts/search-agreements/index.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

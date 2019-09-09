@@ -12,6 +12,9 @@
         {% if query %}
             <input type="hidden" name="q" value="{{ query }}">
         {% endif %}
+        {% if search_field %}
+            <input type="hidden" name="search_field" value="{{ search_field }}">
+        {% endif %}
 
         <div class="m-form-field u-mb15">
             {% set selections = filters['issuer_name'] %}

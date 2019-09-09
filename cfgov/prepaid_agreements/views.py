@@ -33,7 +33,8 @@ def search_products(search_term, search_field, products):
         'prepaid_type',
     ]
     if search_field and search_field[0] in search_fields:
-        search_fields = [search_field[0]]
+        search_field = search_field[0]
+        search_fields = [search_field]
     products = products.annotate(
         search=SearchVector(
             *search_fields
@@ -49,7 +50,7 @@ def search_products(search_term, search_field, products):
             active_filters['status'].append(product.status)
         if product.issuer_name not in active_filters['issuer_name']:
             active_filters['issuer_name'].append(product.issuer_name)
-    return products, active_filters
+    return products, active_filters, search_field
 
 
 def index(request):
@@ -70,7 +71,7 @@ def index(request):
         if search_term:
             search_term = search_term[0].strip()
             if search_term != '':
-                products, active_filters = search_products(
+                products, active_filters, search_field = search_products(
                     search_term, search_field, products
                 )
 
