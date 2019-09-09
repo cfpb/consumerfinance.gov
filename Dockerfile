@@ -94,7 +94,7 @@ RUN yum -y install nodejs yarn  && \
         cfgov/unprocessed \
         node_modules && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
-    mkdir -p cfgov/f/ && chown apache:apache cfgov/f/ && \
+    mkdir -p cfgov/f/ && chown -R apache:apache cfgov/f/ && \
     mkdir /tmp/eregs_cache && chown apache:apache /tmp/eregs_cache
 
 EXPOSE 80
