@@ -400,7 +400,7 @@ function generateCSV() {
   }
 
   // loop through each row
-  [].slice.call( DT.getEls( 'table tbody tr td' ) )
+  [].slice.call( DT.getEls( '.rout-results-table tbody tr td' ) )
     .forEach( _loopHandler );
 
   return theCSV;
