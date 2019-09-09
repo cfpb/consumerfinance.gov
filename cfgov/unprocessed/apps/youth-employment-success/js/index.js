@@ -4,6 +4,7 @@ import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
 import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
+import routeDetailsView from './views/route-details';
 import store from './store';
 
 Array.prototype.slice.call(
@@ -15,6 +16,7 @@ Array.prototype.slice.call(
 const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
 const OPTION_TOGGLE_CLASSES = routeOptionToggleView.CLASSES;
+const DETAILS_CLASSES = routeDetailsView.CLASSES;
 
 const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
 const budgetForm = budgetFormView( budgetFormEl, { store } );
@@ -25,7 +27,11 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
   store.dispatch( addRouteOptionAction( createRoute() ) );
 
   const routeOptionsEl = expandable.element.querySelector( `.${ OPTION_CLASSES.FORM }` );
-  return routeOptionFormView( routeOptionsEl, { store, routeIndex: index } );
+  return routeOptionFormView( routeOptionsEl, {
+    store,
+    routeIndex: index,
+    detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) )
+  } );
 } );
 
 /* only initialize the first form, the other gets initialized when

@@ -3,7 +3,8 @@ import {
   actionCreator,
   assign,
   combineReducers,
-  entries
+  entries,
+  toArray
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
 const reducerStateA = {
@@ -159,6 +160,30 @@ describe( 'YES utility functions', () => {
       expect( objectEntries[0][1] ).toBe( pet.name );
       expect( objectEntries[1][0] ).toBe( 'type' );
       expect( objectEntries[1][1] ).toBe( pet.type );
+    } );
+  } );
+
+  describe( '.toArray', () => {
+    it( 'turns array-like values into arrays', () => {
+      const number = toArray( 1 );
+      expect( number.length ).toBe( 0 );
+
+      const string = toArray( 'ab' );
+      expect( string.length ).toBe( 2 );
+      expect( string[0] ).toBe( 'a' );
+
+      const obj = toArray( {} );
+      expect( obj.length ).toBe( 0 );
+
+      const fragment = document.createDocumentFragment();
+      const children = [ document.createElement( 'a' ), document.createElement( 'a' ) ];
+      children.forEach( child => fragment.appendChild( child ) );
+
+      const dom = document.createElement( 'div' );
+      dom.appendChild( fragment );
+      const array = toArray( dom.querySelectorAll( 'a' ) );
+
+      expect( array.slice ).toBeDefined();
     } );
   } );
 } );
