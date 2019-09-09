@@ -1,7 +1,7 @@
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import InvalidPage, Paginator
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from prepaid_agreements.models import PrepaidProduct
 
@@ -116,5 +116,5 @@ def index(request):
 
 def detail(request, product_id):
     return render(request, 'prepaid_agreements/detail.html', {
-        'product': PrepaidProduct.objects.get(id=product_id)
+        'product': get_object_or_404(PrepaidProduct, pk=product_id)
     })
