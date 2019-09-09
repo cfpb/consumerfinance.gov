@@ -19,8 +19,8 @@ Here's a (very abbreviated) peek into what's *in* the zip file:
 ```
 __main__.py
 cfgov.pth
+install_wheels.py
 loadenv.py
-setup.py
 loadenv-init.pth
 wheels/botocore-1.10.84-py2.py3-none-any.whl
 wheels/tqdm-4.15.0-py2.py3-none-any.whl
