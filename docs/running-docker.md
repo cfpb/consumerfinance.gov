@@ -182,7 +182,7 @@ change configs locally without having to rebuild the image each time.
 
 ## How does it work?
 
-The production image extendes the development image. If you look at the `Dockerfile`, this is spelled out by the line:
+The production image extends the development image. If you look at the `Dockerfile`, this is spelled out by the line:
 
 ```
 FROM cfgov-dev as cfgov-prod
