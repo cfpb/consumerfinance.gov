@@ -83,6 +83,8 @@ RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
 COPY . .
 
 # Build frontend, cleanup excess file, and setup filesystem
+# - cfgov/f/ - Wagtail file uploads
+# - /tmp/eregs_cache/ - Django file-based cache
 RUN yum -y install nodejs yarn  && \
     ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
