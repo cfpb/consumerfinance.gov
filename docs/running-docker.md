@@ -194,6 +194,6 @@ From there, we:
 
 - Install SCL-based Apache HTTPD, and the `mod_wsgi` version appropriate for our chosen `scl_python_version`.
 - Run frontend.sh, Django's collectstatic command, and then *uninstall* node and yarn.
-- Set the default command on container startup to `httpd -d ./cfgov/apache -D FOREGROUND`, which runs apache using
+- Set the default command on container startup to `httpd -d ./cfgov/apache -D FOREGROUND`, which runs Apache using
     the [configuration in cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/apache), in the
     foreground (typical when running Apache in a container).
