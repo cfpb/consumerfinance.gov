@@ -9,7 +9,6 @@ services:
             - "8000:8000" # Django
         volumes: &python_volumes
             - ./:/src/cfgov-refresh/
-            - ./develop-apps/:/src/cfgov-refresh/develop-apps/
             - ./.env:/etc/profile.d/dev-env.sh
             - ./extend-environment.sh:/etc/profile.d/extend-environment.sh
 
