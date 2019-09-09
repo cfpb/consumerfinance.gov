@@ -131,8 +131,8 @@ version you'd like to use. We've tested this against `python27` and `rh-python36
 
 ### Docker Compose
 
-You can also launch the full cf.gov stack locally via `docker-compose`.  This setup is
-a nice way to test out new Apache config changes.  It includes volumes that mount your
+You can also launch the full cf.gov stack locally via `docker-compose`. This setup is
+a nice way to test out new Apache config changes. It includes volumes that mount your
 local checkout `cfgov/apache` config directories into the container, allowing you to
 change configs locally without having to rebuild the image each time.
 
@@ -182,7 +182,7 @@ change configs locally without having to rebuild the image each time.
 
 ## How does it work?
 
-The production image extendes the development image. If you look at the `Dockerfile`, this is spelled out by the line:
+The production image extends the development image. If you look at the `Dockerfile`, this is spelled out by the line:
 
 ```
 FROM cfgov-dev as cfgov-prod
@@ -194,6 +194,6 @@ From there, we:
 
 - Install SCL-based Apache HTTPD, and the `mod_wsgi` version appropriate for our chosen `scl_python_version`.
 - Run frontend.sh, Django's collectstatic command, and then *uninstall* node and yarn.
-- Set the default command on container startup to `httpd -d ./cfgov/apache -D FOREGROUND`, which runs apache using
+- Set the default command on container startup to `httpd -d ./cfgov/apache -D FOREGROUND`, which runs Apache using
     the [configuration in cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/apache), in the
     foreground (typical when running Apache in a container).

@@ -33,7 +33,7 @@ RUN yum -y install \
     pip install --no-cache-dir --upgrade pip setuptools
 
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
-# NOTE: MUST be after pip upgrade.  Build fails otherwise due to bug in old pip.
+# NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
 ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
