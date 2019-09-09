@@ -131,7 +131,7 @@ version you'd like to use. We've tested this against `python27` and `rh-python36
 
 ### Docker Compose
 
-You can also launch the full cf.gov stack locally via `docker-compose`.  This setup is
+You can also launch the full cf.gov stack locally via `docker-compose`. This setup is
 a nice way to test out new Apache config changes.  It includes volumes that mount your
 local checkout `cfgov/apache` config directories into the container, allowing you to
 change configs locally without having to rebuild the image each time.
