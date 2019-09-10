@@ -75,6 +75,8 @@
 
         .o-expandable_content__collapsed {
             // shows approx. 4 lines of content
+            // !important needed to override the default o-expandable_content__collapsed
+            // max-height
             max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
             overflow: hidden;
             position: relative;
@@ -141,6 +143,8 @@
 .o-expandable__read-more-toggle {
     .o-expandable_content__collapsed {
         // shows approx. 4 lines of content
+        // !important needed to override the default o-expandable_content__collapsed
+        // max-height
         max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
         overflow: hidden;
         position: relative;
