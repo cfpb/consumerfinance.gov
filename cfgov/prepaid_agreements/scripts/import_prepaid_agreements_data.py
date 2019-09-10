@@ -76,6 +76,6 @@ def run(*args):
         data['data_last_updated'], '%Y-%m-%d %H:%M:%S')
     last_updated = last_updated.replace(tzinfo=TIMEZONE)
     # Only import data if the data has been updated in the past 24 hours
-    if datetime.now(TIMEZONE) - last_updated <= timedelta(hours=28):
+    if datetime.now(TIMEZONE) - last_updated <= timedelta(hours=24):
         import_products_data(data['products'])
         import_agreements_data(data['agreements'])
