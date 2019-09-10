@@ -6,7 +6,8 @@ class PrepaidProduct(models.Model):
     issuer_name = models.CharField(max_length=255, blank=True)
     prepaid_type = models.CharField(max_length=255, blank=True, null=True)
     program_manager = models.CharField(max_length=255, blank=True, null=True)
-    program_manager_exists = models.CharField(max_length=255, blank=True, null=True)
+    program_manager_exists = models.CharField(
+        max_length=255, blank=True, null=True)
     other_relevant_parties = models.TextField(blank=True, null=True)
     status = models.TextField(blank=True, null=True)
     withdrawal_date = models.DateField(blank=True, null=True)
@@ -16,7 +17,8 @@ class PrepaidProduct(models.Model):
 
     @property
     def latest_agreement(self):
-        return self.prepaidagreement_set.order_by('-pk').first()
+        """ Gets most recent agreement, as determined by its created date."""
+        return self.prepaidagreement_set.first()
 
     class Meta:
         ordering = ['name']
@@ -24,7 +26,7 @@ class PrepaidProduct(models.Model):
 
 class PrepaidAgreement(models.Model):
     product = models.ForeignKey(PrepaidProduct, on_delete=models.CASCADE)
-    created_date = models.DateField(blank=True, null=True)
+    created_time = models.DateTimeField(blank=True, null=True)
     effective_date = models.DateField(blank=True, null=True)
     compressed_files_url = models.TextField(blank=True, null=True)
     bulk_download_path = models.TextField(blank=True, null=True)
@@ -38,4 +40,4 @@ class PrepaidAgreement(models.Model):
         return self == self.product.latest_agreement
 
     class Meta:
-        ordering = ['-pk']
+        ordering = ['-created_time']
