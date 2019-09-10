@@ -2,10 +2,12 @@ import Expandable from 'cf-expandables/src/Expandable';
 import { addRouteOptionAction } from './reducers/route-option-reducer';
 import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
+import averageCostView from './views/average-cost';
 import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
 import routeDetailsView from './views/route-details';
 import store from './store';
+import './polyfills/closest';
 
 Array.prototype.slice.call(
   document.querySelectorAll( 'input' )
@@ -30,7 +32,8 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
   return routeOptionFormView( routeOptionsEl, {
     store,
     routeIndex: index,
-    detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) )
+    detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) ),
+    averageCostView
   } );
 } );
 

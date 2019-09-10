@@ -53,7 +53,7 @@ describe( 'transitTimeView', () => {
     view = null;
   } );
 
-  it( 'dispatches the correct event when hours field is changed', () => {
+  it( 'dispatches the correct action when hours field is changed', () => {
     const hoursEl = document.querySelector( '[data-js-name="transitTimeHours"]' );
     const hours = '1';
 

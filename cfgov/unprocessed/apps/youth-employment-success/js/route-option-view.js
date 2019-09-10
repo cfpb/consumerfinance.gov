@@ -27,7 +27,6 @@ const actionMap = Object.freeze( {
  * and the predicate functions that determine the field's state
  */
 const toggleableFields = {
-  averageCost: ( { transportation } ) => transportation && transportation !== 'Drive',
   miles: state => state.transportation === 'Drive',
   daysPerWeek: state => state.transportation === 'Drive' || state.isCostPerDay
 };
@@ -37,6 +36,7 @@ const toggleableFields = {
  * @param {HTMLElement} node dom element to be toggled
  */
 function hideToggleableField( node ) {
+  if ( !node ) return;
   // need to add an action to update the store somewhere
   node.value = '';
   node.classList.add( 'u-hidden' );
@@ -105,7 +105,12 @@ function updateVisibleInputs( inputs, prevState, state ) {
  *  The root DOM element for this view
  * @returns {Object} The view's public methods
  */
-function RouteOptionFormView( element, { store, routeIndex, detailsView } ) {
+function RouteOptionFormView( element, {
+  store,
+  routeIndex,
+  detailsView,
+  averageCostView
+} ) {
   const _dom = checkDom( element, CLASSES.FORM );
   const _transportationOptionEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_CHECKBOX }` )
@@ -188,6 +193,12 @@ function RouteOptionFormView( element, { store, routeIndex, detailsView } ) {
           { store, routeIndex }
         ).init();
 
+        const costView = averageCostView(
+          _dom.querySelector( `.${ averageCostView.CLASSES.CONTAINER }` ),
+          { store, routeIndex }
+        );
+
+        costView.init();
         detailsView.init();
 
         const currentState = routeSelector(

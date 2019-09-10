@@ -1,10 +1,13 @@
 import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route';
 import routeOptionReducer, {
   addRouteOptionAction,
+  clearAverageCostAction,
   initialState,
   routeSelector,
   updateAverageCostAction,
+  updateCostToActionPlan,
   updateDaysPerWeekAction,
+  updateIsMonthlyCostAction,
   updateMilesAction,
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
@@ -12,6 +15,7 @@ import routeOptionReducer, {
   updateTransportationAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
 
 // Arbitrary value to ensure reducer is updating properly
 const nextValue = '15';
@@ -162,6 +166,86 @@ describe( 'routeOptionReducer', () => {
       const { actionPlanItems } = state.routes[0];
 
       expect( actionPlanItems.length ).toBe( 1 );
+      expect( actionPlanItems[0] ).toBe( PLAN_TYPES.TIME );
+    } );
+
+    it( 'reduces the .updateCostToActionPlan action', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateCostToActionPlan( {
+          routeIndex: 0,
+          value: true } )
+      );
+
+      const { actionPlanItems } = state.routes[0];
+
+      expect( actionPlanItems.length ).toBe( 1 );
+      expect( actionPlanItems[0] ).toBeDefined();
+      expect( actionPlanItems[0] ).toBe( PLAN_TYPES.AVERAGE_COST );
+    } );
+
+    it( 'reduces the .updateIsMonthlyCostAction', () => {
+      expect( initial.routes[0].isMonthlyCost ).toBe( null );
+
+      let state = routeOptionReducer(
+        initial,
+        updateIsMonthlyCostAction( {
+          routeIndex: 0,
+          value: true } )
+      );
+
+      let { isMonthlyCost } = state.routes[0];
+
+      expect( isMonthlyCost ).toBe( true );
+
+      state = routeOptionReducer(
+        initial,
+        updateIsMonthlyCostAction( {
+          routeIndex: 0,
+          value: false } )
+      );
+
+      isMonthlyCost = state.routes[0].isMonthlyCost;
+
+      expect( isMonthlyCost ).toBe( false );
+    } );
+
+    it( 'reduces non-boolean values into boolean ones', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateIsMonthlyCostAction( {
+          routeIndex: 0,
+          value: 'string' } )
+      );
+
+      const { isMonthlyCost } = state.routes[0];
+
+      expect( isMonthlyCost ).toBe( true );
+    } );
+
+    it( 'reduces the .clearAverageCostAction', () => {
+      const route = {
+        averageCost: '100',
+        isMonthlyCost: true,
+        actionPlanItems: [ PLAN_TYPES.COST ]
+      };
+      let state = routeOptionReducer(
+        UNDEFINED,
+        addRouteOptionAction( route )
+      );
+
+      expect( state.routes[0].averageCost ).toBe( route.averageCost );
+      expect( state.routes[0].isMonthlyCost ).toBe( route.isMonthlyCost );
+      expect( state.routes[0].actionPlanItems ).toBe( route.actionPlanItems );
+
+      state = routeOptionReducer(
+        state,
+        clearAverageCostAction( { routeIndex: 0 } )
+      );
+
+      expect( state.routes[0].averageCost ).toBe( '' );
+      expect( state.routes[0].isMonthlyCost ).toBe( null );
+      expect( state.routes[0].actionPlanItems.length ).toBe( 0 );
     } );
   } );
 } );

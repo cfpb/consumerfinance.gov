@@ -2,7 +2,7 @@
 {% from 'atoms/radio-button.html' import render as render_radio with context %}
 {% from 'input.html' import render as render_input with context %}
 
-<div class="content-l content-l_col-2-3 block__sub-micro a-yes-question">
+<div class="content-l content-l_col-2-3 block__sub-micro m-yes-average-cost">
   {{
     render_input({
       'data_js_name': 'averageCost',
@@ -16,7 +16,8 @@
   }}
   {{
     render_radio({
-      'name': "average-cost",
+      'class': 'a-yes-average-cost',
+      'name': 'averageCostFrequency',
       'label': "Daily",
       'value': 'daily',
       'disabled': true
@@ -24,7 +25,8 @@
   }}
   {{
     render_radio({
-      'name': "average-cost",
+      'class': 'a-yes-average-cost',
+      'name': 'averageCostFrequency',
       'label': "Monthly",
       'value': 'monthly',
       'disabled': true
@@ -34,7 +36,7 @@
     render_checkbox({
       'class': 'u-js-only block__sub-micro',
       'label': "I'm not sure, add this to my to-do list to look up later",
-      'name': "yes-miles-unsure",
+      'name': 'costToActionPlan',
       'disabled': true
      })
   }}

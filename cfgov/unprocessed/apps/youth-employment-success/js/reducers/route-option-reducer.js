@@ -7,10 +7,13 @@ const initialState = {
 
 const actionTypes = Object.freeze( {
   ADD_ROUTE_OPTION: 'ADD_ROUTE_OPTION',
+  CLEAR_AVERAGE_COST: 'CLEAR_AVERAGE_COST',
   UPDATE_TRANSPORTATION: 'UPDATE_TRANSPORTATION',
   UPDATE_MILES: 'UPDATE_MILES',
   UPDATE_AVERAGE_COST: 'UPDATE_AVERAGE_COST',
+  UPDATE_IS_MONTHLY_COST: 'UPDATE_IS_MONTHLY_COST',
   UPDATE_DAYS_PER_WEEK: 'UPDATE_DAYS_PER_WEEK',
+  UPDATE_COST_TO_ACTION_PLAN: 'UPDATE_COST_TO_ACTION_PLAN',
   UPDATE_TIME_TO_ACTION_PLAN: 'UPDATE_TIME_TO_ACTION_PLAN',
   UPDATE_TRANSIT_TIME_HOURS: 'UPDATE_TRANSIT_TIME_HOURS',
   UPDATE_TRANSIT_TIME_MINUTES: 'UPDATE_TRANSIT_TIME_MINUTES'
@@ -18,6 +21,9 @@ const actionTypes = Object.freeze( {
 
 const addRouteOptionAction = actionCreator(
   actionTypes.ADD_ROUTE_OPTION
+);
+const clearAverageCostAction = actionCreator(
+  actionTypes.CLEAR_AVERAGE_COST
 );
 const updateTransportationAction = actionCreator(
   actionTypes.UPDATE_TRANSPORTATION
@@ -34,21 +40,40 @@ const updateAverageCostAction = actionCreator(
 const updateTimeToActionPlan = actionCreator(
   actionTypes.UPDATE_TIME_TO_ACTION_PLAN
 );
+const updateCostToActionPlan = actionCreator(
+  actionTypes.UPDATE_COST_TO_ACTION_PLAN
+);
 const updateTransitTimeHoursAction = actionCreator(
   actionTypes.UPDATE_TRANSIT_TIME_HOURS
 );
 const updateTransitTimeMinutesAction = actionCreator(
   actionTypes.UPDATE_TRANSIT_TIME_MINUTES
 );
+const updateIsMonthlyCostAction = actionCreator(
+  actionTypes.UPDATE_IS_MONTHLY_COST
+);
 
 /**
  *
- * @param {object} state the current state of this reducer
- * @param {number} index the index of the route we want to retrieve
- * @returns {object} the route object at the desired index
+ * @param {object} state The current state of this reducer.
+ * @param {number} index The index of the route we want to retrieve.
+ * @returns {object} The route object at the indicated index.
  */
 function routeSelector( state, index ) {
   return state.routes[index] || {};
+}
+
+/**
+ *
+ * @param {object} state The current state of this reducer.
+ * @param {number} index The index of the route we want to retrieve.
+ * @returns {Array} The todo list of actions the user needs to take for
+ * the route at the indicated index.
+ */
+function todoListSelector( state, index ) {
+  const route = routeSelector( state, index );
+
+  return route.actionPlanItems;
 }
 
 /**
@@ -76,7 +101,7 @@ function updateActionPlan( actionPlan, itemType, doUpdate ) {
     return actionPlan.slice();
   }
 
-  return actionPlan.concat( PLAN_TYPES.TIME );
+  return actionPlan.concat( PLAN_TYPES[itemType] );
 }
 
 /**
@@ -116,6 +141,21 @@ function routeOptionReducer( state = initialState, action ) {
         routes: addRouteOption( state.routes, data )
       } );
     }
+    case actionTypes.CLEAR_AVERAGE_COST: {
+      return assign( state, updateRouteData(
+        state.routes,
+        data.routeIndex,
+        {
+          averageCost: '',
+          isMonthlyCost: null,
+          actionPlanItems: updateActionPlan(
+            todoListSelector( state, data.routeIndex ),
+            PLAN_TYPES.AVERAGE_COST,
+            false
+          )
+        }
+      ) );
+    }
     case actionTypes.UPDATE_AVERAGE_COST: {
       return assign( state, updateRouteData(
         state.routes,
@@ -140,11 +180,27 @@ function routeOptionReducer( state = initialState, action ) {
       );
     }
     case actionTypes.UPDATE_TIME_TO_ACTION_PLAN: {
-      const index = action.data.routeIndex;
-      const previousPlanItems = state.routes[index].actionPlanItems;
+      const previousPlanItems = todoListSelector(
+        state, action.data.routeIndex
+      );
       const nextPlanItems = updateActionPlan(
         previousPlanItems,
         PLAN_TYPES.TIME,
+        data.value
+      );
+
+      return assign( state, updateRouteData( state.routes, data.routeIndex, {
+        actionPlanItems: nextPlanItems
+      } ) );
+    }
+    case actionTypes.UPDATE_COST_TO_ACTION_PLAN: {
+      const previousPlanItems = todoListSelector(
+        state,
+        action.data.routeIndex
+      );
+      const nextPlanItems = updateActionPlan(
+        previousPlanItems,
+        PLAN_TYPES.AVERAGE_COST,
         data.value
       );
 
@@ -162,6 +218,11 @@ function routeOptionReducer( state = initialState, action ) {
         transitTimeMinutes: data.value
       } ) );
     }
+    case actionTypes.UPDATE_IS_MONTHLY_COST: {
+      return assign( state, updateRouteData( state.routes, data.routeIndex, {
+        isMonthlyCost: Boolean( data.value )
+      } ) );
+    }
     default:
       return state;
   }
@@ -170,14 +231,17 @@ function routeOptionReducer( state = initialState, action ) {
 export {
   initialState,
   addRouteOptionAction,
+  clearAverageCostAction,
   routeSelector,
   updateTransportationAction,
   updateMilesAction,
   updateDaysPerWeekAction,
   updateAverageCostAction,
+  updateCostToActionPlan,
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
-  updateTransitTimeMinutesAction
+  updateTransitTimeMinutesAction,
+  updateIsMonthlyCostAction
 };
 
 export default routeOptionReducer;
