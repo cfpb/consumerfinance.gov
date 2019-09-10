@@ -159,10 +159,35 @@ function entries( object ) {
   return result;
 }
 
+/**
+ * Converts values to arrays. Array-like objects (such as NodeList) will be filled with their values,
+ * all other values return an empty array
+ * @param {*} arrayLike The value to be converted to an array
+ * @returns {Array} The supplied value wrapped in an array if it is an array-like object,
+ * an empty array otherwise
+ */
+function toArray( arrayLike ) {
+  return Array.prototype.slice.call( arrayLike );
+}
+
+/**
+ * Test if value is a number
+ * @param {*} maybeNum A potentially numberical value
+ * @returns {Boolean} If value is a number or not
+ */
+function isNumber( maybeNum ) {
+  // NaN is never equal to itself, and is thus the only real way pre es6 to check for its existence
+  const num = Number( maybeNum );
+  // eslint-disable-next-line no-self-compare
+  return typeof num === 'number' && num === num;
+}
+
 export {
   actionCreator,
   assign,
   combineReducers,
   entries,
+  isNumber,
+  toArray,
   UNDEFINED
 };

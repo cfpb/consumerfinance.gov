@@ -4,7 +4,7 @@ describe( 'route factory function', () => {
   it( 'constructs a route object', () => {
     const newRoute = createRoute();
 
-    [ 'transportation', 'daysPerWeek', 'miles', 'dailyCost' ].forEach( prop => {
+    [ 'transportation', 'daysPerWeek', 'miles', 'averageCost' ].forEach( prop => {
       expect( newRoute[prop] ).toBeDefined();
     } );
   } );
@@ -16,6 +16,6 @@ describe( 'route factory function', () => {
     expect( newRoute.transportation ).toBe( props.transportation );
     expect( newRoute.miles ).toBe( props.miles );
     expect( newRoute.daysPerWeek ).toBe( '' );
-    expect( newRoute.dailyCost ).toBe( '' );
+    expect( newRoute.averageCost ).toBe( '' );
   } );
 } );

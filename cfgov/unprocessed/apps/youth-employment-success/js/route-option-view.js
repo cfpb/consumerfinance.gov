@@ -1,12 +1,13 @@
 import { checkDom, setInitFlag } from '../../../js/modules/util/atomic-helpers';
 import {
   routeSelector,
-  updateDailyCostAction,
+  updateAverageCostAction,
   updateDaysPerWeekAction,
   updateMilesAction,
   updateTransportationAction
 } from './reducers/route-option-reducer';
 import inputView from './input-view';
+import { toArray } from './util';
 import transitTimeView from './views/transit-time';
 
 const CLASSES = Object.freeze( {
@@ -18,7 +19,7 @@ const CLASSES = Object.freeze( {
 const actionMap = Object.freeze( {
   miles: updateMilesAction,
   daysPerWeek: updateDaysPerWeekAction,
-  dailyCost: updateDailyCostAction
+  averageCost: updateAverageCostAction
 } );
 
 /**
@@ -104,12 +105,12 @@ function updateVisibleInputs( inputs, prevState, state ) {
  *  The root DOM element for this view
  * @returns {Object} The view's public methods
  */
-function RouteOptionFormView( element, { store, routeIndex } ) {
+function RouteOptionFormView( element, { store, routeIndex, detailsView } ) {
   const _dom = checkDom( element, CLASSES.FORM );
-  const _transportationOptionEls = Array.prototype.slice.call(
+  const _transportationOptionEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_CHECKBOX }` )
   );
-  const _textInputEls = Array.prototype.slice.call(
+  const _textInputEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.QUESTION_INPUT }` )
   );
   const _inputMap = _textInputEls.reduce( ( memo, node ) => {
@@ -182,7 +183,12 @@ function RouteOptionFormView( element, { store, routeIndex } ) {
       if ( setInitFlag( _dom ) ) {
         _initRouteOptions();
         _initQuestions();
-        transitTimeView( _dom.querySelector( '.m-yes-transit-time' ), { store, routeIndex } ).init();
+        transitTimeView(
+          _dom.querySelector( `.${ transitTimeView.CLASSES.CONTAINER }` ),
+          { store, routeIndex }
+        ).init();
+
+        detailsView.init();
 
         const currentState = routeSelector(
           store.getState().routes, routeIndex
@@ -191,10 +197,19 @@ function RouteOptionFormView( element, { store, routeIndex } ) {
         boundUpdate( currentState, currentState );
 
         store.subscribe( ( prevState, nextState ) => {
+          const currentRouteState = routeSelector(
+            nextState.routes,
+            routeIndex
+          );
+
           boundUpdate(
             routeSelector( prevState.routes, routeIndex ),
-            routeSelector( nextState.routes, routeIndex )
+            currentRouteState
           );
+          detailsView.render( {
+            budget: nextState.budget,
+            route: currentRouteState
+          } );
         } );
       }
     }
