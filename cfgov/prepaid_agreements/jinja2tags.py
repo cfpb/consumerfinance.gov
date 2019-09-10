@@ -14,11 +14,16 @@ def remove_url_parameter(request, discards):
     """
     query = request.GET.copy()
     params = dict(iterlists(query))
-    for key in discards:
-        if key in params:
-            params[key] = [item for item in params[key]
-                           if item not in discards[key]]
-    querystring = urlencode(params, 'utf-8')
+    items = {}
+    for key in params:
+        if key in discards:
+            items[key.encode('utf-8')] = [
+                item.encode('utf-8') for item in params[key]
+                if item not in discards[key]]
+        else:
+            items[key.encode('utf-8')] = [
+                item.encode('utf-8') for item in params[key]]
+    querystring = urlencode(items, 'utf-8')
     return '?{}'.format(querystring) if querystring else ''
 
 
