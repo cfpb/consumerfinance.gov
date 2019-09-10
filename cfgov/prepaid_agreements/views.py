@@ -24,6 +24,22 @@ def validate_page_number(request, paginator):
     return page_number
 
 
+def get_available_filters(products):
+    available_filters = {'prepaid_type': [], 'status': [], 'issuer_name': []}
+    for product in products:
+        prepaid_type = product.prepaid_type
+        if prepaid_type and prepaid_type != '':
+            if prepaid_type not in available_filters['prepaid_type']:
+                available_filters['prepaid_type'].append(prepaid_type)
+        status = product.status
+        if status and status not in available_filters['status']:
+            available_filters['status'].append(status)
+        issuer_name = product.issuer_name
+        if issuer_name and issuer_name not in available_filters['issuer_name']:
+            available_filters['issuer_name'].append(issuer_name)
+    return available_filters
+
+
 def search_products(search_term, search_field, products):
     search_fields = [
         'issuer_name',
@@ -32,24 +48,15 @@ def search_products(search_term, search_field, products):
         'program_manager',
         'prepaid_type',
     ]
-    if search_field and search_field[0] in search_fields:
-        search_field = search_field[0]
+    if search_field and search_field in search_fields:
         search_fields = [search_field]
     products = products.annotate(
         search=SearchVector(
             *search_fields
         ),
     ).filter(search=search_term)
-    active_filters = {'prepaid_type': [], 'status': [], 'issuer_name': []}
-    for product in products:
-        if product.prepaid_type not in active_filters['prepaid_type']:
-            if product.prepaid_type != '':
-                active_filters['prepaid_type'].append(product.prepaid_type)
-        if product.status not in active_filters['status']:
-            active_filters['status'].append(product.status)
-        if product.issuer_name not in active_filters['issuer_name']:
-            active_filters['issuer_name'].append(product.issuer_name)
-    return products, active_filters, search_field
+
+    return products
 
 
 def filter_products(filters, products):
@@ -70,9 +77,10 @@ def filter_products(filters, products):
 
     return products
 
+
 def index(request):
     params = dict(request.GET.iterlists())
-    active_filters = {}
+    available_filters = {}
     search_term = None
     search_field = None
     products = PrepaidProduct.objects
@@ -84,24 +92,26 @@ def index(request):
         params.pop('page', None)
         search_term = params.pop('q', None)
         search_field = params.pop('search_field', None)
-
+        if search_field:
+            search_field = search_field[0]
         if search_term:
             search_term = search_term[0].strip()
             if search_term != '':
-                products, active_filters, search_field = search_products(
+                products = search_products(
                     search_term, search_field, products
                 )
+            available_filters = get_available_filters(products)
         products = filter_products(params, products)
+
+    if not available_filters:
+        for filter_name in valid_filters:
+            available_filters[filter_name] = PrepaidProduct.objects.order_by(
+                filter_name).values_list(filter_name, flat=True).distinct()
 
     current_count = products.count()
     paginator = Paginator(products.all(), 20)
     page_number = validate_page_number(request, paginator)
     page = paginator.page(page_number)
-
-    if not active_filters:
-        for filter_name in valid_filters:
-            active_filters[filter_name] = PrepaidProduct.objects.order_by(
-                filter_name).values_list(filter_name, flat=True).distinct()
 
     return render(request, 'prepaid_agreements/index.html', {
         'current_page': page_number,
@@ -111,7 +121,7 @@ def index(request):
         'current_count': current_count,
         'filters': params,
         'query': search_term or '',
-        'active_filters': active_filters,
+        'active_filters': available_filters,
         'valid_filters': valid_filters,
         'search_field': search_field,
     })
