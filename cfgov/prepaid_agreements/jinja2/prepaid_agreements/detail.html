@@ -53,14 +53,14 @@
             {% if product.other_relevant_parties %}
                 {% if product.other_relevant_parties | length > 500 %}
                     <div data-qa-hook="expandable"
-                         class="o-expandable">
+                         class="o-expandable
+                                o-expandable__read-more-toggle">
                         <div class="o-expandable_content">
                 {% endif%}
                 {{ product.other_relevant_parties | replace('\n', '; ') }}
                 {% if product.other_relevant_parties | length > 500 %}
                         </div>
-                        <button class="a-btn a-btn__link
-                                       o-expandable_header
+                        <button class="o-expandable_header
                                        o-expandable_target">
                             <span class="o-expandable_link">
                                 <span class="o-expandable_cue o-expandable_cue-open">

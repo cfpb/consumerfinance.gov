@@ -1,12 +1,12 @@
 /* topdoc
-  name: Expandable read more modifier
+  name: Expandable read more mobile modifier
   family: cf-organisms
   notes:
     - "Styles a one-way Expandable organism that previews content on mobile."
   patterns:
   - name: Expandable organism
     markup: |
-      <div class="o-expandable o-expandable__read-more" data-read-more="true">
+      <div class="o-expandable o-expandable__read-more-mobile" data-read-more="true">
           <div class="o-expandable_content" aria-expanded="false">
           </div>
           <button class="o-expandable_header o-expandable_target"
@@ -37,12 +37,12 @@
     notes:
       - "One-way expandable. Displays an approximately 4-line
          preview of content on mobile screen sizes only. "
-  - name: .o-expandable__read-more (modifier)
+  - name: .o-expandable__read-more-mobile (modifier)
   tags:
   - cf-organisms
 */
 
-.o-expandable__read-more {
+.o-expandable__read-more-mobile {
     .o-expandable_target__collapsed {
         display: none;
     }
@@ -92,5 +92,63 @@
                 content: '';
             }
         }
+    }
+}
+
+/* topdoc
+  name: Expandable read more toggle modifier
+  family: cf-organisms
+  notes:
+    - "Styles a two-way Expandable organism that previews content across screen sizes."
+  patterns:
+  - name: Expandable organism
+    markup: |
+      <div class="o-expandable o-expandable__read-more-toggle" data-read-more="true">
+          <div class="o-expandable_content" aria-expanded="false">
+          </div>
+          <button class="o-expandable_header o-expandable_target"
+                  title="Expand content">
+              <span class="o-expandable_link">
+                  <span class="o-expandable_cue o-expandable_cue-open">
+                      Read full answer
+                      {{ svg_icon('plus-round') }}
+                  </span>
+                  <span class="o-expandable_cue o-expandable_cue-close">
+                      Hide full answer
+                      {{ svg_icon('minus-round') }}
+                  </span>
+              </span>
+          </button>
+      </div>
+    codenotes:
+      - |
+        Pattern structure
+        -----------------
+        .o-expandable
+          .o-expandable_content
+          .o-expandable_header.o-expandable_target
+            .o-expandable_link
+              .o-expandable_cue.o-expandable_cue-open
+              .o-expandable_cue.o-expandable_cue-close
+
+    notes:
+      - "Displays an approximately 4-line preview of content. "
+  - name: .o-expandable__read-more-toggle (modifier)
+  tags:
+  - cf-organisms
+*/
+
+.o-expandable__read-more-toggle {
+    .o-expandable_content__collapsed {
+        // shows approx. 4 lines of content
+        max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .o-expandable_target {
+        font-weight: 500;
+        margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+        width: auto;
     }
 }
