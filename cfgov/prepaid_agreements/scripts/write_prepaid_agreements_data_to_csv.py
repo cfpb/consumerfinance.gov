@@ -9,21 +9,21 @@ def write_agreements_data():
     agreements_fieldnames = [
         'issuer_name', 'product_name', 'product_id',
         'agreement_effective_date', 'agreement_id', 'most_recent_agreement',
-        'created_date', 'withdrawal_date', 'current_status',
+        'created_date', 'current_status', 'withdrawal_date',
         'prepaid_product_type', 'program_manager_exists', 'program_manager',
         'other_relevant_parties', 'path', 'direct_download'
     ]
     products_fieldnames = [
         'issuer_name', 'product_name', 'product_id',
         'agreement_effective_date', 'agreement_id',
-        'created_date', 'withdrawal_date', 'current_status',
+        'created_date', 'current_status', 'withdrawal_date',
         'prepaid_product_type', 'program_manager_exists', 'program_manager',
         'other_relevant_parties', 'path', 'direct_download'
     ]
 
     # TODO: This needs to hook up to S3 bucket instead of writing locally.
-    agreements_file = open('metadata_agreements.csv', 'w')
-    products_file = open('metadata_products.csv', 'w')
+    agreements_file = open('metadata_all_agreements.csv', 'w')
+    products_file = open('metadata_recent_agreements.csv', 'w')
 
     agreements_writer = csv.DictWriter(
         agreements_file,
@@ -56,6 +56,8 @@ def write_agreements_data():
             other_relevant_parties = other_relevant_parties.replace(
                 '\n', '; '
             )
+        else:
+            other_relevant_parties = 'No information provided'
         data = {
             'issuer_name': product.issuer_name,
             'product_name': product.name,
@@ -67,7 +69,7 @@ def write_agreements_data():
             'prepaid_product_type': product.prepaid_type,
             'program_manager_exists': product.program_manager_exists,
             'program_manager': product.program_manager,
-            'other_relevant_parties': other_relevant_parties or '',
+            'other_relevant_parties': other_relevant_parties,
             'path': agreement.bulk_download_path,
             'direct_download': agreement.compressed_files_url,
             'agreement_id': agreement.pk
