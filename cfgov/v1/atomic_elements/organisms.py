@@ -30,12 +30,37 @@ from v1.atomic_elements import atoms, molecules
 from v1.util import ref
 
 
+class AskSearch(blocks.StructBlock):
+    show_label = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text='Whether to show form label.'
+    )
+
+    placeholder = blocks.TextBlock(
+        required=False,
+        help_text='Text to show for the input placeholder text.'
+    )
+
+    class Meta:
+        icon = 'search'
+        template = '_includes/organisms/ask-search.html'
+
+    class Media:
+        js = ['ask-autocomplete.js']
+
+
 class Well(blocks.StructBlock):
     content = blocks.RichTextBlock(required=False, label='Well')
 
     class Meta:
-        icon = 'title'
+        group = 'well'
+        icon = 'placeholder'
         template = '_includes/organisms/well.html'
+
+
+class WellWithAskSearch(Well):
+    ask_search = AskSearch()
 
 
 class InfoUnitGroup(blocks.StructBlock):
@@ -733,6 +758,8 @@ class FullWidthText(blocks.StreamBlock):
     related_links = molecules.RelatedLinks()
     reusable_text = v1_blocks.ReusableTextChooserBlock('v1.ReusableText')
     email_signup = EmailSignUp()
+    well = Well()
+    well_with_ask_search = WellWithAskSearch()
 
     class Meta:
         icon = 'edit'

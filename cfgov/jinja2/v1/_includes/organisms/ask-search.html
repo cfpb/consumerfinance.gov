@@ -1,25 +1,33 @@
 {# ==========================================================================
 
-   ask_search_bar.render()
+   ask_search.render()
 
    ==========================================================================
 
    Description:
 
    Output an ask search bar when given:
-   
-   language:      page's language
 
-   show_label:    Boolean; whether to show form label
+   ask_query     The previous search query string.
 
-   q              The previous search query string
+   language:     page's language.
 
-   autocomplete:  Boolean; whether to allow autocomplete
+   show_label:   Boolean; whether to show form label.
+
+   autocomplete: Boolean; whether to allow autocomplete.
+
+   placeholder: String; text to enter for the search input's placeholder value.
 
    ========================================================================== #}
 
-{% macro render(q='', language='en', show_label=True, autocomplete=True) %}
-<aside class="o-search-bar">
+{% macro render(
+    ask_query='',
+    language='en',
+    show_label=True,
+    autocomplete=True,
+    placeholder=''
+) %}
+<div class="o-search-bar">
     <form method="get" action="{{ _('/ask-cfpb/search/') }}">
         {% if show_label %}
         <label for="o-search-bar_query">
@@ -28,10 +36,15 @@
         {% endif %}
         <div class="o-search-bar_input">
             <div class="input-with-btn input-with-btn__bar">
-                <div class="input-with-btn_input 
+                <div class="input-with-btn_input
                             {% if autocomplete %}m-autocomplete{% endif %}"
                       data-language="{{ language }}">
-                    <input class="a-text-input" type="text" name="q" id="o-search-bar_query" value="{{ q }}">
+                    <input class="a-text-input"
+                           type="text"
+                           name="q"
+                           id="o-search-bar_query"
+                           value="{{ ask_query }}"
+                           placeholder="{{ placeholder }}">
                 </div>
                 <div class="input-with-btn_btn">
                     <button class="a-btn" type="submit">
@@ -41,5 +54,16 @@
             </div>
         </div>
     </form>
-</aside>
+</div>
 {% endmacro %}
+
+{% if value %}
+  {{ render(
+      '',
+      value.language | default( 'en' ),
+      value.show_label | default( True ),
+      value.autocomplete | default( True ),
+      value.placeholder | default( '' )
+    )
+  }}
+{% endif %}
