@@ -5,7 +5,7 @@ import csv
 from prepaid_agreements.models import PrepaidAgreement
 
 
-def write_agreements_data():
+def write_agreements_data(path=''):
     agreements_fieldnames = [
         'issuer_name', 'product_name', 'product_id',
         'agreement_effective_date', 'agreement_id', 'most_recent_agreement',
@@ -21,9 +21,10 @@ def write_agreements_data():
         'other_relevant_parties', 'path', 'direct_download'
     ]
 
-    # TODO: This needs to hook up to S3 bucket instead of writing locally.
-    agreements_file = open('metadata_all_agreements.csv', 'w')
-    products_file = open('metadata_recent_agreements.csv', 'w')
+    agreements_location = path + 'prepaid_metadata_all_agreements.csv'
+    products_location = path + 'prepaid_metadata_recent_agreements.csv'
+    agreements_file = open(agreements_location, 'w')
+    products_file = open(products_location, 'w')
 
     agreements_writer = csv.DictWriter(
         agreements_file,
@@ -89,4 +90,7 @@ def write_agreements_data():
 
 
 def run(*args):
-    write_agreements_data()
+    if args:
+        write_agreements_data(path=args[0])
+    else:
+        write_agreements_data()
