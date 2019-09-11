@@ -3,8 +3,9 @@ from __future__ import unicode_literals
 from datetime import datetime
 
 import requests
-from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 from pytz import timezone
+
+from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
 
 S3_PATH = 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/'
