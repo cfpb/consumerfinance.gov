@@ -21,7 +21,7 @@ def import_products_data(products_data):
             withdrawal_date = datetime.strptime(
                 withdrawal_date, "%m/%d/%Y").date()
 
-        product = PrepaidProduct.objects.update_or_create(pk=pk, defaults={
+        PrepaidProduct.objects.update_or_create(pk=pk, defaults={
             'name': item['product_name'],
             'issuer_name': item['issuer_name'],
             'prepaid_type': item['prepaid_type'],
@@ -54,7 +54,7 @@ def import_agreements_data(agreements_data):
         product = PrepaidProduct.objects.get(pk=product_id)
         url = S3_PATH + item['agreements_files_location']
 
-        agreement = PrepaidAgreement.objects.update_or_create(pk=pk, defaults={
+        PrepaidAgreement.objects.update_or_create(pk=pk, defaults={
             'product': product,
             'created_time': created_time,
             'effective_date': effective_date,
