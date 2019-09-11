@@ -15,32 +15,27 @@ METADATA_FILENAME = 'prepaid_metadata.json'
 def import_products_data(products_data):
     for item in products_data:
         pk = item['product_id'].replace('PRODUCT-', '')
-        product = PrepaidProduct.objects.filter(pk=pk).first()
-        if not product:
-            product = PrepaidProduct(pk=pk)
 
         withdrawal_date = item['withdrawal_date']
         if withdrawal_date:
             withdrawal_date = datetime.strptime(
                 withdrawal_date, "%m/%d/%Y").date()
 
-        product.name = item['product_name']
-        product.issuer_name = item['issuer_name']
-        product.prepaid_type = item['prepaid_type']
-        product.program_manager = item['program_manager']
-        product.program_manager_exists = item['program_manager_exists']
-        product.other_relevant_parties = item['other_relevant_parties']
-        product.status = item['status']
-        product.withdrawal_date = withdrawal_date
-        product.save()
+        product = PrepaidProduct.objects.update_or_create(pk=pk, defaults={
+            'name': item['product_name'],
+            'issuer_name': item['issuer_name'],
+            'prepaid_type': item['prepaid_type'],
+            'program_manager': item['program_manager'],
+            'program_manager_exists': item['program_manager_exists'],
+            'other_relevant_parties': item['other_relevant_parties'],
+            'status': item['status'],
+            'withdrawal_date': withdrawal_date
+        })
 
 
 def import_agreements_data(agreements_data):
     for item in agreements_data:
         pk = item['agreement_id'].replace('IFL-', '')
-        agreement = PrepaidAgreement.objects.filter(pk=pk).first()
-        if not agreement:
-            agreement = PrepaidAgreement(pk=pk)
 
         effective_date = item['effective_date']
         if effective_date and effective_date != 'None':
@@ -59,13 +54,14 @@ def import_agreements_data(agreements_data):
         product = PrepaidProduct.objects.get(pk=product_id)
         url = S3_PATH + item['agreements_files_location']
 
-        agreement.product = product
-        agreement.created_time = created_time
-        agreement.effective_date = effective_date
-        agreement.compressed_files_url = url
-        agreement.bulk_download_path = item['path']
-        agreement.filename = item['agreements_files_location']
-        agreement.save()
+        agreement = PrepaidAgreement.objects.update_or_create(pk=pk, defaults={
+            'product': product,
+            'created_time': created_time,
+            'effective_date': effective_date,
+            'compressed_files_url': url,
+            'bulk_download_path': item['path'],
+            'filename': item['agreements_files_location']
+        })
 
 
 def run(*args):
