@@ -1,13 +1,12 @@
 from __future__ import unicode_literals
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import requests
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 from pytz import timezone
 
 
-TIMEZONE = timezone('EST')
 S3_PATH = 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/'
 METADATA_FILENAME = 'prepaid_metadata.json'
 
@@ -53,7 +52,7 @@ def import_agreements_data(agreements_data):
             item['created_date'],
             '%Y-%m-%d %H:%M:%S'
         )
-        created_time = created_time.replace(tzinfo=TIMEZONE)
+        created_time = created_time.replace(tzinfo=timezone('EST'))
 
         product_id = item['product_id'].replace('PRODUCT-', '')
         product = PrepaidProduct.objects.get(pk=product_id)
@@ -72,10 +71,6 @@ def run(*args):
     source_url = S3_PATH + METADATA_FILENAME
     resp = requests.get(url=source_url)
     data = resp.json()
-    last_updated = datetime.strptime(
-        data['data_last_updated'], '%Y-%m-%d %H:%M:%S')
-    last_updated = last_updated.replace(tzinfo=TIMEZONE)
-    # Only import data if the data has been updated in the past 24 hours
-    if datetime.now(TIMEZONE) - last_updated <= timedelta(hours=24):
-        import_products_data(data['products'])
-        import_agreements_data(data['agreements'])
+
+    import_products_data(data['products'])
+    import_agreements_data(data['agreements'])
