@@ -188,25 +188,6 @@ msgstr "Sí"
 msgid "optional"
 msgstr "opcional"
 
-#: v1/_includes/ask/ask-search-bar.html
-msgid "/ask-cfpb/search"
-msgstr "/es/obtener-respuestas/buscar"
-
-msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
-msgstr "¿No encuentra lo que busca? <span class=\"break\">Busca su pregunta.</span>"
-
-msgid "Don't see what you're looking for?"
-msgstr "¿No encuentra lo que busca?"
-
-msgid "Search for your question."
-msgstr "Busca su pregunta."
-
-msgid "Search for your question"
-msgstr "Busca su pregunta"
-
-msgid "Search our full library of answers"
-msgstr "Buscar en toda la lista de respuestas"
-
 #: cfgov/jinja2/v1/_includes/atoms/tagline.html
 msgid "An official website of the United States government"
 msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
