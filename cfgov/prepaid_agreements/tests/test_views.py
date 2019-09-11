@@ -1,3 +1,6 @@
+import unittest
+
+from django.db import connection
 from django.test import TestCase
 
 from prepaid_agreements.models import PrepaidProduct
@@ -26,6 +29,8 @@ class TestViews(TestCase):
             }
         )
 
+    @unittest.skipUnless(
+        connection.vendor == 'postgresql', 'PostgreSQL-dependent')
     def test_search_products_issuer_name(self):
         product1 = PrepaidProduct(issuer_name='Bank of CFPB')
         product1.save()
@@ -39,6 +44,8 @@ class TestViews(TestCase):
         self.assertIn(product1, results)
         self.assertEqual(results.count(), 1)
 
+    @unittest.skipUnless(
+        connection.vendor == 'postgresql', 'PostgreSQL-dependent')
     def test_search_products_all_fields(self):
         product1 = PrepaidProduct(issuer_name='XYZ Bank')
         product1.save()
