@@ -16,16 +16,17 @@ class PrepaidProduct(models.Model):
         return self.name
 
     @property
-    def latest_agreement(self):
-        """ Gets most recent agreement, as determined by its created date."""
-        return self.prepaidagreement_set.first()
+    def most_recent_agreement(self):
+        """ Gets most recent agreement, as determined by its created time."""
+        return self.agreements.first()
 
     class Meta:
         ordering = ['name']
 
 
 class PrepaidAgreement(models.Model):
-    product = models.ForeignKey(PrepaidProduct, on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        PrepaidProduct, related_name='agreements', on_delete=models.CASCADE)
     created_time = models.DateTimeField(blank=True, null=True)
     effective_date = models.DateField(blank=True, null=True)
     compressed_files_url = models.TextField(blank=True, null=True)
@@ -37,7 +38,7 @@ class PrepaidAgreement(models.Model):
 
     @property
     def is_most_recent(self):
-        return self == self.product.latest_agreement
+        return self == self.product.most_recent_agreement
 
     class Meta:
         ordering = ['-created_time']

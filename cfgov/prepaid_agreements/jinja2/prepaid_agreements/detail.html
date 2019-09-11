@@ -81,7 +81,7 @@
             </dd>         
         </dl>
 
-{% set agreements = product.prepaidagreement_set.all() %}
+{% set agreements = product.agreements.all() %}
 {% if agreements | length %}
 
     <div class="block u-mt45">

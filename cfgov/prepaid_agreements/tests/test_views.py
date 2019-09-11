@@ -1,7 +1,9 @@
 from django.test import TestCase
 
 from prepaid_agreements.models import PrepaidProduct
-from prepaid_agreements.views import get_available_filters, search_products
+from prepaid_agreements.views import (
+    filter_products, get_available_filters, search_products
+)
 
 
 class TestViews(TestCase):
@@ -34,21 +36,41 @@ class TestViews(TestCase):
             search_field=['issuer_name'],
             products=PrepaidProduct.objects.all()
         )
-        self.assertEqual(results.first(), product1)
+        self.assertIn(product1, results)
         self.assertEqual(results.count(), 1)
 
     def test_search_products_all_fields(self):
-        product1 = PrepaidProduct(issuer_name='Active Bank')
+        product1 = PrepaidProduct(issuer_name='XYZ Bank')
         product1.save()
-        product2 = PrepaidProduct(program_manager='active manager')
+        product2 = PrepaidProduct(program_manager='xyz manager')
         product2.save()
         product3 = PrepaidProduct(name='Foo Bar Product')
         product3.save()
         results = search_products(
-            search_term='Active',
+            search_term='Xyz',
             search_field=[],
             products=PrepaidProduct.objects.all()
         )
         self.assertIn(product1, results)
         self.assertIn(product2, results)
         self.assertEqual(results.count(), 2)
+
+    def test_filter_products(self):
+        product1 = PrepaidProduct(status='Active', prepaid_type='Student')
+        product1.save()
+        product2 = PrepaidProduct(
+            status='Withdrawn', prepaid_type='Travel', issuer_name='XYZ Bank')
+        product2.save()
+        product3 = PrepaidProduct(
+            status='Active', prepaid_type='Payroll', issuer_name='ABC Bank')
+        product3.save()
+        results = filter_products(
+            filters={
+                'status': ['Active'],
+                'prepaid_type': ['Travel', 'Payroll', 'Student'],
+                'issuer_name': ['ABC Bank', 'XYZ Bank']
+            },
+            products=PrepaidProduct.objects.all()
+        )
+        self.assertIn(product3, results)
+        self.assertEqual(results.count(), 1)

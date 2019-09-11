@@ -21,7 +21,7 @@
         </div>
         <div class="content-l_col content-l_col-1-2">
             <h5 class="h4 u-mb5">Download most recent agreement files</h5>
-            {% set latest_agreement = result.latest_agreement %}
+            {% set latest_agreement = result.most_recent_agreement %}
             <p class="u-break-word">
                 <a href="{{ latest_agreement.compressed_files_url }}">
                     {{ latest_agreement.filename }}

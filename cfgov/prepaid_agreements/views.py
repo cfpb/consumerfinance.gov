@@ -69,7 +69,7 @@ def filter_products(filters, products):
     if 'prepaid_type' in filters:
         prepaid_types = Q()
         for prepaid_type in filters['prepaid_type']:
-            prepaid_types |= Q(prepaid_type__iexact=prepaid_type.title())
+            prepaid_types |= Q(prepaid_type__iexact=prepaid_type)
         products = products.filter(prepaid_types)
 
     if 'status' in filters:
