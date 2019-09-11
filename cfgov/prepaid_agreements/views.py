@@ -11,6 +11,8 @@ def validate_page_number(request, paginator):
     A utility for parsing a pagination request,
     catching invalid page numbers and always returning
     a valid page number, defaulting to 1.
+    TODO: can be replaced by Paginator.get_page
+    when/if upgraded to Django 2.0+
     """
     raw_page = request.GET.get('page', 1)
     try:
