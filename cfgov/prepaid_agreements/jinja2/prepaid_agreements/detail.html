@@ -1,0 +1,149 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/prepaid-agreements/css/main.css') }}">
+{%- endblock css %}
+
+{% block title -%}
+    {{ product.name }} | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block hero %}
+<div class="wrapper content_wrapper">
+
+    {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
+    {% set breadcrumb_items = [{
+        'href': '/data-research/prepaid-accounts/search-agreements/',
+        'title': 'Prepaid Product Agreements Database'
+    }]%}
+    {{ breadcrumbs.render(breadcrumb_items) }}
+</div>
+{% endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom prepaid-agreements prepaid-agreements-detail
+{%- endblock %}
+
+{% block content_main %}
+
+{% set default_text = 'No information provided' %}
+<h1>{{ product.name }}</h1>
+<div class="content-l">
+        <div class="content-l_col content-l_col-1-2">
+            <dl>
+                <dt><h2>Issuer name</h2></dt>
+                <dd>{{ product.issuer_name }}</dd>
+                <dt><h2>Prepaid product type</h2></dt>
+                <dd>{{ product.prepaid_type if product.prepaid_type else default_text }}</dd>
+            </dl>
+        </div>
+        <div class="content-l_col content-l_col-1-2">
+            <dl>
+                <dt><h2>Program manager</h2></dt>
+                <dd>{{ product.program_manager if product.program_manager else default_text }}</dd>
+                <dt><h2>Current status</h2></dt>
+                <dd>{{ product.status if product.status else default_text }}</dd>
+            </dl>
+        </div>
+    </div>
+        <dl>
+            <dt><h2>Other relevant parties</h2></dt>
+            <dd>
+            {% if product.other_relevant_parties %}
+                {% if product.other_relevant_parties | length > 500 %}
+                    <div data-qa-hook="expandable"
+                         class="o-expandable
+                                o-expandable__read-more-toggle">
+                        <div class="o-expandable_content">
+                {% endif%}
+                {{ product.other_relevant_parties | replace('\n', '; ') }}
+                {% if product.other_relevant_parties | length > 500 %}
+                        </div>
+                        <button class="o-expandable_header
+                                       o-expandable_target">
+                            <span class="o-expandable_link">
+                                <span class="o-expandable_cue o-expandable_cue-open">
+                                    Show full list of relevant parties
+                                    {{ svg_icon('plus-round') }}
+                                </span>
+                                <span class="o-expandable_cue o-expandable_cue-close">
+                                    Hide full list of relevant parties
+                                    {{ svg_icon('minus-round') }}
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                {% endif %}
+            {% else %}
+                {{ default_text }}
+            {% endif %}    
+            </dd>         
+        </dl>
+
+{% set agreements = product.agreements.all() %}
+{% if agreements | length %}
+
+    <div class="block u-mt45">
+        <h2 class="h3">Download most recent agreement files</h2>
+        {% set agreement = agreements | first  %}
+        <div class="block block__sub block__flush-top">
+            <p class="u-mb5"><span>Agreement effective date:</span> {{ agreement.effective_date }}</p>
+            <p class="u-break-word">
+                <a href="{{ agreement.compressed_files_url }}">
+                    {{ agreement.filename }}
+                </a>
+            </p>
+        </div>
+    </div>
+
+    {% if agreements | length > 1 %}
+    <div class="block u-mt45">
+        <h2 class="h3">Download older agreements</h2>
+        {% for agreement in agreements[1:] %}
+            <div class="block block__sub {{ 'block__flush-top' if loop.index == 1 else '' }}">
+                <p class="agreement-effective-date"><span>Agreement effective date:</span> {{ agreement.effective_date }}</p>
+                <p class="u-break-word">
+                    <a href="{{ agreement.compressed_files_url }}">
+                        {{ agreement.filename }}
+                    </a>
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endif %}
+
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+<div class="block block__flush-top">
+<header class="m-slug-header">
+  <h2 class="a-heading">
+      Database disclaimer
+  </h2>
+</header>
+<p>We will display the prepaid agreements in this database as the respective issuers submitted them. The CFPB is not responsible for the content of the agreements, including any discrepancies between an agreement as presented in this database and the agreement as offered to the public, or for any omissions or other errors in the agreement as submitted by the issuer.</p>
+<p>The agreements on file will have general terms and conditions, pricing, and fee information. They are not specific to an individual's account information.</p>
+<p>If you have questions about the agreements themselves, contact the prepaid issuer directly.</p>
+</div>
+{%- endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('js/routes/data-research/prepaid-accounts/search-agreements/index.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

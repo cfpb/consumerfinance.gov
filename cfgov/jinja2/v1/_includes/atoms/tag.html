@@ -21,10 +21,11 @@
 
 {%- set behavior = 'data-js-hook=behavior_' ~ options.behavior if options.behavior else '' -%}
 {%- set value = 'data-value=' ~ options.value if options.value else '' -%}
+{%- set href = 'href=' ~ options.href if options.href else '' -%}
 
 <div class="a-tag"
      {{ value }}
      {{ behavior }}>
-    {{ options.label }} {{ svg_icon('remove') }}
+    {{ options.label }} {% if href %}<a {{href}}>{% endif %}{{ svg_icon('remove') }}{% if href %}</a>{% endif %}
 </div>
 {% endmacro %}
