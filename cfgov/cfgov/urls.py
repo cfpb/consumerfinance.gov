@@ -233,6 +233,11 @@ urlpatterns = [
     url(r'^credit-cards/agreements/',
         include('agreements.urls')),
 
+    flagged_url('PREPAID_AGREEMENTS_SEARCH',
+        r'^data-research/prepaid-accounts/search-agreements/',
+        include('prepaid_agreements.urls', namespace='prepaid_agreements'
+    )),
+
     url(r'^consumer-tools/retirement/', include_if_app_enabled(
         'retirement_api',
         'retirement_api.urls',
