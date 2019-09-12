@@ -89,6 +89,7 @@ INSTALLED_APPS = (
     'wellbeing',
     'search',
     'paying_for_college',
+    'prepaid_agreements',
     'regulations3k',
     'treemodeladmin',
     'housing_counselor',
@@ -188,6 +189,7 @@ TEMPLATES = [
 
                 'core.jinja2tags.filters',
                 'agreements.jinja2tags.agreements',
+                'prepaid_agreements.jinja2tags.prepaid_agreements',
                 'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.datetimes_extension',
                 'v1.jinja2tags.fragment_cache_extension',
@@ -709,6 +711,9 @@ FLAGS = {
 
     # Used to hide new youth employment success pages prior to public launch.
     'YOUTH_EMPLOYMENT_SUCCESS':  [],
+
+    # Release of prepaid agreements database search
+    'PREPAID_AGREEMENTS_SEARCH': [],
 
     # Used to hide CCDB landing page updates prior to public launch.
     'CCDB_SEPT_2019_UPDATES':  [],
