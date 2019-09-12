@@ -12,7 +12,8 @@ import routeOptionReducer, {
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction,
-  updateTransportationAction
+  updateTransportationAction,
+  updateDaysToActionPlan
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
@@ -166,6 +167,7 @@ describe( 'routeOptionReducer', () => {
       const { actionPlanItems } = state.routes[0];
 
       expect( actionPlanItems.length ).toBe( 1 );
+      expect( actionPlanItems[0] ).toBeDefined();
       expect( actionPlanItems[0] ).toBe( PLAN_TYPES.TIME );
     } );
 
@@ -182,6 +184,21 @@ describe( 'routeOptionReducer', () => {
       expect( actionPlanItems.length ).toBe( 1 );
       expect( actionPlanItems[0] ).toBeDefined();
       expect( actionPlanItems[0] ).toBe( PLAN_TYPES.AVERAGE_COST );
+    } );
+
+    it( 'reduces the .updateDaysToActionPlan action', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateDaysToActionPlan( {
+          routeIndex: 0,
+          value: true } )
+      );
+
+      const { actionPlanItems } = state.routes[0];
+
+      expect( actionPlanItems.length ).toBe( 1 );
+      expect( actionPlanItems[0] ).toBeDefined();
+      expect( actionPlanItems[0] ).toBe( PLAN_TYPES.DAYS_PER_WEEK );
     } );
 
     it( 'reduces the .updateIsMonthlyCostAction', () => {
@@ -227,11 +244,11 @@ describe( 'routeOptionReducer', () => {
       const route = {
         averageCost: '100',
         isMonthlyCost: true,
-        actionPlanItems: [ PLAN_TYPES.COST ]
+        actionPlanItems: [ PLAN_TYPES.AVERAGE_COST ]
       };
       let state = routeOptionReducer(
         UNDEFINED,
-        addRouteOptionAction( route )
+        addRouteOptionAction( createRoute(route) )
       );
 
       expect( state.routes[0].averageCost ).toBe( route.averageCost );
