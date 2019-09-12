@@ -709,6 +709,9 @@ FLAGS = {
 
     # Used to hide new youth employment success pages prior to public launch.
     'YOUTH_EMPLOYMENT_SUCCESS':  [],
+
+    # Used to hide CCDB landing page updates prior to public launch.
+    'CCDB_SEPT_2019_UPDATES':  [],
 }
 
 
