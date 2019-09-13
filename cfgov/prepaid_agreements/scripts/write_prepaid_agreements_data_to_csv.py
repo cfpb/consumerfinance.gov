@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 
 import csv
@@ -52,16 +54,22 @@ def write_agreements_data(path=''):
         product = agreement.product
         most_recent = 'Yes' if agreement.is_most_recent else 'No'
         created_time = agreement.created_time.strftime('%Y-%m-%d %H:%M:%S')
+
         other_relevant_parties = product.other_relevant_parties
         if other_relevant_parties:
             other_relevant_parties = other_relevant_parties.replace(
                 '\n', '; '
-            )
+            ).encode('utf-8')
         else:
             other_relevant_parties = 'No information provided'
+
+        program_manager = product.program_manager
+        if program_manager:
+            program_manager = program_manager.encode('utf-8')
+
         data = {
-            'issuer_name': product.issuer_name,
-            'product_name': product.name,
+            'issuer_name': product.issuer_name.encode('utf-8'),
+            'product_name': product.name.encode('utf-8'),
             'product_id': product.pk,
             'agreement_effective_date': agreement.effective_date,
             'created_date': created_time,
@@ -69,7 +77,7 @@ def write_agreements_data(path=''):
             'current_status': product.status,
             'prepaid_product_type': product.prepaid_type,
             'program_manager_exists': product.program_manager_exists,
-            'program_manager': product.program_manager,
+            'program_manager': program_manager,
             'other_relevant_parties': other_relevant_parties,
             'path': agreement.bulk_download_path,
             'direct_download': agreement.compressed_files_url,
