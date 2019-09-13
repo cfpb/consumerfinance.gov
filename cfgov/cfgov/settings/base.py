@@ -713,7 +713,10 @@ FLAGS = {
     'YOUTH_EMPLOYMENT_SUCCESS':  [],
 
     # Release of prepaid agreements database search
-    'PREPAID_AGREEMENTS_SEARCH': [], 
+    'PREPAID_AGREEMENTS_SEARCH': [],
+
+    # Used to hide CCDB landing page updates prior to public launch.
+    'CCDB_SEPT_2019_UPDATES':  [],
 }
 
 
