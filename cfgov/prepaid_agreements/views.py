@@ -15,6 +15,7 @@ DISCLAIMER_TEXT = ReusableText.objects.filter(
 SUPPORT_TEXT = ReusableText.objects.filter(
     title='Prepaid agreements support and inquiries').first()
 
+
 def validate_page_number(request, paginator):
     """
     A utility for parsing a pagination request,
