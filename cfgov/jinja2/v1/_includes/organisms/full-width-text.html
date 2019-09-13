@@ -24,7 +24,7 @@
             </div>
         {% elif 'table' in block_type %}
             <div class="m-full-width-text">
-                {{ render_stream_child(block) | safe }}
+                {% include_block block %}
             </div>
         {% elif block_type in ['quote', 'related_links']
            or 'cta' in block_type and block.value.is_inset %}
@@ -39,7 +39,7 @@
             </div>
         {% elif block_type in ['well', 'well_with_ask_search'] %}
             <div class="block">
-                {{ render_stream_child(block) | safe }}
+                {% include_block block %}
             </div>
         {% else %}
             {{ block | safe }}
