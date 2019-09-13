@@ -54,7 +54,6 @@ class Well(blocks.StructBlock):
     content = blocks.RichTextBlock(required=False, label='Well')
 
     class Meta:
-        group = 'well'
         icon = 'placeholder'
         template = '_includes/organisms/well.html'
 
