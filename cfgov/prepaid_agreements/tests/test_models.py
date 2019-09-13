@@ -1,6 +1,7 @@
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 from django.test import TestCase
+from django.utils import timezone
 
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
@@ -22,18 +23,19 @@ class TestMostRecentAgreement(TestCase):
         effective_date = date(month=2, day=3, year=2019)
         self.agreement_old = PrepaidAgreement(
             effective_date=effective_date,
-            created_time=datetime.now() - timedelta(hours=1),
-            product=self.product,
-        )
-        self.agreement_older = PrepaidAgreement(
-            effective_date=effective_date,
-            created_time=datetime.now() - timedelta(hours=2),
+            created_time=timezone.now() - timedelta(hours=1),
             product=self.product,
         )
         self.agreement_old.save()
+        self.agreement_older = PrepaidAgreement(
+            effective_date=effective_date,
+            created_time=timezone.now() - timedelta(hours=2),
+            product=self.product,
+        )
+        self.agreement_older.save()
         self.agreement_new = PrepaidAgreement(
             effective_date=effective_date,
-            created_time=datetime.now(),
+            created_time=timezone.now(),
             product=self.product,
         )
         self.agreement_new.save()
