@@ -10,9 +10,10 @@ from prepaid_agreements.models import PrepaidProduct
 from v1.models.snippets import ReusableText
 
 
-DISCLAIMER_SNIPPET_TITLE = 'Prepaid agreements database disclaimer'
-SUPPORT_SNIPPET_TITLE = 'Prepaid agreements support and inquiries'
-
+DISCLAIMER_TEXT = ReusableText.objects.filter(
+    title='Prepaid agreements database disclaimer').first()
+SUPPORT_TEXT = ReusableText.objects.filter(
+    title='Prepaid agreements support and inquiries').first()
 
 def validate_page_number(request, paginator):
     """
@@ -122,10 +123,6 @@ def index(request):
     paginator = Paginator(products.all(), 20)
     page_number = validate_page_number(request, paginator)
     page = paginator.page(page_number)
-    disclaimer_text = ReusableText.objects.filter(
-        title=DISCLAIMER_SNIPPET_TITLE).first()
-    support_text = ReusableText.objects.filter(
-        title=SUPPORT_SNIPPET_TITLE).first()
 
     return render(request, 'prepaid_agreements/index.html', {
         'current_page': page_number,
@@ -138,8 +135,8 @@ def index(request):
         'active_filters': available_filters,
         'valid_filters': valid_filters,
         'search_field': search_field,
-        'disclaimer_text': disclaimer_text,
-        'support_text': support_text
+        'disclaimer_text': DISCLAIMER_TEXT,
+        'support_text': SUPPORT_TEXT
     })
 
 
@@ -160,14 +157,9 @@ def get_detail_page_breadcrumb(request):
 
 
 def detail(request, product_id):
-    disclaimer_text = ReusableText.objects.filter(
-        title=DISCLAIMER_SNIPPET_TITLE).first()
-    support_text = ReusableText.objects.filter(
-        title=SUPPORT_SNIPPET_TITLE).first()
-
     return render(request, 'prepaid_agreements/detail.html', {
         'product': get_object_or_404(PrepaidProduct, pk=product_id),
-        'breadcrumb': get_detail_page_breadcrumb(request),
-        'disclaimer_text': disclaimer_text,
-        'support_text': support_text
+        'search_page_url': get_detail_page_breadcrumb(request),
+        'disclaimer_text': DISCLAIMER_TEXT,
+        'support_text': SUPPORT_TEXT
     })
