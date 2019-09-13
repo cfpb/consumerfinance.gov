@@ -1,7 +1,6 @@
 import { simulateEvent } from '../../../../../util/simulate-event';
 import averageCostView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
 import {
-  clearAverageCostAction,
   updateAverageCostAction,
   updateCostToActionPlan,
   updateIsMonthlyCostAction

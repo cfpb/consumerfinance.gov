@@ -8,6 +8,7 @@ const initialState = {
 const actionTypes = Object.freeze( {
   ADD_ROUTE_OPTION: 'ADD_ROUTE_OPTION',
   CLEAR_AVERAGE_COST: 'CLEAR_AVERAGE_COST',
+  CLEAR_DAYS_PER_WEEK: 'CLEAR_DAYS_PER_WEEK',
   UPDATE_TRANSPORTATION: 'UPDATE_TRANSPORTATION',
   UPDATE_MILES: 'UPDATE_MILES',
   UPDATE_AVERAGE_COST: 'UPDATE_AVERAGE_COST',
@@ -25,6 +26,9 @@ const addRouteOptionAction = actionCreator(
 );
 const clearAverageCostAction = actionCreator(
   actionTypes.CLEAR_AVERAGE_COST
+);
+const clearDaysPerWeekAction = actionCreator(
+  actionTypes.CLEAR_DAYS_PER_WEEK
 );
 const updateTransportationAction = actionCreator(
   actionTypes.UPDATE_TRANSPORTATION
@@ -164,6 +168,21 @@ function routeOptionReducer( state = initialState, action ) {
         }
       ) );
     }
+    case actionTypes.CLEAR_DAYS_PER_WEEK: {
+      return assign( state, updateRouteData(
+        state.routes,
+        action.data.routeIndex,
+        {
+          daysPerWeek: '',
+          actionPlanItems: updateActionPlan(
+            state,
+            action.data.routeIndex,
+            PLAN_TYPES.DAYS,
+            false
+          )
+        }
+      ) );
+    }
     case actionTypes.UPDATE_AVERAGE_COST: {
       return assign( state, updateRouteData(
         state.routes,
@@ -246,6 +265,7 @@ function routeOptionReducer( state = initialState, action ) {
 export {
   addRouteOptionAction,
   clearAverageCostAction,
+  clearDaysPerWeekAction,
   initialState,
   routeSelector,
   updateTransportationAction,

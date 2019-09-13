@@ -2,18 +2,19 @@ import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employme
 import routeOptionReducer, {
   addRouteOptionAction,
   clearAverageCostAction,
+  clearDaysPerWeekAction,
   initialState,
   routeSelector,
   updateAverageCostAction,
   updateCostToActionPlan,
   updateDaysPerWeekAction,
+  updateDaysToActionPlan,
   updateIsMonthlyCostAction,
   updateMilesAction,
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction,
-  updateTransportationAction,
-  updateDaysToActionPlan
+  updateTransportationAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
@@ -248,7 +249,7 @@ describe( 'routeOptionReducer', () => {
       };
       let state = routeOptionReducer(
         UNDEFINED,
-        addRouteOptionAction( createRoute(route) )
+        addRouteOptionAction( createRoute( route ) )
       );
 
       expect( state.routes[0].averageCost ).toBe( route.averageCost );
@@ -262,6 +263,28 @@ describe( 'routeOptionReducer', () => {
 
       expect( state.routes[0].averageCost ).toBe( '' );
       expect( state.routes[0].isMonthlyCost ).toBe( null );
+      expect( state.routes[0].actionPlanItems.length ).toBe( 0 );
+    } );
+
+    it( 'reduces the .clearDaysPerWeekAction', () => {
+      const route = {
+        daysPerWeek: '2',
+        actionPlanItems: [ PLAN_TYPES.DAYS_PER_WEEK ]
+      };
+      let state = routeOptionReducer(
+        UNDEFINED,
+        addRouteOptionAction( createRoute( route ) )
+      );
+
+      expect( state.routes[0].daysPerWeek ).toBe( route.daysPerWeek );
+      expect( state.routes[0].actionPlanItems ).toBe( route.actionPlanItems );
+
+      state = routeOptionReducer(
+        state,
+        clearDaysPerWeekAction( { routeIndex: 0 } )
+      );
+
+      expect( state.routes[0].daysPerWeek ).toBe( '' );
       expect( state.routes[0].actionPlanItems.length ).toBe( 0 );
     } );
   } );

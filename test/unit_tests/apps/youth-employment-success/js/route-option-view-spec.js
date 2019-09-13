@@ -7,6 +7,7 @@ import {
   updateMilesAction,
   updateTransportationAction
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import daysPerWeekView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/days-per-week';
 
 let UNDEFINED;
 
@@ -34,10 +35,14 @@ describe( 'routeOptionFormView', () => {
     init: detailsInit,
     render: detailsRender
   };
-  const costViewMock = () => ({
+  const viewMock = () => () => ( {
     init: jest.fn()
-  });
+  } );
+  const costViewMock = viewMock();
   costViewMock.CLASSES = averageCostView.CLASSES;
+
+  const daysPerWeekViewMock = viewMock();
+  daysPerWeekViewMock.CLASSES = daysPerWeekView.CLASSES;
   const mockStore = () => ( {
     dispatch,
     subscribe( fn ) {
@@ -66,7 +71,8 @@ describe( 'routeOptionFormView', () => {
       store,
       routeIndex: 0,
       detailsView,
-      averageCostView: costViewMock
+      averageCostView: costViewMock,
+      daysPerWeekView: daysPerWeekViewMock
     } );
     view.init();
   } );
@@ -90,20 +96,6 @@ describe( 'routeOptionFormView', () => {
     expect( mock.calls[0][0] ).toEqual( updateMilesAction( {
       routeIndex: 0,
       value } ) );
-  } );
-
-  it( 'dispatches an action to update `averageCost` input', () => {
-    const averageCostEl = document.querySelector( 'input[name="averageCost"]' );
-    const value = '200';
-
-    averageCostEl.value = value;
-
-    simulateEvent( 'input', averageCostEl );
-
-    const mock = store.dispatch.mock;
-
-    expect( mock.calls.length ).toBe( 1 );
-    expect( mock.calls[0][0] ).toEqual( updateAverageCostAction( { routeIndex: 0, value } ) );
   } );
 
   it( 'dispatches an action to update `daysPerWeek` input', () => {
@@ -134,10 +126,8 @@ describe( 'routeOptionFormView', () => {
   describe( 'conditional fields', () => {
     it( 'hides conditional fields on init', () => {
       const milesEl = document.querySelector( 'input[name="miles"]' );
-      const daysPerWeekEl = document.querySelector( 'input[name="daysPerWeek"]' );
 
       expect( milesEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
-      expect( daysPerWeekEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
     } );
   } );
 } );
