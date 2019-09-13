@@ -14,7 +14,7 @@
 
     {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
     {% set breadcrumb_items = [{
-        'href': '/data-research/prepaid-accounts/search-agreements/',
+        'href': breadcrumb,
         'title': 'Prepaid Product Agreements Database'
     }]%}
     {{ breadcrumbs.render(breadcrumb_items) }}
@@ -121,16 +121,26 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
+{% if support_text %}
 <div class="block block__flush-top">
-<header class="m-slug-header">
-  <h2 class="a-heading">
-      Database disclaimer
-  </h2>
-</header>
-<p>We will display the prepaid agreements in this database as the respective issuers submitted them. The CFPB is not responsible for the content of the agreements, including any discrepancies between an agreement as presented in this database and the agreement as offered to the public, or for any omissions or other errors in the agreement as submitted by the issuer.</p>
-<p>The agreements on file will have general terms and conditions, pricing, and fee information. They are not specific to an individual's account information.</p>
-<p>If you have questions about the agreements themselves, contact the prepaid issuer directly.</p>
+    <header class="m-slug-header">
+      <h2 class="a-heading">
+          {{ support_text.sidefoot_heading | safe }}
+      </h2>
+    </header>
+    {{ support_text.text | safe }}
 </div>
+{% endif %}
+{% if disclaimer_text %}
+<div class="block">
+    <header class="m-slug-header">
+      <h2 class="a-heading">
+          {{ disclaimer_text.sidefoot_heading | safe }}
+      </h2>
+    </header>
+    {{ disclaimer_text.text | safe }}
+</div>
+{% endif %}
 {%- endblock %}
 
 {% block javascript scoped %}
