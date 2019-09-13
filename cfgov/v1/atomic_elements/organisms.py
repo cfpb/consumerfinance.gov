@@ -54,6 +54,7 @@ class Well(blocks.StructBlock):
     content = blocks.RichTextBlock(required=False, label='Well')
 
     class Meta:
+        group = 'Well blocks'
         icon = 'placeholder'
         template = '_includes/organisms/well.html'
 
@@ -772,6 +773,7 @@ class BaseExpandable(blocks.StructBlock):
     is_expanded = blocks.BooleanBlock(required=False)
 
     class Meta:
+        group = 'Expandable blocks'
         icon = 'list-ul'
         template = '_includes/organisms/expandable.html'
         label = 'Expandable'
@@ -807,6 +809,7 @@ class ExpandableGroup(blocks.StructBlock):
     expandables = blocks.ListBlock(Expandable())
 
     class Meta:
+        group = 'Expandable blocks'
         icon = 'list-ul'
         template = '_includes/organisms/expandable-group.html'
 
@@ -1048,6 +1051,7 @@ class ChartBlock(blocks.StructBlock):
     )
 
     class Meta:
+        group = 'Data & Research blocks'
         label = 'Chart Block'
         icon = 'image'
         template = '_includes/organisms/chart.html'
@@ -1073,6 +1077,7 @@ class MortgageChartBlock(blocks.StructBlock):
     )
 
     class Meta:
+        group = 'Data & Research blocks'
         label = 'Mortgage Chart Block'
         icon = 'image'
         template = '_includes/organisms/mortgage-chart.html'
@@ -1233,6 +1238,7 @@ class DataSnapshot(blocks.StructBlock):
     image = images_blocks.ImageChooserBlock(required=False, icon='image')
 
     class Meta:
+        group = 'Data & Research blocks'
         icon = 'image'
         label = 'CCT Data Snapshot'
         template = '_includes/organisms/data_snapshot.html'

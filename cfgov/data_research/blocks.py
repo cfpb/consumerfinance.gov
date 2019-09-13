@@ -108,6 +108,7 @@ class MortgageDataDownloads(blocks.StructBlock):
             'No section will appear if there are no archival downloads.'))
 
     class Meta:
+        group = 'Data & Research blocks'
         label = 'Mortgage Downloads Block'
         icon = 'table'
         template = '_includes/organisms/mortgage-performance-downloads.html'
