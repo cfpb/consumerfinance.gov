@@ -2,17 +2,17 @@ import money from '../../../../../cfgov/unprocessed/apps/youth-employment-succes
 
 describe( 'money helpers', () => {
   describe( '.toDollars', () => {
-    it( 'converts string amounts to dollars with a presicion of 2', () => {
-      expect( money.toDollars( '125.567' ) ).toEqual( 125.56 );
+    it( 'converts string amounts to dollars', () => {
+      expect( money.toDollars( '125.567' ) ).toEqual( 126 );
     } );
 
     it( 'converts numbers to string for proper matching', () => {
-      expect( money.toDollars( 125.9999 ) ).toEqual( 125.99 );
+      expect( money.toDollars( 125.9999 ) ).toEqual( 126 );
     } );
   } );
 
-  it( 'truncates entries over 2 decimal places to 2', () => {
-    expect( money.add( '1.355', '1.655' ) ).toEqual( 3 );
+  it( 'rounds calculation up to nearest whole number', () => {
+    expect( money.add( '1.355', '1.655' ) ).toEqual( 4 );
   } );
 
   it( 'treats invalid entries as zero', () => {

@@ -89,7 +89,7 @@ describe( 'milesView', () => {
         }
       };
 
-      store.subscriber()( { routes: { routes: [ {} ]} }, state );
+      store.subscriber()( { routes: { routes: [ {} ]}}, state );
 
       expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
     } );
@@ -99,14 +99,14 @@ describe( 'milesView', () => {
       const checked = true;
       const prevState = {
         routes: {
-            routes: [ {
+          routes: [ {
             miles: miles
           } ]
         }
       };
       const state = {
         routes: {
-            routes: [ {
+          routes: [ {
             transportation: 'Walk'
           } ]
         }
@@ -129,7 +129,7 @@ describe( 'milesView', () => {
         const subscriberFn = store.subscriber();
         subscriberFn( prevState, state );
 
-        subscriberFn( { routes: { routes: [ {} ]} }, {
+        subscriberFn( { routes: { routes: [ {} ]}}, {
           routes: {
             routes: [ {
               transportation: 'Drive'

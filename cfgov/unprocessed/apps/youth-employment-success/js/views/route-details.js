@@ -106,9 +106,11 @@ function calculatePerMonthCost( dailyCost, daysPerWeek ) {
     return DEFAULT_COST_ESTIMATE;
   }
 
+  const normalizedDays = Number( daysPerWeek ) > 7 ? 7 : daysPerWeek;
+
   return money.toDollars(
     money.toDollars( dailyCost ) *
-    parseFloat( daysPerWeek ) *
+    normalizedDays *
     WEEKLY_COST_MODIFIER
   );
 }
@@ -121,7 +123,7 @@ function calculatePerMonthCost( dailyCost, daysPerWeek ) {
  */
 function updateRemainingBudget( budget, transportationEstimate ) {
   return money.subtract(
-    money.subtract( budget.earned, budget.spent ),
+    budget,
     transportationEstimate
   );
 }
@@ -223,17 +225,18 @@ function routeDetailsView( element ) {
     },
     render( { budget, route } ) {
       const costEstimate = getCalculationFn( route );
+      const remainingBudget = money.subtract( budget.earned, budget.spent );
       const dataToValidate = assign( {}, budget, route );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
-      updateDom( _budgetEl, budget.earned );
+      updateDom( _budgetEl, remainingBudget );
       updateDom( _daysPerWeekEl, route.daysPerWeek );
       updateDom( _totalCostEl, costEstimate );
       updateDom( _budgetLeftEl, updateRemainingBudget( budget, costEstimate ) );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
       updateDom( _todoEl, updateTodoList( route.actionPlanItems ) );
-      toggleAlert( _oobAlertEl, updateRemainingBudget( budget, costEstimate ) );
+      toggleAlert( _oobAlertEl, updateRemainingBudget( remainingBudget, costEstimate ) );
       toggleAlert( _incAlertEl, validate( dataToValidate ) ? 0 : -1 );
     }
   };
