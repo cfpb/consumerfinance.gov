@@ -4,7 +4,7 @@ import {
   updateDaysPerWeekAction,
   updateTransportationAction
 } from './reducers/route-option-reducer';
-import inputView from './input-view';
+import inputView from './views/input';
 import { toArray } from './util';
 import transitTimeView from './views/transit-time';
 
