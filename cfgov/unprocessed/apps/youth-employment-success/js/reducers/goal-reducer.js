@@ -49,7 +49,7 @@ const updateGoalTimelineAction = actionCreator(
  */
 function updateGoal( state, action ) {
   return assign( state, {
-    longTermGoal: action.data
+    longTermGoal: action.data.value
   } );
 }
 
@@ -61,7 +61,7 @@ function updateGoal( state, action ) {
  */
 function updateImportance( state, action ) {
   return assign( state, {
-    goalImportance: action.data
+    goalImportance: action.data.value
   } );
 }
 
@@ -73,7 +73,7 @@ function updateImportance( state, action ) {
  */
 function updateSteps( state, action ) {
   return assign( state, {
-    goalSteps: action.data
+    goalSteps: action.data.value
   } );
 }
 

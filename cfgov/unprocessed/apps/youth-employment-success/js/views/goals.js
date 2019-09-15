@@ -51,7 +51,7 @@ function goalsView(element, { store }) {
         events: {
           blur: _handleUpdateGoals
         }
-      });
+      }).init();
     });
 
     toArray(
@@ -62,7 +62,7 @@ function goalsView(element, { store }) {
           click: _handleTimelineUpdate
         },
         type: 'radio'
-      });
+      }).init();
     });
   }
 

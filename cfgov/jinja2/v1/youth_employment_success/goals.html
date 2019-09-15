@@ -36,6 +36,7 @@
         'helperText': 'For example, saving up for an annual bus pass in the next few months or saving up to buy a car in the next year.',
         'label': 'What’s your long-term goal?',
         'labelClass': "h3",
+        'name': 'longTermGoal',
         'required': true
       })
     }}
@@ -47,6 +48,7 @@
         'helperText': 'This goal could help you save money, in the case of an annual bus pass, or maybe it’s a more reliable option, such as having your own car instead of relying on rides.',
         'label': "Why is this goal important to you?",
         'labelClass': "h3",
+        'name': 'goalImportance',
         'required': true
       })
     }}
@@ -64,7 +66,7 @@
         {{
           renderRadio({
             'class': 'content-l content-l_col-1-2 m-form-field__lg-target',
-            'name':  "yes-goal-timeline-option",
+            'name':  "goalTimeline",
             'label': label[0],
             'value': label[0]
           })
@@ -74,7 +76,7 @@
           {{
             renderRadio({
               'class': 'content-l_col-1-2 m-form-field__lg-target',
-              'name': "yes-goal-timeline-option",
+              'name': "goalTimeline",
               'label': label[1],
               'value': label[1]
             })
@@ -91,6 +93,7 @@
         'helperText': 'Now work backwards — what are some steps you can take to achieve your goal by this time? Make sure your steps are realistic and specific. For example, my first step is “Over the next six months, I’ll take the bus instead of using a rideshare in order to save money. I am trying to save $400 during this time to put towards a car down payment.”',
         'label': "What are some steps you could take to reach your goal?",
         'labelClass': "h3",
+        'name': 'goalSteps',
         'required': true
       })
     }}
