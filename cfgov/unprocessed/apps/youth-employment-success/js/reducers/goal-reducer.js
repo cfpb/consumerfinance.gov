@@ -49,7 +49,7 @@ const updateGoalTimelineAction = actionCreator(
  */
 function updateGoal( state, action ) {
   return assign( state, {
-    longTermGoal: action.data.value
+    longTermGoal: action.data
   } );
 }
 
@@ -61,7 +61,7 @@ function updateGoal( state, action ) {
  */
 function updateImportance( state, action ) {
   return assign( state, {
-    goalImportance: action.data.value
+    goalImportance: action.data
   } );
 }
 
@@ -73,7 +73,7 @@ function updateImportance( state, action ) {
  */
 function updateSteps( state, action ) {
   return assign( state, {
-    goalSteps: action.data.value
+    goalSteps: action.data
   } );
 }
 
@@ -101,6 +101,7 @@ function updateTimeline( state, action ) {
 function goalReducer( state = initialState, action ) {
   if ( handlers.hasOwnProperty( action.type ) ) {
     const handler = handlers[action.type];
+
     return handler( state, action );
   }
 

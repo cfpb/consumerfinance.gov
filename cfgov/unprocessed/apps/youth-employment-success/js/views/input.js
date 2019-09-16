@@ -6,7 +6,12 @@ const defaultProps = {
 };
 const NODE_MISSING_ERROR = 'InputView expects to be initialized with an input node matching the supplied `type` prop';
 
-function isInputNode(element) {
+/**
+ * 
+ * @param {HTMLElement} element The element being tested for input or textarea node status
+ * @returns {Boolean} Whether or not the node is an input or textarea node
+ */
+function isInputNode( element ) {
   if (
     element instanceof HTMLInputElement ||
     element instanceof HTMLTextAreaElement
@@ -25,7 +30,7 @@ function isInputNode(element) {
  * @returns {node} The final dom node for this view
  */
 function resolve( element, type ) {
-  if ( isInputNode(element) ) {
+  if ( isInputNode( element ) ) {
     return element;
   }
 

@@ -7,7 +7,7 @@ import {
   updateIsMonthlyCostAction
 } from '../reducers/route-option-reducer';
 import { toArray } from '../util';
-import inputView from '../input-view';
+import inputView from './input';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-average-cost',

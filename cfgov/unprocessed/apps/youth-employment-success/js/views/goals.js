@@ -1,11 +1,11 @@
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { toArray } from '../util';
 import {
   updateGoalAction,
   updateGoalImportanceAction,
   updateGoalStepsAction,
   updateGoalTimelineAction
 } from '../reducers/goal-reducer';
+import { toArray } from '../util';
 import inputView from './input';
 
 const CLASSES = {
@@ -13,70 +13,81 @@ const CLASSES = {
   LONG_TERM_GOAL: 'js-long-term-goal',
   GOAL_IMPORTANCE: 'js-goal-importance',
   GOAL_STEPS: 'js-goal-steps',
-  GOAL_TIMELINE: 'a-radio',
+  GOAL_TIMELINE: 'a-radio'
 };
 
 const GOALS_TO_ACTIONS = {
-  'longTermGoal': updateGoalAction, 
-  'goalImportance': updateGoalImportanceAction,
-  'goalSteps':  updateGoalStepsAction
+  longTermGoal: updateGoalAction,
+  goalImportance: updateGoalImportanceAction,
+  goalSteps:  updateGoalStepsAction
 };
 
-function goalsView(element, { store }) {
-  const _dom = checkDom(element, CLASSES.CONTAINER);
+function goalsView( element, { store } ) {
+  const _dom = checkDom( element, CLASSES.CONTAINER );
 
-  function _handleUpdateGoals({ name, event }) {
+  /**
+  * Dispatch to the store the value of the last blurred goals section textarea node.
+  * @param {object} updateObject The data returned from the InputView's event handler function
+  * @param {object} updateObject.event The emitted DOM event
+  * @param {string} updateObject.name The name of the field the event was emitted from
+  */
+  function _handleUpdateGoals( { name, event } ) {
     const method = GOALS_TO_ACTIONS[name];
 
-    if (method) {
+    if ( method ) {
       store.dispatch( method( {
         value: event.target.value
-      }))
+      } ) );
     }
   }
 
-  function _handleTimelineUpdate({ event }) {
-    store.dispatch(updateGoalTimelineAction({
+  /**
+  * Dispatch to the store which timeline radio button the user has selected.
+  * @param {object} updateObject The data returned from the InputView's event handler function
+  * @param {object} updateObject.event The emitted DOM event
+  * @param {string} updateObject.name The name of the field the event was emitted from
+  */
+  function _handleTimelineUpdate( { event } ) {
+    store.dispatch( updateGoalTimelineAction( {
       value: event.target.value
-    }));
+    } ) );
   }
 
+  /**
+   * Initialize form control views
+   */
   function _initInputs() {
     [
       CLASSES.LONG_TERM_GOAL,
       CLASSES.GOAL_IMPORTANCE,
-      CLASSES.GOAL_STEPS,
-    ].forEach(klass => {
-      inputView(_dom.querySelector(`.${klass}`), {
+      CLASSES.GOAL_STEPS
+    ].forEach( klass => {
+      inputView( _dom.querySelector( `.${ klass }` ), {
         events: {
           blur: _handleUpdateGoals
         }
-      }).init();
-    });
+      } ).init();
+    } );
 
     toArray(
-      _dom.querySelectorAll(`.${CLASSES.GOAL_TIMELINE}`)
-    ).forEach(radio => {
-      inputView(radio, {
+      _dom.querySelectorAll( `.${ CLASSES.GOAL_TIMELINE }` )
+    ).forEach( radio => {
+      inputView( radio, {
         events: {
           click: _handleTimelineUpdate
         },
         type: 'radio'
-      }).init();
-    });
+      } ).init();
+    } );
   }
 
   return {
     init() {
-      if (setInitFlag(_dom)) {
+      if ( setInitFlag( _dom ) ) {
         _initInputs();
-
-        store.subscribe(() => {
-          console.log(store.getState())
-        })
       }
     }
-  }
+  };
 }
 
 goalsView.CLASSES = CLASSES;
