@@ -5,8 +5,9 @@
 {%- set fill = value.fill if value.fill else '' -%}
 {%- set content = value.content -%}
 {%- set visible = 'm-notification__visible' if value.visible else '' -%}
+{%- set background = 'm-notification__' ~ value.fill if value.background else '' -%}
 
-<div class="m-notification {{ visible }}">
+<div class="m-notification {{ visible }} {{ background }}">
   {{
     renderAlertIcon({
       'fill': fill 

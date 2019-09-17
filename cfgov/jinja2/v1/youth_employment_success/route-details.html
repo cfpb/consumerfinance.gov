@@ -1,5 +1,5 @@
 {% from 'alert.html' import render as renderAlert with context %}
-<div class="content-l content-l_col-2-3 yes-route-details">
+<div class="content-l content-l_col-2-3 yes-route-details {{test}}">
     <p class="h4 u-mt0">
       Totals for <span class="js-transportation-type"></span>
     </p>
@@ -80,11 +80,13 @@
         </b>
       </p>
     </div>
-  
-    <div class="content-l content-l_col-2-3">
-      <span class="h4">MY TO-DO LIST</span>
-      <div class="content_line-bold"></div>
-      <ul class="block__sub-micro js-todo-items">
-      </ul>
-    </div>
+    
+    {% if show_todos %}
+      <div class="content-l content-l_col-2-3">
+        <span class="h4">YOUR TO-DO LIST</span>
+        <div class="content_line-bold"></div>
+        <ul class="block__sub-micro js-todo-items">
+        </ul>
+      </div>
+    {% endif %}
   </div>
