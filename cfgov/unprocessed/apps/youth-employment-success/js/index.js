@@ -4,6 +4,7 @@ import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
 import averageCostView from './views/average-cost';
 import daysPerWeekView from './views/days-per-week';
+import milesView from './views/miles';
 import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
 import routeDetailsView from './views/route-details';
@@ -42,7 +43,8 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
     routeIndex: index,
     detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) ),
     averageCostView,
-    daysPerWeekView
+    daysPerWeekView,
+    milesView
   } );
 } );
 
