@@ -1,5 +1,6 @@
 import { simulateEvent } from '../../../../util/simulate-event';
 import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
+import averageCostView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
 import {
   updateAverageCostAction,
   updateDaysPerWeekAction,
@@ -12,7 +13,9 @@ let UNDEFINED;
 const HTML = `
   <form class="o-yes-route-option">
     <input type="text" name="miles" data-js-name="miles" class="a-yes-question">
-    <input type="text" name="averageCost" data-js-name="averageCost" class="a-yes-question">
+    <div class="m-yes-average-cost">
+      <input type="text" name="averageCost" data-js-name="averageCost" class="a-yes-question">
+    </div>
     <input type="text" name="daysPerWeek" data-js-name="daysPerWeek" class="a-yes-question">
     <input type="text" name="averageCost" data-js-name="averageCost" class="a-yes-question">
     <input type="radio" name="transpo" class="a-yes-route-mode" value="Bus">
@@ -31,6 +34,10 @@ describe( 'routeOptionFormView', () => {
     init: detailsInit,
     render: detailsRender
   };
+  const costViewMock = () => ({
+    init: jest.fn()
+  });
+  costViewMock.CLASSES = averageCostView.CLASSES;
   const mockStore = () => ( {
     dispatch,
     subscribe( fn ) {
@@ -58,7 +65,8 @@ describe( 'routeOptionFormView', () => {
     view = routeOptionFormView( document.querySelector( `.${ CLASSES.FORM }` ), {
       store,
       routeIndex: 0,
-      detailsView
+      detailsView,
+      averageCostView: costViewMock
     } );
     view.init();
   } );
