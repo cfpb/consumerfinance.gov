@@ -1,0 +1,49 @@
+{% from 'atoms/radio-button.html' import render as renderRadio with context %}
+
+<div class="block__sub">
+  <h2>Which way of getting to work is your first choice?</h2>
+  <p>Mya decided to bike to work because it’s affordable and the bikeshare is convenient to her school and work. Frankie decided to take the bus instead of taking a rideshare to work in order to save money to hopefully buy a car in the next year. </p>
+
+  <div class="block__sub">
+    <span class="h4 u-mb0">
+      <b>What option is your first choice?</b>
+    </span>
+    <p class="u-mt0">
+      <small>Choose one</small>
+    </p>
+    <div class="u-w70pct">
+      <div class="block__sub-micro">
+        {{
+          renderRadio({
+            'class': 'content-l content-l_col-1-2 m-form-field__lg-target',
+            'disabled': true,
+            'name':  'yes-route-selection',
+            'label': 'Option 1: -',
+            'value': '0'
+          })
+        }}
+        {{
+          renderRadio({
+            'class': 'content-l content-l_col-1-2 m-form-field__lg-target',
+            'disabled': true,
+            'name':  'yes-route-selection',
+            'label': 'Option 2: -',
+            'value': '1'
+          })
+        }}
+      </div>
+      <div class="block__sub-micro">
+        {{
+          renderRadio({
+            'class': 'content-l content-l_col-1-2 m-form-field__lg-target',
+            'disabled': true,
+            'name':  'yes-route-selection',
+            'label': 'I want to complete items in my to-do list before deciding',
+            'value': 'wait'
+          })
+        }}
+      </div>
+    </div>
+  </div>
+  <button class="a-btn" type="button" disabled>Review your plan</button>
+</div>

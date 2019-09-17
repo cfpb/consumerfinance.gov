@@ -1,0 +1,65 @@
+{% from 'yes-info-unit.html' import yes_info_unit with context %}
+<div class="block">
+  <div class="m-notification
+              m-notification__visible
+              m-notification__success">
+      {% include "success-icon.html" %}
+      <div class="m-notification_content">
+        <div class="h4 m-notification_message">
+          Awesome, you worked on your transportation plan! We hope this plan brings you closer to achieving your long-term goal. Here are some other resources that might be helpful.
+        </div>
+      </div>
+  </div>
+  <div class="block__sub">
+    {{
+      yes_info_unit({
+        'body': 'Buying and owning a car is a big responsibility. Learn how to prepare so you can save money and get the best deal for you.',
+        'heading': 'Learn about buying a car',
+        'image_url': 'http://placekitten/300/300',
+        'link': {
+          'text': 'Learn more about buying a car',
+          'url': '/buy-a-car'
+        }
+      })
+    }}
+  </div>
+  <div class="block__sub">
+    {{
+      yes_info_unit({
+        'body': '<p>Keeping track of your money and benefits is the first step in creating a budget that works for you.</p>',
+        'heading': '<h3>Track spending and make a budget</h3>',
+        'image_url': 'http://placekitten/300/300',
+        'link': {
+          'text': 'Learn how to track my spending',
+          'url': '/ok'
+        }
+      })
+    }}
+  </div>
+  <div class="block__sub">
+    {{
+      yes_info_unit({
+        'body': '<p>Having a poor credit score can create obstacles when you\'re applying for car insurance, loans, credit cards—even apartments and utilities.</p>',
+        'heading': '<h3>Learn about credit</h3>',
+        'image_url': 'http://placekitten/300/300',
+        'link': {
+          'text': 'Learn more about credit and how to improve your score',
+          'url': '/ok'
+        }
+      })
+    }}
+  </div>
+  <div class="block__sub">
+    {{
+      yes_info_unit({
+        'body': '<p>When choosing and using a new bank account, it\’s important to know your options and how to keep your money safe.</p>',
+        'heading': '<h3>Opening a bank account</h3>',
+        'image_url': 'http://placekitten/300/300',
+        'link': {
+          'text': 'Learn more about your banking options',
+          'url': '/ok'
+        }
+      })
+    }}
+  </div>
+</div>

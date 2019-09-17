@@ -1,0 +1,25 @@
+{% from 'molecules/info-unit.html' import info_unit with context %}
+{{info_unit}}
+{% macro yes_info_unit(values) %}
+  {%- set body = '<p>' ~ values.body ~ '</p>' -%}
+  {%- set heading = '<h3>' ~ values.heading ~ '</h3>' -%}
+
+  {{ info_unit({
+    'body': body,
+    'heading': heading,
+    'image': {
+      'alt': 'alternative text',
+      'is_sqaure': true,
+      'is_decorative': true,
+      'url': values.image_url
+    },
+    'links': [
+      {
+        'text': values.link.text,
+        'url': values.link.url
+      }
+    ],
+    'link_image_and_heading': true,
+    'modifier': 'inline'
+  }) }}
+{% endmacro %}
