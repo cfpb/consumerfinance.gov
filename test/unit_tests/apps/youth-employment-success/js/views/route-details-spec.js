@@ -85,7 +85,6 @@ describe( 'routeDetailsView', () => {
       daysPerWeek: '3',
       miles: '20',
       averageCost: '10',
-      monthlyCost: '',
       isMonthlyCost: null,
       transitTimeHours: '1',
       transitTimeMinutes: '5',
@@ -152,7 +151,7 @@ describe( 'routeDetailsView', () => {
             ...nextState.route,
             transportation: 'Walk',
             isMonthlyCost: true,
-            monthlyCost: '100'
+            averageCost: '100'
           }
         };
 

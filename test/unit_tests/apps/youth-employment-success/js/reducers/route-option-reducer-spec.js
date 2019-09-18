@@ -2,11 +2,13 @@ import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employme
 import routeOptionReducer, {
   addRouteOptionAction,
   clearAverageCostAction,
+  clearDaysPerWeekAction,
   initialState,
   routeSelector,
   updateAverageCostAction,
   updateCostToActionPlan,
   updateDaysPerWeekAction,
+  updateDaysToActionPlan,
   updateIsMonthlyCostAction,
   updateMilesAction,
   updateTimeToActionPlan,
@@ -166,6 +168,7 @@ describe( 'routeOptionReducer', () => {
       const { actionPlanItems } = state.routes[0];
 
       expect( actionPlanItems.length ).toBe( 1 );
+      expect( actionPlanItems[0] ).toBeDefined();
       expect( actionPlanItems[0] ).toBe( PLAN_TYPES.TIME );
     } );
 
@@ -182,6 +185,21 @@ describe( 'routeOptionReducer', () => {
       expect( actionPlanItems.length ).toBe( 1 );
       expect( actionPlanItems[0] ).toBeDefined();
       expect( actionPlanItems[0] ).toBe( PLAN_TYPES.AVERAGE_COST );
+    } );
+
+    it( 'reduces the .updateDaysToActionPlan action', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateDaysToActionPlan( {
+          routeIndex: 0,
+          value: true } )
+      );
+
+      const { actionPlanItems } = state.routes[0];
+
+      expect( actionPlanItems.length ).toBe( 1 );
+      expect( actionPlanItems[0] ).toBeDefined();
+      expect( actionPlanItems[0] ).toBe( PLAN_TYPES.DAYS_PER_WEEK );
     } );
 
     it( 'reduces the .updateIsMonthlyCostAction', () => {
@@ -227,11 +245,11 @@ describe( 'routeOptionReducer', () => {
       const route = {
         averageCost: '100',
         isMonthlyCost: true,
-        actionPlanItems: [ PLAN_TYPES.COST ]
+        actionPlanItems: [ PLAN_TYPES.AVERAGE_COST ]
       };
       let state = routeOptionReducer(
         UNDEFINED,
-        addRouteOptionAction( route )
+        addRouteOptionAction( createRoute( route ) )
       );
 
       expect( state.routes[0].averageCost ).toBe( route.averageCost );
@@ -245,6 +263,28 @@ describe( 'routeOptionReducer', () => {
 
       expect( state.routes[0].averageCost ).toBe( '' );
       expect( state.routes[0].isMonthlyCost ).toBe( null );
+      expect( state.routes[0].actionPlanItems.length ).toBe( 0 );
+    } );
+
+    it( 'reduces the .clearDaysPerWeekAction', () => {
+      const route = {
+        daysPerWeek: '2',
+        actionPlanItems: [ PLAN_TYPES.DAYS_PER_WEEK ]
+      };
+      let state = routeOptionReducer(
+        UNDEFINED,
+        addRouteOptionAction( createRoute( route ) )
+      );
+
+      expect( state.routes[0].daysPerWeek ).toBe( route.daysPerWeek );
+      expect( state.routes[0].actionPlanItems ).toBe( route.actionPlanItems );
+
+      state = routeOptionReducer(
+        state,
+        clearDaysPerWeekAction( { routeIndex: 0 } )
+      );
+
+      expect( state.routes[0].daysPerWeek ).toBe( '' );
       expect( state.routes[0].actionPlanItems.length ).toBe( 0 );
     } );
   } );

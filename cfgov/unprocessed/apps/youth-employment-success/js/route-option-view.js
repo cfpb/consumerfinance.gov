@@ -27,8 +27,7 @@ const actionMap = Object.freeze( {
  * and the predicate functions that determine the field's state
  */
 const toggleableFields = {
-  miles: state => state.transportation === 'Drive',
-  daysPerWeek: state => state.transportation === 'Drive' || state.isCostPerDay
+  miles: state => state.transportation === 'Drive'
 };
 
 /**
@@ -109,7 +108,8 @@ function RouteOptionFormView( element, {
   store,
   routeIndex,
   detailsView,
-  averageCostView
+  averageCostView,
+  daysPerWeekView
 } ) {
   const _dom = checkDom( element, CLASSES.FORM );
   const _transportationOptionEls = toArray(
@@ -193,12 +193,16 @@ function RouteOptionFormView( element, {
           { store, routeIndex }
         ).init();
 
-        const costView = averageCostView(
+        averageCostView(
           _dom.querySelector( `.${ averageCostView.CLASSES.CONTAINER }` ),
           { store, routeIndex }
-        );
+        ).init();
 
-        costView.init();
+        daysPerWeekView(
+          _dom.querySelector( `.${ daysPerWeekView.CLASSES.CONTAINER }` ),
+          { store, routeIndex }
+        ).init();
+
         detailsView.init();
 
         const currentState = routeSelector(

@@ -43,9 +43,9 @@ function updateTodoList( todos = [] ) {
   return fragment;
 }
 
-// Assuming days per week for a transportation option to be 5 days per week.
-// This could easily not be accurate as people frequently have weekend jobs,
-// multiple shifts etc, but should work for now.
+/* Assuming days per week for a transportation option to be 5 days per week.
+   This could easily not be accurate as people frequently have weekend jobs,
+   multiple shifts etc, but should work for now. */
 const FULL_TIME_DAYS = 5;
 
 const DEFAULT_COST_ESTIMATE = '-';
@@ -67,7 +67,6 @@ const ESTIMATED_COST_PER_MILE = 1.8;
 function getCalculationFn( route ) {
   const {
     isMonthlyCost,
-    monthlyCost,
     transportation,
     averageCost,
     daysPerWeek,
@@ -79,7 +78,7 @@ function getCalculationFn( route ) {
 
     return calculatePerMonthCost( realDailyCost, daysPerWeek );
   } else if ( isMonthlyCost ) {
-    return monthlyCost;
+    return averageCost;
   }
 
   return calculatePerMonthCost( averageCost, FULL_TIME_DAYS );
