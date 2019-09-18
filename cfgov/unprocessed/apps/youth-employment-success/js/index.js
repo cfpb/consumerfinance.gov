@@ -7,7 +7,6 @@ import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
 import routeDetailsView from './views/route-details';
 import store from './store';
-import './polyfills/closest';
 
 Array.prototype.slice.call(
   document.querySelectorAll( 'input' )
