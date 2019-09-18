@@ -2,7 +2,6 @@ import { simulateEvent } from '../../../../util/simulate-event';
 import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
 import averageCostView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
 import {
-  updateAverageCostAction,
   updateDaysPerWeekAction,
   updateMilesAction,
   updateTransportationAction
@@ -31,17 +30,19 @@ describe( 'routeOptionFormView', () => {
   const dispatch = jest.fn();
   const detailsInit = jest.fn();
   const detailsRender = jest.fn();
+  const costViewInit = jest.fn();
+  const daysViewInit = jest.fn();
   const detailsView = {
     init: detailsInit,
     render: detailsRender
   };
-  const viewMock = () => () => ( {
-    init: jest.fn()
+  const viewMock = (mock) => () => ( {
+    init: mock
   } );
-  const costViewMock = viewMock();
+  const costViewMock = viewMock(costViewInit);
   costViewMock.CLASSES = averageCostView.CLASSES;
 
-  const daysPerWeekViewMock = viewMock();
+  const daysPerWeekViewMock = viewMock(daysViewInit);
   daysPerWeekViewMock.CLASSES = daysPerWeekView.CLASSES;
   const mockStore = () => ( {
     dispatch,
@@ -81,6 +82,12 @@ describe( 'routeOptionFormView', () => {
     dispatch.mockReset();
     view = null;
   } );
+
+  it('initializes its children', () => {
+    expect(costViewInit).toHaveBeenCalled();
+    expect(detailsInit).toHaveBeenCalled();
+    expect(daysViewInit).toHaveBeenCalled();
+  });
 
   it( 'dispatches an action to update `miles` input', () => {
     const milesEl = document.querySelector( 'input[name="miles"]' );
