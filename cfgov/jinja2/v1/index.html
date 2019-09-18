@@ -25,7 +25,6 @@
 {% block content %}
 
     <main class="content" id="main">
-
         {% from 'molecules/home-hero.html' import home_hero with context %}
         {{ home_hero( {
             'heading': 'We’re the CFPB',
@@ -140,13 +139,13 @@
                     <div class="content-l">
                         <div class="content-l_col content-l_col-1-2__on-lg">
                             <div class="m-card">
-                                <h3 class="h1 m-card_heading">$12.4 billion in relief</h3>
+                                <h3 class="h1 m-card_heading">$13.2 billion in relief</h3>
                                 <p class="m-card_body">to consumers from our enforcement actions</p>
                             </div>
                         </div>
                         <div class="content-l_col content-l_col-1-2__on-lg">
                             <div class="m-card">
-                                <h3 class="h1 m-card_heading">31 million+ consumers</h3>
+                                <h3 class="h1 m-card_heading">35 million+ consumers</h3>
                                 <p class="m-card_body">will receive relief because of our actions</p>
                             </div>
                         </div>
@@ -160,7 +159,7 @@
                     <div class="content-l">
                         <div class="content-l_col content-l_col-1-2__on-lg">
                             <div class="m-card">
-                                <h3 class="h1 m-card_heading">1.5 million+ complaints</h3>
+                                <h3 class="h1 m-card_heading">1.9 million+ complaints</h3>
                                 <p class="m-card_body">we’ve handled from consumers</p>
                             </div>
                         </div>
@@ -173,51 +172,68 @@
                     </div>
                 </section>
             </div>
-
-            <p style="margin-top: 30px;margin-bottom: 0;">Figures are updated quarterly. Last update on 06/04/2018</p>
         </div>
 
         <div class="wrapper">
             <div class="content_main content_main__home">
-                <h2>Latest updates</h2>
+                <h2>Recent updates</h2>
+
                 <div class="content-l">
-                    {% for sections in page.latest_updates %}
+                    {% import 'macros/time.html' as time %}
+                    {% import 'macros/category-slug.html' as category_slug %}
+                    {% for post in latest_updates %}
+
+                        {% if loop.index % 2 == 1 %}
                         <section class="content-l_col
                                         content-l_col-1-3">
-                            {% for block in sections.value %}
-                                {# TODO: Refactor to not use m-list.
-                                         It's only used to make the links bold.
-                                         It should either be a list or not. #}
-                                <div class="m-related-posts_list-container m-list">
-                                    <h3 class="h4">
-                                        {% set icon = 'open-quote' if block.categories == 'double-quote' else block.categories %}
-                                        {{ svg_icon(icon) }}
-                                        {{ page.get_category_name(block.categories) }}
-                                    </h3>
-                                    <a class="m-list_link" href="{{ block.link.url }}">
-                                        {{ block.link.text }}
-                                    </a>
-                                    <p class="a-date">
-                                        {% import 'macros/time.html' as time %}
-                                        {{ time.render(block.date, {'date':true}) }}
-                                    </p>
-                                </div>
-                            {% endfor %}
+                        {% endif %}
+
+                            {# TODO: Refactor to not use m-list.
+                                        It's only used to make the links bold.
+                                        It should either be a list or not. #}
+                            <div class="m-related-posts_list-container m-list">
+                                <h3 class="h4">
+                                    {% if is_blog(post) %}
+                                        {{ category_slug.render(category='blog', href=page_url) }}
+                                    {% elif is_event(post) %}
+                                        {{ category_slug.render(category='Events', href=page_url) }}
+                                    {% elif is_report(post) %}
+                                        {{ category_slug.render(category='report', href=page_url) }}
+                                    {% else %}
+                                        {% for cat in post.categories.all() %}
+                                            {% if loop.index > 1 %}
+                                                |
+                                            {% endif %}
+                                            {{ category_slug.render(category=cat.name, href=page_url) }}
+                                        {% endfor %}
+                                    {% endif %}
+                                </h3>
+                                <a class="m-list_link" href="{{ post.get_url() }}">
+                                    {{ post.title }}
+                                </a>
+                                <p class="a-date">
+                                    {{ time.render(post.first_published_at, {'date':true}) }}
+                                </p>
+                            </div>
+
                         {% if loop.last %}
                             <div class="m-related-posts_list-container">
                                 <a class="a-link
-                                          a-link__jump"
-                                   href="/activity-log/">
+                                        a-link__jump"
+                                    href="/activity-log/">
                                     See all updates
                                 </a>
                             </div>
-                        {% endif %}
                         </section>
+                        {% elif loop.index is divisibleby(2) %}
+                        </section>
+                        {% endif %}
+
                     {% endfor %}
                 </div>
+
             </div>
         </div>
-
     </main>
 
 {% endblock content %}

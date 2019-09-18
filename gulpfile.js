@@ -24,6 +24,7 @@ if ( envvars.NODE_ENV === 'production' ) {
     TASK_PATH + 'docs.js',
     TASK_PATH + 'lint.js',
     TASK_PATH + 'test-acceptance.js',
+    TASK_PATH + 'test-acceptance-new.js',
     TASK_PATH + 'test-unit.js'
   ];
 }
@@ -50,8 +51,8 @@ function requireTask( taskPath ) {
  * @returns {string|undefined} File name that exists, otherwise undefined.
  */
 function fileExists( filePattern ) {
-  let UNDEFINED;
   if ( !filePattern ) {
+    let UNDEFINED;
     return UNDEFINED;
   }
   const checkFile = `${ TASK_PATH }${ filePattern }.js`;

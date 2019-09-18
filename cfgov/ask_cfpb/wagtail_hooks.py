@@ -2,100 +2,17 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.conf.urls import url
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
-from django.utils.decorators import method_decorator
 from django.utils.html import format_html
 
-from wagtail.contrib.modeladmin.options import (
-    ModelAdmin, ModelAdminGroup, modeladmin_register
-)
-from wagtail.contrib.modeladmin.views import EditView
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailadmin.rich_text import HalloPlugin
 from wagtail.wagtailcore import hooks
+from wagtail.wagtailcore.models import Page
 
-from ask_cfpb.models import Answer, Audience, Category, NextStep, SubCategory
+from ask_cfpb.models import Answer, AnswerPage
 from ask_cfpb.scripts import export_ask_data
-
-
-class AnswerModelAdminSaveUserEditView(EditView):
-    """
-    An edit_handler that saves the current user as the 'last user'
-    on an Answer object so that it can be passed to a created or updated page.
-    """
-
-    def save_instance_user(self):
-        self.instance.last_user = self.request.user
-        self.instance.save(skip_page_update=True)
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        self.save_instance_user()
-        return super(EditView, self).dispatch(request, *args, **kwargs)
-
-
-class AnswerModelAdmin(ModelAdmin):
-    model = Answer
-    menu_label = 'Answers'
-    menu_icon = 'list-ul'
-    list_display = (
-        'id',
-        'question',
-        'last_edited',
-        'question_es',
-        'last_edited_es')
-    search_fields = (
-        'id', 'question', 'question_es', 'answer', 'answer_es', 'search_tags')
-    list_filter = ('category', 'featured', 'audiences')
-    edit_view_class = AnswerModelAdminSaveUserEditView
-
-
-class AudienceModelAdmin(ModelAdmin):
-    model = Audience
-    menu_icon = 'list-ul'
-    menu_label = 'Audiences'
-
-
-class NextStepModelAdmin(ModelAdmin):
-    model = NextStep
-    menu_label = 'Related resources'
-    menu_icon = 'list-ul'
-    list_display = (
-        'title', 'text')
-
-
-class SubCategoryModelAdmin(ModelAdmin):
-    model = SubCategory
-    menu_label = 'Subcategories'
-    menu_icon = 'list-ul'
-    list_display = (
-        'name', 'weight', 'parent'
-    )
-    search_fields = (
-        'name', 'weight')
-    list_filter = ('parent',)
-
-
-class CategoryModelAdmin(ModelAdmin):
-    model = Category
-    menu_label = 'Categories'
-    menu_icon = 'list-ul'
-    list_display = (
-        'name', 'name_es', 'intro', 'intro_es')
-
-
-@modeladmin_register
-class MyModelAdminGroup(ModelAdminGroup):
-    menu_label = 'Ask CFPB'
-    menu_icon = 'list-ul'
-    items = (
-        AnswerModelAdmin,
-        AudienceModelAdmin,
-        CategoryModelAdmin,
-        SubCategoryModelAdmin,
-        NextStepModelAdmin)
 
 
 def export_data(request):
@@ -149,3 +66,56 @@ def register_export_menu_item():
 @hooks.register('register_admin_urls')
 def register_export_url():
     return [url('export-ask', export_data, name='export-ask')]
+
+
+@hooks.register('after_create_page')
+def create_answer_id(request, page):
+    """
+    Create an incremented Answer ID for a new AnswerPage and attach it.
+
+    Also create a sister-language page to keep languages in sync.
+    """
+    def create_sister_page(new_page, answer_base):
+        sister_map = {
+            'es': {
+                'language': 'en',
+                'parent': Page.objects.get(slug='ask-cfpb').specific,
+                'title_prefix': 'English draft of',
+            },
+            'en': {
+                'language': 'es',
+                'parent': Page.objects.get(slug='obtener-respuestas').specific,
+                'title_prefix': 'Spanish draft of',
+            }
+        }
+        sister_values = sister_map[new_page.language]
+        sister_page = AnswerPage(
+            live=False,
+            language=sister_values['language'],
+            title="{} {}-{}-{}".format(
+                sister_values['title_prefix'],
+                new_page.title,
+                sister_values['language'],
+                answer_base.pk),
+            answer_base=answer_base,
+        )
+        sister_values['parent'].add_child(instance=sister_page)
+        return sister_page
+
+    if isinstance(page, AnswerPage) and page.answer_base is None:
+        new_answer_base = Answer(
+            last_user=request.user,
+            question=page.title)
+        new_answer_base.save()
+        new_id = new_answer_base.pk
+        page.answer_base = new_answer_base
+        page.language = page.get_parent().language
+        sister_page = create_sister_page(page, new_answer_base)
+        sister_page.save()
+        sister_page.save_revision(user=request.user)
+        page.title = "{}-{}-{}".format(
+            page.title, page.language, new_id)
+        page.slug = "{}-{}-{}".format(
+            page.slug, page.language, new_id)
+        page.save()
+        page.save_revision(user=request.user)

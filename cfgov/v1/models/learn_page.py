@@ -1,6 +1,7 @@
 from datetime import date
-from six.moves.urllib.parse import urlencode
 
+from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -20,6 +21,7 @@ from localflavor.us.models import USStateField
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
+from v1.util.events import get_venue_coords
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -67,6 +69,7 @@ class AbstractFilterPage(CFGOVPage):
             FieldPanel('comments_close_by'),
         ], 'Relevant Dates', classname='collapsible'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
+        FieldPanel('language', 'Language'),
     ]
 
     # This page class cannot be created.
@@ -168,6 +171,18 @@ class EventPage(AbstractFilterPage):
     archive_body = RichTextField(blank=True)
     live_body = RichTextField(blank=True)
     future_body = RichTextField(blank=True)
+    persistent_body = StreamField([
+        ('content', blocks.RichTextBlock(icon='edit')),
+        ('content_with_anchor', molecules.ContentWithAnchor()),
+        ('heading', v1_blocks.HeadingBlock(required=False)),
+        ('image', molecules.ContentImage()),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'}
+        )),
+        ('reusable_text', v1_blocks.ReusableTextChooserBlock(
+            'v1.ReusableText'
+        )),
+    ], blank=True)
     start_dt = models.DateTimeField("Start", blank=True, null=True)
     end_dt = models.DateTimeField("End", blank=True, null=True)
     future_body = RichTextField(blank=True)
@@ -194,38 +209,90 @@ class EventPage(AbstractFilterPage):
     )
     flickr_url = models.URLField("Flickr URL", blank=True)
     youtube_url = models.URLField(
-        "Youtube URL",
+        "YouTube URL",
         blank=True,
         help_text="Format: https://www.youtube.com/embed/video_id. "
                   "It can be obtained by clicking on Share > "
-                  "Embed on Youtube.",
+                  "Embed on YouTube.",
         validators=[
             RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
         ]
     )
-
     live_stream_availability = models.BooleanField(
         "Streaming?",
         default=False,
-        blank=True
+        blank=True,
+        help_text='Check if this event will be streamed live. This causes the '
+                  'event page to show the parts necessary for live streaming.'
     )
     live_stream_url = models.URLField(
         "URL",
         blank=True,
-        help_text="Format: https://www.youtube.com/embed/video_id."
+        help_text="Format: https://www.youtube.com/embed/video_id. "
+                  "It can be obtained by clicking on Share > "
+                  "Embed on YouTube.",
+        validators=[
+            RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
+        ]
     )
     live_stream_date = models.DateTimeField(
         "Go Live Date",
         blank=True,
-        null=True
+        null=True,
+        help_text='Enter the date and time that the page should switch from '
+                  'showing the venue image to showing the live video feed. '
+                  'This is typically 15 minutes prior to the event start time.'
     )
+
     # Venue content fields
+    venue_coords = models.CharField(max_length=100, blank=True)
     venue_name = models.CharField(max_length=100, blank=True)
     venue_street = models.CharField(max_length=100, blank=True)
     venue_suite = models.CharField(max_length=100, blank=True)
     venue_city = models.CharField(max_length=100, blank=True)
     venue_state = USStateField(blank=True)
-    venue_zip = models.IntegerField(blank=True, null=True)
+    venue_zipcode = models.CharField(max_length=12, blank=True)
+    venue_image_type = models.CharField(
+        max_length=8,
+        choices=(
+            ('map', 'Map'),
+            ('image', 'Image (selected below)'),
+            ('none', 'No map or image'),
+        ),
+        default='map',
+        help_text='If "Image" is chosen here, you must select the image you '
+                  'want below. It should be sized to 1416x796.',
+    )
+    venue_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    post_event_image_type = models.CharField(
+        max_length=16,
+        choices=(
+            ('placeholder', 'Placeholder image'),
+            ('image', 'Unique image (selected below)'),
+        ),
+        default='placeholder',
+        verbose_name='Post-event image type',
+        help_text='Choose what to display after an event concludes. This will '
+                  'be overridden by embedded video if the "YouTube URL" field '
+                  'on the previous tab is populated. If "Unique image" is '
+                  'chosen here, you must select the image you want below. It '
+                  'should be sized to 1416x796.',
+    )
+    post_event_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    # Agenda content fields
     agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
 
     objects = CFGOVPageManager()
@@ -257,6 +324,7 @@ class EventPage(AbstractFilterPage):
         ], heading='Archive Information'),
         FieldPanel('live_body', classname="full"),
         FieldPanel('future_body', classname="full"),
+        StreamFieldPanel('persistent_body'),
         MultiFieldPanel([
             FieldPanel('live_stream_availability'),
             FieldPanel('live_stream_url'),
@@ -271,8 +339,16 @@ class EventPage(AbstractFilterPage):
             FieldPanel('venue_suite'),
             FieldPanel('venue_city'),
             FieldPanel('venue_state'),
-            FieldPanel('venue_zip'),
+            FieldPanel('venue_zipcode'),
         ], heading='Venue Address'),
+        MultiFieldPanel([
+            FieldPanel('venue_image_type'),
+            ImageChooserPanel('venue_image'),
+        ], heading='Venue Image'),
+        MultiFieldPanel([
+            FieldPanel('post_event_image_type'),
+            ImageChooserPanel('post_event_image'),
+        ], heading='Post-event Image')
     ]
     # Agenda content tab
     agenda_panels = [
@@ -301,19 +377,33 @@ class EventPage(AbstractFilterPage):
         return super(EventPage, self).page_js + ['video-player.js']
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
-        center = 'Washington, DC'
-        if self.venue_city:
-            center = self.venue_city
-        if self.venue_state:
-            center = center + ', ' + self.venue_state
-        options = {
-            'center': center,
-            'scale': scale,
-            'size': size,
-            'zoom': zoom
-        }
-        url = 'https://maps.googleapis.com/maps/api/staticmap?'
-        return '{url}{options}'.format(
-            url=url,
-            options=urlencode(options)
+        if not self.venue_coords:
+            self.venue_coords = get_venue_coords(
+                self.venue_city, self.venue_state
+            )
+        api_url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static'
+        static_map_image_url = '{}/{},{}/{}?access_token={}'.format(
+            api_url,
+            self.venue_coords,
+            zoom,
+            size,
+            settings.MAPBOX_ACCESS_TOKEN
         )
+
+        return static_map_image_url
+
+    def clean(self):
+        super(EventPage, self).clean()
+        if self.venue_image_type == 'image' and not self.venue_image:
+            raise ValidationError({
+                'venue_image': 'Required if "Venue image type" is "Image".'
+            })
+        if self.post_event_image_type == 'image' and not self.post_event_image:
+            raise ValidationError({
+                'post_event_image': 'Required if "Post-event image type" is '
+                                    '"Image".'
+            })
+
+    def save(self, *args, **kwargs):
+        self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
+        return super(EventPage, self).save(*args, **kwargs)

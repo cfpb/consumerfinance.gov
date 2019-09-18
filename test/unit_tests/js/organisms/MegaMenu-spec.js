@@ -1,6 +1,5 @@
-import { simulateEvent } from '../../../util/simulate-event';
-
 import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu';
+import { simulateEvent } from '../../../util/simulate-event';
 
 const BASE_CLASS = 'o-mega-menu';
 const HTML_SNIPPET = `
@@ -171,7 +170,7 @@ const HTML_SNIPPET = `
                                             <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid o-mega-menu_content-2-grid__three-col">
 
                                                 <h3 class="o-mega-menu_content-overview o-mega-menu_content-2-overview o-mega-menu_content-overview-heading o-mega-menu_content-2-overview-heading">
-                                                    <a class="o-mega-menu_content-overview-link o-mega-menu_content-2-overview-link" href="http://content.consumerfinance.gov/data-research/">Data &amp; Research Overview</a>
+                                                    <a class="o-mega-menu_content-overview-link o-mega-menu_content-2-overview-link" href="https://content.consumerfinance.gov/data-research/">Data &amp; Research Overview</a>
                                                 </h3>
 
                                                 <div class="o-mega-menu_content-lists o-mega-menu_content-2-lists ">
@@ -340,6 +339,13 @@ describe( 'MegaMenu', () => {
       }
 
       simulateEvent( 'click', menuTrigger );
+
+      /* The transitionend event should fire on its own,
+         but for some reason the transitionend event is not firing within JSDom.
+         In a future JSDom update this should be revisited.
+         See https://github.com/jsdom/jsdom/issues/1781
+      */
+      firstContent.dispatchEvent( new Event( 'transitionend' ) );
 
       window.setTimeout( resolveClick, 1000 );
     } );

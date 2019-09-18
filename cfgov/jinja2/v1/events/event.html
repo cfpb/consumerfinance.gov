@@ -1,5 +1,4 @@
 {% extends 'layout-2-1-bleedbar.html' %}
-{% import '_vars-events.html' as vars with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% if page.start_dt and page.end_dt %}
     {% set event_state = when(page.start_dt, page.end_dt, page.live_stream_date) %}
@@ -32,7 +31,7 @@
         {% from 'events/_macros.html' import event_agenda as event_agenda with context%}
         {{ event_agenda(page) }}
     {% endif %}
-    <div class="event-footer">
+{#    <div class="event-footer">#}
      {# TODO resolve download button and verify reservation email at a future date #}
 
 {#        {% if event_state and event_state != 'future' %}#}
@@ -55,14 +54,14 @@
 {#                <a href="mailto:reserve@cfpb.gov?subject=Event Question&body=Please include your question and fill in your first and last name below and send this email.%0D%0A%0D%0AQuestion:%0D%0AFirst name:%0D%0ALast name:" class="event-footer_link">{{ svg_icon('email-square') }} reserve@cfpb.gov</a>#}
 {#            </section>#}
 {#        </div>#}
-    </div>
+{#    </div>#}
 {% endblock %}
 
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
     {# TODO: make events feed #}
-    {# <div class="block block__sub" data-qa-hook="rss-subscribe-section">
-        {% import 'rss.html' as rss %}
+    {# <div class="block block__sub">
+        {% import 'rss_feed.html' as rss %}
         {{ rss.render(reverse('events_feed')) }}
     </div> #}
     <section class="block">

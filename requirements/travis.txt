@@ -1,3 +1,4 @@
 coverage==4.5.1
-tox-pip-extensions==1.1.0
 tox==2.9.1
+tox-pip-extensions==1.1.0
+tox-travis==0.12

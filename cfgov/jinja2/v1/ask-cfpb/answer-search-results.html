@@ -1,55 +1,39 @@
 {% import 'molecules/pagination.html' as pagination with context %}
 
-{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
+{% import 'organisms/ask-search.html' as ask_search with context %}
 
-{% extends 'layout-side-nav.html' %}
+{% extends 'layout-2-1-bleedbar.html' %}
 
 {% block content_modifiers -%}
-    {{ super() }} content__hide-horizontal-overflow
+    {{ super() }} ask-cfpb-page ask-cfpb-page__search
 {%- endblock %}
 
-{% block content_wrapper_modifiers -%}
-    {{ super() }} content_wrapper__full-height-left-sidebar ask-cfpb-page ask-cfpb-page__search
-{%- endblock %}
-
-{% block banner_top %}
-    {% if about_us %}
-        {% set value = {
-            'border_bottom': True,
-            'additional_classes': ' ask-cfpb-banner',
-            'content': about_us.text
-        } %}
-        {% include 'templates/content-banner.html' with context %}
-    {% endif %}
-{% endblock %}
 
 {% block content_main %}
     <div class="block
                 block__flush-top
                 u-mb15">
-        <h1>Ask CFPB</h1>
+        <h1>{{ _('Search our library of answers') }}</h1>
 
-        {{ ask_search_bar.render( 'right', '', 'block__bg-branded u-mt30 u-mb30', q=page.query ) }}
+        <div class="block block__sub">
+        {{ ask_search.render( ask_query=tag or page.query, language=page.language, show_label=False, autocomplete=False ) }}
+        </div>
 
         {% if results %}
             {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
                 {% if tag %}
-                <h3 class="results-header">Showing results for “{{ tag }}”</h3>
+                    <h3 class="results-header">{{ _('Showing results for ') }} “{{ tag }}”</h3>
                 {% else %}
-                <h3 class="results-header">
-                    Showing {{ results.start_index() }}-{{ results.end_index() }} of {{ paginator.count }} results 
-                    for “{{ page.result_query }}”
-                </h3>
+                    <h3 class="results-header">{{ _('Showing') }} {{ results.start_index() }}-{{ results.end_index() }} {{ _('of') }} {{ paginator.count }} {{ _('results for') }} “{{ page.result_query }}”</h3>
                 {% endif %}
-
                 {% if page.suggestion %}
-                <p>Search instead for <a href="/ask-cfpb/search?q={{ page.suggestion }}&correct=0">{{ page.suggestion }}</a></p>
+                    <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}&correct=0">{{ page.suggestion }}</a></p>
                 {% endif %}
             {% else %}
                 {% if tag %}
-                <h3 class="results-header">Results for ‘{{ tag }}’</h3>
+                    <h3 class="results-header">{{ _('Showing results for ') }} “{{ tag }}”</h3>
                 {% else %}
-                <h3 class="results-header">Results for ‘{{ page.query }}’</h3>
+                    <h3 class="results-header">{{ _('Showing results for ') }} “{{ page.query }}”</h3>
                 {% endif %}
             {% endif %}
 
@@ -58,16 +42,30 @@
 
                 <div class="question_list">
                 {% for question in results %}
+                {% if tag %}
+                    <article class="question_summary question_summary__full">
+                        <p class="question_title"><a href="{{ question.url }}" class="kbq">{{ question.question|safe }}</a></p>
+                        <p class="qans">{{ question.answer | safe | striptags | truncate }}</p>
+                    </article>
+                {% else %}
                     <article class="question_summary question_summary__full">
                         <p class="question_title"><a href="{{ question[0] }}" class="kbq">{{ question[1]|safe }}</a></p>
-                        <p class="qans">{{ question[2] | safe | striptags | truncate }}</p>
+                        <p class="qans">{{ question[2] }}</p>
                     </article>
+                {% endif %}
                 {% endfor %}
 
                 </div>
 
                 <div class="block block__sub">
-                    {{ pagination.render( paginator.num_pages, current_page | int, '', index, 'Previous', 'Next' ) }}
+                    {{ pagination.render(
+                        paginator.num_pages,
+                        current_page | int,
+                        '',
+                        index,
+                        _('Previous'),
+                        _('Next')
+                    ) }}
                 </div>
 
             </section>
@@ -78,19 +76,19 @@
                         block__flush-top">
             <div class="no-results-message">
                 {% if tag %}
-                <h3 class="results-header">No results found for “{{ tag }}”</h3>
+                    <h3 class="results-header">{{ _('No results found for') }} “{{ tag }}”</h3>
                 {% else %}
-                <h3 class="results-header">No results found for “{{ page.query }}”</h3>
+                    <h3 class="results-header">{{ _('No results found for') }} “{{ page.query }}”</h3>
                 {% endif %}
 
                 {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
                     {% if page.suggestion %}
-                    <p>Search instead for <a href="/ask-cfpb/search?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
+                    <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
                     {% endif %}
-                {% endif %}
-
+                {% else %}
                 <p class="short-desc u-mb30">
-                    Can't find your question? <a href="/ask-cfpb/">Browse questions by category</a>
+                    {{ _("Can't find your question?") }} <a href="{{ _('/ask-cfpb/') }}">{{ _('Browse questions by category') }}</a>
+                {% endif %}
                 </p>
             </div>
         </section>
@@ -100,19 +98,30 @@
         <section class="search-results block
                         block__flush-top">
             <h4>
-                Please enter a search term in the box above.
+                {{ _('Please enter a search term in the box above.') }}
             </h4>
         </section>
 
-        {% endif %}
-
-        {% if disclaimer %}
-        <div class="block block__flush-bottom ask-disclaimer">
-            {{ disclaimer.text | safe }}
-        </div>
         {% endif %}
     </div>
 
 {% endblock %}
 
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+<div class="block block__flush-top u-mb45 about-us-text">
+    {% if about_us %}
+        {{ about_us.text | richtext }}
+    {% endif %}
+</div>
+<div class="block block__border-top block__padded-top disclaimer-text">
+    {% if disclaimer %}
+        <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
+        {{ disclaimer.text | richtext }}
+    {% endif %}
+</div>
+{%- endblock %}
 

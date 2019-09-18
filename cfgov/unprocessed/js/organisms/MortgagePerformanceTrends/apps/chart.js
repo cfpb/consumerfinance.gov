@@ -1,6 +1,6 @@
 import * as ccb from 'cfpb-chart-builder';
-import actions from '../actions/chart';
 import LineChartStore from '../stores/chart';
+import actions from '../actions/chart';
 import utils from '../utils';
 
 const store = new LineChartStore(
@@ -55,7 +55,10 @@ MortgagePerformanceLineChart.prototype.onClick = function( event ) {
 
 MortgagePerformanceLineChart.prototype.onChange = function( event ) {
 
-  let action, geoEl, geoType, geoId, geoName;
+  let action;
+  let geoType;
+  let geoId;
+  let geoName;
   const includeComparison = this.$compare.checked;
   const abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
 
@@ -133,7 +136,8 @@ MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state 
   let source;
   const baseSource = `time-series/${ this.timespan }/national`;
   // If the geo hasn't changed, don't re-render the chart.
-  if ( prevState.geo.id === state.geo.id && prevState.includeComparison === state.includeComparison ) {
+  if ( prevState.geo.id === state.geo.id &&
+       prevState.includeComparison === state.includeComparison ) {
     return;
   }
 

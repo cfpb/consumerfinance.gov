@@ -7,6 +7,7 @@ from django.utils.encoding import force_text
 from django.utils.text import slugify
 
 import boto3
+
 from agreements.models import Issuer
 
 

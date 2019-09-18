@@ -3,14 +3,14 @@
 {{ block.super }}
 {% if page.answer_base %}
 {% if page.language == 'es' and page.answer_base.english_page %}
-<div class="row nice-padding">
+<div class="row nice-padding" style="margin-top: 20px; margin-bottom: 20px;">
       <a href="/admin/pages/{{ page.answer_base.english_page.id }}/edit/" 
          class="button button-secondary button-large">
           EDIT ENGLISH PAGE
       </a>
 </div>
 {% elif page.language == 'en' and page.answer_base.spanish_page %}
-<div class="row nice-padding">
+<div class="row nice-padding" style="margin-top: 20px; margin-bottom: 20px;">
       <a href="/admin/pages/{{ page.answer_base.spanish_page.id }}/edit/" 
          class="button button-secondary button-large">
           EDIT SPANISH PAGE

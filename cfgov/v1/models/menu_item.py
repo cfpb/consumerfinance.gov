@@ -1,3 +1,5 @@
+from six import text_type
+
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -87,8 +89,11 @@ class MenuItem(models.Model):
         and structure it for display in menu template.
         """
         cols = [getattr(self, 'column_' + str(i)) for i in range(1, 5)]
-        self.nav_groups = filter(None, [self.get_active_block(col, draft)
-                                        for col in cols])
+
+        self.nav_groups = list(filter(
+            None,
+            [self.get_active_block(col, draft) for col in cols]
+        ))
         self.featured_content = self.nav_groups.pop() if len(self.nav_groups) \
             and self.nav_groups[-1].block_type == 'featured_content' else None
         footer = self.get_active_block(self.nav_footer, draft)
@@ -125,4 +130,4 @@ class MenuItem(models.Model):
                         if child.name != 'span':
                             child = child.wrap(soup.new_tag('span'))
                         child['aria-hidden'] = 'true'
-        return str(soup).decode('utf-8').replace(u'\xa0', ' ')
+        return text_type(soup).replace(u'\xa0', ' ')

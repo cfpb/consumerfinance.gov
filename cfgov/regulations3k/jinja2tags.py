@@ -8,8 +8,7 @@ import jinja2
 from dateutil import parser
 from jinja2.ext import Extension
 from jinja2.filters import do_mark_safe
-
-from regulations3k.regdown import regdown as regdown_func
+from regdown import regdown as regdown_func
 
 
 def ap_date(date):
@@ -33,6 +32,15 @@ def regdown_filter(text):
     return do_mark_safe(regdown_func(text))
 
 
+def regs_hide_on_mobile(text):
+    """ Mark specific patterns in text as hidden on mobile """
+    text = do_mark_safe(text.replace(
+        'Regulation',
+        'Reg<span class="u-hide-on-mobile">ulation</span>'
+    ))
+    return text
+
+
 class RegulationsExtension(Extension):
 
     def __init__(self, environment):
@@ -44,6 +52,7 @@ class RegulationsExtension(Extension):
         })
         self.environment.filters.update({
             'regdown': regdown_filter,
+            'regs_hide_on_mobile': regs_hide_on_mobile,
         })
 
 

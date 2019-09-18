@@ -2,9 +2,9 @@ import {
   chartTooltipMultiple,
   chartTooltipSingle
 } from './template-loader';
-import { applyThemeTo } from './highcharts-theme';
 import Highcharts from 'highcharts';
 import RateCheckerChartMenu from './RateCheckerChartMenu';
+import { applyThemeTo } from './highcharts-theme';
 import highchartsExport from 'highcharts/modules/exporting';
 
 /**

@@ -6,13 +6,16 @@ from datetime import date
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 
+from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 
-from regulations3k import regdown
+import regdown
 
 
 def sortable_label(label, separator='-'):
@@ -45,25 +48,24 @@ class Part(models.Model):
     chapter = models.CharField(max_length=255)
     part_number = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    letter_code = models.CharField(max_length=10)
+    short_name = models.CharField(max_length=255, blank=True)
 
     panels = [
         FieldPanel('cfr_title_number'),
         FieldPanel('title'),
         FieldPanel('part_number'),
-        FieldPanel('letter_code'),
+        FieldPanel('short_name'),
         FieldPanel('chapter'),
     ]
 
     @property
     def cfr_title(self):
-        return "{} CFR Part {} (Regulation {})".format(
-            self.cfr_title_number, self.part_number, self.letter_code)
+        return str(self)
 
     def __str__(self):
-        name = "12 CFR Part {}".format(self.part_number)
-        if self.letter_code:
-            name += " (Regulation {})".format(self.letter_code)
+        name = "{} CFR Part {}".format(self.cfr_title_number, self.part_number)
+        if self.short_name:
+            name += " ({})".format(self.short_name)
         return name
 
     class Meta:
@@ -298,3 +300,26 @@ class SectionParagraph(models.Model):
     def __str__(self):
         return "Section {}-{} paragraph {}".format(
             self.section.part, self.section.label, self.paragraph_id)
+
+
+@receiver(post_save, sender=EffectiveVersion)
+def effective_version_saved(sender, instance, **kwargs):
+    """ Invalidate the cache if the effective_version is not a draft """
+    if not instance.draft:
+        batch = PurgeBatch()
+        for page in instance.part.page.all():
+            urls = page.get_urls_for_version(instance)
+            batch.add_urls(urls)
+        batch.purge()
+
+
+@receiver(post_save, sender=Section)
+def section_saved(sender, instance, **kwargs):
+    if not instance.subpart.version.draft:
+        batch = PurgeBatch()
+        for page in instance.subpart.version.part.page.all():
+            urls = page.get_urls_for_version(
+                instance.subpart.version, section=instance
+            )
+            batch.add_urls(urls)
+        batch.purge()

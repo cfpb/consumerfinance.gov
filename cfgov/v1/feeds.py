@@ -63,3 +63,30 @@ class FilterableFeedPageMixin(object):
             return FilterableFeed(self, context)(request)
         else:
             return super(FilterableFeedPageMixin, self).serve(request)
+
+
+def get_appropriate_rss_feed_url_for_page(page, request=None):
+    """Given a page, return the most appropriate RSS feed for it to link to.
+
+    This may be the page itself if the specified page provides a feed (for
+    example if the specified page is a blog index page) or may be the
+    specified page's closest ancestor that provides a feed (for example if the
+    specified page is an individual blog page that lives in the tree somewhere
+    under the index page).
+
+    Pages are considered to provide a feed if they inherit from
+    FilterableFeedPageMixin.
+
+    Returns None if neither the page nor any of its ancestors provide feeds.
+    """
+    ancestors_including_page = page.get_ancestors(inclusive=True)
+    ancestors_including_page_with_feeds = ancestors_including_page.filter(
+        ancestors_including_page.type_q(FilterableFeedPageMixin)
+    )
+
+    # page.get_ancestors() orders from root down to page.
+    rss_feed_providing_page = ancestors_including_page_with_feeds.last()
+
+    if rss_feed_providing_page:
+        page_url = rss_feed_providing_page.get_url(request=request)
+        return page_url + 'feed/'

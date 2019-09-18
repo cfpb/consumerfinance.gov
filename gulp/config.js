@@ -47,6 +47,7 @@ module.exports = {
     src: paths.unprocessed + '/js/**/*.js',
     otherBuildTriggerFiles: [
       paths.unprocessed + '/js/**/*.js',
+      paths.unprocessed + '/apps/**/js/**/*.js',
       paths.modules,
       './config/**/*.js',
       './gulp/**/*.js'
@@ -70,10 +71,6 @@ module.exports = {
       './config/**/*.js',
       './gulp/**/*.js'
     ],
-    otherBuildTriggerFilesKBSpanish: [
-      paths.legacy + '/knowledgebase/**/*.css',
-      paths.legacy + '/knowledgebase/**/*.less'
-    ],
     otherBuildTriggerFilesNemo: [
       paths.legacy + '/nemo/**/*.css',
       paths.legacy + '/nemo/**/*.less'
@@ -91,32 +88,5 @@ module.exports = {
       paths.legacy + '/nemo/_/js/main.js',
       paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
     ]
-  },
-  copy: {
-    jsonCode: {
-      src:  'code.json',
-      dest: paths.processed
-    },
-    icons: {
-      src:  paths.modules + '/cf-icons/src/icons/*.svg',
-      dest: paths.processed + '/icons/'
-    },
-    iconsOAH: {
-      dest: paths.processed + '/apps/owning-a-home/icons/'
-    },
-    iconsR3K: {
-      dest: paths.processed + '/apps/regulations3k/icons/'
-    },
-    // TODO: Remove when icon font is entirely deprecated.
-    iconsOld: {
-      src:  paths.modules + '/cf-icons/src/fonts/*',
-      dest: paths.processed + '/fonts/'
-    },
-    lightbox2: {
-      src: [
-        paths.modules + '/lightbox2/dist/**/*'
-      ],
-      dest: paths.processed + '/lightbox2'
-    }
   }
 };

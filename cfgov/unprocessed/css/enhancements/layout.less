@@ -246,9 +246,9 @@
         padding: unit( @grid_gutter-width / @base-font-size-px, em )
                  unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
 
-        .respond-to-range(@bp-sm-min, @bp-lg-max {
+        .respond-to-range(@bp-sm-min, @bp-lg-max, {
             padding: unit( @grid_gutter-width / @base-font-size-px, em );
-        });
+        } );
     }
 
     &__border-bottom {

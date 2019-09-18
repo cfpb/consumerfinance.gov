@@ -6,23 +6,28 @@ import unittest
 
 # from django.core.urlresolvers import reverse
 from django.contrib.auth.models import AnonymousUser, User
-from django.core.exceptions import PermissionDenied, ValidationError
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
-from django.http import HttpRequest, QueryDict  # Http404, HttpResponse
-from django.test import RequestFactory, TestCase as DjangoTestCase
+from django.http import Http404, HttpRequest, QueryDict
+from django.test import (
+    RequestFactory, TestCase as DjangoTestCase, override_settings
+)
 
 from wagtail.wagtailcore.models import Site
 
 import mock
 from model_mommy import mommy
 
+from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
 from regulations3k.models.django import (
-    EffectiveVersion, Part, Section, SectionParagraph, Subpart, sortable_label
+    EffectiveVersion, Part, Section, SectionParagraph, Subpart,
+    effective_version_saved, section_saved, sortable_label
 )
 from regulations3k.models.pages import (
     RegulationLandingPage, RegulationPage, RegulationsSearchPage,
     get_next_section, get_previous_section, get_secondary_nav_items,
-    get_section_url, validate_num_results, validate_page_number
+    get_section_url, validate_num_results, validate_order,
+    validate_page_number, validate_regs_list
 )
 
 
@@ -43,17 +48,21 @@ class RegModelTests(DjangoTestCase):
 
         self.part_1002 = mommy.make(
             Part,
+            cfr_title_number=12,
             part_number='1002',
             title='Equal Credit Opportunity Act',
-            letter_code='B',
+            short_name='Regulation B',
             chapter='X'
         )
         self.part_1030 = mommy.make(
             Part,
+            cfr_title_number=12,
             part_number='1030',
             title='Truth In Savings',
-            letter_code='DD', chapter='X'
+            short_name='Regulation DD',
+            chapter='X'
         )
+
         self.effective_version = mommy.make(
             EffectiveVersion,
             effective_date=datetime.date(2014, 1, 18),
@@ -70,6 +79,7 @@ class RegModelTests(DjangoTestCase):
             part=self.part_1002,
             draft=True,
         )
+
         self.subpart = mommy.make(
             Subpart,
             label='Subpart General',
@@ -182,9 +192,12 @@ class RegModelTests(DjangoTestCase):
         self.reg_page.save()
         self.reg_search_page.save()
 
+        CACHE_PURGED_URLS[:] = []
+
     def get_request(self, path='', data={}):
         request = self.factory.get(path, data=data)
         request.site = self.site
+        request.user = AnonymousUser()
         return request
 
     def test_part_string_method(self):
@@ -197,10 +210,10 @@ class RegModelTests(DjangoTestCase):
         part = self.part_1002
         self.assertEqual(
             part.cfr_title,
-            "{} CFR Part {} (Regulation {})".format(
+            "{} CFR Part {} ({})".format(
                 part.cfr_title_number,
                 part.part_number,
-                part.letter_code))
+                part.short_name))
 
     def test_subpart_string_method(self):
         self.assertEqual(
@@ -288,7 +301,7 @@ class RegModelTests(DjangoTestCase):
     def test_get_secondary_nav_items(self):
         request = self.get_request()
         request.path = '/regulations/1002/4/'
-        sections = list(self.reg_page.get_section_query().all())
+        sections = list(self.reg_page.get_section_query(request).all())
         test_nav_items = get_secondary_nav_items(
             request, self.reg_page, sections
         )[0]
@@ -491,7 +504,7 @@ class RegModelTests(DjangoTestCase):
     def test_get_effective_version_not_draft(self):
         request = self.get_request()
         effective_version = self.reg_page.get_effective_version(
-            request, '2014-01-18'
+            request, date_str='2014-01-18'
         )
         self.assertEqual(effective_version, self.effective_version)
 
@@ -499,16 +512,22 @@ class RegModelTests(DjangoTestCase):
         request = self.get_request()
         request.user = self.superuser
         effective_version = self.reg_page.get_effective_version(
-            request, '2020-01-01'
+            request, date_str='2020-01-01'
         )
         self.assertEqual(effective_version, self.draft_effective_version)
 
     def test_get_effective_version_draft_without_perm(self):
         request = self.get_request()
-        request.user = AnonymousUser()
-        with self.assertRaises(PermissionDenied):
+        with self.assertRaises(Http404):
             self.reg_page.get_effective_version(
-                request, '2020-01-01'
+                request, date_str='2020-01-01'
+            )
+
+    def test_get_effective_version_dne(self):
+        request = self.get_request()
+        with self.assertRaises(Http404):
+            self.reg_page.get_effective_version(
+                request, date_str='2050-01-01'
             )
 
     def test_index_page_with_effective_date(self):
@@ -578,6 +597,86 @@ class RegModelTests(DjangoTestCase):
         with self.assertRaises(ValidationError):
             new_effective_version.validate_unique()
 
+    def test_get_urls_for_version(self):
+        urls = list(self.reg_page.get_urls_for_version(self.effective_version))
+        self.assertIn('http://localhost/reg-landing/1002/', urls)
+        self.assertIn('http://localhost/reg-landing/1002/4/', urls)
+        self.assertIn('http://localhost/reg-landing/1002/versions/', urls)
+
+        urls = list(self.reg_page.get_urls_for_version(
+            self.effective_version, section=self.section_num4))
+        self.assertEqual(['http://localhost/reg-landing/1002/4/'], urls)
+
+        urls = list(self.reg_page.get_urls_for_version(
+            self.old_effective_version))
+        self.assertIn('http://localhost/reg-landing/1002/2011-01-01/', urls)
+        self.assertIn('http://localhost/reg-landing/1002/2011-01-01/4/', urls)
+
+    @override_settings(WAGTAILFRONTENDCACHE={
+        'varnish': {
+            'BACKEND': 'core.testutils.mock_cache_backend.MockCacheBackend',
+        },
+    })
+    def test_effective_version_saved(self):
+        effective_version_saved(None, self.effective_version)
+
+        self.assertIn(
+            'http://localhost/reg-landing/1002/',
+            CACHE_PURGED_URLS
+        )
+        self.assertIn(
+            'http://localhost/reg-landing/1002/4/',
+            CACHE_PURGED_URLS
+        )
+        self.assertIn(
+            'http://localhost/reg-landing/1002/versions/',
+            CACHE_PURGED_URLS
+        )
+
+    @override_settings(WAGTAILFRONTENDCACHE={
+        'varnish': {
+            'BACKEND': 'core.testutils.mock_cache_backend.MockCacheBackend',
+        },
+    })
+    def test_section_saved(self):
+        section_saved(None, self.section_num4)
+        self.assertEqual(
+            CACHE_PURGED_URLS,
+            ['http://localhost/reg-landing/1002/4/']
+        )
+
+    def test_reg_page_can_serve_draft_versions(self):
+        request = self.get_request()
+        request.served_by_wagtail_sharing = True
+        self.assertTrue(self.reg_page.can_serve_draft_versions(request))
+
+    def test_reg_page_num_versions_on_sharing(self):
+        request = self.get_request()
+        request.served_by_wagtail_sharing = True
+        test_context = self.reg_page.get_context(request)
+        self.assertEqual(test_context['num_versions'], 3)
+
+    def test_reg_page_num_versions_off_sharing(self):
+        test_context = self.reg_page.get_context(self.get_request())
+        self.assertEqual(test_context['num_versions'], 2)
+
+    def test_reg_page_next_version_none(self):
+        response = self.client.get('/reg-landing/1002/4/')
+        self.assertIsNone(response.context_data['next_version'])
+
+    def test_validate_order(self):
+        request = HttpRequest()
+        self.assertEqual(validate_order(request), 'relevance')
+        request.GET.update({'order': 'regulation'})
+        self.assertEqual(validate_order(request), 'regulation')
+
+    def test_reg_page_next_version(self):
+        response = self.client.get('/reg-landing/1002/2011-01-01/4/')
+        self.assertEqual(
+            response.context_data['next_version'],
+            self.effective_version
+        )
+
 
 class SectionNavTests(unittest.TestCase):
 
@@ -635,3 +734,16 @@ class SectionNavTests(unittest.TestCase):
         request = HttpRequest()
         request.GET.update({'results': '10'})
         self.assertEqual(validate_num_results(request), 25)
+
+    def test_validate_regs_input_list(self):
+        request = HttpRequest()
+        request.GET.update(QueryDict('regs=one&regs=2&regs=three33'))
+        self.assertEqual(validate_regs_list(request), ['one', '2', 'three33'])
+        request2 = HttpRequest()
+        request2.GET.update(QueryDict('regs=1@#$5567'))
+        self.assertEqual(validate_regs_list(request2), [])
+        request3 = HttpRequest()
+        request3.GET.update(QueryDict('regs=one&regs=734^*^&regs=2'))
+        self.assertEqual(validate_regs_list(request3), ['one', '2'])
+        request4 = HttpRequest()
+        self.assertEqual(validate_regs_list(request4), [])

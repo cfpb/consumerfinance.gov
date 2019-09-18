@@ -5,6 +5,10 @@
 
 import { checkDom } from '../modules/util/atomic-helpers';
 
+const BASE_CLASS = 'external-site';
+const TOTAL_DURATION = 5;
+const INTERVAL = 1000;
+
 /**
  * ExternalSite
  * @class
@@ -14,13 +18,9 @@ import { checkDom } from '../modules/util/atomic-helpers';
  * @param {HTMLElement} element DOM Element.
  */
 function ExternalSite( element ) {
-  const BASE_CLASS = 'external-site_container';
-  const TOTAL_DURATION = 5;
-  const INTERVAL = 1000;
-
   const _dom = checkDom( element, BASE_CLASS );
-  const _durationEl = _dom.querySelector( '.external-site_reload-container' );
-  const _directEl = _dom.querySelector( '.external-site_proceed-btn' );
+  const _durationEl = _dom.querySelector( `.${ BASE_CLASS }_reload-container` );
+  const _proceedBtnEl = _dom.querySelector( `#${ BASE_CLASS }_proceed-btn` );
   let _duration = TOTAL_DURATION;
   let _intervalId;
 
@@ -29,7 +29,7 @@ function ExternalSite( element ) {
    */
   function init() {
     _intervalId = setInterval( _tick, INTERVAL );
-    _directEl.addEventListener( 'click', _proceedClicked );
+    _proceedBtnEl.addEventListener( 'click', _proceedClickedHandler );
   }
 
   /**
@@ -57,7 +57,7 @@ function ExternalSite( element ) {
   function _updateContent() {
     const plurality = _duration === 1 ? '' : 's';
     const content = '<span class=\'external-site_reload-duration\'>' +
-                  _duration + '</span> second' + plurality;
+                    _duration + '</span> second' + plurality;
     _durationEl.innerHTML = content;
   }
 
@@ -65,7 +65,7 @@ function ExternalSite( element ) {
    * Proceed to external site button was clicked.
    * @param {Object} event Click event object.
    */
-  function _proceedClicked( event ) {
+  function _proceedClickedHandler( event ) {
     event.stopImmediatePropagation();
     _gotoUrl();
   }
@@ -74,6 +74,8 @@ function ExternalSite( element ) {
 
   return this;
 }
+
+ExternalSite.BASE_CLASS = BASE_CLASS;
 
 // Expose public methods.
 export default ExternalSite;

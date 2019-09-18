@@ -1,6 +1,6 @@
 # Introduction to cfgov-refresh
 
-This is the documentation for the cfgov-refresh project, a redesign of the [www.consumerfinance.gov](https://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
+This is the documentation for the cfgov-refresh project that powers the [www.consumerfinance.gov](https://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
 
 ## Disclaimer
 
@@ -44,7 +44,6 @@ https://github.com/cfpb/cfgov-refresh/tree/master/requirements
 - `libraries.txt`: Python libraries.
 - `local.txt`: includes `base.txt` and `postgres.txt` and some useful libraries when developing locally.
 - `docs.txt`: requirements to build the cfgov-refresh docs. 
-- `optional-public.txt`: cfgov-refresh satellite apps. Should/could be moved into `libraries.txt`.
 - `postgres.txt`: requirements to connect Django to Postgres.
 - `scripts.txt`: Requirements for running certain jobs on Jenkins, so scripts can run in Jenkins without having to install all the other requirements.
 - `test.txt`: requirements for running Python tests.

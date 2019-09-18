@@ -6,7 +6,7 @@ disclaimer_link PageChooserBlock on the EmailSignup.
 """
 
 import re
-from urlparse import urlparse
+from six.moves.urllib.parse import urlparse
 
 from django.db import migrations
 

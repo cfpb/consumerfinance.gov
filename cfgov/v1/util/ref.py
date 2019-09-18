@@ -49,15 +49,6 @@ page_types = [
     ('cfpb-researchers', 'CFPB Researchers'),
 ]
 
-fcm_types = [
-    ('featured-event', 'Featured event'),
-    ('featured-blog', 'Featured blog'),
-    ('featured-video', 'Featured video'),
-    ('featured-tool', 'Featured tool'),
-    ('featured-news', 'Featured news'),
-    ('featured', 'Featured'),
-]
-
 categories = [
     ('Administrative adjudication docket', (
         ('administrative-adjudication', 'Administrative adjudication'),
@@ -131,7 +122,7 @@ categories = [
         ('consumer-edu-empower', 'Consumer education and empowerment'),
         ('to-congress', 'To Congress'),
     )),
-    ('Rule under development', (
+    ('Rule Under Development', (
         ('notice-proposed-rule-2', 'Advance notice of proposed rulemaking'),
         ('proposed-rule-2', 'Proposed rule'),
     )),
@@ -217,7 +208,6 @@ def page_type_choices():
             ('raj-date', 'Raj Date'),
             ('elizabeth-warren', 'Elizabeth Warren'))),
         ('Newsroom', (
-            ('blog', 'Blog'),
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
             ('directors-notebook', "Director's notebook"),
@@ -248,18 +238,17 @@ def category_label(category):
                 return name
 
 
-def fcm_label(category):
-    for slug, name in fcm_types:
-        if slug == category:
-            return name
-
-
 def is_blog(page):
     for category in page.categories.all():
         for choice in choices_for_page_type('blog'):
             if category.name == choice[0]:
                 return True
     if 'Blog' in page.specific_class.__name__:
+        return True
+
+
+def is_event(page):
+    if 'Event' in page.specific_class.__name__:
         return True
 
 

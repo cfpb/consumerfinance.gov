@@ -1,0 +1,111 @@
+{% macro _render_filter_fields(form) %}
+    <div class="content-l_col
+                content-l_col-1-2">
+        <div class="o-form_group">
+            <fieldset class="o-form_fieldset">
+                <div class="m-form-field m-form-field__select">
+                    <label class="a-label a-label__heading" for="id_geo">
+                        Geographic area
+                    </label>
+                    <div class="a-select">
+                        <select id="id_geo" name="geo">
+                        {% for option in form.geo %}
+                            <option value="{{ option.data.value }}"{% if option.data.selected %} selected{% endif %}>{{ option.choice_label }}</option>
+                            {% if loop.index == 1 %}
+                              <option disabled>──────────</option>
+                            {% endif %}
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="content-l_col
+                content-l_col-1">
+        <div class="o-form_group">
+            <fieldset class="o-form_fieldset">
+                <legend class="a-legend">
+                    Records included
+                </legend>
+               {% for radio in form.records %}
+                <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                    <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
+                    <label class="a-label" for="{{ radio.id_for_label }}">
+                        {{ radio.choice_label}}
+                        {% if radio.data.value == 'first-lien-owner-occupied-1-4-family-records' %}
+                            <small class="a-label_helper">
+                                Most people start with this option
+                            </small>
+                        {% elif radio.data.value == 'all-records' %}
+                            <small class="a-label_helper">
+                                Includes applications, denials, originations, institution purchases
+                            </small>
+                        {% endif %}
+                    </label>
+                </div>
+               {% endfor %}
+            </fieldset>
+        </div>
+        <div class="o-form_group">
+            <fieldset class="o-form_fieldset">
+                <legend class="a-legend">
+                    Variable descriptions
+                </legend>
+               {% for radio in form.field_descriptions %}
+                  <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                      <input class="a-radio" name="{{ radio.data.name }}" type="radio" id="{{ radio.id_for_label }}" value="{{ radio.data.value }}" {% if radio.data.selected %} checked{% endif %}>
+                      <label class="a-label" for="{{ radio.id_for_label }}">
+                          {{ radio.choice_label }}
+                          {% if radio.data.value == 'codes' %}
+                              <small class="a-label_helper">
+                                  Choose only if you're already familiar with the HMDA reporting codes
+                              </small>
+                          {% endif %}
+                      </label>
+                  </div>
+               {% endfor %}
+            </fieldset>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro _filters_form(form) %}
+    <form method="get" action=".">
+        <div class="content-l">
+            {{ _render_filter_fields(form) }}
+            <div class="content-l_col
+                        content-l_col-1
+                        m-btn-group">
+                <input class="a-btn"
+                       type="submit"
+                       value="Search">
+            </div>
+        </div>
+    </form>
+{% endmacro %}
+
+{# ==========================================================================
+
+   HMDA Explorer Controls
+
+   ==========================================================================
+
+   Description:
+
+   Create an expandable of filters when given:
+
+   value: Data object from an instance of the FilterableList StreamField block.
+
+   form: Django form that carries the fields that are to be rendered.
+
+   fragment_id: A unique ID for the filter list control.
+
+   ========================================================================== #}
+{% macro render(form) %}
+    {% set form_markup = _filters_form(form) %}
+    <div class="o-well u-mb30">
+        <h2>Select the HMDA data you want</h2>
+        {{ form_markup | safe }}
+    </div>
+{% endmacro %}

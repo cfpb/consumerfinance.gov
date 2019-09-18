@@ -1,7 +1,7 @@
 // Required modules.
+import * as treeTraversal from '../modules/util/tree-traversal';
 import EventObserver from '../modules/util/EventObserver';
 import MoveTransition from '../modules/transition/MoveTransition';
-import * as treeTraversal from '../modules/util/tree-traversal';
 
 /**
  * MegaMenuDesktop
@@ -46,7 +46,9 @@ function MegaMenuDesktop( menus ) {
        We'll use this later to check if we're still over the links,
        on mouse move. */
     const firstLevelMenus = _menus.getAllAtLevel( 1 );
-    _firstLevelDom = firstLevelMenus[0].data.getDom().container.parentNode;
+    if ( firstLevelMenus.length > 0 ) {
+      _firstLevelDom = firstLevelMenus[0].data.getDom().container.parentNode;
+    }
 
     return this;
   }

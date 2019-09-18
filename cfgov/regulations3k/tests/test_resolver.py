@@ -6,12 +6,12 @@ import datetime
 from django.test import TestCase, override_settings
 
 from model_mommy import mommy
+from regdown import DEFAULT_RENDER_BLOCK_REFERENCE, regdown
 
 from regulations3k.models import (
     EffectiveVersion, Part, RegulationLandingPage, RegulationPage, Section,
     Subpart
 )
-from regulations3k.regdown import DEFAULT_RENDER_BLOCK_REFERENCE, regdown
 from regulations3k.resolver import (
     get_contents_resolver, get_url_resolver, resolve_reference
 )
@@ -42,7 +42,7 @@ class ReferenceResolutionTestCase(TestCase):
             Part,
             part_number='1002',
             title='Equal Credit Opportunity Act',
-            letter_code='B',
+            short_name='Regulation B',
             chapter='X'
         )
         self.effective_version = mommy.make(
@@ -122,7 +122,8 @@ class ReferenceResolutionTestCase(TestCase):
         )
         self.assertEqual(
             result,
-            '<p class="regdown-block level-0" id="b">Securities credit.</p>'
+            '<p class="regdown-block level-0" data-label="b" id="b">'
+            'Securities credit.</p>'
         )
 
     def test_get_url_resolver(self):

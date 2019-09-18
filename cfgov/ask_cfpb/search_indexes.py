@@ -1,138 +1,81 @@
+from __future__ import unicode_literals
+
+from django.utils.html import strip_tags
+from django.utils.text import Truncator
 from haystack import indexes
 
-from ask_cfpb.models import Category, EnglishAnswerProxy, SpanishAnswerProxy
+from ask_cfpb.models.pages import AnswerPage
 from search import fields
 
 
-# AnswerTagProxy,
+def truncatissimo(text):
+    """Limit preview text to 40 words AND to 255 characters."""
+    word_limit = 40
+    while word_limit:
+        test = Truncator(text).words(word_limit, truncate=' ...')
+        if len(test) <= 255:
+            return test
+        else:
+            word_limit -= 1
 
 
-class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
+def extract_raw_text(stream_data):
+    # Extract text from stream_data, starting with the answer text.
+    text_chunks = [
+        block.get('value').get('content')
+        for block in stream_data
+        if block.get('type') == 'text'
+    ]
+    extra_chunks = [
+        block.get('value').get('content')
+        for block in stream_data
+        if block.get('type') in ['tip', 'table']
+    ]
+    chunks = text_chunks + extra_chunks
+    return " ".join(chunks)
+
+
+class AnswerPageIndex(indexes.SearchIndex, indexes.Indexable):
     text = fields.CharFieldWithSynonyms(
         document=True,
         use_template=True,
         boost=10.0)
     autocomplete = indexes.EdgeNgramField(
-        use_template=True,
-        indexed=True)
-    url = indexes.CharField(
-        use_template=True,
-        indexed=False)
-    tags = indexes.MultiValueField(
-        indexed=True,
-        boost=10.0)
-    last_edited = indexes.DateTimeField(
-        indexed=True,
-        null=True,
-        model_attr='last_edited',
-        boost=2.0)
-    suggestions = indexes.FacetCharField()
-
-    def prepare_tags(self, obj):
-        return obj.clean_tags
-
-    def prepare_answer(self, obj):
-        data = super(AnswerBaseIndex, self).prepare(obj)
-        if obj.question.lower().startswith('what is'):
-            data['boost'] = 2.0
-        return data
-
-    def prepare(self, obj):
-        data = super(AnswerBaseIndex, self).prepare(obj)
-        data['suggestions'] = data['text']
-        return data
-
-    def get_model(self):
-        return EnglishAnswerProxy
-
-    def index_queryset(self, using=None):
-        ids = [record.id for record in self.get_model().objects.all()
-               if record.english_page
-               and record.english_page.live is True
-               and record.english_page.redirect_to is None]
-        return self.get_model().objects.filter(id__in=ids)
-
-
-class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
-    text = fields.CharFieldWithSynonyms(
-        language='es',
-        document=True,
-        use_template=True,
-        boost=10.0)
-    autocomplete = indexes.EdgeNgramField(
-        use_template=True,
-        indexed=True)
-    url = indexes.CharField(
-        use_template=True,
-        indexed=False)
-    tags = indexes.MultiValueField(
-        indexed=True,
-        boost=10.0)
-    last_edited = indexes.DateTimeField(
-        indexed=True,
-        null=True,
-        model_attr='last_edited_es',
-        boost=2.0)
-    suggestions = indexes.FacetCharField()
-
-    def prepare_tags(self, obj):
-        return obj.clean_tags_es
-
-    def prepare_spanish_answer_index(self, obj):
-        data = super(SpanishBaseIndex, self).prepare(obj)
-        if obj.question.lower().startswith('what is'):
-            data['boost'] = 2.0
-        return data
-
-    def prepare(self, obj):
-        data = super(SpanishBaseIndex, self).prepare(obj)
-        data['suggestions'] = data['text']
-        return data
-
-    def get_model(self):
-        return SpanishAnswerProxy
-
-    def index_queryset(self, using=None):
-        ids = [record.id for record in self.get_model().objects.all()
-               if record.spanish_page
-               and record.spanish_page.live is True
-               and record.spanish_page.redirect_to is None]
-        return self.get_model().objects.filter(id__in=ids)
-
-
-class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(
-        document=True,
         use_template=True)
-    facet_map = indexes.CharField(
-        indexed=True)
-    slug = indexes.CharField(
-        model_attr='slug')
-    slug_es = indexes.CharField(
-        model_attr='slug_es')
+    url = indexes.CharField(
+        use_template=True,
+        indexed=False)
+    tags = indexes.MultiValueField(
+        boost=10.0)
+    language = indexes.CharField(
+        model_attr='language')
+    portal_topics = indexes.MultiValueField()
+    portal_categories = indexes.MultiValueField()
+    suggestions = indexes.FacetCharField()
+    preview = indexes.CharField(indexed=False)
 
-    def prepare_facet_map(self, obj):
-        return obj.facet_map
+    def prepare_preview(self, page):
+        raw_text = extract_raw_text(page.answer_content.stream_data)
+        full_text = strip_tags(" ".join([page.short_answer, raw_text]))
+        return truncatissimo(full_text)
+
+    def prepare_tags(self, page):
+        return page.clean_search_tags
+
+    def prepare_portal_topics(self, page):
+        return [topic.heading for topic in page.portal_topic.all()]
+
+    def prepare_portal_categories(self, page):
+        return [topic.heading for topic in page.portal_category.all()]
+
+    def prepare(self, page):
+        self.prepared_data = super(AnswerPageIndex, self).prepare(page)
+        self.prepared_data['suggestions'] = self.prepared_data['text']
+        return self.prepared_data
 
     def get_model(self):
-        return Category
+        return AnswerPage
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.all()
-
-
-# class TagIndex(indexes.SearchIndex, indexes.Indexable):
-#     text = indexes.CharField(
-#         use_template=True,
-#         document=True)
-
-#     valid_spanish = indexes.MultiValueField()
-
-#     def get_model(self):
-#         return AnswerTagProxy
-
-#     def prepare_valid_spanish(self, obj):
-#         return self.get_model().valid_spanish_tags()
-
-#     def index_queryset(self, using=None):
-#         return self.get_model().objects.filter(id=1)
+        return self.get_model().objects.filter(
+            live=True, redirect_to_page=None)

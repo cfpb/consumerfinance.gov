@@ -2,5 +2,8 @@
    Scripts for Video Player module.
    ========================================================================== */
 
-import YoutubePlayer from '../../modules/YoutubePlayer';
-YoutubePlayer.init( '.video-player__youtube' );
+import VideoPlayer from '../../organisms/VideoPlayer';
+
+const videoPlayerDom = document.querySelector( `.${ VideoPlayer.BASE_CLASS }` );
+const videoPlayer = new VideoPlayer( videoPlayerDom );
+videoPlayer.init();

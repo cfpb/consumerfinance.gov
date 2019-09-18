@@ -1,0 +1,279 @@
+{
+
+  "@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld",
+
+  "@type": "dcat:Catalog",
+
+  "conformsTo": "https://project-open-data.cio.gov/v1.1/schema",
+
+  "describedBy": "https://project-open-data.cio.gov/v1.1/schema/catalog.json",
+
+  "dataset": [
+
+    {
+
+      "@type": "dcat:Dataset",
+
+      "accessLevel": "public",
+
+      "accrualPeriodicity": "R/P1D",
+
+      "bureauCode": [
+
+        "581:00"
+
+      ],
+
+      "contactPoint": {
+
+        "@type": "vcard:Contact",
+
+        "fn": "devops@cfpb.gov",
+
+        "hasEmail": "mailto:devops@cfpb.gov"
+
+      },
+
+      "describedBy": "https://www.consumerfinance.gov/complaintdatabase/technical-documentation/#field-reference",
+
+      "description": "These are complaints we’ve received about financial products and services.",
+
+      "distribution": [
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp/rows.csv?accessType=DOWNLOAD",
+
+          "mediaType": "text/csv"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp/rows.csv?accessType=DOWNLOAD",
+
+          "mediaType": "text/csv"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://data.consumerfinance.gov/api/views.json",
+
+          "mediaType": "application/json"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://data.consumerfinance.gov/api/views.xml",
+
+          "mediaType": "application/xml"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "format": "API",
+
+          "accessURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp.json"
+
+        }
+
+      ],
+
+      "identifier": "CCDB",
+
+      "keyword": [
+
+        "consumer",
+
+        "finance",
+
+        "complaint",
+
+        "bank account",
+
+        "bank service",
+
+        "credit card",
+
+        "credit report",
+
+        "debt collection",
+
+        "money transfer",
+
+        "mortgage",
+
+        "student loan",
+
+        "loan"
+
+      ],
+
+      "landingPage": "https://www.consumerfinance.gov/complaintdatabase",
+
+      "modified": "2013-11-06",
+
+      "programCode": [
+
+        "000:000"
+
+      ],
+
+      "publisher": {
+
+        "@type": "org:Organization",
+
+        "name": "Consumer Financial Protection Bureau"
+
+      },
+
+      "spatial": "United States",
+
+      "temporal": "2011-12-01/2013-11-06",
+
+      "title": "Consumer Complaint Database"
+
+    },
+
+    {
+
+      "@type": "dcat:Dataset",
+
+      "accessLevel": "public",
+
+      "accrualPeriodicity": "R/P1Y",
+
+      "bureauCode": [
+
+        "581:00"
+
+      ],
+
+      "contactPoint": {
+
+        "@type": "vcard:Contact",
+
+        "fn": "devops@cfpb.gov",
+
+        "hasEmail": "mailto:devops@cfpb.gov"
+
+      },
+
+      "describedBy": "https://api.consumerfinance.gov/data/hmda",
+
+      "description": "The Home Mortgage Disclosure Act (HMDA) requires many financial institutions to maintain, report, and publicly disclose information about mortgages",
+
+      "distribution": [
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.csv",
+
+          "mediaType": "text/csv"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.csv",
+
+          "mediaType": "text/csv"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.json",
+
+          "mediaType": "application/json"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.xml",
+
+          "mediaType": "application/xml"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "format": "API",
+
+          "accessURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.json"
+
+        }
+
+      ],
+
+      "identifier": "hmda_lar",
+
+      "keyword": [
+
+        "consumer",
+
+        "finance",
+
+        "mortgage",
+
+        "HMDA",
+
+        "Home Mortgage Disclosure Act",
+
+        "loan"
+
+      ],
+
+      "landingPage": "https://www.consumerfinance.gov/hmda/",
+
+      "modified": "2014-09-22",
+
+      "programCode": [
+
+        "000:000"
+
+      ],
+
+      "publisher": {
+
+        "@type": "org:Organization",
+
+        "name": "Consumer Financial Protection Bureau"
+
+      },
+
+      "spatial": "United States",
+
+      "temporal": "2007-02-01T00:00:00Z/2014-12-31T00:00:00Z",
+
+      "title": "Home Mortgage Disclosure Act Data for the years 2007-2014"
+
+    }
+
+  ]
+
+}

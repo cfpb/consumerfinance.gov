@@ -18,6 +18,12 @@
 
    explanation: Text to display as an explanation
                 within the notification markup.
+                Defaults to none.
+
+   links:       Array of link objects, which each contain:
+                - text (required): text of link.
+                - url:             link url.
+                Defaults to an empty array.
 
    ========================================================================== #}
 
@@ -41,7 +47,7 @@
           {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
           <div class="h4 m-notification_message">{{ message }}</div>
           {%- if explanation %}
-              <p class="m-notification_explanation">{{ explanation | safe }}</p>
+              <p class="m-notification_explanation">{{ explanation }}</p>
           {% endif -%}
           {% for link in links %}
               {% if link.text %}
@@ -61,7 +67,7 @@
 
 {% if value %}
   {{ render(
-      value.type,
+      value.type | default( 'warning' ),
       value.is_visible | default( true ),
       value.message,
       value.explanation | default( '' ),

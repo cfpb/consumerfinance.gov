@@ -1,135 +1,353 @@
-{#
-    This is the base template for the English-language consumerfinance.gov.
-#}
-{% extends 'base-common.html' %}
+{% set language = page.language if page and page.language else 'en' %}
 
-{% block preload %}
-<link rel="preload" href="{{ static('css/main.css') }}" as="style">
-<link rel="preload"
-      href="{{ static('fonts/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2') }}"
-      as="font"
-      type="font/woff2" crossorigin>
-<link rel="preload"
-      href="{{ static('fonts/cf-icons.woff') }}"
-      as="font"
-      type="font/woff2" crossorigin>
-<link rel="preload"
-      href="{{ static('fonts/627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2') }}"
-      as="font"
-      type="font/woff2" crossorigin>
-<link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
+<!DOCTYPE html>
+{% if flag_enabled('CFPB_RECRUITING', request) %}
+<!--
+    ============================================================================
 
-<link rel="dns-prefetch" href="//consumerfinance.gov/">
-<link rel="dns-prefetch" href="//fast.fonts.net/">
-<link rel="dns-prefetch" href="//google-analytics.com/">
-<link rel="dns-prefetch" href="//googletagmanager.com/">
-<link rel="dns-prefetch" href="//js-agent.newrelic.com/">
-<link rel="dns-prefetch" href="//s.ytimg.com/">
-<link rel="dns-prefetch" href="//search.usa.gov/">
-<link rel="dns-prefetch" href="//stats.g.doubleclick.net/">
-{% endblock preload %}
+    Hey! If you're viewing this, you should probably come work on our Technology
+    & Innovation team. We're always looking for a few great designers,
+    developers, data scientists, and network, infrastructure, privacy and
+    security pros. Keep an eye on our job opportunities at:
+    https://www.consumerfinance.gov/jobs/
 
-{% block body %}
+    Also, you can see more of our code at https://github.com/cfpb
 
-{# Overlay for the page. Used for the mobile mega menu. #}
-<div class="a-overlay u-hidden"></div>
+    And by the way, there’s another hidden message somewhere on the following
+    page: https://www.consumerfinance.gov/jobs/technology-innovation-fellows/.
+    See if you can find it! Hint: picture yourself embedded in our work.
 
-<div class="skip-nav">
-    <a href="#main" class="skip-nav_link">Skip to main content</a>
-</div>
+    ============================================================================
+-->
+{% endif %}
 
-{% block header %}
-    {% import 'organisms/header.html' as o_header with context %}
-    {{ o_header.render( show_banner=true ) }}
-{% endblock header %}
+<!--[if IE 7]>         <html lang="{{ language }}" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="{{ language }}" class="no-js lt-ie10 lt-ie9"> <![endif]-->
+<!--[if IE 9]>         <html lang="{{ language }}" class="no-js lt-ie10"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="{{ language }}" class="no-js"> <!--<![endif]-->
 
-{# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
-{{ wagtailuserbar() }}
-
-{% block banner_top %}
-{% endblock %}
-
-{# PRIMARY CONTENT #}
-{% block content %}
-    {# This will be replaced in templates that extend this template
-    and override "content". #}
-{% endblock content %}
-{# /PRIMARY CONTENT #}
-
-{% block banner_bottom %}
-{% endblock %}
-
-{% block footer %}
-    {% import 'organisms/footer.html' as o_footer with context %}
-    {{ o_footer.render() }}
-{% endblock footer %}
-
-{% endblock body %}
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 
 {#
-    ============
-    BODY SCRIPTS
-    ============
-    The number of scripts here must be kept to a minimum.
+  ===========
+  GLOBAL META
+  ===========
 #}
 
-{% block javascript scoped %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    {% block meta_viewport %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock meta_viewport %}
 
 {#
-  Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
-  available. Check for that CSS class here and act accordingly.
+  ==================
+  PAGE-SPECIFIC META
+  ==================
 #}
-<script>
-  if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-    !function(){
-      {# Include site-wide JavaScript. #}
-      var s = [ '{{ static('js/routes/common.js') }}' ];
-      {#
-        Check and include template-level JavaScript.
-        Template-level JavaScript applies to all pages under the URL scheme
-        www.consumerfinance.gov/[app-url]/
-        and JavaScript appears in unprocessed/js/routes/[app-url]/single.js.
-      #}
-      {% macro template_js() %}
-         {% include 'js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
-      {% endmacro %}
-      {% set js_source = template_js() | trim %}
-      {% if js_source | length > 0 %}
-        s.push( '{{ static('js/routes/' + request.path.split('/')[1] + '/single.js') }}' );
-      {% endif %}
-      {#
-        Check and include component-level JavaScript.
-        Component-level JavaScript adds scripts appearing in
-        unprocessed/js/routes/on-demand/[component].js
-        to the page, based on what components were added in Wagtail.
-      #}
-      {% if page and page.media %}
-         {% for js in page.media %}
-           s.push( '{{ static('js/routes/on-demand/' + js) }}' );
-         {% endfor %}
-      {% endif %}
-      {#
-        Check and include page-level JavaScript.
-        Page-level JavaScript applies to a single pages under the URL scheme
-        www.consumerfinance.gov/[app-url]/somepage
-        and JavaScript appears in unprocessed/js/routes/[app-url]/index.js.
-      #}
-      {% macro page_js() %}
-         {% include 'js/routes/' + request.path[1:] + 'index.js' ignore missing %}
-      {% endmacro %}
-      {% set js_source = page_js() | trim %}
-      {% if js_source | length > 0 %}
-        s.push( '{{ static('js/routes/' + request.path[1:] + 'index.js') }}' );
-      {% endif %}
-      {% if flag_enabled('TURBOLINKS', request) %}
-        s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
-      {% endif %}
-      {# Pass scripts to JavaScript loader. #}
-      jsl(s);
-    }();
-  }
-  var usasearch_config = { siteHandle: 'cfpb' };
-</script>
 
-<script async src="https://search.usa.gov/assets/sayt_loader.js"></script>
-{% endblock javascript %}
+    <title>
+        {%- block title -%}
+            {%- if page -%} {{ page.seo_title or page.title }} | {% endif -%}
+            {{ _('Consumer Financial Protection Bureau') }}
+        {%- endblock title -%}
+    </title>
+    <meta name="description"
+          content="
+            {%- block desc -%}
+                {{- page.search_description if page and page.search_description
+                    else 'Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.'
+                -}}
+            {%- endblock -%}
+          ">
+    <link rel="canonical" href="{{ request.build_absolute_uri() | lower }}">
+
+    {# Open Graph properties #}
+
+    {# Required Open Graph properties #}
+    <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri() | lower }}">
+
+    {% block og_image %}
+        {% if page and page.meta_image %}
+        {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}
+        <meta property="og:image" content="{{ meta_image_url }}">
+        <meta property="twitter:image" content="{{ meta_image_url }}">
+            {% if page.meta_image.should_display_summary_large_image %}
+            <meta name="twitter:card" content="summary_large_image">
+            {% endif %}
+        {% else %}
+        <meta property="og:image"
+              content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
+        <meta property="twitter:image"
+              content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_twitter.png') }}">
+      {% endif %}
+    {% endblock og_image %}
+
+    {# Optional Open Graph properties #}
+    <meta property="og:description"
+          content="
+              {%- block og_desc -%}
+                  {%- if page -%}
+                      {{- page.search_description or page.seo_title or page.title -}}
+                  {%- endif -%}
+              {%- endblock -%}
+          ">
+    <meta property="og:site_name" content="{% block og_site_name %}Consumer Financial Protection Bureau{% endblock %}">
+    {# Facebook Open Graph properties #}
+    <meta property="fb:app_id" content="210516218981921">
+    {% block og_page_id %}{% endblock %}
+    {% block og_article_author %}{% endblock %}
+
+    {# End of Open Graph properties #}
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{ static('favicon.ico') }}">
+
+
+{#
+  ======
+  STYLES
+  ======
+  The number of stylesheets here must be kept to a minimum.
+  Unless adding a significant amount of CSS that is specific to a single page or
+  section of the site, all new styles should be added to cfgov/v1/unprocessed/css/main.less.
+#}
+
+    {% block css %}
+    <!--[if lt IE 10]><link rel="stylesheet" href="{{ static('css/main.ie.css') }}"><![endif]-->
+    <!--[if gt IE 9]><!--><link rel="stylesheet" href="{{ static('css/main.css') }}"><!--<![endif]-->
+    {% endblock css %}
+
+{#
+  ======
+  PRELOADING DYNAMIC ASSETS
+  ======
+#}
+
+    {% block preload %}
+    <link rel="preload" href="{{ static('css/main.css') }}" as="style">
+    <link rel="preload"
+          href="{{ static('fonts/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2') }}"
+          as="font"
+          type="font/woff2" crossorigin>
+    <link rel="preload"
+          href="{{ static('fonts/627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2') }}"
+          as="font"
+          type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
+
+    <link rel="dns-prefetch" href="//consumerfinance.gov/">
+    <link rel="dns-prefetch" href="//fast.fonts.net/">
+    <link rel="dns-prefetch" href="//google-analytics.com/">
+    <link rel="dns-prefetch" href="//googletagmanager.com/">
+    <link rel="dns-prefetch" href="//js-agent.newrelic.com/">
+    <link rel="dns-prefetch" href="//s.ytimg.com/">
+    <link rel="dns-prefetch" href="//search.usa.gov/">
+    <link rel="dns-prefetch" href="//stats.g.doubleclick.net/">
+    {% endblock preload %}
+
+{#
+  ============
+  HEAD SCRIPTS
+  ============
+  The following scripts must be included in the head. DO NOT ADD ANY MORE.
+  All other scripts should go before the closing body tag.
+  If you come across a script that makes a convincing case to be included in
+  the head, then file an issue or PR to discuss including it.
+#}
+
+    {% block javascript_loader %}
+    <script>
+      {# Minified dynamic JavaScript loader that injects a script tag in the head of the page. #}
+      function jsl(a){
+        for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
+      }
+    </script>
+    {% endblock javascript_loader %}
+
+    {% if flag_enabled('AB_TESTING', request) %}
+    {# Google Optimize page-hiding snippet #}
+    <style>
+        .optimize-loading { opacity: 0 !important; }
+    </style>
+    <script>
+        (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+        })(window,document.documentElement,'optimize-loading','dataLayer',5000,
+        {'GTM-KHB8MB':true});
+    {# end Google Optimize page-hiding snippet #}
+
+    {# Google Analytics/Optimize snippet #}
+    {#
+      The last line in the script requires Optimize.
+      Pageview call removed, because pagviews are sent to Analytics via
+      the Google Tag Manager tag (code included below).
+    #}
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-54439736-1', 'auto');
+        ga('require', 'GTM-KHB8MB');
+    </script>
+    {# end Google Analytics/Optimize snippet #}
+    {% endif %}
+
+    {# Google Tag Manager #}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+    {# end Google Tag Manager #}
+
+    {% include "v1/modernizr.html" %}
+</head>
+
+<body{% block body_classes %}{% endblock body_classes %}>
+
+{#
+  =========
+  Analytics
+  =========
+#}
+
+    {% block analytics %}
+
+    {# Google Tag Manager (noscript) #}
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    {# End Google Tag Manager (noscript) #}
+
+    {% endblock analytics %}
+
+
+    {% block body %}
+
+    {# Overlay for the page. Used for the mobile mega menu. #}
+    <div class="a-overlay u-hidden"></div>
+
+    <div class="skip-nav">
+        <a class="skip-nav_link"
+          href="{% block skip_nav_target %}#main{% endblock %}">
+            Skip to main content
+        </a>
+    </div>
+
+    {% block header %}
+        {% import 'organisms/header.html' as o_header with context %}
+        {{ o_header.render( true, language ) }}
+    {% endblock header %}
+
+    {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
+    {{ wagtailuserbar() }}
+
+    {% block banner_top %}
+    {% endblock %}
+
+    {# PRIMARY CONTENT #}
+    {% block content %}
+        {# This will be replaced in templates that extend this template
+        and override "content". #}
+    {% endblock content %}
+    {# /PRIMARY CONTENT #}
+
+    {% block banner_bottom %}
+    {% endblock %}
+
+    {% block footer %}
+        {% import 'organisms/footer.html' as o_footer with context %}
+        {{ o_footer.render( language ) }}
+    {% endblock footer %}
+
+    {% endblock body %}
+
+{#
+  ============
+  BODY SCRIPTS
+  ============
+  The number of scripts here must be kept to a minimum.
+#}
+
+    {% block javascript scoped %}
+
+    {#
+      Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
+      available. Check for that CSS class here and act accordingly.
+    #}
+    <script>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [ '{{ static('js/routes/common.js') }}' ];
+          {#
+            Check and include template-level JavaScript.
+            Template-level JavaScript applies to all pages under the URL scheme
+            www.consumerfinance.gov/[app-url]/
+            and JavaScript appears in unprocessed/js/routes/[app-url]/single.js.
+          #}
+          {% macro template_js() %}
+            {% include 'js/routes/' + app_url(request) + '/single.js' ignore missing %}
+          {% endmacro %}
+          {% set js_source = template_js() | trim %}
+          {% if js_source | length > 0 %}
+            s.push( '{{ static('js/routes/' + app_url(request) + '/single.js') }}' );
+          {% endif %}
+          {#
+            Check and include component-level JavaScript.
+            Component-level JavaScript adds scripts appearing in
+            unprocessed/js/routes/on-demand/[component].js
+            to the page, based on what components were added in Wagtail.
+          #}
+          {% if page and page.media %}
+            {% for js in page.media %}
+              s.push( '{{ static('js/routes/on-demand/' + js) }}' );
+            {% endfor %}
+          {% endif %}
+          {#
+            Check and include page-level JavaScript.
+            Page-level JavaScript applies to a single pages under the URL scheme
+            www.consumerfinance.gov/[app-url]/somepage
+            and JavaScript appears in unprocessed/js/routes/[app-url]/index.js.
+          #}
+          {% macro page_js() %}
+            {% include 'js/routes/' + app_page_url(request) + 'index.js' ignore missing %}
+          {% endmacro %}
+          {% set js_source = page_js() | trim %}
+          {% if js_source | length > 0 %}
+            s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
+          {% endif %}
+          {% if flag_enabled('TURBOLINKS', request) %}
+            s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
+          {% endif %}
+          {# Pass scripts to JavaScript loader. #}
+          jsl(s);
+        }();
+      }
+    </script>
+
+    {% include '_includes/snippets/search_gov.html' %}
+
+    {% endblock javascript %}
+
+    {% block font_tracker %}
+    <!--[if gt IE 8]><!-->
+    {#
+        The invalid media attribute is intentional. It forces the browser to
+        download the stylesheet without blocking rendering and is updated after
+        the stylesheet is downloaded.
+    #}
+    <link rel="stylesheet"
+          href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50"
+          media="none"
+          onload="media='all'">
+    <noscript><link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
+    </noscript>
+    <!--<![endif]-->
+    {% endblock font_tracker %}
+
+</body>
+</html>

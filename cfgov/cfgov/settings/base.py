@@ -4,7 +4,7 @@ from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
-from unipath import Path
+from unipath import DIRS, Path
 
 from cfgov.util import admin_emails
 
@@ -21,10 +21,16 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Deploy environment
 DEPLOY_ENVIRONMENT = os.getenv('DEPLOY_ENVIRONMENT')
 
+# In certain environments, we allow DEBUG to be enabled
+DEBUG = os.environ.get('DJANGO_DEBUG') == 'True'
+
 # signal that tells us that this is a proxied HTTPS request
 # effects how request.is_secure() responds
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
+
+# in some environments, we want to respect X-Forwarded-Port
+USE_X_FORWARDED_PORT = os.environ.get('USE_X_FORWARDED_PORT') == 'True'
 
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
@@ -56,6 +62,7 @@ INSTALLED_APPS = (
     'wagtailinventory',
     'wagtailsharing',
     'flags',
+    'wagtailautocomplete',
     'wagtailflags',
     'watchman',
     'haystack',
@@ -81,17 +88,16 @@ INSTALLED_APPS = (
     'jobmanager',
     'wellbeing',
     'search',
+    'paying_for_college',
+    'prepaid_agreements',
     'regulations3k',
     'treemodeladmin',
     'housing_counselor',
+    'hmda',
 )
 
 OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
-    {
-        'import': 'paying_for_college',
-        'apps': ('paying_for_college', 'haystack',)
-    },
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
@@ -116,7 +122,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
@@ -183,6 +188,8 @@ TEMPLATES = [
                 'flags.jinja2tags.flags',
 
                 'core.jinja2tags.filters',
+                'agreements.jinja2tags.agreements',
+                'prepaid_agreements.jinja2tags.prepaid_agreements',
                 'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.datetimes_extension',
                 'v1.jinja2tags.fragment_cache_extension',
@@ -234,9 +241,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/static/'
 
-# Absolute path to the directory static files should be collected to.
-STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
-
 MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
@@ -258,6 +262,8 @@ STATICFILES_DIRS = [
     PROJECT_ROOT.child('templates', 'wagtailadmin')
 ]
 
+# Also include any directories under static.in.
+STATICFILES_DIRS += REPOSITORY_ROOT.child('static.in').listdir(filter=DIRS)
 
 ALLOWED_HOSTS = ['*']
 
@@ -322,7 +328,8 @@ STATIC_VERSION = ''
 
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
-    'https://files.consumerfinance.gov/a/assets/hud/{format}s/{zipcode}.{format}'
+    'https://files.consumerfinance.gov'
+    '/a/assets/hud/{file_format}s/{zipcode}.{file_format}'
 )
 
 
@@ -406,8 +413,8 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
-    AWS_S3_ACCESS_KEY_ID = os.environ['AWS_S3_ACCESS_KEY_ID']
-    AWS_S3_SECRET_ACCESS_KEY = os.environ['AWS_S3_SECRET_ACCESS_KEY']
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     if os.environ.get('AWS_S3_CUSTOM_DOMAIN'):
         AWS_S3_CUSTOM_DOMAIN = os.environ['AWS_S3_CUSTOM_DOMAIN']
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -476,18 +483,26 @@ GOOGLE_ANALYTICS_SITE = ''
 REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
 REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
 
-# Akamai
+# CDNs
+WAGTAILFRONTENDCACHE = {}
+
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)
 if ENABLE_AKAMAI_CACHE_PURGE:
-    WAGTAILFRONTENDCACHE = {
-        'akamai': {
-            'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
-            'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
-            'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
-            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN')
-        },
+    WAGTAILFRONTENDCACHE['akamai'] = {
+        'BACKEND': 'v1.models.caching.AkamaiBackend',
+        'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
+        'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
+        'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN')
     }
 
+ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get('ENABLE_CLOUDFRONT_CACHE_PURGE', False)
+if ENABLE_CLOUDFRONT_CACHE_PURGE:
+    WAGTAILFRONTENDCACHE['files'] = {
+        'BACKEND': 'wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend',
+        'DISTRIBUTION_ID': {
+            'files.consumerfinance.gov': os.environ.get('CLOUDFRONT_DISTRIBUTION_ID_FILES')
+        }
+    }
 
 # CSP Whitelists
 
@@ -512,10 +527,13 @@ CSP_SCRIPT_SRC = (
     'universal.iperceptions.com',
     'cdn.mouseflow.com',
     'n2.mouseflow.com',
+    'geocoding.geo.census.gov',
+    'tigerweb.geo.census.gov',
     'about:',
     'connect.facebook.net',
     'www.federalregister.gov',
     'storage.googleapis.com',
+    'api.consumerfinance.gov'
 )
 
 # These specify valid sources of CSS code
@@ -550,6 +568,7 @@ CSP_IMG_SRC = (
     'api.mapbox.com',
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
+    'blob:',
     'data:',
     'www.facebook.com',
     'www.gravatar.com',
@@ -576,6 +595,7 @@ CSP_FONT_SRC = (
     "fast.fonts.net",
     "fonts.google.com",
     "fonts.gstatic.com",
+    "files.consumerfinance.gov"
 )
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to.
@@ -628,27 +648,12 @@ FLAGS = {
         {'condition': 'boolean', 'value': False}
     ],
 
-    # When enabled, use Wagtail for /company-signup/
-    # (instead of selfregistration app)
-    'WAGTAIL_COMPANY_SIGNUP': [],
-
-    # IA changes to mega menu for user testing
-    # When enabled, the mega menu under "Consumer Tools" is arranged by topic
-    'IA_USER_TESTING_MENU': [],
-
     # Fix for margin-top when using the text inset
     # When enabled, the top margin of full-width text insets is increased
     'INSET_TEST': [],
 
-    # When enabled, serves `/es/` pages from this
-    # repo ( excluding /obtener-respuestas/ pages ).
-    'ES_CONV_FLAG': [],
-
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': [],
-
-    # To be enabled when mortgage-performance data visualizations go live
-    'MORTGAGE_PERFORMANCE_RELEASE': [],
 
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
@@ -659,14 +664,8 @@ FLAGS = {
     'EMAIL_POPUP_OAH': [('boolean', True)],
     'EMAIL_POPUP_DEBT': [('boolean', True)],
 
-    # The release of new Whistleblowers content/pages
-    'WHISTLEBLOWER_RELEASE': [],
-
     # Search.gov API-based site-search
     'SEARCH_DOTGOV_API': [],
-
-    # The release of the new Financial Coaching pages
-    'FINANCIAL_COACHING': [],
 
     # Turbolinks is a JS library that speeds up page loads
     # https://github.com/turbolinks/turbolinks
@@ -674,8 +673,6 @@ FLAGS = {
 
     # Ping google on page publication in production only
     'PING_GOOGLE_ON_PUBLISH': [('environment is', 'production')],
-
-    'LEGACY_HUD_API': [('environment is', 'production')],
 
     # SPLIT TESTING FLAGS
 
@@ -686,6 +683,40 @@ FLAGS = {
 
     # Test financial well-being hub pages on Beta
     'FINANCIAL_WELLBEING_HUB': [('environment is', 'beta')],
+
+    # Publish new HMDA Explore page
+    # Delete after HMDA API is deprecated (hopefully Summer 2019)
+    'HMDA_LEGACY_PUBLISH': [],
+
+    # The HMDA API and HMDA explorer pages will temporarily be taken down at
+    # TBD intervals. We use a GET parameter during downtime to trigger an
+    # explanatory banner about the outages.
+    # Delete after HMDA API is deprecated (hopefully Summer 2019)
+    'HMDA_OUTAGE': [
+        {'condition': 'parameter', 'value': 'hmda-outage', 'required': True},
+        {'condition': 'path matches', 'value': r'^/data-research', 'required': True}
+    ],
+
+    # Add HowTo schema markup to answer page
+    # Intended for use with path conditions in admin for specific ask pages,
+    # such as: is enabled when path matches ^/ask-cfpb/what-is-an-ach-en-1065/
+    # Delete after Google schema pilot completes and schema usage is
+    # discontinued or implemented with a toggle in answer page admin.
+    'HOW_TO_SCHEMA': [],
+
+    # Manually enabled when Beta is being used for an external test.
+    # Controls the /beta_external_testing endpoint, which Jenkins jobs
+    # query to determine whether to refresh Beta database.
+    'BETA_EXTERNAL_TESTING': [],
+
+    # Used to hide new youth employment success pages prior to public launch.
+    'YOUTH_EMPLOYMENT_SUCCESS':  [],
+
+    # Release of prepaid agreements database search
+    'PREPAID_AGREEMENTS_SEARCH': [],
+
+    # Used to hide CCDB landing page updates prior to public launch.
+    'CCDB_SEPT_2019_UPDATES':  [],
 }
 
 
@@ -760,20 +791,21 @@ else:
         }
     }
 
-PARSE_LINKS_BLACKLIST = [
-    '/admin/',
-    '/django-admin/',
-    '/policy-compliance/rulemaking/regulations/1002/',
-    '/policy-compliance/rulemaking/regulations/1003/',
-    '/policy-compliance/rulemaking/regulations/1004/',
-    '/policy-compliance/rulemaking/regulations/1005/',
-    '/policy-compliance/rulemaking/regulations/1010/',
-    '/policy-compliance/rulemaking/regulations/1011/',
-    '/policy-compliance/rulemaking/regulations/1012/',
-    '/policy-compliance/rulemaking/regulations/1013/',
-    '/policy-compliance/rulemaking/regulations/1024/',
-    '/policy-compliance/rulemaking/regulations/1026/',
-    '/policy-compliance/rulemaking/regulations/1030/',
+
+# See core.middleware.ParseLinksMiddleware. Normally all HTML responses get
+# processed by this middleware so that their link content gets the proper
+# markup (e.g., download icons). We want to exclude certain pages from this
+# middleware. This list of regular expressions defines a set of URLs against
+# which we don't want this logic to be run.
+PARSE_LINKS_EXCLUSION_LIST = [
+    # Wagtail admin pages, except preview and draft views
+    r'^/admin/(?!pages/\d+/(edit/preview|view_draft)/)',
+    # Django admin pages
+    r'^/django-admin/',
+    # Our custom login pages
+    r'^/login/',
+    # Regulations pages that have their own link markup
+    r'^/policy-compliance/rulemaking/regulations/\d+/'
 ]
 
 # Required by django-extensions to determine the execution directory used by

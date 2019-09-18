@@ -1,11 +1,10 @@
 // Required modules.
 import * as arrayHelpers from '../modules/util/array-helpers';
-import * as atomicHelpers from '../modules/util/atomic-helpers';
-import { bindEvent } from '../modules/util/dom-events';
-import { create } from '../modules/util/dom-manipulators';
-import { stringMatch } from '../modules/util/strings';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import EventObserver from '../modules/util/EventObserver';
 import MultiselectModel from './MultiselectModel';
+import { bindEvent } from '../modules/util/dom-events';
+import { create } from '../modules/util/dom-manipulators';
 
 const closeIcon = require(
   'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/close.svg'
@@ -23,7 +22,7 @@ const BASE_CLASS = 'o-multiselect';
  *   The DOM element within which to search for the molecule.
  * @returns {Multiselect} An instance.
  */
-function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
+function Multiselect( element ) { // eslint-disable-line max-statements
 
   const LIST_CLASS = 'm-list';
   const CHECKBOX_INPUT_CLASS = 'a-checkbox';
@@ -47,7 +46,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   const KEY_TAB = 9;
 
   // Internal vars.
-  let _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  let _dom = checkDom( element, BASE_CLASS );
   let _isBlurSkipped = false;
   let _name;
   let _placeholder;
@@ -67,13 +66,11 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   /**
    * Set up and create the multiselect.
-   * @returns {Multiselect|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Multiselect} An instance.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     _instance = this;
@@ -93,7 +90,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
       /* We need to set init flag again since we've created a new <div>
          to replace the <select> element. */
-      atomicHelpers.setInitFlag( _dom );
+      setInitFlag( _dom );
 
       _bindEvents();
     }
@@ -205,10 +202,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         } );
 
         create( 'label', {
-          'for':         option.value,
-          'textContent': option.text,
-          'className':   BASE_CLASS + '_label',
-          'inside':      selectionsItemDom
+          'for':       option.value,
+          'innerHTML': option.text + closeIcon,
+          'className': BASE_CLASS + '_label',
+          'inside':    selectionsItemDom
         } );
 
         _selectionsDom.appendChild( selectionsItemDom );

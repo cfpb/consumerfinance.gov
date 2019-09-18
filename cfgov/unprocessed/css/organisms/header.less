@@ -97,7 +97,7 @@
                 } );
 
                 // Tablet size.
-                .respond-to-range( @bp-sm-min, @bp-sm-max {
+                .respond-to-range( @bp-sm-min, @bp-sm-max, {
                     margin-right: -30px;
                 } );
             }
@@ -168,6 +168,13 @@
             } );
         }
     }
+}
+
+// Used on /external-site/ template, where the header has no nav and eyebrow.
+.o-header__no-nav {
+    .respond-to-min( @bp-med-min, {
+        margin-top: 15px;
+    } );
 }
 
 // Move logo on print.

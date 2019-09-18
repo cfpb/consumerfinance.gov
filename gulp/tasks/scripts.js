@@ -14,7 +14,7 @@ const gulpModernizr = require( 'gulp-modernizr' );
 const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
-const gulpUglifyEs = require( 'gulp-uglify-es' ).default;
+const gulpTerser = require( 'gulp-terser' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
@@ -64,7 +64,7 @@ function scriptsPolyfill() {
       options: [ 'setClasses', 'html5printshiv' ],
       tests: [ 'csspointerevents', 'es5' ]
     } ) )
-    .pipe( gulpUglifyEs( {
+    .pipe( gulpTerser( {
       compress: {
         properties: false
       }
@@ -94,18 +94,6 @@ function scriptsExternal() {
   return _processScript(
     webpackConfig.externalConf,
     '/js/routes/external-site/index.js',
-    '/js/'
-  );
-}
-
-/**
- * Bundle base js for Spanish Ask CFPB pages.
- * @returns {PassThrough} A source stream.
- */
-function scriptsSpanish() {
-  return _processScript(
-    webpackConfig.spanishConf,
-    '/js/routes/es/obtener-respuestas/single.js',
     '/js/'
   );
 }
@@ -169,7 +157,7 @@ function scriptsNemo() {
     } ) )
     .pipe( gulpConcat( 'scripts.js' ) )
     .on( 'error', handleErrors )
-    .pipe( gulpUglifyEs() )
+    .pipe( gulpTerser() )
     .pipe( gulpRename( 'scripts.min.js' ) )
     .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) );
 }
@@ -220,7 +208,7 @@ function scriptsApps() {
         console.log(
           '\x1b[31m%s\x1b[0m',
           'App dependencies not installed, please run from project root:',
-          `npm --prefix ${ appsPath } install ${ appsPath }`
+          `yarn --cwd ${ appsPath }`
         );
       }
     }
@@ -242,7 +230,6 @@ gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
-gulp.task( 'scripts:spanish', scriptsSpanish );
 
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
@@ -262,7 +249,6 @@ gulp.task( 'scripts',
     'scripts:apps',
     'scripts:external',
     'scripts:nemo',
-    'scripts:spanish',
     'scripts:ondemand'
   )
 );

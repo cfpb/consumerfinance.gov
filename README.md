@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=master)](https://travis-ci.org/cfpb/cfgov-refresh?branch=master)
 [![codecov](https://codecov.io/gh/cfpb/cfgov-refresh/branch/master/graph/badge.svg)](https://codecov.io/gh/cfpb/cfgov-refresh)
 
-The redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website.
+The redesign of the [www.consumerfinance.gov](https://www.consumerfinance.gov) website.
 This Django project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
 and [Wagtail CMS](https://wagtail.io) for content administration.
@@ -13,10 +13,8 @@ and [Wagtail CMS](https://wagtail.io) for content administration.
 
 ## Quickstart
 
-Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
-and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions,
-including those for an alternative Docker-based local setup,
-are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
+Full installation and usage instructions are available in
+[our documentation](https://cfpb.github.io/cfgov-refresh).
 
 This project requires Python 2.7, Node 8, and Gulp 4. We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/).
 
@@ -46,7 +44,7 @@ Install third-party dependencies and build frontend assets:
 ./setup.sh
 ```
 
-Create a local database and add some basic pages:
+Create a local database, a Wagtail admin user, and a site homepage:
 
 ```sh
 ./initial-data.sh

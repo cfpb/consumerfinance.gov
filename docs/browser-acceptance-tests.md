@@ -1,6 +1,21 @@
 # Browser/Acceptance Tests
 
-## Quick start:
+## Run tests with localhost server
+
+1. Ensure that the following env vars are set (they should already be in your [`.env`](https://github.com/cfpb/cfgov-refresh/blob/master/.env_SAMPLE) file):
+   - `export TEST_HTTP_HOST=localhost`
+   - `export DJANGO_HTTP_PORT=8000`
+1. Then reload the virtual environment if needed: `source .env`
+1. Get your local version of cf.gov running at http://localhost:8000:
+   ```
+   ./runserver.sh
+   ```
+1. Run the browser tests against your localhost:
+   ```
+   gulp test:acceptance:new
+   ```
+
+## Run tests with Tox server:
 
 To run browser tests, open a new Terminal window or tab and change to the project directory,
 then tell gulp to start the tests:
@@ -215,5 +230,8 @@ There are a number of options to the command:
  - `gulp lint:build`: Lint only the gulp build scripts.
  - `gulp lint:test`: Lint only the test scripts.
  - `gulp lint:scripts`: Lint only the project source scripts.
- - `--fix`: Add this flag (like `gulp lint --fix` or `gulp lint:build --fix`)
+ - `--fix`: Add this flag (like `gulp lint --fix` or `gulp lint:build --fix`).
    to auto-fix some errors, where ESLint has support to do so.
+ - `--path`: Add this flag to specify a file to lint,
+   rather than all files. Path is relative to the project root,
+   such as `gulp lint --path=cfgov/unprocessed/js/modules/Analytics.js`.

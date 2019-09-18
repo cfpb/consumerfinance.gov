@@ -15,11 +15,14 @@ const BYCAnalytics = ( function() {
   let sliderIsActive = false;
   let stepOneSubmitted = false;
 
-  function calculateAge( month, day, year, currentDate ) {
-    let now = currentDate;
-    if ( currentDate instanceof Date !== true ) {
-      now = new Date();
-    }
+  /**
+   * @param {number} month - Month of birth.
+   * @param {number} day - Day of birth.
+   * @param {number} year - Year of birth.
+   * @returns {number} The age, in years, based on current date.
+   */
+  function calculateAge( month, day, year ) {
+    const now = new Date();
     const birthdate = new Date( year, Number( month ) - 1, day );
     let age = now.getFullYear() - birthdate.getFullYear();
     const m = now.getMonth() - birthdate.getMonth();
@@ -37,6 +40,10 @@ const BYCAnalytics = ( function() {
     const stepOneForm = document.querySelector( '#step-one-form' );
     stepOneForm.addEventListener( 'submit', formSubmitted );
 
+    /**
+     * Handle submission of the form.
+     * @param {Event} evt - Form submit event object.
+     */
     function formSubmitted( evt ) {
       evt.preventDefault();
       stepOneSubmitted = true;

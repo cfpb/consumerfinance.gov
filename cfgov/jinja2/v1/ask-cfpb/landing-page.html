@@ -1,112 +1,123 @@
-{% extends "base.html" %}
-{% import 'tags.html' as tags with context %}
-{% import 'form_block.html' as form_block with context %}
+{% extends 'layout-2-1-bleedbar.html' %}
 {% import 'atoms/partially-styled-link.html' as partially_styled_link with context %}
 {% import 'macros/category-icon.html' as category_icon %}
 {% import 'templates/render_block.html' as render_block with context %}
-{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
+{% import 'organisms/ask-search.html' as ask_search with context %}
 
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
+{% block content_modifiers -%}
+    {{ super() }} ask-cfpb-page ask-cfpb-page__landing
 {%- endblock %}
 
-{% block content %}
-
+{% block hero -%}
     {% for block in page.header -%}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
+{% endblock %}
 
-    <main class="content ask-cfpb-page ask-cfpb-page__landing" id="main">
-        <div class="wrapper content_wrapper">
-            <div class="content-l">
-                <section class="ask-categories">
-                    <h2 class="u-show-on-mobile u-mt30">Browse questions by category</h2>
-                    <ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
-                        {% for category in categories %}
-                            <li class="m-list_item">
-                                <a class="m-list_link
-                                          a-link
-                                          a-link__jump
-                                          a-link__icon-after-text"
-                                   href="{{ slugurl( 'category-' + category.slug ) }}">
-                                    <span class="a-link_text">
-                                        {{ category.name }}
-                                    </span>
-                                    {{ category_icon.render( category.name ) }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+{% block content_main %}
+    <div class="content-l">
+        <section class="ask-categories">
+            <h2 class="u-show-on-mobile u-mt30">
+                {{ _('Browse questions by category') }}
+            </h2>
+            <ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
+                {% for portal in portal_cards %}
+                    <li class="m-list_item">
+                        <a class="m-list_link
+                                  a-link
+                                  a-link__jump
+                                  a-link__icon-after-text"
+                            href="{{ portal.url }} "
+                            <span class="a-link_text">
+                                {{ portal.title }}
+                            </span>
+                            {{ category_icon.render(portal.topic) }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
 
-                    <div class="block block__flush-top block__flush-bottom question-categories">
-                        <div class="u-hide-on-mobile">
+            <div class="question-categories">
+                <div class="u-hide-on-mobile">
 
-                            <div class="content-l content-l__equal-height">
+                    <div class="content-l content-l__equal-height">
 
-                                {% for category in categories %}
-                                    <div class="content-l_col content-l_col-1-2__on-med content-l_col-1-3__on-lg content-l_col__equal-height">
-                                        <article class="m-card content-l_body__equal-height">
+                        {% for portal in portal_cards %}
+                            <div class="content-l_col content-l_col-1-2 content-l_col__equal-height">
+                                <article class="m-card content-l_body__equal-height">
+                                    <h2>
+                                        <a href="{{ portal.url }}">
+                                        <span>{{ category_icon.render( portal.topic ) }}</span>
+                                        <span>{{ portal.title }}</span>
+                                        </a>
+                                    </h2>
 
-                                            <h2>
-                                                <a href="{{ slugurl( 'category-' + category.slug ) }}">
-                                                {{ category_icon.render( category.name ) }}
-                                                {{ category.name }}
-                                                </a>
-                                            </h2>
+                                    <ul class="m-list question_list m-list__flush-left u-mt10 u-mb30">
+                                        {% for page in portal.featured_answers %}
+                                            <li class="m-list_item">
+                                            {{ partially_styled_link.render({
+                                                'plain_text': page.question,
+                                                'underlined_text': _('Read answer'),
+                                                'url': page.url })
+                                            }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
 
-                                            <ul class="m-list question_list m-list__flush-left u-mt10 u-mb30">
-                                                {% for a in category.featured_answers() %}
-                                                <li class="m-list_item">
-                                                {{ partially_styled_link.render( {'plain_text': a.question, 'underlined_text': 'Read answer', 'url': a.english_page.url} ) }}
-                                                </li>
-                                                {% endfor %}
-                                            </ul>
-
-                                            <div class="content-l_footer__equal-height">
-                                                <p class="short-desc u-mb0">
-                                                    <a href="{{ slugurl( 'category-' + category.slug ) }}">
-                                                        See all {{ category.name|lower }} questions
-                                                    </a>
-                                                </p>
-                                            </div>
-
-                                        </article>
+                                    <div class="content-l_footer__equal-height">
+                                        <p class="short-desc u-mb0">
+                                            <a href="{{ portal.url }}">
+                                               {{ _('Learn more about') }} {{ portal.title|lower }}
+                                            </a>
+                                        </p>
                                     </div>
 
-                                {% endfor %}
-
+                                </article>
                             </div>
 
-                        </div>
+                        {% endfor %}
 
-                        <div class="block block__sub">
-                            {{ tags.render( {'links': audiences}, is_wagtail=True ) }}
-                        </div>
-
-                        {% if disclaimer %}
-                        <div class="block block__sub ask-disclaimer">
-                            {{ disclaimer.text | safe }}
-                        </div>
-                        {% endif %}
                     </div>
 
-                </section>
-                <section class="ask-search">
-                    {{ ask_search_bar.render() }}
-                </section>
-                {% if about_us %}
-                <div class="block
-                            block__bg
-                            block__flush-top
-                            block__flush-bottom
-                            ask-cfpb-banner">
-
-                    {{ about_us.text | safe }}
-
                 </div>
-                {% endif %}
 
             </div>
-        </div>
-    </main>
+        </section>
+
+        <section class="ask-search block block__sub block__flush-bottom">
+            <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
+            {{ ask_search.render( language=page.language ) }}
+        </section>
+
+
+    </div>
+
 {% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+<a class="a-link a-link__jump"
+   href="{{'/ask-cfpb/' if page.language == 'es' else '/es/obtener-respuestas/'}}">
+    <span class="a-link_text">
+    {% if page.language == 'es'%}
+        View page in English
+    {% else %}
+        Ver página en español
+    {% endif %}
+    </span>
+</a>
+{% if about_us %}
+<div class="block u-mt45 u-mb45 about-us-text">
+    {{ about_us.text | richtext }}
+</div>
+{% endif %}
+{% if disclaimer %}
+<div class="block block__border-top block__padded-top disclaimer-text">
+    <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
+    {{ disclaimer.text | richtext }}
+</div>
+{% endif %}
+{%- endblock %}

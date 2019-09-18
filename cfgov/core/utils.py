@@ -24,6 +24,23 @@ LINK_ICON_CLASSES = 'a-link a-link__icon'
 
 LINK_ICON_TEXT_CLASSES = 'a-link_text'
 
+# Regular expression to match <a> links in HTML strings
+A_TAG = re.compile(
+    # Match an <a containing any attributes
+    r'<a [^>]*?>'
+    # And match everything inside
+    r'.+?'
+    # As long as it's not a </a>, then match '</a>'
+    r'(?=</a>)</a>'
+    # Make '.' match new lines, ignore case
+    r'(?s)(?i)'
+)
+
+# If a link contains these elements, it should *not* get an icon
+ICONLESS_LINK_CHILD_ELEMENTS = [
+    'img', 'svg', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+]
+
 
 def append_query_args_to_url(base_url, args_dict):
     return "{0}?{1}".format(base_url, urlencode(args_dict))
@@ -67,19 +84,8 @@ def format_file_size(bytecount, suffix='B'):
     return "{:.0f} {}{}".format(bytecount, 'T', suffix)
 
 
-def get_link_tags(soup):
-    tags = []
-    for a in soup.find_all('a', href=True):
-        if not is_image_tag(a):
-            tags.append(a)
-    return tags
-
-
-def is_image_tag(tag):
-    for child in tag.children:
-        if child.name in ['img', 'svg']:
-            return True
-    return False
+def get_link_tags(html):
+    return A_TAG.findall(html)
 
 
 def add_link_markup(tag):
@@ -87,10 +93,16 @@ def add_link_markup(tag):
 
     Add an external link icon if the input is not a CFPB (internal) link.
     Add an external link redirect if the input is not a gov link.
-    Add a download icon if the input is a file.
+    If it contains a descendent that should not get an icon, return the link.
+    If not, add a download icon if the input is a file.
     Otherwise (internal link that is not a file), return None.
     """
     icon = False
+
+    tag = BeautifulSoup(tag, 'html.parser').find('a', href=True)
+
+    if tag is None:
+        return None
 
     if not tag.attrs.get('class', None):
         tag.attrs.update({'class': []})
@@ -115,6 +127,12 @@ def add_link_markup(tag):
     elif DOWNLOAD_LINKS.search(tag['href']):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
+
+    if tag.select(', '.join(ICONLESS_LINK_CHILD_ELEMENTS)):
+        # If this tag has any children that are in our list of child elements
+        # that should not get an icon, it doesn't get the icon. It might still
+        # be an external link and modified accordingly above.
+        return str(tag)
 
     if icon:
         tag.attrs['class'].append(LINK_ICON_CLASSES)

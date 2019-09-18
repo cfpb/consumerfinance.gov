@@ -39,8 +39,20 @@ ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = 'https://www.consumerfinance.gov'
 
-FULL_RUN = [
+# These are URL's that exist in a fresh copy of the site
+# after migrations and initial_data are run
+SHORT_RUN = [
     '/',
+    '/your-story/',
+    '/find-a-housing-counselor/',
+    '/know-before-you-owe/',
+    '/fair-lending/',
+    '/data-research/consumer-complaints/',
+]
+
+# These are URL's that are expected to be present in production
+# or a site running a recent dump of production data
+FULL_RUN = [
     '/es/',
     ('/es/obtener-respuestas/buscar'
      '?selected_facets=category_exact:enviar-dinero'),
@@ -55,9 +67,7 @@ FULL_RUN = [
     '/askcfpb/1791/',
     '/askcfpb/316/',
     '/askcfpb/44/',
-    '/your-story/',
     '/students/',
-    '/find-a-housing-counselor/',
     '/servicemembers/',
     '/consumer-tools/auto-loans/',
     '/paying-for-college/',
@@ -69,9 +79,7 @@ FULL_RUN = [
     '/consumer-tools/credit-reports-and-scores/',
     '/consumer-tools/debt-collection/',
     '/consumer-tools/prepaid-cards/',
-    '/know-before-you-owe/',
     '/mortgagehelp/',
-    '/fair-lending/',
     '/sending-money/',
     '/practitioner-resources/your-money-your-goals/',
     '/adult-financial-education/',
@@ -111,77 +119,10 @@ FULL_RUN = [
     '/about-us/careers/',
     '/about-us/careers/current-openings/',
     '/about-us/doing-business-with-us/',
-    '/about-us/advisory-groups/',
     '/about-us/innovation/',
     '/about-us/contact-us/',
     '/eregulations/',
     '/eregulations/1026',
-]
-
-# TODO: Document the logic for what gets included/excluded in short-run tests
-SHORT_RUN = [
-    '/',
-    '/es/',
-    # ('/es/obtener-respuestas/buscar'
-    #  '?selected_facets=category_exact:enviar-dinero'),'/complaint/',
-    '/learnmore/',
-    # '/complaint/'
-    '/ask-cfpb/',
-    '/your-story/',
-    '/students/',
-    '/find-a-housing-counselor/',
-    # '/servicemembers/',
-    '/consumer-tools/auto-loans/',
-    '/paying-for-college/',
-    ('/paying-for-college2/understanding-your-financial-aid-offer/'
-     'about-this-tool/'),
-    '/owning-a-home/',
-    '/retirement/before-you-claim/',
-    # '/retirement/before-you-claim/es/',
-    # '/consumer-tools/credit-reports-and-scores/',
-    # '/consumer-tools/debt-collection/',
-    # '/consumer-tools/prepaid-cards/',
-    '/know-before-you-owe/',
-    # '/mortgagehelp/',
-    '/fair-lending/',
-    '/sending-money/',
-    # '/educational-resources/your-money-your-goals/',
-    '/adult-financial-education/',
-    # '/educational-resources/youth-financial-education/',
-    '/practitioner-resources/library-resources/',
-    # '/educational-resources/tax-preparer-resources/',
-    '/consumer-tools/money-as-you-grow/',
-    # '/empowerment/',
-    '/practitioner-resources/resources-for-older-adults/',
-    # '/data-research/',
-    # '/data-research/research-reports/',
-    # '/data-research/cfpb-research-conference/',
-    '/data-research/consumer-complaints/',
-    '/data-research/hmda/',
-    # '/data-research/consumer-credit-trends/',
-    # '/data-research/credit-card-data/',
-    # '/data-research/cfpb-researchers/',
-    '/policy-compliance/',
-    # '/policy-compliance/rulemaking/',
-    # '/policy-compliance/guidance/',
-    # '/policy-compliance/guidance/implementation-guidance/',
-    # '/policy-compliance/enforcement/',
-    # '/policy-compliance/notice-opportunities-comment/',
-    # '/policy-compliance/amicus/',
-    '/about-us/',
-    # '/about-us/the-bureau/',
-    # '/about-us/budget-strategy/',
-    # '/about-us/payments-harmed-consumers/',
-    # '/about-us/blog/',
-    '/about-us/newsroom/',
-    # '/about-us/events/',
-    '/activity-log/',
-    # '/about-us/careers/',
-    '/about-us/careers/current-openings/',
-    # '/about-us/doing-business-with-us/',
-    # '/about-us/advisory-groups/',
-    # '/about-us/innovation/',
-    # '/about-us/contact-us/',
 ]
 
 
@@ -197,7 +138,7 @@ def check_urls(base, full=False):
     failures = []
     starter = time.time()
     if full:
-        url_list = FULL_RUN
+        url_list = SHORT_RUN + FULL_RUN
     else:
         url_list = SHORT_RUN
     for url_suffix in url_list:

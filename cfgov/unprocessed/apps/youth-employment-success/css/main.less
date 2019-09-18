@@ -1,0 +1,45 @@
+@import (reference) '../../../css/main.less';
+
+/** 
+* This gets overwritten by media queries, so we need to make it important.
+*/
+.u-hidden {
+  display: none !important;
+}
+
+/**
+* Enchancement for the .block__sub class found at:
+* https://github.com/cfpb/capital-framework/blob/0b15295c00ba1972676b6f4c86f3b40dcf45289d/packages/cf-layout/src/cf-layout.less#L466
+*/
+.block__sub-micro {
+  margin-bottom: unit( @grid_gutter-width / @size-i, em );
+  margin-top: unit( @grid_gutter-width / @size-i, em );
+}
+
+.content_line-bold {
+  background-color: @black;
+  height: 1px;
+}
+
+.yes-routes {
+  .a-label__heading {
+    &:extend(.a-label__heading);
+
+    & + input {
+      margin-top: unit( 15px / @base-font-size-px, em );
+    }
+  }
+}
+
+ul {
+  list-style: disc;
+}
+
+/**
+* content-l_col overrides the default appearance for textareas, this restores it. 
+*/
+textarea {
+  border-color: black !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+}

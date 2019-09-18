@@ -1,7 +1,7 @@
 const hud = require( './hud-util' );
 
-const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js';
-const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css';
+const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.js';
+const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.css';
 
 // Settings stored in the template from the backend.
 const mapboxAccessToken = window.cfpbHudSettings.mapbox_access_token;
@@ -150,7 +150,10 @@ function updateMap( data ) {
         iconSize: [ 27, 32 ]
       } );
 
-      const marker = new window.L.Marker( position, { icon: icon } ).addTo( map );
+      const marker = new window.L.Marker(
+        position,
+        { icon: icon }
+      ).addTo( map );
       marker_array[i] = marker;
 
       marker.on( 'click', function() {

@@ -218,10 +218,15 @@ function updateView() {
 }
 
 /**
- * Updates the sentence above the chart
+ * Updates the sentence above the chart.
  * @param {Array} totalVals - List of interest rates.
  */
 function updateLanguage( totalVals ) {
+
+  /**
+   * Set the state text in the sentence above the chart to be the same as
+   * the state drop-down selected.
+   */
   function renderLocation() {
     const stateDropDown = document.querySelector( '#location' );
     const selectedDropDown = stateDropDown.options[stateDropDown.selectedIndex];
@@ -233,10 +238,13 @@ function updateLanguage( totalVals ) {
     }
   }
 
+  /**
+   * Set the loan length text in the summary below the chart.
+   */
   function updateTerm() {
     const termVal = getSelection( 'loan-term' );
     $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
-    // change from 5 years to x if an ARM
+    // Change from 5 years to x if an ARM.
     if ( getSelection( 'rate-structure' ) === 'arm' ) {
       const armVal = getSelection( 'arm-type' );
       const term = armVal.match( /[^-]*/i )[0];
@@ -465,7 +473,8 @@ function processCounty() {
 }
 
 /**
- * Store the loan amount and down payment, process the county data, check if it's a jumbo loan.
+ * Store the loan amount and down payment, process the county data,
+ * check if it's a jumbo loan.
  * @param {HTMLNode} element - TODO: Add description.
  */
 function processLoanAmount( element ) {
@@ -572,11 +581,16 @@ function renderInterestAmounts() {
     }
 
     const length = parseInt( $( item ).parents( '.rc-comparison-section' ).find( '.loan-years' ).text(), 10 ) * 12;
-    const amortizedVal = amortize( { amount: params.getVal( 'loan-amount' ), rate: rate, totalTerm: fullTerm, amortizeTerm: length } );
+    const amortizedVal = amortize( {
+      amount: params.getVal( 'loan-amount' ),
+      rate: rate,
+      totalTerm: fullTerm,
+      amortizeTerm: length
+    } );
     const totalInterest = amortizedVal.interest;
     const roundedInterest = Math.round( unFormatUSD( totalInterest ) );
     const $el = $( item ).find( '.new-cost' );
-    $el.text( formatUSD( roundedInterest, { decimalPlaces: 0 } ) );
+    $el.text( formatUSD( { amount: roundedInterest, decimalPlaces: 0 } ) );
     // Add short term rates, interest, and term to the shortTermVal array.
     if ( length < 180 ) {
       shortTermVal.push( {
@@ -608,7 +622,9 @@ function renderInterestSummary( intVals, term ) {
     return a.rate - b.rate;
   } );
 
-  const diff = formatUSD( sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest, { decimalPlaces: 0 } );
+  const rawDiff = sortedRates[sortedRates.length - 1].interest -
+                  sortedRates[0].interest;
+  const diff = formatUSD( { amount: rawDiff, decimalPlaces: 0 } );
   $( id + ' .comparison-term' ).text( sortedRates[0].term );
   $( id + ' .rate-diff' ).text( diff );
   $( id + ' .higher-rate' ).text( sortedRates[sortedRates.length - 1].rate + '%' );
@@ -856,9 +872,10 @@ function registerEvents() {
       96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 188, 190
     ];
 
-    /* If it's not an allowed key OR the shift key is held down (and they're not tabbing)
-       stop everything. */
-    if ( allowedKeys.indexOf( key ) === -1 || ( event.shiftKey && key !== 9 ) ) {
+    /* If it's not an allowed key OR the shift key is held down
+       (and they're not tabbing) stop everything. */
+    if ( allowedKeys.indexOf( key ) === -1 ||
+         ( event.shiftKey && key !== 9 ) ) {
       event.preventDefault();
     }
   } );

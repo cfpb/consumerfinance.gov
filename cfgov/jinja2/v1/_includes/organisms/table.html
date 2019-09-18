@@ -49,7 +49,7 @@
 
 {% if value.has_data is not defined or value.has_data %}
 {% macro _render_cell(cell) %}
-    {{ (cell or '&nbsp;') | richtext | safe | trim | linebreaksbr }}
+    {{ (cell or '&nbsp;') | richtext | linebreaksbr | trim | safe }}
 {% endmacro %}
 {% if value.heading_text %}
     <{{ value.heading_level -}}>

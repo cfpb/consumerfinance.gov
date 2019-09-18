@@ -30,6 +30,7 @@ class BrowsePage(CFGOVPage):
         ('expandable_group', organisms.ExpandableGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
+        ('video_player', organisms.VideoPlayer()),
         ('snippet_list', organisms.ResourceList()),
         ('table_block', organisms.AtomicTableBlock(
             table_options={'renderer': 'html'}

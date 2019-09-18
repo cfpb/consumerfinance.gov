@@ -18,8 +18,11 @@ from wagtail.wagtailcore.whitelist import attribute_rule
 
 from v1.admin_views import manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
+from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
-from v1.models.snippets import Contact, ReusableText
+from v1.models.snippets import (
+    Contact, GlossaryTerm, RelatedResource, ReusableText
+)
 from v1.util import util
 
 
@@ -230,6 +233,22 @@ class ContactModelAdmin(ModelAdmin):
     search_fields = ('heading', 'body', 'contact_info')
 
 
+class PortalTopicModelAdmin(ModelAdmin):
+    model = PortalTopic
+    menu_icon = 'snippet'
+    list_display = ('heading', 'heading_es')
+    ordering = ('heading',)
+    search_fields = ('heading', 'heading_es')
+
+
+class PortalCategoryModelAdmin(ModelAdmin):
+    model = PortalCategory
+    menu_icon = 'snippet'
+    list_display = ('heading', 'heading_es')
+    ordering = ('heading',)
+    search_fields = ('heading', 'heading_es')
+
+
 class ReusableTextModelAdmin(ModelAdmin):
     model = ReusableText
     menu_icon = 'snippet'
@@ -238,11 +257,34 @@ class ReusableTextModelAdmin(ModelAdmin):
     search_fields = ('title', 'sidefoot_heading', 'text')
 
 
+class RelatedResourceModelAdmin(ModelAdmin):
+    model = RelatedResource
+    menu_icon = 'snippet'
+    list_display = ('title', 'text')
+    ordering = ('title',)
+    search_fields = ('title', 'text')
+
+
+class GlossaryTermModelAdmin(ModelAdmin):
+    model = GlossaryTerm
+    menu_icon = 'snippet'
+    list_display = ('name_en', 'definition_en', 'portal_topic')
+    ordering = ('name_en',)
+    search_fields = ('name_en', 'definition_en', 'name_es', 'definition_es')
+
+
 class SnippetModelAdminGroup(ModelAdminGroup):
     menu_label = 'Snippets'
     menu_icon = 'snippet'
     menu_order = 400
-    items = (ContactModelAdmin, ResourceModelAdmin, ReusableTextModelAdmin)
+    items = (
+        ContactModelAdmin,
+        ResourceModelAdmin,
+        ReusableTextModelAdmin,
+        RelatedResourceModelAdmin,
+        PortalTopicModelAdmin,
+        PortalCategoryModelAdmin,
+        GlossaryTermModelAdmin)
 
 
 modeladmin_register(SnippetModelAdminGroup)
@@ -265,8 +307,13 @@ def whitelister_element_rules():
         'itemtype': True,
     })
 
-    allowed_tags = ['aside', 'h4', 'p', 'span',
+    allowed_tags = ['aside', 'h4', 'h3', 'p', 'span',
                     'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
                     'col', 'colgroup']
 
     return {tag: allow_html_class for tag in allowed_tags}
+
+
+@hooks.register('before_serve_shared_page')
+def set_served_by_wagtail_sharing(page, request, args, kwargs):
+    setattr(request, 'served_by_wagtail_sharing', True)

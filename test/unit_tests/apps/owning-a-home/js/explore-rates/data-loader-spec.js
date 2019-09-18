@@ -28,7 +28,12 @@ describe( 'explore-rates/data-loader', () => {
       domLoader.getData();
       return expect( axios.get ).toHaveBeenCalledWith(
         '/oah-api/rates/rate-checker',
-        { params: { decache: decache, cancelToken: domLoader.getLastCancelToken() }}
+        {
+          params: {
+            decache: decache,
+            cancelToken: domLoader.getLastCancelToken()
+          }
+        }
       );
     } );
   } );

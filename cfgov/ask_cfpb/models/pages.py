@@ -1,69 +1,62 @@
 from __future__ import absolute_import, unicode_literals
 
-import json
-import re
-from six.moves.urllib.parse import urlparse
+from collections import OrderedDict
+from six.moves.urllib.parse import unquote
 
+from django import forms
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
-from django.template.defaultfilters import slugify
 from django.template.response import TemplateResponse
-from django.utils.text import Truncator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
+from django.utils.html import format_html
+from django.utils.text import Truncator, slugify
+from django.utils.translation import activate, deactivate_all, gettext as _
 from haystack.query import SearchQuerySet
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
     TabbedInterface
 )
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Orderable, Page
 from wagtail.wagtailsearch import index
+from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from wagtailautocomplete.edit_handlers import AutocompletePanel
+
+from ask_cfpb.models import blocks as ask_blocks
+from ask_cfpb.models.search import AskSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
-from v1.models.snippets import ReusableText
+from v1.models import (
+    CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic,
+    SublandingPage
+)
+from v1.models.snippets import RelatedResource, ReusableText
 
 
-LANGUAGE_BASES = {
-    'es': '/es/obtener-respuestas/{}/',
-    'en': '/ask-cfpb/{}/'
+REUSABLE_TEXT_TITLES = {
+    'about_us': {
+        'en': 'About us (For consumers)',
+        'es': 'About us (for consumers) (in Spanish)'
+    },
+    'disclaimer': {
+        'en': 'Legal disclaimer for consumer materials',
+        'es': 'Legal disclaimer for consumer materials (in Spanish)'
+    }
 }
-SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
-ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
-ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
-ENGLISH_DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
-SPANISH_DISCLAIMER_SNIPPET_TITLE = (
-    'Legal disclaimer for consumer materials (in Spanish)')
-CONSUMER_TOOLS_PORTAL_PAGES = {
-    '/consumer-tools/auto-loans/': (
-        'Auto Loans',
-        'auto-loans'),
-    '/consumer-tools/bank-accounts/': (
-        'Bank Accounts and Services',
-        'bank-accounts-and-services'),
-    '/consumer-tools/credit-cards/': (
-        'Credit Cards',
-        'credit-cards'),
-    '/consumer-tools/credit-reports-and-scores/': (
-        'Credit Reports and Scores',
-        'credit-reporting'),
-    '/consumer-tools/debt-collection/': (
-        'Debt Collection',
-        'debt-collection'),
-    '/consumer-tools/prepaid-cards/': (
-        'Prepaid Cards',
-        'prepaid-cards'),
-    '/consumer-tools/sending-money/': (
-        'Sending Money',
-        'money-transfers'),
-    '/consumer-tools/student-loans/': (
-        'Student Loans',
-        'student-loans')
-}
+
+
+def get_standard_text(language, text_type):
+    return get_reusable_text_snippet(
+        REUSABLE_TEXT_TITLES[text_type][language]
+    )
+
+
 JOURNEY_PATHS = (
     '/owning-a-home/prepare',
     '/owning-a-home/explore',
@@ -81,97 +74,37 @@ def get_reusable_text_snippet(snippet_title):
         pass
 
 
-def get_ask_nav_items(request, current_page):
-    from ask_cfpb.models import Category
-    return [
-        {
-            'title': cat.name,
-            'url': '/ask-cfpb/category-' + cat.slug + '/',
-            'active': False if not hasattr(current_page, 'ask_category')
-            else cat.name == current_page.ask_category.name,
-            'expanded': True
-        }
-        for cat in Category.objects.all()
-    ], True
-
-
-def get_ask_breadcrumbs(category=None):
-    breadcrumbs = [{'title': 'Ask CFPB', 'href': '/ask-cfpb/'}]
-    if category:
-        breadcrumbs.append({
-            'title': category.name,
-            'href': '/ask-cfpb/category-{}'.format(category.slug)
-        })
-    return breadcrumbs
-
-
-def get_journey_breadcrumbs(request, path):
-    """
-    If referrer is a BAH journey page, breadcrumbs should
-    reflect the BAH journey page hierarchy.
-    """
-    pages = path.replace('process/', '').strip('/').split('/')
-    # TODO: replace when journey page urls are updated
-    # after 2018 homebuying season campaign ends
-    # Also remove related tests
-    if pages == ['owning-a-home']:
-        pages.append('prepare')
-    # end TODO
-    breadcrumbs = []
-    parent = request.site.root_page
-    idx = 0
-    while idx < len(pages):
-        page = parent.get_children().get(slug=pages[idx])
-        # TODO: replace when journey page urls are updated
-        # after 2018 homebuying season campaign ends
-        if len(breadcrumbs):
-            href = page.relative_url(request.site).replace(
-                '/owning-a-home/',
-                '/owning-a-home/process/'
-            )
+def get_portal_or_portal_search_page(portal_topic, language='en'):
+    if portal_topic:
+        portal_page = portal_topic.portal_pages.filter(
+            language=language, live=True).first()
+        if portal_page:
+            return portal_page
         else:
-            href = page.relative_url(request.site)
-        # end TODO
-        breadcrumbs.append({
+            portal_search_page = portal_topic.portal_search_pages.filter(
+                language=language, live=True).first()
+            return portal_search_page
+    return None
+
+
+def get_ask_breadcrumbs(language='en', portal_topic=None):
+    DEFAULT_CRUMBS = {
+        'es': [{
+            'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/',
+        }],
+        'en': [{
+            'title': 'Ask CFPB', 'href': '/ask-cfpb/',
+        }],
+    }
+    if portal_topic:
+        page = get_portal_or_portal_search_page(
+            portal_topic=portal_topic, language=language)
+        crumbs = [{
             'title': page.title,
-            'href': href
-        })
-        parent = page
-        idx += 1
-    return breadcrumbs
-
-
-def get_question_referrer_data(request, categories):
-    """
-    Determines whether a question page's referrer is a
-    portal, Ask category, or BAH journey page. If so, returns
-    the appropriate category and breadcrumbs. Otherwise, returns
-    question's first category and its breadcrumbs.
-    """
-    try:
-        referrer = request.META.get('HTTP_REFERER', '')
-        path = urlparse(referrer).path
-        portal_data = CONSUMER_TOOLS_PORTAL_PAGES.get(path)
-        if portal_data:
-            category = categories.filter(slug=portal_data[1]).first()
-            breadcrumbs = [{'title': portal_data[0], 'href': path}]
-            return (category, breadcrumbs)
-        elif path.startswith(JOURNEY_PATHS):
-            category = categories.filter(slug='mortgages').first() \
-                or categories.first()
-            breadcrumbs = get_journey_breadcrumbs(request, path)
-            return (category, breadcrumbs)
-        else:
-            match = re.search(r'ask-cfpb/category-([A-Za-z0-9-_]*)/', path)
-            if match.group(1):
-                category = categories.filter(slug=match.group(1)).first()
-                return (category, get_ask_breadcrumbs(category))
-    except Exception:
-        pass
-
-    category = categories.first()
-    breadcrumbs = get_ask_breadcrumbs(category)
-    return (category, breadcrumbs)
+            'href': page.url
+        }]
+        return crumbs
+    return DEFAULT_CRUMBS[language]
 
 
 def validate_page_number(request, paginator):
@@ -203,29 +136,50 @@ class AnswerLandingPage(LandingPage):
         ObjectList(content_panels, heading='Content'),
         ObjectList(LandingPage.settings_panels, heading='Configuration'),
     ])
+
+    template = 'ask-cfpb/landing-page.html'
+
     objects = CFGOVPageManager()
 
+    def get_portal_cards(self):
+        """Return an array of dictionaries used to populate portal cards."""
+        portal_cards = []
+        portal_pages = SublandingPage.objects.filter(
+            portal_topic_id__isnull=False,
+            language=self.language,
+        ).order_by('portal_topic__heading')
+        for portal_page in portal_pages:
+            topic = portal_page.portal_topic
+            # Only include a portal if it has featured answers
+            featured_answers = topic.featured_answers(self.language)
+            if not featured_answers:
+                continue
+            # If the portal page is live, link to it
+            if portal_page.live:
+                url = portal_page.url
+            # Otherwise, link to the topic "see all" page if there is one
+            else:
+                topic_page = topic.portal_search_pages.filter(
+                    language=self.language,
+                    live=True).first()
+                if topic_page:
+                    url = topic_page.url
+                else:
+                    continue  # pragma: no cover
+            portal_cards.append({
+                'topic': topic,
+                'title': topic.title(self.language),
+                'url': url,
+                'featured_answers': featured_answers,
+            })
+        return portal_cards
+
     def get_context(self, request, *args, **kwargs):
-        from ask_cfpb.models import Category, Audience
         context = super(AnswerLandingPage, self).get_context(request)
-        context['categories'] = Category.objects.all()
-        if self.language == 'en':
-            context['about_us'] = get_reusable_text_snippet(
-                ABOUT_US_SNIPPET_TITLE)
-            context['disclaimer'] = get_reusable_text_snippet(
-                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
-            context['audiences'] = [
-                {'text': audience.name,
-                 'url': '/ask-cfpb/audience-{}'.format(
-                        slugify(audience.name))}
-                for audience in Audience.objects.all().order_by('name')]
+        context['portal_cards'] = self.get_portal_cards()
+        context['about_us'] = get_standard_text(self.language, 'about_us')
+        context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
         return context
-
-    def get_template(self, request):
-        if self.language == 'es':
-            return 'ask-cfpb/landing-page-spanish.html'
-
-        return 'ask-cfpb/landing-page.html'
 
 
 class SecondaryNavigationJSMixin(object):
@@ -238,157 +192,209 @@ class SecondaryNavigationJSMixin(object):
         return js
 
 
-class AnswerCategoryPage(RoutablePageMixin, SecondaryNavigationJSMixin,
-                         CFGOVPage):
+class PortalSearchPage(
+        RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
     """
-    A routable page type for Ask CFPB category pages and their subcategories.
+    A routable page type for Ask CFPB portal search ("see-all") pages.
     """
-    from ask_cfpb.models import Answer, Audience, Category, SubCategory
 
     objects = CFGOVPageManager()
-    content = StreamField([], null=True)
-    ask_category = models.ForeignKey(
-        Category,
+    portal_topic = models.ForeignKey(
+        PortalTopic,
         blank=True,
         null=True,
-        on_delete=models.PROTECT,
-        related_name='category_page')
-    ask_subcategory = models.ForeignKey(
-        SubCategory,
-        blank=True,
-        null=True,
-        on_delete=models.PROTECT,
-        related_name='subcategory_page')
+        related_name='portal_search_pages',
+        on_delete=models.SET_NULL)
+    portal_category = None
+    query_base = None
+    glossary_terms = None
+    overview = models.TextField(blank=True)
     content_panels = CFGOVPage.content_panels + [
-        FieldPanel('ask_category', Category),
-        StreamFieldPanel('content'),
+        FieldPanel('portal_topic'),
+        FieldPanel('overview'),
     ]
-
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    def get_template(self, request):
-        if self.language == 'es':
-            return 'ask-cfpb/category-page-spanish.html'
+    @property
+    def category_map(self):
+        """
+        Return an ordered dictionary of translated-slug:object pairs.
 
-        return 'ask-cfpb/category-page.html'
+        We use this custom sequence for categories in the navigation sidebar,
+        controlled by the 'display_order' field of portal categories:
+        - Basics
+        - Key terms
+        - Common issues
+        - Know your rights
+        - How-to guides
+        """
+        categories = PortalCategory.objects.all()
+        sorted_mapping = OrderedDict()
+        for category in categories:
+            sorted_mapping.update({
+                slugify(
+                    category.title(self.language)
+                ): category
+            })
+        return sorted_mapping
 
-    def prune_answers(self, id_list):
-        """Make sure category pages don't see nonexistent or draft pages."""
-        answer_query = self.Answer.objects.filter(
-            pk__in=id_list).order_by('-pk')
-        if self.language == 'es':
-            pruned_pks = [a.pk for a in answer_query
-                          if a.spanish_page
-                          and a.spanish_page.live
-                          and not a.spanish_page.redirect_to]
-            pruned_answers = answer_query.filter(pk__in=pruned_pks).values(
-                'id', 'question', 'question_es',
-                'slug', 'slug_es', 'answer_es')
-            for a in pruned_answers:
-                a['answer_es'] = Truncator(a['answer_es']).words(
-                    40, truncate=' ...')
-        else:  # English answers are pruned upstream
-            pruned_answers = answer_query.values(
-                'id', 'question', 'question_es',
-                'slug', 'slug_es', 'answer_es')
-        return pruned_answers
+    def results_message(self, count, heading, search_term):
+        if search_term:
+            _for_term = '{} "{}"'.format(_('for'), search_term)
+        else:
+            _for_term = ''
+        if count == 1:
+            _showing = _('Showing ')  # trailing space triggers singular es
+            _results = _('result')
+        else:
+            _showing = _('Showing')
+            _results = _('results')
+        if self.portal_category and search_term:
+            return format_html(
+                '{} {} {} {} {} {}'
+                '<span class="results-link"><a href="../?search_term={}">'
+                '{} {}</a></span>',
+                _showing,
+                count,
+                _results,
+                _for_term,
+                _('within'),
+                heading.lower(),
+                search_term,
+                _('See all results within'),
+                self.portal_topic.title(self.language).lower()
+            )
+        elif self.portal_category:
+            return '{} {} {} {} {}'.format(
+                _showing,
+                count,
+                _results,
+                _('within'),
+                heading.lower()
+            )
+        return '{} {} {} {} {} {}'.format(
+            _showing,
+            count,
+            _results,
+            _for_term,
+            _('within'),
+            heading.lower())
+
+    def get_heading(self):
+        if self.portal_category:
+            return self.portal_category.title(self.language)
+        else:
+            return self.portal_topic.title(self.language)
 
     def get_context(self, request, *args, **kwargs):
-        context = super(
-            AnswerCategoryPage, self).get_context(request, *args, **kwargs)
-        sqs = SearchQuerySet()
-        if self.language == 'es':
-            sqs = sqs.filter(content=self.ask_category.name_es)
+        if self.language != 'en':
+            activate(self.language)
         else:
-            sqs = sqs.filter(content=self.ask_category.name)
-        sqs = sqs.models(self.Category)
-        try:
-            facet_map = sqs[0].facet_map
-        except IndexError:
-            facet_map = self.ask_category.facet_map
-        facet_dict = json.loads(facet_map)
-        subcat_ids = facet_dict['subcategories'].keys()
-        answer_ids = facet_dict['answers'].keys()
-        answers = self.prune_answers(answer_ids)
-        audience_ids = facet_dict['audiences'].keys()
-        subcats = self.SubCategory.objects.filter(
-            pk__in=subcat_ids).values(
-                'id', 'slug', 'slug_es', 'name', 'name_es')
-        audiences = self.Audience.objects.filter(
-            pk__in=audience_ids).values('id', 'name')
-        context.update({
-            'answers': answers,
-            'audiences': audiences,
-            'facets': facet_dict,
-            'choices': subcats,
-            'results_count': answers.count(),
-            'get_secondary_nav_items': get_ask_nav_items
-        })
+            deactivate_all()
+        return super(PortalSearchPage, self).get_context(
+            request, *args, **kwargs)
 
-        if self.language == 'en':
-            context['about_us'] = get_reusable_text_snippet(
-                ABOUT_US_SNIPPET_TITLE)
-            context['disclaimer'] = get_reusable_text_snippet(
-                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
-            context['breadcrumb_items'] = get_ask_breadcrumbs()
-        elif self.language == 'es':
-            context['tags'] = self.ask_category.top_tags_es
-        return context
+    def get_nav_items(self, request, page):
+        """Return sorted nav items for sidebar."""
+        sorted_categories = [
+            {
+                'title': category.title(self.language),
+                'url': "{}{}/".format(page.url, slug),
+                'active': (
+                    False if not page.portal_category
+                    else category.title(self.language)
+                    == page.portal_category.title(self.language))
+            }
+            for slug, category in self.category_map.items()
+        ]
+        return [{
+            'title': page.portal_topic.title(self.language),
+            'url': page.url,
+            'active': False if page.portal_category else True,
+            'expanded': True,
+            'children': sorted_categories
+        }], True
 
-    # Returns an image for the page's meta Open Graph tag
-    @property
-    def meta_image(self):
-        return self.ask_category.category_image
-
-    @route(r'^$')
-    def category_page(self, request):
+    def get_results(self, request):
         context = self.get_context(request)
-        paginator = Paginator(context.get('answers'), 20)
+        search_term = request.GET.get('search_term', '').strip()
+        if not search_term or len(unquote(search_term)) == 1:
+            results = self.query_base
+        else:
+            search = AskSearch(
+                search_term=search_term,
+                query_base=self.query_base)
+            results = search.queryset
+            if results.count() == 0:
+                # No results, so let's try to suggest a better query
+                search.suggest(request=request)
+                results = search.queryset
+                search_term = search.search_term
+        search_message = self.results_message(
+            results.count(),
+            self.get_heading(),
+            search_term)
+        paginator = Paginator(results, 10)
         page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
         context.update({
+            'search_term': search_term,
+            'results_message': search_message,
+            'pages': paginator.page(page_number),
             'paginator': paginator,
             'current_page': page_number,
-            'questions': page,
+            'get_secondary_nav_items': self.get_nav_items,
         })
-
         return TemplateResponse(
             request,
-            self.get_template(request),
+            'ask-cfpb/see-all.html',
             context)
 
-    @route(r'^(?P<subcat>[^/]+)/$')
-    def subcategory_page(self, request, **kwargs):
-        subcat = self.SubCategory.objects.filter(
-            slug=kwargs.get('subcat')).first()
-        if subcat:
-            self.ask_subcategory = subcat
+    def get_glossary_terms(self):
+        if self.language == 'es':
+            terms = self.portal_topic.glossary_terms.order_by('name_es')
         else:
+            terms = self.portal_topic.glossary_terms.order_by('name_en')
+        for term in terms:
+            if term.name(self.language) and term.definition(self.language):
+                yield term
+
+    @route(r'^$')
+    def portal_topic_page(self, request):
+        self.query_base = SearchQuerySet().filter(
+            portal_topics=self.portal_topic.heading,
+            language=self.language)
+        self.portal_category = None
+        return self.get_results(request)
+
+    @route(r'^(?P<category>[^/]+)/$')
+    def portal_category_page(self, request, **kwargs):
+        category_slug = kwargs.get('category')
+        if category_slug not in self.category_map:
             raise Http404
-        context = self.get_context(request)
-        id_key = str(subcat.pk)
-        answers = context['answers'].filter(
-            pk__in=context['facets']['subcategories'][id_key])
-        paginator = Paginator(answers, 20)
-        page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
-        context.update({
-            'paginator': paginator,
-            'current_page': page_number,
-            'results_count': answers.count(),
-            'questions': page,
-            'breadcrumb_items': get_ask_breadcrumbs(
-                self.ask_category)
-        })
+        self.portal_category = self.category_map.get(category_slug)
+        self.title = "{} {}".format(
+            self.portal_topic.title(self.language),
+            self.portal_category.title(self.language).lower())
+        if self.portal_category.heading == 'Key terms':
+            self.glossary_terms = self.get_glossary_terms()
+            context = self.get_context(request)
+            context.update({
+                'get_secondary_nav_items': self.get_nav_items})
+            return TemplateResponse(
+                request,
+                'ask-cfpb/see-all.html',
+                context)
+        self.query_base = SearchQuerySet().filter(
+            portal_topics=self.portal_topic.heading,
+            language=self.language,
+            portal_categories=self.portal_category.heading)
+        return self.get_results(request)
 
-        return TemplateResponse(
-            request, self.get_template(request), context)
 
-
-class AnswerResultsPage(SecondaryNavigationJSMixin, CFGOVPage):
+class AnswerResultsPage(CFGOVPage):
 
     objects = CFGOVPageManager()
     answers = []
@@ -405,95 +411,41 @@ class AnswerResultsPage(SecondaryNavigationJSMixin, CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    def get_context(self, request, **kwargs):
+    template = 'ask-cfpb/answer-search-results.html'
 
+    def get_context(self, request, **kwargs):
         context = super(
             AnswerResultsPage, self).get_context(request, **kwargs)
         context.update(**kwargs)
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
+        results = paginator.page(page_number)
         context['current_page'] = page_number
         context['paginator'] = paginator
-        context['results'] = page
+        context['results'] = results
         context['results_count'] = len(self.answers)
-        context['get_secondary_nav_items'] = get_ask_nav_items
-
-        if self.language == 'en':
-            context['about_us'] = get_reusable_text_snippet(
-                ABOUT_US_SNIPPET_TITLE)
-            context['disclaimer'] = get_reusable_text_snippet(
-                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
-            context['breadcrumb_items'] = get_ask_breadcrumbs()
-
+        context['breadcrumb_items'] = get_ask_breadcrumbs(
+            language=self.language)
+        context['about_us'] = get_standard_text(self.language, 'about_us')
+        context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
         return context
-
-    def get_template(self, request):
-        if self.language == 'en':
-            return 'ask-cfpb/answer-search-results.html'
-        elif self.language == 'es':
-            return 'ask-cfpb/answer-search-spanish-results.html'
-
-
-class AnswerAudiencePage(SecondaryNavigationJSMixin, CFGOVPage):
-    from ask_cfpb.models import Audience
-
-    objects = CFGOVPageManager()
-    content = StreamField([
-    ], null=True)
-    ask_audience = models.ForeignKey(
-        Audience,
-        blank=True,
-        null=True,
-        on_delete=models.PROTECT,
-        related_name='audience_page')
-    content_panels = CFGOVPage.content_panels + [
-        FieldPanel('ask_audience', Audience),
-        StreamFieldPanel('content'),
-    ]
-
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='Content'),
-        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
-    ])
-
-    def get_context(self, request, *args, **kwargs):
-        from ask_cfpb.models import Answer
-        context = super(AnswerAudiencePage, self).get_context(request)
-        answers = Answer.objects.filter(audiences__id=self.ask_audience.id)
-        paginator = Paginator(answers, 20)
-        page_number = validate_page_number(request, paginator)
-        page = paginator.page(page_number)
-        context.update({
-            'answers': page,
-            'current_page': page_number,
-            'paginator': paginator,
-            'results_count': len(answers),
-            'get_secondary_nav_items': get_ask_nav_items
-        })
-
-        if self.language == 'en':
-            context['about_us'] = get_reusable_text_snippet(
-                ABOUT_US_SNIPPET_TITLE)
-            context['disclaimer'] = get_reusable_text_snippet(
-                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
-            context['breadcrumb_items'] = get_ask_breadcrumbs()
-
-        return context
-
-    template = 'ask-cfpb/audience-page.html'
 
 
 class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     """A routable page for serving Answers by tag"""
 
+    template = 'ask-cfpb/answer-search-results.html'
+
     objects = CFGOVPageManager()
 
-    def get_template(self, request):
-        if self.language == 'es':
-            return 'ask-cfpb/answer-tag-spanish-results.html'
+    def get_context(self, request, *args, **kwargs):
+        if self.language != 'en':
+            activate(self.language)
         else:
-            return 'ask-cfpb/answer-search-results.html'
+            deactivate_all()
+        context = super(
+            TagResultsPage, self).get_context(request, *args, **kwargs)
+        return context
 
     @route(r'^$')
     def tag_base(self, request):
@@ -501,27 +453,12 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
 
     @route(r'^(?P<tag>[^/]+)/$')
     def tag_search(self, request, **kwargs):
-        from ask_cfpb.models import Answer
-        tag_dict = Answer.valid_tags(language=self.language)
         tag = kwargs.get('tag').replace('_', ' ')
-        if not tag or tag not in tag_dict['valid_tags']:
-            raise Http404
-        if self.language == 'es':
-            self.answers = [
-                (SPANISH_ANSWER_SLUG_BASE.format(a.id),
-                 a.question_es,
-                 Truncator(a.answer_es).words(40, truncate=' ...'))
-                for a in tag_dict['tag_map'][tag]
-                if a.answer_pages.filter(language='es', live=True)
-            ]
-        else:
-            self.answers = [
-                (ENGLISH_ANSWER_SLUG_BASE.format(a.id),
-                 a.question,
-                 Truncator(a.answer).words(40, truncate=' ...'))
-                for a in tag_dict['tag_map'][tag]
-                if a.answer_pages.filter(language='en', live=True)
-            ]
+        self.answers = AnswerPage.objects.filter(
+            language=self.language,
+            search_tags__contains=tag,
+            redirect_to_page=None,
+            live=True)
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)
@@ -533,7 +470,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
         context['paginator'] = paginator
         return TemplateResponse(
             request,
-            self.get_template(request),
+            self.template,
             context)
 
 
@@ -553,55 +490,112 @@ class AnswerPage(CFGOVPage):
             "(Optional) Use this field to rephrase the question title as "
             "a statement. Use only if this answer has been chosen to appear "
             "on a money topic portal (e.g. /consumer-tools/debt-collection)."))
-    answer = RichTextField(
+    short_answer = RichTextField(
         blank=True,
-        features=[
-            'bold', 'italic', 'h2', 'h3', 'h4', 'link', 'ol', 'ul',
-            'document-link', 'image', 'embed', 'ask-tips', 'edit-html'
-        ],
-        help_text=(
-            "Do not use H2 or H3 to style text. Only use the HTML Editor "
-            "for troubleshooting. To style tips, warnings and notes, "
-            "select the content that will go inside the rule lines "
-            "(so, title + paragraph) and click the Pencil button "
-            "to style it. Re-select the content and click the button "
-            "again to unstyle the tip."
-        )
-    )
-    snippet = RichTextField(blank=True, help_text='Optional answer intro')
-    search_tags = models.CharField(
-        max_length=1000,
+        features=['link', 'document-link'],
+        help_text='Optional answer intro')
+    answer_content = StreamField(
+        ask_blocks.AskAnswerContent(),
         blank=True,
-        help_text="PLEASE DON'T USE. THIS FIELD IS NOT YET ACTIVATED.")
+        verbose_name='Answer')
     answer_base = models.ForeignKey(
         Answer,
         blank=True,
         null=True,
         related_name='answer_pages',
         on_delete=models.SET_NULL)
-    redirect_to = models.ForeignKey(
-        Answer,
+    redirect_to_page = models.ForeignKey(
+        'self',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='redirected_pages',
-        help_text="Choose another Answer to redirect this page to")
+        related_name='redirect_to_pages',
+        help_text="Choose another AnswerPage to redirect this page to")
+    featured = models.BooleanField(
+        default=False,
+        help_text=(
+            "Check to make this one of two featured answers "
+            "on the landing page."))
+    featured_rank = models.IntegerField(blank=True, null=True)
+    category = models.ManyToManyField(
+        'Category',
+        blank=True,
+        help_text=(
+            "Categorize this answer. "
+            "Avoid putting into more than one category."))
+    search_tags = models.CharField(
+        max_length=1000,
+        blank=True,
+        help_text="Search words or phrases, separated by commas")
+    related_resource = models.ForeignKey(
+        RelatedResource,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
+    related_questions = ParentalManyToManyField(
+        'self',
+        symmetrical=False,
+        blank=True,
+        related_name='related_question',
+        help_text='Maximum of 3 related questions')
+    portal_topic = ParentalManyToManyField(
+        PortalTopic,
+        blank=True,
+        help_text='Limit to 1 portal topic if possible')
+    primary_portal_topic = ParentalKey(
+        PortalTopic,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='primary_portal_topic',
+        help_text=(
+            "Use only if assigning more than one portal topic, "
+            "to control which topic is used as a breadcrumb."))
+    portal_category = ParentalManyToManyField(
+        PortalCategory,
+        blank=True)
 
-    content = StreamField([
+    user_feedback = StreamField([
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
 
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
-            FieldRowPanel([FieldPanel('last_edited')])
-        ],
-            heading="Visible time stamp"),
-        FieldPanel('question'),
-        FieldPanel('statement'),
-        FieldPanel('snippet'),
-        FieldPanel('answer'),
-        FieldPanel('search_tags'),
-        FieldPanel('redirect_to'),
+            FieldPanel('last_edited'),
+            FieldPanel('question'),
+            FieldPanel('statement'),
+            FieldPanel('short_answer')],
+            heading="Page content",
+            classname="collapsible"),
+        StreamFieldPanel('answer_content'),
+        MultiFieldPanel([
+            SnippetChooserPanel('related_resource'),
+            AutocompletePanel(
+                'related_questions',
+                page_type='ask_cfpb.AnswerPage',
+                is_single=False)],
+            heading="Related resources",
+            classname="collapsible"),
+        MultiFieldPanel([
+            FieldPanel('portal_topic', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('primary_portal_topic'),
+            FieldPanel(
+                'portal_category', widget=forms.CheckboxSelectMultiple)],
+            heading="Portal tags",
+            classname="collapsible"),
+        MultiFieldPanel([
+            FieldPanel('featured')],
+            heading="Featured answer on Ask landing page",
+            classname="collapsible"),
+        MultiFieldPanel([
+            AutocompletePanel(
+                'redirect_to_page', page_type='ask_cfpb.AnswerPage')],
+            heading="Redirect to another answer",
+            classname="collapsible"),
+        MultiFieldPanel([
+            StreamFieldPanel('user_feedback')],
+            heading="User feedback",
+            classname="collapsible collapsed"),
     ]
 
     sidebar = StreamField([
@@ -618,75 +612,47 @@ class AnswerPage(CFGOVPage):
     sidebar_panels = [StreamFieldPanel('sidebar'), ]
 
     search_fields = Page.search_fields + [
-        index.SearchField('answer'),
-        index.SearchField('snippet')
+        index.SearchField('answer_content'),
+        index.SearchField('short_answer')
     ]
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(sidebar_panels, heading='Sidebar (English only)'),
+        ObjectList(sidebar_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
+    template = 'ask-cfpb/answer-page.html'
+
     objects = CFGOVPageManager()
 
+    def get_sibling_url(self):
+        if self.answer_base:
+            if self.language == 'es':
+                sibling = self.answer_base.english_page
+            else:
+                sibling = self.answer_base.spanish_page
+            if sibling and sibling.live and not sibling.redirect_to_page:
+                return sibling.url
+
     def get_context(self, request, *args, **kwargs):
+        portal_topic = self.primary_portal_topic or self.portal_topic.first()
         context = super(AnswerPage, self).get_context(request)
-        context['answer_id'] = self.answer_base.id
-        context['related_questions'] = self.answer_base.related_questions.all()
-        context['description'] = self.snippet if self.snippet \
-            else Truncator(self.answer).words(40, truncate=' ...')
-        context['audiences'] = [
-            {'text': audience.name,
-             'url': '/ask-cfpb/audience-{}'.format(
-                    slugify(audience.name))}
-            for audience in self.answer_base.audiences.all()]
-        if self.language == 'es':
-            tag_dict = self.Answer.valid_tags(language='es')
-            context['tags_es'] = [tag for tag in self.answer_base.clean_tags_es
-                                  if tag in tag_dict['valid_tags']]
-            context['tweet_text'] = Truncator(self.question).chars(
-                100, truncate=' ...')
-            context['disclaimer'] = get_reusable_text_snippet(
-                SPANISH_DISCLAIMER_SNIPPET_TITLE)
-            context['category'] = self.answer_base.category.first()
-        elif self.language == 'en':
-            # we're not using tags on English pages yet, so cut the overhead
-            # tag_dict = self.Answer.valid_tags()
-            # context['tags'] = [tag for tag in self.answer_base.clean_tags
-            #                    if tag in tag_dict['valid_tags']]
-            context['about_us'] = get_reusable_text_snippet(
-                ABOUT_US_SNIPPET_TITLE)
-            context['disclaimer'] = get_reusable_text_snippet(
-                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
-            context['last_edited'] = (
-                self.last_edited or self.answer_base.last_edited)
-            # breadcrumbs and/or category should reflect
-            # the referrer if it is a consumer tools portal or
-            # ask category page
-            context['category'], context['breadcrumb_items'] = \
-                get_question_referrer_data(
-                    request, self.answer_base.category.all())
-            subcategories = []
-            for subcat in self.answer_base.subcategory.all():
-                if subcat.parent == context['category']:
-                    subcategories.append(subcat)
-                for related in subcat.related_subcategories.all():
-                    if related.parent == context['category']:
-                        subcategories.append(related)
-            context['subcategories'] = set(subcategories)
-
+        context['related_questions'] = self.related_questions.all()
+        context['description'] = (
+            self.short_answer if self.short_answer
+            else Truncator(self.answer_content).words(40, truncate=' ...'))
+        context['last_edited'] = self.last_edited
+        context['portal_page'] = get_portal_or_portal_search_page(
+            portal_topic, language=self.language)
+        context['breadcrumb_items'] = get_ask_breadcrumbs(
+            language=self.language,
+            portal_topic=portal_topic,
+        )
+        context['about_us'] = get_standard_text(self.language, 'about_us')
+        context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
+        context['sibling_url'] = self.get_sibling_url()
         return context
-
-    def get_template(self, request):
-        printable = request.GET.get('print', False)
-        if self.language == 'es':
-            if printable == 'true':
-                return 'ask-cfpb/answer-page-spanish-printable.html'
-
-            return 'ask-cfpb/answer-page-spanish.html'
-
-        return 'ask-cfpb/answer-page.html'
 
     def __str__(self):
         if self.answer_base:
@@ -695,28 +661,178 @@ class AnswerPage(CFGOVPage):
             return self.title
 
     @property
+    def clean_search_tags(self):
+        return [
+            tag.strip()
+            for tag in self.search_tags.split(',')
+        ]
+
+    @property
     def status_string(self):
-        if self.redirect_to:
+        if self.redirect_to_page:
             if not self.live:
-                return _("redirected but not live")
+                return ("redirected but not live")
             else:
-                return _("redirected")
+                return ("redirected")
         else:
             return super(AnswerPage, self).status_string
 
     # Returns an image for the page's meta Open Graph tag
     @property
     def meta_image(self):
-        if self.answer_base.social_sharing_image:
-            return self.answer_base.social_sharing_image
+        if self.social_sharing_image:
+            return self.social_sharing_image
 
-        if not self.answer_base.category.exists():
+        if not self.category.exists():
             return None
 
-        return self.answer_base.category.first().category_image
+        return self.category.first().category_image
 
     # Overrides the default of page.id for comparing against split testing
     # clusters. See: core.feature_flags.in_split_testing_cluster
     @property
     def split_test_id(self):
         return self.answer_base.id
+
+
+class ArticleLink(Orderable, models.Model):
+    text = models.CharField(max_length=255)
+    url = models.CharField(max_length=255)
+
+    article_page = ParentalKey(
+        'ArticlePage',
+        related_name='article_links'
+    )
+
+    panels = [
+        FieldPanel('text'),
+        FieldPanel('url'),
+    ]
+
+
+@python_2_unicode_compatible
+class ArticlePage(CFGOVPage):
+    """
+    General article page type.
+    """
+    category = models.CharField(
+        choices=[
+            ('basics', 'Basics'),
+            ('common_issues', 'Common issues'),
+            ('howto', 'How to'),
+            ('know_your_rights', 'Know your rights'),
+        ],
+        max_length=255,
+    )
+    heading = models.CharField(
+        max_length=255,
+        blank=False,
+    )
+    intro = models.TextField(
+        blank=False
+    )
+    inset_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Heading"
+    )
+    sections = StreamField([
+        ('section', blocks.StructBlock([
+            ('heading', blocks.CharBlock(
+                max_length=255,
+                required=True,
+                label='Section heading'
+            )),
+            ('summary', blocks.TextBlock(
+                required=False,
+                blank=True,
+                label='Section summary'
+            )),
+            ('link_text', blocks.CharBlock(
+                required=False,
+                blank=True,
+                label="Section link text"
+            )),
+            ('url', blocks.CharBlock(
+                required=False,
+                blank=True,
+                label='Section link URL',
+                max_length=255,
+            )),
+            ('subsections', blocks.ListBlock(
+                blocks.StructBlock([
+                    ('heading', blocks.CharBlock(
+                        max_length=255,
+                        required=False,
+                        blank=True,
+                        label='Subsection heading'
+                    )),
+                    ('summary', blocks.TextBlock(
+                        required=False,
+                        blank=True,
+                        label='Subsection summary'
+                    )),
+                    ('link_text', blocks.CharBlock(
+                        required=True,
+                        label='Subsection link text'
+                    )),
+                    ('url', blocks.CharBlock(
+                        required=True,
+                        label='Subsection link URL'
+                    ))
+                ])
+            ))
+        ]))
+    ])
+    content_panels = CFGOVPage.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('category'),
+            FieldPanel('heading'),
+            FieldPanel('intro')],
+            heading="Heading",
+            classname="collapsible"),
+
+        MultiFieldPanel([
+            FieldPanel('inset_heading'),
+            InlinePanel(
+                'article_links',
+                label='Inset link',
+                max_num=2
+            ), ],
+            heading="Inset links",
+            classname="collapsible"),
+
+        StreamFieldPanel('sections'),
+    ]
+
+    sidebar = StreamField([
+        ('call_to_action', molecules.CallToAction()),
+        ('related_links', molecules.RelatedLinks()),
+        ('related_metadata', molecules.RelatedMetadata()),
+        ('email_signup', organisms.EmailSignUp()),
+        ('reusable_text', v1_blocks.ReusableTextChooserBlock(ReusableText)),
+    ], blank=True)
+
+    sidebar_panels = [StreamFieldPanel('sidebar'), ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField('title'),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(sidebar_panels, heading='Sidebar'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+
+    template = 'ask-cfpb/article-page.html'
+
+    objects = CFGOVPageManager()
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(ArticlePage, self).get_context(request)
+        context['about_us'] = get_standard_text(self.language, 'about_us')
+        return context
+
+    def __str__(self):
+        return self.title

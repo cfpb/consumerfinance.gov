@@ -3,13 +3,14 @@ from __future__ import absolute_import, unicode_literals
 import logging
 import re
 from collections import OrderedDict
+from datetime import date
 from functools import partial
 from six.moves import urllib
+from six.moves.urllib.parse import urljoin
 
-from django.core.exceptions import PermissionDenied
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
-from django.http import HttpResponse, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
@@ -24,14 +25,11 @@ from wagtail.wagtailcore.models import PageManager
 
 import requests
 from jinja2 import Markup
+from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
-from regulations3k.blocks import (
-    RegulationsFullWidthText, RegulationsListingFullWidthText
-)
+from regulations3k.blocks import RegulationsListingFullWidthText
 from regulations3k.models import Part, Section, SectionParagraph
-from regulations3k.parser.integer_conversion import LETTER_CODES
-from regulations3k.regdown import regdown
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
@@ -63,10 +61,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     @route(r'^results/')
     def regulation_results_page(self, request):
         all_regs = Part.objects.order_by('part_number')
-        regs = []
-        order = request.GET.get('order', 'relevance')
-        if 'regs' in request.GET and request.GET.get('regs'):
-            regs = request.GET.getlist('regs')
+        regs = validate_regs_list(request)
+        order = validate_order(request)
         search_query = request.GET.get('q', '').strip()
         payload = {
             'search_query': search_query,
@@ -84,7 +80,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         sqs = SearchQuerySet().filter(content=search_query)
         payload.update({
             'all_regs': [{
-                'letter_code': reg.letter_code,
+                'short_name': reg.short_name,
                 'id': reg.part_number,
                 'num_results': sqs.filter(
                     part=reg.part_number).models(SectionParagraph).count(),
@@ -110,11 +106,12 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                     "Query string {} produced a TypeError: {}".format(
                         search_query, e))
                 continue
-            letter_code = LETTER_CODES.get(hit.part)
+
+            short_name = all_regs.get(part_number=hit.part).short_name
             hit_payload = {
                 'id': hit.paragraph_id,
                 'part': hit.part,
-                'reg': 'Regulation {}'.format(letter_code),
+                'reg': short_name,
                 'label': hit.title,
                 'snippet': snippet,
                 'url': "{}{}/{}/#{}".format(
@@ -122,6 +119,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                     hit.section_label, hit.paragraph_id),
             }
             payload['results'].append(hit_payload)
+
         payload.update({'current_count': sqs.count()})
         self.results = payload
         context = self.get_context(request)
@@ -153,6 +151,7 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
         ('hero', molecules.Hero()),
     ], blank=True)
     content = StreamField([
+        ('notification', molecules.Notification()),
         ('full_width_text', RegulationsListingFullWidthText()),
     ], blank=True)
 
@@ -215,7 +214,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
 
     content = StreamField([
         ('info_unit_group', organisms.InfoUnitGroup()),
-        ('full_width_text', RegulationsFullWidthText()),
+        ('full_width_text', organisms.FullWidthText()),
     ], null=True, blank=True)
 
     regulation = models.ForeignKey(
@@ -244,25 +243,50 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    def get_effective_version(self, request, date_str):
+    def can_serve_draft_versions(self, request):
+        perms = request.user.get_all_permissions()
+        if (request.user.is_superuser or
+                getattr(request, 'served_by_wagtail_sharing', False) or
+                'regulations3k.change_section' in perms):
+            return True
+        return False
+
+    def get_versions_query(self, request):
+        versions = self.regulation.versions
+
+        if not self.can_serve_draft_versions(request):
+            versions = versions.filter(draft=False)
+
+        return versions
+
+    def get_effective_version(self, request, date_str=None):
         """ Get the requested effective version if the user has permission """
-        effective_version = self.regulation.versions.get(
-            effective_date=date_str
-        )
+        query_filter = {}
 
-        if effective_version.draft:
-            perms = request.user.get_all_permissions()
+        if date_str is None:
+            query_filter['effective_date__lte'] = date.today()
+        else:
+            query_filter['effective_date'] = date_str
 
-            if (not request.user.is_superuser and
-               'regulations3k.change_section' not in perms):
-                raise PermissionDenied
+        draft_permission = self.can_serve_draft_versions(request)
+        if not draft_permission:
+            query_filter['draft'] = False
+
+        effective_version = self.regulation.versions.filter(
+            **query_filter
+        ).order_by(
+            '-effective_date'
+        ).first()
+
+        if effective_version is None:
+            raise Http404
 
         return effective_version
 
-    def get_section_query(self, effective_version=None):
+    def get_section_query(self, request=None, effective_version=None):
         """Query set for Sections in this regulation's effective version."""
         if effective_version is None:
-            effective_version = self.regulation.effective_version
+            effective_version = self.get_effective_version(request)
         return Section.objects.filter(
             subpart__version=effective_version
         )
@@ -273,14 +297,14 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
         context.update({
             'regulation': self.regulation,
+            'current_version': self.get_effective_version(request),
             'breadcrumb_items': self.get_breadcrumbs(request, *args, **kwargs),
             'search_url': (
                 self.get_parent().url +
                 'search-regulations/results/?regs=' +
                 self.regulation.part_number
             ),
-            'num_versions': self.regulation.versions.filter(
-                draft=False).count(),
+            'num_versions': self.get_versions_query(request).count(),
         })
         return context
 
@@ -300,6 +324,30 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             ]
 
         return crumbs
+
+    def get_urls_for_version(self, effective_version, section=None):
+        base_url = self.get_full_url()
+        versions_url = urljoin(base_url, 'versions') + '/'
+
+        if effective_version.live_version:
+            # This is the current version
+            version_url = base_url
+        else:
+            # It's a past or future version, URLs have the date str
+            date_str = str(effective_version.effective_date)
+            version_url = urljoin(base_url, date_str) + '/'
+            yield version_url
+
+        if section is not None:
+            yield urljoin(version_url, section.label) + '/'
+        else:
+            sections = self.get_section_query(
+                effective_version=effective_version
+            )
+            yield version_url
+            yield versions_url
+            for section in sections.all():
+                yield urljoin(version_url, section.label) + '/'
 
     def render_interp(self, context, raw_contents, **kwargs):
         template = get_template('regulations3k/inline_interps.html')
@@ -325,20 +373,16 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
     def index_route(self, request, date_str=None):
         request.is_preview = getattr(request, 'is_preview', False)
 
-        if date_str is not None:
-            effective_version = self.get_effective_version(request, date_str)
-            section_query = self.get_section_query(
-                effective_version=effective_version
-            )
-        else:
-            effective_version = self.regulation.effective_version
-            section_query = self.get_section_query()
-
+        effective_version = self.get_effective_version(
+            request, date_str=date_str)
+        section_query = self.get_section_query(
+            effective_version=effective_version
+        )
         sections = list(section_query.all())
 
         context = self.get_context(request)
         context.update({
-            'version': effective_version,
+            'requested_version': effective_version,
             'sections': sections,
             'get_secondary_nav_items': partial(
                 get_secondary_nav_items, sections=sections, date_str=date_str
@@ -357,7 +401,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
     @route(r'^versions/(?:(?P<section_label>[0-9A-Za-z-]+)/)?$',
            name="versions")
     def versions_page(self, request, section_label=None):
-        section_query = self.get_section_query()
+        section_query = self.get_section_query(request=request)
         sections = list(section_query.all())
         context = self.get_context(request, sections=sections)
 
@@ -366,9 +410,11 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
                 'effective_date': v.effective_date,
                 'date_str': str(v.effective_date),
                 'sections': self.get_section_query(effective_version=v).all(),
+                'draft': v.draft
             }
-            for v in self.regulation.versions.filter(
-                draft=False).order_by('-effective_date')
+            for v in self.get_versions_query(request).order_by(
+                '-effective_date'
+            )
         ]
 
         context.update({
@@ -391,14 +437,15 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
     def section_page(self, request, date_str=None, section_label=None):
         """ Render a section of the currently effective regulation """
 
-        if date_str is not None:
-            effective_version = self.get_effective_version(request, date_str)
-            section_query = self.get_section_query(
-                effective_version=effective_version
-            )
-        else:
-            effective_version = self.regulation.effective_version
-            section_query = self.get_section_query()
+        effective_version = self.get_effective_version(
+            request, date_str=date_str)
+        section_query = self.get_section_query(
+            effective_version=effective_version
+        )
+
+        next_version = self.get_versions_query(request).filter(
+            effective_date__gt=effective_version.effective_date
+        ).first()
 
         kwargs = {}
         if date_str is not None:
@@ -430,7 +477,8 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         previous_section = get_previous_section(sections, current_index)
 
         context.update({
-            'version': effective_version,
+            'requested_version': effective_version,
+            'next_version': next_version,
             'section': section,
             'content': content,
             'get_secondary_nav_items': partial(
@@ -550,3 +598,23 @@ def validate_page_number(request, paginator):
     except InvalidPage:
         page_number = 1
     return page_number
+
+
+def validate_regs_list(request):
+    """
+    A utility for validating a RegulationsSearchPage request.
+
+    Validates that a list of regulation part numbers is alphanumeric.
+    """
+    if 'regs' in request.GET and request.GET.get('regs'):
+        regs_input_list = request.GET.getlist('regs')
+        return [reg for reg in regs_input_list if reg.isalnum()]
+    else:
+        return []
+
+
+def validate_order(request):
+    order = request.GET.get('order')
+    if order not in ('relevance', 'regulation'):
+        order = 'relevance'
+    return order

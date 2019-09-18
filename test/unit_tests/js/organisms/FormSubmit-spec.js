@@ -17,7 +17,7 @@ const HTML_SNIPPET = `
           action="/subscriptions/new/"
           enctype="application/x-www-form-urlencoded">
         <div class="u-mb15">
-            <div class="m-notification m-notification__default" data-js-hook="state_atomic_init">
+            <div class="m-notification">
                 <div class="m-notification_content">
                     <div class="h4 m-notification_message"></div>
                 </div>
@@ -64,10 +64,7 @@ describe( 'FormSubmit', () => {
     it( 'should return the FormSubmit instance when initialized', () => {
       expect( typeof thisFormSubmit ).toStrictEqual( 'object' );
       expect( signupForm.dataset.jsHook ).toStrictEqual( 'state_atomic_init' );
-    } );
-
-    it( 'should return undefined if already initialized', () => {
-      expect( formSubmit.init() ).toBeUndefined();
+      expect( formSubmit.init() ).toBeInstanceOf( FormSubmit );
     } );
   } );
 } );

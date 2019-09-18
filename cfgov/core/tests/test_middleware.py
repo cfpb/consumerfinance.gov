@@ -4,39 +4,66 @@ from __future__ import unicode_literals
 from django.test import TestCase, override_settings
 
 import mock
+from bs4 import BeautifulSoup
 
-from core.middleware import parse_links, should_parse_links
+from core.middleware import ParseLinksMiddleware, parse_links
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
+@mock.patch('core.middleware.parse_links')
 class TestParseLinksMiddleware(TestCase):
-    @mock.patch('core.middleware.parse_links')
     def test_parse_links_gets_called(self, mock_parse_links):
         """Middleware correctly invokes parse links when rendering webpage"""
         response = self.client.get('/foo/bar')
         mock_parse_links.assert_called_with(response.content, encoding='utf-8')
 
-    @override_settings(PARSE_LINKS_BLACKLIST=['/foo/'])
-    @mock.patch('core.middleware.parse_links')
-    def test_parse_links_does_not_get_called_blacklist(self, mock_parse_links):
-        """Middleware does not invoke parse links when path is in blacklist"""
+    @override_settings(PARSE_LINKS_EXCLUSION_LIST=[r'^/foo/'])
+    def test_parse_links_does_not_get_called_excluded(self, mock_parse_links):
+        """Middleware does not invoke parse links when path is excluded"""
         self.client.get('/foo/bar')
         mock_parse_links.assert_not_called()
 
 
 class TestShouldParseLinks(TestCase):
     def test_should_not_parse_links_if_non_html(self):
-        self.assertFalse(should_parse_links(
+        self.assertFalse(ParseLinksMiddleware.should_parse_links(
             request_path='/foo/bar',
-            content_type='application/json'
+            response_content_type='application/json'
         ))
 
     def test_should_parse_links_if_html(self):
-        self.assertTrue(should_parse_links(
+        self.assertTrue(ParseLinksMiddleware.should_parse_links(
             request_path='/foo/bar',
-            content_type='text/html'
+            response_content_type='text/html'
         ))
+
+    def check_should_parse_links_for_path(self, path, expected):
+        self.assertEqual(
+            ParseLinksMiddleware.should_parse_links(
+                request_path=path,
+                response_content_type='text/html'
+            ),
+            expected
+        )
+
+    def test_should_parse_links_false_for_admin_root(self):
+        self.check_should_parse_links_for_path('/admin/', False)
+
+    def test_should_parse_links_false_for_admin_page(self):
+        self.check_should_parse_links_for_path('/admin/foo/bar/', False)
+
+    def test_should_parse_links_true_for_admin_page_preview(self):
+        self.check_should_parse_links_for_path(
+            '/admin/pages/1234/edit/preview/',
+            True
+        )
+
+    def test_should_parse_links_true_for_admin_page_view_draft(self):
+        self.check_should_parse_links_for_path(
+            '/admin/pages/1234/view_draft/',
+            True
+        )
 
 
 class TestParseLinks(TestCase):
@@ -96,3 +123,47 @@ class TestParseLinks(TestCase):
         encoding = 'gb2312'
         parsed = parse_links(s.encode(encoding), encoding=encoding)
         self.assertEqual(parsed, s)
+
+    def test_external_link_with_attribute(self):
+        s = '<a href="https://somewhere/foo" data-thing="something">Link</a>'
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertIn('cf-icon-svg', output)
+
+    def test_external_link_with_img(self):
+        s = '<a href="https://somewhere/foo"><img src="some.png"></a>'
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertNotIn('cf-icon-svg', output)
+
+    def test_external_link_with_background_img(self):
+        s = ('<a href="https://somewhere/foo"><span>'
+             '<div style="background-image: url(\'some.png\')"></div>'
+             '</span></a>')
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertNotIn('cf-icon-svg', output)
+
+    def test_external_link_with_header(self):
+        s = '<a href="https://somewhere/foo"><h3>Header</h3></a>'
+        output = parse_links(s)
+        self.assertIn('external-site', output)
+        self.assertNotIn('cf-icon-svg', output)
+
+    def test_multiline_external_gov_link(self):
+        s = '''<a class="m-list_link a-link"
+        href="https://usa.gov/">
+        <span>
+        USA
+        .gov</span>
+        </a>
+        '''
+        output = parse_links(s)
+        self.assertIn('cf-icon-svg', output)
+
+    def test_multiple_links(self):
+        s = ('<a href="https://first.com">one</a>'
+             '<a href="https://second.com">two</a>')
+        output = parse_links(s)
+        soup = BeautifulSoup(output, 'html.parser')
+        self.assertEqual(len(soup.find_all('a')), 2)

@@ -25,7 +25,7 @@
 
 {% macro render(options={}) -%}
     {% set video_url = options.video.url | default('/') %}
-    {% set image_url = static('img/cfpb_video_cover_card_1380x776.png') %}
+    {% set image_url = static( 'img/cfpb_video_cover_card_1380x776.png' ) %}
     {% set video_id = options.video.id | default('') %}
 
     {# TODO: Move the advanced Jinja logic into Django. #}
@@ -47,50 +47,75 @@
     {% endif %}
     {% set button_pos   = options.button_pos or 'center' %}
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
-    <div class="video-player
-                video-player__youtube
+    <div class="o-video-player
+                o-video-player__youtube
                 {{ 'o-featured-content-module_visual' if is_flexible == false else '' }}"
          data-id="{{ video_id }}"
          data-src="{{ video_url }}"
          data-width="{{ options.video.width if options.video.width else '' }}"
          data-height="{{ options.video.height if options.video.height else '' }}">
         {{ caller() | safe if caller else '' }}
-        <div class="video-player_video-container
+        <div class="o-video-player_video-container
                     show-on_video-playing
-                    {{ 'video-player_video-container__flexible' if is_flexible else '' }}">
-            <div class="video-player_iframe-container"></div>
-            <div class="video-player_video-actions-container">
-                <div class="video-player_video-actions">
-                    <a class="a-btn video-player_close-btn" href="/">
-                        <span class="a-btn_icon
-                                     a-btn_icon__on-left">
-                            {{ svg_icon('close-round') }}
-                        </span>
-                        close
-                    </a>
+                    {{ 'o-video-player_video-container__flexible' if is_flexible else '' }}">
+            <div class="o-video-player_iframe-container">
+                <iframe class="o-video-player_iframe"
+                        width="100%"
+                        src="{{ video_url }}"
+                        frameborder="0"
+                        allow="autoplay"
+                        allowfullscreen="true"
+                        scrolling="no">
+                </iframe>
+            </div>
+            <div class="o-video-player_video-actions-container">
+                <div class="o-video-player_video-actions">
+                    <button class="a-btn o-video-player_close-btn" href="/">
+                        Close {{ svg_icon('close-round') }}
+                    </button>
                 </div>
-            {% import 'molecules/social-media.html' as social_media with context %}
-            {{ social_media.render( {
-                'is_share_view': true,
-                'linkedin_title': 'Consumer Financial Protection Bureau',
-                'linkedin_text': 'Check out this video from the @CFPB',
-                'twitter_text': 'Check out this video from the @CFPB',
-                'email_title': page.title if page else 'Consumer Financial Protection Bureau'
-            } ) }}
+                {% if not options.video.is_fcm %}
+                    {% import 'molecules/social-media.html' as social_media with context %}
+                    {{ social_media.render( {
+                        'is_share_view': true,
+                        'linkedin_title': 'Consumer Financial Protection Bureau',
+                        'linkedin_text': 'Check out this video from the @CFPB',
+                        'twitter_text': 'Check out this video from the @CFPB',
+                        'email_title': page.title if page else 'Consumer Financial Protection Bureau'
+                    } ) }}
+                {% endif %}
             </div>
         </div>
-        <div class="video-player_image-container
+        <div class="o-video-player_image-container
                     hide-on_video-playing">
-            <a class="video-player_play-btn video-player_play-btn__{{ button_pos }}"
+
+            {#
+                This link is for the default, no-js, state of the video player.
+            #}
+            <a class="o-video-player_play-btn
+                      o-video-player_play-btn__{{ button_pos }}"
                href="{{ video_url }}"
                target="_blank"
                rel="noopener noreferrer">
-                <span class="u-visually-hidden">Play video</span>
+                {{ svg_icon('play') }}
             </a>
-            <img class="video-player_image
+
+            {#
+                This button is for when the video player has loaded.
+            #}
+            <button class="o-video-player_play-btn
+                           o-video-player_play-btn__{{ button_pos }}
+                           u-hidden">
+                {{ svg_icon('play') }}
+                {# TODO: Figure out how to pull video title from API and put it
+                   in hidden element below for screen readers. #}
+                <span class="u-visually-hidden">Play video</span>
+            </button>
+
+            <img class="o-video-player_image
                         {{ image_loaded_class | default }}
                         {{ 'o-featured-content-module_img' if is_flexible == false else '' }}"
-                 alt="Video image"
+                 alt=""
                  src="{{ image_url }}">
         </div>
     </div>

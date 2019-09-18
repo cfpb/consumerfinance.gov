@@ -59,8 +59,8 @@ To finish the installation, source activate.sh in your shell:
 ```
 
 Run that now for your initial setup.
-Any time you run the project you’ll need to run that last line, so
-if you’ll be working with the project consistently,
+Any time you run the project you’ll need to run that last line,
+so if you’ll be working with the project consistently,
 we suggest adding it to your Bash profile by running:
 
 ```bash
@@ -73,7 +73,6 @@ If you need to find this info again later, you can run:
 brew info autoenv
 ```
 
-
 !!! note
     If you use Zsh you’ll need to use
     [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
@@ -81,25 +80,20 @@ brew info autoenv
 
 #### Front-end dependencies
 
-The cfgov-refresh front end currently uses the following frameworks / tools:
+The cfgov-refresh front-end build process currently
+includes the following frameworks / tools:
 
 - [Gulp](https://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Less](http://lesscss.org): CSS pre-processor.
 - [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
   User interface pattern-library produced by the CFPB.
-
-!!! note
-    If you’re new to Capital Framework, we encourage you to
-    [start here](https://cfpb.github.io/capital-framework/getting-started).
-
-1. Install [Node.js](https://nodejs.org) however you’d like.
-   We recommend using [nvm](https://github.com/creationix/nvm), though.
-
-!!! note
-    This project requires Node.js v8.5 or higher, and npm v5.2 or higher.
-2. Install [yarn](https://yarnpkg.com/en/docs/install). We recommend using [Homebrew](https://brew.sh):
-
+- [Node.js](https://nodejs.org). Install however you’d like.
+  We recommend using [nvm](https://github.com/creationix/nvm), though.
+  If your node version is outdated you should receive a console error to upgrade
+  while attempting to build the project.
+- [Yarn](https://yarnpkg.com).
+  We recommend installing using [Homebrew](https://brew.sh):
 
 ```bash
 # Use --ignore-dependencies to use your system installed node version
@@ -157,11 +151,12 @@ Once it's installed, you can configure it to run as a service:
 brew services start postgresql
 ```
 
-Then create the database and associated user:
+Then create the database, associated user, and schema for that user:
 
 ```bash
 dropdb --if-exists cfgov && dropuser --if-exists cfpb
 createuser cfpb && createdb -O cfpb cfgov
+psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'
 ```
 
 If you absolutely need to use SQLite, you'll need to update your `.env` file
@@ -207,7 +202,7 @@ that you may want to perform before continuing.
 Want to know more about what the setup scripts are doing?
 [Read the detailed rundown.](#curious-about-what-the-setup-scripts-are-doing)
 
-**Continue following the [usage instructions](usage).**
+**Continue following the [usage instructions](../running-virtualenv/).**
 
 ## Docker-compose installation
 
@@ -221,8 +216,7 @@ Want to know more about what the setup scripts are doing?
   connected containers (like a web application and its database).
 - **Docker Machine**: In environments where Docker Engine is not available,
   Docker Machine can be used to create and manage Docker hosts on virtual
-  machines. For more information on Docker Machine, see the 'How do I use
-  Docker Machine' section in the [usage guide](usage#usage-docker).
+  machines.
 
 ### 1. Setup your Docker environment
 
@@ -283,7 +277,11 @@ browser, and see a database error.
 
 ### 3. Setup the database
 
-Run `./shell.sh`. This opens a bash shell inside your Python container.
+Open a bash shell inside your Python container.
+
+```bash
+docker-compose exec python2 bash
+```
 
 You can either [load initial data](#load-initial-data-into-database) per the
 instructions below, or load a database dump.
@@ -310,7 +308,7 @@ working at [http://localhost:8000](http://localhost:8000)
 
 ### 4. Next Steps
 
-See the Docker section of the [usage](usage.md) page to continue after that.
+See [Running in Docker](../running-docker/) to continue after that.
 
 ## Optional steps
 
@@ -328,7 +326,7 @@ with a slug of `cfgov`.
 set to 80.
 - If it doesn't already exist, creates a new
 [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
-a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and
+a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
 `DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump
@@ -438,6 +436,10 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    If this is the production environment, it also triggers style and script
    builds for `ondemand` and `nemo`, which aren't part of a standard
    `gulp build`.
+
+!!! note
+    If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
+
 
 ### 2. `backend.sh`
 
