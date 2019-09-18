@@ -15,7 +15,7 @@ const CLASSES = Object.freeze( {
 } );
 
 const actionMap = Object.freeze( {
-  daysPerWeek: updateDaysPerWeekAction,
+  daysPerWeek: updateDaysPerWeekAction
 } );
 
 /**
@@ -23,11 +23,7 @@ const actionMap = Object.freeze( {
  * and the predicate functions that determine the field's state
  */
 const toggleableFields = {
-<<<<<<< HEAD
-  miles: state => state.transportation === 'Drive'
-=======
   daysPerWeek: state => state.transportation === 'Drive' || state.isCostPerDay
->>>>>>> Fills in miles combo view
 };
 
 /**
@@ -109,11 +105,8 @@ function RouteOptionFormView( element, {
   routeIndex,
   detailsView,
   averageCostView,
-<<<<<<< HEAD
-  daysPerWeekView
-=======
+  daysPerWeekView,
   milesView
->>>>>>> Fills in miles combo view
 } ) {
   const _dom = checkDom( element, CLASSES.FORM );
   const _transportationOptionEls = toArray(

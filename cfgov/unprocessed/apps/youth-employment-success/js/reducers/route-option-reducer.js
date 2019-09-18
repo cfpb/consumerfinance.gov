@@ -194,12 +194,13 @@ function routeOptionReducer( state = initialState, action ) {
         {
           daysPerWeek: '',
           actionPlanItems: updateActionPlan(
-            todoListSelector( state, data.routeIndex ),
+            state, 
+            action.data.routeIndex,
             PLAN_TYPES.DAYS,
             false
           )
         }
-      ));
+      ) );
     }
     case actionTypes.CLEAR_MILES: {
       return assign( state, updateRouteData(
@@ -208,7 +209,8 @@ function routeOptionReducer( state = initialState, action ) {
         {
           miles: '',
           actionPlanItems: updateActionPlan(
-            todoListSelector( state, data.routeIndex ),
+            state,
+            action.data.routeIndex,
             PLAN_TYPES.MILES,
             false
           )
@@ -263,12 +265,9 @@ function routeOptionReducer( state = initialState, action ) {
       } ) );
     }
     case actionTypes.UPDATE_MILES_TO_ACTION_PLAN: {
-      const previousPlanItems = todoListSelector(
-        state,
-        action.data.routeIndex
-      );
       const nextPlanItems = updateActionPlan(
-        previousPlanItems,
+        state,
+        action.data.routeIndex,
         PLAN_TYPES.MILES,
         data.value
       );

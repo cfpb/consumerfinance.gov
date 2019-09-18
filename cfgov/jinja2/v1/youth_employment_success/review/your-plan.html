@@ -1,22 +1,22 @@
 {% from 'alert.html' import render as renderAlert with context %}
 
-<div class="block__sub">
+<div class="block block__sub">
   <h2>Your plan to get to work</h2>
   <h3>Your to-do list</h3>
   <ul>
     <li>Ask about bus passes, gas cards, rideshare credits, or other reduced-fare transit cards</li>
   </ul>
-  <div class="block__sub">
+  <div class="block block__sub">
     <p><b>OPTION 1: <span class="js-option-1-type"></span></b></p>
     <ul class="js-option-1-todo"></ul>
   </div>
-  <div class="block__sub">
+  <div class="block block__sub">
     <p><b>OPTION 2: <span class="js-option-2-type"></span></b></p>
     <ul class="js-option-2-todo"></ul>
   </div>
-  <div class="js-option-1 block__sub">
+  <div class="js-option-1 block block__sub">
     <p class="h3">Your first choice is <span class="js-transportation-type"></span></p>
-    <div class="content-l content-l_col-2-3 block__sub">
+    <div class="content-l content-l_col-2-3 block block__sub">
       {{
         renderAlert({
           'background': true,
@@ -31,12 +31,12 @@
     {% endwith %}
     <div class="content_line"></div>
   </div>
-  <div class="js-option-1 block__sub">
+  <div class="js-option-1 block block__sub">
     <p class="h3">Another option you compared: <span class="js-transportation-type"></span></p>
     <p class="u-mb0">
       <small>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</small>
     </p>
-    <div class="content-l content-l_col-2-3 block__sub">
+    <div class="content-l content-l_col-2-3 block block__sub">
       {{
         renderAlert({
           'background': true,

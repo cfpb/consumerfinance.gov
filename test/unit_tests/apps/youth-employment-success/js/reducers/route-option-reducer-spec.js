@@ -296,6 +296,7 @@ describe( 'routeOptionReducer', () => {
     } );
 
     it( 'reduces the .clearDaysPerWeekAction', () => {
+      const routeIndex = 0;
       const route = {
         daysPerWeek: '2',
         actionPlanItems: [ PLAN_TYPES.DAYS_PER_WEEK ]
@@ -313,7 +314,7 @@ describe( 'routeOptionReducer', () => {
 
       state = routeOptionReducer(
         state,
-        clearDaysPerWeekAction( { routeIndex: 0 } )
+        clearDaysPerWeekAction( { routeIndex } )
       );
 
       currRoute = routeSelector(state, routeIndex);
@@ -323,6 +324,7 @@ describe( 'routeOptionReducer', () => {
     });
 
     it( 'reduces the .clearMilesAction', () => {
+      const routeIndex = 0;
       const route = {
         miles: '25',
         actionPlanItems: [ PLAN_TYPES.MILES ]
@@ -340,7 +342,7 @@ describe( 'routeOptionReducer', () => {
 
       state = routeOptionReducer(
         state,
-        clearMilesAction( { routeIndex: 0 } )
+        clearMilesAction( { routeIndex } )
       );
       
       currRoute = routeSelector(state, routeIndex);

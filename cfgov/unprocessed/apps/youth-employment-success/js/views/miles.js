@@ -68,8 +68,8 @@ function milesView( element, { store, routeIndex } ) {
    * @param {object} state The current state of the app.
    */
   function _onStateUpdate( prevState, state ) {
-    const routeState = routeSelector( state.routes, routeIndex );
-    const prevRouteState = routeSelector( prevState.routes, routeIndex );
+    const routeState = routeSelector( state, routeIndex );
+    const prevRouteState = routeSelector( prevState, routeIndex );
 
     if ( routeState.transportation === 'Drive' ) {
       _dom.classList.remove( 'u-hidden' );

@@ -1,9 +1,9 @@
 import { simulateEvent } from '../../../../util/simulate-event';
 import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
 import averageCostView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
+import milesView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
 import {
   updateDaysPerWeekAction,
-  updateMilesAction,
   updateTransportationAction
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import daysPerWeekView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/days-per-week';
@@ -32,18 +32,23 @@ describe( 'routeOptionFormView', () => {
   const detailsRender = jest.fn();
   const costViewInit = jest.fn();
   const daysViewInit = jest.fn();
+  const milesViewInit = jest.fn();
   const detailsView = {
     init: detailsInit,
     render: detailsRender
   };
-  const viewMock = (mock) => () => ( {
+  const viewMock = mock => () => ( {
     init: mock
   } );
-  const costViewMock = viewMock(costViewInit);
+  const costViewMock = viewMock( costViewInit );
   costViewMock.CLASSES = averageCostView.CLASSES;
 
-  const daysPerWeekViewMock = viewMock(daysViewInit);
+  const daysPerWeekViewMock = viewMock( daysViewInit );
   daysPerWeekViewMock.CLASSES = daysPerWeekView.CLASSES;
+
+  const milesViewMock = viewMock( milesViewInit );
+  milesViewMock.CLASSES = milesView.CLASSES;
+
   const mockStore = () => ( {
     dispatch,
     subscribe( fn ) {
@@ -73,7 +78,8 @@ describe( 'routeOptionFormView', () => {
       routeIndex: 0,
       detailsView,
       averageCostView: costViewMock,
-      daysPerWeekView: daysPerWeekViewMock
+      daysPerWeekView: daysPerWeekViewMock,
+      milesView: milesViewMock
     } );
     view.init();
   } );
@@ -83,26 +89,10 @@ describe( 'routeOptionFormView', () => {
     view = null;
   } );
 
-  it('initializes its children', () => {
-    expect(costViewInit).toHaveBeenCalled();
-    expect(detailsInit).toHaveBeenCalled();
-    expect(daysViewInit).toHaveBeenCalled();
-  });
-
-  it( 'dispatches an action to update `miles` input', () => {
-    const milesEl = document.querySelector( 'input[name="miles"]' );
-    const value = '12';
-
-    milesEl.value = value;
-
-    simulateEvent( 'input', milesEl );
-
-    const mock = store.dispatch.mock;
-
-    expect( mock.calls.length ).toBe( 1 );
-    expect( mock.calls[0][0] ).toEqual( updateMilesAction( {
-      routeIndex: 0,
-      value } ) );
+  it( 'initializes its children', () => {
+    expect( costViewInit ).toHaveBeenCalled();
+    expect( detailsInit ).toHaveBeenCalled();
+    expect( daysViewInit ).toHaveBeenCalled();
   } );
 
   it( 'dispatches an action to update `daysPerWeek` input', () => {
@@ -132,9 +122,9 @@ describe( 'routeOptionFormView', () => {
 
   describe( 'conditional fields', () => {
     it( 'hides conditional fields on init', () => {
-      const milesEl = document.querySelector( 'input[name="miles"]' );
+      const daysPerWeekEl = document.querySelector( 'input[name="daysPerWeek"]' );
 
-      expect( milesEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
+      expect( daysPerWeekEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
     } );
   } );
 } );
