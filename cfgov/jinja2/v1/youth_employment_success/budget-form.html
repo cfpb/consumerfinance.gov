@@ -1,3 +1,5 @@
+{% from 'line-item.html' import render as render_line_item with context %}
+
 <section class="block o-yes-budget">
   <h2>Now let’s compare your different options for getting to work</h2>
   <p>
@@ -10,11 +12,11 @@
     <div class="content-l content-l__large-gutters block block__sub">
       <div class="content-l_col content-l_col-1">
         <div class="content-l">
-          <label for="yes-money-spent" class="a-label h4 content-l_col-1-3">
+          <label for="yes-money-earned" class="a-label h4 content-l_col-1-3">
             <b>How much money do you receive each month?</b> 
           </label>
           <div class="content-l_col content-l_col-2-3">  
-              <input type="text" id="yes-money-earned" name="money-earned" class="a-text-input o-yes-budget-earned" disabled>
+            <input type="text" id="yes-money-earned" name="money-earned" class="a-text-input o-yes-budget-earned" disabled>
           </div>
         </div>
         <div>
@@ -65,17 +67,18 @@
   <div class="content-l block block__sub">
     <div class="content-l_col content-l_col-2-3">
       <div class="content_line-bold"></div>
-      <div class="content-l block block__sub-micro">
-        <h4 class="content-l_col content-l_col-3-4">
-          <b>Total left at the end of the month:</b>
-        </h4>
-        <div class="content-l_col content-l_col-1-4 u-align-right">
-          <span>$</span>
-          <span class="o-yes-budget-remaining"></span>
+      <div class="block block__sub-micro">
+        {{
+          render_line_item({
+            'label': 'Total left at the end of the month:',
+            'target': 'o-yes-budget-remaining'
+          })
+        }}
+        <div class="content-l">
+          <p class="content-l_col content-l_col-1 u-mt10">
+            Estimating your monthly budget is a good place to start, but if you want a clearer picture of where your money goes, track your spending for a month using the Spending Tracker.
+          </p>
         </div>
-        <p class="content-l_col content-l_col-1 u-mt10">
-          Estimating your monthly budget is a good place to start, but if you want a clearer picture of where your money goes, track your spending for a month using the Spending Tracker.
-        </p>
       </div>
     </div>
   </div>

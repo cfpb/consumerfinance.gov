@@ -30,7 +30,7 @@
     Figuring out your long-term goal may help you figure out the best way to get to work now while you’re working towards your goal.
 </p>
 <form class="block u-mt35 js-yes-goals">
-  <div class="block__sub">
+  <div class="block block__sub">
     {{
       textarea.render({
         'fieldClass': 'js-long-term-goal',
@@ -42,7 +42,7 @@
       })
     }}
   </div>
-  <div class="block__sub">
+  <div class="block block__sub">
     {{
       textarea.render({
         'fieldClass': 'js-goal-importance',
@@ -54,7 +54,7 @@
       })
     }}
   </div>
-  <div class="block__sub">
+  <div class="block block__sub">
     <span class="h3 u-mb0">
       <b>When do you hope to reach your goal?</b>
     </span>
@@ -63,7 +63,7 @@
     </p>
     <div class="u-w70pct">
     {% for label in labels | batch(2) %}
-      <div class="block__sub-micro">
+      <div class="block block__sub-micro">
         {{
           radio_button.render({
             'class': 'content-l content-l_col-1-2 m-form-field__lg-target',
@@ -87,7 +87,7 @@
     {% endfor %}
     </div>
   </div>
-  <div class="block__sub">
+  <div class="block block__sub">
     {{
       textarea.render({
         'fieldClass': 'js-goal-steps',

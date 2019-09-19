@@ -11,6 +11,58 @@
   text-align: right;
 }
 
+.a-radio {
+  .respond-to-max(@bp-sm-min, {
+    &.a-text-input__full {
+      width: 100%;
+    }
+  });
+}
+
+[class^="u-w"] {
+  .respond-to-max(@bp-sm-min, {
+    width: 100%;
+  });
+}
+
+.m-yes-transit-time {
+  .respond-to-max(@bp-sm-min, {
+    .u-w50pct {
+      width: 25%;
+    }
+  })
+}
+
+.m-yes-line-item {
+  .respond-to-max(@bp-sm-min, {
+    .line-item {
+      width: 50%;
+    }
+
+    .line-item__content-l {
+      float: left;
+    }
+
+    .line-item__content-r {
+      float: right;
+      margin-top: 0;
+    }
+  });
+}
+
+.m-form-field__radio {
+  .respond-to-max(@bp-sm-min, {
+    margin-bottom: 1rem;
+    width: 100%;
+  });
+}
+
+.js-transit-hours {
+  .respond-to-max(@bp-sm-min, {
+    float: left;
+  });
+}
+
 /**
 * Name this something better
 */
@@ -44,8 +96,7 @@
 }
 
 .yes-transit-tool {
-  .a-text-input {
-    &:extend(.a-text-input);
+  input.a-text-input {
     text-align: right;
   }
 
@@ -65,7 +116,8 @@
   }
 
   .m-notification {
-    border: 0px;
+    border: 0;
+    padding: 0;
   }
 }
 
@@ -87,10 +139,4 @@ textarea {
   border-color: black !important;
   border-style: solid !important;
   border-width: 1px !important;
-}
-
-@media only all and (max-width: 37.5em) {
-  .u-align-right {
-    text-align: initial;
-  }
 }
