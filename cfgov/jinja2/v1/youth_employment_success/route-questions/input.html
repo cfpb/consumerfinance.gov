@@ -8,22 +8,24 @@
 
   ==========================================================================
 
-  Description: Builds form text field.
+  Description:   Builds form text field.
 
-  label:       Name of the field.
+  label:         Name of the field.
 
-  type:        Type of field. Will default to text, but can change to other
-               types to take advantage of HTML5 validation.
-               Possible fields: text, tel, email, url, number, date.
+  type:          Type of field. Will default to text, but can change to other
+                 types to take advantage of HTML5 validation.
+                 Possible fields: text, tel, email, url, number, date.
 
-  size:        The size of the field. Defaults to 1 (full-width).
-               Possible options: 1, 1-2, 1-4
+  size:          The size of the field. Defaults to 1 (full-width).
+                 Possible options: 1, 1-2, 1-4
 
-  required:    Whether the field is required. Defaults to false.
+  required:      Whether the field is required. Defaults to false.
 
-  disabled:    Whether the field is disabled. Defaults to false.
+  disabled:      Whether the field is disabled. Defaults to false.
 
-  data_js_name:   Friendly name for JS to hook into
+  data_js_name:  Friendly name for JS to hook into.
+
+  class:         Optional CSS classes to apply to the element
 
   ========================================================================== #}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
@@ -43,7 +45,8 @@
    {%- if value.helperText -%}
        <p id="{{ ht_id }}"><small>{{ value.helperText | safe }}</small></p>
    {%- endif -%}
-   <input id="{{ id }}"
+   <input class="a-text-input {{ value.class }}"
+          id="{{ id }}"
           name="{{ id }}"
           type="{{ value.type }}"
           value="{{ value.value }}"

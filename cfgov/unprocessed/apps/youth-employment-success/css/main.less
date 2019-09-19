@@ -7,6 +7,24 @@
   display: none !important;
 }
 
+.u-align-right {
+  text-align: right;
+}
+
+/**
+* Name this something better
+*/
+.m-right-justify {
+  &:extend(.h4);
+  position: relative;
+
+  .content-r {
+    left: 100%;
+    position: absolute;
+    top: calc(100% - (@size-iv + @base-line-height-px));
+  }
+}
+
 /**
 * Enchancement for the .block__sub class found at:
 * https://github.com/cfpb/capital-framework/blob/0b15295c00ba1972676b6f4c86f3b40dcf45289d/packages/cf-layout/src/cf-layout.less#L466
@@ -21,7 +39,16 @@
   height: 1px;
 }
 
-.yes-transportation-tool {
+.a-yes-inline-radio {
+  border-width: 0;
+}
+
+.yes-transit-tool {
+  .a-text-input {
+    &:extend(.a-text-input);
+    text-align: right;
+  }
+
   .m-info-unit_image {
     height: 125px;
     width: 125px;
@@ -35,6 +62,10 @@
     & + input {
       margin-top: unit( 15px / @base-font-size-px, em );
     }
+  }
+
+  .m-notification {
+    border: 0px;
   }
 }
 
@@ -56,4 +87,10 @@ textarea {
   border-color: black !important;
   border-style: solid !important;
   border-width: 1px !important;
+}
+
+@media only all and (max-width: 37.5em) {
+  .u-align-right {
+    text-align: initial;
+  }
 }

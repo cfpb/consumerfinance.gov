@@ -1,33 +1,31 @@
 {% from 'atoms/checkbox.html' import render as render_checkbox with context %}
 {% from 'input.html' import render as render_input with context %}
 
-<div class="content-l content-l_col-2-3 block__sub-micro m-yes-transit-time">
+<div class="content-l content-l_col-3-4 block block__sub-micro m-yes-transit-time">
   <p class="a-label__heading">
     How long does it take to get to your destination?
   </p>
-  {{
-    render_input({
-      'data_js_name': "transitTimeHours",
-      'label': 'Hours',
-      'size': '1-4',
-      'type': 'text',
-      'value': '',
-      'disabled': true
-    })
-  }}
-  {{
-    render_input({
-      'data_js_name': "transitTimeMinutes",
-      'label': 'Minutes',
-      'size': '1-4',
-      'type': 'text',
-      'value': '',
-      'disabled': true
-    })
-  }}
+  <div class="content-l">
+    <div class="content-l_col content-l_col-1-2">
+      <div class="content-l">
+        <div class="content-l_col content-l_col-1-2">
+          <label for="yes-transit-time-hours" class="a-label a-label__heading u-mb0">
+            <b>Hours</b> 
+          </label>
+          <input type="text" id="yes-transit-time-hours" name="transitTimeHours" class="a-text-input u-mt0 u-w50pct" disabled>
+        </div>
+        <div class="content-l_col content-l_col-1-2">
+          <label for="yes-transit-time-minutes" class="a-label a-label__heading u-mb0">
+            <b>Minutes</b> 
+          </label>
+          <input type="text" id="yes-transit-time-minutes" name="transitTimeMinutes" class="a-text-input u-mt0 u-w50pct" disabled>
+        </div>
+      </div>
+    </div>
+  </div>
   {{ 
     render_checkbox({
-      'class': 'u-js-only block__sub-micro',
+      'class': 'u-js-only block block__sub-micro',
       'label': "I'm not sure, add this to my to-do list to look up later ",
       'disabled': true,
       'name': "timeToActionPlan"
