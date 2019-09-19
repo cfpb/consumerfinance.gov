@@ -4,7 +4,7 @@ from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
-from unipath import Path
+from unipath import DIRS, Path
 
 from cfgov.util import admin_emails
 
@@ -89,6 +89,7 @@ INSTALLED_APPS = (
     'wellbeing',
     'search',
     'paying_for_college',
+    'prepaid_agreements',
     'regulations3k',
     'treemodeladmin',
     'housing_counselor',
@@ -121,7 +122,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
@@ -189,6 +189,7 @@ TEMPLATES = [
 
                 'core.jinja2tags.filters',
                 'agreements.jinja2tags.agreements',
+                'prepaid_agreements.jinja2tags.prepaid_agreements',
                 'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.datetimes_extension',
                 'v1.jinja2tags.fragment_cache_extension',
@@ -240,9 +241,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/static/'
 
-# Absolute path to the directory static files should be collected to.
-STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
-
 MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
@@ -264,6 +262,8 @@ STATICFILES_DIRS = [
     PROJECT_ROOT.child('templates', 'wagtailadmin')
 ]
 
+# Also include any directories under static.in.
+STATICFILES_DIRS += REPOSITORY_ROOT.child('static.in').listdir(filter=DIRS)
 
 ALLOWED_HOSTS = ['*']
 
@@ -568,6 +568,7 @@ CSP_IMG_SRC = (
     'api.mapbox.com',
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
+    'blob:',
     'data:',
     'www.facebook.com',
     'www.gravatar.com',
@@ -707,6 +708,15 @@ FLAGS = {
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
     'BETA_EXTERNAL_TESTING': [],
+
+    # Used to hide new youth employment success pages prior to public launch.
+    'YOUTH_EMPLOYMENT_SUCCESS':  [],
+
+    # Release of prepaid agreements database search
+    'PREPAID_AGREEMENTS_SEARCH': [],
+
+    # Used to hide CCDB landing page updates prior to public launch.
+    'CCDB_SEPT_2019_UPDATES':  [],
 }
 
 

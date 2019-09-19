@@ -233,6 +233,11 @@ urlpatterns = [
     url(r'^credit-cards/agreements/',
         include('agreements.urls')),
 
+    flagged_url('PREPAID_AGREEMENTS_SEARCH',
+        r'^data-research/prepaid-accounts/search-agreements/',
+        include('prepaid_agreements.urls', namespace='prepaid_agreements'
+    )),
+
     url(r'^consumer-tools/retirement/', include_if_app_enabled(
         'retirement_api',
         'retirement_api.urls',
@@ -305,6 +310,13 @@ urlpatterns = [
             RedirectView.as_view(
                 url='/consumer-tools/money-as-you-grow/%(path)s',
                 permanent=True)),
+    url(r'^practitioner-resources/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
+        FlaggedTemplateView.as_view(
+            flag_name='YOUTH_EMPLOYMENT_SUCCESS',
+            template_name='youth_employment_success/index.html'
+        ),
+        name='youth_employment_success'
+    ),
 
     # retirement redirects
     url(r'^retirement/(?P<path>.*)$', RedirectView.as_view(

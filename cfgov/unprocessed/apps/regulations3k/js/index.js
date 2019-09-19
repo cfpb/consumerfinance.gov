@@ -1,8 +1,8 @@
+import * as utils from './regs3k-utils';
+import { handleContentClick, handleNavClick } from './analytics';
 import Expandable from 'cf-expandables/src/Expandable';
 import { bindEvent } from '../../../js/modules/util/dom-events';
 import { queryOne as find } from '../../../js/modules/util/dom-traverse';
-import { handleContentClick, handleNavClick } from './analytics';
-import * as utils from './regs3k-utils';
 
 const navHeader = find( '.o-regs3k-navigation_header' );
 const navItems = find( '.o-regs3k-sections' );

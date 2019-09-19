@@ -4,8 +4,8 @@
    ========================================================================== */
 
 // Required Modules
-import ERROR_MESSAGES from '../../config/error-messages-config';
 import * as typeCheckers from '../../modules/util/type-checkers';
+import ERROR_MESSAGES from '../../config/error-messages-config';
 
 /* TODO: Update all the validators to return both passed and failed states
    instead of returning an empty object if the value passed */

@@ -19,13 +19,11 @@ function Footer( element ) {
   const _dom = checkDom( element, BASE_CLASS );
 
   /**
-   * @returns {Footer|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Footer} An instance.
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+      return this;
     }
 
     footerButton.init();

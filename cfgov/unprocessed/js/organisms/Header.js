@@ -26,13 +26,11 @@ function Header( element ) {
   /**
    * @param {HTMLNode} overlay
    *   Overlay to show/hide when mobile mega menu is shown.
-   * @returns {Header|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Header} An instance.
    */
   function init( overlay ) {
     if ( !setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+      return this;
     }
 
     // Semi-opaque overlay that shows over the content when the menu flies out.

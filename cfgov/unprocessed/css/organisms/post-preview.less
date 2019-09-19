@@ -98,7 +98,7 @@
             "image"
             "content";
     } );
-    
+
     + .o-post-preview {
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     }
@@ -164,6 +164,12 @@
     &_content {
         grid-area: content;
         padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+
+        > .calendar-icon {
+            float: left;
+            margin-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+            margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+        }
     }
 
     &_description {
@@ -172,7 +178,7 @@
 
     &_image-container {
         grid-area: image;
-        
+
         .respond-to-max( @bp-sm-max, {
             margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
         } );
@@ -191,6 +197,13 @@
         .u-link__colors( @black, @pacific-80 );
     }
 
+    &_subtitle {
+        .heading-6();
+
+        // margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+        clear: both;
+    }
+
     &_byline-group,
     .tags {
         display: block;
@@ -200,12 +213,6 @@
 
 .o-post-preview_image-container {
     position: relative;
-
-    .calendar-icon {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-    }
 }
 
 /* topdoc

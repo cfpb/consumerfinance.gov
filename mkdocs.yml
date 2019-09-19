@@ -9,6 +9,7 @@ nav:
     - Running in a Virtual Environment: running-virtualenv.md
     - Running in Docker: running-docker.md
     - Debugging and Monitoring: debugging-monitoring.md
+    - Artifacts and Deployment: deployment.md
 - Pages and Components:
     - Atomic Structure and Design: atomic-structure.md
     - Creating and Editing Components: editing-components.md

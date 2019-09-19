@@ -3,7 +3,7 @@
 {% import 'form_block.html' as form_block with context %}
 {% import 'macros/util/format/datetime.html' as dt %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
-{% import 'ask/ask-search.html' as ask_search_bar with context %}
+{% import 'organisms/ask-search.html' as ask_search with context %}
 
 {% block title %}
     {{ page.question | striptags }}
@@ -52,10 +52,10 @@
             <div data-qa-hook="expandable"
                  data-read-more="true"
                  class="o-expandable
-                        o-expandable__read-more">
+                        o-expandable__read-more-mobile">
                 <div class="o-expandable_content" id="answer-content">
                     <div class="answer-text">
-                        {% include_block page.answer_content %}   
+                        {% include_block page.answer_content %}
                     </div>
                 </div>
                 <button class="o-expandable_header o-expandable_target"
@@ -83,7 +83,7 @@
                 </div>
             </div>
         {% endif %}
-        
+
         <div class="block related-questions">
             <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
             {% if related_questions %}
@@ -101,7 +101,7 @@
                     <li class="m-list_item m-list_item__last">
                         <a href="{{ portal_page.url }}" class="m-list_link">
                             <b>
-                                {{ _('Learn more about') }} 
+                                {{ _('Learn more about') }}
                                 {{ portal_page.portal_topic.title(page.language) | lower }}
                             </b>
                         </a>
@@ -111,7 +111,7 @@
             </div>
             {% endif %}
             <div class="block block__sub">
-                {{ ask_search_bar.render( language=page.language ) }}
+                {{ ask_search.render( language=page.language ) }}
             </div>
         </div>
         {# This brings in the feedback module #}
@@ -139,9 +139,9 @@
                 Ver página en español
             {% endif %}
             </span>
-        </a> 
+        </a>
     {% endif %}
-    
+
     {% if about_us %}
         <div class="block
                 {% if not sibling_url %}
@@ -151,7 +151,7 @@
         {{ about_us.text | richtext }}
         </div>
     {% endif %}
-   
+
     {% if page.sidebar_panels %}
         {{ streamfield_sidefoot.render(page.sidebar) }}
     {% endif %}

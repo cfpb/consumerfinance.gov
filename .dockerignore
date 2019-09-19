@@ -1,11 +1,27 @@
-develop-apps
-.tox
-collectstatic
-*.sql
-.github
-gulp
-node_modules
-docs
-.vendor
-html
-.git
+# Ignore all
+**
+
+# ...except these directories
+!cfgov
+!config
+!gulp
+!requirements
+!static.in
+!scripts
+
+# ...and these files
+!.npmrc
+!.yarnrc
+!babel.config.js
+!docker-entrypoint.sh
+!frontend.sh
+!gulpfile.js
+!initial-data.sh
+!jest.config.js
+!npm-packages-offline-cache
+!package.json
+!refresh-data.sh
+!yarn.lock
+
+# ...but DO ignore these others
+cfgov/static_built

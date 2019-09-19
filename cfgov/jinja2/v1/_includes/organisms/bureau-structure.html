@@ -237,6 +237,13 @@
                 Position is not part of the Bureau director’s office
             </span>
         </li>
+        <li class="m-list_item">
+            <span class="o-bureau-structure_legend_symbol">****</span>
+            <span class="o-bureau-structure_legend_definition">
+                Position has direct reporting responsibilities to
+                the Policy Associate Director for External Affairs
+            </span>
+        </li>
 </section>
 {%- endmacro %}
 
@@ -260,6 +267,7 @@
               block__border-top
               o-bureau-structure_footer">
     <div class="content-l content-l__main">
+    {% if download_image_url %}
         <div class="content-l_col content-l_col-1-2"
              data-qa-hook="org-chart-download-info">
             <h2 class="h3">Download a copy</h2>
@@ -267,12 +275,15 @@
                 Download a printable, PDF copy of this organizational chart. This version
                 is expanded to show all offices.
             </p>
-            <b>
-                <i>
-                    Currently under revision
-                </i>
-            </b>
+            <a class="a-btn"
+               href="{{ download_image_url }}">
+                <span class="a-btn_icon a-btn_icon__on-left">
+                    {{ svg_icon('save') }}
+                </span>
+                Download PDF
+             </a>
         </div>
+    {% endif %}
         <div class="content-l_col content-l_col-1-2">
             <h2 class="h3">Request speaking info</h2>
             <p>

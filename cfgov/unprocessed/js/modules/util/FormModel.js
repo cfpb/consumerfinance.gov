@@ -35,10 +35,16 @@ function FormModel( form ) {
     return this;
   }
 
+  /**
+   * @returns {Map} A map of fields and field options.
+   */
   function getModel() {
     return _fieldCache;
   }
 
+  /**
+   * Cache the field options.
+   */
   function _cacheFields() {
     const rawElements = _form.elements;
     const validateableElements = [];

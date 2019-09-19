@@ -1,0 +1,38 @@
+{% macro render(result) %}
+{% set default_text = 'No information provided' %}
+<article class="results_item">
+    <h4 class="h3">
+      <a href="detail/{{result.id}}">{{ result.name }}</a>
+    </h4>
+    <div class="content-l">
+        <div class="content-l_col content-l_col-1-2">
+            <dl>
+                <dt>Issuer name</dt>
+                <dd>{{ result.issuer_name }}</dd>
+                <dt>Prepaid product type</dt>
+                <dd>{{ result.prepaid_type if result.prepaid_type else default_text }}</dd>
+                <dt>Program manager</dt>
+                <dd>{{ result.program_manager if result.program_manager else default_text }}</dd>
+                <dt>Other relevant parties</dt>
+                <dd>{{ result.other_relevant_parties | truncate(75) | replace('\n', '; ') if result.other_relevant_parties else default_text }}</dd>
+                <dt>Current status</dt>
+                <dd>{{ result.status if result.status else default_text }}</dd>
+            </dl>
+        </div>
+        <div class="content-l_col content-l_col-1-2">
+            <h5 class="h4 u-mb5">Download most recent agreement files</h5>
+            {% set latest_agreement = result.most_recent_agreement %}
+            <p class="u-break-word">
+                <a href="{{ latest_agreement.compressed_files_url }}">
+                    {{ latest_agreement.filename }}
+                </a>
+            </p>
+            <div class="block block__sub">
+                <h5 class="h4 u-mb5">View all agreement files</h5>
+            <p><a href="detail/{{result.id}}">View all agreements for {{ result.name }}</a></p>
+            </div>
+        </div>
+    </div>
+
+</article>
+{% endmacro %}

@@ -48,6 +48,9 @@ function setup() {
   this.showResults();
 }
 
+/**
+ * Show the results of a search.
+ */
 function showResults() {
   // hide search-tool and about
   DT.addClass( '#search-tool', 'u-hidden' );

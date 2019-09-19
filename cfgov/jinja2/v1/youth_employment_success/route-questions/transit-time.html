@@ -1,0 +1,36 @@
+{% from 'atoms/checkbox.html' import render as render_checkbox with context %}
+{% from 'input.html' import render as render_input with context %}
+
+<div class="content-l content-l_col-2-3 block__sub-micro m-yes-transit-time">
+  <p class="a-label__heading">
+    How long does it take to get to your destination?
+  </p>
+  {{
+    render_input({
+      'data_js_name': "transitTimeHours",
+      'label': 'Hours',
+      'size': '1-4',
+      'type': 'text',
+      'value': '',
+      'disabled': true
+    })
+  }}
+  {{
+    render_input({
+      'data_js_name': "transitTimeMinutes",
+      'label': 'Minutes',
+      'size': '1-4',
+      'type': 'text',
+      'value': '',
+      'disabled': true
+    })
+  }}
+  {{ 
+    render_checkbox({
+      'class': 'u-js-only block__sub-micro',
+      'label': "I'm not sure, add this to my to-do list to look up later ",
+      'disabled': true,
+      'name': "timeToActionPlan"
+     })
+  }}
+</div>
