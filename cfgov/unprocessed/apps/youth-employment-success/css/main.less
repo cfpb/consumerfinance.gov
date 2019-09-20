@@ -11,9 +11,16 @@
   text-align: right;
 }
 
-.a-radio {
+.m-form-field__radio, .m-form-field__checkbox {
   .respond-to-max(@bp-sm-min, {
-    &.a-text-input__full {
+    &:first-child {
+      margin-top: 1rem;
+    }
+
+    .a-label {
+      background-color: #e7e8e9;
+      box-sizing: border-box;
+      padding: 15px;
       width: 100%;
     }
   });
