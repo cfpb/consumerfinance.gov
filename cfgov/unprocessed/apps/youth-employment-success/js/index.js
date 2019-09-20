@@ -62,7 +62,3 @@ routeOptionToggleView(
 
 expandables[0].element.querySelector( '.o-expandable_target' ).click();
 expandables[1].element.classList.add( 'u-hidden' );
-
-window.onbeforeunload = () => {
-  budgetForm.destroy();
-};
