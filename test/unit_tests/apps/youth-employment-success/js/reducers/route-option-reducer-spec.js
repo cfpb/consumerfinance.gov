@@ -213,7 +213,7 @@ describe( 'routeOptionReducer', () => {
       expect( actionPlanItems.length ).toBe( 1 );
       expect( actionPlanItems[0] ).toBeDefined();
       expect( actionPlanItems[0] ).toBe( PLAN_TYPES.DAYS_PER_WEEK );
-    });
+    } );
 
     it( 'reduces the .updateMilesToActionPlan action', () => {
       const state = routeOptionReducer(
@@ -306,22 +306,22 @@ describe( 'routeOptionReducer', () => {
         addRouteOptionAction( createRoute( route ) )
       );
 
-      let currRoute = routeSelector(state, routeIndex);
+      let currRoute = routeSelector( state, routeIndex );
 
       expect( currRoute.daysPerWeek ).toBe( route.daysPerWeek );
       expect( currRoute.actionPlanItems ).toBe( route.actionPlanItems );
-      expect(currRoute.actionPlanItems[0]).toBeDefined();
+      expect( currRoute.actionPlanItems[0] ).toBeDefined();
 
       state = routeOptionReducer(
         state,
         clearDaysPerWeekAction( { routeIndex } )
       );
 
-      currRoute = routeSelector(state, routeIndex);
+      currRoute = routeSelector( state, routeIndex );
 
       expect( currRoute.daysPerWeek ).toBe( '' );
       expect( currRoute.actionPlanItems.length ).toBe( 0 );
-    });
+    } );
 
     it( 'reduces the .clearMilesAction', () => {
       const routeIndex = 0;
@@ -334,7 +334,7 @@ describe( 'routeOptionReducer', () => {
         addRouteOptionAction( route )
       );
 
-      let currRoute = routeSelector(state, routeIndex);
+      let currRoute = routeSelector( state, routeIndex );
 
       expect( currRoute.miles ).toBe( route.miles );
       expect( currRoute.actionPlanItems ).toBe( route.actionPlanItems );
@@ -344,9 +344,9 @@ describe( 'routeOptionReducer', () => {
         state,
         clearMilesAction( { routeIndex } )
       );
-      
-      currRoute = routeSelector(state, routeIndex);
-      
+
+      currRoute = routeSelector( state, routeIndex );
+
       expect( currRoute.miles ).toBe( '' );
       expect( currRoute.actionPlanItems.length ).toBe( 0 );
     } );

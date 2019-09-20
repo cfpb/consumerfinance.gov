@@ -7,7 +7,7 @@ const defaultProps = {
 const NODE_MISSING_ERROR = 'InputView expects to be initialized with an input node matching the supplied `type` prop';
 
 /**
- * 
+ *
  * @param {HTMLElement} element The element being tested for input or textarea node status
  * @returns {Boolean} Whether or not the node is an input or textarea node
  */

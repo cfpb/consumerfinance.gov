@@ -1,5 +1,5 @@
-{% from "goals/goal.html" import renderTextarea with context %}
-{% from 'atoms/radio-button.html' import render as renderRadio with context %}
+{% import "goals/goal.html" as textarea with context %}
+{% import 'atoms/radio-button.html' as radio_button with context %}
 {% set labels = ['3 to 6 months', '6 to 9 months', '9 months to 1 year', '1 year or more'] %}
 
 <h1 class="h1">Planning how you’ll get to work</h1>
@@ -31,7 +31,7 @@
 <form class="block u-mt35 js-yes-goals">
   <div class="block__sub">
     {{
-      renderTextarea ({
+      textarea.render({
         'fieldClass': 'js-long-term-goal',
         'helperText': 'For example, saving up for an annual bus pass in the next few months or saving up to buy a car in the next year.',
         'label': 'What’s your long-term goal?',
@@ -43,7 +43,7 @@
   </div>
   <div class="block__sub">
     {{
-      renderTextarea ({
+      textarea.render({
         'fieldClass': 'js-goal-importance',
         'helperText': 'This goal could help you save money, in the case of an annual bus pass, or maybe it’s a more reliable option, such as having your own car instead of relying on rides.',
         'label': "Why is this goal important to you?",
@@ -64,7 +64,7 @@
     {% for label in labels | batch(2) %}
       <div class="block__sub-micro">
         {{
-          renderRadio({
+          radio_button.render({
             'class': 'content-l content-l_col-1-2 m-form-field__lg-target',
             'name':  "goalTimeline",
             'label': label[0],
@@ -74,7 +74,7 @@
   
         {% if label[1] %}
           {{
-            renderRadio({
+            radio_button.render({
               'class': 'content-l_col-1-2 m-form-field__lg-target',
               'name': "goalTimeline",
               'label': label[1],
@@ -88,7 +88,7 @@
   </div>
   <div class="block__sub">
     {{
-      renderTextarea ({
+      textarea.render({
         'fieldClass': 'js-goal-steps',
         'helperText': 'Now work backwards — what are some steps you can take to achieve your goal by this time? Make sure your steps are realistic and specific. For example, my first step is “Over the next six months, I’ll take the bus instead of using a rideshare in order to save money. I am trying to save $400 during this time to put towards a car down payment.”',
         'label': "What are some steps you could take to reach your goal?",

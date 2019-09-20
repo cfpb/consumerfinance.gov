@@ -22,6 +22,17 @@ const GOALS_TO_ACTIONS = {
   goalSteps:  updateGoalStepsAction
 };
 
+/**
+ * GoalsView
+ * @class
+ *
+ * @classdesc View managing form controls in the prelimiary goals section
+ *
+ * @param {HTMLNode} element The root DOM element for this view
+ * @param {Object} props Additional properties to be supplied to the view
+ * @params {Object} props.store The app state store
+ * @returns {Object} The view's public methods
+ */
 function goalsView( element, { store } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
 
