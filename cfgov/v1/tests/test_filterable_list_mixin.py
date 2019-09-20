@@ -10,7 +10,7 @@ class TestFilterableListMixin(TestCase):
     def setUp(self):
         self.mixin = FilterableListMixin()
         self.factory = RequestFactory()
-    
+
     # FilterableListMixin.filterable_per_page_limit tests
     def test_per_page_limit_returns_integer(self):
         self.assertIsInstance(
@@ -47,6 +47,7 @@ class TestFilterableListMixin(TestCase):
 
         self.assertFalse(MockPageInDefaultSite().filterable_pages().exists())
 
+    # FilterableListMixin.set_do_not_index tests
     def test_do_not_index_is_false_by_default(self):
         assert self.mixin.do_not_index == False
 
