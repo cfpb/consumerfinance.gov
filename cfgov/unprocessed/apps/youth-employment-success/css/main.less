@@ -3,12 +3,51 @@
 /** 
 * This gets overwritten by media queries, so we need to make it important.
 */
-.u-hidden {
+.u-hidden, .u-hide-on-mobile {
   display: none !important;
 }
 
+.u-hide-on-mobile {
+  .respond-to-min(@bp-sm-min, {
+    display: inline-block !important;
+  });
+}
+
+/**
+* This class 3 two issues:
+* 1). it forces any element to be displayed as a block, which breaks layouts for inline elements
+ * 2). It doesn't hide the element on desktop. This is odd because I would assume all elements
+ * are visible by default on all browser sizes, unless specified.
+ * 3). Many elements are meant to be displayed as inline-block(s) for column layouts,
+ * and this solution breaks those as well.
+**/
+.u-show-on-mobile {
+  .respond-to-min(@bp-sm-min, {
+    display: none !important;
+  });
+
+  display: initial !important;
+}
+
+
 .u-align-right {
   text-align: right;
+}
+
+.budget-spent-group-mobile {
+  .respond-to-max(@bp-sm-min, {
+    display: flex;
+    flex-direction: column;
+
+    .budget-spent-group-mobile-first {
+      order: 1;
+    }
+
+    .budget-spent-group-mobile-second {
+      margin-top: .5rem;
+      order: 2;
+    }
+  });
 }
 
 .m-form-field__radio, .m-form-field__checkbox {
