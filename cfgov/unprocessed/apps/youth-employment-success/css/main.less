@@ -9,7 +9,9 @@
 
 .u-hide-on-mobile {
   .respond-to-min(@bp-sm-min, {
-    display: inline-block !important;
+    &.content-l_col {
+      display: inline-block !important;
+    }
   });
 }
 
@@ -34,16 +36,16 @@
   text-align: right;
 }
 
-.budget-spent-group-mobile {
+.u-mobile-reorder {
   .respond-to-max(@bp-sm-min, {
     display: flex;
     flex-direction: column;
 
-    .budget-spent-group-mobile-first {
+    .u-mobile-reorder__first {
       order: 1;
     }
 
-    .budget-spent-group-mobile-second {
+    .u-mobile-reorder__second {
       margin-top: .5rem;
       order: 2;
     }
@@ -68,6 +70,13 @@
 [class^="u-w"] {
   .respond-to-max(@bp-sm-min, {
     width: 100%;
+  });
+}
+
+// The original class provides a pretty huge gap, particularly on mobile, so tame it a bit 
+.content-l_col+.content-l_col {
+  .respond-to-max(@bp-sm-min, {
+    margin-top: 1em;
   });
 }
 
