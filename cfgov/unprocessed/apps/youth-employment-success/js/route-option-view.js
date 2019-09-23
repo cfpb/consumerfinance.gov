@@ -1,9 +1,7 @@
 import { checkDom, setInitFlag } from '../../../js/modules/util/atomic-helpers';
 import {
   routeSelector,
-  updateAverageCostAction,
   updateDaysPerWeekAction,
-  updateMilesAction,
   updateTransportationAction
 } from './reducers/route-option-reducer';
 import inputView from './input-view';
@@ -17,9 +15,7 @@ const CLASSES = Object.freeze( {
 } );
 
 const actionMap = Object.freeze( {
-  miles: updateMilesAction,
-  daysPerWeek: updateDaysPerWeekAction,
-  averageCost: updateAverageCostAction
+  daysPerWeek: updateDaysPerWeekAction
 } );
 
 /**
@@ -27,7 +23,7 @@ const actionMap = Object.freeze( {
  * and the predicate functions that determine the field's state
  */
 const toggleableFields = {
-  miles: state => state.transportation === 'Drive'
+  daysPerWeek: state => state.transportation === 'Drive' || state.isCostPerDay
 };
 
 /**
@@ -109,7 +105,8 @@ function RouteOptionFormView( element, {
   routeIndex,
   detailsView,
   averageCostView,
-  daysPerWeekView
+  daysPerWeekView,
+  milesView
 } ) {
   const _dom = checkDom( element, CLASSES.FORM );
   const _transportationOptionEls = toArray(
@@ -202,6 +199,10 @@ function RouteOptionFormView( element, {
           _dom.querySelector( `.${ daysPerWeekView.CLASSES.CONTAINER }` ),
           { store, routeIndex }
         ).init();
+
+        milesView( _dom.querySelector( `.${ milesView.CLASSES.CONTAINER }` ), {
+          store, routeIndex
+        } ).init();
 
         detailsView.init();
 

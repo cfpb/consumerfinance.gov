@@ -37,5 +37,7 @@
   {% include "route-questions/miles.html" %}
   {% include "route-questions/days-per-week.html" %}
   {% include "route-questions/transit-time.html" %}
-  {% include "route-details.html" %}
+  {% with show_todos=true %}
+    {% include "route-details.html" %}
+  {% endwith %}
 </form>

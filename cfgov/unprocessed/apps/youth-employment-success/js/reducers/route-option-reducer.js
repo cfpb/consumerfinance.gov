@@ -9,6 +9,7 @@ const actionTypes = Object.freeze( {
   ADD_ROUTE_OPTION: 'ADD_ROUTE_OPTION',
   CLEAR_AVERAGE_COST: 'CLEAR_AVERAGE_COST',
   CLEAR_DAYS_PER_WEEK: 'CLEAR_DAYS_PER_WEEK',
+  CLEAR_MILES: 'CLEAR_MILES',
   UPDATE_TRANSPORTATION: 'UPDATE_TRANSPORTATION',
   UPDATE_MILES: 'UPDATE_MILES',
   UPDATE_AVERAGE_COST: 'UPDATE_AVERAGE_COST',
@@ -16,6 +17,7 @@ const actionTypes = Object.freeze( {
   UPDATE_DAYS_PER_WEEK: 'UPDATE_DAYS_PER_WEEK',
   UPDATE_DAYS_TO_ACTION_PLAN: 'UPDATE_DAYS_TO_ACTION_PLAN',
   UPDATE_COST_TO_ACTION_PLAN: 'UPDATE_COST_TO_ACTION_PLAN',
+  UPDATE_MILES_TO_ACTION_PLAN: 'UPDATE_MILES_TO_ACTION_PLAN',
   UPDATE_TIME_TO_ACTION_PLAN: 'UPDATE_TIME_TO_ACTION_PLAN',
   UPDATE_TRANSIT_TIME_HOURS: 'UPDATE_TRANSIT_TIME_HOURS',
   UPDATE_TRANSIT_TIME_MINUTES: 'UPDATE_TRANSIT_TIME_MINUTES'
@@ -29,6 +31,9 @@ const clearAverageCostAction = actionCreator(
 );
 const clearDaysPerWeekAction = actionCreator(
   actionTypes.CLEAR_DAYS_PER_WEEK
+);
+const clearMilesAction = actionCreator(
+  actionTypes.CLEAR_MILES
 );
 const updateTransportationAction = actionCreator(
   actionTypes.UPDATE_TRANSPORTATION
@@ -50,6 +55,9 @@ const updateDaysToActionPlan = actionCreator(
 );
 const updateTimeToActionPlan = actionCreator(
   actionTypes.UPDATE_TIME_TO_ACTION_PLAN
+);
+const updateMilesToActionPlan = actionCreator(
+  actionTypes.UPDATE_MILES_TO_ACTION_PLAN
 );
 const updateTransitTimeHoursAction = actionCreator(
   actionTypes.UPDATE_TRANSIT_TIME_HOURS
@@ -82,6 +90,17 @@ function todoListSelector( state, index ) {
   const route = routeSelector( state, index );
 
   return route.actionPlanItems;
+}
+
+/**
+ * Predicate function to determine if a to-do list item is present in the
+ * user's todo list of action items
+ * @param {array} todoList The list of the user's current todos.
+ * @param {string} todoType The type of plan item to test for.
+ * @returns {Boolean} Whether or not the plan item is in the user's action plan.
+ */
+function hasTodo( todoList, todoType ) {
+  return todoList.indexOf( todoType ) !== -1;
 }
 
 /**
@@ -175,9 +194,24 @@ function routeOptionReducer( state = initialState, action ) {
         {
           daysPerWeek: '',
           actionPlanItems: updateActionPlan(
-            state,
+            state, 
             action.data.routeIndex,
             PLAN_TYPES.DAYS,
+            false
+          )
+        }
+      ) );
+    }
+    case actionTypes.CLEAR_MILES: {
+      return assign( state, updateRouteData(
+        state.routes,
+        data.routeIndex,
+        {
+          miles: '',
+          actionPlanItems: updateActionPlan(
+            state,
+            action.data.routeIndex,
+            PLAN_TYPES.MILES,
             false
           )
         }
@@ -230,6 +264,18 @@ function routeOptionReducer( state = initialState, action ) {
         actionPlanItems: nextPlanItems
       } ) );
     }
+    case actionTypes.UPDATE_MILES_TO_ACTION_PLAN: {
+      const nextPlanItems = updateActionPlan(
+        state,
+        action.data.routeIndex,
+        PLAN_TYPES.MILES,
+        data.value
+      );
+
+      return assign( state, updateRouteData( state.routes, data.routeIndex, {
+        actionPlanItems: nextPlanItems
+      } ) );
+    }
     case actionTypes.UPDATE_TIME_TO_ACTION_PLAN: {
       const nextPlanItems = updateActionPlan(
         state,
@@ -267,13 +313,17 @@ export {
   clearAverageCostAction,
   clearDaysPerWeekAction,
   initialState,
+  clearMilesAction,
   routeSelector,
+  todoListSelector,
+  hasTodo,
   updateTransportationAction,
   updateMilesAction,
   updateDaysPerWeekAction,
   updateAverageCostAction,
   updateCostToActionPlan,
   updateDaysToActionPlan,
+  updateMilesToActionPlan,
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction,
