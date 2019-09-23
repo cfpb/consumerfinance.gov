@@ -104,7 +104,7 @@ describe( 'DaysPerWeekView', () => {
         }
       };
 
-      store.subscriber()( { routes: { routes: [ {} ]} }, state );
+      store.subscriber()( { routes: { routes: [ {} ]}}, state );
 
       expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
     } );
@@ -146,7 +146,7 @@ describe( 'DaysPerWeekView', () => {
 
         expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
 
-        subscriberFn( { routes: { routes: [ {} ]} }, {
+        subscriberFn( { routes: { routes: [ {} ]}}, {
           routes: {
             routes: [ {
               transportation: 'Drive'
