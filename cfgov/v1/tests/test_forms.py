@@ -11,16 +11,6 @@ class TestFilterableListForm(TestCase):
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
     @mock.patch('taggit.models.Tag.objects')
-    def test_set_topics_filters_tags_on_pageids(self, mock_tag_objects, mock_init):
-        mock_init.return_value = None
-        page_ids = [1, 2, 3, 4, 5]
-        form = FilterableListForm()
-        form.fields = {'topics': mock.Mock()}
-        form.set_topics(page_ids=page_ids)
-        mock_tag_objects.filter.assert_called_with(v1_cfgovtaggedpages_items__content_object__id__in=page_ids)
-
-    @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('taggit.models.Tag.objects')
     def test_set_authors_filters_tags_on_pageids(self, mock_tag_objects, mock_init):
         mock_init.return_value = None
         page_ids = [1, 2, 3, 4, 5]

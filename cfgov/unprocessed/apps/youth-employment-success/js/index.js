@@ -4,6 +4,8 @@ import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
 import averageCostView from './views/average-cost';
 import daysPerWeekView from './views/days-per-week';
+import milesView from './views/miles';
+import goalsView from './views/goals';
 import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
 import routeDetailsView from './views/route-details';
@@ -20,6 +22,11 @@ const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
 const OPTION_TOGGLE_CLASSES = routeOptionToggleView.CLASSES;
 const DETAILS_CLASSES = routeDetailsView.CLASSES;
+const GOALS_CLASSES = goalsView.CLASSES;
+
+const goalsViewEl = document.querySelector( ` .${ GOALS_CLASSES.CONTAINER }` );
+const goalsFormView = goalsView( goalsViewEl, { store } );
+goalsFormView.init();
 
 const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
 const budgetForm = budgetFormView( budgetFormEl, { store } );
@@ -42,7 +49,8 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
     routeIndex: index,
     detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) ),
     averageCostView,
-    daysPerWeekView
+    daysPerWeekView,
+    milesView
   } );
 } );
 
@@ -60,7 +68,3 @@ routeOptionToggleView(
 
 expandables[0].element.querySelector( '.o-expandable_target' ).click();
 expandables[1].element.classList.add( 'u-hidden' );
-
-window.onbeforeunload = () => {
-  budgetForm.destroy();
-};

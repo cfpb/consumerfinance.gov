@@ -93,7 +93,7 @@ class AnswerPagePreviewCase(TestCase):
             hostname='preview.localhost',
             port=8000)
 
-    @mock.patch('ask_cfpb.views.ServeView.serve_latest_revision')
+    @mock.patch('ask_cfpb.views.ServeView.serve')
     def test_preview_page(self, mock_serve):
         from ask_cfpb.views import view_answer
         test_request = HttpRequest()

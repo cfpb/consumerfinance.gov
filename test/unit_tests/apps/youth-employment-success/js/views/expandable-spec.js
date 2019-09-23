@@ -19,7 +19,7 @@ describe( 'expandableView', () => {
   let view;
 
   it( 'throws an error when initialized without an expandable', () => {
-    expect( () => expandableView( document.body ) ).toThrow(TypeError);
+    expect( () => expandableView( document.body ) ).toThrow( TypeError );
   } );
 
   describe( 'proper instantiation', () => {

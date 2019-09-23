@@ -7,7 +7,7 @@ import {
   updateIsMonthlyCostAction
 } from '../reducers/route-option-reducer';
 import { toArray } from '../util';
-import inputView from '../input-view';
+import inputView from './input';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-average-cost',
@@ -55,9 +55,9 @@ function averageCostView( element, { store, routeIndex } ) {
   /**
    * Dispatch to the store the estimated cost the user anticipates
    * for their selected transportation option
-   * @param {object} inputData The data returned from the InputView's event handler function
-   * @param {object} inputData.event The emitted DOM event
-   * @param {string} inputData.name The name of the field the event was emitted from
+   * @param {object} updateObject The data returned from the InputView's event handler function
+   * @param {object} updateObject.event The emitted DOM event
+   * @param {string} updateObject.name The name of the field the event was emitted from
    */
   function _handleAverageCostUpdate( { event } ) {
     store.dispatch( updateAverageCostAction( {
@@ -70,9 +70,9 @@ function averageCostView( element, { store, routeIndex } ) {
    * Dispatch to the store whether or not the user has indicated they
    * are unsure about the average cost of their selected transportation
    * option
-   * @param {object} inputData The data returned from the InputView's event handler function
-   * @param {object} inputData.event The emitted DOM event
-   * @param {string} inputData.name The name of the field the event was emitted from
+   * @param {object} updateObject The data returned from the InputView's event handler function
+   * @param {object} updateObject.event The emitted DOM event
+   * @param {string} updateObject.name The name of the field the event was emitted from
    */
   function _handleNotSureUpdate( { event } ) {
     store.dispatch( updateCostToActionPlan( {

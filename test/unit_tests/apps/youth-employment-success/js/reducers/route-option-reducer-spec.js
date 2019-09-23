@@ -3,6 +3,8 @@ import routeOptionReducer, {
   addRouteOptionAction,
   clearAverageCostAction,
   clearDaysPerWeekAction,
+  clearMilesAction,
+  hasTodo,
   initialState,
   routeSelector,
   updateAverageCostAction,
@@ -11,6 +13,7 @@ import routeOptionReducer, {
   updateDaysToActionPlan,
   updateIsMonthlyCostAction,
   updateMilesAction,
+  updateMilesToActionPlan,
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction,
@@ -45,6 +48,16 @@ describe( 'routeOptionReducer', () => {
     expect( routeSelector( appState.routes, 0 ) ).toEqual( initialRoutes.routes[0] );
     expect( routeSelector( appState.routes, 1 ) ).toStrictEqual( {} );
 
+  } );
+
+  it( 'exposes a helper to determine if a given plan type if in a route action plan', () => {
+    const initialRoutes = routeOptionReducer( UNDEFINED, addRouteOptionAction( createRoute( {
+      actionPlanItems: [ PLAN_TYPES.MILES ]
+    } ) ) );
+    const route = initialRoutes.routes[0];
+
+    expect( hasTodo( route.actionPlanItems, PLAN_TYPES.MILES ) ).toBe( true );
+    expect( hasTodo( route.actionPlanItems, PLAN_TYPES.AVERAGE_COST ) ).toBe( false );
   } );
 
   describe( 'updating a specific route', () => {
@@ -202,6 +215,21 @@ describe( 'routeOptionReducer', () => {
       expect( actionPlanItems[0] ).toBe( PLAN_TYPES.DAYS_PER_WEEK );
     } );
 
+    it( 'reduces the .updateMilesToActionPlan action', () => {
+      const state = routeOptionReducer(
+        initial,
+        updateMilesToActionPlan( {
+          routeIndex: 0,
+          value: true } )
+      );
+
+      const { actionPlanItems } = state.routes[0];
+
+      expect( actionPlanItems.length ).toBe( 1 );
+      expect( actionPlanItems[0] ).toBeDefined();
+      expect( actionPlanItems[0] ).toBe( PLAN_TYPES.MILES );
+    } );
+
     it( 'reduces the .updateIsMonthlyCostAction', () => {
       expect( initial.routes[0].isMonthlyCost ).toBe( null );
 
@@ -255,6 +283,7 @@ describe( 'routeOptionReducer', () => {
       expect( state.routes[0].averageCost ).toBe( route.averageCost );
       expect( state.routes[0].isMonthlyCost ).toBe( route.isMonthlyCost );
       expect( state.routes[0].actionPlanItems ).toBe( route.actionPlanItems );
+      expect( state.routes[0].actionPlanItems[0] ).toBeDefined();
 
       state = routeOptionReducer(
         state,
@@ -267,6 +296,7 @@ describe( 'routeOptionReducer', () => {
     } );
 
     it( 'reduces the .clearDaysPerWeekAction', () => {
+      const routeIndex = 0;
       const route = {
         daysPerWeek: '2',
         actionPlanItems: [ PLAN_TYPES.DAYS_PER_WEEK ]
@@ -276,16 +306,49 @@ describe( 'routeOptionReducer', () => {
         addRouteOptionAction( createRoute( route ) )
       );
 
-      expect( state.routes[0].daysPerWeek ).toBe( route.daysPerWeek );
-      expect( state.routes[0].actionPlanItems ).toBe( route.actionPlanItems );
+      let currRoute = routeSelector( state, routeIndex );
+
+      expect( currRoute.daysPerWeek ).toBe( route.daysPerWeek );
+      expect( currRoute.actionPlanItems ).toBe( route.actionPlanItems );
+      expect( currRoute.actionPlanItems[0] ).toBeDefined();
 
       state = routeOptionReducer(
         state,
-        clearDaysPerWeekAction( { routeIndex: 0 } )
+        clearDaysPerWeekAction( { routeIndex } )
       );
 
-      expect( state.routes[0].daysPerWeek ).toBe( '' );
-      expect( state.routes[0].actionPlanItems.length ).toBe( 0 );
+      currRoute = routeSelector( state, routeIndex );
+
+      expect( currRoute.daysPerWeek ).toBe( '' );
+      expect( currRoute.actionPlanItems.length ).toBe( 0 );
+    } );
+
+    it( 'reduces the .clearMilesAction', () => {
+      const routeIndex = 0;
+      const route = {
+        miles: '25',
+        actionPlanItems: [ PLAN_TYPES.MILES ]
+      };
+      let state = routeOptionReducer(
+        UNDEFINED,
+        addRouteOptionAction( route )
+      );
+
+      let currRoute = routeSelector( state, routeIndex );
+
+      expect( currRoute.miles ).toBe( route.miles );
+      expect( currRoute.actionPlanItems ).toBe( route.actionPlanItems );
+      expect( currRoute.actionPlanItems[0] ).toBeDefined();
+
+      state = routeOptionReducer(
+        state,
+        clearMilesAction( { routeIndex } )
+      );
+
+      currRoute = routeSelector( state, routeIndex );
+
+      expect( currRoute.miles ).toBe( '' );
+      expect( currRoute.actionPlanItems.length ).toBe( 0 );
     } );
   } );
 } );
