@@ -82,12 +82,14 @@ describe( 'milesView', () => {
   describe( 'on state update', () => {
     it( 'removes u-hidden class when transportation mode is Drive', () => {
       const state = {
-        routes: [ {
-          transportation: 'Drive'
-        } ]
+        routes: {
+          routes: [ {
+            transportation: 'Drive'
+          } ]
+        }
       };
 
-      store.subscriber()( { routes: [ {} ]}, state );
+      store.subscriber()( { routes: { routes: [ {} ]} }, state );
 
       expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
     } );
@@ -96,14 +98,18 @@ describe( 'milesView', () => {
       const miles = '12';
       const checked = true;
       const prevState = {
-        routes: [ {
-          miles: miles
-        } ]
+        routes: {
+            routes: [ {
+            miles: miles
+          } ]
+        }
       };
       const state = {
-        routes: [ {
-          transportation: 'Walk'
-        } ]
+        routes: {
+            routes: [ {
+            transportation: 'Walk'
+          } ]
+        }
       };
 
       it( 'clears the form inputs', () => {
@@ -123,10 +129,12 @@ describe( 'milesView', () => {
         const subscriberFn = store.subscriber();
         subscriberFn( prevState, state );
 
-        subscriberFn( { routes: [ {} ]}, {
-          routes: [ {
-            transportation: 'Drive'
-          } ]
+        subscriberFn( { routes: { routes: [ {} ]} }, {
+          routes: {
+            routes: [ {
+              transportation: 'Drive'
+            } ]
+          }
         } );
 
         expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
@@ -149,9 +157,11 @@ describe( 'milesView', () => {
       it( 'dispatches the correct action when not sure is selected and transportation method is not drive', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( {
-          routes: [ {
-            actionPlanItems: [ PLAN_TYPES.MILES ]
-          } ]
+          routes: {
+            routes: [ {
+              actionPlanItems: [ PLAN_TYPES.MILES ]
+            } ]
+          }
         }, state );
 
         expect( mock.calls.length ).toBe( 1 );

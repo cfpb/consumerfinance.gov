@@ -97,12 +97,14 @@ describe( 'DaysPerWeekView', () => {
   describe( 'on state update', () => {
     it( 'removes u-hidden class when transportation mode is drive', () => {
       const state = {
-        routes: [ {
-          transportation: 'Drive'
-        } ]
+        routes: {
+          routes: [ {
+            transportation: 'Drive'
+          } ]
+        }
       };
 
-      store.subscriber()( { routes: [ {} ]}, state );
+      store.subscriber()( { routes: { routes: [ {} ]} }, state );
 
       expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
     } );
@@ -111,14 +113,18 @@ describe( 'DaysPerWeekView', () => {
       const days = '2';
       const checked = 'checked';
       const prevState = {
-        routes: [ {
-          daysPerWeek: days
-        } ]
+        routes: {
+          routes: [ {
+            daysPerWeek: days
+          } ]
+        }
       };
       const state = {
-        routes: [ {
-          transportation: 'Walk'
-        } ]
+        routes: {
+          routes: [ {
+            transportation: 'Walk'
+          } ]
+        }
       };
 
       it( 'clears the form inputs', () => {
@@ -138,14 +144,14 @@ describe( 'DaysPerWeekView', () => {
         const subscriberFn = store.subscriber();
         subscriberFn( prevState, state );
 
-        const classes = dom.classList.toString();
+        expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
 
-        expect( classes.match( /u\-hidden/g ).length ).toBe( 1 );
-
-        subscriberFn( { routes: [ {} ]}, {
-          routes: [ {
-            transportation: 'Drive'
-          } ]
+        subscriberFn( { routes: { routes: [ {} ]} }, {
+          routes: {
+            routes: [ {
+              transportation: 'Drive'
+            } ]
+          }
         } );
 
         expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
@@ -153,7 +159,6 @@ describe( 'DaysPerWeekView', () => {
         subscriberFn( prevState, state );
 
         expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
-        expect( dom.classList.toString().match( /u\-hidden/g ).length ).toBe( 1 );
       } );
 
       it( 'dispatches the correct action when daysPerWeek is filled in and transportation method is not drive', () => {

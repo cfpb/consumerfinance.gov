@@ -93,21 +93,9 @@ describe( 'routeOptionFormView', () => {
     expect( costViewInit ).toHaveBeenCalled();
     expect( detailsInit ).toHaveBeenCalled();
     expect( daysViewInit ).toHaveBeenCalled();
+    expect( milesViewInit ).toHaveBeenCalled();
   } );
 
-  it( 'dispatches an action to update `daysPerWeek` input', () => {
-    const daysPerWeekEl = document.querySelector( 'input[name="daysPerWeek"]' );
-    const value = '4';
-
-    daysPerWeekEl.value = value;
-
-    simulateEvent( 'input', daysPerWeekEl );
-
-    const mock = store.dispatch.mock;
-
-    expect( mock.calls.length ).toBe( 1 );
-    expect( mock.calls[0][0] ).toEqual( updateDaysPerWeekAction( { routeIndex: 0, value } ) );
-  } );
 
   it( 'dispatches an action to update `transportation` with checkbox selection', () => {
     const radioEl = document.querySelectorAll( 'input[name="transpo"]' )[0];
@@ -118,13 +106,5 @@ describe( 'routeOptionFormView', () => {
 
     expect( mock.calls.length ).toBe( 1 );
     expect( mock.calls[0][0] ).toEqual( updateTransportationAction( { routeIndex: 0, value: radioEl.value } ) );
-  } );
-
-  describe( 'conditional fields', () => {
-    it( 'hides conditional fields on init', () => {
-      const daysPerWeekEl = document.querySelector( 'input[name="daysPerWeek"]' );
-
-      expect( daysPerWeekEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
-    } );
   } );
 } );
