@@ -865,9 +865,6 @@ class FilterableList(BaseExpandable):
             required=False
         )),
     ])
-    # TODO: Delete this field, add migration to remove.
-    topics = blocks.BooleanBlock(default=True, required=False,
-                                 label='Filter Topics')
     topic_filtering = blocks.ChoiceBlock(
         choices=[
             ('no_filter', "Don't filter topics"),
