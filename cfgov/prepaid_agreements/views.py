@@ -10,12 +10,6 @@ from prepaid_agreements.models import PrepaidProduct
 from v1.models.snippets import ReusableText
 
 
-DISCLAIMER_TEXT = ReusableText.objects.filter(
-    title='Prepaid agreements database disclaimer').first()
-SUPPORT_TEXT = ReusableText.objects.filter(
-    title='Prepaid agreements support and inquiries').first()
-
-
 def validate_page_number(request, paginator):
     """
     A utility for parsing a pagination request,
@@ -90,6 +84,16 @@ def filter_products(filters, products):
     return products
 
 
+def get_disclaimer_text():
+    return ReusableText.objects.filter(
+        title='Prepaid agreements database disclaimer').first()
+
+
+def get_support_text():
+    return ReusableText.objects.filter(
+        title='Prepaid agreements support and inquiries').first()
+
+
 def index(request):
     params = dict(request.GET.iterlists())
     available_filters = {}
@@ -136,8 +140,8 @@ def index(request):
         'active_filters': available_filters,
         'valid_filters': valid_filters,
         'search_field': search_field,
-        'disclaimer_text': DISCLAIMER_TEXT,
-        'support_text': SUPPORT_TEXT
+        'disclaimer_text': get_disclaimer_text(),
+        'support_text': get_support_text()
     })
 
 
@@ -161,6 +165,6 @@ def detail(request, product_id):
     return render(request, 'prepaid_agreements/detail.html', {
         'product': get_object_or_404(PrepaidProduct, pk=product_id),
         'search_page_url': get_detail_page_breadcrumb(request),
-        'disclaimer_text': DISCLAIMER_TEXT,
-        'support_text': SUPPORT_TEXT
+        'disclaimer_text': get_disclaimer_text(),
+        'support_text': get_support_text()
     })
