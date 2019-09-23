@@ -25,7 +25,7 @@
   ========================================================================== #}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
 
-{% macro renderTextarea(value) -%}
+{% macro render(value) -%}
 
 {%- set id = get_unique_id('textarea_', '_') ~ slugify( value.label ) -%}
 {%- set ht_id = get_unique_id('textarea_ht_', '_') ~ slugify( value.label ) -%}
