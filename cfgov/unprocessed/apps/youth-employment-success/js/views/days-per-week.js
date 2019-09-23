@@ -5,7 +5,7 @@ import {
   updateDaysPerWeekAction,
   updateDaysToActionPlan
 } from '../reducers/route-option-reducer';
-import inputView from '../input-view';
+import inputView from './input';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-days-per-week'

@@ -6,7 +6,7 @@ import {
   updateMilesAction,
   updateMilesToActionPlan
 } from '../reducers/route-option-reducer';
-import inputView from '../input-view';
+import inputView from './input';
 import { PLAN_TYPES } from '../data/todo-items';
 
 const CLASSES = Object.freeze( {

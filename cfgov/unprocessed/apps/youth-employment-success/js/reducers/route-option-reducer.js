@@ -194,7 +194,7 @@ function routeOptionReducer( state = initialState, action ) {
         {
           daysPerWeek: '',
           actionPlanItems: updateActionPlan(
-            state, 
+            state,
             action.data.routeIndex,
             PLAN_TYPES.DAYS,
             false

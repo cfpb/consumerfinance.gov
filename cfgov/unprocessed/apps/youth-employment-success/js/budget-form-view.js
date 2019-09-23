@@ -3,7 +3,7 @@ import {
   updateEarnedAction,
   updateSpentAction
 } from './reducers/budget-reducer';
-import inputView from './input-view';
+import inputView from './views/input';
 import money from './money';
 
 const CLASSES = Object.freeze( {
