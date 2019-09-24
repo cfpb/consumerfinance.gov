@@ -234,4 +234,4 @@ There are a number of options to the command:
    to auto-fix some errors, where ESLint has support to do so.
  - `--path`: Add this flag to specify a file to lint,
    rather than all files. Path is relative to the project root,
-   such as `gulp lint --path=cfgov/unprocessed/js/modules/Analytics.js`.
+   such as `gulp lint --path=unprocessed/js/modules/Analytics.js`.

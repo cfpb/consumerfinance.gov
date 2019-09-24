@@ -5,7 +5,7 @@ Users enter a U.S. ZIP code, and the tool returns a list of the ten housing coun
 The page also displays a map of the results using Mapbox.
 
 When the user enters a ZIP code in the page's search box, the [Django view](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/housing_counselor/views.py#L84) fetches a JSON file of the results from our Amazon S3 bucket.
-The results are inserted into the [page template](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/housing_counselor/jinja2/housing_counselor/index.html) and the [Mapbox map](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/apps/find-a-housing-counselor/js/common.js).
+The results are inserted into the [page template](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/housing_counselor/jinja2/housing_counselor/index.html) and the [Mapbox map](https://github.com/cfpb/cfgov-refresh/blob/master/unprocessed/apps/find-a-housing-counselor/js/common.js).
 The page also contains a link to a PDF version of the results, which is also stored in S3.
 The files are publicly accessible, so the tool can run on localhost or in a container without any change in behavior.
 

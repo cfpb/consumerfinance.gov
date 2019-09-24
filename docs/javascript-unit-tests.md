@@ -45,7 +45,7 @@ To run a single test file, use the `--specs` flag to specify a file path:
 gulp test:unit --specs=js/organisms/Footer-spec.js
 ```
 
-The above command tests the code at `cfgov/unprocessed/js/organisms/Footer.js`.
+The above command tests the code at `unprocessed/js/organisms/Footer.js`.
 
 
 ### Run a directory of unit tests
@@ -132,7 +132,7 @@ then we will make it pass, following the principles of TDD.
 1. Copy the sample module file to a new location by running this command:
 
     ```bash
-    cp docs/samples/sample.js cfgov/unprocessed/js/modules/
+    cp docs/samples/sample.js unprocessed/js/modules/
     ```
 
 Test file names should always match what they are testing,
@@ -147,7 +147,7 @@ directory.
 
 The folder structure of the test files mirrors
 the structure of the project JavaScript in
-[`cfgov/unprocessed/js/`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/js).
+[`unprocessed/js/`](https://github.com/cfpb/cfgov-refresh/tree/master/unprocessed/js).
 
 When considering exactly where to place JavaScript in these directories,
 it might be helpful to review the documentation about
@@ -156,7 +156,7 @@ JavaScript corresponding to atomic elements should go into
 the appropriate subfolder for the type of element being implemented.
 In our case, `sample.js` and `sample-spec.js` don’t relate to atomic elements,
 so they can be placed into the uncategorized `modules` subfolders:
-`cfgov/unprocessed/js/modules` and `test/unit_tests/modules`, respectively.
+`unprocessed/js/modules` and `test/unit_tests/modules`, respectively.
 
 !!! note "Child apps"
     If you’re working on something in a child app,
@@ -200,7 +200,7 @@ to save and commit your changes.
     then write the corresponding JavaScript that will make the test pass.
 
 1. Make the test pass by changing your script’s line 7
-   ([see `sample.js`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/sample.js))
+   ([see `sample.js`](https://github.com/cfpb/cfgov-refresh/blob/master/unprocessed/js/modules/sample.js))
    to the following:
 
     ```js
@@ -231,7 +231,7 @@ include the JavaScript file that you are testing.
 Additional dependencies should be added in the same manner.
 
 ```js
-import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
+import sample from '../../../../unprocessed/js/modules/sample.js';
 ```
 
 Some test files use `const` declarations to
@@ -257,7 +257,7 @@ const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 import * as FooterButton from BASE_JS_PATH + 'modules/footer-button.js';
 
 // This is ugly, but it works and supports tree shaking.
-import * as FooterButton from '../../../../cfgov/unprocessed/js/modules/footer-button.js';
+import * as FooterButton from '../../../../unprocessed/js/modules/footer-button.js';
 ```
 
 `import` also provides a benefit in that you can choose specific parts
@@ -456,8 +456,8 @@ with the input described in the `it` statement
 and use `expect` to check that you receive the desired result.
 
 Here is a simple example from our
-[array helpers module](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/util/array-helpers.js)
-(`cfgov/unprocessed/js/modules/util/array-helpers.js`):
+[array helpers module](https://github.com/cfpb/cfgov-refresh/blob/master/unprocessed/js/modules/util/array-helpers.js)
+(`unprocessed/js/modules/util/array-helpers.js`):
 
 ```js
 function indexOfObject( array, key, val ) {
@@ -527,7 +527,7 @@ As an example, let’s look at our Notification component.
 The Notification component uses a common set of markup
 with different classes and SVG icon code to style it
 as a particular kind of notification (success, warning, etc.). In
-[the component JS](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/molecules/Notification.js),
+[the component JS](https://github.com/cfpb/cfgov-refresh/blob/master/unprocessed/js/molecules/Notification.js),
 we have this function that sets the type of a notification before displaying it:
 
 ```js
@@ -573,7 +573,7 @@ Here are the first 22 lines of
 that tests this component:
 
 ```js
-import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
+import Notification from '../../../../unprocessed/js/molecules/Notification';
 const BASE_CLASS = 'm-notification';
 const HTML_SNIPPET = `
   <div class="m-notification">
@@ -674,7 +674,7 @@ One example is found in
 [the tests for our full-table-row-linking code](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/o-table-row-links-spec.js).
 
 In
-[the module code](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/o-table-row-links.js)
+[the module code](https://github.com/cfpb/cfgov-refresh/blob/master/unprocessed/js/modules/o-table-row-links.js)
 (`o-table-row-links.js`),
 if an event listener detects a click anywhere on
 one of these special table rows,

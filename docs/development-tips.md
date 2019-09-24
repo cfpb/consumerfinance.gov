@@ -8,7 +8,7 @@ The structure looks like this:
 
 #### npm modules
 - App's own dependency list is in
-  `cfgov/unprocessed/apps/[project namespace]/package.json`
+  `unprocessed/apps/[project namespace]/package.json`
 - App's `node_modules` path is listed in the Travis config
   https://github.com/cfpb/cfgov-refresh/blob/master/.travis.yml#L10
   so that their dependencies will be available when Travis runs.
@@ -16,7 +16,7 @@ The structure looks like this:
 #### Webpack
 - Apps may include their own webpack-config.js configuration that adjusts how
   their app-specific assets should be built. This configuration appears in
-  `cfgov/unprocessed/apps/[project namespace]/webpack-config.js`
+  `unprocessed/apps/[project namespace]/webpack-config.js`
 
 #### Browserlist
 - Apps may include a

@@ -1,4 +1,4 @@
-import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
+import sample from '../../../../unprocessed/js/modules/sample.js';
 
 describe( 'sample', () => {
 

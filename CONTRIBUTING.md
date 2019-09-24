@@ -87,7 +87,7 @@ our content.
 
 Satellite apps may run within consumerfinance.gov, but manage their own assets
 within the
-[unprocessed/apps](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/apps)
+[unprocessed/apps](https://github.com/cfpb/cfgov-refresh/tree/master/unprocessed/apps)
 directory. These apps can have their own package.json file, webpack config file,
 and
 [browserlist config](https://github.com/browserslist/browserslist#config-file)

@@ -277,20 +277,20 @@ file for the component.
     Please be sure that you actually need new Less before creating it.
     We have a wide array of styles already available in
     [Capital Framework components](https://cfpb.github.io/capital-framework/components/) and
-    [here in cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/css),
+    [here in cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/unprocessed/css),
     some of which could perhaps be combined to achieve your desired result.
     Also be sure that new component designs have gone through
     our internal approval process before adding them to the project.
 
 If you're working on a general-purpose [atomic component](../atomic-structure/)
 for site-wide use, this file should live in
-`cfgov/unprocessed/css/<atoms|molecules|organisms>/`.
+`unprocessed/css/<atoms|molecules|organisms>/`.
 (Choose the deepest folder according to the atomic rank of the component.)
 Continuing the `RelatedContent` example, if it needed its own styles,
-it would live at `cfgov/unprocessed/css/molecules/related-content.less`.
+it would live at `unprocessed/css/molecules/related-content.less`.
 
 Newly-created Less files need to be imported into the project's master
-`main.less` file, located at `cfgov/unprocessed/css/main.less`.
+`main.less` file, located at `unprocessed/css/main.less`.
 Please place them in the appropriate section for their atomic rank.
 
 Because cfgov-refresh uses `main.less` to build a single CSS file
@@ -301,7 +301,7 @@ That is _not_ the case with JavaScript, as we will see in the next section.
 
 !!! note
     If you're working on a component that belongs to a particular sub-app,
-    its Less file should live in `cfgov/unprocessed/<app-name>/css/`.
+    its Less file should live in `unprocessed/<app-name>/css/`.
 
 #### Adding JavaScript
 
@@ -323,7 +323,7 @@ class RelatedContent(blocks.StructBlock):
 ```
 
 (The `related-content.js` file would need to be placed in
-`cfgov/unprocessed/js/molecules/`;
+`unprocessed/js/molecules/`;
 see [Notes on Atomic Design](../atomic-structure/).)
 
 This will load the `related-content.js` script on any page

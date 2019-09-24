@@ -106,7 +106,7 @@ brew install yarn --ignore-dependencies
 The site uses a proprietary licensed font, Avenir.
 If you want to pull this from a content delivery network (CDN),
 you can set the
-[`@use-font-cdn`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/css/main.less#L30)
+[`@use-font-cdn`](https://github.com/cfpb/cfgov-refresh/blob/master/unprocessed/css/main.less#L30)
 to `true` and rebuild the assets with `yarn run gulp build`.
 If you want to install self-hosted fonts locally, you can place the font files
 in `static.in/cfgov-fonts/fonts/` and restart the local web server.

@@ -200,16 +200,16 @@ cfgov-refresh/cfgov/jinja2/v1/_includes/organisms/
 ### CSS
 
 ```
-cfgov-refresh/cfgov/unprocessed/css/atoms/
-cfgov-refresh/cfgov/unprocessed/css/molecules/
-cfgov-refresh/cfgov/unprocessed/css/organisms/
+cfgov-refresh/unprocessed/css/atoms/
+cfgov-refresh/unprocessed/css/molecules/
+cfgov-refresh/unprocessed/css/organisms/
 ```
 
 ### JavaScript
 
 ```
-cfgov-refresh/cfgov/unprocessed/js/molecules/
-cfgov-refresh/cfgov/unprocessed/js/organisms/
+cfgov-refresh/unprocessed/js/molecules/
+cfgov-refresh/unprocessed/js/organisms/
 ```
 
 ### Tests
