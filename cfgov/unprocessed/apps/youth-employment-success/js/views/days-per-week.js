@@ -21,7 +21,7 @@ const CLASSES = Object.freeze( {
  * @param {HTMLNode} element The root DOM element for this view
  * @returns {Object} This view's public methods
  */
-function daysPerWeekView( element, { store, routeIndex } ) {
+function daysPerWeekView( element, { store, routeIndex, todoNotification } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _daysPerWeekEl = _dom.querySelector( 'input[type="text"]' );
   const _notSureEl = _dom.querySelector( 'input[type="checkbox"]' );
@@ -45,9 +45,17 @@ function daysPerWeekView( element, { store, routeIndex } ) {
    * @param {object} param0 The emitted DOM event
    */
   function _handleNotSureUpdate( { event } ) {
+    const { checked } = event.target;
+
+    if ( checked ) {
+      todoNotification.show();
+    } else {
+      todoNotification.hide();
+    }
+
     store.dispatch( updateDaysToActionPlan( {
       routeIndex,
-      value: event.target.checked
+      value: checked
     } ) );
   }
 
@@ -67,9 +75,9 @@ function daysPerWeekView( element, { store, routeIndex } ) {
     } else {
       _daysPerWeekEl.value = '';
       _notSureEl.checked = '';
-      if ( !_dom.classList.contains( 'u-hidden' ) ) {
-        _dom.classList.add( 'u-hidden' );
-      }
+      _dom.classList.add( 'u-hidden' );
+
+      todoNotification.remove();
 
       if ( prevRouteState.daysPerWeek ) {
         store.dispatch( clearDaysPerWeekAction( { routeIndex } ) );
@@ -101,6 +109,7 @@ function daysPerWeekView( element, { store, routeIndex } ) {
         _initInputs();
         _dom.classList.add( 'u-hidden' );
         store.subscribe( _onStateUpdate );
+        todoNotification.init( _dom );
       }
     }
   };

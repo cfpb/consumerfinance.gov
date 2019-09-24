@@ -7,16 +7,20 @@ import {
   updateMilesToActionPlan
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
+import TODO_FIXTURE from '../../fixtures/todo-alert';
+import TodoNotificationMock from '../../mocks/todo-notification';
 
 const HTML = `
   <div class="m-yes-miles">
     <input type="text">
     <input type="checkbox">
   </div>
+  ${ TODO_FIXTURE }
 `;
 
 describe( 'milesView', () => {
   const routeIndex = 0;
+  const todoNotification = new TodoNotificationMock();
   let store;
   let dom;
   let view;
@@ -25,11 +29,12 @@ describe( 'milesView', () => {
     store = mockStore();
     document.body.innerHTML = HTML;
     dom = document.querySelector( `.${ milesView.CLASSES.CONTAINER }` );
-    view = milesView( dom, { store, routeIndex } );
+    view = milesView( dom, { store, routeIndex, todoNotification } );
     view.init();
   } );
 
   afterEach( () => {
+    todoNotification.mockReset();
     store.mockReset();
     view = null;
   } );
@@ -41,6 +46,10 @@ describe( 'milesView', () => {
 
     it( 'subscribes to the store', () => {
       expect( store.subscribe ).toHaveBeenCalled();
+    } );
+
+    it( 'initializes the todo notification component on init', () => {
+      expect( todoNotification.init.mock.calls.length ).toBe( 1 );
     } );
   } );
 
@@ -77,6 +86,22 @@ describe( 'milesView', () => {
         } )
       );
     } );
+
+    it( 'toggles notifications when checkbox is clicked', () => {
+      const notSureEl = document.querySelector( 'input[type="checkbox"]' );
+
+      simulateEvent( 'click', notSureEl );
+
+      expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+      expect( todoNotification.hide.mock.calls.length ).toBe( 0 );
+
+      notSureEl.checked = true;
+
+      simulateEvent( 'click', notSureEl );
+
+      expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+      expect( todoNotification.hide.mock.calls.length ).toBe( 1 );
+    } );
   } );
 
   describe( 'on state update', () => {
@@ -100,7 +125,8 @@ describe( 'milesView', () => {
       const prevState = {
         routes: {
           routes: [ {
-            miles: miles
+            miles: miles,
+            actionPlanItems: [ PLAN_TYPES.MILES ]
           } ]
         }
       };
@@ -144,7 +170,7 @@ describe( 'milesView', () => {
         expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
       } );
 
-      it( 'dispatches the correct action when daysPerWeek is filled in and transportation method is not drive', () => {
+      it( 'dispatches the correct action when miles is filled in and transportation method is not drive', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( prevState, state );
 
@@ -168,6 +194,12 @@ describe( 'milesView', () => {
         expect( mock.calls[0][0] ).toEqual(
           clearMilesAction( { routeIndex } )
         );
+      } );
+
+      it( 'calls .remove on the todo notification component when this view is toggled', () => {
+        store.subscriber()( prevState, state );
+
+        expect( todoNotification.remove.mock.calls.length ).toBe( 1 );
       } );
     } );
   } );

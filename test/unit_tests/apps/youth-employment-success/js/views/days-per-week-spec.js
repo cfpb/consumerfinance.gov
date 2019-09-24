@@ -5,18 +5,22 @@ import {
   updateDaysPerWeekAction,
   updateDaysToActionPlan
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import TODO_FIXTURE from '../../fixtures/todo-alert';
+import TodoNotificationMock from '../../mocks/todo-notification';
 
 const HTML = `
   <div class="m-yes-days-per-week">
     <input type="text" name="daysPerWeek" data-js-name="daysPerWeek">
     <input type="checkbox" name="yes-route-days-unsure">
   </div>
+  ${ TODO_FIXTURE }
 `;
 
 describe( 'DaysPerWeekView', () => {
   const routeIndex = 0;
   const CLASSES = daysPerWeekView.CLASSES;
   const dispatch = jest.fn();
+  const todoNotification = new TodoNotificationMock();
   function mockStore() {
     let subscriberFn;
 
@@ -38,11 +42,12 @@ describe( 'DaysPerWeekView', () => {
     document.body.innerHTML = HTML;
     store = mockStore();
     dom = document.querySelector( `.${ CLASSES.CONTAINER }` );
-    view = daysPerWeekView( dom, { store, routeIndex } );
+    view = daysPerWeekView( dom, { store, routeIndex, todoNotification } );
     view.init();
   } );
 
   afterEach( () => {
+    todoNotification.mockReset();
     dispatch.mockReset();
     view = null;
     store = null;
@@ -55,6 +60,10 @@ describe( 'DaysPerWeekView', () => {
 
     it( 'subscribes to the store', () => {
       expect( store.subscribe ).toHaveBeenCalled();
+    } );
+
+    it( 'initializes the todo notification component on init', () => {
+      expect( todoNotification.init.mock.calls.length ).toBe( 1 );
     } );
   } );
 
@@ -91,6 +100,22 @@ describe( 'DaysPerWeekView', () => {
           value: false
         } )
       );
+    } );
+
+    it( 'toggles notifications when checkbox is clicked', () => {
+      const notSureEl = document.querySelector( 'input[type="checkbox"]' );
+
+      simulateEvent( 'click', notSureEl );
+
+      expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+      expect( todoNotification.hide.mock.calls.length ).toBe( 0 );
+
+      notSureEl.checked = true;
+
+      simulateEvent( 'click', notSureEl );
+
+      expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+      expect( todoNotification.hide.mock.calls.length ).toBe( 1 );
     } );
   } );
 
@@ -169,6 +194,20 @@ describe( 'DaysPerWeekView', () => {
         expect( mock.calls[0][0] ).toEqual(
           clearDaysPerWeekAction( { routeIndex } )
         );
+      } );
+
+      it( 'calls .remove on the todo notification component when this view is toggled', () => {
+        const state = {
+          routes: {
+            routes: [ {
+              transportation: 'Walk'
+            } ]
+          }
+        };
+
+        store.subscriber()( { routes: { routes: [ {} ]}}, state );
+
+        expect( todoNotification.remove.mock.calls.length ).toBe( 1 );
       } );
     } );
   } );

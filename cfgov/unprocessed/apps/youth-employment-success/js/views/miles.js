@@ -27,7 +27,7 @@ const CLASSES = Object.freeze( {
  * @param {string} props.routeIndex The index of the route option this view updates
  * @returns {Object} The view's public methods
  */
-function milesView( element, { store, routeIndex } ) {
+function milesView( element, { store, routeIndex, todoNotification } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _milesEl = _dom.querySelector( 'input[type="text"]' );
   const _notSureEl = _dom.querySelector( 'input[type="checkbox"]' );
@@ -54,9 +54,17 @@ function milesView( element, { store, routeIndex } ) {
    * @param {string} updateObject.name The name of the field the event was emitted from
    */
   function _handleNotSureUpdate( { event } ) {
+    const { checked } = event.target;
+
+    if ( checked ) {
+      todoNotification.show();
+    } else {
+      todoNotification.hide();
+    }
+
     store.dispatch( updateMilesToActionPlan( {
       routeIndex,
-      value: event.target.checked
+      value: checked
     } ) );
   }
 
@@ -77,6 +85,7 @@ function milesView( element, { store, routeIndex } ) {
       _milesEl.value = '';
       _notSureEl.checked = '';
       _dom.classList.add( 'u-hidden' );
+      todoNotification.remove();
 
       if (
         prevRouteState.miles ||
@@ -111,6 +120,7 @@ function milesView( element, { store, routeIndex } ) {
         _initInputs();
         _dom.classList.add( 'u-hidden' );
         store.subscribe( _onStateUpdate );
+        todoNotification.init( _dom );
       }
     }
   };

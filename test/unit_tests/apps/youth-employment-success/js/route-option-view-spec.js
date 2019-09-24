@@ -2,13 +2,13 @@ import { simulateEvent } from '../../../../util/simulate-event';
 import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
 import averageCostView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
 import milesView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
+import transitTimeView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/transit-time';
 import {
-  updateDaysPerWeekAction,
   updateTransportationAction
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import daysPerWeekView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/days-per-week';
 
-let UNDEFINED;
+jest.mock( '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/todo-notification' );
 
 const HTML = `
   <form class="o-yes-route-option">
@@ -33,6 +33,7 @@ describe( 'routeOptionFormView', () => {
   const costViewInit = jest.fn();
   const daysViewInit = jest.fn();
   const milesViewInit = jest.fn();
+  const transitViewInit = jest.fn();
   const detailsView = {
     init: detailsInit,
     render: detailsRender
@@ -48,6 +49,9 @@ describe( 'routeOptionFormView', () => {
 
   const milesViewMock = viewMock( milesViewInit );
   milesViewMock.CLASSES = milesView.CLASSES;
+
+  const transitViewMock = viewMock( transitViewInit );
+  transitViewMock.CLASSES = transitTimeView.CLASSES;
 
   const mockStore = () => ( {
     dispatch,
@@ -79,7 +83,8 @@ describe( 'routeOptionFormView', () => {
       detailsView,
       averageCostView: costViewMock,
       daysPerWeekView: daysPerWeekViewMock,
-      milesView: milesViewMock
+      milesView: milesViewMock,
+      transitTimeView: transitViewMock
     } );
     view.init();
   } );
