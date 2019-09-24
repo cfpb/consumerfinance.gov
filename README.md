@@ -111,4 +111,4 @@ which is the front-end pattern library used in this project.
 ## Credits and references
 
 This project uses [Capital Framework](https://github.com/cfpb/capital-framework)
-as the bass of its user interface and layout components.
+as the basis of its user interface and layout components.
