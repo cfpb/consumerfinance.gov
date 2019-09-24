@@ -26,7 +26,7 @@ const envvars = {
  * Convenience settings for various project directory paths.
  */
 const paths = {
-  unprocessed: './cfgov/unprocessed',
+  unprocessed: './unprocessed',
   processed:   './cfgov/static_built',
   legacy:      './cfgov/legacy/static',
   modules:     './node_modules',

@@ -19,12 +19,12 @@ exclude =
     requirements,
     node_modules,
     site,
+    unprocessed,
 
     # And directories in cfgov that don't have python files to lint
     cfgov/jinja2,
     cfgov/static_built,
     cfgov/templates,
-    cfgov/unprocessed,
 
     # Generated migration files will throw errors. We need to find a way
     # to exclude django-generated migrations while including

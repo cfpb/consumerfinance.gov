@@ -1,7 +1,7 @@
 /*
 This script handles installing node dependencies for a project that lives
 under cfgov-refresh, but has its own package.json. These projects appear
-under the ./cfgov/unprocessed/apps/ path.
+under the ./unprocessed/apps/ path.
  */
 
 const fs = require( 'fs' );

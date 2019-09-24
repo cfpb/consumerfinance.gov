@@ -6,17 +6,17 @@ module.exports = {
   },
   collectCoverage: true,
   collectCoverageFrom: [
-    '<rootDir>/cfgov/unprocessed/**/*.js'
+    '<rootDir>/unprocessed/**/*.js'
   ],
   coveragePathIgnorePatterns: [
     '<rootDir>/collectstatic/',
     '<rootDir>/node_modules/',
-    '<rootDir>/cfgov/unprocessed/apps/.+/node_modules/',
-    '<rootDir>/cfgov/unprocessed/apps/.+/webpack-config.js$',
-    '<rootDir>/cfgov/unprocessed/apps/.+/index.js$',
-    '<rootDir>/cfgov/unprocessed/apps/.+/common.js$',
-    '<rootDir>/cfgov/unprocessed/apps/analytics-gtm/js/[a-zA-Z-]+.js$',
-    '<rootDir>/cfgov/unprocessed/js/routes/'
+    '<rootDir>/unprocessed/apps/.+/node_modules/',
+    '<rootDir>/unprocessed/apps/.+/webpack-config.js$',
+    '<rootDir>/unprocessed/apps/.+/index.js$',
+    '<rootDir>/unprocessed/apps/.+/common.js$',
+    '<rootDir>/unprocessed/apps/analytics-gtm/js/[a-zA-Z-]+.js$',
+    '<rootDir>/unprocessed/js/routes/'
   ],
   coverageDirectory: '<rootDir>/test/unit_test_coverage',
   moduleNameMapper: {

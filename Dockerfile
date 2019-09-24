@@ -93,8 +93,8 @@ RUN yum -y install nodejs yarn  && \
     yum clean all && rm -rf /var/cache/yum && \
     rm -rf \
         cfgov/apache/www \
-        cfgov/unprocessed \
-        node_modules && \
+        node_modules \
+        unprocessed && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
     mkdir -p cfgov/f/ && chown -R apache:apache cfgov/f/ && \
     mkdir /tmp/eregs_cache && chown apache:apache /tmp/eregs_cache

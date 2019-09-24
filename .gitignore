@@ -56,7 +56,7 @@ Thumbs.db
 # Node packages #
 #################
 node_modules/
-cfgov/unprocessed/apps/*/node_modules/
+unprocessed/apps/*/node_modules/
 npm-debug.log
 yarn-error.log
 package-lock.json
