@@ -1,13 +1,13 @@
 // Required modules.
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 const SUCCESS_ICON = require(
-  'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/check-round.svg'
+  'svg-inline-loader!../../../node_modules/cf-icons/src/icons/check-round.svg'
 );
 const WARNING_ICON = require(
-  'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/warning-round.svg'
+  'svg-inline-loader!../../../node_modules/cf-icons/src/icons/warning-round.svg'
 );
 const ERROR_ICON = require(
-  'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/error-round.svg'
+  'svg-inline-loader!../../../node_modules/cf-icons/src/icons/error-round.svg'
 );
 
 /**

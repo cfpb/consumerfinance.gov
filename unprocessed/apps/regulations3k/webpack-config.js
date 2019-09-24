@@ -2,7 +2,7 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-const paths = require( '../../../../config/environment' ).paths;
+const paths = require( '../../../config/environment' ).paths;
 const TerserPlugin = require( 'terser-webpack-plugin' );
 const fs = require( 'fs' );
 const path = require( 'path' );
