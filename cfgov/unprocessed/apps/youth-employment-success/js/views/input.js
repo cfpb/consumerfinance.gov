@@ -1,10 +1,26 @@
-import { assign, entries } from './util';
-import { setInitFlag } from '../../../js/modules/util/atomic-helpers';
+import { assign, entries } from '../util';
+import { setInitFlag } from '../../../../js/modules/util/atomic-helpers';
 
 const defaultProps = {
   type: 'text'
 };
 const NODE_MISSING_ERROR = 'InputView expects to be initialized with an input node matching the supplied `type` prop';
+
+/**
+ *
+ * @param {HTMLElement} element The element being tested for input or textarea node status
+ * @returns {Boolean} Whether or not the node is an input or textarea node
+ */
+function isInputNode( element ) {
+  if (
+    element instanceof HTMLInputElement ||
+    element instanceof HTMLTextAreaElement
+  ) {
+    return true;
+  }
+
+  return false;
+}
 
 /**
  * Get the correct DOM node this view controls
@@ -14,7 +30,7 @@ const NODE_MISSING_ERROR = 'InputView expects to be initialized with an input no
  * @returns {node} The final dom node for this view
  */
 function resolve( element, type ) {
-  if ( element instanceof HTMLInputElement ) {
+  if ( isInputNode( element ) ) {
     return element;
   }
 
@@ -32,7 +48,7 @@ function resolve( element, type ) {
  * @param {Object} props Properties the view should be initialized with
  * @returns {Object} The view's public methods
  */
-function InputView( element, props = {} ) {
+function inputView( element, props = {} ) {
   const _finalProps = assign( {}, defaultProps, props );
   const _dom = resolve( element, _finalProps.type );
 
@@ -99,4 +115,4 @@ function InputView( element, props = {} ) {
 }
 
 export { NODE_MISSING_ERROR };
-export default InputView;
+export default inputView;

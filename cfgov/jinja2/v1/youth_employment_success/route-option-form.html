@@ -1,7 +1,7 @@
 {% from 'atoms/radio-button.html' import render with context %}
 {% set labels = ['Walk', 'Drive', 'Bike', 'Public transit', 'Get dropped off'] %}
 
-<form class="o-yes-route-option">
+<form class="o-yes-route-option" autocomplete="new-password">
   <span class="a-label__heading u-mb0">
     <b>What type of transportation will you take?</b>
   </span>
@@ -37,5 +37,7 @@
   {% include "route-questions/miles.html" %}
   {% include "route-questions/days-per-week.html" %}
   {% include "route-questions/transit-time.html" %}
-  {% include "route-details.html" %}
+  {% with show_todos=true %}
+    {% include "route-details.html" %}
+  {% endwith %}
 </form>

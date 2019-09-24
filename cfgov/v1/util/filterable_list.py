@@ -63,6 +63,9 @@ class FilterableListMixin(object):
 
         return pages
 
+    def filterable_list_wagtail_block(self):
+        return next((b for b in self.content if b.block_type == 'filter_controls'), None)  # noqa 501
+
     def get_context(self, request, *args, **kwargs):
         context = super(FilterableListMixin, self).get_context(
             request, *args, **kwargs
@@ -71,7 +74,8 @@ class FilterableListMixin(object):
         form_data, has_active_filters = self.get_form_data(request.GET)
         form = self.get_form_class()(
             form_data,
-            filterable_pages=self.filterable_pages()
+            filterable_pages=self.filterable_pages(),
+            wagtail_block=self.filterable_list_wagtail_block(),
         )
 
         context.update({

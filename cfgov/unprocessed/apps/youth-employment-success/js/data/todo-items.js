@@ -6,7 +6,7 @@ const PLAN_TYPES = Object.freeze( {
 } );
 
 const ACTION_PLAN = Object.freeze( {
-  AVERAGE_COST: 'average',
+  AVERAGE_COST: 'average cost',
   DAYS_PER_WEEK: 'days per week',
   MILES: 'miles',
   TIME: 'Look up how to estimate transit time.'

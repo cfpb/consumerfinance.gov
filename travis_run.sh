@@ -8,7 +8,9 @@ export NODE_ENV='development'
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
-    yarn run gulp test --travis --headless
+    # Acceptance tests are disabled pending a webdriver update
+    # yarn run gulp test --travis --headless
+    yarn run gulp test:unit --travis --headless
     bash <(curl -s https://codecov.io/bash) -F frontend -X coveragepy
 elif [ "$RUNTEST" == "backend" ]; then
     TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox
