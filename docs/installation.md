@@ -224,7 +224,8 @@ The default Docker installation on some systems includes Docker Compose.
 For systems where this is not the case, Docker Compose will need to be
 [installed manually](https://docs.docker.com/compose/install/).
 
-If `docker-compose ps` runs without error, you can can go to step 2.
+To verify the installation of Docker Compose, the command
+`docker-compose ps` should run without error if Docker is running locally.
 
 #### Copy the `.env_SAMPLE` file over
 
