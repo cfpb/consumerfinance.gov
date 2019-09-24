@@ -3,8 +3,8 @@ import {
   destroyInitFlag,
   instantiateAll,
   setInitFlag
-} from '../../../../../cfgov/unprocessed/js/modules/util/atomic-helpers';
-import Footer from '../../../../../cfgov/unprocessed/js/organisms/Footer';
+} from '../../../../../unprocessed/js/modules/util/atomic-helpers';
+import Footer from '../../../../../unprocessed/js/organisms/Footer';
 
 let containerDom;
 let componentDom;

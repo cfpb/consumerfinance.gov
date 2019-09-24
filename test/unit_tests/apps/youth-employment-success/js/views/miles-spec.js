@@ -1,12 +1,12 @@
 import { simulateEvent } from '../../../../../util/simulate-event';
-import milesView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
+import milesView from '../../../../../../unprocessed/apps/youth-employment-success/js/views/miles';
 import mockStore from '../../../../mocks/store';
 import {
   clearMilesAction,
   updateMilesAction,
   updateMilesToActionPlan
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
+} from '../../../../../../unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import { PLAN_TYPES } from '../../../../../../unprocessed/apps/youth-employment-success/js/data/todo-items';
 
 const HTML = `
   <div class="m-yes-miles">

@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../../unprocessed/js/';
 const arrayHelpers = require( BASE_JS_PATH + 'modules/util/array-helpers' );
 let array;
 let index;

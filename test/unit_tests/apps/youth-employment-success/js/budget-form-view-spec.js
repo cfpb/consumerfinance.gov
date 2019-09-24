@@ -1,6 +1,6 @@
 import { simulateEvent } from '../../../../util/simulate-event';
-import budgetFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/budget-form-view';
-import { configureStore } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/store';
+import budgetFormView from '../../../../../unprocessed/apps/youth-employment-success/js/budget-form-view';
+import { configureStore } from '../../../../../unprocessed/apps/youth-employment-success/js/store';
 
 const HTML = `
 <section class="block o-yes-budget">

@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../../unprocessed/js/';
 const behavior = require( BASE_JS_PATH + 'modules/util/behavior' );
 
 let containerDom;

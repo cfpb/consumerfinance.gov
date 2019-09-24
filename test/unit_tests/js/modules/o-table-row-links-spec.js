@@ -1,5 +1,5 @@
 const simpleTableRowLinks = require(
-  '../../../../cfgov/unprocessed/js/modules/o-table-row-links'
+  '../../../../unprocessed/js/modules/o-table-row-links'
 );
 
 import { simulateEvent } from '../../../util/simulate-event';

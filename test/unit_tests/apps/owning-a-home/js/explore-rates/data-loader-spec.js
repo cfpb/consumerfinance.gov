@@ -1,9 +1,9 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
+const BASE_JS_PATH = '../../../../../../unprocessed/apps/owning-a-home/';
 const domLoader = require( BASE_JS_PATH + 'js/explore-rates/data-loader' );
 
 // Mock the XmlHttpRequest call from axios.
-import axios from '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios';
-jest.mock( '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios' );
+import axios from '../../../../../../unprocessed/apps/owning-a-home/node_modules/axios';
+jest.mock( '../../../../../../unprocessed/apps/owning-a-home/node_modules/axios' );
 const mockResp = { data: 'mock data' };
 axios.get.mockImplementation( () => Promise.resolve( mockResp ) );
 jest.spyOn( axios, 'get' );

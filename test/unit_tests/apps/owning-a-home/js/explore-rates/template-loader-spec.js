@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
+const BASE_JS_PATH = '../../../../../../unprocessed/apps/owning-a-home/';
 const templateLoader = require( BASE_JS_PATH + 'js/explore-rates/template-loader' );
 
 describe( 'explore-rates/template-loader', () => {

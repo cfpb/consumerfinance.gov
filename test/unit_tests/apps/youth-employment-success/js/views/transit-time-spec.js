@@ -1,10 +1,10 @@
 import { simulateEvent } from '../../../../../util/simulate-event';
-import transitTimeView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/transit-time';
+import transitTimeView from '../../../../../../unprocessed/apps/youth-employment-success/js/views/transit-time';
 import {
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+} from '../../../../../../unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 
 const HTML = `
   <div class="content-l content-l_col-2-3 block__sub-micro m-yes-transit-time">

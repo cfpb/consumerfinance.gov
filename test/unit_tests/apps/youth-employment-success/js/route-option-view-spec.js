@@ -1,12 +1,12 @@
 import { simulateEvent } from '../../../../util/simulate-event';
-import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
-import averageCostView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
-import milesView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
+import routeOptionFormView from '../../../../../unprocessed/apps/youth-employment-success/js/route-option-view';
+import averageCostView from '../../../../../unprocessed/apps/youth-employment-success/js/views/average-cost';
+import milesView from '../../../../../unprocessed/apps/youth-employment-success/js/views/miles';
 import {
   updateDaysPerWeekAction,
   updateTransportationAction
-} from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import daysPerWeekView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/days-per-week';
+} from '../../../../../unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import daysPerWeekView from '../../../../../unprocessed/apps/youth-employment-success/js/views/days-per-week';
 
 let UNDEFINED;
 

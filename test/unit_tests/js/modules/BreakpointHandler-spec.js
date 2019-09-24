@@ -1,4 +1,4 @@
-import BreakpointHandler from '../../../../cfgov/unprocessed/js/modules/BreakpointHandler';
+import BreakpointHandler from '../../../../unprocessed/js/modules/BreakpointHandler';
 let args;
 
 /**

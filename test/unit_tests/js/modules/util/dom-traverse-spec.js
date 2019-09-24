@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../../unprocessed/js/';
 const domTraverse = require( BASE_JS_PATH + 'modules/util/dom-traverse' );
 
 describe( 'Dom Traverse', () => {

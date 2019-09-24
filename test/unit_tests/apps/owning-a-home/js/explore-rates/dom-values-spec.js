@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
+const BASE_JS_PATH = '../../../../../../unprocessed/apps/owning-a-home/';
 const domValues = require( BASE_JS_PATH + 'js/explore-rates/dom-values' );
 
 const HTML_SNIPPET = `

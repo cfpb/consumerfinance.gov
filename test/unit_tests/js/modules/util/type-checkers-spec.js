@@ -1,4 +1,4 @@
-import * as typeCheckers from '../../../../../cfgov/unprocessed/js/modules/util/type-checkers.js';
+import * as typeCheckers from '../../../../../unprocessed/js/modules/util/type-checkers.js';
 
 let undefinedVar;
 const blankVar = '';

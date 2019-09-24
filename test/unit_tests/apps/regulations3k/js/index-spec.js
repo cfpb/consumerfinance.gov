@@ -1,4 +1,4 @@
-import app from '../../../../../cfgov/unprocessed/apps/regulations3k/js/index.js';
+import app from '../../../../../unprocessed/apps/regulations3k/js/index.js';
 
 describe( 'The app', () => {
 

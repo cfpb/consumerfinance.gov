@@ -1,4 +1,4 @@
-import ClearableInput from '../../../../cfgov/unprocessed/js/modules/ClearableInput';
+import ClearableInput from '../../../../unprocessed/js/modules/ClearableInput';
 import { simulateEvent } from '../../../util/simulate-event';
 
 let baseDom;

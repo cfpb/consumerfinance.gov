@@ -1,4 +1,4 @@
-import dropDownUtils from '../../../../../cfgov/unprocessed/apps/owning-a-home/js/dropdown-utils.js';
+import dropDownUtils from '../../../../../unprocessed/apps/owning-a-home/js/dropdown-utils.js';
 
 const HTML_SNIPPET = `
 <div class="foo">

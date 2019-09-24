@@ -1,4 +1,4 @@
-import MoveTransition from '../../../../../cfgov/unprocessed/js/modules/transition/MoveTransition';
+import MoveTransition from '../../../../../unprocessed/js/modules/transition/MoveTransition';
 
 let transition;
 

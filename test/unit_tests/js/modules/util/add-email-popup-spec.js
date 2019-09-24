@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/modules/util';
+const BASE_JS_PATH = '../../../../../unprocessed/js/modules/util';
 
 const HTML_SNIPPET = `
 <div class="o-email-popup o-email-signup" lang="en" data-popup-label="testPopup">

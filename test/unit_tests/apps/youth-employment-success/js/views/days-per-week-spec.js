@@ -1,10 +1,10 @@
 import { simulateEvent } from '../../../../../util/simulate-event';
-import daysPerWeekView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/days-per-week';
+import daysPerWeekView from '../../../../../../unprocessed/apps/youth-employment-success/js/views/days-per-week';
 import {
   clearDaysPerWeekAction,
   updateDaysPerWeekAction,
   updateDaysToActionPlan
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+} from '../../../../../../unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 
 const HTML = `
   <div class="m-yes-days-per-week">

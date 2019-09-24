@@ -1,4 +1,4 @@
-import Analytics from '../../../../cfgov/unprocessed/js/modules/Analytics';
+import Analytics from '../../../../unprocessed/js/modules/Analytics';
 let dataLayerOptions;
 let getDataLayerOptions;
 let UNDEFINED;

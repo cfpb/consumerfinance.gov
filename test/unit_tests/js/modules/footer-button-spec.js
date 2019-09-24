@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../unprocessed/js/';
 const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 
 import { simulateEvent } from '../../../util/simulate-event';

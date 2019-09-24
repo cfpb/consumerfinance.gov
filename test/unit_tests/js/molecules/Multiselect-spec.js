@@ -1,4 +1,4 @@
-import Multiselect from '../../../../cfgov/unprocessed/js/molecules/Multiselect';
+import Multiselect from '../../../../unprocessed/js/molecules/Multiselect';
 
 import { simulateEvent } from '../../../util/simulate-event';
 

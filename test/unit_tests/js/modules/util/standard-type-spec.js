@@ -1,7 +1,7 @@
 import {
   JS_HOOK,
   noopFunct
-} from '../../../../../cfgov/unprocessed/js/modules/util/standard-type';
+} from '../../../../../unprocessed/js/modules/util/standard-type';
 
 describe( 'standard-type', () => {
   it( 'should include a standard JS data hook', () => {

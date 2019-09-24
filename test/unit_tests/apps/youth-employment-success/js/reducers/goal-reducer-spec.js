@@ -5,7 +5,7 @@ import goalReducer, {
   updateGoalImportanceAction,
   updateGoalStepsAction,
   updateGoalTimelineAction
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/goal-reducer';
+} from '../../../../../../unprocessed/apps/youth-employment-success/js/reducers/goal-reducer';
 
 let UNDEFINED;
 

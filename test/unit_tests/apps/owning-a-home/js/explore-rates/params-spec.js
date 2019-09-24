@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
+const BASE_JS_PATH = '../../../../../../unprocessed/apps/owning-a-home/';
 
 const HTML_SNIPPET = `
   <input id="credit-score"

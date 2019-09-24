@@ -1,5 +1,5 @@
-import FlyoutMenu from '../../../../../cfgov/unprocessed/js/modules/behavior/FlyoutMenu';
-import MoveTransition from '../../../../../cfgov/unprocessed/js/modules/transition/MoveTransition';
+import FlyoutMenu from '../../../../../unprocessed/js/modules/behavior/FlyoutMenu';
+import MoveTransition from '../../../../../unprocessed/js/modules/transition/MoveTransition';
 
 const HTML_SNIPPET = `
 <div data-js-hook="behavior_flyout-menu">

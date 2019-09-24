@@ -1,10 +1,10 @@
 import { simulateEvent } from '../../../../../util/simulate-event';
-import averageCostView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
+import averageCostView from '../../../../../../unprocessed/apps/youth-employment-success/js/views/average-cost';
 import {
   updateAverageCostAction,
   updateCostToActionPlan,
   updateIsMonthlyCostAction
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+} from '../../../../../../unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 
 const HTML = `
   <div class="content-l content-l_col-2-3 block__sub-micro m-yes-average-cost">

@@ -5,7 +5,7 @@ import {
   combineReducers,
   entries,
   toArray
-} from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+} from '../../../../../unprocessed/apps/youth-employment-success/js/util';
 
 const reducerStateA = {
   name: 'barbara',

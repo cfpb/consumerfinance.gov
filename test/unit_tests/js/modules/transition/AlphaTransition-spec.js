@@ -1,4 +1,4 @@
-import AlphaTransition from '../../../../../cfgov/unprocessed/js/modules/transition/AlphaTransition';
+import AlphaTransition from '../../../../../unprocessed/js/modules/transition/AlphaTransition';
 
 let transition;
 

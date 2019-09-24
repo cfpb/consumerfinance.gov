@@ -1,4 +1,4 @@
-import * as strings from '../../../../../cfgov/unprocessed/js/modules/util/strings';
+import * as strings from '../../../../../unprocessed/js/modules/util/strings';
 let string;
 let control;
 

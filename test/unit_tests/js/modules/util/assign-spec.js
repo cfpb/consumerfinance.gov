@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../../unprocessed/js/';
 const assign = require( BASE_JS_PATH + 'modules/util/assign.js' ).assign;
 let testObjectA;
 let testObjectB;

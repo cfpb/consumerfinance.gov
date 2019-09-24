@@ -1,4 +1,4 @@
-import Tree from '../../../../cfgov/unprocessed/js/modules/Tree';
+import Tree from '../../../../unprocessed/js/modules/Tree';
 
 describe( 'Tree', () => {
   let tree;

@@ -1,4 +1,4 @@
-import expandableView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/expandable';
+import expandableView from '../../../../../../unprocessed/apps/youth-employment-success/js/views/expandable';
 import Expandable from 'cf-expandables/src/Expandable';
 
 const HTML = `

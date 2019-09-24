@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
+const BASE_JS_PATH = '../../../../../unprocessed/apps/regulations3k';
 
 const app = require( `${ BASE_JS_PATH }/js/permalinks.js` );
 

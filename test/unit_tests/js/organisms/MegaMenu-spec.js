@@ -1,4 +1,4 @@
-import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu';
+import MegaMenu from '../../../../unprocessed/js/organisms/MegaMenu';
 import { simulateEvent } from '../../../util/simulate-event';
 
 const BASE_CLASS = 'o-mega-menu';

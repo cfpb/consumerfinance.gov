@@ -1,4 +1,4 @@
-import MultiselectModel from '../../../../cfgov/unprocessed/js/molecules/MultiselectModel';
+import MultiselectModel from '../../../../unprocessed/js/molecules/MultiselectModel';
 
 const HTML_SNIPPET = `
 <select class="o-multiselect" multiple>

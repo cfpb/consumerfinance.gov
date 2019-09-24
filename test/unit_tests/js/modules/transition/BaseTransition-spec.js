@@ -1,4 +1,4 @@
-import BaseTransition from '../../../../../cfgov/unprocessed/js/modules/transition/BaseTransition';
+import BaseTransition from '../../../../../unprocessed/js/modules/transition/BaseTransition';
 
 let transition;
 
