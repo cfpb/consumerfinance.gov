@@ -5,6 +5,8 @@ import {
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import TODO_FIXTURE from '../../fixtures/todo-alert';
+import TodoNotificationMock from '../../mocks/todo-notification';
 
 const HTML = `
   <div class="content-l content-l_col-2-3 block__sub-micro m-yes-transit-time">
@@ -28,11 +30,13 @@ const HTML = `
       </label>
     </div>
   </div>
+  ${ TODO_FIXTURE }
 `;
 
 describe( 'transitTimeView', () => {
   const routeIndex = 0;
   const CLASSES = transitTimeView.CLASSES;
+  const todoNotification = new TodoNotificationMock();
   const dispatch = jest.fn();
   const mockStore = () => ( {
     dispatch,
@@ -44,16 +48,17 @@ describe( 'transitTimeView', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML;
     store = mockStore();
-    view = transitTimeView( document.querySelector( `.${ CLASSES.CONTAINER }` ), { store, routeIndex } );
+    view = transitTimeView( document.querySelector( `.${ CLASSES.CONTAINER }` ), { store, routeIndex, todoNotification } );
     view.init();
   } );
 
   afterEach( () => {
+    todoNotification.mockReset();
     dispatch.mockReset();
     view = null;
   } );
 
-  it( 'dispatches the correct event when hours field is changed', () => {
+  it( 'dispatches the correct action when hours field is changed', () => {
     const hoursEl = document.querySelector( '[data-js-name="transitTimeHours"]' );
     const hours = '1';
 
@@ -102,5 +107,25 @@ describe( 'transitTimeView', () => {
         routeIndex, value: true
       } )
     );
+  } );
+
+  it( 'initializes the todo notification component on init', () => {
+    expect( todoNotification.init.mock.calls.length ).toBe( 1 );
+  } );
+
+  it( 'toggles notifications when checkbox is clicked', () => {
+    const notSureEl = document.querySelector( 'input[type="checkbox"]' );
+
+    simulateEvent( 'click', notSureEl );
+
+    expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+    expect( todoNotification.hide.mock.calls.length ).toBe( 0 );
+
+    notSureEl.checked = true;
+
+    simulateEvent( 'click', notSureEl );
+
+    expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+    expect( todoNotification.hide.mock.calls.length ).toBe( 1 );
   } );
 } );

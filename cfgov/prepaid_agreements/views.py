@@ -1,9 +1,13 @@
+from six.moves.urllib.parse import urlparse
+
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import InvalidPage, Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 
 from prepaid_agreements.models import PrepaidProduct
+from v1.models.snippets import ReusableText
 
 
 def validate_page_number(request, paginator):
@@ -80,6 +84,16 @@ def filter_products(filters, products):
     return products
 
 
+def get_disclaimer_text():
+    return ReusableText.objects.filter(
+        title='Prepaid agreements database disclaimer').first()
+
+
+def get_support_text():
+    return ReusableText.objects.filter(
+        title='Prepaid agreements support and inquiries').first()
+
+
 def index(request):
     params = dict(request.GET.iterlists())
     available_filters = {}
@@ -126,10 +140,31 @@ def index(request):
         'active_filters': available_filters,
         'valid_filters': valid_filters,
         'search_field': search_field,
+        'disclaimer_text': get_disclaimer_text(),
+        'support_text': get_support_text()
     })
+
+
+def get_detail_page_breadcrumb(request):
+    """
+    Determines link back to search page from detail page.
+    If referrer is search page and contains a query
+    string, returns referrer so query is preserved.
+    Otherwise, returns base search page path.
+    """
+    http_referer = request.META.get('HTTP_REFERER', '')
+    referrer = urlparse(http_referer)
+    search_page_path = reverse('prepaid_agreements:index')
+    if referrer.query and referrer.path == search_page_path:
+        return http_referer
+    else:
+        return search_page_path
 
 
 def detail(request, product_id):
     return render(request, 'prepaid_agreements/detail.html', {
-        'product': get_object_or_404(PrepaidProduct, pk=product_id)
+        'product': get_object_or_404(PrepaidProduct, pk=product_id),
+        'search_page_url': get_detail_page_breadcrumb(request),
+        'disclaimer_text': get_disclaimer_text(),
+        'support_text': get_support_text()
     })

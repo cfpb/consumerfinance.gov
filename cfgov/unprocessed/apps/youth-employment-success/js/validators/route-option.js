@@ -67,7 +67,11 @@ function isRequiredValid( data ) {
     // does the data object contain the required field
     if ( data.hasOwnProperty( fieldName ) ) {
       // check if the value exists
-      isValid = valueOrActionPlan( fieldName, data[fieldName], data.actionPlanItems );
+      isValid = valueOrActionPlan(
+        fieldName,
+        data[fieldName],
+        data.actionPlanItems
+      );
     }
 
     if ( !isValid ) {

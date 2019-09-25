@@ -165,13 +165,22 @@
             </div>
         {% endif %}
     </div>
-
+    {% if disclaimer_text or support_text %}
     <div class="database-disclaimer">
         <div class="o-well">
-            <h4>Database disclaimer</h4>
-            <p>We will display the prepaid agreements in this database as the respective issuers submitted them. The CFPB is not responsible for the content of the agreements, including any discrepancies between an agreement as presented in this database and the agreement as offered to the public, or for any omissions or other errors in the agreement as submitted by the issuer.</p>
-            <p>The agreements on file will have general terms and conditions, pricing, and fee information. They are not specific to an individual's account information.</p>
-            <p>If you have questions about the agreements themselves, contact the prepaid issuer directly.</p>
+            {% if disclaimer_text %}
+            <div class="block block__sub block__flush-top">
+                <h4>{{ disclaimer_text.sidefoot_heading | safe }}</h4>
+                {{ disclaimer_text.text | safe }}
+            </div>
+            {% endif %}
+            {% if support_text %}
+            <div class="block block__sub block__flush-bottom">
+                <h4>{{ support_text.sidefoot_heading | safe }}</h4>
+                {{ support_text.text | safe }}
+            </div>
+            {% endif %}
         </div>
     </div>
+    {% endif %}
 </div>

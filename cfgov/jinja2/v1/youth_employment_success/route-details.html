@@ -6,7 +6,7 @@
 
     <div class="content_line-bold"></div>
   
-    <div class="block__sub-micro">
+    <div class="block block__sub-micro">
       <p class="content-l content-l_col-3-4">
         <b>Money left in your monthly budget</b>
       </p>
@@ -34,7 +34,7 @@
   
     <div class="content_line-bold"></div>
   
-    <div class="block__sub-micro">
+    <div class="block block__sub-micro">
       <div class="content-l content-l_col-3-4">
         <p class="u-mb0">
           <b>
@@ -60,7 +60,7 @@
           This option is in budget, and may be a good choice for you to get to work.
         </small>
       </p> -->
-      <div class="js-route-oob block__sub-micro">
+      <div class="js-route-oob block block__sub-micro">
         {{
           renderAlert({
             'content': 'This option is out of budget. Talk to your caseworker about ways you might be able to rethink your budget so this can be an option for you.',
@@ -69,7 +69,7 @@
         }}
       </div>
     </div>
-    <div class="block__sub-micro">
+    <div class="block block__sub-micro">
       <p class="content-l content-l_col-1-3"><b>Total time to get to work</b></p>
       <p class="content-l content-l_col-2-3" style="text-align: right;">
         <b class="content-l_col-1-2">
@@ -80,11 +80,13 @@
         </b>
       </p>
     </div>
-  
-    <div class="content-l content-l_col-2-3">
-      <span class="h4">MY TO-DO LIST</span>
-      <div class="content_line-bold"></div>
-      <ul class="block__sub-micro js-todo-items">
-      </ul>
-    </div>
+    
+    {% if show_todos %}
+      <div class="content-l content-l_col-2-3">
+        <span class="h4">YOUR TO-DO LIST</span>
+        <div class="content_line-bold"></div>
+        <ul class="block block__sub-micro js-todo-items">
+        </ul>
+      </div>
+    {% endif %}
   </div>
