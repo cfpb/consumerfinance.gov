@@ -17,7 +17,7 @@ personal fork. This is advised if you are going to be doing development on
 There are two ways to install cfgov-refresh:
 
 - [Stand-alone installation](#stand-alone-installation)
-- [Docker-compose installation](#docker-compose-installation)
+- [Docker-based installation](#docker-based-installation)
 
 
 ## Stand-alone installation
@@ -204,7 +204,7 @@ Want to know more about what the setup scripts are doing?
 
 **Continue following the [usage instructions](../running-virtualenv/).**
 
-## Docker-compose installation
+## Docker-based installation
 
 ### Tools we use for developing with Docker
 
@@ -214,20 +214,18 @@ Want to know more about what the setup scripts are doing?
   snapshot of all of the files neccessary to run a container).
 - **Docker Compose**: Compose allows you to configure and run a collection of
   connected containers (like a web application and its database).
-- **Docker Machine**: In environments where Docker Engine is not available,
-  Docker Machine can be used to create and manage Docker hosts on virtual
-  machines.
 
 ### 1. Setup your Docker environment
 
 If you have never installed Docker before, follow the instructions
-[here](https://docs.docker.com/engine/installation/) or from your operating
-system vendor. If you are on a mac and are unable to install the official
-"Docker for Mac" package, the quickstart instructions below might help.
+[here](https://docs.docker.com/install/) or from your operating system vendor.
 
-If you are on a machine that is already set up to run Linux docker containers,
-please install [Docker Compose](https://docs.docker.com/compose/install/).
-If `docker-compose ps` runs without error, you can can go to step 2.
+The default Docker installation on some systems includes Docker Compose.
+For systems where this is not the case, Docker Compose will need to be
+[installed manually](https://docs.docker.com/compose/install/).
+
+To verify the installation of Docker Compose, the command
+`docker-compose ps` should run without error if Docker is running locally.
 
 #### Copy the `.env_SAMPLE` file over
 
@@ -239,19 +237,6 @@ this is your first time setting up the project, copy `.env_SAMPLE` to
 ```bash
 cp -a .env_SAMPLE .env
 ```
-
-#### Mac + Homebrew + Docker Machine + VirtualBox quickstart
-
-**Starting assumptions**: You already have Homebrew and VirtualBox installed.
-You can run `brew search docker` without error.
-
-Install Docker, Docker Machine, and Docker Compose:
-`brew install docker docker-compose docker-machine`
-
-Then run `source mac-virtualbox-init.sh` to initialize your Docker Machine
-setup.
-
-At this point, `docker-compose ps` should run without error.
 
 ### 2. Setup your frontend environment
 

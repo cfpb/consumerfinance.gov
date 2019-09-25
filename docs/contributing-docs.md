@@ -45,13 +45,13 @@ nav:
 
 ### With Docker
 
-When running cfgov-refresh using [Docker-compose](https://cfpb.github.io/cfgov-refresh/installation/#docker-compose-installation),
+When running cfgov-refresh using [Docker-compose](../installation/#docker-based-installation),
 this documentation is running by default at http://localhost:8888.
 
 ### Manually
 
 When using 
-[the stand-alone installation](http://localhost:8888/installation/#stand-alone-installation) 
+[the stand-alone installation](../installation/#stand-alone-installation)
 of cfgov-refresh, 
 you can run these docs with:
 
