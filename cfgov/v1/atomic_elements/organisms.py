@@ -1,4 +1,5 @@
 import json
+from collections import Counter
 from functools import partial
 from six import string_types as basestring
 from six.moves.urllib.parse import urlencode
@@ -23,6 +24,7 @@ from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from jinja2 import Markup
+from taggit.models import Tag
 
 import ask_cfpb
 from v1 import blocks as v1_blocks
@@ -30,12 +32,36 @@ from v1.atomic_elements import atoms, molecules
 from v1.util import ref
 
 
+class AskSearch(blocks.StructBlock):
+    show_label = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text='Whether to show form label.'
+    )
+
+    placeholder = blocks.TextBlock(
+        required=False,
+        help_text='Text to show for the input placeholder text.'
+    )
+
+    class Meta:
+        icon = 'search'
+        template = '_includes/organisms/ask-search.html'
+
+    class Media:
+        js = ['ask-autocomplete.js']
+
+
 class Well(blocks.StructBlock):
     content = blocks.RichTextBlock(required=False, label='Well')
 
     class Meta:
-        icon = 'title'
+        icon = 'placeholder'
         template = '_includes/organisms/well.html'
+
+
+class WellWithAskSearch(Well):
+    ask_search = AskSearch()
 
 
 class InfoUnitGroup(blocks.StructBlock):
@@ -733,6 +759,8 @@ class FullWidthText(blocks.StreamBlock):
     related_links = molecules.RelatedLinks()
     reusable_text = v1_blocks.ReusableTextChooserBlock('v1.ReusableText')
     email_signup = EmailSignUp()
+    well = Well()
+    well_with_ask_search = WellWithAskSearch()
 
     class Meta:
         icon = 'edit'
@@ -837,8 +865,17 @@ class FilterableList(BaseExpandable):
             required=False
         )),
     ])
-    topics = blocks.BooleanBlock(default=True, required=False,
-                                 label='Filter Topics')
+    topic_filtering = blocks.ChoiceBlock(
+        choices=[
+            ('no_filter', "Don't filter topics"),
+            ('sort_alphabetically',
+                'Filter topics, sort topic list alphabetically'),
+            ('sort_by_frequency',
+                'Filter topics, sort topic list by number of results'),
+        ],
+        required=True,
+        help_text='Whether to include a dropdown in the filter controls '
+                  'for "Topics"')
     authors = blocks.BooleanBlock(default=True, required=False,
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
@@ -860,18 +897,35 @@ class FilterableList(BaseExpandable):
     class Media:
         js = ['filterable-list.js']
 
+    @staticmethod
+    def get_filterable_topics(filterable_page_ids, value):
+        """Given a set of page IDs, return the list of filterable topics"""
+        tags = Tag.objects.filter(
+            v1_cfgovtaggedpages_items__content_object__id__in=filterable_page_ids  # noqa E501
+        ).values_list('slug', 'name')
+
+        sort_order = value.get('topic_filtering', 'sort_by_frequency')
+        if sort_order == 'sort_alphabetically':
+            return tags.distinct().order_by('name')
+        elif sort_order == 'sort_by_frequency':
+            return [tag for (tag, _) in Counter(tags).most_common()]
+        else:
+            return []
+
     def get_context(self, value, parent_context=None):
         context = super(FilterableList, self).get_context(
             value,
             parent_context=parent_context
         )
-
+        show_topics = value['topic_filtering'] == 'sort_by_frequency' or \
+            value['topic_filtering'] == 'sort_alphabetically'
         # Different instances of FilterableList need to render their post
         # previews differently depending on the page type they live on. By
         # default post dates and tags are always shown.
         context.update({
             'show_post_dates': True,
             'show_post_tags': True,
+            'show_topic_filter': show_topics,
         })
 
         # Pull out the page type selected when the FilterableList was

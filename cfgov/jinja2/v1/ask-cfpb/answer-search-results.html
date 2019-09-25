@@ -1,6 +1,6 @@
 {% import 'molecules/pagination.html' as pagination with context %}
 
-{% import 'ask/ask-search.html' as ask_search_bar with context %}
+{% import 'organisms/ask-search.html' as ask_search with context %}
 
 {% extends 'layout-2-1-bleedbar.html' %}
 
@@ -16,7 +16,7 @@
         <h1>{{ _('Search our library of answers') }}</h1>
 
         <div class="block block__sub">
-        {{ ask_search_bar.render( q=tag or page.query, language=page.language, show_label=False, autocomplete=False ) }}
+        {{ ask_search.render( ask_query=tag or page.query, language=page.language, show_label=False, autocomplete=False ) }}
         </div>
 
         {% if results %}
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="block block__sub">
-                    {{ pagination.render( 
+                    {{ pagination.render(
                         paginator.num_pages,
                         current_page | int,
                         '',

@@ -16,16 +16,23 @@
 
   disabled:    Whether the field is disabled. Defaults to false.
 
+  rows:        The vertical space the textarea should occupy.
+
+  cols:        The horizontal space the textarea should occupy.
+
+  fieldClass:  Classes to control appearance and / or provide JavaScript hooks.
+
   ========================================================================== #}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
 
-{% macro renderTextarea(value) -%}
+{% macro render(value) -%}
 
 {%- set id = get_unique_id('textarea_', '_') ~ slugify( value.label ) -%}
 {%- set ht_id = get_unique_id('textarea_ht_', '_') ~ slugify( value.label ) -%}
 {%- set label_class = value.labelClass if value.labelClass else '' -%}
 {%- set rows = value.rows if value.rows else '6' -%}
 {%- set cols = value.cols if value.cols else '80' -%}
+{%- set field_class = value.fieldClass if value.fieldClass else '' -%}
 
 <div class="form-l_col form-l_col-1">
    <label for="{{ id }}" class="a-label {{ label_class }} u-mb0">
@@ -39,7 +46,7 @@
       <small>{{ value.helperText | safe }}</small>
     </p>
    {%- endif -%}
-   <textarea class="content-l_col-2-3"
+   <textarea class="content-l_col-2-3 {{ field_class }}"
              id="{{ id }}"
              {%- if value.name -%} name="{{ value.name }}" {%- endif -%}
              {{ 'required' if value.required else '' }}

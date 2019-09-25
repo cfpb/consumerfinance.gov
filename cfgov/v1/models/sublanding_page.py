@@ -101,7 +101,8 @@ class SublandingPage(CFGOVPage):
                 CFGOVPage.objects.child_of_q(page)
             )
 
-            form = FilterableListForm(filterable_pages=eligible_children)
+            form = FilterableListForm(filterable_pages=eligible_children,
+                                      wagtail_block=None)
             for post in form.get_page_set():
                 posts_list.append(post)
         return sorted(posts_list,

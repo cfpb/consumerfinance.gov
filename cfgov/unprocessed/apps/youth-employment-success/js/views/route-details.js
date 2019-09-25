@@ -43,6 +43,11 @@ function updateTodoList( todos = [] ) {
   return fragment;
 }
 
+/* Assuming days per week for a transportation option to be 5 days per week.
+   This could easily not be accurate as people frequently have weekend jobs,
+   multiple shifts etc, but should work for now. */
+const FULL_TIME_DAYS = 5;
+
 const DEFAULT_COST_ESTIMATE = '-';
 
 // Rough estimate to account for weeks that have more or less days
@@ -62,7 +67,6 @@ const ESTIMATED_COST_PER_MILE = 1.8;
 function getCalculationFn( route ) {
   const {
     isMonthlyCost,
-    monthlyCost,
     transportation,
     averageCost,
     daysPerWeek,
@@ -74,10 +78,10 @@ function getCalculationFn( route ) {
 
     return calculatePerMonthCost( realDailyCost, daysPerWeek );
   } else if ( isMonthlyCost ) {
-    return monthlyCost;
+    return averageCost;
   }
 
-  return calculatePerMonthCost( averageCost, daysPerWeek );
+  return calculatePerMonthCost( averageCost, FULL_TIME_DAYS );
 }
 
 /**
@@ -102,9 +106,11 @@ function calculatePerMonthCost( dailyCost, daysPerWeek ) {
     return DEFAULT_COST_ESTIMATE;
   }
 
+  const normalizedDays = Number( daysPerWeek ) > 7 ? 7 : daysPerWeek;
+
   return money.toDollars(
     money.toDollars( dailyCost ) *
-    parseFloat( daysPerWeek ) *
+    normalizedDays *
     WEEKLY_COST_MODIFIER
   );
 }
@@ -117,7 +123,7 @@ function calculatePerMonthCost( dailyCost, daysPerWeek ) {
  */
 function updateRemainingBudget( budget, transportationEstimate ) {
   return money.subtract(
-    money.subtract( budget.earned, budget.spent ),
+    budget,
     transportationEstimate
   );
 }
@@ -219,17 +225,18 @@ function routeDetailsView( element ) {
     },
     render( { budget, route } ) {
       const costEstimate = getCalculationFn( route );
+      const remainingBudget = money.subtract( budget.earned, budget.spent );
       const dataToValidate = assign( {}, budget, route );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
-      updateDom( _budgetEl, budget.earned );
+      updateDom( _budgetEl, remainingBudget );
       updateDom( _daysPerWeekEl, route.daysPerWeek );
       updateDom( _totalCostEl, costEstimate );
       updateDom( _budgetLeftEl, updateRemainingBudget( budget, costEstimate ) );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
       updateDom( _todoEl, updateTodoList( route.actionPlanItems ) );
-      toggleAlert( _oobAlertEl, updateRemainingBudget( budget, costEstimate ) );
+      toggleAlert( _oobAlertEl, updateRemainingBudget( remainingBudget, costEstimate ) );
       toggleAlert( _incAlertEl, validate( dataToValidate ) ? 0 : -1 );
     }
   };

@@ -2,7 +2,7 @@
 {% import 'atoms/partially-styled-link.html' as partially_styled_link with context %}
 {% import 'macros/category-icon.html' as category_icon %}
 {% import 'templates/render_block.html' as render_block with context %}
-{% import 'ask/ask-search.html' as ask_search_bar with context %}
+{% import 'organisms/ask-search.html' as ask_search with context %}
 
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__landing
@@ -86,10 +86,10 @@
 
         <section class="ask-search block block__sub block__flush-bottom">
             <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
-            {{ ask_search_bar.render( language=page.language ) }}
+            {{ ask_search.render( language=page.language ) }}
         </section>
 
-        
+
     </div>
 
 {% endblock %}
@@ -108,14 +108,14 @@
         Ver página en español
     {% endif %}
     </span>
-</a> 
+</a>
 {% if about_us %}
 <div class="block u-mt45 u-mb45 about-us-text">
     {{ about_us.text | richtext }}
 </div>
 {% endif %}
 {% if disclaimer %}
-<div class="block block__border-top block__padded-top disclaimer-text"> 
+<div class="block block__border-top block__padded-top disclaimer-text">
     <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
     {{ disclaimer.text | richtext }}
 </div>

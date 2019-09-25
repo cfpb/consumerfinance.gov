@@ -16,7 +16,8 @@ class TestFilterableListForm(TestCase):
 
     def setUpFilterableForm(self, data=None):
         filterable_pages = AbstractFilterPage.objects.live()
-        form = FilterableListForm(filterable_pages=filterable_pages)
+        form = FilterableListForm(filterable_pages=filterable_pages,
+                wagtail_block=None)
         form.is_bound = True
         form.cleaned_data = data
         return form
