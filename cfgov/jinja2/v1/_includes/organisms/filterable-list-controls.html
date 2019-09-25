@@ -46,11 +46,11 @@
             </div>
         </div>
     {% endif %}
-    {% if value.topics or value.authors or value.date_range %}
+    {% if show_topic_filter or value.authors or value.date_range %}
         <div class="content-l_col
                     content-l_col-2-3">
             <div class="content-l">
-                {% if value.topics %}
+                {% if show_topic_filter %}
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">

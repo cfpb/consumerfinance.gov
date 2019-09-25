@@ -1,7 +1,7 @@
 # Running in Docker
 
 First, follow
-[the Docker installation instructions](installation/#docker-compose-installation)
+[the Docker installation instructions](../installation/#docker-based-installation)
 to setup your Docker environment and create the project Docker containers.
 
 We use [`docker-compose`](https://docs.docker.com/compose/reference/overview/)

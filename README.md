@@ -3,10 +3,11 @@
 [![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=master)](https://travis-ci.org/cfpb/cfgov-refresh?branch=master)
 [![codecov](https://codecov.io/gh/cfpb/cfgov-refresh/branch/master/graph/badge.svg)](https://codecov.io/gh/cfpb/cfgov-refresh)
 
-The redesign of the [www.consumerfinance.gov](https://www.consumerfinance.gov) website.
+The master repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
 This Django project includes the front-end assets and build tools,
-[Jinja templates](http://jinja.pocoo.org) for front-end rendering,
-and [Wagtail CMS](https://wagtail.io) for content administration.
+[Jinja templates](https://jinja.palletsprojects.com/) for front-end rendering,
+code to configure our CMS, [Wagtail](https://wagtail.io/),
+and several standalone Django apps for specific parts of the site.
 
 ![Screenshot of cfgov-refresh](homepage.png)
 
@@ -16,7 +17,10 @@ and [Wagtail CMS](https://wagtail.io) for content administration.
 Full installation and usage instructions are available in
 [our documentation](https://cfpb.github.io/cfgov-refresh).
 
-This project requires Python 2.7, Node 8, and Gulp 4. We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/).
+This project requires Python 2.7, Node 8, and Gulp 4.
+We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and
+[virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
+for keeping the project's Python dependencies contained.
 
 Clone the repository:
 
@@ -33,7 +37,7 @@ mkvirtualenv --python=python2.7 cfgov-refresh
 
 Create and load initial environment settings:
 
-```
+```sh
 cp -a .env_SAMPLE .env
 source .env
 ```
@@ -56,32 +60,33 @@ Start your local Django server:
 ./runserver.sh
 ```
 
-Your site will be available locally at <http://localhost:8000>.
+Your site will be available locally at <http://localhost:8000/>.
 
-The site admin will be available at <http://localhost:8000/admin/>, using login `admin` /
-`admin`.
+The Wagtail admin area will be available at <http://localhost:8000/admin/>,
+which you can log into with the credentials `admin`/`admin`.
 
 
 ## Documentation
 
-Full documentation for this project is available in the [docs](docs/) directory
+Full documentation for this project is available in the [docs/](docs/) directory
 and [online](https://cfpb.github.io/cfgov-refresh/).
 
 If you would like to browse the documentation locally, you can do so
-with [`mkdocs`](http://www.mkdocs.org/):
+with [`mkdocs`](https://www.mkdocs.org/):
 
 ```sh
 pip install -r requirements/docs.txt
 mkdocs serve
 ```
 
-Documentation will be available locally at [http://localhost:8000](http://localhost:8000).
+Documentation will be available locally at
+[http://localhost:8000/](http://localhost:8000/).
 
 
 ## Getting help
 
-Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues) to follow the
-development conversation.
+Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues)
+to follow the development conversation.
 If you find a bug not listed in the issue tracker,
 please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new).
 
@@ -97,6 +102,7 @@ which is the front-end pattern library used in this project.
 
 
 ## Open source licensing info
+
 1. [TERMS](TERMS.md)
 2. [LICENSE](LICENSE)
 3. [CFPB Source Code Policy](https://github.com/cfpb/source-code-policy/)
@@ -104,5 +110,5 @@ which is the front-end pattern library used in this project.
 
 ## Credits and references
 
-This project uses the [Capital Framework](https://github.com/cfpb/capital-framework)
-for its user interface and layout components.
+This project uses [Capital Framework](https://github.com/cfpb/capital-framework)
+as the basis of its user interface and layout components.

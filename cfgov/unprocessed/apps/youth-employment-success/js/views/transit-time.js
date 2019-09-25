@@ -4,7 +4,7 @@ import {
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction
 } from '../reducers/route-option-reducer';
-import inputView from '../input-view';
+import inputView from './input';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-transit-time'
@@ -20,7 +20,7 @@ const CLASSES = Object.freeze( {
  * @param {object} props Additional properties to be supplied to the view
  * @returns {Object} The view's public methods
  */
-function transitTimeView( element, { store, routeIndex } ) {
+function transitTimeView( element, { store, routeIndex, todoNotification } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _inputs = Array.prototype.slice.call(
     _dom.querySelectorAll( 'input' )
@@ -39,6 +39,14 @@ function transitTimeView( element, { store, routeIndex } ) {
     const method = _actionMap[name];
     const type = event.target.type;
     const value = type === 'checkbox' ? event.target.checked : event.target.value;
+
+    if ( type === 'checkbox' ) {
+      if ( value ) {
+        todoNotification.show();
+      } else {
+        todoNotification.hide();
+      }
+    }
 
     if ( method ) {
       store.dispatch( method( {
@@ -64,6 +72,7 @@ function transitTimeView( element, { store, routeIndex } ) {
     init() {
       if ( setInitFlag( _dom ) ) {
         _initInputs();
+        todoNotification.init( _dom );
       }
     }
   };

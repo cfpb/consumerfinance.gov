@@ -2,10 +2,16 @@ import Expandable from 'cf-expandables/src/Expandable';
 import { addRouteOptionAction } from './reducers/route-option-reducer';
 import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
+import averageCostView from './views/average-cost';
+import daysPerWeekView from './views/days-per-week';
+import milesView from './views/miles';
+import goalsView from './views/goals';
 import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
 import routeDetailsView from './views/route-details';
+import expandableView from './views/expandable';
 import store from './store';
+import transitTimeView from './views/transit-time';
 
 Array.prototype.slice.call(
   document.querySelectorAll( 'input' )
@@ -17,12 +23,24 @@ const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
 const OPTION_TOGGLE_CLASSES = routeOptionToggleView.CLASSES;
 const DETAILS_CLASSES = routeDetailsView.CLASSES;
+const GOALS_CLASSES = goalsView.CLASSES;
+
+const goalsViewEl = document.querySelector( ` .${ GOALS_CLASSES.CONTAINER }` );
+const goalsFormView = goalsView( goalsViewEl, { store } );
+goalsFormView.init();
 
 const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
 const budgetForm = budgetFormView( budgetFormEl, { store } );
 budgetForm.init();
 
 const expandables = Expandable.init();
+
+expandables.forEach( expandable => {
+  expandableView( expandable.element, {
+    expandable
+  } ).init();
+} );
+
 const routeOptionForms = expandables.map( ( expandable, index ) => {
   store.dispatch( addRouteOptionAction( createRoute() ) );
 
@@ -30,12 +48,18 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
   return routeOptionFormView( routeOptionsEl, {
     store,
     routeIndex: index,
-    detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) )
+    detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) ),
+    averageCostView,
+    daysPerWeekView,
+    milesView,
+    transitTimeView
   } );
 } );
 
-/* only initialize the first form, the other gets initialized when
-  the user clicks 'add another option' button */
+/**
+ * Only initialize the first route option form, the second is initialized when
+ * the user clicks the 'add another option' button.
+*/
 routeOptionForms[0].init();
 routeOptionToggleView(
   document.querySelector( `.${ OPTION_TOGGLE_CLASSES.BUTTON }` ), {
@@ -45,9 +69,4 @@ routeOptionToggleView(
 ).init();
 
 expandables[0].element.querySelector( '.o-expandable_target' ).click();
-// target the last element, reverse is destructive
 expandables[1].element.classList.add( 'u-hidden' );
-
-window.onbeforeunload = () => {
-  budgetForm.destroy();
-};
