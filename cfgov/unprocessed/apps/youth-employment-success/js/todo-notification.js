@@ -65,7 +65,7 @@ function TodoNotification() {
       _clearAlert();
       _cloneNotification( message );
     }
-  };
+  }
 
   /**
    * Display a removal notification, then remove it from the DOM.
@@ -78,7 +78,7 @@ function TodoNotification() {
       _cloneNotification( message );
       cancel = setTimeout( _clearAlert, speed );
     }
-  };
+  }
 
   /**
    * Remove the notification and clear the timer
@@ -87,7 +87,7 @@ function TodoNotification() {
     if ( initialized && clone ) {
       _clearAll();
     }
-  };
+  }
 
   /**
    * Perform set up operations on the instance
