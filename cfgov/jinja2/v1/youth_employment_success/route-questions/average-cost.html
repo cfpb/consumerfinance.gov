@@ -2,7 +2,7 @@
 {% from 'atoms/radio-button.html' import render as render_radio with context %}
 {% from 'input.html' import render as render_input with context %}
 
-<div class="content-l content-l_col-2-3 block__sub-micro m-yes-average-cost">
+<div class="content-l content-l_col-2-3 block__sub-micro m-yes-average-cost" style="transition: height 1s;">
   {{
     render_input({
       'data_js_name': 'averageCost',

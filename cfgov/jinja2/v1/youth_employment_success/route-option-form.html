@@ -1,4 +1,5 @@
 {% from 'atoms/radio-button.html' import render with context %}
+{% import 'alert.html' as alert with context %}
 {% set labels = ['Walk', 'Drive', 'Bike', 'Public transit', 'Get dropped off'] %}
 
 <form class="o-yes-route-option" autocomplete="new-password">
@@ -40,4 +41,13 @@
   {% with show_todos=true %}
     {% include "route-details.html" %}
   {% endwith %}
+  {{
+    alert.render({
+      'background': true,
+      'class': 'js-todo-notification',
+      'content': 'Item added to your to-do list.',
+      'fill': 'success',
+      'visible': false,
+    })
+  }}
 </form>

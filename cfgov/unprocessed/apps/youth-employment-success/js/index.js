@@ -11,6 +11,7 @@ import routeOptionToggleView from './route-option-toggle-view';
 import routeDetailsView from './views/route-details';
 import expandableView from './views/expandable';
 import store from './store';
+import transitTimeView from './views/transit-time';
 
 Array.prototype.slice.call(
   document.querySelectorAll( 'input' )
@@ -50,7 +51,8 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
     detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) ),
     averageCostView,
     daysPerWeekView,
-    milesView
+    milesView,
+    transitTimeView
   } );
 } );
 

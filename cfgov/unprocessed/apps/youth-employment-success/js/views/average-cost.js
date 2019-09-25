@@ -29,7 +29,7 @@ const COST_FREQUENCY_TYPES = {
  * @param {HTMLNode} element The root DOM element for this view
  * @returns {Object} This view's public methods
  */
-function averageCostView( element, { store, routeIndex } ) {
+function averageCostView( element, { store, routeIndex, todoNotification } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _averageCostEl = _dom.querySelector( 'input[type="text"]' );
   const _radioEls = toArray( _dom.querySelectorAll( `.${ CLASSES.RADIO }` ) );
@@ -75,9 +75,17 @@ function averageCostView( element, { store, routeIndex } ) {
    * @param {string} updateObject.name The name of the field the event was emitted from
    */
   function _handleNotSureUpdate( { event } ) {
+    const { checked } = event.target;
+
+    if ( checked ) {
+      todoNotification.show();
+    } else {
+      todoNotification.hide();
+    }
+
     store.dispatch( updateCostToActionPlan( {
       routeIndex,
-      value: event.target.checked
+      value: checked
     } ) );
   }
 
@@ -98,6 +106,7 @@ function averageCostView( element, { store, routeIndex } ) {
         _notSureEl.checked = '';
         _radioEls.forEach( radio => { radio.checked = ''; } );
         _dom.classList.add( 'u-hidden' );
+        todoNotification.remove();
         store.dispatch( clearAverageCostAction( { routeIndex } ) );
       } else {
         _dom.classList.remove( 'u-hidden' );
@@ -136,7 +145,7 @@ function averageCostView( element, { store, routeIndex } ) {
     init() {
       if ( setInitFlag( _dom ) ) {
         _initInputs();
-
+        todoNotification.init( _dom );
         store.subscribe( _onStateUpdate );
       }
     }

@@ -13,7 +13,7 @@ function mockStore() {
     } ),
     mockReset() {
       dispatch.mockReset();
-      subscribe.mockReset();
+      subscribe.mockClear();
       subscriberFn = null;
     }
   };

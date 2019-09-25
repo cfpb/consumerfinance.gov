@@ -5,7 +5,7 @@ import {
 } from './reducers/route-option-reducer';
 import inputView from './views/input';
 import { toArray } from './util';
-import transitTimeView from './views/transit-time';
+import TodoNotification from './todo-notification';
 
 const CLASSES = Object.freeze( {
   FORM: 'o-yes-route-option',
@@ -29,7 +29,8 @@ function RouteOptionFormView( element, {
   detailsView,
   averageCostView,
   daysPerWeekView,
-  milesView
+  milesView,
+  transitTimeView
 } ) {
   const _dom = checkDom( element, CLASSES.FORM );
   const _transportationOptionEls = toArray(
@@ -67,21 +68,21 @@ function RouteOptionFormView( element, {
 
         transitTimeView(
           _dom.querySelector( `.${ transitTimeView.CLASSES.CONTAINER }` ),
-          { store, routeIndex }
+          { store, routeIndex, todoNotification: new TodoNotification() }
         ).init();
 
         averageCostView(
           _dom.querySelector( `.${ averageCostView.CLASSES.CONTAINER }` ),
-          { store, routeIndex }
+          { store, routeIndex, todoNotification: new TodoNotification() }
         ).init();
 
         daysPerWeekView(
           _dom.querySelector( `.${ daysPerWeekView.CLASSES.CONTAINER }` ),
-          { store, routeIndex }
+          { store, routeIndex, todoNotification: new TodoNotification() }
         ).init();
 
         milesView( _dom.querySelector( `.${ milesView.CLASSES.CONTAINER }` ), {
-          store, routeIndex
+          store, routeIndex, todoNotification: new TodoNotification()
         } ).init();
 
         detailsView.init();

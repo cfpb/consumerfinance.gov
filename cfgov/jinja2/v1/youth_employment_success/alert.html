@@ -1,4 +1,4 @@
-{% from 'alert-icon.html' import render as renderAlertIcon with context %}
+{% import 'alert-icon.html' as alert_icon with context %}
 
 {% macro render(value) -%}
 
@@ -6,17 +6,18 @@
 {%- set content = value.content -%}
 {%- set visible = 'm-notification__visible' if value.visible else '' -%}
 {%- set background = 'm-notification__' ~ value.fill if value.background else '' -%}
+{%- set class = value.class if value.class else '' -%}
 
-<div class="m-notification {{ visible }} {{ background }}">
+<div class="m-notification {{ visible }} {{ background }} {{ class }}">
   {{
-    renderAlertIcon({
+    alert_icon.render({
       'fill': fill 
     })
   }}
   <div class="m-notification_content">
     <div class="h4 m-notification_message">
-      <p class="a-label_helper">
-        <small>{{ content }}</small>
+      <p class="a-label a-label_helper">
+        <small class="js-alert-content">{{ content | safe }}</small>
       </p>
     </div>
   </div>
