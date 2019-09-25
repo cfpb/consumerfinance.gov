@@ -399,15 +399,8 @@ class AnswerResultsPage(CFGOVPage):
     objects = CFGOVPageManager()
     answers = []
 
-    content = StreamField([
-    ], null=True)
-
-    content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('content'),
-    ]
-
     edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='Content'),
+        ObjectList(CFGOVPage.content_panels, heading='Content'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
