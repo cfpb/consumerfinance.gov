@@ -12,11 +12,6 @@ services:
   - postgresql
 
 addons:
-  postgresql: "10"
-  apt:
-    packages:
-    - postgresql-10
-    - postgresql-client-10
   chrome: stable
 
 cache:
@@ -44,7 +39,6 @@ script:
 env:
   global:
     - COVERALLS_PARALLEL=true
-    - PGPORT=5433
     - TEST_DATABASE_URL=postgres://travis:travis@localhost:5433/travis
     - TRAVIS_CHECK_MIGRATIONS="./manage.py makemigrations --dry-run --check"
   matrix:
