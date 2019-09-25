@@ -13,6 +13,7 @@ import routeDetailsView from './views/route-details';
 import expandableView from './views/expandable';
 import store from './store';
 import transitTimeView from './views/transit-time';
+import reviewDetailsView from './views/review/details';
 
 Array.prototype.slice.call(
   document.querySelectorAll( 'input' )
@@ -35,7 +36,17 @@ const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
 const budgetForm = budgetFormView( budgetFormEl, { store } );
 budgetForm.init();
 
-reviewGoalsView( document.querySelector( `.${ REVIEW_GOALS_CLASSES.CONTAINER }` ), { store } ).init();
+reviewGoalsView(
+  document.querySelector( `.${ REVIEW_GOALS_CLASSES.CONTAINER }`
+  ), { store }
+).init();
+
+const reviewDetailsEl = document.querySelector(
+  `.${ reviewDetailsView.CLASSES.CONTAINER }`
+);
+reviewDetailsView( reviewDetailsEl, {
+  store, routeDetailsView
+} ).init();
 
 const expandables = Expandable.init();
 

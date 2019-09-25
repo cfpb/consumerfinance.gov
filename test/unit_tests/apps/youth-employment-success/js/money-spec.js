@@ -21,5 +21,6 @@ describe( 'money helpers', () => {
 
   it( 'subtracts values', () => {
     expect( money.subtract( '100', '50' ) ).toEqual( 50 );
+    expect( money.subtract( '-50', '50' ) ).toEqual( -100 );
   } );
 } );
