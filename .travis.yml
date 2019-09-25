@@ -39,7 +39,7 @@ script:
 env:
   global:
     - COVERALLS_PARALLEL=true
-    - TEST_DATABASE_URL=postgres://travis:travis@localhost:5433/travis
+    - TEST_DATABASE_URL=postgres://travis:travis@localhost/travis
     - TRAVIS_CHECK_MIGRATIONS="./manage.py makemigrations --dry-run --check"
   matrix:
     - RUNTEST=backend
