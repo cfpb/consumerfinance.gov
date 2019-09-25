@@ -55,8 +55,7 @@ install() {
     # directly from a GitHub.com URL which enforces rate-limiting. This can
     # cause installation failures when running automated testing. Currently
     # we don't rely on Gecko for testing.
-    # TODO: Remove --version flag when https://github.com/angular/webdriver-manager/pull/421 is merged in.
-    ./node_modules/protractor/bin/webdriver-manager update --gecko false --standalone false --versions.chrome 77.0.3865.40
+    ./node_modules/protractor/bin/webdriver-manager update --gecko false --standalone false
 
   else
     echo "Installing frontend production dependencies…"
