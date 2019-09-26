@@ -381,6 +381,10 @@ urlpatterns = [
         r'^(?i)consumer-tools/financial-well-being/',
         include('wellbeing.urls')
     ),
+    url(
+        r'^(?i)about-us/diversity-and-inclusion/',
+        include('diversity_inclusion.urls')
+    ),
 
     url(r'^sitemap\.xml$', sitemap),
 

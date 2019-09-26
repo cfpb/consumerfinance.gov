@@ -1,0 +1,143 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    Voluntary Diversity Assessment Registration Form
+{%- endblock %}
+
+{% block desc -%}
+    TODO: Come back to this
+{%- endblock %}
+
+{% block og_desc -%}
+    TODO: Come back to this
+{%- endblock %}
+
+{% block og_image %}
+    TODO: Come back to this
+{% endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <style>
+
+    </style>
+{%- endblock %}
+
+{% block content_main -%}
+    <h1>Voluntary Diversity Assessment Registration Form</h1>
+
+    <form id="quiz-form" action="{{ url('voluntary_assessment_form') }}" method="POST">
+        {{ form }}
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <input type="submit" value="Submit">
+    </form>
+{%- endblock %}
+
+{% block content_sidebar -%}
+    <div class="block block__flush-top">
+        <h3>About us</h3>
+        <p>
+            We're the Consumer Financial Protection Bureau (CFPB),
+            a U.S. government agency that makes sure banks, lenders,
+            and other financial companies treat you fairly.
+        </p>
+        <a class="a-link a-link__jump" href="/about-us/the-bureau/">
+            <span class="a-link_text">Learn how the CFPB can help you</span>
+        </a>
+    </div>
+
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">About this questionnaire</h2>
+        </header>
+        <p>
+            CFPB researchers developed the questionnaire and a way to score it,
+            as a tool to help measure your current financial well-being—that is,
+            how well your current money situation is providing you with
+            financial security and freedom of choice, today and for the future.
+        </p>
+        <a class="a-link a-link__jump" href="{{ url('fwb_about') }}">
+            <span class="a-link_text">See more background</span>
+        </a>
+    </div>
+
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">
+                Latest blog posts
+            </h2>
+        </header>
+        <div class="m-related-posts_list-container">
+
+            <ul class="m-related-posts_list
+                       m-list
+                       m-list__unstyled
+                       m-list__spaced">
+
+                <li class="m-list_item">
+                    <h3 class="h4 u-mb5">
+                        <a href="/about-us/blog/were-working-better-serve-people-through-financial-coaching/"
+                          class="m-list_link">
+                            We’re working to better serve people through financial coaching
+                        </a>
+                    </h3>
+                    <p class="a-date">
+                        <span class="datetime">
+                            <time class="datetime_date" datetime="2017-08-17T00:00:00.000000">
+                              AUG 17, 2017
+                            </time>
+                        </span>
+                    </p>
+                </li>
+                <li class="m-list_item">
+                    <h3 class="h4 u-mb5">
+                        <a href="/about-us/blog/effective-financial-education-five-principles-and-how-use-them/"
+                          class="m-list_link">
+                            Effective financial education: Five principles and how to use them
+                        </a>
+                    </h3>
+                    <p class="a-date">
+                        <span class="datetime">
+                            <time class="datetime_date" datetime="2017-06-14T00:00:00.000000">
+                              JUN 14, 2017
+                            </time>
+                        </span>
+                    </p>
+                </li>
+                <li class="m-list_item">
+                    <h3 class="h4 u-mb5">
+                        <a href="/about-us/blog/four-elements-define-personal-financial-well-being/"
+                           class="m-list_link">
+                            Four elements define personal financial well-being
+                        </a>
+                    </h3>
+                    <p class="a-date">
+                        <span class="datetime">
+                            <time class="datetime_date" datetime="2015-01-27T00:00:00.000000">
+                              JAN 27, 2015
+                            </time>
+                        </span>
+                    </p>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">Legal disclaimer</h2>
+        </header>
+        <p>
+            The content on this page provides general consumer information.
+            It is not legal advice or regulatory guidance.
+            The CFPB updates this information periodically.
+            This information may include links or references
+            to third-party resources or content.
+            We do not endorse the third-party or guarantee
+            the accuracy of this third-party information.
+            There may be other resources that also serve your needs.
+        </p>
+    </div>
+{%- endblock %}

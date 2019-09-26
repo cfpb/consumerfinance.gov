@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'treemodeladmin',
     'housing_counselor',
     'hmda',
+    'diversity_inclusion'
 )
 
 OPTIONAL_APPS = [
