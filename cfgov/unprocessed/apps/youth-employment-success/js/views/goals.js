@@ -46,9 +46,7 @@ function goalsView( element, { store } ) {
     const method = GOALS_TO_ACTIONS[name];
 
     if ( method ) {
-      store.dispatch( method( {
-        value: event.target.value
-      } ) );
+      store.dispatch( method( event.target.value ) );
     }
   }
 
@@ -59,9 +57,9 @@ function goalsView( element, { store } ) {
   * @param {string} updateObject.name The name of the field the event was emitted from
   */
   function _handleTimelineUpdate( { event } ) {
-    store.dispatch( updateGoalTimelineAction( {
-      value: event.target.value
-    } ) );
+    store.dispatch( updateGoalTimelineAction(
+      event.target.value
+    ) );
   }
 
   /**

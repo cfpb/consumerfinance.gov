@@ -133,6 +133,7 @@ class DocumentDetailPage(AbstractFilterPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
+        ('notification', molecules.Notification()),
         ('table_block', organisms.AtomicTableBlock(
             table_options={'renderer': 'html'})),
         ('feedback', v1_blocks.Feedback()),
