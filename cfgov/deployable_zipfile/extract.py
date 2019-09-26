@@ -10,11 +10,15 @@ from zipfile import ZipFile
 
 
 def locate_virtualenv_site_packages(virtualenv_python):
+    # On some systems, depending on how sys.stdout is configured, a default
+    # encoding may not be configured. Use utf-8 as a fallback.
+    stdout_encoding = getattr(sys.stdout, 'encoding', None) or 'utf-8'
+
     return subprocess.check_output([
         virtualenv_python,
         '-c',
         'import sys; print(sys.path[-1])',
-    ]).decode(sys.stdout.encoding or 'utf-8').strip()
+    ]).decode(stdout_encoding).strip()
 
 
 def extract_zipfile(zipfile_filename, extract_location):

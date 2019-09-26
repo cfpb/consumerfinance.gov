@@ -52,9 +52,7 @@ describe( 'goalsView', () => {
 
     expect( mock.calls.length ).toBe( 1 );
     expect( mock.calls[0][0] ).toEqual(
-      updateGoalAction( {
-        value: goal
-      } )
+      updateGoalAction( goal )
     );
   } );
 
@@ -69,9 +67,7 @@ describe( 'goalsView', () => {
 
     expect( mock.calls.length ).toBe( 1 );
     expect( mock.calls[0][0] ).toEqual(
-      updateGoalImportanceAction( {
-        value: goal
-      } )
+      updateGoalImportanceAction( goal )
     );
   } );
 
@@ -86,9 +82,7 @@ describe( 'goalsView', () => {
 
     expect( mock.calls.length ).toBe( 1 );
     expect( mock.calls[0][0] ).toEqual(
-      updateGoalStepsAction( {
-        value: goal
-      } )
+      updateGoalStepsAction( goal )
     );
   } );
 
@@ -100,9 +94,7 @@ describe( 'goalsView', () => {
 
     expect( mock.calls.length ).toBe( 1 );
     expect( mock.calls[0][0] ).toEqual(
-      updateGoalTimelineAction( {
-        value: shortTimelineEl.value
-      } )
+      updateGoalTimelineAction( shortTimelineEl.value )
     );
   } );
 } );
