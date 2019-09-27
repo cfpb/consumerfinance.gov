@@ -72,7 +72,7 @@
     show_date=true,
     show_tags=true
 ) %}
-    {% set date_desc = controls.post_date_description or post_date_description or 'Published' %}
+    {% set date_desc = controls.post_date_description or post_date_description %}
     {% set cat_controls = controls.categories %}
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
     <article class="o-post-preview">
