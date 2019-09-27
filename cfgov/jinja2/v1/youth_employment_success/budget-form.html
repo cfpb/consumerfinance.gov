@@ -1,6 +1,6 @@
 {% from 'line-item.html' import render as render_line_item with context %}
 
-<section class="block o-yes-budget">
+<section class="block o-yes-budget u-mb45">
   <h2>Now let’s compare your different options for getting to work</h2>
   <p>
     First we’ll help you figure out your average monthly budget so you have an idea of how much money is available to spend on transportation. Once you’ve estimated your budget, you can compare different options to see which one best fits your budget and lifestyle.
@@ -13,7 +13,7 @@
       <div class="content-l_col content-l_col-1 u-mobile-reorder">
         <div class="content-l u-mobile-reorder__second">
           <label for="yes-money-earned" class="a-label h4 content-l_col content-l_col-1-3 u-hide-on-mobile">
-            <b>How much money do you receive each month?</b> 
+            How much money do you receive each month?
           </label>
           <div class="content-l_col content-l_col-2-3">  
             <input type="text" id="yes-money-earned" name="money-earned" class="a-text-input o-yes-budget-earned" disabled aria-labelledby="mobile-earned-label">
@@ -21,7 +21,7 @@
         </div>
         <div class="u-mobile-reorder__first">
           <p id="mobile-earned-label" class="a-label h4 content-l_col-1-3 u-show-on-mobile">
-            <b>How much money do you receive each month?</b> 
+            How much money do you receive each month?
           </p>
           <p class="a-label_helper">
             Some sources might be:
@@ -53,18 +53,21 @@
         </div>
         <div>
         <div class="u-mobile-reorder__first">
-          <!-- using a-label here adds undesireable styles -->
-          <p class="a-label_helper">
-            Don’t include transportation costs, but some other sources might be:
-          </p>
-          <ul class="a-label_helper">
-            <li>Rent and utilities</li>
-            <li>Groceries and eating out</li>
-            <li>Credit card bills</li>
-            <li>Student loans</li>
-            <li>Childcare</li>
-            <li>Cell phone</li>
-          </ul>
+          <div class="content-l">
+            <div class="content-l_col content-l_col-1-3">
+              <p class="a-label_helper">
+                Don’t include transportation costs, but some other sources might be:
+              </p>
+              <ul class="a-label_helper">
+                <li>Rent and utilities</li>
+                <li>Groceries and eating out</li>
+                <li>Credit card bills</li>
+                <li>Student loans</li>
+                <li>Childcare</li>
+                <li>Cell phone</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <p id="mobile-spent-label" class="a-label content-l_col-1-3 u-show-on-mobile"">
           <b>Now, subtract your monthy expenses:</b>

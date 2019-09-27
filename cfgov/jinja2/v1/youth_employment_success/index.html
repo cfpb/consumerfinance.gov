@@ -16,14 +16,9 @@
       {% include "goals.html" %}      
       {% include "budget-form.html" %}
       <div class="yes-routes">
-        <h2>How do your transportation options fit in your budget, schedule, and lifestyle?</h2>
-        <p>
-          <b>
-            There are many ways you could get to work—some options are faster, cheaper, or more convenient.
-          </b>
-        </p>
-        <p>
-          You’ll be able to choose a type of transportation and enter how much it costs. If you’re unsure about any of the specifics, don’t worry — you can select, “I’m not sure,” and the item will be added to your to-do list, which you’ll receive at the end of the tool. Once you finish your first option, you can compare it to other options to help you figure out the best choice for you.
+        <h2>How do your transportation options fit in your budget, schedule, and lifestyle?</h2>        
+        <p class="u-mb0">
+          There are many ways you could get to work—some options are faster, cheaper, or more convenient. You’ll be able to choose a type of transportation and enter how much it costs. If you’re unsure about any of the specifics, don’t worry — you can select, “I’m not sure,” and the item will be added to your to-do list, which you’ll receive at the end of the tool. Once you finish your first option, you can compare it to other options to help you figure out the best choice for you.
         </p>
         <div class="content-l">
           <div class="u-w75pct">
@@ -35,8 +30,8 @@
               {% endwith %}
             {% endfor %}
           </div>
-        </div>
-        <div class="content-l m-yes-route-option">
+        </div>  
+        <div class="content-l m-yes-route-option block u-mt30">
           <h4>Are there other ways you can get to work? Compare different options to help you figure out your first choice and a backup plan.</h4>
           <div class="content-l_col content-l_col-1">
             {% include "plus-icon.html" %}

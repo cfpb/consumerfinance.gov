@@ -26,7 +26,6 @@ Array.prototype.slice.call(
 const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
 const OPTION_TOGGLE_CLASSES = routeOptionToggleView.CLASSES;
-const DETAILS_CLASSES = routeDetailsView.CLASSES;
 const GOALS_CLASSES = goalsView.CLASSES;
 const REVIEW_GOALS_CLASSES = reviewGoalsView.CLASSES;
 

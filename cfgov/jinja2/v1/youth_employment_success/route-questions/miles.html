@@ -1,18 +1,22 @@
 {% from 'atoms/checkbox.html' import render as render_checkbox with context %}
 {% from 'input.html' import render as render_input with context %}
 
-<div class="content-l content-l_col-2-3 block block__sub-micro m-yes-miles">
-  {{
-    render_input({
-      'data_js_name': "miles",
-      'helperText': 'This can be a rough estimate — don’t worry if it’s not exact.',
-      'label': 'How many miles do you expect to drive each day?',
-      'size': '1-4',
-      'type': 'text',
-      'value': '',
-      'disabled': true
-    })
-  }}
+<div class="content-l content-l_col content-l_col-2-3 block block__sub-micro m-yes-miles">
+  <div class="content-l">
+    <div class="content-l_col content-l_col-1">
+      {{
+        render_input({
+          'data_js_name': "miles",
+          'helperText': 'This can be a rough estimate — don’t worry if it’s not exact.',
+          'label': 'How many miles do you expect to drive each day?',
+          'size': '1-4',
+          'type': 'text',
+          'value': '',
+          'disabled': true
+        })
+      }}
+    </div>
+  </div>
   {{ 
     render_checkbox({
       'class': 'u-js-only block block__sub-micro',

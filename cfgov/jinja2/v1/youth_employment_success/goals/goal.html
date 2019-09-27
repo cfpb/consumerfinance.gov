@@ -37,7 +37,7 @@
 <div class="content-l m-form-field">
   <div class="content-l_col content-l_col-1 block block__sub-micro">
     <label for="{{ id }}" class="a-label {{ label_class }} u-mb0">
-        <b>{{ value.label }}</b>
+        {{ value.label }}
         {%- if value.required == false -%}
             &nbsp;<small class="a-label_helper">(optional)</small>
         {%- endif -%}
@@ -49,7 +49,7 @@
     {%- endif -%}
   </div>
   <div class="content-l_col content-l_col-2-3">
-    <textarea class="a-text-input a-text-input__full"
+    <textarea class="a-text-input a-text-input__full {{ field_class }}"
               id="{{ id }}"
               {%- if value.name -%} name="{{ value.name }}" {%- endif -%}
               {{ 'required' if value.required else '' }}
