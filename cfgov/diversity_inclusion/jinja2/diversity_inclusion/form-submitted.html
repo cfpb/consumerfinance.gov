@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block title -%}
-    Thanks for submitting your form
+    Your voluntary diversity assessment registration has been submitted
 {%- endblock %}
 
 {% block desc -%}
@@ -17,10 +17,6 @@
     TODO: Come back to this
 {%- endblock %}
 
-{% block og_image %}
-    TODO: Come back to this
-{% endblock %}
-
 {% block css %}
     {{ super() }}
     <style>
@@ -28,77 +24,49 @@
     </style>
 {% endblock %}
 
+{% block pre_content %}
+    <div class="content_wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+            {{ svg_icon('left') }}
+            <a class="breadcrumbs_link" href="/about-us/diversity-and-inclusion/">
+                Diversity and inclusion at the Bureau
+            </a>
+        </nav>
+    </div>
+{% endblock %}
+
 
 {% block content_main %}
-    <h1>Thanks for submitting your form</h1>
-{% endblock %}
-
-{% block content_sidebar %}
     <div class="block block__flush-top">
-        <header class="m-slug-header">
-            <h2 class="a-heading">Looking for more help?</h2>
-        </header>
-        <p>
-            You can further explore the tips, tools, answers, and resources
-            in our Consumer Tools section, including:
-        </p>
-        <ul class="m-list m-list__links">
-            <li class="m-list_item">
-                <a class="m-list_link" href="/consumer-tools/debt-collection/">
-                  Debt collection
-                </a>
-            </li>
-            <li class="m-list_item">
-                <a class="m-list_link" href="/consumer-tools/student-loans/">
-                  Student loans
-                </a>
-            </li>
-            <li class="m-list_item">
-                <a class="m-list_link" href="/consumer-tools/credit-reports-and-scores/">
-                  Credit reports and scores
-                </a>
-            </li>
-            <li class="m-list_item">
-                <a class="m-list_link" href="/ask-cfpb/category-credit-cards/">
-                  Credit cards
-                </a>
-            </li>
-            <li class="m-list_item">
-                <a class="m-list_link" href="/consumer-tools/mortgages/">
-                  Mortgages
-                </a>
-            </li>
-        </ul>
+        <h1>Voluntary diversity assessment registration form</h1>
     </div>
-
     <div class="block">
-        <header class="m-slug-header">
-            <h2 class="a-heading">About this questionnaire</h2>
-        </header>
-        <p>
-            CFPB researchers developed the questionnaire and a way to score it,
-            as a tool to help measure your current financial well-being—that is,
-            how well your current money situation is providing you with
-            financial security and freedom of choice, today and for the future.
-        </p>
-        <a class="a-link a-link__jump" href="{{ url('fwb_about') }}">
-            <span class="a-link_text">See more background</span>
-        </a>
-    </div>
-
-    <div class="block">
-        <header class="m-slug-header">
-            <h2 class="a-heading">Legal disclaimer</h2>
-        </header>
-        <p>
-            The content on this page provides general consumer information.
-            It is not legal advice or regulatory guidance.
-            The CFPB updates this information periodically.
-            This information may include links or references
-            to third-party resources or content.
-            We do not endorse the third-party or guarantee
-            the accuracy of this third-party information.
-            There may be other resources that also serve your needs.
-        </p>
+        <div class="m-notification m-notification__visible m-notification__success">
+            {{ svg_icon('approved-round') }}
+            <div class="m-notification_content">
+                <div class="h4 m-notification_message">
+                    Your voluntary diversity assessment registration has been submitted
+                </div>
+                <p class="m-notification_explanation">
+                    Please contact the OMWI Regulated Entities Support Team at
+                    <a href="mailto:OMWI_regulatedentity@cfpb.gov">
+                        OMWI_regulatedentity@cfpb.gov
+                    </a>
+                    if you have any questions.
+                </p>
+            </div>
+        </div>
     </div>
 {% endblock %}
+
+{% block content_sidebar -%}
+    <div class="block block__flush-top">
+        <h3>About us</h3>
+        <p>
+            The Consumer Financial Protection Bureau (CFPB) is a 21st century agency
+            that helps consumer finance markets work by making rules more effective,
+            by consistently and fairly enforcing those rules,
+            and by empowering consumers to take more control over their economic lives.
+        </p>
+    </div>
+{%- endblock %}

@@ -3,10 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from forms import VoluntaryAssessmentForm
+from diversity_inclusion.forms import VoluntaryAssessmentForm
 
 
-class GetName(TemplateView):
+class GetAssessmentForm(TemplateView):
     # if this is a POST request we need to process the form data
     def post(self, request):
         # create a form instance and populate it with data from the request:

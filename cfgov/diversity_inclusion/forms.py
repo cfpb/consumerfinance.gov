@@ -12,75 +12,62 @@ text_input_attrs = {
     'class': 'a-text-input a-text-input__full',
 }
 
-# This is needed to disable Django's default Textarea sizing.
-textarea_attrs = {
-    'rows': None,
-    'cols': None,
-}
-textarea_attrs.update(text_input_attrs)
-
-
 class VoluntaryAssessmentForm(forms.Form):
     institution_name = forms.CharField(
-        max_length=250,
+        label='Institution name',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     institution_address = forms.CharField(
-        max_length=250,
+        label='Street address',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     institution_city = forms.CharField(
-        max_length=250,
+        label='City',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     institution_state = forms.CharField(
-        max_length=20,
+        label='State',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     institution_zip = forms.CharField(
-        label='Institution ZIP Code',
-        max_length=10,
+        label='ZIP',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
 
     lei = forms.CharField(
         label='LEI',
         required=False,
-        max_length=32,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
-    rssd_id = forms.CharField(
-        label='RSSD ID',
+    rssd = forms.CharField(
+        label='RSSD',
         required=False,
-        max_length=32,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     tax_id = forms.CharField(
-        label='Tax ID Number (TIN)',
+        label='Tax ID',
         required=False,
-        max_length=32,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
 
     contact_name = forms.CharField(
-        max_length=250,
+        label='Contact name',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     contact_title = forms.CharField(
-        max_length=250,
+        label='Title',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     contact_email = forms.EmailField(
-        max_length=250,
-        widget=forms.TextInput(attrs=text_input_attrs),
+        label='Work email address',
+        widget=forms.EmailInput(attrs=text_input_attrs),
     )
     contact_phone = forms.CharField(
-        max_length=24,
+        label='Work phone number',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     contact_phone_alt = forms.CharField(
-        label='Alternate contact phone (optional)',
+        label='Alternate work phone number',
         required=False,
-        max_length=24,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
