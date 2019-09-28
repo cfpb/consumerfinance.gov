@@ -1,5 +1,11 @@
 @import (reference) '../../../css/main.less';
 
+.u-hide-on-review-print {
+  .respond-to-print({
+    display: none !important;
+  });
+}
+
 /** 
 * This gets overwritten by media queries, so we need to make it important.
 */
