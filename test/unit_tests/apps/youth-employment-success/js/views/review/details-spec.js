@@ -4,7 +4,7 @@ import { toArray } from '../../../../../../../cfgov/unprocessed/apps/youth-emplo
 import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
 
 const HTML = `
-<div class="js-option-review">
+<div class="js-yes-plans-review">
   <h2>Your plan to get to work</h2>
   <h3>Your to-do list</h3>
   <ul>
