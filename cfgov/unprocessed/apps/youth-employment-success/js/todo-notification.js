@@ -43,16 +43,40 @@ function TodoNotification() {
     }
   }
 
+  function handleTransitionEnd() {
+    registeredNode.appendChild(clone);
+
+    window.requestAnimationFrame(() => {
+      clone.classList.add('fade-in')
+      registeredNode.removeEventListener('transitionend', handleTransitionEnd);
+      clone.classList.remove('fade-in-begin')
+    });
+  }
+
   /**
    * Helper function to clone + append notification node
    * @param {String} message The message the notification should display
    */
   function _cloneNotification( message ) {
+    const containerHeight = registeredNode.scrollHeight;
+    registeredNode.style.height = `${containerHeight}px`;
+    registeredNode.addEventListener('transitionend', handleTransitionEnd);
     clone = self.element.cloneNode( true );
-    clone.querySelector( `.${ CLASSES.MESSAGE }` ).textContent = message;
-    clone.classList.add( VISIBLE_CLASS );
 
-    registeredNode.appendChild( clone );
+    clone.style = 'position: absolute; top: -999999px; left: -999999px';
+
+    clone.classList.add(VISIBLE_CLASS);
+    registeredNode.appendChild(clone);
+
+    const alertHeight = clone.scrollHeight;
+
+    registeredNode.removeChild(clone);
+
+    clone.classList.remove(VISIBLE_CLASS);
+    clone.style = '';
+    clone.querySelector( `.${ CLASSES.MESSAGE }` ).textContent = message;
+    clone.classList.add( VISIBLE_CLASS, 'fade-in-begin' );
+    registeredNode.style.height = `${containerHeight + alertHeight}px`;
   }
 
   /**
