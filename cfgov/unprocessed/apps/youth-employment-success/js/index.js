@@ -15,6 +15,7 @@ import store from './store';
 import transitTimeView from './views/transit-time';
 import reviewDetailsView from './views/review/details';
 import reviewChoiceView from './views/review/choice';
+import drivingCostEstimateView from './views/driving-cost-estimate';
 
 Array.prototype.slice.call(
   document.querySelectorAll( 'input' )
@@ -69,9 +70,10 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
   return routeOptionFormView( routeOptionsEl, {
     store,
     routeIndex: index,
-    detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) ),
+    routeDetailsView,
     averageCostView,
     daysPerWeekView,
+    drivingCostEstimateView,
     milesView,
     transitTimeView
   } );

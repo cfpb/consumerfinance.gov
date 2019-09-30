@@ -1,5 +1,5 @@
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
 import { assign, toArray, toggleCFNotification } from '../util';
+import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
 import { getPlanItem } from '../data/todo-items';
 import money from '../money';
 import transportationMap from '../data/transportation-map';

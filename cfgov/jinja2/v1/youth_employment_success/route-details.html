@@ -55,11 +55,14 @@
           })
         }}
       </div>
-      <!-- <p class="a-label_helper js-route-in-budget">
-        <small>
-          This option is in budget, and may be a good choice for you to get to work.
-        </small>
-      </p> -->
+      <div class="js-route-incomplete">
+        {{
+          renderAlert({
+            'fill': 'success',
+            'content': 'Looks good! This option fits your budget.',
+          })
+        }}
+      </div>
       <div class="js-route-oob block block__sub-micro">
         {{
           renderAlert({

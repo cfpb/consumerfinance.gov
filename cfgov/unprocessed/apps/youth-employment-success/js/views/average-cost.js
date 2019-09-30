@@ -6,8 +6,8 @@ import {
   updateCostToActionPlan,
   updateIsMonthlyCostAction
 } from '../reducers/route-option-reducer';
-import { toArray } from '../util';
 import inputView from './input';
+import { toArray } from '../util';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-average-cost',
@@ -18,6 +18,8 @@ const COST_FREQUENCY_TYPES = {
   DAILY: 'daily',
   MONTHLY: 'monthly'
 };
+
+const NOT_SURE_MESSAGE = 'Looking up average daily cost was added to your to-do list.';
 
 /**
  * AverageCostView
@@ -78,7 +80,7 @@ function averageCostView( element, { store, routeIndex, todoNotification } ) {
     const { checked } = event.target;
 
     if ( checked ) {
-      todoNotification.show();
+      todoNotification.show( NOT_SURE_MESSAGE );
     } else {
       todoNotification.hide();
     }

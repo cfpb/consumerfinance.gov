@@ -1,15 +1,19 @@
 import { simulateEvent } from '../../../../util/simulate-event';
 import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
 import averageCostView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
+import routeDetailsView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route-details';
 import milesView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
 import transitTimeView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/transit-time';
+import drivingCostEstimateView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/driving-cost-estimate';
 import {
   updateTransportationAction
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import daysPerWeekView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/days-per-week';
+import mockStore from '../../../mocks/store';
 
 jest.mock( '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/todo-notification' );
 
+const CLASSES = routeOptionFormView.CLASSES;
 const HTML = `
   <form class="o-yes-route-option">
     <input type="text" name="miles" data-js-name="miles" class="a-yes-question">
@@ -20,24 +24,32 @@ const HTML = `
     <input type="text" name="averageCost" data-js-name="averageCost" class="a-yes-question">
     <input type="radio" name="transpo" class="a-yes-route-mode" value="Bus">
     <input type="radio" name="transpo" class="a-yes-route-mode" value="Drive">
+    <div class="${ CLASSES.DISCOUNT }"></div>
     <div class="m-yes-transit-time"></div>
     <div class="yes-route-details"></div>
   </form>
 `;
 
 describe( 'routeOptionFormView', () => {
-  const CLASSES = routeOptionFormView.CLASSES;
   const dispatch = jest.fn();
   const detailsInit = jest.fn();
   const detailsRender = jest.fn();
+  const costEstimateInit = jest.fn();
+  const costEstimateRender = jest.fn();
   const costViewInit = jest.fn();
   const daysViewInit = jest.fn();
   const milesViewInit = jest.fn();
   const transitViewInit = jest.fn();
-  const detailsView = {
+  const detailsView = () => ({
     init: detailsInit,
     render: detailsRender
-  };
+  });
+  detailsView.CLASSES = routeDetailsView.CLASSES;
+  const costEstimateView = () => ( {
+    init: costEstimateInit,
+    render: costEstimateRender
+  } );
+  costEstimateView.CLASSES = drivingCostEstimateView.CLASSES;
   const viewMock = mock => () => ( {
     init: mock
   } );
@@ -53,24 +65,6 @@ describe( 'routeOptionFormView', () => {
   const transitViewMock = viewMock( transitViewInit );
   transitViewMock.CLASSES = transitTimeView.CLASSES;
 
-  const mockStore = () => ( {
-    dispatch,
-    subscribe( fn ) {
-      return fn( {
-        routes: { routes: []}
-      }, {
-        routes: { routes: []
-        }
-      } );
-    },
-    getState() {
-      return {
-        routes: {
-          routes: []
-        }
-      };
-    }
-  } );
   let view;
   let store;
 
@@ -80,9 +74,10 @@ describe( 'routeOptionFormView', () => {
     view = routeOptionFormView( document.querySelector( `.${ CLASSES.FORM }` ), {
       store,
       routeIndex: 0,
-      detailsView,
+      routeDetailsView: detailsView,
       averageCostView: costViewMock,
       daysPerWeekView: daysPerWeekViewMock,
+      drivingCostEstimateView: costEstimateView,
       milesView: milesViewMock,
       transitTimeView: transitViewMock
     } );
@@ -90,6 +85,7 @@ describe( 'routeOptionFormView', () => {
   } );
 
   afterEach( () => {
+    store.mockReset();
     dispatch.mockReset();
     view = null;
   } );
@@ -97,10 +93,14 @@ describe( 'routeOptionFormView', () => {
   it( 'initializes its children', () => {
     expect( costViewInit ).toHaveBeenCalled();
     expect( detailsInit ).toHaveBeenCalled();
+    expect( costEstimateInit ).toHaveBeenCalled();
     expect( daysViewInit ).toHaveBeenCalled();
     expect( milesViewInit ).toHaveBeenCalled();
   } );
 
+  it( 'subscribes to the store on init', () => {
+    expect( store.subscribe.mock.calls.length ).toBe( 1 );
+  } );
 
   it( 'dispatches an action to update `transportation` with checkbox selection', () => {
     const radioEl = document.querySelectorAll( 'input[name="transpo"]' )[0];
@@ -111,5 +111,32 @@ describe( 'routeOptionFormView', () => {
 
     expect( mock.calls.length ).toBe( 1 );
     expect( mock.calls[0][0] ).toEqual( updateTransportationAction( { routeIndex: 0, value: radioEl.value } ) );
+  } );
+
+  it( 'hides the transportation discount section when transportation method is Walk', () => {
+    const state = {
+      routes: {
+        routes: [ {
+          transportation: 'Walk'
+        } ]
+      }
+    };
+    let discountEl;
+
+    store.subscriber()( {}, state );
+
+    discountEl = document.querySelector( `.${ CLASSES.DISCOUNT }` );
+
+    expect( discountEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
+
+    store.subscriber()( {}, { routes: { routes: [ { transportation: 'Drive' } ]}} );
+
+    expect( discountEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
+  } );
+
+  it( 'calls render on the drivingCostEstimateView on state update', () => {
+    store.subscriber()( {}, { routes: { routes: [ { } ]}} );
+
+    expect( costEstimateRender ).toHaveBeenCalled();
   } );
 } );

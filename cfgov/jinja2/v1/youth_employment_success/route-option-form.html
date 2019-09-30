@@ -34,8 +34,18 @@
       {% endif %}
     </div>
   {% endfor %}
+  <div class="js-discount-tip">
+    <div class="content_line"></div>
+    <div class="block block__sub-micro">
+      {% include "money-icon.html" %}
+      <span>TIP</span>
+      <p>Ask about transportation discounts that your program, employer, or school might offer such as bus passes, gas cards, rideshare credits, or other reduced-fare cards. You might also receive benefits as a military servicemember or veteran.</p>  
+    </div>
+    <div class="content_line"></div>
+  </div>
   {% include "route-questions/average-cost.html" %}
   {% include "route-questions/miles.html" %}
+  {% include "route-questions/driving-cost-estimate.html" %}
   {% include "route-questions/days-per-week.html" %}
   {% include "route-questions/transit-time.html" %}
   {% with show_todos=true %}
