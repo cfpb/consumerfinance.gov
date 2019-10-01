@@ -8,7 +8,7 @@
   'hide_cue_label': false,
   'is_bordered': false
 } %}
-<div class="block block__sub-micro block__flush-bottom">
+<div class="block block__sub-micro block__flush-bottom js-route-option js-route-option-{{ id }}">
   {% call() expandable(expandable_settings) %}
     {% with id=id %}
       {% include "route-option-form.html" %}

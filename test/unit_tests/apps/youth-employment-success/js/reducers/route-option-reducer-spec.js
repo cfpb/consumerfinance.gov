@@ -6,6 +6,7 @@ import routeOptionReducer, {
   clearMilesAction,
   hasTodo,
   initialState,
+  routeCountSelector,
   routeSelector,
   updateAverageCostAction,
   updateCostToActionPlan,
@@ -50,7 +51,7 @@ describe( 'routeOptionReducer', () => {
 
   } );
 
-  it( 'exposes a helper to determine if a given plan type if in a route action plan', () => {
+  it( 'exposes a selector to determine if a given plan type if in a route action plan', () => {
     const initialRoutes = routeOptionReducer( UNDEFINED, addRouteOptionAction( createRoute( {
       actionPlanItems: [ PLAN_TYPES.MILES ]
     } ) ) );
