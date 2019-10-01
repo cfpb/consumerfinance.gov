@@ -1,6 +1,6 @@
 const _centsPerDollar = 100;
 const _decimals = 2;
-const _dollarsToPrecisionRegexp = new RegExp( `(\\d+\\.?\\d{0,${ _decimals }})` );
+const _dollarsToPrecisionRegexp = new RegExp( `(\-?\\d+\\.?\\d{0,${ _decimals }})` );
 
 /**
  * Converts an input string into a scaled dollar value, or zero.

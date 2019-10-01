@@ -89,7 +89,7 @@ function routeSelector( state, index ) {
 function todoListSelector( state, index ) {
   const route = routeSelector( state, index );
 
-  return route.actionPlanItems;
+  return route.actionPlanItems || [];
 }
 
 /**

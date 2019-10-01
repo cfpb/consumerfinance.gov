@@ -1,5 +1,5 @@
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { assign, toArray } from '../util';
+import { assign, toArray, toggleCFNotification } from '../util';
 import { getPlanItem } from '../data/todo-items';
 import money from '../money';
 import transportationMap from '../data/transportation-map';
@@ -150,10 +150,12 @@ function assertStateHasChanged( lastValue, value ) {
  * @param {*} nextValue The value with which to update the node(s)
  */
 function updateDom( node, nextValue ) {
-  if ( 'length' in node ) {
-    node.forEach( n => updateDomNode( n, nextValue ) );
-  } else {
-    updateDomNode( node, nextValue );
+  if ( node ) {
+    if ( 'length' in node ) {
+      node.forEach( n => updateDomNode( n, nextValue ) );
+    } else {
+      updateDomNode( node, nextValue );
+    }
   }
 }
 
@@ -172,21 +174,6 @@ function updateDomNode( node, nextValue ) {
     } else {
       node.textContent = nextValue;
     }
-  }
-}
-
-/**
- * Toggles the out-of-budget alert notification.
- * @param {HTMLElement} node The node containing the notification
- * @param {string} cost The total cost of the option after budget
- */
-function toggleAlert( node, cost ) {
-  const notification = node.querySelector( '.m-notification' );
-
-  if ( Number( cost ) < 0 ) {
-    notification.classList.add( 'm-notification__visible' );
-  } else {
-    notification.classList.remove( 'm-notification__visible' );
   }
 }
 
@@ -226,18 +213,19 @@ function routeDetailsView( element ) {
     render( { budget, route } ) {
       const costEstimate = getCalculationFn( route );
       const remainingBudget = money.subtract( budget.earned, budget.spent );
+      const nextRemainingBudget = updateRemainingBudget( remainingBudget, costEstimate );
       const dataToValidate = assign( {}, budget, route );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
       updateDom( _budgetEl, remainingBudget );
       updateDom( _daysPerWeekEl, route.daysPerWeek );
       updateDom( _totalCostEl, costEstimate );
-      updateDom( _budgetLeftEl, updateRemainingBudget( budget, costEstimate ) );
+      updateDom( _budgetLeftEl, nextRemainingBudget );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
       updateDom( _todoEl, updateTodoList( route.actionPlanItems ) );
-      toggleAlert( _oobAlertEl, updateRemainingBudget( remainingBudget, costEstimate ) );
-      toggleAlert( _incAlertEl, validate( dataToValidate ) ? 0 : -1 );
+      toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
+      toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
     }
   };
 }
