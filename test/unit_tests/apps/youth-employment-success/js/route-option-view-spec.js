@@ -1,15 +1,15 @@
 import { simulateEvent } from '../../../../util/simulate-event';
-import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
-import averageCostView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
-import routeDetailsView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route-details';
-import milesView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
-import transitTimeView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/transit-time';
-import drivingCostEstimateView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/driving-cost-estimate';
 import {
   updateTransportationAction
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import averageCostView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
 import daysPerWeekView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/days-per-week';
+import drivingCostEstimateView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/driving-cost-estimate';
+import milesView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
 import mockStore from '../../../mocks/store';
+import routeDetailsView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route-details';
+import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
+import transitTimeView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/transit-time';
 
 jest.mock( '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/todo-notification' );
 
@@ -40,19 +40,23 @@ describe( 'routeOptionFormView', () => {
   const daysViewInit = jest.fn();
   const milesViewInit = jest.fn();
   const transitViewInit = jest.fn();
-  const detailsView = () => ( {
+
+  const detailsViewMock = () => ({
     init: detailsInit,
     render: detailsRender
-  } );
-  detailsView.CLASSES = routeDetailsView.CLASSES;
+  });
+  detailsViewMock.CLASSES = routeDetailsView.CLASSES;
+
   const costEstimateView = () => ( {
     init: costEstimateInit,
     render: costEstimateRender
   } );
   costEstimateView.CLASSES = drivingCostEstimateView.CLASSES;
+
   const viewMock = mock => () => ( {
     init: mock
   } );
+
   const costViewMock = viewMock( costViewInit );
   costViewMock.CLASSES = averageCostView.CLASSES;
 
@@ -74,7 +78,7 @@ describe( 'routeOptionFormView', () => {
     view = routeOptionFormView( document.querySelector( `.${ CLASSES.FORM }` ), {
       store,
       routeIndex: 0,
-      routeDetailsView: detailsView,
+      routeDetailsView: detailsViewMock,
       averageCostView: costViewMock,
       daysPerWeekView: daysPerWeekViewMock,
       drivingCostEstimateView: costEstimateView,
@@ -96,6 +100,7 @@ describe( 'routeOptionFormView', () => {
     expect( costEstimateInit ).toHaveBeenCalled();
     expect( daysViewInit ).toHaveBeenCalled();
     expect( milesViewInit ).toHaveBeenCalled();
+    expect( transitViewInit ).toHaveBeenCalled();
   } );
 
   it( 'subscribes to the store on init', () => {
@@ -134,9 +139,10 @@ describe( 'routeOptionFormView', () => {
     expect( discountEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
   } );
 
-  it( 'calls render on the drivingCostEstimateView on state update', () => {
-    store.subscriber()( {}, { routes: { routes: [ { } ]}} );
+  it( 'calls render on its children when the store updates', () => {
+    store.subscriber()( {}, { budget: {}, routes: { routes: []}} );
 
+    expect( detailsRender ).toHaveBeenCalled();
     expect( costEstimateRender ).toHaveBeenCalled();
   } );
 } );

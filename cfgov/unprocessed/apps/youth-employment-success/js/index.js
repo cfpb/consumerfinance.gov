@@ -1,6 +1,7 @@
 import Expandable from 'cf-expandables/src/Expandable';
 import { addRouteOptionAction } from './reducers/route-option-reducer';
 import { toArray } from './util';
+import addRouteOptionView from './add-route-option-view';
 import averageCostView from './views/average-cost';
 import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
@@ -15,7 +16,6 @@ import reviewDetailsView from './views/review/details';
 import reviewGoalsView from './views/review/goals';
 import routeDetailsView from './views/route-details';
 import routeOptionFormView from './route-option-view';
-import routeOptionToggleView from './route-option-toggle-view';
 import store from './store';
 import transitTimeView from './views/transit-time';
 
@@ -27,10 +27,11 @@ toArray(
 
 const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
-const OPTION_TOGGLE_CLASSES = routeOptionToggleView.CLASSES;
+const OPTION_TOGGLE_CLASSES = addRouteOptionView.CLASSES;
 const GOALS_CLASSES = goalsView.CLASSES;
 const REVIEW_GOALS_CLASSES = reviewGoalsView.CLASSES;
 
+// Create factory initializers for all of these view initialize calls, separate files?
 const goalsViewEl = document.querySelector( ` .${ GOALS_CLASSES.CONTAINER }` );
 const goalsFormView = goalsView( goalsViewEl, { store } );
 goalsFormView.init();
@@ -39,21 +40,35 @@ const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
 const budgetForm = budgetFormView( budgetFormEl, { store } );
 budgetForm.init();
 
-const expandables = Expandable.init();
+let expandables = [];
 
-expandables.forEach( expandable => {
+function addRouteExpandable( el ) {
+  let routeEl = el;
+
+  if ( !routeEl ) {
+    const parent = document.querySelector( '.yes-routes-option-clone' );
+    const target = parent.querySelector( '.js-route-option' );
+    routeEl = target.cloneNode( true );
+    document.querySelector( '.js-initial-routes' ).appendChild( routeEl );
+  }
+
+  // Initialize a single expandable up-front.
+  const newExpandable = Expandable.init( routeEl );
+  expandables = expandables.concat( newExpandable );
+
+  const routeIndex = expandables.length - 1;
+  const expandable = expandables[expandables.length - 1];
   expandableView( expandable.element, {
-    expandable
+    expandable,
+    index: routeIndex
   } ).init();
-} );
 
-const routeOptionForms = expandables.map( ( expandable, index ) => {
   store.dispatch( addRouteOptionAction( createRoute() ) );
 
   const routeOptionsEl = expandable.element.querySelector( `.${ OPTION_CLASSES.FORM }` );
-  return routeOptionFormView( routeOptionsEl, {
+  const routeOptionForm = routeOptionFormView( routeOptionsEl, {
     store,
-    routeIndex: index,
+    routeIndex,
     routeDetailsView,
     averageCostView,
     daysPerWeekView,
@@ -61,14 +76,16 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
     milesView,
     transitTimeView
   } );
-} );
+  routeOptionForm.init();
+}
 
-expandables[0].element.querySelector( '.o-expandable_target' ).click();
-expandables[1].element.classList.add( 'u-hidden' );
-routeOptionToggleView(
+addRouteExpandable(
+  document.querySelector( '.js-route-option-1' )
+);
+
+addRouteOptionView(
   document.querySelector( `.${ OPTION_TOGGLE_CLASSES.BUTTON }` ), {
-    expandable: expandables[1],
-    routeOptionForm: routeOptionForms[1]
+    onAddExpandable: addRouteExpandable
   }
 ).init();
 
@@ -101,3 +118,12 @@ reviewChoiceView(
   document.querySelector( `.${ reviewChoiceView.CLASSES.CONTAINER }` ),
   { store, onShowReviewPlan: handleShowReviewPlan }
 ).init();
+
+/* remove the second expandable so we can properly initialize it when
+   the add additional route button is clicked. This will still preserve
+   the second route option when JS is unavailable */
+const routesEl = document.querySelector( '.js-initial-routes' );
+
+routesEl.removeChild(
+  routesEl.querySelector( '.js-route-option-2' )
+);

@@ -1,7 +1,9 @@
 import { checkDom } from '../../../../js/modules/util/atomic-helpers';
 
 const CLASSES = Object.freeze( {
-  CONTAINER: 'o-expandable'
+  CONTAINER: 'o-expandable',
+  BUTTON: 'o-expandable_target',
+  HEADING: 'o-expandable_label'
 } );
 
 /**
@@ -16,7 +18,7 @@ const CLASSES = Object.freeze( {
  * @param {Object} props.expandable The expandable instance this view manages
  * @returns {Object} The view's public methods
  */
-function expandableView( element, { expandable } ) {
+function expandableView( element, { expandable, index } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   let initialized = false;
   let detailsEl;
@@ -26,7 +28,7 @@ function expandableView( element, { expandable } ) {
   }
 
   /**
-   * If the view has been initialzed and was previously opened,
+   * If the view has been initialized and was previously opened,
    * remove the route details node.
    */
   function _hideRouteDetails() {
@@ -49,6 +51,9 @@ function expandableView( element, { expandable } ) {
   return {
     init() {
       if ( !initialized ) {
+        // The expandables are initialized in a closed state, so we need to force it to open.
+        expandable.element.querySelector( `.${ CLASSES.BUTTON }` ).click();
+        expandable.element.querySelector( `.${ CLASSES.HEADING }` ).textContent = `Option ${ index + 1 }`;
         expandable.transition.addEventListener( 'expandBegin', _hideRouteDetails );
         expandable.transition.addEventListener( 'collapseBegin', _showRouteDetails );
         initialized = true;
