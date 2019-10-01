@@ -854,7 +854,12 @@ class FilterableList(BaseExpandable):
         required=False,
         help_text='Additional explanation for the notification that '
                   'will be displayed if there are no posts to filter.')
-    post_date_description = blocks.CharBlock(default='Published')
+    post_date_description = blocks.CharBlock(
+        required=False,
+        label='Date stamp descriptor',
+        help_text='Strongly encouraged to help users understand the '
+                  'action that the date of the post is linked to, '
+                  'i.e. published, issued, released.')
     categories = blocks.StructBlock([
         ('filter_category',
          blocks.BooleanBlock(default=True, required=False)),
