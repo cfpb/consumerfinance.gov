@@ -7,6 +7,11 @@
   display: none !important;
 }
 
+/**
+  * Similar to the class below, we want to preserve the inline-block
+  * declaration, not the reset to `block` that this class normally provides.
+  * This !important is specific to the layout requirements of this tool.
+*/
 .u-hide-on-mobile {
   .respond-to-min(@bp-sm-min, {
     &.content-l_col {
@@ -16,7 +21,7 @@
 }
 
 /**
-* This class 3 two issues:
+* This class has three issues:
 * 1). it forces any element to be displayed as a block, which breaks layouts for inline elements
  * 2). It doesn't hide the element on desktop. This is odd because I would assume all elements
  * are visible by default on all browser sizes, unless specified.
@@ -67,6 +72,15 @@
   });
 }
 
+/**
+  * There are a few instances where we need the designs call for
+  * more fine grained control over the width of elements, and in each
+  * of those cases the width should render at 100% of the available container
+  * space on mobile.
+  * It may have been better to go with a custom grid, but
+  * the default layout was fine for most purposes and it seemed like a separate
+  * grid was overkill in this case.
+*/
 [class^="u-w"] {
   .respond-to-max(@bp-sm-min, {
     width: 100%;
@@ -119,7 +133,7 @@
 }
 
 /**
-* Name this something better
+* TODO: Name this something better?
 */
 .m-right-justify {
   &:extend(.h4);
