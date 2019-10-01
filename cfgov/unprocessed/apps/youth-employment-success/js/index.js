@@ -14,6 +14,7 @@ import expandableView from './views/expandable';
 import store from './store';
 import transitTimeView from './views/transit-time';
 import reviewDetailsView from './views/review/details';
+import reviewChoiceView from './views/review/choice';
 
 Array.prototype.slice.call(
   document.querySelectorAll( 'input' )
@@ -47,6 +48,11 @@ const reviewDetailsEl = document.querySelector(
 reviewDetailsView( reviewDetailsEl, {
   store, routeDetailsView
 } ).init();
+
+reviewChoiceView(
+  document.querySelector( `.${ reviewChoiceView.CLASSES.CONTAINER }` ),
+  { store }
+).init();
 
 const expandables = Expandable.init();
 
