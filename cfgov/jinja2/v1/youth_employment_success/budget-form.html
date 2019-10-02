@@ -1,6 +1,6 @@
 {% from 'line-item.html' import render as render_line_item with context %}
 
-<section class="block o-yes-budget u-mb45">
+<section class="block o-yes-budget u-mb15">
   <h2>Now let’s compare your different options for getting to work</h2>
   <p>
     First we’ll help you figure out your average monthly budget so you have an idea of how much money is available to spend on transportation. Once you’ve estimated your budget, you can compare different options to see which one best fits your budget and lifestyle.
@@ -75,20 +75,22 @@
       </div>
     </div>
   </form>
-  <div class="content-l block block__sub">
-    <div class="content-l_col content-l_col-2-3">
-      <div class="content_line-bold"></div>
-      <div class="block block__sub-micro">
-        {{
-          render_line_item({
-            'label': 'Total left at the end of the month:',
-            'target': 'o-yes-budget-remaining'
-          })
-        }}
-        <div class="content-l">
-          <p class="content-l_col content-l_col-1 u-mt10">
-            Estimating your monthly budget is a good place to start, but if you want a clearer picture of where your money goes, track your spending for a month using the Spending Tracker.
-          </p>
+  <div class="content-l_col content-l_col-1 block block__sub-micro">
+    <div class="content-l block block__sub">
+      <div class="content-l_col content-l_col-2-3">
+        <div class="content_line-bold"></div>
+        <div class="block block__sub-micro">
+          {{
+            render_line_item({
+              'label': 'Total left at the end of the month:',
+              'target': 'o-yes-budget-remaining'
+            })
+          }}
+          <div class="content-l">
+            <p class="content-l_col content-l_col-1 u-mt10">
+              Estimating your monthly budget is a good place to start, but if you want a clearer picture of where your money goes, track your spending for a month using the Spending Tracker.
+            </p>
+          </div>
         </div>
       </div>
     </div>
