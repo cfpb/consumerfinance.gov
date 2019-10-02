@@ -75,7 +75,7 @@ function reviewChoiceView( element, { store } ) {
       if ( route ) {
         const label = el.querySelector( 'label' );
         const friendlyOption = transportationMap[route.transportation];
-        const nextLabel = label.textContent.replace( '-', friendlyOption );
+        const nextLabel = `Option ${index + 1}: ${friendlyOption}`;
         label.textContent = nextLabel;
       }
     } );

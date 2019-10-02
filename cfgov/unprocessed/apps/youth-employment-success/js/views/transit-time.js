@@ -10,6 +10,8 @@ const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-transit-time'
 } );
 
+const NOT_SURE_MESSAGE = 'Looking up how long this trip takes was added to your to-do list.';
+
 /**
  * TransitTimeView
  * @class
@@ -42,7 +44,7 @@ function transitTimeView( element, { store, routeIndex, todoNotification } ) {
 
     if ( type === 'checkbox' ) {
       if ( value ) {
-        todoNotification.show();
+        todoNotification.show( NOT_SURE_MESSAGE );
       } else {
         todoNotification.hide();
       }
