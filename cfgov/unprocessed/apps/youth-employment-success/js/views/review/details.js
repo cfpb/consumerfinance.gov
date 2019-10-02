@@ -4,7 +4,7 @@ import { toArray, toggleCFNotification } from '../../util';
 import { getPlanItem } from '../../data/todo-items';
 
 const CLASSES = Object.freeze( {
-  CONTAINER: 'js-option-review',
+  CONTAINER: 'js-yes-plans-review',
   DETAILS: 'yes-route-details',
   TODO: 'js-review-todo',
   ALERT: 'js-route-incomplete'
