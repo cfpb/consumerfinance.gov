@@ -3,8 +3,147 @@
 /** 
 * This gets overwritten by media queries, so we need to make it important.
 */
-.u-hidden {
+.u-hidden, .u-hide-on-mobile {
   display: none !important;
+}
+
+/**
+  * Similar to the class below, we want to preserve the inline-block
+  * declaration, not the reset to `block` that this class normally provides.
+  * This !important is specific to the layout requirements of this tool.
+*/
+.u-hide-on-mobile {
+  .respond-to-min(@bp-sm-min, {
+    &.content-l_col {
+      display: inline-block !important;
+    }
+  });
+}
+
+/**
+* This class has three issues:
+* 1). it forces any element to be displayed as a block, which breaks layouts for inline elements
+ * 2). It doesn't hide the element on desktop. This is odd because I would assume all elements
+ * are visible by default on all browser sizes, unless specified.
+ * 3). Many elements are meant to be displayed as inline-block(s) for column layouts,
+ * and this solution breaks those as well.
+**/
+.u-show-on-mobile {
+  .respond-to-min(@bp-sm-min, {
+    display: none !important;
+  });
+
+  display: initial !important;
+}
+
+
+.u-align-right {
+  text-align: right;
+}
+
+.u-mobile-reorder {
+  .respond-to-max(@bp-sm-min, {
+    display: flex;
+    flex-direction: column;
+
+    .u-mobile-reorder__first {
+      order: 1;
+    }
+
+    .u-mobile-reorder__second {
+      margin-top: .5rem;
+      order: 2;
+    }
+  });
+}
+
+.m-form-field__radio, .m-form-field__checkbox {
+  .respond-to-max(@bp-sm-min, {
+    &:first-child {
+      margin-top: 1rem;
+    }
+
+    .a-label {
+      background-color: #e7e8e9;
+      box-sizing: border-box;
+      padding: 15px;
+      width: 100%;
+    }
+  });
+}
+
+/**
+  * There are a few instances where we need the designs call for
+  * more fine grained control over the width of elements, and in each
+  * of those cases the width should render at 100% of the available container
+  * space on mobile.
+  * It may have been better to go with a custom grid, but
+  * the default layout was fine for most purposes and it seemed like a separate
+  * grid was overkill in this case.
+*/
+[class^="u-w"] {
+  .respond-to-max(@bp-sm-min, {
+    width: 100%;
+  });
+}
+
+// The original class provides a pretty huge gap, particularly on mobile, so tame it a bit 
+.content-l_col+.content-l_col {
+  .respond-to-max(@bp-sm-min, {
+    margin-top: 1em;
+  });
+}
+
+.m-yes-transit-time {
+  .respond-to-max(@bp-sm-min, {
+    .u-w50pct {
+      width: 25%;
+    }
+  })
+}
+
+.m-yes-line-item {
+  .respond-to-max(@bp-sm-min, {
+    .line-item {
+      width: 50%;
+    }
+
+    .line-item__content-l {
+      float: left;
+    }
+
+    .line-item__content-r {
+      float: right;
+      margin-top: 0;
+    }
+  });
+}
+
+.m-form-field__radio {
+  .respond-to-max(@bp-sm-min, {
+    margin-bottom: 1rem;
+    width: 100%;
+  });
+}
+
+.js-transit-hours {
+  .respond-to-max(@bp-sm-min, {
+    float: left;
+  });
+}
+
+/**
+* TODO: Name this something better?
+*/
+.m-right-justify {
+  &:extend(.h4);
+  position: relative;
+
+  .content-r {
+    left: 100%;
+    position: absolute;
+    top: calc(100% - (@size-iv + @base-line-height-px));
+  }
 }
 
 /**
@@ -21,7 +160,15 @@
   height: 1px;
 }
 
-.yes-transportation-tool {
+.a-yes-inline-radio {
+  border-width: 0;
+}
+
+.yes-transit-tool {
+  input.a-text-input {
+    text-align: right;
+  }
+
   .m-info-unit_image {
     height: 125px;
     width: 125px;
@@ -36,12 +183,25 @@
       margin-top: unit( 15px / @base-font-size-px, em );
     }
   }
+
+  .m-notification {
+    border: 0;
+    padding: 0;
+  }
 }
 
 .yes-tip {
   .cf-icon-svg {
     font-size: unit( 20px / @base-font-size-px, em );
     vertical-align: middle;
+  }
+}
+
+.yes-route-details {
+  .m-notification {
+    background: transparent;
+    border: none;
+    padding: 0;
   }
 }
 

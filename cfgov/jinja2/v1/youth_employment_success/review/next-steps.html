@@ -1,15 +1,13 @@
 {% from 'yes-info-unit.html' import yes_info_unit with context %}
 <div class="block">
-  <div class="m-notification
-              m-notification__visible
-              m-notification__success">
+  <h2>
+    <span style="margin-right: 5px">
       {% include "success-icon.html" %}
-      <div class="m-notification_content">
-        <div class="h4 m-notification_message">
-            Awesome work on your transportation plan! We hope this plan brings you closer to achieving your long-term goal. Here are some other resources that might be helpful.
-        </div>
-      </div>
-  </div>
+    </span>
+    <span>
+      Awesome, you worked on your transportation plan! We hope this plan brings you closer to achieving your long-term goal. Here are some other resources that might be helpful.
+    </span>
+</h2>
   <div class="block block__sub">
     {{
       yes_info_unit({
