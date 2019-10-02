@@ -40,10 +40,10 @@ describe( 'routeOptionFormView', () => {
   const daysViewInit = jest.fn();
   const milesViewInit = jest.fn();
   const transitViewInit = jest.fn();
-  const detailsView = () => ({
+  const detailsView = () => ( {
     init: detailsInit,
     render: detailsRender
-  });
+  } );
   detailsView.CLASSES = routeDetailsView.CLASSES;
   const costEstimateView = () => ( {
     init: costEstimateInit,

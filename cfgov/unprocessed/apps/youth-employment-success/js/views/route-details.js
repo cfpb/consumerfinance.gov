@@ -16,7 +16,8 @@ const CLASSES = {
   TIME_MINUTES: 'js-time-minutes',
   TODO_ITEMS: 'js-todo-items',
   INCOMPLETE_ALERT: 'js-route-incomplete',
-  OOB_ALERT: 'js-route-oob'
+  OOB_ALERT: 'js-route-oob',
+  COMPLETE_ALERT: 'js-route-complete'
 };
 
 /**
@@ -201,6 +202,7 @@ function routeDetailsView( element ) {
   const _todoEl = _dom.querySelector( `.${ CLASSES.TODO_ITEMS }` );
   const _incAlertEl = _dom.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
   const _oobAlertEl = _dom.querySelector( `.${ CLASSES.OOB_ALERT }` );
+  const _completeAlertEl = _dom.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
 
   return {
     init() {
@@ -226,6 +228,10 @@ function routeDetailsView( element ) {
       updateDom( _todoEl, updateTodoList( route.actionPlanItems ) );
       toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
       toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
+      toggleCFNotification(
+        _completeAlertEl,
+        validate( dataToValidate ) && nextRemainingBudget >= 0
+      );
     }
   };
 }
