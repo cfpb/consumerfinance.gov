@@ -11,7 +11,7 @@ const transportationMap = Object.freeze( {
   'Drive': 'driving',
   'Bike': 'biking',
   'Public transit': 'public transit',
-  'Get droppped off': 'getting dropped off'
+  'Get dropped off': 'getting dropped off'
 } );
 
 export { transportation };

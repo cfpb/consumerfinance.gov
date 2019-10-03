@@ -19,7 +19,7 @@ const HTML = `
     <ul class="js-review-todo"></ul>
   </div>
   <div class="block block__sub">
-    <p class="h3">Your first choice is <span class="js-transportation-type"></span></p>
+    <p class="h3">Your first choice is <span class="js-transportation-option"></span></p>
     <div class="js-route-incomplete">
       <div class="m-notification"></div>
     </div>
@@ -27,7 +27,7 @@ const HTML = `
     <div class="content_line"></div>
   </div>
   <div class="block block__sub">
-    <p class="h3">Another option you compared: <span class="js-transportation-type"></span></p>
+    <p class="h3">Another option you compared: <span class="js-transportation-option"></span></p>
     <small>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</small>
     <div class="yes-route-details"></div>
     <div class="content_line"></div>
@@ -42,12 +42,13 @@ describe( 'reviewDetailsView', () => {
     init: initMock,
     render: renderMock
   } );
+  let el;
   let store;
   let view;
 
   beforeEach( () => {
     document.body.innerHTML = HTML;
-    const el = document.querySelector( `.${ reviewDetailsView.CLASSES.CONTAINER }` );
+    el = document.querySelector( `.${ reviewDetailsView.CLASSES.CONTAINER }` );
     store = mockStore();
     view = reviewDetailsView( el, { store, routeDetailsView } );
     view.init();
@@ -68,15 +69,19 @@ describe( 'reviewDetailsView', () => {
   } );
 
   describe( 'on state update', () => {
+    const budget = { earned: 1, spent: 1 };
+    const actionPlanRoute = { transportation: 'Walk', actionPlanItems: [ PLAN_TYPES.MILES ]};
+
     const state = {
-      budget: { earned: 1, spent: 1 },
+      budget,
       routes: {
         routes: [
-          { transportation: 'Walk', actionPlanItems: [ PLAN_TYPES.MILES ]},
+          actionPlanRoute,
           { transportation: 'Drive' }
         ]
       }
     };
+
     it( 'renders the details views', () => {
       store.subscriber()( {}, state );
 
@@ -93,6 +98,25 @@ describe( 'reviewDetailsView', () => {
       expect( todoLists[0].children.length ).toBe( 1 );
       expect( todoLists[1].children.length ).toBe( 0 );
     } );
+
+    it('hides the todo lists when there are no todos', () => {
+      const noTodoState = {
+        budget,
+        routes: {
+          routes: [{
+            transportation: 'Drive'
+          }]
+        }
+      };
+
+      store.subscriber()({}, noTodoState);
+
+      const todoEls = toArray(
+        el.querySelectorAll(`.${reviewDetailsView.CLASSES.TODO}`)
+      );
+
+      todoEls.forEach(node => expect(node.parentNode.classList.contains('u-hidden') ).toBeTruthy());
+    });
 
     it( 'toggles the todo notification el when there are todo list items', () => {
       const notification = document.querySelector( '.m-notification' );
