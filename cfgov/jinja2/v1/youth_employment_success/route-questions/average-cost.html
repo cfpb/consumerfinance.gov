@@ -1,48 +1,50 @@
 {% import 'atoms/checkbox.html' as checkbox with context %}
 {% import 'atoms/radio-button.html' as radio with context %}
 
-<div class="content-l content-l_col-3-4 block__sub-micro m-yes-average-cost">
-  <div class="content-l">
-    <div class="content-l_col content-l_col-1">
-      <label for="yes-average-cost" class="a-label a-label__heading h4">
-        <p class="u-mb0">What's the average cost?</p>
-        <small class="a-label_helper">
-          If it's free, enter 0
-        </small>
-      </label>
+<div class="content-l block__sub-micro m-yes-average-cost">
+  <div class="content-l_col content-l_col-3-4">
+    <div class="content-l">
+      <div class="content-l_col content-l_col-1">
+        <label for="yes-average-cost" class="a-label a-label__heading h4">
+          <p class="u-mb0">What's the average cost?</p>
+          <small class="a-label_helper">
+            If it's free, enter $0
+          </small>
+        </label>
+      </div>
+      <div class="content-l_col content-l_col-1-3 u-mt0">
+        <input type="text" data-js-name="averageCost" disabled class="a-text-input u-w50pct" name="yes-average-cost" id="yes-average-cost">
+      </div>
+      <div class="content-l_col content-l_col-1-3 u-mt5 a-yes-inline-radio">
+        {{
+          radio.render({
+            'class': 'a-yes-average-cost-radio',
+            'name': 'averageCostFrequency',
+            'label': "Per day",
+            'value': 'daily',
+            'disabled': true
+          })
+        }}
+      </div>
+      <div class="content-l_col content-l_col-1-3 u-mt5 a-yes-inline-radio">
+        {{
+          radio.render({
+            'class': 'a-yes-average-cost-radio',
+            'name': 'averageCostFrequency',
+            'label': "Per month",
+            'value': 'monthly',
+            'disabled': true
+          })
+        }}
+      </div>
     </div>
-    <div class="content-l_col content-l_col-1-3 u-mt0">
-      <input type="text" data-js-name="averageCost" disabled class="a-text-input u-w50pct" name="yes-average-cost" id="yes-average-cost">
-    </div>
-    <div class="content-l_col content-l_col-1-3 u-mt5 a-yes-inline-radio">
-      {{
-        radio.render({
-          'class': 'a-yes-average-cost-radio',
-          'name': 'averageCostFrequency',
-          'label': "Per day",
-          'value': 'daily',
-          'disabled': true
-        })
-      }}
-    </div>
-    <div class="content-l_col content-l_col-1-3 u-mt5 a-yes-inline-radio">
-      {{
-        radio.render({
-          'class': 'a-yes-average-cost-radio',
-          'name': 'averageCostFrequency',
-          'label': "Per month",
-          'value': 'monthly',
-          'disabled': true
-        })
-      }}
-    </div>
+    {{ 
+      checkbox.render({
+        'class': 'u-js-only block__sub-micro',
+        'label': "I'm not sure, add this to my to-do list to look up later",
+        'name': 'costToActionPlan',
+        'disabled': true
+      })
+    }}
   </div>
-  {{ 
-    checkbox.render({
-      'class': 'u-js-only block__sub-micro',
-      'label': "I'm not sure, add this to my to-do list to look up later",
-      'name': 'costToActionPlan',
-      'disabled': true
-    })
-  }}
 </div>

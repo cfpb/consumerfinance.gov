@@ -9,43 +9,54 @@
 
 <main class="content content__1-3 yes-transit-tool" role="main">
   <div class="wrapper content_wrapper">
-    <aside class="content_sidebar content__flush-top">
+    <aside class="content_sidebar content__flush-top u-hide-on-review-print">
       sidebar
     </aside>
     <section class="content_main">
-      {% include "goals.html" %}      
-      {% include "budget-form.html" %}
-      <div class="yes-routes">
-        <h2>How do your transportation options fit in your budget, schedule, and lifestyle?</h2>        
-        <p class="u-mb0">
-          There are many ways you could get to work—some options are faster, cheaper, or more convenient. You’ll be able to choose a type of transportation and enter how much it costs. If you’re unsure about any of the specifics, don’t worry — you can select, “I’m not sure,” and the item will be added to your to-do list, which you’ll receive at the end of the tool. Once you finish your first option, you can compare it to other options to help you figure out the best choice for you.
-        </p>
-        <div class="content-l">
-          <div class="u-w75pct">
-            {% for i in range(2) %}
-              {% with id=i+1 %}
-                <div class="content-l_col content-l_col-1">
-                  {% include "route-option.html" %}
-                </div>
-              {% endwith %}
-            {% endfor %}
-          </div>
-        </div>  
-        <div class="content-l m-yes-route-option block u-mt30">
-          <div class="content-l_col content-l_col-1">
-            <h4>Are there other ways you can get to work? Compare different options to help you figure out your first choice and a backup plan.</h4>
-            {% include "plus-icon.html" %}
-            <button class="a-btn a-btn__link m-yes-route-option">Show me another option</button>
+      <div class="u-hide-on-review-print">
+        {% include "goals.html" %}      
+        {% include "budget-form.html" %}
+        <div class="yes-routes">
+          <h2>How do your transportation options fit in your budget, schedule, and lifestyle?</h2>        
+          <p class="u-mb0">
+            There are many ways you could get to work—some options are faster, cheaper, or more convenient. You’ll be able to choose a type of transportation and enter how much it costs. If you’re unsure about any of the specifics, don’t worry — you can select, “I’m not sure,” and the item will be added to your to-do list, which you’ll receive at the end of the tool. Once you finish your first option, you can compare it to other options to help you figure out the best choice for you.
+          </p>
+          <div class="yes-routes block block__sub u-hide-on-review-print">
+            <div class="content-l">
+              <div class="u-w75pct">
+                {% for i in range(2) %}
+                  {% with id=i+1 %}
+                    <div class="content-l_col content-l_col-1">
+                      {% include "route-option.html" %}
+                    </div>
+                  {% endwith %}
+                {% endfor %}
+              </div>
+            </div>  
+            <div class="content-l m-yes-route-option block u-mt30">
+              <div class="content-l_col content-l_col-1">
+                <h4>Are there other ways you can get to work? Compare different options to help you figure out your first choice and a backup plan.</h4>
+                {% include "plus-icon.html" %}
+                <button class="a-btn a-btn__link m-yes-route-option">Show me another option</button>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="content_line-bold"></div>
       </div>
-      <div class="content_line-bold"></div>
       {% include "review/index.html" %}
     </section>
   </div>
 </main>
 
 {% endblock content %}
+
+{% block footer %}
+  <div class="u-hide-on-review-print">
+    {% import 'organisms/footer.html' as o_footer with context %}
+    {{ o_footer.render() }}
+  </div>
+{% endblock footer %}
 
 {% block javascript scoped %}
     {{ super() }}
