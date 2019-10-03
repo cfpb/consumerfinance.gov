@@ -1,6 +1,6 @@
 // Required modules.
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import * as breakpointState from '../modules/util/breakpoint-state';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import ClearableInput from '../modules/ClearableInput';
 import EventObserver from '../modules/util/EventObserver';
 import FlyoutMenu from '../modules/behavior/FlyoutMenu';
