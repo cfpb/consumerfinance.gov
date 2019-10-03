@@ -1,13 +1,13 @@
 // Required modules.
-import BaseTransition from '../../modules/transition/BaseTransition';
-import { checkBehaviorDom } from '../../modules/util/behavior';
 import * as breakpointState from '../../modules/util/breakpoint-state';
-import EventObserver from '../../modules/util/EventObserver';
 import {
   BEHAVIOR_PREFIX,
   JS_HOOK,
   noopFunct
 } from '../../modules/util/standard-type';
+import BaseTransition from '../../modules/transition/BaseTransition';
+import EventObserver from '../../modules/util/EventObserver';
+import { checkBehaviorDom } from '../../modules/util/behavior';
 
 /**
  * FlyoutMenu
