@@ -32,7 +32,7 @@
     "cf-pagination": "11.0.1",
     "cf-tables": "11.0.0",
     "cf-typography": "11.0.1",
-    "cfpb-chart-builder": "6.1.2",
+    "cfpb-chart-builder": "6.2.0",
     "core-js": "3.2.1",
     "del": "5.1.0",
     "enforce-node-version": "0.1.0",
