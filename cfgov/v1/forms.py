@@ -15,11 +15,6 @@ from v1.util.date_filter import end_of_time_period
 from .models.base import Feedback
 
 
-class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
-    def validate(self, value):
-        pass
-
-
 class FilterableDateField(forms.DateField):
     def validate_after_1900(date):
         strftime_earliest_year = 1900
@@ -86,7 +81,7 @@ class FilterableListForm(forms.Form):
         widget=widgets.CheckboxSelectMultiple()
     )
 
-    topics = MultipleChoiceFieldNoValidation(
+    topics = forms.MultipleChoiceField(
         required=False,
         choices=[],
         widget=widgets.SelectMultiple(attrs={
