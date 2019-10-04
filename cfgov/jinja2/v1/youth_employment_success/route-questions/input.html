@@ -34,6 +34,7 @@
 
 {%- set id = value.id or get_unique_id('input_', '_') ~ slugify( value.label ) -%}
 {%- set ht_id = get_unique_id('input_ht_', '_') ~ slugify( value.label ) -%}
+{%- set class = value.class if value.class else '' -%}
 
 <div class="form-l_col form-l_col-{{ value.size if value.size else '1' }}">
    <label class="a-label a-label__heading u-mb0" for="{{ id }}">
@@ -45,7 +46,7 @@
    {%- if value.helperText -%}
        <p id="{{ ht_id }}"><small>{{ value.helperText | safe }}</small></p>
    {%- endif -%}
-   <input class="a-text-input {{ value.class }}"
+   <input class="a-text-input {{ class }}"
           id="{{ id }}"
           name="{{ id }}"
           type="{{ value.type }}"

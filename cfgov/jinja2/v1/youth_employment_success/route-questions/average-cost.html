@@ -1,7 +1,7 @@
 {% import 'atoms/checkbox.html' as checkbox with context %}
 {% import 'atoms/radio-button.html' as radio with context %}
 
-<div class="content-l block__sub-micro m-yes-average-cost">
+<div class="content-l block block__sub m-yes-average-cost">
   <div class="content-l_col content-l_col-3-4">
     <div class="content-l">
       <div class="content-l_col content-l_col-1">
@@ -12,10 +12,16 @@
           </small>
         </label>
       </div>
-      <div class="content-l_col content-l_col-1-3 u-mt0">
-        <input type="text" data-js-name="averageCost" disabled class="a-text-input u-w50pct" name="yes-average-cost" id="yes-average-cost">
+      <div class="content-l_col content-l_col-1-4 u-mt0 u-br0">
+        <input type="text"
+               data-js-name="averageCost"
+               disabled
+               class="a-text-input u-w50pct"
+               name="yes-average-cost"
+               id="yes-average-cost"
+               placeholder="$">
       </div>
-      <div class="content-l_col content-l_col-1-3 u-mt5 a-yes-inline-radio">
+      <div class="content-l_col u-mt5 a-yes-inline-radio">
         {{
           radio.render({
             'class': 'a-yes-average-cost-radio',
@@ -26,7 +32,7 @@
           })
         }}
       </div>
-      <div class="content-l_col content-l_col-1-3 u-mt5 a-yes-inline-radio">
+      <div class="content-l_col u-mt5 a-yes-inline-radio">
         {{
           radio.render({
             'class': 'a-yes-average-cost-radio',
@@ -40,7 +46,7 @@
     </div>
     {{ 
       checkbox.render({
-        'class': 'u-js-only block__sub-micro',
+        'class': 'u-js-only block block__sub-micro',
         'label': "I'm not sure, add this to my to-do list to look up later",
         'name': 'costToActionPlan',
         'disabled': true
