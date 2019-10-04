@@ -303,6 +303,7 @@ class School(models.Model):
             'tuitionUnderInDis': jdata['TUITIONUNDERINDIS'],
             'tuitionUnderInS': self.tuition_in_state,
             'tuitionUnderOoss': self.tuition_out_of_state,
+            'underInvestigation': self.under_investigation,
             'url': self.url,
             'zip5': self.zip5,
         }
