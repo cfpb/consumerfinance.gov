@@ -1,0 +1,44 @@
+
+{# ==========================================================================
+
+   Quiz Answers block
+
+   ==========================================================================
+
+   Description:
+
+   Provides a structure for a series of answers to a guided-quiz question:
+
+   value: Object defined from a Streamfield block.
+
+   value.answers:               List of answer components
+
+   FOR EACH ANSWER:
+
+   answer.choice_letter:        Letter label for an answer choice
+
+   answer.answer_choice:        Text of the answer choice
+
+   answer.answer_response:      Response explanation (right or wrong)
+
+   ========================================================================== #}
+
+
+<div class="quiz__answers m-form-field m-form-field__radio">
+  {% for answer in value.answers %}
+  <div class="quiz__answer">
+    <div class="quiz__answer-choice">
+      <input type="radio" value="some value" id="{{ value.situation_id }}" class="a-radio" name="test">
+      <label for="{{ value.situation_id }}" class="a-label">{{ answer.answer_choice }}</label>
+    </div>
+    {% if answer.answer_response %}
+    <div class="quiz__answer-response">
+      {{ answer.answer_response | richtext}}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <button class="quiz__response-button a-btn">Check my answer</button>
+  <div class="quiz__response-target">
+  </div>
+</div>

@@ -8,6 +8,7 @@ import smtplib
 from collections import OrderedDict
 from string import Template
 
+from django.contrib.postgres.fields import JSONField
 from django.core.mail import send_mail
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
@@ -257,13 +258,29 @@ class School(models.Model):
         blank=True,
         null=True,
         help_text=("MEDIAN PAY 10 YRS AFTER ENTRY"))
+    median_annual_pay_6yr = models.IntegerField(
+        blank=True,
+        null=True,
+        help_text=("MEDIAN PAY 6 YRS AFTER ENTRY"))
     avg_net_price = models.IntegerField(
         blank=True,
         null=True,
         help_text="OVERALL AVERAGE")
+    avg_net_price_slices = JSONField(blank=True, null=True)
     tuition_out_of_state = models.IntegerField(blank=True, null=True)
     tuition_in_state = models.IntegerField(blank=True, null=True)
     offers_perkins = models.BooleanField(default=False)
+    cohort_rank_degrees = models.IntegerField(blank=True, null=True)
+    cohort_rank_state = models.IntegerField(blank=True, null=True)
+    cohort_rank_control = models.IntegerField(blank=True, null=True)
+    associate_transfer_rate = models.DecimalField(
+        max_digits=5,
+        decimal_places=3,
+        blank=True, null=True,
+        help_text=(
+            "Transfer rate for first-time, full-time students at "
+            "less-than-four-year institutions "
+            "(150% of expected time to completion)"))
 
     def as_json(self):
         """delivers pertinent data points as json"""
@@ -271,14 +288,19 @@ class School(models.Model):
         ordered_out = OrderedDict()
         jdata = json.loads(self.data_json)
         dict_out = {
+            'associateTransferRate': self.associate_transfer_rate,
             'books': jdata['BOOKS'],
             'city': self.city,
+            'cohortRankDegrees': self.cohort_rank_degrees,
+            'cohortRankState': self.cohort_rank_degrees,
+            'cohortRankControl': self.cohort_rank_degrees,
             'control': self.control,
             'defaultRate': "{0}".format(self.default_rate),
             'gradRate': "{0}".format(self.grad_rate),
             'highestDegree': self.get_highest_degree(),
             'medianMonthlyDebt': "{0}".format(self.median_monthly_debt),
             'medianTotalDebt': "{0}".format(self.median_total_debt),
+            'netPrices': self.avg_net_price_slices,
             'nicknames': ", ".join([nick.nickname for nick
                                     in self.nickname_set.all()]),
             'offersPerkins': self.offers_perkins,
@@ -303,8 +325,10 @@ class School(models.Model):
             'tuitionUnderInDis': jdata['TUITIONUNDERINDIS'],
             'tuitionUnderInS': self.tuition_in_state,
             'tuitionUnderOoss': self.tuition_out_of_state,
+            'underInvestigation': self.under_investigation,
             'url': self.url,
             'zip5': self.zip5,
+
         }
         for key in sorted(dict_out.keys()):
             ordered_out[key] = dict_out[key]
@@ -326,6 +350,42 @@ class School(models.Model):
                 and self.degrees_highest in HIGHEST_DEGREES):
             highest = HIGHEST_DEGREES[self.degrees_highest]
         return highest
+
+    def get_cohort(self, cohort):
+        """
+        Return a cohort, or list of schools, sharing a characteristic.
+
+        Characteristics are degrees_highest, state, and control.
+        """
+        cohorts = {
+            'degrees_highest': School.objects.filter(
+                degrees_highest=self.degrees_highest),
+            'state': School.objects.filter(state=self.state),
+            'control': School.objects.filter(control=self.control),
+        }
+        return [school for school in cohorts[cohort]]
+
+    def get_cohort_rank(self, cohort, metric):
+        """
+        Return the current school's rank in a cohort by a given metric.
+
+        Possible metrics are grad_rate, repay_3yr and median_total_debt.
+        """
+        schools = self.get_cohort(cohort)
+        indexes = {
+            'grad_rate': sorted(
+                [s for s in schools if s.grad_rate],
+                key=lambda school: school.grad_rate),
+            'repay_3yr': sorted(
+                [s for s in schools if s.repay_3yr],
+                key=lambda school: school.repay_3yr),
+            'median_total_debt': sorted(
+                [s for s in schools if s.median_total_debt],
+                key=lambda school: school.median_total_debt)
+        }
+        rank_list = indexes[metric]
+        # TODO: This will deliver a school's rank in the next iteration.
+        return rank_list
 
     def convert_ope6(self):
         if self.ope6_id:
