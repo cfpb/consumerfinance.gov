@@ -1,20 +1,22 @@
 import Expandable from 'cf-expandables/src/Expandable';
 import { addRouteOptionAction } from './reducers/route-option-reducer';
+import averageCostView from './views/average-cost';
 import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
-import averageCostView from './views/average-cost';
 import daysPerWeekView from './views/days-per-week';
-import milesView from './views/miles';
+import drivingCostEstimateView from './views/driving-cost-estimate';
+import expandableView from './views/expandable';
 import goalsView from './views/goals';
+import milesView from './views/miles';
+import printButton from './views/print-button';
+import reviewChoiceView from './views/review/choice';
+import reviewDetailsView from './views/review/details';
 import reviewGoalsView from './views/review/goals';
+import routeDetailsView from './views/route-details';
 import routeOptionFormView from './route-option-view';
 import routeOptionToggleView from './route-option-toggle-view';
-import routeDetailsView from './views/route-details';
-import expandableView from './views/expandable';
 import store from './store';
 import transitTimeView from './views/transit-time';
-import reviewDetailsView from './views/review/details';
-import reviewChoiceView from './views/review/choice';
 
 Array.prototype.slice.call(
   document.querySelectorAll( 'input' )
@@ -25,7 +27,6 @@ Array.prototype.slice.call(
 const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
 const OPTION_TOGGLE_CLASSES = routeOptionToggleView.CLASSES;
-const DETAILS_CLASSES = routeDetailsView.CLASSES;
 const GOALS_CLASSES = goalsView.CLASSES;
 const REVIEW_GOALS_CLASSES = reviewGoalsView.CLASSES;
 
@@ -69,9 +70,10 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
   return routeOptionFormView( routeOptionsEl, {
     store,
     routeIndex: index,
-    detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) ),
+    routeDetailsView,
     averageCostView,
     daysPerWeekView,
+    drivingCostEstimateView,
     milesView,
     transitTimeView
   } );
@@ -91,3 +93,7 @@ routeOptionToggleView(
 
 expandables[0].element.querySelector( '.o-expandable_target' ).click();
 expandables[1].element.classList.add( 'u-hidden' );
+
+printButton(
+  document.querySelector( `.${ printButton.CLASSES.BUTTON }` )
+).init();

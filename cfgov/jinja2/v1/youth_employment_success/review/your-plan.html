@@ -15,42 +15,40 @@
     <ul class="js-review-todo"></ul>
   </div>
   <div class="block block__sub">
-    <p class="h3">Your first choice is <span class="js-transportation-type"></span></p>
-    <div class="content-l content-l_col-2-3">
+    <p class="h3">Your first choice is <span class="js-transportation-option"></span></p>
+    <div class="content-l content-l_col-2-3 block block__sub-micro js-route-incomplete u-mt0">
       {{
         alert.render({
           'background': true,
-          'class': 'js-route-incomplete',
           'fill': 'warning',
-          'content': 'You chose a plan that still has to-do list items. Completing the missing items will give you a better sense if this is the best option for you',
+          'content': 'You chose a plan that still has to-do list items. Completing the missing items will give you a better sense if this is the best option for you.',
           'visible': true
         })
       }}
     </div>
-    <div class="block block__sub">
+    <div class="block block__sub-micro">
       {% with show_todos=false %}
         {% include "route-details.html" %}
       {% endwith %}
     </div>
     <div class="content_line"></div>
   </div>
-  <div class="block block__sub">
-    <p class="h3">Another option you compared: <span class="js-transportation-type"></span></p>
-    <p>
+  <div class="js-option-2 block block__sub">
+    <p class="h3">Another possible option: <span class="js-transportation-option"></span></p>
+    <p class="u-mb0">
       <small>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</small>
     </p>
-    <div class="content-l content-l_col-2-3">
+    <div class="content-l content-l_col-2-3 js-route-incomplete">
       {{
         alert.render({
           'background': true,
-          'class': 'js-route-incomplete',
           'fill': 'warning',
-          'content': 'You chose a plan that still has to-do list items. Completing the missing items will give you a better sense if this is the best option for you',
+          'content': 'You chose a plan that still has to-do list items. Completing the missing items will give you a better sense if this is the best option for you.',
           'visible': true
         })
       }}
     </div>
-    <div class="block block__sub">
+    <div class="block block__sub-micro">
       {% with show_todos=false %}
         {% include "route-details.html" %}
       {% endwith %}

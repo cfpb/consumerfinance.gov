@@ -5,8 +5,8 @@ import {
   updateGoalStepsAction,
   updateGoalTimelineAction
 } from '../reducers/goal-reducer';
-import { toArray } from '../util';
 import inputView from './input';
+import { toArray } from '../util';
 
 const CLASSES = {
   CONTAINER: 'js-yes-goals',
