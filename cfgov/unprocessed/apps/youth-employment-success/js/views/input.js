@@ -110,6 +110,9 @@ function inputView( element, props = {} ) {
     },
     destroy() {
       _unbindEvents();
+    },
+    render( value ) {
+      _dom.value = value;
     }
   };
 }

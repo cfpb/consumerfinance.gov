@@ -1,5 +1,6 @@
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
 import {
+  routeSelector,
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction
@@ -7,7 +8,10 @@ import {
 import inputView from './input';
 
 const CLASSES = Object.freeze( {
-  CONTAINER: 'm-yes-transit-time'
+  CONTAINER: 'm-yes-transit-time',
+  HOURS: 'js-yes-hours',
+  MINUTES: 'js-yes-minutes',
+  NOT_SURE: 'js-yes-not-sure'
 } );
 
 const NOT_SURE_MESSAGE = 'Looking up how long this trip takes was added to your to-do list.';
@@ -24,9 +28,12 @@ const NOT_SURE_MESSAGE = 'Looking up how long this trip takes was added to your 
  */
 function transitTimeView( element, { store, routeIndex, todoNotification } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
-  const _inputs = Array.prototype.slice.call(
-    _dom.querySelectorAll( 'input' )
-  );
+  const _hoursEl = _dom.querySelector( `.${ CLASSES.HOURS }` );
+  const _minutesEl = _dom.querySelector( `.${ CLASSES.MINUTES }` );
+  const _notSureEl = _dom.querySelector( `.${ CLASSES.NOT_SURE }` );
+  let _minutesView;
+  let _hoursView;
+
   const _actionMap = {
     timeToActionPlan: updateTimeToActionPlan,
     transitTimeHours: updateTransitTimeHoursAction,
@@ -57,17 +64,47 @@ function transitTimeView( element, { store, routeIndex, todoNotification } ) {
   }
 
   /**
+   * Re-render child components when state changes
+   * @param {Object} prevState The previous application state
+   * @param {Object} state The current application state
+   * @param {Object} state.routes The route objects currently stored in the application state
+   */
+  function _handleStateUpdate( prevState, state ) {
+    const prevRoute = routeSelector( prevState.routes, routeIndex );
+    const route = routeSelector( state.routes, routeIndex );
+
+    if ( prevRoute.transitTimeHours !== route.transitTimeHours ) {
+      _hoursView.render( route.transitTimeHours );
+    }
+
+    if ( prevRoute.transitTimeMinutes !== route.transitTimeMinutes ) {
+      _minutesView.render( route.transitTimeMinutes );
+    }
+  }
+
+  /**
    * Initialize the input elements this form manages
    */
   function _initInputs() {
-    _inputs.forEach( input => {
-      inputView( input, {
-        events: {
-          input: _setResponse
-        },
-        type: input.type === 'checkbox' ? 'checkbox' : 'text'
-      } ).init();
-    } );
+    const textInputProps = {
+      events: {
+        blur: _setResponse
+      },
+      type: 'text'
+    };
+
+    _minutesView = inputView( _minutesEl, textInputProps );
+    _hoursView = inputView( _hoursEl, textInputProps );
+
+    inputView( _notSureEl, {
+      events: {
+        input: _setResponse
+      },
+      type: 'checkbox'
+    } ).init();
+
+    _hoursView.init();
+    _minutesView.init();
   }
 
   return {
@@ -75,6 +112,7 @@ function transitTimeView( element, { store, routeIndex, todoNotification } ) {
       if ( setInitFlag( _dom ) ) {
         _initInputs();
         todoNotification.init( _dom );
+        store.subscribe( _handleStateUpdate );
       }
     }
   };
