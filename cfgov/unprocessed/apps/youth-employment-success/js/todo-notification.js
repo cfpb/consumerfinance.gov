@@ -51,7 +51,7 @@ function TodoNotification() {
   function _cloneNotification( message ) {
     clone = self.element.cloneNode( true );
     clone.querySelector( `.${ CLASSES.MESSAGE }` ).textContent = message;
-    clone.querySelector(`.${CLASSES.NOTIFICATION}`).classList.add(VISIBLE_CLASS);
+    clone.querySelector( `.${ CLASSES.NOTIFICATION }` ).classList.add( VISIBLE_CLASS );
 
     registeredNode.appendChild( clone );
   }

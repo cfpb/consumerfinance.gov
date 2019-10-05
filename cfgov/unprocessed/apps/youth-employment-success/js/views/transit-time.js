@@ -65,21 +65,15 @@ function transitTimeView( element, { store, routeIndex, todoNotification } ) {
 
   /**
    * Re-render child components when state changes
-   * @param {Object} prevState The previous application state
+   * @param {Object} _ The previous application state (unused)
    * @param {Object} state The current application state
    * @param {Object} state.routes The route objects currently stored in the application state
    */
-  function _handleStateUpdate( prevState, state ) {
-    const prevRoute = routeSelector( prevState.routes, routeIndex );
+  function _handleStateUpdate( _, state ) {
     const route = routeSelector( state.routes, routeIndex );
 
-    if ( prevRoute.transitTimeHours !== route.transitTimeHours ) {
-      _hoursView.render( route.transitTimeHours );
-    }
-
-    if ( prevRoute.transitTimeMinutes !== route.transitTimeMinutes ) {
-      _minutesView.render( route.transitTimeMinutes );
-    }
+    _hoursView.render( route.transitTimeHours );
+    _minutesView.render( route.transitTimeMinutes );
   }
 
   /**
