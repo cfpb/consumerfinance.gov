@@ -157,6 +157,40 @@ function updateRouteData( routes, routeIndex, data ) {
 }
 
 /**
+ * Detect if application should update the `transitTimeMinutes` state value
+ * @param {Object} routes the routes state object
+ * @param {Object} data The action's data
+ * @param {Number} data.routeIndex The index of the route being updated
+ * @returns {Boolean} Whether or not transitTimeMinutes is blank
+ */
+function hasTransitTimeMinutes( routes, data ) {
+  const route = routeSelector( routes, data.routeIndex );
+
+  if ( route.transitTimeMinutes === '' ) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Detect if application should update the `transitTimeHours` state value
+ * @param {Object} routes the routes state object
+ * @param {Object} data The action's data
+ * @param {Number} data.routeIndex The index of the route being updated
+ * @returns {Boolean} Whether or not transitTimeHours is blank
+ */
+function hasTransitTimeHours( routes, data ) {
+  const route = routeSelector( routes, data.routeIndex );
+
+  if ( route.transitTimeHours === '' ) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
  *
  * @param {object} state the current values for this slice of app state
  * @param {object} action instructs reducer which state update to apply
@@ -289,14 +323,32 @@ function routeOptionReducer( state = initialState, action ) {
       } ) );
     }
     case actionTypes.UPDATE_TRANSIT_TIME_HOURS: {
-      return assign( state, updateRouteData( state.routes, data.routeIndex, {
-        transitTimeHours: data.value
-      } ) );
+      const updates = {
+        transitTimeHours: data.value || '0'
+      };
+
+      if ( !hasTransitTimeMinutes( state, data ) ) {
+        updates.transitTimeMinutes = '0';
+      }
+
+      return assign(
+        state,
+        updateRouteData( state.routes, data.routeIndex, updates )
+      );
     }
     case actionTypes.UPDATE_TRANSIT_TIME_MINUTES: {
-      return assign( state, updateRouteData( state.routes, data.routeIndex, {
-        transitTimeMinutes: data.value
-      } ) );
+      const updates = {
+        transitTimeMinutes: data.value || '0'
+      };
+
+      if ( !hasTransitTimeHours( state, data ) ) {
+        updates.transitTimeHours = '0';
+      }
+
+      return assign(
+        state,
+        updateRouteData( state.routes, data.routeIndex, updates )
+      );
     }
     case actionTypes.UPDATE_IS_MONTHLY_COST: {
       return assign( state, updateRouteData( state.routes, data.routeIndex, {

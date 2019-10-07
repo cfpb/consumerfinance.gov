@@ -6,7 +6,7 @@ import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-em
 const CLASSES = reviewDetailsView.CLASSES;
 
 const HTML = `
-<div class="${CLASSES.CONTAINER}">
+<div class="${ CLASSES.CONTAINER }">
   <h2>Your plan to get to work</h2>
   <h3>Your to-do list</h3>
   <ul>
@@ -144,8 +144,8 @@ describe( 'reviewDetailsView', () => {
       const choiceHeadings = toArray( el.querySelectorAll( `.${ CLASSES.CHOICE_HEADING }` ) );
 
       choiceHeadings.forEach( ch => {
-        expect(ch.classList.contains( 'u-hidden' )).toBeTruthy();
-      });
+        expect( ch.classList.contains( 'u-hidden' ) ).toBeTruthy();
+      } );
     } );
   } );
 } );

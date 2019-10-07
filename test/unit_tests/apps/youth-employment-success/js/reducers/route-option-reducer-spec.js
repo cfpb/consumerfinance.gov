@@ -153,9 +153,21 @@ describe( 'routeOptionReducer', () => {
           routeIndex: 0,
           value: nextValue } )
       );
-      const { transitTimeHours } = state.routes[0];
+      const { transitTimeHours, transitTimeMinutes } = state.routes[0];
 
       expect( transitTimeHours ).toBe( nextValue );
+      expect( transitTimeMinutes ).toBe( '0' );
+
+      const nextState = routeOptionReducer(
+        {
+          routes: [ createRoute( { transitTimeMinutes: '1' } ) ]
+        },
+        updateTransitTimeHoursAction( {
+          routeIndex: 0,
+          value: nextValue } )
+      );
+
+      expect( nextState.routes[0].transitTimeMinutes ).toBe( '1' );
     } );
 
     it( 'reduces the .updateTransitTimeMinutes action', () => {
@@ -165,9 +177,21 @@ describe( 'routeOptionReducer', () => {
           routeIndex: 0,
           value: nextValue } )
       );
-      const { transitTimeMinutes } = state.routes[0];
+      const { transitTimeMinutes, transitTimeHours } = state.routes[0];
 
       expect( transitTimeMinutes ).toBe( nextValue );
+      expect( transitTimeHours ).toBe( '0' );
+
+      const nextState = routeOptionReducer(
+        {
+          routes: [ createRoute( { transitTimeHours: '1' } ) ]
+        },
+        updateTransitTimeMinutesAction( {
+          routeIndex: 0,
+          value: nextValue } )
+      );
+
+      expect( nextState.routes[0].transitTimeHours ).toBe( '1' );
     } );
 
     it( 'reduces the .updateTimeToActionPlan action', () => {
