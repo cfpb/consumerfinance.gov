@@ -1,7 +1,7 @@
 {% import 'alert.html' as alert with context %}
 {% import 'line-item.html' as line_item with context %}
 
-<div class="content-l block block__sub u-mb0 yes-route-details">
+<div class="content-l u-mb0 yes-route-details">
   <div class="content-l_col content-l_col-1">
     <p class="h5 u-mt0 u-mb0">
       Totals for <span class="js-transportation-type"></span>
@@ -26,14 +26,14 @@
   
     <div class="content_line-bold"></div>
   
-    <div class="block block__sub-micro">
+    <div class="block block__sub-micro block__flush-bottom">
       {{
         line_item.render({
           'label': 'Total left in your budget after <span class="js-transportation-type"></span>',
           'target': 'js-budget-left'
         })
       }}
-      <div class="content-l">
+      <div class="content-l block block__sub-micro block__flush-top">
         <div class="content-l_col content-l_col-1">
           <div class="js-route-complete">
             {{
@@ -44,23 +44,23 @@
             }}
           </div>
           <div class="js-route-incomplete">
-              {{
-                alert.render({
-                  'fill': 'warning',
-                  'content': 'To see if this option fits your budget, complete the items in your to-do list and enter the missing amounts above.',
-                  'visible': true
-                })
-              }}
-            </div>
-            <div class="js-route-oob block block__sub-micro">
-              {{
-                alert.render({
-                  'content': 'This option is out of budget. Talk to your caseworker about ways you might be able to rethink your budget so this can be an option for you.',
-                  'fill': 'danger'
-                })
-              }}
-            </div>
+            {{
+              alert.render({
+                'fill': 'warning',
+                'content': 'To see if this option fits your budget, complete the items in your to-do list and enter the missing amounts above.',
+                'visible': true
+              })
+            }}
           </div>
+          <div class="js-route-oob">
+            {{
+              alert.render({
+                'content': 'This option is out of budget. Talk to your caseworker about ways you might be able to rethink your budget so this can be an option for you.',
+                'fill': 'danger'
+              })
+            }}
+          </div>
+        </div>
       </div>
     </div>
 
@@ -79,7 +79,7 @@
     </div>
     
     {% if show_todos %}
-    <div class="content-l">
+    <div class="content-l block block__sub-micro">
       <div class="content-l_col content-l_col-1">
         <span class="h5">Your to-do list</span>
         <div class="content_line-bold"></div>
