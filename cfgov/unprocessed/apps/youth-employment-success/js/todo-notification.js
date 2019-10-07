@@ -1,5 +1,6 @@
 const CLASSES = Object.freeze( {
   CONTAINER: 'js-todo-notification',
+  NOTIFICATION: 'm-notification',
   MESSAGE: 'js-alert-content'
 } );
 
@@ -50,7 +51,7 @@ function TodoNotification() {
   function _cloneNotification( message ) {
     clone = self.element.cloneNode( true );
     clone.querySelector( `.${ CLASSES.MESSAGE }` ).textContent = message;
-    clone.classList.add( VISIBLE_CLASS );
+    clone.querySelector(`.${CLASSES.NOTIFICATION}`).classList.add(VISIBLE_CLASS);
 
     registeredNode.appendChild( clone );
   }

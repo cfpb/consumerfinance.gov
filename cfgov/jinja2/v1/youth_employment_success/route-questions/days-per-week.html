@@ -1,10 +1,11 @@
-{% from 'atoms/checkbox.html' import render as render_checkbox with context %}
-{% from 'input.html' import render as render_input with context %}
+{% import 'atoms/checkbox.html' as checkbox with context %}
+{% import 'input.html' as input with context %}
 
-<div class="content-l block block__sub-micro m-yes-days-per-week">
-  <div class="content-l_col content-l_col-2-3">
+<div class="content-l block block__sub m-yes-days-per-week">
+  <div class="content-l_col content-l_col-3-4">
     {{
-      render_input({
+      input.render({
+        'class': 'u-w10pct',
         'data_js_name': "daysPerWeek",
         'label': "How many days per week will you make this trip?",
         'size': '1-4',
@@ -14,9 +15,9 @@
       })
     }}
     {{
-      render_checkbox({
+      checkbox.render({
         'class': 'u-js-only block__sub-micro',
-        'label': "I'm not sure. Look up later",
+        'label': "I'm not sure, add this to my to-do list to look up later",
         'name': "yes-route-days-unsure",
         'disabled': true
       })
