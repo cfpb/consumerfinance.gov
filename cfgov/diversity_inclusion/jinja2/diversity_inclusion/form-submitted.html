@@ -48,11 +48,12 @@
                     Your voluntary diversity assessment onboarding has been submitted
                 </div>
                 <p class="m-notification_explanation">
-                    Please contact the OMWI Regulated Entities Support Team at
+                    We’ll use the information you submitted to create your account in our diversity and inclusion community.
+                    You’ll receive an email when your account has been created with instructions for logging in.
+                    If you have any quetsions, please contact the OMWI Regulated Entities Support Team at
                     <a href="mailto:OMWI_regulatedentity@cfpb.gov">
                         OMWI_regulatedentity@cfpb.gov
-                    </a>
-                    if you have any questions.
+                    </a>.
                 </p>
             </div>
         </div>
@@ -60,13 +61,5 @@
 {% endblock %}
 
 {% block content_sidebar -%}
-    <div class="block block__flush-top">
-        <h3>About us</h3>
-        <p>
-            The Consumer Financial Protection Bureau (CFPB) is a 21st century agency
-            that helps consumer finance markets work by making rules more effective,
-            by consistently and fairly enforcing those rules,
-            and by empowering consumers to take more control over their economic lives.
-        </p>
-    </div>
+    {% include '_sidebar.html' %}
 {%- endblock %}

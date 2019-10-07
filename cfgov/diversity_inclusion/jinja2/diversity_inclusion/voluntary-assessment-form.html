@@ -35,13 +35,13 @@
         <h1>Voluntary diversity assessment onboarding form</h1>
         <div class="lead-paragraph">
             <p>
-                The Consumer Financial Protection Bureau’s (Bureau) D&I Assessment website allows financial institutions to submit D&I Assessments.
+                The Consumer Financial Protection Bureau’s voluntary diversity assessment onboarding form allows financial institutions to submit diversity and inclusion assessments.
             </p>
         </div>
         <p>
-            Please complete and submit this form to the Assessment Support Team to establish a point of contact (POC) for your institution.
-            The POC will then be able to make D&I Assessment submissions to the Bureau and create additional profiles for other employees of your institution.
-            For questions concerning this form, please contact the OMWI Regulated Entities Support Team at
+            Please complete and submit this form to establish a point of contact for your institution.
+            The point of contact will then be able to make  diversity and inclusion assessment submissions to the Bureau.
+            For questions concerning this form, please contact the Office of Minority and Women Inclusion’s Regulated Entities Support Team at
             <a href="mailto:OMWI_regulatedentity@cfpb.gov">
                 OMWI_regulatedentity@cfpb.gov
             </a>.
@@ -53,7 +53,7 @@
               method="POST">
             <h2>Institution information</h2>
             <p>
-                Please provide your institution’s name, headquarters location, and identification numbers.
+                Please provide your institution’s name, location, and tax identification number.
             </p>
             <div class="o-well u-mb30">
                 <div class="o-form_group">
@@ -105,46 +105,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="block block__sub block__border-top block__padded-top">
-                    <p>
-                        Please provide
-                        <strong>
-                            at least one
-                        </strong>
-                        of your institution's identification numbers.
-                    </p>
-                    <div class="o-form_group">
-                        <div class="m-form-field">
-                            <label class="a-label a-label__heading"
-                                   for="{{ form.lei.id_for_label }}">
-                                {{ form.lei.label }}
-                            </label>
-                            {{ form.lei }}
-                        </div>
-                    </div>
-                    <div class="o-form_group">
-                        <div class="m-form-field">
-                            <label class="a-label a-label__heading"
-                                   for="{{ form.rssd.id_for_label }}">
-                                {{ form.rssd.label }}
-                            </label>
-                            {{ form.rssd }}
-                        </div>
-                    </div>
-                    <div class="o-form_group">
-                        <div class="m-form-field">
-                            <label class="a-label a-label__heading"
-                                   for="{{ form.tax_id.id_for_label }}">
-                                {{ form.tax_id.label }}
-                            </label>
-                            {{ form.tax_id }}
-                        </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.tax_id.id_for_label }}">
+                            {{ form.tax_id.label }}
+                        </label>
+                        {{ form.tax_id }}
                     </div>
                 </div>
             </div>
             <h2>Contact information</h2>
             <p>
-                Please provide the name and contact information for the individual who will be your institution’s POC.
+                Please provide the name and contact information for the individual who will be your institution’s diversity and inclusion point of contact.
             </p>
             <div class="o-well u-mb30">
                 <div class="o-form_group">
@@ -195,14 +168,12 @@
                 </div>
             </div>
             <div class="o-form_group">
-                <input type="hidden"
-                       name="csrfmiddlewaretoken"
-                       value="{{ csrf_token }}">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 <div class="m-btn-group">
                     <input class="a-btn"
-                       title="Submit your diversity assessment registration form"
-                       type="submit"
-                       value="Submit">
+                           title="Submit your diversity assessment registration form"
+                           type="submit"
+                           value="Submit">
                     <a class="a-btn a-btn__link a-btn__secondary"
                        href="/privacy/voluntary-diversity-assessment-privacy-act-statement/"
                        rel="noopener noreferrer"
@@ -216,13 +187,5 @@
 {%- endblock %}
 
 {% block content_sidebar -%}
-    <div class="block block__flush-top">
-        <h3>About us</h3>
-        <p>
-            The Consumer Financial Protection Bureau (CFPB) is a 21st century agency
-            that helps consumer finance markets work by making rules more effective,
-            by consistently and fairly enforcing those rules,
-            and by empowering consumers to take more control over their economic lives.
-        </p>
-    </div>
+    {% include '_sidebar.html' %}
 {%- endblock %}

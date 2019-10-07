@@ -34,19 +34,8 @@ class VoluntaryAssessmentForm(forms.Form):
         widget=forms.TextInput(attrs=text_input_attrs),
     )
 
-    lei = forms.CharField(
-        label='LEI',
-        required=False,
-        widget=forms.TextInput(attrs=text_input_attrs),
-    )
-    rssd = forms.CharField(
-        label='RSSD',
-        required=False,
-        widget=forms.TextInput(attrs=text_input_attrs),
-    )
     tax_id = forms.CharField(
-        label='Tax ID',
-        required=False,
+        label='Tax identification number',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
 
