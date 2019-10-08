@@ -1,12 +1,5 @@
 @import (reference) '../../../css/main.less';
 
-.no-js {
-  .u-show-no-js {
-    display: block;
-    visibility: visible;
-  }
-}
-
 /**
   * Capital Framework overrides
 **/
@@ -172,6 +165,12 @@ textarea {
   });
 }
 
+.u-show-on-print {
+  .respond-to-print({
+    display: block !important;
+  });
+}
+
 .u-mobile-reorder {
   .respond-to-max(@bp-sm-min, {
     display: flex;
@@ -190,6 +189,17 @@ textarea {
       order: 3;
     }
   });
+}
+
+.no-js {
+  .u-show-no-js {
+    display: block;
+    visibility: visible;
+  }
+}
+
+.u-show-no-js {
+  display: none;
 }
 
 .a-average-cost {
