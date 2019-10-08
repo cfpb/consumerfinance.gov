@@ -27,6 +27,8 @@
 
   class:         Optional CSS classes to apply to the element
 
+  pattern:       Optional HTML5 validation regexp
+
   ========================================================================== #}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
 
@@ -55,7 +57,8 @@
           {{ 'required' if value.required else '' }}
           {{ 'disabled' if value.disabled else ''}}
           {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}
-          {{ 'placeholder="' ~ value.placeholder ~ '"' if value.placeholder else '' }}>
+          {{ 'placeholder="' ~ value.placeholder ~ '"' if value.placeholder else '' }}
+          {{ 'pattern=' ~ value.pattern ~ '' if value.pattern else ''}}>
    </input>
 </div>
 
