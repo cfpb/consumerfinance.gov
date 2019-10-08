@@ -70,9 +70,7 @@ function daysPerWeekView( element, { store, routeIndex, todoNotification } ) {
     const prevRouteState = routeSelector( prevState.routes, routeIndex );
     const routeState = routeSelector( state.routes, routeIndex );
 
-    if ( routeState.transportation === 'Drive' ) {
-      _dom.classList.remove( 'u-hidden' );
-    } else {
+    if ( routeState.isMonthlyCost ) {
       _daysPerWeekEl.value = '';
       _notSureEl.checked = '';
       _dom.classList.add( 'u-hidden' );
@@ -82,6 +80,8 @@ function daysPerWeekView( element, { store, routeIndex, todoNotification } ) {
       if ( prevRouteState.daysPerWeek ) {
         store.dispatch( clearDaysPerWeekAction( { routeIndex } ) );
       }
+    } else {
+      _dom.classList.remove( 'u-hidden' );
     }
   }
 
@@ -107,7 +107,6 @@ function daysPerWeekView( element, { store, routeIndex, todoNotification } ) {
     init() {
       if ( setInitFlag( _dom ) ) {
         _initInputs();
-        _dom.classList.add( 'u-hidden' );
         store.subscribe( _onStateUpdate );
         todoNotification.init( _dom );
       }
