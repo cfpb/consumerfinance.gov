@@ -1,5 +1,6 @@
 import Expandable from 'cf-expandables/src/Expandable';
 import { addRouteOptionAction } from './reducers/route-option-reducer';
+import { toArray } from './util';
 import averageCostView from './views/average-cost';
 import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
@@ -18,8 +19,8 @@ import routeOptionToggleView from './route-option-toggle-view';
 import store from './store';
 import transitTimeView from './views/transit-time';
 
-Array.prototype.slice.call(
-  document.querySelectorAll( 'input' )
+toArray(
+  document.querySelectorAll( 'input, textarea' )
 ).forEach( input => {
   input.removeAttribute( 'disabled' );
 } );

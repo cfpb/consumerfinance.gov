@@ -7,7 +7,7 @@
 <p class="u-mb0">Meet Mya and Frankie. They’ll help you think about your plan.</p>
 <div class="content-l block block__sub block__flush-top">  
   <div class="content-l_col-1-2 block block__sub">
-    <img src="/static/apps/youth-employment-success/img/Mya_transportation_tool.png" alt="">
+    <img src="/static/apps/youth-employment-success/img/Mya_transportation_tool.png" alt="" class="u-hide-on-print">
     <p class="h2 u-mt15">Mya plans to bike to work</p>
     <p class="u-mt20">Mya decided to bike to work because there’s a bikeshare near her school. Bikeshares allow you to borrow a bike from different self-service bike stations around the city. Mya heads straight to work from class—some days she has time to walk, but usually she’s in a rush and biking is faster.</p>
     <p class="h3">
@@ -16,7 +16,7 @@
     <p>I want to buy an annual bikeshare membership since my school offers a special student rate and it’d be a better deal than paying per ride. The $60 annual membership works out to a little over $1 per week (over 52 weeks in a year). In order to save money for this, I will walk to work two days a week for the next few months.</p>
   </div>
   <div class="content-l_col-1-2 block block__sub">
-    <img src="/static/apps/youth-employment-success/img/Frankie_transportation_tool.png" alt="">
+    <img src="/static/apps/youth-employment-success/img/Frankie_transportation_tool.png" alt="" class="u-hide-on-print">
     <p class="h2 u-mt15">Frankie plans to take the bus</p>
     <p class="u-mt20">Frankie doesn’t live near public transportation so he usually gets a ride to the closest bus stop. The bus ride is about 25 minutes long so he leaves his house at 7:10am to allow enough time to get dropped off, ride the bus, and arrive at work before his 8am shift starts.</p>
     <p class="h3">
@@ -36,6 +36,7 @@
     <div class="block block__sub">
       {{
         textarea.render({
+          'disabled': true,
           'fieldClass': 'js-long-term-goal',
           'helperText': 'For example, your long-term goal could be saving up for an annual bus pass over the next few months or saving up to buy a car in the next year.',
           'label': 'What’s your long-term goal?',
@@ -48,6 +49,7 @@
     <div class="block block__sub">
       {{
         textarea.render({
+          'disabled': true,
           'fieldClass': 'js-goal-importance',
           'helperText': 'Maybe this goal will help you save money in the long run, or maybe it’s a more reliable option than your current way of getting to work.',
           'label': "Why is this goal important to you?",
@@ -93,6 +95,7 @@
     <div class="block block__sub">
       {{
         textarea.render({
+          'disabled': true,
           'fieldClass': 'js-goal-steps',
           'helperText': 'Now work backwards — what are some steps you could take to achieve your goal during your intended timeline? Make sure your steps are realistic and specific. For example, my first step is “Over the next six months, I’ll take the bus instead of using a rideshare in order to save money. I’m trying to save $400 over these six months to put towards a car down payment.”',
           'label': "What are some steps you could take to reach your goal?",

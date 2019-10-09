@@ -82,6 +82,12 @@
   });
 }
 
+.m-list_link {
+  .respond-to-max(@bp-sm-min, {
+    border: 0;
+  });
+}
+
 .o-expandable_content__expanded {
   /**
    * The route option form is quite large and the current expandable `max-height`
@@ -153,9 +159,15 @@ textarea {
   });
 }
 
-.u-hide-on-review-print {
+.u-hide-on-print {
   .respond-to-print({
     display: none !important;
+  });
+}
+
+.u-show-on-print {
+  .respond-to-print({
+    display: block !important;
   });
 }
 
@@ -177,6 +189,17 @@ textarea {
       order: 3;
     }
   });
+}
+
+.no-js {
+  .u-show-no-js {
+    display: block;
+    visibility: visible;
+  }
+}
+
+.u-show-no-js {
+  display: none;
 }
 
 .a-average-cost {

@@ -9,11 +9,12 @@
 
 <main class="content content__1-3 yes-transit-tool" role="main">
   <div class="wrapper content_wrapper">
-    <aside class="content_sidebar content__flush-top u-hide-on-review-print">
+    <aside class="content_sidebar content__flush-top js-no-print">
       sidebar
     </aside>
     <section class="content_main">
-      <div class="u-hide-on-review-print">
+      {% include "no-js.html" %}
+      <div class="js-no-print">
         {% include "goals.html" %}      
         {% include "budget-form.html" %}
         <div class="block">
@@ -33,7 +34,7 @@
 {% endblock content %}
 
 {% block footer %}
-  <div class="u-hide-on-review-print">
+  <div class="u-hide-on-print">
     {% import 'organisms/footer.html' as o_footer with context %}
     {{ o_footer.render() }}
   </div>
