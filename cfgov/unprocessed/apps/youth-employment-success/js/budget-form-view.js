@@ -71,8 +71,9 @@ function BudgetFormView( element, { store } ) {
    */
   function _updateTotal( { budget } ) {
     const { earned, spent } = budget;
+    const total = !earned && !spent ? '-' : money.subtract( earned, spent );
 
-    _moneyRemainingEl.textContent = money.subtract( earned, spent );
+    _moneyRemainingEl.textContent = total;
   }
 
   return {

@@ -1,29 +1,15 @@
 @import (reference) '../../../css/main.less';
 
-.u-hide-on-review-print {
-  .respond-to-print({
-    display: none !important;
-  });
-}
+/**
+  * Capital Framework overrides
+**/
 
+// ATOMIC OVERRIDES
 /** 
 * This gets overwritten by media queries, so we need to make it important.
 */
-.u-hidden, .u-hide-on-mobile {
+.u-hidden {
   display: none !important;
-}
-
-/**
-  * Similar to the class below, we want to preserve the inline-block
-  * declaration, not the reset to `block` that this class normally provides.
-  * This !important is specific to the layout requirements of this tool.
-*/
-.u-hide-on-mobile {
-  .respond-to-min(@bp-sm-min, {
-    &.content-l_col {
-      display: inline-block !important;
-    }
-  });
 }
 
 /**
@@ -42,27 +28,38 @@
   display: initial !important;
 }
 
-
-.u-align-right {
-  text-align: right;
+/**
+* Enchancement for the .block__sub class found at:
+* https://github.com/cfpb/capital-framework/blob/0b15295c00ba1972676b6f4c86f3b40dcf45289d/packages/cf-layout/src/cf-layout.less#L466
+*/
+.block__sub-micro {
+  margin-bottom: unit( @grid_gutter-width / @size-i, em );
+  margin-top: unit( @grid_gutter-width / @size-i, em );
 }
 
-.u-mobile-reorder {
+.content_line-bold {
+  background-color: @black;
+  height: 1px;
+}
+/** /ATOMIC OVERRIDES **/
+
+// LAYOUT OVERRIDES
+.content_main {
+  h2, .h2, textarea {
+    max-width: 41.875rem;
+  }
+}
+
+// The original class provides a pretty huge gap, particularly on mobile, so tame it a bit 
+.content-l_col+.content-l_col {
   .respond-to-max(@bp-sm-min, {
-    display: flex;
-    flex-direction: column;
-
-    .u-mobile-reorder__first {
-      order: 1;
-    }
-
-    .u-mobile-reorder__second {
-      margin-top: .5rem;
-      order: 2;
-    }
+    margin-top: 1em;
   });
 }
+/** /LAYOUT OVERRIDES **/
 
+
+// MOLECULE / ORGANISM OVERRIDES
 .m-form-field__radio, .m-form-field__checkbox {
   .respond-to-max(@bp-sm-min, {
     &:first-child {
@@ -77,6 +74,40 @@
     }
   });
 }
+
+.m-form-field__radio {
+  .respond-to-max(@bp-sm-min, {
+    margin-bottom: 1rem;
+    width: 100%;
+  });
+}
+
+.o-expandable_content__expanded {
+  /**
+   * The route option form is quite large and the current expandable `max-height`
+   * does not accomodate all the content. Selected this value to accomodate for
+   * all the case in which all form fields are visible and the user's to-do list
+   * is populated.
+  */
+  max-height: 2400px !important;
+}
+/** /MOLECULE OVERRIDES **/
+
+
+// ELEMENT-SPECIFIC
+ul {
+  list-style: disc;
+}
+
+/**
+* content-l_col overrides the default appearance for textareas, this restores it. 
+*/
+textarea {
+  border-color: black !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+}
+/** /ELEMENT-SPECIFIC **/
 
 /**
   * There are a few instances where we need the designs call for
@@ -93,11 +124,114 @@
   });
 }
 
-// The original class provides a pretty huge gap, particularly on mobile, so tame it a bit 
-.content-l_col+.content-l_col {
+.u-align-right {
+  text-align: right;
+}
+
+.u-br0 {
+  border-right-width: 0;
+}
+
+.u-mr10 {
+  margin-right: 10px;
+}
+
+/**
+  * We want to preserve the inline-block declaration, and not reset `display`
+  * to `block` as this class normally does.
+  * This !important is specific to the layout requirements of this tool.
+*/
+.u-hide-on-mobile {
   .respond-to-max(@bp-sm-min, {
-    margin-top: 1em;
+    display: none !important;
   });
+
+  .respond-to-min(@bp-sm-min, {
+    &.content-l_col {
+      display: inline-block !important;
+    }
+  });
+}
+
+.u-hide-on-review-print {
+  .respond-to-print({
+    display: none !important;
+  });
+}
+
+.u-mobile-reorder {
+  .respond-to-max(@bp-sm-min, {
+    display: flex;
+    flex-direction: column;
+
+    &__first {
+      margin-bottom: 0;
+      order: 1;
+    }
+
+    &__second {
+      order: 2;
+    }
+
+    &__third {
+      order: 3;
+    }
+  });
+}
+
+.a-average-cost {
+  .respond-to-max(@bp-sm-min, {
+    width: 15%;
+  })
+}
+
+.a-yes-inline-radio {
+  > .a-yes-average-cost-radio:first-child {
+    margin-right: 1rem;
+  }
+
+  border-width: 0;
+  display: inline-block;
+
+  .respond-to-max(@bp-sm-min, {
+    display: block;
+  });
+}
+
+.m-hours {
+  .m-hours_container {
+    .respond-to-max(@bp-sm-min, {
+      display: inline;
+    });
+  }
+
+  .m-hours_data {
+    .respond-to-max(@bp-sm-min, {
+      display: inline;
+      text-align: right;
+      float: right;
+      margin-bottom: .25rem;
+
+      + * {
+        margin-top: .25rem;
+        text-align: right;
+      }
+    });
+  }
+}
+
+/**
+* TODO: Name this something better?
+*/
+.m-right-justify {
+  &:extend(.h4);
+  position: relative;
+
+  .content-r {
+    left: 100%;
+    position: absolute;
+    top: calc(100% - (@size-iv + @base-line-height-px));
+  }
 }
 
 .m-yes-transit-time {
@@ -105,7 +239,7 @@
     .u-w50pct {
       width: 25%;
     }
-  })
+  });
 }
 
 .m-yes-line-item {
@@ -125,60 +259,11 @@
   });
 }
 
-.m-form-field__radio {
+.js-transit-hours, .js-transit-minutes {
   .respond-to-max(@bp-sm-min, {
-    margin-bottom: 1rem;
-    width: 100%;
+    display: inline-block;
+    width: 20%;
   });
-}
-
-.js-transit-hours {
-  .respond-to-max(@bp-sm-min, {
-    float: left;
-  });
-}
-
-/**
-* TODO: Name this something better?
-*/
-.m-right-justify {
-  &:extend(.h4);
-  position: relative;
-
-  .content-r {
-    left: 100%;
-    position: absolute;
-    top: calc(100% - (@size-iv + @base-line-height-px));
-  }
-}
-
-/**
-* Enchancement for the .block__sub class found at:
-* https://github.com/cfpb/capital-framework/blob/0b15295c00ba1972676b6f4c86f3b40dcf45289d/packages/cf-layout/src/cf-layout.less#L466
-*/
-.block__sub-micro {
-  margin-bottom: unit( @grid_gutter-width / @size-i, em );
-  margin-top: unit( @grid_gutter-width / @size-i, em );
-}
-
-.content_line-bold {
-  background-color: @black;
-  height: 1px;
-}
-
-.a-yes-inline-radio {
-  border-width: 0;
-}
-
-.yes-transit-tool {
-  input.a-text-input {
-    text-align: right;
-  }
-
-  .m-info-unit_image {
-    height: 125px;
-    width: 125px;
-  }
 }
 
 .yes-routes {
@@ -188,18 +273,6 @@
     & + input {
       margin-top: unit( 15px / @base-font-size-px, em );
     }
-  }
-
-  .m-notification {
-    border: 0;
-    padding: 0;
-  }
-}
-
-.yes-tip {
-  .cf-icon-svg {
-    font-size: unit( 20px / @base-font-size-px, em );
-    vertical-align: middle;
   }
 }
 
@@ -211,15 +284,21 @@
   }
 }
 
-ul {
-  list-style: disc;
+.yes-tip {
+  .cf-icon-svg {
+    font-size: unit( 20px / @base-font-size-px, em );
+    vertical-align: middle;
+  }
 }
 
-/**
-* content-l_col overrides the default appearance for textareas, this restores it. 
-*/
-textarea {
-  border-color: black !important;
-  border-style: solid !important;
-  border-width: 1px !important;
+.yes-transit-tool {
+  // TODO: replace with u-right-align?
+  input.a-text-input {
+    text-align: right;
+  }
+
+  .m-info-unit_image {
+    height: 125px;
+    width: 125px;
+  }
 }
