@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <div class="block block__sub-micro">
+    <div class="block block__sub-micro block__flush-bottom">
       <div class="content-l m-hours">
         <p class="content-l_col content-l_col-1-2 h4 m-hours_container">Total time to get to work</p>
         <div class="content-l_col content-l_col-1-2 u-align-right m-hours_container">
@@ -79,13 +79,13 @@
     </div>
     
     {% if show_todos %}
-    <div class="content-l block block__sub-micro">
+    <div class="content-l block block__sub-micro js-todo-list u-hidden">
       <div class="content-l_col content-l_col-1">
         <span class="h5">Your to-do list</span>
         <div class="content_line-bold"></div>
         <div class="content-l">
           <div class="content-l_col content-l_col-2-3">
-            <ul class="js-todo-items"></ul>
+            <ul class="block block__sub-micro block__flush-bottom js-todo-items"></ul>
           </div>
         </div>
       </div>

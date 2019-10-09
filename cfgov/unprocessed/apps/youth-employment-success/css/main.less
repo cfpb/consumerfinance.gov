@@ -45,7 +45,11 @@
 
 // LAYOUT OVERRIDES
 .content_main {
-  h2, .h2, textarea {
+  h2,
+  .h2,
+  textarea,
+  .m-notification,
+  .js-yes-plans-review {
     max-width: 41.875rem;
   }
 }
@@ -260,14 +264,6 @@ input:-moz-ui-invalid {
     position: absolute;
     top: calc(100% - (@size-iv + @base-line-height-px));
   }
-}
-
-.m-yes-transit-time {
-  .respond-to-max(@bp-sm-min, {
-    .u-w50pct {
-      width: 25%;
-    }
-  });
 }
 
 .m-yes-line-item {

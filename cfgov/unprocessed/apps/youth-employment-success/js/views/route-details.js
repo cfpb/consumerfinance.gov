@@ -14,6 +14,7 @@ const CLASSES = {
   BUDGET_REMAINING: 'js-budget-left',
   TIME_HOURS: 'js-time-hours',
   TIME_MINUTES: 'js-time-minutes',
+  TODO_LIST: 'js-todo-list',
   TODO_ITEMS: 'js-todo-items',
   INCOMPLETE_ALERT: 'js-route-incomplete',
   OOB_ALERT: 'js-route-oob',
@@ -199,10 +200,25 @@ function routeDetailsView( element ) {
   const _budgetLeftEl = _dom.querySelector( `.${ CLASSES.BUDGET_REMAINING }` );
   const _timeHoursEl = _dom.querySelector( `.${ CLASSES.TIME_HOURS }` );
   const _timeMinutesEl = _dom.querySelector( `.${ CLASSES.TIME_MINUTES }` );
-  const _todoEl = _dom.querySelector( `.${ CLASSES.TODO_ITEMS }` );
+  const _todoListEl = _dom.querySelector( `.${ CLASSES.TODO_LIST }` );
+  const _todoItemsEl = _dom.querySelector( `.${ CLASSES.TODO_ITEMS }` );
   const _incAlertEl = _dom.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
   const _oobAlertEl = _dom.querySelector( `.${ CLASSES.OOB_ALERT }` );
   const _completeAlertEl = _dom.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
+
+  /**
+   * Toggles the display of the todo list element and its children
+   * @param {Array} todos The array of todos the user may have added
+   */
+  function _toggleTodoList( todos = [] ) {
+    if ( todos.length ) {
+      _todoListEl.classList.remove( 'u-hidden' );
+    } else {
+      _todoListEl.classList.add( 'u-hidden' );
+    }
+
+    updateDom( _todoItemsEl, updateTodoList( todos ) );
+  }
 
   return {
     init() {
@@ -215,7 +231,10 @@ function routeDetailsView( element ) {
     render( { budget, route } ) {
       const costEstimate = getCalculationFn( route );
       const remainingBudget = money.subtract( budget.earned, budget.spent );
-      const nextRemainingBudget = updateRemainingBudget( remainingBudget, costEstimate );
+      const nextRemainingBudget = updateRemainingBudget(
+        remainingBudget,
+        costEstimate
+      );
       const dataToValidate = assign( {}, budget, route );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
@@ -225,7 +244,9 @@ function routeDetailsView( element ) {
       updateDom( _budgetLeftEl, nextRemainingBudget );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
-      updateDom( _todoEl, updateTodoList( route.actionPlanItems ) );
+      if ( _todoListEl ) {
+        _toggleTodoList( route.actionPlanItems );
+      }
       toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
       toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
       toggleCFNotification(
