@@ -44,13 +44,13 @@ function transitTimeView( element, { store, routeIndex, todoNotification } ) {
    * Updates form state from child input text nodes
    * @param {object} updateObject object with DOM event and field name
    */
-  function _setResponse( { name, event } ) {
+  function _setResponse( { name, event, value } ) {
     const method = _actionMap[name];
     const type = event.target.type;
-    const value = type === 'checkbox' ? event.target.checked : event.target.value;
+    const finalValue = type === 'checkbox' ? event.target.checked : value;
 
     if ( type === 'checkbox' ) {
-      if ( value ) {
+      if ( finalValue ) {
         todoNotification.show( NOT_SURE_MESSAGE );
       } else {
         todoNotification.hide();
@@ -59,7 +59,7 @@ function transitTimeView( element, { store, routeIndex, todoNotification } ) {
 
     if ( method ) {
       store.dispatch( method( {
-        routeIndex, value } ) );
+        routeIndex, value: finalValue } ) );
     }
   }
 

@@ -40,10 +40,10 @@ function milesView( element, { store, routeIndex, todoNotification } ) {
    * @param {object} updateObject.event The emitted DOM event
    * @param {string} updateObject.name The name of the field the event was emitted from
    */
-  function _handleUpdateMiles( { event } ) {
+  function _handleUpdateMiles( { event, value } ) {
     store.dispatch( updateMilesAction( {
       routeIndex,
-      value: event.target.value
+      value
     } ) );
   }
 

@@ -113,6 +113,11 @@ textarea {
   border-style: solid !important;
   border-width: 1px !important;
 }
+
+input:-moz-ui-invalid {
+  // Required to stop FF from validating the `placeholder` attribute
+  box-shadow: none;
+}
 /** /ELEMENT-SPECIFIC **/
 
 /**
