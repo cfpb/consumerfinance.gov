@@ -50,6 +50,7 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
    * @param {Object} state The current application state
    */
   function _handleStateUpdate( _, state ) {
+    // TODO initialize and render new details views as route options are added.
     const otherRoutes = state.routes.routes.slice();
     const preferredRoute = otherRoutes.splice( state.routeChoice, 1 );
     const finalRoutes = preferredRoute.concat( otherRoutes );
@@ -68,6 +69,32 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
       }
     } );
 
+    _todoEls.forEach( ( el, index ) => {
+      const fragment = document.createDocumentFragment();
+      const todos = todoListSelector( state.routes, index );
+
+      if ( todos.length ) {
+        el.parentNode.classList.remove( 'u-hidden' );
+      } else {
+        el.parentNode.classList.add( 'u-hidden' );
+      }
+
+      todos.forEach( todo => {
+        const item = document.createElement( 'li' );
+        item.textContent = getPlanItem( todo );
+        fragment.appendChild( item );
+      } );
+
+      el.innerHTML = '';
+      el.appendChild( fragment );
+    } );
+
+    _notificationEls.forEach( ( el, index ) => {
+      const todos = todoListSelector( state.routes, index );
+      toggleCFNotification( el, todos.length );
+    } );
+
+    // TODO rename this, what is `isWaiting`, non obvious name
     if ( isWaiting( state ) ) {
       _reviewChoiceHeadingEls.forEach( el => el.classList.add( 'u-hidden' ) );
     } else {
