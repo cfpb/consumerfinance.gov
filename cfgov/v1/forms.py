@@ -8,11 +8,10 @@ from django.forms import widgets
 
 from taggit.models import Tag
 
+from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
 from v1.util.date_filter import end_of_time_period
-
-from .models.base import Feedback
 
 
 class FilterableDateField(forms.DateField):
