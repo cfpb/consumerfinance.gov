@@ -12,7 +12,7 @@
       <small>Choose one</small>
     </p>
     <div class="u-w70pct">
-      <div class="block block__sub-micro">
+      <div class="block block__sub-micro js-route-choices">
         {{
           radio_button.render({
             'class': 'content-l content-l_col-1-2 m-form-field__lg-target js-yes-route-selection',
@@ -42,6 +42,19 @@
             'value': 'wait'
           })
         }}
+      </div>
+      <div class="js-yes-route-selection-clone u-hidden">
+        <div class="block block__sub-micro ">
+          {{
+            radio_button.render({
+              'class': 'content-l content-l_col-1-2 m-form-field__lg-target js-yes-route-selection',
+              'disabled': true,
+              'name':  'yes-route-selection',
+              'label': 'I want to complete items in my to-do list before deciding',
+              'value': 'wait'
+            })
+          }}
+        </div>
       </div>
     </div>
   </div>

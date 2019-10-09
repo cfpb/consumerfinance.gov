@@ -42,12 +42,18 @@ budgetForm.init();
 
 let expandables = [];
 
+/**
+ * Given a container element, initialize a new expandable and route option form. If
+ * a DOM element is not supplied, clone the form 'template' element and initialize the
+ * JS views with it.
+ * @param {HTMLElement} el A DOM node
+ */
 function addRouteExpandable( el ) {
   let routeEl = el;
 
   if ( !routeEl ) {
     const parent = document.querySelector( '.yes-routes-option-clone' );
-    const target = parent.querySelector( '.js-route-option' );
+    const target = parent.querySelector( '.js-option-wrapper' );
     routeEl = target.cloneNode( true );
     document.querySelector( '.js-initial-routes' ).appendChild( routeEl );
   }
@@ -125,5 +131,5 @@ reviewChoiceView(
 const routesEl = document.querySelector( '.js-initial-routes' );
 
 routesEl.removeChild(
-  routesEl.querySelector( '.js-route-option-2' )
+  routesEl.querySelector( '.js-option-wrapper-2' )
 );

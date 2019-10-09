@@ -3,7 +3,7 @@
     <div class="u-w75pct js-initial-routes">
       {% for i in range(2) %}
         {% with id=i+1 %}
-          <div class="content-l_col content-l_col-1">
+          <div class="content-l_col content-l_col-1 js-option-wrapper-{{ id }}">
             {% include "route-option.html" %}
           </div>
         {% endwith %}
@@ -19,7 +19,9 @@
       </div>
     </div>
     <div class="u-hidden yes-routes-option-clone">
-      {% include "route-option.html" %}
-    </div>
+      <div class="content-l_col content-l_col-1 js-option-wrapper">
+        {% include "route-option.html" %}
+      </div>
+     </div>
   </div>
 </div>

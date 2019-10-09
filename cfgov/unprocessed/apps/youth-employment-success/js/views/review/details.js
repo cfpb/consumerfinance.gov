@@ -50,6 +50,7 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
    * @param {Object} state The current application state
    */
   function _handleStateUpdate( _, state ) {
+    // TODO initialize and render new details views as route options are added.
     const otherRoutes = state.routes.routes.slice();
     const preferredRoute = otherRoutes.splice( state.routeChoice, 1 );
     const finalRoutes = preferredRoute.concat( otherRoutes );

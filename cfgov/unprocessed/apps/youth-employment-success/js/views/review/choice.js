@@ -8,7 +8,8 @@ const CLASSES = Object.freeze( {
   CONTAINER: 'js-yes-review-choice',
   REVIEW_PLAN: 'js-yes-plans-review',
   BUTTON: 'js-yes-choice-finalize',
-  CHOICE: 'js-yes-route-selection'
+  CHOICE: 'js-yes-route-selection',
+  CHOICE_CLONE: 'js-yes-route-selection-clone'
 } );
 
 /**
@@ -140,8 +141,22 @@ function reviewChoiceView( element, { store, onShowReviewPlan } ) {
    * @param {Object} _ The previous application state object, unused here
    * @param {Object} state The current state of the application
    */
-  function _handleStateUpdate( _, state ) {
+  function _handleStateUpdate( prevState, state ) {
+    //TODO: when number of routes change, add a new choice option?
+    // Add selector for all routes
+    const prevRoutes = prevState.routes.routes;
     const routes = state.routes.routes;
+
+    // CHoice buttons clearly need to be their own view
+    if (prevRoutes.length && prevRoutes.length !== routes.length) {
+      const choiceClone = _dom.querySelector(`.${CLASSES.CHOICE_CLONE}`).cloneNode(true);
+      _choiceBtnEls.push(choiceClone.querySelector(`.${CLASSES.CHOICE}`));
+      _choiceInputs.push(_choiceBtnEls[_choiceBtnEls.length - 1].querySelector('input'));
+      _dom.querySelector('.js-route-choices').appendChild(choiceClone);
+      choiceClone.classList.remove('u-hidden');
+      _populateOptionLabels(routes);
+    }
+
     let transportationSelected = true;
 
     for ( let i = 0; i < routes.length; i++ ) {
@@ -157,6 +172,7 @@ function reviewChoiceView( element, { store, onShowReviewPlan } ) {
       _populateOptionLabels( routes );
     }
 
+    // TODO: add selector for this, expand reducer to handle whether or not button was clicked
     if ( state.routeChoice ) {
       _enableReviewButton();
     } else {
