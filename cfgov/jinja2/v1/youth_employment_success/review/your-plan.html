@@ -7,18 +7,18 @@
     <li>Ask about bus passes, gas cards, rideshare credits, or other reduced-fare transit cards</li>
   </ul>
   <div class="block block__sub">
-    <p><b>OPTION 1: <span class="js-option-1-type"></span></b></p>
+    <p class="h5">OPTION 1: <span class="js-option-1-type"></span></p>
     <ul class="js-review-todo"></ul>
   </div>
   <div class="block block__sub">
-    <p><b>OPTION 2: <span class="js-option-2-type"></span></b></p>
+    <p class="h5">OPTION 2: <span class="js-option-2-type"></span></p>
     <ul class="js-review-todo"></ul>
   </div>
   <div class="block block__sub">
     <div class="js-review-choice-heading">
       <p class="h3">Your first choice is <span class="js-transportation-option"></span></p>
     </div>
-    <div class="content-l content-l_col-2-3 js-route-incomplete u-mt0">
+    <div class="content-l content-l_col-1 js-route-incomplete u-mt0">
       {{
         alert.render({
           'background': true,
@@ -33,8 +33,8 @@
       {% with show_todos=false %}
         {% include "route-details.html" %}
       {% endwith %}
+      <div class="content_line"></div>
     </div>
-    <div class="content_line"></div>
   </div>
   <div class="js-option-2 block">
     <div class="js-review-choice-heading">
@@ -43,7 +43,7 @@
         <small>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</small>
       </p>
     </div>
-    <div class="content-l content-l_col-2-3 js-route-incomplete">
+    <div class="content-l content-l_col-1 js-route-incomplete">
       {{
         alert.render({
           'background': true,
@@ -58,7 +58,7 @@
       {% with show_todos=false %}
         {% include "route-details.html" %}
       {% endwith %}
+      <div class="content_line"></div>
     </div>
-    <div class="content_line"></div>
   </div>
 </div>

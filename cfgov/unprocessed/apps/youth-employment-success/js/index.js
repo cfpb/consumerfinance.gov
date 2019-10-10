@@ -80,11 +80,8 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
   } );
 } );
 
-/**
- * Only initialize the first route option form, the second is initialized when
- * the user clicks the 'add another option' button.
-*/
-routeOptionForms[0].init();
+expandables[0].element.querySelector( '.o-expandable_target' ).click();
+expandables[1].element.classList.add( 'u-hidden' );
 routeOptionToggleView(
   document.querySelector( `.${ OPTION_TOGGLE_CLASSES.BUTTON }` ), {
     expandable: expandables[1],
@@ -92,8 +89,11 @@ routeOptionToggleView(
   }
 ).init();
 
-expandables[0].element.querySelector( '.o-expandable_target' ).click();
-expandables[1].element.classList.add( 'u-hidden' );
+/**
+ * Only initialize the first route option form, the second is initialized when
+ * the user clicks the 'add another option' button.
+*/
+routeOptionForms[0].init();
 
 printButton(
   document.querySelector( `.${ printButton.CLASSES.BUTTON }` )

@@ -41,8 +41,10 @@ const HTML = `
         </b>
       </p>
     </div>
-    <span class="h4">MY TO-DO LIST</span> 
-    <ul class="block__sub-micro js-todo-items"></ul>
+    <div class="js-todo-list u-hidden">
+      <span class="h4">MY TO-DO LIST</span> 
+      <ul class="js-todo-items"></ul>
+    </div>
   </div>
 `;
 
@@ -195,12 +197,23 @@ describe( 'routeDetailsView', () => {
       expect( minutesEl.textContent ).toBe( '5' );
     } );
 
+    it( 'shows the todo list when there are todo list items', () => {
+      const todosEl = document.querySelector( `.${ CLASSES.TODO_LIST }` );
+
+      expect( todosEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
+
+      view.render( nextState );
+
+      expect( todosEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
+    } );
+
     it( 'updates the to-do list', () => {
       view.render( nextState );
 
-      const todosEl = document.querySelector( `.${ CLASSES.TODO_ITEMS }` );
+      const todosEl = document.querySelector( `.${ CLASSES.TODO_LIST }` );
+      const todoItemsEl = document.querySelector( `.${ CLASSES.TODO_ITEMS }` );
 
-      expect( todosEl.querySelectorAll( 'li' ).length ).toBe( 1 );
+      expect( todoItemsEl.querySelectorAll( 'li' ).length ).toBe( 1 );
 
       view.render( {
         ...nextState,
@@ -210,7 +223,8 @@ describe( 'routeDetailsView', () => {
         }
       } );
 
-      expect( todosEl.querySelectorAll( 'li' ).length ).toBe( 0 );
+      expect( todosEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
+      expect( todoItemsEl.querySelectorAll( 'li' ).length ).toBe( 0 );
     } );
 
     it( 'shows the out of budget alert when the route is out of budget', () => {
