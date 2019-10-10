@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import argparse
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from six import StringIO, ensure_text
 
 from django.core.management import call_command
@@ -10,20 +10,27 @@ from django.utils.timezone import make_aware
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.wagtailcore.models import Site
 
-from v1.management.commands.export_feedback import parse_date
+from v1.management.commands.export_feedback import (
+    make_aware_datetime, parse_date
+)
 from v1.models import Feedback
 
 
 class TestParseDate(TestCase):
     def test_parse_valid_date(self):
-        self.assertEqual(
-            parse_date('2000-01-01'),
-            make_aware(datetime(2000, 1, 1, 0, 0))
-        )
+        self.assertEqual(parse_date('2000-01-01'), date(2000, 1, 1))
 
     def test_parse_invalid_date_raises_argumenttypeerror(self):
         with self.assertRaises(argparse.ArgumentTypeError):
             parse_date('foo')
+
+
+class TestMakeAwareDatetime(TestCase):
+    def test_make_aware(self):
+        self.assertEqual(
+            make_aware_datetime(date(2000, 1, 1)),
+            make_aware(datetime(2000, 1, 1, 0, 0, 0))
+        )
 
 
 class TestExportFeedback(TestCase):
@@ -110,9 +117,19 @@ class TestExportFeedback(TestCase):
 
     def test_export_between_dates_including_start_and_end(self):
         output = self.call_command(
-            from_date=self.first_timestamp,
-            to_date=self.second_timestamp
+            from_date=self.first_timestamp.date(),
+            to_date=self.second_timestamp.date()
         )
 
         # Output should contain all feedback including both dates.
         self.assertEqual(len(output.split()), 7)
+
+    def test_export_between_dates_only_some(self):
+        output = self.call_command(
+                from_date=self.first_timestamp.date(),
+                to_date=self.first_timestamp.date() + timedelta(days=1)
+        )
+
+        # Output should contain only the first set of feedback.
+        self.assertEqual(len(output.split()), 4)
+        self.assertNotIn('2010', output)

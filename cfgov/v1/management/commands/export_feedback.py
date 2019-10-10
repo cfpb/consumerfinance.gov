@@ -1,5 +1,5 @@
 import argparse
-from datetime import datetime, timedelta
+from datetime import datetime, time, timedelta
 
 from django.core.management.base import BaseCommand
 from django.utils.timezone import make_aware
@@ -11,11 +11,13 @@ from v1.models import Feedback
 
 def parse_date(s):
     try:
-        naive_datetime = datetime.strptime(s, '%Y-%m-%d')
+        return datetime.strptime(s, '%Y-%m-%d').date()
     except ValueError:
         raise argparse.ArgumentTypeError('Not a valid date: %s' % s)
 
-    return make_aware(naive_datetime)
+
+def make_aware_datetime(date):
+    return make_aware(datetime.combine(date, time()))
 
 
 class Command(BaseCommand):
@@ -55,12 +57,14 @@ class Command(BaseCommand):
         ).order_by('submitted_on')
 
         if kwargs['from_date']:
-            feedbacks = feedbacks.filter(submitted_on__gte=kwargs['from_date'])
+            feedbacks = feedbacks.filter(
+                submitted_on__gte=make_aware_datetime(kwargs['from_date'])
+            )
 
         if kwargs['to_date']:
-            feedbacks = feedbacks.filter(
-                submitted_on__lt=kwargs['to_date'] + timedelta(days=1)
-            )
+            feedbacks = feedbacks.filter(submitted_on__lt=(
+                make_aware_datetime(kwargs['to_date']) + timedelta(days=1)
+            ))
 
         # If writing to stdout, don't append an extra newline to the CSV.
         if not kwargs['filename']:
