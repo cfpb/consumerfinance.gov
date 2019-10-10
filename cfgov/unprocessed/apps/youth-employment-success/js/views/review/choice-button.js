@@ -1,19 +1,19 @@
-import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
+import { setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 import inputView from '../input';
-import transportationMap from '../../data/transportation-map';
+import transportationMap from '../../data-types/transportation-map';
 
 const CLASSES = Object.freeze({
   CONTAINER: 'js-route-selection',
 });
 
-function ChoiceButtonView(element, { handleClick }) {
+function ChoiceButtonView(element, { handleClick, position }) {
   const _dom = element;
   const _labelEl = _dom.querySelector('label');
   const _inputEl = _dom.querySelector('input');
 
   function _populateOptionLabel( route = {} ) {    
     const friendlyOption = transportationMap[route.transportation];
-    const nextLabel = `Option ${ index + 1 }: ${ friendlyOption || '-' }`;
+    const nextLabel = `Option ${ position }: ${ friendlyOption || '-' }`;
     _labelEl.textContent = nextLabel;
   }
 
@@ -21,14 +21,14 @@ function ChoiceButtonView(element, { handleClick }) {
    * Allow user to interact with this view's radio button form elements
    */
   function _enableChoice() {
-    _dom.removeAttribute( 'disabled' );
+    _inputEl.removeAttribute( 'disabled' );
   }
 
   /**
    * Disable route option selection radio button
    */
   function _disableChoice() {
-    _dom.setAttribute( 'disabled', 'disabled' );
+    _inputEl.setAttribute( 'disabled', 'disabled' );
   }
 
   function _render({ route = {} } = {}) {

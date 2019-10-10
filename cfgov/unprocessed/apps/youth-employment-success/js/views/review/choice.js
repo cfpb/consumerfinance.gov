@@ -1,6 +1,7 @@
 import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 import { toArray } from '../../util';
 import { updateRouteChoiceAction } from '../../reducers/choice-reducer';
+import inputView from '../input';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'js-yes-review-choice',
@@ -85,9 +86,10 @@ function reviewChoiceView( element, { store, choiceButtonView, onShowReviewPlan 
    * Initialize the form controls this view manages
    */
   function _initInputs() { 
-    _choiceButtonViews = _choiceBtnEls.map(el => {
+    _choiceButtonViews = _choiceBtnEls.map((el, index) => {
       const view = choiceButtonView(el, {
-        handleClick: _handlePlanSelection
+        handleClick: _handlePlanSelection,
+        position: index + 1
       });
 
       view.init();
@@ -95,9 +97,14 @@ function reviewChoiceView( element, { store, choiceButtonView, onShowReviewPlan 
       return view;
     });
 
-    _waitButtonView = choiceButtonView(_waitBtnEl, {
-      handleClick: _handlePlanSelection
+    _waitButtonView = inputView(_waitBtnEl, {
+      events: {
+        'click': _handlePlanSelection
+      },
+      type: 'radio'
     });
+
+    // probably need to disable this
     _waitButtonView.init();
 
     _reviewBtnEl.addEventListener( 'click', _showReviewPlan );
@@ -132,19 +139,21 @@ function reviewChoiceView( element, { store, choiceButtonView, onShowReviewPlan 
         nextChoice.classList.add('u-mt15', 'u-mb15');
       }
 
-
       const buttonView = choiceButtonView(nextChoice, {
-        events: {
-          'click': _handlePlanSelection
-        },
-        type: 'radio'
+        handleClick: _handlePlanSelection,
+        position: _choiceButtonViews.length + 1
       });
 
       buttonView.init();
-      _choiceButtonViews.push(buttonView);
+
+      if (_choiceBtnEls.length !== routes.length) {
+        _choiceButtonViews.push(buttonView);
+      }
     }
 
-    _choiceButtonViews.forEach( (view, i) => view.render(routes[i]) );
+    _choiceButtonViews.forEach( (view, i) => {
+      view.render({ route: routes[i] });
+    });
 
     // TODO: add selector for this, expand reducer to handle whether or not button was clicked
     if ( state.routeChoice ) {
