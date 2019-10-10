@@ -4,6 +4,7 @@ import { toArray } from './util';
 import addRouteOptionView from './add-route-option-view';
 import averageCostView from './views/average-cost';
 import budgetFormView from './budget-form-view';
+import choiceButtonView from './views/review/choice-button';
 import createRoute from './route.js';
 import daysPerWeekView from './views/days-per-week';
 import drivingCostEstimateView from './views/driving-cost-estimate';
@@ -54,7 +55,10 @@ reviewDetailsView( reviewDetailsEl, {
 
 reviewChoiceView(
   document.querySelector( `.${ reviewChoiceView.CLASSES.CONTAINER }` ),
-  { store }
+  {
+    store,
+    choiceButtonView
+  }
 ).init();
 
 let expandables = [];

@@ -1,14 +1,12 @@
 import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 import { toArray } from '../../util';
 import { updateRouteChoiceAction } from '../../reducers/choice-reducer';
-import inputView from '../input';
-import transportationMap from '../../data-types/transportation-map';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'js-yes-review-choice',
   REVIEW_PLAN: 'js-yes-plans-review',
   BUTTON: 'js-yes-choice-finalize',
-  CHOICE: 'js-yes-route-selection',
+  CHOICE_WAIT: 'js-route-selection-wait',
   CHOICE_CLONE: 'js-yes-route-selection-clone'
 } );
 
@@ -25,29 +23,20 @@ const CLASSES = Object.freeze( {
  * @param {YesStore} props.store The public API exposed by the Store class
  * @returns {Object} This view's public API
  */
-function reviewChoiceView( element, { store, onShowReviewPlan } ) {
+function reviewChoiceView( element, { store, choiceButtonView, onShowReviewPlan } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _reviewPlanEl = _dom.querySelector( `.${ CLASSES.REVIEW_PLAN }` );
+  // Although three choice buttons are initially shown to handle the case where a user
+  // visiting the site without JS enabled elects to print the tool, we only want to
+  // initialize one choice button to start
   const _choiceBtnEls = toArray(
-    _dom.querySelectorAll( `.${ CLASSES.CHOICE }` )
+    _dom.querySelectorAll( `.${ choiceButtonView.CLASSES.CONTAINER }` )
   );
-  const _choiceInputs = _choiceBtnEls.map( el => el.querySelector( 'input' ) );
+  const _waitBtnEl = _dom.querySelector( `.${CLASSES.CHOICE_WAIT }` );
   const _reviewBtnEl = _dom.querySelector( `.${ CLASSES.BUTTON }` );
 
-  /**
-   * Allow user to interact with this view's radio button form elements
-   */
-  function _enableChoices() {
-    _choiceInputs.forEach( el => el.removeAttribute( 'disabled' ) );
-  }
-
-  /**
-   * Disable route option selection radio button
-   */
-  function _disableChoices() {
-    _choiceInputs.forEach( el => el.setAttribute( 'disabled', 'disabled' )
-    );
-  }
+  let _choiceButtonViews = [];
+  let _waitButtonView;
 
   /**
    * Enables the button that displays the final review plan on click
@@ -61,25 +50,6 @@ function reviewChoiceView( element, { store, onShowReviewPlan } ) {
    */
   function _disableReviewButton() {
     _reviewBtnEl.setAttribute( 'disabled', 'disabled' );
-  }
-
-  /**
-   * Sets the labels of each route selection radio button to the
-   * mode of transportation the user indicated.
-   * @param {Object} routes An array of route option objects
-   */
-  function _populateOptionLabels( routes ) {
-    _choiceBtnEls.forEach( ( el, index ) => {
-      const route = routes[index];
-
-      // Need a check here because the third option isnt tied to a route
-      if ( route ) {
-        const label = el.querySelector( 'label' );
-        const friendlyOption = transportationMap[route.transportation];
-        const nextLabel = `Option ${ index + 1 }: ${ friendlyOption }`;
-        label.textContent = nextLabel;
-      }
-    } );
   }
 
   /**
@@ -114,26 +84,23 @@ function reviewChoiceView( element, { store, onShowReviewPlan } ) {
   /**
    * Initialize the form controls this view manages
    */
-  function _initInputs() {
-    _choiceInputs.forEach( el => {
-      inputView( el, {
-        events: {
-          click: _handlePlanSelection
-        },
-        type: 'radio'
-      } ).init();
-    } );
+  function _initInputs() { 
+    _choiceButtonViews = _choiceBtnEls.map(el => {
+      const view = choiceButtonView(el, {
+        handleClick: _handlePlanSelection
+      });
+
+      view.init();
+
+      return view;
+    });
+
+    _waitButtonView = choiceButtonView(_waitBtnEl, {
+      handleClick: _handlePlanSelection
+    });
+    _waitButtonView.init();
 
     _reviewBtnEl.addEventListener( 'click', _showReviewPlan );
-  }
-
-  /**
-   * Determines if a given route has a transportation type indicated
-   * @param {Object} route A route object
-   * @returns {Boolean} If the route has a specified mode of transportation
-   */
-  function _routeHasTransportation( route ) {
-    return route && Boolean( route.transportation );
   }
 
   /**
@@ -142,35 +109,42 @@ function reviewChoiceView( element, { store, onShowReviewPlan } ) {
    * @param {Object} state The current state of the application
    */
   function _handleStateUpdate( prevState, state ) {
-    //TODO: when number of routes change, add a new choice option?
-    // Add selector for all routes
+    // TODO: Add selector for all routes
     const prevRoutes = prevState.routes.routes;
     const routes = state.routes.routes;
 
-    // CHoice buttons clearly need to be their own view
+    // Choice buttons clearly need to be their own view
     if (prevRoutes.length && prevRoutes.length !== routes.length) {
-      const choiceClone = _dom.querySelector(`.${CLASSES.CHOICE_CLONE}`).cloneNode(true);
-      _choiceBtnEls.push(choiceClone.querySelector(`.${CLASSES.CHOICE}`));
-      _choiceInputs.push(_choiceBtnEls[_choiceBtnEls.length - 1].querySelector('input'));
-      _dom.querySelector('.js-route-choices').appendChild(choiceClone);
-      choiceClone.classList.remove('u-hidden');
-      _populateOptionLabels(routes);
-    }
-
-    let transportationSelected = true;
-
-    for ( let i = 0; i < routes.length; i++ ) {
-      const route = routes[i];
-
-      if ( !_routeHasTransportation( route ) ) {
-        transportationSelected = false;
+      let nextChoice;
+      if (_choiceBtnEls.length === routes.length) {
+        /** 
+         * The user added the second route. Since the form element starts on the page
+         * (to accomodate a user printing the tool), we grab that element and initialize
+         * a new choiceView with it. All routes after the second require that we clone
+         * a dummy choice form control and populate it.
+        **/
+        nextChoice = _choiceBtnEls[_choiceBtnEls.length - 1];
+      } else {
+        nextChoice = _dom.querySelector(`.${CLASSES.CHOICE_CLONE}`)
+          .children[0]
+          .cloneNode(true);
+        _dom.querySelector('.js-route-choices').appendChild(nextChoice);
+        nextChoice.classList.add('u-mt15', 'u-mb15');
       }
+
+
+      const buttonView = choiceButtonView(nextChoice, {
+        events: {
+          'click': _handlePlanSelection
+        },
+        type: 'radio'
+      });
+
+      buttonView.init();
+      _choiceButtonViews.push(buttonView);
     }
 
-    if ( transportationSelected ) {
-      _enableChoices();
-      _populateOptionLabels( routes );
-    }
+    _choiceButtonViews.forEach( (view, i) => view.render(routes[i]) );
 
     // TODO: add selector for this, expand reducer to handle whether or not button was clicked
     if ( state.routeChoice ) {
@@ -184,14 +158,6 @@ function reviewChoiceView( element, { store, onShowReviewPlan } ) {
     init() {
       if ( setInitFlag( _dom ) ) {
         _hideReviewPlan();
-
-        /**
-         * NOTE: Although these are set to disabled in the template, we need to manually disable them again;
-         * all form controls are enabled once JS is detected. These fields are a special
-         * case in that they are the only form controls which are conditionally available,
-         * based on valid data being input by the user.
-        */
-        _disableChoices();
         _initInputs();
         store.subscribe( _handleStateUpdate );
       }
