@@ -16,7 +16,7 @@ from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.whitelist import attribute_rule
 
-from v1.admin_views import manage_cdn
+from v1.admin_views import ExportFeedbackView, manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
@@ -121,6 +121,32 @@ def form_module_handlers(page, request, context, *args, **kwargs):
         context['form_modules'] = form_modules
 
 
+class PermissionCheckingMenuItem(MenuItem):
+    """MenuItem that only displays if the user has a certain permission.
+
+    This subclassing approach is recommended by the Wagtail documentation:
+    https://docs.wagtail.io/en/v1.13.4/reference/hooks.html#register-admin-menu-item
+    """
+    def __init__(self, *args, **kwargs):
+        self.permission = kwargs.pop('permission')
+        super(PermissionCheckingMenuItem, self).__init__(*args, **kwargs)
+
+    def is_shown(self, request):
+        return request.user.has_perm(self.permission)
+
+
+@hooks.register('register_admin_menu_item')
+def register_export_feedback_menu_item():
+    return PermissionCheckingMenuItem(
+        'Export feedback',
+        reverse('export-feedback'),
+        classnames='icon icon-download',
+        order=99999,
+        # TODO: In Django 2.1 this can be changed to v1.view_feedback.
+        permission='v1.change_feedback'
+    )
+
+
 @hooks.register('register_admin_menu_item')
 def register_django_admin_menu_item():
     return MenuItem(
@@ -140,8 +166,13 @@ def register_frank_menu_item():
 
 
 @hooks.register('register_admin_urls')
-def register_flag_admin_urls():
-    return [url(r'^cdn/$', manage_cdn, name='manage-cdn'), ]
+def register_admin_urls():
+    return [
+        url(r'^cdn/$', manage_cdn, name='manage-cdn'),
+        url(r'^export-feedback/$',
+            ExportFeedbackView.as_view(),
+            name='export-feedback'),
+    ]
 
 
 @hooks.register('before_serve_page')

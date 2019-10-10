@@ -34,10 +34,13 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            'page_slug',
+            'pages',
             nargs='*',
             type=lookup_page_slug,
-            help='export only feedback for this page and its child pages'
+            help=(
+                'export only feedback for these page slugs '
+                'and their child pages'
+            )
         )
         parser.add_argument(
             '--exclude',
@@ -62,7 +65,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         feedbacks = Feedback.objects.for_pages(
-            kwargs['page_slug'],
+            kwargs['pages'],
             exclude=kwargs['exclude']
         ).order_by('submitted_on')
 

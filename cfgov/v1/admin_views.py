@@ -1,15 +1,20 @@
+import datetime
 import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.http.response import HttpResponseForbidden
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import FileResponse, HttpResponseForbidden
 from django.shortcuts import render
+from django.utils import timezone
+from django.views.generic import FormView
 
 from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
 
+from dateutil.relativedelta import relativedelta
 from requests.exceptions import HTTPError
 
-from v1.admin_forms import CacheInvalidationForm
+from v1.admin_forms import CacheInvalidationForm, ExportFeedbackForm
 from v1.models.caching import AkamaiBackend, CDNHistory
 
 
@@ -97,3 +102,51 @@ def manage_cdn(request):
                   context={'form': form,
                            'user_can_purge': user_can_purge,
                            'history': history})
+
+
+class ExportFeedbackView(PermissionRequiredMixin, FormView):
+    # TODO: In Django 2.1 this can be changed to v1.view_feedback.
+    permission_required = 'v1.change_feedback'
+    template_name = 'v1/export_feedback.html'
+    form_class = ExportFeedbackForm
+
+    def form_valid(self, form):
+        # TODO: In Django 2.1, use as_attachment=True and pass the filename
+        # as an argument instead of manually specifying the content headers.
+        response = FileResponse(
+            form.generate_zipfile(),
+            content_type='application/zip'
+        )
+        response['Content-Disposition'] = (
+            'attachment;filename=feedback_%s.zip' % form.get_filename_dates()
+        )
+
+        return response
+
+    def get_initial(self):
+        most_recent_quarter = self.get_most_recent_quarter()
+
+        return {
+            'from_date': most_recent_quarter[0],
+            'to_date': most_recent_quarter[1],
+        }
+
+    @staticmethod
+    def get_most_recent_quarter(today=None):
+        """Returns the start and end date of the most recent quarter.
+
+        For example, calling this method on 2019/12/01 would return
+        (2019/07/01, 2019/09/30).
+        """
+        today = today or timezone.now().date()
+
+        current_quarter_start = datetime.date(
+            today.year,
+            1 + (((today.month - 1) // 3) * 3),
+            1
+        )
+
+        return (
+            current_quarter_start - relativedelta(months=3),
+            current_quarter_start - relativedelta(days=1)
+        )

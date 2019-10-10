@@ -1,0 +1,26 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% block titletag %}{% trans "Export feedback" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+button.export-feedback {
+    margin-top: 2em;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title="Export feedback" icon="download" %}
+
+    <div class="nice-padding">
+        <p>
+            Download a ZIP file containing feedback submitted to the website.
+		</p>
+        <form method="post">
+            {% csrf_token %}
+			{{ form }}
+            <button type="submit" class="button export-feedback">Download</button>
+        </form>
+    </div>
+{% endblock %}
