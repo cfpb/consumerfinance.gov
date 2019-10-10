@@ -370,3 +370,27 @@ class ProgramExport(TestCase):
         with patch("six.moves.builtins.open", m, create=True):
             p.as_csv('/tmp.csv')
         self.assertEqual(m.call_count, 1)
+
+class SchoolCohortTest(TestCase):
+    fixtures = ['test_fixture.json']
+
+    def test_highest_degree_cohort(self):
+        test_school = School.objects.get(pk=155317) 
+        self.assertEqual(4, len(test_school.get_cohort('degrees_highest')))
+
+    def test_state_cohort(self):
+        test_school = School.objects.get(pk=100636)
+        self.assertEqual(2, len(test_school.get_cohort('state')))
+
+    def test_control_cohort(self):
+        test_school = School.objects.get(pk=155317)
+        self.assertEqual(5, len(test_school.get_cohort('control')))
+
+    # def get_cohort_rank(self, cohort, metric):
+    def test_get_cohort_rank(self):
+        test_school = School.objects.get(pk=155317) 
+        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'grad_rate')))
+        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'repay_3yr')))
+        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'median_total_debt')))
+
+

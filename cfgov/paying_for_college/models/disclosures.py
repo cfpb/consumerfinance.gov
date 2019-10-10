@@ -264,6 +264,9 @@ class School(models.Model):
     tuition_out_of_state = models.IntegerField(blank=True, null=True)
     tuition_in_state = models.IntegerField(blank=True, null=True)
     offers_perkins = models.BooleanField(default=False)
+    cohort_rank_degrees = models.IntegerField(blank=True, null=True)
+    cohort_rank_degrees = models.IntegerField(blank=True, null=True)
+    cohort_rank_degrees = models.IntegerField(blank=True, null=True)
 
     def as_json(self):
         """delivers pertinent data points as json"""
@@ -306,6 +309,10 @@ class School(models.Model):
             'underInvestigation': self.under_investigation,
             'url': self.url,
             'zip5': self.zip5,
+            'cohort_rank_degrees': self.cohort_rank_degrees,
+            'cohort_rank_state': self.cohort_rank_degrees,
+            'cohort_rank_control': self.cohort_rank_degrees,
+
         }
         for key in sorted(dict_out.keys()):
             ordered_out[key] = dict_out[key]
@@ -327,6 +334,36 @@ class School(models.Model):
                 and self.degrees_highest in HIGHEST_DEGREES):
             highest = HIGHEST_DEGREES[self.degrees_highest]
         return highest
+
+    def get_cohort(self, cohort):
+        """
+        Return a cohort, or list of schools, sharing a characteristic.
+
+        Characteristics are degrees_highest, state, and control.
+        """
+        cohorts = {
+            'degrees_highest': School.objects.filter(degrees_highest = self.degrees_highest),
+            'state': School.objects.filter(state = self.state),
+            'control': School.objects.filter(control = self.control),
+        }
+        return [school for school in cohorts[cohort]]
+
+    def get_cohort_rank(self, cohort, metric):
+        """
+        Return the current school's rank in a cohort by a given metric.
+
+        Possible metrics are grad_rate, repay_3yr and median_total_debt.
+        """
+        schools = self.get_cohort(cohort)
+        indexes = {
+            'grad_rate': sorted(schools, key=lambda school: school.grad_rate),
+            'repay_3yr': sorted(schools, key=lambda school: school.repay_3yr),
+            'median_total_debt': sorted(schools, key=lambda school: school.median_total_debt)
+        }
+        rank_list = indexes[metric]
+        # TODO: This function will deliver a school's rank, not just a list, in the next iteration.
+        return rank_list
+
 
     def convert_ope6(self):
         if self.ope6_id:
