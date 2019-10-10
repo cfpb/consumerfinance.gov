@@ -4,19 +4,46 @@ from datetime import date, datetime, timedelta
 from six import StringIO, ensure_text
 
 from django.core.management import call_command
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 from django.utils.timezone import make_aware
 
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.wagtailcore.models import Site
 
 from v1.management.commands.export_feedback import (
-    make_aware_datetime, parse_date
+    lookup_page_slug, make_aware_datetime, parse_date
 )
 from v1.models import Feedback
 
 
-class TestParseDate(TestCase):
+def create_simple_page(parent, slug):
+    page = SimplePage(title=slug, slug=slug, content=slug, live=True)
+    parent.add_child(instance=page)
+    return page
+
+
+class LookupPageSlug(TestCase):
+    def setUp(self):
+        self.root_page = Site.objects.get(is_default_site=True).root_page
+
+    def test_lookup_valid_page_slug(self):
+        self.assertEqual(lookup_page_slug(self.root_page.slug), self.root_page)
+
+    def test_lookup_nonexistent_page_slug_raises_argumenttypeerror(self):
+        with self.assertRaises(argparse.ArgumentTypeError):
+            lookup_page_slug('this-page-does-not-exist')
+
+    def test_lookup_duplicate_page_slug_raises_argumenttypeerror(self):
+        duplicate_slug = 'two-pages-with-this-slug'
+
+        page = create_simple_page(self.root_page, duplicate_slug)
+        create_simple_page(page, duplicate_slug)
+        
+        with self.assertRaises(argparse.ArgumentTypeError):
+            lookup_page_slug(duplicate_slug)
+
+
+class TestParseDate(SimpleTestCase):
     def test_parse_valid_date(self):
         self.assertEqual(parse_date('2000-01-01'), date(2000, 1, 1))
 
@@ -25,7 +52,7 @@ class TestParseDate(TestCase):
             parse_date('foo')
 
 
-class TestMakeAwareDatetime(TestCase):
+class TestMakeAwareDatetime(SimpleTestCase):
     def test_make_aware(self):
         self.assertEqual(
             make_aware_datetime(date(2000, 1, 1)),
@@ -47,9 +74,9 @@ class TestExportFeedback(TestCase):
         # /foo
         # /bar
         # /bar/baz
-        foo_page = self.create_simple_page(root_page, 'foo')
-        bar_page = self.create_simple_page(root_page, 'bar')
-        baz_page = self.create_simple_page(bar_page, 'baz')
+        self.foo_page = create_simple_page(root_page, 'foo')
+        self.bar_page = create_simple_page(root_page, 'bar')
+        self.baz_page = create_simple_page(self.bar_page, 'baz')
 
         # Create feedback for each page, for two points in time.
 
@@ -59,7 +86,7 @@ class TestExportFeedback(TestCase):
         # Jan 1, 2010, 11 PM
         self.second_timestamp = make_aware(datetime(2010, 1, 1, 23, 0))
 
-        for page in [foo_page, bar_page, baz_page]:
+        for page in [self.foo_page, self.bar_page, self.baz_page]:
             for ts in (self.first_timestamp, self.second_timestamp):
                 feedback = Feedback.objects.create(page=page, comment=u'ahëm')
 
@@ -69,16 +96,6 @@ class TestExportFeedback(TestCase):
                 # overridden.
                 feedback.submitted_on = ts
                 feedback.save()
-
-    def create_simple_page(self, parent, slug):
-        page = SimplePage(
-            title=slug,
-            slug=slug,
-            content=slug,
-            live=True
-        )
-        parent.add_child(instance=page)
-        return page
 
     def call_command(self, *args, **kwargs):
         stdout = StringIO()
@@ -102,14 +119,14 @@ class TestExportFeedback(TestCase):
         )
 
     def test_export_only_some_feedback(self):
-        output = self.call_command('bar')
+        output = self.call_command(self.bar_page)
 
         # Expect only feedback for /bar and /baz are exported.
         self.assertEqual(len(output.split()), 5)
         self.assertNotIn('foo', output)
 
     def test_export_except_for_some_feedback(self):
-        output = self.call_command('foo', exclude=True)
+        output = self.call_command(self.foo_page, exclude=True)
 
         # Expect only feedback for /bar and /baz are exported.
         self.assertEqual(len(output.split()), 5)

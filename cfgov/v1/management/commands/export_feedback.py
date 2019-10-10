@@ -9,6 +9,15 @@ from wagtail.wagtailcore.models import Page
 from v1.models import Feedback
 
 
+def lookup_page_slug(s):
+    try:
+        return Page.objects.get(slug=s)
+    except Page.DoesNotExist:
+        raise argparse.ArgumentTypeError('No page with slug: %s' % s)
+    except Page.MultipleObjectsReturned:
+        raise argparse.ArgumentTypeError('Multiple pages with slug: %s' % s)
+
+
 def parse_date(s):
     try:
         return datetime.strptime(s, '%Y-%m-%d').date()
@@ -27,6 +36,7 @@ class Command(BaseCommand):
         parser.add_argument(
             'page_slug',
             nargs='*',
+            type=lookup_page_slug,
             help='export only feedback for this page and its child pages'
         )
         parser.add_argument(
@@ -52,7 +62,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         feedbacks = Feedback.objects.for_pages(
-            [Page.objects.get(slug=slug) for slug in kwargs['page_slug']],
+            kwargs['page_slug'],
             exclude=kwargs['exclude']
         ).order_by('submitted_on')
 
