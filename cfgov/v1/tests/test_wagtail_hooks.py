@@ -14,45 +14,8 @@ from v1.models.base import CFGOVPage
 from v1.models.menu_item import MenuItem
 from v1.models.resources import Resource
 from v1.wagtail_hooks import (
-    check_permissions, form_module_handlers, get_resource_tags,
-    set_served_by_wagtail_sharing
+    form_module_handlers, get_resource_tags, set_served_by_wagtail_sharing
 )
-
-
-class TestCheckPermissions(TestCase):
-
-    def setUp(self):
-        self.parent = mock.Mock()
-        self.user = mock.Mock()
-        perms = mock.Mock()
-        perms.can_publish.return_value = True
-        self.parent.slug = 'root'
-        self.parent.permissions_for_user.return_value = perms
-
-    def test_calls_permissions_for_user(self):
-        """
-            Check call to parent page's permissions_for_user method.
-        """
-        check_permissions(self.parent, self.user, False, False)
-        assert self.parent.permissions_for_user.called
-
-    def test_does_not_call_can_publish(self):
-        """
-            Check can_publish is not called for parent.slug that is 'root'.
-        """
-        check_permissions(self.parent, self.user, False, False)
-        perms = self.parent.permissions_for_user()
-        assert not perms.can_publish.called
-
-    def test_calls_can_publish(self):
-        """
-            Check can_publish is called when parent.slug is not 'root' and when
-            is_publishing and is_sharing is True.
-        """
-        self.parent.slug = 'not root'
-        check_permissions(self.parent, self.user, True, True)
-        perms = self.parent.permissions_for_user()
-        assert perms.can_publish.called
 
 
 class TestFormModuleHandlers(TestCase):
