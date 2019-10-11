@@ -48,4 +48,4 @@ https://github.com/cfpb/retirement/releases/download/0.10.3/retirement-0.10.3-py
 https://github.com/cfpb/ccdb5-api/releases/download/1.1.12/ccdb5_api-1.1.12-py2.py3-none-any.whl
 https://github.com/cfpb/ccdb5-ui/releases/download/1.3.4/ccdb5_ui-1.3.4-py2.py3-none-any.whl
 https://github.com/cfpb/django-college-costs-comparison/releases/download/1.12.0/comparisontool-1.12.0-py2.py3-none-any.whl
-https://github.com/cfpb/teachers-digital-platform/releases/download/1.1.5/teachers_digital_platform-1.1.5-py2.py3-none-any.whl
+https://github.com/cfpb/teachers-digital-platform/releases/download/1.1.7/teachers_digital_platform-1.1.7-py2.py3-none-any.whl
