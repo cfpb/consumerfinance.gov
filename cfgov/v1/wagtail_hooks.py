@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
@@ -48,12 +49,6 @@ def log_page_deletion(request, page):
             url=page.url_path,
         )
     )
-
-
-def check_permissions(parent, user, is_publishing, is_sharing):
-    parent_perms = parent.permissions_for_user(user)
-    if parent.slug != 'root':
-        is_publishing = is_publishing and parent_perms.can_publish()
 
 
 @hooks.register('insert_editor_js')
@@ -142,8 +137,7 @@ def register_export_feedback_menu_item():
         reverse('export-feedback'),
         classnames='icon icon-download',
         order=99999,
-        # TODO: In Django 2.1 this can be changed to v1.view_feedback.
-        permission='v1.change_feedback'
+        permission='v1.export_feedback'
     )
 
 
@@ -348,3 +342,11 @@ def whitelister_element_rules():
 @hooks.register('before_serve_shared_page')
 def set_served_by_wagtail_sharing(page, request, args, kwargs):
     setattr(request, 'served_by_wagtail_sharing', True)
+
+
+@hooks.register('register_permissions')
+def add_export_feedback_permission_to_wagtail_admin_group_view():
+    return Permission.objects.filter(
+        content_type__app_label='v1',
+        codename='export_feedback'
+    )

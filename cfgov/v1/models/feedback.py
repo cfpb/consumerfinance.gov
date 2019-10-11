@@ -79,3 +79,8 @@ class Feedback(models.Model):
     email = models.EmailField(max_length=250, blank=True, null=True)
 
     objects = FeedbackQuerySet.as_manager()
+
+    class Meta:
+        permissions = (
+            ('export_feedback', 'Can export feedback from the Wagtail admin'),
+        )

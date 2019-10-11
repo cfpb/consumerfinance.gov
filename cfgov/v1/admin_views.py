@@ -105,8 +105,7 @@ def manage_cdn(request):
 
 
 class ExportFeedbackView(PermissionRequiredMixin, FormView):
-    # TODO: In Django 2.1 this can be changed to v1.view_feedback.
-    permission_required = 'v1.change_feedback'
+    permission_required = 'v1.export_feedback'
     template_name = 'v1/export_feedback.html'
     form_class = ExportFeedbackForm
 

@@ -21,6 +21,10 @@ Feedback is automatically grouped into three segments, each stored as a CSV:
 - Feedback submitted on Buying a House pages
 - Feedback submitted on all other website pages
 
+In order to access this part of the Wagtail admin, users must be granted the
+"Can export feedback from the Wagtail admin" permission. This can be enabled
+or disabled for different Wagtail groups in the Groups area of the admin.
+
 ## Exporting feedback from the command line
 
 For more control over what feedback to export, the
