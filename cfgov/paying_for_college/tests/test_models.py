@@ -6,6 +6,7 @@ import six
 import smtplib
 import unittest
 
+from django.http import HttpRequest
 from django.test import TestCase
 from django.utils import timezone
 
@@ -13,8 +14,11 @@ import requests
 from paying_for_college.apps import PayingForCollegeConfig
 from paying_for_college.models import (
     Alias, ConstantCap, ConstantRate, Contact, Feedback, Nickname,
-    Notification, Program, School, get_region, make_divisible_by_6
+    Notification, Program, School, StudentResourcesPage, get_region,
+    make_divisible_by_6
 )
+
+from v1.models import HomePage
 
 
 if six.PY2:  # pragma: no cover
@@ -38,6 +42,38 @@ class MakeDivisibleTest(TestCase):
         self.assertTrue(make_divisible_by_6(test_value) == 6)
         test_value = 45
         self.assertTrue(make_divisible_by_6(test_value) == 48)
+
+
+class PageModelsTest(TestCase):
+
+    def setUp(self):
+
+        def create_page(model, title, slug, parent):
+            new_page = model(
+                live=False,
+                title=title,
+                slug=slug)
+            parent.add_child(instance=new_page)
+            new_page.save()
+            return new_page
+        self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.debt_page = create_page(
+            StudentResourcesPage,
+            'Repaying student debt',
+            'repaying-student-debt',
+            self.ROOT_PAGE
+        )
+
+    def test_student_resources_get_template(self):
+        self.assertEqual(
+            self.debt_page.get_template(HttpRequest()),
+            'paying-for-college/{}.html'.format(self.debt_page.slug)
+        )
+
+    def test_student_resources_page_js(self):
+        self.assertIn(
+            'secondary-navigation.js',
+            self.debt_page.page_js)
 
 
 class SchoolRegionTest(TestCase):
@@ -371,11 +407,12 @@ class ProgramExport(TestCase):
             p.as_csv('/tmp.csv')
         self.assertEqual(m.call_count, 1)
 
+
 class SchoolCohortTest(TestCase):
     fixtures = ['test_fixture.json']
 
     def test_highest_degree_cohort(self):
-        test_school = School.objects.get(pk=155317) 
+        test_school = School.objects.get(pk=155317)
         self.assertEqual(4, len(test_school.get_cohort('degrees_highest')))
 
     def test_state_cohort(self):
@@ -388,9 +425,7 @@ class SchoolCohortTest(TestCase):
 
     # def get_cohort_rank(self, cohort, metric):
     def test_get_cohort_rank(self):
-        test_school = School.objects.get(pk=155317) 
-        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'grad_rate')))
-        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'repay_3yr')))
-        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'median_total_debt')))
-
-
+        test_school = School.objects.get(pk=155317)
+        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'grad_rate')))  # noqa
+        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'repay_3yr')))  # noqa
+        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'median_total_debt')))  # noqa

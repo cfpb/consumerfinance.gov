@@ -7,6 +7,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 
 from paying_for_college.models.blocks import GuidedQuiz
+
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
 
