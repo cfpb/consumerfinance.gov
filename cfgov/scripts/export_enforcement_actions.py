@@ -17,8 +17,7 @@ from v1.util.migrations import get_stream_data
 
 html_parser = HTMLParser.HTMLParser()
 
-# @Todo: get the post preview summary and the main content fields too.
-HEADINGS = ['Matter name', 'Date filed', 'URL', 'Status', 'Category', 'File number']
+HEADINGS = ['Matter name', 'Date filed', 'URL', 'Status', 'Category', 'File number', 'Content', 'Preview text']
 
 
 def clean_and_strip(data):
@@ -27,19 +26,6 @@ def clean_and_strip(data):
 
 
 def assemble_output():
-
-    # prefetch_fields = (
-    #     'related_questions',
-    #     'portal_topic__heading',
-    #     'portal_category__heading')
-    # answer_pages = list(AnswerPage.objects.prefetch_related(
-    #     *prefetch_fields).order_by('language', '-answer_base__id').values(
-    #         'id', 'answer_base__id', 'question', 'short_answer',
-    #         'answer_content', 'url_path', 'live', 'redirect_to_page_id',
-    #         'related_resource__title', 'language', *prefetch_fields))
-    # output_rows = []
-    # seen = []
-
     strip_tags = re.compile(r'<[^<]+?>')
     rows = []
     for page in DocumentDetailPage.objects.all():
@@ -52,6 +38,7 @@ def assemble_output():
             'Matter name': page.title,
             'URL': url,
             'Category': ','.join(c.get_name_display() for c in page.categories.all()),
+            'Preview text': clean_and_strip(page.preview_description)
         }
         stream_data = get_stream_data(page, 'sidefoot')
         for field in stream_data:
@@ -64,7 +51,15 @@ def assemble_output():
                         row['Status'] = strip_tags.sub('', block['value'].get('blob', ''))
                     elif block['value'].get('heading', '') == 'File number':
                         row['File number'] = strip_tags.sub('', block['value'].get('blob', ''))
+        stream_data_content = get_stream_data(page, 'content')
+        for field in stream_data_content:
+            if field['type'] == 'full_width_text':
+                field_full_width_text = field['value']
+                for block in field_full_width_text:
+                    if block['type'] == 'content':
+                        row['Content'] = clean_and_strip(block['value'])
         rows.append(row)
+    print(rows)
     return rows
 
 
