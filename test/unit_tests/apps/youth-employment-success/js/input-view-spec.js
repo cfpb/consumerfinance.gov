@@ -1,4 +1,4 @@
-import inputView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/input-view';
+import inputView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/input';
 import { simulateEvent } from '../../../../util/simulate-event';
 
 const HTML = `
@@ -9,7 +9,6 @@ const HTML = `
 
 describe( 'InputView', () => {
   let view;
-  let docAlias;
 
   beforeEach( () => {
     document.body.innerHTML = HTML;
@@ -40,7 +39,8 @@ describe( 'InputView', () => {
     const fakeInput = 'hey';
     const mockHandler = jest.fn();
     const events = {
-      change: mockHandler
+      change: mockHandler,
+      blur: mockHandler
     };
     let eventTarget;
     let view;
@@ -69,6 +69,58 @@ describe( 'InputView', () => {
       simulateEvent( 'change', eventTarget, { target: { value: fakeInput }} );
 
       expect( mockHandler.mock.calls.length ).toBe( 1 );
+    } );
+
+    describe( 'sanitizing data', () => {
+      it( 'removes data that does not match the pattern when pattern attribute is present', () => {
+        document.body.innerHTML = `
+          <input type="text" pattern="\\D+">
+        `;
+
+        const input = document.querySelector( 'input' );
+        inputView( input, { events } ).init();
+
+        input.value = '-122';
+
+        simulateEvent( 'blur', input );
+
+        expect( input.value ).toBe( '122' );
+        expect( mockHandler.mock.calls[0][0].value ).toBe( '122' );
+      } );
+
+      it( 'returns the original value if the type of input is not text', () => {
+        document.body.innerHTML = `
+          <input type="number">
+        `;
+
+        const input = document.querySelector( 'input' );
+
+        inputView( input, { events, type: 'number' } ).init();
+
+        input.value = 12;
+
+        simulateEvent( 'blur', input );
+
+        expect( input.value ).toBe( '12' );
+        expect( mockHandler.mock.calls[0][0].value ).toBe( '12' );
+      } );
+
+      it( 'returns the original value if input is text but there is no pattern', () => {
+        document.body.innerHTML = `
+          <input type="text">
+        `;
+
+        const input = document.querySelector( 'input' );
+
+        inputView( input, { events } ).init();
+
+        input.value = '-1';
+
+        simulateEvent( 'blur', input );
+
+        expect( input.value ).toBe( '-1' );
+        expect( mockHandler.mock.calls[0][0].value ).toBe( '-1' );
+      } );
     } );
   } );
 } );

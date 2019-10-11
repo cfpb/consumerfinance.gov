@@ -6,7 +6,8 @@ describe( '.validate', () => {
     spent: 1,
     transitTimeMinutes: 1,
     transitTimeHours: 1,
-    transportation: 'Walk'
+    transportation: 'Walk',
+    actionPlanItems: []
   };
 
   it( 'validates data to true if all required fields are present', () => {
@@ -16,7 +17,9 @@ describe( '.validate', () => {
   it( 'validates data to false if not all required fields are present', () => {
     expect( validate( {} ) ).toBeFalsy();
     expect( validate( {
-      earned: 1
+      earned: 1,
+      spent: '',
+      actionPlanItems: []
     } ) ).toBeFalsy();
   } );
 
@@ -39,7 +42,8 @@ describe( '.validate', () => {
       transitTimeHours: 1,
       transportation: 'Drive',
       miles: 1,
-      daysPerWeek: 1
+      daysPerWeek: 1,
+      actionPlanItems: []
     };
 
     expect( validate( driveData ) ).toBeTruthy();

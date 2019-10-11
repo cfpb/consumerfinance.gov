@@ -1,7 +1,7 @@
 
 {# ==========================================================================
 
-   well.render()
+   A Well organism
 
    ==========================================================================
 
@@ -10,10 +10,15 @@
    Create a gray well organism.
    See [GHE]/flapjack/Modules-V1/wiki/Well
 
-   template: Template URL for content to include.
-
    ========================================================================== #}
 
 <div class="o-well">
-    {{ value.content | safe }}
+    {#
+        Looping over the values allows us to extend Well in organisms.py
+        and add additional blocks to include in the Well,
+        without the need to create a separate template.
+    #}
+    {% for block in value.values() %}
+        {% include_block block %}
+    {% endfor %}
 </div>

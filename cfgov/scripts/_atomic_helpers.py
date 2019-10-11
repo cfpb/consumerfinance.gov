@@ -472,6 +472,7 @@ chart_block_credit_tightness = {
 filter_controls = {
     'type': u'filter_controls',
     'value': {
+        'topic_filtering': u'sort_by_frequency',
         'categories': {
             'page_type': '',
         },

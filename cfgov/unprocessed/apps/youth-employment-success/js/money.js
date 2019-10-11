@@ -1,6 +1,6 @@
 const _centsPerDollar = 100;
 const _decimals = 2;
-const _dollarsToPrecisionRegexp = new RegExp( `(\\d+\\.?\\d{0,${ _decimals }})` );
+const _dollarsToPrecisionRegexp = new RegExp( `(\-?\\d+\\.?\\d{0,${ _decimals }})` );
 
 /**
  * Converts an input string into a scaled dollar value, or zero.
@@ -12,8 +12,9 @@ function toDollars( dollars ) {
   const safeDollars = typeof dollars === 'string' ? dollars : String( dollars );
   const matches = safeDollars.match( _dollarsToPrecisionRegexp );
   const dollarsFixed = ( matches && matches[0] ) || 0;
+  const dollarAmount = dollarsFixed * _centsPerDollar / _centsPerDollar;
 
-  return dollarsFixed * _centsPerDollar / _centsPerDollar;
+  return Math.ceil( dollarAmount );
 }
 
 const dollars = {
@@ -36,9 +37,7 @@ const dollars = {
    * @returns {Number} The difference of the two values
    */
   subtract( a, b ) {
-    const subtracted = toDollars( a ) - toDollars( b );
-
-    return subtracted % 1 ? subtracted.toFixed( 2 ) : subtracted;
+    return toDollars( a ) - toDollars( b );
   }
 };
 

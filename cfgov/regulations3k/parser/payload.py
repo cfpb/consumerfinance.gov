@@ -81,7 +81,7 @@ class PayLoad(object):
             raw_title = part_soup.find('HEAD').text
             parsed_title = title_pattern.match(raw_title)
             part.title = parsed_title.group(2).title()
-            part.letter_code = parsed_title.group(3).replace(
+            part.short_name = parsed_title.group(3).replace(
                 'REGULATION', '').strip()
             part.save()
         self.part = part

@@ -101,6 +101,7 @@ function updateTimeline( state, action ) {
 function goalReducer( state = initialState, action ) {
   if ( handlers.hasOwnProperty( action.type ) ) {
     const handler = handlers[action.type];
+
     return handler( state, action );
   }
 

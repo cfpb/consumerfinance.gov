@@ -4,7 +4,8 @@ import {
   assign,
   combineReducers,
   entries,
-  toArray
+  toArray,
+  toggleCFNotification
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
 const reducerStateA = {
@@ -184,6 +185,26 @@ describe( 'YES utility functions', () => {
       const array = toArray( dom.querySelectorAll( 'a' ) );
 
       expect( array.slice ).toBeDefined();
+    } );
+  } );
+
+  describe( '.toggleCFNotification', () => {
+    it( 'throws an error if not passed a dom node as its first argument', () => {
+      expect( () => toggleCFNotification( null, true ) ).toThrow();
+    } );
+
+    it( 'toggles a supplied notification', () => {
+      const HTML = '<div class="m-notification"></div>';
+      document.body.innerHTML = HTML;
+      const el = document.querySelector( '.m-notification' );
+
+      toggleCFNotification( el, true );
+
+      expect( el.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
+
+      toggleCFNotification( el, false );
+
+      expect( el.classList.contains( 'm-notification__visible' ) ).toBeFalsy();
     } );
   } );
 } );

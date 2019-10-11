@@ -37,29 +37,49 @@ function isFieldInActionPlan( fieldName, routeTodoList ) {
 }
 
 /**
+ * Determine if a field has a value OR is in the user's todo list of actions.
+ * Fields in the to-do list do not require values.
+ *
+ * @param {string} fieldName The name of the field to validate
+ * @param {*} value The value of the field being validated
+ * @param {array} actionItems List of items the user has in their to-do list of actions
+ * @returns {Boolean} Whether or not the field is valid
+ */
+function valueOrActionPlan( fieldName, value, actionItems ) {
+  if ( !isFieldInActionPlan( fieldName, actionItems ) && !value ) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
  * Check if all required fields are present
  * @param {object} data The route option form data
  * @returns {Boolean} Data validity
  */
 function isRequiredValid( data ) {
-  return requiredFields.reduce( ( memo, fieldName ) => {
+  const todoList = data.actionPlanItems;
+  let isValid;
+
+  for ( let i = 0; i < requiredFields.length; i++ ) {
+    const fieldName = requiredFields[i];
     // does the data object contain the required field
     if ( data.hasOwnProperty( fieldName ) ) {
       // check if the value exists
-      if (
-        !data[fieldName] &&
-        !isFieldInActionPlan( fieldName, data.actionPlanItems )
-      ) {
-        memo = false;
-      } else {
-        memo = true;
-      }
-    } else {
-      memo = false;
+      isValid = valueOrActionPlan(
+        fieldName,
+        data[fieldName],
+        todoList
+      );
     }
 
-    return memo;
-  }, true );
+    if ( !isValid ) {
+      return false;
+    }
+  }
+
+  return isValid;
 }
 
 /**
@@ -67,10 +87,10 @@ function isRequiredValid( data ) {
  * @param {object} param0 Route data
  * @returns {Boolean} Data validity
  */
-function isValidDriveData( { miles, daysPerWeek } ) {
+function isValidDriveData( { miles, daysPerWeek, actionPlanItems } ) {
   if (
-    miles && isNumber( miles ) &&
-    daysPerWeek && isNumber( daysPerWeek )
+    valueOrActionPlan( 'miles', miles, actionPlanItems ) &&
+    valueOrActionPlan( 'daysPerWeek', daysPerWeek, actionPlanItems )
   ) {
     return true;
   }

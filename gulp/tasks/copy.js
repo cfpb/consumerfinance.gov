@@ -55,6 +55,14 @@ gulp.task( 'copy:icons:r3k', () => {
   return stream;
 } );
 
+gulp.task( 'copy:icons:prepaid', () => {
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/apps/prepaid_agreements/icons/`
+  );
+  return stream;
+} );
+
 gulp.task( 'copy:lightbox2', () => {
   const stream = _genericCopy(
     `${ paths.modules }/lightbox2/dist/**/*`,
@@ -68,7 +76,8 @@ gulp.task( 'copy:icons',
   gulp.parallel(
     'copy:icons:main',
     'copy:icons:oah',
-    'copy:icons:r3k'
+    'copy:icons:r3k',
+    'copy:icons:prepaid'
   )
 );
 

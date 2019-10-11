@@ -1,0 +1,106 @@
+@import (reference) '../../../css/main.less';
+@import (less) '../../../css/search.less';
+@import (less) './search-bar.less';
+
+.u-readable-width {
+    // Magic number: matches max-width for content set in cf-layout
+    max-width: 41.875rem;
+}
+
+.u-break-word {
+    word-break: break-word;
+}
+
+.prepaid-agreements {
+    dt, dd {
+        display: block;
+        margin-left: 0;
+    }
+
+    dt {
+        letter-spacing: 0;
+        font-weight: normal;
+        text-transform: none;
+        font-size: inherit;
+        .heading-4();
+        margin-bottom: unit( @grid_gutter-width / 6 / @base-font-size-px, em );;
+
+        &:last-of-type {
+            margin-bottom: unit( @grid_gutter-width / 6 / @base-font-size-px, em );;
+        }
+    }
+
+    dd + dt {
+        margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    }
+}
+
+.prepaid-agreements-search {
+    .o-multiselect_label {
+        word-break: break-word;
+    }
+
+    padding-top: 0 !important;
+
+    .filters {
+        &_applied {
+            padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        }
+        .o-multiselect_choices {
+            display: none;
+        }
+    }
+
+    .respond-to-min( @bp-lg-min, {
+        .content_sidebar {
+            width: 33% !important;
+        }
+
+        .content_main {
+            width: 67% !important;
+        }
+    });
+
+    .search_wrapper {
+        label.h2 {
+            display: block;
+            max-width: none;
+            margin-bottom: unit( @grid_gutter-width * 2/3 / @base-font-size-px, em );
+        }
+    }
+
+    .search_results {
+        .content_sidebar {
+            .o-expandable {
+                &:nth-child(4n) {
+                    border-bottom: none;
+                }
+            }
+            
+            .o-expandable_content__expanded {
+                padding-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+            }
+        }
+
+        .results_item {
+            h4 {
+                max-width: none;
+            }
+        }
+    }
+
+    .database-disclaimer {
+        padding: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+}
+
+.prepaid-agreements-detail {
+    dt h2 {
+        .h4();
+        margin-bottom: unit( @grid_gutter-width / 6 / @base-font-size-px, em );
+    }
+
+    dd {
+        margin-bottom: unit( @grid_gutter-width * 2/3 / @base-font-size-px, em );
+    }
+}

@@ -1,0 +1,73 @@
+{% from 'yes-info-unit.html' import yes_info_unit with context %}
+<div class="block">
+  <h2>
+    <span style="margin-right: 5px">
+      {% include "success-icon.html" %}
+    </span>
+    <span>
+      Awesome, you worked on your transportation plan! We hope this plan brings you closer to achieving your long-term goal. Here are some other resources that might be helpful.
+    </span>
+</h2>
+  <div class="block block__sub">
+    {{
+      yes_info_unit({
+        'body': 'Buying and owning a car is a big responsibility. Learn how to prepare so you can save money and get the best deal for you.',
+        'heading': 'Learn about buying a car',
+        'image_url': '/static/apps/youth-employment-success/img/review/learn_about_buying_a_car.png',
+        'link': {
+          'text': 'Learn more about buying a car',
+          'url': '/buy-a-car'
+        }
+      })
+    }}
+  </div>
+  <div class="block block__sub">
+    {{
+      yes_info_unit({
+        
+        'body': '<p>Keeping track of your money and benefits is the first step in creating a budget that works for you.</p>',
+        'heading': '<h3>Track spending and make a budget</h3>',
+        'image_url': '/static/apps/youth-employment-success/img/review/track_spending.png',
+        'link': {
+          'text': 'Learn how to track my spending',
+          'url': 'https://www.consumerfinance.gov/about-us/blog/budgeting-how-to-create-a-budget-and-stick-with-it/'
+        }
+      })
+    }}
+    <p class="u-show-no-js u-show-on-print">
+      https://www.consumerfinance.gov/about-us/blog/budgeting-how-to-create-a-budget-and-stick-with-it/
+    </p>
+  </div>
+  <div class="block block__sub">
+    {{
+      yes_info_unit({
+        'body': '<p>Having a poor credit score can create obstacles when you\'re applying for car insurance, loans, credit cards—even apartments and utilities.</p>',
+        'heading': '<h3>Learn about credit</h3>',
+        'image_url': '/static/apps/youth-employment-success/img/review/learn_about_credit.png',
+        'link': {
+          'text': 'Learn more about credit and how to improve your score',
+          'url': 'https://www.consumerfinance.gov/consumer-tools/credit-reports-and-scores/'
+        }
+      })
+    }}
+    <p class="u-show-no-js u-show-on-print">
+      https://www.consumerfinance.gov/consumer-tools/credit-reports-and-scores/
+    </p>
+  </div>
+  <div class="block block__sub">
+    {{
+      yes_info_unit({
+        'body': '<p>When choosing and using a new bank account, it\’s important to know your options and how to keep your money safe.</p>',
+        'heading': '<h3>Opening a bank account</h3>',
+        'image_url': '/static/apps/youth-employment-success/img/review/opening_a_bank_account.png',
+        'link': {
+          'text': 'Learn more about your banking options',
+          'url': 'https://www.consumerfinance.gov/about-us/blog/guides-to-help-you-open-and-manage-your-checking-account/'
+        }
+      })
+    }}
+    <p class="u-show-no-js u-show-on-print">
+      https://www.consumerfinance.gov/about-us/blog/guides-to-help-you-open-and-manage-your-checking-account/
+    </p>
+  </div>
+</div>
