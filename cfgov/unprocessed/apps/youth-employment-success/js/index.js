@@ -1,5 +1,6 @@
 import Expandable from 'cf-expandables/src/Expandable';
 import { addRouteOptionAction } from './reducers/route-option-reducer';
+import { toArray } from './util';
 import averageCostView from './views/average-cost';
 import budgetFormView from './budget-form-view';
 import createRoute from './route.js';
@@ -18,8 +19,8 @@ import routeOptionToggleView from './route-option-toggle-view';
 import store from './store';
 import transitTimeView from './views/transit-time';
 
-Array.prototype.slice.call(
-  document.querySelectorAll( 'input' )
+toArray(
+  document.querySelectorAll( 'input, textarea' )
 ).forEach( input => {
   input.removeAttribute( 'disabled' );
 } );
@@ -79,11 +80,8 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
   } );
 } );
 
-/**
- * Only initialize the first route option form, the second is initialized when
- * the user clicks the 'add another option' button.
-*/
-routeOptionForms[0].init();
+expandables[0].element.querySelector( '.o-expandable_target' ).click();
+expandables[1].element.classList.add( 'u-hidden' );
 routeOptionToggleView(
   document.querySelector( `.${ OPTION_TOGGLE_CLASSES.BUTTON }` ), {
     expandable: expandables[1],
@@ -91,8 +89,11 @@ routeOptionToggleView(
   }
 ).init();
 
-expandables[0].element.querySelector( '.o-expandable_target' ).click();
-expandables[1].element.classList.add( 'u-hidden' );
+/**
+ * Only initialize the first route option form, the second is initialized when
+ * the user clicks the 'add another option' button.
+*/
+routeOptionForms[0].init();
 
 printButton(
   document.querySelector( `.${ printButton.CLASSES.BUTTON }` )

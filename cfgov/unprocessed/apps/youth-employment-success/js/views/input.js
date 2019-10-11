@@ -59,6 +59,26 @@ function inputView( element, props = {} ) {
   }
 
   /**
+   * Strip invalid data from text inputs if the `pattern` attribute is present.
+   * @param {Object} target The node's JS object
+   * @returns {String} The sanitized input
+   */
+  function _sanitizeTextInput( target ) {
+    if ( _finalProps.type === 'text' ) {
+      if ( target.getAttribute( 'pattern' ) ) {
+        const pattern = new RegExp( target.getAttribute( 'pattern' ), 'g' );
+        const sanitized = target.value.replace( pattern, '' );
+
+        target.value = sanitized;
+
+        return sanitized;
+      }
+    }
+
+    return target.value;
+  }
+
+  /**
    *
    * @param {Function} handler event handler passed in through props
    * @returns {Function} A function that accepts an event and updates
@@ -67,8 +87,9 @@ function inputView( element, props = {} ) {
   const eventHandler = handler => event => {
     const { target } = event;
     const fieldName = target.getAttribute( 'data-js-name' ) || target.name;
+    const value = _sanitizeTextInput( target );
 
-    return handler( { name: fieldName, event } );
+    return handler( { name: fieldName, event, value } );
   };
 
   /**

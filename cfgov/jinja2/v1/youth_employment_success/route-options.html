@@ -1,4 +1,4 @@
-<div class="yes-routes block block__sub u-hide-on-review-print">
+<div class="yes-routes block block__sub js-no-print">
   <div class="content-l">
     <div class="u-w75pct">
       {% for i in range(2) %}
@@ -13,8 +13,10 @@
   <div class="content-l m-yes-route-option block u-mt30">
     <div class="content-l_col content-l_col-1">
       <h2>Are there other ways you can get to work? Compare different options to help you figure out your first choice and a backup plan.</h2>
-      {% include "plus-icon.html" %}
-      <button class="a-btn a-btn__link m-yes-route-option">Show me another option</button>
+      <div class="u-js-only">
+        {% include "plus-icon.html" %}
+        <button class="a-btn a-btn__link m-yes-route-option">Show me another option</button>
+      </div>
     </div>
   </div>
 </div>

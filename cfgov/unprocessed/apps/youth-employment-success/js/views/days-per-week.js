@@ -31,10 +31,10 @@ function daysPerWeekView( element, { store, routeIndex, todoNotification } ) {
    * for their selected transportation option
    * @param {object} param0 The emitted DOM event
    */
-  function _handleDaysUpdate( { event } ) {
+  function _handleDaysUpdate( { event, value } ) {
     store.dispatch( updateDaysPerWeekAction( {
       routeIndex,
-      value: event.target.value
+      value
     } ) );
   }
 

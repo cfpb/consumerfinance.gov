@@ -39,9 +39,8 @@ function BudgetFormView( element, { store } ) {
    *  the state with the event target's value
    */
   function _handleInput( action ) {
-    return ( { event } ) => {
-      const amount = event.currentTarget.value;
-      store.dispatch( action( amount ) );
+    return ( { _, value } ) => {
+      store.dispatch( action( value ) );
     };
   }
 

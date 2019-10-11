@@ -61,10 +61,10 @@ function averageCostView( element, { store, routeIndex, todoNotification } ) {
    * @param {object} updateObject.event The emitted DOM event
    * @param {string} updateObject.name The name of the field the event was emitted from
    */
-  function _handleAverageCostUpdate( { event } ) {
+  function _handleAverageCostUpdate( { event, value } ) {
     store.dispatch( updateAverageCostAction( {
       routeIndex,
-      value: event.target.value
+      value
     } ) );
   }
 
