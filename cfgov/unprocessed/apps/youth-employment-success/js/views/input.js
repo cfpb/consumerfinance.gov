@@ -1,5 +1,6 @@
 import { assign, entries } from '../util';
 import { setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import sanitizeMap from '../sanitizers';
 
 const defaultProps = {
   type: 'text'
@@ -64,15 +65,12 @@ function inputView( element, props = {} ) {
    * @returns {String} The sanitized input
    */
   function _sanitizeTextInput( target ) {
-    if ( _finalProps.type === 'text' ) {
-      if ( target.getAttribute( 'pattern' ) ) {
-        const pattern = new RegExp( target.getAttribute( 'pattern' ), 'g' );
-        const sanitized = target.value.replace( pattern, '' );
+    const sanitizeType = target.getAttribute( 'data-sanitize' );
+    const sanitizeMethod = sanitizeMap[sanitizeType];
 
-        target.value = sanitized;
-
-        return sanitized;
-      }
+    if ( sanitizeMethod ) {
+      const sanitized = sanitizeMethod( target.value );
+      target.value = sanitized;
     }
 
     return target.value;

@@ -5,6 +5,7 @@ import {
   combineReducers,
   entries,
   toArray,
+  toPrecision,
   toggleCFNotification
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
@@ -205,6 +206,30 @@ describe( 'YES utility functions', () => {
       toggleCFNotification( el, false );
 
       expect( el.classList.contains( 'm-notification__visible' ) ).toBeFalsy();
+    } );
+  } );
+
+  describe( '.toPrecision', () => {
+    it( 'throws an error when a string that cannot be converted to a number is supplied', () => {
+      expect( () => toPrecision( 'string' )
+      ).toThrow();
+    } );
+
+    it( 'returns the original number when a precision is not specified', () => {
+      const num = '100';
+      expect( toPrecision( num ) ).toBe( num );
+    } );
+
+    it( 'returns a string of 0 when no arguments are supplied', () => {
+      expect( toPrecision() ).toBe( '0' );
+    } );
+
+    it( 'adds a number of zeros to the end of a string commesurate with the value supplied as the second argument', () => {
+      const string = '100.';
+
+      expect( toPrecision( string, 3 ) ).toBe( '100.000' );
+      expect( toPrecision( '100.1', 2 ) ).toBe( '100.10' );
+      expect( toPrecision( '100.00', 2 ) ).toBe( '100.00' );
     } );
   } );
 } );
