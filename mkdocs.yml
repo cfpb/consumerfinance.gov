@@ -32,11 +32,12 @@ nav:
     - Related Projects: related-projects.md
     - Development Tips: development-tips.md
     - How We Use Travis CI: travis.md
-- Public APIs and Data:
+- APIs and Data:
     - Ask CFPB: ask-cfpb.md
     - Consumer Complaints: consumer-complaint-database.md
     - Find a Housing Counselor Tool: housing-counselor-tool.md
     - HMDA Data: hmda.md
+    - Website Feedback: website-feedback.md
 
 theme:
     name: readthedocs
