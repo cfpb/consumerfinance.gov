@@ -34,7 +34,7 @@
       {% endif %}
     </div>
   {% endfor %}
-  <div class="js-discount-tip">
+  <div class="block block__sub js-discount-tip">
     <div class="content_line"></div>
     <div class="block block__sub-micro">
       {% include "money-icon.html" %}
@@ -51,13 +51,14 @@
   {% with show_todos=true %}
     {% include "route-details.html" %}
   {% endwith %}
-  {{
-    alert.render({
-      'background': true,
-      'class': 'js-todo-notification',
-      'content': 'Item added to your to-do list.',
-      'fill': 'success',
-      'visible': false,
-    })
-  }}
+  <div class="content-l_col content-l_col-3-4 js-todo-notification">    
+    {{
+      alert.render({
+        'background': true,
+        'content': 'Item added to your to-do list.',
+        'fill': 'success',
+        'visible': false,
+      })
+    }}
+  </div>
 </form>

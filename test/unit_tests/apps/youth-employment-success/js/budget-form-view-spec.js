@@ -108,7 +108,7 @@ describe( 'BudgetFormView', () => {
 
   it( 'defaults the `total` value to zero when no input has been received', () => {
     const totalEl = document.querySelector( `.${ CLASSES.REMAINING }` );
-    expect( totalEl.textContent ).toEqual( '0' );
+    expect( totalEl.textContent ).toEqual( '-' );
   } );
 
   it( 'unbinds events on view cleanup', () => {

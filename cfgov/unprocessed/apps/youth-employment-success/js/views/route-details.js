@@ -49,7 +49,7 @@ function updateTodoList( todos = [] ) {
    multiple shifts etc, but should work for now. */
 const FULL_TIME_DAYS = 5;
 
-const DEFAULT_COST_ESTIMATE = '-';
+const DEFAULT_COST_ESTIMATE = '0';
 
 // Rough estimate to account for weeks that have more or less days
 const WEEKLY_COST_MODIFIER = 4.2;

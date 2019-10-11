@@ -3,8 +3,10 @@ import mockStore from '../../../../../mocks/store';
 import { toArray } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
 
+const CLASSES = reviewDetailsView.CLASSES;
+
 const HTML = `
-<div class="js-yes-plans-review">
+<div class="${ CLASSES.CONTAINER }">
   <h2>Your plan to get to work</h2>
   <h3>Your to-do list</h3>
   <ul>
@@ -19,7 +21,7 @@ const HTML = `
     <ul class="js-review-todo"></ul>
   </div>
   <div class="block block__sub">
-    <p class="h3">Your first choice is <span class="js-transportation-option"></span></p>
+    <p class="h3 ${ CLASSES.CHOICE_HEADING }">Your first choice is <span class="js-transportation-option"></span></p>
     <div class="js-route-incomplete">
       <div class="m-notification"></div>
     </div>
@@ -27,8 +29,10 @@ const HTML = `
     <div class="content_line"></div>
   </div>
   <div class="block block__sub">
-    <p class="h3">Another option you compared: <span class="js-transportation-option"></span></p>
-    <small>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</small>
+    <div class="${ CLASSES.CHOICE_HEADING }">
+      <p class="h3">Another option you compared: <span class="js-transportation-option"></span></p>
+      <small>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</small>
+    </div>
     <div class="yes-route-details"></div>
     <div class="content_line"></div>
   </div>
@@ -99,24 +103,24 @@ describe( 'reviewDetailsView', () => {
       expect( todoLists[1].children.length ).toBe( 0 );
     } );
 
-    it('hides the todo lists when there are no todos', () => {
+    it( 'hides the todo lists when there are no todos', () => {
       const noTodoState = {
         budget,
         routes: {
-          routes: [{
+          routes: [ {
             transportation: 'Drive'
-          }]
+          } ]
         }
       };
 
-      store.subscriber()({}, noTodoState);
+      store.subscriber()( {}, noTodoState );
 
       const todoEls = toArray(
-        el.querySelectorAll(`.${reviewDetailsView.CLASSES.TODO}`)
+        el.querySelectorAll( `.${ reviewDetailsView.CLASSES.TODO }` )
       );
 
-      todoEls.forEach(node => expect(node.parentNode.classList.contains('u-hidden') ).toBeTruthy());
-    });
+      todoEls.forEach( node => expect( node.parentNode.classList.contains( 'u-hidden' ) ).toBeTruthy() );
+    } );
 
     it( 'toggles the todo notification el when there are todo list items', () => {
       const notification = document.querySelector( '.m-notification' );
@@ -126,6 +130,22 @@ describe( 'reviewDetailsView', () => {
       store.subscriber()( {}, state );
 
       expect( notification.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
+    } );
+
+    it( 'hides the `Possible Option` headings when the user selects the `wait` choice', () => {
+      const state = {
+        budget,
+        routes: { routes: []},
+        routeChoice: 'wait'
+      };
+
+      store.subscriber()( {}, state );
+
+      const choiceHeadings = toArray( el.querySelectorAll( `.${ CLASSES.CHOICE_HEADING }` ) );
+
+      choiceHeadings.forEach( ch => {
+        expect( ch.classList.contains( 'u-hidden' ) ).toBeTruthy();
+      } );
     } );
   } );
 } );

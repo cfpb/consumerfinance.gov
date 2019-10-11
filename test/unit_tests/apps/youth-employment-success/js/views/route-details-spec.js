@@ -95,7 +95,7 @@ describe( 'routeDetailsView', () => {
       view.render( nextState );
 
       const budgetEl = document.querySelector( `.${ CLASSES.BUDGET }` );
-      const expectedBudget = String(nextState.budget.earned - nextState.budget.spent);
+      const expectedBudget = String( nextState.budget.earned - nextState.budget.spent );
 
       expect( budgetEl.textContent ).toBe( expectedBudget );
     } );
@@ -249,13 +249,13 @@ describe( 'routeDetailsView', () => {
       expect( notification.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
     } );
 
-    it('displays a complete alert message when the data is valid and the option is in budget', () => {
-      view.render(nextState);
+    it( 'displays a complete alert message when the data is valid and the option is in budget', () => {
+      view.render( nextState );
 
       let completeAlert = document.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
-      let notification = completeAlert.querySelector('.m-notification');
+      let notification = completeAlert.querySelector( '.m-notification' );
 
-      expect(notification.classList.contains('m-notification__visible')).toBeFalsy();
+      expect( notification.classList.contains( 'm-notification__visible' ) ).toBeFalsy();
 
       const state = {
         budget: { earned: '10000', spent: '10' },
@@ -265,12 +265,12 @@ describe( 'routeDetailsView', () => {
         }
       };
 
-      view.render(state);
+      view.render( state );
 
       completeAlert = document.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
-      notification = completeAlert.querySelector('.m-notification');
+      notification = completeAlert.querySelector( '.m-notification' );
 
-      expect(notification.classList.contains('m-notification__visible')).toBeTruthy();
-    });
+      expect( notification.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
+    } );
   } );
 } );

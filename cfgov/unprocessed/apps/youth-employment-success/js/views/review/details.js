@@ -1,11 +1,13 @@
 import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 import { toArray, toggleCFNotification } from '../../util';
 import { getPlanItem } from '../../data/todo-items';
+import { isWaiting } from '../../reducers/choice-reducer';
 import { todoListSelector } from '../../reducers/route-option-reducer';
 import transportationMap from '../../data/transportation-map';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'js-yes-plans-review',
+  CHOICE_HEADING: 'js-review-choice-heading',
   TRANSPORTATION_TYPE: 'js-transportation-option',
   DETAILS: 'yes-route-details',
   TODO: 'js-review-todo',
@@ -42,6 +44,10 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
   const _transportationTypeEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_TYPE }` )
   );
+  const _reviewChoiceHeadingEls = toArray(
+    _dom.querySelectorAll( `.${ CLASSES.CHOICE_HEADING }` )
+  );
+
   const _detailsViews = [];
 
   /**
@@ -92,6 +98,12 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
       const todos = todoListSelector( state.routes, index );
       toggleCFNotification( el, todos.length );
     } );
+
+    if ( isWaiting( state ) ) {
+      _reviewChoiceHeadingEls.forEach( el => el.classList.add( 'u-hidden' ) );
+    } else {
+      _reviewChoiceHeadingEls.forEach( el => el.classList.remove( 'u-hidden' ) );
+    }
   }
 
   /**

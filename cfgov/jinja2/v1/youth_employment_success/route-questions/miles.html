@@ -1,10 +1,11 @@
 {% from 'atoms/checkbox.html' import render as render_checkbox with context %}
 {% from 'input.html' import render as render_input with context %}
 
-<div class="content-l block block__sub-micro m-yes-miles">
-  <div class="content-l_col content-l_col-2-3">    
+<div class="content-l block block__sub m-yes-miles">
+  <div class="content-l_col content-l_col-3-4">    
     {{
       render_input({
+        'class': 'u-w10pct',
         'data_js_name': "miles",
         'helperText': 'This can be a rough estimate — don’t worry if it’s not exact.',
         'label': 'How many miles do you expect to drive each day?',
