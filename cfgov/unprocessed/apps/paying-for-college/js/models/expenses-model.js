@@ -5,5 +5,5 @@ const expensesModel = {
 };
 
 export {
-	expensesModel
+  expensesModel
 };

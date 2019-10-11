@@ -1,101 +1,96 @@
 import closest from '../../../js/modules/util/dom-traverse';
 import {
-  hide,
-  show,
   getElementHeight,
-  slide,
+  getYLocation,
+  hide,
   isVisible,
-  getYLocation
+  show,
+  slide
 } from './repay-utils';
 
 const decisionStackerTargets = {
-  "0":  {"question": "1", "federal": "a", "non-federal": "b", "both": "c"},
-  "1a": {"question": "2", "yes": "a", "no": "b"},
-  "1b": {"question": "2", "yes": "c", "no": "d"},
-  "2a": {"question": "3", "yes": "a", "no": "b", "not-sure": "b"},
-  "2b": {"question": "8", "yes": "a", "no": "b", "not-sure": "b"},
-  "2c": {"question": "3", "yes": "c", "no": "d", "not-sure": "d"},
-  "2d": {"question": "8", "yes": "c", "no": "d", "not-sure": "d"},
-  "3a": {"question": "4", "yes": "a", "no": "b"},
-  "3b": {"question": "8", "yes": "a", "no": "b", "not-sure": "b"},
-  "3c": {"module": "m12"},
-  "3d": {"question": "8", "yes": "c", "no": "e", "not-sure": "e"},
-  "4a": {"question": "5", "yes": "a", "no": "b"},
-  "4b": {"module": "m5"},
-  "5a": {"module": "m4"},
-  "5b": {"question": "6", "yes": "a", "no": "b"},
-  "6a": {"module": "m5", "yes": "a", "no": "b"},
-  "6b": {"question": "7", "yes": "a", "no": "b"},
-  "7a": {"module": "m6"},
-  "7b": {"module": "m7"},
-  "8a": {"question": "9", "yes": "a", "no": "b"},
-  "8b": {"question": "9", "yes": "a", "no": "c"},
-  "8c": {"question": "9", "yes": "e", "no": "d"},
-  "8d": {"question": "9", "yes": "e", "no": "g"},
-  "8e": {"question": "9", "yes": "f", "no": "g"},
-  "9a": {"module": "m2"},
-  "9b": {"module": "m1"},
-  "9c": {"module": "m3"},
-  "9d": {"module": "m9"},
-  "9e": {"module": "m10"},
-  "9f": {"module": "m13"},
-  "9g": {"module": "m11"}
+  '0':  { 'question': '1', 'federal': 'a', 'non-federal': 'b', 'both': 'c' },
+  '1a': { question: '2', yes: 'a', no: 'b' },
+  '1b': { question: '2', yes: 'c', no: 'd' },
+  '2a': { 'question': '3', 'yes': 'a', 'no': 'b', 'not-sure': 'b' },
+  '2b': { 'question': '8', 'yes': 'a', 'no': 'b', 'not-sure': 'b' },
+  '2c': { 'question': '3', 'yes': 'c', 'no': 'd', 'not-sure': 'd' },
+  '2d': { 'question': '8', 'yes': 'c', 'no': 'd', 'not-sure': 'd' },
+  '3a': { question: '4', yes: 'a', no: 'b' },
+  '3b': { 'question': '8', 'yes': 'a', 'no': 'b', 'not-sure': 'b' },
+  '3c': { module: 'm12' },
+  '3d': { 'question': '8', 'yes': 'c', 'no': 'e', 'not-sure': 'e' },
+  '4a': { question: '5', yes: 'a', no: 'b' },
+  '4b': { module: 'm5' },
+  '5a': { module: 'm4' },
+  '5b': { question: '6', yes: 'a', no: 'b' },
+  '6a': { module: 'm5', yes: 'a', no: 'b' },
+  '6b': { question: '7', yes: 'a', no: 'b' },
+  '7a': { module: 'm6' },
+  '7b': { module: 'm7' },
+  '8a': { question: '9', yes: 'a', no: 'b' },
+  '8b': { question: '9', yes: 'a', no: 'c' },
+  '8c': { question: '9', yes: 'e', no: 'd' },
+  '8d': { question: '9', yes: 'e', no: 'g' },
+  '8e': { question: '9', yes: 'f', no: 'g' },
+  '9a': { module: 'm2' },
+  '9b': { module: 'm1' },
+  '9c': { module: 'm3' },
+  '9d': { module: 'm9' },
+  '9e': { module: 'm10' },
+  '9f': { module: 'm13' },
+  '9g': { module: 'm11' }
 }; // end decisionStackerTargets
 
 const decisionStacker = function( appElement, targets ) {
   const stacker = {};
   stacker.appElement = appElement;
-  let writingHash = true;
+  const writingHash = true;
 
-  const assignButtons = ( code ) => {
+  const assignButtons = function( code ) {
     // this function relies on decisionStackerTargets object
     if ( typeof targets !== 'object' ) {
       return false;
     }
     if ( targets[code].hasOwnProperty( 'question' ) ) {
-      const elem = document.querySelector( '#q' + targets[code]['question'] );
+      const elem = document.querySelector( '#q' + targets[code].question );
       const sectionOrigin = elem.getAttribute( 'data-ds-origin' );
-      const sectionData = targets[ sectionOrigin ];
-      let buttons = elem.querySelectorAll( 'button' );
-      buttons.forEach( ( button ) => {
-        let name = button.getAttribute( 'data-ds-name' );
+      const sectionData = targets[sectionOrigin];
+      const buttons = elem.querySelectorAll( 'button' );
+      buttons.forEach( button => {
+        const name = button.getAttribute( 'data-ds-name' );
         if ( sectionData.hasOwnProperty( name ) ) {
-          button.value = sectionData[ 'question' ] + sectionData[ name ];
+          button.value = sectionData.question + sectionData[name];
         }
       } );
     }
-  };
-
-  const init = () => {
-    assignButtons( 0 );
-    initializeButtons();
+    return true;
   };
 
   const initializeButtons = () => {
     const buttons = appElement.querySelectorAll( '.ds-section .ds-buttons button' );
 
-    buttons.forEach( ( button ) => {
-      button.addEventListener( 'click', ( event ) => {
+    buttons.forEach( button => {
+      button.addEventListener( 'click', event => {
         const button = event.target;
         const code = button.value;
-        let destinationObject = decisionStackerTargets[code];
+        const destinationObject = decisionStackerTargets[code];
         let destination;
         let destinationElement;
 
         if ( writingHash === true ) {
           if ( location.hash !== '' ) {
-            location.hash = location.hash + ':';
+            location.hash += ':';
           }
-          location.hash = location.hash + button.getAttribute('data-ds-name');
+          location.hash += button.getAttribute( 'data-ds-name' );
         }
 
         // destination is a question
         if ( destinationObject.hasOwnProperty( 'question' ) ) {
-          destination = '#q' + destinationObject['question'];
-        }
-        // destination is a module
-        else {
-          destination = '#' + destinationObject['module'];
+          destination = '#q' + destinationObject.question;
+        } else {
+          // destination is a module
+          destination = '#' + destinationObject.module;
           show( document, '.ds-clear-all.ds-clear-after-m' );
         }
 
@@ -105,9 +100,9 @@ const decisionStacker = function( appElement, targets ) {
 
         slide( 'down', destinationElement );
 
-        let section = closest( button, '.ds-section' );
-        let name = button.getAttribute( 'data-ds-name' );
-        let respSelector = '[data-responds-to="' + name + '"]';
+        const section = closest( button, '.ds-section' );
+        const name = button.getAttribute( 'data-ds-name' );
+        const respSelector = '[data-responds-to="' + name + '"]';
 
         section.setAttribute( 'data-ds-decision', name );
         assignButtons( code );
@@ -123,10 +118,15 @@ const decisionStacker = function( appElement, targets ) {
 
     } );
 
+    const init = () => {
+      assignButtons( 0 );
+      initializeButtons();
+    };
+
     // Initialize the "Edit" buttons
     const editButtons = appElement.querySelectorAll( '.ds-response-container .go-back' );
-    editButtons.forEach( ( button ) => {
-      button.addEventListener( 'click', ( event ) => {
+    editButtons.forEach( button => {
+      button.addEventListener( 'click', event => {
 
         const button = event.target;
         const section = closest( button, '.ds-section' );
@@ -138,12 +138,12 @@ const decisionStacker = function( appElement, targets ) {
         const visibleQuestions = Array.prototype.slice.call( questions ).filter( isVisible );
 
         visibleQuestions.forEach( ( questionSection, i ) => {
-          let thisNumber = Number( questionSection.getAttribute( 'data-ds-qnum' ) );
+          const thisNumber = Number( questionSection.getAttribute( 'data-ds-qnum' ) );
 
           console.log( 'thisNumber', thisNumber, 'questionNumber', questionNumber );
           if ( thisNumber > questionNumber ) {
-            // slide( 'up', questionSection.querySelector( '.ds-content' ) );
-            // slide( 'up', questionSection.querySelector( '.ds-response-container' ) );
+            /* slide( 'up', questionSection.querySelector( '.ds-content' ) );
+               slide( 'up', questionSection.querySelector( '.ds-response-container' ) ); */
             hide( questionSection );
           } else if ( thisNumber === questionNumber ) {
             slide( 'up', questionSection.querySelector( '.ds-response-container' ) );
@@ -152,9 +152,9 @@ const decisionStacker = function( appElement, targets ) {
           } else if ( thisNumber < questionNumber ) {
             // rebuild hash
             if ( i !== 0 ) {
-              hash = hash + '`:'
+              hash += '`:';
             }
-            hash = hash + questionSection.getAttribute( 'data-ds-decision' );
+            hash += questionSection.getAttribute( 'data-ds-decision' );
           }
         } );
 
@@ -168,55 +168,58 @@ const decisionStacker = function( appElement, targets ) {
         location.hash = hash;
 
         // scrollToDestination( section );
-      } )
+      } );
     } );
 
     document.querySelector( '.ds-clear-button' )
-      .addEventListener( 'click', ( event ) => {
+      .addEventListener( 'click', event => {
         document.querySelector( '#q1 .go-back' ).click();
       } );
 
   };
 
-  const processHash = ( position ) => {
-    let hashes = location.hash.replace( '#', '' ).split( ':' );
-    let selector = '.ds-buttons:visible button[data-ds-name="' + hashes[position] + '"]';
+  const processHash = position => {
+    const hashes = location.hash.replace( '#', '' ).split( ':' );
+    const selector = '.ds-buttons:visible button[data-ds-name="' + hashes[position] + '"]';
 
-    document.querySelectorAll( selector ).forEach( ( button ) => {
+    document.querySelectorAll( selector ).forEach( button => {
       if ( isVisible( button ) ) {
         button.addEventListener( 'click', () => {
-        if ( position + 1 < hashes.length ) {
-          processHash( position + 1 );
-        }
-      } );
+          if ( position + 1 < hashes.length ) {
+            processHash( position + 1 );
+          }
+        } );
       }
     } );
   };
 
-  const scrollToDestination = ( destination ) => {
-    let scrollTop = destination.offsetTop - 50;
+  const scroll = function( destination) {
+    const scrollTop = destination.offsetTop - 50;
+
+    if ( window.pageYOffset >= scrollTop ) return;
+
+    const duration = 500;
+    const start = window.pageYOffset;
+    const startTime = new Date().getTime();
+
+    const now = new Date().getTime();
+    const time = Math.min( 1, ( now - startTime ) / duration );
+    const newOffset = Math.ceil( time * time * ( scrollTop - start ) ) + start;
+    window.scroll( 0, newOffset );
+
+    requestAnimationFrame( scroll );
+  };
+
+  const scrollToDestination = destination => {
+    const scrollTop = destination.offsetTop - 50;
     if ( 'requestAnimationFrame' in window === false ) {
       window.scrollTo( 0, scrollTop );
     } else {
-      const duration = 500;
-      const start = window.pageYOffset;
-      const startTime = new Date().getTime();
-      function scroll() {
-        if ( window.pageYOffset >= scrollTop ) return;
-
-        const now = new Date().getTime();
-        const time = Math.min( 1, ( ( now - startTime ) / duration ) );
-        let newOffset = Math.ceil( time * time * ( scrollTop - start ) ) + start;
-        window.scroll( 0, newOffset );
-
-        requestAnimationFrame( scroll );
-      }
-
-      scroll();
+      scroll( destination );
     }
   };
 
-  init();
+  // init();
 
   return stacker;
 };
@@ -224,9 +227,9 @@ const decisionStacker = function( appElement, targets ) {
 
 const init = function() {
   const dsSections = document.querySelectorAll( '.ds-section' );
-  dsSections.forEach( ( section ) => {
-    let stacker = decisionStacker( section, decisionStackerTargets );
-  })
+  dsSections.forEach( section => {
+    const stacker = decisionStacker( section, decisionStackerTargets );
+  } );
 };
 
 
@@ -234,19 +237,14 @@ if ( 'replaceState' in window.history ) {
   window.addEventListener( 'load', init );
 }
 
-// document.addEventListener( 'DOMContentLoaded', ( event ) => {
-//   console.log( 'LOAD' );
+/* document.addEventListener( 'DOMContentLoaded', ( event ) => {
+   console.log( 'LOAD' ); */
 
-//   const dsSections = document.querySelectorAll( '.ds-section' );
-//   dsSections.forEach( ( section ) => {
-//     let stacker = decisionStacker( section, decisionStackerTargets );
-//     console.log( 'Hi' );
-//   })
+/* const dsSections = document.querySelectorAll( '.ds-section' );
+   dsSections.forEach( ( section ) => {
+   let stacker = decisionStacker( section, decisionStackerTargets );
+   console.log( 'Hi' );
+   }) */
 
 // } );
-
-
-
-
-
 

@@ -5,5 +5,5 @@ const financialView = {
 };
 
 export {
-	financialView
+  financialView
 };

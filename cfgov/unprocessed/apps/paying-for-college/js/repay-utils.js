@@ -4,51 +4,51 @@ const hide = function( haystack, selector ) {
   if ( typeof selector === 'undefined' ) {
     haystack.style.display = 'none';
   } else {
-    haystack.querySelectorAll( selector ).forEach( ( elem ) => {
+    haystack.querySelectorAll( selector ).forEach( elem => {
       elem.style.display = 'none';
-    } );    
+    } );
   }
-}
+};
 
 const show = function( haystack, selector ) {
   if ( typeof selector === 'undefined' ) {
     haystack.style.display = 'block';
   } else {
-    haystack.querySelectorAll( selector ).forEach( ( elem ) => {
+    haystack.querySelectorAll( selector ).forEach( elem => {
       elem.style.display = 'block';
-    } );    
+    } );
   }
 
-}
+};
 
 const getElementHeight = function( elem ) {
-  let style = window.getComputedStyle( elem );
-  let display = style.display;
-  let position = style.position;
-  let visibility = style.visibility;
-  let maxHeight = style.maxHeight;
+  const style = window.getComputedStyle( elem );
+  const display = style.display;
+  const position = style.position;
+  const visibility = style.visibility;
+  const maxHeight = style.maxHeight;
   let height = 0;
 
   // An invisible block element has the height and stuff we're looking for.
-  elem.style.position   = 'absolute';
+  elem.style.position = 'absolute';
   elem.style.visibility = 'hidden';
-  elem.style.display    = 'block';
+  elem.style.display = 'block';
   elem.style.maxHeight = null;
 
   height = elem.offsetHeight;
 
-  elem.style.position   = position;
-  elem.style.display    = display;
+  elem.style.position = position;
+  elem.style.display = display;
   elem.style.visibility = visibility;
   elem.style.maxHeight = maxHeight;
 
   return height;
-}
+};
 
-const slide = function( direction, elem, callback  ) {
+const slide = function( direction, elem, callback ) {
   if ( elem === null ) {
-  	// console.log( 'ERR: null element passed to slide.' );
-  	return;
+    // console.log( 'ERR: null element passed to slide.' );
+    return;
   }
   let newHeight = '0';
   if ( direction === 'up' ) {
@@ -59,7 +59,7 @@ const slide = function( direction, elem, callback  ) {
     elem.style.maxHeight = '0px';
   }
 
-  newHeight = newHeight + 'px';
+  newHeight += 'px';
 
   elem.style.display = 'block';
   elem.style.transition = 'max-height 0.5s ease-in-out';
@@ -71,20 +71,20 @@ const slide = function( direction, elem, callback  ) {
         elem.style.display = 'none';
       }, 510 );
     } else {
-   	  setTimeout( () => {
+      setTimeout( () => {
         elem.style.maxHeight = null;
       }, 510 );
     }
   }, 10 );
 
-}
+};
 
 const isVisible = function( element ) {
   if ( element.style.display === 'none' ) {
-  	return false;
+    return false;
   }
-  return !!( element.offsetWidth && element.offsetHeight && element.getClientRects().length );
-}
+  return Boolean( element.offsetWidth && element.offsetHeight && element.getClientRects().length );
+};
 
 /**
  * scrollY - Get the Y coord of the current viewport. Older browsers don't

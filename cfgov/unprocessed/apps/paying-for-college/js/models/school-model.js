@@ -5,5 +5,5 @@ const schoolModel = {
 };
 
 export {
-	schoolModel
+  schoolModel
 };
