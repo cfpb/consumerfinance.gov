@@ -6,7 +6,7 @@ import {
 import TodoNotification from './todo-notification';
 import inputView from './views/input';
 import { toArray } from './util';
-import { transportation } from './data/transportation-map';
+import { TRANSPORTATION } from './data/transportation-map';
 
 const CLASSES = Object.freeze( {
   FORM: 'o-yes-route-option',
@@ -59,7 +59,7 @@ function RouteOptionFormView( element, {
   function _updateToolTip( transportationOption ) {
     const tooltip = _dom.querySelector( `.${ CLASSES.DISCOUNT }` );
 
-    if ( transportationOption === transportation.WALK ) {
+    if ( transportationOption === TRANSPORTATION.WALK ) {
       tooltip.classList.add( 'u-hidden' );
     } else {
       tooltip.classList.remove( 'u-hidden' );
