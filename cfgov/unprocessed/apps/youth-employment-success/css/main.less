@@ -232,6 +232,8 @@ input:-moz-ui-invalid {
 
 .m-hours {
   .m-hours_container {
+    border-right: 0;
+
     .respond-to-max(@bp-sm-min, {
       display: inline;
     });
@@ -263,6 +265,8 @@ input:-moz-ui-invalid {
     left: 100%;
     position: absolute;
     top: calc(100% - (@size-iv + @base-line-height-px));
+    // Fix for safari absolute position layout
+    width: 100%;
   }
 }
 
