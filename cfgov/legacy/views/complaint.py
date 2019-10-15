@@ -40,7 +40,7 @@ class ComplaintLandingView(TemplateView):
 
         context.update({
             'technical_issues': flag_enabled('CCDB_TECHNICAL_ISSUES'),
-            'ccdb_sept_2019_updates': flag_enabled('CCDB_SEPT_2019_UPDATES'),
+            'ccdb_content_updates': flag_enabled('CCDB_CONTENT_UPDATES'),
         })
 
         return context
