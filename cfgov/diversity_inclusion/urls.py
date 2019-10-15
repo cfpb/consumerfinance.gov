@@ -11,13 +11,6 @@ urlpatterns = [
         name='voluntary_assessment_form'
     ),
     url(
-        r'^voluntary-assessment-onboarding-form/form-submitted/$',
-        TemplateView.as_view(
-            template_name='diversity_inclusion/form-submitted.html'
-        ),
-        name='form_submitted'
-    ),
-    url(
         r'^voluntary-assessment-onboarding-form/privacy-act-statement/$',
         TemplateView.as_view(
             template_name='diversity_inclusion/privacy.html'

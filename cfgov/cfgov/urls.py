@@ -383,7 +383,7 @@ urlpatterns = [
     ),
     url(
         r'^(?i)about-us/diversity-and-inclusion/',
-        include('diversity_inclusion.urls')
+        include('diversity_inclusion.urls', namespace='diversity_inclusion')
     ),
 
     url(r'^sitemap\.xml$', sitemap),

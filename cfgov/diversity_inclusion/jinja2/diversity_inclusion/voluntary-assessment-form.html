@@ -40,16 +40,14 @@
         </div>
         <p>
             Please complete and submit this form to establish a point of contact for your institution.
-            The point of contact will then be able to make  diversity and inclusion assessment submissions to the Bureau.
+            The point of contact will then be able to make diversity and inclusion assessment submissions to the Bureau.
             For questions concerning this form, please contact the Office of Minority and Women Inclusion’s Regulated Entities Support Team at
-            <a href="mailto:OMWI_regulatedentity@cfpb.gov">
-                OMWI_regulatedentity@cfpb.gov
-            </a>.
+            <a href="mailto:OMWI_regulatedentity@cfpb.gov">OMWI_regulatedentity@cfpb.gov</a>.
         </p>
     </div>
     <div class="block">
         <form id="voluntary-diversity-assessment"
-              action="{{ url('voluntary_assessment_form') }}"
+              action="{{ url('diversity_inclusion:voluntary_assessment_form') }}"
               method="POST">
             <h2>Institution information</h2>
             <p>
@@ -175,7 +173,7 @@
                            type="submit"
                            value="Submit">
                     <a class="a-btn a-btn__link a-btn__secondary"
-                       href="privacy-act-statement/"
+                       href="{{ url('diversity_inclusion:privacy') }}"
                        rel="noopener noreferrer"
                        target="_blank">
                        See Privacy Act statement
