@@ -22,6 +22,6 @@ urlpatterns = [
         TemplateView.as_view(
             template_name='diversity_inclusion/privacy.html'
         ),
-        name='form_submitted'
+        name='privacy'
     ),
 ]
