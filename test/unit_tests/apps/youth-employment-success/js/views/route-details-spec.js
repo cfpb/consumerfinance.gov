@@ -116,7 +116,7 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '454' );
+        expect( totalCostEl.textContent ).toBe( '432' );
       } );
 
       it( 'correctly calculates monthly cost', () => {
@@ -151,10 +151,10 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '210' );
+        expect( totalCostEl.textContent ).toBe( '120' );
       } );
 
-      it( 'updates its total cost value using a presumed 5 days per week if daysPerWeek are not supplied', () => {
+      it( 'does not update the total cost if daysPerWeek is not supplied', () => {
         const state = {
           budget: { ...nextState.budget },
           route: {
@@ -169,7 +169,26 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '210' );
+        expect( totalCostEl.textContent ).toBe( '0' );
+      } );
+
+      it( 'updates total cost properly when daysPerWeek is supplied', () => {
+        const state = {
+          budget: { ...nextState.budget },
+          route: {
+            ...nextState.route,
+            transportation: 'Walk',
+            isMonthlyCost: false,
+            daysPerWeek: 2,
+            averageCost: '100'
+          }
+        };
+
+        view.render( state );
+
+        const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
+
+        expect( totalCostEl.textContent ).toBe( '800' );
       } );
     } );
 
@@ -178,7 +197,7 @@ describe( 'routeDetailsView', () => {
 
       const budgetLeftEl = document.querySelector( `.${ CLASSES.BUDGET_REMAINING }` );
 
-      expect( budgetLeftEl.textContent ).toBe( '-379' );
+      expect( budgetLeftEl.textContent ).toBe( '-357' );
     } );
 
     it( 'updates the time in hours', () => {
