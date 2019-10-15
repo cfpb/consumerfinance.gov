@@ -1,4 +1,4 @@
-const MONEY_REGEXP = /[^\d+\.{1}\d+]/;
+const MONEY_REGEXP = /[^\d+\.{1}\d+]|[\.]*$/;
 const DIGITS_ONLY_REGEXP = /\D+/;
 
 /**

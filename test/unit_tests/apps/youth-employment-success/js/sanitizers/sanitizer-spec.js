@@ -10,6 +10,11 @@ describe( 'exposed sanitize functions', () => {
       expect( moneySanitizer( badMoney ) ).toBe( '122.3' );
     } );
 
+    it('only allows for a single decimal place', () => {
+      const badMoney = '12.2.';
+      expect(moneySanitizer(badMoney)).toBe('12.2');
+    });
+
     it( 'removes all leading zeros from a number', () => {
       expect( moneySanitizer( '000000100.11' ) ).toBe( '100.11' );
     } );
