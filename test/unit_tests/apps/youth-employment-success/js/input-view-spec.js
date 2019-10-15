@@ -72,9 +72,9 @@ describe( 'InputView', () => {
     } );
 
     describe( 'sanitizing data', () => {
-      it( 'removes data that does not match the pattern when pattern attribute is present', () => {
+      it( 'removes data that is not valid when `data-sanitize` attribute is present', () => {
         document.body.innerHTML = `
-          <input type="text" pattern="\\D+">
+          <input type="text" data-sanitize="money">
         `;
 
         const input = document.querySelector( 'input' );
@@ -82,7 +82,7 @@ describe( 'InputView', () => {
 
         input.value = '-122';
 
-        simulateEvent( 'blur', input );
+        simulateEvent( 'change', input );
 
         expect( input.value ).toBe( '122' );
         expect( mockHandler.mock.calls[0][0].value ).toBe( '122' );

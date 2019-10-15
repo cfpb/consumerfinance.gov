@@ -205,6 +205,22 @@ function toggleCFNotification( node, doShow ) {
   }
 }
 
+/**
+ * Right-pad a string with some number of zeros
+ * @param {String} str The string to convert to a fixed precision number
+ * @param {Number} precision The number of places after the decimal to truncate to
+ * @returns {String} A new string with the correct precision
+ */
+function toPrecision( str = '', precision = 0 ) {
+  const num = Number( str );
+
+  if ( !isNumber( num ) ) {
+    throw new Error( 'First argument must be a number.' );
+  }
+
+  return String( ( Math.round( ( num * 1000 ) / 10 ) / 100 ).toFixed( precision ) );
+}
+
 export {
   actionCreator,
   assign,
@@ -212,6 +228,7 @@ export {
   entries,
   isNumber,
   toArray,
+  toPrecision,
   toggleCFNotification,
   UNDEFINED
 };
