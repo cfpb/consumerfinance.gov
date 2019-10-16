@@ -57,11 +57,11 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
    */
   function _handleStateUpdate( _, state ) {
     const otherRoutes = state.routes.routes.slice();
-    const preferredRoute = otherRoutes.splice( state.routeChoice );
-    const routes = preferredRoute.concat( otherRoutes );
+    const preferredRoute = otherRoutes.splice( state.routeChoice, 1 );
+    const finalRoutes = preferredRoute.concat( otherRoutes );
 
     _detailsViews.forEach( ( view, index ) => {
-      const route = routes[index] || {};
+      const route = finalRoutes[index] || {};
 
       if ( Object.keys( route ).length ) {
         const transporationDesc = transportationMap[route.transportation];

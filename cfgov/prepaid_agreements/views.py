@@ -32,7 +32,7 @@ def validate_page_number(request, paginator):
 
 def get_available_filters(products):
     available_filters = {'prepaid_type': [], 'status': [], 'issuer_name': []}
-    for product in products:
+    for product in products.all():
         prepaid_type = product.prepaid_type
         if prepaid_type and prepaid_type != '':
             if prepaid_type not in available_filters['prepaid_type']:
