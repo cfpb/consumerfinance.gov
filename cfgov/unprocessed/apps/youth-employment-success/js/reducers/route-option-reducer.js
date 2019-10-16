@@ -8,12 +8,16 @@ const initialState = {
 const actionTypes = Object.freeze( {
   ADD_ROUTE_OPTION: 'ADD_ROUTE_OPTION',
   CLEAR_AVERAGE_COST: 'CLEAR_AVERAGE_COST',
+  CLEAR_DAYS_PER_WEEK: 'CLEAR_DAYS_PER_WEEK',
+  CLEAR_MILES: 'CLEAR_MILES',
   UPDATE_TRANSPORTATION: 'UPDATE_TRANSPORTATION',
   UPDATE_MILES: 'UPDATE_MILES',
   UPDATE_AVERAGE_COST: 'UPDATE_AVERAGE_COST',
   UPDATE_IS_MONTHLY_COST: 'UPDATE_IS_MONTHLY_COST',
   UPDATE_DAYS_PER_WEEK: 'UPDATE_DAYS_PER_WEEK',
+  UPDATE_DAYS_TO_ACTION_PLAN: 'UPDATE_DAYS_TO_ACTION_PLAN',
   UPDATE_COST_TO_ACTION_PLAN: 'UPDATE_COST_TO_ACTION_PLAN',
+  UPDATE_MILES_TO_ACTION_PLAN: 'UPDATE_MILES_TO_ACTION_PLAN',
   UPDATE_TIME_TO_ACTION_PLAN: 'UPDATE_TIME_TO_ACTION_PLAN',
   UPDATE_TRANSIT_TIME_HOURS: 'UPDATE_TRANSIT_TIME_HOURS',
   UPDATE_TRANSIT_TIME_MINUTES: 'UPDATE_TRANSIT_TIME_MINUTES'
@@ -24,6 +28,12 @@ const addRouteOptionAction = actionCreator(
 );
 const clearAverageCostAction = actionCreator(
   actionTypes.CLEAR_AVERAGE_COST
+);
+const clearDaysPerWeekAction = actionCreator(
+  actionTypes.CLEAR_DAYS_PER_WEEK
+);
+const clearMilesAction = actionCreator(
+  actionTypes.CLEAR_MILES
 );
 const updateTransportationAction = actionCreator(
   actionTypes.UPDATE_TRANSPORTATION
@@ -37,11 +47,17 @@ const updateDaysPerWeekAction = actionCreator(
 const updateAverageCostAction = actionCreator(
   actionTypes.UPDATE_AVERAGE_COST
 );
+const updateCostToActionPlan = actionCreator(
+  actionTypes.UPDATE_COST_TO_ACTION_PLAN
+);
+const updateDaysToActionPlan = actionCreator(
+  actionTypes.UPDATE_DAYS_TO_ACTION_PLAN
+);
 const updateTimeToActionPlan = actionCreator(
   actionTypes.UPDATE_TIME_TO_ACTION_PLAN
 );
-const updateCostToActionPlan = actionCreator(
-  actionTypes.UPDATE_COST_TO_ACTION_PLAN
+const updateMilesToActionPlan = actionCreator(
+  actionTypes.UPDATE_MILES_TO_ACTION_PLAN
 );
 const updateTransitTimeHoursAction = actionCreator(
   actionTypes.UPDATE_TRANSIT_TIME_HOURS
@@ -73,7 +89,18 @@ function routeSelector( state, index ) {
 function todoListSelector( state, index ) {
   const route = routeSelector( state, index );
 
-  return route.actionPlanItems;
+  return route.actionPlanItems || [];
+}
+
+/**
+ * Predicate function to determine if a to-do list item is present in the
+ * user's todo list of action items
+ * @param {array} todoList The list of the user's current todos.
+ * @param {string} todoType The type of plan item to test for.
+ * @returns {Boolean} Whether or not the plan item is in the user's action plan.
+ */
+function hasTodo( todoList, todoType ) {
+  return todoList.indexOf( todoType ) !== -1;
 }
 
 /**
@@ -88,13 +115,16 @@ function addRouteOption( routes, nextRoute ) {
 
 /**
  * Helper function to add / remove a plan item
- * @param {array} actionPlan The plan item types currently in the user's action plan
+ * @param {object} state The application state.
+ * @param {number} routeIndex The index of the route we want to target.
  * @param {string} itemType The plan item type to add or remove
  * @param {boolean} doUpdate How the plan should be amended
  *
  * @returns {Array} The new action plan
  */
-function updateActionPlan( actionPlan, itemType, doUpdate ) {
+function updateActionPlan( state, routeIndex, itemType, doUpdate ) {
+  const actionPlan = todoListSelector( state, routeIndex );
+
   if ( !doUpdate ) {
     actionPlan.splice( actionPlan.indexOf( itemType ) );
 
@@ -127,6 +157,40 @@ function updateRouteData( routes, routeIndex, data ) {
 }
 
 /**
+ * Detect if application should update the `transitTimeMinutes` state value
+ * @param {Object} routes the routes state object
+ * @param {Object} data The action's data
+ * @param {Number} data.routeIndex The index of the route being updated
+ * @returns {Boolean} Whether or not transitTimeMinutes is blank
+ */
+function hasTransitTimeMinutes( routes, data ) {
+  const route = routeSelector( routes, data.routeIndex );
+
+  if ( route.transitTimeMinutes === '' ) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Detect if application should update the `transitTimeHours` state value
+ * @param {Object} routes the routes state object
+ * @param {Object} data The action's data
+ * @param {Number} data.routeIndex The index of the route being updated
+ * @returns {Boolean} Whether or not transitTimeHours is blank
+ */
+function hasTransitTimeHours( routes, data ) {
+  const route = routeSelector( routes, data.routeIndex );
+
+  if ( route.transitTimeHours === '' ) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
  *
  * @param {object} state the current values for this slice of app state
  * @param {object} action instructs reducer which state update to apply
@@ -149,8 +213,39 @@ function routeOptionReducer( state = initialState, action ) {
           averageCost: '',
           isMonthlyCost: null,
           actionPlanItems: updateActionPlan(
-            todoListSelector( state, data.routeIndex ),
+            state,
+            action.data.routeIndex,
             PLAN_TYPES.AVERAGE_COST,
+            false
+          )
+        }
+      ) );
+    }
+    case actionTypes.CLEAR_DAYS_PER_WEEK: {
+      return assign( state, updateRouteData(
+        state.routes,
+        action.data.routeIndex,
+        {
+          daysPerWeek: '',
+          actionPlanItems: updateActionPlan(
+            state,
+            action.data.routeIndex,
+            PLAN_TYPES.DAYS,
+            false
+          )
+        }
+      ) );
+    }
+    case actionTypes.CLEAR_MILES: {
+      return assign( state, updateRouteData(
+        state.routes,
+        data.routeIndex,
+        {
+          miles: '',
+          actionPlanItems: updateActionPlan(
+            state,
+            action.data.routeIndex,
+            PLAN_TYPES.MILES,
             false
           )
         }
@@ -179,27 +274,10 @@ function routeOptionReducer( state = initialState, action ) {
       } )
       );
     }
-    case actionTypes.UPDATE_TIME_TO_ACTION_PLAN: {
-      const previousPlanItems = todoListSelector(
-        state, action.data.routeIndex
-      );
-      const nextPlanItems = updateActionPlan(
-        previousPlanItems,
-        PLAN_TYPES.TIME,
-        data.value
-      );
-
-      return assign( state, updateRouteData( state.routes, data.routeIndex, {
-        actionPlanItems: nextPlanItems
-      } ) );
-    }
     case actionTypes.UPDATE_COST_TO_ACTION_PLAN: {
-      const previousPlanItems = todoListSelector(
-        state,
-        action.data.routeIndex
-      );
       const nextPlanItems = updateActionPlan(
-        previousPlanItems,
+        state,
+        action.data.routeIndex,
         PLAN_TYPES.AVERAGE_COST,
         data.value
       );
@@ -208,15 +286,69 @@ function routeOptionReducer( state = initialState, action ) {
         actionPlanItems: nextPlanItems
       } ) );
     }
-    case actionTypes.UPDATE_TRANSIT_TIME_HOURS: {
+    case actionTypes.UPDATE_DAYS_TO_ACTION_PLAN: {
+      const nextPlanItems = updateActionPlan(
+        state,
+        action.data.routeIndex,
+        PLAN_TYPES.DAYS_PER_WEEK,
+        data.value
+      );
+
       return assign( state, updateRouteData( state.routes, data.routeIndex, {
-        transitTimeHours: data.value
+        actionPlanItems: nextPlanItems
       } ) );
     }
-    case actionTypes.UPDATE_TRANSIT_TIME_MINUTES: {
+    case actionTypes.UPDATE_MILES_TO_ACTION_PLAN: {
+      const nextPlanItems = updateActionPlan(
+        state,
+        action.data.routeIndex,
+        PLAN_TYPES.MILES,
+        data.value
+      );
+
       return assign( state, updateRouteData( state.routes, data.routeIndex, {
-        transitTimeMinutes: data.value
+        actionPlanItems: nextPlanItems
       } ) );
+    }
+    case actionTypes.UPDATE_TIME_TO_ACTION_PLAN: {
+      const nextPlanItems = updateActionPlan(
+        state,
+        action.data.routeIndex,
+        PLAN_TYPES.TIME,
+        data.value
+      );
+
+      return assign( state, updateRouteData( state.routes, data.routeIndex, {
+        actionPlanItems: nextPlanItems
+      } ) );
+    }
+    case actionTypes.UPDATE_TRANSIT_TIME_HOURS: {
+      const updates = {
+        transitTimeHours: data.value || '0'
+      };
+
+      if ( !hasTransitTimeMinutes( state, data ) ) {
+        updates.transitTimeMinutes = '0';
+      }
+
+      return assign(
+        state,
+        updateRouteData( state.routes, data.routeIndex, updates )
+      );
+    }
+    case actionTypes.UPDATE_TRANSIT_TIME_MINUTES: {
+      const updates = {
+        transitTimeMinutes: data.value || '0'
+      };
+
+      if ( !hasTransitTimeHours( state, data ) ) {
+        updates.transitTimeHours = '0';
+      }
+
+      return assign(
+        state,
+        updateRouteData( state.routes, data.routeIndex, updates )
+      );
     }
     case actionTypes.UPDATE_IS_MONTHLY_COST: {
       return assign( state, updateRouteData( state.routes, data.routeIndex, {
@@ -229,15 +361,21 @@ function routeOptionReducer( state = initialState, action ) {
 }
 
 export {
-  initialState,
   addRouteOptionAction,
   clearAverageCostAction,
+  clearDaysPerWeekAction,
+  initialState,
+  clearMilesAction,
   routeSelector,
+  todoListSelector,
+  hasTodo,
   updateTransportationAction,
   updateMilesAction,
   updateDaysPerWeekAction,
   updateAverageCostAction,
   updateCostToActionPlan,
+  updateDaysToActionPlan,
+  updateMilesToActionPlan,
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction,

@@ -1,11 +1,14 @@
 import unittest
 
 from django.db import connection
+from django.http import HttpRequest
 from django.test import TestCase
+from django.urls import reverse
 
 from prepaid_agreements.models import PrepaidProduct
 from prepaid_agreements.views import (
-    filter_products, get_available_filters, search_products
+    filter_products, get_available_filters, get_detail_page_breadcrumb,
+    search_products
 )
 
 
@@ -81,3 +84,35 @@ class TestViews(TestCase):
         )
         self.assertIn(product3, results)
         self.assertEqual(results.count(), 1)
+
+    def test_get_breadcrumb_if_referrer_is_search_page_with_query(self):
+        request = HttpRequest()
+        search_path_with_query = reverse('prepaid_agreements:index') + '?q=a'
+        request.META.update({'HTTP_REFERER': search_path_with_query})
+        self.assertEqual(
+            get_detail_page_breadcrumb(request),
+            search_path_with_query
+        )
+
+    def test_get_breadcrumb_if_referrer_is_search_page_without_query(self):
+        request = HttpRequest()
+        search_path = reverse('prepaid_agreements:index')
+        request.META.update({'HTTP_REFERER': search_path})
+        self.assertEqual(get_detail_page_breadcrumb(request), search_path)
+
+    def test_get_breadcrumb_if_referrer_is_not_search_page(self):
+        request = HttpRequest()
+        search_path = reverse('prepaid_agreements:index')
+        request.META.update({'HTTP_REFERER': '/random-path/'})
+        self.assertEqual(get_detail_page_breadcrumb(request), search_path)
+
+    def test_get_breadcrumb_if_referrer_is_random_page_with_query(self):
+        request = HttpRequest()
+        search_path = reverse('prepaid_agreements:index')
+        request.META.update({'HTTP_REFERER': '/random-path/?q=test'})
+        self.assertEqual(get_detail_page_breadcrumb(request), search_path)
+
+    def test_get_breadcrumb_if_no_referrer(self):
+        request = HttpRequest()
+        search_path = reverse('prepaid_agreements:index')
+        self.assertEqual(get_detail_page_breadcrumb(request), search_path)

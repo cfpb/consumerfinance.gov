@@ -1,5 +1,5 @@
+import { assign, toArray, toggleCFNotification } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { assign, toArray } from '../util';
 import { getPlanItem } from '../data/todo-items';
 import money from '../money';
 import transportationMap from '../data/transportation-map';
@@ -14,9 +14,11 @@ const CLASSES = {
   BUDGET_REMAINING: 'js-budget-left',
   TIME_HOURS: 'js-time-hours',
   TIME_MINUTES: 'js-time-minutes',
+  TODO_LIST: 'js-todo-list',
   TODO_ITEMS: 'js-todo-items',
   INCOMPLETE_ALERT: 'js-route-incomplete',
-  OOB_ALERT: 'js-route-oob'
+  OOB_ALERT: 'js-route-oob',
+  COMPLETE_ALERT: 'js-route-complete'
 };
 
 /**
@@ -43,15 +45,10 @@ function updateTodoList( todos = [] ) {
   return fragment;
 }
 
-// Assuming days per week for a transportation option to be 5 days per week.
-// This could easily not be accurate as people frequently have weekend jobs,
-// multiple shifts etc, but should work for now.
-const FULL_TIME_DAYS = 5;
-
-const DEFAULT_COST_ESTIMATE = '-';
+const DEFAULT_COST_ESTIMATE = '0';
 
 // Rough estimate to account for weeks that have more or less days
-const WEEKLY_COST_MODIFIER = 4.2;
+const WEEKLY_COST = 4.0;
 
 // This number will be pulled from a data set, for now, its magic
 const ESTIMATED_COST_PER_MILE = 1.8;
@@ -67,7 +64,6 @@ const ESTIMATED_COST_PER_MILE = 1.8;
 function getCalculationFn( route ) {
   const {
     isMonthlyCost,
-    monthlyCost,
     transportation,
     averageCost,
     daysPerWeek,
@@ -79,10 +75,10 @@ function getCalculationFn( route ) {
 
     return calculatePerMonthCost( realDailyCost, daysPerWeek );
   } else if ( isMonthlyCost ) {
-    return monthlyCost;
+    return averageCost;
   }
 
-  return calculatePerMonthCost( averageCost, FULL_TIME_DAYS );
+  return calculatePerMonthCost( averageCost, daysPerWeek );
 }
 
 /**
@@ -90,7 +86,7 @@ function getCalculationFn( route ) {
  * @param {string} numberOfMiles Number of miles user expects to drive each day
  * @returns {Number} The cost, in dollars, of driving each day
  */
-function calculateDrivingDailyCost( numberOfMiles = '0' ) {
+function calculateDrivingDailyCost( numberOfMiles = 0 ) {
   return money.toDollars(
     parseFloat( numberOfMiles ) * ESTIMATED_COST_PER_MILE
   );
@@ -107,10 +103,12 @@ function calculatePerMonthCost( dailyCost, daysPerWeek ) {
     return DEFAULT_COST_ESTIMATE;
   }
 
+  const normalizedDays = Number( daysPerWeek ) > 7 ? 7 : daysPerWeek;
+
   return money.toDollars(
     money.toDollars( dailyCost ) *
-    parseFloat( daysPerWeek ) *
-    WEEKLY_COST_MODIFIER
+    normalizedDays *
+    WEEKLY_COST
   );
 }
 
@@ -122,7 +120,7 @@ function calculatePerMonthCost( dailyCost, daysPerWeek ) {
  */
 function updateRemainingBudget( budget, transportationEstimate ) {
   return money.subtract(
-    money.subtract( budget.earned, budget.spent ),
+    budget,
     transportationEstimate
   );
 }
@@ -149,10 +147,12 @@ function assertStateHasChanged( lastValue, value ) {
  * @param {*} nextValue The value with which to update the node(s)
  */
 function updateDom( node, nextValue ) {
-  if ( 'length' in node ) {
-    node.forEach( n => updateDomNode( n, nextValue ) );
-  } else {
-    updateDomNode( node, nextValue );
+  if ( node ) {
+    if ( 'length' in node ) {
+      node.forEach( n => updateDomNode( n, nextValue ) );
+    } else {
+      updateDomNode( node, nextValue );
+    }
   }
 }
 
@@ -171,21 +171,6 @@ function updateDomNode( node, nextValue ) {
     } else {
       node.textContent = nextValue;
     }
-  }
-}
-
-/**
- * Toggles the out-of-budget alert notification.
- * @param {HTMLElement} node The node containing the notification
- * @param {string} cost The total cost of the option after budget
- */
-function toggleAlert( node, cost ) {
-  const notification = node.querySelector( '.m-notification' );
-
-  if ( Number( cost ) < 0 ) {
-    notification.classList.add( 'm-notification__visible' );
-  } else {
-    notification.classList.remove( 'm-notification__visible' );
   }
 }
 
@@ -210,9 +195,25 @@ function routeDetailsView( element ) {
   const _budgetLeftEl = _dom.querySelector( `.${ CLASSES.BUDGET_REMAINING }` );
   const _timeHoursEl = _dom.querySelector( `.${ CLASSES.TIME_HOURS }` );
   const _timeMinutesEl = _dom.querySelector( `.${ CLASSES.TIME_MINUTES }` );
-  const _todoEl = _dom.querySelector( `.${ CLASSES.TODO_ITEMS }` );
+  const _todoListEl = _dom.querySelector( `.${ CLASSES.TODO_LIST }` );
+  const _todoItemsEl = _dom.querySelector( `.${ CLASSES.TODO_ITEMS }` );
   const _incAlertEl = _dom.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
   const _oobAlertEl = _dom.querySelector( `.${ CLASSES.OOB_ALERT }` );
+  const _completeAlertEl = _dom.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
+
+  /**
+   * Toggles the display of the todo list element and its children
+   * @param {Array} todos The array of todos the user may have added
+   */
+  function _toggleTodoList( todos = [] ) {
+    if ( todos.length ) {
+      _todoListEl.classList.remove( 'u-hidden' );
+    } else {
+      _todoListEl.classList.add( 'u-hidden' );
+    }
+
+    updateDom( _todoItemsEl, updateTodoList( todos ) );
+  }
 
   return {
     init() {
@@ -224,18 +225,29 @@ function routeDetailsView( element ) {
     },
     render( { budget, route } ) {
       const costEstimate = getCalculationFn( route );
+      const remainingBudget = money.subtract( budget.earned, budget.spent );
+      const nextRemainingBudget = updateRemainingBudget(
+        remainingBudget,
+        costEstimate
+      );
       const dataToValidate = assign( {}, budget, route );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
-      updateDom( _budgetEl, budget.earned );
+      updateDom( _budgetEl, remainingBudget );
       updateDom( _daysPerWeekEl, route.daysPerWeek );
       updateDom( _totalCostEl, costEstimate );
-      updateDom( _budgetLeftEl, updateRemainingBudget( budget, costEstimate ) );
+      updateDom( _budgetLeftEl, nextRemainingBudget );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
-      updateDom( _todoEl, updateTodoList( route.actionPlanItems ) );
-      toggleAlert( _oobAlertEl, updateRemainingBudget( budget, costEstimate ) );
-      toggleAlert( _incAlertEl, validate( dataToValidate ) ? 0 : -1 );
+      if ( _todoListEl ) {
+        _toggleTodoList( route.actionPlanItems );
+      }
+      toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
+      toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
+      toggleCFNotification(
+        _completeAlertEl,
+        validate( dataToValidate ) && nextRemainingBudget >= 0
+      );
     }
   };
 }

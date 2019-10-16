@@ -4,57 +4,33 @@ import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-emplo
 import transportationMap from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/transportation-map';
 
 const HTML = `
-  <div class="content-l content-l_col-2-3 yes-route-details">
-    <p class="h4 u-mt0">
+  <div class="yes-route-details">
+    <p>
       Totals for <span class="js-transportation-type"></span>
-    </p>
-
-    <div class="content_line-bold"></div>
-  
-    <div class="block__sub-micro">
+    </p>  
+    <div>
       <p class="content-l content-l_col-3-4">
         <b>Money left in your monthly budget</b>
       </p>
-      <p class="content-l content-l_col-1-4" style="text-align: right;">
-        <b class="content-l_col">$</b>
-        <b class="content-l_col-2-3 js-budget"></b>
+      <p class="content-l content-l_col-1-4">
+        $<b class="content-l_col-2-3 js-budget"></b>
       </p>
-      <div class="content-l content-l_col-3-4">
-        <p class="u-mb0">
-          <b>
-            Average monthly cost of <span class="js-transportation-type"></span>
-          </b>
-        </p>
-        <span class="a-label_helper">
-          <small>
-            Based on <span class="js-days-per-week"></span> days a week you will make this trip
-          </small>
+      <div>
+        Average monthly cost of <span class="js-transportation-type"></span>
+        <span>
+          Based on <span class="js-days-per-week"></span> days a week you will make this trip
         </span>
       </div>
-      <p class="content-l content-l_col-1-4" style="text-align: right;">
-        <b class="content-l_col">$</b>
-        <b class="content-l_col-2-3 js-total-cost"></b>
-      </p>
+      $<b class="content-l_col-2-3 js-total-cost"></b>
     </div>
-  
-    <div class="content_line-bold"></div>
-  
-    <div class="block__sub-micro">
-      <div class="content-l content-l_col-3-4">
-        <p class="u-mb0">
-          <b>
-            Total left in your budget after <span class="js-transportation-type"></span>
-          </b>
-        </p>
-      </div>
-      <p class="content-l content-l_col-1-4" style="text-align: right;">
-        <b class="content-l_col">$</b>
-        <b class="content-l_col-2-3 js-budget-left"></b>
-      </p>
+    <div>   
+      <b>Total left in your budget after <span class="js-transportation-type"></span></b>
+      $<b class="content-l_col-2-3 js-budget-left"></b>
       <div class="js-route-incomplete"><p class="m-notification"></p></div>
       <div class="js-route-oob"><p class="m-notification"></p></div>
+      <div class="js-route-complete"><p class="m-notification"></p></div>
     </div>
-    <div class="block__sub-micro">
+    <div>
       <p class="content-l content-l_col-1-3"><b>Total time to get to work</b></p>
       <p class="content-l content-l_col-2-3" style="text-align: right;">
         <b class="content-l_col-1-2">
@@ -65,11 +41,9 @@ const HTML = `
         </b>
       </p>
     </div>
-  
-    <div class="content-l content-l_col-2-3">
-      <span class="h4">MY TO-DO LIST</span>
-      <div class="content_line-bold"></div>
-      <ul class="block__sub-micro js-todo-items"></ul>
+    <div class="js-todo-list u-hidden">
+      <span class="h4">MY TO-DO LIST</span> 
+      <ul class="js-todo-items"></ul>
     </div>
   </div>
 `;
@@ -85,7 +59,6 @@ describe( 'routeDetailsView', () => {
       daysPerWeek: '3',
       miles: '20',
       averageCost: '10',
-      monthlyCost: '',
       isMonthlyCost: null,
       transitTimeHours: '1',
       transitTimeMinutes: '5',
@@ -124,8 +97,9 @@ describe( 'routeDetailsView', () => {
       view.render( nextState );
 
       const budgetEl = document.querySelector( `.${ CLASSES.BUDGET }` );
+      const expectedBudget = String( nextState.budget.earned - nextState.budget.spent );
 
-      expect( budgetEl.textContent ).toBe( nextState.budget.earned );
+      expect( budgetEl.textContent ).toBe( expectedBudget );
     } );
 
     it( 'updates its days per week value', () => {
@@ -142,7 +116,7 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '453.6' );
+        expect( totalCostEl.textContent ).toBe( '432' );
       } );
 
       it( 'correctly calculates monthly cost', () => {
@@ -152,7 +126,7 @@ describe( 'routeDetailsView', () => {
             ...nextState.route,
             transportation: 'Walk',
             isMonthlyCost: true,
-            monthlyCost: '100'
+            averageCost: '100'
           }
         };
 
@@ -177,10 +151,10 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '126' );
+        expect( totalCostEl.textContent ).toBe( '120' );
       } );
 
-      it( 'updates its total cost value to `-` if daysPerWeek are not supplied', () => {
+      it( 'does not update the total cost if daysPerWeek is not supplied', () => {
         const state = {
           budget: { ...nextState.budget },
           route: {
@@ -195,7 +169,26 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '-' );
+        expect( totalCostEl.textContent ).toBe( '0' );
+      } );
+
+      it( 'updates total cost properly when daysPerWeek is supplied', () => {
+        const state = {
+          budget: { ...nextState.budget },
+          route: {
+            ...nextState.route,
+            transportation: 'Walk',
+            isMonthlyCost: false,
+            daysPerWeek: 2,
+            averageCost: '100'
+          }
+        };
+
+        view.render( state );
+
+        const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
+
+        expect( totalCostEl.textContent ).toBe( '800' );
       } );
     } );
 
@@ -204,7 +197,7 @@ describe( 'routeDetailsView', () => {
 
       const budgetLeftEl = document.querySelector( `.${ CLASSES.BUDGET_REMAINING }` );
 
-      expect( budgetLeftEl.textContent ).toBe( '-378.60' );
+      expect( budgetLeftEl.textContent ).toBe( '-357' );
     } );
 
     it( 'updates the time in hours', () => {
@@ -223,12 +216,23 @@ describe( 'routeDetailsView', () => {
       expect( minutesEl.textContent ).toBe( '5' );
     } );
 
+    it( 'shows the todo list when there are todo list items', () => {
+      const todosEl = document.querySelector( `.${ CLASSES.TODO_LIST }` );
+
+      expect( todosEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
+
+      view.render( nextState );
+
+      expect( todosEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
+    } );
+
     it( 'updates the to-do list', () => {
       view.render( nextState );
 
-      const todosEl = document.querySelector( `.${ CLASSES.TODO_ITEMS }` );
+      const todosEl = document.querySelector( `.${ CLASSES.TODO_LIST }` );
+      const todoItemsEl = document.querySelector( `.${ CLASSES.TODO_ITEMS }` );
 
-      expect( todosEl.querySelectorAll( 'li' ).length ).toBe( 1 );
+      expect( todoItemsEl.querySelectorAll( 'li' ).length ).toBe( 1 );
 
       view.render( {
         ...nextState,
@@ -238,7 +242,8 @@ describe( 'routeDetailsView', () => {
         }
       } );
 
-      expect( todosEl.querySelectorAll( 'li' ).length ).toBe( 0 );
+      expect( todosEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
+      expect( todoItemsEl.querySelectorAll( 'li' ).length ).toBe( 0 );
     } );
 
     it( 'shows the out of budget alert when the route is out of budget', () => {
@@ -257,7 +262,7 @@ describe( 'routeDetailsView', () => {
       expect( notification.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
     } );
 
-    it.only( 'displays incomplete alert message until all required fields are filled in', () => {
+    it( 'displays incomplete alert message until all required fields are filled in', () => {
       view.render( nextState );
 
       let incAlertEl = document.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
@@ -274,6 +279,30 @@ describe( 'routeDetailsView', () => {
 
       incAlertEl = document.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
       notification = incAlertEl.querySelector( '.m-notification' );
+      expect( notification.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
+    } );
+
+    it( 'displays a complete alert message when the data is valid and the option is in budget', () => {
+      view.render( nextState );
+
+      let completeAlert = document.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
+      let notification = completeAlert.querySelector( '.m-notification' );
+
+      expect( notification.classList.contains( 'm-notification__visible' ) ).toBeFalsy();
+
+      const state = {
+        budget: { earned: '10000', spent: '10' },
+        route: {
+          ...nextState.route,
+          transportation: 'Drive'
+        }
+      };
+
+      view.render( state );
+
+      completeAlert = document.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
+      notification = completeAlert.querySelector( '.m-notification' );
+
       expect( notification.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
     } );
   } );

@@ -6,8 +6,8 @@ import {
   updateCostToActionPlan,
   updateIsMonthlyCostAction
 } from '../reducers/route-option-reducer';
-import { toArray } from '../util';
-import inputView from '../input-view';
+import inputView from './input';
+import { toArray, toPrecision } from '../util';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-average-cost',
@@ -19,6 +19,8 @@ const COST_FREQUENCY_TYPES = {
   MONTHLY: 'monthly'
 };
 
+const NOT_SURE_MESSAGE = 'Looking up average daily cost was added to your to-do list.';
+
 /**
  * AverageCostView
  * @class
@@ -29,7 +31,7 @@ const COST_FREQUENCY_TYPES = {
  * @param {HTMLNode} element The root DOM element for this view
  * @returns {Object} This view's public methods
  */
-function averageCostView( element, { store, routeIndex } ) {
+function averageCostView( element, { store, routeIndex, todoNotification } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _averageCostEl = _dom.querySelector( 'input[type="text"]' );
   const _radioEls = toArray( _dom.querySelectorAll( `.${ CLASSES.RADIO }` ) );
@@ -55,14 +57,14 @@ function averageCostView( element, { store, routeIndex } ) {
   /**
    * Dispatch to the store the estimated cost the user anticipates
    * for their selected transportation option
-   * @param {object} inputData The data returned from the InputView's event handler function
-   * @param {object} inputData.event The emitted DOM event
-   * @param {string} inputData.name The name of the field the event was emitted from
+   * @param {object} updateObject The data returned from the InputView's event handler function
+   * @param {object} updateObject.event The emitted DOM event
+   * @param {string} updateObject.name The name of the field the event was emitted from
    */
-  function _handleAverageCostUpdate( { event } ) {
+  function _handleAverageCostUpdate( { event, value } ) {
     store.dispatch( updateAverageCostAction( {
       routeIndex,
-      value: event.target.value
+      value
     } ) );
   }
 
@@ -70,14 +72,22 @@ function averageCostView( element, { store, routeIndex } ) {
    * Dispatch to the store whether or not the user has indicated they
    * are unsure about the average cost of their selected transportation
    * option
-   * @param {object} inputData The data returned from the InputView's event handler function
-   * @param {object} inputData.event The emitted DOM event
-   * @param {string} inputData.name The name of the field the event was emitted from
+   * @param {object} updateObject The data returned from the InputView's event handler function
+   * @param {object} updateObject.event The emitted DOM event
+   * @param {string} updateObject.name The name of the field the event was emitted from
    */
   function _handleNotSureUpdate( { event } ) {
+    const { checked } = event.target;
+
+    if ( checked ) {
+      todoNotification.show( NOT_SURE_MESSAGE );
+    } else {
+      todoNotification.hide();
+    }
+
     store.dispatch( updateCostToActionPlan( {
       routeIndex,
-      value: event.target.checked
+      value: checked
     } ) );
   }
 
@@ -98,11 +108,17 @@ function averageCostView( element, { store, routeIndex } ) {
         _notSureEl.checked = '';
         _radioEls.forEach( radio => { radio.checked = ''; } );
         _dom.classList.add( 'u-hidden' );
+        todoNotification.remove();
         store.dispatch( clearAverageCostAction( { routeIndex } ) );
       } else {
         _dom.classList.remove( 'u-hidden' );
       }
     }
+  }
+
+  function _handleBlur( { event, value } ) {
+    event.target.value = toPrecision( value, 2 );
+    _handleAverageCostUpdate( { event, value: event.target.value } );
   }
 
   /**
@@ -111,7 +127,8 @@ function averageCostView( element, { store, routeIndex } ) {
   function _initInputs() {
     inputView( _averageCostEl, {
       events: {
-        input: _handleAverageCostUpdate
+        input: _handleAverageCostUpdate,
+        blur: _handleBlur
       }
     } ).init();
 
@@ -136,7 +153,7 @@ function averageCostView( element, { store, routeIndex } ) {
     init() {
       if ( setInitFlag( _dom ) ) {
         _initInputs();
-
+        todoNotification.init( _dom );
         store.subscribe( _onStateUpdate );
       }
     }

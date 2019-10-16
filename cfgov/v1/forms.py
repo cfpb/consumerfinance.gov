@@ -15,11 +15,6 @@ from v1.util.date_filter import end_of_time_period
 from .models.base import Feedback
 
 
-class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
-    def validate(self, value):
-        pass
-
-
 class FilterableDateField(forms.DateField):
     def validate_after_1900(date):
         strftime_earliest_year = 1900
@@ -86,7 +81,7 @@ class FilterableListForm(forms.Form):
         widget=widgets.CheckboxSelectMultiple()
     )
 
-    topics = MultipleChoiceFieldNoValidation(
+    topics = forms.MultipleChoiceField(
         required=False,
         choices=[],
         widget=widgets.SelectMultiple(attrs={
@@ -112,6 +107,7 @@ class FilterableListForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.filterable_pages = kwargs.pop('filterable_pages')
+        self.wagtail_block = kwargs.pop('wagtail_block')
         super(FilterableListForm, self).__init__(*args, **kwargs)
 
         clean_categories(selected_categories=self.data.get('categories'))
@@ -145,17 +141,9 @@ class FilterableListForm(forms.Form):
 
     # Populate Topics' choices
     def set_topics(self, page_ids):
-        tags = Tag.objects.filter(
-            v1_cfgovtaggedpages_items__content_object__id__in=page_ids
-        ).values_list('slug', 'name')
-
-        options = self.prepare_options(arr=tags)
-        most = options[:3]
-        other = options[3:]
-
-        self.fields['topics'].choices = \
-            (('Most frequent', most),
-             ('All other topics', other))
+        if self.wagtail_block:
+            self.fields['topics'].choices = self.wagtail_block.block \
+                .get_filterable_topics(page_ids, self.wagtail_block.value)
 
     # Populate Authors' choices
     def set_authors(self, page_ids):

@@ -1,18 +1,22 @@
 import { simulateEvent } from '../../../../../util/simulate-event';
 import averageCostView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
 import {
-  clearAverageCostAction,
   updateAverageCostAction,
   updateCostToActionPlan,
   updateIsMonthlyCostAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import TODO_FIXTURE from '../../fixtures/todo-alert';
+import TodoNotificationMock from '../../mocks/todo-notification';
+import mockStore from '../../../../mocks/store';
 
 const HTML = `
   <div class="content-l content-l_col-2-3 block__sub-micro m-yes-average-cost">
       <div class="form-l_col form-l_col-1-4">
       <label class="a-label a-label__heading u-mb0" for="input_37b566d867b4ec_what's-the-average-cost">
-          What's the average cost?</label><p id="input_ht_37b566d867b67e_what's-the-average-cost"><small>If it's free, enter 0</small></p><input id="input_37b566d867b4ec_what's-the-average-cost" name="input_37b566d867b4ec_what's-the-average-cost" type="text" value="" data-js-name="averageCost" aria-describedby="&quot;input_ht_37b566d867b67e_what's-the-average-cost&quot;" class="">
-      
+        What's the average cost?
+      </label>
+      <p id="input_ht_37b566d867b67e_what's-the-average-cost"><small>If it's free, enter 0</small></p>
+      <input id="input_37b566d867b4ec_what's-the-average-cost" name="input_37b566d867b4ec_what's-the-average-cost" type="text" value="" data-js-name="averageCost" data-sanitize="money" class="">
     </div>
       <div class="m-form-field m-form-field__radio a-yes-average-cost">
         <input class="a-radio" type="radio" value="daily" id="input_37b566d867baf2_daily" name="average-cost">
@@ -33,30 +37,29 @@ const HTML = `
         </label>
     </div>
   </div>
+  ${ TODO_FIXTURE };
 `;
 
 describe( 'averageCostView', () => {
   const routeIndex = 0;
   const CLASSES = averageCostView.CLASSES;
-  const dispatch = jest.fn();
-  const mockStore = () => ( {
-    dispatch,
-    subscribe() { return {}; }
-  } );
-  let store;
+  const store = mockStore();
+  const todoNotification = new TodoNotificationMock();
   let view;
 
   beforeEach( () => {
     document.body.innerHTML = HTML;
-    store = mockStore();
-    view = averageCostView( document.querySelector( `.${ CLASSES.CONTAINER }` ), { store, routeIndex } );
+    view = averageCostView(
+      document.querySelector( `.${ CLASSES.CONTAINER }` ),
+      { store, routeIndex, todoNotification }
+    );
     view.init();
   } );
 
   afterEach( () => {
-    dispatch.mockReset();
+    store.mockReset();
+    todoNotification.mockReset();
     view = null;
-    store = null;
   } );
 
   it( 'dispatches the correct action when average cost input changes', () => {
@@ -76,6 +79,15 @@ describe( 'averageCostView', () => {
       } )
     );
   } );
+
+  it('sets the correct precision on blur', () => {
+    const costEl = document.querySelector( 'input[type="text"]' );
+    costEl.value = '12.03000';
+
+    simulateEvent('blur', costEl);
+
+    expect(costEl.value).toBe('12.03');
+  });
 
   it( 'dispatches the correct action when a radio button is selected', () => {
     const radioEls = document.querySelectorAll( `.${ CLASSES.RADIO }` );
@@ -116,4 +128,39 @@ describe( 'averageCostView', () => {
       } )
     );
   } );
+
+  it( 'initializes the todo notification component on init', () => {
+    expect( todoNotification.init.mock.calls.length ).toBe( 1 );
+  } );
+
+  it( 'toggles notifications when checkbox is clicked', () => {
+    const notSureEl = document.querySelector( 'input[type="checkbox"]' );
+
+    simulateEvent( 'click', notSureEl );
+
+    expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+    expect( todoNotification.hide.mock.calls.length ).toBe( 0 );
+
+    notSureEl.checked = true;
+
+    simulateEvent( 'click', notSureEl );
+
+    expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+    expect( todoNotification.hide.mock.calls.length ).toBe( 1 );
+  } );
+
+  it( 'calls .remove on the todo notification component when this view is toggled', () => {
+    const state = {
+      routes: {
+        routes: [ {
+          transportation: 'Drive'
+        } ]
+      }
+    };
+
+    store.subscriber()( { routes: { routes: [ {} ]}}, state );
+
+    expect( todoNotification.remove.mock.calls.length ).toBe( 1 );
+  } );
+
 } );

@@ -3,7 +3,7 @@ import {
   updateEarnedAction,
   updateSpentAction
 } from './reducers/budget-reducer';
-import inputView from './input-view';
+import inputView from './views/input';
 import money from './money';
 
 const CLASSES = Object.freeze( {
@@ -39,9 +39,8 @@ function BudgetFormView( element, { store } ) {
    *  the state with the event target's value
    */
   function _handleInput( action ) {
-    return ( { event } ) => {
-      const amount = event.currentTarget.value;
-      store.dispatch( action( amount ) );
+    return ( { _, value } ) => {
+      store.dispatch( action( value ) );
     };
   }
 
@@ -71,8 +70,9 @@ function BudgetFormView( element, { store } ) {
    */
   function _updateTotal( { budget } ) {
     const { earned, spent } = budget;
+    const total = !earned && !spent ? '-' : money.subtract( earned, spent );
 
-    _moneyRemainingEl.textContent = money.subtract( earned, spent );
+    _moneyRemainingEl.textContent = total;
   }
 
   return {

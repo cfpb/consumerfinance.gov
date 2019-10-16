@@ -57,17 +57,22 @@ def view_answer(request, slug, language, answer_id):
         return redirect(new_page.url, permanent=True)
     if "{}-{}-{}".format(slug, language, answer_id) != answer_page.slug:
         return redirect(answer_page.url, permanent=True)
-    else:
-        try:
-            sharing_site = SharingSite.find_for_request(request)
-        except SharingSite.DoesNotExist:
-            return answer_page.serve(request)
-        page, args, kwargs = ServeView.get_requested_page(
-            sharing_site.site,
-            request,
-            request.path)
-        return ServeView.serve_latest_revision(
-            page, request, args, kwargs)
+
+    # We don't want to call answer_page.serve(request) here because that
+    # would bypass wagtail-sharing logic that allows for review of draft
+    # revisions via a sharing site.
+    try:
+        sharing_site = SharingSite.find_for_request(request)
+    except SharingSite.DoesNotExist:
+        return answer_page.serve(request)
+
+    page, args, kwargs = ServeView.route(
+        sharing_site.site,
+        request,
+        request.path
+    )
+
+    return ServeView.serve(page, request, args, kwargs)
 
 
 def ask_search(request, language='en', as_json=False):

@@ -5,52 +5,56 @@ import {
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import TODO_FIXTURE from '../../fixtures/todo-alert';
+import mockStore from '../../../../mocks/store';
+import TodoNotificationMock from '../../mocks/todo-notification';
+
+const CLASSES = transitTimeView.CLASSES;
 
 const HTML = `
   <div class="content-l content-l_col-2-3 block__sub-micro m-yes-transit-time">
     <div class="form-l_col form-l_col-1-4">
-      <label class="a-label a-label__heading u-mb0" for="input_37ad90bd3b4790_hours">
-        Hours
-      </label>
-      <input id="input_37ad90bd3b4790_hours" name="input_37ad90bd3b4790_hours" type="text" value="" data-js-name="transitTimeHours">
+      <input class="${ CLASSES.HOURS }" type="text" value="" data-js-name="transitTimeHours">
     </div>
     <div class="form-l_col form-l_col-1-4">
-      <label class="a-label a-label__heading u-mb0" for="input_37ad90bd3b4ed4_minutes">
-        Minutes
-      </label>
-      <input id="input_37ad90bd3b4ed4_minutes" name="input_37ad90bd3b4ed4_minutes" type="text" value="" data-js-name="transitTimeMinutes">
-      
+      <input class="${ CLASSES.MINUTES }" type="text" value="" data-js-name="transitTimeMinutes">
     </div>
     <div class="m-form-field m-form-field__checkbox block__sub-micro">
-      <input class="a-checkbox" type="checkbox" value="input_37ad90bd3b546a_i'm-not-sure-add-this-to-my-to-do-list-to-look-up-later-" id="input_37ad90bd3b546a_i'm-not-sure-add-this-to-my-to-do-list-to-look-up-later-" name="timeToActionPlan">
+      <input class="a-checkbox ${ CLASSES.NOT_SURE }" type="checkbox" name="timeToActionPlan">
       <label class="a-label" for="input_37ad90bd3b546a_i'm-not-sure-add-this-to-my-to-do-list-to-look-up-later-">
         <span>I'm not sure, add this to my to-do list to look up later </span>
       </label>
     </div>
   </div>
+  ${ TODO_FIXTURE }
 `;
 
 describe( 'transitTimeView', () => {
   const routeIndex = 0;
   const CLASSES = transitTimeView.CLASSES;
+  const todoNotification = new TodoNotificationMock();
   const dispatch = jest.fn();
-  const mockStore = () => ( {
-    dispatch,
-    subscribe() { return {}; }
-  } );
+  let el;
   let view;
   let store;
 
   beforeEach( () => {
     document.body.innerHTML = HTML;
     store = mockStore();
-    view = transitTimeView( document.querySelector( `.${ CLASSES.CONTAINER }` ), { store, routeIndex } );
+    el = document.querySelector( `.${ CLASSES.CONTAINER }` );
+    view = transitTimeView( el, { store, routeIndex, todoNotification } );
     view.init();
   } );
 
   afterEach( () => {
+    store.mockReset();
+    todoNotification.mockReset();
     dispatch.mockReset();
     view = null;
+  } );
+
+  it( 'subscribes to the store on init', () => {
+    expect( store.subscribe.mock.calls.length ).toBe( 1 );
   } );
 
   it( 'dispatches the correct action when hours field is changed', () => {
@@ -59,7 +63,7 @@ describe( 'transitTimeView', () => {
 
     hoursEl.value = hours;
 
-    simulateEvent( 'input', hoursEl );
+    simulateEvent( 'blur', hoursEl );
 
     const mock = store.dispatch.mock;
 
@@ -77,7 +81,7 @@ describe( 'transitTimeView', () => {
 
     minutesEl.value = minutes;
 
-    simulateEvent( 'input', minutesEl );
+    simulateEvent( 'blur', minutesEl );
 
     const mock = store.dispatch.mock;
 
@@ -102,5 +106,57 @@ describe( 'transitTimeView', () => {
         routeIndex, value: true
       } )
     );
+  } );
+
+  it( 'initializes the todo notification component on init', () => {
+    expect( todoNotification.init.mock.calls.length ).toBe( 1 );
+  } );
+
+  it( 'toggles notifications when checkbox is clicked', () => {
+    const notSureEl = document.querySelector( 'input[type="checkbox"]' );
+
+    simulateEvent( 'click', notSureEl );
+
+    expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+    expect( todoNotification.hide.mock.calls.length ).toBe( 0 );
+
+    notSureEl.checked = true;
+
+    simulateEvent( 'click', notSureEl );
+
+    expect( todoNotification.show.mock.calls.length ).toBe( 1 );
+    expect( todoNotification.hide.mock.calls.length ).toBe( 1 );
+  } );
+
+  it( 'updates the minutes field when the current state has changed', () => {
+    const state = {
+      routes: {
+        routes: [ {
+          transitTimeMinutes: '0'
+        } ]
+      }
+    };
+    const minutesEl = el.querySelector( `.${ CLASSES.MINUTES }` );
+    minutesEl.value = '';
+
+    store.subscriber()( { routes: { routes: [ {} ]}}, state );
+
+    expect( minutesEl.value ).toBe( '0' );
+  } );
+
+  it( 'updates the hours field when the current state has changed', () => {
+    const state = {
+      routes: {
+        routes: [ {
+          transitTimeHours: '0'
+        } ]
+      }
+    };
+    const hoursEl = el.querySelector( `.${ CLASSES.HOURS }` );
+    hoursEl.value = '';
+
+    store.subscriber()( { routes: { routes: [ {} ]}}, state );
+
+    expect( hoursEl.value ).toBe( '0' );
   } );
 } );
