@@ -4,9 +4,9 @@
 
 {% block extra_css %}
 <style>
-button.export-feedback {
-    margin-top: 2em;
-}
+    .export-feedback-btn {
+        margin-top: 2em;
+    }
 </style>
 {% endblock %}
 
@@ -16,11 +16,11 @@ button.export-feedback {
     <div class="nice-padding">
         <p>
             Download a ZIP file containing feedback submitted to the website.
-		</p>
+        </p>
         <form method="post">
             {% csrf_token %}
-			{{ form }}
-            <button type="submit" class="button export-feedback">Download</button>
+            {{ form }}
+            <button type="submit" class="button export-feedback-btn">Download</button>
         </form>
     </div>
 {% endblock %}
