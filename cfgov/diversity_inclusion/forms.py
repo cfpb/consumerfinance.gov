@@ -1,6 +1,7 @@
 from __future__ import division
 
 from django import forms
+from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 
@@ -13,22 +14,6 @@ from django.http import HttpResponse
 text_input_attrs = {
     'class': 'a-text-input a-text-input__full',
 }
-
-# Is there a way to use this to define the fields on the forms,
-# if field tpe and widget type and required status were added to the tuples?
-fields = [
-    ('institution_name', 'Institution name'),
-    ('institution_address', 'Street address'),
-    ('institution_city', 'City'),
-    ('institution_state', 'State'),
-    ('institution_zip', 'ZIP'),
-    ('tax_id', 'Tax identification number'),
-    ('contact_name', 'Contact name'),
-    ('contact_title', 'Title'),
-    ('contact_email', 'Work email address'),
-    ('contact_phone', 'Work phone number'),
-    ('contact_phone_alt', 'Alternate work phone number'),
-]
 
 
 class VoluntaryAssessmentForm(forms.Form):
@@ -80,15 +65,19 @@ class VoluntaryAssessmentForm(forms.Form):
     )
 
     def send_email(self):
-        from_email = self.cleaned_data['contact_email']
         subject = 'Voluntary Diversity Assessment Onboarding Form from ' \
                   + self.cleaned_data['institution_name']
-
         body = ''
-        for (field, label) in fields:
-            body += label + ': ' + self.cleaned_data[field] + '\n'
+
+        for (field_name, field) in self.fields.items():
+            body += field.label + ': ' + self.cleaned_data[field_name] + '\n'
 
         try:
-            send_mail(subject, body, from_email, ['scott.cranfill@cfpb.gov'])
+            send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,
+                ['scott.cranfill@cfpb.gov']
+            )
         except BadHeaderError:
             return HttpResponse('Invalid header found.')
