@@ -243,7 +243,11 @@ function routeDetailsView( element ) {
         _toggleTodoList( route.actionPlanItems );
       }
       toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
-      toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
+
+      if ( route.transportation ) {
+        toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
+      }
+
       toggleCFNotification(
         _completeAlertEl,
         validate( dataToValidate ) && nextRemainingBudget >= 0
