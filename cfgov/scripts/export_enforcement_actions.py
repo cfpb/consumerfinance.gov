@@ -59,7 +59,6 @@ def assemble_output():
                     if block['type'] == 'content':
                         row['Content'] = clean_and_strip(block['value'])
         rows.append(row)
-    print(rows)
     return rows
 
 
