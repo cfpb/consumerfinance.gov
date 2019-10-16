@@ -3,6 +3,7 @@ let UNDEFINED;
 const REDUCER_RETURN_ERROR = 'Reducer must return a state object';
 const INVALID_ARG_ERROR = 'The "reducers" argument must be an object, where each value is a reducer function';
 const INVALID_OBJECT_ERROR = 'The `entries` function must be passed an object as its first argument';
+const HTML_MINUS = '&#8722;';
 
 /**
  * Helper method to generate an action creator
@@ -221,11 +222,39 @@ function toPrecision( str = '', precision = 0 ) {
   return String( ( Math.round( ( num * 1000 ) / 10 ) / 100 ).toFixed( precision ) );
 }
 
+function formatNegative( num ) {
+  if ( !isNumber( num ) ) {
+    return num;
+  }
+
+  const [ significant, decimalZeros = '' ] = num.split( '.' );
+  let decimals = '';
+
+  // Math.abs will preserve decimals, but not if they are zero
+  if ( ( /^0+$/ ).test( decimalZeros ) ) {
+    decimals = decimalZeros;
+  }
+
+  let formattedTotal = significant;
+
+  if ( num < 0 ) {
+    formattedTotal = `${ HTML_MINUS }${ Math.abs( num ) }`;
+  }
+
+  if ( !decimals ) {
+    return formattedTotal;
+  }
+
+  return `${ formattedTotal }.${ decimals }`;
+}
+
+
 export {
   actionCreator,
   assign,
   combineReducers,
   entries,
+  formatNegative,
   isNumber,
   toArray,
   toPrecision,

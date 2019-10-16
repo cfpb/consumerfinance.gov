@@ -197,7 +197,7 @@ describe( 'routeDetailsView', () => {
 
       const budgetLeftEl = document.querySelector( `.${ CLASSES.BUDGET_REMAINING }` );
 
-      expect( budgetLeftEl.textContent ).toBe( '-357.00' );
+      expect( budgetLeftEl.textContent ).toBe( `${ String.fromCharCode( 8722 ) }357.00` );
     } );
 
     it( 'updates the time in hours', () => {
