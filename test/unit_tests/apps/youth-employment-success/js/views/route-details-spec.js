@@ -1,5 +1,5 @@
 import routeDetailsView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route-details';
-import { toArray } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import { toArray, toPrecision } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
 import transportationMap from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/transportation-map';
 
@@ -97,7 +97,7 @@ describe( 'routeDetailsView', () => {
       view.render( nextState );
 
       const budgetEl = document.querySelector( `.${ CLASSES.BUDGET }` );
-      const expectedBudget = String( nextState.budget.earned - nextState.budget.spent );
+      const expectedBudget = toPrecision( String( nextState.budget.earned - nextState.budget.spent ), 2 );
 
       expect( budgetEl.textContent ).toBe( expectedBudget );
     } );
@@ -116,7 +116,7 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '432' );
+        expect( totalCostEl.textContent ).toBe( '432.00' );
       } );
 
       it( 'correctly calculates monthly cost', () => {
@@ -134,7 +134,7 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '100' );
+        expect( totalCostEl.textContent ).toBe( '100.00' );
       } );
 
       it( 'correctly calculates monthly cost based on daily cost', () => {
@@ -151,7 +151,7 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '120' );
+        expect( totalCostEl.textContent ).toBe( '120.00' );
       } );
 
       it( 'does not update the total cost if daysPerWeek is not supplied', () => {
@@ -169,7 +169,7 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '0' );
+        expect( totalCostEl.textContent ).toBe( '0.00' );
       } );
 
       it( 'updates total cost properly when daysPerWeek is supplied', () => {
@@ -188,7 +188,7 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '800' );
+        expect( totalCostEl.textContent ).toBe( '800.00' );
       } );
     } );
 
@@ -197,7 +197,7 @@ describe( 'routeDetailsView', () => {
 
       const budgetLeftEl = document.querySelector( `.${ CLASSES.BUDGET_REMAINING }` );
 
-      expect( budgetLeftEl.textContent ).toBe( '-357' );
+      expect( budgetLeftEl.textContent ).toBe( '-357.00' );
     } );
 
     it( 'updates the time in hours', () => {

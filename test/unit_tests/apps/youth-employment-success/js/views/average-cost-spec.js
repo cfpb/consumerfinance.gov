@@ -80,14 +80,36 @@ describe( 'averageCostView', () => {
     );
   } );
 
-  it('sets the correct precision on blur', () => {
+  it( 'sets the correct precision on blur', () => {
     const costEl = document.querySelector( 'input[type="text"]' );
     costEl.value = '12.03000';
 
-    simulateEvent('blur', costEl);
+    simulateEvent( 'blur', costEl );
 
-    expect(costEl.value).toBe('12.03');
-  });
+    expect( costEl.value ).toBe( '12.03' );
+
+    costEl.value = '';
+    simulateEvent( 'blur', costEl );
+
+    expect( costEl.value ).toBe( '' );
+  } );
+
+  it( 'dispatches the correct action on blur', () => {
+    const costEl = document.querySelector( 'input[type="text"]' );
+    costEl.value = '12.03000';
+
+    simulateEvent( 'blur', costEl );
+
+
+    const mock = store.dispatch.mock;
+
+    expect( mock.calls.length ).toBe( 1 );
+    expect( mock.calls[0][0] ).toEqual(
+      updateAverageCostAction( {
+        routeIndex, value: '12.03'
+      } )
+    );
+  } );
 
   it( 'dispatches the correct action when a radio button is selected', () => {
     const radioEls = document.querySelectorAll( `.${ CLASSES.RADIO }` );

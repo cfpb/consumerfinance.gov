@@ -117,7 +117,7 @@ function averageCostView( element, { store, routeIndex, todoNotification } ) {
   }
 
   function _handleBlur( { event, value } ) {
-    event.target.value = toPrecision( value, 2 );
+    event.target.value = value ? toPrecision( value, 2 ) : '';
     _handleAverageCostUpdate( { event, value: event.target.value } );
   }
 
