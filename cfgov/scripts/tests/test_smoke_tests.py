@@ -1,4 +1,4 @@
-"""Test the dployment http and static resource smoke tests."""
+"""Test the deployment http and static resource smoke tests."""
 import unittest
 
 import mock
