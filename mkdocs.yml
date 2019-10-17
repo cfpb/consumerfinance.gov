@@ -30,7 +30,7 @@ nav:
     - Contributing to the Docs: contributing-docs.md
     - Related Projects: related-projects.md
     - Development Tips: development-tips.md
-    - How We Use Travis CI: travis.md
+    - How We Use GitHub Actions: github_actions.md
 - APIs and Data:
     - Ask CFPB: ask-cfpb.md
     - Consumer Complaints: consumer-complaint-database.md

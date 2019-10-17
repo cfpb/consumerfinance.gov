@@ -15,7 +15,7 @@ function _genericLint( src ) {
   const options = minimist( process.argv.slice( 2 ) );
   let errorHandler = through2.obj();
 
-  if ( options.travis ) {
+  if ( options.ci ) {
     options.quiet = true;
     errorHandler = gulpEslint.failAfterError();
   }
