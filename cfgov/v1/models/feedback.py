@@ -34,9 +34,6 @@ class FeedbackQuerySet(models.QuerySet):
     def write_csv(self, f):
         headings = [
             'comment',
-            'currently_own',
-            'expect_to_buy',
-            'email',
             'is_helpful',
             'page',
             'referrer',

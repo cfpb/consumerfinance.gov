@@ -64,8 +64,8 @@ class TestMakeAwareDatetime(SimpleTestCase):
 
 class TestExportFeedback(TestCase):
     expected_csv_header = (
-        '"comment","currently_own","expect_to_buy","email","is_helpful",'
-        '"page","referrer","submitted_on","language"\r\n'
+        '"comment","is_helpful","page","referrer","submitted_on","language"'
+        '\r\n'
     )
 
     def setUp(self):
@@ -116,7 +116,7 @@ class TestExportFeedback(TestCase):
 
         # Expect that unicode characters are properly written.
         self.assertIn(
-            u'"ahëm","","","","","foo","","2000-01-01",""',
+            u'"ahëm","","foo","","2000-01-01",""',
             lines
         )
 
