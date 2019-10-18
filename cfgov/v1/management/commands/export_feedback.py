@@ -1,4 +1,5 @@
 import argparse
+import io
 from datetime import datetime, time, timedelta
 
 from django.core.management.base import BaseCommand
@@ -49,7 +50,6 @@ class Command(BaseCommand):
         )
         parser.add_argument(
             '--filename',
-            type=argparse.FileType('w'),
             help='export to CSV file instead of to stdout'
         )
         parser.add_argument(
@@ -79,8 +79,16 @@ class Command(BaseCommand):
                 make_aware_datetime(kwargs['to_date']) + timedelta(days=1)
             ))
 
-        # If writing to stdout, don't append an extra newline to the CSV.
-        if not kwargs['filename']:
+        if kwargs['filename']:
+            with io.open(
+                kwargs['filename'],
+                mode='w',
+                newline='',
+                encoding='utf-8'
+            ) as f:
+                feedbacks.write_csv(f)
+        else:
+            # If writing to stdout, don't append an extra newline to the CSV.
             self.stdout.ending = ''
 
-        feedbacks.write_csv(kwargs['filename'] or self.stdout)
+            feedbacks.write_csv(self.stdout)

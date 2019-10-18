@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import argparse
+import io
+import tempfile
 from datetime import date, datetime, timedelta
 from six import StringIO, ensure_text
 
@@ -106,9 +108,9 @@ class TestExportFeedback(TestCase):
         Feedback.objects.all().delete()
         self.assertEqual(self.call_command(), self.expected_csv_header)
 
-    def test_export_all_feedback(self):
-        lines = self.call_command().split()
-        
+    def check_export_all_feedback(self, content):
+        lines = content.split()
+
         # Expect one line per feedback plus the header line.
         self.assertEqual(len(lines), 7)
 
@@ -117,6 +119,16 @@ class TestExportFeedback(TestCase):
             u'"ahëm","","","","","foo","","2000-01-01",""',
             lines
         )
+
+    def test_export_all_feedback_stdout(self):
+        self.check_export_all_feedback(self.call_command())
+
+    def test_export_feedback_to_file(self):
+        with tempfile.NamedTemporaryFile() as tf:
+            self.call_command(filename=tf.name)
+
+            with io.open(tf.name, encoding='utf-8') as f:
+                self.check_export_all_feedback(f.read())
 
     def test_export_only_some_feedback(self):
         output = self.call_command(self.bar_page)
