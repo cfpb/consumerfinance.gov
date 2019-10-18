@@ -22,7 +22,7 @@ class VoluntaryAssessmentForm(forms.Form):
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     institution_address = forms.CharField(
-        label='Street address',
+        label='Headquarters street address',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     institution_city = forms.CharField(
