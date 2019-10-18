@@ -2,6 +2,14 @@
 
 const financialView = {
 
+
+
+
+
+    init: function() {
+
+    }
+
 };
 
 export {

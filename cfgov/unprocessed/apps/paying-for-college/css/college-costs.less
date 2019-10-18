@@ -1,4 +1,71 @@
 
+.college-costs {
+	
+	.content_sidebar {
+		border-left: 0px;
+	}
+
+	.o-college-costs-nav {
+		border-top: 1px solid @gray-20;
+		padding-left: 0;
+
+		ul {
+			margin: 0;
+		}
+
+		button {
+			border: none;
+			background: none;
+			padding: unit( 5px / @base-font-size-px, em ) 0;
+			padding-left: unit( 10px / @base-font-size-px, em );
+			text-align: left;
+			width: 100%;
+
+			&:focus {
+				outline: 0;
+				font-weight: 600;
+			}
+		}
+
+		li {
+			list-style: none;
+			margin: 0;
+		}
+
+		& > li.o-college-costs-nav__section {
+			border-bottom: 1px solid @gray-20;
+
+			& > button {
+				font-size: unit( 18px / @base-font-size-px, em );
+			}
+
+			// Non-active nav sub-items are hidden	
+			& > ul > li {
+				display: none;
+			}
+
+			&.active {
+				border-left: 3px solid @green;
+
+				& > button {
+					font-weight: 600;
+				}
+
+				> ul > li {
+					display: block;
+
+					&.active > button {
+						font-weight: 600;
+					}
+				}
+			}
+
+		}
+
+	}
+
+}
+
 #college-costs__school-search {
 	position: relative;
 }

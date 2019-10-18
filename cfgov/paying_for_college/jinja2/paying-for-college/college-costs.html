@@ -13,205 +13,233 @@
     <link rel="stylesheet" href="{{ static('apps/paying-for-college/css/main.css') }}">
 {%- endblock css %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__1-3 content__hide-horizontal-overflow college-costs
+{%- endblock %}
+
 {% block content_main %}
 
-<main class="content content__1-3 content__hide-horizontal-overflow" id="main">
-    <h2>Comparison Zone</h2>
-    <div class="wrapper content_wrapper">
-        <aside class="content_sidebar content__flush-bottom content__flush-top-on-small content__flush-sides-on-small content__half-top-on-desk">
-            <h2>Sidebar</h2>
-        </aside>
-        <div class="content_main content__flush-top-on-small content__half-top-on-desk content__flush-bottom">
-            <section id="college-costs__school-search">
-                <div class="SEARCH-BOX">
-                    <div class="form-group_item">
-                        <label class="form-label" for="search__school-name">
-                            Search for a school:
-                        </label>
-                    </div>
-                    <div>
-                        <input type="text" id="search__school-name" name="search__school-name"
-                            autocorrect="off">
-                    </div>
+<div class="wrapper content_wrapper">
+    <aside class="content_sidebar content__flush-bottom content__flush-top-on-small content__flush-sides-on-small content__half-top-Son-desk">
+        <ul class="o-college-costs-nav">
+            <li class="o-college-costs-nav__section active"><button data-nav_section="offer-letter">Your offer letter</button>
+                <ul>
+                    <li class="active"><button data-nav_item="school-info">School information</button></li>
+                    <li><button data-nav_item="costs">Costs</button></li>
+                    <li><button data-nav_item="grants-scholarships">Grants & scholarships</button></li>
+                    <li><button data-nav_item="savings">Savings</button></li>
+                    <li><button data-nav_item="work">Work & work study</button></li>
+                    <li><button data-nav_item="federal-loans">Federal loans</button></li>
+                    <li><button data-nav_item="school-loans">School loans</button></li>
+                </ul>
+            </li>
+            <li class="o-college-costs-nav__section"><button data-nav_section="covering-costs">Covering your costs</button>
+                <ul>
+                    <li><button data-nav_item="bridging-the-gap">Bridging the gap</button></li>
+                    <li><button data-nav_item="timing-of-costs">Timing of costs & funds</button></li>
+                    <li><button data-nav_item="other-costs">Other costs & earnings</button></li>
+                </ul>
+            </li>
+            <li class="o-college-costs-nav__section"><button data-nav_section="affording-loans">Affording your loans</button>
+                <ul>
+                    <li><button data-nav_item="projected-debt">Projected total debt</button></li>
+                    <li><button data-nav_item="total-debt-rule">Total debt rule of thumb</button></li>
+                    <li><button data-nav_item="cost-of-borrowing">The cost of borrowing</button></li>
+                    <li><button data-nav_item="monthly-budget">Debt & your monthly budget</button></li>
+                </ul>
+            </li>
+            <li class="o-college-costs-nav__section"><button data-nav_section="worth-investment">Worth Your Investment</button></li>
+        </ul>
+    </aside>
+    <div class="content_main content__flush-top-on-small content__half-top-on-desk content__flush-bottom">
+        <section id="college-costs__school-search">
+            <div class="SEARCH-BOX">
+                <div class="form-group_item">
+                    <label class="form-label" for="search__school-name">
+                        Search for a school:
+                    </label>
                 </div>
-                <div id="tmp__search-results">
+                <div>
+                    <input type="text" id="search__school-name" name="search__school-name"
+                        autocorrect="off">
                 </div>
-            </section>
-            <section>
-                <h3>Costs of college</h3>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="costs__tuition-fees">
-                            Tuition
-                        </label>
-                    </div>
-                    <div>
-                        <input type="text" id="costs__tuition-fees" name="costs__tuition-fees" data-financial="tuitionFees" autocorrect="off" value="0">
-                    </div>
+            </div>
+            <div id="tmp__search-results">
+            </div>
+        </section>
+        <section>
+            <h3>Costs of college</h3>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="costs__tuition-fees">
+                        Tuition
+                    </label>
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="costs__roomboard">
-                            Room and board
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="costs__room-board" name="costs__roomboard" data-financial="roomBoard" autocorrect="off" value="0">
-                    </div>
+                <div>
+                    <input type="text" id="costs__tuition-fees" name="costs__tuition-fees" data-financial="tuitionFees" autocorrect="off" value="0">
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="costs__books">
-                            Books
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="costs__books" name="costs__books" data-financial="books" autocorrect="off" value="0">
-                    </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="costs__roomboard">
+                        Room and board
+                    </label>
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="costs__other">
-                            Other expenses
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="costs__other" name="costs__other" data-financial="otherExpenses" autocorrect="off" value="0">
-                    </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="costs__room-board" name="costs__roomboard" data-financial="roomBoard" autocorrect="off" value="0">
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="costs__transportation">
-                            Transportation
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="costs__transportation" name="costs__transportation" data-financial="transportation" autocorrect="off" value="0">
-                    </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="costs__books">
+                        Books
+                    </label>
                 </div>
-            </section>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="costs__books" name="costs__books" data-financial="books" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="costs__other">
+                        Other expenses
+                    </label>
+                </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="costs__other" name="costs__other" data-financial="otherExpenses" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="costs__transportation">
+                        Transportation
+                    </label>
+                </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="costs__transportation" name="costs__transportation" data-financial="transportation" autocorrect="off" value="0">
+                </div>
+            </div>
+        </section>
 
-            <section>
-                <h3>Grants and scholarships</h3>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="grants__pell">
-                            Federal Pell Grants
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="grants__pell" name="grants__pell" data-financial="transportation" autocorrect="off" value="0">
-                    </div>
+        <section>
+            <h3>Grants and scholarships</h3>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="grants__pell">
+                        Federal Pell Grants
+                    </label>
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="grants__other_1">
-                            Grant or Scholarship #1
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="grants__other_1" name="grants__other_1" data-financial="transportation" autocorrect="off" value="0">
-                    </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="grants__pell" name="grants__pell" data-financial="transportation" autocorrect="off" value="0">
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="grants__military">
-                            Military tuition assistance
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="grants__military" name="grants__military" data-financial="transportation" autocorrect="off" value="0">
-                    </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="grants__other_1">
+                        Grant or Scholarship #1
+                    </label>
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="grants__gibill">
-                            GI Bill
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="grants__gibill" name="grants__gibill" data-financial="transportation" autocorrect="off" value="0">
-                    </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="grants__other_1" name="grants__other_1" data-financial="transportation" autocorrect="off" value="0">
                 </div>
-            </section>
-            <section>
-                <h3>Loans</h3>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="loans__directSub">
-                            DIRECT Subsidized Loans
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="loans__directSub" name="loans__directSub" data-financial="directSubsidized" autocorrect="off" value="0">
-                    </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="grants__military">
+                        Military tuition assistance
+                    </label>
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="loans__directUnsub">
-                            DIRECT Unsubsidized Loans
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="loans__directUnsub" name="loans__directUnsub" data-financial="directUnsubsidized" autocorrect="off" value="0">
-                    </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="grants__military" name="grants__military" data-financial="transportation" autocorrect="off" value="0">
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="loans__parentPlus">
-                            Parent PLUS Loan
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="loans__parentPlus" name="loans__parentPlus" data-financial="parentPlus" autocorrect="off" value="0">
-                    </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="grants__gibill">
+                        GI Bill
+                    </label>
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="loans__gradPlus">
-                            Grad PLUS Loan
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="loans__gradPlus" name="loans__gradPlus" data-financial="gradPlus" autocorrect="off" value="0">
-                    </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="grants__gibill" name="grants__gibill" data-financial="transportation" autocorrect="off" value="0">
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="loans__privateLoan_1">
-                            Private Loan(s)
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="loans__privateLoan_1" name="loans__privateLoan_1" data-financial="privateLoan" autocorrect="off" value="0">
-                    </div>
+            </div>
+        </section>
+        <section>
+            <h3>Loans</h3>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="loans__directSub">
+                        DIRECT Subsidized Loans
+                    </label>
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="loans__institutional">
-                            Private Loan(s)
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="loans__institutional" name="loans__institutional" data-financial="institutionalLoan" autocorrect="off" value="0">
-                    </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="loans__directSub" name="loans__directSub" data-financial="directSubsidized" autocorrect="off" value="0">
                 </div>
-                <div class="FINANCIAL-ITEM">
-                    <div class="form-group_item">
-                        <label class="form-label" for="loans__tuitionRepay">
-                            Tuition Repayment Plan
-                        </label>
-                    </div>
-                    <div class="aid-form_input-wrapper">
-                        <input type="text" id="loans__tuitionRepay" name="loans__tuitionRepay" data-financial="tuitionRepay" autocorrect="off" value="0">
-                    </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="loans__directUnsub">
+                        DIRECT Unsubsidized Loans
+                    </label>
                 </div>
-            </section>
-        </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="loans__directUnsub" name="loans__directUnsub" data-financial="directUnsubsidized" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="loans__parentPlus">
+                        Parent PLUS Loan
+                    </label>
+                </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="loans__parentPlus" name="loans__parentPlus" data-financial="parentPlus" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="loans__gradPlus">
+                        Grad PLUS Loan
+                    </label>
+                </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="loans__gradPlus" name="loans__gradPlus" data-financial="gradPlus" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="loans__privateLoan_1">
+                        Private Loan(s)
+                    </label>
+                </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="loans__privateLoan_1" name="loans__privateLoan_1" data-financial="privateLoan" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="loans__institutional">
+                        Private Loan(s)
+                    </label>
+                </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="loans__institutional" name="loans__institutional" data-financial="institutionalLoan" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="FINANCIAL-ITEM">
+                <div class="form-group_item">
+                    <label class="form-label" for="loans__tuitionRepay">
+                        Tuition Repayment Plan
+                    </label>
+                </div>
+                <div class="aid-form_input-wrapper">
+                    <input type="text" id="loans__tuitionRepay" name="loans__tuitionRepay" data-financial="tuitionRepay" autocorrect="off" value="0">
+                </div>
+            </div>
+        </section>
     </div>
+</div>
 
-    
-</main>
 
 {% endblock %}
 
