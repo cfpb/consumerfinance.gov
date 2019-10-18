@@ -239,14 +239,13 @@ input:-moz-ui-invalid {
 
 .m-hours {
   .m-hours_container {
-    border-right: 0;
-
     .respond-to-max(@bp-sm-min, {
       display: inline;
     });
   }
 
   .m-hours_data {
+    border: 0;
     .respond-to-max(@bp-sm-min, {
       display: inline;
       text-align: right;
@@ -258,6 +257,9 @@ input:-moz-ui-invalid {
         text-align: right;
       }
     });
+  }
+  .m-minutes_data {
+    border: 0;
   }
 }
 
@@ -297,6 +299,10 @@ input:-moz-ui-invalid {
 }
 
 .js-transit-hours, .js-transit-minutes {
+  // Necessary because we are setting a lot of custom widths per design's
+  // direction, and at certain screen sizes the fields become unusable
+  min-width: 35px;
+
   .respond-to-max(@bp-sm-min, {
     display: inline-block;
     width: 20%;

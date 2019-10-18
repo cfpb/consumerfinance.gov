@@ -16,9 +16,13 @@ const CLASSES = {
   TIME_MINUTES: 'js-time-minutes',
   TODO_LIST: 'js-todo-list',
   TODO_ITEMS: 'js-todo-items',
+  INVALID_ALERT: 'js-route-invalid',
   INCOMPLETE_ALERT: 'js-route-incomplete',
+  PENDING_TODOS_ALERT: 'js-route-pending-todos',
   OOB_ALERT: 'js-route-oob',
-  COMPLETE_ALERT: 'js-route-complete'
+  OOB_W_TODOS: 'js-route-oob-with-todos',
+  COMPLETE_ALERT: 'js-route-complete',
+  COMPLETE_W_TODOS: 'js-route-complete-with-todos'
 };
 
 /**
@@ -197,9 +201,14 @@ function routeDetailsView( element ) {
   const _timeMinutesEl = _dom.querySelector( `.${ CLASSES.TIME_MINUTES }` );
   const _todoListEl = _dom.querySelector( `.${ CLASSES.TODO_LIST }` );
   const _todoItemsEl = _dom.querySelector( `.${ CLASSES.TODO_ITEMS }` );
+
+  const _invalidAlertEl = _dom.querySelector(`.${CLASSES.INVALID_ALERT}`);
   const _incAlertEl = _dom.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
   const _oobAlertEl = _dom.querySelector( `.${ CLASSES.OOB_ALERT }` );
+  const _pendingTodosAlertEl = _dom.querySelector(`.${CLASSES.PENDING_TODOS_ALERT}`);
+  const _oobWTodosAlertEl = _dom.querySelector( `.${ CLASSES.OOB_W_TODOS }` );
   const _completeAlertEl = _dom.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
+  const _completeWTodoAlertEl = _dom.querySelector(`.${CLASSES.COMPLETE_W_TODOS}`)
 
   /**
    * Toggles the display of the todo list element and its children
@@ -213,6 +222,10 @@ function routeDetailsView( element ) {
     }
 
     updateDom( _todoItemsEl, updateTodoList( todos ) );
+  }
+
+  function _updateNotificationVisibility() {
+    
   }
 
   return {
@@ -250,6 +263,9 @@ function routeDetailsView( element ) {
       if ( _todoListEl ) {
         _toggleTodoList( route.actionPlanItems );
       }
+
+      _updateNotificationVisibility();
+
       toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
 
       if ( route.transportation ) {
