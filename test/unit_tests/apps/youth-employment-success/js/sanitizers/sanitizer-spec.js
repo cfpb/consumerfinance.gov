@@ -10,6 +10,18 @@ describe( 'exposed sanitize functions', () => {
       expect( moneySanitizer( badMoney ) ).toBe( '122.3' );
     } );
 
+    it( 'does not allow for multiple zeros in a row at the beginning of the string', () => {
+      expect( moneySanitizer( '00' ) ).toBe( '0' );
+    } );
+
+    it( 'allows for a 0 followed by a decimal point', () => {
+      expect( moneySanitizer( '0.' ) ).toBe( '0.' );
+    } );
+
+    it( 'allows for a . at the beginning of the string', () => {
+      expect( moneySanitizer( '.1' ) ).toBe( '.1' );
+    } );
+
     it( 'only allows for a single decimal place', () => {
       const badMoney = '12.2.';
       expect( moneySanitizer( badMoney ) ).toBe( '12.2' );

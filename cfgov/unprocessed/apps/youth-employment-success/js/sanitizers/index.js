@@ -1,5 +1,7 @@
-const MONEY_REGEXP = /((\d+,?)*\.{1}\d*)/;
+const MONEY_REGEXP = /((\d*,?)*\.{1}\d*)/;
 const MONEY_ONLY_REGEXP = /[^\d\.,]/;
+const ALL_ZEROES_REGEXP = /^0+/g;
+const NON_DECIMAL_ZERO_REGEXP = /^(0(?!\.\d{0,2}))/g;
 const DIGITS_ONLY_REGEXP = /\D+/;
 
 /**
@@ -18,26 +20,19 @@ function addCommas( str ) {
 }
 
 /**
- * Removes all leading zeros from a string with more than 1 character.
+ * Removes all leading zeros from a string.
  * @param {String} str The string to strip
  * @returns {String} The string with leading zeros removed
  */
 function stripLeadingZeros( str ) {
-  if ( str.length && str.length > 1 ) {
-    let index = 0;
+  // replace all zeros with at most 1 zero
+  const withSingleZero = str.replace( ALL_ZEROES_REGEXP, '0' );
 
-    while ( index < str.length ) {
-      const char = str[index];
-
-      if ( char !== '0' ) {
-        return str.slice( index );
-      }
-
-      index += 1;
-    }
+  if ( withSingleZero.length > 1 ) {
+    return withSingleZero.replace( NON_DECIMAL_ZERO_REGEXP, '' );
   }
 
-  return str;
+  return withSingleZero;
 }
 
 /**
