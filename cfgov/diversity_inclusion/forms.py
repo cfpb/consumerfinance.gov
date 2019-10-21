@@ -65,7 +65,7 @@ class VoluntaryAssessmentForm(forms.Form):
     )
 
     def send_email(self):
-        subject = 'Voluntary Diversity Assessment Onboarding Form from ' \
+        subject = 'Diversity assessment submission from ' \
                   + self.cleaned_data['institution_name']
         message = ''
         from_email = settings.DEFAULT_FROM_EMAIL
