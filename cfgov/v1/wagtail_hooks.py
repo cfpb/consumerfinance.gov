@@ -40,7 +40,7 @@ def export_data(request):
 @hooks.register('register_admin_menu_item')
 def register_export_menu_item():
     return MenuItem(
-        'Export enforcement actions',
+        'Enforcement actions',
         reverse('export-enforcement-actions'),
         classnames='icon icon-download',
         order=99999,
