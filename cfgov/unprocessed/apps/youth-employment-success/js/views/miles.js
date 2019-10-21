@@ -6,12 +6,14 @@ import {
   updateMilesAction,
   updateMilesToActionPlan
 } from '../reducers/route-option-reducer';
-import inputView from './input';
 import { PLAN_TYPES } from '../data/todo-items';
+import inputView from './input';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-miles'
 } );
+
+const NOT_SURE_MESSAGE = 'Looking up how many miles you drive each day was added to your to-do list.';
 
 /**
  * MilesView
@@ -38,10 +40,10 @@ function milesView( element, { store, routeIndex, todoNotification } ) {
    * @param {object} updateObject.event The emitted DOM event
    * @param {string} updateObject.name The name of the field the event was emitted from
    */
-  function _handleUpdateMiles( { event } ) {
+  function _handleUpdateMiles( { event, value } ) {
     store.dispatch( updateMilesAction( {
       routeIndex,
-      value: event.target.value
+      value
     } ) );
   }
 
@@ -57,7 +59,7 @@ function milesView( element, { store, routeIndex, todoNotification } ) {
     const { checked } = event.target;
 
     if ( checked ) {
-      todoNotification.show();
+      todoNotification.show( NOT_SURE_MESSAGE );
     } else {
       todoNotification.hide();
     }

@@ -8,16 +8,10 @@ from django.forms import widgets
 
 from taggit.models import Tag
 
+from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
 from v1.util.date_filter import end_of_time_period
-
-from .models.base import Feedback
-
-
-class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
-    def validate(self, value):
-        pass
 
 
 class FilterableDateField(forms.DateField):
@@ -86,7 +80,7 @@ class FilterableListForm(forms.Form):
         widget=widgets.CheckboxSelectMultiple()
     )
 
-    topics = MultipleChoiceFieldNoValidation(
+    topics = forms.MultipleChoiceField(
         required=False,
         choices=[],
         widget=widgets.SelectMultiple(attrs={

@@ -3,6 +3,7 @@ import budgetReducer from './reducers/budget-reducer';
 import { combineReducers } from './util';
 import goalReducer from './reducers/goal-reducer';
 import routeOptionReducer from './reducers/route-option-reducer';
+import choiceReducer from './reducers/choice-reducer';
 
 /**
  * Function to create a new store instance
@@ -13,7 +14,8 @@ function configureStore() {
     combineReducers( {
       budget: budgetReducer,
       goals: goalReducer,
-      routes: routeOptionReducer
+      routes: routeOptionReducer,
+      routeChoice: choiceReducer
     } )
   );
 }

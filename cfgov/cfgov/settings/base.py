@@ -711,13 +711,13 @@ FLAGS = {
     'BETA_EXTERNAL_TESTING': [],
 
     # Used to hide new youth employment success pages prior to public launch.
-    'YOUTH_EMPLOYMENT_SUCCESS':  [],
+    'YOUTH_EMPLOYMENT_SUCCESS': [],
 
     # Release of prepaid agreements database search
     'PREPAID_AGREEMENTS_SEARCH': [],
 
     # Used to hide CCDB landing page updates prior to public launch.
-    'CCDB_SEPT_2019_UPDATES':  [],
+    'CCDB_CONTENT_UPDATES': [],
 }
 
 

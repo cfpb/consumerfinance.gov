@@ -1,5 +1,6 @@
 import { assign, entries } from '../util';
 import { setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import sanitizeMap from '../sanitizers';
 
 const defaultProps = {
   type: 'text'
@@ -59,6 +60,23 @@ function inputView( element, props = {} ) {
   }
 
   /**
+   * Strip invalid data from text inputs if the `pattern` attribute is present.
+   * @param {Object} target The node's JS object
+   * @returns {String} The sanitized input
+   */
+  function _sanitizeTextInput( target ) {
+    const sanitizeType = target.getAttribute( 'data-sanitize' );
+    const sanitizeMethod = sanitizeMap[sanitizeType];
+
+    if ( sanitizeMethod ) {
+      const sanitized = sanitizeMethod( target.value );
+      target.value = sanitized;
+    }
+
+    return target.value;
+  }
+
+  /**
    *
    * @param {Function} handler event handler passed in through props
    * @returns {Function} A function that accepts an event and updates
@@ -67,8 +85,9 @@ function inputView( element, props = {} ) {
   const eventHandler = handler => event => {
     const { target } = event;
     const fieldName = target.getAttribute( 'data-js-name' ) || target.name;
+    const value = _sanitizeTextInput( target );
 
-    return handler( { name: fieldName, event } );
+    return handler( { name: fieldName, event, value } );
   };
 
   /**
@@ -110,6 +129,9 @@ function inputView( element, props = {} ) {
     },
     destroy() {
       _unbindEvents();
+    },
+    render( value ) {
+      _dom.value = value;
     }
   };
 }

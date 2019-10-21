@@ -182,6 +182,45 @@ function isNumber( maybeNum ) {
   return typeof num === 'number' && num === num;
 }
 
+/**
+ * Helper function to control showing and hiding CFNotification alert nodes
+ * @param {HTMLElement} node The element in which to search for the notification,
+ * or the notification itself
+ * @param {Boolean} doShow Whether to show or hide the element
+ */
+function toggleCFNotification( node, doShow ) {
+  if ( !( node instanceof HTMLElement ) ) {
+    throw new TypeError( 'First argument must be a valid DOM node.' );
+  }
+
+  const notification = node.classList.contains( 'm-notification' ) ?
+    node : node.querySelector( '.m-notification' );
+
+  if ( notification ) {
+    if ( doShow ) {
+      notification.classList.add( 'm-notification__visible' );
+    } else {
+      notification.classList.remove( 'm-notification__visible' );
+    }
+  }
+}
+
+/**
+ * Right-pad a string with some number of zeros
+ * @param {String} str The string to convert to a fixed precision number
+ * @param {Number} precision The number of places after the decimal to truncate to
+ * @returns {String} A new string with the correct precision
+ */
+function toPrecision( str = '', precision = 0 ) {
+  const num = Number( str );
+
+  if ( !isNumber( num ) ) {
+    throw new Error( 'First argument must be a number.' );
+  }
+
+  return String( ( Math.round( ( num * 1000 ) / 10 ) / 100 ).toFixed( precision ) );
+}
+
 export {
   actionCreator,
   assign,
@@ -189,5 +228,7 @@ export {
   entries,
   isNumber,
   toArray,
+  toPrecision,
+  toggleCFNotification,
   UNDEFINED
 };

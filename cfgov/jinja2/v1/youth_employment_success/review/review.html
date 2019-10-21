@@ -1,12 +1,12 @@
-{% from 'atoms/radio-button.html' import render as renderRadio with context %}
+{% import 'atoms/radio-button.html' as radio_button with context %}
 
-<div class="block block__sub">
+<div class="block block__sub js-no-print">
   <h2>Which way of getting to work is your first choice?</h2>
-  <p>Mya decided to bike to work because it’s affordable and the bikeshare is convenient to her school and work. Frankie decided to take the bus instead of taking a rideshare to work in order to save money to hopefully buy a car in the next year. </p>
+  <p>Mya decided to bike to work because it’s affordable and the bikeshare is convenient to her school and job. Frankie decided to take the bus instead of taking a rideshare to work in order to save money to hopefully buy a car in the next year.</p>
 
   <div class="block block__sub">
     <span class="h4 u-mb0">
-      <b>What option is your first choice?</b>
+      <b>Which option is your first choice?</b>
     </span>
     <p class="u-mt0">
       <small>Choose one</small>
@@ -14,8 +14,8 @@
     <div class="u-w70pct">
       <div class="block block__sub-micro">
         {{
-          renderRadio({
-            'class': 'content-l content-l_col-1-2 m-form-field__lg-target',
+          radio_button.render({
+            'class': 'content-l content-l_col-1-2 m-form-field__lg-target js-yes-route-selection',
             'disabled': true,
             'name':  'yes-route-selection',
             'label': 'Option 1: -',
@@ -23,8 +23,8 @@
           })
         }}
         {{
-          renderRadio({
-            'class': 'content-l content-l_col-1-2 m-form-field__lg-target',
+          radio_button.render({
+            'class': 'content-l content-l_col-1-2 m-form-field__lg-target js-yes-route-selection',
             'disabled': true,
             'name':  'yes-route-selection',
             'label': 'Option 2: -',
@@ -34,8 +34,8 @@
       </div>
       <div class="block block__sub-micro">
         {{
-          renderRadio({
-            'class': 'content-l content-l_col-1-2 m-form-field__lg-target',
+          radio_button.render({
+            'class': 'content-l content-l_col-1-2 m-form-field__lg-target js-yes-route-selection',
             'disabled': true,
             'name':  'yes-route-selection',
             'label': 'I want to complete items in my to-do list before deciding',
@@ -45,5 +45,5 @@
       </div>
     </div>
   </div>
-  <button class="a-btn" disabled>Review your plan</button>
+  <button class="a-btn a-btn__full-on-xs js-yes-choice-finalize u-js-only" disabled>Review your plan</button>
 </div>

@@ -1,6 +1,3 @@
-import csv
-from six.moves import cStringIO as StringIO
-
 from django.contrib.auth.models import User
 from django.db import models
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -398,46 +395,3 @@ class TemporaryLockout(models.Model):
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
-
-
-class Feedback(models.Model):
-    submitted_on = models.DateTimeField(auto_now_add=True)
-    page = models.ForeignKey(
-        Page,
-        related_name='feedback',
-        null=True,
-        on_delete=models.SET_NULL,
-    )
-    comment = models.TextField(blank=True, null=True)
-    language = models.CharField(max_length=8, blank=True, null=True)
-    referrer = models.CharField(max_length=255, blank=True, null=True)
-    is_helpful = models.NullBooleanField()
-    expect_to_buy = models.CharField(max_length=255, blank=True, null=True)
-    currently_own = models.CharField(max_length=255, blank=True, null=True)
-    email = models.EmailField(max_length=250, blank=True, null=True)
-
-    def assemble_csv(self, queryset):
-        headings = [
-            'comment',
-            'currently_own',
-            'expect_to_buy',
-            'email',
-            'is_helpful',
-            'page',
-            'referrer',
-            'submitted_on',
-            'language'
-        ]
-        csvfile = StringIO()
-        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-        writer.writerow([field for field in headings])
-        for feedback in queryset:
-            feedback.submitted_on = "{}".format(feedback.submitted_on.date())
-            feedback.comment = feedback.comment.encode('utf-8')
-            if feedback.referrer is not None:
-                feedback.referrer = feedback.referrer.encode('utf-8')
-            writer.writerow(
-                ["{}".format(getattr(feedback, heading))
-                 for heading in headings]
-            )
-        return csvfile.getvalue()

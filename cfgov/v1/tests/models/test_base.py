@@ -11,7 +11,7 @@ from wagtail.wagtailcore.models import Site
 
 import mock
 
-from v1.models import BrowsePage, CFGOVPage, Feedback
+from v1.models import BrowsePage, CFGOVPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 
@@ -283,26 +283,6 @@ class TestCFGOVPageQuerySet(TestCase):
         page = CFGOVPage(title='test', slug='test', live=True)
         save_new_page(page)
         self.check_live_counts(on_live_host=2)
-
-
-class TestFeedbackModel(TestCase):
-    def setUp(self):
-        self.test_feedback = Feedback(
-            email='tester@example.com',
-            comment="Sparks on the curb.",
-            is_helpful=True,
-            referrer="https://www.consumerfinance.gov/owing-a-home/",
-            submitted_on=datetime.datetime.now()
-        )
-        self.test_feedback.save()
-
-    def test_assemble_csv(self):
-        test_csv = Feedback().assemble_csv(Feedback.objects.all())
-        for term in ["comment",
-                     "Sparks on the curb",
-                     "tester@example.com",
-                     "{}".format(self.test_feedback.submitted_on.date())]:
-            self.assertIn(term, test_csv)
 
 
 class TestCFGOVPageMediaProperty(TestCase):
