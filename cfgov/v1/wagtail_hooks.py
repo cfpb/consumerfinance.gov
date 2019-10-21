@@ -72,7 +72,6 @@ def editor_css():
         'css/deprecated-blocks.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
-        'css/info-unit-group.css',
         'css/table-block.css',
     ]
     css_includes = format_html_join(
