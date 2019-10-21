@@ -2,7 +2,7 @@ from __future__ import division
 
 from django import forms
 from django.conf import settings
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse
 
 
