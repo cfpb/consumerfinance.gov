@@ -1,4 +1,4 @@
-import { assign, toArray, toggleCFNotification } from '../util';
+import { assign, toArray, toPrecision, toggleCFNotification } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
 import { getPlanItem } from '../data/todo-items';
 import money from '../money';
@@ -233,10 +233,10 @@ function routeDetailsView( element ) {
       const dataToValidate = assign( {}, budget, route );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
-      updateDom( _budgetEl, remainingBudget );
+      updateDom( _budgetEl, toPrecision( remainingBudget, 2 ) );
       updateDom( _daysPerWeekEl, route.daysPerWeek );
-      updateDom( _totalCostEl, costEstimate );
-      updateDom( _budgetLeftEl, nextRemainingBudget );
+      updateDom( _totalCostEl, toPrecision( costEstimate, 2 ) );
+      updateDom( _budgetLeftEl, toPrecision( nextRemainingBudget, 2 ) );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
       if ( _todoListEl ) {

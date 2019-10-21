@@ -10,10 +10,23 @@ describe( 'exposed sanitize functions', () => {
       expect( moneySanitizer( badMoney ) ).toBe( '122.3' );
     } );
 
-    it('only allows for a single decimal place', () => {
+    it( 'does not allow for multiple zeros in a row at the beginning of the string', () => {
+      expect( moneySanitizer( '00' ) ).toBe( '0' );
+    } );
+
+    it( 'allows for a 0 followed by a decimal point', () => {
+      expect( moneySanitizer( '0.' ) ).toBe( '0.' );
+    } );
+
+    it( 'allows for a . at the beginning of the string', () => {
+      expect( moneySanitizer( '.1' ) ).toBe( '.1' );
+    } );
+
+    it( 'only allows for a single decimal place', () => {
       const badMoney = '12.2.';
-      expect(moneySanitizer(badMoney)).toBe('12.2');
-    });
+      expect( moneySanitizer( badMoney ) ).toBe( '12.2' );
+      expect( moneySanitizer( '12..' ) ).toBe( '12.' );
+    } );
 
     it( 'removes all leading zeros from a number', () => {
       expect( moneySanitizer( '000000100.11' ) ).toBe( '100.11' );
@@ -21,6 +34,12 @@ describe( 'exposed sanitize functions', () => {
 
     it( 'truncates any numbers over a decimal precision of 2', () => {
       expect( moneySanitizer( '100.111' ) ).toBe( '100.11' );
+    } );
+
+    it( 'adds commas where appropriate', () => {
+      expect( moneySanitizer( '1222' ) ).toBe( '1,222' );
+      expect( moneySanitizer( '12222222.00' ) ).toBe( '12,222,222.00' );
+      expect( moneySanitizer( '1@2222.0' ) ).toBe( '12,222.0' );
     } );
   } );
 

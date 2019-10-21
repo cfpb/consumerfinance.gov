@@ -1,24 +1,50 @@
-const MONEY_REGEXP = /[^\d+\.{1}\d+]|[\.]*$/;
+const MONEY_REGEXP = /((\d*,?)*\.{1}\d*)/;
+const MONEY_ONLY_REGEXP = /[^\d\.,]/;
+const ALL_ZEROES_REGEXP = /^0+/g;
+const NON_DECIMAL_ZERO_REGEXP = /^(0(?!\.\d{0,2}))/g;
 const DIGITS_ONLY_REGEXP = /\D+/;
 
 /**
- * Removes all leading zeros from a string with more than 1 character.
+ * From great Stack overflow answer here:
+ * https://stackoverflow.com/a/2901298
+ */
+const COMMA_REGEXP = new RegExp( /\B(?=(\d{3})+(?!\d))/, 'g' );
+
+/**
+ * Add commas every 3 digits
+ * @param {String} str The number string to add commas to
+ * @returns {String} The number string with commas inserted every 3 digits
+ */
+function addCommas( str ) {
+  return str.replace( /,/g, '' ).replace( COMMA_REGEXP, ',' );
+}
+
+/**
+ * Removes all leading zeros from a string.
  * @param {String} str The string to strip
  * @returns {String} The string with leading zeros removed
  */
 function stripLeadingZeros( str ) {
-  if ( str.length && str.length > 1 ) {
-    let index = 0;
+  // replace all zeros with at most 1 zero
+  const withSingleZero = str.replace( ALL_ZEROES_REGEXP, '0' );
 
-    while ( index < str.length ) {
-      const char = str[index];
+  if ( withSingleZero.length > 1 ) {
+    return withSingleZero.replace( NON_DECIMAL_ZERO_REGEXP, '' );
+  }
 
-      if ( char !== '0' ) {
-        return str.slice( index );
-      }
+  return withSingleZero;
+}
 
-      index += 1;
-    }
+/**
+ * Verify that the given string matches the money regex
+ * @param {String} str The string to match against
+ * @returns {String} Either the match, or the raw string for further processing
+ */
+function matchMoney( str ) {
+  const matches = str.match( MONEY_REGEXP );
+
+  if ( matches && matches.length ) {
+    return matches[0];
   }
 
   return str;
@@ -56,13 +82,15 @@ function truncateTo( length ) {
 }
 
 const stripNonDigitChars = stripInvalidChars( new RegExp( DIGITS_ONLY_REGEXP, 'g' ) );
-const stripNonMoneyChars = stripInvalidChars( new RegExp( MONEY_REGEXP, 'g' ) );
+const stripNonMoneyCharacters = stripInvalidChars( new RegExp( MONEY_ONLY_REGEXP, 'g' ) );
 const truncateTo2 = truncateTo( 2 );
 
 const _moneySanitizers = [
   stripLeadingZeros,
-  stripNonMoneyChars,
-  truncateTo2
+  stripNonMoneyCharacters,
+  matchMoney,
+  truncateTo2,
+  addCommas
 ];
 const _numberSanitizers = [
   stripLeadingZeros,
