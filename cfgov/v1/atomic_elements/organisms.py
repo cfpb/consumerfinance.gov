@@ -165,7 +165,7 @@ class InfoUnitGroup2575Only(InfoUnitGroup):
     )
 
     class Meta:
-        label = 'Info unit group'
+        label = 'IUG 25/75 (deprecated)'
 
 
 class PostPreviewSnapshot(blocks.StructBlock):
