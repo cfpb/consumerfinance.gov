@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
@@ -16,7 +17,7 @@ from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.whitelist import attribute_rule
 
-from v1.admin_views import manage_cdn
+from v1.admin_views import ExportFeedbackView, manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
@@ -48,12 +49,6 @@ def log_page_deletion(request, page):
             url=page.url_path,
         )
     )
-
-
-def check_permissions(parent, user, is_publishing, is_sharing):
-    parent_perms = parent.permissions_for_user(user)
-    if parent.slug != 'root':
-        is_publishing = is_publishing and parent_perms.can_publish()
 
 
 @hooks.register('insert_editor_js')
@@ -121,6 +116,31 @@ def form_module_handlers(page, request, context, *args, **kwargs):
         context['form_modules'] = form_modules
 
 
+class PermissionCheckingMenuItem(MenuItem):
+    """MenuItem that only displays if the user has a certain permission.
+
+    This subclassing approach is recommended by the Wagtail documentation:
+    https://docs.wagtail.io/en/v1.13.4/reference/hooks.html#register-admin-menu-item
+    """
+    def __init__(self, *args, **kwargs):
+        self.permission = kwargs.pop('permission')
+        super(PermissionCheckingMenuItem, self).__init__(*args, **kwargs)
+
+    def is_shown(self, request):
+        return request.user.has_perm(self.permission)
+
+
+@hooks.register('register_admin_menu_item')
+def register_export_feedback_menu_item():
+    return PermissionCheckingMenuItem(
+        'Export feedback',
+        reverse('export-feedback'),
+        classnames='icon icon-download',
+        order=99999,
+        permission='v1.export_feedback'
+    )
+
+
 @hooks.register('register_admin_menu_item')
 def register_django_admin_menu_item():
     return MenuItem(
@@ -140,8 +160,13 @@ def register_frank_menu_item():
 
 
 @hooks.register('register_admin_urls')
-def register_flag_admin_urls():
-    return [url(r'^cdn/$', manage_cdn, name='manage-cdn'), ]
+def register_admin_urls():
+    return [
+        url(r'^cdn/$', manage_cdn, name='manage-cdn'),
+        url(r'^export-feedback/$',
+            ExportFeedbackView.as_view(),
+            name='export-feedback'),
+    ]
 
 
 @hooks.register('before_serve_page')
@@ -317,3 +342,11 @@ def whitelister_element_rules():
 @hooks.register('before_serve_shared_page')
 def set_served_by_wagtail_sharing(page, request, args, kwargs):
     setattr(request, 'served_by_wagtail_sharing', True)
+
+
+@hooks.register('register_permissions')
+def add_export_feedback_permission_to_wagtail_admin_group_view():
+    return Permission.objects.filter(
+        content_type__app_label='v1',
+        codename='export_feedback'
+    )
