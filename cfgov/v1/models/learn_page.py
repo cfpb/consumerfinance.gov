@@ -105,8 +105,6 @@ class LearnPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
-        # TODO: InfoUnitGroup2575Only is deprecated and will be removed.
-        ('info_unit_group_25_75_only', organisms.InfoUnitGroup2575Only()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
