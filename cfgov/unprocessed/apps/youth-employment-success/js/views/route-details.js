@@ -1,6 +1,8 @@
 import { assign, formatNegative, toArray, toPrecision, toggleCFNotification } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import { ALERT_TYPES, getBitmask } from '../data-types/notifications';
 import { getPlanItem } from '../data-types/todo-items';
+import buildAlertRules from '../details-notification-rules';
 import money from '../money';
 import transportationMap from '../data-types/transportation-map';
 import validate from '../validators/route-option';
@@ -25,6 +27,8 @@ const CLASSES = {
   COMPLETE_ALERT: 'js-route-complete',
   COMPLETE_W_TODOS: 'js-route-complete-with-todos'
 };
+
+const alertRules = buildAlertRules( CLASSES );
 
 /**
  * Generates a list of LI elements to be passed back to the DOM
@@ -194,7 +198,7 @@ function routeDetailsView( element ) {
   const _transportationEl = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_TYPE }` )
   );
-  const _alertsEl = _dom.querySelector(`.${CLASSES.ALERTS}`);
+  const _alertsEl = _dom.querySelector( `.${ CLASSES.ALERTS }` );
   const _budgetEl = _dom.querySelector( `.${ CLASSES.BUDGET }` );
   const _daysPerWeekEl = _dom.querySelector( `.${ CLASSES.DAYS_PER_WEEK }` );
   const _totalCostEl = _dom.querySelector( `.${ CLASSES.TOTAL_COST }` );
@@ -204,13 +208,14 @@ function routeDetailsView( element ) {
   const _todoListEl = _dom.querySelector( `.${ CLASSES.TODO_LIST }` );
   const _todoItemsEl = _dom.querySelector( `.${ CLASSES.TODO_ITEMS }` );
 
-  const _invalidAlertEl = _dom.querySelector(`.${CLASSES.INVALID_ALERT}`);
+  const _invalidAlertEl = _dom.querySelector( `.${ CLASSES.INVALID_ALERT }` );
   const _incAlertEl = _dom.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
   const _oobAlertEl = _dom.querySelector( `.${ CLASSES.OOB_ALERT }` );
-  const _pendingTodosAlertEl = _dom.querySelector(`.${CLASSES.PENDING_TODOS_ALERT}`);
+  const _pendingTodosAlertEl = _dom.querySelector( `.${ CLASSES.PENDING_TODOS_ALERT }` );
   const _oobWTodosAlertEl = _dom.querySelector( `.${ CLASSES.OOB_W_TODOS }` );
   const _completeAlertEl = _dom.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
-  const _completeWTodoAlertEl = _dom.querySelector(`.${CLASSES.COMPLETE_W_TODOS}`)
+  const _completeWTodoAlertEl = _dom.querySelector( `.${ CLASSES.COMPLETE_W_TODOS }` );
+  let activeNotification;
 
   /**
    * Toggles the display of the todo list element and its children
@@ -226,20 +231,26 @@ function routeDetailsView( element ) {
     updateDom( _todoItemsEl, updateTodoList( todos ) );
   }
 
-  function _updateNotificationVisibility(notificationEl, doShow) {
-    toggleCFNotification(notificationEl, doShow);
+  function _updateNotificationVisibility( notificationEl, doShow ) {
+    if ( activeNotification ) {
+      toggleCFNotification( activeNotification, false );
+      activeNotification = null;
+    }
 
-    if (doShow) {
-      _alertsEl.classList.remove('u-hidden');
+    activeNotification = notificationEl;
+    toggleCFNotification( activeNotification, doShow );
+
+    if ( activeNotification ) {
+      _alertsEl.classList.remove( 'u-hidden' );
     } else {
-      _alertsEl.classList.add('u-hidden');
+      _alertsEl.classList.add( 'u-hidden' );
     }
   }
 
   return {
     init() {
       if ( setInitFlag( _dom ) ) {
-        _alertsEl.classList.add('u-hidden');
+        _alertsEl.classList.add( 'u-hidden' );
         return this;
       }
 
@@ -253,6 +264,14 @@ function routeDetailsView( element ) {
         costEstimate
       );
       const dataToValidate = assign( {}, budget, route );
+      const dataIsValid = validate( dataToValidate );
+      const valuesForNotification = {
+        [ALERT_TYPES.HAS_TODOS]: Boolean( route.actionPlanItems.length ),
+        [ALERT_TYPES.INVALID]: Boolean( route.transportation && !dataIsValid ),
+        [ALERT_TYPES.IN_BUDGET]: dataIsValid && nextRemainingBudget >= 0,
+        [ALERT_TYPES.OUT_OF_BUDGET]: dataIsValid && nextRemainingBudget < 0
+      };
+      const alertEl = alertRules[getBitmask( valuesForNotification )];
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
       updateDom( _budgetEl,
@@ -273,18 +292,7 @@ function routeDetailsView( element ) {
         _toggleTodoList( route.actionPlanItems );
       }
 
-      _updateNotificationVisibility();
-
-      toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
-
-      if ( route.transportation ) {
-        toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
-      }
-
-      toggleCFNotification(
-        _completeAlertEl,
-        validate( dataToValidate ) && nextRemainingBudget >= 0
-      );
+      _updateNotificationVisibility( _dom.querySelector( `.${ alertEl }` ), true );
     }
   };
 }

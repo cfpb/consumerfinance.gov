@@ -190,18 +190,20 @@ function isNumber( maybeNum ) {
  * @param {Boolean} doShow Whether to show or hide the element
  */
 function toggleCFNotification( node, doShow ) {
-  if ( !( node instanceof HTMLElement ) ) {
-    throw new TypeError( 'First argument must be a valid DOM node.' );
-  }
+  if ( node ) {
+    if ( !( node instanceof HTMLElement ) ) {
+      throw new TypeError( 'First argument must be a valid DOM node.' );
+    }
 
-  const notification = node.classList.contains( 'm-notification' ) ?
-    node : node.querySelector( '.m-notification' );
+    const notification = node.classList.contains( 'm-notification' ) ?
+      node : node.querySelector( '.m-notification' );
 
-  if ( notification ) {
-    if ( doShow ) {
-      notification.classList.add( 'm-notification__visible' );
-    } else {
-      notification.classList.remove( 'm-notification__visible' );
+    if ( notification ) {
+      if ( doShow ) {
+        notification.classList.add( 'm-notification__visible' );
+      } else {
+        notification.classList.remove( 'm-notification__visible' );
+      }
     }
   }
 }
@@ -212,14 +214,20 @@ function toggleCFNotification( node, doShow ) {
  * @param {Number} precision The number of places after the decimal to truncate to
  * @returns {String} A new string with the correct precision
  */
-function toPrecision( str = '', precision = 0 ) {
-  const num = Number( str );
+function toPrecision( value = '', precision = 0 ) {
+  let safeValue;
 
-  if ( !isNumber( num ) ) {
+  if ( typeof value === 'string' ) {
+    safeValue = value.replace( /,+/, '' );
+  } else {
+    safeValue = Number( value );
+  }
+
+  if ( !isNumber( safeValue ) ) {
     throw new Error( 'First argument must be a number.' );
   }
 
-  return String( ( Math.round( ( num * 1000 ) / 10 ) / 100 ).toFixed( precision ) );
+  return String( ( Math.round( ( safeValue * 1000 ) / 10 ) / 100 ).toFixed( precision ) );
 }
 
 function formatNegative( num ) {
