@@ -1,5 +1,5 @@
 import { actionCreator, assign } from '../util';
-import { PLAN_TYPES } from '../data/todo-items';
+import { PLAN_TYPES } from '../data-types/todo-items';
 
 const initialState = {
   routes: []

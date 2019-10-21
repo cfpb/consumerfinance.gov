@@ -1,8 +1,8 @@
 import { assign, formatNegative, toArray, toPrecision, toggleCFNotification } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { getPlanItem } from '../data/todo-items';
+import { getPlanItem } from '../data-types/todo-items';
 import money from '../money';
-import transportationMap from '../data/transportation-map';
+import transportationMap from '../data-types/transportation-map';
 import validate from '../validators/route-option';
 
 const CLASSES = {
@@ -16,6 +16,7 @@ const CLASSES = {
   TIME_MINUTES: 'js-time-minutes',
   TODO_LIST: 'js-todo-list',
   TODO_ITEMS: 'js-todo-items',
+  ALERTS: 'js-route-notifications',
   INVALID_ALERT: 'js-route-invalid',
   INCOMPLETE_ALERT: 'js-route-incomplete',
   PENDING_TODOS_ALERT: 'js-route-pending-todos',
@@ -193,6 +194,7 @@ function routeDetailsView( element ) {
   const _transportationEl = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_TYPE }` )
   );
+  const _alertsEl = _dom.querySelector(`.${CLASSES.ALERTS}`);
   const _budgetEl = _dom.querySelector( `.${ CLASSES.BUDGET }` );
   const _daysPerWeekEl = _dom.querySelector( `.${ CLASSES.DAYS_PER_WEEK }` );
   const _totalCostEl = _dom.querySelector( `.${ CLASSES.TOTAL_COST }` );
@@ -224,13 +226,20 @@ function routeDetailsView( element ) {
     updateDom( _todoItemsEl, updateTodoList( todos ) );
   }
 
-  function _updateNotificationVisibility() {
-    
+  function _updateNotificationVisibility(notificationEl, doShow) {
+    toggleCFNotification(notificationEl, doShow);
+
+    if (doShow) {
+      _alertsEl.classList.remove('u-hidden');
+    } else {
+      _alertsEl.classList.add('u-hidden');
+    }
   }
 
   return {
     init() {
       if ( setInitFlag( _dom ) ) {
+        _alertsEl.classList.add('u-hidden');
         return this;
       }
 
