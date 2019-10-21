@@ -9,7 +9,7 @@ ways to access and export this data.
 
 ## Exporting feedback using Wagtail
 
-Users with appropriate permissions have access to an "Export Feedback" tool
+Users with appropriate permissions have access to an "Export feedback" tool
 in Wagtail. This tool generates a ZIP file containing submitted feedback
 between two user-specified dates.
 
@@ -41,24 +41,24 @@ cfgov/manage.py export_feedback --filename output.csv
 (Alternatively, exclude the `--filename` parameter to send the output to the
 console.)
 
-To export feedback for a specific Wagtail page, provide its slug. Specified
-pages must have slugs that are unique across the website.
+To export feedback for a specific Wagtail page and its descendants, provide its
+slug. Specified pages must have slugs that are unique across the website.
 
 ```sh
-cfgov/manage.py export_feedback ask_cfpb --filename ask_cfpb.csv
+cfgov/manage.py export_feedback ask-cfpb --filename ask_cfpb.csv
 ```
 
 Specify multiple slugs to export feedback for multiple pages:
 
 ```sh
-cfgov/manage.py export_feedback ask_cfpb owning-a-home --filename ask_and_bah.csv
+cfgov/manage.py export_feedback ask-cfpb owning-a-home --filename ask_and_bah.csv
 ```
 
-To invert the selection, and export feedback _except_ for those pages
+To invert the selection, and export feedback for all pages _except_ those
 specified, use the `--exclude` parameter:
 
 ```sh
-cfgov/manage.py export_feedback ask_cfpb --exclude --filename everything_except_ask.csv
+cfgov/manage.py export_feedback --exclude ask-cfpb --filename everything_except_ask.csv
 ```
 
 To limit the exported feedback within a given date range, provide the
