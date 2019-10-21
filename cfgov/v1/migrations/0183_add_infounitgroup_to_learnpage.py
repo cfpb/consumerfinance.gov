@@ -51,7 +51,7 @@ def backwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0181_update_post_date_description_field'),
+        ('v1', '0182_export_feedback_permission'),
     ]
 
     operations = [
