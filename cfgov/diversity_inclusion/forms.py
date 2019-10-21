@@ -67,17 +67,19 @@ class VoluntaryAssessmentForm(forms.Form):
     def send_email(self):
         subject = 'Voluntary Diversity Assessment Onboarding Form from ' \
                   + self.cleaned_data['institution_name']
-        body = ''
+        message = ''
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = ['OMWI_regulatedentity@cfpb.gov']
 
-        for (field_name, field) in self.fields.items():
-            body += field.label + ': ' + self.cleaned_data[field_name] + '\n'
+        for (name, field) in self.fields.items():
+            message += field.label + ': ' + self.cleaned_data[name] + '\n'
 
         try:
             send_mail(
                 subject,
-                body,
-                settings.DEFAULT_FROM_EMAIL,
-                ['scott.cranfill@cfpb.gov']
+                message,
+                from_email,
+                recipient_list
             )
         except BadHeaderError:
             return HttpResponse('Invalid header found.')
