@@ -1,5 +1,5 @@
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { transportation } from '../data/transportation-map';
+import { TRANSPORTATION } from '../data/transportation-map';
 
 const CLASSES = {
   CONTAINER: 'js-driving-estimate',
@@ -26,7 +26,7 @@ function drivingCostEstimate( element ) {
       }
     },
     render( route ) {
-      if ( route.transportation === transportation.DRIVE ) {
+      if ( route.transportation === TRANSPORTATION.DRIVE ) {
         _dom.classList.remove( 'u-hidden' );
         // Magic number for now, until we get an actual average cost
         _costPerMileEl.textContent = '$1.80';

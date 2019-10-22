@@ -7,7 +7,7 @@ import {
   updateIsMonthlyCostAction
 } from '../reducers/route-option-reducer';
 import inputView from './input';
-import { toArray } from '../util';
+import { toArray, toPrecision } from '../util';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-average-cost',
@@ -116,13 +116,19 @@ function averageCostView( element, { store, routeIndex, todoNotification } ) {
     }
   }
 
+  function _handleBlur( { event, value } ) {
+    event.target.value = value ? toPrecision( value, 2 ) : '';
+    _handleAverageCostUpdate( { event, value: event.target.value } );
+  }
+
   /**
    * Initial the input elements this view manages.
    */
   function _initInputs() {
     inputView( _averageCostEl, {
       events: {
-        input: _handleAverageCostUpdate
+        input: _handleAverageCostUpdate,
+        blur: _handleBlur
       }
     } ).init();
 

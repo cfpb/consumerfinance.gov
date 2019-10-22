@@ -1,6 +1,6 @@
 import { simulateEvent } from '../../../../util/simulate-event';
 import budgetFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/budget-form-view';
-import { configureStore } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/store';
+import mockStore from '../../../mocks/store';
 
 const HTML = `
 <section class="block o-yes-budget">
@@ -80,12 +80,13 @@ describe( 'BudgetFormView', () => {
 
   beforeEach( () => {
     document.body.innerHTML = HTML;
-    store = configureStore();
+    store = mockStore();
     view = budgetFormView( document.querySelector( `.${ CLASSES.FORM }` ), { store } );
     view.init();
   } );
 
   afterEach( () => {
+    store.mockReset();
     view.destroy();
     view = null;
   } );
@@ -98,17 +99,40 @@ describe( 'BudgetFormView', () => {
     moneyEarnedEl.value = '100';
     simulateEvent( 'input', moneyEarnedEl );
 
-    expect( totalEl.textContent ).toEqual( '100' );
+    store.subscriber()( {}, { budget: { earned: '100.00' }} );
+    expect( totalEl.textContent ).toEqual( '100.00' );
+
 
     moneySpentEl.value = '100';
     simulateEvent( 'input', moneySpentEl );
+    store.subscriber()( {}, { budget: { earned: '100.00', spent: '100.00' }} );
 
-    expect( totalEl.textContent ).toEqual( '0' );
+    expect( totalEl.textContent ).toEqual( '0.00' );
   } );
 
   it( 'defaults the `total` value to zero when no input has been received', () => {
+    store.subscriber()( {}, { budget: {}} );
+
     const totalEl = document.querySelector( `.${ CLASSES.REMAINING }` );
+
     expect( totalEl.textContent ).toEqual( '-' );
+  } );
+
+  it( 'updates values with correct preciscion on blur', () => {
+    const moneyEarnedEl = document.querySelector( `.${ CLASSES.EARNED_INPUT }` );
+    const moneySpentEl = document.querySelector( `.${ CLASSES.SPENT_INPUT }` );
+
+    moneyEarnedEl.value = '100';
+
+    simulateEvent( 'blur', moneyEarnedEl );
+
+    expect( moneyEarnedEl.value ).toBe( '100.00' );
+
+    moneySpentEl.value = '100';
+
+    simulateEvent( 'blur', moneySpentEl );
+
+    expect( moneySpentEl.value ).toBe( '100.00' );
   } );
 
   it( 'unbinds events on view cleanup', () => {
@@ -117,12 +141,13 @@ describe( 'BudgetFormView', () => {
 
     moneySpentEl.value = '100';
     simulateEvent( 'input', moneySpentEl );
+    store.subscriber()( {}, { budget: { earned: '0.00', spent: '100.00' }} );
 
     view.destroy();
 
     moneySpentEl.value = '5';
     simulateEvent( 'input', moneySpentEl );
 
-    expect( totalEl.textContent ).toEqual( '-100' );
+    expect( totalEl.textContent ).toEqual( '-100.00' );
   } );
 } );

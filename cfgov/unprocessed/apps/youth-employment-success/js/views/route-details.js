@@ -1,4 +1,4 @@
-import { assign, toArray, toggleCFNotification } from '../util';
+import { assign, toArray, toPrecision, toggleCFNotification } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
 import { getPlanItem } from '../data/todo-items';
 import money from '../money';
@@ -45,15 +45,10 @@ function updateTodoList( todos = [] ) {
   return fragment;
 }
 
-/* Assuming days per week for a transportation option to be 5 days per week.
-   This could easily not be accurate as people frequently have weekend jobs,
-   multiple shifts etc, but should work for now. */
-const FULL_TIME_DAYS = 5;
-
 const DEFAULT_COST_ESTIMATE = '0';
 
 // Rough estimate to account for weeks that have more or less days
-const WEEKLY_COST_MODIFIER = 4.2;
+const WEEKLY_COST = 4.0;
 
 // This number will be pulled from a data set, for now, its magic
 const ESTIMATED_COST_PER_MILE = 1.8;
@@ -83,7 +78,7 @@ function getCalculationFn( route ) {
     return averageCost;
   }
 
-  return calculatePerMonthCost( averageCost, FULL_TIME_DAYS );
+  return calculatePerMonthCost( averageCost, daysPerWeek );
 }
 
 /**
@@ -91,7 +86,7 @@ function getCalculationFn( route ) {
  * @param {string} numberOfMiles Number of miles user expects to drive each day
  * @returns {Number} The cost, in dollars, of driving each day
  */
-function calculateDrivingDailyCost( numberOfMiles = '0' ) {
+function calculateDrivingDailyCost( numberOfMiles = 0 ) {
   return money.toDollars(
     parseFloat( numberOfMiles ) * ESTIMATED_COST_PER_MILE
   );
@@ -113,7 +108,7 @@ function calculatePerMonthCost( dailyCost, daysPerWeek ) {
   return money.toDollars(
     money.toDollars( dailyCost ) *
     normalizedDays *
-    WEEKLY_COST_MODIFIER
+    WEEKLY_COST
   );
 }
 
@@ -238,17 +233,21 @@ function routeDetailsView( element ) {
       const dataToValidate = assign( {}, budget, route );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
-      updateDom( _budgetEl, remainingBudget );
+      updateDom( _budgetEl, toPrecision( remainingBudget, 2 ) );
       updateDom( _daysPerWeekEl, route.daysPerWeek );
-      updateDom( _totalCostEl, costEstimate );
-      updateDom( _budgetLeftEl, nextRemainingBudget );
+      updateDom( _totalCostEl, toPrecision( costEstimate, 2 ) );
+      updateDom( _budgetLeftEl, toPrecision( nextRemainingBudget, 2 ) );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
       if ( _todoListEl ) {
         _toggleTodoList( route.actionPlanItems );
       }
       toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
-      toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
+
+      if ( route.transportation ) {
+        toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
+      }
+
       toggleCFNotification(
         _completeAlertEl,
         validate( dataToValidate ) && nextRemainingBudget >= 0
