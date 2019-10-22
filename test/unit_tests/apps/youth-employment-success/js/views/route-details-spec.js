@@ -26,9 +26,11 @@ const HTML = `
     <div>   
       <b>Total left in your budget after <span class="js-transportation-type"></span></b>
       $<b class="content-l_col-2-3 js-budget-left"></b>
-      <div class="js-route-incomplete"><p class="m-notification"></p></div>
-      <div class="js-route-oob"><p class="m-notification"></p></div>
-      <div class="js-route-complete"><p class="m-notification"></p></div>
+      <div class="js-route-notifications">
+        <div class="js-route-incomplete"><p class="m-notification"></p></div>
+        <div class="js-route-oob"><p class="m-notification"></p></div>
+        <div class="js-route-complete"><p class="m-notification"></p></div>
+      </div>
     </div>
     <div>
       <p class="content-l content-l_col-1-3"><b>Total time to get to work</b></p>
@@ -73,9 +75,11 @@ describe( 'routeDetailsView', () => {
     view = routeDetailsView(
       document.querySelector( `.${ CLASSES.CONTAINER }` )
     );
+    view.init();
   } );
 
   afterEach( () => {
+    document.body.innerHTML = null;
     view = null;
   } );
 
@@ -246,7 +250,7 @@ describe( 'routeDetailsView', () => {
       expect( todoItemsEl.querySelectorAll( 'li' ).length ).toBe( 0 );
     } );
 
-    it.only( 'does not hide the to-do list when an item is removed and there are remaining items', () => {
+    it( 'does not hide the to-do list when an item is removed and there are remaining items', () => {
       const state = {
         budget: { ...nextState.budget },
         route: {
@@ -271,66 +275,6 @@ describe( 'routeDetailsView', () => {
       } );
 
       expect( todosEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
-    } );
-
-    it( 'shows the out of budget alert when the route is out of budget', () => {
-      const state = {
-        budget: { earned: '1', spent: '100' },
-        route: {
-          ...nextState.route,
-          transportation: 'Drive'
-        }
-      };
-
-      view.render( state );
-
-      const oobAlertEl = document.querySelector( `.${ CLASSES.OOB_ALERT }` );
-      const notification = oobAlertEl.querySelector( '.m-notification' );
-      expect( notification.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
-    } );
-
-    it( 'displays incomplete alert message until all required fields are filled in', () => {
-      view.render( nextState );
-
-      let incAlertEl = document.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
-      let notification = incAlertEl.querySelector( '.m-notification' );
-      expect( notification.classList.contains( 'm-notification__visible' ) ).toBeFalsy();
-
-      view.render( {
-        ...nextState,
-        route: {
-          ...nextState.route,
-          miles: 0
-        }
-      } );
-
-      incAlertEl = document.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
-      notification = incAlertEl.querySelector( '.m-notification' );
-      expect( notification.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
-    } );
-
-    it( 'displays a complete alert message when the data is valid and the option is in budget', () => {
-      view.render( nextState );
-
-      let completeAlert = document.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
-      let notification = completeAlert.querySelector( '.m-notification' );
-
-      expect( notification.classList.contains( 'm-notification__visible' ) ).toBeFalsy();
-
-      const state = {
-        budget: { earned: '10000', spent: '10' },
-        route: {
-          ...nextState.route,
-          transportation: 'Drive'
-        }
-      };
-
-      view.render( state );
-
-      completeAlert = document.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
-      notification = completeAlert.querySelector( '.m-notification' );
-
-      expect( notification.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
     } );
   } );
 } );

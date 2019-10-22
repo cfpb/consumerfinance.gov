@@ -210,7 +210,7 @@ function toggleCFNotification( node, doShow ) {
 
 /**
  * Right-pad a string with some number of zeros
- * @param {String} str The string to convert to a fixed precision number
+ * @param {String} value The string to convert to a fixed precision number
  * @param {Number} precision The number of places after the decimal to truncate to
  * @returns {String} A new string with the correct precision
  */

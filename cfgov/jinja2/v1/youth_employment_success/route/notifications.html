@@ -11,7 +11,7 @@
       {{
         alert.render({
           'fill': 'success',
-          'content': 'It\'s in budget but you still have to-do list items to complete.'
+          'content': 'Looks like this option fits your budget, but you still have items left in your to-do list to complete.'
         })
       }}  
   </div>
@@ -27,7 +27,7 @@
     {{
       alert.render({
         'fill': 'warning',
-        'content': 'You have items in your to-do list to complete.'
+        'content': 'You have items left in your to-do list to complete.'
       })
     }}
   </div>
@@ -50,8 +50,8 @@
   <div class="js-route-oob-with-todos">
     {{
       alert.render({
-        'content': 'This is out of budget and you still have pending to-do items to complete.',
-        'fill': 'danger'
+        'fill': 'danger',
+        'content': 'This option is out budget, and you still have items left in your to-do list. Talk to your caseworker about ways you might be able to rethink your budget so this can be an option for you.'
       })
     }}
   </div>

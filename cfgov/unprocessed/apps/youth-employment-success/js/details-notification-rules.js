@@ -15,7 +15,7 @@ function buildAlertRules( els ) {
   };
   const inBudgetWithTodos = {
     rule: getBitValue( ALERT_TYPES.HAS_TODOS ) | getBitValue( ALERT_TYPES.IN_BUDGET ),
-    el: els.COMPLETE_W_TODOS
+    el: els.IN_BUDGET_W_TODOS
   };
   const withTodos = {
     rule: getBitValue( ALERT_TYPES.HAS_TODOS ),
@@ -27,7 +27,7 @@ function buildAlertRules( els ) {
   };
   const inBudget = {
     rule: getBitValue( ALERT_TYPES.IN_BUDGET ),
-    el: els.COMPLETE_ALERT
+    el: els.IN_BUDGET_ALERT
   };
   const outOfBudget = {
     rule: getBitValue( ALERT_TYPES.OUT_OF_BUDGET ),

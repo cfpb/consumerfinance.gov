@@ -19,7 +19,7 @@ const ALERT_TYPES = Object.freeze( {
  *     without needing a lot of code.
  * 4). It ensures that no matter what the state of the application, there will
  *     be at most one displayed alert, and which alert is shown won't need to be resolved
- *     heirarchically.
+ *     hierarchically.
  * 5). It leaves the final implementation of what alerts should be shown
  *     up to the view making use of the bitmask.
  *
@@ -34,7 +34,7 @@ const ALERT_TYPES = Object.freeze( {
  */
 const ALERT_BITMASK_ENUM = Object.freeze( {
   [ALERT_TYPES.NONE]: 0,
-  [ALERT_TYPES.INVALID]: 1 << 0,
+  [ALERT_TYPES.INVALID]: 1,
   [ALERT_TYPES.IN_BUDGET]: 1 << 1,
   [ALERT_TYPES.OUT_OF_BUDGET]: 1 << 2,
   [ALERT_TYPES.HAS_TODOS]: 1 << 3
