@@ -71,7 +71,7 @@ function reviewGoalsView( element, { store } ) {
         if ( _goalsMap.hasOwnProperty( attr ) ) {
           const el = _goalsMap[attr];
 
-          el.textContent = goals[attr];
+          el.innerHTML = goals[attr];
         }
       }
     }
