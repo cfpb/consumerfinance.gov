@@ -1,4 +1,4 @@
-import { assign, toArray, toPrecision } from '../util';
+import { assign, formatNegative, toArray, toPrecision } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
 import { ALERT_TYPES } from '../data-types/notifications';
 import { getPlanItem } from '../data-types/todo-items';
@@ -234,7 +234,9 @@ function routeDetailsView( element ) {
       const dataToValidate = assign( {}, budget, route );
       const dataIsValid = validate( dataToValidate );
       const valuesForNotification = {
-        [ALERT_TYPES.HAS_TODOS]: Boolean( route.actionPlanItems.length ),
+        [ALERT_TYPES.HAS_TODOS]: Boolean(
+          route.transportation && route.actionPlanItems.length
+        ),
         [ALERT_TYPES.INVALID]: Boolean( route.transportation && !dataIsValid ),
         [ALERT_TYPES.IN_BUDGET]: dataIsValid && nextRemainingBudget >= 0,
         [ALERT_TYPES.OUT_OF_BUDGET]: dataIsValid && nextRemainingBudget < 0

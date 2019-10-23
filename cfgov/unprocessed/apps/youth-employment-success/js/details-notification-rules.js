@@ -17,10 +17,6 @@ function buildAlertRules( els ) {
     rule: getBitValue( ALERT_TYPES.HAS_TODOS ) | getBitValue( ALERT_TYPES.IN_BUDGET ),
     el: els.IN_BUDGET_W_TODOS
   };
-  const withTodos = {
-    rule: getBitValue( ALERT_TYPES.HAS_TODOS ),
-    el: els.PENDING_TODOS_ALERT
-  };
   const invalid = {
     rule: getBitValue( ALERT_TYPES.INVALID ),
     el: els.INVALID_ALERT
@@ -39,7 +35,6 @@ function buildAlertRules( els ) {
     [invalidWithTodos.rule]: invalidWithTodos.el,
     [oobWithTodos.rule]: oobWithTodos.el,
     [inBudgetWithTodos.rule]: inBudgetWithTodos.el,
-    [withTodos.rule]: withTodos.el,
     [invalid.rule]: invalid.el,
     [inBudget.rule]: inBudget.el,
     [outOfBudget.rule]: outOfBudget.el
