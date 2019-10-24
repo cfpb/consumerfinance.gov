@@ -16,6 +16,7 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 from v1.util.util import get_secondary_nav_items
+from youth_employment.blocks import YESChecklist
 
 
 class BrowsePage(CFGOVPage):
@@ -47,6 +48,7 @@ class BrowsePage(CFGOVPage):
         ('data_snapshot', organisms.DataSnapshot()),
         ('job_listing_table', JobListingTable()),
         ('bureau_structure', organisms.BureauStructure()),
+        ('yes_checklist', YESChecklist()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
@@ -85,5 +87,7 @@ class BrowsePage(CFGOVPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)
-        context.update({'get_secondary_nav_items': get_secondary_nav_items})
+        context.update({
+            'get_secondary_nav_items': get_secondary_nav_items
+        })
         return context
