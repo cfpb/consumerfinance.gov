@@ -1,11 +1,13 @@
-import { assign, formatNegative, toArray, toPrecision, toggleCFNotification } from '../util';
+import { assign, formatNegative, toArray, toPrecision } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { getPlanItem } from '../data/todo-items';
+import { ALERT_TYPES } from '../data-types/notifications';
+import { getPlanItem } from '../data-types/todo-items';
 import money from '../money';
-import transportationMap from '../data/transportation-map';
+import notificationsView from './notifications';
+import transportationMap from '../data-types/transportation-map';
 import validate from '../validators/route-option';
 
-const CLASSES = {
+const CLASSES = Object.freeze( {
   CONTAINER: 'yes-route-details',
   TRANSPORTATION_TYPE: 'js-transportation-type',
   BUDGET: 'js-budget',
@@ -15,11 +17,8 @@ const CLASSES = {
   TIME_HOURS: 'js-time-hours',
   TIME_MINUTES: 'js-time-minutes',
   TODO_LIST: 'js-todo-list',
-  TODO_ITEMS: 'js-todo-items',
-  INCOMPLETE_ALERT: 'js-route-incomplete',
-  OOB_ALERT: 'js-route-oob',
-  COMPLETE_ALERT: 'js-route-complete'
-};
+  TODO_ITEMS: 'js-todo-items'
+} );
 
 /**
  * Generates a list of LI elements to be passed back to the DOM
@@ -197,9 +196,8 @@ function routeDetailsView( element ) {
   const _timeMinutesEl = _dom.querySelector( `.${ CLASSES.TIME_MINUTES }` );
   const _todoListEl = _dom.querySelector( `.${ CLASSES.TODO_LIST }` );
   const _todoItemsEl = _dom.querySelector( `.${ CLASSES.TODO_ITEMS }` );
-  const _incAlertEl = _dom.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
-  const _oobAlertEl = _dom.querySelector( `.${ CLASSES.OOB_ALERT }` );
-  const _completeAlertEl = _dom.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
+
+  let alertView;
 
   /**
    * Toggles the display of the todo list element and its children
@@ -218,7 +216,10 @@ function routeDetailsView( element ) {
   return {
     init() {
       if ( setInitFlag( _dom ) ) {
-        return this;
+        alertView = notificationsView(
+          _dom.querySelector( `.${ notificationsView.CLASSES.CONTAINER }` )
+        );
+        alertView.init();
       }
 
       return this;
@@ -231,6 +232,15 @@ function routeDetailsView( element ) {
         costEstimate
       );
       const dataToValidate = assign( {}, budget, route );
+      const dataIsValid = validate( dataToValidate );
+      const valuesForNotification = {
+        [ALERT_TYPES.HAS_TODOS]: Boolean(
+          route.transportation && route.actionPlanItems.length
+        ),
+        [ALERT_TYPES.INVALID]: Boolean( route.transportation && !dataIsValid ),
+        [ALERT_TYPES.IN_BUDGET]: dataIsValid && nextRemainingBudget >= 0,
+        [ALERT_TYPES.OUT_OF_BUDGET]: dataIsValid && nextRemainingBudget < 0
+      };
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
       updateDom( _budgetEl,
@@ -250,16 +260,8 @@ function routeDetailsView( element ) {
       if ( _todoListEl ) {
         _toggleTodoList( route.actionPlanItems );
       }
-      toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
 
-      if ( route.transportation ) {
-        toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
-      }
-
-      toggleCFNotification(
-        _completeAlertEl,
-        validate( dataToValidate ) && nextRemainingBudget >= 0
-      );
+      alertView.render( valuesForNotification );
     }
   };
 }

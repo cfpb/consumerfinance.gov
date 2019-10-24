@@ -2,7 +2,7 @@ import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-hel
 import { toArray } from '../../util';
 import { updateRouteChoiceAction } from '../../reducers/choice-reducer';
 import inputView from '../input';
-import transportationMap from '../../data/transportation-map';
+import transportationMap from '../../data-types/transportation-map';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'js-yes-review-choice',

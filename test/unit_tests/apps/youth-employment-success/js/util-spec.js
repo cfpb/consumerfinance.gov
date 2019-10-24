@@ -191,8 +191,8 @@ describe( 'YES utility functions', () => {
   } );
 
   describe( '.toggleCFNotification', () => {
-    it( 'throws an error if not passed a dom node as its first argument', () => {
-      expect( () => toggleCFNotification( null, true ) ).toThrow();
+    it( 'throws an error if first arg is supplied and value is not a dom node', () => {
+      expect( () => toggleCFNotification( 'foo', true ) ).toThrow();
     } );
 
     it( 'toggles a supplied notification', () => {

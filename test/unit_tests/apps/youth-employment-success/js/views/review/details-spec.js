@@ -1,7 +1,7 @@
 import reviewDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/details';
 import mockStore from '../../../../../mocks/store';
 import { toArray } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
+import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 
 const CLASSES = reviewDetailsView.CLASSES;
 
