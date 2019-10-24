@@ -3,9 +3,9 @@ import {
   updateEarnedAction,
   updateSpentAction
 } from './reducers/budget-reducer';
+import { formatNegative, toPrecision } from './util';
 import inputView from './views/input';
 import money from './money';
-import { toPrecision } from './util';
 
 const CLASSES = Object.freeze( {
   FORM: 'o-yes-budget',
@@ -94,7 +94,7 @@ function BudgetFormView( element, { store } ) {
     const { earned, spent } = budget;
     const total = !earned && !spent ? '-' : toPrecision( money.subtract( earned, spent ), 2 );
 
-    _moneyRemainingEl.textContent = total;
+    _moneyRemainingEl.innerHTML = formatNegative( total );
   }
 
   return {

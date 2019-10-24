@@ -20,7 +20,7 @@ import routeOptionReducer, {
   updateTransportationAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/todo-items';
+import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 
 // Arbitrary value to ensure reducer is updating properly
 const nextValue = '15';
@@ -192,6 +192,26 @@ describe( 'routeOptionReducer', () => {
       );
 
       expect( nextState.routes[0].transitTimeHours ).toBe( '1' );
+    } );
+
+    it( 'properly reduces the state of the actionPlanItems list', () => {
+      const state = routeOptionReducer(
+        {
+          routes: [
+            createRoute( {
+              actionPlanItems: [ PLAN_TYPES.TIME, PLAN_TYPES.MILES ]
+            } )
+          ]
+        },
+        updateTimeToActionPlan( {
+          routeIndex: 0,
+          value: false } )
+      );
+
+      const todos = routeSelector( state, 0 ).actionPlanItems;
+
+      expect( todos.length ).toBe( 1 );
+      expect( todos[0] ).toBe( PLAN_TYPES.MILES );
     } );
 
     it( 'reduces the .updateTimeToActionPlan action', () => {

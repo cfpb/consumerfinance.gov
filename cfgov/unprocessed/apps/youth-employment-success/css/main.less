@@ -49,7 +49,8 @@
   .h2,
   textarea,
   .m-notification,
-  .js-yes-plans-review {
+  .js-yes-plans-review,
+  .a-label small {
     max-width: 41.875rem;
   }
 }
@@ -99,8 +100,13 @@
    * all the case in which all form fields are visible and the user's to-do list
    * is populated.
   */
-  max-height: 2400px !important;
+  overflow-y: visible !important;
 }
+
+.o-expandable__padded .o-expandable_content:after {
+  padding-bottom: 0px !important;
+}
+
 /** /MOLECULE OVERRIDES **/
 
 
@@ -122,6 +128,7 @@ input:-moz-ui-invalid {
   // Required to stop FF from validating the `placeholder` attribute
   box-shadow: none;
 }
+
 /** /ELEMENT-SPECIFIC **/
 
 /**
@@ -232,14 +239,13 @@ input:-moz-ui-invalid {
 
 .m-hours {
   .m-hours_container {
-    border-right: 0;
-
     .respond-to-max(@bp-sm-min, {
       display: inline;
     });
   }
 
   .m-hours_data {
+    border: 0;
     .respond-to-max(@bp-sm-min, {
       display: inline;
       text-align: right;
@@ -251,6 +257,9 @@ input:-moz-ui-invalid {
         text-align: right;
       }
     });
+  }
+  .m-minutes_data {
+    border: 0;
   }
 }
 
@@ -264,7 +273,9 @@ input:-moz-ui-invalid {
   .content-r {
     left: 100%;
     position: absolute;
-    top: calc(100% - (@size-iv + @base-line-height-px));
+    // The right-justified content doesn't quite line up with the input field it's
+    // attached to, so we have to manually nudge it up a bit
+    top: calc(100% - (@size-iv + @base-line-height-px + 3px));
     // Fix for safari absolute position layout
     width: 100%;
   }
@@ -288,6 +299,10 @@ input:-moz-ui-invalid {
 }
 
 .js-transit-hours, .js-transit-minutes {
+  // Necessary because we are setting a lot of custom widths per design's
+  // direction, and at certain screen sizes the fields become unusable
+  min-width: 35px;
+
   .respond-to-max(@bp-sm-min, {
     display: inline-block;
     width: 20%;
