@@ -5,7 +5,7 @@ import { toArray } from '../../../../../../../cfgov/unprocessed/apps/youth-emplo
 import {
   updateRouteChoiceAction
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/choice-reducer';
-import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data/transportation-map';
+import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
 
 const CLASSES = reviewChoiceView.CLASSES;
 

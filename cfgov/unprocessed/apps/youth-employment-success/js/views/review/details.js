@@ -1,9 +1,9 @@
 import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 import { toArray, toggleCFNotification } from '../../util';
-import { getPlanItem } from '../../data/todo-items';
+import { getPlanItem } from '../../data-types/todo-items';
 import { isWaiting } from '../../reducers/choice-reducer';
 import { todoListSelector } from '../../reducers/route-option-reducer';
-import transportationMap from '../../data/transportation-map';
+import transportationMap from '../../data-types/transportation-map';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'js-yes-plans-review',
