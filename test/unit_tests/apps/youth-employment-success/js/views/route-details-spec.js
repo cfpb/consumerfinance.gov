@@ -197,7 +197,7 @@ describe( 'routeDetailsView', () => {
 
       const budgetLeftEl = document.querySelector( `.${ CLASSES.BUDGET_REMAINING }` );
 
-      expect( budgetLeftEl.textContent ).toBe( '-357.00' );
+      expect( budgetLeftEl.textContent ).toBe( `${ String.fromCharCode( 8722 ) }357.00` );
     } );
 
     it( 'updates the time in hours', () => {
@@ -244,6 +244,33 @@ describe( 'routeDetailsView', () => {
 
       expect( todosEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
       expect( todoItemsEl.querySelectorAll( 'li' ).length ).toBe( 0 );
+    } );
+
+    it.only( 'does not hide the to-do list when an item is removed and there are remaining items', () => {
+      const state = {
+        budget: { ...nextState.budget },
+        route: {
+          ...nextState.route,
+          actionPlanItems: nextState.route.actionPlanItems.concat( [ PLAN_TYPES.MILES ] )
+        }
+      };
+
+      view.render( state );
+
+      const todosEl = document.querySelector( `.${ CLASSES.TODO_LIST }` );
+      const todoItemsEl = document.querySelector( `.${ CLASSES.TODO_ITEMS }` );
+
+      expect( todoItemsEl.querySelectorAll( 'li' ).length ).toBe( 2 );
+
+      view.render( {
+        budget: { ...state.budget },
+        route: {
+          ...state.route,
+          actionPlanItems: [ PLAN_TYPES.MILES ]
+        }
+      } );
+
+      expect( todosEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
     } );
 
     it( 'shows the out of budget alert when the route is out of budget', () => {

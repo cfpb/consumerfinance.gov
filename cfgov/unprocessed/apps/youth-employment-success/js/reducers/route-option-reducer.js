@@ -126,7 +126,7 @@ function updateActionPlan( state, routeIndex, itemType, doUpdate ) {
   const actionPlan = todoListSelector( state, routeIndex );
 
   if ( !doUpdate ) {
-    actionPlan.splice( actionPlan.indexOf( itemType ) );
+    actionPlan.splice( actionPlan.indexOf( itemType ), 1 );
 
     return actionPlan.slice();
   }
