@@ -1,4 +1,4 @@
-{% import 'molecules/featured-menu-content.html' as featured_menu_content %}
+{% import 'molecules/featured-menu-content.html' as featured_menu_content with context%}
 {% set base_class = 'o-mega-menu' %}
 
 {# ==========================================================================
@@ -190,7 +190,7 @@
 {% macro _nav_item( nav_depth, nav_item ) %}
 {% set link = nav_item.link if nav_item.link else nav_item %}
 {% if link %}
-    {% set url = link.page_link.url if link.page_link else link.external_link | default('#') %}
+    {% set url = pageurl(link.page_link) if link.page_link else link.external_link | default('#') %}
     {% set text = link.link_text %}
     {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
 
