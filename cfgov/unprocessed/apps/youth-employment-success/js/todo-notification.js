@@ -50,6 +50,7 @@ function TodoNotification() {
    */
   function _cloneNotification( message ) {
     clone = self.element.cloneNode( true );
+    clone.classList.remove( 'u-hidden' );
     clone.querySelector( `.${ CLASSES.MESSAGE }` ).textContent = message;
     clone.querySelector( `.${ CLASSES.NOTIFICATION }` ).classList.add( VISIBLE_CLASS );
 

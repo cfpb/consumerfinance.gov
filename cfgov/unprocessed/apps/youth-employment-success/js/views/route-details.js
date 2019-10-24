@@ -1,4 +1,4 @@
-import { assign, toArray, toPrecision, toggleCFNotification } from '../util';
+import { assign, formatNegative, toArray, toPrecision, toggleCFNotification } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
 import { getPlanItem } from '../data/todo-items';
 import money from '../money';
@@ -166,10 +166,10 @@ function updateDomNode( node, nextValue ) {
 
   if ( assertStateHasChanged( currentValue, nextValue ) ) {
     if ( nextValue instanceof HTMLElement || nextValue instanceof Node ) {
-      node.textContent = '';
+      node.innerHTML = '';
       node.appendChild( nextValue );
     } else {
-      node.textContent = nextValue;
+      node.innerHTML = nextValue;
     }
   }
 }
@@ -233,10 +233,18 @@ function routeDetailsView( element ) {
       const dataToValidate = assign( {}, budget, route );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
-      updateDom( _budgetEl, toPrecision( remainingBudget, 2 ) );
+      updateDom( _budgetEl,
+        formatNegative(
+          toPrecision( remainingBudget, 2 )
+        )
+      );
       updateDom( _daysPerWeekEl, route.daysPerWeek );
       updateDom( _totalCostEl, toPrecision( costEstimate, 2 ) );
-      updateDom( _budgetLeftEl, toPrecision( nextRemainingBudget, 2 ) );
+      updateDom( _budgetLeftEl,
+        formatNegative(
+          toPrecision( nextRemainingBudget, 2 )
+        )
+      );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
       if ( _todoListEl ) {

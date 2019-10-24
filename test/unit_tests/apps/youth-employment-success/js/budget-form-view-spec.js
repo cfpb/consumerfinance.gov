@@ -110,7 +110,7 @@ describe( 'BudgetFormView', () => {
     expect( totalEl.textContent ).toEqual( '0.00' );
   } );
 
-  it( 'defaults the `total` value to zero when no input has been received', () => {
+  it( 'defaults the `total` value to - when no input has been received', () => {
     store.subscriber()( {}, { budget: {}} );
 
     const totalEl = document.querySelector( `.${ CLASSES.REMAINING }` );
@@ -148,6 +148,6 @@ describe( 'BudgetFormView', () => {
     moneySpentEl.value = '5';
     simulateEvent( 'input', moneySpentEl );
 
-    expect( totalEl.textContent ).toEqual( '-100.00' );
+    expect( totalEl.textContent ).toBe( `${ String.fromCharCode( 8722 ) }100.00` );
   } );
 } );
