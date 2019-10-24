@@ -1,5 +1,5 @@
-import Store from '../../../js/organisms/MortgagePerformanceTrends/stores/store';
-import { UNDEFINED } from './util';
+import Store from '../../../../js/organisms/MortgagePerformanceTrends/stores/store';
+import { UNDEFINED } from '../util';
 
 class YesStore extends Store {
   constructor( reducer, middlewares ) {
