@@ -3,19 +3,19 @@ import { addRouteOptionAction } from './reducers/route-option-reducer';
 import { toArray } from './util';
 import averageCostView from './views/average-cost';
 import budgetFormView from './budget-form-view';
-import createRoute from './route.js';
+import createRoute from './models/route';
 import daysPerWeekView from './views/days-per-week';
 import drivingCostEstimateView from './views/driving-cost-estimate';
 import expandableView from './views/expandable';
 import goalsView from './views/goals';
 import milesView from './views/miles';
-import printButton from './views/print-button';
+import printButton from './views/review/print-button';
 import reviewChoiceView from './views/review/choice';
 import reviewDetailsView from './views/review/details';
 import reviewGoalsView from './views/review/goals';
-import routeDetailsView from './views/route-details';
-import routeOptionFormView from './route-option-view';
-import routeOptionToggleView from './route-option-toggle-view';
+import routeDetailsView from './views/route/details';
+import routeOptionFormView from './views/route/option-view';
+import routeOptionToggleView from './views/route/option-toggle-view';
 import store from './store';
 import transitTimeView from './views/transit-time';
 
@@ -38,23 +38,6 @@ goalsFormView.init();
 const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
 const budgetForm = budgetFormView( budgetFormEl, { store } );
 budgetForm.init();
-
-reviewGoalsView(
-  document.querySelector( `.${ REVIEW_GOALS_CLASSES.CONTAINER }`
-  ), { store }
-).init();
-
-const reviewDetailsEl = document.querySelector(
-  `.${ reviewDetailsView.CLASSES.CONTAINER }`
-);
-reviewDetailsView( reviewDetailsEl, {
-  store, routeDetailsView
-} ).init();
-
-reviewChoiceView(
-  document.querySelector( `.${ reviewChoiceView.CLASSES.CONTAINER }` ),
-  { store }
-).init();
 
 const expandables = Expandable.init();
 
@@ -94,6 +77,23 @@ routeOptionToggleView(
  * the user clicks the 'add another option' button.
 */
 routeOptionForms[0].init();
+
+reviewChoiceView(
+  document.querySelector( `.${ reviewChoiceView.CLASSES.CONTAINER }` ),
+  { store }
+).init();
+
+const reviewDetailsEl = document.querySelector(
+  `.${ reviewDetailsView.CLASSES.CONTAINER }`
+);
+reviewDetailsView( reviewDetailsEl, {
+  store, routeDetailsView
+} ).init();
+
+reviewGoalsView(
+  document.querySelector( `.${ REVIEW_GOALS_CLASSES.CONTAINER }`
+  ), { store }
+).init();
 
 printButton(
   document.querySelector( `.${ printButton.CLASSES.BUTTON }` )

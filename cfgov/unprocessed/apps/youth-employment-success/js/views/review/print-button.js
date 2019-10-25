@@ -1,5 +1,5 @@
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { toArray } from '../util';
+import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
+import { toArray } from '../../util';
 
 const CLASSES = {
   BUTTON: 'yes-print-button',

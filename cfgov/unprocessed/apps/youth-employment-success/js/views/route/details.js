@@ -1,11 +1,11 @@
-import { assign, formatNegative, toArray, toPrecision } from '../util';
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { ALERT_TYPES } from '../data-types/notifications';
-import { getPlanItem } from '../data-types/todo-items';
-import money from '../money';
-import notificationsView from './notifications';
-import transportationMap from '../data-types/transportation-map';
-import validate from '../validators/route-option';
+import { assign, formatNegative, toArray, toPrecision } from '../../util';
+import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
+import { ALERT_TYPES } from '../../data-types/notifications';
+import { getPlanItem } from '../../data-types/todo-items';
+import money from '../../money';
+import notificationsView from '../notifications';
+import transportationMap from '../../data-types/transportation-map';
+import validate from '../../validators/route-option';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'yes-route-details',

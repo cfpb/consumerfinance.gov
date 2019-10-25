@@ -1,5 +1,6 @@
 {% from 'molecules/info-unit.html' import info_unit with context %}
-{{info_unit}}
+{{ info_unit }}
+
 {% macro yes_info_unit(values) %}
   {{ info_unit({
     'body': '<p>' ~ values.body ~ '</p>',

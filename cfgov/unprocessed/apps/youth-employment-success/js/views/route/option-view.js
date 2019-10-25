@@ -1,12 +1,12 @@
-import { checkDom, setInitFlag } from '../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 import {
   routeSelector,
   updateTransportationAction
-} from './reducers/route-option-reducer';
-import TodoNotification from './todo-notification';
-import inputView from './views/input';
-import { toArray } from './util';
-import { TRANSPORTATION } from './data-types/transportation-map';
+} from '../../reducers/route-option-reducer';
+import TodoNotification from '../../todo-notification';
+import inputView from '../input';
+import { toArray } from '../../util';
+import { TRANSPORTATION } from '../../data-types/transportation-map';
 
 const CLASSES = Object.freeze( {
   FORM: 'o-yes-route-option',

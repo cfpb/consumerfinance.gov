@@ -1,17 +1,17 @@
-import { simulateEvent } from '../../../../util/simulate-event';
-import routeOptionFormView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route-option-view';
-import averageCostView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
-import routeDetailsView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route-details';
-import milesView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
-import transitTimeView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/transit-time';
-import drivingCostEstimateView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/driving-cost-estimate';
+import { simulateEvent } from '../../../../../../util/simulate-event';
+import routeOptionFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-view';
+import averageCostView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/average-cost';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import milesView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
+import transitTimeView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/transit-time';
+import drivingCostEstimateView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/driving-cost-estimate';
 import {
   updateTransportationAction
-} from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import daysPerWeekView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/days-per-week';
-import mockStore from '../../../mocks/store';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import daysPerWeekView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/days-per-week';
+import mockStore from '../../../../../mocks/store';
 
-jest.mock( '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/todo-notification' );
+jest.mock( '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/todo-notification' );
 
 const CLASSES = routeOptionFormView.CLASSES;
 const HTML = `

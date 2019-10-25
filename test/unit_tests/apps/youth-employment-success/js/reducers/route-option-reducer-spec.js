@@ -1,4 +1,4 @@
-import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route';
+import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
 import routeOptionReducer, {
   addRouteOptionAction,
   clearAverageCostAction,

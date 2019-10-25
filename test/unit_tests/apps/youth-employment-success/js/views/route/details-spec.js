@@ -1,7 +1,7 @@
-import routeDetailsView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route-details';
-import { toArray, toPrecision } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
-import transportationMap from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import { toArray, toPrecision } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
 
 const HTML = `
   <div class="yes-route-details">
