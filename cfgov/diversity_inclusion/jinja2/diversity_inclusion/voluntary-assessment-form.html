@@ -51,6 +51,24 @@
         <form id="voluntary-diversity-assessment"
               action="{{ url('diversity_inclusion:voluntary_assessment_form') }}"
               method="POST">
+            {#
+                Display any error messages created during form submission.
+                Rendered above the form for styling purposes.
+            #}
+            {% if form.errors %}
+                {% import 'molecules/notification.html' as notification %}
+                <div class="u-mb15">
+                    {% for error in form.non_field_errors() %}
+                        {{- notification.render('error', true, error | richtext ) }}
+                    {% endfor %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            {{- notification.render('error', true, error) }}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <h2>Institution information</h2>
             <p>
                 Please provide your institution’s name, headquarters location, and tax identification number.
