@@ -39,23 +39,6 @@ const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
 const budgetForm = budgetFormView( budgetFormEl, { store } );
 budgetForm.init();
 
-reviewGoalsView(
-  document.querySelector( `.${ REVIEW_GOALS_CLASSES.CONTAINER }`
-  ), { store }
-).init();
-
-const reviewDetailsEl = document.querySelector(
-  `.${ reviewDetailsView.CLASSES.CONTAINER }`
-);
-reviewDetailsView( reviewDetailsEl, {
-  store, routeDetailsView
-} ).init();
-
-reviewChoiceView(
-  document.querySelector( `.${ reviewChoiceView.CLASSES.CONTAINER }` ),
-  { store }
-).init();
-
 const expandables = Expandable.init();
 
 expandables.forEach( expandable => {
@@ -95,6 +78,26 @@ routeOptionToggleView(
 */
 routeOptionForms[0].init();
 
-printButton(
-  document.querySelector( `.${ printButton.CLASSES.BUTTON }` )
+// Initialize subviews for the review section
+function handleShowReviewPlan() {
+  reviewGoalsView(
+    document.querySelector( `.${ REVIEW_GOALS_CLASSES.CONTAINER }`
+    ), { store }
+  ).init();
+  
+  const reviewDetailsEl = document.querySelector(
+    `.${ reviewDetailsView.CLASSES.CONTAINER }`
+  );
+  reviewDetailsView( reviewDetailsEl, {
+    store, routeDetailsView
+  } ).init();
+
+  printButton(
+    document.querySelector( `.${ printButton.CLASSES.BUTTON }` )
+  ).init();
+}
+
+reviewChoiceView(
+  document.querySelector( `.${ reviewChoiceView.CLASSES.CONTAINER }` ),
+  { store, onShowReviewPlan: handleShowReviewPlan }
 ).init();
