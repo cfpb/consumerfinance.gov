@@ -34,14 +34,16 @@ function notificationsView( element ) {
    * @param {HTMLElement} notificationEl The DOM node of the notification to toggle
    * @param {Boolean} doShow Whether to show or hide the notification
    */
-  function _updateNotificationVisibility( notificationEl, doShow ) {
+  function _updateNotificationVisibility( alertEl, alertContainer, doShow ) {
     if ( activeNotification ) {
       toggleCFNotification( activeNotification, false );
+      alertContainer.removeChild(activeNotification);
       activeNotification = null;
     }
 
-    activeNotification = notificationEl;
+    activeNotification = alertEl.cloneNode(true);
     toggleCFNotification( activeNotification, doShow );
+    alertContainer.appendChild(activeNotification);
 
     if ( activeNotification ) {
       _dom.classList.remove( 'u-hidden' );
@@ -58,9 +60,11 @@ function notificationsView( element ) {
 
       return this;
     },
-    render( alertValues ) {
-      const alertEl = alertRules[getBitmask( alertValues )];
-      _updateNotificationVisibility( _dom.querySelector( `.${ alertEl }` ), true );
+    render( { alertValues, alertTarget }) {
+      const alertSelector = alertRules[getBitmask( alertValues )];
+      const alertEl = _dom.querySelector( `.${ alertSelector }` );
+
+      _updateNotificationVisibility( alertEl, alertTarget, true );
     }
   };
 }

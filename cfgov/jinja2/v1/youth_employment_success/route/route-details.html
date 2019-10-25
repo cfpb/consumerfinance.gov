@@ -1,7 +1,7 @@
-{% import 'alert.html' as alert with context %}
 {% import 'line-item.html' as line_item with context %}
 
 <div class="content-l u-mb0 yes-route-details">
+  <div class="block block__sub-micro block__flush-top u-js-only js-route-notification"></div>
   <div class="content-l_col content-l_col-1">
     <p class="h5 u-mt0 u-mb0">
       Totals for <span class="js-transportation-type"></span>
@@ -33,9 +33,7 @@
           'target': 'js-budget-left'
         })
       }}
-      <div class="content-l block block__sub-micro block__flush-top u-js-only js-route-notifications">
-        {% include 'route/notifications.html' %}
-      </div>
+      <div class="block block__sub-micro block__flush-top u-js-only js-route-inline-notification"></div>
     </div>
 
     <div class="block block__sub-micro block__flush-bottom">

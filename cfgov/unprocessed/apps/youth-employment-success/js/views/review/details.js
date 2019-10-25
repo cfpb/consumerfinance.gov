@@ -111,7 +111,7 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
    */
   function _initSubviews() {
     _detailsEls.reduce( ( memo, node ) => {
-      const view = routeDetailsView( node );
+      const view = routeDetailsView( node, { alertTarget: 'js-route-notification' } );
 
       memo.push( view );
 

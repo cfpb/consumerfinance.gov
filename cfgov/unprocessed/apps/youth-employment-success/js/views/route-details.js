@@ -183,7 +183,7 @@ function updateDomNode( node, nextValue ) {
  * @param {HTMLNode} element The root DOM element for this view
  * @returns {Object} This view's public methods
  */
-function routeDetailsView( element ) {
+function routeDetailsView( element, { alertTarget } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _transportationEl = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_TYPE }` )
@@ -217,7 +217,7 @@ function routeDetailsView( element ) {
     init() {
       if ( setInitFlag( _dom ) ) {
         alertView = notificationsView(
-          _dom.querySelector( `.${ notificationsView.CLASSES.CONTAINER }` )
+          document.querySelector( `.${ notificationsView.CLASSES.CONTAINER }` )
         );
         alertView.init();
       }
@@ -231,8 +231,7 @@ function routeDetailsView( element ) {
         remainingBudget,
         costEstimate
       );
-      const dataToValidate = assign( {}, budget, route );
-      const dataIsValid = validate( dataToValidate );
+      const dataIsValid = validate( assign( {}, budget, route ) );
       const valuesForNotification = {
         [ALERT_TYPES.HAS_TODOS]: Boolean(
           route.transportation && route.actionPlanItems.length
@@ -257,11 +256,14 @@ function routeDetailsView( element ) {
       );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
+
       if ( _todoListEl ) {
         _toggleTodoList( route.actionPlanItems );
       }
 
-      alertView.render( valuesForNotification );
+      alertView.render( {
+        alertValues: valuesForNotification, alertTarget
+      } );
     }
   };
 }
