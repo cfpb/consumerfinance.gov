@@ -1,5 +1,5 @@
 import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
-import { toArray, toggleCFNotification } from '../../util';
+import { toArray } from '../../util';
 import { getPlanItem } from '../../data-types/todo-items';
 import { isWaiting } from '../../reducers/choice-reducer';
 import { todoListSelector } from '../../reducers/route-option-reducer';
@@ -11,7 +11,7 @@ const CLASSES = Object.freeze( {
   TRANSPORTATION_TYPE: 'js-transportation-option',
   DETAILS: 'yes-route-details',
   TODO: 'js-review-todo',
-  ALERT: 'js-route-incomplete'
+  NOTIFICATION: 'js-route-notification'
 } );
 
 /**
@@ -38,14 +38,14 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
   const _detailsEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.DETAILS }` )
   );
-  const _notificationEls = toArray(
-    _dom.querySelectorAll( `.${ CLASSES.ALERT }` )
-  );
   const _transportationTypeEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_TYPE }` )
   );
   const _reviewChoiceHeadingEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.CHOICE_HEADING }` )
+  );
+  const _notificationEls = toArray(
+    _dom.querySelectorAll(`.${CLASSES.NOTIFICATION}`)
   );
 
   const _detailsViews = [];
@@ -94,11 +94,6 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
       el.appendChild( fragment );
     } );
 
-    _notificationEls.forEach( ( el, index ) => {
-      const todos = todoListSelector( state.routes, index );
-      toggleCFNotification( el, todos.length );
-    } );
-
     if ( isWaiting( state ) ) {
       _reviewChoiceHeadingEls.forEach( el => el.classList.add( 'u-hidden' ) );
     } else {
@@ -110,8 +105,10 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
    * Initialize the child views this view manages.
    */
   function _initSubviews() {
-    _detailsEls.reduce( ( memo, node ) => {
-      const view = routeDetailsView( node, { alertTarget: 'js-route-notification' } );
+    _detailsEls.reduce( ( memo, node, index ) => {
+      const view = routeDetailsView( node, {
+        alertTarget: _notificationEls[index]
+      } );
 
       memo.push( view );
 

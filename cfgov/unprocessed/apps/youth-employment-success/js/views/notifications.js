@@ -38,17 +38,21 @@ function notificationsView( element ) {
     if ( activeNotification ) {
       toggleCFNotification( activeNotification, false );
       alertContainer.removeChild(activeNotification);
+      alertContainer.classList.add('u-hidden');
       activeNotification = null;
     }
 
     activeNotification = alertEl.cloneNode(true);
     toggleCFNotification( activeNotification, doShow );
+
     alertContainer.appendChild(activeNotification);
+    alertContainer.classList.remove('u-hidden');
 
     if ( activeNotification ) {
       _dom.classList.remove( 'u-hidden' );
     } else {
       _dom.classList.add( 'u-hidden' );
+      
     }
   }
 

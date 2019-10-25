@@ -18,17 +18,6 @@
     <div class="js-review-choice-heading">
       <p class="h3">Your first choice is <span class="js-transportation-option"></span></p>
     </div>
-    <div class="content-l content-l_col-1 js-route-incomplete u-mt0">
-      {{
-        alert.render({
-          'background': true,
-          'class': 'block block__sub-micro u-js-only',
-          'fill': 'warning',
-          'content': 'You chose a plan that still has to-do list items. Completing the missing items will give you a better sense if this is the best option for you.',
-          'visible': true
-        })
-      }}
-    </div>
     <div class="block block__sub-micro block__flush-bottom">
       {% with show_todos=false %}
         {% include "route/route-details.html" %}
@@ -42,17 +31,6 @@
       <p class="u-mb0">
         <small>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</small>
       </p>
-    </div>
-    <div class="content-l content-l_col-1 js-route-incomplete">
-      {{
-        alert.render({
-          'background': true,
-          'class': 'block block__sub-micro u-js-only',
-          'fill': 'warning',
-          'content': 'You chose a plan that still has to-do list items. Completing the missing items will give you a better sense if this is the best option for you.',
-          'visible': true
-        })
-      }}
     </div>
     <div class="block block__sub-micro block__flush-bottom">
       {% with show_todos=false %}

@@ -49,7 +49,9 @@
   {% include "route-questions/days-per-week.html" %}
   {% include "route-questions/transit-time.html" %}
   {% with show_todos=true %}
+  <div class="yes-route-form-details">
     {% include "route-details.html" %}
+  </div>
   {% endwith %}
   <div class="content-l_col content-l_col-1 js-todo-notification u-hidden">    
     {{
