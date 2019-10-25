@@ -6,10 +6,10 @@ const PLAN_TYPES = Object.freeze( {
 } );
 
 const ACTION_PLAN = Object.freeze( {
-  AVERAGE_COST: 'average cost',
-  DAYS_PER_WEEK: 'days per week',
-  MILES: 'miles',
-  TIME: 'Look up how to estimate transit time.'
+  AVERAGE_COST: 'Look up average daily cost.',
+  DAYS_PER_WEEK: 'Find out how many days per week you\'ll make this trip.',
+  MILES: ' Look up how many miles you drive each day.',
+  TIME: ' Look up how long this trip takes.'
 } );
 
 /**

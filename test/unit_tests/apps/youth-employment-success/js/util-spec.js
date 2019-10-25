@@ -4,6 +4,7 @@ import {
   assign,
   combineReducers,
   entries,
+  formatNegative,
   toArray,
   toPrecision,
   toggleCFNotification
@@ -190,8 +191,8 @@ describe( 'YES utility functions', () => {
   } );
 
   describe( '.toggleCFNotification', () => {
-    it( 'throws an error if not passed a dom node as its first argument', () => {
-      expect( () => toggleCFNotification( null, true ) ).toThrow();
+    it( 'throws an error if first arg is supplied and value is not a dom node', () => {
+      expect( () => toggleCFNotification( 'foo', true ) ).toThrow();
     } );
 
     it( 'toggles a supplied notification', () => {
@@ -230,6 +231,21 @@ describe( 'YES utility functions', () => {
       expect( toPrecision( string, 3 ) ).toBe( '100.000' );
       expect( toPrecision( '100.1', 2 ) ).toBe( '100.10' );
       expect( toPrecision( '100.00', 2 ) ).toBe( '100.00' );
+    } );
+  } );
+
+  describe( '.formatNegative', () => {
+    it( 'returns the value supplied if that value is not a number', () => {
+      expect( formatNegative( '-' ) ).toBe( '-' );
+    } );
+
+    it( 'adds an html entity minus to a number', () => {
+      expect( formatNegative( '-1600' ) ).toBe( '&#8722;1600' );
+    } );
+
+    it( 'preserves decimals', () => {
+      expect( formatNegative( '-1600.00' ) ).toBe( '&#8722;1600.00' );
+      expect( formatNegative( '-1600.10' ) ).toBe( '&#8722;1600.1' );
     } );
   } );
 } );

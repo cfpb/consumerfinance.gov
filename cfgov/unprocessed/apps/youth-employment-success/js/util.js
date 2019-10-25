@@ -3,6 +3,7 @@ let UNDEFINED;
 const REDUCER_RETURN_ERROR = 'Reducer must return a state object';
 const INVALID_ARG_ERROR = 'The "reducers" argument must be an object, where each value is a reducer function';
 const INVALID_OBJECT_ERROR = 'The `entries` function must be passed an object as its first argument';
+const HTML_MINUS = '&#8722;';
 
 /**
  * Helper method to generate an action creator
@@ -189,43 +190,79 @@ function isNumber( maybeNum ) {
  * @param {Boolean} doShow Whether to show or hide the element
  */
 function toggleCFNotification( node, doShow ) {
-  if ( !( node instanceof HTMLElement ) ) {
-    throw new TypeError( 'First argument must be a valid DOM node.' );
-  }
+  if ( node ) {
+    if ( !( node instanceof HTMLElement ) ) {
+      throw new TypeError( 'First argument must be a valid DOM node.' );
+    }
 
-  const notification = node.classList.contains( 'm-notification' ) ?
-    node : node.querySelector( '.m-notification' );
+    const notification = node.classList.contains( 'm-notification' ) ?
+      node : node.querySelector( '.m-notification' );
 
-  if ( notification ) {
-    if ( doShow ) {
-      notification.classList.add( 'm-notification__visible' );
-    } else {
-      notification.classList.remove( 'm-notification__visible' );
+    if ( notification ) {
+      if ( doShow ) {
+        notification.classList.add( 'm-notification__visible' );
+      } else {
+        notification.classList.remove( 'm-notification__visible' );
+      }
     }
   }
 }
 
 /**
  * Right-pad a string with some number of zeros
- * @param {String} str The string to convert to a fixed precision number
+ * @param {String} value The string to convert to a fixed precision number
  * @param {Number} precision The number of places after the decimal to truncate to
  * @returns {String} A new string with the correct precision
  */
-function toPrecision( str = '', precision = 0 ) {
-  const num = Number( str );
+function toPrecision( value = '', precision = 0 ) {
+  let safeValue;
 
-  if ( !isNumber( num ) ) {
+  if ( typeof value === 'string' ) {
+    safeValue = value.replace( /,+/, '' );
+  } else {
+    safeValue = Number( value );
+  }
+
+  if ( !isNumber( safeValue ) ) {
     throw new Error( 'First argument must be a number.' );
   }
 
-  return String( ( Math.round( ( num * 1000 ) / 10 ) / 100 ).toFixed( precision ) );
+  return String( ( Math.round( ( safeValue * 1000 ) / 10 ) / 100 ).toFixed( precision ) );
 }
+
+function formatNegative( num ) {
+  if ( !isNumber( num ) ) {
+    return num;
+  }
+
+  const [ significant, decimalZeros = '' ] = num.split( '.' );
+  let decimals = '';
+
+  // Math.abs will preserve decimals, but not if they are zero
+  if ( ( /^0+$/ ).test( decimalZeros ) ) {
+    decimals = decimalZeros;
+  }
+
+  let formattedTotal = significant;
+
+  if ( num < 0 ) {
+    formattedTotal = `${ HTML_MINUS }${ Math.abs( num ) }`;
+  }
+
+  if ( !decimals ) {
+    return formattedTotal;
+  }
+
+  return `${ formattedTotal }.${ decimals }`;
+}
+
 
 export {
   actionCreator,
   assign,
   combineReducers,
   entries,
+  formatNegative,
   isNumber,
   toArray,
   toPrecision,
