@@ -97,4 +97,18 @@ describe( 'goalsView', () => {
       updateGoalTimelineAction( shortTimelineEl.value )
     );
   } );
+
+  it( 'preserves spaces in the textarea', () => {
+    const ltgEl = document.querySelector( `.${ CLASSES.LONG_TERM_GOAL }` );
+    const goal = 'This is my goal\nIt is a good goal\nThe end!';
+    const mock = store.dispatch.mock;
+
+    ltgEl.value = goal;
+
+    simulateEvent( 'blur', ltgEl );
+
+    const expected = goal.replace( /\n/g, '<br />' );
+
+    expect( mock.calls[0][0].data ).toEqual( expected );
+  } );
 } );

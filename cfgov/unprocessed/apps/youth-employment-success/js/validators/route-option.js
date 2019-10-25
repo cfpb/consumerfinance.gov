@@ -1,5 +1,4 @@
-import { PLAN_TYPES } from '../data/todo-items';
-import { isNumber } from '../util';
+import { PLAN_TYPES } from '../data-types/todo-items';
 
 /* Fields that are always required, regardless of the transportation
    mode selected */

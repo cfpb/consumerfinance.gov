@@ -1,5 +1,5 @@
 import { actionCreator, assign } from '../util';
-import { PLAN_TYPES } from '../data/todo-items';
+import { PLAN_TYPES } from '../data-types/todo-items';
 
 const initialState = {
   routes: []
@@ -126,7 +126,7 @@ function updateActionPlan( state, routeIndex, itemType, doUpdate ) {
   const actionPlan = todoListSelector( state, routeIndex );
 
   if ( !doUpdate ) {
-    actionPlan.splice( actionPlan.indexOf( itemType ) );
+    actionPlan.splice( actionPlan.indexOf( itemType ), 1 );
 
     return actionPlan.slice();
   }

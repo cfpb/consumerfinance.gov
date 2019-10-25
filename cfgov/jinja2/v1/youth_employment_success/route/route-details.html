@@ -33,44 +33,19 @@
           'target': 'js-budget-left'
         })
       }}
-      <div class="content-l block block__sub-micro block__flush-top u-js-only">
-        <div class="content-l_col content-l_col-1">
-          <div class="js-route-complete">
-            {{
-              alert.render({
-                'fill': 'success',
-                'content': 'Looks good! This option fits your budget.',
-              })
-            }}
-          </div>
-          <div class="js-route-incomplete">
-            {{
-              alert.render({
-                'fill': 'warning',
-                'content': 'To see if this option fits your budget, complete the items in your to-do list and enter the missing amounts above.'
-              })
-            }}
-          </div>
-          <div class="js-route-oob">
-            {{
-              alert.render({
-                'content': 'This option is out of budget. Talk to your caseworker about ways you might be able to rethink your budget so this can be an option for you.',
-                'fill': 'danger'
-              })
-            }}
-          </div>
-        </div>
+      <div class="content-l block block__sub-micro block__flush-top u-js-only js-route-notifications">
+        {% include 'route/notifications.html' %}
       </div>
     </div>
 
     <div class="block block__sub-micro block__flush-bottom">
       <div class="content-l m-hours">
-        <p class="content-l_col content-l_col-1-2 h4 m-hours_container">Total time to get to work</p>
-        <div class="content-l_col content-l_col-1-2 u-align-right m-hours_container">
+        <p class="content-l_col content-l_col-2-3 h4 m-hours_container">Total time to get to work</p>
+        <div class="content-l_col content-l_col-1-3 u-align-right m-hours_container">
           <p class="content-l_col content-l_col-1-2 m-hours_data">
             <span class="js-time-hours">-</span> hours
           </p>
-          <p class="content-l_col content-l_col-1-2">
+          <p class="content-l_col content-l_col-1-2 m-minutes_data">
             <span class="js-time-minutes">-</span> minutes
           </p>
         </div>
