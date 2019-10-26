@@ -84,7 +84,6 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
 
       if ( todos.length ) {
         el.classList.remove( 'u-hidden' );
-        el.classList.add('o-well');
       } else {
         el.classList.add( 'u-hidden' );
       }
@@ -128,6 +127,7 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
     init() {
       if ( setInitFlag( _dom ) ) {
         _initSubviews();
+        _handleStateUpdate({}, store.getState());
         store.subscribe( _handleStateUpdate );
       }
     }

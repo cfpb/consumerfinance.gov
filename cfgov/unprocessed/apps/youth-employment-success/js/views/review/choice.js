@@ -167,7 +167,7 @@ function reviewChoiceView( element, { store, onShowReviewPlan } ) {
   return {
     init() {
       if ( setInitFlag( _dom ) ) {
-  //      _hideReviewPlan();
+        _hideReviewPlan();
 
         /**
          * NOTE: Although these are set to disabled in the template, we need to manually disable them again;
