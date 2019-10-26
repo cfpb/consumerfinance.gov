@@ -10,7 +10,8 @@ const CLASSES = Object.freeze( {
   CHOICE_HEADING: 'js-review-choice-heading',
   TRANSPORTATION_TYPE: 'js-transportation-option',
   DETAILS: 'yes-route-details',
-  TODO: 'js-review-todo',
+  TODO: 'js-todo-list',
+  TODO_ITEMS: 'js-todo-items',
   NOTIFICATION: 'js-route-notification'
 } );
 
@@ -34,6 +35,9 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _todoEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TODO }` )
+  );
+  const _todoItemEls = toArray(
+    _dom.querySelectorAll( `.${ CLASSES.TODO_ITEMS }` )
   );
   const _detailsEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.DETAILS }` )
@@ -79,9 +83,10 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
       const todos = todoListSelector( state.routes, index );
 
       if ( todos.length ) {
-        el.parentNode.classList.remove( 'u-hidden' );
+        el.classList.remove( 'u-hidden' );
+        el.classList.add('o-well');
       } else {
-        el.parentNode.classList.add( 'u-hidden' );
+        el.classList.add( 'u-hidden' );
       }
 
       todos.forEach( todo => {
@@ -90,8 +95,9 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
         fragment.appendChild( item );
       } );
 
-      el.innerHTML = '';
-      el.appendChild( fragment );
+      const todoListEl = _todoItemEls[index];
+      todoListEl.innerHTML = '';
+      todoListEl.appendChild( fragment );
     } );
 
     if ( isWaiting( state ) ) {

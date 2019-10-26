@@ -1,5 +1,6 @@
 {% import 'line-item.html' as line_item with context %}
 
+{% macro route_details() %}
 <div class="content-l u-mb0 yes-route-details">
   <div class="content-l u-js-only">
     <div class="content-l_col-1 js-route-notification block block__sub-micro block__flush-top u-hidden" style="margin-left: 15px;"></div>
@@ -51,19 +52,9 @@
         </div>
       </div>
     </div>
-    
-    {% if show_todos %}
-    <div class="content-l block block__sub-micro js-todo-list u-hidden">
-      <div class="content-l_col content-l_col-1">
-        <span class="h5">Your to-do list</span>
-        <div class="content_line-bold"></div>
-        <div class="content-l">
-          <div class="content-l_col content-l_col-2-3">
-            <ul class="block block__sub-micro block__flush-bottom js-todo-items"></ul>
-          </div>
-        </div>
-      </div>
-    </div>
+
+    {% if caller is defined %}
+      {{ caller() }}
     {% endif %}
-  </div>
 </div>
+{% endmacro %}
