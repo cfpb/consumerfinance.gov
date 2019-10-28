@@ -80,7 +80,7 @@ function reviewGoalsView( element, { store } ) {
   return {
     init() {
       if ( setInitFlag( _dom ) ) {
-        _handleStateUpdate({}, store.getState());
+        _handleStateUpdate( {}, store.getState() );
         store.subscribe( _handleStateUpdate );
       }
     }

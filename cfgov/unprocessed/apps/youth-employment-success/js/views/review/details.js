@@ -49,7 +49,7 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
     _dom.querySelectorAll( `.${ CLASSES.CHOICE_HEADING }` )
   );
   const _notificationEls = toArray(
-    _dom.querySelectorAll(`.${CLASSES.NOTIFICATION}`)
+    _dom.querySelectorAll( `.${ CLASSES.NOTIFICATION }` )
   );
 
   const _detailsViews = [];
@@ -127,7 +127,7 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
     init() {
       if ( setInitFlag( _dom ) ) {
         _initSubviews();
-        _handleStateUpdate({}, store.getState());
+        _handleStateUpdate( {}, store.getState() );
         store.subscribe( _handleStateUpdate );
       }
     }

@@ -84,7 +84,7 @@ function handleShowReviewPlan() {
     document.querySelector( `.${ REVIEW_GOALS_CLASSES.CONTAINER }`
     ), { store }
   ).init();
-  
+
   const reviewDetailsEl = document.querySelector(
     `.${ reviewDetailsView.CLASSES.CONTAINER }`
   );
