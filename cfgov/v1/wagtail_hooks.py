@@ -8,8 +8,8 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.html import format_html_join
 from django.shortcuts import render
+from django.utils.html import format_html_join
 
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
@@ -17,6 +17,8 @@ from wagtail.contrib.modeladmin.options import (
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.whitelist import attribute_rule
+
+from scripts import export_enforcement_actions
 
 from v1.admin_views import ExportFeedbackView, manage_cdn
 from v1.models.menu_item import MenuItem as MegaMenuItem
@@ -27,8 +29,6 @@ from v1.models.snippets import (
 )
 from v1.util import util
 
-from scripts import export_enforcement_actions
-
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +37,7 @@ def export_data(request):
     if request.method == 'POST':
         return export_enforcement_actions.export_actions(http_response=True)
     return render(request, 'wagtailadmin/export_data.html')
+
 
 @hooks.register('register_admin_menu_item')
 def register_export_menu_item():
@@ -50,7 +51,11 @@ def register_export_menu_item():
 
 @hooks.register('register_admin_urls')
 def register_export_url():
-    return [url('export-enforcement-actions', export_data, name='export-enforcement-actions')]
+    return [url(
+        'export-enforcement-actions',
+        export_data,
+        name='export-enforcement-actions')]
+
 
 @hooks.register('before_delete_page')
 def raise_delete_error(request, page):

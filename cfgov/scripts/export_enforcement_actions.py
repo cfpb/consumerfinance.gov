@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
+import re
 from six.moves import html_parser as HTMLParser
 
 from django.http import HttpResponse
@@ -8,16 +9,22 @@ from django.utils import html
 
 import unicodecsv
 
-import csv
-import re
 from v1.models import DocumentDetailPage
 from v1.util.migrations import get_stream_data
 
 
-
 html_parser = HTMLParser.HTMLParser()
 
-HEADINGS = ['Matter name', 'Date filed', 'URL', 'Status', 'Category', 'File number', 'Content', 'Preview text']
+HEADINGS = [
+    'Matter name',
+    'Date filed',
+    'URL',
+    'Status',
+    'Category',
+    'File number',
+    'Content',
+    'Preview text'
+]
 
 
 def clean_and_strip(data):
@@ -34,10 +41,12 @@ def assemble_output():
         url = 'https://consumerfinance.gov' + page.get_url()
         if 'policy-compliance/enforcement/actions' not in url:
             continue
+        page_categories = ','.join(
+            c.get_name_display() for c in page.categories.all())
         row = {
             'Matter name': page.title,
             'URL': url,
-            'Category': ','.join(c.get_name_display() for c in page.categories.all()),
+            'Category': page_categories,
             'Preview text': clean_and_strip(page.preview_description)
         }
         stream_data = get_stream_data(page, 'sidefoot')
@@ -48,9 +57,11 @@ def assemble_output():
                     if block['value'].get('heading', '') == 'Date filed':
                         row['Date filed'] = str(block['value'].get('date'))
                     elif block['value'].get('heading', '') == 'Status':
-                        row['Status'] = strip_tags.sub('', block['value'].get('blob', ''))
+                        row['Status'] = strip_tags.sub(
+                            '', block['value'].get('blob', ''))
                     elif block['value'].get('heading', '') == 'File number':
-                        row['File number'] = strip_tags.sub('', block['value'].get('blob', ''))
+                        row['File number'] = strip_tags.sub(
+                            '', block['value'].get('blob', ''))
         stream_data_content = get_stream_data(page, 'content')
         for field in stream_data_content:
             if field['type'] == 'full_width_text':
@@ -78,7 +89,8 @@ def export_actions(path='/tmp', http_response=False):
     unless a path argument is supplied,
     or http_response is set to True (for downloads via the Wagtail admin).
     A command that passes in path would look like this:
-    `python cfgov/manage.py runscript export_enforcement_actions --script-args [PATH]`
+    `python cfgov/manage.py runscript export_enforcement_actions
+    --script-args [PATH]`
     """
 
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
