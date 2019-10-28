@@ -8,6 +8,8 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailsearch import index
 
+from youth_employment.blocks import YESChecklist
+
 from data_research.blocks import (
     ConferenceRegistrationForm, MortgageDataDownloads
 )
@@ -16,7 +18,6 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 from v1.util.util import get_secondary_nav_items
-from youth_employment.blocks import YESChecklist
 
 
 class BrowsePage(CFGOVPage):
