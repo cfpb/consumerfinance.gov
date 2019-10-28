@@ -1,8 +1,6 @@
 import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 import { toArray } from '../../util';
-import { getPlanItem } from '../../data-types/todo-items';
 import { isWaiting } from '../../reducers/choice-reducer';
-import { todoListSelector } from '../../reducers/route-option-reducer';
 import transportationMap from '../../data-types/transportation-map';
 
 const CLASSES = Object.freeze( {
@@ -10,8 +8,6 @@ const CLASSES = Object.freeze( {
   CHOICE_HEADING: 'js-review-choice-heading',
   TRANSPORTATION_TYPE: 'js-transportation-option',
   DETAILS: 'yes-route-details',
-  TODO: 'js-todo-list',
-  TODO_ITEMS: 'js-todo-items',
   NOTIFICATION: 'js-route-notification'
 } );
 
@@ -33,12 +29,6 @@ const CLASSES = Object.freeze( {
  */
 function reviewDetailsView( element, { store, routeDetailsView } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
-  const _todoEls = toArray(
-    _dom.querySelectorAll( `.${ CLASSES.TODO }` )
-  );
-  const _todoItemEls = toArray(
-    _dom.querySelectorAll( `.${ CLASSES.TODO_ITEMS }` )
-  );
   const _detailsEls = toArray(
     _dom.querySelectorAll( `.${ CLASSES.DETAILS }` )
   );
@@ -78,27 +68,6 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
       }
     } );
 
-    _todoEls.forEach( ( el, index ) => {
-      const fragment = document.createDocumentFragment();
-      const todos = todoListSelector( state.routes, index );
-
-      if ( todos.length ) {
-        el.classList.remove( 'u-hidden' );
-      } else {
-        el.classList.add( 'u-hidden' );
-      }
-
-      todos.forEach( todo => {
-        const item = document.createElement( 'li' );
-        item.textContent = getPlanItem( todo );
-        fragment.appendChild( item );
-      } );
-
-      const todoListEl = _todoItemEls[index];
-      todoListEl.innerHTML = '';
-      todoListEl.appendChild( fragment );
-    } );
-
     if ( isWaiting( state ) ) {
       _reviewChoiceHeadingEls.forEach( el => el.classList.add( 'u-hidden' ) );
     } else {
@@ -112,7 +81,8 @@ function reviewDetailsView( element, { store, routeDetailsView } ) {
   function _initSubviews() {
     _detailsEls.reduce( ( memo, node, index ) => {
       const view = routeDetailsView( node, {
-        alertTarget: _notificationEls[index]
+        alertTarget: _notificationEls[index],
+        hasDefaultTodo: true
       } );
 
       memo.push( view );

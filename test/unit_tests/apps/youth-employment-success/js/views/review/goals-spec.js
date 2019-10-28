@@ -29,6 +29,9 @@ describe( 'reviewGoalsView', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML;
     store = mockStore();
+    store.mockState( {
+      goals: {}
+    } );
     view = reviewGoalsView( document.querySelector( `.${ reviewGoalsView.CLASSES.CONTAINER }` ), { store } );
     view.init();
   } );

@@ -33,7 +33,7 @@ function notificationsView( element ) {
    * Remove active alert notification from the DOM, and zero out the reference to it.
    * @param {HTMLElement} alertContainer The DOM element from which the alert should be removed
    */
-  function _clearActiveNotification(alertContainer) {
+  function _clearActiveNotification( alertContainer ) {
     toggleCFNotification( activeNotification, false );
     alertContainer.removeChild( activeNotification );
     alertContainer.classList.add( 'u-hidden' );
@@ -48,19 +48,16 @@ function notificationsView( element ) {
    */
   function _updateNotificationVisibility( alertEl, alertContainer, doShow ) {
     if ( activeNotification ) {
-      _clearActiveNotification(alertContainer);
+      _clearActiveNotification( alertContainer );
     }
 
-    activeNotification = alertEl.cloneNode( true );
-    toggleCFNotification( activeNotification, doShow );
-
-    alertContainer.appendChild( activeNotification );
-    alertContainer.classList.remove( 'u-hidden' );
-
-    if ( activeNotification ) {
+    if ( alertEl ) {
+      activeNotification = alertEl.cloneNode( true );
+      toggleCFNotification( activeNotification, doShow );
+      alertContainer.appendChild( activeNotification );
+      alertContainer.classList.remove( 'u-hidden' );
       _dom.classList.remove( 'u-hidden' );
     } else {
-      console.log('does this get called?')
       _dom.classList.add( 'u-hidden' );
     }
   }
@@ -75,11 +72,9 @@ function notificationsView( element ) {
     },
     render( { alertValues, alertTarget } ) {
       const alertSelector = alertRules[getBitmask( alertValues )];
+      const alertEl = _dom.querySelector( `.${ alertSelector }` );
 
-      if (alertSelector) {
-        const alertEl = _dom.querySelector( `.${ alertSelector }` );
-        _updateNotificationVisibility( alertEl, alertTarget, true );
-      }
+      _updateNotificationVisibility( alertEl, alertTarget, true );
     }
   };
 }

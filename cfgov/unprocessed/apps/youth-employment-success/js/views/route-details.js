@@ -23,12 +23,19 @@ const CLASSES = Object.freeze( {
 /**
  * Generates a list of LI elements to be passed back to the DOM
  *
+ * @param {HTMLElement} todosEl Reference to the actual todo list ul element
  * @param {array} todos A list of types of actions the user should take
  * when considering this route option
+ * @param {Boolean} hasDefault Whether or not this list has a default item
  * @returns {Node} An HTML documentFragment with a collection of LI elements
  */
-function updateTodoList( todos = [] ) {
+function buildTodoListNodes( todosEl, todos = [], hasDefault ) {
   const fragment = document.createDocumentFragment();
+  const defaultItem = hasDefault && todosEl.children && todosEl.children[0];
+
+  if ( defaultItem ) {
+    fragment.appendChild( defaultItem.cloneNode( true ) );
+  }
 
   todos.forEach( todo => {
     const realTodo = getPlanItem( todo );
@@ -183,7 +190,7 @@ function updateDomNode( node, nextValue ) {
  * @param {HTMLNode} element The root DOM element for this view
  * @returns {Object} This view's public methods
  */
-function routeDetailsView( element, { alertTarget } ) {
+function routeDetailsView( element, { alertTarget, hasDefaultTodo = false } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _transportationEl = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_TYPE }` )
@@ -201,16 +208,17 @@ function routeDetailsView( element, { alertTarget } ) {
 
   /**
    * Toggles the display of the todo list element and its children
-   * @param {Array} todos The array of todos the user may have added
+   * @param {DocumentFragment} fragment Collection of new li nodes representing
+   * todos the user may have added
    */
-  function _toggleTodoList( todos = [] ) {
-    if ( todos.length ) {
+  function updateTodoList( fragment ) {
+    updateDom( _todoItemsEl, fragment, hasDefaultTodo );
+
+    if ( _todoItemsEl.children.length ) {
       _todoListEl.classList.remove( 'u-hidden' );
     } else {
       _todoListEl.classList.add( 'u-hidden' );
     }
-
-    updateDom( _todoItemsEl, updateTodoList( todos ) );
   }
 
   return {
@@ -240,6 +248,9 @@ function routeDetailsView( element, { alertTarget } ) {
         [ALERT_TYPES.IN_BUDGET]: dataIsValid && nextRemainingBudget >= 0,
         [ALERT_TYPES.OUT_OF_BUDGET]: dataIsValid && nextRemainingBudget < 0
       };
+      const todoListFragment = buildTodoListNodes(
+        _todoItemsEl, route.actionPlanItems, hasDefaultTodo
+      );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
       updateDom( _budgetEl,
@@ -256,10 +267,7 @@ function routeDetailsView( element, { alertTarget } ) {
       );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
-
-      if ( _todoListEl ) {
-        _toggleTodoList( route.actionPlanItems );
-      }
+      updateTodoList( todoListFragment );
 
       alertView.render( {
         alertValues: valuesForNotification, alertTarget

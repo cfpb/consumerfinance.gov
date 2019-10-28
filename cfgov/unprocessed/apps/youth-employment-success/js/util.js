@@ -184,7 +184,7 @@ function isNumber( maybeNum ) {
 }
 
 /**
- * Helper function to control showing and hiding CFNotification alert nodes
+ * Helper function to control showing and hiding cf-notification alert nodes
  * @param {HTMLElement} node The element in which to search for the notification,
  * or the notification itself
  * @param {Boolean} doShow Whether to show or hide the element
