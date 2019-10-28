@@ -36,7 +36,7 @@
 {% endif %}
 {% if value.link %}
     {% set link = value.link %}
-    {% set link_url = link.page_link.url if link.page_link else link.external_link %}
+    {% set link_url = pageurl(link.page_link) if link.page_link else link.external_link %}
     {% set link_text = link.link_text %}
 {% endif %}
 
