@@ -100,7 +100,7 @@
    * all the case in which all form fields are visible and the user's to-do list
    * is populated.
   */
-  overflow-y: visible !important;
+  max-height: 1600px;
 }
 
 .o-expandable__padded .o-expandable_content:after {
@@ -218,6 +218,11 @@ input:-moz-ui-invalid {
   display: none;
 }
 
+.highlight {
+  background-color: #f9f9f9;
+  padding: unit( 12px / @base-font-size-px, em );
+}
+
 .a-average-cost {
   .respond-to-max(@bp-sm-min, {
     width: 15%;
@@ -316,14 +321,6 @@ input:-moz-ui-invalid {
     & + input {
       margin-top: unit( 15px / @base-font-size-px, em );
     }
-  }
-}
-
-.yes-route-details {
-  .m-notification {
-    background: transparent;
-    border: none;
-    padding: 0;
   }
 }
 

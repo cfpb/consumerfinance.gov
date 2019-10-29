@@ -3,6 +3,25 @@ import { toArray, toPrecision } from '../../../../../../cfgov/unprocessed/apps/y
 import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 import transportationMap from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
 
+jest.mock(
+  '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications',
+  () => {
+    const impl = () => ( {
+      init: jest.fn(),
+      render: jest.fn()
+    } );
+
+    impl.CLASSES = {
+      CONTAINER: 'mock'
+    };
+
+    return {
+      'default': impl,
+      '__esModule': true
+    };
+  }
+);
+
 const HTML = `
   <div class="yes-route-details">
     <p>
@@ -26,11 +45,7 @@ const HTML = `
     <div>   
       <b>Total left in your budget after <span class="js-transportation-type"></span></b>
       $<b class="content-l_col-2-3 js-budget-left"></b>
-      <div class="js-route-notifications">
-        <div class="js-route-incomplete"><p class="m-notification"></p></div>
-        <div class="js-route-oob"><p class="m-notification"></p></div>
-        <div class="js-route-complete"><p class="m-notification"></p></div>
-      </div>
+      <div class="block block__sub-micro block__flush-top u-js-only js-route-inline-notification"></div>
     </div>
     <div>
       <p class="content-l content-l_col-1-3"><b>Total time to get to work</b></p>
@@ -48,6 +63,7 @@ const HTML = `
       <ul class="js-todo-items"></ul>
     </div>
   </div>
+  <div class="js-route-notifications"></div>
 `;
 
 describe( 'routeDetailsView', () => {
@@ -73,7 +89,9 @@ describe( 'routeDetailsView', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML;
     view = routeDetailsView(
-      document.querySelector( `.${ CLASSES.CONTAINER }` )
+      document.querySelector( `.${ CLASSES.CONTAINER }` ), {
+        alertTarget: document.querySelector( '.js-route-inline-notification' )
+      }
     );
     view.init();
   } );
@@ -228,6 +246,28 @@ describe( 'routeDetailsView', () => {
       view.render( nextState );
 
       expect( todosEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
+    } );
+
+    it( 'preserves the first todo list item if hasDefaultTodo prop is true', () => {
+      view = null;
+      document.body.innerHTML = HTML;
+
+      view = routeDetailsView(
+        document.querySelector( `.${ CLASSES.CONTAINER }` ), {
+          alertTarget: document.querySelector( '.js-route-inline-notification' ),
+          hasDefaultTodo: true
+        }
+      );
+      view.init();
+
+      let todoItemsEl = document.querySelector( `.${ CLASSES.TODO_ITEMS }` );
+      todoItemsEl.innerHTML = '<li>default mock</li>';
+
+      view.render( nextState );
+
+      todoItemsEl = document.querySelector( `.${ CLASSES.TODO_ITEMS }` );
+
+      expect( todoItemsEl.children.length ).toBe( 2 );
     } );
 
     it( 'updates the to-do list', () => {
