@@ -1,0 +1,21 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% block titletag %}{% trans "Export data" %}{% endblock %}
+
+{% block content %}
+
+    {% include "wagtailadmin/shared/header.html" with title="Export data" icon="download" %}
+
+    <div class="nice-padding">
+        <h3>
+            Download a spreadsheet of all enforcement actions pages. <br>
+        </h3>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="button">
+                Download CSV
+            </button>
+        </form>
+    </div>
+
+{% endblock %}
