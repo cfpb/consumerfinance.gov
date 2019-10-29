@@ -86,8 +86,13 @@ function RouteOptionFormView( element, {
           _dom.querySelector( `.${ drivingCostEstimateView.CLASSES.CONTAINER }` )
         );
 
+        const detailsContainer = routeDetailsView.CLASSES.CONTAINER;
+        const detailsEl = _dom.querySelector( `.${ detailsContainer }` );
         const detailsView = routeDetailsView(
-          _dom.querySelector( `.${ routeDetailsView.CLASSES.CONTAINER }` )
+          detailsEl,
+          {
+            alertTarget: detailsEl.querySelector( '.js-route-inline-notification' )
+          }
         );
 
         transitTimeView(

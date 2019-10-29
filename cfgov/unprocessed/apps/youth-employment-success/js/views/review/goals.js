@@ -39,7 +39,7 @@ function reviewGoalsView( element, { store } ) {
    * @returns {Boolean} Whether or not the DOM should update
    */
   function _shouldUpdate( prevState, state ) {
-    const prevGoals = prevState.goals;
+    const prevGoals = prevState.goals || {};
     const goals = state.goals;
     let shouldUpdate = false;
 
@@ -80,6 +80,7 @@ function reviewGoalsView( element, { store } ) {
   return {
     init() {
       if ( setInitFlag( _dom ) ) {
+        _handleStateUpdate( {}, store.getState() );
         store.subscribe( _handleStateUpdate );
       }
     }

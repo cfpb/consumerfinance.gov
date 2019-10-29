@@ -24,7 +24,7 @@ const CLASSES = Object.freeze( {
  * @param {YesStore} props.store The public API exposed by the Store class
  * @returns {Object} This view's public API
  */
-function reviewChoiceView( element, { store } ) {
+function reviewChoiceView( element, { store, onShowReviewPlan } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _reviewPlanEl = _dom.querySelector( `.${ CLASSES.REVIEW_PLAN }` );
   const _choiceBtnEls = toArray(
@@ -87,6 +87,7 @@ function reviewChoiceView( element, { store } ) {
    */
   function _showReviewPlan() {
     _reviewPlanEl.classList.remove( 'u-hidden' );
+    onShowReviewPlan();
     _reviewBtnEl.removeEventListener( 'click', _showReviewPlan );
   }
 

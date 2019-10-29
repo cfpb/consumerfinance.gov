@@ -34,12 +34,13 @@ describe( 'reviewChoiceGoal', () => {
   let choiceWrappers;
   let store;
   let view;
+  const onChooseMock = jest.fn();
 
   beforeEach( () => {
     document.body.innerHTML = HTML;
     store = mockStore();
     dom = document.querySelector( `.${ CLASSES.CONTAINER }` );
-    view = reviewChoiceView( dom, { store } );
+    view = reviewChoiceView( dom, { store, onShowReviewPlan: onChooseMock } );
     view.init();
     choiceWrappers = toArray(
       dom.querySelectorAll( `.${ CLASSES.CHOICE }` )
@@ -49,6 +50,7 @@ describe( 'reviewChoiceGoal', () => {
 
   afterEach( () => {
     store.mockReset();
+    onChooseMock.mockReset();
     view = null;
     choiceInputs.length = 0;
   } );
@@ -165,5 +167,10 @@ describe( 'reviewChoiceGoal', () => {
     store.subscriber()( {}, state );
 
     choiceInputs.forEach( input => expect( input.getAttribute( 'disabled' ) ).toBeTruthy() );
+  } );
+
+  it( 'calls its hook fn after showing the review plans', () => {
+    simulateEvent( 'click', dom.querySelector( `.${ CLASSES.BUTTON }` ) );
+    expect( onChooseMock ).toHaveBeenCalled();
   } );
 } );
