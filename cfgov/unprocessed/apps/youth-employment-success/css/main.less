@@ -220,7 +220,7 @@ input:-moz-ui-invalid {
 
 .highlight {
   background-color: #f9f9f9;
-  padding: .75em;
+  padding: unit( 12px / @base-font-size-px, em );
 }
 
 .a-average-cost {
@@ -321,14 +321,6 @@ input:-moz-ui-invalid {
     & + input {
       margin-top: unit( 15px / @base-font-size-px, em );
     }
-  }
-}
-
-.yes-route-form-details {
-  .m-notification {
-    background: transparent;
-    border: none;
-    padding: 0;
   }
 }
 
