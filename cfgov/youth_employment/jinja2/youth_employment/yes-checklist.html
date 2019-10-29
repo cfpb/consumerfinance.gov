@@ -1,0 +1,31 @@
+{# ==========================================================================
+
+   YESChecklist
+
+   ==========================================================================
+
+   Description:
+
+   Build a checklist from a set of blocks for printing. Used in the Youth employment
+   success Car buying guide.
+
+   value.checklist is a list of checklist blocks. each block has these elements:
+
+   item             Short description of checklist item
+   details          Deeper explanation of item for table display
+
+   ========================================================================== #}
+
+<script id="car-buying-guide-json">
+    {{ value.checklist | tojson }}
+</script>
+<div class="m-checklist-group">
+{% for block in value.checklist | batch(2) %}
+    <div class="content-l block block__sub u-mt15 u-mb15">
+        {% include_block block[0] %}
+        {% if block[1] %}
+            {% include_block block[1] %}
+        {% endif %}
+    </div>
+{% endfor %}
+</div>
