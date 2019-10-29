@@ -83,7 +83,7 @@ describe( 'notificationsView', () => {
   } );
 
   describe( 'alert visibility', () => {
-    it('clears an active alert when a new one is supplied', () => {
+    it( 'clears an active alert when a new one is supplied', () => {
       view.render( {
         alertValues: {
           ...alertSettings,
@@ -91,25 +91,25 @@ describe( 'notificationsView', () => {
         },
         alertTarget } );
 
-        let alert = alertTarget.querySelector( `.${ CLASSES.INVALID_ALERT }` );
+      let alert = alertTarget.querySelector( `.${ CLASSES.INVALID_ALERT }` );
 
-        expect(alert).toBeDefined();
+      expect( alert ).toBeDefined();
 
-        view.render( {
-          alertValues: {
-            ...alertSettings,
-            [ALERT_TYPES.INVALID]: false,
-            [ALERT_TYPES.IN_BUDGET]: true
-          },
-          alertTarget } );
+      view.render( {
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.INVALID]: false,
+          [ALERT_TYPES.IN_BUDGET]: true
+        },
+        alertTarget } );
 
-          alert = alertTarget.querySelector( `.${ CLASSES.INVALID_ALERT }` );
+      alert = alertTarget.querySelector( `.${ CLASSES.INVALID_ALERT }` );
 
-          expect(alert === null).toBeTruthy();
+      expect( alert === null ).toBeTruthy();
 
-          alert = alertTarget.querySelector(`.${CLASSES.IN_BUDGET_ALERT}`);
-          expect(alert).toBeDefined();
-    });
+      alert = alertTarget.querySelector( `.${ CLASSES.IN_BUDGET_ALERT }` );
+      expect( alert ).toBeDefined();
+    } );
 
     it( 'displays the invalid alert when data is invalid', () => {
       view.render( {

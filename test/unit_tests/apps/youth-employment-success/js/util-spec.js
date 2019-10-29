@@ -245,7 +245,7 @@ describe( 'YES utility functions', () => {
 
     it( 'preserves decimals', () => {
       expect( formatNegative( '-1600.00' ) ).toBe( '&#8722;1600.00' );
-      expect( formatNegative( '-1600.10' ) ).toBe( '&#8722;1600.1' );
+      expect( formatNegative( '-1600.10' ) ).toBe( '&#8722;1600.10' );
     } );
   } );
 } );

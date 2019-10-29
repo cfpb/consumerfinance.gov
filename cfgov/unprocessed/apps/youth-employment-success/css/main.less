@@ -87,9 +87,23 @@
   });
 }
 
+.m-info-unit.print-layout {
+  .respond-to-print({
+    .m-info-unit-image {
+      display: none !important;
+    }
+  });
+}
+
 .m-list_link {
   .respond-to-max(@bp-sm-min, {
     border: 0;
+  });
+}
+
+.m-notification {
+  .respond-to-print({
+    background-color: transparent !important;
   });
 }
 
@@ -100,7 +114,7 @@
    * all the case in which all form fields are visible and the user's to-do list
    * is populated.
   */
-  max-height: 1600px;
+  max-height: 1700px !important;
 }
 
 .o-expandable__padded .o-expandable_content:after {
@@ -221,6 +235,11 @@ input:-moz-ui-invalid {
 .highlight {
   background-color: #f9f9f9;
   padding: unit( 12px / @base-font-size-px, em );
+
+  .respond-to-print({
+    background-color: transparent;
+    padding: 0;
+  })
 }
 
 .a-average-cost {
