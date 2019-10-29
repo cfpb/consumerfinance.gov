@@ -192,10 +192,12 @@ input:-moz-ui-invalid {
 .u-hide-on-print {
   .respond-to-print({
     display: none !important;
+    visibility: hidden !important;
   });
 }
 
 .u-show-on-print {
+  display: none !important;
   .respond-to-print({
     display: block !important;
   });
@@ -360,4 +362,26 @@ input:-moz-ui-invalid {
     height: 125px;
     width: 125px;
   }
+}
+
+/** FIREFOX PRINT FIXES **/
++.o-mega-menu_content {
+  .respond-to-print({
+    display: none !important;
+    overflow: visible;
+    visibility: hidden !important;
+  });
+}
+
+.content_main {
+  .respond-to-print({
+    display: block !important;
+    overflow: visible !important
+  });
+}
+
+.u-w75pct {
+  .respond-to-print({
+    width: 100%;
+  });
 }
