@@ -45,7 +45,6 @@ class TestDataLoad(TestCase):
         )
         self.assertEqual(Issuer.objects.all().count(), 1)
 
-
     @mock.patch.dict(os.environ, {'AGREEMENTS_S3_UPLOAD_ENABLED': 'yes'})
     @mock.patch(
         'agreements.management.commands._util.upload_to_s3'
@@ -69,7 +68,8 @@ class TestManagementUtils(TestCase):
     def test_save_agreement(self):
         agreements_zip = zipfile.ZipFile(utf8_zip)
 
-        raw_path = 'UTF_agreements/Visa Cardholder Agreement and Disclosures.pdf'
+        expectedName = 'Visa Cardholder Agreement and Disclosures.pdf'
+        raw_path = 'UTF_agreements/' + expectedName
 
         buf = six.StringIO()
         agreement = _util.save_agreement(
@@ -78,7 +78,10 @@ class TestManagementUtils(TestCase):
             buf,
             upload=False)
 
-        self.assertEqual(agreement.file_name, 'Visa Cardholder Agreement and Disclosures.pdf')
+        self.assertEqual(
+            agreement.file_name,
+            expectedName
+        )
 
     @mock.patch.dict(os.environ, {'AWS_S3_ACCESS_KEY_ID': 'fake',
                                   'AWS_S3_SECRET_ACCESS_KEY': 'fake',
