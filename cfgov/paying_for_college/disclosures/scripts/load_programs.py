@@ -217,7 +217,7 @@ def load(source, s3=False):
     updated_programs = 0
     FAILED = []  # failed messages
     if s3:
-        s3_url = ('https://s3.amazonaws.com/files.consumerfinance.gov'
+        s3_url = ('https://files.consumerfinance.gov'
                   '/pb/paying_for_college/csv/validated_program_data/{}')
         raw_data = read_in_s3(s3_url.format(source))
     else:
