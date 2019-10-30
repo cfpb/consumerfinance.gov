@@ -80,6 +80,12 @@
         min-width: @bp-lg-min;
     } );
 
+    .respond-to-min( @bp-med-min, {
+        // Setting the minimum height allocates room for the mega menu
+        // so the header height doesn't change when it loads in.
+        min-height: 172px;
+    } );
+
     &_content {
         position: relative;
 
@@ -172,6 +178,7 @@
 
 // Used on /external-site/ template, where the header has no nav and eyebrow.
 .o-header__no-nav {
+    min-height: auto;
     .respond-to-min( @bp-med-min, {
         margin-top: 15px;
     } );
