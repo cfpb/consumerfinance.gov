@@ -60,7 +60,6 @@
           {{ 'disabled' if value.disabled else ''}}
           {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}
           {{ 'placeholder="' ~ value.placeholder ~ '"' if value.placeholder else '' }}>
-   </input>
 </div>
 
 {%- endmacro %}

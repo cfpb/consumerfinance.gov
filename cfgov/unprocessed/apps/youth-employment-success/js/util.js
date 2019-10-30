@@ -239,14 +239,14 @@ function formatNegative( num ) {
   let decimals = '';
 
   // Math.abs will preserve decimals, but not if they are zero
-  if ( ( /^0+$/ ).test( decimalZeros ) ) {
+  if ( ( /0+/ ).test( decimalZeros ) ) {
     decimals = decimalZeros;
   }
 
   let formattedTotal = significant;
 
-  if ( num < 0 ) {
-    formattedTotal = `${ HTML_MINUS }${ Math.abs( num ) }`;
+  if ( significant < 0 ) {
+    formattedTotal = `${ HTML_MINUS }${ Math.abs( significant ) }`;
   }
 
   if ( !decimals ) {

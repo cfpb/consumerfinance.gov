@@ -10,7 +10,7 @@
       Totals for <span class="js-transportation-type"></span>
     </p>
 
-    <div class="content_line-bold"></div>
+    <div class="content_line-bold u-hide-on-print"></div>
     <div class="block block__sub-micro u-mb0">
       {{
         line_item.render({
@@ -56,5 +56,6 @@
     {% if caller is defined %}
       {{ caller() }}
     {% endif %}
+  </div>
 </div>
 {% endmacro %}
