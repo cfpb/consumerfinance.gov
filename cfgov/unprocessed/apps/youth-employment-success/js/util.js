@@ -184,7 +184,7 @@ function isNumber( maybeNum ) {
 }
 
 /**
- * Helper function to control showing and hiding CFNotification alert nodes
+ * Helper function to control showing and hiding cf-notification alert nodes
  * @param {HTMLElement} node The element in which to search for the notification,
  * or the notification itself
  * @param {Boolean} doShow Whether to show or hide the element
@@ -239,14 +239,14 @@ function formatNegative( num ) {
   let decimals = '';
 
   // Math.abs will preserve decimals, but not if they are zero
-  if ( ( /^0+$/ ).test( decimalZeros ) ) {
+  if ( ( /0+/ ).test( decimalZeros ) ) {
     decimals = decimalZeros;
   }
 
   let formattedTotal = significant;
 
-  if ( num < 0 ) {
-    formattedTotal = `${ HTML_MINUS }${ Math.abs( num ) }`;
+  if ( significant < 0 ) {
+    formattedTotal = `${ HTML_MINUS }${ Math.abs( significant ) }`;
   }
 
   if ( !decimals ) {

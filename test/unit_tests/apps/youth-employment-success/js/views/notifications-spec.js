@@ -39,9 +39,10 @@ const HTML = `
       </div>
     </div>
   </div>
+  <div class="target"></div>
 `;
 
-const alertValues = {
+const alertSettings = {
   [ALERT_TYPES.HAS_TODOS]: false,
   [ALERT_TYPES.INVALID]: false,
   [ALERT_TYPES.IN_BUDGET]: false,
@@ -50,19 +51,18 @@ const alertValues = {
 
 describe( 'notificationsView', () => {
   let dom;
-  let alerts;
+  let alertTarget;
   let view;
 
   beforeEach( () => {
     document.body.innerHTML = HTML;
     dom = document.body.querySelector( `.${ CLASSES.CONTAINER }` );
+    alertTarget = document.body.querySelector( '.target' );
     view = notificationsView( dom );
     view.init();
-    alerts = toArray( dom.querySelectorAll( 'div[class^="js-route"]' ) );
   } );
 
   afterEach( () => {
-    alerts.length = 0;
     document.body.innerHTML = null;
     view = null;
   } );
@@ -73,149 +73,147 @@ describe( 'notificationsView', () => {
 
   it( 'toggles its container element when a there is an active notification', () => {
     view.render( {
-      ...alertValues,
-      [ALERT_TYPES.INVALID]: true
-    } );
+      alertValues: {
+        ...alertSettings,
+        [ALERT_TYPES.INVALID]: true
+      },
+      alertTarget } );
 
     expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
   } );
 
   describe( 'alert visibility', () => {
+    it( 'clears an active alert when a new one is supplied', () => {
+      view.render( {
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.INVALID]: true
+        },
+        alertTarget } );
+
+      let alert = alertTarget.querySelector( `.${ CLASSES.INVALID_ALERT }` );
+
+      expect( alert ).toBeDefined();
+
+      view.render( {
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.INVALID]: false,
+          [ALERT_TYPES.IN_BUDGET]: true
+        },
+        alertTarget } );
+
+      alert = alertTarget.querySelector( `.${ CLASSES.INVALID_ALERT }` );
+
+      expect( alert === null ).toBeTruthy();
+
+      alert = alertTarget.querySelector( `.${ CLASSES.IN_BUDGET_ALERT }` );
+      expect( alert ).toBeDefined();
+    } );
+
     it( 'displays the invalid alert when data is invalid', () => {
       view.render( {
-        ...alertValues,
-        [ALERT_TYPES.INVALID]: true
-      } );
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.INVALID]: true
+        },
+        alertTarget } );
 
-      const invalidAlertIndex = alerts.findIndex( el => el.classList.contains( `${ CLASSES.INVALID_ALERT }` ) );
-
-      const alert = alerts.splice( invalidAlertIndex, 1 );
-      const alertNotification = alert[0].querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector( `.${ CLASSES.INVALID_ALERT }` );
+      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
 
       expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
-
-      alerts.forEach( alert => {
-        expect(
-          alert.querySelector( `.${ NOTIFICATION_CLASS }` ).classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` )
-        ).toBeFalsy();
-      } );
+      expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
     it( 'displays the invalid with todos alert when data is invalid and there are todos', () => {
       view.render( {
-        ...alertValues,
-        [ALERT_TYPES.INVALID]: true,
-        [ALERT_TYPES.HAS_TODOS]: true
-      } );
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.INVALID]: true,
+          [ALERT_TYPES.HAS_TODOS]: true
+        },
+        alertTarget } );
 
-      const alertIndex = alerts.findIndex( el => el.classList.contains( `${ CLASSES.INCOMPLETE_ALERT }` )
-      );
-      const alert = alerts.splice( alertIndex, 1 );
-      const alertNotification = alert[0].querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
+      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
 
       expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
-
-      alerts.forEach( alert => {
-        expect(
-          alert.querySelector( `.${ NOTIFICATION_CLASS }` ).classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` )
-        ).toBeFalsy();
-      } );
+      expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
     it( 'displays the in budget alert when data is in budget', () => {
       view.render( {
-        ...alertValues,
-        [ALERT_TYPES.IN_BUDGET]: true
-      } );
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.IN_BUDGET]: true
+        },
+        alertTarget } );
 
-      const alertIndex = alerts.findIndex( el => el.classList.contains( `${ CLASSES.IN_BUDGET_ALERT }` )
-      );
-      const alert = alerts.splice( alertIndex, 1 );
-      const alertNotification = alert[0].querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector( `.${ CLASSES.IN_BUDGET_ALERT }` );
+      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
 
       expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
-
-      alerts.forEach( alert => {
-        expect(
-          alert.querySelector( `.${ NOTIFICATION_CLASS }` ).classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` )
-        ).toBeFalsy();
-      } );
+      expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
     it( 'displays the in-budget-with-todos alert when data is in budget and there are todos', () => {
-      expect( view.render( {
-        ...alertValues,
-        [ALERT_TYPES.IN_BUDGET]: true,
-        [ALERT_TYPES.HAS_TODOS]: true
-      } ) );
+      view.render( {
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.IN_BUDGET]: true,
+          [ALERT_TYPES.HAS_TODOS]: true
+        },
+        alertTarget } );
 
-      const alertIndex = alerts.findIndex( el => el.classList.contains( `${ CLASSES.IN_BUDGET_W_TODOS }` )
-      );
-      const alert = alerts.splice( alertIndex, 1 );
-      const alertNotification = alert[0].querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector( `.${ CLASSES.IN_BUDGET_W_TODOS }` );
+      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
 
       expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
-
-      alerts.forEach( alert => {
-        expect(
-          alert.querySelector( `.${ NOTIFICATION_CLASS }` ).classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` )
-        ).toBeFalsy();
-      } );
+      expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
     it( 'displays the out of budget alert when data is out of budget', () => {
       view.render( {
-        ...alertValues,
-        [ALERT_TYPES.OUT_OF_BUDGET]: true
-      } );
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.OUT_OF_BUDGET]: true
+        },
+        alertTarget } );
 
-      const alertIndex = alerts.findIndex( el => el.classList.contains( `${ CLASSES.OOB_ALERT }` )
-      );
-      const alert = alerts.splice( alertIndex, 1 );
-      const alertNotification = alert[0].querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector( `.${ CLASSES.OOB_ALERT }` );
+      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
 
       expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
-
-      alerts.forEach( alert => {
-        expect(
-          alert.querySelector( `.${ NOTIFICATION_CLASS }` ).classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` )
-        ).toBeFalsy();
-      } );
+      expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
     it( 'displays the out-of-budget-with-todos alert when data is out of budget and there are todos', () => {
       view.render( {
-        ...alertValues,
-        [ALERT_TYPES.OUT_OF_BUDGET]: true,
-        [ALERT_TYPES.HAS_TODOS]: true
-      } );
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.OUT_OF_BUDGET]: true,
+          [ALERT_TYPES.HAS_TODOS]: true
+        },
+        alertTarget } );
 
-      const alertIndex = alerts.findIndex( el => el.classList.contains( `${ CLASSES.OOB_W_TODOS }` )
-      );
-      const alert = alerts.splice( alertIndex, 1 );
-      const alertNotification = alert[0].querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector( `.${ CLASSES.OOB_W_TODOS }` );
+      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
 
       expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
-
-      alerts.forEach( alert => {
-        expect(
-          alert.querySelector( `.${ NOTIFICATION_CLASS }` ).classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` )
-        ).toBeFalsy();
-      } );
+      expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
     it( 'does not display anything when an invalid bitmask is supplied', () => {
       view.render( {
-        ...alertValues,
-        [ALERT_TYPES.OUT_OF_BUDGET]: true,
-        [ALERT_TYPES.IN_BUDGET]: true
-      } );
+        alertValues: {
+          ...alertSettings,
+          [ALERT_TYPES.OUT_OF_BUDGET]: true,
+          [ALERT_TYPES.IN_BUDGET]: true
+        },
+        alertTarget } );
 
-      alerts.forEach( alert => {
-        expect(
-          alert.querySelector( `.${ NOTIFICATION_CLASS }` ).classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` )
-        ).toBeFalsy();
-      } );
+      expect( alertTarget.childNodes.length ).toBe( 0 );
     } );
   } );
 } );

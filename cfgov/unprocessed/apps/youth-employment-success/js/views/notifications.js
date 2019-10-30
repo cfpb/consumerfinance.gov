@@ -30,20 +30,32 @@ function notificationsView( element ) {
   let activeNotification;
 
   /**
+   * Remove active alert notification from the DOM, and zero out the reference to it.
+   * @param {HTMLElement} alertContainer The DOM element from which the alert should be removed
+   */
+  function _clearActiveNotification( alertContainer ) {
+    toggleCFNotification( activeNotification, false );
+    alertContainer.removeChild( activeNotification );
+    alertContainer.classList.add( 'u-hidden' );
+    activeNotification = null;
+  }
+
+  /**
    * Toggle the supplied notification, as well as the notifications container element, if necessary.
-   * @param {HTMLElement} notificationEl The DOM node of the notification to toggle
+   * @param {HTMLElement} alertEl The DOM node of the notification to toggle
+   * @param {HTMLElement} alertContainer The DOM node in which to render the notification
    * @param {Boolean} doShow Whether to show or hide the notification
    */
-  function _updateNotificationVisibility( notificationEl, doShow ) {
+  function _updateNotificationVisibility( alertEl, alertContainer, doShow ) {
     if ( activeNotification ) {
-      toggleCFNotification( activeNotification, false );
-      activeNotification = null;
+      _clearActiveNotification( alertContainer );
     }
 
-    activeNotification = notificationEl;
-    toggleCFNotification( activeNotification, doShow );
-
-    if ( activeNotification ) {
+    if ( alertEl ) {
+      activeNotification = alertEl.cloneNode( true );
+      toggleCFNotification( activeNotification, doShow );
+      alertContainer.appendChild( activeNotification );
+      alertContainer.classList.remove( 'u-hidden' );
       _dom.classList.remove( 'u-hidden' );
     } else {
       _dom.classList.add( 'u-hidden' );
@@ -58,9 +70,11 @@ function notificationsView( element ) {
 
       return this;
     },
-    render( alertValues ) {
-      const alertEl = alertRules[getBitmask( alertValues )];
-      _updateNotificationVisibility( _dom.querySelector( `.${ alertEl }` ), true );
+    render( { alertValues, alertTarget } ) {
+      const alertSelector = alertRules[getBitmask( alertValues )];
+      const alertEl = _dom.querySelector( `.${ alertSelector }` );
+
+      _updateNotificationVisibility( alertEl, alertTarget, true );
     }
   };
 }
