@@ -20,6 +20,7 @@ from localflavor.us.models import USStateField
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
+from v1.jinja2tags.datetimes import when
 from v1.models.base import CFGOVPage, CFGOVPageManager
 from v1.util.events import get_venue_coords
 
@@ -377,7 +378,17 @@ class EventPage(AbstractFilterPage):
 
     @property
     def page_js(self):
-        return super(EventPage, self).page_js + ['video-player.js']
+        if self.start_dt:
+            event_state = when(
+                self.start_dt, self.end_dt, self.live_stream_date
+            )
+            if (
+                (self.live_stream_date and event_state == 'present')
+                or (self.youtube_url and event_state == 'past')
+            ):
+                return super(EventPage, self).page_js + ['video-player.js']
+
+        return super(EventPage, self).page_js
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
         if not self.venue_coords:
