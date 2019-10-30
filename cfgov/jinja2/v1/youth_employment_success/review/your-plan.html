@@ -7,21 +7,21 @@
     <div class="js-review-choice-heading block block__sub">
       <p class="h3">Your first choice is <span class="js-transportation-option"></span></p>
     </div>
-    <div class="block block__sub-micro block__flush-bottom">
+    <div class="block block__sub block__flush-bottom">
       {% call route_details() %}
         {% include "partials/well-todo-list.html" %}
         <div class="content_line"></div>
       {% endcall %}
     </div>
   </div>
-  <div class="js-option-2 block">
+  <div class="js-option-2 block block__sub">
     <div class="js-review-choice-heading">
       <p class="h3">Another possible option: <span class="js-transportation-option"></span></p>
       <p class="u-mb0">
         <small>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</small>
       </p>
     </div>
-    <div class="block block__sub-micro block__flush-bottom">
+    <div class="block block__sub block__flush-bottom">
       {% call route_details() %}
         {% include "partials/well-todo-list.html" %}
         <div class="content_line"></div>
