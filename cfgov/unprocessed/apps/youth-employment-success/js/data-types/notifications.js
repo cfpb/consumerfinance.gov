@@ -43,8 +43,8 @@ const ALERT_BITMASK_ENUM = Object.freeze( {
 /**
  * Given a values object, with keys that map to the ALERT_TYPES defined here,
  * resolve the final value of the bitmask.
- * @param {Object} values An object of values that maps to the `ALERT_TYPES` enum
- * @returns {Number} The value of the bitmask
+ * @param {Object} values An object of values that maps to the `ALERT_TYPES` enum.
+ * @returns {number} The value of the bitmask.
  */
 function getBitmask( values = {} ) {
   let mask = 0;
@@ -62,6 +62,10 @@ function getBitmask( values = {} ) {
   return mask;
 }
 
+/**
+ * @param {string} type A bitmask flag label.
+ * @returns {string} The bitmask flag label.
+ */
 function getBitValue( type ) {
   return ALERT_BITMASK_ENUM[type] || ALERT_BITMASK_ENUM[ALERT_TYPES.NONE];
 }
