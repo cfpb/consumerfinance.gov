@@ -59,21 +59,109 @@
 					}
 				}
 			}
+		}
+	}
+
+	&_tool-section {
+		display: none;
+		max-width: unit( 570px / @base-font-size-px, rem );
+
+		&.active {
+			display: block;
+		}
+
+		& > h3 {
+			border-bottom: 1px solid @gray-60;
+			margin-top: unit( 30px / @base-font-size-px, em );
+		}
+
+
+		.financial-item {
+			margin-top: unit( 20px / @base-font-size-px, em );
+
+			&_label-wrapper {
+				display: inline-block;
+			    box-sizing: border-box;
+			    border: solid transparent;
+			    border-width: 0 15px;
+			    margin-right: -.25em;
+			    vertical-align: top;
+			    width: 50%;
+
+			    label {
+			    	font-weight: 500;
+			    }
+
+			    span {
+				    font-size: unit( 18px / @base-font-size-px, em );
+			    	font-weight: 500;
+			    }
+			}
+
+			&_input-wrapper {
+				display: inline-block;
+				box-sizing: border-box;
+			    border: solid transparent;
+			    border-width: 0 15px;
+			    margin-right: -.25em;
+			    vertical-align: top;
+			    text-align: right;
+			    width: 50%;
+
+			    input {
+			    	text-align: right;
+			    }
+			}
+
+			&__debt-total {
+				color: @red;
+				font-weight: 500;
+			}
+
+			&__-total {
+				font-weight: 500;
+			}
 
 		}
 
+		&_buttons {
+			margin-top: unit( 45px / @base-font-size-px, rem );
+
+			.btn__save {
+				background: nomne;
+				border: none;
+				font-weight: 500;
+				margin-left: unit( 30px / @base-font-size-px, em );
+				text-decoration: underline;
+			}
+		}
+	}
+
+	&_info-box {
+
+		background-color: @gray-10;
+		margin-top: unit( 30px / @base-font-size-px, em );
+		padding: unit( 10px / @base-font-size-px, em ) unit( 15px / @base-font-size-px, em );
 	}
 
 }
 
-#college-costs__school-search {
+#college-costs_school-search {
 	position: relative;
-}
 
-#college-costs__school-search #tmp__search-results {
-	display: none;
-	position: absolute;
-	background-color: white;
-	border: 1px solid black;
-	padding: 5px 10px;
+	label {
+		font-weight: 600;
+	}
+
+	input {
+		width: 100%;
+	}
+
+	#tmp__search-results {
+		display: none;
+		position: absolute;
+		background-color: white;
+		border: 1px solid black;
+		padding: 5px 10px;
+	}
 }
