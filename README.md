@@ -1,7 +1,6 @@
 # cfgov-refresh
 
 [![Build Status](https://github.com/cfpb/cfgov-refresh/workflows/test/badge.svg?branch=master)](https://github.com/cfpb/cfgov-refresh/actions)
-[![codecov](https://codecov.io/gh/cfpb/cfgov-refresh/branch/master/graph/badge.svg)](https://codecov.io/gh/cfpb/cfgov-refresh)
 
 The master repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
 This Django project includes the front-end assets and build tools,
