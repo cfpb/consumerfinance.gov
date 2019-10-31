@@ -1,7 +1,10 @@
+from datetime import datetime
+
 from django.test import TestCase
 
 from wagtail.wagtailcore.blocks import StreamValue
 
+from pytz import timezone
 from scripts._atomic_helpers import filter_controls as controls
 
 from v1.atomic_elements.organisms import FilterableList
@@ -23,7 +26,10 @@ class TestFilterableList(TestCase):
         page1 = BlogPage(title='test page 1')
         page1.tags.add(u'C-tag-3-instances')
 
-        page2 = EventPage(title='test page 2')
+        page2 = EventPage(
+            title='test page 2',
+            start_dt=datetime.now(timezone('UTC'))
+        )
         page2.tags.add(u'B-tag-2-instances')
         page2.tags.add(u'C-tag-3-instances')
 

@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -17,11 +17,12 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
 from localflavor.us.models import USStateField
+from pytz import timezone
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.jinja2tags.datetimes import when
 from v1.models.base import CFGOVPage, CFGOVPageManager
+from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
 
 
@@ -187,7 +188,7 @@ class EventPage(AbstractFilterPage):
             'v1.ReusableText'
         )),
     ], blank=True)
-    start_dt = models.DateTimeField("Start", blank=True, null=True)
+    start_dt = models.DateTimeField("Start")
     end_dt = models.DateTimeField("End", blank=True, null=True)
     future_body = RichTextField(blank=True)
     archive_image = models.ForeignKey(
@@ -377,16 +378,32 @@ class EventPage(AbstractFilterPage):
     template = 'events/event.html'
 
     @property
-    def page_js(self):
-        if self.start_dt:
-            event_state = when(
-                self.start_dt, self.end_dt, self.live_stream_date
+    def event_state(self):
+        if self.end_dt:
+            end = convert_date(self.end_dt, 'America/New_York')
+            if end < datetime.now(timezone('America/New_York')):
+                return 'past'
+
+        if self.live_stream_date:
+            start = convert_date(
+                self.live_stream_date,
+                'America/New_York'
             )
-            if (
-                (self.live_stream_date and event_state == 'present')
-                or (self.youtube_url and event_state == 'past')
-            ):
-                return super(EventPage, self).page_js + ['video-player.js']
+        else:
+            start = convert_date(self.start_dt, 'America/New_York')
+
+        if datetime.now(timezone('America/New_York')) > start:
+            return 'present'
+
+        return 'future'
+
+    @property
+    def page_js(self):
+        if (
+            (self.live_stream_date and self.event_state == 'present')
+            or (self.youtube_url and self.event_state == 'past')
+        ):
+            return super(EventPage, self).page_js + ['video-player.js']
 
         return super(EventPage, self).page_js
 
@@ -421,3 +438,8 @@ class EventPage(AbstractFilterPage):
     def save(self, *args, **kwargs):
         self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
         return super(EventPage, self).save(*args, **kwargs)
+
+    def get_context(self, request):
+        context = super(EventPage, self).get_context(request)
+        context['event_state'] = self.event_state
+        return context

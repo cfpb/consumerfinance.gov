@@ -13,7 +13,6 @@ from v1.tests.wagtail_pages.helpers import save_new_page
 
 
 class EventPageTests(TestCase):
-
     @override_settings(MAPBOX_ACCESS_TOKEN='test_token')
     @responses.activate
     def test_save_calls_get_venue_coords(self):
@@ -32,6 +31,7 @@ class EventPageTests(TestCase):
 
         page = EventPage(
             title='Super fun event',
+            start_dt=datetime.datetime.now(pytz.UTC),
             venue_city='Boston',
             venue_state='MA'
         )
@@ -45,45 +45,65 @@ class EventPageTests(TestCase):
         self.assertIn('static/-77.039628,38.898238', page.location_image_url())
 
     @freeze_time('2011-01-03')
-    def test_page_js_gets_video_player_when_needed(self):
+    def test_event_state_and_page_js(self):
+        """ Test EventPage properties event_state and page_js
+
+        Creates event pages with several different combinations of fields to
+        ensure that the event_state and page_js properties are returning the
+        correct thing in each situation.
+        """
+
         page = EventPage(
-            title='Future event',
-            start_dt=datetime.datetime(2011, 01, 04, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 01, 05, tzinfo=pytz.UTC)
+            title='Future event with no end date',
+            start_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC)
         )
         save_new_page(page)
+        self.assertEqual('future', page.event_state)
+        self.assertNotIn('video-player.js', page.page_js)
+
+        page = EventPage(
+            title='Future event with end date',
+            start_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC),
+            end_dt=datetime.datetime(2011, 1, 5, tzinfo=pytz.UTC)
+        )
+        save_new_page(page)
+        self.assertEqual('future', page.event_state)
         self.assertNotIn('video-player.js', page.page_js)
 
         page = EventPage(
             title='Present event with no live_stream_date',
-            start_dt=datetime.datetime(2011, 01, 03, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 01, 04, tzinfo=pytz.UTC)
+            start_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            end_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC)
         )
         save_new_page(page)
+        self.assertEqual('present', page.event_state)
         self.assertNotIn('video-player.js', page.page_js)
 
         page = EventPage(
             title='Present event with live_stream_date',
-            start_dt=datetime.datetime(2011, 01, 02, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 01, 04, tzinfo=pytz.UTC),
-            live_stream_date=datetime.datetime(2011, 01, 02, tzinfo=pytz.UTC)
+            start_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            end_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC),
+            live_stream_date=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC)
         )
         save_new_page(page)
+        self.assertEqual('present', page.event_state)
         self.assertIn('video-player.js', page.page_js)
 
         page = EventPage(
             title='Past event with no youtube_url',
-            start_dt=datetime.datetime(2011, 01, 01, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 01, 02, tzinfo=pytz.UTC)
+            start_dt=datetime.datetime(2011, 1, 1, tzinfo=pytz.UTC),
+            end_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC)
         )
         save_new_page(page)
+        self.assertEqual('past', page.event_state)
         self.assertNotIn('video-player.js', page.page_js)
 
         page = EventPage(
-            title='Past event with no youtube_url',
-            start_dt=datetime.datetime(2011, 01, 01, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 01, 02, tzinfo=pytz.UTC),
+            title='Past event with youtube_url',
+            start_dt=datetime.datetime(2011, 1, 1, tzinfo=pytz.UTC),
+            end_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
             youtube_url='https://www.youtube.com/embed/Aa1Bb2Cc3Dc4'
         )
         save_new_page(page)
+        self.assertEqual('past', page.event_state)
         self.assertIn('video-player.js', page.page_js)
