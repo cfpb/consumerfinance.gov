@@ -48,11 +48,6 @@ function reviewGoalsView( element, { store } ) {
     }
 
     for ( const goal in prevGoals ) {
-      if ( !prevGoals ) {
-        shouldUpdate = true;
-        return shouldUpdate;
-      }
-
       if ( prevGoals.hasOwnProperty( goal ) ) {
         const prevGoalContent = prevGoals[goal];
         const goalContent = goals[goal];
