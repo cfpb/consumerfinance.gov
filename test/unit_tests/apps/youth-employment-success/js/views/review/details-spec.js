@@ -23,7 +23,7 @@ const HTML = `
   <div class="block block__sub">
     <div class="${ CLASSES.CHOICE_HEADING }">
       <p class="h3">Another option you compared: <span class="js-transportation-option"></span></p>
-      <small>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</small>
+      <p>Depending on whether this fits in your budget and schedule, this could be a backup plan if you’re in a bind and your first choice doesn’t work out.</p>
     </div>
     <div class="yes-route-details">
       <div class="js-route-notification block block__sub-micro block__flush-top u-hidden"></div>
