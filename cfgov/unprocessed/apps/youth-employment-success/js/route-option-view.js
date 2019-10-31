@@ -6,7 +6,7 @@ import {
 import TodoNotification from './todo-notification';
 import inputView from './views/input';
 import { toArray } from './util';
-import { TRANSPORTATION } from './data/transportation-map';
+import { TRANSPORTATION } from './data-types/transportation-map';
 
 const CLASSES = Object.freeze( {
   FORM: 'o-yes-route-option',
@@ -86,8 +86,13 @@ function RouteOptionFormView( element, {
           _dom.querySelector( `.${ drivingCostEstimateView.CLASSES.CONTAINER }` )
         );
 
+        const detailsContainer = routeDetailsView.CLASSES.CONTAINER;
+        const detailsEl = _dom.querySelector( `.${ detailsContainer }` );
         const detailsView = routeDetailsView(
-          _dom.querySelector( `.${ routeDetailsView.CLASSES.CONTAINER }` )
+          detailsEl,
+          {
+            alertTarget: detailsEl.querySelector( '.js-route-inline-notification' )
+          }
         );
 
         transitTimeView(

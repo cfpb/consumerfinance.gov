@@ -2,7 +2,7 @@ import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-hel
 import { toArray } from '../../util';
 import { updateRouteChoiceAction } from '../../reducers/choice-reducer';
 import inputView from '../input';
-import transportationMap from '../../data/transportation-map';
+import transportationMap from '../../data-types/transportation-map';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'js-yes-review-choice',
@@ -24,7 +24,7 @@ const CLASSES = Object.freeze( {
  * @param {YesStore} props.store The public API exposed by the Store class
  * @returns {Object} This view's public API
  */
-function reviewChoiceView( element, { store } ) {
+function reviewChoiceView( element, { store, onShowReviewPlan } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _reviewPlanEl = _dom.querySelector( `.${ CLASSES.REVIEW_PLAN }` );
   const _choiceBtnEls = toArray(
@@ -87,6 +87,7 @@ function reviewChoiceView( element, { store } ) {
    */
   function _showReviewPlan() {
     _reviewPlanEl.classList.remove( 'u-hidden' );
+    onShowReviewPlan();
     _reviewBtnEl.removeEventListener( 'click', _showReviewPlan );
   }
 

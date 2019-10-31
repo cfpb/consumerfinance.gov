@@ -1,11 +1,13 @@
-import { assign, toArray, toPrecision, toggleCFNotification } from '../util';
+import { assign, formatNegative, toArray, toPrecision } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { getPlanItem } from '../data/todo-items';
+import { ALERT_TYPES } from '../data-types/notifications';
+import { getPlanItem } from '../data-types/todo-items';
 import money from '../money';
-import transportationMap from '../data/transportation-map';
+import notificationsView from './notifications';
+import transportationMap from '../data-types/transportation-map';
 import validate from '../validators/route-option';
 
-const CLASSES = {
+const CLASSES = Object.freeze( {
   CONTAINER: 'yes-route-details',
   TRANSPORTATION_TYPE: 'js-transportation-type',
   BUDGET: 'js-budget',
@@ -15,21 +17,25 @@ const CLASSES = {
   TIME_HOURS: 'js-time-hours',
   TIME_MINUTES: 'js-time-minutes',
   TODO_LIST: 'js-todo-list',
-  TODO_ITEMS: 'js-todo-items',
-  INCOMPLETE_ALERT: 'js-route-incomplete',
-  OOB_ALERT: 'js-route-oob',
-  COMPLETE_ALERT: 'js-route-complete'
-};
+  TODO_ITEMS: 'js-todo-items'
+} );
 
 /**
  * Generates a list of LI elements to be passed back to the DOM
  *
+ * @param {HTMLElement} todosEl Reference to the actual todo list ul element
  * @param {array} todos A list of types of actions the user should take
  * when considering this route option
+ * @param {Boolean} hasDefault Whether or not this list has a default item
  * @returns {Node} An HTML documentFragment with a collection of LI elements
  */
-function updateTodoList( todos = [] ) {
+function buildTodoListNodes( todosEl, todos = [], hasDefault ) {
   const fragment = document.createDocumentFragment();
+  const defaultItem = hasDefault && todosEl.children && todosEl.children[0];
+
+  if ( defaultItem ) {
+    fragment.appendChild( defaultItem.cloneNode( true ) );
+  }
 
   todos.forEach( todo => {
     const realTodo = getPlanItem( todo );
@@ -166,10 +172,10 @@ function updateDomNode( node, nextValue ) {
 
   if ( assertStateHasChanged( currentValue, nextValue ) ) {
     if ( nextValue instanceof HTMLElement || nextValue instanceof Node ) {
-      node.textContent = '';
+      node.innerHTML = '';
       node.appendChild( nextValue );
     } else {
-      node.textContent = nextValue;
+      node.innerHTML = nextValue;
     }
   }
 }
@@ -184,7 +190,7 @@ function updateDomNode( node, nextValue ) {
  * @param {HTMLNode} element The root DOM element for this view
  * @returns {Object} This view's public methods
  */
-function routeDetailsView( element ) {
+function routeDetailsView( element, { alertTarget, hasDefaultTodo = false } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _transportationEl = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_TYPE }` )
@@ -197,28 +203,31 @@ function routeDetailsView( element ) {
   const _timeMinutesEl = _dom.querySelector( `.${ CLASSES.TIME_MINUTES }` );
   const _todoListEl = _dom.querySelector( `.${ CLASSES.TODO_LIST }` );
   const _todoItemsEl = _dom.querySelector( `.${ CLASSES.TODO_ITEMS }` );
-  const _incAlertEl = _dom.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
-  const _oobAlertEl = _dom.querySelector( `.${ CLASSES.OOB_ALERT }` );
-  const _completeAlertEl = _dom.querySelector( `.${ CLASSES.COMPLETE_ALERT }` );
+
+  let alertView;
 
   /**
    * Toggles the display of the todo list element and its children
-   * @param {Array} todos The array of todos the user may have added
+   * @param {DocumentFragment} fragment Collection of new li nodes representing
+   * todos the user may have added
    */
-  function _toggleTodoList( todos = [] ) {
-    if ( todos.length ) {
+  function updateTodoList( fragment ) {
+    updateDom( _todoItemsEl, fragment, hasDefaultTodo );
+
+    if ( _todoItemsEl.children.length ) {
       _todoListEl.classList.remove( 'u-hidden' );
     } else {
       _todoListEl.classList.add( 'u-hidden' );
     }
-
-    updateDom( _todoItemsEl, updateTodoList( todos ) );
   }
 
   return {
     init() {
       if ( setInitFlag( _dom ) ) {
-        return this;
+        alertView = notificationsView(
+          document.querySelector( `.${ notificationsView.CLASSES.CONTAINER }` )
+        );
+        alertView.init();
       }
 
       return this;
@@ -230,28 +239,39 @@ function routeDetailsView( element ) {
         remainingBudget,
         costEstimate
       );
-      const dataToValidate = assign( {}, budget, route );
+      const dataIsValid = validate( assign( {}, budget, route ) );
+      const valuesForNotification = {
+        [ALERT_TYPES.HAS_TODOS]: Boolean(
+          route.transportation && route.actionPlanItems.length
+        ),
+        [ALERT_TYPES.INVALID]: Boolean( route.transportation && !dataIsValid ),
+        [ALERT_TYPES.IN_BUDGET]: dataIsValid && nextRemainingBudget >= 0,
+        [ALERT_TYPES.OUT_OF_BUDGET]: dataIsValid && nextRemainingBudget < 0
+      };
+      const todoListFragment = buildTodoListNodes(
+        _todoItemsEl, route.actionPlanItems, hasDefaultTodo
+      );
 
       updateDom( _transportationEl, transportationMap[route.transportation] );
-      updateDom( _budgetEl, toPrecision( remainingBudget, 2 ) );
+      updateDom( _budgetEl,
+        formatNegative(
+          toPrecision( remainingBudget, 2 )
+        )
+      );
       updateDom( _daysPerWeekEl, route.daysPerWeek );
       updateDom( _totalCostEl, toPrecision( costEstimate, 2 ) );
-      updateDom( _budgetLeftEl, toPrecision( nextRemainingBudget, 2 ) );
+      updateDom( _budgetLeftEl,
+        formatNegative(
+          toPrecision( nextRemainingBudget, 2 )
+        )
+      );
       updateDom( _timeHoursEl, route.transitTimeHours );
       updateDom( _timeMinutesEl, route.transitTimeMinutes );
-      if ( _todoListEl ) {
-        _toggleTodoList( route.actionPlanItems );
-      }
-      toggleCFNotification( _oobAlertEl, nextRemainingBudget < 0 );
+      updateTodoList( todoListFragment );
 
-      if ( route.transportation ) {
-        toggleCFNotification( _incAlertEl, !validate( dataToValidate ) );
-      }
-
-      toggleCFNotification(
-        _completeAlertEl,
-        validate( dataToValidate ) && nextRemainingBudget >= 0
-      );
+      alertView.render( {
+        alertValues: valuesForNotification, alertTarget
+      } );
     }
   };
 }

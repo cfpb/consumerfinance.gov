@@ -49,7 +49,8 @@
   .h2,
   textarea,
   .m-notification,
-  .js-yes-plans-review {
+  .js-yes-plans-review,
+  .a-label small {
     max-width: 41.875rem;
   }
 }
@@ -86,9 +87,23 @@
   });
 }
 
+.m-info-unit.print-layout {
+  .respond-to-print({
+    .m-info-unit-image {
+      display: none !important;
+    }
+  });
+}
+
 .m-list_link {
   .respond-to-max(@bp-sm-min, {
     border: 0;
+  });
+}
+
+.m-notification {
+  .respond-to-print({
+    background-color: transparent !important;
   });
 }
 
@@ -99,8 +114,13 @@
    * all the case in which all form fields are visible and the user's to-do list
    * is populated.
   */
-  max-height: 2400px !important;
+  max-height: 1700px !important;
 }
+
+.o-expandable__padded .o-expandable_content:after {
+  padding-bottom: 0px !important;
+}
+
 /** /MOLECULE OVERRIDES **/
 
 
@@ -122,6 +142,7 @@ input:-moz-ui-invalid {
   // Required to stop FF from validating the `placeholder` attribute
   box-shadow: none;
 }
+
 /** /ELEMENT-SPECIFIC **/
 
 /**
@@ -171,10 +192,12 @@ input:-moz-ui-invalid {
 .u-hide-on-print {
   .respond-to-print({
     display: none !important;
+    visibility: hidden !important;
   });
 }
 
 .u-show-on-print {
+  display: none !important;
   .respond-to-print({
     display: block !important;
   });
@@ -211,6 +234,16 @@ input:-moz-ui-invalid {
   display: none;
 }
 
+.highlight {
+  background-color: #f7f8f9;
+  padding: unit( 12px / @base-font-size-px, em );
+
+  .respond-to-print({
+    background-color: transparent;
+    padding: 0;
+  })
+}
+
 .a-average-cost {
   .respond-to-max(@bp-sm-min, {
     width: 15%;
@@ -232,14 +265,13 @@ input:-moz-ui-invalid {
 
 .m-hours {
   .m-hours_container {
-    border-right: 0;
-
     .respond-to-max(@bp-sm-min, {
       display: inline;
     });
   }
 
   .m-hours_data {
+    border: 0;
     .respond-to-max(@bp-sm-min, {
       display: inline;
       text-align: right;
@@ -251,6 +283,9 @@ input:-moz-ui-invalid {
         text-align: right;
       }
     });
+  }
+  .m-minutes_data {
+    border: 0;
   }
 }
 
@@ -264,7 +299,9 @@ input:-moz-ui-invalid {
   .content-r {
     left: 100%;
     position: absolute;
-    top: calc(100% - (@size-iv + @base-line-height-px));
+    // The right-justified content doesn't quite line up with the input field it's
+    // attached to, so we have to manually nudge it up a bit
+    top: calc(100% - (@size-iv + @base-line-height-px + 3px));
     // Fix for safari absolute position layout
     width: 100%;
   }
@@ -288,6 +325,10 @@ input:-moz-ui-invalid {
 }
 
 .js-transit-hours, .js-transit-minutes {
+  // Necessary because we are setting a lot of custom widths per design's
+  // direction, and at certain screen sizes the fields become unusable
+  min-width: 35px;
+
   .respond-to-max(@bp-sm-min, {
     display: inline-block;
     width: 20%;
@@ -301,14 +342,6 @@ input:-moz-ui-invalid {
     & + input {
       margin-top: unit( 15px / @base-font-size-px, em );
     }
-  }
-}
-
-.yes-route-details {
-  .m-notification {
-    background: transparent;
-    border: none;
-    padding: 0;
   }
 }
 
@@ -329,4 +362,26 @@ input:-moz-ui-invalid {
     height: 125px;
     width: 125px;
   }
+}
+
+/** FIREFOX PRINT FIXES **/
++.o-mega-menu_content {
+  .respond-to-print({
+    display: none !important;
+    overflow: visible;
+    visibility: hidden !important;
+  });
+}
+
+.content_main {
+  .respond-to-print({
+    display: block !important;
+    overflow: visible !important
+  });
+}
+
+.u-w75pct {
+  .respond-to-print({
+    width: 100%;
+  });
 }

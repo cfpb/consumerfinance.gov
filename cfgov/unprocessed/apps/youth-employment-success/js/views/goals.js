@@ -22,6 +22,8 @@ const GOALS_TO_ACTIONS = {
   goalSteps:  updateGoalStepsAction
 };
 
+const NEWLINE_REGEXP = /(?:\r\n)|\r|\n/g;
+
 /**
  * GoalsView
  * @class
@@ -46,7 +48,8 @@ function goalsView( element, { store } ) {
     const method = GOALS_TO_ACTIONS[name];
 
     if ( method ) {
-      store.dispatch( method( event.target.value ) );
+      const textHTMLNewlines = event.target.value.replace( NEWLINE_REGEXP, '<br />' );
+      store.dispatch( method( textHTMLNewlines ) );
     }
   }
 

@@ -52,10 +52,7 @@ def save_agreement(agreements_zip, pdf_path, outfile,
 
     zipinfo = agreements_zip.getinfo(pdf_path)
 
-    if six.PY3:  # pragma: no cover
-        path = force_text(pdf_path)
-    else:  # pragma: no cover
-        path = pdf_path.decode('cp1252')
+    path = force_text(pdf_path)
 
     try:
         issuer_name, filename = path.split('/')
