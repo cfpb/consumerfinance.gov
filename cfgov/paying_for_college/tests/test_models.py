@@ -13,9 +13,9 @@ from django.utils import timezone
 import requests
 from paying_for_college.apps import PayingForCollegeConfig
 from paying_for_college.models import (
-    Alias, ConstantCap, ConstantRate, Contact, Feedback, Nickname,
-    Notification, Program, School, StudentResourcesPage, get_region,
-    make_divisible_by_6
+    Alias, CollegeCostsPage, ConstantCap, ConstantRate, Contact, Feedback,
+    Nickname, Notification, Program, RepayingStudentDebtPage, School,
+    StudentLoanQuizPage, get_region, make_divisible_by_6
 )
 
 from v1.models import HomePage
@@ -57,23 +57,57 @@ class PageModelsTest(TestCase):
             new_page.save()
             return new_page
         self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.loan_quiz_page = create_page(
+            StudentLoanQuizPage,
+            'Choosing a student loan',
+            'choose-a-student-loan',
+            self.ROOT_PAGE
+        )
         self.debt_page = create_page(
-            StudentResourcesPage,
+            RepayingStudentDebtPage,
             'Repaying student debt',
             'repaying-student-debt',
             self.ROOT_PAGE
         )
-
-    def test_student_resources_get_template(self):
-        self.assertEqual(
-            self.debt_page.get_template(HttpRequest()),
-            'paying-for-college/{}.html'.format(self.debt_page.slug)
+        self.college_costs_page = create_page(
+            CollegeCostsPage,
+            'Understanding college costs',
+            'college-costs',
+            self.ROOT_PAGE
         )
 
-    def test_student_resources_page_js(self):
+    def test_loan_quiz_template(self):
+        slug = 'choose-a-student-loan'
+        self.assertEqual(
+            self.loan_quiz_page.get_template(HttpRequest()),
+            'paying-for-college/{}.html'.format(slug))
+
+    def test_loan_quiz_js(self):
+        self.assertIn(
+            'secondary-navigation.js',
+            self.loan_quiz_page.page_js)
+
+    def test_debt_page_template(self):
+        slug = 'repaying-student-debt'
+        self.assertEqual(
+            self.debt_page.get_template(HttpRequest()),
+            'paying-for-college/{}.html'.format(slug))
+
+    def test_debt_page_js(self):
         self.assertIn(
             'secondary-navigation.js',
             self.debt_page.page_js)
+
+    def test_college_costs_template(self):
+        slug = 'college-costs'
+        self.assertEqual(
+            self.college_costs_page.get_template(HttpRequest()),
+            'paying-for-college/{}.html'.format(slug))
+
+    def test_college_costs_js(self):
+        self.assertIn(
+            'secondary-navigation.js',
+            self.college_costs_page.page_js)
 
 
 class SchoolRegionTest(TestCase):

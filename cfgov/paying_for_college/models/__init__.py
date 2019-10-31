@@ -6,4 +6,6 @@ from paying_for_college.models.disclosures import (
     Feedback, Nickname, Notification, Program, School, cdr, csw, get_region,
     make_divisible_by_6
 )
-from paying_for_college.models.pages import StudentResourcesPage
+from paying_for_college.models.pages import (
+    CollegeCostsPage, RepayingStudentDebtPage, StudentLoanQuizPage
+)

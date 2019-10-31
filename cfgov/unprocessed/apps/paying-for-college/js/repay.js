@@ -193,7 +193,7 @@ const decisionStacker = function( appElement, targets ) {
     } );
   };
 
-  const scroll = function( destination) {
+  const scroll = function( destination ) {
     const scrollTop = destination.offsetTop - 50;
 
     if ( window.pageYOffset >= scrollTop ) return;

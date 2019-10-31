@@ -7,7 +7,7 @@ const searchView = {
   searchResults: null,
   keyupDelay: null,
 
-  formatSearchResults: function( responseText ) {
+  _formatSearchResults: function( responseText ) {
     const obj = JSON.parse( responseText );
     let html;
     for ( const key in obj ) {
@@ -16,22 +16,22 @@ const searchView = {
     }
   },
 
-  handleInputChange: function( event ) {
+  _handleInputChange: function( event ) {
     clearTimeout( this.keyupDelay );
     this.keyupDelay = setTimeout( function() {
       const searchTerm = searchView.searchBox.value;
       // TODO - clean up searchbox text, remove non-alphanumeric characters
       schoolSearch( searchTerm )
         .then( resp => {
-          searchView.formatSearchResults( resp.responseText );
+          searchView._formatSearchResults( resp.responseText );
         } );
     }, 500 );
   },
 
   _addKeyListener: function() {
     const events = {
-      keyup: this.handleInputChange,
-      focusout: this.handleInputChange
+      keyup: this._handleInputChange,
+      focusout: this._handleInputChange
     };
     bindEvent( this.searchBox, events );
   },
