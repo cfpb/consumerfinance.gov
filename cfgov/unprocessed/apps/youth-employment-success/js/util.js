@@ -1,3 +1,5 @@
+import { addCommas } from './sanitizers';
+
 let UNDEFINED;
 
 const REDUCER_RETURN_ERROR = 'Reducer must return a state object';
@@ -227,7 +229,7 @@ function toPrecision( value = '', precision = 0 ) {
     throw new Error( 'First argument must be a number.' );
   }
 
-  return String( ( Math.round( ( safeValue * 1000 ) / 10 ) / 100 ).toFixed( precision ) );
+  return addCommas( String( ( Math.round( ( safeValue * 1000 ) / 10 ) / 100 ).toFixed( precision ) ) );
 }
 
 function formatNegative( num ) {

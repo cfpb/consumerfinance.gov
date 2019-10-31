@@ -77,4 +77,29 @@ describe( 'reviewGoalsView', () => {
       expect( el.textContent ).toBe( expected );
     } );
   } );
+
+  it( 'updates when prevState has not been populated', () => {
+    const prevState = { goals: null };
+    const state = {
+      goals: {
+        longTermGoal: 'goal',
+        goalImportance: 'very',
+        goalSteps: 'several',
+        goalTimeline: '3 to 6 months'
+      }
+    };
+
+    let els = toArray( document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` ) );
+
+    els.forEach( el => expect( el.textContent ).toBe( '' ) );
+
+    store.subscriber()( prevState, state );
+
+    els = toArray( document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` ) );
+
+    els.forEach( el => {
+      const expected = state.goals[el.getAttribute( 'data-js-goal' )];
+      expect( el.textContent ).toBe( expected );
+    } );
+  } );
 } );
