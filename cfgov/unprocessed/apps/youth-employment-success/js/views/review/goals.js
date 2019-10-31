@@ -43,12 +43,12 @@ function reviewGoalsView( element, { store } ) {
     const goals = state.goals;
     let shouldUpdate = false;
 
-    if (!Object.keys(prevGoals).length) {
+    if ( !Object.keys( prevGoals ).length ) {
       return true;
     }
 
     for ( const goal in prevGoals ) {
-      if (!prevGoals) {
+      if ( !prevGoals ) {
         shouldUpdate = true;
         return shouldUpdate;
       }
@@ -80,7 +80,7 @@ function reviewGoalsView( element, { store } ) {
         if ( _goalsMap.hasOwnProperty( attr ) ) {
           const el = _goalsMap[attr];
 
-          el.innerHTML = goals[attr];
+          el.innerHTML = goals[attr] || '';
         }
       }
     }
