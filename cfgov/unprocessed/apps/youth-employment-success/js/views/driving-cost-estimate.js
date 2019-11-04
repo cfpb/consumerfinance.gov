@@ -2,8 +2,7 @@ import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helper
 import { TRANSPORTATION } from '../data-types/transportation-map';
 
 const CLASSES = {
-  CONTAINER: 'js-driving-estimate',
-  COST_PER_MILE: 'js-cost-per-mile'
+  CONTAINER: 'js-driving-estimate'
 };
 
 /**
@@ -17,7 +16,6 @@ const CLASSES = {
  */
 function drivingCostEstimate( element ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
-  const _costPerMileEl = _dom.querySelector( `.${ CLASSES.COST_PER_MILE }` );
 
   return {
     init() {
@@ -28,11 +26,8 @@ function drivingCostEstimate( element ) {
     render( route ) {
       if ( route.transportation === TRANSPORTATION.DRIVE ) {
         _dom.classList.remove( 'u-hidden' );
-        // Magic number for now, until we get an actual average cost
-        _costPerMileEl.textContent = '$1.80';
       } else {
         _dom.classList.add( 'u-hidden' );
-        _costPerMileEl.textContent = '';
       }
     }
   };

@@ -19,7 +19,7 @@ const COST_FREQUENCY_TYPES = {
   MONTHLY: 'monthly'
 };
 
-const NOT_SURE_MESSAGE = 'Looking up average daily cost was added to your to-do list.';
+const NOT_SURE_MESSAGE = 'Looking up average cost was added to your to-do list.';
 
 /**
  * AverageCostView

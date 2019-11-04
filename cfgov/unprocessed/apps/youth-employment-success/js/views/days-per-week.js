@@ -11,6 +11,8 @@ const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-days-per-week'
 } );
 
+const NOT_SURE_MESSAGE = 'Looking up how many days a week you\'ll make this trip was added to your to-do list.';
+
 /**
  * DaysPerWeekView
  * @class
@@ -48,7 +50,7 @@ function daysPerWeekView( element, { store, routeIndex, todoNotification } ) {
     const { checked } = event.target;
 
     if ( checked ) {
-      todoNotification.show();
+      todoNotification.show( NOT_SURE_MESSAGE );
     } else {
       todoNotification.hide();
     }
