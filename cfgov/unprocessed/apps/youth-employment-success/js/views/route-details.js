@@ -8,6 +8,7 @@ import transportationMap from '../data-types/transportation-map';
 import validate from '../validators/route-option';
 
 const CLASSES = Object.freeze( {
+  AVERAGE_COST_HELPER: 'js-average-cost-helper',
   CONTAINER: 'yes-route-details',
   TRANSPORTATION_TYPE: 'js-transportation-type',
   BUDGET: 'js-budget',
@@ -180,6 +181,17 @@ function updateDomNode( node, nextValue ) {
   }
 }
 
+function updateNodeVisibility( node, visibility ) {
+  const predicate = typeof visibility === 'function' ?
+    visibility : () => visibility;
+
+  if ( predicate() ) {
+    node.classList.add( 'u-hidden' );
+  } else {
+    node.classList.remove( 'u-hidden' );
+  }
+}
+
 /**
  * RouteDetailsView
  * @class
@@ -195,6 +207,7 @@ function routeDetailsView( element, { alertTarget, hasDefaultTodo = false } ) {
   const _transportationEl = toArray(
     _dom.querySelectorAll( `.${ CLASSES.TRANSPORTATION_TYPE }` )
   );
+  const _averageCostHelperEl = _dom.querySelector( `.${ CLASSES.AVERAGE_COST_HELPER }` );
   const _budgetEl = _dom.querySelector( `.${ CLASSES.BUDGET }` );
   const _daysPerWeekEl = _dom.querySelector( `.${ CLASSES.DAYS_PER_WEEK }` );
   const _totalCostEl = _dom.querySelector( `.${ CLASSES.TOTAL_COST }` );
@@ -252,6 +265,7 @@ function routeDetailsView( element, { alertTarget, hasDefaultTodo = false } ) {
         _todoItemsEl, route.actionPlanItems, hasDefaultTodo
       );
 
+      updateNodeVisibility( _averageCostHelperEl, route.isMonthlyCost );
       updateDom( _transportationEl, transportationMap[route.transportation] );
       updateDom( _budgetEl,
         formatNegative(

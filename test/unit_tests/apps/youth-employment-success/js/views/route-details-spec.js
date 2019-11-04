@@ -36,7 +36,7 @@ const HTML = `
       </p>
       <div>
         Average monthly cost of <span class="js-transportation-type"></span>
-        <span>
+        <span class="js-average-cost-helper">
           Based on <span class="js-days-per-week"></span> days a week you will make this trip
         </span>
       </div>
@@ -131,6 +131,23 @@ describe( 'routeDetailsView', () => {
 
       expect( daysPerWeekEl.textContent ).toBe( nextState.route.daysPerWeek );
     } );
+
+    it('hides the average cost helper text when isMonthlyCost is true', () => {
+      const state = {
+        budget: { ...nextState.budget },
+        route: {
+          ...nextState.route,
+          transportation: 'Walk',
+          isMonthlyCost: true,
+          averageCost: '100'
+        }
+      };
+
+      view.render( state );
+
+      const averageCostHelperEl = document.querySelector(`.${CLASSES.AVERAGE_COST_HELPER}`);
+      expect(averageCostHelperEl.classList.contains('u-hidden')).toBeTruthy();
+    });
 
     describe( 'total costs', () => {
       it( 'correctly calculates driving cost', () => {
