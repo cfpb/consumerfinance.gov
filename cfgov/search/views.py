@@ -34,7 +34,7 @@ class SearchView(View):
         pages = sorted(pages, key=lambda k: k.title)
 
         contacts = list(
-            Contact.objects.filter(body__contains=url).order_by('heading'))
+            Contact.objects.filter(body__contains=url))
         resources = sorted(list(
             Resource.objects.filter(link__contains=url)) + list(
             Resource.objects.filter(alternate_link__contains=url)),
