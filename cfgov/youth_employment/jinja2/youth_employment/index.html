@@ -17,16 +17,4 @@
 
 {% block javascript %}
     {{ super() }}
-
-    <script async>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
-          var s = [
-            '{{ static('apps/find-a-housing-counselor/js/common.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
-    </script>
 {% endblock javascript %}
