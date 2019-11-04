@@ -115,7 +115,9 @@ class LearnPage(AbstractFilterPage):
             table_options={'renderer': 'html'}
         )),
         ('feedback', v1_blocks.Feedback()),
+        ('contact_expandable_group', organisms.ContactExpandableGroup()),
     ], blank=True)
+
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel('content')
     )

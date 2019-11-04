@@ -802,6 +802,38 @@ class ExpandableGroup(blocks.StructBlock):
         js = ["expandable-group.js"]
 
 
+class ContactExpandableGroup(blocks.StructBlock):
+    """Expandable group that renders selected Contact snippets."""
+    group_title = blocks.CharBlock()
+    contacts = blocks.ListBlock(SnippetChooserBlock('v1.Contact'))
+
+    def get_context(self, value, parent_context=None):
+        context = super(ContactExpandableGroup, self).get_context(
+            value,
+            parent_context=parent_context
+        )
+
+        # This block mimics the ExpandableGroup block.
+        context['value'] = ExpandableGroup().to_python({
+            'heading': value['group_title'],
+            'expandables': [
+                {
+                    'label':  contact.heading,
+                    'content': contact.contact_info.stream_data,
+                } for contact in value['contacts']
+            ],
+        })
+
+        return context
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/organisms/expandable-group.html'
+
+    class Media:
+        js = ["expandable-group.js"]
+
+
 class ItemIntroduction(blocks.StructBlock):
     show_category = blocks.BooleanBlock(
         required=False,
