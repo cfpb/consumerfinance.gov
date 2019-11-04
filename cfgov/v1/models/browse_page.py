@@ -49,7 +49,6 @@ class BrowsePage(CFGOVPage):
         ('data_snapshot', organisms.DataSnapshot()),
         ('job_listing_table', JobListingTable()),
         ('bureau_structure', organisms.BureauStructure()),
-        ('yes_checklist', YESChecklist()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

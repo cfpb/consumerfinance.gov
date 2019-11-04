@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import "molecules/social-media.html" as social_media with context %}
+
+{% block title %}
+    Find a Housing Counselor | Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet"
+      href="{{ static('apps/find-a-housing-counselor/css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/find-a-housing-counselor/js/common.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}
