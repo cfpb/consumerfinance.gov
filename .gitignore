@@ -29,6 +29,10 @@ cfgov/static_built/*
 !cfgov/legacy/static/foia/quarterly/*.zip
 !cfgov/paying_for_college/data_sources/ipeds/test.txt.zip
 
+# Desired minified CSS #
+########################
+!cfgov/legacy/static/complaint/css/notifications.min.css
+
 
 # Logs and databases #
 ######################
