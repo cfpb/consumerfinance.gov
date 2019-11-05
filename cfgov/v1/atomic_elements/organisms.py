@@ -791,6 +791,7 @@ class ExpandableGroup(blocks.StructBlock):
         help_text=('Check this to add a horizontal rule line to top of '
                    'expandable group.')
     )
+    add_heading_id = blocks.BooleanBlock(default=False, required=False)
 
     expandables = blocks.ListBlock(Expandable())
 
@@ -816,9 +817,10 @@ class ContactExpandableGroup(blocks.StructBlock):
         # This block mimics the ExpandableGroup block.
         context['value'] = ExpandableGroup().to_python({
             'heading': value['group_title'],
+            'add_heading_id': True,
             'expandables': [
                 {
-                    'label':  contact.heading,
+                    'label': contact.heading,
                     'content': contact.contact_info.stream_data,
                 } for contact in value['contacts']
             ],
