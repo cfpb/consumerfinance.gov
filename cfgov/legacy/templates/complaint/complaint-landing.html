@@ -13,6 +13,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock %}
 
+{% block page_meta %}
+    <meta property="og:title" content="Consumer Complaint Database | Consumer Financial Protection Bureau">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:description" content="The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response.">
+    <meta name="description" content="The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response.">
+{% endblock %}
+
 {% block content %}
 <div id="ccdb-landing">
     <div class="cf-notification cf-notification__warning {% if data_down %} show-data-notification {% elif narratives_down %} show-narratives-notification  {% endif %}">
@@ -203,23 +210,23 @@
               <div class="m-notification_content">
                   <div class="h4 m-notification_message">Updated API available now</div>
                   <p class="m-notification_explanation">
-                      The CFPB is updating its API service to ensure seamless data availability for users and real time consistency with the Consumer Complaint Database. As a result, the Socrata platform will be retired in <b>January, 2020</b>. Check out our Complaint search tool and the new API service documentation to learn more about upcoming changes to the Consumer Complaint Database API.
+                      The CFPB recently updated its Application Programming Interface (API) service to ensure seamless data availability for users and real-time consistency with the Consumer Complaint Database. The Socrata platform will be retired in early January 2020. Check out our search tool and the new API service to learn more about consumer complaints.
                   </p>
                   <ul class="m-list m-list__links">
                     <li class="m-list_item">
-                        <a class="m-list_link" href="https://cfpb.github.io/ccdb5-api/">
+                        <a class="m-list_link" href="https://cfpb.github.io/api/ccdb/api.html">
                             New API documentation
                         </a>
                     </li>
                     <li class="m-list_item">
-                        <a class="m-list_link" href="http://files.consumerfinance.gov/ccdb/complaints.json">
+                        <a class="m-list_link" href="http://files.consumerfinance.gov/ccdb/complaints.json.zip">
                           Download complaint data (new API) | JSON
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 651.7 1200" class="cf-icon-svg"><path d="M507.1 692.8c-15.6-15.6-40.9-15.6-56.6 0l-85.1 85.1V466.6c0-22.1-17.9-40-40-40s-40 17.9-40 40V778l-85.1-85.1c-15.6-15.6-40.9-15.6-56.6 0-15.6 15.6-15.6 40.9 0 56.6L297 902.9c7.5 7.5 17.7 11.7 28.3 11.7s20.8-4.2 28.3-11.7l153.3-153.4c15.8-15.7 15.8-41 .2-56.7z"/><path d="M30 161c-16.5 0-30 13.5-30 30v827.8c0 16.5 13.5 30 30 30h591.7c16.5 0 30-13.5 30-30V343.7L469 161H30zm389.6 60v134.8c0 19.9 16.3 36.2 36.2 36.2h135.9V988.8H60V221h359.6z"/></svg>
                         </a>
 
                     </li>
                     <li class="m-list_item">
-                        <a class="m-list_link" href="http://files.consumerfinance.gov/ccdb/complaints.csv">
+                        <a class="m-list_link" href="http://files.consumerfinance.gov/ccdb/complaints.csv.zip">
                             Download complaint data (new API) | CSV</a>
                     </li>
                 </ul>
