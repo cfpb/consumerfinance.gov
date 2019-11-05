@@ -39,9 +39,13 @@ function reviewGoalsView( element, { store } ) {
    * @returns {Boolean} Whether or not the DOM should update
    */
   function _shouldUpdate( prevState, state ) {
-    const prevGoals = prevState.goals;
+    const prevGoals = prevState.goals || {};
     const goals = state.goals;
     let shouldUpdate = false;
+
+    if ( !Object.keys( prevGoals ).length ) {
+      return true;
+    }
 
     for ( const goal in prevGoals ) {
       if ( prevGoals.hasOwnProperty( goal ) ) {
@@ -71,7 +75,7 @@ function reviewGoalsView( element, { store } ) {
         if ( _goalsMap.hasOwnProperty( attr ) ) {
           const el = _goalsMap[attr];
 
-          el.innerHTML = goals[attr];
+          el.innerHTML = goals[attr] || '';
         }
       }
     }
@@ -80,6 +84,7 @@ function reviewGoalsView( element, { store } ) {
   return {
     init() {
       if ( setInitFlag( _dom ) ) {
+        _handleStateUpdate( {}, store.getState() );
         store.subscribe( _handleStateUpdate );
       }
     }

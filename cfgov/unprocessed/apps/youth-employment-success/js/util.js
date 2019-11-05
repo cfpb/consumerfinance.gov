@@ -1,3 +1,5 @@
+import { addCommas } from './sanitizers';
+
 let UNDEFINED;
 
 const REDUCER_RETURN_ERROR = 'Reducer must return a state object';
@@ -184,7 +186,7 @@ function isNumber( maybeNum ) {
 }
 
 /**
- * Helper function to control showing and hiding CFNotification alert nodes
+ * Helper function to control showing and hiding cf-notification alert nodes
  * @param {HTMLElement} node The element in which to search for the notification,
  * or the notification itself
  * @param {Boolean} doShow Whether to show or hide the element
@@ -227,7 +229,7 @@ function toPrecision( value = '', precision = 0 ) {
     throw new Error( 'First argument must be a number.' );
   }
 
-  return String( ( Math.round( ( safeValue * 1000 ) / 10 ) / 100 ).toFixed( precision ) );
+  return addCommas( String( ( Math.round( ( safeValue * 1000 ) / 10 ) / 100 ).toFixed( precision ) ) );
 }
 
 function formatNegative( num ) {
@@ -239,14 +241,14 @@ function formatNegative( num ) {
   let decimals = '';
 
   // Math.abs will preserve decimals, but not if they are zero
-  if ( ( /^0+$/ ).test( decimalZeros ) ) {
+  if ( ( /0+/ ).test( decimalZeros ) ) {
     decimals = decimalZeros;
   }
 
   let formattedTotal = significant;
 
-  if ( num < 0 ) {
-    formattedTotal = `${ HTML_MINUS }${ Math.abs( num ) }`;
+  if ( significant < 0 ) {
+    formattedTotal = `${ HTML_MINUS }${ Math.abs( significant ) }`;
   }
 
   if ( !decimals ) {

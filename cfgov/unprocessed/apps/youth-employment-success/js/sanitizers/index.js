@@ -120,4 +120,7 @@ const sanitizeMap = {
   number: sanitizeNumbers
 };
 
+export {
+  addCommas
+};
 export default sanitizeMap;

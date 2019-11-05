@@ -1,0 +1,11 @@
+{% import "atoms/checkbox.html" as checkbox with context %}
+
+{{
+  checkbox.render({
+    'class': 'content-l_col-1-2 m-form-field__lg-target a-yes-cbg-checkbox',
+    'label': value.item,
+    'value': value.details,
+    'behavior': 'checklist_array_item'
+  })
+}}
+

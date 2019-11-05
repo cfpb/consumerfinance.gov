@@ -90,7 +90,7 @@ function MegaMenu( element ) {
       _mobileNav.resume();
     }
 
-    _dom.classList.remove( 'u-hide-on-mobile' );
+    _dom.classList.remove( 'u-hidden' );
 
     _tabTrigger.init();
     _tabTrigger.addEventListener( 'tabPressed', _handleTabPress );

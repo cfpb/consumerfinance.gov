@@ -92,7 +92,10 @@ function TodoNotification() {
   }
 
   /**
-   * Perform set up operations on the instance
+   * @class TodoNotification
+   * @classdesc Controller that adds to-do notification support to a view.
+   *            In this tool, views accept this class as a prop via
+   *            `new TodoNotification()` and handle its lifecycle themselves.
    *
    * @param {HTMLElement} node The container element the notification should be appended to
    * @param {Number} duration The length of time until the notification is removed from the DOM.
