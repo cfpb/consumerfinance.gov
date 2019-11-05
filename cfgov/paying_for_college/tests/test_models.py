@@ -77,37 +77,19 @@ class PageModelsTest(TestCase):
         )
 
     def test_loan_quiz_template(self):
-        slug = 'choose-a-student-loan'
         self.assertEqual(
             self.loan_quiz_page.get_template(HttpRequest()),
-            'paying-for-college/{}.html'.format(slug))
-
-    def test_loan_quiz_js(self):
-        self.assertIn(
-            'secondary-navigation.js',
-            self.loan_quiz_page.page_js)
+            'paying-for-college/choose-a-student-loan.html')
 
     def test_debt_page_template(self):
-        slug = 'repaying-student-debt'
         self.assertEqual(
             self.debt_page.get_template(HttpRequest()),
-            'paying-for-college/{}.html'.format(slug))
-
-    def test_debt_page_js(self):
-        self.assertIn(
-            'secondary-navigation.js',
-            self.debt_page.page_js)
+            'paying-for-college/repaying-student-debt.html')
 
     def test_college_costs_template(self):
-        slug = 'college-costs'
         self.assertEqual(
             self.college_costs_page.get_template(HttpRequest()),
-            'paying-for-college/{}.html'.format(slug))
-
-    def test_college_costs_js(self):
-        self.assertIn(
-            'secondary-navigation.js',
-            self.college_costs_page.page_js)
+            'paying-for-college/college-costs.html')
 
 
 class SchoolRegionTest(TestCase):
