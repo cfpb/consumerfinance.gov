@@ -15,6 +15,13 @@ from prepaid_agreements.views import (
 class TestViews(TestCase):
 
     def test_get_available_filters(self):
+        products = PrepaidProduct.objects
+
+        self.assertEqual(
+            get_available_filters(products),
+            {'prepaid_type': [], 'status': [], 'issuer_name': []}
+        )
+
         product1 = PrepaidProduct(
             issuer_name='Bank of CFPB',
             prepaid_type='Tax'
@@ -22,7 +29,6 @@ class TestViews(TestCase):
         product1.save()
         product2 = PrepaidProduct(prepaid_type='Travel')
         product2.save()
-        products = PrepaidProduct.objects.all()
         self.assertEqual(
             get_available_filters(products),
             {

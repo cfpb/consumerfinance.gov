@@ -4,7 +4,9 @@ import {
   assign,
   combineReducers,
   entries,
+  formatNegative,
   toArray,
+  toPrecision,
   toggleCFNotification
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
@@ -189,8 +191,8 @@ describe( 'YES utility functions', () => {
   } );
 
   describe( '.toggleCFNotification', () => {
-    it( 'throws an error if not passed a dom node as its first argument', () => {
-      expect( () => toggleCFNotification( null, true ) ).toThrow();
+    it( 'throws an error if first arg is supplied and value is not a dom node', () => {
+      expect( () => toggleCFNotification( 'foo', true ) ).toThrow();
     } );
 
     it( 'toggles a supplied notification', () => {
@@ -205,6 +207,45 @@ describe( 'YES utility functions', () => {
       toggleCFNotification( el, false );
 
       expect( el.classList.contains( 'm-notification__visible' ) ).toBeFalsy();
+    } );
+  } );
+
+  describe( '.toPrecision', () => {
+    it( 'throws an error when a string that cannot be converted to a number is supplied', () => {
+      expect( () => toPrecision( 'string' )
+      ).toThrow();
+    } );
+
+    it( 'returns the original number when a precision is not specified', () => {
+      const num = '100';
+      expect( toPrecision( num ) ).toBe( num );
+    } );
+
+    it( 'returns a string of 0 when no arguments are supplied', () => {
+      expect( toPrecision() ).toBe( '0' );
+    } );
+
+    it( 'adds a number of zeros to the end of a string commesurate with the value supplied as the second argument', () => {
+      const string = '100.';
+
+      expect( toPrecision( string, 3 ) ).toBe( '100.000' );
+      expect( toPrecision( '100.1', 2 ) ).toBe( '100.10' );
+      expect( toPrecision( '100.00', 2 ) ).toBe( '100.00' );
+    } );
+  } );
+
+  describe( '.formatNegative', () => {
+    it( 'returns the value supplied if that value is not a number', () => {
+      expect( formatNegative( '-' ) ).toBe( '-' );
+    } );
+
+    it( 'adds an html entity minus to a number', () => {
+      expect( formatNegative( '-1600' ) ).toBe( '&#8722;1600' );
+    } );
+
+    it( 'preserves decimals', () => {
+      expect( formatNegative( '-1600.00' ) ).toBe( '&#8722;1600.00' );
+      expect( formatNegative( '-1600.10' ) ).toBe( '&#8722;1600.10' );
     } );
   } );
 } );

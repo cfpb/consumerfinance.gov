@@ -1,68 +1,107 @@
+{% from 'line-item.html' import render as render_line_item with context %}
+
 <section class="block o-yes-budget">
-  <h1>Now let’s compare your different options for getting to work</h1>
-  <p>This section helps you budget</p>
-  <form id="yes-budget-form" class="block__sub">
-    <div class="content-l content-l__large-gutters block__sub">
-      <div class="content-l_col content-l_col-1-3">
-        <label for="yes-money-earned" class="a-label">
-          <b>How much money do you receive each month?</b>
-        </label>
-        <div>
+  <h2>Now let’s compare your different options for getting to work</h2>
+  <p>
+    First we’ll help you figure out your average monthly budget so you have an idea of how much money is available to spend on transportation. Once you’ve estimated your budget, you can compare different options to see which one best fits your budget and lifestyle.
+  </p>
+  <form id="yes-budget-form" class="block block__sub block__flush-bottom">
+    <h3>
+      How much money can you spend on getting to work?
+    </h3>
+    <div class="content-l content-l__large-gutters block block__sub">
+      <div class="content-l_col content-l_col-1 u-mobile-reorder">
+        <div class="content-l u-mobile-reorder__second">
+          <label for="yes-money-earned" class="a-label h4 content-l_col content-l_col-1-3 u-hide-on-mobile">
+            How much money do you receive each month?
+          </label>
+          <div class="content-l_col content-l_col-2-3">  
+            <input type="text"
+                   id="yes-money-earned"
+                   name="money-earned"
+                   class="a-text-input o-yes-budget-earned"
+                   disabled
+                   placeholder="$"
+                   data-sanitize="money">
+          </div>
+        </div>
+        <div class="u-mobile-reorder__first">
+          <p id="mobile-earned-label" class="a-label h4 content-l_col-1-3 u-show-on-mobile">
+            How much money do you receive each month?
+          </p>
           <p class="a-label_helper">
             Some sources might be:
           </p>
           <ul class="a-label_helper">
-            <li>Source 1</li>
-            <li>Source 2</li>
-            <li>Source 3</li>
+            <li>Primary and additional jobs</li>
+            <li>Government programs</li>
+            <li>Disability benefits</li>
+            <li>Child support</li>
+            <li>Cash gifts or allowances</li>
           </ul>
         </div>
-      </div>
-      <div class="content-l_col content-l_col-2-3">
-        <input type="text" id="yes-money-earned" name="money-earned" class="a-text-input o-yes-budget-earned" disabled>
       </div>
     </div>
 
-    <div class="content-l content-l__large-gutters block__sub">
-      <div class="content-l_col content-l_col-1-3">
-        <label for="yes-money-spent" class="a-label">
-          <b>Now, subtract your monthy expenses:</b>
-        </label>
-        <div>
-          <p class="a-label_helper">
-            Don't include transportation costs. Examples of expenses:
-          </p>
-          <ul class="a-label_helper">
-            <li>Source 1</li>
-            <li>Source 2</li>
-            <li>Source 3</li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="content-l_col content-l_col-2-3">
-        <span><b>(-)</b></span>
-        <input type="text" id="yes-money-spent" name="money-spent" class="a-text-input o-yes-budget-spent" disabled>
+    
+    <div class="content-l content-l__large-gutters block block__sub block__flush-bottom">        
+      <div class="content-l_col content-l_col-1">
+        <div class="content-l u-mobile-reorder">
+          <label for="yes-money-spent" class="a-label content-l_col content-l_col-1-3 m-right-justify u-mobile-reorder__first">
+            Now, subtract your monthy expenses:
+            <span class="h3 content-r u-hide-on-mobile">(-)</span>
+          </label>
+          <div class="content-l_col content-l_col-2-3 u-mobile-reorder__third">
+            <span class="h3 u-show-on-mobile u-mr10">( - )</span>
+            <input type="text"
+                   id="yes-money-spent"
+                   name="money-spent" 
+                   class="a-text-input o-yes-budget-spent"
+                   disabled=""
+                   placeholder="$"
+                   data-sanitize="money">
+          </div>
+        
+          <div class="u-mobile-reorder__second">
+            
+              <div class="content-l_col content-l_col-1-3">
+                <p class="a-label_helper">
+                  Don’t include transportation costs, but some other sources might be:
+                </p>
+                <ul class="a-label_helper">
+                  <li>Rent and utilities</li>
+                  <li>Groceries and eating out</li>
+                  <li>Credit card bills</li>
+                  <li>Student loans</li>
+                  <li>Childcare</li>
+                  <li>Cell phone</li>
+                </ul>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </form>
-  <div class="content-l block__sub">
-    <div class="content-l_col content-l_col-2-3">
-      <div class="content_line-bold"></div>
-      <div class="content-l">
-        <div class="content-l_col content-l_col-3-4">
-          <b>Total left at the end of the month:</b>
-        </div>
-        <div class="content-l_col content-l_col-1-4">
-          <div class="content-l">
-            <div class="content-l_col content-l_col-1-3">$</div>
-            <div class="content-l_col content-l_col-2-3 o-yes-budget-remaining"></div>
+  <div class="content-l">
+    <div class="content-l_col content-l_col-1">
+      <div class="content-l block block__sub block__flush-bottom">
+        <div class="content-l_col content-l_col-2-3">
+          <div class="content_line-bold"></div>
+          <div class="block block__sub-micro block__flush-bottom">
+            {{
+              render_line_item({
+                'label': 'Total left at the end of the month:',
+                'target': 'o-yes-budget-remaining'
+              })
+            }}
+            <div class="content-l">
+              <p class="content-l_col content-l_col-1 u-mt10">
+                Estimating your monthly budget is a good place to start, but if you want a clearer picture of where your money goes, track your spending for a month using the <a href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_spending-tracker.pdf" rel="noopener noreferrer" target="_blank">Spending Tracker</a>.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="content-l">
-    <p class="content-l_col-1">Estimating your budget etc...</p>
   </div>
 </section>

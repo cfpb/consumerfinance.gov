@@ -54,10 +54,6 @@ describe( 'DaysPerWeekView', () => {
   } );
 
   describe( 'on initialize', () => {
-    it( 'hides its container element', () => {
-      expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
-    } );
-
     it( 'subscribes to the store', () => {
       expect( store.subscribe ).toHaveBeenCalled();
     } );
@@ -134,7 +130,7 @@ describe( 'DaysPerWeekView', () => {
       expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
     } );
 
-    describe( 'when transportation mode is not Drive', () => {
+    describe( 'when average cost is defined as a montly cost', () => {
       const days = '2';
       const checked = 'checked';
       const prevState = {
@@ -147,7 +143,8 @@ describe( 'DaysPerWeekView', () => {
       const state = {
         routes: {
           routes: [ {
-            transportation: 'Walk'
+            transportation: 'Walk',
+            isMonthlyCost: true
           } ]
         }
       };
@@ -186,7 +183,7 @@ describe( 'DaysPerWeekView', () => {
         expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
       } );
 
-      it( 'dispatches the correct action when daysPerWeek is filled in and transportation method is not drive', () => {
+      it( 'dispatches the correct action when daysPerWeek is filled in', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( prevState, state );
 
@@ -197,14 +194,6 @@ describe( 'DaysPerWeekView', () => {
       } );
 
       it( 'calls .remove on the todo notification component when this view is toggled', () => {
-        const state = {
-          routes: {
-            routes: [ {
-              transportation: 'Walk'
-            } ]
-          }
-        };
-
         store.subscriber()( { routes: { routes: [ {} ]}}, state );
 
         expect( todoNotification.remove.mock.calls.length ).toBe( 1 );

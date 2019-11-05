@@ -2,7 +2,7 @@ import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-hel
 import { toArray } from '../../util';
 import { updateRouteChoiceAction } from '../../reducers/choice-reducer';
 import inputView from '../input';
-import transportationMap from '../../data/transportation-map';
+import transportationMap from '../../data-types/transportation-map';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'js-yes-review-choice',
@@ -24,7 +24,7 @@ const CLASSES = Object.freeze( {
  * @param {YesStore} props.store The public API exposed by the Store class
  * @returns {Object} This view's public API
  */
-function reviewChoiceView( element, { store } ) {
+function reviewChoiceView( element, { store, onShowReviewPlan } ) {
   const _dom = checkDom( element, CLASSES.CONTAINER );
   const _reviewPlanEl = _dom.querySelector( `.${ CLASSES.REVIEW_PLAN }` );
   const _choiceBtnEls = toArray(
@@ -75,7 +75,7 @@ function reviewChoiceView( element, { store } ) {
       if ( route ) {
         const label = el.querySelector( 'label' );
         const friendlyOption = transportationMap[route.transportation];
-        const nextLabel = label.textContent.replace( '-', friendlyOption );
+        const nextLabel = `Option ${ index + 1 }: ${ friendlyOption }`;
         label.textContent = nextLabel;
       }
     } );
@@ -87,6 +87,7 @@ function reviewChoiceView( element, { store } ) {
    */
   function _showReviewPlan() {
     _reviewPlanEl.classList.remove( 'u-hidden' );
+    onShowReviewPlan();
     _reviewBtnEl.removeEventListener( 'click', _showReviewPlan );
   }
 
@@ -171,8 +172,8 @@ function reviewChoiceView( element, { store } ) {
         /**
          * NOTE: Although these are set to disabled in the template, we need to manually disable them again;
          * all form controls are enabled once JS is detected. These fields are a special
-         * case in that they are the only form controls which are only available once
-         * all other inputs in the tool have received valid data from the user.
+         * case in that they are the only form controls which are conditionally available,
+         * based on valid data being input by the user.
         */
         _disableChoices();
         _initInputs();

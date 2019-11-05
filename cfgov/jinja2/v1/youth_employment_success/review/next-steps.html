@@ -1,15 +1,14 @@
 {% from 'yes-info-unit.html' import yes_info_unit with context %}
-<div class="block">
-  <div class="m-notification
-              m-notification__visible
-              m-notification__success">
+<div class="block block__sub">
+  <h2 class="u-hide-on-print">
+    <span style="margin-right: 5px">
       {% include "success-icon.html" %}
-      <div class="m-notification_content">
-        <div class="h4 m-notification_message">
-          Awesome, you worked on your transportation plan! We hope this plan brings you closer to achieving your long-term goal. Here are some other resources that might be helpful.
-        </div>
-      </div>
-  </div>
+    </span>
+    <span>
+      Awesome, you worked on your transportation plan! We hope this plan brings you closer to achieving your long-term goal. Here are some other resources that might be helpful.
+    </span>
+  </h2>
+  <h2 class="u-show-on-print">Helpful resources</h2>
   <div class="block block__sub">
     {{
       yes_info_unit({
@@ -18,7 +17,7 @@
         'image_url': '/static/apps/youth-employment-success/img/review/learn_about_buying_a_car.png',
         'link': {
           'text': 'Learn more about buying a car',
-          'url': '/buy-a-car'
+          'url': 'https://www.consumerfinance.gov/practitioner-resources/resources-youth-employment-programs/buying-a-car/'
         }
       })
     }}
@@ -26,9 +25,8 @@
   <div class="block block__sub">
     {{
       yes_info_unit({
-        
         'body': '<p>Keeping track of your money and benefits is the first step in creating a budget that works for you.</p>',
-        'heading': '<h3>Track spending and make a budget</h3>',
+        'heading': 'Track spending and make a budget',
         'image_url': '/static/apps/youth-employment-success/img/review/track_spending.png',
         'link': {
           'text': 'Learn how to track my spending',
@@ -41,7 +39,7 @@
     {{
       yes_info_unit({
         'body': '<p>Having a poor credit score can create obstacles when you\'re applying for car insurance, loans, credit cards—even apartments and utilities.</p>',
-        'heading': '<h3>Learn about credit</h3>',
+        'heading': 'Learn about credit',
         'image_url': '/static/apps/youth-employment-success/img/review/learn_about_credit.png',
         'link': {
           'text': 'Learn more about credit and how to improve your score',
@@ -54,7 +52,7 @@
     {{
       yes_info_unit({
         'body': '<p>When choosing and using a new bank account, it\’s important to know your options and how to keep your money safe.</p>',
-        'heading': '<h3>Opening a bank account</h3>',
+        'heading': 'Opening a bank account',
         'image_url': '/static/apps/youth-employment-success/img/review/opening_a_bank_account.png',
         'link': {
           'text': 'Learn more about your banking options',

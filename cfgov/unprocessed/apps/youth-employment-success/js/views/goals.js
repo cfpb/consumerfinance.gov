@@ -5,8 +5,8 @@ import {
   updateGoalStepsAction,
   updateGoalTimelineAction
 } from '../reducers/goal-reducer';
-import { toArray } from '../util';
 import inputView from './input';
+import { toArray } from '../util';
 
 const CLASSES = {
   CONTAINER: 'js-yes-goals',
@@ -21,6 +21,8 @@ const GOALS_TO_ACTIONS = {
   goalImportance: updateGoalImportanceAction,
   goalSteps:  updateGoalStepsAction
 };
+
+const NEWLINE_REGEXP = /(?:\r\n)|\r|\n/g;
 
 /**
  * GoalsView
@@ -46,7 +48,8 @@ function goalsView( element, { store } ) {
     const method = GOALS_TO_ACTIONS[name];
 
     if ( method ) {
-      store.dispatch( method( event.target.value ) );
+      const textHTMLNewlines = event.target.value.replace( NEWLINE_REGEXP, '<br />' );
+      store.dispatch( method( textHTMLNewlines ) );
     }
   }
 

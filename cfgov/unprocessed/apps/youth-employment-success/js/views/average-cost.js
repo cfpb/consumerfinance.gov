@@ -6,8 +6,8 @@ import {
   updateCostToActionPlan,
   updateIsMonthlyCostAction
 } from '../reducers/route-option-reducer';
-import { toArray } from '../util';
 import inputView from './input';
+import { toArray, toPrecision } from '../util';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-average-cost',
@@ -18,6 +18,8 @@ const COST_FREQUENCY_TYPES = {
   DAILY: 'daily',
   MONTHLY: 'monthly'
 };
+
+const NOT_SURE_MESSAGE = 'Looking up average daily cost was added to your to-do list.';
 
 /**
  * AverageCostView
@@ -59,10 +61,10 @@ function averageCostView( element, { store, routeIndex, todoNotification } ) {
    * @param {object} updateObject.event The emitted DOM event
    * @param {string} updateObject.name The name of the field the event was emitted from
    */
-  function _handleAverageCostUpdate( { event } ) {
+  function _handleAverageCostUpdate( { event, value } ) {
     store.dispatch( updateAverageCostAction( {
       routeIndex,
-      value: event.target.value
+      value
     } ) );
   }
 
@@ -78,7 +80,7 @@ function averageCostView( element, { store, routeIndex, todoNotification } ) {
     const { checked } = event.target;
 
     if ( checked ) {
-      todoNotification.show();
+      todoNotification.show( NOT_SURE_MESSAGE );
     } else {
       todoNotification.hide();
     }
@@ -114,13 +116,19 @@ function averageCostView( element, { store, routeIndex, todoNotification } ) {
     }
   }
 
+  function _handleBlur( { event, value } ) {
+    event.target.value = value ? toPrecision( value, 2 ) : '';
+    _handleAverageCostUpdate( { event, value: event.target.value } );
+  }
+
   /**
    * Initial the input elements this view manages.
    */
   function _initInputs() {
     inputView( _averageCostEl, {
       events: {
-        input: _handleAverageCostUpdate
+        input: _handleAverageCostUpdate,
+        blur: _handleBlur
       }
     } ).init();
 

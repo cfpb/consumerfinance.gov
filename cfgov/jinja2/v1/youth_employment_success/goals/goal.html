@@ -34,28 +34,31 @@
 {%- set cols = value.cols if value.cols else '80' -%}
 {%- set field_class = value.fieldClass if value.fieldClass else '' -%}
 
-<div class="form-l_col form-l_col-1">
-   <label for="{{ id }}" class="a-label {{ label_class }} u-mb0">
-       <b>{{ value.label }}</b>
-       {%- if value.required == false -%}
-           &nbsp;<small class="a-label_helper">(optional)</small>
-       {%- endif -%}
-   </label>
-  {%- if value.helperText -%}
-    <p id="{{ ht_id }}">
-      <small>{{ value.helperText | safe }}</small>
-    </p>
-   {%- endif -%}
-   <textarea class="content-l_col-2-3 {{ field_class }}"
-             id="{{ id }}"
-             {%- if value.name -%} name="{{ value.name }}" {%- endif -%}
-             {{ 'required' if value.required else '' }}
-             {{ 'disabled' if value.disabled else '' }}
-             {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}
-             rows="{{ rows }}"
-             cols="{{ cols }}">
-       {{- value.value | default('', true) -}}
-   </textarea>
+<div class="content-l m-form-field">
+  <div class="content-l_col content-l_col-1 block block__sub-micro">
+    <label for="{{ id }}" class="a-label {{ label_class }} u-mb0">
+        {{ value.label }}
+        {%- if value.required == false -%}
+            &nbsp;<small class="a-label_helper">(optional)</small>
+        {%- endif -%}
+    </label>
+    {%- if value.helperText -%}
+      <p id="{{ ht_id }}">
+        <small>{{ value.helperText | safe }}</small>
+      </p>
+    {%- endif -%}
+  </div>
+  <div class="content-l_col content-l_col-1">
+    <textarea class="a-text-input a-text-input__full {{ field_class }}"
+              id="{{ id }}"
+              {%- if value.name -%} name="{{ value.name }}" {%- endif -%}
+              {{ 'required' if value.required else '' }}
+              {{ 'disabled' if value.disabled else '' }}
+              {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}
+              rows="{{ rows }}">
+        {{- value.value | default('', true) -}}
+    </textarea>
+  </div>
 </div>
 
 {%- endmacro %}

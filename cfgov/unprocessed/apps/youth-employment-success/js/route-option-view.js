@@ -3,14 +3,16 @@ import {
   routeSelector,
   updateTransportationAction
 } from './reducers/route-option-reducer';
+import TodoNotification from './todo-notification';
 import inputView from './views/input';
 import { toArray } from './util';
-import TodoNotification from './todo-notification';
+import { TRANSPORTATION } from './data-types/transportation-map';
 
 const CLASSES = Object.freeze( {
   FORM: 'o-yes-route-option',
   TRANSPORTATION_CHECKBOX: 'a-yes-route-mode',
-  QUESTION_INPUT: 'a-yes-question'
+  QUESTION_INPUT: 'a-yes-question',
+  DISCOUNT: 'js-discount-tip'
 } );
 
 /**
@@ -26,9 +28,10 @@ const CLASSES = Object.freeze( {
 function RouteOptionFormView( element, {
   store,
   routeIndex,
-  detailsView,
+  routeDetailsView,
   averageCostView,
   daysPerWeekView,
+  drivingCostEstimateView,
   milesView,
   transitTimeView
 } ) {
@@ -50,6 +53,20 @@ function RouteOptionFormView( element, {
   }
 
   /**
+   * Toggles visibility of transportation option tooltip
+   * @param {String} transportationOption The type of transportation the user has indicated
+   */
+  function _updateToolTip( transportationOption ) {
+    const tooltip = _dom.querySelector( `.${ CLASSES.DISCOUNT }` );
+
+    if ( transportationOption === TRANSPORTATION.WALK ) {
+      tooltip.classList.add( 'u-hidden' );
+    } else {
+      tooltip.classList.remove( 'u-hidden' );
+    }
+  }
+
+  /**
    * Initialize checkbox nodes this form view manages
    */
   function _initRouteOptions() {
@@ -65,6 +82,18 @@ function RouteOptionFormView( element, {
     init() {
       if ( setInitFlag( _dom ) ) {
         _initRouteOptions();
+        const drivingEstimateView = drivingCostEstimateView(
+          _dom.querySelector( `.${ drivingCostEstimateView.CLASSES.CONTAINER }` )
+        );
+
+        const detailsContainer = routeDetailsView.CLASSES.CONTAINER;
+        const detailsEl = _dom.querySelector( `.${ detailsContainer }` );
+        const detailsView = routeDetailsView(
+          detailsEl,
+          {
+            alertTarget: detailsEl.querySelector( '.js-route-inline-notification' )
+          }
+        );
 
         transitTimeView(
           _dom.querySelector( `.${ transitTimeView.CLASSES.CONTAINER }` ),
@@ -86,17 +115,20 @@ function RouteOptionFormView( element, {
         } ).init();
 
         detailsView.init();
+        drivingEstimateView.init();
 
-        store.subscribe( ( _, nextState ) => {
+        store.subscribe( ( _, state ) => {
           const currentRouteState = routeSelector(
-            nextState.routes,
+            state.routes,
             routeIndex
           );
 
           detailsView.render( {
-            budget: nextState.budget,
+            budget: state.budget,
             route: currentRouteState
           } );
+          drivingEstimateView.render( currentRouteState );
+          _updateToolTip( currentRouteState.transportation );
         } );
       }
     }

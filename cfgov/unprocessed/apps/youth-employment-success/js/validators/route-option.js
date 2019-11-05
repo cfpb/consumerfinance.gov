@@ -1,5 +1,4 @@
-import { PLAN_TYPES } from '../data/todo-items';
-import { isNumber } from '../util';
+import { PLAN_TYPES } from '../data-types/todo-items';
 
 /* Fields that are always required, regardless of the transportation
    mode selected */
@@ -59,18 +58,18 @@ function valueOrActionPlan( fieldName, value, actionItems ) {
  * @returns {Boolean} Data validity
  */
 function isRequiredValid( data ) {
+  const todoList = data.actionPlanItems;
   let isValid;
 
   for ( let i = 0; i < requiredFields.length; i++ ) {
     const fieldName = requiredFields[i];
-
     // does the data object contain the required field
     if ( data.hasOwnProperty( fieldName ) ) {
       // check if the value exists
       isValid = valueOrActionPlan(
         fieldName,
         data[fieldName],
-        data.actionPlanItems
+        todoList
       );
     }
 
@@ -87,10 +86,10 @@ function isRequiredValid( data ) {
  * @param {object} param0 Route data
  * @returns {Boolean} Data validity
  */
-function isValidDriveData( { miles, daysPerWeek } ) {
+function isValidDriveData( { miles, daysPerWeek, actionPlanItems } ) {
   if (
-    miles && isNumber( miles ) &&
-    daysPerWeek && isNumber( daysPerWeek )
+    valueOrActionPlan( 'miles', miles, actionPlanItems ) &&
+    valueOrActionPlan( 'daysPerWeek', daysPerWeek, actionPlanItems )
   ) {
     return true;
   }
