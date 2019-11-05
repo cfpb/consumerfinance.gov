@@ -60,7 +60,7 @@ class StudentLoanQuizPage(PayingForCollegePage):
 
 
 class CollegeCostsPage(PayingForCollegePage):
-    """Breaking down financial aid and loans for prospectives student."""
+    """Breaking down financial aid and loans for prospective students."""
     content = StreamField(PayingForCollegeContent, blank=True)
 
     def get_template(self, request):
