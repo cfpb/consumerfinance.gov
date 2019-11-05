@@ -45,14 +45,31 @@ class EventPageTests(TestCase):
         self.assertIn('static/-77.039628,38.898238', page.location_image_url())
 
     @freeze_time('2011-01-03')
-    def test_event_state_and_page_js(self):
-        """ Test EventPage properties event_state and page_js
+    def test_present_event_with_livestream_includes_video_js(self):
+        page = EventPage(
+            title='Present event with live_stream_date',
+            start_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            end_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC),
+            live_stream_date=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC)
+        )
+        save_new_page(page)
+        self.assertEqual('present', page.event_state)
+        self.assertIn('video-player.js', page.page_js)
 
-        Creates event pages with several different combinations of fields to
-        ensure that the event_state and page_js properties are returning the
-        correct thing in each situation.
-        """
+    @freeze_time('2011-01-03')
+    def test_past_event_with_video_includes_video_js(self):
+        page = EventPage(
+            title='Past event with youtube_url',
+            start_dt=datetime.datetime(2011, 1, 1, tzinfo=pytz.UTC),
+            end_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            youtube_url='https://www.youtube.com/embed/Aa1Bb2Cc3Dc4'
+        )
+        save_new_page(page)
+        self.assertEqual('past', page.event_state)
+        self.assertIn('video-player.js', page.page_js)
 
+    @freeze_time('2011-01-03')
+    def test_video_js_not_included_on_event_when_not_needed(self):
         page = EventPage(
             title='Future event with no end date',
             start_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC)
@@ -80,16 +97,6 @@ class EventPageTests(TestCase):
         self.assertNotIn('video-player.js', page.page_js)
 
         page = EventPage(
-            title='Present event with live_stream_date',
-            start_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC),
-            live_stream_date=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC)
-        )
-        save_new_page(page)
-        self.assertEqual('present', page.event_state)
-        self.assertIn('video-player.js', page.page_js)
-
-        page = EventPage(
             title='Past event with no youtube_url',
             start_dt=datetime.datetime(2011, 1, 1, tzinfo=pytz.UTC),
             end_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC)
@@ -97,13 +104,3 @@ class EventPageTests(TestCase):
         save_new_page(page)
         self.assertEqual('past', page.event_state)
         self.assertNotIn('video-player.js', page.page_js)
-
-        page = EventPage(
-            title='Past event with youtube_url',
-            start_dt=datetime.datetime(2011, 1, 1, tzinfo=pytz.UTC),
-            end_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
-            youtube_url='https://www.youtube.com/embed/Aa1Bb2Cc3Dc4'
-        )
-        save_new_page(page)
-        self.assertEqual('past', page.event_state)
-        self.assertIn('video-player.js', page.page_js)
