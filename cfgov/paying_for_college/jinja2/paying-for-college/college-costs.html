@@ -1,0 +1,479 @@
+{% extends 'layout-full.html' %}
+{# import any other needed atoms, elements here #}
+{% import 'templates/render_block.html' as render_block with context %}
+
+{% block hero -%}
+    {% for block in page.header -%}
+        {{ render_block.render(block, loop.index) }}
+    {%- endfor %}
+{% endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/paying-for-college/css/main.css') }}">
+{%- endblock css %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__1-3 content__hide-horizontal-overflow college-costs
+{%- endblock %}
+
+{% block content_main %}
+
+<div class="wrapper content_wrapper">
+    <aside class="content_sidebar content__flush-bottom content__flush-top-on-small content__flush-sides-on-small content__half-top-Son-desk">
+        <ul class="o-college-costs-nav">
+            <li class="o-college-costs-nav__section active"><button data-nav_section="offer-letter">Your offer letter</button>
+                <ul>
+                    <li class="active"><button data-nav_item="school-info">School information</button></li>
+                    <li><button data-nav_item="costs">Costs</button></li>
+                    <li><button data-nav_item="grants-scholarships">Grants & scholarships</button></li>
+                    <li><button data-nav_item="income">Income</button></li>
+                    <li><button data-nav_item="federal-loans">Federal loans</button></li>
+                    <li><button data-nav_item="school-loans">Institutional loans</button></li>
+                </ul>
+            </li>
+            <li class="o-college-costs-nav__section"><button data-nav_section="covering-costs">Covering your costs</button>
+                <ul>
+                    <li><button data-nav_item="bridging-the-gap">Bridging the gap</button></li>
+                    <li><button data-nav_item="timing-of-costs">Timing of costs & funds</button></li>
+                    <li><button data-nav_item="other-costs">Other costs & earnings</button></li>
+                </ul>
+            </li>
+            <li class="o-college-costs-nav__section"><button data-nav_section="affording-loans">Affording your loans</button>
+                <ul>
+                    <li><button data-nav_item="projected-debt">Projected total debt</button></li>
+                    <li><button data-nav_item="total-debt-rule">Total debt rule of thumb</button></li>
+                    <li><button data-nav_item="cost-of-borrowing">The cost of borrowing</button></li>
+                    <li><button data-nav_item="monthly-budget">Debt & your monthly budget</button></li>
+                </ul>
+            </li>
+            <li class="o-college-costs-nav__section"><button data-nav_section="worth-investment">Worth Your Investment</button></li>
+        </ul>
+    </aside>
+    <div class="content_main content__flush-top-on-small content__half-top-on-desk content__flush-bottom">
+        <section class="college-costs_tool-section" id="college-costs_school-search" data-tool-section="school-info">
+            <div class="SEARCH-BOX">
+                <h2>School Information</h2>
+                <p>Let's get started by selecting the school you plan to attend and entering in some information about wehere you expect to live.</p>
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="search__school-name">
+                        Search for a college:
+                    </label>
+                </div>
+                <p>
+                    <input type="text" id="search__school-name" name="search__school-name"
+                        autocorrect="off">
+                </p>
+            </div>
+            <div id="tmp__search-results">
+            </div>
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="costs">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+        <section class="college-costs_tool-section" data-tool-section="costs">
+            <h2>Costs</h2>
+            <p>Enter the costs reported in your offer. Please note that these are estimates—the actual amounts will depend on factors like which courses you enroll in and personal budgeting.</p>
+            <p>We recommend using the supplied estimates unless you’re sure your spending will be radically different.</p>
+            <p>Use estimated data from the Department of Education, if your offer letter did not include costs.</p>
+
+            <h3>Direct Costs</h3>
+            <p>Direct costs are what the school charges you for directly. Your actual bill from the school will vary from the numbers here.</p>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="costs__tuition-fees">
+                        Tuition and fees
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="costs__tuition-fees" name="costs__tuition-fees" data-financial="tuitionFees" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="costs__roomboard">
+                        Housing and meals
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="costs__room-board" name="costs__roomboard" data-financial="roomBoard" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <span>Total direct costs</span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item__debt-total" data-static-text="total-direct-costs">$99,999</span>
+                </div>
+            </div>
+
+            <h3>Indirect Costs</h3>
+            <p>Indirect costs are for other school year necessities, like traveling between home and school and childcare. Though these vary from student to student, these estimates are a good starting point. Adjust the categories and amounts below to match what your financial aid offer letter says.</p>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="costs__books">
+                        Books
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="costs__books" name="costs__books" data-financial="books" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="costs__other">
+                        Other expenses
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="costs__other" name="costs__other" data-financial="otherExpenses" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="costs__transportation">
+                        Transportation
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="costs__transportation" name="costs__transportation" data-financial="transportation" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                        <span>Total indirect costs</span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item__debt-total" data-static-text="total-direct-costs">$99,999</span>
+                </div>
+            </div>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="grants-scholarships">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="grants-scholarships">
+            <h2>Grants and scholarships</h2>
+            <h3>Grants</h3>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="grants__pell">
+                        Federal Pell Grants
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="grants__pell" name="grants__pell" data-financial="grants__pell" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="grants__seog">
+                        Federal SEOG Grant
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="grants__seog" name="grants__seog" data-financial="grants__seog" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="grants__state">
+                        State Grant
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="grants__state" name="grants__state" data-financial="grants__state" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="grants__school">
+                        School Grant
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="grants__school" name="grants__school" data-financial="grants__school" autocorrect="off" value="0">
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <span>Total grants</span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item__total" data-static-text="total-grants">$99,999</span>
+                </div>
+            </div>
+
+            <h3>Scholarships</h3>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="scholarships__school">
+                        School scholarships
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="scholarships__school" name="scholarships__school" data-financial="scholarships__school" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="scholarships__state">
+                        State scholarships
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="scholarships__state" name="scholarships__state" data-financial="scholarships__state" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="scholarships__other">
+                        Other scholarships
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="scholarships__other" data-financial="scholarships__other" autocorrect="off" value="0">
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <span>Total scholarships</span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item__total" data-static-text="total-scholarships">$99,999</span>
+                </div>
+            </div>
+
+            <div class="college-costs_info-box">
+                <h3> Did you know...</h3>
+                <ul>
+                    <li>Most grants and scholarships have requirements (like minimum GPA) that you must meet to keep them.</li>
+                    <li>Your grant and scholarship funding will probably change from year to year, based on your changing financial situation or the terms of the funding (for example, some scholarships are specifically for seniors).</li>
+                    <li>Receiving private scholarships can reduce your eligibility for grants and/or school scholarships.</li>
+                    <li>Scholarship money can be taxed as income.</li>
+                </ul>
+            </div>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="income">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="income">
+            <h2>Income</h2>
+            <p>Use this section if your offer includes a work-study estimate, you already have an off-campus job lined up for the school year, or you receive benefits like TANF or SNAP, enter your estimated income below.</p>
+
+            <div class="college-costs_info-box">
+                <p>Working up to 20 hours a week is associated with better grades, but working more than that may put your academic standing—and your financial aid eligibility—at risk.</p>
+            </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="income_workstudy">
+                        Estimated work-study income
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="income_workstudy" name="income_workstudy" data-financial="directSubsidized" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="income_job">
+                        Estimated off-campus job income
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="income_job" name="income_job" data-financial="directSubsidized" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="income_tanf">
+                        Estimated income from TANF
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="income_tanf" name="income_tanf" data-financial="directSubsidized" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="income_snap">
+                        Estimated income from SNAP
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="income_snap" name="income_snap" data-financial="directSubsidized" autocorrect="off" value="0">
+                </div>
+            </div>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="federal-loans">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="federal-loans">
+            <p>Loans are money you have to repay, typically with interest. That means you will end up paying back more than you originally borrowed. Student loans must be repaid and do not go away unless you repay them. Federal student loans can be discharged in limited circumstances but often cannot go away even if you declare bankruptcy. </p>
+
+            <p>Loans from the federal government come with protections typically not offered by private loans. Subsidized federal loans are cheaper because they do not gather interest until after you leave school. Unsubsidized federal loans start gathering interest as soon as you take them out. </p>
+
+            <h3>Federal Loans</h3>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="loans__directSub">
+                        DIRECT Subsidized Loans
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="loans__directSub" name="loans__directSub" data-financial="directSubsidized" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="loans__directUnsub">
+                        DIRECT Unsubsidized Loans
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="loans__directUnsub" name="loans__directUnsub" data-financial="directUnsubsidized" autocorrect="off" value="0">
+                </div>
+            </div>
+            
+            <div class="college-costs_info-box">
+                <h3> Did you know...</h3>
+                <ul>
+                    <li>You don’t have to take out the full amount of loans offered to you. Only borrow the amount you need.</li>
+                    <li>Because student debt is permanent, you should not use student loans to cover costs outside of your education. (Using loans for childcare so you can attend class is fine; using them to buy a car is not.)</li>
+                    <li>The amount of federal loans you’re allowed to borrow goes up each year you are in school.</li>
+                    <li>Your debt grows when you don’t make monthly interest payments on unsubsidized loans.</li>
+                    <li>Federal loans do not mean that the government guarantees that this is a high-quality school or that you will get a good job when you graduate.</li>
+                    <li>You have to pay back your loans even if you don’t graduate.</li>
+                </ul>
+            </div>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="school-loans">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="school-loans">
+            <h3>Institutional loans</h3>
+
+            <p>Your school may offer you loans directly or through a private bank. Before taking on this debt, do your research to make sure they are the best option for you. If you think you may want to use this funding, enter it below. (Entering it here does not obligate you to borrow this money.)</p>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="loans__tuitionRepay">
+                        School loans
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="loans__tuitionRepay" name="loans__tuitionRepay" data-financial="tuitionRepay" autocorrect="off" value="0">
+                </div>
+            </div>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="bridging-the-gap">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="bridging-the-gap">
+            <h3>Bridging the gap</h3>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="timing-of-costs">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="timing-of-costs">
+            <h3>Timing of costs & funds</h3>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="other-costs">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="other-costs">
+            <h3>Other costs & earnings</h3>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="projected-debt">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="projected-debt">
+            <h3>Projected total debt</h3>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="total-debt-rule">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="total-debt-rule">
+            <h3>Total debt rule of thumb</h3>
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="cost-of-borrowing">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="cost-of-borrowing">
+            <h3>The cost of borrowing</h3>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="monthly-budget">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="monthly-budget">
+            <h3>Debt & your monthly budget</h3>
+
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="worth-investment">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+        </section>
+
+        <section class="college-costs_tool-section" data-tool-section="worth-investment">
+            <h3>Worth your investment</h3>
+        </section>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/paying-for-college/js/college-costs.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}
