@@ -65,6 +65,9 @@ class Contact(models.Model):
     def __str__(self):
         return self.heading
 
+    class Meta:
+        ordering = ['heading']
+
 
 @python_2_unicode_compatible
 @register_snippet
