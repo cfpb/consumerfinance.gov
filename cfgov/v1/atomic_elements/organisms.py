@@ -1,3 +1,4 @@
+import itertools
 import json
 from collections import Counter
 from functools import partial
@@ -827,6 +828,29 @@ class ContactExpandableGroup(blocks.StructBlock):
         })
 
         return context
+
+    def bulk_to_python(self, values):
+        """Support bulk retrieval of Contacts to reduce database queries.
+
+        This method leverages Wagtail's undocumented method for doing bulk
+        retrieval of data for StreamField blocks. It retrieves all Contacts
+        referenced by a StreamField in a single lookup, instead of the
+        default behavior of doing one database query per SnippetChooserBlock.
+        """
+        contact_ids = set(
+            itertools.chain(*(block['contacts'] for block in values))
+        )
+
+        contact_model = self.child_blocks['contacts'].child_block.target_model
+        contacts_by_id = contact_model.objects.in_bulk(contact_ids)
+
+        for block in values:
+            block['contacts'] = [
+                contacts_by_id[contact_id]
+                for contact_id in block['contacts']
+            ]
+
+        return values
 
     class Meta:
         icon = 'list-ul'
