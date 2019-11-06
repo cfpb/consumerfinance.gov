@@ -9,7 +9,7 @@ const stateModel = {
 
 
   init: () => {
-    stateModel.activeSection = 'school-info';
+    stateModel.activeSection = 'costs';
   }
 
 };
