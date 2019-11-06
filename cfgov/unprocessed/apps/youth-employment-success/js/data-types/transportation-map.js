@@ -2,7 +2,7 @@ const TRANSPORTATION = Object.freeze( {
   WALK: 'Walk',
   DRIVE: 'Drive',
   BIKE: 'Bike',
-  PUBLIC_TRANSIT: 'Public transit',
+  PUBLIC_TRANSIT: 'Public transportation',
   DROPPED_OFF: 'Get dropped off',
   RIDESHARE: 'Rideshare or cab'
 } );
@@ -10,8 +10,8 @@ const TRANSPORTATION = Object.freeze( {
 const transportationMap = Object.freeze( {
   [TRANSPORTATION.WALK]: 'walking',
   [TRANSPORTATION.DRIVE]: 'driving',
-  [TRANSPORTATION.BIKE]: 'biking',
-  [TRANSPORTATION.PUBLIC_TRANSIT]: 'public transit',
+  [TRANSPORTATION.BIKE]: 'bike or scooter',
+  [TRANSPORTATION.PUBLIC_TRANSIT]: 'public transportation',
   [TRANSPORTATION.DROPPED_OFF]: 'getting dropped off',
   [TRANSPORTATION.RIDESHARE]: 'rideshare or cab'
 } );

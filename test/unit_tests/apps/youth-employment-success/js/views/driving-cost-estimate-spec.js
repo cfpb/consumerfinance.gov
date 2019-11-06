@@ -4,7 +4,7 @@ const CLASSES = drivingCostEstimate.CLASSES;
 
 const HTML = `
   <div class="${ CLASSES.CONTAINER } u-hidden">
-    <p>$<span class="${ CLASSES.COST_PER_MILE }"></span></p>
+    <p>$0.80</p>
   </div>
 `;
 
@@ -26,7 +26,7 @@ describe( 'drivingCostEstimateView', () => {
     view.render( { transportation: 'Drive' } );
 
     expect( el.classList.contains( 'u-hidden' ) ).toBeFalsy();
-    expect( el.querySelector( `.${ CLASSES.COST_PER_MILE }` ).textContent ).toBe( '$1.80' );
+    expect( el.textContent.trim() ).toBe( '$0.80' );
   } );
 
   it( 'hide itself again when transportation type is not drive', () => {
@@ -34,6 +34,5 @@ describe( 'drivingCostEstimateView', () => {
     view.render( { transportation: 'Walk' } );
 
     expect( el.classList.contains( 'u-hidden' ) ).toBeTruthy();
-    expect( el.querySelector( `.${ CLASSES.COST_PER_MILE }` ).textContent ).toBe( '' );
   } );
 } );

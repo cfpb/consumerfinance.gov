@@ -53,12 +53,8 @@ function buildTodoListNodes( todosEl, todos = [], hasDefault ) {
 }
 
 const DEFAULT_COST_ESTIMATE = '0';
-
-// Rough estimate to account for weeks that have more or less days
 const WEEKLY_COST = 4.0;
-
-// This number will be pulled from a data set, for now, its magic
-const ESTIMATED_COST_PER_MILE = 1.8;
+const AAA_ESTIMATED_COST_PER_MILE = 0.80;
 
 /**
  * Given a route configuration, determine what calculations need to be performed
@@ -95,7 +91,7 @@ function getCalculationFn( route ) {
  */
 function calculateDrivingDailyCost( numberOfMiles = 0 ) {
   return money.toDollars(
-    parseFloat( numberOfMiles ) * ESTIMATED_COST_PER_MILE
+    parseFloat( numberOfMiles ) * AAA_ESTIMATED_COST_PER_MILE
   );
 }
 

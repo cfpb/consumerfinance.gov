@@ -132,7 +132,7 @@ describe( 'routeDetailsView', () => {
       expect( daysPerWeekEl.textContent ).toBe( nextState.route.daysPerWeek );
     } );
 
-    it('hides the average cost helper text when isMonthlyCost is true', () => {
+    it( 'hides the average cost helper text when isMonthlyCost is true', () => {
       const state = {
         budget: { ...nextState.budget },
         route: {
@@ -145,9 +145,9 @@ describe( 'routeDetailsView', () => {
 
       view.render( state );
 
-      const averageCostHelperEl = document.querySelector(`.${CLASSES.AVERAGE_COST_HELPER}`);
-      expect(averageCostHelperEl.classList.contains('u-hidden')).toBeTruthy();
-    });
+      const averageCostHelperEl = document.querySelector( `.${ CLASSES.AVERAGE_COST_HELPER }` );
+      expect( averageCostHelperEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
+    } );
 
     describe( 'total costs', () => {
       it( 'correctly calculates driving cost', () => {
@@ -155,7 +155,7 @@ describe( 'routeDetailsView', () => {
 
         const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
 
-        expect( totalCostEl.textContent ).toBe( '432.00' );
+        expect( totalCostEl.textContent ).toBe( '192.00' );
       } );
 
       it( 'correctly calculates monthly cost', () => {
@@ -236,7 +236,7 @@ describe( 'routeDetailsView', () => {
 
       const budgetLeftEl = document.querySelector( `.${ CLASSES.BUDGET_REMAINING }` );
 
-      expect( budgetLeftEl.textContent ).toBe( `${ String.fromCharCode( 8722 ) }357.00` );
+      expect( budgetLeftEl.textContent ).toBe( `${ String.fromCharCode( 8722 ) }117.00` );
     } );
 
     it( 'updates the time in hours', () => {

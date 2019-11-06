@@ -6,8 +6,8 @@ const PLAN_TYPES = Object.freeze( {
 } );
 
 const ACTION_PLAN = Object.freeze( {
-  AVERAGE_COST: 'Look up average daily cost.',
-  DAYS_PER_WEEK: 'Find out how many days per week you\'ll make this trip.',
+  AVERAGE_COST: 'Look up average cost of your trip.',
+  DAYS_PER_WEEK: 'Look up number of days you\'ll make this trip.',
   MILES: ' Look up how many miles you drive each day.',
   TIME: ' Look up how long this trip takes.'
 } );
