@@ -8,7 +8,7 @@ from jinja2.ext import Extension
 from hmda.templatetags.hmda_banners import hmda_outage_banner
 from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
-from v1.models import CFGOVRendition
+from v1.models.images import CFGOVRendition
 from v1.templatetags.app_urls import app_page_url, app_url
 from v1.templatetags.complaint_banners import (
     complaint_issue_banner, complaint_maintenance_banner

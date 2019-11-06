@@ -1,4 +1,8 @@
+from datetime import datetime
+
 from django.test import TestCase
+
+import pytz
 
 from v1.models import (
     BlogPage, EventPage, HomePage, NewsroomPage, SublandingFilterablePage
@@ -8,6 +12,8 @@ from v1.models import (
 class TestHomePage(TestCase):
 
     def setUp(self):
+        now = datetime.now(pytz.UTC)
+
         self.home_page = HomePage.objects.get(slug='cfgov')
 
         # Set up a root for updates
@@ -33,15 +39,24 @@ class TestHomePage(TestCase):
 
         # Set up some events
         self.event_1 = EventPage(
-            title='Event 1', slug='event1', live=True
+            title='Event 1',
+            slug='event1',
+            live=True,
+            start_dt=now
         )
         self.updates_page.add_child(instance=self.event_1)
         self.event_2 = EventPage(
-            title='Event 2', slug='event2', live=True
+            title='Event 2',
+            slug='event2',
+            live=True,
+            start_dt=now
         )
         self.updates_page.add_child(instance=self.event_2)
         self.event_3 = EventPage(
-            title='Event 3', slug='event3', live=True
+            title='Event 3',
+            slug='event3',
+            live=True,
+            start_dt=now
         )
         self.updates_page.add_child(instance=self.event_3)
 
@@ -78,7 +93,10 @@ class TestHomePage(TestCase):
 
         # Set up some events
         self.unpublished_event_1 = EventPage(
-            title='Unpublished event 1', slug='unpublished_event1', live=False
+            title='Unpublished event 1',
+            slug='unpublished_event1',
+            live=False,
+            start_dt=now
         )
         self.updates_page.add_child(instance=self.unpublished_event_1)
 

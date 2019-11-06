@@ -1,8 +1,10 @@
 from __future__ import unicode_literals
 
+from datetime import datetime
+
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Site
+from pytz import timezone
 
 from v1.forms import FilterableListForm
 from v1.models import BlogPage
@@ -43,7 +45,10 @@ class TestFilterableListForm(TestCase):
     def test_filter_by_tags(self):
         page1 = BlogPage(title='test page 1')
         page1.tags.add('foo')
-        page2 = EventPage(title='test page 2')
+        page2 = EventPage(
+            title='test page 2',
+            start_dt=datetime.now(timezone('UTC'))
+        )
         page2.tags.add('bar')
         page3 = BlogPage(title='test page 3')
         page3.tags.add('blah')
@@ -81,8 +86,14 @@ class TestFilterableListForm(TestCase):
         self.assertEquals(page_set[0].specific, page1)
 
     def test_filter_by_title(self):
-        page1 = EventPage(title='Cool Event')
-        page2 = EventPage(title='Awesome Event')
+        page1 = EventPage(
+            title='Cool Event',
+            start_dt=datetime.now(timezone('UTC'))
+        )
+        page2 = EventPage(
+            title='Awesome Event',
+            start_dt=datetime.now(timezone('UTC'))
+        )
         publish_page(page1)
         publish_page(page2)
         form = self.setUpFilterableForm(data={'title': 'Cool'})
