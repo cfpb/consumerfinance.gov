@@ -31,24 +31,18 @@ docker-compose up
 
 Environment variables from your `.env` file are sourced 
 when the Python containers start
-and when you [access the running Python containers](#access-the-containers-shell). 
+and when you [access the running Python containers](#access-a-containers-shell). 
 Your local shell environment variables, however, 
 are not visible to applications running in Docker.
 To add new environment variables, simply add them to the `.env` file, 
 stop docker-compose with Ctrl+C, 
 and start it again with `docker-compose up`.
 
-### Access a container's shell
 
-- Python 2.7: `docker-compose exec python2 bash`
-- Python 3.6: `docker-compose exec python3 bash`
-- Elasticsearch: `docker-compose exec elasticsearch bash`
-- PostgreSQL: `docker-compose exec postgres bash`
-
-### Run Django management commands
+### Commands that must be run from within a Docker container
 
 Django `manage.py` commands can only be run after you've 
-[opened up a shell in one of the Python containers](](#access-the-containers-shell)). 
+[opened up a shell in one of the Python containers](#access-a-containers-shell). 
 From there commands like `cfgov/manage.py migrate` should run as expected.
 
 The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` —
@@ -59,6 +53,13 @@ they will work as expected once you're inside the container.
     any management commands or scripts that operate on the database
     (like `migrate`, `refresh-data.sh`, and `initial-data.sh`)
     should only be run once in one of the two Python containers.
+
+#### Access a container's shell
+
+- Python 2.7: `docker-compose exec python2 bash`
+- Python 3.6: `docker-compose exec python3 bash`
+- Elasticsearch: `docker-compose exec elasticsearch bash`
+- PostgreSQL: `docker-compose exec postgres bash`
 
 ### Update Python dependencies
 
