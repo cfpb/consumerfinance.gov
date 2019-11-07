@@ -2,10 +2,12 @@ import validate from '../../../../../../cfgov/unprocessed/apps/youth-employment-
 
 describe( '.validate', () => {
   const data = {
-    earned: 1,
-    spent: 1,
-    transitTimeMinutes: 1,
-    transitTimeHours: 1,
+    earned: '1',
+    spent: '1',
+    averageCost: '1',
+    isMonthlyCost: true,
+    transitTimeMinutes: '1',
+    transitTimeHours: '1',
     transportation: 'Walk',
     actionPlanItems: []
   };
@@ -13,6 +15,13 @@ describe( '.validate', () => {
   it( 'validates data to true if all required fields are present', () => {
     expect( validate( data ) ).toBeTruthy();
   } );
+
+  it('validates undefined data', () => {
+    expect(validate({
+      ...data,
+      earned: undefined
+    })).toBeFalsy();
+  });
 
   it( 'validates data to false if not all required fields are present', () => {
     expect( validate( {} ) ).toBeFalsy();
@@ -50,6 +59,34 @@ describe( '.validate', () => {
     expect( validate( {
       ...driveData,
       miles: ''
+    } ) ).toBeFalsy();
+    expect( validate( {
+      ...driveData,
+      daysPerWeek: ''
+    } ) ).toBeFalsy();
+  } );
+
+  it( 'validates non-driving data correctly', () => {
+    expect( validate( {
+      ...data,
+      averageCost: ''
+    } ) ).toBeFalsy();
+
+    expect( validate( {
+      ...data,
+      averageCost: '',
+      isMonthlyCost: null
+    } ) ).toBeFalsy();
+
+    expect( validate( {
+      ...data,
+      isMonthlyCost: null
+    } ) ).toBeFalsy();
+
+    expect( validate( {
+      ...data,
+      isMonthlyCost: false,
+      daysPerWeek: ''
     } ) ).toBeFalsy();
   } );
 } );
