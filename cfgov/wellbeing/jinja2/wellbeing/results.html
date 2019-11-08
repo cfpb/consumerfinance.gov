@@ -208,7 +208,7 @@
 {% block pre_content %}
     <div class="content_wrapper">
         <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home') }}">
+            <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home_' + current_language) }}">
                 {{ svg_icon( 'left' ) }}
                 Back to the questionnaire
             </a>
@@ -644,7 +644,7 @@
             how well your current money situation is providing you with
             financial security and freedom of choice, today and for the future.
         </p>
-        <a class="a-link a-link__jump" href="{{ url('fwb_about') }}">
+        <a class="a-link a-link__jump" href="{{ url('fwb_about_' + current_language) }}">
             <span class="a-link_text">See more background</span>
         </a>
     </div>
