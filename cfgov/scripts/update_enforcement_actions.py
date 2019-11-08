@@ -21,8 +21,7 @@ def update_sidefoot():
     for page in DocumentDetailPage.objects.all():
         if not page.live:
             continue
-        url = 'https://consumerfinance.gov' + page.get_url()
-        if 'policy-compliance/enforcement/actions' not in url:
+        if 'policy-compliance/enforcement/actions' not in page.get_url():
             continue
         stream_data = get_stream_data(page, 'sidefoot')
         for field in stream_data:
