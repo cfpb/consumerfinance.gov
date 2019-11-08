@@ -23,6 +23,10 @@ else:  # pragma: no cover
     from csv import writer as csw  # pragma: no cover
     from csv import DictReader as cdr  # noqa # pragma: no cover
 
+# Our database has a fake school for demo purposes
+# It should be discoverable via search and API calls, but should be excluded
+# from cohort calculations and from periodic college scorecard API updates.
+FAKE_SCHOOL_PK = 999999
 REGION_MAP = {'MW': ['IL', 'IN', 'IA', 'KS', 'MI', 'MN',
                      'MO', 'NE', 'ND', 'OH', 'SD', 'WI'],
               'NE': ['CT', 'ME', 'MA', 'NH', 'NJ',
@@ -187,6 +191,14 @@ class Contact(models.Model):
         )
 
 
+def format_for_null(value):
+    """If a Python value is None, we want it to convert to null in json."""
+    if value is None:
+        return value
+    else:
+        return "{}".format(value)
+
+
 @python_2_unicode_compatible
 class School(models.Model):
     """
@@ -214,6 +226,8 @@ class School(models.Model):
     url = models.TextField(blank=True)
     degrees_predominant = models.TextField(blank=True)
     degrees_highest = models.TextField(blank=True)
+    program_count = models.IntegerField(blank=True, null=True)
+    program_most_popular = JSONField(blank=True, null=True)
     main_campus = models.NullBooleanField()
     online_only = models.NullBooleanField()
     operating = models.BooleanField(default=True)
@@ -239,16 +253,21 @@ class School(models.Model):
         decimal_places=10,
         blank=True, null=True,
         help_text="GRADS WITH A DECLINING BALANCE AFTER 3 YRS")
+    repay_5yr = models.DecimalField(
+        max_digits=13,
+        decimal_places=10,
+        blank=True, null=True,
+        help_text="GRADS WITH A DECLINING BALANCE AFTER 5 YRS")
     default_rate = models.DecimalField(
         max_digits=5,
         decimal_places=3,
         blank=True, null=True,
-        help_text="LOAN DEFAULT RATE AT 3 YRS")
+        help_text="LOAN DEFAULT RATE AT 5 YRS")
     median_total_debt = models.DecimalField(
         max_digits=7,
         decimal_places=1,
         blank=True, null=True,
-        help_text="MEDIAN STUDENT DEBT")
+        help_text="MEDIAN STUDENT DEBT 10 YRS AFTER ENROLLING")
     median_monthly_debt = models.DecimalField(
         max_digits=14,
         decimal_places=9,
@@ -270,9 +289,9 @@ class School(models.Model):
     tuition_out_of_state = models.IntegerField(blank=True, null=True)
     tuition_in_state = models.IntegerField(blank=True, null=True)
     offers_perkins = models.BooleanField(default=False)
-    cohort_rank_degrees = models.IntegerField(blank=True, null=True)
-    cohort_rank_state = models.IntegerField(blank=True, null=True)
-    cohort_rank_control = models.IntegerField(blank=True, null=True)
+    cohort_ranking_by_control = JSONField(blank=True, null=True)
+    cohort_ranking_by_highest_degree = JSONField(blank=True, null=True)
+    cohort_ranking_by_state = JSONField(blank=True, null=True)
     associate_transfer_rate = models.DecimalField(
         max_digits=5,
         decimal_places=3,
@@ -283,23 +302,32 @@ class School(models.Model):
             "(150% of expected time to completion)"))
 
     def as_json(self):
-        """delivers pertinent data points as json"""
+        """
+        Deliver pertinent data points as json.
+
+        Fields marked below as "legacy" may duplicate other fields
+        but are maintained for backward compatibility, for the sake of
+        the orignal for-profit version of the tool.
+        """
+
         region = get_region(self)
         ordered_out = OrderedDict()
         jdata = json.loads(self.data_json)
         dict_out = {
-            'associateTransferRate': self.associate_transfer_rate,
             'books': jdata['BOOKS'],
             'city': self.city,
-            'cohortRankDegrees': self.cohort_rank_degrees,
-            'cohortRankState': self.cohort_rank_degrees,
-            'cohortRankControl': self.cohort_rank_degrees,
+            'cohortRankByControl': self.cohort_ranking_by_control,
+            'cohortRankByHighestDegree': self.cohort_ranking_by_highest_degree,
+            'cohortRankByState': self.cohort_ranking_by_state,
             'control': self.control,
-            'defaultRate': "{0}".format(self.default_rate),
-            'gradRate': "{0}".format(self.grad_rate),
+            'defaultRate': format_for_null(self.default_rate),  # legacy
+            'enrollment': self.enrollment,
+            'gradRate': format_for_null(self.grad_rate),  # legacy
             'highestDegree': self.get_highest_degree(),
-            'medianMonthlyDebt': "{0}".format(self.median_monthly_debt),
-            'medianTotalDebt': "{0}".format(self.median_total_debt),
+            'medianAnnualPay': self.median_annual_pay,
+            'medianAnnualPay6Yr': self.median_annual_pay_6yr,
+            'medianMonthlyDebt': format_for_null(self.median_monthly_debt),
+            'medianTotalDebt': format_for_null(self.median_total_debt),
             'netPrices': self.avg_net_price_slices,
             'nicknames': ", ".join([nick.nickname for nick
                                     in self.nickname_set.all()]),
@@ -309,9 +337,16 @@ class School(models.Model):
             'otherOffCampus': jdata['OTHEROFFCAMPUS'],
             'otherOnCampus': jdata['OTHERONCAMPUS'],
             'otherWFamily': jdata['OTHERWFAMILY'],
+            'programCount': self.program_count,
+            'programsPopular': self.program_most_popular,
             'predominantDegree': self.get_predominant_degree(),
+            'rateAssociateTransfer': format_for_null(
+                self.associate_transfer_rate),
+            'rateDefault': format_for_null(self.default_rate),
+            'rateGraduation': format_for_null(self.grad_rate),
+            'rateRepay3yr': format_for_null(self.repay_3yr),
             'region': region,
-            'repay3yr': "{0}".format(self.repay_3yr),
+            'repay3yr': format_for_null(self.repay_3yr),  # legacy
             'roomBrdOffCampus': jdata['ROOMBRDOFFCAMPUS'],
             'roomBrdOnCampus': jdata['ROOMBRDONCAMPUS'],
             'school': self.primary_alias,
@@ -359,7 +394,8 @@ class School(models.Model):
         """
         cohorts = {
             'degrees_highest': School.objects.filter(
-                degrees_highest=self.degrees_highest),
+                degrees_highest=self.degrees_highest).exclude(
+                pk=FAKE_SCHOOL_PK),
             'state': School.objects.filter(state=self.state),
             'control': School.objects.filter(control=self.control),
         }
@@ -369,14 +405,14 @@ class School(models.Model):
         """
         Return the current school's rank in a cohort by a given metric.
 
-        Possible metrics are grad_rate, repay_3yr and median_total_debt.
+        Possible metrics are grad_rate, repay_rate and median_total_debt.
         """
         schools = self.get_cohort(cohort)
         indexes = {
             'grad_rate': sorted(
                 [s for s in schools if s.grad_rate],
                 key=lambda school: school.grad_rate),
-            'repay_3yr': sorted(
+            'repay_rate': sorted(
                 [s for s in schools if s.repay_3yr],
                 key=lambda school: school.repay_3yr),
             'median_total_debt': sorted(

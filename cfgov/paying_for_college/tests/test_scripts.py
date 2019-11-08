@@ -1,6 +1,11 @@
+from __future__ import unicode_literals
+
+import copy
 import datetime
+import json
 import os
 import six
+from decimal import Decimal
 
 import django
 from django.conf import settings
@@ -14,7 +19,9 @@ from paying_for_college.disclosures.scripts import (
 from paying_for_college.disclosures.scripts.ping_edmc import (
     EDMC_DEV, ERRORS, OID, notify_edmc
 )
-from paying_for_college.models import Alias, Notification, Program, School
+from paying_for_college.models import (
+    FAKE_SCHOOL_PK, Alias, Notification, Program, School
+)
 
 
 if six.PY2:  # pragma: no cover
@@ -93,62 +100,41 @@ class PurgeTests(django.test.TestCase):
 class TestScripts(django.test.TestCase):
 
     fixtures = ['test_fixture.json']
+    api_fixture = '{}/fixtures/sample_4yr_api_result.json'.format(COLLEGE_ROOT)
 
-    mock_dict = {'results': [{
-        'id': 155317,
-        'ope6_id': 5555,
-        'ope8_id': 55500,
-        'enrollment': 10000,
-        'accreditor': "Santa",
-        'url': '',
-        'degrees_predominant': '',
-        'degrees_highest': '',
-        'school.ownership': 2,
-        'latest.completion.completion_rate_4yr_150nt_pooled': 0.45,
-        'latest.completion.completion_rate_less_than_4yr_150nt_pooled': None,
-        'school.main_campus': True,
-        'school.online_only': False,
-        'school.operating': True,
-        'school.under_investigation': False,
-        'RETENTRATE': '',
-        'RETENTRATELT4': '',  # NEW
-        'REPAY3YR': '',  # NEW
-        'DEFAULTRATE': '',
-        'AVGSTULOANDEBT': '',
-        'MEDIANDEBTCOMPLETER': '',  # NEW
-        'city': 'Lawrence'}],
-        'metadata': {'page': 0}
-    }
+    # a full sample API return for a 4-year school (Texas Tech 229115)
+    with open(api_fixture, 'r') as f:
+        mock_results = json.loads(f.read())
 
-    mock_lt_4 = {'results': [{
-        'id': 155317,
-        'ope6_id': 5555,
-        'ope8_id': 55500,
-        'enrollment': 10000,
-        'accreditor': "Santa",
-        'url': '',
-        'degrees_predominant': '',
-        'degrees_highest': '',
-        'school.ownership': 2,
-        'latest.completion.completion_rate_4yr_150nt_pooled': 0,
-        'latest.completion.completion_rate_less_than_4yr_150nt_pooled': 0.25,
-        'school.main_campus': True,
-        'school.online_only': False,
-        'school.operating': False,
-        'school.under_investigation': False,
-        'RETENTRATE': '',
-        'RETENTRATELT4': '',  # NEW
-        'REPAY3YR': '',  # NEW
-        'DEFAULTRATE': '',
-        'AVGSTULOANDEBT': '',
-        'MEDIANDEBTCOMPLETER': '',  # NEW
-        'city': 'Lawrence'}],
-        'metadata': {'page': 0}
-    }
-    no_data_dict = {'results': None}
-    mock_dict2 = {
+    # a partial sample API return for a community college
+    mock_lt_4 = {
         'results': [{
-            'id': 123456,
+            'id': 100636,
+            'ope6_id': '011667',
+            'latest.student.size': 2693,
+            'school.accreditor': "Higher Learning Commission",
+            'school.degrees_awarded.predominant': 2,
+            'school.degrees_awarded.highest': 2,
+            'school.ownership': 1,
+            'latest.completion.completion_rate_4yr_150nt_pooled': None,
+            'latest.completion.completion_rate_less_than_4yr_150nt_pooled': 0.541,  # noqa
+            'latest.academics.program_percentage.humanities': 0.5623,
+            'latest.academics.program_percentage.agriculture': 0.200,
+            'latest.academics.program_percentage.physical_science': 0.0900,
+            'latest.academics.program_percentage.biological': 0.100,
+            'school.main_campus': True,
+            'school.online_only': False,
+            'school.operating': False,
+            'school.under_investigation': False,
+            'school.city': 'Norfolk',
+            'school.state': 'NE',
+        }],
+        'metadata': {'page': 0}
+    }
+    no_data_dict = {'results': []}
+    mock_results2 = {
+        'results': [{
+            'id': 408039,
             'key': 'value'}],
         'metadata': {'page': 0}
     }
@@ -172,67 +158,130 @@ class TestScripts(django.test.TestCase):
         testzip5 = update_colleges.fix_zip5('55105')
         self.assertTrue(testzip5 == '55105')
 
-    @patch(
-        'paying_for_college.disclosures.scripts.update_colleges.requests.get')
-    def test_update_colleges(self, mock_requests):
-        mock_response = mock.Mock()
-        mock_response.json.return_value = self.mock_dict
-        mock_response.ok = True
-        mock_requests.return_value = mock_response
-        (FAILED, NO_DATA, endmsg) = update_colleges.update()
-        self.assertTrue(len(NO_DATA) == 0)
-        self.assertTrue(len(FAILED) == 0)
-        self.assertTrue('updated' in endmsg)
-        mock_response.json.return_value = self.no_data_dict
-        (FAILED, NO_DATA, endmsg) = update_colleges.update()
-        self.assertFalse(len(NO_DATA) == 0)
-        mock_response.json.return_value = self.mock_lt_4
-        (FAILED, NO_DATA, endmsg) = update_colleges.update()
-        self.assertTrue(len(NO_DATA) == 0)
+    def test_set_school_grad_rate_4yr(self):
+        school = School.objects.get(pk=100654)
+        api_data = {
+            'latest.completion.completion_rate_4yr_150nt_pooled': 0.44,
+            'latest.completion.completion_rate_less_than_4yr_150nt_pooled': None,  # noqa
+        }
+        school = update_colleges.set_school_grad_rate(school, api_data)
+        self.assertEqual(school.grad_rate, Decimal('0.44'))
+        self.assertEqual(school.grad_rate_4yr, Decimal('0.44'))
+        self.assertEqual(school.grad_rate_lt4, None)
+
+    def test_set_school_grad_rate_lt4(self):
+        school = School.objects.get(pk=100636)
+        api_data = {
+            'latest.completion.completion_rate_4yr_150nt_pooled': None,
+            'latest.completion.completion_rate_less_than_4yr_150nt_pooled': 0.54,  # noqa
+        }
+        school = update_colleges.set_school_grad_rate(school, api_data)
+        self.assertEqual(school.grad_rate, Decimal('0.54'))
+        self.assertEqual(school.grad_rate_lt4, Decimal('0.54'))
+        self.assertEqual(school.grad_rate_4yr, None)
 
     @patch(
         'paying_for_college.disclosures.scripts.update_colleges.requests.get')
-    def test_update_colleges_single_school(self, mock_requests):
+    def test_api_school_query(self, mock_requests):
         mock_response = mock.Mock()
-        mock_response.json.return_value = self.mock_dict
+        mock_response.json.return_value = self.mock_results
         mock_response.ok = True
         mock_requests.return_value = mock_response
-        (FAILED, NODATA, endmsg) = update_colleges.update(single_school=243197)
-        self.assertTrue(len(NODATA) == 0)
-        self.assertTrue(len(FAILED) == 0)
-        self.assertTrue('updated' in endmsg)
-        (FAILED, N0DATA, endmsg) = update_colleges.update(exclude_ids=[999999])
-        self.assertTrue(len(NODATA) == 0)
-        self.assertTrue(len(FAILED) == 0)
-        self.assertTrue('updated' in endmsg)
+        api_utils.api_school_query(123456, 'school.name')
+        self.assertEqual(mock_requests.call_count, 1)
+        self.assertTrue(mock_requests.called_with((123456, 'school.name')))
+
+    @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
+    def test_single_school_request(self, mock_get_data):
+        mock_get_data.return_value = self.mock_results.get('results')[0]
+        update_colleges.update(single_school=408039)
+        self.assertEqual(mock_get_data.call_count, 1)
+        self.assertTrue(mock_get_data.called_with(
+            408039,
+            api_utils.build_field_string()
+        ))
+
+    @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
+    def test_update_colleges_success(self, mock_get_data):
+        mock_get_data.return_value = self.mock_results.get('results')[0]
+        (NO_DATA, endmsg) = update_colleges.update()
+        self.assertTrue(len(NO_DATA) == 0)
+        self.assertTrue('Updated' in endmsg)
+
+    @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
+    def test_update_colleges_success_community_college(self, mock_get_data):
+        mock_get_data.return_value = self.mock_lt_4.get('results')[0]
+        (NO_DATA, endmsg) = update_colleges.update(
+            single_school=100636)
+        self.assertTrue(len(NO_DATA) == 0)
+        self.assertTrue('Updated' in endmsg)
+
+    @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
+    def test_update_colleges_single_not_operating(self, mock_get_data):
+        altered_results = copy.copy(self.mock_results).get('results')[0]
+        altered_results['school.operating'] = 0
+        mock_get_data.return_value = altered_results
+        (NO_DATA, endmsg) = update_colleges.update(
+            single_school=408039)
+        self.assertTrue(len(NO_DATA) == 0)
+        self.assertTrue('closed since last run: 1' in endmsg)
+
+    @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
+    def test_update_colleges_no_data_single_school(self, mock_get_data):
+        mock_get_data.return_value = None
+        (NO_DATA, endmsg) = update_colleges.update(
+            single_school=408039)
+        self.assertEqual(len(NO_DATA), 1)
+
+    @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
+    def test_update_colleges_community_colleges(self, mock_get_data):
+        mock_get_data.return_value = self.mock_lt_4.get('results')[0]
+        (NO_DATA, endmsg) = update_colleges.update()
+        self.assertTrue(len(NO_DATA) == 0)
+
+    @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
+    def test_update_colleges_no_data(self, mock_get_data):
+        mock_get_data.return_value = None
+        update_colleges.update()
+        self.assertEqual(
+            mock_get_data.call_count,
+            School.objects.filter(operating=True).exclude(
+                pk=FAKE_SCHOOL_PK).count())
 
     @patch(
         'paying_for_college.disclosures.scripts.update_colleges.requests.get')
-    def test_update_colleges_not_OK(self, mock_requests):
+    def test_get_scorecard_data(self, mock_requests):
+        mock_response = mock.Mock()
+        mock_response.json.return_value = self.mock_results
+        mock_response.ok = True
+        mock_requests.return_value = mock_response
+        data = update_colleges.get_scorecard_data('example.com')
+        self.assertEqual(mock_requests.call_count, 1)
+        self.assertTrue(mock_requests.called_with('example.com'))
+        self.assertEqual(type(data), dict)
+
+    @patch(
+        'paying_for_college.disclosures.scripts.update_colleges.requests.get')
+    def test_get_scorecard_data_throttled(self, mock_requests):
         mock_response = mock.Mock()
         mock_response.ok = False
-        mock_response.reason = "Testing OK == False"
+        mock_response.reason = "API limit reached"
         mock_response.status_code = 429
         mock_requests.return_value = mock_response
-        (FAILED, NO_DATA, endmsg) = update_colleges.update()
-        self.assertTrue('limit' in endmsg)
-        mock_response = mock.Mock()
-        mock_response.ok = False
-        mock_response.reason = "Testing OK == False"
-        (FAILED, NO_DATA, endmsg) = update_colleges.update()
-        self.assertFalse(len(FAILED) == 0)
-        mock_requests.side_effect = requests.exceptions.ConnectTimeout
-        (FAILED, NO_DATA, endmsg) = update_colleges.update()
-        self.assertFalse(len(FAILED) == 0)
+        test_data = update_colleges.get_scorecard_data('example.com')
+        self.assertEqual(mock_requests.call_count, 1)
+        self.assertIs(test_data, None)
 
     @patch(
         'paying_for_college.disclosures.scripts.update_colleges.requests.get')
-    def test_update_colleges_bad_responses(self, mock_requests):
+    def test_get_scorecard_data_no_results(self, mock_requests):
         mock_response = mock.Mock()
         mock_response.ok = True
-        mock_response.json.return_value = {'results': []}
-        (FAILED, NO_DATA, endmsg) = update_colleges.update()
-        self.assertTrue('no data' in endmsg)
+        mock_response.json.return_value = self.no_data_dict
+        mock_requests.return_value = mock_response
+        test_data = update_colleges.get_scorecard_data('example.com')
+        self.assertEqual(mock_requests.call_count, 1)
+        self.assertIs(test_data, None)
 
     def test_create_alias(self):
         update_ipeds.create_alias('xyz', School.objects.first())
@@ -344,14 +393,14 @@ class TestScripts(django.test.TestCase):
         mock_return_dict['ROOM'] = '1'
         mock_fieldnames = ['UNITID', 'ROOM'] + list(points.keys())
         mock_read.return_value = (mock_fieldnames, [mock_return_dict])
-        mock_dict = update_ipeds.process_datafiles()
+        mock_results = update_ipeds.process_datafiles()
         self.assertTrue(mock_read.call_count == 2)
-        self.assertTrue('999999' in mock_dict.keys())
+        self.assertTrue('999999' in mock_results.keys())
         mock_fieldnames = ['UNITID'] + list(school_points.keys())
         mock_return_dict = {school_points[key]: 'x' for key in school_points}
         mock_return_dict['UNITID'] = '999999'
         mock_read.return_value = (mock_fieldnames, [mock_return_dict])
-        mock_dict = update_ipeds.process_datafiles(add_schools=['999999'])
+        mock_results = update_ipeds.process_datafiles(add_schools=['999999'])
         self.assertTrue(mock_read.call_count == 3)
 
     @patch(
@@ -433,31 +482,50 @@ class TestScripts(django.test.TestCase):
         percent = api_utils.calculate_group_percent(0, 0)
         self.assertTrue(percent == 0)
 
-    @patch('paying_for_college.disclosures.scripts.api_utils.requests.get')
-    def test_get_repayment_data(self, mock_requests):
-        mock_response = mock.Mock()
-        expected_dict = {
-            'results': [
-                {'latest.repayment.5_yr_repayment.completers': 100,
-                 'latest.repayment.5_yr_repayment.noncompleters': 900}]
-        }
-        mock_response.json.return_value = expected_dict
-        mock_requests.return_value = mock_response
-        data = api_utils.get_repayment_data(123456)
-        self.assertTrue(data['completer_repayment_rate_after_5_yrs'] == 10.0)
+    # def test_get_repayment_rate(self):
+    #     """Checks calculation of completer repay rate from data payload."""
+    #     mock_data = {
+    #         'latest.repayment.5_yr_repayment.completers': 10,
+    #         'latest.repayment.5_yr_repayment.noncompleters': 90,
+    #     }
+    #     expected_result = 10.0
+    #     self.assertEqual(
+    #         api_utils.get_completer_repayment_rate(mock_data, timeframe=5),
+    #         expected_result
+    #         )
+
+    # @patch('paying_for_college.disclosures.scripts.api_utils.requests.get')
+    # def test_get_repayment_data(self, mock_requests):
+    #     """Checks repay calculation for one-off repayment data requests."""
+    #     mock_response = mock.Mock()
+    #     expected_dict = {
+    #         'results': [
+    #             {'latest.repayment.5_yr_repayment.completers': 100,
+    #              'latest.repayment.5_yr_repayment.noncompleters': 900,
+    #              'completer_repayment_rate_after_5_yrs': 10.0,
+    #              }
+    #         ]
+    #     }
+    #     mock_response.json.return_value = expected_dict
+    #     mock_requests.return_value = mock_response
+    #     data = api_utils.get_repayment_data(123456)
+    #     self.assertTrue(data['completer_repayment_rate_after_5_yrs'] == 10.0)
 
     @patch('paying_for_college.disclosures.scripts.api_utils.requests.get')
     def test_search_by_school_name(self, mock_requests):
         mock_response = mock.Mock()
-        mock_response.json.return_value = self.mock_dict2
+        mock_response.json.return_value = self.mock_results2
         mock_requests.return_value = mock_response
         data = api_utils.search_by_school_name('mockname')
-        self.assertTrue(data == self.mock_dict2['results'])
+        self.assertTrue(data == self.mock_results2['results'])
 
     def test_build_field_string(self):
-        fstring = api_utils.build_field_string()
-        self.assertTrue(fstring.startswith('id'))
-        self.assertTrue(fstring.endswith('25000'))
+        field_string = api_utils.build_field_string()
+        self.assertTrue(field_string.startswith('id'))
+        self.assertEqual(
+            len(field_string.split(',')),
+            (len(api_utils.BASE_FIELDS) + len(api_utils.YEAR_FIELDS))
+        )
 
     @patch('paying_for_college.disclosures.scripts.nat_stats.requests.get')
     def test_bad_nat_stats_request(self, mock_requests):
@@ -523,3 +591,31 @@ class TestScripts(django.test.TestCase):
         with mock.patch('six.moves.builtins.open', m):
             stats = nat_stats.get_bls_stats()
             self.assertEqual(stats, {})
+
+    def test_compile_school_programs(self):
+        mock_data = {
+            'latest.academics.program_percentage.agriculture': 0.200,
+            'latest.academics.program_percentage.biological': 0.100
+        }
+        test_payload = api_utils.compile_school_programs(mock_data)
+        self.assertEqual(test_payload.get('program_count'), 2)
+        self.assertEqual(
+            test_payload.get('most_popular'),
+            [
+                'Agriculture, Agriculture Operations, and Related Sciences',
+                'Biological and Biomedical Sciences'
+            ]
+        )
+
+    @patch(
+        'paying_for_college.disclosures.scripts.api_utils.requests.get')
+    def test_get_school_programs_no_results(self, mock_requests):
+        mock_response = mock.Mock()
+        mock_response.json.return_value = {}
+        mock_response.ok = True
+        mock_requests.return_value = mock_response
+        test_payload = api_utils.compile_school_programs({})
+        self.assertEqual(mock_requests.call_count, 0)
+        self.assertEqual(
+            test_payload.get('program_count'), 0
+        )

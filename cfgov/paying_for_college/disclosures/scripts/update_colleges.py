@@ -3,18 +3,21 @@ from __future__ import print_function
 
 import datetime
 import json
+import logging
 import os
 import sys
 import time
+from decimal import Decimal
 
 import requests
 from paying_for_college.disclosures.scripts import api_utils
-from paying_for_college.disclosures.scripts.api_utils import MODEL_MAP
-from paying_for_college.models import CONTROL_MAP, School
+from paying_for_college.disclosures.scripts.api_utils import (
+    DECIMAL_MAP, MODEL_MAP
+)
+from paying_for_college.models import CONTROL_MAP, FAKE_SCHOOL_PK, School
 
 
-# import pprint
-# PP = pprint.PrettyPrinter(indent=4)
+logger = logging.getLogger(__name__)
 
 DATESTAMP = datetime.datetime.now().strftime("%Y-%m-%d")
 HOME = os.path.expanduser("~")
@@ -22,7 +25,7 @@ NO_DATA_FILE = "{}/no_data_{}.json".format(HOME, DATESTAMP)
 SCRIPTNAME = os.path.basename(__file__).partition('.')[0]
 ID_BASE = "{}?api_key={}".format(api_utils.SCHOOLS_ROOT, api_utils.API_KEY)
 FIELDS = sorted(MODEL_MAP.keys())
-FIELDSTRING = ",".join(FIELDS)
+FIELDSTRING = api_utils.build_field_string()
 
 
 def fix_zip5(zip5):
@@ -35,11 +38,48 @@ def fix_zip5(zip5):
         return zip5[:5]
 
 
+def get_scorecard_data(url):
+    response = requests.get(url)
+    if not response.ok:
+        logger.info("request not OK, returned {}".format(response.reason))
+        if response.status_code == 429:
+            logger.info("API limit reached")
+        return
+    if not response.json() or not response.json().get('results'):
+        return
+    return response.json().get('results')[0]
+
+
+def set_school_grad_rate(school, api_data):
+    """Set the appropriate grad rate for a given school."""
+    four_year_raw = api_data.get(
+        'latest.completion.completion_rate_4yr_150nt_pooled')
+    associate_raw = api_data.get(
+        'latest.completion.completion_rate_less_than_4yr_150nt_pooled')
+    if four_year_raw is None:
+        four_year_rate = four_year_raw
+    else:
+        four_year_rate = Decimal(str(four_year_raw))
+    if associate_raw is None:
+        associate_rate = associate_raw
+    else:
+        associate_rate = Decimal(str(associate_raw))
+    if int(school.degrees_highest) >= 3:
+        school.grad_rate = four_year_rate
+        school.grad_rate_4yr = four_year_rate
+        school.grad_rate_lt4 = None
+    else:
+        school.grad_rate = associate_rate
+        school.grad_rate_lt4 = associate_rate
+        school.grad_rate_4yr = None
+    return school
+
+
 def update(exclude_ids=[], single_school=None):
     """update college-level data for the latest year"""
 
-    FAILED = []  # failed to get a good API response
-    NO_DATA = []  # API responded, but with no data
+    exclude_ids += [FAKE_SCHOOL_PK]
+    NO_DATA = []  # API failed to respond or provided no data
     CLOSED = 0  # schools that have closed since our last scrape
     START_MSG = "Requesting latest school data."
     JOB_MSG = (
@@ -54,12 +94,12 @@ def update(exclude_ids=[], single_school=None):
     UPDATE_COUNT = 0
     id_url = "{0}&id={1}&fields={2}"
     if single_school:
-        base_query = School.objects.filter(pk=single_school)
-        print("Updating {0}".format(base_query[0]))
+        base_query = School.objects.exclude(
+            pk__in=exclude_ids).filter(pk=single_school)
+        logger.info("Updating {}".format(base_query[0]))
     else:
-        base_query = School.objects.filter(operating=True)
-        if exclude_ids:
-            base_query = base_query.exclude(pk__in=exclude_ids)
+        base_query = School.objects.filter(
+            operating=True).exclude(pk__in=exclude_ids)
     for school in base_query:
         UPDATED = False
         PROCESSED += 1
@@ -68,77 +108,59 @@ def update(exclude_ids=[], single_school=None):
         if PROCESSED % 5 == 0:
             time.sleep(1)
         url = id_url.format(ID_BASE, school.school_id, FIELDSTRING)
-        # print(url)
-        try:
-            resp = requests.get(url)
-        except Exception:
-            FAILED.append(school)
+        data = get_scorecard_data(url)
+        if not data:
+            NO_DATA.append(school)
+            sys.stdout.write('-')
+            sys.stdout.flush()
             continue
         else:
-            if resp.ok is True:
-                raw_data = resp.json()
-                if raw_data and raw_data['results']:
-                    sys.stdout.write('.')
-                    sys.stdout.flush()
-                    data = raw_data['results'][0]
-                    if data['school.operating'] == 0:
-                        data['school.operating'] = False
-                    elif data['school.operating'] == 1:
-                        data['school.operating'] = True
-                    for key in MODEL_MAP:
-                        if key in data.keys() and data[key] is not None:
-                            setattr(school, MODEL_MAP[key], data[key])
-                            UPDATED = True
-                    if data['school.ownership']:
-                        school.ownership = str(data['school.ownership'])
-                        school.control = CONTROL_MAP[school.ownership]
-                    if school.grad_rate_4yr:
-                        school.grad_rate = school.grad_rate_4yr
-                    elif school.grad_rate_lt4:
-                        school.grad_rate = school.grad_rate_lt4
-                    if school.operating is False:
-                        CLOSED += 1
-                    if UPDATED is True:
-                        UPDATE_COUNT += 1
-                        school.zip5 = fix_zip5(str(school.zip5))
-                        school.save()
-                else:
-                    sys.stdout.write('-')
-                    sys.stdout.flush()
-                    NO_DATA.append(school)
+            sys.stdout.write('.')
+            sys.stdout.flush()
+            if data.get('school.operating') == 0:
+                school.operating = False
+                school.save()
+                CLOSED += 1
+                continue
             else:
-                print("request not OK, returned {0}".format(resp.reason))
-                FAILED.append(school)
-                if resp.status_code == 429:
-                    endmsg = "API limit reached"
-                    print(endmsg)
-                    print(resp.content)
-                    return (FAILED, NO_DATA, endmsg)
-                else:
-                    print("request for {0} "
-                          "returned {1}".format(school, resp.status_code))
-                    continue
-    endmsg = """\nTried to get new data for {0} school(s):\n\
-    updated {1} and found no data for {2}\n\
-    API response failures: {3}; schools that closed since last run: {4}\n\
-    \n{5} took {6} to run""".format(PROCESSED,
-                                    UPDATE_COUNT,
-                                    len(NO_DATA),
-                                    len(FAILED),
-                                    CLOSED,
-                                    SCRIPTNAME,
-                                    (datetime.datetime.now() - STARTER))
+                data['school.operating'] = True
+            for key in DECIMAL_MAP:
+                if data.get(key) is not None:
+                    setattr(school, DECIMAL_MAP[key], Decimal(str(data[key])))
+                    UPDATED = True
+            for key in MODEL_MAP:
+                if data.get(key) is not None:
+                    setattr(school, MODEL_MAP[key], data[key])
+                    UPDATED = True
+            if data.get('school.ownership'):
+                school.ownership = str(data['school.ownership'])
+                school.control = CONTROL_MAP[school.ownership]
+            school = set_school_grad_rate(school, data)
+            program_data = api_utils.compile_school_programs(data)
+            if program_data and type(program_data.get('most_popular')) == list:
+                UPDATED = True
+                school.program_most_popular = program_data['most_popular']
+                school.program_count = program_data.get(
+                    'program_count')
+            if UPDATED is True:
+                UPDATE_COUNT += 1
+                school.zip5 = fix_zip5(str(school.zip5))
+                school.save()
+    endmsg = """
+    Updated {} schools and found no data for {}\n\
+    Schools that closed since last run: {}\n\
+    \n{} took {} to run""".format(
+        UPDATE_COUNT,
+        len(NO_DATA),
+        CLOSED,
+        SCRIPTNAME,
+        (datetime.datetime.now() - STARTER))
     if NO_DATA:
-        data_note = "\nA list of schools that had no API data was saved to {0}"
+        data_note = "\nA list of schools that had no API data was saved to {}"
         endmsg += data_note.format(NO_DATA_FILE)
         no_data_dict = {}
         for school in NO_DATA:
             no_data_dict[school.pk] = school.primary_alias
         with open(NO_DATA_FILE, 'w') as f:
             f.write(json.dumps(no_data_dict))
-    # print(endmsg)
-    return (FAILED, NO_DATA, endmsg)
-
-
-if __name__ == '__main__':  # pragma: no cover
-    (failed, no_data, endmsg) = update()
+    return (NO_DATA, endmsg)
