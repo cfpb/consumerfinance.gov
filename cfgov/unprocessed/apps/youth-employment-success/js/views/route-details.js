@@ -177,6 +177,11 @@ function updateDomNode( node, nextValue ) {
   }
 }
 
+/**
+ * Toggle the visibility of a node
+ * @param {HTMLElement} node The element to show or hide
+ * @param {Boolean} visibility Whether to show or hide the element
+ */
 function updateNodeVisibility( node, visibility ) {
   const predicate = typeof visibility === 'function' ?
     visibility : () => visibility;

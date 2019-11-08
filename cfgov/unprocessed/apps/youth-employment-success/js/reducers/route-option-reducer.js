@@ -126,7 +126,11 @@ function updateActionPlan( state, routeIndex, itemType, doUpdate ) {
   const actionPlan = todoListSelector( state, routeIndex );
 
   if ( !doUpdate ) {
-    actionPlan.splice( actionPlan.indexOf( itemType ), 1 );
+    const toRemove = actionPlan.indexOf( itemType );
+
+    if ( toRemove !== -1 ) {
+      actionPlan.splice( toRemove, 1 );
+    }
 
     return actionPlan.slice();
   }
@@ -230,7 +234,7 @@ function routeOptionReducer( state = initialState, action ) {
           actionPlanItems: updateActionPlan(
             state,
             action.data.routeIndex,
-            PLAN_TYPES.DAYS,
+            PLAN_TYPES.DAYS_PER_WEEK,
             false
           )
         }
