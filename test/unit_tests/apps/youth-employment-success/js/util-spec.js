@@ -212,7 +212,7 @@ describe( 'YES utility functions', () => {
 
   describe( '.toPrecision', () => {
     it( 'returns the value if it cant be coerced into a number', () => {
-      expect(toPrecision( 'string' )).toBe('string');
+      expect( toPrecision( 'string' ) ).toBe( 'string' );
     } );
 
     it( 'returns the original number when a precision is not specified', () => {

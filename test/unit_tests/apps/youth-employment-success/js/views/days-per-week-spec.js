@@ -120,7 +120,8 @@ describe( 'DaysPerWeekView', () => {
       const state = {
         routes: {
           routes: [ {
-            transportation: 'Drive'
+            transportation: 'Drive',
+            actionPlanItems: []
           } ]
         }
       };
@@ -130,13 +131,14 @@ describe( 'DaysPerWeekView', () => {
       expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
     } );
 
-    describe( 'when average cost is defined as a montly cost', () => {
+    describe( 'when average cost is defined as a monthly cost', () => {
       const days = '2';
       const checked = 'checked';
       const prevState = {
         routes: {
           routes: [ {
-            daysPerWeek: days
+            daysPerWeek: days,
+            actionPlanItems: []
           } ]
         }
       };
@@ -144,7 +146,8 @@ describe( 'DaysPerWeekView', () => {
         routes: {
           routes: [ {
             transportation: 'Walk',
-            isMonthlyCost: true
+            isMonthlyCost: true,
+            actionPlanItems: []
           } ]
         }
       };

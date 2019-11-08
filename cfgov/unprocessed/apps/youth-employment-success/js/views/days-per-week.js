@@ -6,12 +6,31 @@ import {
   updateDaysToActionPlan
 } from '../reducers/route-option-reducer';
 import inputView from './input';
+import { PLAN_TYPES } from '../data-types/todo-items';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-days-per-week'
 } );
 
 const NOT_SURE_MESSAGE = 'Looking up how many days a week you\'ll make this trip was added to your to-do list.';
+
+/**
+ * Helper function to determine whether or not the state this view controls should
+ * be updated in the app's state store
+ * @param {String} daysPerWeek Value of daysPerWeek input node
+ * @param {Array} todoList Previous todo list items the user may have
+ * @returns {Boolean} Should the state be cleared
+ */
+function shouldClearDaysPerWeek(daysPerWeek, todoList) {
+  if (
+    daysPerWeek ||
+    todoList && todoList.indexOf(PLAN_TYPES.DAYS_PER_WEEK) !== -1
+  ) {
+    return true;
+  }
+
+  return false;
+}
 
 /**
  * DaysPerWeekView
@@ -71,6 +90,7 @@ function daysPerWeekView( element, { store, routeIndex, todoNotification } ) {
   function _onStateUpdate( prevState, state ) {
     const prevRouteState = routeSelector( prevState.routes, routeIndex );
     const routeState = routeSelector( state.routes, routeIndex );
+    const { daysPerWeek, actionPlanItems } = prevRouteState;
 
     if ( routeState.isMonthlyCost ) {
       _daysPerWeekEl.value = '';
@@ -79,7 +99,7 @@ function daysPerWeekView( element, { store, routeIndex, todoNotification } ) {
 
       todoNotification.remove();
 
-      if ( prevRouteState.daysPerWeek ) {
+      if ( shouldClearDaysPerWeek(daysPerWeek, actionPlanItems ) ) {
         store.dispatch( clearDaysPerWeekAction( { routeIndex } ) );
       }
     } else {

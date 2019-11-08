@@ -152,43 +152,43 @@ describe( 'routeDetailsView', () => {
     describe( 'total costs', () => {
       let totalCostEl;
 
-      beforeEach(() => {
+      beforeEach( () => {
         totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
-      });
+      } );
 
-      describe('when driving', () => {
+      describe( 'when driving', () => {
         it( 'correctly calculates driving cost', () => {
           view.render( nextState );
-  
+
           expect( totalCostEl.textContent ).toBe( '192.00' );
         } );
-  
-        it('does not update calculations if `miles` is not supplied', () => {
-          view.render({
+
+        it( 'does not update calculations if `miles` is not supplied', () => {
+          view.render( {
             ...nextState,
             route: {
               ...nextState.route,
               miles: ''
             }
-          });
-  
+          } );
+
           expect( totalCostEl.textContent ).toBe( '—' );
-        });
-  
-        it('does not update calculations if daysPerWeek is not supplied', () => {
-          view.render({
+        } );
+
+        it( 'does not update calculations if daysPerWeek is not supplied', () => {
+          view.render( {
             ...nextState,
             route: {
               ...nextState.route,
               daysPerWeek: ''
             }
-          });
-  
-          expect( totalCostEl.textContent ).toBe( '—' );
-        });
-      });
+          } );
 
-      describe('when using another mode of transportation', () => {
+          expect( totalCostEl.textContent ).toBe( '—' );
+        } );
+      } );
+
+      describe( 'when using another mode of transportation', () => {
         it( 'correctly calculates monthly cost', () => {
           const state = {
             budget: { ...nextState.budget },
@@ -199,12 +199,12 @@ describe( 'routeDetailsView', () => {
               averageCost: '100'
             }
           };
-  
+
           view.render( state );
-  
+
           expect( totalCostEl.textContent ).toBe( '100.00' );
         } );
-  
+
         it( 'correctly calculates monthly cost based on daily cost', () => {
           const state = {
             budget: { ...nextState.budget },
@@ -214,13 +214,13 @@ describe( 'routeDetailsView', () => {
               isMonthlyCost: false
             }
           };
-  
+
           view.render( state );
-  
+
           expect( totalCostEl.textContent ).toBe( '120.00' );
         } );
 
-        it ('does not update the total cost if per day or per month is not supplied', () => {
+        it( 'does not update the total cost if per day or per month is not supplied', () => {
           const state = {
             budget: { ...nextState.budget },
             route: {
@@ -229,13 +229,13 @@ describe( 'routeDetailsView', () => {
               isMonthlyCost: null
             }
           };
-  
+
           view.render( state );
-  
-          expect( totalCostEl.textContent ).toBe( '-' );
-        });
-  
-        it('does not update the total cost if averageCost is not supplied', () => {
+
+          expect( totalCostEl.textContent ).toBe( '—' );
+        } );
+
+        it( 'does not update the total cost if averageCost is not supplied', () => {
           const state = {
             budget: { ...nextState.budget },
             route: {
@@ -246,12 +246,12 @@ describe( 'routeDetailsView', () => {
               daysPerWeek: 1
             }
           };
-  
+
           view.render( state );
-  
+
           expect( totalCostEl.textContent ).toBe( '—' );
-        });
-  
+        } );
+
         it( 'does not update the total cost if daysPerWeek is not supplied', () => {
           const state = {
             budget: { ...nextState.budget },
@@ -262,12 +262,12 @@ describe( 'routeDetailsView', () => {
               daysPerWeek: 0
             }
           };
-  
+
           view.render( state );
-  
+
           expect( totalCostEl.textContent ).toBe( '—' );
         } );
-  
+
         it( 'updates total cost properly when daysPerWeek is supplied', () => {
           const state = {
             budget: { ...nextState.budget },
@@ -279,13 +279,13 @@ describe( 'routeDetailsView', () => {
               averageCost: '100'
             }
           };
-  
+
           view.render( state );
-  
+
           expect( totalCostEl.textContent ).toBe( '800.00' );
         } );
       } );
-    });
+    } );
 
     it( 'updates its budget remaining', () => {
       view.render( nextState );

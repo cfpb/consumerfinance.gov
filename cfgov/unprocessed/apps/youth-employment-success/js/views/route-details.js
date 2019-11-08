@@ -81,12 +81,14 @@ function getCalculationFn( route ) {
     return averageCost;
   }
 
-  return calculatePerMonthCost( averageCost, daysPerWeek );
+  const validDaysPerWeek = isMonthlyCost === null ? null : daysPerWeek;
+
+  return calculatePerMonthCost( averageCost, validDaysPerWeek );
 }
 
-function useDefaultCostEstimate(value) {
-  if (!value || value === DEFAULT_COST_ESTIMATE ) {
-    return true
+function useDefaultCostEstimate( value ) {
+  if ( !value || value === DEFAULT_COST_ESTIMATE ) {
+    return true;
   }
 
   return false;
@@ -98,7 +100,7 @@ function useDefaultCostEstimate(value) {
  * @returns {Number} The cost, in dollars, of driving each day
  */
 function calculateDrivingDailyCost( numberOfMiles = 0 ) {
-  if ( useDefaultCostEstimate(numberOfMiles) ) {
+  if ( useDefaultCostEstimate( numberOfMiles ) ) {
     return DEFAULT_COST_ESTIMATE;
   }
 
@@ -114,7 +116,7 @@ function calculateDrivingDailyCost( numberOfMiles = 0 ) {
  * @returns {String|Number} Retuns '-' if daysPerWeek is not supplied, otherwise returns the monthly cost
  */
 function calculatePerMonthCost( dailyCost, daysPerWeek ) {
-  if ( useDefaultCostEstimate(daysPerWeek) || useDefaultCostEstimate(dailyCost)) {
+  if ( useDefaultCostEstimate( daysPerWeek ) || useDefaultCostEstimate( dailyCost ) ) {
     return DEFAULT_COST_ESTIMATE;
   }
 
@@ -134,7 +136,7 @@ function calculatePerMonthCost( dailyCost, daysPerWeek ) {
  * @returns {Number} The user's remaining monthly money.
  */
 function updateRemainingBudget( budget, transportationEstimate ) {
-  if ( useDefaultCostEstimate(budget) || useDefaultCostEstimate(transportationEstimate)) {
+  if ( useDefaultCostEstimate( budget ) || useDefaultCostEstimate( transportationEstimate ) ) {
     return DEFAULT_COST_ESTIMATE;
   }
 
@@ -266,7 +268,7 @@ function routeDetailsView( element, { alertTarget, hasDefaultTodo = false } ) {
       const costEstimate = getCalculationFn( route );
       const remainingBudget = money.subtract( budget.earned, budget.spent );
       const nextRemainingBudget = updateRemainingBudget(
-        String(remainingBudget),
+        String( remainingBudget ),
         costEstimate
       );
       const isFormValid = validate( assign( {}, budget, route ) );
