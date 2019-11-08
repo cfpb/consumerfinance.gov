@@ -8,6 +8,7 @@ import printTableView from './views/print-table';
 import selectedItems from './models/selected-items';
 import updateExpandableButtonText from './expandables';
 
+const TEMPLATE_SELECTOR = 'cbg-checklist';
 
 const CHECKLIST_GROUP_SELECTOR = 'm-checklist-group';
 const PRINT_BUTTON_SELECTOR = 'js-cbg-print';
@@ -34,6 +35,8 @@ const expandableData = expandableEls.reduce( ( memo, expandable ) => {
 
   return memo;
 }, {} );
+
+document.querySelector(`.${TEMPLATE_SELECTOR}`).parentNode.classList.add('cbg-print-block');
 
 const items = selectedItems( { maxElements: 5 } );
 const checklistLookup = checklistMap( expandableData );

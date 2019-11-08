@@ -6,13 +6,18 @@
     margin: 0 !important;
     display: block !important;
     position: static !important;
-  });
 
-  > div[class^="block"]:not(:last-child) {
-    .respond-to-print({
+    div.block {
       display: none !important;
-    });
-  }
+    }
+
+    .block.cbg-print-block {
+      div[class^="block"] {
+        display: block !important;
+      }
+      display: block !important;
+    }
+  });
 
   &:after {
     .respond-to-print({
