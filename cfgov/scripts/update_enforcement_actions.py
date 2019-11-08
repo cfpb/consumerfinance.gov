@@ -1,11 +1,23 @@
 from __future__ import unicode_literals
+from re import search, IGNORECASE
 
 from v1.models import DocumentDetailPage
-from v1.util.migrations import get_stream_data
+from v1.util.migrations import get_stream_data, set_stream_data
 from v1.tests.wagtail_pages.helpers import publish_changes
 
+def update_category(current):
+    stip = search('Stipulation and consent order', current, IGNORECASE)
+    admin = search('Administrative adjudication', current, IGNORECASE)
 
-def update_field_name():
+    if stip or admin:
+        return 'Administrative Proceeding'
+    elif search('Federal district court case', current, IGNORECASE):
+        return 'Civil Action'
+    else:
+      return current
+
+
+def update_sidefoot():
     for page in DocumentDetailPage.objects.all():
         if not page.live:
             continue
@@ -19,12 +31,11 @@ def update_field_name():
                 for block in field_content:
                     if block['value'].get('heading', '') == 'File number':
                         block['value']['heading'] = 'Docket number'
-                        print(block['value'].get('heading', ''))
-                        print(block['value'].get('blob', ''))
+                    if block['value'].get('heading', '') == 'Category':
+                        block['value']['blob'] = update_category(block['value']['blob'])
             break
-        publish_changes(page.specific)
-        break
+        set_stream_data(page.specific, 'sidefoot', stream_data)
 
 
 def run():
-    update_field_name()
+    update_sidefoot()
