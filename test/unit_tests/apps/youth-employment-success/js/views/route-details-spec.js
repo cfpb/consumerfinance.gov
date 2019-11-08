@@ -150,86 +150,142 @@ describe( 'routeDetailsView', () => {
     } );
 
     describe( 'total costs', () => {
-      it( 'correctly calculates driving cost', () => {
-        view.render( nextState );
+      let totalCostEl;
 
-        const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
+      beforeEach(() => {
+        totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
+      });
 
-        expect( totalCostEl.textContent ).toBe( '192.00' );
+      describe('when driving', () => {
+        it( 'correctly calculates driving cost', () => {
+          view.render( nextState );
+  
+          expect( totalCostEl.textContent ).toBe( '192.00' );
+        } );
+  
+        it('does not update calculations if `miles` is not supplied', () => {
+          view.render({
+            ...nextState,
+            route: {
+              ...nextState.route,
+              miles: ''
+            }
+          });
+  
+          expect( totalCostEl.textContent ).toBe( '—' );
+        });
+  
+        it('does not update calculations if daysPerWeek is not supplied', () => {
+          view.render({
+            ...nextState,
+            route: {
+              ...nextState.route,
+              daysPerWeek: ''
+            }
+          });
+  
+          expect( totalCostEl.textContent ).toBe( '—' );
+        });
+      });
+
+      describe('when using another mode of transportation', () => {
+        it( 'correctly calculates monthly cost', () => {
+          const state = {
+            budget: { ...nextState.budget },
+            route: {
+              ...nextState.route,
+              transportation: 'Walk',
+              isMonthlyCost: true,
+              averageCost: '100'
+            }
+          };
+  
+          view.render( state );
+  
+          expect( totalCostEl.textContent ).toBe( '100.00' );
+        } );
+  
+        it( 'correctly calculates monthly cost based on daily cost', () => {
+          const state = {
+            budget: { ...nextState.budget },
+            route: {
+              ...nextState.route,
+              transportation: 'Walk',
+              isMonthlyCost: false
+            }
+          };
+  
+          view.render( state );
+  
+          expect( totalCostEl.textContent ).toBe( '120.00' );
+        } );
+
+        it ('does not update the total cost if per day or per month is not supplied', () => {
+          const state = {
+            budget: { ...nextState.budget },
+            route: {
+              ...nextState.route,
+              transportation: 'Walk',
+              isMonthlyCost: null
+            }
+          };
+  
+          view.render( state );
+  
+          expect( totalCostEl.textContent ).toBe( '-' );
+        });
+  
+        it('does not update the total cost if averageCost is not supplied', () => {
+          const state = {
+            budget: { ...nextState.budget },
+            route: {
+              ...nextState.route,
+              transportation: 'Walk',
+              isMonthlyCost: false,
+              averageCost: '',
+              daysPerWeek: 1
+            }
+          };
+  
+          view.render( state );
+  
+          expect( totalCostEl.textContent ).toBe( '—' );
+        });
+  
+        it( 'does not update the total cost if daysPerWeek is not supplied', () => {
+          const state = {
+            budget: { ...nextState.budget },
+            route: {
+              ...nextState.route,
+              transportation: 'Walk',
+              isMonthlyCost: false,
+              daysPerWeek: 0
+            }
+          };
+  
+          view.render( state );
+  
+          expect( totalCostEl.textContent ).toBe( '—' );
+        } );
+  
+        it( 'updates total cost properly when daysPerWeek is supplied', () => {
+          const state = {
+            budget: { ...nextState.budget },
+            route: {
+              ...nextState.route,
+              transportation: 'Walk',
+              isMonthlyCost: false,
+              daysPerWeek: 2,
+              averageCost: '100'
+            }
+          };
+  
+          view.render( state );
+  
+          expect( totalCostEl.textContent ).toBe( '800.00' );
+        } );
       } );
-
-      it( 'correctly calculates monthly cost', () => {
-        const state = {
-          budget: { ...nextState.budget },
-          route: {
-            ...nextState.route,
-            transportation: 'Walk',
-            isMonthlyCost: true,
-            averageCost: '100'
-          }
-        };
-
-        view.render( state );
-
-        const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
-
-        expect( totalCostEl.textContent ).toBe( '100.00' );
-      } );
-
-      it( 'correctly calculates monthly cost based on daily cost', () => {
-        const state = {
-          budget: { ...nextState.budget },
-          route: {
-            ...nextState.route,
-            transportation: 'Walk',
-            isMonthlyCost: false
-          }
-        };
-
-        view.render( state );
-
-        const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
-
-        expect( totalCostEl.textContent ).toBe( '120.00' );
-      } );
-
-      it( 'does not update the total cost if daysPerWeek is not supplied', () => {
-        const state = {
-          budget: { ...nextState.budget },
-          route: {
-            ...nextState.route,
-            transportation: 'Walk',
-            isMonthlyCost: false,
-            daysPerWeek: 0
-          }
-        };
-
-        view.render( state );
-
-        const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
-
-        expect( totalCostEl.textContent ).toBe( '0.00' );
-      } );
-
-      it( 'updates total cost properly when daysPerWeek is supplied', () => {
-        const state = {
-          budget: { ...nextState.budget },
-          route: {
-            ...nextState.route,
-            transportation: 'Walk',
-            isMonthlyCost: false,
-            daysPerWeek: 2,
-            averageCost: '100'
-          }
-        };
-
-        view.render( state );
-
-        const totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
-
-        expect( totalCostEl.textContent ).toBe( '800.00' );
-      } );
-    } );
+    });
 
     it( 'updates its budget remaining', () => {
       view.render( nextState );

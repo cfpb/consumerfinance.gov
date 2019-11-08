@@ -229,10 +229,6 @@ function toPrecision( value = '', precision = 0 ) {
     safeValue = Number( value );
   }
 
-  if ( !isNumber( safeValue ) ) {
-    throw new Error( 'First argument must be a number.' );
-  }
-
   return addCommas( String( ( Math.round( ( safeValue * 1000 ) / 10 ) / 100 ).toFixed( precision ) ) );
 }
 
