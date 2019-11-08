@@ -9,6 +9,7 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailsearch import index
 
+from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 
 from v1.atomic_elements import molecules
@@ -45,8 +46,6 @@ class HomePage(CFGOVPage):
 
     # Sets page to only be createable at the root
     parent_page_types = ['wagtailcore.Page']
-
-    template = 'index.html'
 
     objects = PageManager()
 
@@ -85,6 +84,12 @@ class HomePage(CFGOVPage):
 
         return latest_pages
 
+    def get_template(self, request):
+        if flag_enabled('NEW_HOME_PAGE', request=request):
+            return 'home-page/index_new.html'
+        else:
+            return 'home-page/index_%s.html' % self.language
+
 
 class HomePageExcludedUpdates(models.Model):
     page = ParentalKey(
@@ -100,8 +105,5 @@ class HomePageExcludedUpdates(models.Model):
 
 
 class SpanishHomePage(HomePage):
-    parent_page_types = ['v1.HomePage']
-
-    template = 'index_es.html'
-
     objects = PageManager()
+    parent_page_types = ['v1.HomePage']
