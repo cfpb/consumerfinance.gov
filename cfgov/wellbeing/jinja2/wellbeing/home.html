@@ -63,10 +63,9 @@
     <p>
         <b>Answer the questions and get your score.</b>
         You won’t be asked about any personal financial data—it’s
-        not that kind of questionnaire.
-        <a href="{{ url('fwb_about') }}">See how and why we developed it.</a>
+        not that kind of questionnaire. 
+        <a href="{{ url('fwb_about_' + current_language) }}">See how and why we developed it.</a>
     </p>
-
     <p>
         <b>Review steps you can take</b>
         if you want to be able to answer the questions differently.
@@ -96,7 +95,7 @@
         </div>
     </div>
 
-    <form id="quiz-form" action="{{ url('fwb_results') }}" method="POST">
+    <form id="quiz-form" action="{{ url('fwb_results_' + current_language) }}" method="POST">
         <div class="block">
             <h2>Part 1: How well does this statement describe you or your situation?</h2>
             <div class="o-well">
@@ -959,7 +958,7 @@
             how well your current money situation is providing you with
             financial security and freedom of choice, today and for the future.
         </p>
-        <a class="a-link a-link__jump" href="{{ url('fwb_about') }}">
+        <a class="a-link a-link__jump" href="{{ url('fwb_about_' + current_language) }}">
             <span class="a-link_text">See more background</span>
         </a>
     </div>
