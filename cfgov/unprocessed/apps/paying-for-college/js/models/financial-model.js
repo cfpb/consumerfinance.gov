@@ -27,6 +27,7 @@ const financialModel = {
         let totalIndirectCosts = 0;
         let totalGrants = 0;
         let totalScholarships = 0;
+        let totalFedLoans = 0;
 
         // Calculate totals
         for ( let prop in financialModel.values ) {
@@ -39,6 +40,8 @@ const financialModel = {
                 totalGrants += value;
             } else if ( prop.substring( 0, 12 ) === 'scholarship_' ) {
                 totalScholarships += value;
+            } else if ( prop.substring( 0, 8 ) === 'fedLoan_' ) {
+                totalFedLoans += value;
             }
         }
 
@@ -50,6 +53,7 @@ const financialModel = {
 
         financialModel.values.total_costs = totalDirectCosts + totalIndirectCosts;
         financialModel.values.total_grantsScholarships = totalGrants + totalScholarships;
+        financialModel.values.total_fedLoans = totalFedLoans;
     },
 
     /**
@@ -69,7 +73,11 @@ const financialModel = {
         financialModel.setValue( 'scholarship_school', 1919 );
         financialModel.setValue( 'fedLoan_directSub', 12345 );
         financialModel.setValue( 'fee_directSub', .0108 );
-        financialModel.setValue( 'rate_directSub', .0103 );
+        financialModel.setValue( 'rate_directSub', .0678 );
+        financialModel.setValue( 'fedLoan_directUnsub', 13333 );
+        financialModel.setValue( 'fee_directUnsub', .0219 );
+        financialModel.setValue( 'rate_directUnsub', .0987 );
+        
         financialModel.calculateTotals();
 
 

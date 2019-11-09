@@ -24,6 +24,7 @@ const init = function() {
 
   financialView.updateFinancialItems();
 
+  console.log( financialModel.values );
 
 };
 
