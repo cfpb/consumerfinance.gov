@@ -57,22 +57,22 @@
 {%- endblock %}
 
 {% block content_main -%}
-    <h2>{{ _('Here’s how it works:</h2>
+    <h2>{{ _('Here’s how it works:') }}</h2>
 
     <p>
-        <b>{{ _('Answer the questions and get your score.</b>
+        <b>{{ _('Answer the questions and get your score.') }}</b>
         {{ _('You won’t be asked about any personal financial data—it’s
-        not that kind of questionnaire.
-        <a href="{{ url('fwb_about_' + current_language) }}">{{ _('See how and why we developed it.</a>
+        not that kind of questionnaire.') }}
+        <a href="{{ url('fwb_about_' + current_language) }}">{{ _('See how and why we developed it.') }}</a>
     </p>
     <p>
-        <b>{{ _('Review steps you can take</b>
-        {{ _('if you want to be able to answer the questions differently.
+        <b>{{ _('Review steps you can take') }}</b>
+        {{ _('if you want to be able to answer the questions differently.') }}
     </p>
 
     <p>
-        {{ _('<b>See how your score compares</b>
-        to other U.S. adults from our national survey.
+        <b>{{ _('See how your score compares') }}</b>
+        {{ _('to other U.S. adults from our national survey.') }}
     </p>
 
     <div class="m-notification
@@ -81,13 +81,13 @@
         {{ svg_icon('warning-round') }}
         <div class="m-notification_content">
             <p class="h4 m-notification_message">
-                {{ _('We never collect or store the answers you provide.
+                {{ _('We never collect or store the answers you provide.') }}
             </p>
             <ul class="m-list m-list__links">
                 <li class="m-list_item">
                     <a class="m-list_link"
                        href="/privacy/website-privacy-policy/">
-                        {{ _('See how your privacy is protected.
+                        {{ _('See how your privacy is protected.') }}
                     </a>
                 </li>
             </ul>
@@ -96,13 +96,13 @@
 
     <form id="quiz-form" action="{{ url('fwb_results_' + current_language) }}" method="POST">
         <div class="block">
-            <h2>{{ _('Part 1: How well does this statement describe you or your situation?</h2>
+            <h2>{{ _('Part 1: How well does this statement describe you or your situation?') }}</h2>
             <div class="o-well">
                 <fieldset class="o-form_fieldset o-scale" id="question_1">
                     <h3 class="a-legend">
-                        {{ _('I could handle a major unexpected expense
+                        {{ _('I could handle a major unexpected expense') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">{{ _('This statement describes me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement describes me') }}</div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -936,14 +936,14 @@
 
 {% block content_sidebar -%}
     <div class="block block__flush-top">
-        <h3>{{ _('About us</h3>
+        <h3>About us</h3>
         <p>
-            {{ _('We're the Consumer Financial Protection Bureau (CFPB),
+            We're the Consumer Financial Protection Bureau (CFPB),
             a U.S. government agency that makes sure banks, lenders,
-            and other financial companies treat you fairly.') }}
+            and other financial companies treat you fairly.
         </p>
         <a class="a-link a-link__jump" href="/about-us/the-bureau/">
-            <span class="a-link_text">{{ _('Learn how the CFPB can help you') }}</span>
+            <span class="a-link_text">Learn how the CFPB can help you</span>
         </a>
     </div>
 
