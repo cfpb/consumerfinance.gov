@@ -425,7 +425,7 @@
                 <ul>
                     <li>
                         <b>{{ _('Look toward home ownership.') }}</b>
-                        {{ _('Consult our
+			{{ _('Consult our') }}
                         <a href="/owning-a-home/">{{ _('Buying a House') }}</a>
                         {{ _('tools and resources.') }}
                     </li>
@@ -510,9 +510,8 @@
         {{ notification.render(
             'warning',
             true,
-            '{{ _('We never collect or store answers to the financial well-being questionnaire.') }}',
-            '{{ _('If you would like to see your score and answers on the page below,
-            please start with the') }} <a href="../">questionnaire</a> {{ _('and enter your responses.') }}'
+            _('We never collect or store answers to the financial well-being questionnaire.'),
+	    _('If you would like to see your score and answers on the page below, please start with the <a href="../">questionnaire</a> and enter your responses.')
         ) }}
     </div>
     {% endif %}

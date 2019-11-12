@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-17 18:33+0000\n"
+"POT-Creation-Date: 2020-03-17 18:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -867,7 +867,7 @@ msgid "Get my score"
 msgstr ""
 
 #: wellbeing/jinja2/wellbeing/home.html:952
-#: wellbeing/jinja2/wellbeing/results.html:639
+#: wellbeing/jinja2/wellbeing/results.html:638
 msgid "About this questionnaire"
 msgstr ""
 
@@ -998,6 +998,10 @@ msgstr ""
 msgid "Look toward home ownership."
 msgstr ""
 
+#: wellbeing/jinja2/wellbeing/results.html:428
+msgid "Consult our"
+msgstr ""
+
 #: wellbeing/jinja2/wellbeing/results.html:429
 msgid "Buying a House"
 msgstr ""
@@ -1097,55 +1101,46 @@ msgstr ""
 msgid "See how your score compares to group averages"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:513
-msgid ""
-"We never collect or store answers to the financial well-being questionnaire."
-msgstr ""
-
-#: wellbeing/jinja2/wellbeing/results.html:515
-msgid "and enter your responses."
-msgstr ""
-
-#: wellbeing/jinja2/wellbeing/results.html:522
+#: wellbeing/jinja2/wellbeing/results.html:521
 msgid "Compare by"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:530
+#: wellbeing/jinja2/wellbeing/results.html:529
 msgid "Age"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:538
+#: wellbeing/jinja2/wellbeing/results.html:537
 msgid "Household income"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:546
+#: wellbeing/jinja2/wellbeing/results.html:545
 msgid "Employment status"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:556
+#: wellbeing/jinja2/wellbeing/results.html:555
 msgid "Your score"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:564
+#: wellbeing/jinja2/wellbeing/results.html:563
 msgid "U.S. average"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:585
+#: wellbeing/jinja2/wellbeing/results.html:584
 msgid "Source:"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:587
+#: wellbeing/jinja2/wellbeing/results.html:586
 msgid "Financial Well-Being in America report"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:588
+#: wellbeing/jinja2/wellbeing/results.html:587
 msgid "Download CSV file"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:591
+#: wellbeing/jinja2/wellbeing/results.html:590
 msgid "Date published:"
 msgstr ""
 
-#: wellbeing/jinja2/wellbeing/results.html:592
+#: wellbeing/jinja2/wellbeing/results.html:591
 msgid "September 26, 2017"
 msgstr ""
