@@ -1,15 +1,15 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% block title -%}
-    Why financial well-being?
+    {{ _('Why financial well-being?') }}
 {%- endblock %}
 
 {% block desc -%}
-    Learn about the financial well-being scale and why we created it.
+    {{ _('Learn about the financial well-being scale and why we created it.') }}
 {%- endblock %}
 
 {% block og_desc -%}
-    Learn about the financial well-being scale and why we created it.
+    {{ _('Learn about the financial well-being scale and why we created it.') }}
 {%- endblock %}
 
 {% block og_image %}
@@ -23,7 +23,7 @@
     <div class="content_wrapper">
         <nav class="breadcrumbs" aria-label="Breadcrumbs">
             <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home_' + current_language) }}">
-                Back to the questionnaire
+                {{ _('Back to the questionnaire') }}
             </a>
         </nav>
     </div>
@@ -31,79 +31,79 @@
 
 
 {% block content_main %}
-    <h1>Why financial well-being?</h1>
+    <h1>{{ _('Why financial well-being?') }}</h1>
     <p class="lead-paragraph">
-        At the CFPB, we work to help consumers like you take control
+        {{ _('At the CFPB, we work to help consumers like you take control
         of your financial life to reach your own life goals,
-        achieve financial peace of mind, and avoid pitfalls that can derail you.
+        achieve financial peace of mind, and avoid pitfalls that can derail you.') }}
     </p>
     <p>
-        The ultimate goal of our work is to help you
+        {{ _('The ultimate goal of our work is to help you
         improve your financial well-being.
         Financial well-being means how much your financial situation
-        and money choices provide you with security and freedom of choice.
+        and money choices provide you with security and freedom of choice.') }}
     </p>
     <p>
-        We developed a questionnaire and a scoring method as a tool
-        that can help you take stock of your financial well-being.
+        {{ _('We developed a questionnaire and a scoring method as a tool
+        that can help you take stock of your financial well-being.') }}
     </p>
     <p>
-        Maybe you’re planning to take action to improve your financial
+        {{ _('Maybe you’re planning to take action to improve your financial
         life—on your own or with help from others,
         maybe through a friend, coach, book, or financial services professional.
         One of the key questions you might ask yourself afterward is,
-        “Am I better off than before?”
+        “Am I better off than before?”') }}
     </p>
     <p>
-        To answer that question, you can use our financial well-being
+        {{ _('To answer that question, you can use our financial well-being
         questionnaire and your resulting score.
         Together, they let you accurately and consistently measure
         your financial well-being before and after
-        taking steps to improve your financial situation.
+        taking steps to improve your financial situation.') }}
     </p>
 
-    <h2>Why doesn’t this questionnaire ask about financial details?</h2>
+    <h2>{{ _('Why doesn’t this questionnaire ask about financial details?<') }}/h2>
     <p>
-        Because each person’s situation is unique and subjective,
+        {{ _('Because each person’s situation is unique and subjective,
         it is hard to describe financial well-being using only numbers
-        like income, net worth, or credit score.
+        like income, net worth, or credit score.') }}
     </p>
     <p>
-        Instead,
+        {{ _('Instead,') }}
         <a href="/about-us/blog/four-elements-define-personal-financial-well-being/">
-            we asked people around the country
+            {{ _('we asked people around the country') }}
         </a>
-        what financial well-being meant to them, and we listened.
+        {{ _('what financial well-being meant to them, and we listened.') }}
     </p>
     <p>
-        We learned that financial well-being means
+        {{ _('We learned that financial well-being means
         having financial security and financial freedom of choice,
         in the present and in the future.
-        More specifically, having financial well-being is when you:
+        More specifically, having financial well-being is when you:') }}
     </p>
     <ul>
-        <li>Have control over day-to-day, month-to-month finances </li>
-        <li>Have the capacity to absorb a financial shock</li>
-        <li>Are on track to meet your financial goals</li>
-        <li>Have the financial freedom to make the choices that allow you to enjoy life</li>
+        <li>{{ _('Have control over day-to-day, month-to-month finances') }}</li>
+        <li>{{ _('Have the capacity to absorb a financial shock') }}</li>
+        <li>{{ _('Are on track to meet your financial goals') }}</li>
+        <li>{{ _('Have the financial freedom to make the choices that allow you to enjoy life') }}</li>
     </ul>
     <p>
-        That’s why people with the same income, financial experiences, or education
-        can have very different levels of financial well-being.
+        {{ _('That’s why people with the same income, financial experiences, or education
+        can have very different levels of financial well-being.') }}
     </p>
 
-    <h2>How does financial well-being look across America?</h2>
+    <h2>{{ _('How does financial well-being look across America?') }}</h2>
     <p>
-        The tool allows you to compare your financial well-being score
+        {{ _('The tool allows you to compare your financial well-being score
         to other adults in the United States.
         The comparison of your score to others’ scores
         is made possible by our national survey.
         In late 2016, we collected responses to our financial well-being scale
-        in a nationwide survey of U.S. adults for the first time.
+        in a nationwide survey of U.S. adults for the first time.') }}
     </p>
     <a class="a-link__jump"
        href="/data-research/research-reports/financial-well-being-america/">
-        <span class="a-link_text">See the report</span>
+        <span class="a-link_text">{{ _('See the report') }}</span>
     </a>
 {% endblock %}
 
