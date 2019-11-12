@@ -1,358 +1,306 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-17 18:33+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: es\n"
 
-#: v1/home_page.html
-msgid "homepage"
-msgstr "página de inicio"
-
-#: v1/_includes/molecules/global-search.html
-msgid "Search"
-msgstr "Buscar"
-
-msgid "Clear search"
-msgstr "Borrar búsqueda"
-
-msgid "Clear"
-msgstr "Borrar"
-
-msgid "Close"
-msgstr "Cerrar"
-
-msgid "Search the CFPB"
-msgstr "Buscar la CFPB"
-
-msgid "Submit a Complaint"
-msgstr "Enviar una queja"
-
-msgid "Mortgage"
-msgstr "Hipoteca"
-
-msgid "Mortgages"
-msgstr "Hipotecas"
-
-msgid "Buying a Home?"
-msgstr "¿Quiere comprar una vivienda?"
-
-msgid "Buying a House?"
-msgstr "¿Quiere comprar una vivienda?"
-
-msgid "Sign up for email tips and info to help you through the process."
-msgstr "Suscríbase a nuestra lista de email con consejos útiles sobre hipotecas."
-
-msgid "Sign up for our 2-week Get Homebuyer Ready boot camp. We’ll take you step-by-step through the entire homebuying process."
-msgstr ""
-
-#: v1/ask-cfpb/category-page.html
-msgid "results"
-msgstr "resultados"
-
-msgid "result"
-msgstr "resultado"
-
-msgid " results"
-msgstr " resultados"
-
-msgid "Read answer"
-msgstr "Leer la respuesta"
-
-msgid "/ask-cfpb/"
-msgstr "/es/obtener-respuestas/"
-
-msgid "/ask-cfpb/search/"
-msgstr "/es/obtener-respuestas/buscar/"
-
-msgid "Previous"
-msgstr "Anterior"
-
-msgid "Next"
-msgstr "Siguiente"
-
-msgid "No results found for"
-msgstr "No se encontraron resultados para"
-
-msgid "Please enter a search term in the box above."
-msgstr "Por favor escriba su búsqueda arriba"
-
-#: portals
-msgid "Featured"
-msgstr "Destacado"
-
-msgid "Sign up"
-msgstr "Suscribir"
-
-msgid "See Privacy Act statement"
-msgstr "Lea la declaración de privacidad"
-
-msgid "Email address"
-msgstr "Dirección email"
-
-#: cfgov/jinja2/v1/ask-cfpb/answer-page.html
-msgid "updated"
-msgstr "actualizado"
-
-msgid "Please do not share any personally identifiable information (PII), including, but not limited to: your name, address, phone number, email address, Social Security number, account information, or any other information of a sensitive nature."
-msgstr "No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo."
-
-msgid "Return to top"
-msgstr "Ir arriba"
-
-msgid "Read more"
-msgstr "Leer más"
-
-msgid "Read full answer"
-msgstr "Leer más"
-
-msgid "Hide full answer"
-msgstr "Esconder la respuesta completa"
-
-msgid "Browse related questions"
-msgstr "Otras preguntas"
-
-msgid "Take the next step"
-msgstr "Dar el siguiente paso"
-
-msgid "Related questions"
-msgstr "Otras preguntas"
-
-#: cfgov/jinja2/v1/ask-cfpb/landing-page.html
-msgid "Learn more about"
-msgstr "Sepa más sobre"
-
-#: cfgov/jinja2/v1/ask-cfpb/article-page.html
-msgid "In this article"
-msgstr "En este artículo"
-
-#: cfgov/jinja2/v1/ask-cfpb/answer-search-results.html
-msgid "Search our library of answers"
-msgstr "Buscar en nuestra lista de respuestas"
-
-msgid "Can't find your question?"
-msgstr "¿No encuentra su pregunta?"
-
-msgid "Ask CFPB"
-msgstr "Obtener respuestas"
-
-msgid "Showing results for "
-msgstr "Se muestran resultados para "
-
-msgid "of"
-msgstr "de"
-
+#: ask_cfpb/models/pages.py:251
 msgid "for"
-msgstr "para"
+msgstr ""
 
-#: singular
+#: ask_cfpb/models/pages.py:255
 msgid "Showing "
-msgstr "Se muestra "
+msgstr ""
 
+#: ask_cfpb/models/pages.py:256
+msgid "result"
+msgstr ""
+
+#: ask_cfpb/models/pages.py:258
+#: jinja2/v1/ask-cfpb/answer-search-results.html:27
 msgid "Showing"
-msgstr "Se muestran"
+msgstr ""
 
-msgid "result within"
-msgstr "resultado de"
+#: ask_cfpb/models/pages.py:259
+msgid "results"
+msgstr ""
 
-msgid "results within"
-msgstr "resultados de"
-
-msgid "results for"
-msgstr "resultados para"
-
-msgid "result for"
-msgstr "resultado para"
-
-msgid "Search instead for"
-msgstr "Busca de"
-
-#: cfgov/jinja2/v1/ask-cfpb/landing-page.html
-msgid "Browse questions by category"
-msgstr "Examinar las preguntas por categoría"
-
-#: cfgov/jinja2/v1/_includes/ask/tip.html
-msgid "Tip"
-msgstr "Consejo"
-
-#: cfgov/jinja2/v1/_includes/blocks/feedback.html
-msgid "Was this answer helpful to you?"
-msgstr "¿Te resultó útil esta respuesta?"
-
-msgid "Additional comment"
-msgstr "Comentario adicional"
-
-msgid "Explore"
-msgstr "Explorar"
-
-msgid "Yes"
-msgstr "Sí"
-
-msgid "optional"
-msgstr "opcional"
-
-#: v1/_includes/ask/ask-search-bar.html
-msgid "/ask-cfpb/search"
-msgstr "/es/obtener-respuestas/buscar"
-
-msgid "Don't see what you're looking for? <span class=\"break\">Search for your question.</span>"
-msgstr "¿No encuentra lo que busca? <span class=\"break\">Busca su pregunta.</span>"
-
-msgid "Don't see what you're looking for?"
-msgstr "¿No encuentra lo que busca?"
-
-msgid "Search for your question."
-msgstr "Busca su pregunta."
-
-msgid "Search for your question"
-msgstr "Busca su pregunta"
-
-msgid "Search our full library of answers"
-msgstr "Buscar en toda la lista de respuestas"
-
-#: cfgov/jinja2/v1/_includes/atoms/tagline.html
-msgid "An official website of the United States government"
-msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
-
-#: cfgov/jinja2/v1/_includes/molecules/pagination.html
-msgid "Page"
-msgstr "Página"
-
-#: ask_cfpb/models/pages/PortalTopicSearchPage
-msgid "Narrow your results"
-msgstr "Búsqueda especial"
-
-msgid "See all results within"
-msgstr "Ver todos los resultados para"
-
+#: ask_cfpb/models/pages.py:269 ask_cfpb/models/pages.py:280
+#: ask_cfpb/models/pages.py:288
 msgid "within"
-msgstr "en"
-
-msgid "answers"
-msgstr "respuestas"
-
-msgid "answers within"
-msgstr "respuestas dentro de"
-
-msgid " of "
-msgstr " de "
-
-msgid "Go"
-msgstr "Ir"
-
-#: cfgov/jinja2/v1/_includes/organisms/secondary-navigation.html
-msgid "In this section"
-msgstr "En esta sección"
-
-#: cfgov/jinja2/v1/_includes/organisms/footer.html
-msgid "Back to top"
-msgstr "Ir arriba"
-
-msgid "https://usa.gov/"
-msgstr "https://gobiernousa.gov/"
-
-msgid "USA.gov"
-msgstr "GobiernoUSA.gov"
-
-#: v1/models/portal_topics.py
-msgid "Auto loans"
-msgstr "Préstamos para vehículos"
-
-msgid "Bank accounts"
-msgstr "Cuentas bancarias"
-
-msgid "Credit cards"
-msgstr "Tarjetas de crédito"
-
-msgid "Credit reports and scores"
-msgstr "Informes y puntajes de crédito"
-
-msgid "Debt collection"
-msgstr "Cobro de deudas"
-
-msgid "Fraud and scams"
-msgstr "Fraudes y estafas"
-
-msgid "Money transfers"
-msgstr "Transferencias y envíos de dinero"
-
-msgid "Payday loans"
-msgstr "Préstamos del día de pago"
-
-msgid "Prepaid cards"
-msgstr "Tarjetas prepagadas"
-
-msgid "Reverse mortgages"
-msgstr "Hipotecas inversas"
-
-msgid "Student loans"
-msgstr "Préstamos para educación"
-
-msgid "Basics"
-msgstr "Lo que debe saber"
-
-msgid "Common issues"
-msgstr "Problemas comunes"
-
-msgid "How-to"
-msgstr "Paso a paso"
-
-msgid "How to"
-msgstr "Paso a paso"
-
-msgid "How-to guides"
-msgstr "Paso a paso"
-
-msgid "Key terms"
-msgstr "Palabras claves"
-
-msgid "Know your rights"
-msgstr "Conozca sus derechos"
-
-#: ask_cfpb/models/pages.py:649 ask_cfpb/tests/models/test_pages.py:781
-msgid "redirected but not live"
 msgstr ""
 
-#: ask_cfpb/models/pages.py:651 ask_cfpb/tests/models/test_pages.py:784
-msgid "redirected"
+#: ask_cfpb/models/pages.py:272
+msgid "See all results within"
 msgstr ""
 
-#: ask_cfpb/tests/models/test_pages.py:787
-msgid "live"
+#: ask_cfpb/templates/admin/export.html:3
+msgid "Export Ask data"
 msgstr ""
 
-#: cfgov/settings/base.py:188
+#: cfgov/settings/base.py:229
 msgid "English"
 msgstr ""
 
-#: cfgov/settings/base.py:189
+#: cfgov/settings/base.py:230
 msgid "Spanish"
 msgstr ""
 
-#: core/forms.py:41
+#: core/forms.py:39
 msgid "Signature validation failed"
 msgstr ""
 
-#: core/forms.py:44
+#: core/forms.py:42
 msgid ""
 "URL must either be allowed by settings.EXTERNAL_URL_WHITELIST or have a "
 "valid signature"
 msgstr ""
 
-#: jinja2/v1/_includes/molecules/related-posts.html:121
+#: jinja2/v1/_includes/ask/tip.html:19
+msgid "Tip"
+msgstr ""
+
+#: jinja2/v1/_includes/atoms/tagline.html:16
+msgid "An official website of the United States government"
+msgstr ""
+
+#: jinja2/v1/_includes/blocks/feedback.html:53
+msgid "Yes"
+msgstr ""
+
+#: jinja2/v1/_includes/blocks/feedback.html:90
+msgid "Additional comment"
+msgstr ""
+
+#: jinja2/v1/_includes/blocks/feedback.html:91
+msgid "optional"
+msgstr ""
+
+#: jinja2/v1/_includes/blocks/feedback.html:95
+msgid ""
+"Please do not share any personally identifiable information (PII), "
+"including, but not limited to: your name, address, phone number, email "
+"address, Social Security number, account information, or any other "
+"information of a sensitive nature."
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-header-cta.html:27
+msgid "Submit a Complaint"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-search.html:23
+#: jinja2/v1/_includes/molecules/global-search.html:58
+#: jinja2/v1/_includes/molecules/global-search.html:77
+#: jinja2/v1/_includes/organisms/ask-search.html:56
+#: jinja2/v1/ask-cfpb/see-all.html:52
+msgid "Search"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-search.html:27
+msgid "Close"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-search.html:63
+#: jinja2/v1/_includes/molecules/global-search.html:66
+msgid "Search the CFPB"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-search.html:72
+#: jinja2/v1/ask-cfpb/see-all.html:56
+msgid "Clear search"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-search.html:82
+msgid "Suggested search terms:"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-search.html:86
+msgid "Regulations"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-search.html:91
+msgid "Compliance guides"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-search.html:96
+msgid "Mortgage"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/global-search.html:101
+msgid "College loans"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/pagination.html:69
+msgid "Page"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/pagination.html:98
+msgid "Go"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/related-posts.html:112
 msgid "View more"
-msgstr "Ver más"
+msgstr ""
 
-#: jinja2/v1/_includes/organisms/expandable.html:48
-#: regulations3k/jinja2/regulations3k/inline_interps.html:16
+#: jinja2/v1/_includes/organisms/ask-search.html:31
+#: jinja2/v1/ask-cfpb/see-all.html:78
+msgid "/ask-cfpb/search/"
+msgstr ""
+
+#: jinja2/v1/_includes/organisms/ask-search.html:34
+msgid "Search for your question"
+msgstr ""
+
+#: jinja2/v1/_includes/organisms/email-signup.html:53
+msgid "Email address"
+msgstr ""
+
+#: jinja2/v1/_includes/organisms/email-signup.html:64
+msgid "Sign up"
+msgstr ""
+
+#: jinja2/v1/_includes/organisms/email-signup.html:69
+msgid "See Privacy Act statement"
+msgstr ""
+
+#: jinja2/v1/_includes/organisms/expandable.html:50
+#: regulations3k/jinja2/regulations3k/inline_interps.html:15
+#: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:48
+#: wellbeing/jinja2/wellbeing/results.html:339
 msgid "Show"
-msgstr "Mostrar"
+msgstr ""
 
-#: jinja2/v1/_includes/organisms/expandable.html:53
+#: jinja2/v1/_includes/organisms/expandable.html:58
 #: regulations3k/jinja2/regulations3k/inline_interps.html:21
+#: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:55
+#: wellbeing/jinja2/wellbeing/results.html:345
 msgid "Hide"
-msgstr "Ocultar"
+msgstr ""
+
+#: jinja2/v1/_includes/organisms/footer.html:32
+msgid "Back to top"
+msgstr ""
+
+#: jinja2/v1/_includes/organisms/footer.html:175
+msgid "https://usa.gov/"
+msgstr ""
+
+#: jinja2/v1/_includes/organisms/footer.html:175
+msgid "USA.gov"
+msgstr ""
+
+#: jinja2/v1/_layouts/base.html:52
+#: legacy/templates/front/base_nonresponsive.html:32
+#: legacy/templates/front/base_update.html:52 v1/jinja2/v1/home_page.html:7
+#: v1/jinja2/v1/home_page.html:13
+msgid "Consumer Financial Protection Bureau"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-page.html:38
+msgid "updated"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-page.html:65
+msgid "Read full answer"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-page.html:69
+msgid "Hide full answer"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-page.html:77
+#: jinja2/v1/ask-cfpb/landing-page.html:85 jinja2/v1/ask-cfpb/see-all.html:78
+msgid "Don't see what you're looking for?"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-page.html:80
+msgid "Browse related questions"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-page.html:93
+#: jinja2/v1/ask-cfpb/landing-page.html:72
+msgid "Learn more about"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:16
+msgid "Search our library of answers"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:25
+#: jinja2/v1/ask-cfpb/answer-search-results.html:34
+#: jinja2/v1/ask-cfpb/answer-search-results.html:36
+msgid "Showing results for "
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:27
+msgid "of"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:27
+msgid "results for"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:30
+#: jinja2/v1/ask-cfpb/answer-search-results.html:79
+msgid "Search instead for"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:30
+#: jinja2/v1/ask-cfpb/answer-search-results.html:79
+msgid "/ask-cfpb/search"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:72
+#: jinja2/v1/ask-cfpb/answer-search-results.html:74
+msgid "No results found for"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:83
+msgid "Can't find your question?"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:83
+msgid "/ask-cfpb/"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:83
+#: jinja2/v1/ask-cfpb/landing-page.html:21
+msgid "Browse questions by category"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/answer-search-results.html:94
+msgid "Please enter a search term in the box above."
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/article-page.html:28
+msgid "In this article"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/see-all.html:27
+msgid "Read more"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/see-all.html:42
+msgid "Narrow your results"
+msgstr ""
+
+#: jinja2/v1/ask-cfpb/see-all.html:78
+msgid "Search our full library of answers"
+msgstr ""
 
 #: legacy/templates/common/forgot_password.html:24
 msgid "Email"
@@ -372,19 +320,16 @@ msgstr ""
 
 #: legacy/templates/common/password_change_confirm.html:9
 #: legacy/templates/common/password_change_form.html:9
-#: templates/admin/base.html:12
 msgid "Documentation"
 msgstr ""
 
 #: legacy/templates/common/password_change_confirm.html:10
 #: legacy/templates/common/password_change_form.html:11
-#: templates/admin/base.html:16
 msgid "Change password"
 msgstr ""
 
 #: legacy/templates/common/password_change_confirm.html:12
 #: legacy/templates/common/password_change_form.html:13
-#: templates/admin/base.html:20
 msgid "Log out"
 msgstr ""
 
@@ -441,6 +386,14 @@ msgstr ""
 msgid "login"
 msgstr ""
 
+#: legacy/templates/common/reset_password_email.html:3
+msgid "Please follow the link below to reset your password:"
+msgstr ""
+
+#: legacy/templates/common/reset_password_email.html:7
+msgid "Your username (in case you've forgotten):"
+msgstr ""
+
 #: legacy/templates/front/base_nonresponsive.html:23
 #: legacy/templates/front/base_nonresponsive.html:24
 #: legacy/templates/front/base_nonresponsive.html:25
@@ -453,25 +406,29 @@ msgstr ""
 msgid "en-US"
 msgstr ""
 
-#: legacy/templates/front/base_nonresponsive.html:32
-#: legacy/templates/front/base_update.html:52
-msgid "Consumer Financial Protection Bureau"
-msgstr "Oficina para la Protección Financiera del Consumidor"
-
-#: legacy/templates/front/base_nonresponsive.html:110
-#: legacy/templates/front/base_update.html:172
+#: legacy/templates/front/base_nonresponsive.html:113
+#: legacy/templates/front/base_update.html:163
 msgid "en"
 msgstr ""
 
-#: permissions_viewer/templates/permissions_viewer/group.html:4
+#: mega_menu/wagtail_hooks.py:16
+msgid "Preview"
+msgstr ""
+
+#: mega_menu/wagtail_hooks.py:21
+#, python-format
+msgid "Preview this %s"
+msgstr ""
+
+#: permissions_viewer/templates/permissions_viewer/group.html:3
 msgid "Roster and Permissions for"
 msgstr ""
 
-#: permissions_viewer/templates/permissions_viewer/index.html:4
+#: permissions_viewer/templates/permissions_viewer/index.html:3
 msgid "Permissions Viewer"
 msgstr ""
 
-#: permissions_viewer/templates/permissions_viewer/user.html:4
+#: permissions_viewer/templates/permissions_viewer/user.html:3
 msgid "Permissions for"
 msgstr ""
 
@@ -487,16 +444,24 @@ msgstr ""
 msgid "View permissions for this user"
 msgstr ""
 
-#: templates/admin/base.html:7
-msgid "View site"
+#: search/templates/search/_list_explore_revised.html:17
+msgid "Edit this page"
 msgstr ""
 
-#: templates/admin/base.html:18
-msgid "Wagtail login"
+#: search/templates/search/_list_explore_revised.html:37
+msgid "Edit"
 msgstr ""
 
-#: templates/admin/base.html:19
-msgid "Task launcher"
+#: search/templates/search/_list_explore_revised.html:47
+msgid "View Draft"
+msgstr ""
+
+#: search/templates/search/_list_explore_revised.html:57
+msgid "View Live"
+msgstr ""
+
+#: search/templates/search/external_links.html:4
+msgid "External Links Management"
 msgstr ""
 
 #: templates/wagtailadmin/access_denied.html:7
@@ -524,6 +489,10 @@ msgstr ""
 msgid "Reset password"
 msgstr ""
 
+#: templates/wagtailadmin/export_data.html:3
+msgid "Export data"
+msgstr ""
+
 #: templates/wagtailadmin/login.html:50
 msgid "Forgotten it?"
 msgstr ""
@@ -544,41 +513,639 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
-#: v1/models/base.py:41
+#: v1/jinja2/v1/home_page.html:13
+msgid "homepage"
+msgstr ""
+
+#: v1/models/base.py:35
 msgid "Author"
 msgstr ""
 
-#: v1/models/base.py:42
+#: v1/models/base.py:36
 msgid "Authors"
 msgstr ""
 
-#: v1/models/base.py:49
+#: v1/models/base.py:43
 msgid "Tag"
 msgstr ""
 
-#: v1/models/base.py:50
+#: v1/models/base.py:44
 msgid "Tags"
 msgstr ""
 
-#: v1/models/base.py:415
+#: v1/models/base.py:342
 msgid "password"
 msgstr ""
 
-#: v1/templates/cdnadmin/disabled.html:4 v1/templates/cdnadmin/index.html:5
+#: v1/templates/cdnadmin/disabled.html:3 v1/templates/cdnadmin/index.html:5
 msgid "CDN Manager"
 msgstr ""
 
-#: v1/views/__init__.py:50
+#: v1/templates/v1/export_feedback.html:3
+msgid "Export feedback"
+msgstr ""
+
+#: v1/tests/management/commands/test_makemessages_data/__init__.py:4
+msgid "Test string from Python file."
+msgstr ""
+
+#: v1/tests/management/commands/test_makemessages_data/templates/test.html:2
+msgid "Test string from Django template."
+msgstr ""
+
+#: v1/views/__init__.py:51
 msgid "Your password has been changed successfully!"
 msgstr ""
 
-#: v1/views/__init__.py:175
+#: v1/views/__init__.py:176
 msgid "Enter new password"
 msgstr ""
 
-#: v1/views/__init__.py:188
+#: v1/views/__init__.py:189
 msgid "Password reset unsuccessful"
 msgstr ""
 
-#~ msgid "(required)"
-#~ msgstr "(se requiere)"
+#: wellbeing/jinja2/wellbeing/about.html:4
+#: wellbeing/jinja2/wellbeing/about.html:34
+msgid "Why financial well-being?"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:8
+#: wellbeing/jinja2/wellbeing/about.html:12
+msgid "Learn about the financial well-being scale and why we created it."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:26
+#: wellbeing/jinja2/wellbeing/results.html:213
+msgid "Back to the questionnaire"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:65
+msgid "Why doesn’t this questionnaire ask about financial details?"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:72
+msgid "Instead,"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:74
+msgid "we asked people around the country"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:76
+msgid "what financial well-being meant to them, and we listened."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:85
+msgid "Have control over day-to-day, month-to-month finances"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:86
+msgid "Have the capacity to absorb a financial shock"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:87
+msgid "Are on track to meet your financial goals"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:88
+msgid ""
+"Have the financial freedom to make the choices that allow you to enjoy life"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:95
+msgid "How does financial well-being look across America?"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/about.html:106
+msgid "See the report"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/error.html:7
+msgid "Financial well-being questionnaire submission problem"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/error.html:11
+msgid "Please go back and retake the questionnaire to receive your score."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/error.html:15
+msgid "There was a problem with your submission"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:4
+#: wellbeing/jinja2/wellbeing/home.html:45
+msgid "Find out your financial well-being"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:8
+msgid ""
+"Answer ten questions to measure your own current financial well-being and "
+"see steps you can take to improve it."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:12
+msgid ""
+"Find out your financial well-being by answering ten questions, and then see "
+"steps you can take to improve it."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:48
+msgid ""
+"Answer ten questions to measure your current financial well-being and see "
+"steps you can take to improve it."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:60
+msgid "Here’s how it works:"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:63
+msgid "Answer the questions and get your score."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:66
+msgid "See how and why we developed it."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:69
+msgid "Review steps you can take"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:70
+msgid "if you want to be able to answer the questions differently."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:74
+msgid "See how your score compares"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:75
+msgid "to other U.S. adults from our national survey."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:84
+msgid "We never collect or store the answers you provide."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:90
+msgid "See how your privacy is protected."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:99
+msgid "Part 1: How well does this statement describe you or your situation?"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:103
+msgid "I could handle a major unexpected expense"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:105
+#: wellbeing/jinja2/wellbeing/home.html:178
+#: wellbeing/jinja2/wellbeing/home.html:251
+#: wellbeing/jinja2/wellbeing/home.html:324
+#: wellbeing/jinja2/wellbeing/home.html:397
+#: wellbeing/jinja2/wellbeing/home.html:470
+msgid "This statement describes me"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:117
+#: wellbeing/jinja2/wellbeing/home.html:190
+#: wellbeing/jinja2/wellbeing/home.html:263
+#: wellbeing/jinja2/wellbeing/home.html:336
+#: wellbeing/jinja2/wellbeing/home.html:409
+#: wellbeing/jinja2/wellbeing/home.html:482
+msgid "Completely"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:130
+#: wellbeing/jinja2/wellbeing/home.html:203
+#: wellbeing/jinja2/wellbeing/home.html:276
+#: wellbeing/jinja2/wellbeing/home.html:349
+#: wellbeing/jinja2/wellbeing/home.html:422
+#: wellbeing/jinja2/wellbeing/home.html:495
+msgid "Very well"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:143
+#: wellbeing/jinja2/wellbeing/home.html:216
+#: wellbeing/jinja2/wellbeing/home.html:289
+#: wellbeing/jinja2/wellbeing/home.html:362
+#: wellbeing/jinja2/wellbeing/home.html:435
+#: wellbeing/jinja2/wellbeing/home.html:508
+msgid "Somewhat"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:156
+#: wellbeing/jinja2/wellbeing/home.html:229
+#: wellbeing/jinja2/wellbeing/home.html:302
+#: wellbeing/jinja2/wellbeing/home.html:375
+#: wellbeing/jinja2/wellbeing/home.html:448
+#: wellbeing/jinja2/wellbeing/home.html:521
+msgid "Very little"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:169
+#: wellbeing/jinja2/wellbeing/home.html:242
+#: wellbeing/jinja2/wellbeing/home.html:315
+#: wellbeing/jinja2/wellbeing/home.html:388
+#: wellbeing/jinja2/wellbeing/home.html:461
+#: wellbeing/jinja2/wellbeing/home.html:534
+msgid "Not at all"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:176
+msgid "I am securing my financial future"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:249
+msgid ""
+"Because of my money situation, I feel like I will never have the things I "
+"want in life"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:322
+msgid "I can enjoy life because of the way I’m managing my money"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:395
+msgid "I am just getting by financially"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:468
+msgid "I am concerned that the money I have or will save won’t last"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:542
+msgid "Part 2: How often does this statement apply to you?"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:546
+msgid ""
+"Giving a gift for a wedding, birthday or other occasion would put a strain "
+"on my finances for the month"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:548
+#: wellbeing/jinja2/wellbeing/home.html:621
+#: wellbeing/jinja2/wellbeing/home.html:693
+#: wellbeing/jinja2/wellbeing/home.html:766
+msgid "This statement applies to me"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:560
+#: wellbeing/jinja2/wellbeing/home.html:632
+#: wellbeing/jinja2/wellbeing/home.html:705
+#: wellbeing/jinja2/wellbeing/home.html:778
+msgid "Always"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:573
+#: wellbeing/jinja2/wellbeing/home.html:645
+#: wellbeing/jinja2/wellbeing/home.html:718
+#: wellbeing/jinja2/wellbeing/home.html:791
+msgid "Often"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:586
+#: wellbeing/jinja2/wellbeing/home.html:658
+#: wellbeing/jinja2/wellbeing/home.html:731
+#: wellbeing/jinja2/wellbeing/home.html:804
+msgid "Sometimes"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:599
+#: wellbeing/jinja2/wellbeing/home.html:671
+#: wellbeing/jinja2/wellbeing/home.html:744
+#: wellbeing/jinja2/wellbeing/home.html:817
+msgid "Rarely"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:612
+#: wellbeing/jinja2/wellbeing/home.html:684
+#: wellbeing/jinja2/wellbeing/home.html:757
+#: wellbeing/jinja2/wellbeing/home.html:830
+msgid "Never"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:619
+msgid "I have money left over at the end of the month"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:691
+msgid "I am behind with my finances"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:764
+msgid "My finances control my life"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:838
+msgid "About you"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:843
+msgid "Select your age group. This changes the scoring calculation."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:882
+msgid ""
+"Select how you completed the questionnaire. This changes the scoring "
+"calculation."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:897
+msgid "I read and answered the questions myself"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:912
+msgid "I read the questions to someone else and recorded their answers"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:928
+msgid "Get my score"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:952
+#: wellbeing/jinja2/wellbeing/results.html:639
+msgid "About this questionnaire"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/home.html:961
+msgid "See more background"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:9
+#: wellbeing/jinja2/wellbeing/results.html:233
+msgid "Your financial well-being score"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:13
+#: wellbeing/jinja2/wellbeing/results.html:17
+msgid ""
+"See your survey results and learn how you may be able to improve your score."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:272
+msgid "Print"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:283
+msgid "Save as PDF"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:288
+msgid "Your result"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:297
+msgid "Your score:"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:300
+msgid "More score comparisons"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:307
+msgid "U.S. average:"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:318
+msgid "Financial well-being score"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:334
+msgid "Review your answers"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:355
+msgid "Question"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:356
+msgid "Your answer"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:374
+msgid "What would you like to do next?"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:382
+msgid "Take control of day-to-day money management"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:385
+msgid "Track where your money goes."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:386
+msgid "Fill out the"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:390
+msgid "bill calendar"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:393
+msgid "and"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:397
+msgid "spending tracker"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:400
+msgid "to see and manage your everyday expenses."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:403
+msgid "Get a grip on debt."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:404
+msgid "Stay on top of what you owe with our"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:408
+msgid "debt log"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:411
+msgid "and find templates to help you communicate with"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:412
+msgid "debt collectors"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:415
+msgid "Repay student loans wisely."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:416
+msgid "Use our tool to see your choices about how you"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:418
+msgid "repay your student debt"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:424
+msgid "Get on track for your financial future"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:427
+msgid "Look toward home ownership."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:429
+msgid "Buying a House"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:430
+msgid "tools and resources."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:433
+msgid "Create an action plan to meet your goals."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:434
+#: wellbeing/jinja2/wellbeing/results.html:451
+msgid "Use our"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:438
+msgid "worksheet"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:445
+msgid "budgeting tool"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:450
+msgid "Consider the right age for claiming Social Security."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:452
+msgid "Planning for Retirement"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:453
+msgid "tool before you make your decision."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:456
+msgid "Build and maintain your credit record."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:457
+msgid "Understand"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:459
+msgid "credit reports and scores"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:461
+msgid "and their effect on your cost of borrowing."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:467
+msgid "Get personalized help"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:476
+msgid "A nonprofit credit counselor"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:481
+msgid "tips for choosing a credit counselor"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:484
+msgid "A HUD-certified housing counselor"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:487
+msgid "Find one in your area."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:490
+msgid "A financial coach"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:491
+msgid ""
+"can assess your situation and work with you over time to resolve issues and "
+"get ahead."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:493
+msgid "Find out about the CFPB coaching initiative."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:497
+msgid "Your local library"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:498
+msgid "can often connect you with organizations and people in your area."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:506
+msgid "See how your score compares to group averages"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:513
+msgid ""
+"We never collect or store answers to the financial well-being questionnaire."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:515
+msgid "and enter your responses."
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:522
+msgid "Compare by"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:530
+msgid "Age"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:538
+msgid "Household income"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:546
+msgid "Employment status"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:556
+msgid "Your score"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:564
+msgid "U.S. average"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:585
+msgid "Source:"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:587
+msgid "Financial Well-Being in America report"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:588
+msgid "Download CSV file"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:591
+msgid "Date published:"
+msgstr ""
+
+#: wellbeing/jinja2/wellbeing/results.html:592
+msgid "September 26, 2017"
+msgstr ""
