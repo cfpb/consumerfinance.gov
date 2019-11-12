@@ -45,7 +45,7 @@ wagtail-sharing==0.8
 wagtail-treemodeladmin==1.0.4
 
 # These packages are installed from GitHub.
-https://github.com/cfpb/owning-a-home-api/releases/download/0.12.2/owning_a_home_api-0.12.2-py2.py3-none-any.whl
+https://github.com/cfpb/owning-a-home-api/releases/download/0.12.3/owning_a_home_api-0.12.3-py2.py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.10.3/retirement-0.10.3-py2.py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.1.12/ccdb5_api-1.1.12-py2.py3-none-any.whl
 https://github.com/cfpb/ccdb5-ui/releases/download/1.3.4/ccdb5_ui-1.3.4-py2.py3-none-any.whl
