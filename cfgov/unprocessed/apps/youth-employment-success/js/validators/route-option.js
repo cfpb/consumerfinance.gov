@@ -136,6 +136,7 @@ function isValidDriveData( { miles, daysPerWeek, actionPlanItems } ) {
  * @param {String} averageCost The cost of the trip
  * @param {Boolean} isMonthlyCost Whether or not the average cost is per day or per month
  * @param {Array} actionPlanItems The current to-do list of trip unknowns
+ * @returns {Boolean} Validity of the supplied data
  */
 function isValidAverageCost( { daysPerWeek, averageCost, isMonthlyCost, actionPlanItems } ) {
   if (
@@ -156,6 +157,24 @@ function isValidAverageCost( { daysPerWeek, averageCost, isMonthlyCost, actionPl
 }
 
 /**
+ * Helper function to determine what type of transportation data we should be
+ * validating (e.g. 'Drive' vs any other mode of transportation).
+ * @param {Object} data The route data to be validated
+ * @returns {Boolean} Validity of the supplied data
+ */
+function isValidTransportationData( data ) {
+  let valid = true;
+
+  if ( data.transportation === 'Drive' ) {
+    valid = isValidDriveData( data );
+  } else {
+    valid = isValidAverageCost( data );
+  }
+
+  return valid;
+}
+
+/**
  * Validate all data for a route
  * @param {object} data The transportation tool form data
  * @returns {Boolean} Data validity
@@ -169,11 +188,7 @@ function validate( data ) {
     return valid;
   }
 
-  if ( data.transportation === 'Drive' ) {
-    valid = isValidDriveData( data );
-  } else {
-    valid = isValidAverageCost( data );
-  }
+  valid = isValidTransportationData( data );
 
   return valid;
 }

@@ -16,12 +16,12 @@ describe( '.validate', () => {
     expect( validate( data ) ).toBeTruthy();
   } );
 
-  it('validates undefined data', () => {
-    expect(validate({
+  it( 'validates undefined data', () => {
+    expect( validate( {
       ...data,
       earned: undefined
-    })).toBeFalsy();
-  });
+    } ) ).toBeFalsy();
+  } );
 
   it( 'validates data to false if not all required fields are present', () => {
     expect( validate( {} ) ).toBeFalsy();

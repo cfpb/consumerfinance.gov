@@ -1,4 +1,4 @@
-import { assign, formatNegative, toArray, toPrecision } from '../util';
+import { assign, formatNegative, isNumber, toArray, toPrecision } from '../util';
 import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
 import { ALERT_TYPES } from '../data-types/notifications';
 import { getPlanItem } from '../data-types/todo-items';
@@ -52,7 +52,7 @@ function buildTodoListNodes( todosEl, todos = [], hasDefault ) {
   return fragment;
 }
 
-const DEFAULT_COST_ESTIMATE = '0';
+const DEFAULT_COST_ESTIMATE = '—';
 const WEEKLY_COST = 4.0;
 const AAA_ESTIMATED_COST_PER_MILE = 0.80;
 
@@ -81,7 +81,17 @@ function getCalculationFn( route ) {
     return averageCost;
   }
 
-  return calculatePerMonthCost( averageCost, daysPerWeek );
+  const validDaysPerWeek = isMonthlyCost === null ? null : daysPerWeek;
+
+  return calculatePerMonthCost( averageCost, validDaysPerWeek );
+}
+
+function useDefaultCostEstimate( value ) {
+  if ( !value || value === DEFAULT_COST_ESTIMATE ) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -90,6 +100,10 @@ function getCalculationFn( route ) {
  * @returns {Number} The cost, in dollars, of driving each day
  */
 function calculateDrivingDailyCost( numberOfMiles = 0 ) {
+  if ( useDefaultCostEstimate( numberOfMiles ) ) {
+    return DEFAULT_COST_ESTIMATE;
+  }
+
   return money.toDollars(
     parseFloat( numberOfMiles ) * AAA_ESTIMATED_COST_PER_MILE
   );
@@ -102,7 +116,7 @@ function calculateDrivingDailyCost( numberOfMiles = 0 ) {
  * @returns {String|Number} Retuns '-' if daysPerWeek is not supplied, otherwise returns the monthly cost
  */
 function calculatePerMonthCost( dailyCost, daysPerWeek ) {
-  if ( !daysPerWeek ) {
+  if ( useDefaultCostEstimate( daysPerWeek ) || useDefaultCostEstimate( dailyCost ) ) {
     return DEFAULT_COST_ESTIMATE;
   }
 
@@ -122,6 +136,10 @@ function calculatePerMonthCost( dailyCost, daysPerWeek ) {
  * @returns {Number} The user's remaining monthly money.
  */
 function updateRemainingBudget( budget, transportationEstimate ) {
+  if ( useDefaultCostEstimate( budget ) || useDefaultCostEstimate( transportationEstimate ) ) {
+    return DEFAULT_COST_ESTIMATE;
+  }
+
   return money.subtract(
     budget,
     transportationEstimate
@@ -250,17 +268,17 @@ function routeDetailsView( element, { alertTarget, hasDefaultTodo = false } ) {
       const costEstimate = getCalculationFn( route );
       const remainingBudget = money.subtract( budget.earned, budget.spent );
       const nextRemainingBudget = updateRemainingBudget(
-        remainingBudget,
+        String( remainingBudget ),
         costEstimate
       );
-      const dataIsValid = validate( assign( {}, budget, route ) );
+      const isFormValid = validate( assign( {}, budget, route ) );
       const valuesForNotification = {
         [ALERT_TYPES.HAS_TODOS]: Boolean(
           route.transportation && route.actionPlanItems.length
         ),
-        [ALERT_TYPES.INVALID]: Boolean( route.transportation && !dataIsValid ),
-        [ALERT_TYPES.IN_BUDGET]: dataIsValid && nextRemainingBudget >= 0,
-        [ALERT_TYPES.OUT_OF_BUDGET]: dataIsValid && nextRemainingBudget < 0
+        [ALERT_TYPES.INVALID]: Boolean( route.transportation && !isFormValid ),
+        [ALERT_TYPES.IN_BUDGET]: isFormValid && nextRemainingBudget >= 0,
+        [ALERT_TYPES.OUT_OF_BUDGET]: isFormValid && nextRemainingBudget < 0
       };
       const todoListFragment = buildTodoListNodes(
         _todoItemsEl, route.actionPlanItems, hasDefaultTodo
@@ -274,18 +292,21 @@ function routeDetailsView( element, { alertTarget, hasDefaultTodo = false } ) {
         )
       );
       updateDom( _daysPerWeekEl, route.daysPerWeek );
+
       updateDom( _totalCostEl, toPrecision( costEstimate, 2 ) );
       updateDom( _budgetLeftEl,
         formatNegative(
           toPrecision( nextRemainingBudget, 2 )
         )
       );
-      updateDom( _timeHoursEl, route.transitTimeHours );
-      updateDom( _timeMinutesEl, route.transitTimeMinutes );
+
+      updateDom( _timeHoursEl, route.transitTimeHours || '-' );
+      updateDom( _timeMinutesEl, route.transitTimeMinutes || '-' );
       updateTodoList( todoListFragment );
 
       alertView.render( {
-        alertValues: valuesForNotification, alertTarget
+        alertValues: valuesForNotification,
+        alertTarget
       } );
     }
   };
