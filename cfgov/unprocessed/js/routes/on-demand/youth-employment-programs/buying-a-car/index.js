@@ -36,7 +36,7 @@ const expandableData = expandableEls.reduce( ( memo, expandable ) => {
   return memo;
 }, {} );
 
-document.querySelector(`.${TEMPLATE_SELECTOR}`).parentNode.classList.add('cbg-print-block');
+document.querySelector( `.${ TEMPLATE_SELECTOR }` ).parentNode.classList.add( 'cbg-print-block' );
 
 const items = selectedItems( { maxElements: 5 } );
 const checklistLookup = checklistMap( expandableData );

@@ -21,10 +21,10 @@ const NOT_SURE_MESSAGE = 'Looking up how many days a week you\'ll make this trip
  * @param {Array} todoList Previous todo list items the user may have
  * @returns {Boolean} Should the state be cleared
  */
-function shouldClearDaysPerWeek(daysPerWeek, todoList) {
+function shouldClearDaysPerWeek( daysPerWeek, todoList ) {
   if (
     daysPerWeek ||
-    todoList && todoList.indexOf(PLAN_TYPES.DAYS_PER_WEEK) !== -1
+    todoList && todoList.indexOf( PLAN_TYPES.DAYS_PER_WEEK ) !== -1
   ) {
     return true;
   }
@@ -99,7 +99,7 @@ function daysPerWeekView( element, { store, routeIndex, todoNotification } ) {
 
       todoNotification.remove();
 
-      if ( shouldClearDaysPerWeek(daysPerWeek, actionPlanItems ) ) {
+      if ( shouldClearDaysPerWeek( daysPerWeek, actionPlanItems ) ) {
         store.dispatch( clearDaysPerWeekAction( { routeIndex } ) );
       }
     } else {
