@@ -12,7 +12,6 @@ const searchView = {
     let html;
     for ( const key in obj ) {
       html += '\n<option value="' + obj[key].id + '">' + obj[key].schoolname + '</option>';
-      console.log( html );
     }
   },
 

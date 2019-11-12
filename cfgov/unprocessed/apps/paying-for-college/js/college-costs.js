@@ -2,7 +2,7 @@
 
 import studentDebtCalculator from 'student-debt-calc';
 import { schoolModel } from './models/school-model.js';
-import { debtModel } from './models/debt-model.js';
+import { financialModel } from './models/financial-model.js';
 import { expensesModel } from './models/expenses-model.js';
 import { stateModel } from './models/state-model.js';
 
@@ -19,7 +19,15 @@ const init = function() {
   searchView.init( body );
   financialView.init( body );
   navigationView.init( body );
+
+  financialModel.init();
+
+  financialView.updateFinancialItems();
+
+  console.log( financialModel.values );
+
 };
 
 
 window.addEventListener( 'load', init );
+
