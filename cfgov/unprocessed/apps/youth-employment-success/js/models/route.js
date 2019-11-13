@@ -1,4 +1,4 @@
-import { assign } from './util';
+import { assign } from '../util';
 
 /**
  * Factory function for creating a route object. Designed to be used in conjunction

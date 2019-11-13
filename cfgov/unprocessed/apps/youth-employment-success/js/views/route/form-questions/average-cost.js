@@ -1,13 +1,13 @@
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../../../../../../js/modules/util/atomic-helpers';
 import {
   clearAverageCostAction,
   routeSelector,
   updateAverageCostAction,
   updateCostToActionPlan,
   updateIsMonthlyCostAction
-} from '../reducers/route-option-reducer';
-import inputView from './input';
-import { toArray, toPrecision } from '../util';
+} from '../../../reducers/route-option-reducer';
+import inputView from '../../input';
+import { toArray, toPrecision } from '../../../util';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-average-cost',
