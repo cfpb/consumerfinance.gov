@@ -74,7 +74,7 @@
     "babel-jest": "24.9.0",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
-    "cucumber": "6.0.4",
+    "cucumber": "6.0.5",
     "gulp-eslint": "6.0.0",
     "jest": "24.9.0",
     "jest-cli": "24.9.0",
@@ -87,7 +87,7 @@
     "protractor-retry": "1.2.9",
     "sauce-connect-tunnel": "0.2.1",
     "selenium-webdriver": "4.0.0-alpha.5",
-    "snyk": "1.244.0",
+    "snyk": "1.247.1",
     "through2": "3.0.1",
     "wcag": "0.3.0"
   },
