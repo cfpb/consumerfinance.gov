@@ -1,10 +1,10 @@
-import routeDetailsView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route-details';
-import { toArray, toPrecision } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
-import transportationMap from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import { toArray, toPrecision } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
 
 jest.mock(
-  '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications',
+  '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications',
   () => {
     const impl = () => ( {
       init: jest.fn(),
@@ -259,7 +259,7 @@ describe( 'routeDetailsView', () => {
               ...nextState.route,
               transportation: 'Walk',
               isMonthlyCost: false,
-              daysPerWeek: 0
+              daysPerWeek: ''
             }
           };
 

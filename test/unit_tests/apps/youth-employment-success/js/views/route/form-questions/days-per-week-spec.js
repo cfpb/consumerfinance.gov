@@ -1,49 +1,59 @@
-import { simulateEvent } from '../../../../../util/simulate-event';
-import milesView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/miles';
-import mockStore from '../../../../mocks/store';
+import { simulateEvent } from '../../../../../../../util/simulate-event';
+import daysPerWeekView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week';
 import {
-  clearMilesAction,
-  updateMilesAction,
-  updateMilesToActionPlan
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
-import TODO_FIXTURE from '../../fixtures/todo-alert';
-import TodoNotificationMock from '../../mocks/todo-notification';
+  clearDaysPerWeekAction,
+  updateDaysPerWeekAction,
+  updateDaysToActionPlan
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import TODO_FIXTURE from '../../../../fixtures/todo-alert';
+import TodoNotificationMock from '../../../../mocks/todo-notification';
 
 const HTML = `
-  <div class="m-yes-miles">
-    <input type="text">
-    <input type="checkbox">
+  <div class="m-yes-days-per-week">
+    <input type="text" name="daysPerWeek" data-js-name="daysPerWeek">
+    <input type="checkbox" name="yes-route-days-unsure">
   </div>
   ${ TODO_FIXTURE }
 `;
 
-describe( 'milesView', () => {
+describe( 'DaysPerWeekView', () => {
   const routeIndex = 0;
+  const CLASSES = daysPerWeekView.CLASSES;
+  const dispatch = jest.fn();
   const todoNotification = new TodoNotificationMock();
+  function mockStore() {
+    let subscriberFn;
+
+    return {
+      subscriber() {
+        return subscriberFn;
+      },
+      dispatch,
+      subscribe: jest.fn().mockImplementation( fn => {
+        subscriberFn = fn;
+      } )
+    };
+  }
   let store;
-  let dom;
   let view;
+  let dom;
 
   beforeEach( () => {
-    store = mockStore();
     document.body.innerHTML = HTML;
-    dom = document.querySelector( `.${ milesView.CLASSES.CONTAINER }` );
-    view = milesView( dom, { store, routeIndex, todoNotification } );
+    store = mockStore();
+    dom = document.querySelector( `.${ CLASSES.CONTAINER }` );
+    view = daysPerWeekView( dom, { store, routeIndex, todoNotification } );
     view.init();
   } );
 
   afterEach( () => {
     todoNotification.mockReset();
-    store.mockReset();
+    dispatch.mockReset();
     view = null;
+    store = null;
   } );
 
   describe( 'on initialize', () => {
-    it( 'hides its container element', () => {
-      expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
-    } );
-
     it( 'subscribes to the store', () => {
       expect( store.subscribe ).toHaveBeenCalled();
     } );
@@ -54,35 +64,36 @@ describe( 'milesView', () => {
   } );
 
   describe( 'event handling', () => {
-    it( 'calls the correct action on `miles` field input', () => {
-      const milesEl = dom.querySelector( 'input[type="text"]' );
-      const milesPerDay = '5';
+    it( 'calls the correct action on text input', () => {
+      const daysEl = dom.querySelector( 'input[type="text"]' );
+      const daysPerWeek = '2';
       const mock = store.dispatch.mock;
 
-      milesEl.value = milesPerDay;
+      daysEl.value = daysPerWeek;
 
-      simulateEvent( 'input', milesEl );
+      simulateEvent( 'input', daysEl );
 
       expect( mock.calls.length ).toBe( 1 );
       expect( mock.calls[0][0] ).toEqual(
-        updateMilesAction( {
+        updateDaysPerWeekAction( {
           routeIndex,
-          value: milesPerDay
+          value: daysPerWeek
         } )
       );
     } );
 
-    it( 'calls the correct action when the `not sure` checkbox is clicked', () => {
-      const notSureEl = document.querySelector( 'input[type="checkbox"]' );
+    it( 'calls the correct action on checkbox input', () => {
+      const notSureEl = dom.querySelector( 'input[type="checkbox"]' );
       const mock = store.dispatch.mock;
 
+      notSureEl.checked = 'false';
       simulateEvent( 'click', notSureEl );
 
       expect( mock.calls.length ).toBe( 1 );
       expect( mock.calls[0][0] ).toEqual(
-        updateMilesToActionPlan( {
+        updateDaysToActionPlan( {
           routeIndex,
-          value: true
+          value: false
         } )
       );
     } );
@@ -105,11 +116,12 @@ describe( 'milesView', () => {
   } );
 
   describe( 'on state update', () => {
-    it( 'removes u-hidden class when transportation mode is Drive', () => {
+    it( 'removes u-hidden class when transportation mode is drive', () => {
       const state = {
         routes: {
           routes: [ {
-            transportation: 'Drive'
+            transportation: 'Drive',
+            actionPlanItems: []
           } ]
         }
       };
@@ -119,41 +131,45 @@ describe( 'milesView', () => {
       expect( dom.classList.contains( 'u-hidden' ) ).toBeFalsy();
     } );
 
-    describe( 'when transportation mode is not Drive', () => {
-      const miles = '12';
-      const checked = true;
+    describe( 'when average cost is defined as a monthly cost', () => {
+      const days = '2';
+      const checked = 'checked';
       const prevState = {
         routes: {
           routes: [ {
-            miles: miles,
-            actionPlanItems: [ PLAN_TYPES.MILES ]
+            daysPerWeek: days,
+            actionPlanItems: []
           } ]
         }
       };
       const state = {
         routes: {
           routes: [ {
-            transportation: 'Walk'
+            transportation: 'Walk',
+            isMonthlyCost: true,
+            actionPlanItems: []
           } ]
         }
       };
 
       it( 'clears the form inputs', () => {
-        const milesEl = dom.querySelector( 'input[type="text"]' );
+        const daysEl = dom.querySelector( 'input[type="text"]' );
         const notSureEl = dom.querySelector( 'input[type="checkbox"]' );
 
-        milesEl.value = miles;
+        daysEl.value = days;
         notSureEl.checked = checked;
 
         store.subscriber()( prevState, state );
 
-        expect( milesEl.value ).toBe( '' );
+        expect( daysEl.value ).toBe( '' );
         expect( notSureEl.checked ).toBe( false );
       } );
 
-      it( 'hides the container element', () => {
+      it( 'hides the container element, if not hidden', () => {
         const subscriberFn = store.subscriber();
         subscriberFn( prevState, state );
+
+        expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
 
         subscriberFn( { routes: { routes: [ {} ]}}, {
           routes: {
@@ -170,34 +186,18 @@ describe( 'milesView', () => {
         expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
       } );
 
-      it( 'dispatches the correct action when miles is filled in and transportation method is not drive', () => {
+      it( 'dispatches the correct action when daysPerWeek is filled in', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( prevState, state );
 
         expect( mock.calls.length ).toBe( 1 );
         expect( mock.calls[0][0] ).toEqual(
-          clearMilesAction( { routeIndex } )
-        );
-      } );
-
-      it( 'dispatches the correct action when not sure is selected and transportation method is not drive', () => {
-        const mock = store.dispatch.mock;
-        store.subscriber()( {
-          routes: {
-            routes: [ {
-              actionPlanItems: [ PLAN_TYPES.MILES ]
-            } ]
-          }
-        }, state );
-
-        expect( mock.calls.length ).toBe( 1 );
-        expect( mock.calls[0][0] ).toEqual(
-          clearMilesAction( { routeIndex } )
+          clearDaysPerWeekAction( { routeIndex } )
         );
       } );
 
       it( 'calls .remove on the todo notification component when this view is toggled', () => {
-        store.subscriber()( prevState, state );
+        store.subscriber()( { routes: { routes: [ {} ]}}, state );
 
         expect( todoNotification.remove.mock.calls.length ).toBe( 1 );
       } );

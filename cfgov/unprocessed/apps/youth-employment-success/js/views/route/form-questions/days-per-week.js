@@ -1,12 +1,12 @@
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../../../../../../js/modules/util/atomic-helpers';
 import {
   clearDaysPerWeekAction,
   routeSelector,
   updateDaysPerWeekAction,
   updateDaysToActionPlan
-} from '../reducers/route-option-reducer';
-import inputView from './input';
-import { PLAN_TYPES } from '../data-types/todo-items';
+} from '../../../reducers/route-option-reducer';
+import inputView from '../../input';
+import { PLAN_TYPES } from '../../../data-types/todo-items';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-days-per-week'
