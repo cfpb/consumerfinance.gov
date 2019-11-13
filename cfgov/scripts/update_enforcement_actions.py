@@ -18,12 +18,20 @@ def update_category(current):
 
 
 def update_sidefoot():
+    draft_pages = []
     for page in DocumentDetailPage.objects.all():
+        url = page.get_url()
+
         if not page.live:
             continue
-        if 'policy-compliance/enforcement/actions' not in page.get_url():
+        if 'policy-compliance/enforcement/actions' not in url:
             continue
+        if page.has_unpublished_changes:
+            draft_pages.append(url)
+            continue
+
         stream_data = get_stream_data(page, 'sidefoot')
+
         for field in stream_data:
             if field['type'] == 'related_metadata':
                 field_content = field['value']['content']
@@ -34,6 +42,10 @@ def update_sidefoot():
                         block['value']['blob'] = update_category(block['value']['blob'])
             break
         set_stream_data(page.specific, 'sidefoot', stream_data)
+    if len(draft_pages) > 0:
+        print('Skipped the following draft pages:', ' '.join(draft_pages))
+    else:
+        print('No draft pages found, updates made to all valid enforcement actions pages')
 
 
 def run():
