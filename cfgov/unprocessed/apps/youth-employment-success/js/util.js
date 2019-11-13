@@ -223,6 +223,10 @@ function toggleCFNotification( node, doShow ) {
  * @returns {String} A new string with the correct precision
  */
 function toPrecision( value = '', precision = 0 ) {
+  if ( !value && !precision ) {
+    return String( 0 );
+  }
+
   if ( !isNumber( value ) ) {
     return value;
   }
