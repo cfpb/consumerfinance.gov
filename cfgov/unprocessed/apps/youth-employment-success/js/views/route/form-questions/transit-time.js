@@ -1,11 +1,11 @@
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../../../../../../js/modules/util/atomic-helpers';
 import {
   routeSelector,
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction
-} from '../reducers/route-option-reducer';
-import inputView from './input';
+} from '../../../reducers/route-option-reducer';
+import inputView from '../../input';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-transit-time',

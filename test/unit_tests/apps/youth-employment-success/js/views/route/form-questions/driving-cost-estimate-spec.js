@@ -1,4 +1,4 @@
-import drivingCostEstimate from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/driving-cost-estimate';
+import drivingCostEstimate from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/driving-cost-estimate';
 
 const CLASSES = drivingCostEstimate.CLASSES;
 

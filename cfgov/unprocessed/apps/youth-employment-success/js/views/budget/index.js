@@ -1,11 +1,11 @@
-import { checkDom, setInitFlag } from '../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 import {
   updateEarnedAction,
   updateSpentAction
-} from './reducers/budget-reducer';
-import { formatNegative, toPrecision } from './util';
-import inputView from './views/input';
-import money from './money';
+} from '../../reducers/budget-reducer';
+import { formatNegative, toPrecision } from '../../util';
+import inputView from '../input';
+import money from '../../money';
 
 const CLASSES = Object.freeze( {
   FORM: 'o-yes-budget',

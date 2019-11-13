@@ -17,9 +17,10 @@ describe( '.validate', () => {
   } );
 
   it( 'validates undefined data', () => {
+    let UNDEFINED;
     expect( validate( {
       ...data,
-      earned: undefined
+      earned: UNDEFINED
     } ) ).toBeFalsy();
   } );
 

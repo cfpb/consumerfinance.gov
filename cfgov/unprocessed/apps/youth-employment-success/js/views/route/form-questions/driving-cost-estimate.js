@@ -1,5 +1,5 @@
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { TRANSPORTATION } from '../data-types/transportation-map';
+import { checkDom, setInitFlag } from '../../../../../../js/modules/util/atomic-helpers';
+import { TRANSPORTATION } from '../../../data-types/transportation-map';
 
 const CLASSES = {
   CONTAINER: 'js-driving-estimate'

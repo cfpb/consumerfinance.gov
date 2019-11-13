@@ -1,12 +1,12 @@
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 import {
   updateGoalAction,
   updateGoalImportanceAction,
   updateGoalStepsAction,
   updateGoalTimelineAction
-} from '../reducers/goal-reducer';
-import inputView from './input';
-import { toArray } from '../util';
+} from '../../reducers/goal-reducer';
+import inputView from '../input';
+import { toArray } from '../../util';
 
 const CLASSES = {
   CONTAINER: 'js-yes-goals',

@@ -1,4 +1,4 @@
-import { checkDom, setInitFlag } from '../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
 
 const CLASSES = Object.freeze( {
   BUTTON: 'm-yes-route-option'
