@@ -1,8 +1,7 @@
 /**
  * Update the application state model, then trigger updates in views
  */
-
-
+import { stateModel } from '../models/state-model.js';
 import { navigationView } from '../views/navigation-view.js';
 import { financialView } from '../views/financial-view.js';
 import { searchView } from '../views/search-view.js';
@@ -19,7 +18,12 @@ const updateState = {
     stateModel.activeSection = item;
 
     navigationView.update();
-    financialView.updateSection();
+  },
+
+  getStarted: bool => {
+    if ( bool === true ) {
+      stateModel.gotStarted = true;
+    }
   }
 
 };

@@ -9,7 +9,6 @@ import { stringToNum } from '../util/number-utils.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 
 const financialView = {
-  _sections: null,
   _financialItems: null,
   _inputChangeTimeout: null,
   _calculatingTimeout: null,
@@ -27,7 +26,6 @@ const financialView = {
         bindEvent( elem, events );
     } );
   },
-
 
   /**
    * Find financial items on page
@@ -104,18 +102,6 @@ const financialView = {
     //   5 );    
   },
 
-  updateSection: function() {
-    const activeName = getState( 'activeSection' );
-    const query = '.college-costs_tool-section[data-tool-section="' + activeName + '"]';
-    const activeSection = document.querySelector( query );
-
-    this._sections.forEach( elem => {
-      elem.classList.remove( 'active' );
-    } );
-
-    activeSection.classList.add( 'active' );
-  },
-
   /**
     * initializeFinancialValues - Create financial model values based on the input
     * fields that exist in the financial view
@@ -127,11 +113,8 @@ const financialView = {
   },
 
   init: function( body ) {
-    this._sections = body.querySelectorAll( '.college-costs_tool-section' );
     this._findFinancialItems();
     this._addInputListeners();
-
-    this.updateSection();
 
     this.initializeFinancialValues();
 

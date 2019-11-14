@@ -1,141 +1,162 @@
 
 .college-costs {
-	
-	.content_sidebar {
-		border-left: 0px;
-	}
 
-	.o-college-costs-nav {
-		border-top: 1px solid @gray-20;
-		padding-left: 0;
+	& .college-costs_intro-segment {
+		margin-top: unit( -45px / @base-font-size-px, em );
 
-		ul {
-			margin: 0;
+		.m-hero {
+			margin-bottom: unit( 45px / @base-font-size-px, em );
 		}
 
-		button {
-			border: none;
-			background: none;
-			padding: unit( 5px / @base-font-size-px, em ) 0;
-			padding-left: unit( 10px / @base-font-size-px, em );
-			text-align: left;
-			width: 100%;
-
-			&:focus {
-				outline: 0;
-				font-weight: 600;
-			}
-		}
-
-		li {
-			list-style: none;
-			margin: 0;
-		}
-
-		& > li.o-college-costs-nav__section {
-			border-bottom: 1px solid @gray-20;
-
-			& > button {
-				font-size: unit( 18px / @base-font-size-px, em );
-			}
-
-			// Non-active nav sub-items are hidden	
-			& > ul > li {
-				display: none;
-			}
-
-			&.active {
-				border-left: 3px solid @green;
-
-				& > button {
-					font-weight: 600;
-				}
-
-				> ul > li {
-					display: block;
-
-					&.active > button {
-						font-weight: 600;
-					}
-				}
-			}
+		&.hidden {
+			display: none;
 		}
 	}
 
-	&_tool-section {
+	&_app-segment {
 		display: none;
-		max-width: unit( 570px / @base-font-size-px, rem );
 
 		&.active {
 			display: block;
 		}
 
-		& > h3 {
-			border-bottom: 1px solid @gray-60;
-			margin-top: unit( 30px / @base-font-size-px, em );
+		.o-college-costs-nav {
+			border-left: 0px;
 		}
 
+		.o-college-costs-nav > ul {
+			border-top: 1px solid @gray-20;
+			padding-left: 0;
 
-		.financial-item {
-			margin-top: unit( 20px / @base-font-size-px, em );
-
-			&_label-wrapper {
-				display: inline-block;
-			    box-sizing: border-box;
-			    border: solid transparent;
-			    border-width: 0 15px;
-			    margin-right: -.25em;
-			    vertical-align: top;
-			    width: 50%;
-
-			    label {
-			    	font-weight: 500;
-			    }
-
-			    span {
-				    font-size: unit( 18px / @base-font-size-px, em );
-			    	font-weight: 500;
-			    }
+			ul {
+				margin: 0;
 			}
 
-			&_input-wrapper {
-				display: inline-block;
-				box-sizing: border-box;
-			    border: solid transparent;
-			    border-width: 0 15px;
-			    margin-right: -.25em;
-			    vertical-align: top;
-			    text-align: right;
-			    width: 50%;
-
-			    input {
-			    	text-align: right;
-			    }
-			}
-
-			&__debt-total {
-				color: @red;
-				font-weight: 500;
-			}
-
-			&__-total {
-				font-weight: 500;
-			}
-
-		}
-
-		&_buttons {
-			margin-top: unit( 45px / @base-font-size-px, rem );
-
-			.btn__save {
-				background: nomne;
+			button {
 				border: none;
-				font-weight: 500;
-				margin-left: unit( 30px / @base-font-size-px, em );
-				text-decoration: underline;
+				background: none;
+				padding: unit( 5px / @base-font-size-px, em ) 0;
+				padding-left: unit( 10px / @base-font-size-px, em );
+				text-align: left;
+				width: 100%;
+
+				&:focus {
+					outline: 0;
+					font-weight: 600;
+				}
+			}
+
+			li {
+				list-style: none;
+				margin: 0;
+			}
+
+			li.o-college-costs-nav__section {
+				border-bottom: 1px solid @gray-20;
+
+				& > button {
+					font-size: unit( 18px / @base-font-size-px, em );
+				}
+
+				// Non-active nav sub-items are hidden	
+				& > ul > li {
+					display: none;
+				}
+
+				&.active {
+					border-left: 3px solid @green;
+
+					& > button {
+						font-weight: 600;
+					}
+
+					> ul > li {
+						display: block;
+
+						&.active > button {
+							font-weight: 600;
+						}
+					}
+				}
+			}
+		}
+
+		.college-costs_tool-section {
+			display: none;
+			max-width: unit( 570px / @base-font-size-px, rem );
+
+			&.active {
+				display: block;
+			}
+
+			& > h3 {
+				border-bottom: 1px solid @gray-60;
+				margin-top: unit( 30px / @base-font-size-px, em );
+			}
+
+
+			.financial-item {
+				margin-top: unit( 20px / @base-font-size-px, em );
+
+				&_label-wrapper {
+					display: inline-block;
+				    box-sizing: border-box;
+				    border: solid transparent;
+				    border-width: 0 15px;
+				    margin-right: -.25em;
+				    vertical-align: top;
+				    width: 50%;
+
+				    label {
+				    	font-weight: 500;
+				    }
+
+				    span {
+					    font-size: unit( 18px / @base-font-size-px, em );
+				    	font-weight: 500;
+				    }
+				}
+
+				&_input-wrapper {
+					display: inline-block;
+					box-sizing: border-box;
+				    border: solid transparent;
+				    border-width: 0 15px;
+				    margin-right: -.25em;
+				    vertical-align: top;
+				    text-align: right;
+				    width: 50%;
+
+				    input {
+				    	text-align: right;
+				    }
+				}
+
+				&__debt-total {
+					color: @red;
+					font-weight: 500;
+				}
+
+				&__-total {
+					font-weight: 500;
+				}
+
+			}
+
+			&_buttons {
+				margin-top: unit( 45px / @base-font-size-px, rem );
+
+				.btn__save {
+					background: nomne;
+					border: none;
+					font-weight: 500;
+					margin-left: unit( 30px / @base-font-size-px, em );
+					text-decoration: underline;
+				}
 			}
 		}
 	}
+	
 
 }
 
@@ -150,11 +171,41 @@
 		width: 100%;
 	}
 
-	#tmp__search-results {
+	#search__results {
 		display: none;
 		position: absolute;
 		background-color: white;
 		border: 1px solid black;
-		padding: 5px 10px;
+
+		&.active {
+			display: block;
+		}
+
+		ul {
+			margin: 0;
+			padding: 0;
+
+			li {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				
+				button {
+					background: none;
+					border: none;
+					padding: unit( 5px / @base-font-size-px, em ) unit( 30px / @base-font-size-px, em );
+					margin: 0;
+					text-align: left;
+				}				
+
+				&:hover {
+					background-color: @pacific-20;
+				}
+
+				p {
+
+				}
+			}
+		}
 	}
 }

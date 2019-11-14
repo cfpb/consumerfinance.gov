@@ -13,15 +13,63 @@
     <link rel="stylesheet" href="{{ static('apps/paying-for-college/css/main.css') }}">
 {%- endblock css %}
 
+{% block content_modifiers -%}
+    {{ super() }} content__hide-horizontal-overflow college-costs
+{%- endblock %}
+
 {% block content_main_modifiers -%}
-    {{ super() }} content__1-3 content__hide-horizontal-overflow college-costs
+    {{ super() }} content__flush-bottom 
 {%- endblock %}
 
 {% block content_main %}
 
-<div class="wrapper content_wrapper">
-    <aside class="content_sidebar content__flush-bottom content__flush-top-on-small content__flush-sides-on-small content__half-top-Son-desk">
-        <ul class="o-college-costs-nav">
+<div class="college-costs_intro-segment">
+    <div class="m-hero">
+        <div class="m-hero_wrapper wrapper">
+            <div class="m-hero_text">
+                <h1 class="m-hero_heading">College costs decoder</h1>
+                <p>Congratulations on moving forward in your education! Now that you have a financial aid offer, the next step is deciding whether it’s the right fit for you. You’re about to spend a lot of time, money, and hard work—you can use this tool to put together a financing plan to make sure this investment pays off.</p>
+
+                <p>This tool will help you:</p>
+                <ul>
+                    <li>Plan to cover your costs with the least debt needed</li>
+                    <li>Estimate how much debt you’ll finish with</li>
+                    <li>Decide if loans are a good option for you</li>
+                    <li>Figure out your next steps</li>
+                </ul>
+            </div>
+            <div class="m-hero_image-wrapper">
+                <div class="m-hero_image" style="background-image: url({{ static('apps/paying-for-college/img/ph-hero.png') }})"></div>
+            </div>
+        </div>
+    </div>
+
+    <h2>To start...</h2>
+    <p>You will need:</p>
+    <ul>
+        <li>Your financial aid offer</li>
+        <li>An idea of how much money you and your family can put towards school</li>
+        <li>You may also want to use this took with  someone you trust who can help you weigh your options</li>
+    </ul>
+
+    <h2>How do you feel about your plan to pay for school?</h2>
+<!--
+    <div class="feeling-gauge">
+        <div><label for="feeling_1">Not confident at all</label></div>
+        <div><label for="feeling_3">Somewhat confident</label></div>
+        <div><label for="feeling_5">Highly confident</label></div>
+    </div>
+-->
+    <img class="feeling-gauge" src="{{ static('apps/paying-for-college/img/ph-gauge.png') }}" width="640">
+
+    <div class="college-costs_tool-section_buttons">
+        <button class="a-btn college-costs_buttons__start btn__get-started a-btn__disabled" disabled="true">Get started</button>
+    </div>
+</div>
+
+<div class="college-costs_app-segment content content__1-3">
+    <aside class="content_sidebar content__flush-bottom content__flush-top-on-small content__flush-sides-on-small content__half-top-on-desk o-college-costs-nav">
+        <ul>
             <li class="o-college-costs-nav__section active"><button data-nav_section="offer-letter">Your financial aid offer</button>
                 <ul>
                     <li class="active"><button data-nav_item="school-info">School & living situation</button></li>
@@ -55,28 +103,37 @@
             </li>
         </ul>
     </aside>
+
     <div class="content_main content__flush-top-on-small content__half-top-on-desk content__flush-bottom">
         <section class="college-costs_tool-section" id="college-costs_school-search" data-tool-section="school-info">
-            <div class="SEARCH-BOX">
+            <div class="school-search_start">
                 <h2>School & living situation</h2>
                 <p>Start with the school you’re considering, as well as the program and where you expect to live.</p>
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="search__school-name">
+                    <label class="form-label" for="search__school-input">
                         Search for a college:
                     </label>
                 </div>
                 <p>
-                    <input type="text" id="search__school-name" name="search__school-name"
+                    <input type="text" id="search__school-input" name="search__school-input"
                         autocorrect="off">
                 </p>
             </div>
-            <div id="tmp__search-results">
+            <div id="search__results">
+                <ul></ul>
             </div>
+
+            <div class="school-search_additional-info">
+                
+
+            </div>
+
             <div class="college-costs_tool-section_buttons">
                 <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="costs">Next step</button>
                 <button class="btn__save">Save and finish later</button>
             </div>
         </section>
+
         <section class="college-costs_tool-section" data-tool-section="costs">
             <h2>Costs</h2>
             <p>Enter the costs reported in your offer. Please note that these are estimates—the actual amounts will depend on factors like which courses you enroll in and personal budgeting.</p>
@@ -469,10 +526,6 @@
             <h2>Other Resources</h2>
             <p>Thank you for entering everything from your financial aid offer. What other resources are available to you?</p>
 
-            <div class="college-costs_info-box">
-                <p>Working up to 20 hours a week is associated with better grades, but working more than that may put your academic standing—and your financial aid eligibility—at risk.</p>
-            </div>
-
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <label class="form-label" for="savings_personal">
@@ -486,7 +539,7 @@
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <label class="form-label" for="savings_family">
-                        Personal savings
+                        Family contribution
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
@@ -682,11 +735,7 @@
         </section>
 
         <section class="college-costs_tool-section" data-tool-section="max-debt-guideline">
-            <h2>Affording your loans</h2>
-
-            <h3>Is this too much debt for me?</h3>
-
-            <p><strong>How do I know if this is too much debt for me?</strong></p>
+            <h2>How do I know if this is too much debt for me?</h2>
 
             <p>A simple guideline: If you’re borrowing more than you’ll earn in your first year out of school, then you might be taking on more debt than you can afford. This page compares the median salary of this school’s recent students to your projected total debt at the end of your program. </p>
 
@@ -699,9 +748,7 @@
         </section>
 
         <section class="college-costs_tool-section" data-tool-section="cost-of-borrowing">
-            <h2>The cost of borrowing</h2>
-
-            <p>What will interest cost me?</p>
+            <h2>What will interest cost me?</h2>
 
             <p>Loans charge you interest.  You have to pay back the interest plusthe amount you originally borrowed. This page shows you an estimate of the total cost of your student debt over 10 and 25 years, the two most common time frames for student loans.</p>
 
