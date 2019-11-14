@@ -6,10 +6,12 @@
 
 const stateModel = {
   activeSection: null,
+  schoolSelected: null,
+  gotStarted: false,
 
 
   init: () => {
-    stateModel.activeSection = 'school-info';
+
   }
 
 };
