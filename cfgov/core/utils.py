@@ -4,6 +4,7 @@ from six.moves.urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 
 from bs4 import BeautifulSoup, NavigableString
 
@@ -162,3 +163,53 @@ class NoMigrations(object):
 
     def __getitem__(self, item):
         return None
+
+
+def slugify_unique(context, value):
+    """Generates a slug, making it unique for a context, if possible.
+
+    If the context has a request object, the generated slug will be unique:
+
+    >>> context = {'request': request}
+    >>> slugify_unique(context, 'Some text')
+    'some-text'
+    >>> slugify_unique(context, 'Some text')
+    'some-text-1'
+    >>> slugify_unique(context, 'Some text')
+    'some-text-2'
+
+    This functionality is not thread safe.
+
+    If the context lacks a request, this function falls back to the default
+    behavior of Django slugify:
+
+    https://docs.djangoproject.com/en/1.11/ref/utils/#django.utils.text.slugify
+
+    >>> context = {}
+    >>> slugify_unique(context, 'Some text')
+    'some-text'
+    >>> slugify_unique(context, 'Some text')
+    'some-text'
+    """
+    slug = slugify(value)
+
+    request = context.get('request')
+
+    if request:
+        attribute_name = '__slugify_unique_slugs'
+
+        if not hasattr(request, attribute_name):
+            setattr(request, attribute_name, list())
+
+        used_slugs = getattr(request, attribute_name)
+
+        original_slug = slug
+        index = 1
+
+        while slug in used_slugs:
+            slug = '%s-%d' % (original_slug, index)
+            index += 1
+
+        used_slugs.append(slug)
+
+    return slug
