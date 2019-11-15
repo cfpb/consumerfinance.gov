@@ -218,6 +218,42 @@
 				font-weight: 500;
 			}
 		}
+
+		.number-callout {
+			padding-top: unit( 10px / @base-font-size-px, em );
+			margin-top: unit( 20px / @base-font-size-px, em );
+
+			&__lined {
+				border-top: 1px solid @gray-40;
+			}
+
+			&_header {
+				font-size: unit( 16px / @base-font-size-px, em );
+				margin-bottom: 0;
+				text-transform: uppercase;
+			}
+
+			&_value {
+				font-size: 28px;
+			    font-weight: 600;
+			    margin-top: 0;
+			    margin-bottom: unit( 10px / @base-font-size-px, em );
+			}
+
+			& + .number-callout {
+				margin-top: unit( 30px / @base-font-size-px, em );
+			}
+		}
+
+		.school-results {
+			&_basics {
+				display: table;
+				&__half {
+					display: table-cell;
+					width: 50%;
+				}
+			}
+		}
 	}
 	
 

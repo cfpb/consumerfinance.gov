@@ -866,16 +866,21 @@
 
         </section>
 
-        <section class="college-costs_tool-section" data-tool-section="max-debt-guideline">
+        <section class="college-costs_tool-section debt-guideline" data-tool-section="max-debt-guideline">
             <h2>How do I know if this is too much debt for me?</h2>
 
             <p>A simple guideline: If you’re borrowing more than you’ll earn in your first year out of school, then you might be taking on more debt than you can afford. This page compares the median salary of this school’s recent students to your projected total debt at the end of your program. </p>
 
-            <h4>Projected total debt</h4>
-            <div>$53,500</div>
+            <div class="number-callout">
+                <h4 class="number-callout_header">Projected total debt</h4>
+                <div class="number-callout_value">$53,500</div>
+            </div>
+            <p>Your projected total debt at the end of the program (assuming similar borrowing each year).</p>
 
-            <h4>Median salary of [school]'s graduates</h4>
-            <div>$48,200</div>
+            <div class="number-callout">
+                <h4 class="number-callout_header">Median salary of [school]'s graduates</h4>
+                <div class="number-callout_value">$48,200</div>
+            </div>
 
             <img src="{{ static('apps/paying-for-college/img/ph-debt-rule.png') }}" style="margin: 30px 0">
 
@@ -972,23 +977,28 @@
 
             <p>Skipping monthly loan payments can cause other financial problems for you. This page will help you check whether your projected future salary would cover your loan payment along with other living expenses.</p>
 
-            <h3 class="affording-header">Monthly loan payment</h3>
-            <div class="affording_monthly-payment">
-                <span data-expenses-item="payment_loan">$612.94</span>
+            <div class="number-callout number-callout__lined">
+                <h4 class="number-callout_header">Monthly loan payment</h4>
+                <div class="number-callout_value">$612.94</div>
+                <p>Your payment will depend on your total debt and your repayment plan. (This tool assumes a standard plan, where you pay the same amount every month.)</p>
             </div>
 
-            <p>Your payment will depend on your total debt and your repayment plan. (This tool assumes a standard plan, where you pay the same amount every month.)</p>
-
-            <h3 class="affording-header">Monthly salary</h3>
-            <div class="affording_monthly-salary">
-                <span data-expenses-item="salary_monthly">$4,016.67</span>
+            <div class="number-callout number-callout__lined">
+                <h4 class="number-callout_header">Monthly salary</h4>
+                <div class="number-callout_value">$4,016.67</div>
+                <p>Your actual monthly salary will depend on many different factors, including your field of work, and the area where you will live. To get more information about the salary levels of different careers, visit the <a href="">BLS Wage Data</a> website.</p>
             </div>
 
-            <p>Your actual monthly salary will depend on many different factors, including your field of work, and the area where you will live. To get more information about the salary levels of different careers, visit the <a href="">BLS Wage Data</a> website.</p>
+            <div class="m-notification m-notification__visible">
+                {{ svg_icon('information-round') }}
+                <div class="m-notification_content">
+                    Students to to overestimate their startings salaries, and assume it will be higher than average. In your calculations, use a lower starting salary, so that you are prepared in case your actual starting salary is lower than you expected.
+                </div>
+            </div>
 
-            <h3 class="affording-header">Monthly expenses</h3>
-            <div class="affording_monthly-expenses">
-                <span data-expenses-item="total_expenses">
+            <div class="number-callout number-callout__lined">
+                <h4 class="number-callout_header">Monthly expenses</h4>
+                <div class="number-callout_value">$3,777</div>
             </div>
 
             <div class="m-form-field m-form-field m-form-field__select">
@@ -1136,8 +1146,6 @@
         <section class="college-costs_tool-section school-results" data-tool-section="school-results">
             <h2>Compare the school to others</h2>
 
-            <p>How does this school compare to others like it?</p>
-
             <p>Now that you understand how much debt you’re considering, let’s look at some statistics that indicate how well the school serves students. These stats are important because finishing and getting your degree or certificate, especially at a chool that you will finish well-prepared, means you’re more likely to get a higher paying job and be able to afford your debt. You’re investing a lot—make sure it pays off.</p>
 
             <h3 class="header_bottom-line">School basics</h3>
@@ -1162,14 +1170,14 @@
                         <strong>Highest degree offered:</strong>
                         <span data-school-item="highestDegree">PhD</span>
                     </div>
-                </div>
-                <div>
-                    <strong>Number of Programs:</strong>
-                    <span data-school-item="programCount">53</span>
-                </div>
-                <div>
-                    <strong>Most popular programs:</strong>
-                    <span data-school-item="popularPrograms">Business, Management, Marketing and Related Support Services</span>
+                    <div>
+                        <strong>Number of Programs:</strong>
+                        <span data-school-item="programCount">53</span>
+                    </div>
+                    <div>
+                        <strong>Most popular programs:</strong>
+                        <span data-school-item="popularPrograms">Business, Management, Marketing and Related Support Services</span>
+                    </div>
                 </div>
             </div>
 
