@@ -10,6 +10,8 @@ import { navigationView } from './views/navigation-view.js';
 import { financialView } from './views/financial-view.js';
 import { schoolView } from './views/school-view.js';
 
+import { updateState } from './dispatchers/update-state.js';
+
 
 /* init() - Initialize the app */
 
@@ -27,8 +29,9 @@ const init = function() {
   console.log( financialModel.values );
 
   // Get stuff started
-  navigationView.activateGetStartedBtn();
-  navigationView._handleGetStartedBtnClick();
+  // navigationView.activateGetStartedBtn();
+  // navigationView._handleGetStartedBtnClick();
+  // updateState.activeSection( 'school-results' );
 
 };
 
