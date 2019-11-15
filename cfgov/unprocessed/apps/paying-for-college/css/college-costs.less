@@ -107,6 +107,7 @@
 				margin-top: unit( 30px / @base-font-size-px, em );
 			}
 
+			.expenses-item,
 			.financial-item {
 				margin-top: unit( 30px / @base-font-size-px, em );
 
@@ -184,6 +185,14 @@
 
 			}
 
+			.expenses-item {
+				&_label-wrapper {
+					label {
+						font-weight: normal;
+					}
+				}
+			}
+
 			&_buttons {
 				margin-top: unit( 45px / @base-font-size-px, rem );
 
@@ -202,6 +211,7 @@
 			}
 		}
 
+		.affording,
 		.make-a-plan {
 			&_gap {
 				color: @red;
