@@ -26,9 +26,9 @@ const init = function() {
 
   console.log( financialModel.values );
 
-  /* Get stuff started
-     navigationView.activateGetStartedBtn();
-     navigationView._handleGetStartedBtnClick(); */
+  // Get stuff started
+  navigationView.activateGetStartedBtn();
+  navigationView._handleGetStartedBtnClick();
 
 };
 

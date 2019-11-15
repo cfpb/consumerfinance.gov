@@ -101,6 +101,12 @@
                     <li><button data-nav_item="what-to-do-next">What to do next</button></li>
                 </ul>
             </li>
+            <li class="o-college-costs-nav__section"><button data-nav_section="save-and-finish">Save & finish</button>
+                <ul>
+                    <li><button data-nav_item="save-and-finish">Save & finish</button></li>
+                    
+                </ul>
+            </li>
         </ul>
     </aside>
 
@@ -734,16 +740,14 @@
         <section class="college-costs_tool-section" data-tool-section="make-a-plan">
             <h2>Make a plan to cover this year's cost of attendance</h2>
 
+            <p>Thank you for entering all that info! This page will help you determine whether you have enough funding to cover the cost of attending this particular school. If you have a gap, it will help you come up with a plan.</p>
+
             <div class="m-notification m-notification__visible m-notification__error">
                 {{ svg_icon('information-round') }}
                 <div class="m-notification_content">
                     You have <span class="make-a-plan_gap" data-financial-item="total_gap">$XX,XXX</span> of uncovered costs for this year of schooling. Make a plan to get this down to $0.
                 </div>
             </div>
-
-            <p>Thank you for entering all that info! This page will help you determine whether you have enough funding to cover the 
-            ing this particular school. If you have a gap, it will help you come up with a plan.</p>
-
 
             <h3 class="h4">Cost of attendance vs. funding</h3>
 
@@ -902,7 +906,7 @@
                     <span>Total money borrowed</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item__otal" data-financial-itemX="">$53,500</span>
+                    <span class="financial-item_total" data-financial-itemX="">$53,500</span>
                 </div>     
             </div>
             <div class="financial-item form-group_item">
@@ -910,7 +914,7 @@
                     <span>Total interest payments</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item__otal" data-financial-itemX="">$20,053</span>
+                    <span class="financial-item_total" data-financial-itemX="">$20,053</span>
                 </div>
             </div>
             <div class="financial-item form-group_item">
@@ -962,27 +966,165 @@
             </div>
         </section>
 
-        <section class="college-costs_tool-section" data-tool-section="affording-your-payments">
+        <section class="college-costs_tool-section affording" data-tool-section="affording-your-payments">
             <h2>Can I afford my payment?</h2>
 
 
             <p>Skipping monthly loan payments can cause other financial problems for you. This page will help you check whether your projected future salary would cover your loan payment along with other living expenses.</p>
 
-            <img src="{{ static('apps/paying-for-college/img/ph-monthly-budget.png') }}" style="margin-top: 30px;">
-
-            <h3 class="header_bottom-line">Monthly loan payment</h3>
+            <h3 class="affording-header">Monthly loan payment</h3>
             <div class="affording_monthly-payment">
-                <span data-expenses-item="monthly-payment">$612.94</span>
+                <span data-expenses-item="payment_loan">$612.94</span>
             </div>
 
             <p>Your payment will depend on your total debt and your repayment plan. (This tool assumes a standard plan, where you pay the same amount every month.)</p>
 
-            <h3 class="header_bottom-line">Monthly salary</h3>
+            <h3 class="affording-header">Monthly salary</h3>
             <div class="affording_monthly-salary">
-                <span data-expenses-item="monthly-salary">$4,016.67</span>
+                <span data-expenses-item="salary_monthly">$4,016.67</span>
             </div>
 
             <p>Your actual monthly salary will depend on many different factors, including your field of work, and the area where you will live. To get more information about the salary levels of different careers, visit the <a href="">BLS Wage Data</a> website.</p>
+
+            <h3 class="affording-header">Monthly expenses</h3>
+            <div class="affording_monthly-expenses">
+                <span data-expenses-item="total_expenses">
+            </div>
+
+            <div class="m-form-field m-form-field m-form-field__select">
+                <label class="a-label a-label__heading" for="expenses_region">
+                    What part of the US do you plan to live in after graduation?
+                </label>
+                <div class="a-select">
+                    <select id="expenses_region">
+                        <option value="south">South region</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_housing">
+                        Housing
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_housing" data-expenses-item="housing" autocorrect="off" value="$1,138">
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_food">
+                        Food
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_food" data-expenses-item="housing" autocorrect="off" value="$486">
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_clothing">
+                        Clothing
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_clothing" data-expenses-item="housing" autocorrect="off" value="$118">
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_transportation">
+                        Transportation
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_transportation" data-expenses-item="housing" autocorrect="off" value="$636">
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_healthcare">
+                        Healthcare
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_healthcare" data-expenses-item="housing" autocorrect="off" value="$280">
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_entertainment">
+                        Entertainment
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_entertainment" data-expenses-item="housing" autocorrect="off" value="$151">
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_savings">
+                        Retirement & savings
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_savings" data-expenses-item="housing" autocorrect="off" value="$278">
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_taxes">
+                        Taxes
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_taxes" data-expenses-item="housing" autocorrect="off" value="$147">
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_childcare">
+                        Childcare
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_childcare" data-expenses-item="housing" autocorrect="off" value="$200">
+                </div>
+            </div>
+
+            <div class="expenses-item form-group_item">
+                <div class="expenses-item_label-wrapper">
+                    <label class="form-label" for="expenses_other">
+                        Other
+                    </label>
+                </div>
+                <div class="expenses-item_input-wrapper">
+                    <input type="text" id="scholarships__other" name="expenses_other" data-expenses-item="housing" autocorrect="off" value="$300">
+                </div>
+            </div>
+
+            <h3 class="affording-header">Total money left</h3>
+            <div class="affording_monthly-remaining">
+                <span data-expenses-item="total_remainder">-$373.27</span>
+            </div>
+
+            <div class="m-notification m-notification__visible m-notification__error">
+                {{ svg_icon('information-round') }}
+                <div class="m-notification_content">
+                    The estimate leaves you with a shortage of <span class="gap" data-expenses-item="total_gap">$373</span>. Try adjusting the expenses to balance your budget.
+                </div>
+            </div>
+
+            <img src="{{ static('apps/paying-for-college/img/ph-monthly-budget.png') }}" style="margin-top: 30px;">
 
             <div class="college-costs_tool-section_buttons">
                 <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="school-results">Next step</button>
@@ -1031,16 +1173,156 @@
                 </div>
             </div>
 
+            <div class="m-notification m-notification__visible m-notification__warning">
+                {{ svg_icon('information-round') }}
+                <div class="m-notification_content">
+                    This school is under investigation. <a href="">Find out more.</a>
+                </div>
+            </div>
+
+            <img class="" src="{{ static('apps/paying-for-college/img/ph-graduation-rate_full.png') }}">
+
+            <img class="" src="{{ static('apps/paying-for-college/img/ph-repayment-rate_full.png') }}" style="margin-top: 30px">
+
             <div class="college-costs_tool-section_buttons">
                 <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="summary">Next step</button>
                 <button class="btn__save">Save and finish later</button>
             </div>
         </section>
 
-        <section class="college-costs_tool-section" data-tool-section="summary">
+        <section class="college-costs_tool-section summary" data-tool-section="summary">
             <h2>Review your financing plan</h2>
 
             <p>Here is an overview of this school’s costs, your plan for covering them, the debt you are considering, and the school’s results on a few key metrics. As you look over these numbers again, think about whether you are feeling good about going to this school with this financial plan.</p>
+
+            <button class="a-btn">Print summary</button>
+            <button class="a-btn a-btn__secondary">Save as a link</button>
+
+            <h3 class="summary-header">Your offer letter</h3>
+
+             <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Total cost of attendance
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-financial-item="total_costs">$99,999</span>
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Total funding offered
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-financial-item="total_offerFunding">$99,999</span>
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
+
+            <h3 class="summary-header">Covering your costs</h3>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Funding beyond your offer letter
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-financial-item="total_otherFunding">$99,999</span>
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Uncovered costs: all funding
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-financial-item="total_gap">$0</span>
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
+
+            <h3 class="summary-header">Affording your loans</h3>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Pass debt guideline?
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-state-item="total_otherFunding">No</span>
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Total cost of borrowing (10 years)
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-financial-item="debt_totalTen">$73,553</span>
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Total cost of borrowing (25 years)
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-financial-item="debt_totalTwentyFive">$110,385</span>
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Balance monthly budget?
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-state-item="total_otherFunding">No</span>
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
+
+            <h3>This school's results</h3>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        School basics
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        School statistics
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
+                </div>
+            </div>
 
             <div class="college-costs_tool-section_buttons">
                 <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="what-to-do-next">Next step</button>
@@ -1054,6 +1336,137 @@
             <p>Your next steps depend on whether you want to use this plan to pay for attending this school.</p>
 
             <p>Do you want to put this plan into action or consider other options?</p>
+
+            <div>
+                <button class="a-btn">Put this plan into action</button>
+                <button class="a-btn">Consider other options</button>
+            </div>
+            <div>
+                <button class="a-btn">See your steps</button>
+            </div>
+
+            <div>
+                <h3>Put this plan into action</h3>
+                <h4>1. Ask the financial aid office any questions you still have.</h4>
+
+                <p>It’s first on this list, but you can should do it whenever you’re confused or unsure of what to do next.</p>
+
+                <h4>2. Find out what it takes to enroll.</h4>
+
+                <p>How much is the deposit? What paperwork do you need to send in? When are the money and paperwork due?</p>
+
+                <h4>3. Research the details of your grants and scholarships.</h4>
+
+                <p>Read or ask about the requirements of each grant and scholarship. </p>
+
+                <h4>4. Double check that you’ll have enough money when you need it.</h4>
+
+                <p>If you have uncovered upfront costs, talk to the financial aid office about options like tuition installment plans. Explore savings options, it is never too late to start. Or explore whether your family is able to contribute.</p> 
+
+                <h4>5. Accept the loans you want.</h4>
+
+                <p>More paperwork! You’ll also need to do entrance counseling online for federal loans. Remember, you don’t need to accept all the loans, ask your financial aid office to reduce your loans amounts if you would like to borrow less. </p>
+
+                <h4>6. Apply for additional institutional or private student loans.</h4>
+
+                <p>To get the best deal for your situation, read the fine print and shop around for the lowest interest rates and fees. You’ll probably need a cosigner.</p>
+
+                <h4>7. Make a budget.</h4>
+
+                <p>Use this cashflow budget to plan out when you’ll get money and when you’ll have to pay it.</p> 
+
+                <h4>8. Put a reminder in your calendar to fill out FAFSA on October 1.</h4>
+
+                <p>If you’ll be in school next year, you’ll need to start this process again in a few months. </p>
+
+                <h4>9. Set another reminder to visit the financial aid office every semester.</h4>
+
+                <p>Ask about new opportunities for funding. For example, some scholarships are only open to certain majors or only for upperclassmen.</p> 
+
+                <h4>10. Ask about getting credits from a more affordable school.</h4>
+
+                <p>Reach out to your academic advisor about taking core requirements at community college.</p>
+
+            </div>
+
+            <div>
+                <h3>Consider other options</h3>
+
+                <h4>1. Ask about getting credits from a more affordable school.</h4>
+                <p>Reach out to your academic advisor about taking core requirements at community college.</p>
+
+                <h4>2. Reduce your living costs.</h4>
+                <p>Can you live at home? Stick to public transit?</p> 
+
+                <h4>3. Look for more grants and scholarships.</h4>
+                <p>There are always more available, even if school starts in a week or two!</p>
+
+                <h4>4. Consider working, if you weren’t going to.</h4>
+                <p>Remember, up to 20 hours a week is associated with better grades.</p>
+
+                <h4>5. Think about other programs at this school.</h4>
+
+                <h4>6. Explore other schools.</h4>
+                <p>Even if this is the only school you applied to, it’s not your only option. You can always start at community college and plan to apply for a transfer next year.</p>
+
+            </div>
+
+            <h3>How do you feel about your plan to pay for school?</h3>
+
+            <img src="{{ static('apps/paying-for-college/img/ph-feeling-gauge-end.png') }}" style="margin: 30px 0">            
+            <div class="college-costs_tool-section_buttons">
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="save-and-finish">Next step</button>
+                <button class="btn__save">Save and finish later</button>
+            </div>
+
+        </section>
+
+        <section class="college-costs_tool-section finish" data-tool-section="save-and-finish">
+            <h2>Great job!</h2>
+
+            <p>You've made a plan to cover your school costs and graduate with as little debt as possible, and learned about the impact of loans on your future.</p>
+
+            <p>Copy and save this link so that you can come back and review your plan. You can also email yourself the link by providing your email. We won't store this information.</p>
+
+            <div class="form-group_item">
+                <div class="">
+                    <label class="form-label" for="finish_link">
+                        Your link
+                    </label>
+                </div>
+                <div class="">
+                    <input type="text" id="finish_link" name="finish_link" autocorrect="off" value="https://www.consumerfinance.gov/paying-for-college/app-name/?value=1&b=2&c=3&d=4">
+                </div>
+            </div>
+
+            <div class="form-group_item">
+                <div class="">
+                    <label class="form-label" for="finish_email">
+                        Email
+                    </label>
+                </div>
+                <div class="">
+                    <input type="text" id="finish_email" name="finish_email" autocorrect="off" value="">
+                </div>
+            </div>
+
+            <h3>Was this tool helpful?</h3>
+
+            <div class="form-group_item">
+                <div class="">
+                    <label class="form-label" for="finish_feedback">
+                        We are always looking for ways to improve this tool. If you have any suggestions, let us know.
+                    </label>
+                </div>
+                <textarea class="a-text-input" id="finish_feedback"></textarea>
+            </div>
+            <button class="a-btn">Submit</button>
+
+            <h3>Do you have another financial aid offer?</h3>
+
+            <p>If you have another financial aid offer you can click the button below to start this form over and enter in your data for the other school.</p>
+
+            <button class="a-btn">Restart</button>
 
         </section>
 
