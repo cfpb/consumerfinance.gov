@@ -2,7 +2,7 @@
 
 import numberToMoney from 'format-usd';
 import { updateState } from '../dispatchers/update-state.js';
-import { updateFinancial, createFinancial } from '../dispatchers/update-models.js';
+import { createFinancial, updateFinancial } from '../dispatchers/update-models.js';
 import { getState } from '../dispatchers/get-state.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
 import { stringToNum } from '../util/number-utils.js';
@@ -22,8 +22,8 @@ const financialView = {
       const events = {
         keyup: this._handleInputChange,
         focusout: this._handleInputChange
-        };
-        bindEvent( elem, events );
+      };
+      bindEvent( elem, events );
     } );
   },
 
@@ -38,6 +38,7 @@ const financialView = {
 
   /**
    * Event handling for INPUT changes
+   * @param {Object} event - Triggering event
    */
   _handleInputChange: function( event ) {
     clearTimeout( financialView._inputChangeTimeout );
@@ -75,31 +76,31 @@ const financialView = {
           val = numberToMoney( { amount: val, decimalPlaces: 0 } );
         }
 
-        if ( elem.tagName === "INPUT" ) {
-          elem.value = val;          
+        if ( elem.tagName === 'INPUT' ) {
+          elem.value = val;
         } else {
           elem.innerText = val;
         }
 
-              
+
       }
     } );
 
-    // financialView._financialSpans.forEach( elem => {
-    //   elem.innerText = 'Calculating...';
-    // } );
+    /* financialView._financialSpans.forEach( elem => {
+       elem.innerText = 'Calculating...';
+       } ); */
 
 
-    // financialView._calculatingTimeout = setTimeout(
-    //   function() {
-    //     financialView._financialSpans.forEach( elem => {
-    //       const prop = elem.dataset.financialItem;
-    //       let val = getFinancialValue( prop );
-    //       val = numberToMoney( { amount: val, decimalPlaces: 0 } );
-    //       elem.innerText = val;
-    //     } );
-    //   },
-    //   5 );    
+    /* financialView._calculatingTimeout = setTimeout(
+       function() {
+       financialView._financialSpans.forEach( elem => {
+       const prop = elem.dataset.financialItem;
+       let val = getFinancialValue( prop );
+       val = numberToMoney( { amount: val, decimalPlaces: 0 } );
+       elem.innerText = val;
+       } );
+       },
+       5 ); */
   },
 
   /**
@@ -108,7 +109,7 @@ const financialView = {
     */
   initializeFinancialValues: function() {
     this._financialItems.forEach( elem => {
-        createFinancial( elem.dataset.financialItem );
+      createFinancial( elem.dataset.financialItem );
     } );
   },
 

@@ -8,10 +8,9 @@ import { financialView } from '../views/financial-view.js';
 import { schoolModel } from '../models/school-model.js';
 
 const updateModels = {
-    
 
 
-}
+};
 
 /**
   * updateFinancial - Update a property of the financial model
@@ -20,14 +19,14 @@ const updateModels = {
   */
 
 const updateFinancial = function( name, value ) {
-    financialModel.setValue( name, value );
-}
+  financialModel.setValue( name, value );
+};
 
 const createFinancial = function( name ) {
-    financialModel.createFinancialProperty( name );
-}
+  financialModel.createFinancialProperty( name );
+};
 
 export {
-    updateFinancial,
-    createFinancial
-}
+  updateFinancial,
+  createFinancial
+};

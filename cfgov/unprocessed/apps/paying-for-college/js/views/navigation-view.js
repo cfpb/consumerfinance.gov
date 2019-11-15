@@ -69,7 +69,6 @@ const navigationView = {
   },
 
   _updateSideNav: function( activeName ) {
-    console.log( 'USN: ' + activeName );
     const navItem = navigationView._navMenu.querySelector( '[data-nav_item="' + activeName + '"]' );
     const activeElem = closest( navItem, 'li' );
     const activeParent = closest( activeElem, '.o-college-costs-nav__section' );

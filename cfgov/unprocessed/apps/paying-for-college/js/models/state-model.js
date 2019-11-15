@@ -11,7 +11,8 @@ const stateModel = {
 
 
   init: () => {
-
+    // PLACEHOLDER - Add more interesting stuff later
+    stateModel.foo = 'bar';
   }
 
 };
