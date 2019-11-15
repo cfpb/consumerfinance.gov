@@ -1,5 +1,3 @@
-
-
 /**
  * Turns a string into a number.
  * Assumes each number in the string should be preserved (unlike parseInt)
@@ -39,6 +37,6 @@ function stringToNum( numberString ) {
 }
 
 export {
-  stringToNum,
-  
-}
+  stringToNum
+
+};

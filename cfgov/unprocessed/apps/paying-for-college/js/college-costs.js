@@ -8,7 +8,7 @@ import { stateModel } from './models/state-model.js';
 
 import { navigationView } from './views/navigation-view.js';
 import { financialView } from './views/financial-view.js';
-import { searchView } from './views/search-view.js';
+import { schoolView } from './views/school-view.js';
 
 
 /* init() - Initialize the app */
@@ -16,7 +16,7 @@ import { searchView } from './views/search-view.js';
 const init = function() {
   const body = document.querySelector( 'body' );
   stateModel.init();
-  searchView.init( body );
+  schoolView.init( body );
   financialView.init( body );
   navigationView.init( body );
 
@@ -26,9 +26,9 @@ const init = function() {
 
   console.log( financialModel.values );
 
-  // Get stuff started
-  navigationView.activateGetStartedBtn();
-  navigationView._handleGetStartedBtnClick();
+  /* Get stuff started
+     navigationView.activateGetStartedBtn();
+     navigationView._handleGetStartedBtnClick(); */
 
 };
 

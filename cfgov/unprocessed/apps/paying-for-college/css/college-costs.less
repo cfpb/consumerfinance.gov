@@ -1,8 +1,16 @@
 
 .college-costs {
 
+	> .wrapper > .content_main {
+		padding-top: 0;
+	}
+
+	& .content_main:after {
+        content: none;
+    }
+
 	& .college-costs_intro-segment {
-		margin-top: unit( -45px / @base-font-size-px, em );
+		padding-bottom: unit( 60px / @base-font-size-px, em );
 
 		.m-hero {
 			margin-bottom: unit( 45px / @base-font-size-px, em );
@@ -15,6 +23,7 @@
 
 	&_app-segment {
 		display: none;
+		padding-bottom: unit( 60px / @base-font-size-px, em );
 
 		&.active {
 			display: block;
@@ -89,20 +98,32 @@
 				display: block;
 			}
 
-			& > h3 {
-				border-bottom: 1px solid @gray-60;
+			& > h3.header_bottom-line {
+				border-bottom: 1px solid @gray-40;
 				margin-top: unit( 30px / @base-font-size-px, em );
 			}
 
+			.header__spaced {
+				margin-top: unit( 30px / @base-font-size-px, em );
+			}
 
 			.financial-item {
-				margin-top: unit( 20px / @base-font-size-px, em );
+				margin-top: unit( 30px / @base-font-size-px, em );
+
+				&__spaced {
+					margin-top: unit( 45px / @base-font-size-px, em );
+				}
+
+				&__lined {
+					border-top: 1px solid @gray-60;
+					padding-top: unit( 10px / @base-font-size-px, em );
+				}
 
 				&_label-wrapper {
 					display: inline-block;
 				    box-sizing: border-box;
 				    border: solid transparent;
-				    border-width: 0 15px;
+				    border-width: 0;
 				    margin-right: -.25em;
 				    vertical-align: top;
 				    width: 50%;
@@ -111,8 +132,15 @@
 				    	font-weight: 500;
 				    }
 
-				    span {
-					    font-size: unit( 18px / @base-font-size-px, em );
+				    span.label-note {
+				    	display: block;
+					    font-size: unit( 14px / @base-font-size-px, em );
+				    	font-weight: normal;
+				    	margin-top: unit( 10px / @base-font-size-px, em );
+				    }
+
+				    span.static-label {
+				    	font-size: unit( 18px / @base-font-size-px, em );
 				    	font-weight: 500;
 				    }
 				}
@@ -129,16 +157,29 @@
 
 				    input {
 				    	text-align: right;
+				    	width: 100%;
+				    }
+
+				    .a-btn__link {
+				    	margin-left: unit( 10px / @base-font-size-px, em );
 				    }
 				}
 
-				&__debt-total {
-					color: @red;
+				&_total {
 					font-weight: 500;
+					font-size: unit( 18px / @base-font-size-px, em );
+
+					&__debt {
+						color: @red;
+					}
+
+					&__large {
+						font-size: unit( 20px / @base-font-size-px, em );
+					}
 				}
 
-				&__-total {
-					font-weight: 500;
+				.financial-note {
+					margin-top: unit( 15px / @base-font-size-px, em );
 				}
 
 			}
@@ -154,6 +195,18 @@
 					text-decoration: underline;
 				}
 			}
+
+			.m-notification {
+				margin-bottom: unit( 30px / @base-font-size-px, em );
+				margin-top: unit( 30px / @base-font-size-px, em );
+			}
+		}
+
+		.make-a-plan {
+			&_gap {
+				color: @red;
+				font-weight: 500;
+			}
 		}
 	}
 	
@@ -163,8 +216,9 @@
 #college-costs_school-search {
 	position: relative;
 
-	label {
+	.school-search_start label {
 		font-weight: 600;
+		margin-bottom: unit( 15px / @base-font-size-px, em );
 	}
 
 	input {
@@ -207,5 +261,23 @@
 				}
 			}
 		}
+	}
+
+	.school-search_additional-info {
+		display: none;
+
+		&.active {
+			display: block;
+		}
+
+		.m-form-field {
+			margin-top: unit( 10px / @base-font-size-px, em );
+		}
+	}
+
+	h3.program-question {
+		font-size: unit( 18px / @base-font-size-px, em );
+		font-weight: 500;
+		margin-top: unit( 15px / @base-font-size-px, em );
 	}
 }
