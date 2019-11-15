@@ -31,7 +31,7 @@ const init = function() {
   // Get stuff started
   // navigationView.activateGetStartedBtn();
   // navigationView._handleGetStartedBtnClick();
-  // updateState.activeSection( 'school-results' );
+  // updateState.activeSection( 'save-and-finish' );
 
 };
 

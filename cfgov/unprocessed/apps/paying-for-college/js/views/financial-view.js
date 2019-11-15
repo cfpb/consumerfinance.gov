@@ -1,6 +1,7 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
 import numberToMoney from 'format-usd';
+import { closest } from '../../../../js/modules/util/dom-traverse';
 import { updateState } from '../dispatchers/update-state.js';
 import { createFinancial, updateFinancial } from '../dispatchers/update-models.js';
 import { getState } from '../dispatchers/get-state.js';
@@ -13,9 +14,10 @@ const financialView = {
   _inputChangeTimeout: null,
   _calculatingTimeout: null,
   _currentInput: null,
+  _actionPlanChoices: null,
 
   /**
-   * Listeners for INPUT fields
+   * Listeners for INPUT fields and radio buttons
    */
   _addInputListeners: function() {
     financialView._financialItems.forEach( elem => {
@@ -25,19 +27,44 @@ const financialView = {
       };
       bindEvent( elem, events );
     } );
+
+    financialView._actionPlanChoices.forEach( elem => {
+        const events = {
+            click: this._handleActionPlanClick
+        }
+        bindEvent( elem, events );
+    } );
+
+    bindEvent( financialView._actionPlanSeeSteps, { click: this._handleSeeStepsClick } );
+
   },
 
   /**
-   * Find financial items on page
+   * Event handling for action-plan choice clicks
+   * @param {Object} event - Triggering event
    */
-  _findFinancialItems: function() {
-    this._financialItems = document.querySelectorAll( '[data-financial-item]' );
-    this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
-    this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
+  _handleActionPlanClick: function( event ) {
+    const target = event.target;
+    financialView._actionPlanChoices.forEach( elem => {
+        elem.classList.remove( 'highlighted' );
+    } );
+
+    if ( target.matches( '.m-form-field' ) ) {
+      console.log( 'form-field' );
+        target.classList.add( 'highlighted' );
+        target.querySelector( 'input' ).setAttribute( 'checked', true );
+    } else {
+        console.log( 'not form-field' );
+        const div = closest( target, '.m-form-field' );
+        div.classList.add( 'highlighted' );
+        div.querySelector( 'input' ).setAttribute( 'checked', true );
+    }
+
+    financialView._actionPlanSeeSteps.removeAttribute( 'disabled' );
   },
 
   /**
-   * Event handling for INPUT changes
+   * Event handling for financial-item INPUT changes
    * @param {Object} event - Triggering event
    */
   _handleInputChange: function( event ) {
@@ -58,13 +85,27 @@ const financialView = {
       updateFinancial( name, value );
       financialView.updateFinancialItems();
     }
-
   },
+
+  /**
+   * Event handling for "see steps" action plan button
+   * @param {Object} event - Triggering event
+   */
+   _handleSeeStepsClick: function( event ) {
+    // TODO - This could all be written better.
+    const selected = document.querySelector( '.action-plan_choices .highlighted input[checked="true"]');
+    document.querySelectorAll( '[data-action-plan]' ).forEach( elem => {
+      elem.classList.remove( 'active' );  
+    } );
+    document.querySelector( '[data-action-plan="' + selected.value + '"]' ).classList.add( 'active' );
+    document.querySelector( '.action-plan .action-plan_feeling-gauge' ).classList.add( 'active' );
+   },
 
   updateFinancialItems: function() {
     clearTimeout( this._calculatingTimeout );
 
     this._financialItems.forEach( elem => {
+        
       if ( !elem.matches( ':focus' ) ) {
         const prop = elem.dataset.financialItem;
         const isRate = prop.substr( 0, 5 ) === 'rate_';
@@ -114,9 +155,12 @@ const financialView = {
   },
 
   init: function( body ) {
-    this._findFinancialItems();
+    this._financialItems = document.querySelectorAll( '[data-financial-item]' );
+    this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
+    this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
+    this._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field' );
+    this._actionPlanSeeSteps = document.getElementById( 'action-plan_see-your-steps' );
     this._addInputListeners();
-
     this.initializeFinancialValues();
 
   }
