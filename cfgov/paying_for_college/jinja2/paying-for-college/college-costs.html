@@ -94,11 +94,11 @@
                     <li><button data-nav_item="affording-your-payments">Can I afford my payment?</button></li>
                 </ul>
             </li>
-            <li class="o-college-costs-nav__section"><button data-nav_section="worth-investment">Worth Your Investment</button>
+            <li class="o-college-costs-nav__section"><button data-nav_section="worth-investment">Worth your investment</button>
                 <ul>
                     <li><button data-nav_item="school-results">Compare this school to others</button></li>
                     <li><button data-nav_item="summary">Review your financing plan</button></li>
-                    <li><button data-nav_item="what-to-do-next">What to do next</button></li>
+                    <li><button data-nav_item="action-plan">What to do next</button></li>
                 </ul>
             </li>
             <li class="o-college-costs-nav__section"><button data-nav_section="save-and-finish">Save & finish</button>
@@ -214,7 +214,7 @@
             <p>We recommend using the supplied estimates unless you’re sure your spending will be radically different.</p>
             <p>Use estimated data from the Department of Education, if your offer letter did not include costs.</p>
 
-            <h3 class="header_bottom-line">Direct Costs</h3>
+            <h3 class="header_bottom-line">Direct costs</h3>
             <p>Direct costs are what the school charges you for directly. Your actual costs may vary.</p>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
@@ -245,7 +245,7 @@
                 </div>
             </div>
 
-            <h3 class="header_bottom-line">Indirect Costs</h3>
+            <h3 class="header_bottom-line">Indirect costs</h3>
             <p>Indirect costs are for other school year necessities, like traveling between home and school and childcare. Though these vary from student to student, these estimates are a good starting point. Adjust the categories and amounts below to match what your financial aid offer says, and add important expenses that might not be listed.</p>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
@@ -1206,7 +1206,7 @@
             <button class="a-btn">Print summary</button>
             <button class="a-btn a-btn__secondary">Save as a link</button>
 
-            <h3 class="summary-header">Your offer letter</h3>
+            <h3 class="summary_header">Your offer letter</h3>
 
              <div class="financial-item form-group_item financial-item__lined">
                 <div class="financial-item_label-wrapper">
@@ -1220,7 +1220,7 @@
                 </div>
             </div>
 
-            <div class="financial-item form-group_item financial-item__lined">
+            <div class="financial-item form-group_item financial-item__lined financial-item__last">
                 <div class="financial-item_label-wrapper">
                     <span class="static-label">
                         Total funding offered
@@ -1232,7 +1232,7 @@
                 </div>
             </div>
 
-            <h3 class="summary-header">Covering your costs</h3>
+            <h3 class="summary_header">Covering your costs</h3>
 
             <div class="financial-item form-group_item financial-item__lined">
                 <div class="financial-item_label-wrapper">
@@ -1246,7 +1246,7 @@
                 </div>
             </div>
 
-            <div class="financial-item form-group_item financial-item__lined">
+            <div class="financial-item form-group_item financial-item__lined financial-item__last">
                 <div class="financial-item_label-wrapper">
                     <span class="static-label">
                         Uncovered costs: all funding
@@ -1258,7 +1258,7 @@
                 </div>
             </div>
 
-            <h3 class="summary-header">Affording your loans</h3>
+            <h3 class="summary_header">Affording your loans</h3>
 
             <div class="financial-item form-group_item financial-item__lined">
                 <div class="financial-item_label-wrapper">
@@ -1296,7 +1296,7 @@
                 </div>
             </div>
 
-            <div class="financial-item form-group_item financial-item__lined">
+            <div class="financial-item form-group_item financial-item__lined financial-item__last">
                 <div class="financial-item_label-wrapper">
                     <span class="static-label">
                         Balance monthly budget?
@@ -1308,7 +1308,7 @@
                 </div>
             </div>
 
-            <h3>This school's results</h3>
+            <h3 class="summary_header">This school's results</h3>
 
             <div class="financial-item form-group_item financial-item__lined">
                 <div class="financial-item_label-wrapper">
@@ -1321,7 +1321,7 @@
                 </div>
             </div>
 
-            <div class="financial-item form-group_item financial-item__lined">
+            <div class="financial-item form-group_item financial-item__lined financial-item__last">
                 <div class="financial-item_label-wrapper">
                     <span class="static-label">
                         School statistics
@@ -1333,28 +1333,36 @@
             </div>
 
             <div class="college-costs_tool-section_buttons">
-                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="what-to-do-next">Next step</button>
+                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="action-plan">Next step</button>
                 <button class="btn__save">Save and finish later</button>
             </div>
         </section>
 
-        <section class="college-costs_tool-section" data-tool-section="what-to-do-next">
+        <section class="college-costs_tool-section" data-tool-section="action-plan">
             <h2>What do I do next?</h2>
 
             <p>Your next steps depend on whether you want to use this plan to pay for attending this school.</p>
 
             <p>Do you want to put this plan into action or consider other options?</p>
 
-            <div>
-                <button class="a-btn">Put this plan into action</button>
-                <button class="a-btn">Consider other options</button>
-            </div>
-            <div>
-                <button class="a-btn">See your steps</button>
+            <div class="action-plan_choices">
+                <div class="m-form-field m-form-field__radio">
+                    <input id="action-plan_put-into-action" type="radio" name="action-plan-radio" class="a-radio" value="put">
+                    <label class="a-label" for="action-plan_put-into-action">How to put this plan into action</label>
+                </div>
+                <div class="action-plan_choices__spacer"></div>
+                <div class="m-form-field m-form-field__radio">
+                    <input id="action-plan_consider" type="radio" name="action-plan-radio" class="a-radio" value="consider">
+                    <label class="a-label" for="action-plan_consider">Consider other options</label>
+                </div>
             </div>
 
             <div>
-                <h3>Put this plan into action</h3>
+                <button id="action-plan_see-your-steps" class="a-btn" disabled="true">See your steps</button>
+            </div>
+
+            <div class="action-plan_steps" data-action-plan="put">
+                <h3>How to put this plan into action</h3>
                 <h4>1. Ask the financial aid office any questions you still have.</h4>
 
                 <p>It’s first on this list, but you can should do it whenever you’re confused or unsure of what to do next.</p>
@@ -1397,7 +1405,7 @@
 
             </div>
 
-            <div>
+            <div class="action-plan_steps" data-action-plan="consider">
                 <h3>Consider other options</h3>
 
                 <h4>1. Ask about getting credits from a more affordable school.</h4>
@@ -1419,9 +1427,12 @@
 
             </div>
 
-            <h3>How do you feel about your plan to pay for school?</h3>
+            <div class="action-plan_feeling-gauge">
+                <h3>How do you feel about your plan to pay for school?</h3>
 
-            <img src="{{ static('apps/paying-for-college/img/ph-feeling-gauge-end.png') }}" style="margin: 30px 0">            
+                <img src="{{ static('apps/paying-for-college/img/ph-feeling-gauge-end.png') }}" style="margin: 30px 0">
+            </div>            
+
             <div class="college-costs_tool-section_buttons">
                 <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="save-and-finish">Next step</button>
                 <button class="btn__save">Save and finish later</button>
@@ -1470,11 +1481,14 @@
             </div>
             <button class="a-btn">Submit</button>
 
+
+        <div class="restart">
             <h3>Do you have another financial aid offer?</h3>
 
             <p>If you have another financial aid offer you can click the button below to start this form over and enter in your data for the other school.</p>
 
             <button class="a-btn">Restart</button>
+        </div>
 
         </section>
 

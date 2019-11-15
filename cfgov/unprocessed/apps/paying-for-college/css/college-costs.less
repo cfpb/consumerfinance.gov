@@ -1,4 +1,4 @@
-
+;
 .college-costs {
 
 	> .wrapper > .content_main {
@@ -245,6 +245,69 @@
 			}
 		}
 
+		.summary {
+			&_header {
+				margin-top: unit( 30px / @base-font-size-px, em );
+			}
+
+			& .financial-item__lined {
+				padding-bottom: unit( 10px / @base-font-size-px, em );
+				margin-top: 0;
+
+				&.financial-item__last {
+					border-bottom: 1px solid @gray-40;
+				}
+			}
+		}
+
+		.action-plan {
+			&_choices {
+				display: table;
+				margin-bottom: unit( 15px / @base-font-size-px, em );
+
+				.m-form-field {
+					background-color: @gray-10;
+					border: 1px solid white;
+					display: table-cell;
+					padding: 0;
+					width: 50%;
+
+					label {
+						padding: unit( 15px / @base-font-size-px, em );
+					}
+
+					&.highlighted {
+						background-color: @pacific-10;
+						border: 1px solid @pacific;
+					}
+				}
+				
+				&__spacer {
+					border-right: unit( 15px / @base-font-size-px, em ) solid white;
+				}
+			}
+
+			&_steps {
+				display: none;
+				padding-top: unit( 30px / @base-font-size-px, em );
+
+				&.active {
+					display: block;
+				}
+			}
+
+			&_feeling-gauge {
+				display: none;
+				margin-top: unit( 30px / @base-font-size-px, em );
+
+				&.active {
+					display: block;
+				}
+			}
+
+
+		}
+
 		.school-results {
 			&_basics {
 				display: table;
@@ -252,6 +315,22 @@
 					display: table-cell;
 					width: 50%;
 				}
+			}
+		}
+
+		.finish {
+			.form-group_item {
+				margin-bottom: unit( 30px / @base-font-size-px, em );
+
+				textarea,
+				input {
+					margin-top: unit( 10px / @base-font-size-px, em );
+					width: 80%;
+				}
+			}
+
+			.restart {
+				margin-top: unit( 45px / @base-font-size-px, em );
 			}
 		}
 	}

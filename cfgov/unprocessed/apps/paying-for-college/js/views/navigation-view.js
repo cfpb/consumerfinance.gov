@@ -122,7 +122,6 @@ const navigationView = {
       this._updateSideNav( activeName );
       this._updateSection( activeName );
     }
-    console.log( 'updated FinView' );
   }
 
 };
