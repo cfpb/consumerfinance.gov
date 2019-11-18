@@ -43,6 +43,7 @@ const COMMON_MODULE_CONFIG = {
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   cache: true,
   parallel: true,
+  extractComments: false,
   terserOptions: {
     ie8: false,
     ecma: 5,
@@ -91,6 +92,7 @@ const externalConf = {
     filename: 'external-site.js'
   },
   optimization: {
+    minimize: true,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
