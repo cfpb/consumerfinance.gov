@@ -44,6 +44,7 @@
     'list':   _list,
     'text':   _text,
     'topics': _topics,
+    'categories': _categories,
 } %}
 <div class="m-related-metadata
             {{ 'm-related-metadata__half-width' if value.is_half_width else '' }}">
@@ -56,6 +57,9 @@
        In that case, render only if the value `show_topics` is True. #}
     {% for block in value.content %}
         {% if 'topics' in block.block_type and not block.value.show_topics %}
+            {% continue %}
+        {% endif %}
+        {% if 'categories' in block.block_type and not block.value.show_categories %}
             {% continue %}
         {% endif %}
         <div class="m-related-metadata_item-container">
@@ -159,4 +163,28 @@
 
 {% macro _topics(list) %}
     {{ _list( page.related_metadata_tags(), true ) }}
+{% endmacro %}
+
+{# ==========================================================================
+
+   _categories()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related metadata categories markup
+
+   categories_check: A dict holding a string heading and a show_categories bool
+
+   ========================================================================== #}
+
+{% macro _categories(categories_check) %}
+    <ul class="m-list m-list__unstyled">
+    {% for category in page.categories.all() %}
+    <li class="m-list_item">
+        <span>{{ category.get_name_display() }}</span>
+    </li>
+    {% endfor %}
+</ul>
 {% endmacro %}
