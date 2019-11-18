@@ -36,6 +36,34 @@ function isFieldInActionPlan( fieldName, routeTodoList ) {
 }
 
 /**
+ * Determine is a value can be considered empty. It is empty if the value is:
+ *
+ * null
+ * undefined
+ * an empty string
+ * an empty array
+ * an empty object
+ *
+ * @param {*} value The value to be checked
+ * @returns {Boolean} If this value is empty or not
+ */
+function isEmpty( value ) {
+  if ( typeof value === 'undefined' ) {
+    return true;
+  }
+
+  if ( value === '' ) {
+    return true;
+  }
+
+  if ( value === null ) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * Determine if a field has a value OR is in the user's todo list of actions.
  * Fields in the to-do list do not require values.
  *
@@ -45,7 +73,10 @@ function isFieldInActionPlan( fieldName, routeTodoList ) {
  * @returns {Boolean} Whether or not the field is valid
  */
 function valueOrActionPlan( fieldName, value, actionItems ) {
-  if ( !isFieldInActionPlan( fieldName, actionItems ) && !value ) {
+  if (
+    !isFieldInActionPlan( fieldName, actionItems ) &&
+    isEmpty( value )
+  ) {
     return false;
   }
 
@@ -98,6 +129,52 @@ function isValidDriveData( { miles, daysPerWeek, actionPlanItems } ) {
 }
 
 /**
+ * Determine if a transportation mode that requires entering the averageCost
+ * and its associated fields (all modes except 'Drive') is valid
+ * @param {Object} data The data to validate
+ * @param {String} daysPerWeek The number of days the user will make the trip
+ * @param {String} averageCost The cost of the trip
+ * @param {Boolean} isMonthlyCost Whether or not the average cost is per day or per month
+ * @param {Array} actionPlanItems The current to-do list of trip unknowns
+ * @returns {Boolean} Validity of the supplied data
+ */
+function isValidAverageCost( { daysPerWeek, averageCost, isMonthlyCost, actionPlanItems } ) {
+  if (
+    isEmpty( averageCost ) ||
+    isEmpty( isMonthlyCost )
+  ) {
+    return false;
+  }
+
+  if (
+    !isMonthlyCost &&
+    !valueOrActionPlan( 'daysPerWeek', daysPerWeek, actionPlanItems )
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Helper function to determine what type of transportation data we should be
+ * validating (e.g. 'Drive' vs any other mode of transportation).
+ * @param {Object} data The route data to be validated
+ * @returns {Boolean} Validity of the supplied data
+ */
+function isValidTransportationData( data ) {
+  let valid = true;
+
+  if ( data.transportation === 'Drive' ) {
+    valid = isValidDriveData( data );
+  } else {
+    valid = isValidAverageCost( data );
+  }
+
+  return valid;
+}
+
+/**
  * Validate all data for a route
  * @param {object} data The transportation tool form data
  * @returns {Boolean} Data validity
@@ -111,9 +188,7 @@ function validate( data ) {
     return valid;
   }
 
-  if ( data.transportation === 'Drive' ) {
-    valid = isValidDriveData( data );
-  }
+  valid = isValidTransportationData( data );
 
   return valid;
 }
