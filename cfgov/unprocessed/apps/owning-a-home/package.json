@@ -22,7 +22,7 @@
     "es6-promise": "4.2.8",
     "fastdom": "1.0.9",
     "format-usd": "1.0.1",
-    "handlebars": "4.5.1",
+    "handlebars": "4.5.3",
     "handlebars-loader": "git+https://github.com/Waavi/handlebars-loader.git",
     "highcharts": "7.2.1",
     "jquery": "^3.3.1",
