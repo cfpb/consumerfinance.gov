@@ -1,11 +1,11 @@
-import { assign, formatNegative, isNumber, toArray, toPrecision } from '../util';
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
-import { ALERT_TYPES } from '../data-types/notifications';
-import { getPlanItem } from '../data-types/todo-items';
-import money from '../money';
-import notificationsView from './notifications';
-import transportationMap from '../data-types/transportation-map';
-import validate from '../validators/route-option';
+import { assign, formatNegative, isNumber, toArray, toPrecision } from '../../util';
+import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
+import { ALERT_TYPES } from '../../data-types/notifications';
+import { getPlanItem } from '../../data-types/todo-items';
+import money from '../../money';
+import notificationsView from '../notifications';
+import transportationMap from '../../data-types/transportation-map';
+import validate from '../../validators/route-option';
 
 const CLASSES = Object.freeze( {
   AVERAGE_COST_HELPER: 'js-average-cost-helper',
@@ -87,7 +87,11 @@ function getCalculationFn( route ) {
 }
 
 function useDefaultCostEstimate( value ) {
-  if ( !value || value === DEFAULT_COST_ESTIMATE ) {
+  if ( !isNumber( value ) && !value ) {
+    return true;
+  }
+
+  if ( value === DEFAULT_COST_ESTIMATE ) {
     return true;
   }
 

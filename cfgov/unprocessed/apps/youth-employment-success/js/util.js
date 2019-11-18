@@ -179,6 +179,12 @@ function toArray( arrayLike ) {
  * @returns {Boolean} If value is a number or not
  */
 function isNumber( maybeNum ) {
+  /* An empty string, false, or null will all resolve to 0, which is not the intended effect.
+     Check for them explicitly. */
+  if ( maybeNum === '' || maybeNum === false || maybeNum === null ) {
+    return false;
+  }
+
   // NaN is never equal to itself, and is thus the only real way pre es6 to check for its existence
   const num = Number( maybeNum );
   // eslint-disable-next-line no-self-compare
@@ -217,6 +223,10 @@ function toggleCFNotification( node, doShow ) {
  * @returns {String} A new string with the correct precision
  */
 function toPrecision( value = '', precision = 0 ) {
+  if ( !value && !precision ) {
+    return String( 0 );
+  }
+
   if ( !isNumber( value ) ) {
     return value;
   }

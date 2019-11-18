@@ -1,4 +1,4 @@
-import closest from '../../../js/modules/util/dom-traverse';
+import { closest } from '../../../js/modules/util/dom-traverse';
 import {
   getElementHeight,
   getYLocation,

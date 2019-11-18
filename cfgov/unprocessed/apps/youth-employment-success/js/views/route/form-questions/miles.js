@@ -1,13 +1,13 @@
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../../../../../../js/modules/util/atomic-helpers';
 import {
   clearMilesAction,
   hasTodo,
   routeSelector,
   updateMilesAction,
   updateMilesToActionPlan
-} from '../reducers/route-option-reducer';
-import { PLAN_TYPES } from '../data-types/todo-items';
-import inputView from './input';
+} from '../../../reducers/route-option-reducer';
+import { PLAN_TYPES } from '../../../data-types/todo-items';
+import inputView from '../../input';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'm-yes-miles'

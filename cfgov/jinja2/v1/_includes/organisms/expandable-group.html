@@ -26,8 +26,8 @@
    ========================================================================== #}
 
 <div
-    {%- if value.heading and value.add_heading_id %}
-        id="{{ value.heading | slugify }}"
+    {%- if value.heading %}
+        id="{{ value.heading | slugify_unique }}"
     {% endif -%}
 >
     {% if value.has_rule %}

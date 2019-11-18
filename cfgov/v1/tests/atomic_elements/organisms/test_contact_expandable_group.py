@@ -1,3 +1,4 @@
+from django.http import HttpRequest
 from django.test import TestCase
 
 from wagtail.tests.utils import WagtailTestUtils
@@ -21,6 +22,20 @@ class TestContactExpandableGroup(WagtailTestUtils, TestCase):
         self.assertTagInHTML(html, '<div id="wyld-stallyns">')
         self.assertIn('Bill', html)
         self.assertIn('Ted', html)
+
+    def test_renders_unique_heading_ids(self):
+        block = ContactExpandableGroup()
+        value = block.to_python({
+            'group_title': 'Heading',
+            'contacts': [],
+        })
+
+        request = HttpRequest()
+        html = block.render(value, {'request': request})
+        self.assertTagInHTML(html, '<div id="heading">')
+
+        html = block.render(value, {'request': request})
+        self.assertTagInHTML(html, '<div id="heading-1">')
 
     def test_bulk_to_python(self):
         Contact.objects.bulk_create(

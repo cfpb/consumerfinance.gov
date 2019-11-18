@@ -1,13 +1,13 @@
-import { simulateEvent } from '../../../../../util/simulate-event';
-import transitTimeView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/transit-time';
+import { simulateEvent } from '../../../../../../../util/simulate-event';
+import transitTimeView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/transit-time';
 import {
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import TODO_FIXTURE from '../../fixtures/todo-alert';
-import mockStore from '../../../../mocks/store';
-import TodoNotificationMock from '../../mocks/todo-notification';
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import TODO_FIXTURE from '../../../../fixtures/todo-alert';
+import mockStore from '../../../../../../mocks/store';
+import TodoNotificationMock from '../../../../mocks/todo-notification';
 
 const CLASSES = transitTimeView.CLASSES;
 
