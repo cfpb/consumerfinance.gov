@@ -51,6 +51,10 @@ class HomePage(CFGOVPage):
 
     search_fields = CFGOVPage.search_fields + [index.SearchField('header')]
 
+    @property
+    def page_js(self):
+        return super(HomePage, self).page_js + ['home-page.js']
+
     def get_category_name(self, category_icon_name):
         cats = dict(ref.limited_categories)
         return cats[str(category_icon_name)]
