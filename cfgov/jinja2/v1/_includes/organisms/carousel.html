@@ -14,15 +14,30 @@
 {% macro render() %}
 
 <div class="o-carousel u-hidden">
-    <ul class="o-carousel_items">
-        <div class="o-carousel_item">Item 1</div>
-        <div class="o-carousel_item">Item 2</div>
-        <div class="o-carousel_item">Item 3</div>
-        <div class="o-carousel_item">Item 4</div>
+    <div class="o-carousel_navigator">
+
+        <button class="o-carousel_btn o-carousel_btn-prev" aria-label="Previous showcase item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm137.2 771.3c19.4 19.6 19.3 51.3-.3 70.7-19.5 19.3-50.9 19.3-70.4 0L262.8 643.5c-19.5-19.5-19.5-51.2 0-70.7l303.7-303.7c19.6-19.4 51.3-19.3 70.7.3 19.3 19.5 19.3 50.9 0 70.4L368.9 608.2l268.3 268.3z"></path></svg>    
+        </button>
+        <button class="o-carousel_btn o-carousel_btn-next" aria-label="Next showcase item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm237.2 532.5L433.5 941.4c-19.6 19.4-51.3 19.3-70.7-.3-19.3-19.5-19.3-50.9 0-70.4l268.3-268.3L362.8 334c-19.4-19.6-19.3-51.3.3-70.7 19.5-19.3 50.9-19.3 70.4 0L737.2 567c19.5 19.5 19.5 51.1 0 70.7z"></path></svg>
+        </button>
+        
+        <ul class="o-carousel_items">
+            <div class="o-carousel_item">Item 1</div>
+            <div class="o-carousel_item">Item 2</div>
+            <div class="o-carousel_item">Item 3</div>
+            <div class="o-carousel_item">Item 4</div>
+        </ul>
+        
+    </div>
+
+    <ul class="o-carousel_thumbnails">
+        <button class="o-carousel_thumbnail o-carousel_thumbnail-selected">Item 1</button>
+        <button class="o-carousel_thumbnail">Item 2</button>
+        <button class="o-carousel_thumbnail">Item 3</button>
+        <button class="o-carousel_thumbnail">Item 4</button>
     </ul>
-    
-    <button class="o-carousel_btn o-carousel_btn-prev">Prev</button>
-    <button class="o-carousel_btn o-carousel_btn-next">Next</button>
 </div>
 
 {% endmacro %}
