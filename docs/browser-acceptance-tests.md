@@ -122,7 +122,7 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 1. [Follow the instructions here](https://github.com/cfpb/development/blob/master/guides/browser-testing-with-sauce-labs.md) in the "Sign up for saucelabs.com" and "Set up Sauce Connect to test URLs on local and dev servers" sections. The remaining sections are not required to run cfgov-refresh browser tests, but are recommended if you want to use Sauce Labs to manually QA in supported browsers.
 1. Edit your cfgov-refresh `.env` file. Uncomment the `export` statements in the "Sauce Labs section of the file, and update them as follows:
-    -  `SAUCE_USERNAME`: Your saucelabs.com username
+    - `SAUCE_USERNAME`: Your saucelabs.com username
     - `SAUCE_ACCESS_KEY`: Your access key can be found on the [Sauce Labs user settings page](https://saucelabs.com/beta/user-settings).
     - `SAUCE_SELENIUM_URL`: This depends on what environment you would like to run the browser tests against:
         - `localhost:4445/wd/hub` is the default. Sauce will run the tests against this temporary test server that has the basic [`initial-data.sh` database](https://cfpb.github.io/cfgov-refresh/installation/#load-initial-data-into-database).
