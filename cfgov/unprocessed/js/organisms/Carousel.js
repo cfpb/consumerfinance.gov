@@ -46,6 +46,9 @@ function Carousel( element ) {
     _btnPrev.addEventListener( 'click', _btnPrevClicked );
     _btnNext.addEventListener( 'click', _btnNextClicked );
 
+    // Carousel ready, show it!
+    element.classList.remove( 'u-hidden' );
+  
     return this;
   }
 
