@@ -1,0 +1,28 @@
+{# ==========================================================================
+
+   carousel.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for a Carousel organism, which displays a set of 
+   blocks of content that can be navigated through sequentially.
+
+   ========================================================================== #}
+
+{% macro render() %}
+
+<div class="o-carousel">
+    <ul class="o-carousel_items">
+        <div class="o-carousel_item">Item 1</div>
+        <div class="o-carousel_item">Item 2</div>
+        <div class="o-carousel_item">Item 3</div>
+        <div class="o-carousel_item">Item 4</div>
+    </ul>
+    
+    <button class="o-carousel_btn-prev">Prev</button>
+    <button class="o-carousel_btn-next">Next</button>
+</div>
+
+{% endmacro %}

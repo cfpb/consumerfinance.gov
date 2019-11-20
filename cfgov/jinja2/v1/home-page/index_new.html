@@ -1,5 +1,14 @@
 {% extends "layout-full.html" %}
 
 {% block content_main %}
-{{ _('Consumer Financial Protection Bureau') }}
+
+<h1>
+    {{ _('Consumer Financial Protection Bureau') }}
+</h1>
+
+{% block carousel %}
+    {% import 'organisms/carousel.html' as o_carousel with context %}
+    {{ o_carousel.render() }}
+{% endblock carousel %}
+
 {% endblock content_main %}
