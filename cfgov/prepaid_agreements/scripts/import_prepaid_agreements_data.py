@@ -2,8 +2,10 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
+from django.utils import timezone
+
+import pytz
 import requests
-from pytz import timezone
 
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
@@ -11,10 +13,21 @@ from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 S3_PATH = 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/'
 METADATA_FILENAME = 'prepaid_metadata.json'
 
+valid_products = []
+current_date = timezone.now()
+
+
+def mark_deleted_products():
+    deleted_products = PrepaidProduct.objects.exclude(pk__in=valid_products)
+    for product in deleted_products:
+        product.deleted_at = current_date
+        product.save()
+
 
 def import_products_data(products_data):
     for item in products_data:
         pk = item['product_id'].replace('PRODUCT-', '')
+        valid_products.append(pk)
 
         withdrawal_date = item['withdrawal_date']
         if withdrawal_date:
@@ -48,7 +61,7 @@ def import_agreements_data(agreements_data):
             item['created_date'],
             '%Y-%m-%d %H:%M:%S'
         )
-        created_time = created_time.replace(tzinfo=timezone('EST'))
+        created_time = created_time.replace(tzinfo=pytz.timezone('EST'))
 
         product_id = item['product_id'].replace('PRODUCT-', '')
         product = PrepaidProduct.objects.get(pk=product_id)
@@ -71,3 +84,4 @@ def run(*args):
 
     import_products_data(data['products'])
     import_agreements_data(data['agreements'])
+    mark_deleted_products()

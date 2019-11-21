@@ -11,6 +11,7 @@ class PrepaidProduct(models.Model):
     other_relevant_parties = models.TextField(blank=True, null=True)
     status = models.TextField(blank=True, null=True)
     withdrawal_date = models.DateField(blank=True, null=True)
+    deleted_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.name
