@@ -39,29 +39,35 @@
     }
   }
 
+  &_items {
+    border: 1px solid @gray;
+    border-bottom: none;
+  }
+
   &_item {
     box-sizing: border-box;
 
-    // Below are temporary styles.
-    border: 1px solid red;
-    height: 100px;
-    padding: 30px;
+    &:not( .u-hidden ) {
+      display: table-row;
+    }
   }
 
-  &_item:nth-child(1) {
-    background: orange;
+  &_item-text {
+    display: table-cell;
+    width: 66%;
+    padding: unit( @grid_gutter-width / @base-font-size-px, em );
+    padding-left: unit( ( @grid_gutter-width * 3 ) / @base-font-size-px, em );
   }
 
-  &_item:nth-child(2) {
-    background: greenyellow;
-  }
+  &_item-visual {
+    display: table-cell;
+    width: auto;
 
-  &_item:nth-child(3) {
-    background: cyan;
-  }
+    // This should be set to the height of the image we want to include.
+    height: 300px;
 
-  &_item:nth-child(4) {
-    background: forestgreen;
+    // This is a temporary value.
+    background: red;
   }
 
   &_thumbnails {
@@ -71,6 +77,11 @@
 
   &_thumbnail {
     width: 25%;
+    display: table-row;
+
+    // This should be set to the height of the thumbnail image we want to include.
+    height: 100px;
+
     // Set font-size to override parent font-size:0, which removes the gap between the thumbnails.
     font-size: unit( 16px / @base-font-size-px, rem );
     background: @white;
@@ -84,6 +95,23 @@
 
   &_thumbnail-selected {
     background: @gray-10;
+  }
+
+  &_thumbnail-visual,
+  &_thumbnail-text {
+    display: table-cell;
+
+    padding: 5px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  // These are temporary styles.
+  &_thumbnail-img {
+    height: 48px;
+    width: 48px;
+    display: block;
+    border: 1px solid gray;
   }
 }
 
