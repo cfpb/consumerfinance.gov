@@ -1,0 +1,99 @@
+.o-carousel {
+
+  // Override default unordered list padding.
+  & ul {
+    padding: 0;
+  }
+
+  &_navigator {
+    position: relative;
+  }
+
+  &_btn {
+    background: @white;
+    border: none;
+    border-radius: 1000px;
+    width: 32px;
+    height: 32px;
+    margin-top: -16px;
+    position: absolute;
+    top: 50%;
+
+    &-prev {
+      left: 20px;
+    }
+
+    &-next {
+      right: 20px;
+    }
+
+    & svg {
+      position: absolute;
+
+      // These are essentially magic numbers to position the SVG in the middle of a solid circle.
+      left: 2px;
+      top: -2px;
+      width: 28px;
+      height: 36px;
+      font-size: 40px;
+    }
+  }
+
+  &_item {
+    box-sizing: border-box;
+
+    // Below are temporary styles.
+    border: 1px solid red;
+    height: 100px;
+    padding: 30px;
+  }
+
+  &_item:nth-child(1) {
+    background: orange;
+  }
+
+  &_item:nth-child(2) {
+    background: greenyellow;
+  }
+
+  &_item:nth-child(3) {
+    background: cyan;
+  }
+
+  &_item:nth-child(4) {
+    background: forestgreen;
+  }
+
+  &_thumbnails {
+    // Remove gap between child inline elements. See https://stackoverflow.com/questions/26950005/strange-gap-between-two-buttons
+    font-size: 0;
+  }
+
+  &_thumbnail {
+    width: 25%;
+    // Set font-size to override parent font-size:0, which removes the gap between the thumbnails.
+    font-size: unit( 16px / @base-font-size-px, rem );
+    background: @white;
+    border: 1px solid @gray;
+    border-right: none;
+
+    &:nth-child(4) {
+      border-right: 1px solid @gray;
+    }
+  }
+
+  &_thumbnail-selected {
+    background: @gray-10;
+  }
+}
+
+// Show no-js state of carousel where all items show and buttons are hidden.
+.no-js .o-carousel {
+  // Override u-hidden when
+  display: block !important;
+
+  &_btn,
+  &_thumbnails {
+    display: none !important;
+  }
+}

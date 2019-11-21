@@ -14,6 +14,7 @@ const COMMON_BUNDLE_NAME = 'common.js';
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   cache: true,
   parallel: true,
+  extractComments: false,
   terserOptions: {
     ie8: false,
     ecma: 5,
@@ -66,6 +67,7 @@ const conf = {
     jsonpFunction: 'rout'
   },
   optimization: {
+    minimize: true,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]

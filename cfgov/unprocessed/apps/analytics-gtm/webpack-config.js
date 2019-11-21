@@ -11,6 +11,7 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   cache: true,
   parallel: true,
+  extractComments: false,
   terserOptions: {
     ie8: false,
     ecma: 5,
@@ -63,6 +64,7 @@ const conf = {
     jsonpFunction: 'analyticsGtm'
   },
   optimization: {
+    minimize: true,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
