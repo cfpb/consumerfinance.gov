@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 from django.db import models
 from django.db.models import Q
 
@@ -15,6 +16,142 @@ from modelcluster.fields import ParentalKey
 from v1.atomic_elements import molecules
 from v1.models.base import CFGOVPage
 from v1.util import ref
+
+
+"""Placeholder until these are exposed in the Wagtail admin."""
+_info_units_by_language = {
+    'en': [
+        {
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2485,
+            },
+            'heading': {
+                'text': 'Empowering Consumers',
+                'level': 'h3',
+            },
+            'body': (
+                'We produce innovation products to help consumers make '
+                'informed financial decisions and choose products and '
+                'services that fit their needs.'
+            ),
+            'links': [
+                {
+                    'text': 'Consumer tools',
+                    'url': '/consumer-tools/',
+                },
+                {
+                    'text': 'Resources for practitioners',
+                    'url': '/practitioner-resources/',
+                },
+            ],
+        },
+        {
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2485,
+            },
+            'heading': {
+                'text': 'Rules of the Road',
+                'level': 'h3',
+            },
+            'body': (
+                'We create clear rules to implement the law and preserve '
+                'choices for consumers.'
+            ),
+            'links': [
+                {
+                    'text': 'Rulemaking',
+                    'url': '/policy-compliance/rulemaking/',
+                },
+            ],
+        },
+        {
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2485,
+            },
+            'heading': {
+                'text': 'Enforcing the Law',
+                'level': 'h3',
+            },
+            'body': (
+                'We enforce federal consumer financial laws by investigating '
+                'cases of potential wrongdoing and taking action.'
+            ),
+            'links': [
+                {
+                    'text': 'Enforcement',
+                    'url': '/policy-compliance/enforcement/'
+                },
+            ],
+        },
+        {
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2485,
+            },
+            'heading': {
+                'text': 'Learning through data and research',
+                'level': 'h3',
+            },
+            'body': (
+                u'We publish research and information we’ve collected above '
+                u'the consumer financial marketplace.'
+            ),
+            'links': [
+                {
+                    'text': 'Data & Research',
+                    'url': '/data-research/',
+                },
+            ],
+        },
+        {
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2485,
+            },
+            'heading': {
+                'text': 'Supervision',
+                'level': 'h3',
+            },
+            'body': (
+                'We supervise financial companies to ensure compliance with '
+                'federal consumer laws.'
+            ),
+            'links': [
+                {
+                    'text': 'Policy & Compliance',
+                    'url': '/policy-compliance/',
+                },
+            ],
+        },
+        {
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2485,
+            },
+            'heading': {
+                'text': 'Events',
+                'level': 'h3',
+            },
+            'body': (
+                'We host conferences, workshops, townhalls, symposiums, and '
+                'Advisory Committee meetings.'
+            ),
+            'links': [
+                {
+                    'text': 'Events',
+                    'url': '/about-us/events/',
+                },
+            ],
+        },
+    ],
+}
+
+
+# TODO: Add real info unit content for Spanish.
+_info_units_by_language['es'] = _info_units_by_language['en']
 
 
 class HomePage(CFGOVPage):
@@ -61,8 +198,17 @@ class HomePage(CFGOVPage):
 
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
-        context['latest_updates'] = self.get_latest_updates(request)
+        context.update({
+            'info_units': self.get_info_units(),
+            'latest_updates': self.get_latest_updates(request),
+        })
         return context
+
+    def get_info_units(self):
+        return [
+            molecules.InfoUnit().to_python(info_unit)
+            for info_unit in _info_units_by_language[self.language]
+        ]
 
     def get_latest_updates(self, request):
         # TODO: There should be a way to express this as part of the query

@@ -47,7 +47,7 @@
 {%- from 'molecules/info-unit-2.html' import info_unit with context %}
 
 <div class="o-info-unit-group"
-     {{- ' id="' ~ value.heading.text|slugify ~ '" ' if value.heading.text else ' ' -}}>
+     {{- ' id="' ~ value.heading.text|slugify ~ '" ' if value.heading and value.heading.text else ' ' -}}>
 
 {% if value.heading and value.heading.text %}
     <{{ value.heading.level }}>
