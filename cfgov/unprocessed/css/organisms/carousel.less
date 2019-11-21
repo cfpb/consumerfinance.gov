@@ -1,0 +1,41 @@
+.o-carousel {
+  width: 100%;
+
+  // Override default unordered list padding.
+  & ul {
+    padding: 0;
+  }
+
+  &_item {
+    border: 1px solid red;
+    height: 100px;
+    width: 100%;
+    padding: 30px;
+  }
+
+  &_item:nth-child(1) {
+    background: orange;
+  }
+
+  &_item:nth-child(2) {
+    background: greenyellow;
+  }
+
+  &_item:nth-child(3) {
+    background: cyan;
+  }
+
+  &_item:nth-child(4) {
+    background: forestgreen;
+  }
+}
+
+// Show no-js state of carousel where all items show and buttons are hidden.
+.no-js .o-carousel {
+  // Override u-hidden when 
+  display: block !important;
+
+  &_btn {
+    display: hidden !important;
+  }
+}
