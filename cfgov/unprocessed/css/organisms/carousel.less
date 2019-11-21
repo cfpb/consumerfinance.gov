@@ -10,14 +10,14 @@
   }
 
   &_btn {
-    position: absolute;
-    top: 50%;
-    margin-top: -16px;
+    background: @white;
+    border: none;
     border-radius: 1000px;
     width: 32px;
     height: 32px;
-    border: none;
-    background: @white;
+    margin-top: -16px;
+    position: absolute;
+    top: 50%;
 
     &-prev {
       left: 20px;
@@ -35,13 +35,13 @@
       top: -2px;
       width: 28px;
       height: 36px;
-      font-size: 40px;      
+      font-size: 40px;
     }
   }
 
   &_item {
     box-sizing: border-box;
-  
+
     // Below are temporary styles.
     border: 1px solid red;
     height: 100px;
@@ -89,7 +89,7 @@
 
 // Show no-js state of carousel where all items show and buttons are hidden.
 .no-js .o-carousel {
-  // Override u-hidden when 
+  // Override u-hidden when
   display: block !important;
 
   &_btn,
