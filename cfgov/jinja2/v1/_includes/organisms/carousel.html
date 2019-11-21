@@ -6,7 +6,7 @@
 
    Description:
 
-   Creates markup for a Carousel organism, which displays a set of 
+   Creates markup for a Carousel organism, which displays a set of
    blocks of content that can be navigated through sequentially.
 
    ========================================================================== #}
@@ -14,15 +14,30 @@
 {% macro render() %}
 
 <div class="o-carousel u-hidden">
-    <ul class="o-carousel_items">
-        <div class="o-carousel_item">Item 1</div>
-        <div class="o-carousel_item">Item 2</div>
-        <div class="o-carousel_item">Item 3</div>
-        <div class="o-carousel_item">Item 4</div>
+    <div class="o-carousel_navigator">
+
+        <button class="o-carousel_btn o-carousel_btn-prev" aria-label="Previous showcase item">
+            {{ svg_icon( 'left-round' ) }}
+        </button>
+        <button class="o-carousel_btn o-carousel_btn-next" aria-label="Next showcase item">
+            {{ svg_icon( 'right-round' ) }}
+        </button>
+
+        <ul class="o-carousel_items">
+            <div class="o-carousel_item">Item 1</div>
+            <div class="o-carousel_item">Item 2</div>
+            <div class="o-carousel_item">Item 3</div>
+            <div class="o-carousel_item">Item 4</div>
+        </ul>
+
+    </div>
+
+    <ul class="o-carousel_thumbnails">
+        <button class="o-carousel_thumbnail o-carousel_thumbnail-selected">Item 1</button>
+        <button class="o-carousel_thumbnail">Item 2</button>
+        <button class="o-carousel_thumbnail">Item 3</button>
+        <button class="o-carousel_thumbnail">Item 4</button>
     </ul>
-    
-    <button class="o-carousel_btn o-carousel_btn-prev">Prev</button>
-    <button class="o-carousel_btn o-carousel_btn-next">Next</button>
 </div>
 
 {% endmacro %}
