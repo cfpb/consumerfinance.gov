@@ -67,17 +67,22 @@ function Carousel( element ) {
     _updateDisplay( _currItemIndex, _currItemIndex + 1 );
   }
 
-
+  /**
+   * 
+   * @param {MouseEvent} event - The event object corresponding to the mouse click of a thumbnail.
+   */
   function _thumbnailClicked( event ) {
     let node = event.target;
-    // Get thumbnail index
+    // Get thumbnail index.
     let i = 0;
     while ( ( node = node.previousSibling ) !== null ) {
       if ( node.nodeType === 1 ) {
         ++i;
       }
     }
-    _updateDisplay( _currItemIndex, i );
+    if ( _currItemIndex !== i ) {
+      _updateDisplay( _currItemIndex, i );
+    }
   }
 
   /**
