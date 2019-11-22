@@ -13,22 +13,22 @@ from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 S3_PATH = 'https://files.consumerfinance.gov/a/assets/prepaid-agreements/'
 METADATA_FILENAME = 'prepaid_metadata.json'
 
-valid_products = []
-current_date = timezone.now()
 
-
-def mark_deleted_products():
-    deleted_products = PrepaidProduct.objects.exclude(pk__in=valid_products)
-    for product in deleted_products:
-        if not product.deleted_at:
-            product.deleted_at = current_date
-            product.save()
+def mark_deleted_products(valid_products):
+    PrepaidProduct.objects.exclude(
+        pk__in=valid_products
+    ).exclude(
+        deleted_at__isnull=False
+    ).update(
+        deleted_at=timezone.now()
+    )
 
 
 def import_products_data(products_data):
+    imported_products = []
     for item in products_data:
         pk = item['product_id'].replace('PRODUCT-', '')
-        valid_products.append(pk)
+        imported_products.append(pk)
 
         withdrawal_date = item['withdrawal_date']
         if withdrawal_date:
@@ -45,6 +45,7 @@ def import_products_data(products_data):
             'status': item['status'],
             'withdrawal_date': withdrawal_date
         })
+    return imported_products
 
 
 def import_agreements_data(agreements_data):
@@ -83,6 +84,6 @@ def run(*args):
     resp = requests.get(url=source_url)
     data = resp.json()
 
-    import_products_data(data['products'])
+    imported_products = import_products_data(data['products'])
     import_agreements_data(data['agreements'])
-    mark_deleted_products()
+    mark_deleted_products(imported_products)

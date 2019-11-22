@@ -95,17 +95,13 @@ def get_support_text():
         title='Prepaid agreements support and inquiries').first()
 
 
-def get_valid_products():
-    return PrepaidProduct.objects.filter(deleted_at=None)
-
-
 def index(request):
     query = request.GET.copy()
     params = dict(iterlists(query))
     available_filters = {}
     search_term = None
     search_field = None
-    products = get_valid_products()
+    products = PrepaidProduct.objects.valid()
     total_count = products.count()
     valid_filters = [
         'prepaid_type', 'status', 'issuer_name'

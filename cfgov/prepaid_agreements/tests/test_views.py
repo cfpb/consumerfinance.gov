@@ -4,25 +4,15 @@ from django.db import connection
 from django.http import HttpRequest
 from django.test import TestCase
 from django.urls import reverse
-from django.utils import timezone
 
 from prepaid_agreements.models import PrepaidProduct
 from prepaid_agreements.views import (
     filter_products, get_available_filters, get_detail_page_breadcrumb,
-    get_valid_products, search_products
+    search_products
 )
 
 
 class TestViews(TestCase):
-
-    def test_get_valid_products(self):
-        product1 = PrepaidProduct()
-        product1.save()
-        product2 = PrepaidProduct(deleted_at=timezone.now())
-        product2.save()
-        valid_products = get_valid_products()
-        self.assertIn(product1, valid_products)
-        self.assertNotIn(product2, valid_products)
 
     def test_get_available_filters(self):
         products = PrepaidProduct.objects
