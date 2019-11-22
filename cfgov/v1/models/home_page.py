@@ -40,10 +40,6 @@ _info_units_by_language = {
                     'text': 'Consumer tools',
                     'url': '/consumer-tools/',
                 },
-                {
-                    'text': 'Resources for practitioners',
-                    'url': '/practitioner-resources/',
-                },
             ],
         },
         {
@@ -64,6 +60,10 @@ _info_units_by_language = {
                     'text': 'Rulemaking',
                     'url': '/policy-compliance/rulemaking/',
                 },
+                {
+                    'text': 'Notice and Opportunities to Comment',
+                    'url': '/policy-compliance/notice-opportunities-comment/'
+                },
             ],
         },
         {
@@ -82,8 +82,12 @@ _info_units_by_language = {
             'links': [
                 {
                     'text': 'Enforcement',
-                    'url': '/policy-compliance/enforcement/'
+                    'url': '/policy-compliance/enforcement/',
                 },
+                {
+                    'text': 'Payments to harmed consumers',
+                    'url': '/about-us/payments-harmed-consumers/',
+                }
             ],
         },
         {
@@ -101,8 +105,12 @@ _info_units_by_language = {
             ),
             'links': [
                 {
-                    'text': 'Data & Research',
+                    'text': 'Data and Research',
                     'url': '/data-research/',
+                },
+                {
+                    'text': 'Financial Well-being survey',
+                    'url': '/data-research/financial-well-being-survey-data/',
                 },
             ],
         },
@@ -121,8 +129,14 @@ _info_units_by_language = {
             ),
             'links': [
                 {
-                    'text': 'Policy & Compliance',
-                    'url': '/policy-compliance/',
+                    'text': 'Compliance and Guidance',
+                    'url': '/policy-compliance/guidance/',
+                },
+                {
+                    'text': 'Supervisory Highlights',
+                    'url': (
+                        '/policy-compliance/guidance/supervisory-highlights/'
+                    ),
                 },
             ],
         },
@@ -141,8 +155,12 @@ _info_units_by_language = {
             ),
             'links': [
                 {
-                    'text': 'Events',
-                    'url': '/about-us/events/',
+                    'text': 'Archive of Events',
+                    'url': '/about-us/events/archive-past-events/',
+                },
+                {
+                    'text': 'Request a Speaker',
+                    'url': '/about-us/events/request-speaker/',
                 },
             ],
         },
