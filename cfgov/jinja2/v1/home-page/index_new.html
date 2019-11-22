@@ -10,8 +10,9 @@
     {{ o_carousel.render() }}
 {% endblock carousel %}
 
-{% with value = {'info_units': info_units, 'format': '33-33-33'} %}
-{% include 'organisms/info-unit-group-2.html' %}
-{% endwith %}
-
+<section class="block">
+    {% with value = {'info_units': info_units, 'format': '33-33-33'} %}
+    {% include 'organisms/info-unit-group-2.html' %}
+    {% endwith %}
+</section>
 {% endblock content_main %}
