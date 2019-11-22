@@ -68,11 +68,11 @@ function Carousel( element ) {
   }
 
   /**
-   * 
+   *
    * @param {MouseEvent} event - The event object corresponding to the mouse click of a thumbnail.
    */
   function _thumbnailClicked( event ) {
-    let node = event.target;
+    let node = event.currentTarget;
     // Get thumbnail index.
     let i = 0;
     while ( ( node = node.previousSibling ) !== null ) {
