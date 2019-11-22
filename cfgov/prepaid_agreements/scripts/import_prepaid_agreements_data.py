@@ -20,8 +20,9 @@ current_date = timezone.now()
 def mark_deleted_products():
     deleted_products = PrepaidProduct.objects.exclude(pk__in=valid_products)
     for product in deleted_products:
-        product.deleted_at = current_date
-        product.save()
+        if not product.deleted_at:
+            product.deleted_at = current_date
+            product.save()
 
 
 def import_products_data(products_data):
