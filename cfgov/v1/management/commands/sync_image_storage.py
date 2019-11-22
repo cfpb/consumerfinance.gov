@@ -27,22 +27,20 @@ class Command(BaseCommand):
         image_count = images.count()
 
         for i, image in enumerate(images):
-            self.stdout.write('%d/%d ' % (i + 1, image_count), ending='')
+            image_prefix = '%d/%d (%d) ' % (i + 1, image_count, image.pk)
+            self.stdout.write(image_prefix, ending='')
             self.save(base_url, dest_dir, image.file.name)
 
             renditions = image.renditions.all()
             rendition_count = renditions.count()
 
             for j, rendition in enumerate(renditions):
-                self.stdout.write(
-                    '%d/%d %d/%d ' % (
-                        i + 1,
-                        image_count,
-                        j + 1,
-                        rendition_count
-                    ),
-                    ending=''
+                rendition_prefix = '%d/%d (%d) ' % (
+                    j + 1,
+                    rendition_count,
+                    rendition.pk
                 )
+                self.stdout.write(image_prefix + rendition_prefix, ending='')
                 self.save(base_url, dest_dir, rendition.file.name)
 
     def save(self, base_url, dest_dir, path):
