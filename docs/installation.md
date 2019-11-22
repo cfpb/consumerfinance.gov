@@ -340,6 +340,27 @@ To apply any unapplied migrations to a database created from a dump, run:
 python cfgov/manage.py migrate
 ```
 
+### Sync local image storage
+
+If using a database dump, pages will contain links to images that exist in
+the database but don't exist on your local disk. This will cause broken or
+missing images when browsing the site locally.
+
+For example, in production images are stored on S3, but when running locally
+they are stored on disk.
+
+This project includes a Django management command that can be used to download
+any remote images referenced in the database so that they can be served when
+running locally.
+
+```bash
+cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
+```
+
+This downloads all remote images (and image renditions) referenced in the
+database, retrieving them from the specified URL and storing them in the
+specified local directory.
+
 ### Set variables for working with the GovDelivery API
 
 Uncomment and set the GovDelivery environment variables in your `.env` file.

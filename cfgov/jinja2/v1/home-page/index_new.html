@@ -1,14 +1,18 @@
 {% extends "layout-full.html" %}
 
-{% block content_main %}
-
-<h1>
+{% block title -%}
     {{ _('Consumer Financial Protection Bureau') }}
-</h1>
+{%- endblock %}
 
+{% block content_main %}
 {% block carousel %}
     {% import 'organisms/carousel.html' as o_carousel with context %}
     {{ o_carousel.render() }}
 {% endblock carousel %}
 
+<section class="block">
+    {% with value = {'info_units': info_units, 'format': '33-33-33'} %}
+    {% include 'organisms/info-unit-group-2.html' %}
+    {% endwith %}
+</section>
 {% endblock content_main %}

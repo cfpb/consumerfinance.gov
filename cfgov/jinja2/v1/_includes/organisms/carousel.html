@@ -11,8 +11,34 @@
 
    ========================================================================== #}
 
-{% macro render() %}
+{% macro render_carousel_item( title ) %}
+<section class="o-carousel_item">
+    <div class="o-carousel_item-text">
+        <h2>{{ title }}</h2>
+        <p>
+            {{ caller() }}
+        </p>
+    </div>
+    <div class="o-carousel_item-visual">
+        <img class="o-carousel_item-img"
+            src="https://dummyimage.com/1076x606/addc91/101820"
+            alt="">
+    </div>
+</section>
+{% endmacro %}
 
+{% macro render_carousel_thumbnail( title, is_selected=false ) %}
+<button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
+    <div class="o-carousel_thumbnail-visual">
+        <img class="o-carousel_thumbnail-img"
+            src="https://dummyimage.com/48x48/addc91/101820"
+            alt="">
+    </div>
+    <h6 class="o-carousel_thumbnail-text">{{ title }}</h6>
+</button>
+{% endmacro %}
+
+{% macro render() %}
 <div class="o-carousel u-hidden">
     <div class="o-carousel_navigator">
 
@@ -24,19 +50,32 @@
         </button>
 
         <ul class="o-carousel_items">
-            <div class="o-carousel_item">Item 1</div>
-            <div class="o-carousel_item">Item 2</div>
-            <div class="o-carousel_item">Item 3</div>
-            <div class="o-carousel_item">Item 4</div>
+
+            {% call render_carousel_item( 'Start small, Save Up campaign' ) %}
+                Lorem ipsum dolor sit amet, ei ius adhuc inani iudico, labitur instructior ex pri. Cu pri inani constituto, cum aeque noster commodo cu.
+            {% endcall %}
+
+            {% call render_carousel_item( 'Financial Literacy Month' ) %}
+                Show belly cat milk copy park pee walk owner escape bored tired cage droppings sick vet vomit favor packaging over toy cats making all the muffins get scared by doggo also cucumerro . Sit in window and stare oooh, a bird, yum meow meow.
+            {% endcall %}
+
+            {% call render_carousel_item( 'This is a key initiative' ) %}
+                Doggo ipsum dat tungg tho wrinkler heck borking doggo aqua doggo, pats heckin borkdrive. Heckin angery woofer fluffer thicc blep, big ol pupper length boy shooberino super chub, heckin shibe. Smol borking doggo with a long snoot for pats boofers borkdrive such treat fat boi, puggorino borkf long woofer.
+            {% endcall %}
+
+            {% call render_carousel_item( 'This is title fourth item' ) %}
+                Robot ipsum Zygolike perfluoroeae benzocy equiphage telluriose quinhood exbiile hysterophyceae tetride. Italocarp nonalyte silicoistically isoaria Panule genitoatory gamolog herpetoonymy. Thanatostat Sinophorous poikiloite toxoid dermatocarpous osmioopsy xennamancy. Omphaloate nanoonymy ekageny euphane forthphyll deuterolepry auxostomy. Choleid symule vicelike italoderm cacory bradynasty speleoite enneanomics. Papaphilous petaworthy eurie contrataxy poikilooideae contraal limnont quinathon umbeont. Dextomy raceade.
+            {% endcall %}
+
         </ul>
 
     </div>
 
     <ul class="o-carousel_thumbnails">
-        <button class="o-carousel_thumbnail o-carousel_thumbnail-selected">Item 1</button>
-        <button class="o-carousel_thumbnail">Item 2</button>
-        <button class="o-carousel_thumbnail">Item 3</button>
-        <button class="o-carousel_thumbnail">Item 4</button>
+        {{ render_carousel_thumbnail( 'Start small, Save Up campaign', true ) }}
+        {{ render_carousel_thumbnail( 'Financial Literacy Month' ) }}
+        {{ render_carousel_thumbnail( 'This is a key initiative' ) }}
+        {{ render_carousel_thumbnail( 'This is title fourth item' ) }}
     </ul>
 </div>
 
