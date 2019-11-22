@@ -6,8 +6,9 @@
 
 {% block content_main %}
 {% block carousel %}
-    {% import 'organisms/carousel.html' as o_carousel with context %}
-    {{ o_carousel.render() }}
+    {% with value = {'_items': carousel_items} %}
+    {% include 'organisms/carousel.html' %}
+    {% endwith %}
 {% endblock carousel %}
 
 <section class="block">
