@@ -2,7 +2,6 @@ import datetime
 import sys
 
 import localflavor
-import numpy as np
 from paying_for_college.models import (
     CONTROL_MAP, FAKE_SCHOOL_PK, HIGHEST_DEGREES, School
 )
@@ -43,20 +42,31 @@ def build_cohorts():
     return base_query
 
 
+def calculate_percentile_rank(array, target):
+    """
+    Derive a target school's percentile rank from an array of cohort scores.
+    """
+    true_false_array = [value <= target for value in array]
+    if len(true_false_array) == 0:
+        return
+    raw_rank = float(sum(true_false_array)) / len(true_false_array)
+    return int(round(raw_rank * 100))
+
+
 def rank_by_metric(school, cohort, metric):
     """
-    Calculate a school's percentile rank among a cohort by 3 metrics.
+    Return a school's percentile rank among a cohort by 3 metrics.
 
-    Metrics are grad_rate, repay_rate and median_total_debt.
+    Possible cohorts are by state, by highest degree, or by control type.
+    Possible metrics are grad rate, repayment rate, or median total debt.
     """
     values = [getattr(s, metric) for s in cohort if getattr(s, metric)]
     payload = {'cohort_count': len(values)}
-    array = np.array([float(val) for val in values])
-    value_array = np.array([float(getattr(school, metric))])
-    # Assemble an array of True/False values based on whether 
-    # a cohort metric is less than the target metric, then find the mean
-    raw_rank = (array <= value_array[:, None]).mean()
-    payload.update({'percentile_rank': int(round(raw_rank * 100))})
+    array = [float(val) for val in values]
+    target_value = float(getattr(school, metric))
+    payload.update({
+        'percentile_rank': calculate_percentile_rank(array, target_value)
+    })
     return payload
 
 
@@ -72,7 +82,7 @@ def run(single_school=None):
         by_control = {}
         by_highest_degree = {}
         count += 1
-        if count % 500 == 0:
+        if count % 500 == 0:  # pragma: no cover
             print(count)
         state_cohort = STATE.get(school.state) if school.state else None
         control_cohort = CONTROL.get(

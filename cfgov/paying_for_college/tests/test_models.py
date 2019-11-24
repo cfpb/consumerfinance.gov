@@ -431,7 +431,7 @@ class SchoolCohortTest(TestCase):
 
     def test_highest_degree_cohort(self):
         test_school = School.objects.get(pk=155317)
-        self.assertEqual(4, len(test_school.get_cohort('degrees_highest')))
+        self.assertEqual(5, len(test_school.get_cohort('degrees_highest')))
 
     def test_state_cohort(self):
         test_school = School.objects.get(pk=100636)
@@ -439,11 +439,14 @@ class SchoolCohortTest(TestCase):
 
     def test_control_cohort(self):
         test_school = School.objects.get(pk=155317)
-        self.assertEqual(6, len(test_school.get_cohort('control')))
+        self.assertEqual(7, len(test_school.get_cohort('control')))
 
     # def get_cohort_rank(self, cohort, metric):
     def test_get_cohort_rank(self):
         test_school = School.objects.get(pk=155317)
-        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'grad_rate')))  # noqa
-        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'repay_rate')))  # noqa
-        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'median_total_debt')))  # noqa
+        self.assertEqual(5, len(test_school.get_cohort_rank(
+            'degrees_highest', 'grad_rate')))
+        self.assertEqual(4, len(test_school.get_cohort_rank(
+            'degrees_highest', 'repay_rate')))
+        self.assertEqual(5, len(test_school.get_cohort_rank(
+            'degrees_highest', 'median_total_debt')))

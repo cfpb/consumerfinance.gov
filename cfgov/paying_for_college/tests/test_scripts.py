@@ -13,8 +13,8 @@ from django.utils import timezone
 
 import requests
 from paying_for_college.disclosures.scripts import (
-    api_utils, nat_stats, notifications, purge_objects, tag_settlement_schools,
-    update_colleges, update_ipeds
+    api_utils, nat_stats, notifications, process_cohorts, purge_objects,
+    tag_settlement_schools, update_colleges, update_ipeds
 )
 from paying_for_college.disclosures.scripts.ping_edmc import (
     EDMC_DEV, ERRORS, OID, notify_edmc
@@ -145,6 +145,57 @@ class TestScripts(django.test.TestCase):
             patcher = patch(base + method)
             patcher.start()
             self.addCleanup(patcher.stop)
+
+    def test_process_cohorts(self):
+        school = School.objects.get(pk=100654)
+        base_query = process_cohorts.build_cohorts()
+        cohort = process_cohorts.STATE.get(school.state)
+        metric = 'grad_rate'
+        self.assertEqual(
+            base_query.count(), 6)
+        self.assertEqual(
+            process_cohorts.rank_by_metric(school, cohort, metric).get(
+                'percentile_rank'),
+            100
+        )
+
+    def test_percentile_rank_blank_array(self):
+        self.assertIs(
+            process_cohorts.calculate_percentile_rank([], 0.50),
+            None
+        )
+
+    def test_run_cohorts(self):
+        school = School.objects.get(pk=100654)
+        self.assertIs(
+            school.cohort_ranking_by_state,
+            None
+        )
+        process_cohorts.run()
+        school.refresh_from_db()
+        self.assertEqual(
+            type(school.cohort_ranking_by_state),
+            dict
+        )
+        self.assertEqual(
+            school.cohort_ranking_by_state.get(
+                'grad_rate').get('percentile_rank'),
+            100
+        )
+
+    def test_run_cohorts_singleton(self):
+        school = School.objects.get(pk=100654)
+        self.assertIs(
+            school.cohort_ranking_by_state,
+            None
+        )
+        process_cohorts.run(single_school=100654)
+        school.refresh_from_db()
+        self.assertEqual(
+            school.cohort_ranking_by_state.get(
+                'grad_rate').get('percentile_rank'),
+            100
+        )
 
     def test_icomma(self):
         icomma_test = update_ipeds.icomma(445999)
