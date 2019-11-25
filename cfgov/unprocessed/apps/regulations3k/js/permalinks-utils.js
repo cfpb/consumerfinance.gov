@@ -125,8 +125,10 @@ const getCommentMarker = label => {
   if ( splitCurrentParagraph !== null ) {
     commentedParagraphID = splitCurrentParagraph[0]
       .split( '-' );
-    commentParagraphID = splitCurrentParagraph[1]
-      .split( '-' );
+    if ( splitCurrentParagraph[1] ) {
+      commentParagraphID = splitCurrentParagraph[1]
+        .split( '-' );
+    }
   }
   if ( commentedParagraphID !== null ) {
     commentedSection = commentedParagraphID[0];
@@ -139,11 +141,13 @@ const getCommentMarker = label => {
         .join( ')(' );
       commentedParagraph = '(' + commentedParagraph + ')';
     }
-    commentParagraph = commentParagraphID
-      .slice( 1 )
-      .join( '.' );
-    if ( commentParagraph !== '' ) {
-      commentParagraph = '-' + commentParagraph;
+    if ( commentParagraphID !== '' ) {
+      commentParagraph = commentParagraphID
+        .slice( 1 )
+        .join( '.' );
+      if ( commentParagraph !== '' ) {
+        commentParagraph = '-' + commentParagraph;
+      }
     }
   }
 
