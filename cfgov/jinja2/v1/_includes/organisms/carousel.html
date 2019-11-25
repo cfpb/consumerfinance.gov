@@ -9,36 +9,52 @@
    Creates markup for a Carousel organism, which displays a set of
    blocks of content that can be navigated through sequentially.
 
+   value._items:                Carousel content panels.
+
+   item.title:                  Panel title.
+
+   item.body:                   Panel body text.
+
+   item.link.text:              Panel link text.
+
+   item.link.url:               Panel link URL.
+
+   item.image.url:              URL to panel image.
+
+   item.image.alt_text:         Alt text for panel image.
+
+   item.image.thumbnail_url:    URL to panel thumbnail image.
+
    ========================================================================== #}
 
-{% macro render_carousel_item( title ) %}
+{% macro render_carousel_item( item ) %}
 <section class="o-carousel_item">
     <div class="o-carousel_item-text">
-        <h2>{{ title }}</h2>
-        <p>
-            {{ caller() }}
-        </p>
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.body }}</p>
+        <p><a href="{{ item.link.url }}">{{ item.link.text }}</a></p>
     </div>
     <div class="o-carousel_item-visual">
         <img class="o-carousel_item-img"
-            src="https://dummyimage.com/1076x606/addc91/101820"
-            alt="">
+             src="{{ item.image.url }}"
+             alt="{{ item.image.alt_text }}"
+        >
     </div>
 </section>
 {% endmacro %}
 
-{% macro render_carousel_thumbnail( title, is_selected=false ) %}
+{% macro render_carousel_thumbnail( item, is_selected=false ) %}
 <button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
     <div class="o-carousel_thumbnail-visual">
         <img class="o-carousel_thumbnail-img"
-            src="https://dummyimage.com/48x48/addc91/101820"
-            alt="">
+             src="{{ item.image.thumbnail_url }}"
+             alt="{{ item.image.alt_text }}">
     </div>
-    <h6 class="o-carousel_thumbnail-text">{{ title }}</h6>
+    <h6 class="o-carousel_thumbnail-text">{{ item.title }}</h6>
 </button>
 {% endmacro %}
 
-{% macro render() %}
+{% macro render(value) %}
 <div class="o-carousel u-hidden">
     <div class="o-carousel_navigator">
 
@@ -50,33 +66,19 @@
         </button>
 
         <ul class="o-carousel_items">
-
-            {% call render_carousel_item( 'Start small, Save Up campaign' ) %}
-                Lorem ipsum dolor sit amet, ei ius adhuc inani iudico, labitur instructior ex pri. Cu pri inani constituto, cum aeque noster commodo cu.
-            {% endcall %}
-
-            {% call render_carousel_item( 'Financial Literacy Month' ) %}
-                Show belly cat milk copy park pee walk owner escape bored tired cage droppings sick vet vomit favor packaging over toy cats making all the muffins get scared by doggo also cucumerro . Sit in window and stare oooh, a bird, yum meow meow.
-            {% endcall %}
-
-            {% call render_carousel_item( 'This is a key initiative' ) %}
-                Doggo ipsum dat tungg tho wrinkler heck borking doggo aqua doggo, pats heckin borkdrive. Heckin angery woofer fluffer thicc blep, big ol pupper length boy shooberino super chub, heckin shibe. Smol borking doggo with a long snoot for pats boofers borkdrive such treat fat boi, puggorino borkf long woofer.
-            {% endcall %}
-
-            {% call render_carousel_item( 'This is title fourth item' ) %}
-                Robot ipsum Zygolike perfluoroeae benzocy equiphage telluriose quinhood exbiile hysterophyceae tetride. Italocarp nonalyte silicoistically isoaria Panule genitoatory gamolog herpetoonymy. Thanatostat Sinophorous poikiloite toxoid dermatocarpous osmioopsy xennamancy. Omphaloate nanoonymy ekageny euphane forthphyll deuterolepry auxostomy. Choleid symule vicelike italoderm cacory bradynasty speleoite enneanomics. Papaphilous petaworthy eurie contrataxy poikilooideae contraal limnont quinathon umbeont. Dextomy raceade.
-            {% endcall %}
-
+            {% for item in value._items %}
+                {{ render_carousel_item( item ) }}
+            {% endfor %}
         </ul>
 
     </div>
 
     <ul class="o-carousel_thumbnails">
-        {{ render_carousel_thumbnail( 'Start small, Save Up campaign', true ) }}
-        {{ render_carousel_thumbnail( 'Financial Literacy Month' ) }}
-        {{ render_carousel_thumbnail( 'This is a key initiative' ) }}
-        {{ render_carousel_thumbnail( 'This is title fourth item' ) }}
+        {% for item in value._items %}
+            {{ render_carousel_thumbnail( item, loop.first ) }}
+        {% endfor %}
     </ul>
 </div>
-
 {% endmacro %}
+
+{% if value %}{{ render(value) }}{% endif %}

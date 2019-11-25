@@ -19,6 +19,82 @@ from v1.util import ref
 
 
 """Placeholder until these are exposed in the Wagtail admin."""
+_placeholder_carousel_image_url = (
+    'https://files.consumerfinance.gov/f/original_images/'
+    'cfpb_mayg_bookshelf_puppy-in-the-window.jpg'
+)
+
+
+_placeholder_carousel_image = {
+    'url': _placeholder_carousel_image_url,
+    'alt_text': 'Alt text goes here',
+    'thumbnail_url': _placeholder_carousel_image_url,
+}
+
+
+_carousel_items_by_language = {
+    'en': [
+        {
+            'title': 'Start Small, Save Up',
+            'body': (
+                'Whether you want to put money aside for unexpected expenses '
+                'or make a plan to save for your future goals, we have '
+                'resources that can help.'
+            ),
+            'link': {
+                'text': 'Learn how to get started',
+                'url': '/start-small-save-up/',
+            },
+            'image': _placeholder_carousel_image,
+        },
+        {
+            'title': 'Tax time',
+            'body': (
+                'Take advantage of the time when you are filing your tax '
+                'return to set aside a portion of your refund towards savings.'
+            ),
+            'link': {
+                'text': 'Learn more about tax time savings',
+                'url': '/about-us/blog/tax-time-saving-tips/',
+            },
+            'image': _placeholder_carousel_image,
+        },
+        {
+            'title': 'Building a Bridge to Credit Visibility Symposium',
+            'body': (
+                'Mark your Calendar to join the Bureau for a day-long '
+                'symposium on September 17, 2018, from 8:00am to 4:45pm'
+            ),
+            'link': {
+                'text': 'Learn more about this event',
+                'url': (
+                    '/about-us/events/archive-past-events'
+                    '/building-bridge-credit-visibility/'
+                ),
+            },
+            'image': _placeholder_carousel_image,
+        },
+        {
+            'title': 'Equifax data breach updates',
+            'body': (
+                'Today the CFPB, FTC and States Announced Settlement with '
+                'Equifax Over 2017 Data Breach.'
+            ),
+            'link': {
+                'text': 'Find out more details',
+                'url': '/equifax-settlement/',
+            },
+            'image': _placeholder_carousel_image,
+        },
+    ],
+}
+
+
+# TODO: Add real carousel content for Spanish.
+_carousel_items_by_language['es'] = _carousel_items_by_language['en']
+
+
+"""Placeholder until these are exposed in the Wagtail admin."""
 _info_units_by_language = {
     'en': [
         {
@@ -217,10 +293,14 @@ class HomePage(CFGOVPage):
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
         context.update({
+            'carousel_items': self.get_carousel_items(),
             'info_units': self.get_info_units(),
             'latest_updates': self.get_latest_updates(request),
         })
         return context
+
+    def get_carousel_items(self):
+        return _carousel_items_by_language[self.language]
 
     def get_info_units(self):
         return [
