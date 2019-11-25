@@ -27,7 +27,6 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from jinja2 import Markup
 from taggit.models import Tag
 
-import ask_cfpb
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
 from v1.util import ref
@@ -1222,16 +1221,6 @@ class ResourceList(blocks.StructBlock):
         label = 'Resource List'
         icon = 'table'
         template = '_includes/organisms/resource-list.html'
-
-
-class AskCategoryCard(ModelList):
-
-    def render(self, value, context=None):
-        value['category'] = ask_cfpb.models.Category.objects.first()
-        value.update(context or {})
-
-        template = '_includes/organisms/ask-cfpb-card.html'
-        return render_to_string(template, value)
 
 
 class DataSnapshot(blocks.StructBlock):

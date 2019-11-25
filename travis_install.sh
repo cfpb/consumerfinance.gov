@@ -2,6 +2,7 @@
 
 # Install frontend dependencies
 frontend() {
+    npm install --global gulp-cli
     chmod +x ./frontend.sh
     ./frontend.sh development
 }
