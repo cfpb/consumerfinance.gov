@@ -101,7 +101,7 @@ def index(request):
     available_filters = {}
     search_term = None
     search_field = None
-    products = PrepaidProduct.objects
+    products = PrepaidProduct.objects.valid()
     total_count = products.count()
     valid_filters = [
         'prepaid_type', 'status', 'issuer_name'
