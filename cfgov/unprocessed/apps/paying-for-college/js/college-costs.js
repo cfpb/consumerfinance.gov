@@ -9,6 +9,7 @@ import { stateModel } from './models/state-model.js';
 import { navigationView } from './views/navigation-view.js';
 import { financialView } from './views/financial-view.js';
 import { schoolView } from './views/school-view.js';
+import { fixedSticky } from './views/fixed-sticky-view.js';
 
 import { updateState } from './dispatchers/update-state.js';
 
@@ -25,13 +26,14 @@ const init = function() {
   financialModel.init();
 
   financialView.updateFinancialItems();
-
   console.log( financialModel.values );
 
+  fixedSticky.init( document.getElementById( 'costs-not-covered' ) );
+
   // Get stuff started
-  // navigationView.activateGetStartedBtn();
-  // navigationView._handleGetStartedBtnClick();
-  // updateState.activeSection( 'save-and-finish' );
+  navigationView.activateGetStartedBtn();
+  navigationView._handleGetStartedBtnClick();
+  updateState.activeSection( 'grants-scholarships' );
 
 };
 

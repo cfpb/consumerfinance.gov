@@ -228,12 +228,12 @@
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="costs__roomboard">
+                    <label class="form-label" for="costs__room-board">
                         Housing and meals
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="costs__room-board" name="costs__roomboard" data-financial-item="dirCost_housing" autocorrect="off" value="0">
+                    <input type="text" id="costs__room-board" name="costs__room-board" data-financial-item="dirCost_housing" autocorrect="off" value="0">
                 </div>
             </div>
             <div class="financial-item form-group_item">
@@ -312,8 +312,13 @@
             <div class="m-notification m-notification__visible">
                 {{ svg_icon('information-round') }}
                 <div class="m-notification_content">
-                    <p class="m-notification_explanation">Not sure where your grants and scholarships are listed? One way to identify grants and scholarships on your offer is to use  the Hechinger Report’s OfferLetterDECODER, which color codes the different types of funding in offers uploaded as PDFs. (This links to a third-party resource. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.)</p>
+                    Not sure where your grants and scholarships are listed? One way to identify grants and scholarships on your offer is to use  the Hechinger Report’s OfferLetterDECODER, which color codes the different types of funding in offers uploaded as PDFs. (This links to a third-party resource. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.)
                 </div>
+            </div>
+
+            <div id="costs-not-covered" class="costs-not-covered">
+                <div class="costs-not-covered_title">Costs not covered yet</div>
+                <div class="costs-not-covered_amount"><span data-financial-item="total_gap"></div>
             </div>
 
             <h3 class="header_bottom-line">Grants</h3>
@@ -444,12 +449,12 @@
 
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="income_workstudy">
+                    <label class="form-label" for="income__workstudy">
                         Estimated work-study income
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="income_workstudy" name="income_workstudy" data-financial-item="income_workStudy" autocorrect="off" value="0">
+                    <input type="text" id="income__workstudy" name="income__workstudy" data-financial-item="income_workStudy" autocorrect="off" value="0">
                 </div>
             </div>
 
@@ -591,18 +596,18 @@
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="">Interest rate (%)</label>
+                    <label class="form-label" for="loans__schoolLoanRate">Interest rate (%)</label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-item="rate_schoolLoan">9.99%</span>
+                    <input class="financial-item_total" id="loans__schoolLoanRate" name="loans__schoolLoanRate" data-financial-item="rate_schoolLoan" value="9.99%">
                 </div>
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="">Loan fee (%)</label>
+                    <label class="form-label" for="loans__schoolLoanFee">Loan fee (%)</label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-item="fee_schoolLoan">9.99%</span>
+                    <input class="financial-item_total" id="loans__schoolLoanFee" name="loans__schoolLoanFee" data-financial-item="fee_schoolLoan" value="9.99%">
                 </div>
             </div>
             <div class="financial-item form-group_item financial-item__lined">
@@ -638,52 +643,52 @@
 
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="savings_personal">
+                    <label class="form-label" for="savings__personal">
                         Personal savings
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="savings_personal" name="savings_personal" data-financial-item="savings_personal" autocorrect="off" value="0">
+                    <input type="text" id="savings__personal" name="savings__personal" data-financial-item="savings_personal" autocorrect="off" value="0">
                 </div>
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="savings_family">
+                    <label class="form-label" for="savings__family">
                         Family contribution
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="savings_family" name="savings_family" data-financial-item="savings_family" autocorrect="off" value="0">
+                    <input type="text" id="savings__family" name="savings__family" data-financial-item="savings_family" autocorrect="off" value="0">
                 </div>
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="income_job">
+                    <label class="form-label" for="income__job">
                         Estimated off-campus job income
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="income_job" name="income_job" data-financial-item="income_job" autocorrect="off" value="0">
+                    <input type="text" id="income__job" name="income__job" data-financial-item="income_job" autocorrect="off" value="0">
                 </div>
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="income_tanf">
+                    <label class="form-label" for="income__tanf">
                         Estimated income from TANF
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="income_tanf" name="income_tanf" data-financial-item="income_tanf" autocorrect="off" value="0">
+                    <input type="text" id="income__tanf" name="income__tanf" data-financial-item="income_tanf" autocorrect="off" value="0">
                 </div>
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="income_snap">
+                    <label class="form-label" for="income__snap">
                         Estimated income from SNAP
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="income_snap" name="income_snap" data-financial-item="income_snap" autocorrect="off" value="0">
+                    <input type="text" id="income__snap" name="income__snap" data-financial-item="income_snap" autocorrect="off" value="0">
                 </div>
             </div>
 

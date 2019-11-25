@@ -29,10 +29,10 @@ const financialView = {
     } );
 
     financialView._actionPlanChoices.forEach( elem => {
-        const events = {
-            click: this._handleActionPlanClick
-        }
-        bindEvent( elem, events );
+      const events = {
+        click: this._handleActionPlanClick
+      };
+      bindEvent( elem, events );
     } );
 
     bindEvent( financialView._actionPlanSeeSteps, { click: this._handleSeeStepsClick } );
@@ -46,18 +46,18 @@ const financialView = {
   _handleActionPlanClick: function( event ) {
     const target = event.target;
     financialView._actionPlanChoices.forEach( elem => {
-        elem.classList.remove( 'highlighted' );
+      elem.classList.remove( 'highlighted' );
     } );
 
     if ( target.matches( '.m-form-field' ) ) {
       console.log( 'form-field' );
-        target.classList.add( 'highlighted' );
-        target.querySelector( 'input' ).setAttribute( 'checked', true );
+      target.classList.add( 'highlighted' );
+      target.querySelector( 'input' ).setAttribute( 'checked', true );
     } else {
-        console.log( 'not form-field' );
-        const div = closest( target, '.m-form-field' );
-        div.classList.add( 'highlighted' );
-        div.querySelector( 'input' ).setAttribute( 'checked', true );
+      console.log( 'not form-field' );
+      const div = closest( target, '.m-form-field' );
+      div.classList.add( 'highlighted' );
+      div.querySelector( 'input' ).setAttribute( 'checked', true );
     }
 
     financialView._actionPlanSeeSteps.removeAttribute( 'disabled' );
@@ -91,21 +91,21 @@ const financialView = {
    * Event handling for "see steps" action plan button
    * @param {Object} event - Triggering event
    */
-   _handleSeeStepsClick: function( event ) {
+  _handleSeeStepsClick: function( event ) {
     // TODO - This could all be written better.
-    const selected = document.querySelector( '.action-plan_choices .highlighted input[checked="true"]');
+    const selected = document.querySelector( '.action-plan_choices .highlighted input[checked="true"]' );
     document.querySelectorAll( '[data-action-plan]' ).forEach( elem => {
-      elem.classList.remove( 'active' );  
+      elem.classList.remove( 'active' );
     } );
     document.querySelector( '[data-action-plan="' + selected.value + '"]' ).classList.add( 'active' );
     document.querySelector( '.action-plan .action-plan_feeling-gauge' ).classList.add( 'active' );
-   },
+  },
 
   updateFinancialItems: function() {
     clearTimeout( this._calculatingTimeout );
 
     this._financialItems.forEach( elem => {
-        
+
       if ( !elem.matches( ':focus' ) ) {
         const prop = elem.dataset.financialItem;
         const isRate = prop.substr( 0, 5 ) === 'rate_';
