@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
-from re import search, IGNORECASE
 
 from v1.models import DocumentDetailPage
 from v1.util.migrations import get_stream_data, set_stream_data
-from v1.tests.wagtail_pages.helpers import publish_changes
+
 
 def update_sidefoot():
     draft_pages = []
@@ -32,7 +31,7 @@ def update_sidefoot():
     if len(draft_pages) > 0:
         print('Skipped the following draft pages:', ' '.join(draft_pages))
     else:
-        print('No draft pages found, updates made to all valid enforcement actions pages')
+        print('No draft pages found, all valid enforcement pages updated')
 
 
 def run():
