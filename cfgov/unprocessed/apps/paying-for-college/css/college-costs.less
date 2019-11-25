@@ -3,6 +3,7 @@
 
 	> .wrapper > .content_main {
 		padding-top: 0;
+		position: relative;
 	}
 
 	& .content_main:after {
@@ -67,9 +68,16 @@
 					font-size: unit( 18px / @base-font-size-px, em );
 				}
 
-				// Non-active nav sub-items are hidden	
+				// Non-active, non-open nav sub-items are hidden	
 				& > ul > li {
 					display: none;
+				}
+
+				&.active,
+				&.open {
+					> ul > li {
+						display: block;
+					}
 				}
 
 				&.active {
@@ -79,12 +87,8 @@
 						font-weight: 600;
 					}
 
-					> ul > li {
-						display: block;
-
-						&.active > button {
-							font-weight: 600;
-						}
+					> ul > li.active > button {
+						font-weight: 600;
 					}
 				}
 			}
@@ -209,103 +213,127 @@
 				margin-bottom: unit( 30px / @base-font-size-px, em );
 				margin-top: unit( 30px / @base-font-size-px, em );
 			}
-		}
 
-		.affording,
-		.make-a-plan {
-			&_gap {
-				color: @red;
-				font-weight: 500;
-			}
-		}
-
-		.number-callout {
-			padding-top: unit( 10px / @base-font-size-px, em );
-			margin-top: unit( 20px / @base-font-size-px, em );
-
-			&__lined {
-				border-top: 1px solid @gray-40;
-			}
-
-			&_header {
-				font-size: unit( 16px / @base-font-size-px, em );
-				margin-bottom: 0;
-				text-transform: uppercase;
-			}
-
-			&_value {
-				font-size: 28px;
-			    font-weight: 600;
-			    margin-top: 0;
-			    margin-bottom: unit( 10px / @base-font-size-px, em );
-			}
-
-			& + .number-callout {
-				margin-top: unit( 30px / @base-font-size-px, em );
-			}
-		}
-
-		.summary {
-			&_header {
-				margin-top: unit( 30px / @base-font-size-px, em );
-			}
-
-			& .financial-item__lined {
-				padding-bottom: unit( 10px / @base-font-size-px, em );
-				margin-top: 0;
-
-				&.financial-item__last {
-					border-bottom: 1px solid @gray-40;
+			.affording,
+			.make-a-plan {
+				&_gap {
+					color: @red;
+					font-weight: 500;
 				}
 			}
-		}
 
-		.action-plan {
-			&_choices {
-				display: table;
-				margin-bottom: unit( 15px / @base-font-size-px, em );
+			.number-callout {
+				padding-top: unit( 10px / @base-font-size-px, em );
+				margin-top: unit( 20px / @base-font-size-px, em );
 
-				.m-form-field {
-					background-color: @gray-10;
-					border: 1px solid white;
-					display: table-cell;
-					padding: 0;
-					width: 50%;
+				&__lined {
+					border-top: 1px solid @gray-40;
+				}
 
-					label {
-						padding: unit( 15px / @base-font-size-px, em );
-					}
+				&_header {
+					font-size: unit( 16px / @base-font-size-px, em );
+					margin-bottom: 0;
+					text-transform: uppercase;
+				}
 
-					&.highlighted {
-						background-color: @pacific-10;
-						border: 1px solid @pacific;
+				&_value {
+					font-size: 28px;
+				    font-weight: 600;
+				    margin-top: 0;
+				    margin-bottom: unit( 10px / @base-font-size-px, em );
+				}
+
+				& + .number-callout {
+					margin-top: unit( 30px / @base-font-size-px, em );
+				}
+			}
+
+			.summary {
+				&_header {
+					margin-top: unit( 30px / @base-font-size-px, em );
+				}
+
+				& .financial-item__lined {
+					padding-bottom: unit( 10px / @base-font-size-px, em );
+					margin-top: 0;
+
+					&.financial-item__last {
+						border-bottom: 1px solid @gray-40;
 					}
 				}
+			}
+
+			.action-plan {
+				&_choices {
+					display: table;
+					margin-bottom: unit( 15px / @base-font-size-px, em );
+
+					.m-form-field {
+						background-color: @gray-10;
+						border: 1px solid white;
+						display: table-cell;
+						padding: 0;
+						width: 50%;
+
+						label {
+							padding: unit( 15px / @base-font-size-px, em );
+						}
+
+						&.highlighted {
+							background-color: @pacific-10;
+							border: 1px solid @pacific;
+						}
+					}
+					
+					&__spacer {
+						border-right: unit( 15px / @base-font-size-px, em ) solid white;
+					}
+				}
+
+				&_steps {
+					display: none;
+					padding-top: unit( 30px / @base-font-size-px, em );
+
+					&.active {
+						display: block;
+					}
+				}
+
+				&_feeling-gauge {
+					display: none;
+					margin-top: unit( 30px / @base-font-size-px, em );
+
+					&.active {
+						display: block;
+					}
+				}
+			}
+
+			.costs-not-covered {
+				&_title {
+					font-weight: 500;
+					text-transform: uppercase;
+				}
+				&_amount {
+					font-weight: 500;
+					font-size: unit( 18px / @base-font-size-px, em );
+				}
+				position: absolute;
+				top: 0;
+				right: 0;
 				
-				&__spacer {
-					border-right: unit( 15px / @base-font-size-px, em ) solid white;
-				}
-			}
-
-			&_steps {
-				display: none;
-				padding-top: unit( 30px / @base-font-size-px, em );
-
-				&.active {
-					display: block;
-				}
-			}
-
-			&_feeling-gauge {
-				display: none;
+				border-right: 5px solid @red;
 				margin-top: unit( 30px / @base-font-size-px, em );
+				padding: 0 unit( 10px / @base-font-size-px, em );
+				text-align: right;
 
-				&.active {
-					display: block;
+				&.stuck {
+					position: fixed;
+					right: 0px;
+    				top: 0px;
 				}
+
 			}
-
-
 		}
 
 		.school-results {

@@ -54,9 +54,16 @@ const navigationView = {
     if ( typeof target.dataset.nav_item !== 'undefined' ) {
       updateState.activeSection( target.dataset.nav_item );
     } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
+      // Close all open menu section
+      navigationView._navListItems.forEach( elem => {
+        elem.classList.remove( 'open' );
+      } );
+      // Open the clicked menu section
       const parent = closest( target, '.o-college-costs-nav__section' );
-      const elem = parent.querySelector( '.o-college-costs-nav__section ul li button' );
-      updateState.activeSection( elem.dataset.nav_item );
+      parent.classList.add( 'open' );
+
+      /* const elem = parent.querySelector( '.o-college-costs-nav__section ul li button' );
+         updateState.activeSection( elem.dataset.nav_item ); */
     }
   },
 
