@@ -79,7 +79,7 @@ def update(exclude_ids=[], single_school=None):
 
     exclude_ids += [FAKE_SCHOOL_PK]
     NO_DATA = []  # API failed to respond or provided no data
-    CLOSED = 0  # schools that have closed since our last scrape
+    CLOSED = []  # schools that have closed since our last scrape
     START_MSG = "Requesting latest school data."
     JOB_MSG = (
         "The job is paced to be friendly to the Scorecard API, "
@@ -119,7 +119,7 @@ def update(exclude_ids=[], single_school=None):
             if data.get('school.operating') == 0:
                 school.operating = False
                 school.save()
-                CLOSED += 1
+                CLOSED.append(school)
                 continue
             else:
                 data['school.operating'] = True
@@ -151,11 +151,16 @@ def update(exclude_ids=[], single_school=None):
     \n{} took {} to run""".format(
         UPDATE_COUNT,
         len(NO_DATA),
-        CLOSED,
+        len(CLOSED),
         SCRIPTNAME,
         (datetime.datetime.now() - STARTER))
     if NO_DATA:
-        logger.info("Schools for which we found no data:")
+        logger.info("\n\nSchools for which we found no data:")
         for school in NO_DATA:
             logger.info("{} ({})".format(school.primary_alias, school.pk))
+    if CLOSED:
+        logger.info("\n\nSchools that have closed since the last update:")
+        for school in CLOSED:
+            logger.info("- {} ({})".format(school.primary_alias, school.pk))
+
     return (NO_DATA, endmsg)
