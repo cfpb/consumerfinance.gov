@@ -1,8 +1,7 @@
 .o-carousel {
 
-  // Override default unordered list and button padding and button border.
-  & ul,
-  & button {
+  // Override default unordered list padding.
+  & ul {
     padding: 0;
   }
 
@@ -74,6 +73,8 @@
     // the border set on the parent.
     margin-left: -1px;
     margin-top: -1px;
+    // Remove default button padding.
+    padding: 0;
     border: 1px solid @gray;
     border-bottom: none;
     background: @white;
