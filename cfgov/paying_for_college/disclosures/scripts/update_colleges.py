@@ -92,13 +92,12 @@ def update(exclude_ids=[], single_school=None):
     PROCESSED = 0
     UPDATE_COUNT = 0
     id_url = "{0}&id={1}&fields={2}"
+    base_query = School.objects.exclude(pk__in=exclude_ids)
     if single_school:
-        base_query = School.objects.exclude(
-            pk__in=exclude_ids).filter(pk=single_school)
+        base_query = base_query.filter(pk=single_school)
         logger.info("Updating {}".format(base_query[0]))
     else:
-        base_query = School.objects.filter(
-            operating=True).exclude(pk__in=exclude_ids)
+        base_query = base_query.filter(operating=True)
     for school in base_query:
         UPDATED = False
         PROCESSED += 1
