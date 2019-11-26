@@ -83,6 +83,9 @@
     flex-direction: column;
     min-width: 200px;
     width: 25%;
+
+    // To avoid a double border, we offset the position by a pixel to overlap
+    // the border set on the parent.
     margin-left: -1px;
     margin-top: -1px;
     border: 1px solid @gray;
