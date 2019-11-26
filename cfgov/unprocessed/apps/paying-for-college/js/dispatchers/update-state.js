@@ -7,7 +7,6 @@ import { financialView } from '../views/financial-view.js';
 import { schoolView } from '../views/school-view.js';
 
 const updateState = {
-
   /**
    * activeSection - Change the active navigation view, trigger an update
    * for the navigationView
@@ -24,6 +23,14 @@ const updateState = {
     if ( bool === true ) {
       stateModel.gotStarted = true;
     }
+  },
+
+  setProgramData: function( prop, value ) {
+    stateModel.programData[prop] = value;
+  },
+
+  byProperty: function( prop, value ) {
+    stateModel[prop] = value;
   }
 
 };

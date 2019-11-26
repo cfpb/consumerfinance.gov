@@ -5,11 +5,13 @@ based on these costs.
 */
 
 import { createFinancials } from '../dispatchers/update-models.js';
+import { getSchoolValue, getConstantsValue } from '../dispatchers/get-model-values.js';
+import { recalculate } from '../dispatchers/recalculate.js'
 
 const financialModel = {
   values: {},
 
-  createFinancialProperty: name => {
+  createFinancialProperty: function( name, value ) {
     if ( !financialModel.values.hasOwnProperty( name ) ) {
       financialModel.values[name] = 0;
     }
@@ -19,6 +21,8 @@ const financialModel = {
     if ( financialModel.values.hasOwnProperty( name ) ) {
       financialModel.values[name] = value;
       financialModel.calculateTotals();
+
+      recalculate();
     }
   },
 
@@ -57,6 +61,10 @@ const financialModel = {
       }
     }
 
+    // Calculate totals
+    totalContributions = totalGrants + totalScholarships + totalSavings + totalIncome;
+    totalLoans = totalFedLoans + totalSchoolLoans + totalPrivateLoans;
+
     // Update the model
     financialModel.values.total_directCosts = totalDirectCosts;
     financialModel.values.total_indirectCosts = totalIndirectCosts;
@@ -64,41 +72,36 @@ const financialModel = {
     financialModel.values.total_scholarships = totalScholarships;
     financialModel.values.total_savings = totalSavings;
     financialModel.values.total_income = totalIncome;
-
-    totalContributions = totalGrants + totalScholarships + totalSavings + totalIncome;
-
     financialModel.values.total_costs = totalDirectCosts + totalIndirectCosts;
     financialModel.values.total_grantsScholarships = totalGrants + totalScholarships;
-
+    financialModel.values.total_otherResources = totalSavings + totalIncome;
     financialModel.values.total_fedLoans = totalFedLoans;
     financialModel.values.total_schoolLoans = totalSchoolLoans;
-
-    totalLoans = totalFedLoans + totalSchoolLoans + totalPrivateLoans;
-
+    financialModel.values.total_borrowing = totalLoans;
     financialModel.values.total_gap = totalDirectCosts + totalIndirectCosts - totalContributions -
             totalLoans;
   },
 
   /**
-      * init - Initialize this model
-      */
+    * init - Initialize this model
+    */
   init: () => {
     // These are test values used only for development purposes.
 
-    financialModel.setValue( 'dirCost_tuition', 45520 );
-    financialModel.setValue( 'dirCost_housing', 3500 );
-    financialModel.setValue( 'indiCost_books', 1100 );
-    financialModel.setValue( 'indiCost_other', 150 );
-    financialModel.setValue( 'grant_state', 1200 );
-    financialModel.setValue( 'grant_pell', 2000 );
-    financialModel.setValue( 'scholarship_state', 1250 );
-    financialModel.setValue( 'scholarship_school', 2550 );
-    financialModel.setValue( 'fedLoan_directSub', 5000 );
-    financialModel.setValue( 'fee_directSub', 0.0108 );
-    financialModel.setValue( 'rate_directSub', 0.0678 );
-    financialModel.setValue( 'fedLoan_directUnsub', 7000 );
-    financialModel.setValue( 'fee_directUnsub', 0.0219 );
-    financialModel.setValue( 'rate_directUnsub', 0.0987 );
+    // financialModel.setValue( 'dirCost_tuition', 45520 );
+    // financialModel.setValue( 'dirCost_housing', 3500 );
+    // financialModel.setValue( 'indiCost_books', 1100 );
+    // financialModel.setValue( 'indiCost_other', 150 );
+    // financialModel.setValue( 'grant_state', 1200 );
+    // financialModel.setValue( 'grant_pell', 2000 );
+    // financialModel.setValue( 'scholarship_state', 1250 );
+    // financialModel.setValue( 'scholarship_school', 2550 );
+    // financialModel.setValue( 'fedLoan_directSub', 5000 );
+    // financialModel.setValue( 'fee_directSub', 0.0108 );
+    // financialModel.setValue( 'rate_directSub', 0.0678 );
+    // financialModel.setValue( 'fedLoan_directUnsub', 7000 );
+    // financialModel.setValue( 'fee_directUnsub', 0.0219 );
+    // financialModel.setValue( 'rate_directUnsub', 0.0987 );
 
     financialModel.calculateTotals();
 

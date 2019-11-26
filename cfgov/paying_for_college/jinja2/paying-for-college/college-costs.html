@@ -27,15 +27,15 @@
     <div class="m-hero">
         <div class="m-hero_wrapper wrapper">
             <div class="m-hero_text">
-                <h1 class="m-hero_heading">College costs decoder</h1>
-                <p>Congratulations on moving forward in your education! Now that you have a financial aid offer, the next step is deciding whether it’s the right fit for you. You’re about to spend a lot of time, money, and hard work—you can use this tool to put together a financing plan to make sure this investment pays off.</p>
+                <h1 class="m-hero_heading">Financing your future</h1>
+                <p>You’re about to spend a lot of time, money, and hard work—make sure your investment pays off.</p>
 
-                <p>This tool will help you:</p>
+                <p>Turn a financial aid offer into a plan to pay for college that fits your needs. This tool will help you :</p>
                 <ul>
-                    <li>Plan to cover your costs with the least debt needed</li>
+                    <li>Figure out how to cover costs with the least debt needed</li>
                     <li>Estimate how much debt you’ll finish with</li>
-                    <li>Decide if loans are a good option for you</li>
-                    <li>Figure out your next steps</li>
+                    <li>See the potential impact of this debt on your future</li>
+                    <li>Determine your next steps</li>
                 </ul>
             </div>
             <div class="m-hero_image-wrapper">
@@ -49,7 +49,8 @@
     <ul>
         <li>Your financial aid offer</li>
         <li>An idea of how much money you and your family can put towards school</li>
-        <li>You may also want to use this took with  someone you trust who can help you weigh your options</li>
+        <li>A private loan offer, if you have one
+        <li>You may want to use this tool with someone you trust who can help you weigh your options.</li>
     </ul>
 
     <h2>How do you feel about your plan to pay for school?</h2>
@@ -435,12 +436,12 @@
                 </div>
             </div>
 
-            <div class="m-notification m-notification__visible">
-                {{ svg_icon('information-round') }}
+            <div class="m-notification m-notification__visible m-notification__warning">
+                {{ svg_icon('warning-round') }}
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message">Did you know?</div>
+                    <div class="h4 m-notification_message">Know before you go</div>
                     <ul>
-                        <li>Most grants and scholarships have requirements (such as minimum GPA) that you must meet to keep them.</li>
+                        <li>Make sure you know the requirements of your grants and scholarships (such as minimum GPA).</li>
                         <li>Your grant and scholarship funding can change from year to year, depending on your eligibility, your financial situation, the terms of the funding, and other factors.</li>
                         <li>Receiving private scholarships can reduce your eligibility for grants or scholarships from the school.</li>
                         <li>Scholarship money may be taxed as income if it exceeds the total of certain expenses. Ask the financial aid office if this might be an issue for you.</li>
@@ -479,10 +480,10 @@
                 </div>
             </div>
 
-            <div class="m-notification m-notification__visible">
-                {{ svg_icon('information-round') }}
+            <div class="m-notification m-notification__visible m-notification__warning">
+                {{ svg_icon('warning-round') }}
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message">Did you know?</div>
+                    <div class="h4 m-notification_message">Know before you go</div>
                     <ul>
                         <li>If you do not find a work-study job, you may lose your eligibility in the future.</li>
                         <li>Work-study money will not be available to cover upfront costs, because you pay those before you have earned all of the work-study funds. Like any other job that pays hourly, you will get periodic paychecks for your hours worked, after you start working.</li>
@@ -569,16 +570,25 @@
                 </div>
             </div>
 
-            
-            <div class="m-notification m-notification__visible">
-                {{ svg_icon('information-round') }}
+ 
+            <div class="m-notification m-notification__visible m-notification__success">
+                {{ svg_icon('dollar-round') }}
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message">Did you know?</div>
+                    <div class="h4 m-notification_message">Money saving tips</div>
                     <ul>
                         <li>You don’t have to take out the full amount of loans offered to you. Only borrow the amount you need.</li>
-                        <li>Because student debt is permanent, you should not use student loans to cover costs outside of your education. (For example, you can use student loan funds to pay for childcare but not to buy a car.)</li>
-                        <li>The total amount of federal loans you’re allowed to borrow goes up each year you are in school.</li>
                         <li>Paying down the interest on unsubsidized loans while you’re in school will save you money in the long run.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            <div class="m-notification m-notification__visible m-notification__warning">
+                {{ svg_icon('warning-round') }}
+                <div class="m-notification_content">
+                    <div class="h4 m-notification_message">Know before you go</div>
+                    <ul>
+                        <li>Because student debt is permanent, you should not use student loans to cover costs outside of your education. (For example, you can use student loan funds to pay for childcare but not to buy a car.)</li>
                         <li>Federal loans do not provide a government guarantee of the quality of the school.  Federal loans do not guarantee that you will get a good job when you graduate.</li>
                         <li>You have to pay back your loans even if you don’t graduate.</li>
                     </ul>
@@ -631,16 +641,27 @@
                 </div>
             </div>
 
-            <div class="m-notification m-notification__visible">
-                {{ svg_icon('information-round') }}
+            <div class="m-notification m-notification__visible m-notification__success">
+                {{ svg_icon('dollar-round') }}
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message">Did you know?</div>
+                    <div class="h4 m-notification_message">Money saving tips</div>
                     <ul>
-                        <li>Loans from your school or from a bank or credit union may not offer the same protections as federal student loans.</li>
-                        <li>To make sure a particular loan is a good option, look at the terms: the interest rate, whether interest accumulates during school, whether you’ll have to start repaying the loan immediately after leaving school, and whether there are flexible repayment options. </li>
+                        <li>Compare loans from your school to other federal and private options. Look at the terms: the interest rate, whether interest accumulates during school, whether you’ll have to start repaying the loan immediately after leaving school, and whether there are flexible repayment options. </li>
                     </ul>
                 </div>
             </div>
+            
+            <div class="m-notification m-notification__visible m-notification__warning">
+                {{ svg_icon('warning-round') }}
+                <div class="m-notification_content">
+                    <div class="h4 m-notification_message">Know before you go</div>
+                    <ul>
+                        <li>Loans from your school or from a bank or credit union may not offer the same protections as federal student loans.</li>
+                    </ul>
+                </div>
+            </div>
+            
+
 
             <div class="college-costs_tool-section_buttons">
                 <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="other-resources">Next step</button>
@@ -733,8 +754,20 @@
         <section class="college-costs_tool-section" data-tool-section="loan-counseling">
             <h2>How do student loans work?</h2>
 
-            <p>Loans are money you have to pay back with interest. That means you'll pay more than you originally borrowed. To save money on the cost of student loans, you have three options: borrow less, borrow at a lower interest rate, or take less time to repay your loans by making bigger monthly payments. (As the graph below shows, you’ll pay far more interest over 25 years than over 10.)</p>
-
+            <p>Since you will probably use loans to pay for school—most students do—it’s important to understand how they work. This page will overview the general cost of borrowing money and detail some of the unique traits of student loans.</p> 
+            
+            <p>Loans are money you pay back with interest. That means you'll pay more than you originally borrowed. For example, if you borrow $10,000 with 4% annual interest, you will accrue $400 in interest during the first year.</p> 
+            
+            <p>To save money on the cost of student loans, you have three options:</p> 
+            
+            <ul>
+                <li>borrow less</li>
+                <li>borrow at a lower interest rate</li>
+                <li>repay your loans faster by making bigger monthly payments.</li> 
+            </ul>
+            
+            <p>As this graph shows, someone with about $30,000 in student loans (typical for college undergraduates) will save more than $10,000 in interest by repaying their loan in 10 years instead than 25 years.</p> 
+            
             <img src="{{ static('apps/paying-for-college/img/ph-loan-explainer.png') }}" style="margin: 30px 0">
 
             <p>So why take out student loans? A degree can open up more career options and increase your future earnings. If higher education helps you reach your goals, the cost of student loans may be a good investment in your future—if you can afford to repay them.</p>
@@ -863,7 +896,7 @@
             <p>If you still have uncovered costs, you could consider applying for a private student loan from a bank or credit union. You may also want to discuss with your parents about taking out a federal Parent PLUS loan. If your parents take out a Parent PLUS loan or co-sign a private loan for you, or take out a private student loan in their own name, their credit record will be affected if the loan is not paid back on time. Parents also have to consider things like whether they have saved enough for emergencies or their retirement when deciding if they should borrow money for a family member's college costs.</p>
 
             <div>
-                <button class="a-btn a-btn__add">{{ svg_icon('plus-round') }} Add Private loans</button>
+                <button class="a-btn a-btn__add">{{ svg_icon('plus-round') }} Add a private loan to your plan if you have an offer from a lender.</button>
                 <button class="a-btn a-btn__add">{{ svg_icon('plus-round') }} Add Parent PLUS loan</button>
             </div>
 
@@ -918,11 +951,11 @@
         <section class="college-costs_tool-section" data-tool-section="cost-of-borrowing">
             <h2>What will interest cost me?</h2>
 
-            <p>Loans charge you interest.  You have to pay back the interest plusthe amount you originally borrowed. This page shows you an estimate of the total cost of your student debt over 10 and 25 years, the two most common time frames for student loans.</p>
+            <p>If you can reduce the amount you borrow, you'll save even more in the long run on interest payments. This page compares the total cost of your projected debt to the cost of borrowing a little less or a little more.</p>
 
             <img src="{{ static('apps/paying-for-college/img/ph-cost-of-borrowing.png') }}" style="margin: 30px 0">
 
-            <h3 class="header_bottom-line">Cost of paying back loans over 10 years</h3>
+            <h3 class="header_bottom-line">Cost of borrowing your loans</h3>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <span>Total money borrowed</span>
@@ -933,7 +966,7 @@
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <span>Total interest payments</span>
+                    <span>Interest with 10-year repayment plan</span>
                 </div>
                 <div class="financial-item_input-wrapper">
                     <span class="financial-item_total" data-financial-itemX="">$20,053</span>
@@ -948,21 +981,21 @@
                 </div>
             </div>
 
-            <h3 class="header_bottom-line">Cost of paying back loans over 25 years</h3>
+            <h3 class="header_bottom-line">Cost of borrowing 10% more</h3>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <span>Total money borrowed</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-itemX="">$53,500</span>
+                    <span class="financial-item_total" data-financial-itemX="">$58,850</span>
                 </div>     
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <span>Total interest payments</span>
+                    <span>Interest with 10-year repayment plan</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-itemX="">$56,885</span>
+                    <span class="financial-item_total" data-financial-itemX="">$22,058</span>
                 </div>
             </div>
             <div class="financial-item form-group_item">
@@ -970,15 +1003,40 @@
                     <span>Total cost of borrowing</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total financial-item_total__debt" data-financial-itemX="">$110,385</span>
+                    <span class="financial-item_total financial-item_total__debt" data-financial-itemX="">$80,908</span>
                 </div>
             </div>
 
-            <div class="m-notification m-notification__visible">
-                {{ svg_icon('information-round') }}
+            <h3 class="header_bottom-line">Cost of borrowing 10% less</h3>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <span>Total money borrowed</span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-financial-itemX="">$48,150</span>
+                </div>     
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <span>Interest with 10-year repayment plan</span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total" data-financial-itemX="">$18,048</span>
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <span>Total cost of borrowing</span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total financial-item_total__debt" data-financial-itemX="">$66,198</span>
+                </div>
+            </div>
+            <div class="m-notification m-notification__visible m-notification__success ">
+                {{ svg_icon('dollar-round') }}
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message">Did you know?</div>
-                    <p>You can also lower the total cost of your loans by making payments towards the interest on your private and unsubsidized federal loans while you’re still in school. This will reduce the amount you pay due to <em>capitalization</em> — interest on your interest. </p>
+                    <div class="h4 m-notification_message">Money saving tip</div>
+                    <p>To lower the total cost of your loans, make room in your in-school budget for payments towards the interest on your private and unsubsidized federal loans. This will reduce the amount you pay due to <em>capitalization</em> — interest on your interest. </p>
                 </div>
             </div>
 

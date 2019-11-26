@@ -8,7 +8,13 @@ const stateModel = {
   activeSection: null,
   schoolSelected: null,
   gotStarted: false,
-
+  handleCostsButtonClicked: false,
+  programData: {
+    type: null,
+    length: null,
+    rate: null,
+    housing: null
+  },
 
   init: () => {
     // PLACEHOLDER - Add more interesting stuff later

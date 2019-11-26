@@ -3,6 +3,8 @@
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { schoolSearch } from '../dispatchers/get-api-values';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
+import { updateSchoolData } from '../dispatchers/update-models.js';
+import { updateState } from '../dispatchers/update-state.js';
 
 const schoolView = {
   _searchSection: null,
@@ -49,9 +51,13 @@ const schoolView = {
 
     // If there's a school_id, then proceed with schoolInfo
     if ( typeof button.dataset.school_id !== 'undefined' ) {
+      const iped = button.dataset.school_id;
       schoolView._searchResults.classList.remove( 'active' );
       schoolView._searchBox.value = button.querySelector( 'strong' ).innerText;
       schoolView._schoolInfo.classList.add( 'active' );
+
+      // Add schoolData to schoolModel
+      updateSchoolData( iped );
 
     }
   },
@@ -60,6 +66,11 @@ const schoolView = {
     const container = closest( event.target, '.m-form-field' );
     const input = container.querySelector( 'input' );
     input.setAttribute( 'checked', true );
+
+    // Update the model with program info
+    const prop = input.getAttribute( 'name' ).substr( 8 );
+    const value = input.value;
+    updateState.setProgramData( prop, value );
 
     const checkedCount = schoolView._schoolInfo
       .querySelectorAll( 'input[checked="true"]' ).length;
