@@ -208,99 +208,111 @@
             </div>
         </section>
 
-        <section class="college-costs_tool-section" data-tool-section="costs">
+        <section class="college-costs_tool-section costs" data-tool-section="costs">
             <h2>Costs</h2>
-            <p>Enter the costs reported in your offer. Please note that these are estimates—the actual amounts will depend on factors like which courses you enroll in and personal budgeting.</p>
-            <p>We recommend using the supplied estimates unless you’re sure your spending will be radically different.</p>
-            <p>Use estimated data from the Department of Education, if your offer letter did not include costs.</p>
-
-            <h3 class="header_bottom-line">Direct costs</h3>
-            <p>Direct costs are what the school charges you for directly. Your actual costs may vary.</p>
-            <div class="financial-item form-group_item">
-                <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="costs__tuition-fees">
-                        Tuition and fees
-                    </label>
-                </div>
-                <div class="financial-item_input-wrapper">
-                    <input type="text" id="costs__tuition-fees" name="costs__tuition-fees" data-financial-item="dirCost_tuition" autocorrect="off" value="0">
-                </div>
-            </div>
-            <div class="financial-item form-group_item">
-                <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="costs__room-board">
-                        Housing and meals
-                    </label>
-                </div>
-                <div class="financial-item_input-wrapper">
-                    <input type="text" id="costs__room-board" name="costs__room-board" data-financial-item="dirCost_housing" autocorrect="off" value="0">
-                </div>
-            </div>
-            <div class="financial-item form-group_item">
-                <div class="financial-item_label-wrapper">
-                    <span class="financial-item_total">Total direct costs</span>
-                </div>
-                <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total financial-item_total__debt" data-financial-item="total_directCosts">$99,999</span>
-                </div>
+            <p>Does your financial aid offer have information about costs?</p>
+            <div class="costs_button-section">
+                <button class="a-btn" data-costs_offer-answer="yes">Yes</button>
+                <button class="a-btn" data-costs_offer-answer="no">No</button>
             </div>
 
-            <h3 class="header_bottom-line">Indirect costs</h3>
-            <p>Indirect costs are for other school year necessities, like traveling between home and school and childcare. Though these vary from student to student, these estimates are a good starting point. Adjust the categories and amounts below to match what your financial aid offer says, and add important expenses that might not be listed.</p>
-            <div class="financial-item form-group_item">
-                <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="costs__books">
-                        Books
-                    </label>
-                </div>
-                <div class="financial-item_input-wrapper">
-                    <input type="text" id="costs__books" name="costs__books" data-financial-item="indiCost_books" autocorrect="off" value="0">
-                </div>
+            <div class="costs_content-section costs_content-section_content" data-offer-costs-info="yes">
+                <p>Type in the costs listed in your offer. Please note that these are estimates—the actual amounts will depend on factors like which courses you enroll in and your personal budgeting. Use the estimates in your offer letter unless you’re sure your spending will be radically different.</p>
             </div>
-            <div class="financial-item form-group_item">
-                <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="costs__other">
-                        Other expenses
-                    </label>
-                </div>
-                <div class="financial-item_input-wrapper">
-                    <input type="text" id="costs__other" name="costs__other" data-financial-item="indiCost_other" autocorrect="off" value="0">
-                </div>
-            </div>
-            <div class="financial-item form-group_item">
-                <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="costs__transportation">
-                        Transportation
-                    </label>
-                </div>
-                <div class="financial-item_input-wrapper">
-                    <input type="text" id="costs__transportation" name="costs__transportation" data-financial-item="indiCost_transportation" autocorrect="off" value="0">
-                </div>
+            <div class="costs_content-section costs_content-section_content" data-offer-costs-info="no">
+                <p>We’ve used older data about the school collected by the Department of Education to fill in the estimated cost to attend this school below. The actual costs will probably be different.</p>
             </div>
 
-            <div class="financial-item form-group_item">
-                <div class="financial-item_label-wrapper">
-                        <span class="financial-item_total">Total indirect costs</span>
+            <div class="costs_content-section" id="costs_inputs-section">
+                <h3 class="header_bottom-line">Direct costs</h3>
+                <p>Direct costs are what the school charges you for directly. Your actual costs may vary.</p>
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                        <label class="form-label" for="costs__tuition-fees">
+                            Tuition and fees
+                        </label>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <input type="text" id="costs__tuition-fees" name="costs__tuition-fees" data-financial-item="dirCost_tuition" autocorrect="off" value="0">
+                    </div>
                 </div>
-                <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total financial-item_total__debt" data-financial-item="total_indirectCosts">$99,999</span>
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                        <label class="form-label" for="costs__room-board">
+                            Housing and meals
+                        </label>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <input type="text" id="costs__room-board" name="costs__room-board" data-financial-item="dirCost_housing" autocorrect="off" value="0">
+                    </div>
+                </div>
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                        <span class="financial-item_total">Total direct costs</span>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <span class="financial-item_total financial-item_total__debt" data-financial-item="total_directCosts">$99,999</span>
+                    </div>
+                </div>
+
+                <h3 class="header_bottom-line">Indirect costs</h3>
+                <p>Indirect costs are for other school year necessities, like traveling between home and school and childcare. Though these vary from student to student, these estimates are a good starting point. Adjust the categories and amounts below to match what your financial aid offer says, and add important expenses that might not be listed.</p>
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                        <label class="form-label" for="costs__books">
+                            Books
+                        </label>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <input type="text" id="costs__books" name="costs__books" data-financial-item="indiCost_books" autocorrect="off" value="0">
+                    </div>
+                </div>
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                        <label class="form-label" for="costs__other">
+                            Other expenses
+                        </label>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <input type="text" id="costs__other" name="costs__other" data-financial-item="indiCost_other" autocorrect="off" value="0">
+                    </div>
+                </div>
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                        <label class="form-label" for="costs__transportation">
+                            Transportation
+                        </label>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <input type="text" id="costs__transportation" name="costs__transportation" data-financial-item="indiCost_transportation" autocorrect="off" value="0">
+                    </div>
+                </div>
+
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                            <span class="financial-item_total">Total indirect costs</span>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <span class="financial-item_total financial-item_total__debt" data-financial-item="total_indirectCosts">$99,999</span>
+                    </div>
+                </div>
+
+                <div class="financial-item financial-item__lined form-group_item">
+                    <div class="financial-item_label-wrapper">
+                            <span class="financial-item_total financial-item_total__large">Cost of attendance (for one year)</span>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <span class="financial-item_total financial-item_total__debt financial-item_total__large" data-financial-item="total_costs">$99,999</span>
+                    </div>
+                </div>
+
+
+                <div class="college-costs_tool-section_buttons">
+                    <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="grants-scholarships">Next step</button>
+                    <button class="btn__save">Save and finish later</button>
                 </div>
             </div>
-
-            <div class="financial-item financial-item__lined form-group_item">
-                <div class="financial-item_label-wrapper">
-                        <span class="financial-item_total financial-item_total__large">Cost of attendance (for one year)</span>
-                </div>
-                <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total financial-item_total__debt financial-item_total__large" data-financial-item="total_costs">$99,999</span>
-                </div>
-            </div>
-
-
-            <div class="college-costs_tool-section_buttons">
-                <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="grants-scholarships">Next step</button>
-                <button class="btn__save">Save and finish later</button>
-            </div>
+            
 
         </section>
 

@@ -14,7 +14,20 @@ const financialView = {
   _inputChangeTimeout: null,
   _calculatingTimeout: null,
   _currentInput: null,
+  _costsOfferButtons: null,
   _actionPlanChoices: null,
+
+  /**
+   * Listeners for INPUT fields and radio buttons
+   */
+  _addButtonListeners: function() {
+    financialView._costsOfferButtons.forEach( elem => {
+      const events = {
+        click: this._handleCostsButtonClick
+      };
+      bindEvent( elem, events );
+    } );
+  },
 
   /**
    * Listeners for INPUT fields and radio buttons
@@ -61,6 +74,28 @@ const financialView = {
     }
 
     financialView._actionPlanSeeSteps.removeAttribute( 'disabled' );
+  },
+
+  _handleCostsButtonClick: function( event ) {
+    const target = event.target;
+    const answer = target.dataset.costs_offerAnswer;
+    const offerContent = document.querySelector( '[data-offer-costs-info="' + answer +  '"]' );
+    const costsContent = document.getElementById( 'costs_inputs-section' );
+
+    console.log( offerContent );
+
+    // TODO - Add state tracking here
+
+    // Show the appropriate content
+    document.querySelectorAll( '[data-offer-costs-info]' ).forEach( elem => {
+      elem.classList.remove( 'active' );
+    } );
+    document.querySelectorAll( '[data-costs_offer-answer]' ).forEach( elem => {
+      elem.classList.add( 'a-btn__disabled' );
+    } );
+    target.classList.remove( 'a-btn__disabled' );
+    offerContent.classList.add( 'active' );
+    costsContent.classList.add( 'active' );
   },
 
   /**
@@ -158,9 +193,11 @@ const financialView = {
     this._financialItems = document.querySelectorAll( '[data-financial-item]' );
     this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
     this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
+    this._costsOfferButtons = document.querySelectorAll( '.costs_button-section button' );
     this._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field' );
     this._actionPlanSeeSteps = document.getElementById( 'action-plan_see-your-steps' );
     this._addInputListeners();
+    this._addButtonListeners();
     this.initializeFinancialValues();
 
   }

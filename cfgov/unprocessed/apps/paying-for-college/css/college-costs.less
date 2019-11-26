@@ -111,6 +111,30 @@
 				margin-top: unit( 30px / @base-font-size-px, em );
 			}
 
+			.costs {
+				&_button-section {
+					margin-bottom: unit( 30px / @base-font-size-px, em );
+
+					.a-btn.active {
+						background-color: @white;
+						color: @pacific;
+						border-color: @pacific;
+					}
+				}
+
+				&_content-section {
+					display: none;
+
+					&.active {
+						display: block;
+					}
+
+					&_content {
+						margin-bottom: unit( 30px / @base-font-size-px, em );
+					}
+				}
+			}
+
 			.expenses-item,
 			.financial-item {
 				margin-top: unit( 30px / @base-font-size-px, em );

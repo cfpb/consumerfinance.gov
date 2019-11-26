@@ -33,7 +33,7 @@ const init = function() {
   // Get stuff started
   navigationView.activateGetStartedBtn();
   navigationView._handleGetStartedBtnClick();
-  updateState.activeSection( 'grants-scholarships' );
+  updateState.activeSection( 'costs' );
 
 };
 
