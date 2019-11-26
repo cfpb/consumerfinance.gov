@@ -125,6 +125,7 @@ const modernConf = {
 };
 
 const onDemandHeaderRawConf = {
+  mode: 'production',
   module: COMMON_MODULE_CONFIG,
   resolve: {
     symlinks: false
