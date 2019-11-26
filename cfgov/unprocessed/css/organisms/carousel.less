@@ -11,11 +11,8 @@
   }
 
   &_btn {
-    background: @white;
-    border: none;
-    border-radius: 1000px;
-    width: 32px;
-    height: 32px;
+    padding-left: unit( 10px / @btn-font-size, em );
+    padding-right: unit( 10px / @btn-font-size, em );
     margin-top: -16px;
     position: absolute;
     top: 50%;
@@ -26,17 +23,6 @@
 
     &-next {
       right: 20px;
-    }
-
-    & svg {
-      position: absolute;
-
-      // These are essentially magic numbers to position the SVG in the middle of a solid circle.
-      left: 2px;
-      top: -2px;
-      width: 28px;
-      height: 36px;
-      font-size: 40px;
     }
   }
 
