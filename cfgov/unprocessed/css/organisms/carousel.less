@@ -75,10 +75,40 @@
     align-items: stretch;
     position: relative;
 
+    // We can't do a straight top border because it gets included in the
+    // box model and pushes the content down. This floats a border above the
+    // content.
+    &:before {
+      content: '';
+      position: absolute;
+      height: 5px;
+      width: 100%;
+    }
+
+    &:hover:before {
+      border-top: 5px solid @gray;
+      display: block;
+    }
+
     &:focus {
       outline: 1px dotted @pacific;
       outline-offset: 2px;
     }
+
+    // We have a right border, but we also need a bottom border when the
+    // thumbnails stack. We absolute position this to avoid a double-border
+    // (with the parent's border) and set the z-index above the focus outline,
+    // so that it is not hidden when the focus brings a thumbnail forward.
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      z-index: 2;
+      height: 1px;
+      width: 100%;
+      border-top: 1px solid @black;
+    }
+
   }
 
   &_thumbnail-layout {
@@ -89,16 +119,9 @@
   &_thumbnail-selected {
     background: @white;
 
-    // We can't do a straight top border because it gets included in the
-    // box model and pushes the content down. This floats a border above the
-    // content.
     &:before {
       border-top: 5px solid @green;
-      content: '';
       display: block;
-      position: absolute;
-      height: 5px;
-      width: 100%;
     }
   }
 
