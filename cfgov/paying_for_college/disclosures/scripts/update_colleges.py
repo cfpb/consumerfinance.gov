@@ -1,6 +1,4 @@
 """Update college data using the Dept. of Education's collegechoice api"""
-from __future__ import print_function
-
 import datetime
 import logging
 import os
@@ -30,9 +28,9 @@ FIELDSTRING = api_utils.build_field_string()
 def fix_zip5(zip5):
     """add leading zeros if they have been stripped by the scorecard db"""
     if len(zip5) == 4:
-        return "0{0}".format(zip5)
+        return "0{}".format(zip5)
     if len(zip5) == 3:
-        return "00{0}".format(zip5)
+        return "00{}".format(zip5)
     else:
         return zip5[:5]
 
@@ -85,13 +83,13 @@ def update(exclude_ids=[], single_school=None):
         "The job is paced to be friendly to the Scorecard API, "
         "so it can take an hour to run.\n"
         "A dot means a school was updated; a dash means no data found.")
-    print(START_MSG)
+    logger.info(START_MSG)
     if not single_school:
-        print(JOB_MSG)
+        logger.info(JOB_MSG)
     STARTER = datetime.datetime.now()
     PROCESSED = 0
     UPDATE_COUNT = 0
-    id_url = "{0}&id={1}&fields={2}"
+    id_url = "{}&id={}&fields={}"
     base_query = School.objects.exclude(pk__in=exclude_ids)
     if single_school:
         base_query = base_query.filter(pk=single_school)
@@ -102,7 +100,7 @@ def update(exclude_ids=[], single_school=None):
         UPDATED = False
         PROCESSED += 1
         if PROCESSED % 500 == 0:  # pragma: no cover
-            print("\n{0}\n".format(PROCESSED))
+            logger.info("\n{}\n".format(PROCESSED))
         if PROCESSED % 5 == 0:
             time.sleep(1)
         url = id_url.format(ID_BASE, school.school_id, FIELDSTRING)

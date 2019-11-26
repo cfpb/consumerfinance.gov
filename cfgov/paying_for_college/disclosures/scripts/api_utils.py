@@ -12,8 +12,6 @@ from https://api.data.gov/signup/
 - api_key usage:
     https://api.data.gov/docs/api-key/
 """
-from __future__ import print_function
-
 import os
 
 import requests
@@ -201,6 +199,7 @@ YEAR_FIELDS = assemble_program_fields() + [
 
 
 def api_school_query(school_id, fields):
+    """This is no longer used in processing but handy for API exploration."""
     url = QUERY_URL.format(SCHOOLS_ROOT, school_id, API_KEY, fields)
     return requests.get(url).json()
 
