@@ -43,18 +43,12 @@
             Table of Contents
         </span>
         <span class="o-expandable_header-right o-expandable_link">
-            <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="u-visually-hidden">
-                    {{ _('Show') }}
-                    {{ expandable_cue_additional_text }}
-                </span>
+            <span class="o-expandable_cue o-expandable_cue-open"
+                  aria-label="{{ _('Show') }} {{ expandable_cue_additional_text }}">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="u-visually-hidden">
-                    {{ _('Hide') }}
-                    {{ expandable_cue_additional_text }}
-                </span>
+            <span class="o-expandable_cue o-expandable_cue-close"
+                  aria-label="{{ _('Hide') }} {{ expandable_cue_additional_text }}">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>

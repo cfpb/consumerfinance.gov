@@ -145,8 +145,8 @@
                 <time class="calendar-icon"
                       data-month="{{ event.start_dt | date('%b') }}"
                       data-day="{{ event.start_dt | date('%-d') }}"
-                      datetime="{{ event.start_dt | date('%c') }}">
-                    <span class="u-visually-hidden">{{ event.start_dt | date('%b %-d, %Y') }}</span>
+                      datetime="{{ event.start_dt | date('%c') }}"
+                      aria-label="{{ event.start_dt | date('%b %-d, %Y') }}">
                 </time>
             {% endif %}
         {% endif %}
