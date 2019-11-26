@@ -269,8 +269,8 @@ class School(models.Model):
         blank=True, null=True,
         help_text="MEDIAN STUDENT DEBT 10 YRS AFTER ENROLLING")
     median_monthly_debt = models.DecimalField(
-        max_digits=14,
-        decimal_places=9,
+        max_digits=7,
+        decimal_places=2,
         blank=True, null=True,
         help_text=("MEDIAN STUDENT MONTHLY DEBT"))
     median_annual_pay = models.IntegerField(
