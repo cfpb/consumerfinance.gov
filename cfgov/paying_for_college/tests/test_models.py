@@ -81,16 +81,6 @@ class PageModelsTest(TestCase):
             self.loan_quiz_page.get_template(HttpRequest()),
             'paying-for-college/choose-a-student-loan.html')
 
-    def test_college_costs_template(self):
-        self.assertEqual(
-            self.college_costs_page.get_template(HttpRequest()),
-            'paying-for-college/college-costs.html')
-
-    def test_debt_page_template(self):
-        self.assertEqual(
-            self.debt_page.get_template(HttpRequest()),
-            'paying-for-college/repaying-student-debt.html')
-
 
 class SchoolRegionTest(TestCase):
 
