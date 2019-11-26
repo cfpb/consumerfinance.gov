@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   carousel.render()
+   carousel.render( value )
 
    ==========================================================================
 
@@ -9,7 +9,7 @@
    Creates markup for a Carousel organism, which displays a set of
    blocks of content that can be navigated through sequentially.
 
-   value._items:                Carousel content panels.
+   value:                       List of carousel content panels.
 
    item.title:                  Panel title.
 
@@ -26,9 +26,9 @@
 {% macro render_carousel_item( item ) %}
 <section class="o-carousel_item">
     <div class="o-carousel_item-text">
-        <h2>{{ item.title }}</h2>
-        <p>{{ item.body }}</p>
-        <p><a href="{{ item.link.url }}">{{ item.link.text }}</a></p>
+        <h2>{{ item.heading }}</h2>
+        <p>{{ item.text }}</p>
+        <p><a href="{{ item.link_url }}">{{ item.link_text }}</a></p>
     </div>
     <div class="o-carousel_item-visual">
         {% set image_instance = get_image_instance( item.image_pk ) %}
@@ -85,7 +85,7 @@
 </div>
 {% endmacro %}
 
-{% macro render(value) %}
+{% macro render( value ) %}
 <div class="o-carousel u-hidden">
     <h5>{{ _( 'Featured' ) }}</h5>
     <div class="o-carousel_navigator">
@@ -108,7 +108,7 @@
     </div>
 
     <ul class="o-carousel_thumbnails">
-        {% for item in value._items %}
+        {% for item in value %}
             {{ render_carousel_thumbnail( item, loop.first ) }}
         {% endfor %}
     </ul>
@@ -120,5 +120,3 @@
     </ul>
 </div>
 {% endmacro %}
-
-{% if value %}{{ render( value ) }}{% endif %}

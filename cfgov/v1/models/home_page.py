@@ -3,12 +3,13 @@ from django.db import models
 from django.db.models import Q
 
 from wagtail.wagtailadmin.edit_handlers import (
-    InlinePanel, ObjectList, PageChooserPanel, StreamFieldPanel,
+    FieldPanel, InlinePanel, ObjectList, PageChooserPanel, StreamFieldPanel,
     TabbedInterface
 )
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailimages import get_image_model
+from wagtail.wagtailcore.models import Orderable, Page, PageManager
+from wagtail.wagtailimages import get_image_model, get_image_model_string
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
 from flags.state import flag_enabled
@@ -291,6 +292,9 @@ class HomePage(CFGOVPage):
         ObjectList(content_panels, heading='General Content'),
         ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+        ObjectList([
+            InlinePanel('carousel', min_num=4, max_num=4, label="Carousel"),
+        ], heading='Carousel'),
     ])
 
     # Sets page to only be createable at the root
@@ -378,6 +382,44 @@ class HomePageExcludedUpdates(models.Model):
 
     panels = [
         PageChooserPanel('excluded_page'),
+    ]
+
+
+class CarouselItem(Orderable):
+    page = ParentalKey(Page, on_delete=models.CASCADE, related_name='carousel')
+    heading = models.CharField(max_length=45, help_text=(
+        "45 characters maximum. Sentence case, unless proper noun."
+    ))
+    thumbnail_heading = models.CharField(
+        null=True, blank=True, max_length=30, help_text=(
+            "Shortened version of the heading, if needed "
+            "(no more than 30 characters maximum, including spaces)."
+        )
+    )
+    text = models.CharField(max_length=140, help_text=(
+        "140 characters maximum (including spaces)."
+    ))
+    link_text = models.CharField(max_length=30, help_text=(
+        "30 characters maximum (including spaces). "
+        "Lead with a verb, and be specific."
+    ))
+    # TODO: Change this to use a URLField that also allows relative links.
+    link_url = models.CharField("Link URL", max_length=255)
+    image = models.ForeignKey(
+        get_image_model_string(),
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='+'
+    )
+
+    panels = [
+        FieldPanel('heading'),
+        FieldPanel('thumbnail_heading'),
+        FieldPanel('text'),
+        FieldPanel('link_text'),
+        FieldPanel('link_url'),
+        ImageChooserPanel('image'),
     ]
 
 

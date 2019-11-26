@@ -8,7 +8,7 @@
 
 {% block content_main %}
 {% block carousel %}
-    {% with value = {'_items': carousel_items} %}
+    {% with value = { 'items': page.carousel.all() } %}
     {% include 'organisms/carousel.html' %}
     {% endwith %}
 {% endblock carousel %}
