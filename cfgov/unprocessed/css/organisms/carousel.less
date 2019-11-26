@@ -1,7 +1,8 @@
 .o-carousel {
 
-  // Override default unordered list padding.
-  & ul {
+  // Override default unordered list and button padding and button border.
+  & ul,
+  & button {
     padding: 0;
   }
 
@@ -71,26 +72,27 @@
   }
 
   &_thumbnails {
-    // Remove gap between child inline elements. See https://stackoverflow.com/questions/26950005/strange-gap-between-two-buttons
-    font-size: 0;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid @gray;
+    border-right: none;
   }
 
   &_thumbnail {
+    flex-grow: 1;
+    flex-direction: column;
+    min-width: 200px;
     width: 25%;
-    display: table-row;
-
-    // This should be set to the height of the thumbnail image we want to include.
-    height: 100px;
-
-    // Set font-size to override parent font-size:0, which removes the gap between the thumbnails.
-    font-size: unit( 16px / @base-font-size-px, rem );
-    background: @white;
+    margin-left: -1px;
+    margin-top: -1px;
     border: 1px solid @gray;
-    border-right: none;
+    border-bottom: none;
+    background: @white;
+  }
 
-    &:nth-child(4) {
-      border-right: 1px solid @gray;
-    }
+  &_thumbnail-layout {
+    width: 100%;
+    display: table;
   }
 
   &_thumbnail-selected {
@@ -100,10 +102,12 @@
   &_thumbnail-visual,
   &_thumbnail-text {
     display: table-cell;
+    padding: 10px;
+  }
 
-    padding: 5px;
-    text-align: left;
-    vertical-align: top;
+  // Set to same size as child image.
+  &_thumbnail-visual {
+    width: 48px;
   }
 
   // These are temporary styles.
@@ -112,6 +116,11 @@
     width: 48px;
     display: block;
     border: 1px solid gray;
+  }
+
+  &_thumbnail-text {
+    text-align: left;
+    vertical-align: top;
   }
 }
 
