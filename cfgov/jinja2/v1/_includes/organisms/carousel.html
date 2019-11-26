@@ -45,12 +45,14 @@
 
 {% macro render_carousel_thumbnail( item, is_selected=false ) %}
 <button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
-    <div class="o-carousel_thumbnail-visual">
-        <img class="o-carousel_thumbnail-img"
-             src="{{ item.image.thumbnail_url }}"
-             alt="{{ item.image.alt_text }}">
-    </div>
-    <h6 class="o-carousel_thumbnail-text">{{ item.title }}</h6>
+    <li class="o-carousel_thumbnail-layout">
+        <div class="o-carousel_thumbnail-visual">
+            <img class="o-carousel_thumbnail-img"
+                src="{{ item.image.thumbnail_url }}"
+                alt="{{ item.image.alt_text }}">
+        </div>
+        <h6 class="o-carousel_thumbnail-text">{{ item.title }}</h6>
+    </li>
 </button>
 {% endmacro %}
 
