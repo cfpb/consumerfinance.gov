@@ -248,6 +248,40 @@ _info_units_by_language = {
 _info_units_by_language['es'] = _info_units_by_language['en']
 
 
+_cards_by_language = {
+    'en': [
+        {
+            'icon': 'warning',
+            'text': 'Have an issue with a financial product?',
+            'link_text': 'Submit a complaint',
+            'link_url': '/complaint/',
+        },
+        {
+            'icon': 'lightbulb',
+            'text': (
+                'Have a question on a financial topic? '
+                'Browse answers to hundreds of financial questions.'
+            ),
+            'link_text': 'Browse Ask CFPB',
+            'link_url': '/ask-cfpb/',
+        },
+        {
+            'icon': 'open-quote',
+            'text': (
+                'Tell us your experiences with money and financial services. '
+                'The CFPB is listening.'
+            ),
+            'link_text': 'Tell your story',
+            'link_url': '/your-story/',
+        },
+    ],
+}
+
+
+# TODO: Add real card content for Spanish.
+_cards_by_language['es'] = _cards_by_language['en']
+
+
 class HomePage(CFGOVPage):
     header = StreamField([
         ('info_unit', molecules.InfoUnit()),
@@ -295,6 +329,9 @@ class HomePage(CFGOVPage):
         context.update({
             'carousel_items': self.get_carousel_items(),
             'info_units': self.get_info_units(),
+            # TODO: Add Spanish version of this heading.
+            'card_heading': "We want to hear from you",
+            'cards': self.get_cards(),
             'latest_updates': self.get_latest_updates(request),
         })
         return context
@@ -307,6 +344,9 @@ class HomePage(CFGOVPage):
             molecules.InfoUnit().to_python(info_unit)
             for info_unit in _info_units_by_language[self.language]
         ]
+
+    def get_cards(self):
+        return _cards_by_language[self.language]
 
     def get_latest_updates(self, request):
         # TODO: There should be a way to express this as part of the query

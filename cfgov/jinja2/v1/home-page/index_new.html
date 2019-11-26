@@ -1,5 +1,7 @@
 {% extends "layout-full.html" %}
 
+{% import "organisms/card-group.html" as card_group with context %}
+
 {% block title -%}
     {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
@@ -15,5 +17,9 @@
     {% with value = {'info_units': info_units, 'format': '33-33-33'} %}
     {% include 'organisms/info-unit-group-2.html' %}
     {% endwith %}
+</section>
+
+<section class="block">
+    {{ card_group.render( card_heading, cards ) }}   
 </section>
 {% endblock content_main %}
