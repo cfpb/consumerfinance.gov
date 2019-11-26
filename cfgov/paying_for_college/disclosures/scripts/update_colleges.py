@@ -2,7 +2,6 @@
 from __future__ import print_function
 
 import datetime
-import json
 import logging
 import os
 import sys
@@ -156,11 +155,7 @@ def update(exclude_ids=[], single_school=None):
         SCRIPTNAME,
         (datetime.datetime.now() - STARTER))
     if NO_DATA:
-        data_note = "\nA list of schools that had no API data was saved to {}"
-        endmsg += data_note.format(NO_DATA_FILE)
-        no_data_dict = {}
+        logger.info("Schools for which we found no data:")
         for school in NO_DATA:
-            no_data_dict[school.pk] = school.primary_alias
-        with open(NO_DATA_FILE, 'w') as f:
-            f.write(json.dumps(no_data_dict))
+            logger.info("{} ({})".format(school.primary_alias, school.pk))
     return (NO_DATA, endmsg)
