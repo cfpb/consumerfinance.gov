@@ -69,7 +69,11 @@
     padding: 0;
     border: none;
     border-right: 1px solid @gray;
-    background: @white;
+    background: @gray-5;
+    // These values are used to set the width for the selected border rule.
+    display: flex;
+    align-items: stretch;
+    position: relative;
 
     &:focus {
       outline: 1px dotted @pacific;
@@ -83,7 +87,19 @@
   }
 
   &_thumbnail-selected {
-    background: @gray-10;
+    background: @white;
+
+    // We can't do a straight top border because it gets included in the
+    // box model and pushes the content down. This floats a border above the
+    // content.
+    &:before {
+      border-top: 5px solid @green;
+      content: '';
+      display: block;
+      position: absolute;
+      height: 5px;
+      width: 100%;
+    }
   }
 
   &_thumbnail:focus {
