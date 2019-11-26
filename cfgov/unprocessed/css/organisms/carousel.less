@@ -32,10 +32,6 @@
 
   &_item {
     box-sizing: border-box;
-
-    &:not( .u-hidden ) {
-      display: table-row;
-    }
   }
 
   &_item-text {
@@ -43,6 +39,7 @@
     width: 66%;
     padding: unit( @grid_gutter-width / @base-font-size-px, em );
     padding-left: unit( ( @grid_gutter-width * 3 ) / @base-font-size-px, em );
+    vertical-align: top;
   }
 
   &_item-visual {
@@ -68,16 +65,16 @@
     flex-direction: column;
     min-width: 200px;
     width: 25%;
-
-    // To avoid a double border, we offset the position by a pixel to overlap
-    // the border set on the parent.
-    margin-left: -1px;
-    margin-top: -1px;
-    // Remove default button padding.
+    // Remove default button padding and border.
     padding: 0;
-    border: 1px solid @gray;
-    border-bottom: none;
+    border: none;
+    border-right: 1px solid @gray;
     background: @white;
+
+    &:focus {
+      outline: 1px dotted @pacific;
+      outline-offset: 2px;
+    }
   }
 
   &_thumbnail-layout {
@@ -87,6 +84,10 @@
 
   &_thumbnail-selected {
     background: @gray-10;
+  }
+
+  &_thumbnail:focus {
+    z-index: 1;
   }
 
   &_thumbnail-visual,
