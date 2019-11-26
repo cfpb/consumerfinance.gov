@@ -157,7 +157,7 @@ def update(exclude_ids=[], single_school=None):
     if NO_DATA:
         logger.info("\n\nSchools for which we found no data:")
         for school in NO_DATA:
-            logger.info("{} ({})".format(school.primary_alias, school.pk))
+            logger.info("- {} ({})".format(school.primary_alias, school.pk))
     if CLOSED:
         logger.info("\n\nSchools that have closed since the last update:")
         for school in CLOSED:

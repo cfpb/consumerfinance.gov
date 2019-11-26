@@ -10,10 +10,8 @@ from django.http import HttpRequest
 from django.test import TestCase
 from django.utils import timezone
 
-# from wagtail.wagtailcore import blocks
 import requests
 from paying_for_college.apps import PayingForCollegeConfig
-# from paying_for_college.blocks import GuidedQuiz
 from paying_for_college.models import (
     Alias, CollegeCostsPage, ConstantCap, ConstantRate, Contact, Feedback,
     Nickname, Notification, Program, RepayingStudentDebtPage, School,
