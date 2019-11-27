@@ -81,16 +81,6 @@ class PageModelsTest(TestCase):
             self.loan_quiz_page.get_template(HttpRequest()),
             'paying-for-college/choose-a-student-loan.html')
 
-    def test_debt_page_template(self):
-        self.assertEqual(
-            self.debt_page.get_template(HttpRequest()),
-            'paying-for-college/repaying-student-debt.html')
-
-    def test_college_costs_template(self):
-        self.assertEqual(
-            self.college_costs_page.get_template(HttpRequest()),
-            'paying-for-college/college-costs.html')
-
 
 class SchoolRegionTest(TestCase):
 
@@ -422,26 +412,3 @@ class ProgramExport(TestCase):
         with patch("six.moves.builtins.open", m, create=True):
             p.as_csv('/tmp.csv')
         self.assertEqual(m.call_count, 1)
-
-
-class SchoolCohortTest(TestCase):
-    fixtures = ['test_fixture.json']
-
-    def test_highest_degree_cohort(self):
-        test_school = School.objects.get(pk=155317)
-        self.assertEqual(5, len(test_school.get_cohort('degrees_highest')))
-
-    def test_state_cohort(self):
-        test_school = School.objects.get(pk=100636)
-        self.assertEqual(2, len(test_school.get_cohort('state')))
-
-    def test_control_cohort(self):
-        test_school = School.objects.get(pk=155317)
-        self.assertEqual(5, len(test_school.get_cohort('control')))
-
-    # def get_cohort_rank(self, cohort, metric):
-    def test_get_cohort_rank(self):
-        test_school = School.objects.get(pk=155317)
-        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'grad_rate')))  # noqa
-        self.assertEqual(5, len(test_school.get_cohort_rank('degrees_highest', 'repay_3yr')))  # noqa
-        self.assertEqual(5, len(test_school.get_cohort_rank('degrees_highest', 'median_total_debt')))  # noqa
