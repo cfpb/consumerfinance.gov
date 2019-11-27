@@ -19,7 +19,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            (failed, no_data, endmsg) = update_colleges.update(
+            (no_data, endmsg) = update_colleges.update(
                 single_school=options['school_id'])
         except(IndexError):
             self.stdout.write(ID_ERROR.format(options['school_id']))

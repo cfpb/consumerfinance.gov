@@ -62,14 +62,10 @@ class StudentLoanQuizPage(PayingForCollegePage):
 class CollegeCostsPage(PayingForCollegePage):
     """Breaking down financial aid and loans for prospective students."""
     content = StreamField(PayingForCollegeContent, blank=True)
-
-    def get_template(self, request):
-        return 'paying-for-college/college-costs.html'
+    template = 'paying-for-college/college-costs.html'
 
 
 class RepayingStudentDebtPage(PayingForCollegePage):
     """A page to serve static subpages in the paying-for-college suite."""
     content = StreamField(PayingForCollegeContent, blank=True)
-
-    def get_template(self, request):
-        return 'paying-for-college/repaying-student-debt.html'
+    template = 'paying-for-college/repaying-student-debt.html'
