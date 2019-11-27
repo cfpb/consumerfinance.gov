@@ -7,14 +7,21 @@
 
   &_navigator {
     position: relative;
+    border: 1px solid @gray-40;
+    border-bottom: none;
+
+    .respond-to-max( @bp-xs-max, {
+      display: none;
+    } );
   }
 
   &_btn {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
     padding-left: unit( 10px / @btn-font-size, em );
     padding-right: unit( 10px / @btn-font-size, em );
     margin-top: -16px;
-    position: absolute;
-    top: 50%;
 
     &-prev {
       left: 20px;
@@ -25,26 +32,47 @@
     }
   }
 
+  // The items are laid out horizontally side-by-side so we can make them
+  // equal height, and then we move them to a stack on top of each other
+  // and hide the overflow.
+  &_items-container {
+    position: relative;
+    overflow: hidden;
+  }
+
   &_items {
-    border: 1px solid @gray;
-    border-bottom: none;
+    width: 400%;
+    display: table;
   }
 
   &_item {
-    box-sizing: border-box;
+    position: relative;
+    display: table-cell;
+    transition: opacity 0.35s;
   }
+
+  each( range( 4 ), {
+    &_item:nth-child( @{value} ) {
+      left: -25% * ( @value - 1 );
+    }
+  } );
 
   &_item-text {
     display: table-cell;
-    width: 66%;
+    width: auto;
     padding: unit( @grid_gutter-width / @base-font-size-px, em );
     padding-left: unit( ( @grid_gutter-width * 3 ) / @base-font-size-px, em );
+    padding-right: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
     vertical-align: top;
   }
 
   &_item-visual {
     display: table-cell;
-    width: auto;
+    width: 55%;
+
+    .respond-to-max( @bp-sm-max, {
+      width: 50%;
+    } );
 
     // This should be set to the height of the image we want to include.
     height: 300px;
@@ -56,7 +84,7 @@
   &_thumbnails {
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid @gray;
+    border: 1px solid @gray-40;
     border-right: none;
   }
 
@@ -65,10 +93,20 @@
     flex-direction: column;
     min-width: 200px;
     width: 25%;
+
+    // Change stacking behavior of thumbnails.
+    .respond-to-max( @bp-sm-max, {
+      width: 50%;
+    } );
+
+    .respond-to-max( @bp-xs-max, {
+      width: 100%;
+    } );
+
     // Remove default button padding and border.
     padding: 0;
     border: none;
-    border-right: 1px solid @gray;
+    border-right: 1px solid @gray-40;
     background: @gray-5;
     // These values are used to set the width for the selected border rule.
     display: flex;
@@ -86,7 +124,7 @@
     }
 
     &:hover:before {
-      border-top: 5px solid @gray;
+      border-top: 5px solid @gray-40;
       display: block;
     }
 
@@ -106,7 +144,7 @@
       z-index: 2;
       height: 1px;
       width: 100%;
-      border-top: 1px solid @black;
+      border-top: 1px solid @gray-40;
     }
 
   }
@@ -145,7 +183,7 @@
     height: 48px;
     width: 48px;
     display: block;
-    border: 1px solid gray;
+    border: 1px solid @gray-40;
   }
 
   &_thumbnail-text {
