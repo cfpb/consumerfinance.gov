@@ -1,0 +1,20 @@
+.o-card-group {
+    padding: unit( 30px / @base-font-size-px, em );
+
+    &_cards {
+        display: flex;
+        flex: 1;
+
+        & .m-card {
+            margin-right: unit( 20px / @base-font-size-px, em );
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &__bg-green {
+        background: @green-20;
+    }
+}
