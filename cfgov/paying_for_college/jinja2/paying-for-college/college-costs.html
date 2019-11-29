@@ -329,7 +329,7 @@
                 </div>
             </div>
 
-            <div id="costs-not-covered" class="costs-not-covered">
+            <div class="costs-not-covered">
                 <div class="costs-not-covered_title">Costs not covered yet</div>
                 <div class="costs-not-covered_amount"><span data-financial-item="total_gap"></div>
             </div>
@@ -460,6 +460,11 @@
             <h2>Work-study</h2>
             <p>Work-study programs are part-time jobs on campus. If your offer includes work-study, that means you are eligible to apply for work-study jobs—a job will not be lined up for you. Work-study money is estimated and not guaranteed.</p>
 
+            <div class="costs-not-covered">
+                <div class="costs-not-covered_title">Costs not covered yet</div>
+                <div class="costs-not-covered_amount"><span data-financial-item="total_gap"></div>
+            </div>
+
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <label class="form-label" for="income__workstudy">
@@ -505,6 +510,11 @@
 
             <p>[While anyone can borrow unsubsidized loans (in limited amounts), you must demonstrate need on FAFSA to qualify for a subsidized loan.]</p>
 
+            <div class="costs-not-covered">
+                <div class="costs-not-covered_title">Costs not covered yet</div>
+                <div class="costs-not-covered_amount"><span data-financial-item="total_gap"></div>
+            </div>
+
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <label class="form-label" for="loans__directSub">
@@ -518,18 +528,18 @@
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <span class="static-label" for="">Interest rate (%)</span>
+                    <span class="static-label" for="loans__directSubRate">Interest rate (%)</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item" data-financial-item="rate_directSub">9.99%</span>
+                    <span id="loans__directSubRate" class="financial-item" data-financial-item="rate_directSub">9.99%</span>
                 </div>
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <span class="static-label" for="">Loan fee (%)</span>
+                    <span class="static-label" for="loans__directSubFee">Loan fee (%)</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item" data-financial-item="fee_directSub">9.99%</span>
+                    <span id="loans__directSubFee" class="financial-item" data-financial-item="fee_directSub">9.99%</span>
                 </div>
             </div>
 
@@ -606,6 +616,11 @@
 
             <p>Your school may offer you loans directly or through a bank. Before taking on this debt, do your research to make sure they are the best option for you. If you think you may want to use this funding, enter it below. (Entering it here does not obligate you to borrow this money.)</p>
 
+            <div class="costs-not-covered">
+                <div class="costs-not-covered_title">Costs not covered yet</div>
+                <div class="costs-not-covered_amount"><span data-financial-item="total_gap"></div>
+            </div>
+
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <label class="form-label" for="loans__schoolLoan">
@@ -613,7 +628,7 @@
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="loans__schoolLoan" name="loans__schoolLoan" data-financial-item="privloan_school" autocorrect="off" value="0">
+                    <input type="text" id="loans__schoolLoan" name="loans__schoolLoan" data-financial-item="instiLoan_institutional" autocorrect="off" value="0">
                 </div>
             </div>
             <div class="financial-item form-group_item">
@@ -621,7 +636,7 @@
                     <label class="form-label" for="loans__schoolLoanRate">Interest rate (%)</label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input class="financial-item_total" id="loans__schoolLoanRate" name="loans__schoolLoanRate" data-financial-item="rate_schoolLoan" value="9.99%">
+                    <input id="loans__schoolLoanRate" name="loans__schoolLoanRate" data-financial-item="rate_institutionalLoan" value="9.99%">
                 </div>
             </div>
             <div class="financial-item form-group_item">
@@ -629,12 +644,12 @@
                     <label class="form-label" for="loans__schoolLoanFee">Loan fee (%)</label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input class="financial-item_total" id="loans__schoolLoanFee" name="loans__schoolLoanFee" data-financial-item="fee_schoolLoan" value="9.99%">
+                    <input id="loans__schoolLoanFee" name="loans__schoolLoanFee" data-financial-item="fee_institutionalLoan" value="9.99%">
                 </div>
             </div>
             <div class="financial-item form-group_item financial-item__lined">
                 <div class="financial-item_label-wrapper financial-item_total">
-                    <span class="financial-item_total financial-item_total__large">Total school loans</span>
+                    <span class="financial-item_total financial-item_total__large">Total institutional loans</span>
                 </div>
                 <div class="financial-item_input-wrapper">
                     <span class="financial-item_total financial-item_total__large financial-item_total" data-financial-item="total_schoolLoans">$99,999</span>
@@ -673,6 +688,11 @@
         <section class="college-costs_tool-section" data-tool-section="other-resources">
             <h2>Other Resources</h2>
             <p>Thank you for entering everything from your financial aid offer. What other resources are available to you?</p>
+
+            <div class="costs-not-covered">
+                <div class="costs-not-covered_title">Costs not covered yet</div>
+                <div class="costs-not-covered_amount"><span data-financial-item="total_gap"></div>
+            </div>
 
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
@@ -787,7 +807,7 @@
 
         </section>
 
-        <section class="college-costs_tool-section" data-tool-section="make-a-plan">
+        <section class="college-costs_tool-section make-a-plan" data-tool-section="make-a-plan">
             <h2>Make a plan to cover this year's cost of attendance</h2>
 
             <p>Thank you for entering all that info! This page will help you determine whether you have enough funding to cover the cost of attending this particular school. If you have a gap, it will help you come up with a plan.</p>
@@ -818,7 +838,7 @@
                     <button class="a-btn a-btn__link">{{ svg_icon('edit') }} Edit</button>
                 </div>
                 <div class="financial-note">
-                    <strong>Reduce costs:</strong> Can you realistically spend less on indirect costs? For example, can you live at home or buy a refurbished laptop? 
+                    <strong>Minimize indirect costs:</strong> Can you reduce your indirect costs by living at home or buying a refurbished laptop? 
                 </div>
             </div>   
 
@@ -833,7 +853,7 @@
                     <button class="a-btn a-btn__link">{{ svg_icon('edit') }} Edit</button>
                 </div>
                 <div class="financial-note">
-                    <strong>Search for additional grants and scholarships:</strong> Explore whether your state or local community offers scholarships or grants. Contact your high school counselor to see if they have any additional leads. 
+                    <strong>Apply for additional grants and scholarships:</strong> Ask the financial aid office and your school counselor (if you’re currently in high school) for help. The Department of Education has more ideas here [link to ED page on scholarships]. 
                 </div>
             </div>
 
@@ -848,22 +868,9 @@
                     <button class="a-btn a-btn__link">{{ svg_icon('edit') }} Edit</button>
                 </div>
                 <div class="financial-note">
-                    <strong>Find more cash:</strong> Can you contribute more from savings or work? 
-                </div>
-            </div>
+                    <p><strong>Find more cash:</strong> Can you contribute more from savings or work? Can anyone in your family help you?</p> 
 
-            <div class="financial-item form-group_item financial-item__lined">
-                <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="plan_cost">
-                        School loans
-                    </label>
-                </div>
-                <div class="financial-item_input-wrapper">
-                    <span class="" data-financial-item="total_schoolLoans">$99,999</span>
-                    <button class="a-btn a-btn__link">{{ svg_icon('edit') }} Edit</button>
-                </div>
-                <div class="financial-note">
-                    <strong>Talk to the financial aid office</strong>: Does this school offer a low- or no-interest tuition payment plan? You and your family might be able to budget for paying your tuition gradually over time. 
+                    <p><strong>Ask about tuition payment plans:</strong> If the school offers a no-cost or low-cost installment plan, you and your family may be able to budget for paying your tuition gradually over time. Ask the financial aid office. </p>
                 </div>
             </div>
 
@@ -878,7 +885,22 @@
                     <button class="a-btn a-btn__link">{{ svg_icon('edit') }} Edit</button>
                 </div>
                 <div class="financial-note">
-                    <strong>Federal loans:</strong> Your next cheapest option is federal Direct Subsidized Loans, if you’re allowed to borrow any more, followed by Direct Unsubsidized Loans. Generally, your financial aid offer will provide you the maximum amount of Direct Loans available to you but contact your financial aid office to find out more. 
+                    <strong>Take out more federal loans:</strong> Generally, your financial aid offer includes the maximum amount of Direct Loans available to you. Contact the financial aid office to find out more.
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="plan_cost">
+                        Institutional loans
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="" data-financial-item="total_schoolLoans">$99,999</span>
+                    <button class="a-btn a-btn__link">{{ svg_icon('edit') }} Edit</button>
+                </div>
+                <div class="financial-note">
+                    <strong>Borrow more from the school:</strong> Contact the financial aid office to find out more. Remember, these loans may not offer the same protections as federal student loans 
                 </div>
             </div>
 
@@ -891,13 +913,33 @@
                 </div>
             </div>
 
-            <h3 class="header__spaced">Other borrowing</h3>
+            <h3 class="other-loan-options">Other loan options</h3>
 
-            <p>If you still have uncovered costs, you could consider applying for a private student loan from a bank or credit union. You may also want to discuss with your parents about taking out a federal Parent PLUS loan. If your parents take out a Parent PLUS loan or co-sign a private loan for you, or take out a private student loan in their own name, their credit record will be affected if the loan is not paid back on time. Parents also have to consider things like whether they have saved enough for emergencies or their retirement when deciding if they should borrow money for a family member's college costs.</p>
+            <p>After working with the financial aid office to exhaust all other options, there are two more options: private student loans and federal Parent PLUS Loans. You or a family member can apply for a <strong>private student loan</strong> from a bank or credit union; students without credit history are typically required to have a family member cosign as a fellow borrower on the loan. Parents can apply for a <strong>Parent PLUS Loan</strong> from the US Department of Education.  </p>
 
-            <div>
+            <div class="other-borrowing-btns">
                 <button class="a-btn a-btn__add">{{ svg_icon('plus-round') }} Add a private loan to your plan if you have an offer from a lender.</button>
                 <button class="a-btn a-btn__add">{{ svg_icon('plus-round') }} Add Parent PLUS loan</button>
+            </div>
+
+            <div class="m-notification m-notification__visible m-notification__warning">
+                {{ svg_icon('warning-round') }}
+                <div class="m-notification_content">
+                    <div class="h4 m-notification_message">Know before you go</div>
+                    <ul>
+                        <li><strong>Accessibility</strong>: Parent PLUS Loans require a less thorough credit check. All borrowers can save money by comparison shopping—apply to multiple lenders to get the best terms.</li>
+
+                        <li><strong>Cost</strong>: For borrowers and cosigners with strong credit, private loans may offer lower interest rates than Parent PLUS Loans. Any borrower can save money on interest by starting repayment as soon as possible.</li>
+
+                        <li><strong>Protections</strong>: Private loans are not legally required to offer the same borrower protections and repayment options as Federal Direct Loans. Parent PLUS loans offer some, but not all, of the protections as Federal Direct Loans.</li>
+
+                        <li><strong>Risk</strong>: With both types of loans, borrowers and cosigners risk harm to their credit score if the debt is not repaid on time. Parents and other family members should consider whether they have saved enough for emergencies and retirement when deciding whether to borrow money for their student’s education.</li>
+
+                        <li><strong>Further guidance</strong>: Visit the Department of Education for a detailed discussion of loan options.</li>
+                    </ul>
+                </div>
+               
+                
             </div>
 
             <div class="financial-item form-group_item financial-item__lined">
@@ -923,13 +965,13 @@
 
             <div class="number-callout">
                 <h4 class="number-callout_header">Projected total debt</h4>
-                <div class="number-callout_value">$53,500</div>
+                <div class="number-callout_value"><span data-financial-item="total_debtAtGrad">$53,500</span></div>
             </div>
             <p>Your projected total debt at the end of the program (assuming similar borrowing each year).</p>
 
             <div class="number-callout">
                 <h4 class="number-callout_header">Median salary of [school]'s graduates</h4>
-                <div class="number-callout_value">$48,200</div>
+                <div class="number-callout_value"><span data-financial-item="salary_annual">$48,200</span></div>
             </div>
 
             <img src="{{ static('apps/paying-for-college/img/ph-debt-rule.png') }}" style="margin: 30px 0">
@@ -938,7 +980,7 @@
                 {{ svg_icon('information-round') }}
                 <div class="m-notification_content">
                     <div class="h4 m-notification_message">It's recommended that you keep your total debt under your expected salary.</div>
-                    <p> Your projected total debt is $XXXX higher/lower than the median salary of this school’s students six years after enrollment. Your actual salary will depend on many different factors, including your field of work and where you live. Visit the BLS Wage Data site for more information.</p>
+                    <p> Your projected total debt is <span data-financial-item="total_debtRuleGap">$XXXX</span> higher than the median salary of this school’s students six years after enrollment. Your actual salary will depend on many different factors, including your field of work and where you live. Visit the BLS Wage Data site for more information.</p>
                 </div>
             </div>
 
@@ -961,7 +1003,7 @@
                     <span>Total money borrowed</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-itemX="">$53,500</span>
+                    <span class="financial-item_total" data-financial-item="total_borrowing">$53,500</span>
                 </div>     
             </div>
             <div class="financial-item form-group_item">
@@ -969,7 +1011,7 @@
                     <span>Interest with 10-year repayment plan</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-itemX="">$20,053</span>
+                    <span class="financial-item_total" data-financial-item="total_interest10year">$20,053</span>
                 </div>
             </div>
             <div class="financial-item form-group_item">
@@ -977,7 +1019,7 @@
                     <span>Total cost of borrowing</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total financial-item_total__debt" data-financial-itemX="">$73,553</span>
+                    <span class="financial-item_total financial-item_total__debt" data-financial-item="total_debt10year">$73,553</span>
                 </div>
             </div>
 
@@ -987,7 +1029,7 @@
                     <span>Total money borrowed</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-itemX="">$58,850</span>
+                    <span class="financial-item_total" data-financial-itemX="total_borrowing__tenMore">$58,850</span>
                 </div>     
             </div>
             <div class="financial-item form-group_item">
@@ -995,7 +1037,7 @@
                     <span>Interest with 10-year repayment plan</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-itemX="">$22,058</span>
+                    <span class="financial-item_total" data-financial-itemX="total_interest10year__tenMore">$22,058</span>
                 </div>
             </div>
             <div class="financial-item form-group_item">
@@ -1003,7 +1045,7 @@
                     <span>Total cost of borrowing</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total financial-item_total__debt" data-financial-itemX="">$80,908</span>
+                    <span class="financial-item_total financial-item_total__debt" data-financial-itemX="total_debt10year__tenMore">$80,908</span>
                 </div>
             </div>
 
@@ -1013,7 +1055,7 @@
                     <span>Total money borrowed</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-itemX="">$48,150</span>
+                    <span class="financial-item_total" data-financial-itemX="total_borrowing__tenLess">$48,150</span>
                 </div>     
             </div>
             <div class="financial-item form-group_item">
@@ -1021,7 +1063,7 @@
                     <span>Interest with 10-year repayment plan</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-itemX="">$18,048</span>
+                    <span class="financial-item_total" data-financial-itemX="total_interest10year__tenLess">$18,048</span>
                 </div>
             </div>
             <div class="financial-item form-group_item">
@@ -1029,7 +1071,7 @@
                     <span>Total cost of borrowing</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total financial-item_total__debt" data-financial-itemX="">$66,198</span>
+                    <span class="financial-item_total financial-item_total__debt" data-financial-itemX="total_debt10year__tenLess">$66,198</span>
                 </div>
             </div>
             <div class="m-notification m-notification__visible m-notification__success ">
@@ -1054,13 +1096,13 @@
 
             <div class="number-callout number-callout__lined">
                 <h4 class="number-callout_header">Monthly loan payment</h4>
-                <div class="number-callout_value">$612.94</div>
+                <div class="number-callout_value"><span data-financial-item="total_debtMonthly10year">$612.94</span></div>
                 <p>Your payment will depend on your total debt and your repayment plan. (This tool assumes a standard plan, where you pay the same amount every month.)</p>
             </div>
 
             <div class="number-callout number-callout__lined">
                 <h4 class="number-callout_header">Monthly salary</h4>
-                <div class="number-callout_value">$4,016.67</div>
+                <div class="number-callout_value"><span data-financial-itemX="salary_monthly">$4,016.67</span></div>
                 <p>Your actual monthly salary will depend on many different factors, including your field of work, and the area where you will live. To get more information about the salary levels of different careers, visit the <a href="">BLS Wage Data</a> website.</p>
             </div>
 
@@ -1073,7 +1115,7 @@
 
             <div class="number-callout number-callout__lined">
                 <h4 class="number-callout_header">Monthly expenses</h4>
-                <div class="number-callout_value">$3,777</div>
+                <div class="number-callout_value"><span data-expenses-item="total_expenses">$3,777</span></div>
             </div>
 
             <div class="m-form-field m-form-field m-form-field__select">
@@ -1197,9 +1239,9 @@
                 </div>
             </div>
 
-            <h3 class="affording-header">Total money left</h3>
-            <div class="affording_monthly-remaining">
-                <span data-expenses-item="total_remainder">-$373.27</span>
+            <div class="number-callout number-callout__lined">
+                <h4 class="number-callout_header">Total money left</h4>
+                <div class="number-callout_value"><span data-expenses-item="total_remainder">-$373</span></div>
             </div>
 
             <div class="m-notification m-notification__visible m-notification__error">
@@ -1263,9 +1305,9 @@
                 </div>
             </div>
 
-            <img class="" src="{{ static('apps/paying-for-college/img/ph-graduation-rate_full.png') }}">
+            <img class="" src="{{ static('apps/paying-for-college/img/ph-grad-rate-national.png') }}">
 
-            <img class="" src="{{ static('apps/paying-for-college/img/ph-repayment-rate_full.png') }}" style="margin-top: 30px">
+            <img class="" src="{{ static('apps/paying-for-college/img/ph-repayment-rate-national.png') }}" style="margin-top: 30px">
 
             <div class="college-costs_tool-section_buttons">
                 <button class="a-btn college-costs_buttons__next btn__next-step" data-button-target="summary">Next step</button>
@@ -1354,7 +1396,7 @@
                     </span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-item="debt_totalTen">$73,553</span>
+                    <span class="financial-item_total" data-financial-item="total_debt10year">$73,553</span>
                     <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
                 </div>
             </div>
@@ -1366,7 +1408,7 @@
                     </span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total" data-financial-item="debt_totalTwentyFive">$110,385</span>
+                    <span class="financial-item_total" data-financial-item="total_debt25yr">$110,385</span>
                     <button class="a-btn a-btn__link">Show {{ svg_icon('plus-round') }}</button>
                 </div>
             </div>

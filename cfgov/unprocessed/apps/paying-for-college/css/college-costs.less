@@ -102,7 +102,7 @@
 				display: block;
 			}
 
-			& > h3.header_bottom-line {
+			& h3.header_bottom-line {
 				border-bottom: 1px solid @gray-40;
 				margin-top: unit( 30px / @base-font-size-px, em );
 			}
@@ -238,11 +238,25 @@
 				margin-top: unit( 30px / @base-font-size-px, em );
 			}
 
-			.affording,
-			.make-a-plan {
+			&.affording,
+			&.make-a-plan {
 				&_gap {
 					color: @red;
 					font-weight: 500;
+				}
+			}
+
+			&.make-a-plan {
+				.other-borrowing-btns {
+					button {
+					    margin: unit( 10px / @base-font-size-px, em ) 0;
+					}
+				}
+
+				h3.other-loan-options {
+					font-size: unit( 16px / @base-font-size-px, em );
+					font-weight: 500;
+					margin-top: unit( 30px / @base-font-size-px, em );
 				}
 			}
 
@@ -265,6 +279,10 @@
 				    font-weight: 600;
 				    margin-top: 0;
 				    margin-bottom: unit( 10px / @base-font-size-px, em );
+
+				    &.red {
+				    	color: @red;
+				    }
 				}
 
 				& + .number-callout {

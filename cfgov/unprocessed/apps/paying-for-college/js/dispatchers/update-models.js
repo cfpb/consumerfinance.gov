@@ -8,7 +8,7 @@ import { financialView } from '../views/financial-view.js';
 import { schoolModel } from '../models/school-model.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
 import { getState } from '../dispatchers/get-state.js';
-import { getSchoolValue } from '../dispatchers/get-model-values.js';
+import { getConstantsValue, getSchoolValue } from '../dispatchers/get-model-values.js';
 
 /**
   * updateFinancial - Update a property of the financial model
@@ -33,7 +33,8 @@ const updateSchoolData = function( iped ) {
         schoolModel.createSchoolProperty( key, data[key] );
       }
 
-      
+      financialModel.setValue( 'salary_annual', Number( getSchoolValue( 'schoolSalary' ) ) );
+      financialModel.setValue( 'salary_monthly', Number( getSchoolValue( 'schoolSalary' ) ) / 12 );
 
       financialView.updateFinancialItems();
     } );
@@ -45,7 +46,6 @@ const updateSchoolData = function( iped ) {
 const importSchoolToFinancial = function() {
   const program = getState( 'programData' );
 
-  console.log( program.type, program.rate, program.housing );
   if ( program.type === 'graduate' ) {
     if ( program.rate === 'out-of-state' ) {
       financialModel.setValue( 'dirCost_tuition', Number( getSchoolValue( 'tuitionGradOss' ) ) );
@@ -54,14 +54,12 @@ const importSchoolToFinancial = function() {
     } else if ( program.rate === 'in-district' ) {
       financialModel.setValue( 'dirCost_tuition', Number( getSchoolValue( 'tuitionGradInDis' ) ) );
     }
-  } else {
-    if ( program.rate === 'out-of-state' ) {
-      financialModel.setValue( 'dirCost_tuition', Number( getSchoolValue( 'tuitionUnderOoss' ) ) );
-    } else if ( program.rate === 'in-state' ) {
-      financialModel.setValue( 'dirCost_tuition', Number( getSchoolValue( 'tuitionUnderInS' ) ) );
-    } else if ( program.rate === 'in-district' ) {
-      financialModel.setValue( 'dirCost_tuition', Number( getSchoolValue( 'tuitionUnderInDis' ) ) );
-    }
+  } else if ( program.rate === 'out-of-state' ) {
+    financialModel.setValue( 'dirCost_tuition', Number( getSchoolValue( 'tuitionUnderOoss' ) ) );
+  } else if ( program.rate === 'in-state' ) {
+    financialModel.setValue( 'dirCost_tuition', Number( getSchoolValue( 'tuitionUnderInS' ) ) );
+  } else if ( program.rate === 'in-district' ) {
+    financialModel.setValue( 'dirCost_tuition', Number( getSchoolValue( 'tuitionUnderInDis' ) ) );
   }
 
   if ( program.housing === 'on-campus' ) {

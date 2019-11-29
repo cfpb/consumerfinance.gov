@@ -44,7 +44,7 @@ const fixedSticky = {
         elem.classList.remove( 'stuck' );
         elem.style.right = '0px';
       }
-    } )
+    } );
 
   },
 

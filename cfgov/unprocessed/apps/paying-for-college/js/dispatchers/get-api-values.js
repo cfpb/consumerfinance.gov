@@ -30,7 +30,7 @@ const getConstants = function() {
         console.log( 'An error occurred!', error );
       } );
   } );
-}
+};
 
 const getSchoolData = function( iped ) {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
@@ -46,7 +46,7 @@ const getSchoolData = function( iped ) {
         console.log( 'An error occurred!', error );
       } );
   } );
-}
+};
 
 export {
   getConstants,

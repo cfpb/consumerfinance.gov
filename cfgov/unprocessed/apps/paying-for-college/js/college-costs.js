@@ -14,7 +14,6 @@ import { fixedSticky } from './views/fixed-sticky-view.js';
 import { updateState } from './dispatchers/update-state.js';
 
 
-
 /* init() - Initialize the app */
 
 const init = function() {
@@ -25,7 +24,6 @@ const init = function() {
   financialView.init( body );
   navigationView.init( body );
 
-
   financialModel.init();
 
   financialView.updateFinancialItems();
@@ -33,10 +31,10 @@ const init = function() {
 
   fixedSticky.init( '.costs-not-covered' );
 
-  // Get stuff started
-  navigationView.activateGetStartedBtn();
-  navigationView._handleGetStartedBtnClick();
-  updateState.activeSection( 'school-info' );
+  /* Get stuff started
+     navigationView.activateGetStartedBtn();
+     navigationView._handleGetStartedBtnClick();
+     updateState.activeSection( 'school-info' ); */
 
 };
 

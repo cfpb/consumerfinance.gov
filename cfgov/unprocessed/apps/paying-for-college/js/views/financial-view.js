@@ -3,11 +3,10 @@
 import numberToMoney from 'format-usd';
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { updateState } from '../dispatchers/update-state.js';
-import { importSchoolToFinancial } from '../dispatchers/update-models.js';
-import { createFinancial, updateFinancial } from '../dispatchers/update-models.js';
+import { createFinancial, updateFinancial, importSchoolToFinancial } from '../dispatchers/update-models.js';
 import { getState } from '../dispatchers/get-state.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
-import { stringToNum } from '../util/number-utils.js';
+import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 
 const financialView = {
@@ -78,7 +77,7 @@ const financialView = {
   _handleCostsButtonClick: function( event ) {
     const target = event.target;
     const answer = target.dataset.costs_offerAnswer;
-    const offerContent = document.querySelector( '[data-offer-costs-info="' + answer +  '"]' );
+    const offerContent = document.querySelector( '[data-offer-costs-info="' + answer + '"]' );
     const costsContent = document.getElementById( 'costs_inputs-section' );
 
     // When button is first clicked, bring in school data if 'No'
@@ -109,9 +108,15 @@ const financialView = {
     clearTimeout( financialView._inputChangeTimeout );
     const elem = event.target;
     const name = elem.dataset.financialItem;
-    const value = stringToNum( elem.value );
+    const isRate = name.substr( 0, 5 ) === 'rate_';
+    const isFee = name.substr( 0, 4 ) === 'fee_';
+    let value = stringToNum( elem.value );
 
     financialView._currentInput = elem;
+
+    if ( isRate || isFee ) {
+      value /= 100;
+    }
 
     if ( elem.matches( ':focus' ) ) {
       financialView._inputChangeTimeout = setTimeout(
@@ -147,8 +152,10 @@ const financialView = {
         const isRate = prop.substr( 0, 5 ) === 'rate_';
         const isFee = prop.substr( 0, 4 ) === 'fee_';
         let val = getFinancialValue( prop );
-        if ( isRate || isFee ) {
-          val = ( val * 100 ) + '%';
+        if ( isFee ) {
+          val = decimalToPercentString( val, 3 );
+        } else if ( isRate ) {
+          val = decimalToPercentString( val, 2 );
         } else {
           val = numberToMoney( { amount: val, decimalPlaces: 0 } );
         }

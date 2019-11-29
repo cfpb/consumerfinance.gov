@@ -1,5 +1,5 @@
 /**
- * Recalculates the student debt totals, etc
+ * The file interfaces between our application and the studentDebtCalculator package
  */
 
 import studentDebtCalculator from 'student-debt-calc';
@@ -8,8 +8,7 @@ import { constantsModel } from '../models/constants-model.js';
 import { getState } from '../dispatchers/get-state.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
 
-
-const recalculate = function( data ) {
+const calculateDebt = function( data ) {
   let values = {};
   const debtObj = {
     total_debtAtGrad: 0,
@@ -24,14 +23,15 @@ const recalculate = function( data ) {
     fedLoan_directSub: 'directSubsidized',
     fedLoan_directUnsub: 'directUnsubsidized',
     privloan_school: 'privateLoan',
-    rate_schoolLoan: 'privateLoanRate'
+    rate_schoolLoan: 'privateLoanRate',
+    instiLoan_institutional: 'institutionalLoan',
+    rate_institutionalLoan: 'institutionalLoanRate'
   };
 
   values = Object.assign( constantsModel.values, data );
 
-  for ( const key in values ) {
-    values[key] = Number( values[key] );
-  }
+  console.log( 'after merge', values );
+
   for ( const key in modelToCalc ) {
     values[modelToCalc[key]] = getFinancialValue( key );
   }
@@ -41,16 +41,24 @@ const recalculate = function( data ) {
 
   // Add additional values
   values.programLength = getState( 'program' ).length;
+  values.undergraduate = getState( 'program' ).type !== 'graduate';
+  values.program = getState( 'program' ).type === 'graduate' ? 'grad' : 'ba';
+
+  console.log( 'before calc: ', values.DLOriginationFee );
 
   values = studentDebtCalculator( values );
 
+  /* Copy over debt values
+     TODO: Take out the +1 on the next line */
   debtObj.total_debtAtGrad = values.totalDebt;
   debtObj.total_debt10year = values.tenYear.loanLifetime;
   debtObj.total_debtMonthly10year = values.tenYear.loanMonthly;
-  debtObj.total_interest10yr = values.tenYear.loanLifetime - values.borrowingTotal;
+  debtObj.total_interest10year = values.tenYear.loanLifetime - values.borrowingTotal;
+  debtObj.total_debtRuleGap = values.totalDebt - values.salary_annual;
 
+  return debtObj;
 };
 
 export {
-  recalculate
+  calculateDebt
 };

@@ -36,7 +36,15 @@ function stringToNum( numberString ) {
 
 }
 
-export {
-  stringToNum
+function decimalToPercentString( number, decimalPlaces ) {
+  if ( typeof decimalPlaces === 'undefined' ) decimalPlaces = 2;
+  return Number( number )
+    .toLocaleString( 'en-US',
+      { style: 'percent',
+        minimumFractionDigits: decimalPlaces } );
+}
 
+export {
+  stringToNum,
+  decimalToPercentString
 };
