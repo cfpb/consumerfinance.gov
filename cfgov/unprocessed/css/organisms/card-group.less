@@ -12,6 +12,14 @@
                 margin-right: 0;
             }
         }
+
+        .respond-to-max( @bp-xs-max, {
+            flex-direction: column;
+
+            & .m-card {
+                margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+            }
+        } );
     }
 
     &__bg-green {

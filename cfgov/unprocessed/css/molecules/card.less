@@ -3,19 +3,12 @@
     flex-direction: column;
     flex-grow: 1;
     flex-basis: 0;
+    box-sizing: border-box;
+    width: 100%;
     background: @white;
     border: 1px solid @gray-20;
     border-bottom-width: 3px;
     padding: unit( @grid_gutter-width / @base-font-size-px, em );
-
-    // TODO: Check if heading and body is used anywhere?
-    &_heading {
-        color: @green;
-    }
-
-    &_body {
-        margin-bottom: 0;
-    }
 
     &_icon {
         font-size: unit( 48px / @base-font-size-px, em );
@@ -24,5 +17,14 @@
 
     &_footer {
         margin-top: auto;
+    }
+
+    // TODO: Check if heading and body is used anywhere?
+    &_heading {
+        color: @green;
+    }
+
+    &_body {
+        margin-bottom: 0;
     }
 }
