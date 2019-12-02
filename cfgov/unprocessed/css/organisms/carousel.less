@@ -91,6 +91,7 @@
   &_thumbnail {
     flex-grow: 1;
     flex-direction: column;
+    box-sizing: border-box;
     min-width: 200px;
     width: 25%;
 
@@ -112,21 +113,6 @@
     display: flex;
     align-items: stretch;
     position: relative;
-
-    // We can't do a straight top border because it gets included in the
-    // box model and pushes the content down. This floats a border above the
-    // content.
-    &:before {
-      content: '';
-      position: absolute;
-      height: 5px;
-      width: 100%;
-    }
-
-    &:hover:before {
-      border-top: 5px solid @gray-40;
-      display: block;
-    }
 
     &:focus {
       outline: 1px dotted @pacific;
@@ -154,14 +140,39 @@
     display: table;
   }
 
-  &_thumbnail-selected {
-    background: @white;
+  // Only show hover and top border at desktop sizes.
+  .respond-to-min( @bp-xs-max, {
 
-    &:before {
-      border-top: 5px solid @green;
+    // Hide "featured" heading at desktop size.
+    & h5 {
+      display: none;
+    }
+
+    // We can't do a straight top border because it gets included in the
+    // box model and pushes the content down. This floats a border above the
+    // content.
+    &_thumbnail:before {
+      content: '';
+      position: absolute;
+      height: 5px;
+      width: 100%;
+    }
+
+    &_thumbnail:hover:before {
+      border-top: 5px solid @gray-40;
       display: block;
     }
-  }
+
+    &_thumbnail-selected {
+      background: @white;
+
+      &:before {
+        border-top: 5px solid @green;
+        display: block;
+      }
+    }
+
+  } );
 
   &_thumbnail:focus {
     z-index: 1;
@@ -190,6 +201,18 @@
     text-align: left;
     vertical-align: top;
   }
+
+  // Disable thumbnail links on anything but mobile size.
+  .respond-to-min( @bp-xs-max, {
+    &_thumbnail-text a,
+    &_thumbnail-visual a {
+      pointer-events: none;
+      text-decoration: none;
+      border: none;
+      color: @black;
+    }
+
+  } );
 }
 
 // Show no-js state of carousel where all items show and buttons are hidden.

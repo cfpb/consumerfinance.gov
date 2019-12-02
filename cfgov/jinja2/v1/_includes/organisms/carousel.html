@@ -32,7 +32,11 @@
     <div class="o-carousel_item-text">
         <h2>{{ item.title }}</h2>
         <p>{{ item.body }}</p>
-        <p><a href="{{ item.link.url }}">{{ item.link.text }}</a></p>
+        <p>
+            <a href="{{ item.link.url }}">
+                {{ item.link.text }}
+            </a>
+        </p>
     </div>
     <div class="o-carousel_item-visual">
         <img class="o-carousel_item-img"
@@ -44,22 +48,33 @@
 {% endmacro %}
 
 {% macro render_carousel_thumbnail( item, is_selected=false ) %}
-<button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
+{#
+    Since desktop uses a button and mobile uses links,
+    we simulate a button here at desktop sizes, so we need to set the tab index.
+#}
+<div class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}"
+     role="button"
+     tabindex="0">
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
-            <img class="o-carousel_thumbnail-img"
-                src="{{ item.image.thumbnail_url }}"
-                alt="{{ item.image.alt_text }}">
+            <a href="{{ item.link.url }}" tabindex="-1">
+                <img class="o-carousel_thumbnail-img"
+                    src="{{ item.image.thumbnail_url }}"
+                    alt="{{ item.image.alt_text }}">
+            </a>
         </div>
         <p class="o-carousel_thumbnail-text">
-            {{ item.title }}
+            <a href="{{ item.link.url }}" tabindex="-1">
+                {{ item.title }}
+            </a>
         <p>
     </li>
-</button>
+</div>
 {% endmacro %}
 
 {% macro render(value) %}
 <div class="o-carousel u-hidden">
+    <h5>Featured</h5>
     <div class="o-carousel_navigator">
 
         <button class="o-carousel_btn o-carousel_btn-prev a-btn" aria-label="Previous showcase item">
