@@ -32,11 +32,7 @@
     <div class="o-carousel_item-text">
         <h2>{{ item.title }}</h2>
         <p>{{ item.body }}</p>
-        <p>
-            <a href="{{ item.link.url }}">
-                {{ item.link.text }}
-            </a>
-        </p>
+        <p><a href="{{ item.link.url }}">{{ item.link.text }}</a></p>
     </div>
     <div class="o-carousel_item-visual">
         <img class="o-carousel_item-img"
@@ -48,23 +44,36 @@
 {% endmacro %}
 
 {% macro render_carousel_thumbnail( item, is_selected=false ) %}
-{#
-    Since desktop uses a button and mobile uses links,
-    we simulate a button here at desktop sizes, so we need to set the tab index.
-#}
-<div class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}"
-     role="button"
-     tabindex="0">
+<button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
-            <a href="{{ item.link.url }}" tabindex="-1">
+            <img class="o-carousel_thumbnail-img"
+                src="{{ item.image.thumbnail_url }}"
+                alt="{{ item.image.alt_text }}">
+        </div>
+        <p class="o-carousel_thumbnail-text">
+            {{ item.title }}
+        <p>
+    </li>
+</button>
+{% endmacro %}
+
+{#
+    Since desktop uses a button and mobile uses links,
+    we duplicate the markup here but use a div instead of a button.
+#}
+{% macro render_carousel_thumbnail_mobile( item, is_selected=false ) %}
+<div class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
+    <li class="o-carousel_thumbnail-layout">
+        <div class="o-carousel_thumbnail-visual">
+            <a href="{{ item.link.url }}">
                 <img class="o-carousel_thumbnail-img"
                     src="{{ item.image.thumbnail_url }}"
                     alt="{{ item.image.alt_text }}">
             </a>
         </div>
         <p class="o-carousel_thumbnail-text">
-            <a href="{{ item.link.url }}" tabindex="-1">
+            <a href="{{ item.link.url }}">
                 {{ item.title }}
             </a>
         <p>
@@ -97,6 +106,12 @@
     <ul class="o-carousel_thumbnails">
         {% for item in value._items %}
             {{ render_carousel_thumbnail( item, loop.first ) }}
+        {% endfor %}
+    </ul>
+
+    <ul class="o-carousel_thumbnails o-carousel_thumbnails__mobile">
+        {% for item in value._items %}
+            {{ render_carousel_thumbnail_mobile( item, loop.first ) }}
         {% endfor %}
     </ul>
 </div>

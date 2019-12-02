@@ -140,8 +140,28 @@
     display: table;
   }
 
-  // Only show hover and top border at desktop sizes.
-  .respond-to-min( @bp-xs-max, {
+  // Mobile view.
+  .respond-to-max( @bp-xs-max, {
+    &_thumbnails {
+      display: none;
+    }
+
+    &_thumbnails__mobile {
+      display: block !important;
+    }
+
+    // Allow focus state on image inside link.
+    &_thumbnail-visual a {
+      display: block;
+      border-bottom-width: 0;
+    }
+  } );
+
+  // Desktop view.
+  .respond-to-min( @bp-sm-min, {
+    &_thumbnails__mobile {
+      display: none;
+    }
 
     // Hide "featured" heading at desktop size.
     & h5 {
@@ -171,7 +191,6 @@
         display: block;
       }
     }
-
   } );
 
   &_thumbnail:focus {
@@ -201,18 +220,6 @@
     text-align: left;
     vertical-align: top;
   }
-
-  // Disable thumbnail links on anything but mobile size.
-  .respond-to-min( @bp-xs-max, {
-    &_thumbnail-text a,
-    &_thumbnail-visual a {
-      pointer-events: none;
-      text-decoration: none;
-      border: none;
-      color: @black;
-    }
-
-  } );
 }
 
 // Show no-js state of carousel where all items show and buttons are hidden.
