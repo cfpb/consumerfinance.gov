@@ -100,7 +100,7 @@ _info_units_by_language = {
         {
             'image': {
                 'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2503,
             },
             'heading': {
                 'text': 'Empowering Consumers',
@@ -121,7 +121,7 @@ _info_units_by_language = {
         {
             'image': {
                 'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2507,
             },
             'heading': {
                 'text': 'Rules of the Road',
@@ -145,7 +145,7 @@ _info_units_by_language = {
         {
             'image': {
                 'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2504,
             },
             'heading': {
                 'text': 'Enforcing the Law',
@@ -169,7 +169,7 @@ _info_units_by_language = {
         {
             'image': {
                 'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2506,
             },
             'heading': {
                 'text': 'Learning through data and research',
@@ -193,7 +193,7 @@ _info_units_by_language = {
         {
             'image': {
                 'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2508,
             },
             'heading': {
                 'text': 'Supervision',
@@ -219,7 +219,7 @@ _info_units_by_language = {
         {
             'image': {
                 'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2505,
             },
             'heading': {
                 'text': 'Events',
