@@ -251,7 +251,7 @@ _info_units_by_language['es'] = _info_units_by_language['en']
 _cards_by_language = {
     'en': [
         {
-            'icon': 'warning',
+            'icon': 'complaint',
             'text': 'Have an issue with a financial product?',
             'link_text': 'Submit a complaint',
             'link_url': '/complaint/',
