@@ -63,7 +63,7 @@
     we duplicate the markup here but use a div instead of a button.
 #}
 {% macro render_carousel_thumbnail_mobile( item, is_selected=false ) %}
-<div class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
+<div class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{% endif %}">
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
             <a href="{{ item.link.url }}">
