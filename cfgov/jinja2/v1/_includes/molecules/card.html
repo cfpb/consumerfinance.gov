@@ -1,17 +1,26 @@
 {# ==========================================================================
 
-   Card
+   card.render( value )
 
    ==========================================================================
 
    Description:
 
-   Creates a card with header and body text.
+   Creates markup for a Card molecule, which displays an icon, some text,
+   and a link.
+
+   value.text:                  Card body text.
+
+   value.link_text:             Card link text.
+
+   value.link_url:              Card link URL.
 
    ========================================================================== #}
 
-{# TODO: This is a prototype and needs to change the text via parameters. #}
+{% macro render( value ) %}
 <div class="m-card">
-    <h3 class="h1 m-card_heading">Card Heading</h3>
-    <p class="m-card_body">Card text</p>
+    {{ svg_icon( value.icon ) }}
+    <p>{{ value.text }}</p>
+    <a href="{{ value.link_url }}">{{ value.link_text }}</a>
 </div>
+{% endmacro %}
