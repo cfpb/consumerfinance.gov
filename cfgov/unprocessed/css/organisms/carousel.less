@@ -91,6 +91,7 @@
   &_thumbnail {
     flex-grow: 1;
     flex-direction: column;
+    box-sizing: border-box;
     min-width: 200px;
     width: 25%;
 
@@ -112,21 +113,6 @@
     display: flex;
     align-items: stretch;
     position: relative;
-
-    // We can't do a straight top border because it gets included in the
-    // box model and pushes the content down. This floats a border above the
-    // content.
-    &:before {
-      content: '';
-      position: absolute;
-      height: 5px;
-      width: 100%;
-    }
-
-    &:hover:before {
-      border-top: 5px solid @gray-40;
-      display: block;
-    }
 
     &:focus {
       outline: 1px dotted @pacific;
@@ -154,14 +140,58 @@
     display: table;
   }
 
-  &_thumbnail-selected {
-    background: @white;
+  // Mobile view.
+  .respond-to-max( @bp-xs-max, {
+    &_thumbnails {
+      display: none;
+    }
 
-    &:before {
-      border-top: 5px solid @green;
+    &_thumbnails__mobile {
+      display: block !important;
+    }
+
+    // Allow focus state on image inside link.
+    &_thumbnail-visual a {
+      display: block;
+      border-bottom-width: 0;
+    }
+  } );
+
+  // Desktop view.
+  .respond-to-min( @bp-sm-min, {
+    &_thumbnails__mobile {
+      display: none;
+    }
+
+    // Hide "featured" heading at desktop size.
+    & h5 {
+      display: none;
+    }
+
+    // We can't do a straight top border because it gets included in the
+    // box model and pushes the content down. This floats a border above the
+    // content.
+    &_thumbnail:before {
+      content: '';
+      position: absolute;
+      height: 5px;
+      width: 100%;
+    }
+
+    &_thumbnail:hover:before {
+      border-top: 5px solid @gray-40;
       display: block;
     }
-  }
+
+    &_thumbnail-selected {
+      background: @white;
+
+      &:before {
+        border-top: 5px solid @green;
+        display: block;
+      }
+    }
+  } );
 
   &_thumbnail:focus {
     z-index: 1;
