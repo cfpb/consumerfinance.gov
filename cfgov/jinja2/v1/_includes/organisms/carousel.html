@@ -51,7 +51,9 @@
                 src="{{ item.image.thumbnail_url }}"
                 alt="{{ item.image.alt_text }}">
         </div>
-        <h6 class="o-carousel_thumbnail-text">{{ item.title }}</h6>
+        <p class="o-carousel_thumbnail-text">
+            {{ item.title }}
+        <p>
     </li>
 </button>
 {% endmacro %}
@@ -67,10 +69,12 @@
             {{ svg_icon( 'right' ) }}
         </button>
 
-        <ul class="o-carousel_items">
-            {% for item in value._items %}
-                {{ render_carousel_item( item ) }}
-            {% endfor %}
+        <ul class="o-carousel_items-container">
+            <div class="o-carousel_items">
+                {% for item in value._items %}
+                    {{ render_carousel_item( item ) }}
+                {% endfor %}
+            </div>
         </ul>
 
     </div>

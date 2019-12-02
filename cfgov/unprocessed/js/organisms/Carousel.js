@@ -36,7 +36,7 @@ function Carousel( element ) {
     for ( let i = 0, len = _items.length; i < len; i++ ) {
       itemDom = _items[i];
       if ( i > 0 ) {
-        itemDom.classList.add( 'u-hidden' );
+        itemDom.classList.add( 'u-alpha-0' );
       }
     }
 
@@ -100,8 +100,8 @@ function Carousel( element ) {
     } else if ( _currItemIndex > _items.length - 1 ) {
       _currItemIndex = 0;
     }
-    _items[_currItemIndex].classList.remove( 'u-hidden' );
-    lastItem.classList.add( 'u-hidden' );
+    _items[_currItemIndex].classList.remove( 'u-alpha-0' );
+    lastItem.classList.add( 'u-alpha-0' );
 
     _thumbnails[_currItemIndex].classList.add( `${ BASE_CLASS }_thumbnail-selected` );
     lastThumbnail.classList.remove( `${ BASE_CLASS }_thumbnail-selected` );
