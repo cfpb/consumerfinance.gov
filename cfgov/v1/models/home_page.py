@@ -13,22 +13,15 @@ from wagtail.wagtailsearch import index
 from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 
-from v1.atomic_elements import molecules
+from v1.atomic_elements import atoms, molecules
 from v1.models.base import CFGOVPage
 from v1.util import ref
 
 
 """Placeholder until these are exposed in the Wagtail admin."""
-_placeholder_carousel_image_url = (
-    'https://files.consumerfinance.gov/f/original_images/'
-    'cfpb_mayg_bookshelf_puppy-in-the-window.jpg'
-)
-
-
 _placeholder_carousel_image = {
-    'url': _placeholder_carousel_image_url,
-    'alt_text': 'Alt text goes here',
-    'thumbnail_url': _placeholder_carousel_image_url,
+    'alt': 'Alt text goes here',
+    'upload': 2509,
 }
 
 
@@ -328,6 +321,7 @@ class HomePage(CFGOVPage):
         context = super(HomePage, self).get_context(request)
         context.update({
             'carousel_items': self.get_carousel_items(),
+            'make_image_atom': self.make_image_atom,
             'info_units': self.get_info_units(),
             # TODO: Add Spanish version of this heading.
             'card_heading': "We want to hear from you",
@@ -338,6 +332,10 @@ class HomePage(CFGOVPage):
 
     def get_carousel_items(self):
         return _carousel_items_by_language[self.language]
+
+    def make_image_atom(self, value):
+        # TODO: Not needed once the entire carousel is in Wagtail.
+        return atoms.ImageBasic().to_python(value)
 
     def get_info_units(self):
         return [
