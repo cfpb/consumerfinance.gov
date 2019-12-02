@@ -67,9 +67,11 @@
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
             <a href="{{ item.link.url }}">
+                {% set image_atom = make_image_atom( item.image ) %}
+                {% set thumbnail_image = image( image_atom.upload, 'fill-50x50' ) %}
                 <img class="o-carousel_thumbnail-img"
-                    src="{{ item.image.thumbnail_url }}"
-                    alt="{{ item.image.alt_text }}">
+                    src="{{ thumbnail_image.url }}"
+                    alt="{{ image_atom.alt }}">
             </a>
         </div>
         <p class="o-carousel_thumbnail-text">
