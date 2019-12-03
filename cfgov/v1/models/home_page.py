@@ -89,17 +89,16 @@ _info_units_by_language = {
     'en': [
         {
             'image': {
-                'alt': 'Alt text goes here',
                 'upload': 2503,
             },
             'heading': {
-                'text': 'Empowering Consumers',
+                'text': 'Empowering consumers',
                 'level': 'h3',
             },
             'body': (
-                'We produce innovation products to help consumers make '
-                'informed financial decisions and choose products and '
-                'services that fit their needs.'
+                'We produce innovative tools and resources to help consumers '
+                'make informed financial decisions, wherever they are on '
+                'their journey.'
             ),
             'links': [
                 {
@@ -110,11 +109,10 @@ _info_units_by_language = {
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
                 'upload': 2507,
             },
             'heading': {
-                'text': 'Rules of the Road',
+                'text': 'Rules of the road',
                 'level': 'h3',
             },
             'body': (
@@ -127,18 +125,17 @@ _info_units_by_language = {
                     'url': '/policy-compliance/rulemaking/',
                 },
                 {
-                    'text': 'Notice and Opportunities to Comment',
+                    'text': 'Notice and opportunities to comment',
                     'url': '/policy-compliance/notice-opportunities-comment/'
                 },
             ],
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
                 'upload': 2504,
             },
             'heading': {
-                'text': 'Enforcing the Law',
+                'text': 'Enforcing the law',
                 'level': 'h3',
             },
             'body': (
@@ -158,7 +155,6 @@ _info_units_by_language = {
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
                 'upload': 2506,
             },
             'heading': {
@@ -171,18 +167,17 @@ _info_units_by_language = {
             ),
             'links': [
                 {
-                    'text': 'Data and Research',
+                    'text': 'Data and research',
                     'url': '/data-research/',
                 },
                 {
-                    'text': 'Financial Well-being survey',
+                    'text': 'Financial well-being survey data',
                     'url': '/data-research/financial-well-being-survey-data/',
                 },
             ],
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
                 'upload': 2508,
             },
             'heading': {
@@ -195,11 +190,11 @@ _info_units_by_language = {
             ),
             'links': [
                 {
-                    'text': 'Compliance and Guidance',
+                    'text': 'Compliance and guidance',
                     'url': '/policy-compliance/guidance/',
                 },
                 {
-                    'text': 'Supervisory Highlights',
+                    'text': 'Supervisory highlights',
                     'url': (
                         '/policy-compliance/guidance/supervisory-highlights/'
                     ),
@@ -208,7 +203,6 @@ _info_units_by_language = {
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
                 'upload': 2505,
             },
             'heading': {
@@ -221,11 +215,11 @@ _info_units_by_language = {
             ),
             'links': [
                 {
-                    'text': 'Archive of Events',
+                    'text': 'Archive of events',
                     'url': '/about-us/events/archive-past-events/',
                 },
                 {
-                    'text': 'Request a Speaker',
+                    'text': 'Request a speaker',
                     'url': '/about-us/events/request-speaker/',
                 },
             ],
