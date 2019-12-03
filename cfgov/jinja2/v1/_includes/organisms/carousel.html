@@ -32,9 +32,9 @@
     </div>
     <div class="o-carousel_item-visual">
         {% set image_atom = make_image_atom( item.image ) %}
-        {% set original_image = image( image_atom.upload, 'original' ) %}
+        {% set image_original = image( image_atom.upload, 'original' ) %}
         <img class="o-carousel_item-img"
-             src="{{ original_image.url }}"
+             src="{{ image_original.url }}"
              alt="{{ image_atom.alt }}"
         >
     </div>
@@ -46,9 +46,9 @@
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
             {% set image_atom = make_image_atom( item.image ) %}
-            {% set thumbnail_image = image( image_atom.upload, 'fill-50x50' ) %}
+            {% set image_thumbnail = image( image_atom.upload, 'fill-50x50' ) %}
             <img class="o-carousel_thumbnail-img"
-                src="{{ thumbnail_image.url }}"
+                src="{{ image_thumbnail.url }}"
                 alt="{{ image_atom.alt }}">
         </div>
         <p class="o-carousel_thumbnail-text">
@@ -68,9 +68,9 @@
         <div class="o-carousel_thumbnail-visual">
             <a href="{{ item.link.url }}">
                 {% set image_atom = make_image_atom( item.image ) %}
-                {% set thumbnail_image = image( image_atom.upload, 'fill-50x50' ) %}
+                {% set image_thumbnail = image( image_atom.upload, 'fill-50x50' ) %}
                 <img class="o-carousel_thumbnail-img"
-                    src="{{ thumbnail_image.url }}"
+                    src="{{ image_thumbnail.url }}"
                     alt="{{ image_atom.alt }}">
             </a>
         </div>
