@@ -26,7 +26,7 @@ function Carousel( element ) { // eslint-disable-line max-lines-per-function
 
   // Track how many unique slides the user has seen in the carousel.
   let _slideVisitCount = 1;
-  const ALL_SLIDES_VISITED = 15;
+  const ALL_SLIDES_VISITED = Math.pow( 2, _items.length ) - 1;
   let _allSlidesVisited = false;
 
   /**
@@ -117,11 +117,11 @@ function Carousel( element ) { // eslint-disable-line max-lines-per-function
      * 0010 = item two (2 decimal).
      * 0100 = item three (4 decimal).
      * 1000 = item four (8 decimal).
-     * 1111 = all visited (15 decimal).
+     * 1111 = all visited (if there are four items) (15 decimal).
      *
-     * We need to map 0, 1, 2, 3 item indices to bitwise digits to 1, 2, 4, 8.
+     * We need to map 0, 1, 2, … item indices to bitwise digits to 1, 2, 4, ….
      */
-    _slideVisitCount |= [ 1, 2, 4, 8 ][newCurrItemIndex];
+    _slideVisitCount |= Math.pow( 2, newCurrItemIndex );
     if ( _slideVisitCount === ALL_SLIDES_VISITED &&
          _allSlidesVisited !== true ) {
       Analytics.sendEvent( {
