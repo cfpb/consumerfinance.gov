@@ -30,7 +30,7 @@ _carousel_items_by_language = {
                 'resources that can help.'
             ),
             'link': {
-                'text': 'Learn how to get started',
+                'text': 'See resources to help you save',
                 'url': '/start-small-save-up/',
             },
             'image_pk': 2516,
@@ -38,12 +38,12 @@ _carousel_items_by_language = {
         {
             'title': 'CFPB Research Conference',
             'body': (
-                'CFPB hosting research conference featuring research from a '
-                'range of disciplines and approaches that can inform the '
-                'topic of consumer finance.'
+                u'The CFPB’s fourth research conference features research from'
+                u' a range of disciplines and approaches that inform the topic'
+                ' of consumer finance.'
             ),
             'link': {
-                'text': 'Learn about the conference',
+                'text': 'Learn more about the conference',
                 'url': '/data-research/cfpb-research-conference/',
             },
             'image_pk': 2515,
@@ -51,8 +51,8 @@ _carousel_items_by_language = {
         {
             'title': 'Protect yourself from debt collection scams',
             'body': (
-                'Watch our new video to learn how to tell the difference '
-                'between legitimate debt collector and scammers'
+                'Learn how to tell the difference between a legitimate debt '
+                'collector and scammers with our resources.'
             ),
             'link': {
                 'text': 'Learn how to protect yourself',
@@ -64,17 +64,17 @@ _carousel_items_by_language = {
             'image_pk': 2514,
         },
         {
-            'title': 'TODO',
+            'title': 'Shop for the best prepaid card for you',
             'body': (
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In '
-                'pellentesque odio et nulla ornare porta. Nulla lobortis '
-                'tincidunt congue nullam.'
+                u'If you’re considering getting a prepaid card or account, we '
+                u'have information that can help you choose the right one for '
+                u'you and better understand your rights.'
             ),
             'link': {
-                'text': 'TODO',
-                'url': '/',
+                'text': 'Learn about prepaid cards',
+                'url': '/consumer-tools/prepaid-cards/',
             },
-            'image_pk': 2516,
+            'image_pk': 2517,
         },
     ],
 }
