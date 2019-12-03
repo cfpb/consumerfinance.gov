@@ -8,12 +8,13 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
+from wagtail.wagtailimages import get_image_model
 from wagtail.wagtailsearch import index
 
 from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 
-from v1.atomic_elements import atoms, molecules
+from v1.atomic_elements import molecules
 from v1.models.base import CFGOVPage
 from v1.util import ref
 
@@ -32,10 +33,7 @@ _carousel_items_by_language = {
                 'text': 'Learn how to get started',
                 'url': '/start-small-save-up/',
             },
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2516,
-            },
+            'image_pk': 2516,
         },
         {
             'title': 'CFPB Research Conference',
@@ -48,10 +46,7 @@ _carousel_items_by_language = {
                 'text': 'Learn about the conference',
                 'url': '/data-research/cfpb-research-conference/',
             },
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2515,
-            },
+            'image_pk': 2515,
         },
         {
             'title': 'Protect yourself from debt collection scams',
@@ -66,10 +61,7 @@ _carousel_items_by_language = {
                     'debt-collector-and-scammers/'
                 ),
             },
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2514,
-            },
+            'image_pk': 2514,
         },
         {
             'title': 'TODO',
@@ -82,10 +74,7 @@ _carousel_items_by_language = {
                 'text': 'TODO',
                 'url': '/',
             },
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2516,
-            },
+            'image_pk': 2516,
         },
     ],
 }
@@ -329,7 +318,7 @@ class HomePage(CFGOVPage):
         context = super(HomePage, self).get_context(request)
         context.update({
             'carousel_items': self.get_carousel_items(),
-            'make_image_atom': self.make_image_atom,
+            'get_image_instance': self.get_image_instance,
             'info_units': self.get_info_units(),
             # TODO: Add Spanish version of this heading.
             'card_heading': "We want to hear from you",
@@ -341,9 +330,9 @@ class HomePage(CFGOVPage):
     def get_carousel_items(self):
         return _carousel_items_by_language[self.language]
 
-    def make_image_atom(self, value):
+    def get_image_instance(self, pk):
         # TODO: Not needed once the entire carousel is in Wagtail.
-        return atoms.ImageBasic().to_python(value)
+        return get_image_model().objects.get(pk=pk)
 
     def get_info_units(self):
         return [
