@@ -19,12 +19,6 @@ from v1.util import ref
 
 
 """Placeholder until these are exposed in the Wagtail admin."""
-_placeholder_carousel_image = {
-    'alt': 'Alt text goes here',
-    'upload': 2509,
-}
-
-
 _carousel_items_by_language = {
     'en': [
         {
@@ -38,46 +32,60 @@ _carousel_items_by_language = {
                 'text': 'Learn how to get started',
                 'url': '/start-small-save-up/',
             },
-            'image': _placeholder_carousel_image,
-        },
-        {
-            'title': 'Tax time',
-            'body': (
-                'Take advantage of the time when you are filing your tax '
-                'return to set aside a portion of your refund towards savings.'
-            ),
-            'link': {
-                'text': 'Learn more about tax time savings',
-                'url': '/about-us/blog/tax-time-saving-tips/',
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2516,
             },
-            'image': _placeholder_carousel_image,
         },
         {
-            'title': 'Building a Bridge to Credit Visibility Symposium',
+            'title': 'CFPB Research Conference',
             'body': (
-                'Mark your Calendar to join the Bureau for a day-long '
-                'symposium on September 17, 2018, from 8:00am to 4:45pm'
+                'CFPB hosting research conference featuring research from a '
+                'range of disciplines and approaches that can inform the '
+                'topic of consumer finance.'
             ),
             'link': {
-                'text': 'Learn more about this event',
+                'text': 'Learn about the conference',
+                'url': '/data-research/cfpb-research-conference/',
+            },
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2515,
+            },
+        },
+        {
+            'title': 'Protect yourself from debt collection scams',
+            'body': (
+                'Watch our new video to learn how to tell the difference '
+                'between legitimate debt collector and scammers'
+            ),
+            'link': {
+                'text': 'Learn how to protect yourself',
                 'url': (
-                    '/about-us/events/archive-past-events'
-                    '/building-bridge-credit-visibility/'
+                    '/about-us/blog/how-tell-difference-between-legitimate-'
+                    'debt-collector-and-scammers/'
                 ),
             },
-            'image': _placeholder_carousel_image,
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2514,
+            },
         },
         {
-            'title': 'Equifax data breach updates',
+            'title': 'TODO',
             'body': (
-                'Today the CFPB, FTC and States Announced Settlement with '
-                'Equifax Over 2017 Data Breach.'
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In '
+                'pellentesque odio et nulla ornare porta. Nulla lobortis '
+                'tincidunt congue nullam.'
             ),
             'link': {
-                'text': 'Find out more details',
-                'url': '/equifax-settlement/',
+                'text': 'TODO',
+                'url': '/',
             },
-            'image': _placeholder_carousel_image,
+            'image': {
+                'alt': 'Alt text goes here',
+                'upload': 2516,
+            },
         },
     ],
 }
