@@ -18,7 +18,7 @@
   &_btn {
     position: absolute;
     top: 50%;
-    z-index: 2;
+    z-index: 3;
     padding-left: unit( 10px / @btn-font-size, em );
     padding-right: unit( 10px / @btn-font-size, em );
     margin-top: -16px;
@@ -56,6 +56,11 @@
       left: -25% * ( @value - 1 );
     }
   } );
+
+  // Bring the currently visible slide forward so it's above the invisible ones.
+  &_item:not( .u-alpha-0 ) {
+    z-index: 2;
+  }
 
   &_item-text {
     display: table-cell;
