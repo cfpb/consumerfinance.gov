@@ -19,11 +19,7 @@
 
    item.link.url:               Panel link URL.
 
-   item.image.url:              URL to panel image.
-
-   item.image.alt_text:         Alt text for panel image.
-
-   item.image.thumbnail_url:    URL to panel thumbnail image.
+   item.image:                  Panel Wagtail image.
 
    ========================================================================== #}
 
@@ -35,9 +31,11 @@
         <p><a href="{{ item.link.url }}">{{ item.link.text }}</a></p>
     </div>
     <div class="o-carousel_item-visual">
+        {% set image_atom = make_image_atom( item.image ) %}
+        {% set image_original = image( image_atom.upload, 'original' ) %}
         <img class="o-carousel_item-img"
-             src="{{ item.image.url }}"
-             alt="{{ item.image.alt_text }}"
+             src="{{ image_original.url }}"
+             alt="{{ image_atom.alt }}"
         >
     </div>
 </section>
@@ -47,9 +45,11 @@
 <button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
+            {% set image_atom = make_image_atom( item.image ) %}
+            {% set image_thumbnail = image( image_atom.upload, 'fill-50x50' ) %}
             <img class="o-carousel_thumbnail-img"
-                src="{{ item.image.thumbnail_url }}"
-                alt="{{ item.image.alt_text }}">
+                src="{{ image_thumbnail.url }}"
+                alt="{{ image_atom.alt }}">
         </div>
         <p class="o-carousel_thumbnail-text">
             {{ item.title }}
@@ -67,9 +67,11 @@
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
             <a href="{{ item.link.url }}">
+                {% set image_atom = make_image_atom( item.image ) %}
+                {% set image_thumbnail = image( image_atom.upload, 'fill-50x50' ) %}
                 <img class="o-carousel_thumbnail-img"
-                    src="{{ item.image.thumbnail_url }}"
-                    alt="{{ item.image.alt_text }}">
+                    src="{{ image_thumbnail.url }}"
+                    alt="{{ image_atom.alt }}">
             </a>
         </div>
         <p class="o-carousel_thumbnail-text">
