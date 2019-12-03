@@ -31,11 +31,11 @@
         <p><a href="{{ item.link.url }}">{{ item.link.text }}</a></p>
     </div>
     <div class="o-carousel_item-visual">
-        {% set image_atom = make_image_atom( item.image ) %}
-        {% set image_original = image( image_atom.upload, 'original' ) %}
+        {% set image_instance = get_image_instance( item.image_pk ) %}
+        {% set rendition = image( image_instance, 'original' ) %}
         <img class="o-carousel_item-img"
-             src="{{ image_original.url }}"
-             alt="{{ image_atom.alt }}"
+             src="{{ rendition.url }}"
+             {%- if image_instance.alt %} alt="{{ image_instance.alt }}"{% endif %}
         >
     </div>
 </section>
@@ -45,11 +45,12 @@
 <button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
-            {% set image_atom = make_image_atom( item.image ) %}
-            {% set image_thumbnail = image( image_atom.upload, 'fill-50x50' ) %}
+            {% set image_instance = get_image_instance( item.image_pk ) %}
+            {% set rendition = image( image_instance, 'fill-50x50' ) %}
             <img class="o-carousel_thumbnail-img"
-                src="{{ image_thumbnail.url }}"
-                alt="{{ image_atom.alt }}">
+                src="{{ rendition.url }}"
+                 {%- if image_instance.alt %} alt="{{ image_instance.alt }}"{% endif %}
+            >
         </div>
         <p class="o-carousel_thumbnail-text">
             {{ item.title }}
@@ -67,11 +68,12 @@
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
             <a href="{{ item.link.url }}">
-                {% set image_atom = make_image_atom( item.image ) %}
-                {% set image_thumbnail = image( image_atom.upload, 'fill-50x50' ) %}
+                {% set image_instance = get_image_instance( item.image_pk ) %}
+                {% set rendition = image( image_instance, 'fill-50x50' ) %}
                 <img class="o-carousel_thumbnail-img"
-                    src="{{ image_thumbnail.url }}"
-                    alt="{{ image_atom.alt }}">
+                    src="{{ rendition.url }}"
+                    {%- if image_instance.alt %} alt="{{ image_instance.alt }}"{% endif %}
+                >
             </a>
         </div>
         <p class="o-carousel_thumbnail-text">
