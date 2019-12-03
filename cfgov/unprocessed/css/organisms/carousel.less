@@ -229,11 +229,23 @@
 
 // Show no-js state of carousel where all items show and buttons are hidden.
 .no-js .o-carousel {
-  // Override u-hidden when
+  // Override u-hidden when JS is turned off.
   display: block !important;
 
+  // Revert item layout.
+  &_items {
+    width: auto;
+    display: block;
+  }
+
+  &_item {
+    position: static;
+    display: block;
+    border-bottom: 1px solid @gray-40;
+  }
+
   &_btn,
-  &_thumbnails {
+  &_thumbnails:not( .o-carousel_thumbnails__mobile ) {
     display: none !important;
   }
 }
