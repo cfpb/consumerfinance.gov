@@ -2,6 +2,7 @@
 # Script for activating the virtualenv (creating it first, if necessary).
 # NOTE: Run this script while in the project root directory.
 #       It will not run correctly when run from another directory.
+# DOCS: https://github.com/cfpb/development/blob/master/guides/installing-python.md
 # ==========================================================================
 
 # Confirm that variable VENV_NAME is already set to the name of the virtualenv
