@@ -8,6 +8,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
+from wagtail.wagtailimages import get_image_model
 from wagtail.wagtailsearch import index
 
 from flags.state import flag_enabled
@@ -19,19 +20,6 @@ from v1.util import ref
 
 
 """Placeholder until these are exposed in the Wagtail admin."""
-_placeholder_carousel_image_url = (
-    'https://files.consumerfinance.gov/f/original_images/'
-    'cfpb_mayg_bookshelf_puppy-in-the-window.jpg'
-)
-
-
-_placeholder_carousel_image = {
-    'url': _placeholder_carousel_image_url,
-    'alt_text': 'Alt text goes here',
-    'thumbnail_url': _placeholder_carousel_image_url,
-}
-
-
 _carousel_items_by_language = {
     'en': [
         {
@@ -42,49 +30,51 @@ _carousel_items_by_language = {
                 'resources that can help.'
             ),
             'link': {
-                'text': 'Learn how to get started',
+                'text': 'See resources to help you save',
                 'url': '/start-small-save-up/',
             },
-            'image': _placeholder_carousel_image,
+            'image_pk': 2516,
         },
         {
-            'title': 'Tax time',
+            'title': 'CFPB Research Conference',
             'body': (
-                'Take advantage of the time when you are filing your tax '
-                'return to set aside a portion of your refund towards savings.'
+                u'The CFPB’s fourth research conference features research from'
+                u' a range of disciplines and approaches that inform the topic'
+                ' of consumer finance.'
             ),
             'link': {
-                'text': 'Learn more about tax time savings',
-                'url': '/about-us/blog/tax-time-saving-tips/',
+                'text': 'Learn more about the conference',
+                'url': '/data-research/cfpb-research-conference/',
             },
-            'image': _placeholder_carousel_image,
+            'image_pk': 2515,
         },
         {
-            'title': 'Building a Bridge to Credit Visibility Symposium',
+            'title': 'Protect yourself from debt collection scams',
             'body': (
-                'Mark your Calendar to join the Bureau for a day-long '
-                'symposium on September 17, 2018, from 8:00am to 4:45pm'
+                'Learn how to tell the difference between a legitimate debt '
+                'collector and scammers with our resources.'
             ),
             'link': {
-                'text': 'Learn more about this event',
+                'text': 'Learn how to protect yourself',
                 'url': (
-                    '/about-us/events/archive-past-events'
-                    '/building-bridge-credit-visibility/'
+                    '/about-us/blog/how-tell-difference-between-legitimate-'
+                    'debt-collector-and-scammers/'
                 ),
             },
-            'image': _placeholder_carousel_image,
+            'image_pk': 2514,
         },
         {
-            'title': 'Equifax data breach updates',
+            'title': 'Shop for the best prepaid card for you',
             'body': (
-                'Today the CFPB, FTC and States Announced Settlement with '
-                'Equifax Over 2017 Data Breach.'
+                u'If you’re considering getting a prepaid card or account, we '
+                u'have information that can help you choose the right one for '
+                u'you and better understand your rights.'
             ),
             'link': {
-                'text': 'Find out more details',
-                'url': '/equifax-settlement/',
+                'text': 'Learn about prepaid cards',
+                'url': '/consumer-tools/prepaid-cards/',
             },
-            'image': _placeholder_carousel_image,
+            'image_pk': 2517,
         },
     ],
 }
@@ -99,17 +89,16 @@ _info_units_by_language = {
     'en': [
         {
             'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2503,
             },
             'heading': {
-                'text': 'Empowering Consumers',
+                'text': 'Empowering consumers',
                 'level': 'h3',
             },
             'body': (
-                'We produce innovation products to help consumers make '
-                'informed financial decisions and choose products and '
-                'services that fit their needs.'
+                'We produce innovative tools and resources to help consumers '
+                'make informed financial decisions, wherever they are on '
+                'their journey.'
             ),
             'links': [
                 {
@@ -120,11 +109,10 @@ _info_units_by_language = {
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2507,
             },
             'heading': {
-                'text': 'Rules of the Road',
+                'text': 'Rules of the road',
                 'level': 'h3',
             },
             'body': (
@@ -137,18 +125,17 @@ _info_units_by_language = {
                     'url': '/policy-compliance/rulemaking/',
                 },
                 {
-                    'text': 'Notice and Opportunities to Comment',
+                    'text': 'Notice and opportunities to comment',
                     'url': '/policy-compliance/notice-opportunities-comment/'
                 },
             ],
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2504,
             },
             'heading': {
-                'text': 'Enforcing the Law',
+                'text': 'Enforcing the law',
                 'level': 'h3',
             },
             'body': (
@@ -168,8 +155,7 @@ _info_units_by_language = {
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2506,
             },
             'heading': {
                 'text': 'Learning through data and research',
@@ -181,19 +167,18 @@ _info_units_by_language = {
             ),
             'links': [
                 {
-                    'text': 'Data and Research',
+                    'text': 'Data and research',
                     'url': '/data-research/',
                 },
                 {
-                    'text': 'Financial Well-being survey',
+                    'text': 'Financial well-being survey data',
                     'url': '/data-research/financial-well-being-survey-data/',
                 },
             ],
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2508,
             },
             'heading': {
                 'text': 'Supervision',
@@ -205,11 +190,11 @@ _info_units_by_language = {
             ),
             'links': [
                 {
-                    'text': 'Compliance and Guidance',
+                    'text': 'Compliance and guidance',
                     'url': '/policy-compliance/guidance/',
                 },
                 {
-                    'text': 'Supervisory Highlights',
+                    'text': 'Supervisory highlights',
                     'url': (
                         '/policy-compliance/guidance/supervisory-highlights/'
                     ),
@@ -218,8 +203,7 @@ _info_units_by_language = {
         },
         {
             'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
+                'upload': 2505,
             },
             'heading': {
                 'text': 'Events',
@@ -231,11 +215,11 @@ _info_units_by_language = {
             ),
             'links': [
                 {
-                    'text': 'Archive of Events',
+                    'text': 'Archive of events',
                     'url': '/about-us/events/archive-past-events/',
                 },
                 {
-                    'text': 'Request a Speaker',
+                    'text': 'Request a speaker',
                     'url': '/about-us/events/request-speaker/',
                 },
             ],
@@ -328,6 +312,7 @@ class HomePage(CFGOVPage):
         context = super(HomePage, self).get_context(request)
         context.update({
             'carousel_items': self.get_carousel_items(),
+            'get_image_instance': self.get_image_instance,
             'info_units': self.get_info_units(),
             # TODO: Add Spanish version of this heading.
             'card_heading': "We want to hear from you",
@@ -338,6 +323,10 @@ class HomePage(CFGOVPage):
 
     def get_carousel_items(self):
         return _carousel_items_by_language[self.language]
+
+    def get_image_instance(self, pk):
+        # TODO: Not needed once the entire carousel is in Wagtail.
+        return get_image_model().objects.get(pk=pk)
 
     def get_info_units(self):
         return [

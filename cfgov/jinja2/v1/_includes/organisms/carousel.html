@@ -19,11 +19,7 @@
 
    item.link.url:               Panel link URL.
 
-   item.image.url:              URL to panel image.
-
-   item.image.alt_text:         Alt text for panel image.
-
-   item.image.thumbnail_url:    URL to panel thumbnail image.
+   item.image:                  Panel Wagtail image.
 
    ========================================================================== #}
 
@@ -35,9 +31,11 @@
         <p><a href="{{ item.link.url }}">{{ item.link.text }}</a></p>
     </div>
     <div class="o-carousel_item-visual">
+        {% set image_instance = get_image_instance( item.image_pk ) %}
+        {% set rendition = image( image_instance, 'original' ) %}
         <img class="o-carousel_item-img"
-             src="{{ item.image.url }}"
-             alt="{{ item.image.alt_text }}"
+             src="{{ rendition.url }}"
+             {%- if image_instance.alt %} alt="{{ image_instance.alt }}"{% endif %}
         >
     </div>
 </section>
@@ -47,9 +45,12 @@
 <button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
+            {% set image_instance = get_image_instance( item.image_pk ) %}
+            {% set rendition = image( image_instance, 'fill-50x50' ) %}
             <img class="o-carousel_thumbnail-img"
-                src="{{ item.image.thumbnail_url }}"
-                alt="{{ item.image.alt_text }}">
+                src="{{ rendition.url }}"
+                 {%- if image_instance.alt %} alt="{{ image_instance.alt }}"{% endif %}
+            >
         </div>
         <p class="o-carousel_thumbnail-text">
             {{ item.title }}
@@ -67,9 +68,12 @@
     <li class="o-carousel_thumbnail-layout">
         <div class="o-carousel_thumbnail-visual">
             <a href="{{ item.link.url }}">
+                {% set image_instance = get_image_instance( item.image_pk ) %}
+                {% set rendition = image( image_instance, 'fill-50x50' ) %}
                 <img class="o-carousel_thumbnail-img"
-                    src="{{ item.image.thumbnail_url }}"
-                    alt="{{ item.image.alt_text }}">
+                    src="{{ rendition.url }}"
+                    {%- if image_instance.alt %} alt="{{ image_instance.alt }}"{% endif %}
+                >
             </a>
         </div>
         <p class="o-carousel_thumbnail-text">
