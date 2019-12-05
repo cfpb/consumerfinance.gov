@@ -1,8 +1,7 @@
 from __future__ import unicode_literals
 
-from v1.models import DocumentDetailPage, CFGOVPageCategory
+from v1.models import CFGOVPageCategory, DocumentDetailPage
 from v1.util.migrations import get_stream_data, set_stream_data
-from v1.tests.wagtail_pages.helpers import publish_changes
 
 
 def get_new_name(current):
@@ -17,14 +16,17 @@ def get_new_name(current):
     else:
         return current
 
+
 def get_new_category(name):
     return CFGOVPageCategory(name=get_new_name(name))
+
 
 def update_page_category(page):
     cats = page.categories.all()
     updated = [get_new_category(cat.name) for cat in cats]
     page.categories.set(updated)
     page.save()
+
 
 def update_categories():
     draft_pages = []
@@ -39,15 +41,19 @@ def update_categories():
             draft_pages.append(url)
             continue
 
+        stream_data = get_stream_data(page, 'sidefoot')
+
         # Remove inline Category, use the page category instead
         for field in stream_data:
             if field['type'] == 'related_metadata':
                 field_content = field['value']['content']
+                new_content = []
                 for block in field_content:
                     if block['value'].get('heading', '') != 'Category':
                         new_content.append(block)
                     field['value']['content'] = new_content
             break
+
         set_stream_data(page.specific, 'sidefoot', stream_data)
 
         # Update page categories according to defined map
@@ -56,7 +62,8 @@ def update_categories():
     if len(draft_pages) > 0:
         print('Skipped the following draft pages:', ' '.join(draft_pages))
     else:
-        print('No draft pages found, inline categories removed')
+        print('No draft pages found')
+        print('Inline categories removed and page categories updated.')
 
 
 def run():
