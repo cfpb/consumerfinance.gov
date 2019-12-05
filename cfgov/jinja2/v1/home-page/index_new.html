@@ -1,6 +1,7 @@
 {% extends "layout-full.html" %}
 
 {% import "organisms/card-group.html" as card_group with context %}
+{% import "organisms/carousel.html" as carousel with context %}
 
 {% block title -%}
     {{ _('Consumer Financial Protection Bureau') }}
@@ -8,9 +9,7 @@
 
 {% block content_main %}
 {% block carousel %}
-    {% with value = { 'items': page.carousel.all() } %}
-    {% include 'organisms/carousel.html' %}
-    {% endwith %}
+    {{ carousel.render( carousel_items ) }}
 {% endblock carousel %}
 
 <section class="block">
