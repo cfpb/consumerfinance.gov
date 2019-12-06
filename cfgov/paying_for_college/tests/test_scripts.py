@@ -5,10 +5,12 @@ import datetime
 import json
 import os
 import six
+import unittest
 from decimal import Decimal
 
 import django
 from django.conf import settings
+from django.db import connection
 from django.utils import timezone
 
 import requests
@@ -165,6 +167,8 @@ class TestScripts(django.test.TestCase):
             None
         )
 
+    @unittest.skipUnless(
+        connection.vendor == 'postgresql', 'PostgreSQL-dependent')
     def test_run_cohorts(self):
         school = School.objects.get(pk=100654)
         self.assertIs(
@@ -183,6 +187,8 @@ class TestScripts(django.test.TestCase):
             100
         )
 
+    @unittest.skipUnless(
+        connection.vendor == 'postgresql', 'PostgreSQL-dependent')
     def test_run_cohorts_singleton(self):
         school = School.objects.get(pk=100654)
         self.assertIs(
@@ -231,6 +237,8 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(school.grad_rate_lt4, Decimal('0.54'))
         self.assertEqual(school.grad_rate_4yr, None)
 
+    @unittest.skipUnless(
+        connection.vendor == 'postgresql', 'PostgreSQL-dependent')
     @patch(
         'paying_for_college.disclosures.scripts.update_colleges.requests.get')
     def test_api_school_query(self, mock_requests):
@@ -242,6 +250,8 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(mock_requests.call_count, 1)
         self.assertTrue(mock_requests.called_with((123456, 'school.name')))
 
+    @unittest.skipUnless(
+        connection.vendor == 'postgresql', 'PostgreSQL-dependent')
     @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
     def test_single_school_request(self, mock_get_data):
         mock_get_data.return_value = self.mock_results.get('results')[0]

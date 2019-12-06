@@ -188,7 +188,7 @@
     }
 
     &_thumbnail:hover:before {
-      border-top: 5px solid @gray-40;
+      background: @gray-40;
       display: block;
     }
 
@@ -196,8 +196,12 @@
       background: @white;
 
       &:before {
-        border-top: 5px solid @green;
+        background: @green;
         display: block;
+      }
+
+      &:hover:before {
+        background: @green;
       }
     }
   } );
