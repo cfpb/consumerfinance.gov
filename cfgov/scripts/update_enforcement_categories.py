@@ -8,7 +8,6 @@ def get_new_name(current):
     stip = 'stipulation-and-consent-order-2'
     admin = 'administrative-adjudication-2'
     fed = 'fed-district-case'
-
     if current == stip or current == admin:
         return 'administrative-proceeding'
     elif current == fed:
@@ -47,7 +46,12 @@ def update_categories():
         for field in stream_data:
             if field['type'] == 'related_metadata':
                 field_content = field['value']['content']
-                new_content = []
+                new_content = [
+                    {'type': 'categories', 'value': {
+                        'heading': 'Category',
+                        'show_categories': True
+                    }}
+                ]
                 for block in field_content:
                     if block['value'].get('heading', '') != 'Category':
                         new_content.append(block)
