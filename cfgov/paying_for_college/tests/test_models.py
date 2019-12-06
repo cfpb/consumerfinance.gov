@@ -10,6 +10,8 @@ from django.http import HttpRequest
 from django.test import TestCase
 from django.utils import timezone
 
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
+
 import requests
 from paying_for_college.apps import PayingForCollegeConfig
 from paying_for_college.models import (
@@ -77,9 +79,25 @@ class PageModelsTest(TestCase):
         )
 
     def test_loan_quiz_template(self):
+        page = self.loan_quiz_page
+        stream_block = page.content.stream_block
+
+        def get_stream_value():
+            return [{
+                'type': 'guided_quiz',
+                'id': '12345',
+                'value': {
+                    'question': '?',
+                    'answer': 'huh?'}}]
+        page.content = StreamValue(
+            stream_block,
+            get_stream_value(),
+            is_lazy=True)
         self.assertEqual(
-            self.loan_quiz_page.get_template(HttpRequest()),
+            page.get_template(HttpRequest()),
             'paying-for-college/choose-a-student-loan.html')
+        self.assertEqual(
+            self.loan_quiz_page.content[0].value['situation_id'], '12345')
 
 
 class SchoolRegionTest(TestCase):
@@ -102,7 +120,8 @@ class PayingForCollegeConfigTest(unittest.TestCase):
 class SchoolModelsTest(TestCase):
 
     def create_school(
-            self, ID=999999,
+            self,
+            school_id=999999,
             data_json='',
             accreditor="Almighty Wizard",
             city="Emerald City",
@@ -111,7 +130,7 @@ class SchoolModelsTest(TestCase):
             ope6=5555,
             ope8=555500):
         return School.objects.create(
-            school_id=ID,
+            school_id=school_id,
             data_json=data_json,
             accreditor=accreditor,
             degrees_highest=degrees_highest,
@@ -316,7 +335,7 @@ class SchoolModelsTest(TestCase):
         self.assertEqual(feedback.parsed_url, {})
 
     def test_feedback_school(self):
-        school = self.create_school(ID=451796)
+        school = self.create_school(school_id=451796)
         feedback = self.create_feedback()
         self.assertEqual(feedback.school, school)
         feedback.url = feedback.url.replace("iped=451796&", '')

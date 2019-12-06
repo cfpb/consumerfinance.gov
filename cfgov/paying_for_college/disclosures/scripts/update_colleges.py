@@ -1,4 +1,4 @@
-"""Update college data using the Dept. of Education's collegechoice api"""
+"""Update college data using the Dept. of Education's API."""
 import datetime
 import logging
 import os
@@ -12,6 +12,7 @@ from paying_for_college.disclosures.scripts.api_utils import (
     DECIMAL_MAP, MODEL_MAP
 )
 from paying_for_college.models import CONTROL_MAP, FAKE_SCHOOL_PK, School
+from requests.exceptions import SSLError
 
 
 logger = logging.getLogger(__name__)
@@ -26,7 +27,7 @@ FIELDSTRING = api_utils.build_field_string()
 
 
 def fix_zip5(zip5):
-    """add leading zeros if they have been stripped by the scorecard db"""
+    """Add leading zeros if they have been stripped by the scorecard db."""
     if len(zip5) == 4:
         return "0{}".format(zip5)
     if len(zip5) == 3:
@@ -36,7 +37,12 @@ def fix_zip5(zip5):
 
 
 def get_scorecard_data(url):
-    response = requests.get(url)
+    """Make our API call to Scorecard."""
+    try:
+        response = requests.get(url)
+    except SSLError:
+        logger.warn("SSL error connecting with Scorecard")
+        return
     if not response.ok:
         logger.info("request not OK, returned {}".format(response.reason))
         if response.status_code == 429:
@@ -72,23 +78,52 @@ def set_school_grad_rate(school, api_data):
     return school
 
 
-def update(exclude_ids=[], single_school=None):
-    """update college-level data for the latest year"""
+def compile_net_prices(school, api_data):
+    """
+    Assemble net-price and slices from new-in-2019 Scorecard endpoints.
 
+    The former 'avg_net_price.overall' endpoint was removed in favor of
+    separate values for public and private school groups.
+    """
+    slice_data = {}
+    slice_map = {
+        'latest.cost.net_price.{}.by_income_level.0-30000': '0_30k',
+        'latest.cost.net_price.{}.by_income_level.30001-48000': '30k_48k',
+        'latest.cost.net_price.{}.by_income_level.48001-75000': '48k_75k',
+        'latest.cost.net_price.{}.by_income_level.75001-110000': '75k_110k',
+        'latest.cost.net_price.{}.by_income_level.110001-plus': '110k_plus',
+    }
+    public_slices = {
+        key.format('public'): val for key, val in slice_map.items()
+    }
+    private_slices = {
+        key.format('private'): val for key, val in slice_map.items()
+    }
+    if school.control == 'Public':
+        mapping = public_slices
+        school.avg_net_price = api_data.get('latest.cost.avg_net_price.public')
+    else:
+        mapping = private_slices
+        school.avg_net_price = api_data.get(
+            'latest.cost.avg_net_price.private')
+    for key, val in mapping.items():
+        slice_data[val] = api_data.get(key)
+    school.avg_net_price_slices = slice_data
+    return school
+
+
+def update(exclude_ids=[], single_school=None):
+    """Update college-level data for the latest year."""
     exclude_ids += [FAKE_SCHOOL_PK]
-    NO_DATA = []  # API failed to respond or provided no data
-    CLOSED = []  # schools that have closed since our last scrape
-    START_MSG = "Requesting latest school data."
-    JOB_MSG = (
+    no_data = []  # API failed to respond or provided no data
+    closed = []  # schools that have closed since our last scrape
+    job_msg = (
         "The job is paced to be friendly to the Scorecard API, "
         "so it can take an hour to run.\n"
         "A dot means a school was updated; a dash means no data found.")
-    logger.info(START_MSG)
-    if not single_school:
-        logger.info(JOB_MSG)
-    STARTER = datetime.datetime.now()
-    PROCESSED = 0
-    UPDATE_COUNT = 0
+    starter = datetime.datetime.now()
+    processed = 0
+    update_count = 0
     id_url = "{}&id={}&fields={}"
     base_query = School.objects.exclude(pk__in=exclude_ids)
     if single_school:
@@ -96,68 +131,66 @@ def update(exclude_ids=[], single_school=None):
         logger.info("Updating {}".format(base_query[0]))
     else:
         base_query = base_query.filter(operating=True)
+        logger.info(
+            "Seeking updates for {} schools.".format(base_query.count()))
+        logger.info(job_msg)
     for school in base_query:
-        UPDATED = False
-        PROCESSED += 1
-        if PROCESSED % 500 == 0:  # pragma: no cover
-            logger.info("\n{}\n".format(PROCESSED))
-        if PROCESSED % 5 == 0:
+        processed += 1
+        if processed % 500 == 0:  # pragma: no cover
+            logger.info("\n{}\n".format(processed))
+        if processed % 5 == 0:
             time.sleep(1)
         url = id_url.format(ID_BASE, school.school_id, FIELDSTRING)
         data = get_scorecard_data(url)
         if not data:
-            NO_DATA.append(school)
+            no_data.append(school)
             sys.stdout.write('-')
             sys.stdout.flush()
             continue
-        else:
-            sys.stdout.write('.')
-            sys.stdout.flush()
-            if data.get('school.operating') == 0:
-                school.operating = False
-                school.save()
-                CLOSED.append(school)
-                continue
-            else:
-                data['school.operating'] = True
-            for key in DECIMAL_MAP:
-                if data.get(key) is not None:
-                    setattr(school, DECIMAL_MAP[key], Decimal(str(data[key])))
-                    UPDATED = True
-            for key in MODEL_MAP:
-                if data.get(key) is not None:
-                    setattr(school, MODEL_MAP[key], data[key])
-                    UPDATED = True
-            if data.get('school.ownership'):
-                school.ownership = str(data['school.ownership'])
-                school.control = CONTROL_MAP[school.ownership]
-            school = set_school_grad_rate(school, data)
-            program_data = api_utils.compile_school_programs(data)
-            if program_data and type(program_data.get('most_popular')) == list:
-                UPDATED = True
-                school.program_most_popular = program_data['most_popular']
-                school.program_count = program_data.get(
-                    'program_count')
-            if UPDATED is True:
-                UPDATE_COUNT += 1
-                school.zip5 = fix_zip5(str(school.zip5))
-                school.save()
+        sys.stdout.write('.')
+        sys.stdout.flush()
+        update_count += 1
+        if data.get('school.operating') == 0:
+            school.operating = False
+            school.save()
+            closed.append(school)
+            continue
+        data['school.operating'] = True
+        for key in DECIMAL_MAP:
+            if data.get(key) is not None:
+                setattr(school, DECIMAL_MAP[key], Decimal(str(data[key])))
+        for key in MODEL_MAP:
+            if data.get(key) is not None:
+                setattr(school, MODEL_MAP[key], data[key])
+        if data.get('school.ownership'):
+            school.ownership = str(data['school.ownership'])
+            school.control = CONTROL_MAP[school.ownership]
+        set_school_grad_rate(school, data)
+        compile_net_prices(school, data)
+        program_data = api_utils.compile_school_programs(data)
+        if program_data and type(program_data.get('most_popular')) == list:
+            school.program_most_popular = program_data['most_popular']
+            school.program_count = program_data.get(
+                'program_count')
+        school.zip5 = fix_zip5(str(school.zip5))
+        school.save()
     endmsg = """
     Updated {} schools and found no data for {}\n\
     Schools that closed since last run: {}\n\
     \n{} took {} to run""".format(
-        UPDATE_COUNT,
-        len(NO_DATA),
-        len(CLOSED),
+        update_count,
+        len(no_data),
+        len(closed),
         SCRIPTNAME,
-        (datetime.datetime.now() - STARTER))
-    if NO_DATA:
-        logger.info("\n\nSchools for which we found no data:")
-        for school in NO_DATA:
-            logger.info("- {} ({})".format(school.primary_alias, school.pk))
-    if CLOSED:
+        (datetime.datetime.now() - starter))
+    if no_data:
+        logger.info("\n\nSchools for which we found no data on {}:".format(
+            datetime.date.today().strftime("%b %-d, %Y")))
+        for school in no_data:
+            logger.info("- {}".format(school))
+    if closed:
         logger.info("\n\nSchools that have closed since the last update:")
-        for school in CLOSED:
-            logger.info("- {} ({})".format(school.primary_alias, school.pk))
-
-    return (NO_DATA, endmsg)
+        for school in closed:
+            logger.info("- {}".format(school))
+    logger.info(endmsg)
+    return (no_data, endmsg)
