@@ -52,8 +52,14 @@
     height: 100%;
     position: relative;
     vertical-align: top;
-    transition: opacity 0.35s;
+    transition: visibility 0.35s, opacity 0.35s;
+
+    &__hidden{
+      opacity: 0;
+      visibility: hidden;
+    }
   }
+
 
   each( range( 4 ), {
     &_item:nth-child( @{value} ) {
@@ -69,7 +75,7 @@
   }
 
   // Bring the currently visible slide forward so it's above the invisible ones.
-  &_item:not( .u-alpha-0 ) {
+  &_item:not( &_item__hidden ) {
     z-index: 2;
   }
 
