@@ -290,7 +290,7 @@ class HomePage(CFGOVPage):
                 },
                 'body': (
                     u'We publish research and information we’ve collected '
-                    u'above the consumer financial marketplace.'
+                    u'about the consumer financial marketplace.'
                 ),
                 'links': [
                     {
