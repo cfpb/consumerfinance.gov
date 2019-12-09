@@ -41,13 +41,17 @@
   }
 
   &_items {
-    width: 400%;
     display: table;
+    width: 400%;
+    height: 300px;
   }
 
   &_item {
-    position: relative;
     display: table-cell;
+    width: 25%;
+    height: 100%;
+    position: relative;
+    vertical-align: top;
     transition: opacity 0.35s;
   }
 
@@ -56,6 +60,13 @@
       left: -25% * ( @value - 1 );
     }
   } );
+
+  &_item-wrapper {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+  }
 
   // Bring the currently visible slide forward so it's above the invisible ones.
   &_item:not( .u-alpha-0 ) {
@@ -80,14 +91,33 @@
     } );
 
     // This should be set to the height of the image we want to include.
-    height: 300px;
+    // height: 300px;
+    height: 100%;
 
-    // This is a temporary value.
+    // This is a temporary value. Turn on for debugging spacing around images.
     // background: red;
+
+    position: relative;
+    overflow: hidden;
+  }
+
+  &_item-visual-wrapper {
+    // This regrettable extra div is required for the image sizing and
+    // positioning to work in IE.
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    position: relative;
   }
 
   &_item-img {
-      display: block;
+    display: block;
+    max-width: none;
+    height: 100%;
+    position: absolute;
+    left: -9999px;
+    right: -9999px;
+    margin: 0 auto;
   }
 
   &_thumbnails {
@@ -188,7 +218,7 @@
     }
 
     &_thumbnail:hover:before {
-      border-top: 5px solid @gray-40;
+      background: @gray-40;
       display: block;
     }
 
@@ -196,8 +226,12 @@
       background: @white;
 
       &:before {
-        border-top: 5px solid @green;
+        background: @green;
         display: block;
+      }
+
+      &:hover:before {
+        background: @green;
       }
     }
   } );
@@ -238,18 +272,24 @@
 
   // Revert item layout.
   &_items {
-    width: auto;
     display: block;
+    width: auto;
+    height: auto;
   }
 
   &_item {
-    position: static;
     display: block;
+    width: auto;
     border-bottom: 1px solid @gray-40;
+    position: static;
+  }
+
+  &_item-visual {
+    height: 300px;
   }
 
   &_btn,
-  &_thumbnails:not( .o-carousel_thumbnails__mobile ) {
+  &_thumbnails__desktop {
     display: none !important;
   }
 }
