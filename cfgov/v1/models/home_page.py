@@ -436,7 +436,7 @@ class HomePageCarouselItem(Orderable):
     ]
 
 
-class HomePageInfoUnit(ClusterableModel, Orderable):
+class HomePageInfoUnit(Orderable, ClusterableModel):
     page = ParentalKey(
         'v1.HomePage', on_delete=models.CASCADE, related_name='info_units'
     )
