@@ -8,9 +8,7 @@
 {%- endblock %}
 
 {% block content_main %}
-{% block carousel %}
-    {{ carousel.render( carousel_items ) }}
-{% endblock carousel %}
+{{ carousel.render( carousel_items ) }}
 
 <section class="block">
     {% with value = {'info_units': info_units, 'format': '33-33-33'} %}
