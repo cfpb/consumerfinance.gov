@@ -29,7 +29,9 @@
         <div class="o-carousel_item-text">
             <h2>{{ item.title }}</h2>
             <p>{{ item.body }}</p>
-            <p><a href="{{ item.link_url }}">{{ item.link_text }}</a></p>
+            <a class="a-link__jump" href="{{ item.link_url }}">
+                <span class="a-link_text">{{ item.link_text }}</span>
+            </a>
         </div>
         <div class="o-carousel_item-visual">
             <div class="o-carousel_item-visual-wrapper">
