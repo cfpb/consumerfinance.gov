@@ -68,7 +68,6 @@ class HomePage(CFGOVPage):
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
         ObjectList([
             InlinePanel(
                 'carousel_items', min_num=4, max_num=4, label="Carousel Item"
@@ -82,7 +81,8 @@ class HomePage(CFGOVPage):
         ObjectList([
             FieldPanel('card_heading'),
             InlinePanel('cards', min_num=3, max_num=3, label="Card"),
-        ], heading='Cards')
+        ], heading='Cards'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
     # Sets page to only be createable at the root
