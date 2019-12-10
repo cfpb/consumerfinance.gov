@@ -6,10 +6,17 @@
         flex: 1;
 
         & .m-card {
-            margin-right: unit( 20px / @base-font-size-px, em );
+            margin-left: unit( 20px / @base-font-size-px, em );
 
-            &:last-child {
-                margin-right: 0;
+            .lt-ie10 & {
+                display: block;
+                width: 32%;
+                margin-left: 2%;
+                float: left;
+            }
+
+            &:first-child {
+                margin-left: 0;
             }
         }
 
@@ -27,5 +34,9 @@
 
     &__bg-green {
         background: @green-20;
+    }
+
+    .lt-ie10 & {
+        .u-clearfix();
     }
 }
