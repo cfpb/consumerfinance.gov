@@ -6,6 +6,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: es\n"
 
+#: v1/home-page/index_new.html
+msgid "homepage"
+msgstr "página de inicio"
+
 #: v1/_includes/molecules/global-search.html
 msgid "Search"
 msgstr "Buscar"
