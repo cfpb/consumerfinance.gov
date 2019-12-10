@@ -186,8 +186,9 @@ class HomePage(CFGOVPage):
             {
                 'title': 'Protect yourself from debt collection scams',
                 'body': (
-                    'Learn how to tell the difference between a legitimate '
-                    'debt collector and scammers with our resources.'
+                    'Do you know how to tell the difference between legitimate'
+                    ' debt collectors and scammers? Find out with our '
+                    'resources.'
                 ),
                 'link_text': 'Learn how to protect yourself',
                 'link_url': (
@@ -213,26 +214,6 @@ class HomePage(CFGOVPage):
         return [
             {
                 'image': {
-                    'upload': 2503,
-                },
-                'heading': {
-                    'text': 'Empowering consumers',
-                    'level': 'h3',
-                },
-                'body': (
-                    'We produce innovative tools and resources to help '
-                    'consumers make informed financial decisions, wherever '
-                    'they are on their journey.'
-                ),
-                'links': [
-                    {
-                        'text': 'Consumer tools',
-                        'url': '/consumer-tools/',
-                    },
-                ],
-            },
-            {
-                'image': {
                     'upload': 2507,
                 },
                 'heading': {
@@ -252,6 +233,32 @@ class HomePage(CFGOVPage):
                         'text': 'Notice and opportunities to comment',
                         'url': (
                             '/policy-compliance/notice-opportunities-comment/'
+                        ),
+                    },
+                ],
+            },
+            {
+                'image': {
+                    'upload': 2508,
+                },
+                'heading': {
+                    'text': 'Supervision',
+                    'level': 'h3',
+                },
+                'body': (
+                    'We supervise financial companies to ensure compliance '
+                    'with federal consumer laws.'
+                ),
+                'links': [
+                    {
+                        'text': 'Compliance and guidance',
+                        'url': '/policy-compliance/guidance/',
+                    },
+                    {
+                        'text': 'Supervisory highlights',
+                        'url': (
+                            '/policy-compliance/guidance/'
+                            'supervisory-highlights/'
                         ),
                     },
                 ],
@@ -282,6 +289,26 @@ class HomePage(CFGOVPage):
             },
             {
                 'image': {
+                    'upload': 2503,
+                },
+                'heading': {
+                    'text': 'Empowering consumers',
+                    'level': 'h3',
+                },
+                'body': (
+                    'We produce innovative tools and resources to help '
+                    'consumers make informed financial decisions, wherever '
+                    'they are on their journey.'
+                ),
+                'links': [
+                    {
+                        'text': 'Consumer tools',
+                        'url': '/consumer-tools/',
+                    },
+                ],
+            },
+            {
+                'image': {
                     'upload': 2506,
                 },
                 'heading': {
@@ -301,32 +328,6 @@ class HomePage(CFGOVPage):
                         'text': 'Financial well-being survey data',
                         'url': (
                             '/data-research/financial-well-being-survey-data/'
-                        ),
-                    },
-                ],
-            },
-            {
-                'image': {
-                    'upload': 2508,
-                },
-                'heading': {
-                    'text': 'Supervision',
-                    'level': 'h3',
-                },
-                'body': (
-                    'We supervise financial companies to ensure compliance '
-                    'with federal consumer laws.'
-                ),
-                'links': [
-                    {
-                        'text': 'Compliance and guidance',
-                        'url': '/policy-compliance/guidance/',
-                    },
-                    {
-                        'text': 'Supervisory highlights',
-                        'url': (
-                            '/policy-compliance/guidance/'
-                            'supervisory-highlights/'
                         ),
                     },
                 ],
@@ -363,7 +364,7 @@ class HomePage(CFGOVPage):
         return [
             {
                 'icon': 'complaint',
-                'text': 'Have an issue with a financial product?',
+                'text': 'Have a problem with a financial product or service?',
                 'link_text': 'Submit a complaint',
                 'link_url': '/complaint/',
             },
@@ -435,7 +436,7 @@ class HomePageCarouselItem(Orderable):
     ]
 
 
-class HomePageInfoUnit(ClusterableModel, Orderable):
+class HomePageInfoUnit(Orderable, ClusterableModel):
     page = ParentalKey(
         'v1.HomePage', on_delete=models.CASCADE, related_name='info_units'
     )

@@ -6,10 +6,17 @@
         flex: 1;
 
         & .m-card {
-            margin-right: unit( 20px / @base-font-size-px, em );
+            margin-left: unit( 20px / @base-font-size-px, em );
 
-            &:last-child {
-                margin-right: 0;
+            .lt-ie10 & {
+                display: block;
+                width: 32%;
+                margin-left: 2%;
+                float: left;
+            }
+
+            &:first-child {
+                margin-left: 0;
             }
         }
 
@@ -18,11 +25,18 @@
 
             & .m-card {
                 margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+                // Overrides flex-basis:1 to prevent card content from overflowing container
+                // when flex-direction is set to column at small screen sizes
+                flex-basis: auto;
             }
         } );
     }
 
     &__bg-green {
         background: @green-20;
+    }
+
+    .lt-ie10 & {
+        .u-clearfix();
     }
 }
