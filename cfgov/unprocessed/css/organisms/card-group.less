@@ -24,10 +24,15 @@
             flex-direction: column;
 
             & .m-card {
-                margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+                margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+                margin-left: 0;
                 // Overrides flex-basis:1 to prevent card content from overflowing container
                 // when flex-direction is set to column at small screen sizes
                 flex-basis: auto;
+            }
+
+            & .m-card:first-child {
+                margin-top: 0;
             }
         } );
     }
