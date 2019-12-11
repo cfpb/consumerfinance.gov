@@ -2,19 +2,17 @@
 import six
 
 from django.db import models
-from django.db.models import Q
 from django.utils.safestring import mark_safe
 
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, InlinePanel, ObjectList, PageChooserPanel, StreamFieldPanel,
-    TabbedInterface
+    FieldPanel, InlinePanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
 from wagtail.wagtailadmin.forms import (
     WagtailAdminModelFormMetaclass, WagtailAdminPageForm
 )
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Orderable, PageManager
-from wagtail.wagtailimages import get_image_model, get_image_model_string
+from wagtail.wagtailimages import get_image_model_string
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
@@ -52,18 +50,7 @@ class HomePage(CFGOVPage):
     card_heading = models.CharField(max_length=40, null=True, blank=True)
 
     # General content tab
-    content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('header'),
-        InlinePanel(
-            'excluded_updates',
-            label='Pages excluded from Latest Updates',
-            help_text=('This block automatically displays the six most '
-                       'recently published blog posts, press releases, '
-                       'speeches, testimonies, events, or op-eds. If you want '
-                       'to exclude a page from appearing as a recent update '
-                       'in this block, add it as an excluded page.')
-        ),
-    ]
+    content_panels = CFGOVPage.content_panels + [StreamFieldPanel('header')]
 
     # Tab handler interface
     edit_handler = TabbedInterface([
@@ -100,306 +87,28 @@ class HomePage(CFGOVPage):
 
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
-        context['latest_updates'] = self.get_latest_updates(request)
 
-        if flag_enabled('NEW_HOME_PAGE_IN_WAGTAIL', request=request):
-            context.update({
-                'carousel_items': self.carousel_items.select_related('image'),
-                'info_units': [
-                    info_unit.as_info_unit()
-                    for info_unit in
-                    self.info_units.select_related('image')
-                ],
-                'card_heading': self.card_heading,
-                'cards': self.cards.all(),
-            })
-        elif flag_enabled('NEW_HOME_PAGE', request=request):
-            context.update({
-                'carousel_items': self.get_hardcoded_carousel_items(),
-                'info_units': [
-                    molecules.InfoUnit().to_python(info_unit)
-                    for info_unit in
-                    self.get_hardcoded_info_units()
-                ],
-                'card_heading': self.get_hardcoded_card_heading(),
-                'cards': self.get_hardcoded_cards(),
-            })
+        context.update({
+            'carousel_items': self.carousel_items.select_related('image'),
+            'info_units': [
+                info_unit.as_info_unit()
+                for info_unit in
+                self.info_units.select_related('image')
+            ],
+            'card_heading': self.card_heading,
+            'cards': self.cards.all(),
+        })
 
         return context
 
-    def get_latest_updates(self, request):
-        # TODO: There should be a way to express this as part of the query
-        # rather than evaluating it in Python.
-        excluded_updates_pks = [
-            e.excluded_page.pk for e in self.excluded_updates.all()
-        ]
-
-        latest_pages = CFGOVPage.objects.in_site(
-            request.site
-        ).exclude(
-            pk__in=excluded_updates_pks
-        ).filter(
-            Q(content_type__app_label='v1') & (
-                Q(content_type__model='blogpage') |
-                Q(content_type__model='eventpage') |
-                Q(content_type__model='newsroompage')
-            ),
-            live=True,
-        ).distinct().order_by(
-            '-first_published_at'
-        )[:6]
-
-        return latest_pages
-
     def get_template(self, request):
-        if flag_enabled('NEW_HOME_PAGE', request=request):
-            return 'home-page/index_new.html'
+        if (
+            self.language == 'en' or
+            flag_enabled('NEW_HOME_PAGE', request=request)
+        ):
+            return 'home-page/index.html'
         else:
             return 'home-page/index_%s.html' % self.language
-
-    def get_hardcoded_carousel_items(self):
-        images = get_image_model().objects.in_bulk([2514, 2515, 2516, 2517])
-
-        return [
-            {
-                'title': 'Start Small, Save Up',
-                'body': (
-                    'Whether you want to put money aside for unexpected '
-                    'expenses or make a plan to save for your future goals, we'
-                    ' have resources that can help.'
-                ),
-                'link_text': 'See resources to help you save',
-                'link_url': '/start-small-save-up/',
-                'image': images[2516],
-            },
-            {
-                'title': 'CFPB Research Conference',
-                'body': (
-                    u'The CFPB’s fourth research conference features research '
-                    u'from a range of disciplines and approaches that inform '
-                    'the topic of consumer finance.'
-                ),
-                'link_text': 'Learn more about the conference',
-                'link_url': '/data-research/cfpb-research-conference/',
-                'image': images[2515],
-            },
-            {
-                'title': 'Protect yourself from debt collection scams',
-                'body': (
-                    'Do you know how to tell the difference between legitimate'
-                    ' debt collectors and scammers? Find out with our '
-                    'resources.'
-                ),
-                'link_text': 'Learn how to protect yourself',
-                'link_url': (
-                    '/about-us/blog/how-tell-difference-between-legitimate-'
-                    'debt-collector-and-scammers/'
-                ),
-                'image': images[2514],
-            },
-            {
-                'title': 'Shop for the best prepaid card for you',
-                'body': (
-                    u'If you’re considering getting a prepaid card or account,'
-                    u' we have information that can help you choose the right '
-                    u'one for you and better understand your rights.'
-                ),
-                'link_text': 'Learn about prepaid cards',
-                'link_url': '/consumer-tools/prepaid-cards/',
-                'image': images[2517],
-            },
-        ]
-
-    def get_hardcoded_info_units(self):
-        return [
-            {
-                'image': {
-                    'upload': 2507,
-                },
-                'heading': {
-                    'text': 'Rules of the road',
-                    'level': 'h3',
-                },
-                'body': (
-                    'We create clear rules to implement the law and preserve '
-                    'choices for consumers.'
-                ),
-                'links': [
-                    {
-                        'text': 'Rulemaking',
-                        'url': '/policy-compliance/rulemaking/',
-                    },
-                    {
-                        'text': 'Notice and opportunities to comment',
-                        'url': (
-                            '/policy-compliance/notice-opportunities-comment/'
-                        ),
-                    },
-                ],
-            },
-            {
-                'image': {
-                    'upload': 2508,
-                },
-                'heading': {
-                    'text': 'Supervision',
-                    'level': 'h3',
-                },
-                'body': (
-                    'We supervise financial companies to ensure compliance '
-                    'with federal consumer laws.'
-                ),
-                'links': [
-                    {
-                        'text': 'Compliance and guidance',
-                        'url': '/policy-compliance/guidance/',
-                    },
-                    {
-                        'text': 'Supervisory highlights',
-                        'url': (
-                            '/policy-compliance/guidance/'
-                            'supervisory-highlights/'
-                        ),
-                    },
-                ],
-            },
-            {
-                'image': {
-                    'upload': 2504,
-                },
-                'heading': {
-                    'text': 'Enforcing the law',
-                    'level': 'h3',
-                },
-                'body': (
-                    'We enforce federal consumer financial laws by '
-                    'investigating cases of potential wrongdoing and taking '
-                    'action.'
-                ),
-                'links': [
-                    {
-                        'text': 'Enforcement',
-                        'url': '/policy-compliance/enforcement/',
-                    },
-                    {
-                        'text': 'Payments to harmed consumers',
-                        'url': '/about-us/payments-harmed-consumers/',
-                    }
-                ],
-            },
-            {
-                'image': {
-                    'upload': 2503,
-                },
-                'heading': {
-                    'text': 'Empowering consumers',
-                    'level': 'h3',
-                },
-                'body': (
-                    'We produce innovative tools and resources to help '
-                    'consumers make informed financial decisions, wherever '
-                    'they are on their journey.'
-                ),
-                'links': [
-                    {
-                        'text': 'Consumer tools',
-                        'url': '/consumer-tools/',
-                    },
-                ],
-            },
-            {
-                'image': {
-                    'upload': 2506,
-                },
-                'heading': {
-                    'text': 'Learning through data and research',
-                    'level': 'h3',
-                },
-                'body': (
-                    u'We publish research and information we’ve collected '
-                    u'about the consumer financial marketplace.'
-                ),
-                'links': [
-                    {
-                        'text': 'Data and research',
-                        'url': '/data-research/',
-                    },
-                    {
-                        'text': 'Financial well-being survey data',
-                        'url': (
-                            '/data-research/financial-well-being-survey-data/'
-                        ),
-                    },
-                ],
-            },
-            {
-                'image': {
-                    'upload': 2505,
-                },
-                'heading': {
-                    'text': 'Events',
-                    'level': 'h3',
-                },
-                'body': (
-                    'We host conferences, workshops, townhalls, symposiums, '
-                    'and Advisory Committee meetings.'
-                ),
-                'links': [
-                    {
-                        'text': 'Archive of events',
-                        'url': '/about-us/events/archive-past-events/',
-                    },
-                    {
-                        'text': 'Request a speaker',
-                        'url': '/about-us/events/request-speaker/',
-                    },
-                ],
-            },
-        ]
-
-    def get_hardcoded_card_heading(self):
-        return "We want to hear from you"
-
-    def get_hardcoded_cards(self):
-        return [
-            {
-                'icon': 'complaint',
-                'text': 'Have a problem with a financial product or service?',
-                'link_text': 'Submit a complaint',
-                'link_url': '/complaint/',
-            },
-            {
-                'icon': 'lightbulb',
-                'text': (
-                    'Have a question on a financial topic? '
-                    'Browse answers to hundreds of financial questions.'
-                ),
-                'link_text': 'Browse Ask CFPB',
-                'link_url': '/ask-cfpb/',
-            },
-            {
-                'icon': 'open-quote',
-                'text': (
-                    'Tell us your experiences with money and financial '
-                    'services. The CFPB is listening.'
-                ),
-                'link_text': 'Tell your story',
-                'link_url': '/your-story/',
-            },
-        ]
-
-
-class HomePageExcludedUpdates(models.Model):
-    page = ParentalKey(
-        HomePage, on_delete=models.CASCADE, related_name='excluded_updates'
-    )
-    excluded_page = models.ForeignKey(
-        CFGOVPage, on_delete=models.CASCADE, related_name='+'
-    )
-
-    panels = [
-        PageChooserPanel('excluded_page'),
-    ]
 
 
 class HomePageCarouselItem(Orderable):
