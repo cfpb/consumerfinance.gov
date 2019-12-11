@@ -3,6 +3,7 @@ import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import Analytics from '../modules/Analytics';
 
 const BASE_CLASS = 'o-carousel';
+const HIDDEN_CLASS = 'o-carousel_item__hidden'
 
 /**
  * Carousel
@@ -42,7 +43,7 @@ function Carousel( element ) { // eslint-disable-line max-lines-per-function
     for ( let i = 0, len = _items.length; i < len; i++ ) {
       itemDom = _items[i];
       if ( i > 0 ) {
-        itemDom.classList.add( 'u-alpha-0' );
+        itemDom.classList.add( HIDDEN_CLASS );
       }
     }
 
@@ -155,8 +156,8 @@ function Carousel( element ) { // eslint-disable-line max-lines-per-function
     }
 
     // Update visible slides.
-    _items[_currItemIndex].classList.remove( 'u-alpha-0' );
-    lastItem.classList.add( 'u-alpha-0' );
+    _items[_currItemIndex].classList.remove( HIDDEN_CLASS );
+    lastItem.classList.add( HIDDEN_CLASS );
 
     _thumbnails[_currItemIndex].classList.add( `${ BASE_CLASS }_thumbnail-selected` );
     lastThumbnail.classList.remove( `${ BASE_CLASS }_thumbnail-selected` );
