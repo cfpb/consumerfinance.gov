@@ -9,9 +9,6 @@ This Django project includes the front-end assets and build tools,
 code to configure our CMS, [Wagtail](https://wagtail.io/),
 and several standalone Django apps for specific parts of the site.
 
-![Screenshot of cfgov-refresh](homepage.png)
-
-
 ## Quickstart
 
 Full installation and usage instructions are available in
