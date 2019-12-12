@@ -9,6 +9,8 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
+const WEBPACK_MODE = 'production';
+const IS_MINIMIZED = true;
 
 /* Commmon webpack 'module' option used in each configuration.
    Runs code through Babel and uses global supported browser list. */
@@ -68,12 +70,13 @@ const STATS_CONFIG = {
 
 const commonConf = {
   cache: true,
+  mode: WEBPACK_MODE,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: '[name]'
   },
   optimization: {
+    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -86,13 +89,13 @@ const commonConf = {
 
 const externalConf = {
   cache: true,
+  mode: WEBPACK_MODE,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: 'external-site.js'
   },
   optimization: {
-    minimize: true,
+    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -105,7 +108,7 @@ const externalConf = {
 
 const modernConf = {
   cache: true,
-  mode: 'production',
+  mode: WEBPACK_MODE,
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: '[name]'
@@ -114,6 +117,7 @@ const modernConf = {
     COMMON_CHUNK_CONFIG
   ],
   optimization: {
+    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -125,7 +129,7 @@ const modernConf = {
 };
 
 const onDemandHeaderRawConf = {
-  mode: 'production',
+  mode: WEBPACK_MODE,
   module: COMMON_MODULE_CONFIG,
   resolve: {
     symlinks: false
@@ -134,8 +138,8 @@ const onDemandHeaderRawConf = {
 
 const appsConf = {
   cache: true,
+  mode: WEBPACK_MODE,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: '[name]',
     jsonpFunction: 'apps'
@@ -144,6 +148,7 @@ const appsConf = {
     COMMON_CHUNK_CONFIG
   ],
   optimization: {
+    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -156,12 +161,13 @@ const appsConf = {
 
 const spanishConf = {
   cache: true,
+  mode: WEBPACK_MODE,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: 'spanish.js'
   },
   optimization: {
+    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
