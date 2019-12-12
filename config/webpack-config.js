@@ -10,7 +10,6 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
 const WEBPACK_MODE = 'production';
-const IS_MINIMIZED = true;
 
 /* Commmon webpack 'module' option used in each configuration.
    Runs code through Babel and uses global supported browser list. */
@@ -76,7 +75,6 @@ const commonConf = {
     filename: '[name]'
   },
   optimization: {
-    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -95,7 +93,6 @@ const externalConf = {
     filename: 'external-site.js'
   },
   optimization: {
-    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -117,7 +114,6 @@ const modernConf = {
     COMMON_CHUNK_CONFIG
   ],
   optimization: {
-    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -148,7 +144,6 @@ const appsConf = {
     COMMON_CHUNK_CONFIG
   ],
   optimization: {
-    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -167,7 +162,6 @@ const spanishConf = {
     filename: 'spanish.js'
   },
   optimization: {
-    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
