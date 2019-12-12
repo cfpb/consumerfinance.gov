@@ -9,8 +9,6 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
-const WEBPACK_MODE = 'production';
-const IS_MINIMIZED = true;
 
 /* This sets the default mode for webpack configurations to satisfy the need
    of webpack to have a `mode` set.
