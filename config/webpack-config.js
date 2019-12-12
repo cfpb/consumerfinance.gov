@@ -12,7 +12,8 @@ const COMMON_BUNDLE_NAME = 'common.js';
 
 /* This sets the default mode for webpack configurations to satisfy the need
    of webpack to have a `mode` set.
-   This value gets overridden when NODE_ENV=development. */
+   This value gets overridden when NODE_ENV=development.
+   See the `if ( envvars.NODE_ENV === 'development' )` block below. */
 const WEBPACK_MODE_DEFAULT = 'production';
 
 /* Commmon webpack 'module' option used in each configuration.
