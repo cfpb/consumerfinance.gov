@@ -9,6 +9,8 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
+const WEBPACK_MODE = 'production';
+const IS_MINIMIZED = true;
 
 /* This sets the default mode for webpack configurations to satisfy the need
    of webpack to have a `mode` set.
@@ -80,6 +82,7 @@ const commonConf = {
     filename: '[name]'
   },
   optimization: {
+    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -119,6 +122,7 @@ const modernConf = {
     COMMON_CHUNK_CONFIG
   ],
   optimization: {
+    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -149,6 +153,7 @@ const appsConf = {
     COMMON_CHUNK_CONFIG
   ],
   optimization: {
+    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -167,6 +172,7 @@ const spanishConf = {
     filename: 'spanish.js'
   },
   optimization: {
+    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
