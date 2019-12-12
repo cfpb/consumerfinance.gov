@@ -122,13 +122,16 @@ const getCommentMarker = label => {
   let commentParagraphID = '';
 
   const splitCurrentParagraph = label.split( 'Interp' );
+  /* A guard clause just in case any comment paragraphs have an invalid ID that
+     doesn't have 'Interp' in it */
+  if ( splitCurrentParagraph.length < 2 ) {
+    return '';
+  }
   if ( splitCurrentParagraph !== null ) {
     commentedParagraphID = splitCurrentParagraph[0]
       .split( '-' );
-    if ( splitCurrentParagraph[1] ) {
-      commentParagraphID = splitCurrentParagraph[1]
-        .split( '-' );
-    }
+    commentParagraphID = splitCurrentParagraph[1]
+      .split( '-' );
   }
   if ( commentedParagraphID !== null ) {
     commentedSection = commentedParagraphID[0];
@@ -141,13 +144,11 @@ const getCommentMarker = label => {
         .join( ')(' );
       commentedParagraph = '(' + commentedParagraph + ')';
     }
-    if ( commentParagraphID !== '' ) {
-      commentParagraph = commentParagraphID
-        .slice( 1 )
-        .join( '.' );
-      if ( commentParagraph !== '' ) {
-        commentParagraph = '-' + commentParagraph;
-      }
+    commentParagraph = commentParagraphID
+      .slice( 1 )
+      .join( '.' );
+    if ( commentParagraph !== '' ) {
+      commentParagraph = '-' + commentParagraph;
     }
   }
 
