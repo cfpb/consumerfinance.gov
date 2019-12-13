@@ -4,6 +4,7 @@
  * for tracking tab navigation of the site.
  */
 
+// eslint-disable-next-line max-lines-per-function, complexity, max-statements
 const TabNavigationTracking = ( () => {
 
   if ( !window.Storage ) {
@@ -157,7 +158,11 @@ const TabNavigationTracking = ( () => {
     } else {
       navPath.push( curPage );
     }
-    sessionStorage.setItem( '_nav_path', JSON.stringify( navPath ) );
+    try {
+      sessionStorage.setItem( '_nav_path', JSON.stringify( navPath ) );
+    } catch ( exception ) {
+      console.log( exception );
+    }
   }
 
   window.addEventListener( 'beforeunload', removeTabOnUnload );

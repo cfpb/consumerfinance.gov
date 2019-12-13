@@ -1,17 +1,19 @@
 {% extends "layout-full.html" %}
 
 {% import "organisms/card-group.html" as card_group with context %}
+{% import "organisms/carousel.html" as carousel with context %}
 
 {% block title -%}
     {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
 {% block content_main %}
-{% block carousel %}
-    {% with value = {'_items': carousel_items} %}
-    {% include 'organisms/carousel.html' %}
-    {% endwith %}
-{% endblock carousel %}
+
+<h1 class="u-visually-hidden">
+	{{ _('Consumer Financial Protection Bureau') }} {{ _('homepage') }}
+</h1>
+
+{{ carousel.render( carousel_items ) }}
 
 <section class="block">
     {% with value = {'info_units': info_units, 'format': '33-33-33'} %}
