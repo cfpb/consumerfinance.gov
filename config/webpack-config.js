@@ -80,7 +80,6 @@ const commonConf = {
     filename: '[name]'
   },
   optimization: {
-    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -120,7 +119,6 @@ const modernConf = {
     COMMON_CHUNK_CONFIG
   ],
   optimization: {
-    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -151,7 +149,6 @@ const appsConf = {
     COMMON_CHUNK_CONFIG
   ],
   optimization: {
-    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -170,7 +167,6 @@ const spanishConf = {
     filename: 'spanish.js'
   },
   optimization: {
-    minimize: IS_MINIMIZED,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
