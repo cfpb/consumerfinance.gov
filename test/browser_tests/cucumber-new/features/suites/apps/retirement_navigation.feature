@@ -11,5 +11,5 @@ Scenario Outline: Test links in the landing page
    Then I should see the "<full_url>" URL with page title "<page_title>"
 
 Examples:
-| link_name                           | page_title            | full_url                             |
-| Learn how estimates are calculated. | Quick Calculator FAQs | www.ssa.gov/OACT/quickcalc/faqs.html |
+| link_name                         | page_title      | full_url                                          |
+| Where do these numbers come from? | About this tool | consumer-tools/retirement/before-you-claim/about/ |
