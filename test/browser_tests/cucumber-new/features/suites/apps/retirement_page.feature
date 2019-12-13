@@ -13,7 +13,7 @@ Scenario Outline: Select month and day and year and income and retirement age
   And I enter day "<day>"
   And I enter year "<year>"
   And I enter income "<income>"
-  And I click get estimate
+  And I click Get your estimates
   And I choose retirement age "<retirement_age>"
   Then I should see "<retirement_age>" in age_selector_response
   And I should see result "<expected_result>" displayed in graph-container-text
