@@ -27,13 +27,13 @@ from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, ArticlePage,
     PortalSearchPage, get_standard_text, validate_page_number
 )
+from ask_cfpb.models.snippets import GlossaryTerm
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
 from v1.models import (
     CFGOVImage, HomePage, PortalCategory, PortalTopic, SublandingPage
 )
-from v1.models.snippets import GlossaryTerm
 from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import get_free_path, get_or_create_page
 
