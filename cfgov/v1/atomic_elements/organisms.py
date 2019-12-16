@@ -1,4 +1,3 @@
-import itertools
 import json
 from collections import Counter
 from functools import partial
@@ -793,61 +792,6 @@ class ExpandableGroup(blocks.StructBlock):
     )
 
     expandables = blocks.ListBlock(Expandable())
-
-    class Meta:
-        icon = 'list-ul'
-        template = '_includes/organisms/expandable-group.html'
-
-    class Media:
-        js = ["expandable-group.js"]
-
-
-class ContactExpandableGroup(blocks.StructBlock):
-    """Expandable group that renders selected Contact snippets."""
-    group_title = blocks.CharBlock()
-    contacts = blocks.ListBlock(SnippetChooserBlock('v1.Contact'))
-
-    def get_context(self, value, parent_context=None):
-        context = super(ContactExpandableGroup, self).get_context(
-            value,
-            parent_context=parent_context
-        )
-
-        # This block mimics the ExpandableGroup block.
-        context['value'] = ExpandableGroup().to_python({
-            'heading': value['group_title'],
-            'expandables': [
-                {
-                    'label': contact.heading,
-                    'content': contact.contact_info.stream_data,
-                } for contact in value['contacts']
-            ],
-        })
-
-        return context
-
-    def bulk_to_python(self, values):
-        """Support bulk retrieval of Contacts to reduce database queries.
-
-        This method leverages Wagtail's undocumented method for doing bulk
-        retrieval of data for StreamField blocks. It retrieves all Contacts
-        referenced by a StreamField in a single lookup, instead of the
-        default behavior of doing one database query per SnippetChooserBlock.
-        """
-        contact_ids = set(
-            itertools.chain(*(block['contacts'] for block in values))
-        )
-
-        contact_model = self.child_blocks['contacts'].child_block.target_model
-        contacts_by_id = contact_model.objects.in_bulk(contact_ids)
-
-        for block in values:
-            block['contacts'] = [
-                contacts_by_id[contact_id]
-                for contact_id in block['contacts']
-            ]
-
-        return values
 
     class Meta:
         icon = 'list-ul'
