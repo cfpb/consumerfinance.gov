@@ -240,7 +240,29 @@ class ContactAddress(blocks.StructBlock):
 
 
 class ContactEmail(blocks.StructBlock):
-    emails = blocks.ListBlock(atoms.Hyperlink())
+    emails = blocks.ListBlock(
+        blocks.StructBlock([
+            ('url', blocks.EmailBlock(label="Email address")),
+            ('text', blocks.CharBlock(
+                required=False,
+                label="Link text (optional)"
+            )),
+        ])
+    )
+
+    def clean(self, value):
+        cleaned = super(ContactEmail, self).clean(value)
+
+        if not cleaned.get('emails'):
+            raise ValidationError(
+                "Validation error in ContactEmail: "
+                "at least one email address is required",
+                params={'heading': ErrorList([
+                    "At least one email address is required."
+                ])}
+            )
+
+        return cleaned
 
     class Meta:
         icon = 'mail'
