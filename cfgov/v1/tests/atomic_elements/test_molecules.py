@@ -6,7 +6,7 @@ from wagtail.wagtailcore.blocks import StreamValue
 from scripts import _atomic_helpers as atomic
 
 from v1.atomic_elements.molecules import (
-    ContactEmail, RSSFeed, TextIntroduction
+    ContactEmail, ContactHyperlink, RSSFeed, TextIntroduction
 )
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.browse_page import BrowsePage
@@ -195,6 +195,43 @@ class ContactEmailTests(SimpleTestCase):
         value = block.to_python({'emails': [{'url': 'foo@example.com'}]})
         self.assertInHTML(
             '<a href="mailto:foo@example.com">foo@example.com</a>',
+            block.render(value)
+        )
+
+    def test_render_with_link_text(self):
+        block = ContactEmail()
+        value = block.to_python({
+            'emails': [
+                {
+                    'url': 'foo@example.com',
+                    'text': 'Bar',
+                },
+            ],
+        })
+
+        self.assertInHTML(
+            '<a href="mailto:foo@example.com">Bar</a>',
+            block.render(value)
+        )
+
+
+class ContactHyperlinkTests(SimpleTestCase):
+    def test_render_no_link_text(self):
+        block = ContactHyperlink()
+        value = block.to_python({'url': 'https://example.com'})
+        self.assertInHTML(
+            '<a href="https://example.com">https://example.com</a>',
+            block.render(value)
+        )
+
+    def test_render_with_link_text(self):
+        block = ContactHyperlink()
+        value = block.to_python({
+            'url': 'https://example.com',
+            'text': 'Example',
+        })
+        self.assertInHTML(
+            '<a href="https://example.com">Example</a>',
             block.render(value)
         )
 

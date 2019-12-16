@@ -313,6 +313,16 @@ class ContactPhone(blocks.StructBlock):
         label = 'Phone'
 
 
+class ContactHyperlink(blocks.StructBlock):
+    url = blocks.URLBlock()
+    text = blocks.CharBlock(required=False)
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/molecules/contact-hyperlink.html'
+        label = 'Hyperlink'
+
+
 class ContentImage(blocks.StructBlock):
     image = atoms.ImageBasic()
     image_width = blocks.ChoiceBlock(
