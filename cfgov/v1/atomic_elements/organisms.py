@@ -801,6 +801,29 @@ class ExpandableGroup(blocks.StructBlock):
         js = ["expandable-group.js"]
 
 
+class ContactExpandable(blocks.StructBlock):
+    contact = SnippetChooserBlock('v1.Contact')
+
+    class Meta:
+        icon = 'user'
+        template = '_includes/organisms/contact-expandable.html'
+
+    class Media:
+        js = ['expandable.js']
+
+
+class ContactExpandableGroup(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    expandables = blocks.ListBlock(ContactExpandable())
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/organisms/expandable-group.html'
+
+    class Media:
+        js = ['expandable-group.js']
+
+
 class ItemIntroduction(blocks.StructBlock):
     show_category = blocks.BooleanBlock(
         required=False,
