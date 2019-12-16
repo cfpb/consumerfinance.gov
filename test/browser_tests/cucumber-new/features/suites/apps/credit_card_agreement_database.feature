@@ -11,13 +11,6 @@ Scenario: Reach the page listing credit card agreements from Bank of America in 
   And I should find the text "Agreements by 'Bank of America'" on the page
 
 @smoke_testing
-Scenario: Reach the page listing credit card agreements from NASA Federal Credit Union in the database
-  Given I visit the www.consumerfinance.gov/credit-cards/agreements/ URL
-  When I select what I call the "card issuer" drop list and search "nasa" and choose first
-  Then I should be directed to the "www.consumerfinance.gov/credit-cards/agreements/issuer/41/" URL
-  And I should find the text "Agreements by 'NASA Federal Credit Union'" on the page
-
-@smoke_testing
 Scenario: Reach the Credit card agreement database page through the menu
   Given I visit the www.consumerfinance.gov homepage
   When I use the "PARTICIPATE" menu to access "Credit cards"
