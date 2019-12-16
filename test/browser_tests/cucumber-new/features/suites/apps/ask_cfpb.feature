@@ -17,17 +17,6 @@ Examples:
 | es/obtener-respuestas/c/obtener-una-tarjeta-de-credito/47/que-es-un-periodo_BAD.html                | es/obtener-respuestas/c/obtener-una-tarjeta-de-credito/47/que-es-un-periodo-de-gracia-como-funciona.html | Qué es un período de gracia |
 
 @smoke_testing @ask_cfpb
-Scenario Outline: In Ask CFPB, verify that the search box contains a sample question and search button is disabled by default
-  Given I visit the "www.consumerfinance.gov/<page_url>" URL
-  Then I should see "<sample_question>" inside the search box
-  And I should see the search button is "disabled"
-
-Examples:
-| page_url               | sample_question                            |
-| ask-cfpb/              | example: how do I lower my interest rate   |
-#| es/obtener-respuestas/ | Ejemplo: ¿Cómo puedo revisar mi informe de crédito? |
-
-@smoke_testing @ask_cfpb
 Scenario Outline: In Ask CFPB, verify that the search button becomes enabled after typing at least one character
   Given I visit the "www.consumerfinance.gov/<page_url>" URL
   When I enter "<search_text>" in the ask cfpb search box
