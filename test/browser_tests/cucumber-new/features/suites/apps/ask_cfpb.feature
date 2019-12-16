@@ -16,17 +16,6 @@ Examples:
 | es/obtener-respuestas/c/manejar-una-cuenta-bancaria/983/como-suspendo-el-pago-de-un-cheque_BAD.html | es/obtener-respuestas/c/manejar-una-cuenta-bancaria/983/como-suspendo-el-pago-de-un-cheque.html | ¿Cómo suspendo el pago de un cheque? |
 | es/obtener-respuestas/c/obtener-una-tarjeta-de-credito/47/que-es-un-periodo_BAD.html                | es/obtener-respuestas/c/obtener-una-tarjeta-de-credito/47/que-es-un-periodo-de-gracia-como-funciona.html | Qué es un período de gracia |
 
-@smoke_testing @ask_cfpb
-Scenario Outline: In Ask CFPB, verify that the search button becomes enabled after typing at least one character
-  Given I visit the "www.consumerfinance.gov/<page_url>" URL
-  When I enter "<search_text>" in the ask cfpb search box
-  Then I should see the search button is "enabled"
-
-Examples:
-| page_url               | search_text |
-| ask-cfpb/              | money       |
-#| es/obtener-respuestas/ | dinero      |
-
 @ask_cfpb_autocomplete
 Scenario Outline: Search for a term, select a question using auto-complete and verify that the window title includes the search term
   Given I visit the "www.consumerfinance.gov/<page_url>" URL
