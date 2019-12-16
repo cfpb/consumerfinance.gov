@@ -8,7 +8,7 @@ Scenario: Reach the page listing credit card agreements from Bank of America in 
   Given I visit the www.consumerfinance.gov/credit-cards/agreements/ URL
   When I select what I call the "card issuer" drop list and search "Bank of America" and choose first
   Then I should be directed to the "www.consumerfinance.gov/credit-cards/agreements/issuer/176/" URL
-  And I should find the text "Agreements by 'Bank of America NA'" on the page
+  And I should find the text "Agreements by 'Bank of America'" on the page
 
 @smoke_testing
 Scenario: Reach the page listing credit card agreements from NASA Federal Credit Union in the database
