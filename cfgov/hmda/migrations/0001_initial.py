@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('v1', '0151_add_portal_tag_models'),
+        ('v1', '0196_recreated'),
     ]
 
     operations = [

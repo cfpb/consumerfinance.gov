@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('data_research', '0011_recreated'),
-        ('v1', '0102_recreated'),
+        ('v1', '0196_recreated'),
     ]
 
     operations = [
