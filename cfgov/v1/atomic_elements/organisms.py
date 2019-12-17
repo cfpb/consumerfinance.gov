@@ -1,3 +1,4 @@
+import itertools
 import json
 from collections import Counter
 from functools import partial
@@ -811,6 +812,18 @@ class ContactExpandable(blocks.StructBlock):
     class Media:
         js = ['expandable.js']
 
+    def bulk_to_python(self, values):
+        """Support bulk retrieval of Contacts to reduce database queries."""
+        contact_model = self.child_blocks['contact'].target_model
+        contacts_by_id = contact_model.objects.in_bulk(
+            value['contact'] for value in values
+        )
+
+        for value in values:
+            value['contact'] = contacts_by_id.get(value['contact'])
+
+        return [blocks.StructValue(self, value) for value in values]
+
 
 class ContactExpandableGroup(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
@@ -822,6 +835,22 @@ class ContactExpandableGroup(blocks.StructBlock):
 
     class Media:
         js = ['expandable-group.js']
+
+    def bulk_to_python(self, values):
+        contact_expandable_values = list(itertools.chain(*(
+            value['expandables'] for value in values
+        )))
+
+        contacts = self.child_blocks['expandables'].child_block \
+            .bulk_to_python(contact_expandable_values)
+
+        index = 0
+        for value in values:
+            value_count = len(value['expandables'])
+            value['expandables'] = contacts[index:index + value_count]
+            index += value_count
+
+        return [blocks.StructValue(self, value) for value in values]
 
 
 class ItemIntroduction(blocks.StructBlock):
