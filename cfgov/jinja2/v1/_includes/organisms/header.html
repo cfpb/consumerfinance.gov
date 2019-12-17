@@ -92,7 +92,14 @@
             {% endif %}
 
             {% block primary_nav %}
-                {% from 'organisms/mega-menu.html' import mega_menu with context %}
+                {% if flag_enabled('MEGA_MENU_VAR_1', request) %}
+                    {% from 'organisms/mega-menu-var-1.html' import mega_menu with context %}
+                {% elif flag_enabled('MEGA_MENU_VAR_2', request) %}
+                    {% from 'organisms/mega-menu-var-2.html' import mega_menu with context %}
+                {% else %}
+                    {% from 'organisms/mega-menu.html' import mega_menu with context %}
+                {% endif %}
+
                 {% if language == 'es' %}
                     {% import '_vars-mega-menu-spanish.html' as vars with context %}
                     {{ mega_menu(vars.menu_items) }}
