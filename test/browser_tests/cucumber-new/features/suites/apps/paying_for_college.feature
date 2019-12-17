@@ -4,22 +4,20 @@
 #  So I can make informed financial decisions about paying for college
 Feature: As a student I want accurate data about that school's costs so that I can make a better comparison.
 
-@ignore
-Scenario: Compare an average public to an average private 4-year university
-  Given I visit the "www.consumerfinance.gov/paying-for-college/compare-financial-aid-and-college-cost/" URL
+@t1 @pfc
+Scenario: Compare a public to a private 4-year university
+  Given I visit the cost comparison tool
   And I remove all schools
-  When I add an average public 4-year university
-  And I add an average private 4-year university
-  Then I should see cost of attendance per year left to pay as "$22,261" and "$43,289"
+  When I add a public 4-year university
+  And I add a private 4-year university
+  Then I should see cost of attendance per year left to pay as "$29,526" and "$33,901"
 
-# undergraduate and certificate programs but not grad programs
-
-@ignore
+@pfc
 Scenario: Get Started
   Given I visit the cost comparison tool
   When I add a public 4-year university
 
-@ignore @pfc
+@pfc
 Scenario: As a student with a financial offer, I want to enter my own data so I have the most accurate picture of my options
   Given I visit the cost comparison tool
   When I add a public 4-year university
@@ -56,7 +54,6 @@ Scenario Outline: Auto-populate costs for a 4-year public university different h
     # click in-state
     # click on-campus
   Then I should see the auto-populated success screen and the proper data loaded into the form
-
 Examples:
 | residency   | housing    |
 | in-state    | on-campus  |
@@ -80,7 +77,7 @@ Examples:
 | on-campus  |
 | family     |
 
-@pay-for-college @repaying-student-debt @wizard
+@pfc @repaying-student-debt
 Scenario Outline: Answering questions about repaying student debt
   Given I visit the "www.consumerfinance.gov/paying-for-college/repay-student-debt/" URL
   When I select <answer1> for question "1"
@@ -91,7 +88,6 @@ Scenario Outline: Answering questions about repaying student debt
     And I select <answer6> for question "6" (if applicable)
     And I select <answer7> for question "7" (if applicable)
   Then I should see the module for <module_to_load>
-
 Examples:
 | answer1 | answer2 | answer3 | answer4 | answer5 | answer6 | answer7 | module_to_load                     |
 | Federal | Yes     | Yes     | Yes     | Yes     | n/a     | n/a     | Federal direct consolidation loans |
