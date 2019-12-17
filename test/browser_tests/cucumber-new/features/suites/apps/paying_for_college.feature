@@ -70,7 +70,7 @@ Examples:
 | in-district | family     |
 
 @ignore
-Scenario Outline: Auto-popuate costs for a 4-year private university
+Scenario Outline: Auto-populate costs for a 4-year private university
   Given I visit the cost comparison tool
   When I add a private school with <housing> housing
   Then I should see the auto-populated success screen and the proper data loaded into the form 
