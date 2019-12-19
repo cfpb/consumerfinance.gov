@@ -21,7 +21,7 @@ import { isInDesktop } from '../modules/util/breakpoint-state';
  * @returns {MegaMenu} An instance.
  */
 function MegaMenu( element ) {
-  const BASE_CLASS = 'o-mega-menu';
+  const BASE_CLASS = 'o-mega-menu-var-1';
 
   const _dom = checkDom( element, BASE_CLASS );
 

@@ -274,6 +274,20 @@
 
     {% block javascript scoped %}
 
+    {# TODO: Remove when 2019/2020 Mega Menu modifications are finalized. #}
+    {% if flag_enabled('MEGA_MENU_VAR_1', request) %}
+      <script>
+        window.cfpb = window.cfpb || {};
+        window.cfpb.megaMenuVar1 = true;
+      </script>
+
+    {% elif flag_enabled('MEGA_MENU_VAR_2', request) %}
+      <script>
+        window.cfpb = window.cfpb || {};
+        window.cfpb.megaMenuVar2 = true;
+      </script>
+    {% endif %}
+
     {#
       Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
       available. Check for that CSS class here and act accordingly.
