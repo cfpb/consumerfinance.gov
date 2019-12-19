@@ -6,7 +6,7 @@ Feature: Verify the Retirement landing page works according to requirements
 Background:
   Given I navigate to the Retirement landing page
 
-@smoke_testing @retirement
+@smoke_testing @retirement @dob
 Scenario Outline: Select month and day and year and income and retirement age
   Given I navigate to the Retirement Landing page
   When I enter month "<month>"
@@ -17,6 +17,11 @@ Scenario Outline: Select month and day and year and income and retirement age
   And I choose retirement age "<retirement_age>"
   Then I should see "<retirement_age>" in age_selector_response
   And I should see result "<expected_result>" displayed in graph-container-text
+  And I should find the text "full benefit claiming age" on the page
+  When I move the slider on the graph to the left
+  Then I should find the text "reduces your monthly benefit" on the page
+  When I move the slider on the graph to the right
+  Then I should find the text "increases your benefit" on the page
 
 Examples:
 | month | day | year | income | expected_result  | retirement_age |
@@ -34,3 +39,47 @@ Examples:
 | 5     | 5   | 1965 | 50000  | 67               | 62             |
 | 6     | 6   | 1966 | 60000  | 67               | 67             |
 | 7     | 7   | 1970 | 70000  | 67               | 70             |
+
+
+@smoke_testing @retirement @lifestyle
+Scenario Outline: Learn tips specific to your situation
+   Given I navigate to the Retirement landing page
+   And I enter birth and salary information
+   When I respond to <question> by clicking <answer> in the tips blocks
+Examples:
+| question                                                                              | answer  |
+| Are you married?                                                                      | Yes     |
+| Are you married?                                                                      | No      |
+| Are you married?                                                                      | Widowed |
+| Do you plan to continue working in your 60s?                                          | Yes      |
+| Do you plan to continue working in your 60s?                                          | No       |
+| Do you plan to continue working in your 60s?                                          | Not Sure |
+| Will your expenses decrease after you retire?                                         | Yes      |
+| Will your expenses decrease after you retire?                                         | No       |
+| Will your expenses decrease after you retire?                                         | Not Sure |
+| Do you expect to have additional sources of retirement income beyond Social Security? | Yes      |
+| Do you expect to have additional sources of retirement income beyond Social Security? | No       |
+| Do you expect to have additional sources of retirement income beyond Social Security? | Not Sure |
+| Do you expect to live a long life?                                                    | Yes      |
+| Do you expect to live a long life?                                                    | No       |
+| Do you expect to live a long life?                                                    | Not Sure |
+
+
+@smoke_testing @retirement @age
+Scenario Outline: Select the age you plan to start collecting your Social Security retirement benefits.
+   Given I navigate to the Retirement landing page
+   And I enter birth and salary information
+   When I choose retirement age "<retirement_age>"
+   Then I should see "<retirement_age>" in age_selector_response
+   And I answer whether or not the page was helpful
+Examples:
+| retirement_age |
+| 62             |
+| 63             |
+| 64             |
+| 65             |
+| 66             |
+| 67             |
+| 68             |
+| 69             |
+| 70             |
