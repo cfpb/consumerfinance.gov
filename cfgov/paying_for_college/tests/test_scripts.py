@@ -354,7 +354,7 @@ class TestScripts(django.test.TestCase):
         mock_requests.side_effect = SSLError
         test_data = update_colleges.get_scorecard_data('example.com')
         self.assertEqual(mock_requests.call_count, 1)
-        self.assertIs(test_data, None)
+        self.assertIsNone(test_data)
 
     @patch(
         'paying_for_college.disclosures.scripts.update_colleges.requests.get')
