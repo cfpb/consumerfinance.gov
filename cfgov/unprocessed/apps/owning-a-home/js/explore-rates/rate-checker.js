@@ -202,7 +202,7 @@ function updateView() {
            Incorrectly returns: Tue Jan 06 2015 21:00:00 GMT-0800 (PST)
            The following will detect it and will offset the timezone enough
            to get the correct date (but not time) */
-        if ( ( new Date( results.timestamp ) ).getDate() !== parseInt( results.timestamp.split( 'T' )[0].split( '-' )[2], 10 ) ) {
+        if ( new Date( results.timestamp ).getDate() !== parseInt( results.timestamp.split( 'T' )[0].split( '-' )[2], 10 ) ) {
           _timestamp = _timestamp.split( 'T' )[0] + 'T15:00:00Z';
         }
       } catch ( err ) {
