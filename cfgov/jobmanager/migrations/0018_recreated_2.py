@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('jobmanager', '0017_recreated'),
-        ('v1', '0196_recreated'),
+        ('v1', '0198_recreated'),
     ]
 
     operations = [

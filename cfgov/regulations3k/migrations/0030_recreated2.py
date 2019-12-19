@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
     ]
 
     dependencies = [
-        ('v1', '0196_recreated'),
+        ('v1', '0198_recreated'),
         ('regulations3k', '0029_recreated'),
     ]
 

@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('v1', '0196_recreated'),
+        ('v1', '0198_recreated'),
     ]
 
     operations = [
