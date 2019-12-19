@@ -25,7 +25,6 @@ Scenario Outline: Search for school subject activities
   When I enter search activity money
   Then I check school subject <name> for activity
   And I click on the "Search" activity button
-  Then I should find the text "<name>" on the page
 Examples:
 | name                                 |
 | CTE (Career and technical education) |
@@ -58,6 +57,7 @@ Scenario Outline: Search for activities per grade level
   When I enter search activity money
   Then I check grade level <name> for activity
   And I click on the "Search" activity button
+  Then I should find the text "<name>" on the page
 Examples:
 | name                |
 | Middle school (6-8) |
@@ -140,6 +140,7 @@ Scenario Outline: Search for activities for a duration
   When I enter search activity money
   Then I check activity duration <name>
   And I click on the "Search" activity button
+  Then I should find the text "<name>" on the page
 Examples:
 | name          |
 | 15-20 minutes |
