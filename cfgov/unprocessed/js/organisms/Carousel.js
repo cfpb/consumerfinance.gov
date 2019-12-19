@@ -3,7 +3,7 @@ import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import Analytics from '../modules/Analytics';
 
 const BASE_CLASS = 'o-carousel';
-const HIDDEN_CLASS = 'o-carousel_item__hidden'
+const HIDDEN_CLASS = 'o-carousel_item__hidden';
 
 /**
  * Carousel
