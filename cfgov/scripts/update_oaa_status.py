@@ -1,8 +1,11 @@
 import csv
+
 from v1.models import DocumentDetailPage
 from v1.util.migrations import get_stream_data, set_stream_data
 
+
 sByURL = {}
+
 
 def update_oaa():
     with open('./cfgov/scripts/status.csv') as csvfile:
@@ -26,6 +29,7 @@ def update_oaa():
                             block['value']['blob'] = sByURL[url]
             break
         set_stream_data(page.specific, 'sidefoot', stream_data)
+
 
 def run():
     update_oaa()
