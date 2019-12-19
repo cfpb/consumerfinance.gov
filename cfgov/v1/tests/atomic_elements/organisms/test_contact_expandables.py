@@ -32,7 +32,9 @@ class ContactExpandableTests(TestCase):
         html = block.render(block.to_python({'contact': contact.pk}))
 
         self.assertIn("Scrooge McDuck", html)
-        self.assertNotIn("World's richest duck", html)
+        self.assertNotIn("World's richest duck", html, msg=(
+            "ContactExpandable molecule should not include the Contact body"
+        ))
         self.assertInHTML(
             '<a href="https://vault.duckburg.com">Money Bin</a>',
             html
@@ -93,7 +95,6 @@ class ContactExpandableGroupTests(WagtailTestUtils, TestCase):
         }))
 
         self.assertInHTML("<h3>Contacts</h3>", html)
-        self.assertNotIn("World's richest duck", html)
         self.assertInHTML(
             '<a href="https://8.example.com">https://8.example.com</a>',
             html

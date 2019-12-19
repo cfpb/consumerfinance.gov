@@ -235,22 +235,6 @@ class ContactHyperlinkTests(SimpleTestCase):
             block.render(value)
         )
 
-    def test_render_with_link_text(self):
-        block = ContactEmail()
-        value = block.to_python({
-            'emails': [
-                {
-                    'url': 'foo@example.com',
-                    'text': 'Bar',
-                },
-            ],
-        })
-
-        self.assertInHTML(
-            '<a href="mailto:foo@example.com">Bar</a>',
-            block.render(value)
-        )
-
 
 class TestTextIntroductionValidation(TestCase):
 
