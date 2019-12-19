@@ -1,4 +1,7 @@
-"""Update college data using the Dept. of Education's API."""
+"""
+Update college data using the Dept. of Education's College Scorecard API.
+Scorecard documentation: https://collegescorecard.ed.gov/data/documentation/
+"""
 import datetime
 import logging
 import os
@@ -41,7 +44,7 @@ def get_scorecard_data(url):
     try:
         response = requests.get(url)
     except SSLError:
-        logger.warn("SSL error connecting with Scorecard")
+        logger.exception("SSL error connecting with Scorecard")
         return
     if not response.ok:
         logger.info("request not OK, returned {}".format(response.reason))

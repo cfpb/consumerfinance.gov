@@ -10,8 +10,6 @@ from django.http import HttpRequest
 from django.test import TestCase
 from django.utils import timezone
 
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
-
 import requests
 from paying_for_college.apps import PayingForCollegeConfig
 from paying_for_college.models import (
@@ -21,6 +19,7 @@ from paying_for_college.models import (
 )
 
 from v1.models import HomePage
+from v1.util.migrations import set_stream_data
 
 
 if six.PY2:  # pragma: no cover
@@ -79,20 +78,20 @@ class PageModelsTest(TestCase):
         )
 
     def test_loan_quiz_template(self):
-        page = self.loan_quiz_page
-        stream_block = page.content.stream_block
+        """
+        We are using get_template to set a 'situation_id' for development.
 
-        def get_stream_value():
-            return [{
-                'type': 'guided_quiz',
-                'id': '12345',
-                'value': {
-                    'question': '?',
-                    'answer': 'huh?'}}]
-        page.content = StreamValue(
-            stream_block,
-            get_stream_value(),
-            is_lazy=True)
+        We hope to drop this value, or deliver it another way,
+        when quiz structure is decided.
+        """
+        page = self.loan_quiz_page
+        stream_data = [{
+            'type': 'guided_quiz',
+            'id': '12345',
+            'value': {
+                'question': '?',
+                'answer': 'huh?'}}]
+        set_stream_data(page, 'content', stream_data)
         self.assertEqual(
             page.get_template(HttpRequest()),
             'paying-for-college/choose-a-student-loan.html')

@@ -48,7 +48,7 @@ completion_rate:\n\
 
 
 class TaggingTests(django.test.TestCase):
-    """Test functions for tagging settlement schools via CSV"""
+    """Test functions for tagging settlement schools via CSV."""
 
     fixtures = ['test_fixture.json']
     mock_csv_data = [{"ipeds_unit_id": "243197",
@@ -310,14 +310,12 @@ class TestScripts(django.test.TestCase):
             School.objects.filter(operating=True).exclude(
                 pk=FAKE_SCHOOL_PK).count())
 
-    @unittest.skipUnless(
-        connection.vendor == 'postgresql', 'PostgreSQL-dependent')
-    def test_compile_net_prices_public(self):
+    def check_compile_net_prices(self, control):
         mock_api_data = self.mock_results.get('results')[0]
         mock_avg_net_price = mock_api_data.get(
-            'latest.cost.avg_net_price.public')
-        school, cr = School.objects.get_or_create(school_id=229115)
-        school.control = 'Public'
+            'latest.cost.avg_net_price.%s' % control.lower())
+        school, _ = School.objects.get_or_create(school_id=229115)
+        school.control = control
         school = update_colleges.compile_net_prices(school, mock_api_data)
         self.assertEqual(school.avg_net_price, mock_avg_net_price)
         for each in ['0_30k', '30k_48k', '48k_75k', '75k_110k', '110k_plus']:
@@ -325,16 +323,13 @@ class TestScripts(django.test.TestCase):
 
     @unittest.skipUnless(
         connection.vendor == 'postgresql', 'PostgreSQL-dependent')
+    def test_compile_net_prices_public(self):
+        self.check_compile_net_prices('Public')
+
+    @unittest.skipUnless(
+        connection.vendor == 'postgresql', 'PostgreSQL-dependent')
     def test_compile_net_prices_private(self):
-        mock_api_data = self.mock_results.get('results')[0]
-        mock_avg_net_price = mock_api_data.get(
-            'latest.cost.avg_net_price.private')
-        school, cr = School.objects.get_or_create(school_id=229115)
-        school.control = 'Private'
-        school = update_colleges.compile_net_prices(school, mock_api_data)
-        self.assertEqual(school.avg_net_price, mock_avg_net_price)
-        for each in ['0_30k', '30k_48k', '48k_75k', '75k_110k', '110k_plus']:
-            self.assertIn(each, school.avg_net_price_slices.keys())
+        self.check_compile_net_prices('Private')
 
     @patch(
         'paying_for_college.disclosures.scripts.update_colleges.requests.get')
@@ -349,9 +344,10 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(type(data), dict)
 
     @patch(
-        'paying_for_college.disclosures.scripts.update_colleges.requests.get')
+        'paying_for_college.disclosures.scripts.update_colleges.requests.get',
+        side_effect=SSLError
+    )
     def test_get_scorecard_data_ssl_error(self, mock_requests):
-        mock_requests.side_effect = SSLError
         test_data = update_colleges.get_scorecard_data('example.com')
         self.assertEqual(mock_requests.call_count, 1)
         self.assertIsNone(test_data)
