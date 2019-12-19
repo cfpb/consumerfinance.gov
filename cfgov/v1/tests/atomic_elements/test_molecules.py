@@ -1,11 +1,13 @@
 from django.core.exceptions import ValidationError
-from django.test import Client, TestCase
+from django.test import SimpleTestCase, TestCase
 
 from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 
-from v1.atomic_elements.molecules import RSSFeed, TextIntroduction
+from v1.atomic_elements.molecules import (
+    ContactEmail, ContactHyperlink, RSSFeed, TextIntroduction
+)
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.browse_page import BrowsePage
 from v1.models.landing_page import LandingPage
@@ -13,9 +15,6 @@ from v1.models.learn_page import DocumentDetailPage, LearnPage
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
-
-
-django_client = Client()
 
 
 class MoleculesTestCase(TestCase):
@@ -32,7 +31,7 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=bfp)
-        response = django_client.get('/browse-filterable-page/')
+        response = self.client.get('/browse-filterable-page/')
         self.assertContains(response, 'this is an intro')
 
     def test_featured_content(self):
@@ -51,7 +50,7 @@ class MoleculesTestCase(TestCase):
             atomic.expandable_group
         ], True)
         publish_page(child=bp)
-        response = django_client.get('/browse-page/')
+        response = self.client.get('/browse-page/')
         self.assertContains(response, 'this is a featured content body')
 
     def test_content_with_anchor(self):
@@ -66,7 +65,7 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=learn_page)
-        response = django_client.get('/learn/')
+        response = self.client.get('/learn/')
         self.assertContains(response, 'full width text block')
         self.assertContains(response, 'this is an anchor link')
 
@@ -82,7 +81,7 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=learn_page)
-        response = django_client.get('/learn/')
+        response = self.client.get('/learn/')
         self.assertContains(response, 'this is a quote')
         self.assertContains(response, 'a citation')
 
@@ -98,7 +97,7 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=learn_page)
-        response = django_client.get('/learn/')
+        response = self.client.get('/learn/')
         self.assertContains(response, 'this is a call to action')
 
     def test_notification(self):
@@ -113,7 +112,7 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=sublanding_page)
-        response = django_client.get('/sublanding/')
+        response = self.client.get('/sublanding/')
         self.assertContains(response, 'this is a notification message')
         self.assertContains(response, 'this is a notification explanation')
         self.assertContains(response, 'this is a notification link')
@@ -130,9 +129,8 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=sfp)
-        response = django_client.get('/sfp/')
+        response = self.client.get('/sfp/')
         self.assertContains(response, 'this is a hero heading')
-
 
     def test_related_links(self):
         """Related links value correctly displays on a Landing Page"""
@@ -146,7 +144,7 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=landing_page)
-        response = django_client.get('/landing/')
+        response = self.client.get('/landing/')
         self.assertContains(response, 'this is a related link')
 
     def test_expandable(self):
@@ -161,7 +159,7 @@ class MoleculesTestCase(TestCase):
             True,
         )
         publish_page(child=browse_page)
-        response = django_client.get('/browse/')
+        response = self.client.get('/browse/')
         self.assertContains(response, 'this is an expandable')
 
     def test_related_metadata(self):
@@ -176,8 +174,66 @@ class MoleculesTestCase(TestCase):
             True,
         )
         publish_page(child=ddp)
-        response = django_client.get('/ddp/')
+        response = self.client.get('/ddp/')
         self.assertContains(response, 'this is a related metadata heading')
+
+
+class ContactEmailTests(SimpleTestCase):
+    def test_clean_email_required(self):
+        block = ContactEmail()
+        value = block.to_python({'emails': []})
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_clean_valid(self):
+        block = ContactEmail()
+        value = block.to_python({'emails': [{'url': 'foo@example.com'}]})
+        self.assertTrue(block.clean(value))
+
+    def test_render_no_link_text(self):
+        block = ContactEmail()
+        value = block.to_python({'emails': [{'url': 'foo@example.com'}]})
+        self.assertInHTML(
+            '<a href="mailto:foo@example.com">foo@example.com</a>',
+            block.render(value)
+        )
+
+    def test_render_with_link_text(self):
+        block = ContactEmail()
+        value = block.to_python({
+            'emails': [
+                {
+                    'url': 'foo@example.com',
+                    'text': 'Bar',
+                },
+            ],
+        })
+
+        self.assertInHTML(
+            '<a href="mailto:foo@example.com">Bar</a>',
+            block.render(value)
+        )
+
+
+class ContactHyperlinkTests(SimpleTestCase):
+    def test_render_no_link_text(self):
+        block = ContactHyperlink()
+        value = block.to_python({'url': 'https://example.com'})
+        self.assertInHTML(
+            '<a href="https://example.com">https://example.com</a>',
+            block.render(value)
+        )
+
+    def test_render_with_link_text(self):
+        block = ContactHyperlink()
+        value = block.to_python({
+            'url': 'https://example.com',
+            'text': 'Example',
+        })
+        self.assertInHTML(
+            '<a href="https://example.com">Example</a>',
+            block.render(value)
+        )
 
 
 class TestTextIntroductionValidation(TestCase):

@@ -802,59 +802,55 @@ class ExpandableGroup(blocks.StructBlock):
         js = ["expandable-group.js"]
 
 
-class ContactExpandableGroup(blocks.StructBlock):
-    """Expandable group that renders selected Contact snippets."""
-    group_title = blocks.CharBlock()
-    contacts = blocks.ListBlock(SnippetChooserBlock('v1.Contact'))
+class ContactExpandable(blocks.StructBlock):
+    contact = SnippetChooserBlock('v1.Contact')
 
-    def get_context(self, value, parent_context=None):
-        context = super(ContactExpandableGroup, self).get_context(
-            value,
-            parent_context=parent_context
-        )
+    class Meta:
+        icon = 'user'
+        template = '_includes/organisms/contact-expandable.html'
 
-        # This block mimics the ExpandableGroup block.
-        context['value'] = ExpandableGroup().to_python({
-            'heading': value['group_title'],
-            'expandables': [
-                {
-                    'label': contact.heading,
-                    'content': contact.contact_info.stream_data,
-                } for contact in value['contacts']
-            ],
-        })
-
-        return context
+    class Media:
+        js = ['expandable.js']
 
     def bulk_to_python(self, values):
-        """Support bulk retrieval of Contacts to reduce database queries.
-
-        This method leverages Wagtail's undocumented method for doing bulk
-        retrieval of data for StreamField blocks. It retrieves all Contacts
-        referenced by a StreamField in a single lookup, instead of the
-        default behavior of doing one database query per SnippetChooserBlock.
-        """
-        contact_ids = set(
-            itertools.chain(*(block['contacts'] for block in values))
+        """Support bulk retrieval of Contacts to reduce database queries."""
+        contact_model = self.child_blocks['contact'].target_model
+        contacts_by_id = contact_model.objects.in_bulk(
+            value['contact'] for value in values
         )
 
-        contact_model = self.child_blocks['contacts'].child_block.target_model
-        contacts_by_id = contact_model.objects.in_bulk(contact_ids)
+        for value in values:
+            value['contact'] = contacts_by_id.get(value['contact'])
 
-        for block in values:
-            block['contacts'] = [
-                contacts_by_id[contact_id]
-                for contact_id in block['contacts']
-            ]
+        return [blocks.StructValue(self, value) for value in values]
 
-        return values
+
+class ContactExpandableGroup(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    expandables = blocks.ListBlock(ContactExpandable())
 
     class Meta:
         icon = 'list-ul'
         template = '_includes/organisms/expandable-group.html'
 
     class Media:
-        js = ["expandable-group.js"]
+        js = ['expandable-group.js']
+
+    def bulk_to_python(self, values):
+        contact_expandable_values = list(itertools.chain(*(
+            value['expandables'] for value in values
+        )))
+
+        contacts = self.child_blocks['expandables'].child_block \
+            .bulk_to_python(contact_expandable_values)
+
+        index = 0
+        for value in values:
+            value_count = len(value['expandables'])
+            value['expandables'] = contacts[index:index + value_count]
+            index += value_count
+
+        return [blocks.StructValue(self, value) for value in values]
 
 
 class ItemIntroduction(blocks.StructBlock):
