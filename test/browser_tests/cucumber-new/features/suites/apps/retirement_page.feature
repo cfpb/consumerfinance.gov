@@ -70,6 +70,7 @@ Scenario Outline: Select the age you plan to start collecting your Social Securi
    When I choose retirement age "<retirement_age>"
    Then I should see "<retirement_age>" in age-response-value
    And I answer whether or not the page was helpful
+   Then I should find the text "Thank you for your feedback!" on the page
 Examples:
 | retirement_age |
 | 62             |
