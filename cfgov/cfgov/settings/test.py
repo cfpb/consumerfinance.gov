@@ -20,7 +20,7 @@ DATABASES = {'default': TEST_DATABASE}
 
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
-TEST_RUNNER = os.environ.get('TEST_RUNNER', 'cfgov.test.TestDataTestRunner')
+TEST_RUNNER = os.environ.get('TEST_RUNNER', 'cfgov.test.TestRunner')
 
 INSTALLED_APPS += (
     'wagtail.contrib.settings',
@@ -53,3 +53,8 @@ MOCK_STATICFILES_PATTERNS = {
 FLAG_SOURCES = (
     'flags.sources.SettingsFlagsSource',
 )
+
+# We use a custom MEDIA_ROOT for testing so that tests that create images and
+# other files don't write them to the local development media directory. The
+# test runner cleans up this directory after the tests run.
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'cfgov', 'tests', 'test-media')

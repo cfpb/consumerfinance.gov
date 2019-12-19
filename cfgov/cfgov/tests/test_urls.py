@@ -100,7 +100,7 @@ class FlaggedWagtailOnlyViewTests(TestCase):
         response = self.client.get('/')
         self.assertContains(
             response,
-            'U.S. government agency that makes sure banks'
+            'Consumer Financial Protection Bureau'
         )
 
     @override_settings(FLAGS={'MY_TEST_FLAG': [('boolean', False)]})
