@@ -192,5 +192,4 @@ def update(exclude_ids=[], single_school=None):
         logger.info("\n\nSchools that have closed since the last update:")
         for school in closed:
             logger.info("- {}".format(school))
-    logger.info(endmsg)
     return (no_data, endmsg)
