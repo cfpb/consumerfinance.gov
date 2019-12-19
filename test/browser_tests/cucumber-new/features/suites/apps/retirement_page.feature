@@ -68,7 +68,7 @@ Scenario Outline: Select the age you plan to start collecting your Social Securi
    Given I navigate to the Retirement landing page
    And I enter birth and salary information
    When I choose retirement age "<retirement_age>"
-   Then I should see "<retirement_age>" in age_selector_response
+   Then I should see "<retirement_age>" in age-response-value
    And I answer whether or not the page was helpful
 Examples:
 | retirement_age |
