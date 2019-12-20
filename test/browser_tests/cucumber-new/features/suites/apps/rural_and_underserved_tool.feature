@@ -3,12 +3,9 @@ Feature: Verify the Rural and underserved areas tool landing page works accordin
   I want to Check status of properties for loans extended on the landing page
   So that I can find the information I'm looking for
 
-Background:
-  Given I navigate to the Rural and underserved areas tool landing page
-
-@smoke_testing @rural
+@rural
 Scenario Outline: Check status of properties for loans extended
-  Given I navigate to the Rural and underserved areas tool landing page
+  Given I visit the consumerfinance rural-or-underserved-tool URL
   When I check status of properties for loans extended in <year>
   Then I Enter addresses manually <address>
   And I click on the "Check addresses" button
