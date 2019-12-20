@@ -69,16 +69,17 @@ Scenario Outline: Select the age you plan to start collecting your Social Securi
    And I enter birth and salary information
    When I choose retirement age "<retirement_age>"
    Then I should see "<retirement_age>" in age-response-value
+   And I should find the text "<retirement_text>" on the page
    And I answer whether or not the page was helpful
    Then I should find the text "Thank you for your feedback!" on the page
 Examples:
-| retirement_age |
-| 62             |
-| 63             |
-| 64             |
-| 65             |
-| 66             |
-| 67             |
-| 68             |
-| 69             |
-| 70             |
+| retirement_age | retirement_text                                                                                |
+| 62             | You’ve chosen age 62, which is earlier than your Social Security full retirement claiming age. |
+| 63             | You’ve chosen age 63, which is earlier than your Social Security full retirement claiming age. |
+| 64             | You’ve chosen age 64, which is earlier than your Social Security full retirement claiming age. |
+| 65             | You’ve chosen age 65, which is earlier than your Social Security full retirement claiming age. |
+| 66             | You’ve chosen age 66, which is earlier than your Social Security full retirement claiming age. |
+| 67             | You’ve chosen age 67, which is your Social Security full retirement claiming age.              |
+| 68             | You’ve chosen age 68, which is later than your Social Security full retirement claiming age.   |
+| 69             | You’ve chosen age 69, which is later than your Social Security full retirement claiming age.   |
+| 70             | You’ve chosen age 70, which is your maximum Social Security benefit claiming age.              |
