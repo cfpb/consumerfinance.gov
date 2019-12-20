@@ -3,12 +3,9 @@ Feature: Verify Prepaid product agreements database landing page works according
   I want to search prepaid product agreements by issuer name, product name, product type
   So that I can find the product information I'm looking for
 
-Background:
-  Given I navigate to the Prepaid product agreements database landing page
-
-@smoke_testing @prepaid
+@prepaid
 Scenario Outline: Search prepaid product agreements by issuer name, product name, product type
-  Given I navigate to the Prepaid product agreements database landing page
+  Given I visit the consumerfinance data-research/prepaid-accounts/search-agreements URL
   When I enter search term visa
   And I click on the "Search" product terms button
   Then I enter card issuer name <name>
