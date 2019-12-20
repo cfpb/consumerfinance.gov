@@ -18,7 +18,7 @@ Examples:
 
 @ask_cfpb_autocomplete
 Scenario Outline: Search for a term, select a question using auto-complete and verify that the window title includes the search term
-  Given I visit the "www.consumerfinance.gov/<page_url>" URL
+  Given I visit the consumerfinance <page_url> URL
   When I select what I call the "search" text box and search "<search_text>" and choose "<link_text>"
   Then I should see the page title contains "<link_text>"
 
@@ -33,7 +33,7 @@ Examples:
 
 @ask_cfpb
 Scenario Outline: Search for a term, with NO auto-complete and verify that the window title includes the search term
-  Given I visit the "www.consumerfinance.gov/<page_url>" URL
+  Given I visit the consumerfinance <page_url> URL
   When I enter "<search_text>" in the "q" text box
   Then I should see the page title contains "<title_text> '<search_text>'"
 
@@ -46,7 +46,7 @@ Examples:
 
 @ask_cfpb
 Scenario: Search the Ask CFPB page for 'reverse' and reach the 'What is a reverse mortgage?' page
-  Given I visit the www.consumerfinance.gov/askcfpb/ URL
+  Given I visit the consumerfinance askcfpb URL
   When I select what I call the "search" text box and search "reverse" and choose "What is a reverse mortgage?"
   Then I should be directed to the "www.consumerfinance.gov/askcfpb/224/what-is-a-reverse-mortgage.html" URL
   And I should see the page title contains "What is a reverse mortgage"
@@ -55,7 +55,7 @@ Scenario: Search the Ask CFPB page for 'reverse' and reach the 'What is a revers
 
 @security @ask_cfpb @spanish_language
 Scenario Outline: Search the Obtener Respuestas page and have Spanish unicode characters url-encoded
-  Given I visit the "www.consumerfinance.gov/es/obtener-respuestas/" URL
+  Given I visit the consumerfinance es/obtener-respuestas URL
   When I enter "<search_term>" in the "q" text box
   Then I should see results at the "www.consumerfinance.gov/es/obtener-respuestas/buscar?<query_param>" URL
   And I should see the page title contains "Buscar por"
