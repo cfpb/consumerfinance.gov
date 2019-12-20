@@ -6,7 +6,7 @@ Feature: As a student I want accurate data about that school's costs so that I c
 
 @t1 @pfc
 Scenario: Compare a public to a private 4-year university
-  Given I visit the cost comparison tool
+  Given I visit the consumerfinance paying-for-college/compare-financial-aid-and-college-cost URL
   And I remove all schools
   When I add a public 4-year university
   And I add a private 4-year university
@@ -14,19 +14,19 @@ Scenario: Compare a public to a private 4-year university
 
 @pfc
 Scenario: Get Started
-  Given I visit the cost comparison tool
+  Given I visit the consumerfinance paying-for-college/compare-financial-aid-and-college-cost URL
   When I add a public 4-year university
 
 @pfc
 Scenario: As a student with a financial offer, I want to enter my own data so I have the most accurate picture of my options
-  Given I visit the cost comparison tool
+  Given I visit the consumerfinance paying-for-college/compare-financial-aid-and-college-cost URL
   When I add a public 4-year university
   And I check the box saying I have a financial aid offer
   Then I should end up at the financial aid offer success screen
 
 @ignore
 Scenario: Student has a financial aid offer and has XML to enter
-  Given I visit the cost comparison tool
+  Given I visit the consumerfinance paying-for-college/compare-financial-aid-and-college-cost URL
   When I add a public 4-year university
   And I check the box saying I have a financial aid offer
   And I enter XML data
@@ -38,13 +38,13 @@ Scenario: Student has XML but it is malformed
 
 @ignore
 Scenario: As a business owner, I want to know that if we do not have data, the tool does not autopopulate
-  Given I visit the cost comparison tool
+  Given I visit the consumerfinance paying-for-college/compare-financial-aid-and-college-cost URL
   When I add a school we do not have data for
   Then I should be taken to the unable-to-autopopulate success screen
 
 @ignore
 Scenario Outline: Auto-populate costs for a 4-year public university different housing and residency options
-  Given I visit the cost comparison tool
+  Given I visit the consumerfinance paying-for-college/compare-financial-aid-and-college-cost URL
   When I add a public school with <residency> tuition and <housing> housing options
     # begin typing
     # choose the school from the autocomplete list
@@ -68,7 +68,7 @@ Examples:
 
 @ignore
 Scenario Outline: Auto-populate costs for a 4-year private university
-  Given I visit the cost comparison tool
+  Given I visit the consumerfinance paying-for-college/compare-financial-aid-and-college-cost URL
   When I add a private school with <housing> housing
   Then I should see the auto-populated success screen and the proper data loaded into the form 
 Examples:
@@ -79,7 +79,7 @@ Examples:
 
 @pfc @repaying-student-debt
 Scenario Outline: Answering questions about repaying student debt
-  Given I visit the "www.consumerfinance.gov/paying-for-college/repay-student-debt/" URL
+  Given I visit the consumerfinance paying-for-college/repay-student-debt URL
   When I select <answer1> for question "1"
     And I select <answer2> for question "2"
     And I select <answer3> for question "3" (if applicable)
