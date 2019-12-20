@@ -9,7 +9,7 @@ Background:
 @smoke_testing @activities @block
 Scenario Outline: Search for building block activities
   Given I navigate to the financial literacy activities page
-  When I enter search activity finance
+  When I enter search activity money
   Then I check building block <name> for activity
   And I click on the "Search" activity button
   Then I should find the text "<name>" on the page
