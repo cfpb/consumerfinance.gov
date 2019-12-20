@@ -12,8 +12,11 @@ Scenario Outline: Check status of properties for loans extended
   When I check status of properties for loans extended in <year>
   Then I Enter addresses manually <address>
   And I click on the "Check addresses" button
+  Then I should find the text "1 of 1 addresses processed for <year> rural or underserved area safe harbor designation." on the page
+  And I should find the text "<address>" on the page
+  And I should find the text "<identified>" on the page
 Examples:
-| year | address                                      |
-| 2019 | BCFP, 1700 G St. N.W. Washington, D.C. 20552 |
-| 2018 | CFPB, 1990 K St. N.W. Washington, D.C. 20006 |
-| 2017 | CFPB, PO Box 2900, Clinton, IA 52733-2900    |
+| year | address                                      | identified                  |
+| 2019 | BCFP, 1700 G St. N.W. Washington, D.C. 20552 | 1 address is not identified |
+| 2018 | CFPB, 1990 K St. N.W. Washington, D.C. 20006 | 1 address is not identified |
+| 2017 | CFPB, PO Box 2900, Clinton, IA 52733-2900    | 1 address is not identified |
