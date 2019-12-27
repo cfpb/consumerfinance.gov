@@ -5,8 +5,8 @@ Feature: Test the Ask CFPB page in English and Spanish
 
 @smoke_testing @ask_cfpb 
 Scenario Outline: Make sure incorrect slug in URL is corrected
-  Given I visit the incorrect "www.consumerfinance.gov/<bad_url>" URL
-  Then I should be directed to "www.consumerfinance.gov/<correct_url>" URL
+  Given I visit the incorrect consumerfinance <bad_url> URL
+  Then I should be directed to consumerfinance <correct_url> URL
   And I should see the page title contains "<title>"
 
 Examples:
@@ -48,7 +48,7 @@ Examples:
 Scenario: Search the Ask CFPB page for 'reverse' and reach the 'What is a reverse mortgage?' page
   Given I visit the consumerfinance askcfpb URL
   When I select what I call the "search" text box and search "reverse" and choose "What is a reverse mortgage?"
-  Then I should be directed to the "www.consumerfinance.gov/askcfpb/224/what-is-a-reverse-mortgage.html" URL
+  Then I should be directed to the consumerfinance askcfpb/224/what-is-a-reverse-mortgage.html URL
   And I should see the page title contains "What is a reverse mortgage"
   And I should see the last breadcrumb as "WHAT IS A REVERSE MORTGAGE?"
   And I should find the text "What is a reverse mortgage?" on the page
@@ -57,7 +57,7 @@ Scenario: Search the Ask CFPB page for 'reverse' and reach the 'What is a revers
 Scenario Outline: Search the Obtener Respuestas page and have Spanish unicode characters url-encoded
   Given I visit the consumerfinance es/obtener-respuestas URL
   When I enter "<search_term>" in the "q" text box
-  Then I should see results at the "www.consumerfinance.gov/es/obtener-respuestas/buscar?<query_param>" URL
+  Then I should see results at the consumerfinance es/obtener-respuestas/buscar?<query_param> URL
   And I should see the page title contains "Buscar por"
   And I should find the text "Encontrar respuestas a preguntas" on the page
 
