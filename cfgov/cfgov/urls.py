@@ -136,6 +136,12 @@ urlpatterns = [
         template_name='fair-lending/index.html'),
         name='fair-lending'),
 
+    # My Money Tools
+    url(r'^mmt-my-money-calendar/$',
+        TemplateView.as_view(
+        template_name='mmt-my-money-calendar/index.html'),
+        name='mmt-my-money-calendar'),   
+
     url(r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(
             template_name='students/knowbeforeyouowe/index.html'),

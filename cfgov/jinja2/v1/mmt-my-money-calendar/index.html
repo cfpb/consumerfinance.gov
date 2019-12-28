@@ -1,0 +1,47 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% import 'form_block.html' as form_block with context %}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block hero -%}
+{% include "hero.html" %}
+{% endblock %}
+
+{% block content_main %}
+    <div>{% include "featured-content.html" %}</div>
+    <br>
+    <div>{% include "info-unit-group-1.html" %}</div>
+    <br>
+    <div>{% include "info-unit-group-2.html" %}</div>
+    <br>
+    <div>{% include "info-unit-group-3.html" %}</div>
+    <br>
+    <div>{% include "starting-balance-form.html" %}</div>
+     <br>
+    <div>{% include "income-input-form.html" %}</div>
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+    {% include "reusable_text.html" %}
+    <div class="m-related-links">
+        <header class="m-slug-header">
+            <h2 class="a-heading">
+                Still have a question?
+            </h2>
+        </header>
+        <div class="rich-text"><p>Call us if you still can’t find what you’re looking for.</p><p><b><span>(855)
+411-2372</span></b><span></span></p><p>
+
+</p><p><b><span>TTY/TDD:
+(855) 729-2372</span></b><span></span></p></div>
+    </div>
+{%- endblock %}

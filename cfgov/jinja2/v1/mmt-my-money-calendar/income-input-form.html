@@ -1,0 +1,151 @@
+{% from 'line-item.html' import render as render_line_item with context %}
+
+<section class="block o-yes-budget">
+  <h2>
+    Now, talk about your income
+  </h2>
+  <p>
+      We want to figure out how much money you have coming in each month so you can
+      make smart decisions about how and when to spend it.
+  </p>
+  <form id="yes-budget-form" class="block block__sub block__flush-bottom">
+    <div class="content-l content-l__large-gutters block block__sub">
+      <div class="content-l_col content-l_col-1-2 u-mobile-reorder">
+        <div class="u-mobile-reorder__first">
+          <p id="mobile-earned-label" class="a-label h4 content-l_col-1 u-show-on-mobile">
+            How much money to do you receive each month from all your <em>employment</em>?
+          </p>
+          <p class="a-label_helper">
+              Don’t forget to include:
+          </p>
+          <ul class="a-label_helper">
+            <li>Income from your primary job</li>
+            <li>Income from a part-time or second job</li>
+            <li>Income from occasional employment</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-l_col content-l_col-1-2">  
+        <input type="text"
+              id="yes-money-earned"
+              name="money-earned"
+              class="a-text-input o-yes-budget-earned"
+              disabled
+              placeholder="$"
+              data-sanitize="money">
+      </div>
+    </div>
+    <div class="content-l content-l__large-gutters block block__sub">
+      <div class="content-l_col content-l_col-1-2 u-mobile-reorder">
+        <div class="u-mobile-reorder__second">
+          <p id="mobile-earned-label" class="a-label h4 content-l_col-1 u-show-on-mobile">
+            Do you receive any money each month from <em>child support</em>?
+          </p>
+        </div>
+      </div>
+      <div class="content-l_col content-l_col-1-2">  
+        <input type="text"
+              id="yes-money-earned"
+              name="money-earned"
+              class="a-text-input o-yes-budget-earned"
+              disabled
+              placeholder="$"
+              data-sanitize="money">
+      </div>
+    </div>
+    <div class="content-l content-l__large-gutters block block__sub">
+      <div class="content-l_col content-l_col-1-2 u-mobile-reorder">
+        <div class="u-mobile-reorder__second">
+          <p id="mobile-earned-label" class="a-label h4 content-l_col-1 u-show-on-mobile">
+            Do you receive any money each month from <em>child support</em>?
+          </p>
+        </div>
+      </div>
+      <div class="content-l_col content-l_col-1-2">  
+        <input type="text"
+              id="yes-money-earned"
+              name="money-earned"
+              class="a-text-input o-yes-budget-earned"
+              disabled
+              placeholder="$"
+              data-sanitize="money">
+      </div>
+    </div>
+    <div class="content-l content-l__large-gutters block block__sub">
+      <div class="content-l_col content-l_col-1-2 u-mobile-reorder">
+        <div class="u-mobile-reorder__third">
+          <p id="mobile-earned-label" class="a-label h4 content-l_col-1 u-show-on-mobile">
+            Do you receive any money each month from <em>disability benefits</em>?
+          </p>
+        </div>
+      </div>
+      <div class="content-l_col content-l_col-1-2">  
+        <input type="text"
+              id="yes-money-earned"
+              name="money-earned"
+              class="a-text-input o-yes-budget-earned"
+              disabled
+              placeholder="$"
+              data-sanitize="money">
+      </div>
+    </div>
+    <div class="content-l content-l__large-gutters block block__sub">
+      <div class="content-l_col content-l_col-1-2 u-mobile-reorder">
+        <div class="u-mobile-reorder__fourth">
+          <p id="mobile-earned-label" class="a-label h4 content-l_col-1 u-show-on-mobile">
+            Do you receive any money each month from <em>government programs</em>?
+          </p>
+        </div>
+      </div>
+      <div class="content-l_col content-l_col-1-2">  
+        <input type="text"
+              id="yes-money-earned"
+              name="money-earned"
+              class="a-text-input o-yes-budget-earned"
+              disabled
+              placeholder="$"
+              data-sanitize="money">
+      </div>
+    </div>
+    <div class="content-l content-l__large-gutters block block__sub">
+      <div class="content-l_col content-l_col-1-2 u-mobile-reorder">
+        <div class="u-mobile-reorder__fifth">
+          <p id="mobile-earned-label" class="a-label h4 content-l_col-1 u-show-on-mobile">
+            Do you receive any money each month from <em>retirement benefits</em>?
+          </p>
+        </div>
+      </div>
+      <div class="content-l_col content-l_col-1-2">  
+        <input type="text"
+              id="yes-money-earned"
+              name="money-earned"
+              class="a-text-input o-yes-budget-earned"
+              disabled
+              placeholder="$"
+              data-sanitize="money">
+      </div>
+    </div>
+  </form>
+  <div class="content-l">
+    <div class="content-l_col content-l_col-1">
+      <div class="content-l block block__sub block__flush-bottom">
+        <div class="content-l_col content-l_col-2-3">
+          <div class="content_line-bold"></div>
+          <div class="block block__sub-micro block__flush-bottom">
+            {{
+              render_line_item({
+                'label': 'Total of all your income:',
+                'target': 'o-yes-budget-remaining'
+              })
+            }}
+            <div class="content-l">
+              <p class="content-l_col content-l_col-1 u-mt10">
+                Looking at your income is great start!  Now, let's calculate your expenses. <a href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_spending-tracker.pdf" rel="noopener noreferrer" target="_blank"> Cutting Expenses tool</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

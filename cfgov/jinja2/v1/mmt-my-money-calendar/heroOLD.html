@@ -1,0 +1,42 @@
+
+
+<section class="m-hero">
+    <div class="m-hero_wrapper wrapper">
+        <div class="m-hero_text">
+            <h1 class="m-hero_heading">This is the hero head</h1>
+            <div class="m-hero_subhead">
+                This is the hero subhead
+            </div>
+        </div>
+        <div class="m-hero_image-wrapper">
+        Image Wrapper
+            <div class="m-hero_image">
+                <img src="/static/apps/youth-employment-success/img/Landing.png" alt="" class="u-hide-on-print">
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .m-hero {
+            background-color:#D3DAEB;
+        }
+        .m-hero_image {
+             url('{{ static("apps/know-before-you-owe/img/Landing.png") }}');
+        }
+
+        @media screen and (min-width: 37.5625em) {
+            .m-hero_image {
+                 url('{{ static("apps/know-before-you-owe/img/Landing.png") }}');
+                padding-bottom: 5px;
+            }
+
+            .m-hero__overlay .m-hero_wrapper {
+                 url('{{ static("apps/know-before-you-owe/img/Landing.png") }}');
+                background-size: cover;
+                filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                    src='./img/Landing.png',
+                    sizingMethod='scale');
+            }
+        } 
+    </style>
+</section>
