@@ -2,7 +2,7 @@
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import EventObserver from '../modules/util/EventObserver';
 import FlyoutMenu from '../modules/behavior/FlyoutMenu';
-import MegaMenuDesktop from '../organisms/MegaMenuDesktop';
+import MegaMenuDesktop from '../organisms/MegaMenuDesktopVar1';
 import MegaMenuMobile from '../organisms/MegaMenuMobile';
 import MoveTransition from '../modules/transition/MoveTransition';
 import TabTrigger from '../modules/TabTrigger';
@@ -150,8 +150,6 @@ function MegaMenu( element ) {
    */
   function _addEvents( menu ) {
     menu.addEventListener( 'triggerClick', _handleEvent );
-    menu.addEventListener( 'triggerOver', _handleEvent );
-    menu.addEventListener( 'triggerOut', _handleEvent );
     menu.addEventListener( 'expandBegin', _handleEvent );
     menu.addEventListener( 'expandEnd', _handleEvent );
     menu.addEventListener( 'collapseBegin', _handleEvent );

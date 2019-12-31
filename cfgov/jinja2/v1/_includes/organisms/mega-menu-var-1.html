@@ -1,4 +1,3 @@
-{% import 'molecules/featured-menu-content.html' as featured_menu_content with context %}
 {% set base_class = 'o-mega-menu-var-1' %}
 
 {# ==========================================================================
@@ -47,7 +46,6 @@
    ========================================================================== #}
 
 {% macro _nav_list( nav_depth, nav_groups ) %}
-<div class="{{ _classes( nav_depth, '-lists' ) }}">
     {% for nav_group in nav_groups %}
     {% set group = nav_group.value %}
     <div class="{{ _classes( nav_depth, '-list' ) }}">
@@ -76,7 +74,6 @@
     </div>
 
     {% endfor %}
-</div>
 
 {% endmacro %}
 
@@ -106,11 +103,10 @@
    ========================================================================== #}
 
 {% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text, language='en' ) %}
-<section class="{{- _classes( nav_depth ) -}} u-hidden-overflow"
-     aria-expanded="false"
-     data-js-hook="behavior_flyout-menu_content">
+<section class="{{- _classes( nav_depth ) -}}"
+         aria-expanded="false"
+         data-js-hook="behavior_flyout-menu_content">
     <div class="{{- _classes( nav_depth, '-wrapper' ) -}}">
-        {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
         {# Open wrapper if needed #}
         {% if nav_depth > 1 %}
         <button class="{{- _classes( nav_depth, '-alt-trigger' ) -}}"
@@ -121,47 +117,79 @@
         {% endif %}
         <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) -}}">
 
-            {% if nav_depth > 1 %}
+            {% if nav_depth > 1 and nav_overview_url != '#' %}
             <h3 class="{{ _classes( nav_depth, '-overview' ) }}
-                       {{ _classes( nav_depth, '-overview-heading' ) }}
-            ">
-                {# TODO: Remove the check for '#' when real overview pages
-                       are added for the Consumer Resources and Education
-                       pages. #}
-                {% if nav_overview_url %}
-                    {% if nav_overview_url == '#' %}
-
-                    {# only use a link element when there is an overview page to link to, otherwise we use regular heading text for context #}
-
-                    <span class="{{ _classes( nav_depth, '-overview-heading-text' ) }}">{{ nav_overview_text }}</span>
-
-                    {% else %}
-
-                    <a class="{{ _classes( nav_depth, '-overview-link' ) }}
-                              {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                              {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
-                        {{ nav_overview_text ~ ' Overview' }}
-                    </a>
-
-                    {% endif %}
-                {% endif %}
+                       {{ _classes( nav_depth, '-overview-heading' ) }}">
+                <a class="{{ _classes( nav_depth, '-overview-link' ) }}
+                            {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
+                            {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
+                    {{ nav_overview_text ~ ' Overview' }}
+                </a>
             </h3>
             {% endif %}
+
             {% if nav_item.nav_items %}
                 {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}
             {% endif %}
+
             {% if nav_item.nav_groups %}
+            <div class="{{ _classes( nav_depth, '-lists' ) }}">
                 {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
-            {% endif %}
-            {% if nav_item.footer %}
-            <div class="{{ base_class ~ '_footer' }}">
-                {{ nav_item.footer | safe }}
+                {% if nav_item.footer %}
+                    {# TODO: This is hardcoded to menu selected, which will need to be controlled by Wagtail when this is released. #}
+                    {% if nav_item | string == 'Consumer Tools' %}
+                    <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                        <ul class="m-list m-list__unstyled">
+                            <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                                <span>{{ svg_icon( 'favorite' ) }}</span>
+                                <a class="{{ _classes( nav_depth, '-link' ) }}" href="/consumer-tools/disasters-and-emergencies/">
+                                    Prepare your finances for a natural disaster
+                                </a>
+                            </li>
+                            <li>
+                                <a class="{{ _classes( nav_depth, '-link' ) }}" href="/complaint/">
+                                    <span>{{ svg_icon( 'complaint' ) }}</span>
+                                    Submit a complaint
+                                </a>
+                            </li>
+                            <li>
+                                <a class="{{ _classes( nav_depth, '-link' ) }}" href="/ask-cfpb/">
+                                    <span>{{ svg_icon( 'lightbulb' ) }}</span>
+                                    Browse Ask CFPB
+                                </a>
+                            </li>
+                            <li>
+                                <a class="{{ _classes( nav_depth, '-link' ) }}" href="/your-story/">
+                                    <span>{{ svg_icon( 'open-quote' ) }}</span>
+                                    Tell Your Story
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% elif nav_item | string == 'Practitioner Resources' %}
+                    <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                        <ul class="m-list m-list__unstyled">
+                            <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                                <span>{{ svg_icon( 'favorite' ) }}</span>
+                                <a class="{{ _classes( nav_depth, '-link' ) }}" href="/data-research/research-reports/financial-well-being-america/">
+                                    Explore financial well-being survey results
+                                </a>
+                            </li>
+                            <li>
+                                <a class="{{ _classes( nav_depth, '-link' ) }}" href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php">
+                                    <span>{{ svg_icon( 'complaint' ) }}</span>
+                                    Order free brochures
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                {% endif %}
             </div>
             {% endif %}
+
         </div>
-        {{ featured_menu_content.render(nav_item.featured_content.value) if nav_item.featured_content else ''}}
-        {# Close Wrapper if needed #}
-        {{ '</div>' | safe if nav_depth > 1 else '' }}
     </div>
 
     {% if nav_depth == 1 %}
@@ -208,6 +236,8 @@
              if has_children else ''
            }}>
               {{ text }}
+              <span class="{{- _classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
+              <span class="{{- _classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
               {{ svg_icon('right') }}
         </a>
         {% if has_children %}
