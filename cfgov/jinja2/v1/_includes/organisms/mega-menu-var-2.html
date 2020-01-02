@@ -178,6 +178,20 @@
                     </li>
                 </ul>
             </div>
+            {% elif nav_item | string == 'Data & Research' or nav_item | string == 'Policy & Compliance' or nav_item | string == 'About Us' %}
+            <div class="{{ _classes( nav_depth, '-heading' ) }}">
+
+                {% if nav_depth > 1 %}
+                <h3 class="{{ _classes( nav_depth, '-overview' ) }}
+                            {{ _classes( nav_depth, '-overview-heading' ) }}">
+                    <a class="{{ _classes( nav_depth, '-overview-link' ) }}
+                                {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
+                                {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
+                        {{ nav_overview_text ~ ' Overview' }}
+                    </a>
+                </h3>
+                {% endif %}
+            </div>
             {% endif %}
 
             {% if nav_item.nav_items %}
@@ -187,33 +201,54 @@
             {% if nav_item.nav_groups %}
             <div class="{{ _classes( nav_depth, '-lists' ) }}">
                 {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
-                {% if nav_item.footer %}
-                    {# TODO: This is hardcoded to menu selected, which will need to be controlled by Wagtail when this is released. #}
-                    {% if nav_item | string == 'Consumer Tools' %}
-                    <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
-                        <ul class="m-list m-list__unstyled">
-                            <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
-                                <span>{{ svg_icon( 'favorite' ) }}</span>
-                                <a class="{{ _classes( nav_depth, '-link' ) }}" href="/consumer-tools/disasters-and-emergencies/">
-                                    Prepare your finances for a natural disaster
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    {% elif nav_item | string == 'Practitioner Resources' %}
-                    <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
-                        <ul class="m-list m-list__unstyled">
-                            <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
-                                <span>{{ svg_icon( 'favorite' ) }}</span>
-                                <a class="{{ _classes( nav_depth, '-link' ) }}" href="/data-research/research-reports/financial-well-being-america/">
-                                    Explore financial well-being survey results
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    {% endif %}
 
+                {# TODO: This is hardcoded to menu selected, which will need to be controlled by Wagtail when this is released. #}
+                {% if nav_item | string == 'Consumer Tools' %}
+                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                    <ul class="m-list m-list__unstyled">
+                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                            <span>{{ svg_icon( 'favorite' ) }}</span>
+                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/consumer-tools/disasters-and-emergencies/">
+                                Prepare your finances for a natural disaster
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% elif nav_item | string == 'Practitioner Resources' %}
+                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                    <ul class="m-list m-list__unstyled">
+                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                            <span>{{ svg_icon( 'favorite' ) }}</span>
+                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/data-research/research-reports/financial-well-being-america/">
+                                Explore financial well-being survey results
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% elif nav_item | string == 'Data & Research' %}
+                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                    <ul class="m-list m-list__unstyled">
+                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                            <span>{{ svg_icon( 'favorite' ) }}</span>
+                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/data-research/financial-well-being-survey-data/">
+                                Help advance financial well-being
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% elif nav_item | string == 'Policy & Compliance' %}
+                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                    <ul class="m-list m-list__unstyled">
+                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                            <span>{{ svg_icon( 'favorite' ) }}</span>
+                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/policy-compliance/guidance/tila-respa-disclosure-rule/">
+                                Resources to help you comply
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 {% endif %}
+
             </div>
             {% endif %}
 
