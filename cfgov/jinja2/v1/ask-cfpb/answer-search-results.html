@@ -45,7 +45,7 @@
                 {% if tag %}
                     <article class="question_summary question_summary__full">
                         <p class="question_title"><a href="{{ question.url }}" class="kbq">{{ question.question|safe }}</a></p>
-                        <p class="qans">{{ question.answer | safe | striptags | truncate }}</p>
+                        <p class="qans">{{ question.answer_content | safe | striptags | truncate }}</p>
                     </article>
                 {% else %}
                     <article class="question_summary question_summary__full">
