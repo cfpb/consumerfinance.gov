@@ -324,8 +324,8 @@ urlpatterns = [
                 url='/consumer-tools/money-as-you-grow/%(path)s',
                 permanent=True)),
     url(r'^practitioner-resources/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
-        FlaggedTemplateView.as_view(
-            flag_name='YOUTH_EMPLOYMENT_SUCCESS',
+        TemplateView.as_view(
+
             template_name='youth_employment_success/index.html'
         ),
         name='youth_employment_success'
