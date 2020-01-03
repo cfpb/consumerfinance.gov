@@ -22,18 +22,6 @@ services:
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
 
-    python2:
-        build:
-            context: .
-            dockerfile: Dockerfile
-            args:
-                scl_python_version: python27
-        depends_on:
-            - elasticsearch
-            - postgres
-        stdin_open: true
-        tty: true
-
     python3:
         build:
             context: .

@@ -18,11 +18,11 @@ make sure you are in the cfgov-refresh root and then run:
 tox
 ```
 
-This will run linting tests and unit tests with migrations in both Python 2.7 and Python 3.6. 
+This will run linting tests and unit tests with migrations in Python 3.6. 
 This is the same as running:
 
 ```sh
-tox -e lint -e unittest-py27-dj111-wag113-slow -e unittest-py36-dj111-wag113-slow
+tox -e lint -e unittest-py36-dj111-wag113-slow
 ```
 
 By default this uses a local SQLite database for tests. To override this, you
@@ -33,14 +33,8 @@ If you haven't changed any Python dependencies and you don't need to test
 all migrations, you can run a much faster Python code test using:
 
 ```sh
-# Python 2.7
-tox -e unittest-py27-dj111-wag113-fast
-
 # Python 3.6
 tox -e unittest-py36-dj111-wag113-fast
-
-# Both
-tox -e unittest-py27-dj111-wag113-fast -e unittest-py36-dj111-wag113-fast
 ```
 
 If you would like to run only a specific test, or the tests for a specific app, 

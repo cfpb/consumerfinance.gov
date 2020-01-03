@@ -145,13 +145,6 @@ they will need to be installed seperately by
 [accessing the Python containers' shell](#access-the-containers-shell) 
 and using `pip`:
 
-Python 2.7:
-
-```bash
-docker-compose exec python2 bash
-pip install [PACKAGE NAME]
-```
-
 Python 3.6:
 
 ```bash
