@@ -109,4 +109,4 @@ except (TypeError, ValueError):
     )
 
 # Used in legacy.views.complaint.ComplaintLandingView
-COMPLAINT_LANDING_STATS_SOURCE = "https://files.consumerfinance.gov/ccdb/narratives.json"
+COMPLAINT_LANDING_STATS_SOURCE = "https://consumerfinance.gov/data-research/consumer-complaints/search/api/v1/?field=all&size=1&no_aggs=true"
