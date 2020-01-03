@@ -259,7 +259,6 @@
               {{ text }}
               <span class="{{- _classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
               <span class="{{- _classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
-              {{ svg_icon('right') }}
         </a>
         {% if has_children %}
             {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
@@ -283,12 +282,12 @@
 {% macro mega_menu( menu_items, language='en' ) %}
 <nav class="{{ base_class }}
             u-hidden"
-    data-js-hook="behavior_flyout-menu"
-    aria-label="main menu">
+     data-js-hook="behavior_flyout-menu"
+     aria-label="main menu">
     <h2 class="{{ base_class ~ '_heading' }}">
         <button class="{{ base_class ~ '_trigger' }}"
-               data-js-hook="behavior_flyout-menu_trigger"
-               aria-haspopup="menu">
+                data-js-hook="behavior_flyout-menu_trigger"
+                aria-haspopup="menu">
             <span class="{{ base_class ~ '_trigger-open' }}">
                 {{ svg_icon('menu') }}
             </span>

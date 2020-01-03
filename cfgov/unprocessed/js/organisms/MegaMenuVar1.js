@@ -163,6 +163,19 @@ function MegaMenu( element ) {
    */
   function _handleEvent( event ) {
     const activeNav = isInDesktop() ? _desktopNav : _mobileNav;
+
+    //------------------------------------------------------------------
+    // TODO: This temporarily disables the mobile menu submenu clicking
+    // and will be used for testing a new version of the menu.
+    if ( !isInDesktop() ) {
+      const triggerDom = event.target.getDom().trigger;
+      if ( typeof triggerDom.href !== 'undefined' ) {
+        window.location.assign( triggerDom.href );
+      }
+      return;
+    }
+    //------------------------------------------------------------------
+
     activeNav.handleEvent( event );
   }
 
