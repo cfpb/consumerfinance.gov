@@ -122,6 +122,11 @@ const getCommentMarker = label => {
   let commentParagraphID = '';
 
   const splitCurrentParagraph = label.split( 'Interp' );
+  /* A guard clause just in case any comment paragraphs have an invalid ID that
+     doesn't have 'Interp' in it */
+  if ( splitCurrentParagraph.length < 2 ) {
+    return '';
+  }
   if ( splitCurrentParagraph !== null ) {
     commentedParagraphID = splitCurrentParagraph[0]
       .split( '-' );
