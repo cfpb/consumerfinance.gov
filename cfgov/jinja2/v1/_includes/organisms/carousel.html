@@ -73,7 +73,8 @@
                 {% set rendition = image( item.image, 'fill-48x48' ) %}
                 <img class="o-carousel_thumbnail-img"
                      src="{{ rendition.url }}"
-                     alt="{{ item.title }}">
+                     alt="{{ item.title }}"
+                     aria-hidden="true">
             </a>
         </span>
         <span class="o-carousel_thumbnail-text">
