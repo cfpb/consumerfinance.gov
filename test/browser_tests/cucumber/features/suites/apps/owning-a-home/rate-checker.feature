@@ -1,4 +1,4 @@
-Feature: verify the Rate Checker tool works according to requirements
+Feature: Verify the Rate Checker tool works according to requirements
   As a first time visitor to the Rate Checker page
   I want to utilize the Rate Checker tool
   So that I can make informed choices when shopping for a mortgage loan
@@ -10,12 +10,11 @@ Background:
 Scenario Outline: Test selecting different states
   When I select "<state_name>" as State
   Then I should see the selected "<state_name>" above the Rate Checker chart
-
 Examples:
-  | state_name      |
-  | Nevada          |
-  | California			|
-  | Virginia		    |
+| state_name |
+| Nevada     |
+| California |
+| Virginia   |
 
 @rate_checker
 Scenario: Test all dropdown lists in the Rate Checker page

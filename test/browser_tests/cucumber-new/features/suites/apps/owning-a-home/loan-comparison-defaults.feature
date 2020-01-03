@@ -5,11 +5,11 @@ Feature: Test the default values in the Loan Comparison page
 
 Background:
    Given I navigate to the "Loan Comparison" page
-   
+
 @loan_comparison
 Scenario: First time visitor should see default State selected
  Then I should see "Alabama" as default State
- 
+
 @loan_comparison
 Scenario: First time visitor should see default Credit Score
  Then I should see "701 - 720" as default Credit Score
@@ -156,4 +156,3 @@ Scenario: First time Desktop visitor should see default Discount point and credi
   When I click Add another loan
     And I click Add another loan again
   Then I should see "0" as default Discount point and credits for "Loan C"
-

@@ -3,7 +3,7 @@ Feature: MultiSelect Tags
   I should be able to select using the multi-select
 
 Background:
-  Given I goto URL "/about-us/blog/"
+  Given I goto a browse filterable page
   And I open the filterable list control
 
 Scenario: State on page load
@@ -26,17 +26,17 @@ Scenario: Search input blur
   And the multi-select dropdown length should be 0
 
 Scenario: Typing in search input, returning matched results
-  When I enter "students" in the search input
-  Then the multi-select dropdown should display "students"
+  When I enter "tag0" in the search input
+  Then the multi-select dropdown should display "tag0"
   And the multi-select dropdown length should be 1
 
 Scenario: Typing in search input, not returning unmatched results
-  When I enter "students" in the search input
-  Then the multi-select dropdown shouldn't display "mortgages"
+  When I enter "tag0" in the search input
+  Then the multi-select dropdown shouldn't display "tag2"
   And the multi-select dropdown length should be 1
 
 Scenario: Typing in search input, clearing the input and closing results
-  When I enter "students" in the search input
+  When I enter "tag0" in the search input
   And I hit the escape button on the search input
   Then the multi-select dropdown shouldn't be visible
   And the multi-select dropdown length should be 0
