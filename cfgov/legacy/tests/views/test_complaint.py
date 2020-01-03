@@ -29,9 +29,9 @@ class ComplaintLandingViewTests(TestCase):
     @override_settings(COMPLAINT_LANDING_STATS_SOURCE=test_url)
     def test_data_up_to_date(self):
         data_json = {
-            'stats': {
+            '_meta': {
+                'last_indexed': self.two_days_ago(),
                 'last_updated': self.two_days_ago(),
-                'last_updated_narratives': self.two_days_ago(),
             },
         }
         responses.add(responses.GET, self.test_url, json=data_json)
@@ -42,9 +42,9 @@ class ComplaintLandingViewTests(TestCase):
     @override_settings(COMPLAINT_LANDING_STATS_SOURCE=test_url)
     def test_data_out_of_date(self):
         data_json = {
-            'stats': {
-                'last_updated': '2010-01-01',
-                'last_updated_narratives': self.two_days_ago(),
+            '_meta': {
+                'last_indexed': '2010-01-01',
+                'last_updated': self.two_days_ago(),
             },
         }
         responses.add(responses.GET, self.test_url, json=data_json)
@@ -55,9 +55,9 @@ class ComplaintLandingViewTests(TestCase):
     @override_settings(COMPLAINT_LANDING_STATS_SOURCE=test_url)
     def test_narratives_out_of_date(self):
         data_json = {
-            'stats': {
-                'last_updated': self.two_days_ago(),
-                'last_updated_narratives': '2010-01-01',
+            '_meta': {
+                'last_indexed': self.two_days_ago(),
+                'last_updated': '2010-01-01',
             },
         }
         responses.add(responses.GET, self.test_url, json=data_json)
