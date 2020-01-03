@@ -1,5 +1,5 @@
 """
-Utilities for querying the Dept of Ed's collegescorecard api
+Utilities for querying the Dept of Ed's College Scorecard API.
 
 The API, released 2015-09-12, requires a key, which you can get
 from https://api.data.gov/signup/
@@ -38,7 +38,6 @@ MODEL_MAP = {
     'school.operating': 'operating',
     'school.under_investigation': 'under_investigation',
     'school.zip': 'zip5',
-    'latest.cost.avg_net_price.overall': 'avg_net_price',
     'latest.cost.tuition.out_of_state': 'tuition_out_of_state',
     'latest.cost.tuition.in_state': 'tuition_in_state',
     'latest.earnings.10_yrs_after_entry.median': 'median_annual_pay',
@@ -147,7 +146,18 @@ YEAR_FIELDS = assemble_program_fields() + [
     'cost.tuition.in_state',
     'cost.tuition.out_of_state',
     'cost.tuition.program_year',
-    'cost.avg_net_price.overall',
+    'cost.avg_net_price.private',
+    'cost.net_price.private.by_income_level.0-30000',
+    'cost.net_price.private.by_income_level.30001-48000',
+    'cost.net_price.private.by_income_level.48001-75000',
+    'cost.net_price.private.by_income_level.75001-110000',
+    'cost.net_price.private.by_income_level.110001-plus',
+    'cost.avg_net_price.public',
+    'cost.net_price.public.by_income_level.0-30000',
+    'cost.net_price.public.by_income_level.30001-48000',
+    'cost.net_price.public.by_income_level.48001-75000',
+    'cost.net_price.public.by_income_level.75001-110000',
+    'cost.net_price.public.by_income_level.110001-plus',
     'earnings.6_yrs_after_entry.working_not_enrolled.mean_earnings',
     'earnings.6_yrs_after_entry.median',
     'earnings.6_yrs_after_entry.percent_greater_than_25000',
@@ -199,13 +209,13 @@ YEAR_FIELDS = assemble_program_fields() + [
 
 
 def api_school_query(school_id, fields):
-    """This is no longer used in processing but handy for API exploration."""
+    """Explore endpoints; this is handy but no longer used in processing."""
     url = QUERY_URL.format(SCHOOLS_ROOT, school_id, API_KEY, fields)
     return requests.get(url).json()
 
 
 def build_field_string():
-    """assemble fields for an api query"""
+    """Assemble fields for an API query."""
     fields = BASE_FIELDS + ['latest.{}'.format(field)
                             for field in YEAR_FIELDS]
     field_string = ",".join([field for field in fields])
@@ -213,7 +223,7 @@ def build_field_string():
 
 
 def search_by_school_name(name):
-    """search api by school name, return school name, id, city, state"""
+    """Search api by school name, return school name, id, city, state."""
     fields = "id,school.name,school.city,school.state"
     url = "{0}?api_key={1}&school.name={2}&fields={3}".format(
         SCHOOLS_ROOT, API_KEY, name, fields)
@@ -222,7 +232,7 @@ def search_by_school_name(name):
 
 
 def calculate_group_percent(group1, group2):
-    """calculates group1's percentage of a two-group total"""
+    """Calculate group1's percentage of a two-group total."""
     if group1 + group2 == 0:
         return 0
     else:

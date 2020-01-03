@@ -19,6 +19,7 @@ from paying_for_college.models import (
 )
 
 from v1.models import HomePage
+from v1.util.migrations import set_stream_data
 
 
 if six.PY2:  # pragma: no cover
@@ -77,9 +78,25 @@ class PageModelsTest(TestCase):
         )
 
     def test_loan_quiz_template(self):
+        """
+        We are using get_template to set a 'situation_id' for development.
+
+        We hope to drop this value, or deliver it another way,
+        when quiz structure is decided.
+        """
+        page = self.loan_quiz_page
+        stream_data = [{
+            'type': 'guided_quiz',
+            'id': '12345',
+            'value': {
+                'question': '?',
+                'answer': 'huh?'}}]
+        set_stream_data(page, 'content', stream_data)
         self.assertEqual(
-            self.loan_quiz_page.get_template(HttpRequest()),
+            page.get_template(HttpRequest()),
             'paying-for-college/choose-a-student-loan.html')
+        self.assertEqual(
+            self.loan_quiz_page.content[0].value['situation_id'], '12345')
 
 
 class SchoolRegionTest(TestCase):
@@ -102,7 +119,8 @@ class PayingForCollegeConfigTest(unittest.TestCase):
 class SchoolModelsTest(TestCase):
 
     def create_school(
-            self, ID=999999,
+            self,
+            school_id=999999,
             data_json='',
             accreditor="Almighty Wizard",
             city="Emerald City",
@@ -111,7 +129,7 @@ class SchoolModelsTest(TestCase):
             ope6=5555,
             ope8=555500):
         return School.objects.create(
-            school_id=ID,
+            school_id=school_id,
             data_json=data_json,
             accreditor=accreditor,
             degrees_highest=degrees_highest,
@@ -316,7 +334,7 @@ class SchoolModelsTest(TestCase):
         self.assertEqual(feedback.parsed_url, {})
 
     def test_feedback_school(self):
-        school = self.create_school(ID=451796)
+        school = self.create_school(school_id=451796)
         feedback = self.create_feedback()
         self.assertEqual(feedback.school, school)
         feedback.url = feedback.url.replace("iped=451796&", '')
