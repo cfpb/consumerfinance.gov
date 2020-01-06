@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import argparse
 import logging
 import sys
@@ -18,10 +19,11 @@ parser.add_argument(
     help="choose a server base other than www.consumerfinance.gov"
 )
 parser.add_argument(
-    "--full",
-    action="store_true",
-    help=("If --full is used, the script will check all urls in our main nav, "
-          "plus a selection of our most-visited pages.")
+    "--url_list",
+    type=str,
+    nargs='+',
+    help=("You can provide a space-separated custom list "
+          "of relative URLs to check.")
 )
 parser.add_argument(
     "-v", "--verbose",
@@ -40,38 +42,32 @@ FULL = False
 BASE = 'https://www.consumerfinance.gov'
 S3_URI = 'http://files.consumerfinance.gov.s3.amazonaws.com/build/smoketests/smoketest_urls.json'  # noqa
 
-# These are URL's that exist in a fresh copy of the site
-# after migrations and initial_data are run
-SHORT_RUN = [
-    '/',
-    '/your-story/',
-    '/find-a-housing-counselor/',
-    '/know-before-you-owe/',
-    '/fair-lending/',
-    '/data-research/consumer-complaints/',
-]
-
-# Fall-back top-20 URLs, as of July 2019, from hubcap/wiki
-TOP20 = [
+# Fall-back list of top 25 URLs, as of Jan.2, 2020, from hubcap/wiki
+TOP = [
     '/',  # home page
-    '/find-a-housing-counselor/',
     '/learnmore/',
     '/complaint/',
+    '/find-a-housing-counselor/',
     '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',  # noqa
-    '/complaint/getting-started/',
-    '/policy-compliance/rulemaking/regulations/',
-    '/policy-compliance/rulemaking/regulations/1026/',
-    '/policy-compliance/guidance/tila-respa-disclosure-rule/',
-    '/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/',  # noqa
-    '/data-research/consumer-complaints/',
-    '/policy-compliance/guidance/',
-    '/ask-cfpb/how-do-i-stop-automatic-payments-from-my-bank-account-en-2023/',
     '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
+    '/complaint/getting-started/',
+    '/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/',  # noqa
+    '/policy-compliance/rulemaking/regulations/',
+    '/consumer-tools/debt-collection/',
+    '/policy-compliance/guidance/tila-respa-disclosure-rule/',
+    '/ask-cfpb/how-do-i-stop-automatic-payments-from-my-bank-account-en-2023/',
+    '/policy-compliance/rulemaking/regulations/1026/',
+    '/data-research/consumer-complaints',
+    '/data-research/consumer-complaints/search/?from=0&searchfield=all&searchtext=&size=25&sort=created_date_desc',  # noqa
+    '/policy-compliance/guidance/',
+    '/consumer-tools/prepaid-cards/',
     '/ask-cfpb/how-do-i-get-a-copy-of-my-credit-reports-en-5/',
-    '/ask-cfpb/',
-    '/data-research/consumer-complaints/search/',
     '/about-us/contact-us/',
+    '/ask-cfpb/',
+    '/complaint/process/',
+    '/about-us/careers/current-openings/',
     '/about-us/the-bureau/',
+    '/consumer-tools/credit-reports-and-scores/',
     '/owning-a-home/',
 ]
 
@@ -134,10 +130,12 @@ APPS = [
     '/your-story/',
 ]
 
-FULL_RUN = sorted(set(TOP20 + APPS))
+# call `set` on the combined list to weed out dupes
+FULL_RUN = sorted(set(TOP + APPS))
 
 
 def get_full_list():
+    """Fetch a list of URLs to test from s3, or fall back to local default."""
     try:
         url_data = requests.get(S3_URI).json()
     except Exception as e:
@@ -145,24 +143,35 @@ def get_full_list():
             'Using fallback because request for S3 list failed: {}'.format(e))
         full_run = FULL_RUN
     else:
-        full_run = sorted(set(url_data.get('top20') + url_data.get('apps')))
+        full_run = sorted(set(url_data.get('top') + url_data.get('apps')))
     return full_run
 
 
-def check_urls(base, full=False):
+def check_urls(base, url_list=None):
     """
     A smoke test to make sure the main cfgov URLs are returning status 200.
 
-    The full option tests megamenu links, plus the 20 most-popular pages.
+    Providing no `url_list` will test a standard list of important site URLs,
+    which includes megamenu links, main apps, and our 25 most popular pages.
+
+    Passing no base value will run the tests against production.
+
+    To run the full suite against production, and see its progress:
+
+    ./cfgov/scripts/http_smoke_test.py -v
+
+    You can test a custom set of URLs by passing relative URL strings
+    (relative to the provided base) as the `url_list` value. 
+    This example tests two URLs against a local cfgov instance:
+
+    ./cfgov/scripts/http_smoke_test.py -v --base 'http://localhost:8000' --url_list '/' '/retirement/before-you-claim/'  # noqa
     """
     count = 0
     timeouts = []
     failures = []
     starter = time.time()
-    if full:
+    if not url_list:
         url_list = get_full_list()
-    else:
-        url_list = SHORT_RUN
     for url_suffix in url_list:
         logger.info(url_suffix)
         count += 1
@@ -216,16 +225,16 @@ def check_urls(base, full=False):
     logger.info("\x1B[32mAll URLs return 200. No smoke!\x1B[0m")
     return True
 
-
 if __name__ == '__main__':  # pragma: nocover
+    url_list = None
     args = parser.parse_args()
     if args.verbose:
         logger.setLevel(logging.INFO)
     if args.base:
         BASE = args.base
-    if args.full:
-        FULL = True
+    if args.url_list:
+        url_list = args.url_list
     if args.timeout:
         TIMEOUT = int(args.timeout)
-    if not check_urls(BASE, full=FULL):
+    if not check_urls(BASE, url_list=url_list):
         sys.exit(1)
