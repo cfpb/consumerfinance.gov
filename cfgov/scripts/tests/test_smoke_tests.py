@@ -120,10 +120,7 @@ class HttpTests(unittest.TestCase):
     def test_allowed_timeouts(self, mock_get):
         too_many = http_smoke_test.ALLOWED_TIMEOUTS + 2
         urls = http_smoke_test.FULL_RUN[:too_many]
-        self.assertIs(
-            http_smoke_test.check_urls('pro1', url_list=urls),
-            False
-        )
+        self.assertFalse(http_smoke_test.check_urls('pro1', url_list=urls))
 
     @mock.patch(
         'scripts.http_smoke_test.requests.get',
@@ -142,4 +139,4 @@ class HttpTests(unittest.TestCase):
     )
     def test_http_fail_request_error(self, mock_get):
         result = http_smoke_test.check_urls('www', url_list=['/', '/ask-cfpb'])
-        self.assertIs(result, False)
+        self.assertFalse(result)
