@@ -167,7 +167,7 @@ function MegaMenu( element ) {
     //------------------------------------------------------------------
     // TODO: This temporarily disables the mobile menu submenu clicking
     // and will be used for testing a new version of the menu.
-    if ( !isInDesktop() ) {
+    if ( !isInDesktop() && event.target.getDom().container.tagName !== 'NAV' ) {
       const triggerDom = event.target.getDom().trigger;
       if ( typeof triggerDom.href !== 'undefined' ) {
         window.location.assign( triggerDom.href );
