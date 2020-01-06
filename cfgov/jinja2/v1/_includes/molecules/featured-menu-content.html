@@ -31,8 +31,7 @@
     {% set img_src = featured_image.url if featured_image.url else '' %}
 {% else %}
     {% set featured_image = value.image %}
-    {% set img_src = static(featured_image.url) if featured_image.url else '' %}
-
+    {% set img_src = featured_image.url if featured_image.url else '' %}
 {% endif %}
 {% if value.link %}
     {% set link = value.link %}

@@ -96,6 +96,7 @@ INSTALLED_APPS = (
     'hmda',
     'youth_employment',
     'diversity_inclusion',
+    'mega_menu.apps.MegaMenuConfig',
 )
 
 OPTIONAL_APPS = [
@@ -191,6 +192,7 @@ TEMPLATES = [
 
                 'core.jinja2tags.filters',
                 'agreements.jinja2tags.agreements',
+                'mega_menu.jinja2tags.MegaMenuExtension',
                 'prepaid_agreements.jinja2tags.prepaid_agreements',
                 'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.datetimes_extension',
@@ -829,7 +831,12 @@ else:
 # which we don't want this logic to be run.
 PARSE_LINKS_EXCLUSION_LIST = [
     # Wagtail admin pages, except preview and draft views
-    r'^/admin/(?!pages/\d+/(edit/preview|view_draft)/)',
+    (
+        r'^/admin/(?!'
+        r'pages/\d+/(edit/preview|view_draft)/|'
+        r'mega_menu/menu/preview/\w+/'
+        r')'
+    ),
     # Django admin pages
     r'^/django-admin/',
     # Our custom login pages
