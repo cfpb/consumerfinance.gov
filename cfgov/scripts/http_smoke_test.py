@@ -139,7 +139,7 @@ def get_full_list():
     try:
         url_data = requests.get(S3_URI).json()
     except Exception as e:
-        logger.info(
+        logger.warning(
             'Using fallback because request for S3 list failed: {}'.format(e))
         full_run = FULL_RUN
     else:
