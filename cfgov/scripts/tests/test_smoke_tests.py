@@ -59,11 +59,10 @@ class HttpTests(unittest.TestCase):
         mock_response = mock.Mock()
         mock_response.status_code = 200
         mock_get.return_value = mock_response
-        http_smoke_test.check_urls('pro1', url_list=['/', '/ask-cfpb/'])
-        self.assertEqual(
-            mock_get.call_count,
-            2
+        self.assertTrue(
+            http_smoke_test.check_urls('pro1', url_list=['/', '/ask-cfpb/'])
         )
+        self.assertEqual(mock_get.call_count, 2)
 
     @mock.patch('scripts.http_smoke_test.requests.get')
     @mock.patch('scripts.http_smoke_test.get_full_list')
@@ -72,7 +71,7 @@ class HttpTests(unittest.TestCase):
         mock_response = mock.Mock()
         mock_response.status_code = 200
         mock_get.return_value = mock_response
-        http_smoke_test.check_urls('pro1')
+        self.assertTrue(http_smoke_test.check_urls('pro1'))
         self.assertEqual(mock_get.call_count, len(http_smoke_test.FULL_RUN))
 
     @mock.patch('scripts.http_smoke_test.requests.get')
