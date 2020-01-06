@@ -7,12 +7,6 @@ from v1.models.resources import Resource
 
 
 class TestUnicodeCompatibility(TestCase):
-    @skipIf(six.PY3, "all strings are unicode")
-    def test_unicode_resource_title_str(self):
-        resource = Resource(title=u'Unicod\xeb')
-        self.assertEqual(str(resource), 'Unicod\xc3\xab')
-        self.assertIsInstance(str(resource), str)
-
     def test_unicode_resource_title_unicode(self):
         resource = Resource(title=u'Unicod\xeb')
         self.assertEqual(six.text_type(resource), u'Unicod\xeb')

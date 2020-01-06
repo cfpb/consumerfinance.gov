@@ -13,12 +13,6 @@ from v1.models.snippets import Contact, RelatedResource, ReusableText
 
 
 class TestUnicodeCompatibility(TestCase):
-    @skipIf(six.PY3, "all strings are unicode")
-    def test_unicode_contact_heading_str(self):
-        contact = Contact(heading=u'Unicod\xeb')
-        self.assertEqual(str(contact), 'Unicod\xc3\xab')
-        self.assertIsInstance(str(contact), str)
-
     def test_unicode_contact_heading_unicode(self):
         contact = Contact(heading=u'Unicod\xeb')
         self.assertEqual(six.text_type(contact), u'Unicod\xeb')
