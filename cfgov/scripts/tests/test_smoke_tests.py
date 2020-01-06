@@ -82,7 +82,7 @@ class HttpTests(unittest.TestCase):
         mock_get.return_value = mock_response
         mock_response.json.return_value = []
         result = http_smoke_test.check_urls('pro1', url_list='/')
-        self.assertIs(result, False)
+        self.assertFalse(result)
         self.assertEqual(mock_get.call_count, 1)
 
     @mock.patch('scripts.http_smoke_test.requests.get')
@@ -93,7 +93,7 @@ class HttpTests(unittest.TestCase):
         mock_response.status_code = 404
         mock_get.return_value = mock_response
         result = http_smoke_test.check_urls('pro1')
-        self.assertIs(result, False)
+        self.assertFalse(result)
         self.assertEqual(mock_get.call_count, len(http_smoke_test.FULL_RUN))
 
     @mock.patch(
