@@ -486,10 +486,6 @@ body {
         &_group-heading {
             margin-top: @grid_gutter-width;
 
-            &__hidden {
-                .u-visually-hidden;
-            }
-
             // add border between title and following list
             &:not(&__hidden) + ul {
                 border-top: 1px solid @gray-40;
@@ -891,6 +887,14 @@ body {
             left: -@grid_gutter-width;
             width: @menu_max_width_px + ( @grid_gutter-width * 2 );
         }
+
+        &_group-heading {
+            &__hidden {
+                opacity: 0;
+                cursor: default;
+            }
+        }
+
     } );
 }
 
