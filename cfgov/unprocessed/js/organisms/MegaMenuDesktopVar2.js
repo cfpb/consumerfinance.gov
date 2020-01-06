@@ -115,6 +115,15 @@ function MegaMenuDesktop( baseClass, menus ) {
     }
   }
 
+  function _handleBodyClick( event ) {
+    console.log( event.target );
+    // If we've clicked outside the parent of the current menu, close it.
+    if ( !_firstLevelDom.contains( event.target ) ||
+         event.target.parentNode.classList.contains( `${ baseClass }_content-1-list` ) ) {
+      _updateMenuState( null, event.type );
+    }
+  }
+
   /**
    * Cleanup state and set the currently active menu.
    * @param {FlyoutMenu} menu - The menu currently being activated.
@@ -133,6 +142,7 @@ function MegaMenuDesktop( baseClass, menus ) {
       _activeMenu = menu;
       _activeMenu.getTransition().animateOn();
 
+      _bodyDom.addEventListener( 'click', _handleBodyClick );
       /* Mousemove needed in addition to mouseout of the trigger
          in order to check if user has moved off the menu <ul> and not
          just the <li> list items. */
