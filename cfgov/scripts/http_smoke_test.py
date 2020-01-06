@@ -225,6 +225,7 @@ def check_urls(base, url_list=None):
     logger.info("\x1B[32mAll URLs return 200. No smoke!\x1B[0m")
     return True
 
+
 if __name__ == '__main__':  # pragma: nocover
     url_list = None
     args = parser.parse_args()
