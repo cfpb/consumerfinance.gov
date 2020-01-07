@@ -719,6 +719,9 @@ FLAGS = {
 
     # Used to hide CCDB landing page updates prior to public launch.
     'CCDB_CONTENT_UPDATES': [],
+
+    # Toggle My Money Calendar tool pages prior to public launch.
+    'MMT_MY_MONEY_CALENDAR': [],
 }
 
 
