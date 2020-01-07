@@ -131,7 +131,7 @@ APPS = [
 ]
 
 # call `set` on the combined list to weed out dupes
-FULL_RUN = sorted(set(TOP + APPS))
+FALLBACK_URLS = sorted(set(TOP + APPS))
 
 
 def get_full_list():
@@ -141,10 +141,10 @@ def get_full_list():
     except Exception as e:
         logger.warning(
             'Using fallback because request for S3 list failed: {}'.format(e))
-        full_run = FULL_RUN
+        url_list = FALLBACK_URLS
     else:
-        full_run = sorted(set(url_data.get('top') + url_data.get('apps')))
-    return full_run
+        url_list = sorted(set(url_data.get('top') + url_data.get('apps')))
+    return url_list
 
 
 def check_urls(base, url_list=None):
