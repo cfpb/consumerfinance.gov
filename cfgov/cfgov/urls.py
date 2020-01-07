@@ -137,7 +137,7 @@ urlpatterns = [
         name='fair-lending'),
 
     # My Money Tools
-    url(r'^mmt-my-money-calendar/$',
+    url(r'^mmt-my-money-calendar/.*',
         FlaggedTemplateView.as_view(
             template_name='mmt-my-money-calendar/index.html',
             flag_name='MMT_MY_MONEY_CALENDAR'),
