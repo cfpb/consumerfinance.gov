@@ -154,6 +154,28 @@ class DocumentDetailPage(AbstractFilterPage):
     ]
 
 
+class EnforcementActionsDetailPage(AbstractFilterPage):
+    content = StreamField([
+        ('full_width_text', organisms.FullWidthText()),
+        ('expandable', organisms.Expandable()),
+        ('expandable_group', organisms.ExpandableGroup()),
+        ('notification', molecules.Notification()),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'})),
+        ('feedback', v1_blocks.Feedback()),
+    ], blank=True)
+    edit_handler = AbstractFilterPage.generate_edit_handler(
+        content_panel=StreamFieldPanel('content')
+    )
+    template = 'document-detail/index.html'
+
+    objects = PageManager()
+
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField('content')
+    ]
+
+
 class AgendaItemBlock(blocks.StructBlock):
     start_time = blocks.TimeBlock(label="Start", required=False)
     end_time = blocks.TimeBlock(label="End", required=False)
