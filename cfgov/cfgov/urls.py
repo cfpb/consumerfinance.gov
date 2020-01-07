@@ -145,9 +145,10 @@ urlpatterns = [
 
     # My Money Tools
     url(r'^mmt-my-money-calendar/$',
-        TemplateView.as_view(
-        template_name='mmt-my-money-calendar/index.html'),
-        name='mmt-my-money-calendar'),   
+        FlaggedTemplateView.as_view(
+            template_name='mmt-my-money-calendar/index.html',
+            flag_name='MMT_MY_MONEY_CALENDAR'),
+        name='mmt-my-money-calendar'),
 
     url(r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(

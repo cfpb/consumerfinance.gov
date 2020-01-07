@@ -795,6 +795,9 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {'condition': 'boolean', 'value': False}
     ],
+
+    # Toggle My Money Calendar tool pages prior to public launch.
+    'MMT_MY_MONEY_CALENDAR': [],
 }
 
 
