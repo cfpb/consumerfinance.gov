@@ -12,7 +12,7 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 
 - macOS
 - [Homebrew](https://brew.sh) - package manager for installing system software on OSX
-- [Python 3.6](https://docs.python.org/3.6/) and [pip (Python package manager)](https://pip.pypa.io/en/stable/user_guide/)
+- [Python](https://docs.python.org/3.6/) and [pip (Python package manager)](https://pip.pypa.io/en/stable/user_guide/)
 - [Jinja2 templates](http://jinja.pocoo.org/docs/2.10/) for front-end rendering. See [`requirements/libraries.txt`](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/libraries.txt) for version.
 - [Wagtail CMS](https://wagtail.io) for content administration. See [`requirements/wagtail.txt`](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/wagtail.txt) for version.
 - [PostgreSQL 10.5](https://www.postgresql.org/) is the database we use in production and locally.

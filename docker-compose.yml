@@ -22,7 +22,7 @@ services:
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
 
-    python3:
+    python:
         build:
             context: .
             dockerfile: Dockerfile

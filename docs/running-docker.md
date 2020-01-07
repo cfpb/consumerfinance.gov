@@ -6,7 +6,7 @@ to setup your Docker environment and create the project Docker containers.
 
 We use [`docker-compose`](https://docs.docker.com/compose/reference/overview/)
 to run an Elasticsearch container, a PostgreSQL container, 
-and Django in a Python 3.6 container. 
+and Django in a Python container. 
 There is also a container serving the documentation. 
 
 All of these containers are configured in our 
@@ -16,7 +16,7 @@ for more about the format and use of this file.
 
 The following URLs are mapped to your host from the containers:
 
-- Access cfgov-refresh running in the Python 3.6 container: http://localhost:8000/
+- Access cfgov-refresh running in the Python container: http://localhost:8000/
 - Access Elasticsearch: http://localhost:9200/
 - View this documentation: http://localhost:8888/
 
@@ -30,7 +30,7 @@ docker-compose up
 
 Environment variables from your `.env` file are sourced 
 when the Python container starts
-and when you [access the running Python container](#access-the-containers-shell). 
+and when you [access a running Python container](#access-a-container-shell). 
 Your local shell environment variables, however, 
 are not visible to applications running in Docker.
 To add new environment variables, simply add them to the `.env` file, 
@@ -39,14 +39,14 @@ and start it again with `docker-compose up`.
 
 ### Access a container's shell
 
-- Python 3.6: `docker-compose exec python3 bash`
+- Python: `docker-compose exec python bash`
 - Elasticsearch: `docker-compose exec elasticsearch bash`
 - PostgreSQL: `docker-compose exec postgres bash`
 
 ### Run Django management commands
 
 Django `manage.py` commands can only be run after you've 
-[opened up a shell in the Python container](](#access-the-containers-shell)). 
+[opened up a shell in a Python container](#access-a-container-shell). 
 From there commands like `cfgov/manage.py migrate` should run as expected.
 
 The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` —
@@ -59,7 +59,7 @@ you will need to stop `docker-compose` (if it is running)
 and rebuild the Python container using:
 
 ```
-docker-compose up --build python3
+docker-compose up --build python
 ```
 
 ### Work on satellite apps
@@ -72,7 +72,7 @@ If you have inserted a [PDB breakpoint](https://docs.python.org/3/library/pdb.ht
 and need to interact with the running Django process when the breakpoint is reached 
 you can run [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach/):
 
-- Python 3.6: `docker attach cfgov-refresh_python3_1`
+- `docker attach cfgov-refresh_python`
 
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 
@@ -133,14 +133,14 @@ change configs locally without having to rebuild the image each time.
     docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
     ```
 
-    This creates a container running Python 3.6 version of cf.gov, as well as
+    This creates a container running cf.gov on Python, as well as
     Postgres and Elasticsearch containers, much like the development environment.
 
 1. Load the `cfgov` database (optional).  If you do not already have a running
     `cfgov` database, you will need to download and load it from within the container.
 
     ```bash
-    docker-compose exec python3 bash
+    docker-compose exec python bash
 
     # Once in the container...
     export CFGOV_PROD_DB_LOCATION=<database-dump-url>
@@ -149,14 +149,14 @@ change configs locally without having to rebuild the image each time.
 
 1. Browse to your new local cf.gov site.
 
-    - Python 3.6: http://localhost:8000
+    - http://localhost:8000
 
 
 1. Adjust an Apache [`cfgov/apache`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/apache)
    config and reload Apache (optional).
 
     ```bash
-    docker-compose exec python3 bash
+    docker-compose exec python bash
 
     # Once in the container...
     httpd -d ./cfgov/apache -k restart
@@ -165,8 +165,8 @@ change configs locally without having to rebuild the image each time.
 1. Switch back to the development Compose setup.
 
     ```bash
-    docker-compose rm -sf python3
-    docker-compose up --build python3
+    docker-compose rm -sf python
+    docker-compose up --build python
     ```
 
 

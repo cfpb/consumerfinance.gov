@@ -18,7 +18,7 @@ make sure you are in the cfgov-refresh root and then run:
 tox
 ```
 
-This will run linting tests and unit tests with migrations in Python 3.6. 
+This will run linting tests and unit tests with migrations in Python. 
 This is the same as running:
 
 ```sh
@@ -33,7 +33,7 @@ If you haven't changed any Python dependencies and you don't need to test
 all migrations, you can run a much faster Python code test using:
 
 ```sh
-# Python 3.6
+# Python
 tox -e unittest-py36-dj111-wag113-fast
 ```
 

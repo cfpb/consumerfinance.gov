@@ -142,12 +142,12 @@ cd retirement
 If the satellite app needs any Python requirements that are not specified in 
 [the cfgov-refresh requirements](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/), 
 they will need to be installed seperately by 
-[accessing the Python containers' shell](#access-the-containers-shell) 
+[accessing a Python container shell](#access-a-container-shell) 
 and using `pip`:
 
-Python 3.6:
+Python Container:
 
 ```bash
-docker-compose exec python3 bash
+docker-compose exec python bash
 pip install [PACKAGE NAME]
 ```

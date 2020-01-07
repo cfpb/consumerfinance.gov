@@ -5,7 +5,7 @@ volumes:
 
 services:
 
-    python3:
+    python:
         build:
             target: cfgov-prod
         environment: &python_env
