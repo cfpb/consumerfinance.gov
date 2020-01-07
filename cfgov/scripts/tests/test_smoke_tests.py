@@ -21,18 +21,36 @@ class StaticAssetTests(unittest.TestCase):
         mock_response.status_code = 200
         mock_response.content = self.mock_links
         mock_get.return_value = mock_response
-        msg = static_asset_smoke_test.check_static('any-url.com/')
+        msg = static_asset_smoke_test.check_static('/any-url.com/')
         self.assertEqual(mock_get.call_count, 3)
         self.assertIn('passed', msg)
 
     @mock.patch('scripts.static_asset_smoke_test.requests.get')
-    def test_home_page_test_failure(self, mock_get):
+    def test_home_page_test_partial_failure(self, mock_get):
         mock_response = mock.Mock()
         mock_response.status_code = 404
         mock_response.content = self.mock_links
         mock_get.return_value = mock_response
-        msg = static_asset_smoke_test.check_static('any-url.com/')
+        msg = static_asset_smoke_test.check_static('/sub-url-1/ /sub_url-2/')
         self.assertEqual(mock_get.call_count, 3)
+        self.assertIn('Partial', msg)
+
+    @mock.patch('scripts.static_asset_smoke_test.requests.get')
+    def test_request_failure(self, mock_get):
+        mock_response = mock.Mock()
+        mock_response.ok = False
+        mock_get.return_value = mock_response
+        msg = static_asset_smoke_test.check_static('/mock-url/')
+        self.assertIn('FAIL', msg)
+
+    @mock.patch('scripts.static_asset_smoke_test.requests.get')
+    @mock.patch('scripts.static_asset_smoke_test.extract_static_links')
+    def test_link_check_failure(self, mock_extract, mock_get):
+        mock_extract.return_value = ['mock_link', 'mock_link', 'mock_link']
+        mock_response = mock.Mock()
+        mock_response.status_code = 404
+        mock_get.return_value = mock_response
+        msg = static_asset_smoke_test.check_static('/mock_url/')
         self.assertIn('FAIL', msg)
 
 
