@@ -808,10 +808,7 @@ body {
 
                 border-left: 5px solid transparent;
                 font-size: unit( 16px / @base-font-size-px, em );
-            }
 
-            &-link,
-            &-overview-link {
                 &:hover,
                 &__current,
                 &__current:visited {
@@ -824,6 +821,10 @@ body {
                 &__current:visited {
                     cursor: default;
                 }
+            }
+
+            &-overview-link {
+                padding-top: 0;
             }
 
             &_group-heading {
@@ -886,6 +887,10 @@ body {
         &_content-2 {
             left: -@grid_gutter-width;
             width: @menu_max_width_px + ( @grid_gutter-width * 2 );
+
+            &-overview-link {
+                padding-top: 0;
+            }
         }
 
         &_group-heading {

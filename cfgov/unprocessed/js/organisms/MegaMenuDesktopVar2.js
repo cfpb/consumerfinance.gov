@@ -115,8 +115,11 @@ function MegaMenuDesktop( baseClass, menus ) {
     }
   }
 
+  /**
+   * Event handler for when mouse clicks elsewhere on body.
+   * @param {MouseEvent} event - The hovering event.
+   */
   function _handleBodyClick( event ) {
-    console.log( event.target );
     // If we've clicked outside the parent of the current menu, close it.
     if ( !_firstLevelDom.contains( event.target ) ||
          event.target.parentNode.classList.contains( `${ baseClass }_content-1-list` ) ) {
