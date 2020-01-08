@@ -1,13 +1,17 @@
 const { LAST_2_IE_11_UP } = require('../../../../config/browser-list-config');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
-const path = require('path');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const reactPreset = require('@babel/preset-react');
 const classPropertiesPlugin = require('@babel/plugin-proposal-class-properties');
 
 // Used for toggling debug output. Inherit Django debug value to cut down on redundant environment variables:
-const { DJANGO_DEBUG: DEBUG = false, NODE_ENV = 'development' } = process.env;
+const {
+  DJANGO_DEBUG: DEBUG = false,
+  NODE_ENV = 'development',
+  ANALYZE = false,
+} = process.env;
 
 const COMMON_BUNDLE_NAME = 'common.js';
 
@@ -74,6 +78,16 @@ const STATS_CONFIG = {
  * TODO: Set up service worker config using workbox for offline capability
  */
 
+const plugins = [
+  AUTOLOAD_REACT,
+];
+
+if (NODE_ENV === 'development' && ANALYZE) {
+  plugins.push(new BundleAnalyzerPlugin({
+    analyzerMode: 'server',
+  }));
+}
+
 const conf = {
   cache: false,
   mode: NODE_ENV,
@@ -90,9 +104,7 @@ const conf = {
   },
   stats: STATS_CONFIG.stats,
   devtool: NODE_ENV === 'production' ? false : 'inline-source-map',
-  plugins: [
-    AUTOLOAD_REACT,
-  ],
+  plugins,
 };
 
 module.exports = { conf };
