@@ -6,11 +6,11 @@ function Counter({ initial = 0 }) {
   const increment = useCallback((evt) => {
     evt.preventDefault();
     setCount(count + 1);
-  });
+  }, []);
   const decrement = useCallback((evt) => {
     evt.preventDefault();
     setCount(count - 1);
-  });
+  }, []);
 
   return (
     <div className="counter">
