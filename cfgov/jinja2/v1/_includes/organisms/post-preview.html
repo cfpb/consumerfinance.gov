@@ -146,7 +146,7 @@
                       data-month="{{ event.start_dt | date('%b') }}"
                       data-day="{{ event.start_dt | date('%-d') }}"
                       datetime="{{ event.start_dt | date('%c') }}"
-                      aria-label="{{ event.start_dt | date('%b %-d, %Y') }}">
+                      aria-hidden="true">
                 </time>
             {% endif %}
         {% endif %}

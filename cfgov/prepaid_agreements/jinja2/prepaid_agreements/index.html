@@ -71,7 +71,7 @@
                         <div class="m-btn-inside-input input-contains-label">
                             <label for="searchText"
                                    class="input-contains-label_before input-contains-label_before__search"
-                                   aria-label="The term to search for">
+                                   aria-hidden="true">
                                 {{ svg_icon('search') }}
                             </label>
                             <input id="searchText"
@@ -80,7 +80,8 @@
                                    class="a-text-input"
                                    name="q"
                                    placeholder="Enter search term"
-                                   value="{{ query }}">
+                                   value="{{ query }}"
+                                   aria-label="The term to search for">
                             <a class="a-btn a-btn__link" href="{{ remove_url_parameter(request, { 'q': [query] }) }}">{{ svg_icon('remove') }} Clear</a>
                         </div>
                     </div>
