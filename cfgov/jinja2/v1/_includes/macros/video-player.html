@@ -103,13 +103,13 @@
             {#
                 This button is for when the video player has loaded.
             #}
+            {# TODO: Figure out how to pull video title from API and put it
+                in aria-label below for screen readers. #}
             <button class="o-video-player_play-btn
                            o-video-player_play-btn__{{ button_pos }}
-                           u-hidden">
+                           u-hidden"
+                    aria-label="Play video">
                 {{ svg_icon('play') }}
-                {# TODO: Figure out how to pull video title from API and put it
-                   in hidden element below for screen readers. #}
-                <span class="u-visually-hidden">Play video</span>
             </button>
 
             <img class="o-video-player_image
