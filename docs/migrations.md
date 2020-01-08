@@ -404,7 +404,7 @@ Migrations can be recreated with this process:
     This involves adding lines to these files like:
 
     ```py
-    includes = [('app_name', '0002_foo'), ('app_name', '0003_bar'), ...]
+    replaces = [('app_name', '0002_foo'), ('app_name', '0003_bar'), ...]
     ```
 
     This tells Django that these new files replace the old files, 
