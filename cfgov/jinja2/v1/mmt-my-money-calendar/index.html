@@ -13,17 +13,20 @@
 {% endblock %}
 
 {% block content_main %}
-    <div>{% include "featured-content.html" %}</div>
-    <br>
-    <div>{% include "info-unit-group-1.html" %}</div>
-    <br>
-    <div>{% include "info-unit-group-2.html" %}</div>
-    <br>
-    <div>{% include "info-unit-group-3.html" %}</div>
-    <br>
-    <div>{% include "starting-balance-form.html" %}</div>
-     <br>
-    <div>{% include "income-input-form.html" %}</div>
+  <!-- React app entrypoint -->
+  <div id="mmt-my-money-calendar"></div>
+
+  <div>{% include "featured-content.html" %}</div>
+  <br>
+  <div>{% include "info-unit-group-1.html" %}</div>
+  <br>
+  <div>{% include "info-unit-group-2.html" %}</div>
+  <br>
+  <div>{% include "info-unit-group-3.html" %}</div>
+  <br>
+  <div>{% include "starting-balance-form.html" %}</div>
+  <br>
+  <div>{% include "income-input-form.html" %}</div>
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}
@@ -45,3 +48,8 @@
 (855) 729-2372</span></b><span></span></p></div>
     </div>
 {%- endblock %}
+
+{% block javascript %}
+  {{ super() }}
+  <script src="{{ static('apps/mmt-my-money-calendar/js/index.js') }}"></script>
+{% endblock %}
