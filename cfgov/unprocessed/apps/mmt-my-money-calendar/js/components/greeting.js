@@ -1,3 +1,3 @@
-const Greeting = () => (<h1>It works!</h1>);
+const Greeting = () => <h1>Hello from React!</h1>;
 
 export default Greeting;
