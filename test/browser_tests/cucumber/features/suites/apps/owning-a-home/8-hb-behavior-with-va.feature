@@ -16,15 +16,15 @@ Scenario Outline: Triggering conventional via FHA high-balance
     And I should see the County field highlighted
 
 Examples:
-| state_name      |
-| California      |
-| Colorado        |
-| Florida         |
-| Idaho           |
-| Maryland        |
-| North Carolina  |
-| Virginia        |
-| Washington      |
+| state_name     |
+| California     |
+| Colorado       |
+| Florida        |
+| Idaho          |
+| Maryland       |
+| North Carolina |
+| Virginia       |
+| Washington     |
 
 @high_balance
 Scenario Outline: Triggering conventional via FHA high-balance
@@ -37,15 +37,15 @@ Scenario Outline: Triggering conventional via FHA high-balance
     And I should NOT see a County alert "Based on your loan amount, you may not be eligible for a regular VA loan. Please enter your county so we can find the right loan type for you and get you the most accurate rates."
     And I should see "VA high-balance" as the selected Loan Type
     And I should see the Loan Type field highlighted
-    And I should see an HB alert "When you borrow between $424,100 and <VA_max_loan_amount> in your county, you may be eligible for a high-balance VA loan." 
+    And I should see an HB alert "When you borrow between $424,100 and <VA_max_loan_amount> in your county, you may be eligible for a high-balance VA loan."
 
 Examples:
-| state_name      | county_name         | VA_max_loan_amount  |
-| California      | Mono County         | $529,000            |
-| Colorado        | San Miguel County   | $625,500            |
-| Florida         | Monroe County       | $529,000            |
-| Idaho           | Blaine County       | $625,500            |
-| Maryland        | Anne Arundel County | $517,500            |
-| North Carolina  | Gates County        | $458,850            |
-| Virginia        | Norfolk city        | $458,850            |
-| Washington      | Snohomish County    | $540,500            |
+| state_name     | county_name         | VA_max_loan_amount |
+| California     | Mono County         | $529,000           |
+| Colorado       | San Miguel County   | $625,500           |
+| Florida        | Monroe County       | $529,000           |
+| Idaho          | Blaine County       | $625,500           |
+| Maryland       | Anne Arundel County | $517,500           |
+| North Carolina | Gates County        | $458,850           |
+| Virginia       | Norfolk city        | $458,850           |
+| Washington     | Snohomish County    | $540,500           |

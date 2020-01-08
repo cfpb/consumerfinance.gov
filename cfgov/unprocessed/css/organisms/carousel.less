@@ -140,6 +140,11 @@
     min-width: 200px;
     width: 25%;
 
+    // We need to explicitly set a visible overflow for IE11
+    // so that the :after pseudo-selector created further down
+    // and set below the element's bounds is visible.
+    overflow: visible;
+
     // Change stacking behavior of thumbnails.
     .respond-to-max( @bp-sm-max, {
       width: 50%;

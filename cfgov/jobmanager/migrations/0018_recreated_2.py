@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('jobmanager', '0017_recreated'),
-        ('v1', '0102_recreated'),
+        ('v1', '0198_recreated'),
     ]
 
     operations = [
@@ -38,19 +38,19 @@ class Migration(migrations.Migration):
             name='JobListingPage',
             fields=[
                 ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
-                ('description', wagtail.wagtailcore.fields.RichTextField(verbose_name=b'Summary')),
-                ('open_date', models.DateField(verbose_name=b'Open date')),
-                ('close_date', models.DateField(verbose_name=b'Close date')),
-                ('salary_min', models.DecimalField(verbose_name=b'Minimum salary', max_digits=11, decimal_places=2)),
-                ('salary_max', models.DecimalField(verbose_name=b'Maximum salary', max_digits=11, decimal_places=2)),
-                ('allow_remote', models.BooleanField(default=False, help_text=b'Adds remote option to jobs with office locations.', verbose_name=b'Location can also be remote')),
-                ('responsibilities', wagtail.wagtailcore.fields.RichTextField(null=True, verbose_name=b'Responsibilities', blank=True)),
-                ('travel_required', models.BooleanField(default=False, help_text=b'Optional: Check to add a "Travel required" section to the job description. Section content defaults to "Yes".')),
-                ('travel_details', wagtail.wagtailcore.fields.RichTextField(help_text=b'Optional: Add content for "Travel required" section.', null=True, blank=True)),
-                ('additional_section_title', models.CharField(help_text=b'Optional: Add title for an additional section that will display at end of job description.', max_length=255, null=True, blank=True)),
-                ('additional_section_content', wagtail.wagtailcore.fields.RichTextField(help_text=b'Optional: Add content for an additional section that will display at end of job description.', null=True, blank=True)),
+                ('description', wagtail.wagtailcore.fields.RichTextField(verbose_name='Summary')),
+                ('open_date', models.DateField(verbose_name='Open date')),
+                ('close_date', models.DateField(verbose_name='Close date')),
+                ('salary_min', models.DecimalField(verbose_name='Minimum salary', max_digits=11, decimal_places=2)),
+                ('salary_max', models.DecimalField(verbose_name='Maximum salary', max_digits=11, decimal_places=2)),
+                ('allow_remote', models.BooleanField(default=False, help_text='Adds remote option to jobs with office locations.', verbose_name='Location can also be remote')),
+                ('responsibilities', wagtail.wagtailcore.fields.RichTextField(null=True, verbose_name='Responsibilities', blank=True)),
+                ('travel_required', models.BooleanField(default=False, help_text='Optional: Check to add a "Travel required" section to the job description. Section content defaults to "Yes".')),
+                ('travel_details', wagtail.wagtailcore.fields.RichTextField(help_text='Optional: Add content for "Travel required" section.', null=True, blank=True)),
+                ('additional_section_title', models.CharField(help_text='Optional: Add title for an additional section that will display at end of job description.', max_length=255, null=True, blank=True)),
+                ('additional_section_content', wagtail.wagtailcore.fields.RichTextField(help_text='Optional: Add content for an additional section that will display at end of job description.', null=True, blank=True)),
                 ('division', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='jobmanager.JobCategory', null=True)),
-                ('job_length', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name=b'Position length', blank=True, to='jobmanager.JobLength', null=True)),
+                ('job_length', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name='Position length', blank=True, to='jobmanager.JobLength', null=True)),
             ],
             options={
                 'abstract': False,

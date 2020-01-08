@@ -9,16 +9,16 @@ Background:
 @jumbo
 Scenario Outline: Trigger conforming jumbo loan
   When I select "<state_name>" as State
-	  And I select "FHA" Loan Type
+    And I select "FHA" Loan Type
     And I enter $"500,000" as House Price amount
   Then I should see the chart faded out to indicate the data is out of date
-    And I should see a County alert "Based on your loan amount, you may not be eligible for a regular FHA loan. Please enter your county so we can find the right loan type for you and get you the most accurate rates." 
-    And I should see the County field highlighted 
+    And I should see a County alert "Based on your loan amount, you may not be eligible for a regular FHA loan. Please enter your county so we can find the right loan type for you and get you the most accurate rates."
+    And I should see the County field highlighted
 
 Examples:
-| state_name | 
-| Hawaii     | 
-| Utah       | 
+| state_name |
+| Hawaii     |
+| Utah       |
 | Alaska     |
 
 @jumbo
