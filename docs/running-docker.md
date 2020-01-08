@@ -30,7 +30,7 @@ docker-compose up
 
 Environment variables from your `.env` file are sourced 
 when the Python container starts
-and when you [access a running Python container](#access-a-container-shell). 
+and when you access the running Python container. 
 Your local shell environment variables, however, 
 are not visible to applications running in Docker.
 To add new environment variables, simply add them to the `.env` file, 
@@ -46,7 +46,7 @@ and start it again with `docker-compose up`.
 ### Run Django management commands
 
 Django `manage.py` commands can only be run after you've 
-[opened up a shell in a Python container](#access-a-container-shell). 
+opened up a shell in the Python container. 
 From there commands like `cfgov/manage.py migrate` should run as expected.
 
 The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` —
@@ -72,7 +72,7 @@ If you have inserted a [PDB breakpoint](https://docs.python.org/3/library/pdb.ht
 and need to interact with the running Django process when the breakpoint is reached 
 you can run [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach/):
 
-- `docker attach cfgov-refresh_python`
+- `docker attach cfgov-refresh_python_1`
 
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 
@@ -149,7 +149,7 @@ change configs locally without having to rebuild the image each time.
 
 1. Browse to your new local cf.gov site.
 
-    - http://localhost:8000
+    http://localhost:8000
 
 
 1. Adjust an Apache [`cfgov/apache`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/apache)

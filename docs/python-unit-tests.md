@@ -33,7 +33,6 @@ If you haven't changed any Python dependencies and you don't need to test
 all migrations, you can run a much faster Python code test using:
 
 ```sh
-# Python
 tox -e unittest-py36-dj111-wag113-fast
 ```
 
