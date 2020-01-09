@@ -132,3 +132,23 @@ yarn run gulp test:unit       # Run only unit tests on source code.
 yarn run gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
 yarn run gulp audit           # Run code quality audits.
 ```
+
+### Reinstalling the virtual environment
+
+To remove an existing virtual environment for 
+[a reinstall of cfgov-refresh](installation/#stand-alone-installation), 
+first deactivate the virtual environment if it is active:
+
+```bash
+deactivate
+```
+
+Then remove the existing virtual environment:
+
+```bash
+rmvirtualenv cfgov-refresh
+```
+
+After this, you may follow 
+[the installation instructions](installation/#stand-alone-installation)
+again.
