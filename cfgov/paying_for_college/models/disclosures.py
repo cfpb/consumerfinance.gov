@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 import datetime
 import json
-import six
 import smtplib
 from collections import OrderedDict
 from string import Template
@@ -539,7 +538,7 @@ class Notification(DisclosureBase):
         if school.contact:
             if school.contact.endpoint:
                 endpoint = school.contact.endpoint
-                if type(endpoint) == six.text_type:
+                if type(endpoint) == str:
                     endpoint = endpoint.encode('utf-8')
                 try:
                     resp = requests.post(endpoint, data=payload, timeout=10)
