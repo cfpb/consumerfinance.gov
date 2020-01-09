@@ -221,14 +221,9 @@ class RegModelTests(DjangoTestCase):
             'Subpart A - General')
 
     def test_section_string_method(self):
-        if sys.version_info >= (3, 0):  # pragma: no cover
-            self.assertEqual(
-                self.section_num4.__str__(),
-                '\xa7\xa01002.4 General rules.')
-        else:  # pragma: no cover
-            self.assertEqual(
-                self.section_num4.__str__(),
-                '\xa7\xa01002.4 General rules.'.encode('utf8'))
+        self.assertEqual(
+            self.section_num4.__str__(),
+            '\xa7\xa01002.4 General rules.')
 
     def test_section_export_graphs(self):
         test_counts = self.section_num4.extract_graphs()
