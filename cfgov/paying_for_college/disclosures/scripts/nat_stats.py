@@ -9,9 +9,6 @@ import yaml
 from unipath import Path
 
 
-if six.PY2:  # pragma: no cover
-    FileNotFoundError = IOError
-
 COLLEGE_CHOICE_NATIONAL_DATA_URL = (
     'https://raw.githubusercontent.com/RTICWDT/'
     'college-scorecard/dev/_data/national_stats.yaml'

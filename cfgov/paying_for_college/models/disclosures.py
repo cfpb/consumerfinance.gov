@@ -15,13 +15,8 @@ from django.utils.encoding import python_2_unicode_compatible
 
 import requests
 
-
-if six.PY2:  # pragma: no cover
-    from unicodecsv import writer as csw  # pragma: no cover
-    from unicodecsv import DictReader as cdr  # noqa # pragma: no cover
-else:  # pragma: no cover
-    from csv import writer as csw  # pragma: no cover
-    from csv import DictReader as cdr  # noqa # pragma: no cover
+from csv import writer as csw  # pragma: no cover
+from csv import DictReader as cdr  # noqa # pragma: no cover
 
 # Our database has a fake school for demo purposes
 # It should be discoverable via search and API calls, but should be excluded

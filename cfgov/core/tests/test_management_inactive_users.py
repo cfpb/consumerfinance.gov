@@ -76,10 +76,7 @@ class InactiveUsersTestCase(TestCase):
         self.stdout = StringIO()
 
     def get_stdout(self):
-        if six.PY2:  # pragma: no cover
-            return self.stdout.getvalue().decode('utf-8')
-        else:  # pragma: no cover
-            return self.stdout.getvalue()
+        return self.stdout.getvalue()
 
     def test_format_inactive_users_last_login(self):
         short_date = date_format(self.user_1.last_login,

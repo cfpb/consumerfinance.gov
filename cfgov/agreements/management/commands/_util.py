@@ -12,10 +12,7 @@ from agreements.models import Issuer
 
 
 def s3_safe_key(path, prefix=''):
-    if six.PY2:
-        key = prefix + force_text(path)
-    else:
-        key = prefix + path
+    key = prefix + path
     key = key.replace(' ', '_')
     key = key.replace('%', '')
     key = key.replace(';', '')

@@ -9,9 +9,6 @@ from v1.util.ref import (
 
 class TestCategories(TestCase):
 
-    if six.PY2:
-        assertCountEqual = TestCase.assertItemsEqual
-
     def test_no_duplicate_slugs(self):
         page_categories = dict(categories).values()
         slugs = list(itertools.chain(*(

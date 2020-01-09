@@ -2,13 +2,8 @@ import six
 
 from django.core.management import call_command
 
-
-if six.PY2:  # pragma: no cover
-    import unittest
-    import mock
-else:  # pragma: no cover
-    import unittest
-    from unittest import mock
+import unittest
+from unittest import mock
 
 
 class CommandTests(unittest.TestCase):

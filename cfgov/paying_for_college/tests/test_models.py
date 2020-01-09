@@ -21,13 +21,8 @@ from paying_for_college.models import (
 from v1.models import HomePage
 from v1.util.migrations import set_stream_data
 
-
-if six.PY2:  # pragma: no cover
-    import mock
-    from mock import mock_open, patch
-else:  # pragma: no cover
-    from unittest import mock
-    from unittest.mock import mock_open, patch
+from unittest import mock
+from unittest.mock import mock_open, patch
 
 
 class MakeDivisibleTest(TestCase):

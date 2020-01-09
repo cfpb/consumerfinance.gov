@@ -26,14 +26,8 @@ from paying_for_college.models import (
 )
 from requests.exceptions import SSLError
 
-
-if six.PY2:  # pragma: no cover
-    FileNotFoundError = IOError
-    import mock
-    from mock import mock_open, patch
-else:  # pragma: no cover
-    from unittest import mock
-    from unittest.mock import mock_open, patch
+from unittest import mock
+from unittest.mock import mock_open, patch
 
 
 COLLEGE_ROOT = "{}/paying_for_college".format(settings.PROJECT_ROOT)

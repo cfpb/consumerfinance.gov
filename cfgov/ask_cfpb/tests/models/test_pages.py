@@ -37,11 +37,7 @@ from v1.models import (
 from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import get_free_path, get_or_create_page
 
-
-if six.PY2:
-    import mock  # pragma: no cover
-else:
-    from unittest import mock  # pragma: no cover
+from unittest import mock  # pragma: no cover
 
 html_parser = HTMLParser.HTMLParser()
 now = timezone.now()

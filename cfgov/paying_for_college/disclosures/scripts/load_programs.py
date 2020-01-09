@@ -98,23 +98,6 @@ def get_school(iped):
         return (school, '')
 
 
-def read_py2(filename):  # pragma: no cover
-    try:
-        with open(filename, 'r') as f:
-            reader = cdr(f, encoding='utf-8-sig')
-            data = [row for row in reader]
-    except UnicodeDecodeError:
-        try:
-            with open(filename, 'r') as f:
-                reader = cdr(f, encoding='windows-1252')
-                data = [row for row in reader]
-        except Exception:
-            data = [{}]
-    except Exception:
-        data = [{}]
-    return data
-
-
 def read_py3(filename):  # pragma: no cover
     try:
         with open(filename, newline='', encoding='utf-8-sig') as f:
@@ -134,18 +117,12 @@ def read_py3(filename):  # pragma: no cover
 
 def read_in_data(filename):
     """Read in a utf-8 CSV, as per our spec, or windows-1252 if we must."""
-    if six.PY2:  # pragma: no cover
-        return read_py2(filename)
-    else:  # pragma: no cover
-        return read_py3(filename)
+    return read_py3(filename)
 
 
 def read_in_s3(url):
     response = requests.get(url)
-    if six.PY2:  # pragma: no cover
-        f = io.BytesIO(response.text.encode('utf-8'))
-    else:  # pragma: no cover
-        f = io.StringIO(response.text)
+    f = io.StringIO(response.text)
     reader = cdr(f)
     data = [row for row in reader]
     return data

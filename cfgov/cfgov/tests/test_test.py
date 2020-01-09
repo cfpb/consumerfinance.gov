@@ -8,27 +8,6 @@ from unittest import TestCase, TestSuite, defaultTestLoader
 from cfgov.test import StdoutCapturingTestRunner, redirect_stdout
 
 
-if six.PY2:
-    class TestRedirectStdout(TestCase):
-
-        def test_redirect_to_string_io(self):
-            stdout = sys.stdout
-            unstdout = StringIO()
-            with redirect_stdout(unstdout):
-                self.assertIs(sys.stdout, unstdout)
-                print('Hello, world!', file=sys.stdout)
-
-            self.assertIs(sys.stdout, stdout)
-            test_str = unstdout.getvalue().strip()
-            self.assertEqual(test_str, 'Hello, world!')
-
-        def test_raises_exception(self):
-            unstdout = StringIO()
-            with self.assertRaises(ValueError):
-                with redirect_stdout(unstdout):
-                    raise ValueError('Test exception handling')
-
-
 class StderrSuppressingStdoutCapturingTestRunner(StdoutCapturingTestRunner):
     """Modified StdoutCapturingTestRunner for use in testing.
 
