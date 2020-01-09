@@ -2,7 +2,7 @@
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import EventObserver from '../modules/util/EventObserver';
 import FlyoutMenu from '../modules/behavior/FlyoutMenu';
-import MegaMenuDesktop from '../organisms/MegaMenuDesktop';
+import MegaMenuDesktop from '../organisms/MegaMenuDesktopVar1';
 import MegaMenuMobile from '../organisms/MegaMenuMobile';
 import MoveTransition from '../modules/transition/MoveTransition';
 import TabTrigger from '../modules/TabTrigger';
@@ -21,7 +21,7 @@ import { isInDesktop } from '../modules/util/breakpoint-state';
  * @returns {MegaMenu} An instance.
  */
 function MegaMenu( element ) {
-  const BASE_CLASS = 'o-mega-menu';
+  const BASE_CLASS = 'o-mega-menu-var-1';
 
   const _dom = checkDom( element, BASE_CLASS );
 
@@ -150,8 +150,6 @@ function MegaMenu( element ) {
    */
   function _addEvents( menu ) {
     menu.addEventListener( 'triggerClick', _handleEvent );
-    menu.addEventListener( 'triggerOver', _handleEvent );
-    menu.addEventListener( 'triggerOut', _handleEvent );
     menu.addEventListener( 'expandBegin', _handleEvent );
     menu.addEventListener( 'expandEnd', _handleEvent );
     menu.addEventListener( 'collapseBegin', _handleEvent );
@@ -165,6 +163,19 @@ function MegaMenu( element ) {
    */
   function _handleEvent( event ) {
     const activeNav = isInDesktop() ? _desktopNav : _mobileNav;
+
+    //------------------------------------------------------------------
+    // TODO: This temporarily disables the mobile menu submenu clicking
+    // and will be used for testing a new version of the menu.
+    if ( !isInDesktop() && event.target.getDom().container.tagName !== 'NAV' ) {
+      const triggerDom = event.target.getDom().trigger;
+      if ( typeof triggerDom.href !== 'undefined' ) {
+        window.location.assign( triggerDom.href );
+      }
+      return;
+    }
+    //------------------------------------------------------------------
+
     activeNav.handleEvent( event );
   }
 
