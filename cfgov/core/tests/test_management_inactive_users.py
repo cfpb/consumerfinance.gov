@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import six
 from datetime import timedelta
-from six.moves import cStringIO as StringIO
+from io import StringIO
 
 from django.contrib.auth import get_user_model
 from django.core import mail
