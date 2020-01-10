@@ -1,7 +1,6 @@
 import datetime
 import json
 import os
-import six
 import zipfile
 from collections import OrderedDict
 from subprocess import call
@@ -97,7 +96,7 @@ def download_zip_file(url, zip_file):
     if resp.ok:
         with open(zip_file, 'wb') as f:
             for chunk in resp.iter_content(chunk_size=1024):
-                if chunk:  # pragma: no cover
+                if chunk:
                     f.write(chunk)
         unzip_file(zip_file)
         call(['rm', zip_file])

@@ -1,6 +1,5 @@
 import json
 import os
-import six
 from collections import OrderedDict
 from subprocess import call
 

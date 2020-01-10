@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 import os
-import six
 
 from django.utils.encoding import force_text
 from django.utils.text import slugify

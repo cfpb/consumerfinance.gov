@@ -1,5 +1,3 @@
-import six
-
 from django.core.management import call_command
 
 import unittest

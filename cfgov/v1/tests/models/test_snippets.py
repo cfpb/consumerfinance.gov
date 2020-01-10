@@ -13,8 +13,8 @@ from v1.models.snippets import Contact, RelatedResource, ReusableText
 
 class TestUnicodeCompatibility(TestCase):
     def test_unicode_contact_heading_unicode(self):
-        contact = Contact(heading=u'Unicod\xeb')
-        self.assertEqual(str(contact), u'Unicod\xeb')
+        contact = Contact(heading='Unicod\xeb')
+        self.assertEqual(str(contact), 'Unicod\xeb')
         self.assertIsInstance(str(contact), str)
 
 

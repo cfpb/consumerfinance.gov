@@ -1,8 +1,7 @@
 from __future__ import print_function
 
-import six
 import sys
-from six import StringIO
+from io import StringIO
 from unittest import TestCase, TestSuite, defaultTestLoader
 
 from cfgov.test import StdoutCapturingTestRunner, redirect_stdout

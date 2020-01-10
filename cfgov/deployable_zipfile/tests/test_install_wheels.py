@@ -1,6 +1,5 @@
 import os
 import shutil
-import six
 import tempfile
 from unittest import TestCase
 
@@ -25,8 +24,7 @@ class TestSetup(TestCase):
 
         # We expect that only compatible wheels will be installed.
 
-        if six.PY3:  # pragma: no cover
-            expected_wheels = ['baz-1.0-py3-none-any.whl']
+        expected_wheels = ['baz-1.0-py3-none-any.whl']
 
         expected_wheels.append('foo-1.0-py2.py3-none-any.whl')
 

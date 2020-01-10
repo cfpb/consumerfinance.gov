@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 import datetime
-import six
 import smtplib
 import unittest
 
@@ -422,6 +421,6 @@ class ProgramExport(TestCase):
     def test_program_as_csv(self):
         p = Program.objects.get(pk=1)
         m = mock_open()
-        with patch("six.moves.builtins.open", m, create=True):
+        with patch("builtins.open", m, create=True):
             p.as_csv('/tmp.csv')
         self.assertEqual(m.call_count, 1)

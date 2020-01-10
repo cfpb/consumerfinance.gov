@@ -5,8 +5,8 @@ import re
 from collections import OrderedDict
 from datetime import date
 from functools import partial
-from six.moves import urllib
-from six.moves.urllib.parse import urljoin
+import urllib
+from urllib.parse import urljoin
 
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models

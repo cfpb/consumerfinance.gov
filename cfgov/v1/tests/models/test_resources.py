@@ -8,7 +8,7 @@ from v1.models.resources import Resource
 class TestUnicodeCompatibility(TestCase):
     def test_unicode_resource_title_unicode(self):
         resource = Resource(title=u'Unicod\xeb')
-        self.assertEqual(str(resource), u'Unicod\xeb')
+        self.assertEqual(str(resource), 'Unicod\xeb')
         self.assertIsInstance(str(resource), str)
 
 

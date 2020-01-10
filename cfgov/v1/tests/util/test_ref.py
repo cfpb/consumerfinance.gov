@@ -1,5 +1,5 @@
 import itertools
-import six
+
 from unittest import TestCase
 
 from v1.util.ref import (

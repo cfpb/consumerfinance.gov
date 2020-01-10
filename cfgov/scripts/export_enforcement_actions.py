@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 import re
-from six.moves import html_parser as HTMLParser
+import html.parser as HTMLParser
 
 from django.http import HttpResponse
 from django.utils import html

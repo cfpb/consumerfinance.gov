@@ -2,8 +2,7 @@
 from __future__ import unicode_literals
 
 import datetime
-import six
-from six.moves import html_parser as HTMLParser
+import html.parser as HTMLParser
 
 from django.apps import apps
 from django.contrib.auth.models import User
@@ -37,7 +36,7 @@ from v1.models import (
 from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import get_free_path, get_or_create_page
 
-from unittest import mock  # pragma: no cover
+from unittest import mock
 
 html_parser = HTMLParser.HTMLParser()
 now = timezone.now()
@@ -128,7 +127,7 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
         slug = 'ask-cfpb-{}.csv'.format(timestamp)
         m = mock.mock_open()
-        with mock.patch('six.moves.builtins.open', m, create=True):
+        with mock.patch('builtins.open', m, create=True):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
         m.assert_called_once_with("/tmp/{}".format(slug), 'w')
