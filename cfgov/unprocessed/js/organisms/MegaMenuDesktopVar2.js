@@ -146,11 +146,12 @@ function MegaMenuDesktop( baseClass, menus ) {
       _activeMenu.getTransition().animateOn();
 
       _bodyDom.addEventListener( 'click', _handleBodyClick );
+
       /* Mousemove needed in addition to mouseout of the trigger
          in order to check if user has moved off the menu <ul> and not
          just the <li> list items. */
-      //_bodyDom.addEventListener( 'mousemove', _handleMove );
-      //_bodyDom.addEventListener( 'mouseleave', _handleMove );
+      /* _bodyDom.addEventListener( 'mousemove', _handleMove );
+         _bodyDom.addEventListener( 'mouseleave', _handleMove ); */
       _activeMenu.expand();
     } else {
       // An open menu has switched to another menu.
