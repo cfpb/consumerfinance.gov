@@ -98,7 +98,8 @@ def get_school(iped):
         return (school, '')
 
 
-def read_py3(filename):  # pragma: no cover
+def read_in_data(filename):
+    """Read in a utf-8 CSV, as per our spec, or windows-1252 if we must."""
     try:
         with open(filename, newline='', encoding='utf-8-sig') as f:
             reader = cdr(f)
@@ -113,11 +114,6 @@ def read_py3(filename):  # pragma: no cover
     except Exception:
         data = [{}]
     return data
-
-
-def read_in_data(filename):
-    """Read in a utf-8 CSV, as per our spec, or windows-1252 if we must."""
-    return read_py3(filename)
 
 
 def read_in_s3(url):
