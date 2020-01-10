@@ -1,9 +1,19 @@
+import sys
 import warnings
 
 from unipath import DIRS
 
 from .base import *
 
+
+if sys.version_info[0] < 3:
+    raise Exception(
+        "Python 2 is no longer supported. "
+        "If you are running in a virtual environment, please see "
+        "http://cfpb.github.io/cfgov-refresh/running-virtualenv/"
+        "#reinstalling-the-virtual-environment "
+        "for how to reinstall."
+    )
 
 DEBUG = True
 SECRET_KEY = 'not-secret-key-for-testing'
