@@ -3,7 +3,7 @@ from __future__ import print_function
 from io import StringIO
 from unittest import TestCase, TestSuite, defaultTestLoader
 
-from cfgov.test import StdoutCapturingTestRunner, redirect_stdout
+from cfgov.test import StdoutCapturingTestRunner
 
 
 class StderrSuppressingStdoutCapturingTestRunner(StdoutCapturingTestRunner):
