@@ -1,5 +1,5 @@
 import getpass
-from six.moves import input
+import input
 
 from django.contrib.auth import get_user_model
 from django.test import Client

@@ -2,7 +2,6 @@
 from __future__ import print_function, unicode_literals
 
 import io
-import six
 
 import requests
 from paying_for_college.models import Program, School, cdr
@@ -160,12 +159,12 @@ def clean(data):
     rate_fields = ('completion_rate', 'default_rate', 'job_placement_rate')
     # Clean string and numeric parameters
     cleaned_data = {
-        k: clean_number_as_string(v) for k, v in six.iteritems(data)
+        k: clean_number_as_string(v) for k, v in dictionary.items(data)
         if k in number_fields
     }
     cleaned_data.update(
         {
-            k: clean_string_as_string(v) for k, v in six.iteritems(data)
+            k: clean_string_as_string(v) for k, v in dictionary.items(data)
             if k not in number_fields
         }
     )
@@ -252,7 +251,7 @@ def load(source, s3=False):
             program.save()
 
         else:  # There is error
-            for key, error_list in six.iteritems(serializer.errors):
+            for key, error_list in dictionary.items(serializer.errors):
 
                 fail_msg = (
                     'ERROR on row {}: {}: '.format(

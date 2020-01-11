@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import json
-from six.moves.urllib.parse import urljoin
+from urllib.parse import urljoin
 
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect

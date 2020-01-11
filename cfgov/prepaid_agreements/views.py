@@ -1,4 +1,4 @@
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import InvalidPage, Paginator

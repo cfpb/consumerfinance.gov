@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from collections import OrderedDict
-from six.moves.urllib.parse import unquote
+from urllib.parse import unquote
 
 from django import forms
 from django.core.paginator import InvalidPage, Paginator
