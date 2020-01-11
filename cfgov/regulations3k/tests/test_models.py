@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 import datetime
-import sys
 import unittest
 
 # from django.core.urlresolvers import reverse
