@@ -159,12 +159,12 @@ def clean(data):
     rate_fields = ('completion_rate', 'default_rate', 'job_placement_rate')
     # Clean string and numeric parameters
     cleaned_data = {
-        k: clean_number_as_string(v) for k, v in dictionary.items(data)
+        k: clean_number_as_string(v) for k, v in dict.items(data)
         if k in number_fields
     }
     cleaned_data.update(
         {
-            k: clean_string_as_string(v) for k, v in dictionary.items(data)
+            k: clean_string_as_string(v) for k, v in dict.items(data)
             if k not in number_fields
         }
     )
@@ -251,7 +251,7 @@ def load(source, s3=False):
             program.save()
 
         else:  # There is error
-            for key, error_list in dictionary.items(serializer.errors):
+            for key, error_list in dict.items(serializer.errors):
 
                 fail_msg = (
                     'ERROR on row {}: {}: '.format(
