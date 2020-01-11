@@ -15,6 +15,7 @@ from django.utils.encoding import python_2_unicode_compatible
 import requests
 
 from csv import writer as csw
+from csv import DictReader as cdr
 
 # Our database has a fake school for demo purposes
 # It should be discoverable via search and API calls, but should be excluded
