@@ -75,7 +75,8 @@ def assemble_output():
                 lambda item: item['type'] == 'how_to_schema' or
                 item['type'] == 'faq_schema', answer_streamfield)
             if answer_schema:
-                answer = answer_schema[0].get('value').get('description')
+                answer = next(answer_schema).get('value').get('description')
+
         output['Answer'] = clean_and_strip(answer).replace('\x81', '')
         output['ShortAnswer'] = clean_and_strip(page['short_answer'])
         output['URL'] = page['url_path'].replace('/cfgov', '')
