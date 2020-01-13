@@ -48,7 +48,7 @@ class ComplaintLandingView(TemplateView):
     def get_ccdb_status_json(self, complaint_source):
         """Retrieve JSON describing the CCDB's status from a given URL."""
         try:
-            headers = { "accept": "application/json"}
+            headers = {"accept": "application/json"}
             res_json = requests.get(complaint_source, headers=headers).json()
 
         except requests.exceptions.RequestException:
