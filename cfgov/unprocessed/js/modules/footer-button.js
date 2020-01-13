@@ -61,15 +61,8 @@ function _scrollToTop() {
  *  Move focus to the top of the page.
  */
 function _setFocus() {
-  /* To move the focus from the footer we need to move it to another
-     focusable element. This is the "skip to main content" skip link.
-     Since we don't want this highlighted right away when
-     returning to the top of the page, we then need to blur it.
-     Unfortunately, this means the next hit of the tab key
-     will focus on the next element after the skip link,
-     since that link is the first focusable element on the page. */
-  document.querySelector( '.skip-nav_link' ).focus();
-  document.activeElement.blur();
+  document.documentElement.tabIndex = 0;
+  document.documentElement.focus();
 }
 
 export { init };
