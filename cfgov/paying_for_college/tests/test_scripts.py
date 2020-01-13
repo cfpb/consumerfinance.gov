@@ -4,9 +4,10 @@ import copy
 import datetime
 import json
 import os
-import six
 import unittest
 from decimal import Decimal
+from unittest import mock
+from unittest.mock import mock_open, patch
 
 import django
 from django.conf import settings
@@ -25,15 +26,6 @@ from paying_for_college.models import (
     FAKE_SCHOOL_PK, Alias, Notification, Program, School
 )
 from requests.exceptions import SSLError
-
-
-if six.PY2:  # pragma: no cover
-    FileNotFoundError = IOError
-    import mock
-    from mock import mock_open, patch
-else:  # pragma: no cover
-    from unittest import mock
-    from unittest.mock import mock_open, patch
 
 
 COLLEGE_ROOT = "{}/paying_for_college".format(settings.PROJECT_ROOT)
@@ -400,7 +392,7 @@ class TestScripts(django.test.TestCase):
 
     def test_dump_csv(self):
         m = mock_open()
-        with patch("six.moves.builtins.open", m, create=True):
+        with patch("builtins.open", m, create=True):
             update_ipeds.dump_csv(
                 '/tmp/mockfile.csv',
                 ['a', 'b', 'c'],
@@ -410,7 +402,7 @@ class TestScripts(django.test.TestCase):
 
     def test_write_clean_csv(self):
         m = mock_open()
-        with patch("six.moves.builtins.open", m, create=True):
+        with patch("builtins.open", m, create=True):
             update_ipeds.write_clean_csv(
                 '/tmp/mockfile.csv',
                 ['a ', ' b', ' c '],
@@ -422,7 +414,7 @@ class TestScripts(django.test.TestCase):
         'paying_for_college.disclosures.scripts.update_ipeds.download_files')
     def test_read_csv(self, mock_download):
         m = mock_open(read_data='a , b, c \nd,e,f')
-        with patch("six.moves.builtins.open", m):
+        with patch("builtins.open", m):
             fieldnames, data = update_ipeds.read_csv('mockfile.csv')
         self.assertEqual(mock_download.call_count, 1)
         self.assertEqual(m.call_count, 1)
@@ -680,7 +672,7 @@ class TestScripts(django.test.TestCase):
     def test_get_bls_stats_failure(self):
         m = mock_open()
         m.side_effect = FileNotFoundError
-        with mock.patch('six.moves.builtins.open', m):
+        with mock.patch('builtins.open', m):
             stats = nat_stats.get_bls_stats()
             self.assertEqual(stats, {})
 

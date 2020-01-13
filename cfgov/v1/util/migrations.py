@@ -1,5 +1,4 @@
 import json
-import six
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -109,7 +108,7 @@ def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
     """ Recursively run the mapper on fields of block_type in stream_data """
     migrated = False
 
-    if isinstance(block_path, six.string_types):
+    if isinstance(block_path, str):
         block_path = [block_path, ]
 
     if len(block_path) == 0:

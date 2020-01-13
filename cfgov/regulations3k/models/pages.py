@@ -2,11 +2,11 @@ from __future__ import absolute_import, unicode_literals
 
 import logging
 import re
+import urllib
 from collections import OrderedDict
 from datetime import date
 from functools import partial
-from six.moves import urllib
-from six.moves.urllib.parse import urljoin
+from urllib.parse import urljoin
 
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
