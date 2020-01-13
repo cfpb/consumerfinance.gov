@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, MultiFieldPanel, PageChooserPanel, StreamFieldPanel
@@ -12,7 +11,6 @@ from bs4 import BeautifulSoup
 from v1 import blocks as v1_blocks
 
 
-@python_2_unicode_compatible
 class MenuItem(models.Model):
     link_text = models.CharField(
         max_length=255,
