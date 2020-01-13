@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import datetime
 import tempfile
 import unittest
-from six import BytesIO
+from io import BytesIO
 
 import django
 

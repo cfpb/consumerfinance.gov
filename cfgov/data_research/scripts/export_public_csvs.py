@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 import logging
-from six import BytesIO
+from io import BytesIO
 
 import unicodecsv
 from dateutil import parser
