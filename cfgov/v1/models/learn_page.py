@@ -108,6 +108,7 @@ class LearnPage(AbstractFilterPage):
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
         ('expandable_group', organisms.ExpandableGroup()),
+        ('contact_expandable_group', organisms.ContactExpandableGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
         ('call_to_action', molecules.CallToAction()),
@@ -117,7 +118,6 @@ class LearnPage(AbstractFilterPage):
             table_options={'renderer': 'html'}
         )),
         ('feedback', v1_blocks.Feedback()),
-        ('contact_expandable_group', organisms.ContactExpandableGroup()),
     ], blank=True)
 
     edit_handler = AbstractFilterPage.generate_edit_handler(

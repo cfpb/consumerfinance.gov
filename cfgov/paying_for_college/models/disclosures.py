@@ -328,7 +328,8 @@ class School(models.Model):
             'medianAnnualPay6Yr': self.median_annual_pay_6yr,
             'medianMonthlyDebt': format_for_null(self.median_monthly_debt),
             'medianTotalDebt': format_for_null(self.median_total_debt),
-            'netPrices': self.avg_net_price_slices,
+            'netPriceAvg': self.avg_net_price,
+            'netPriceAvgSlices': self.avg_net_price_slices,
             'nicknames': ", ".join([nick.nickname for nick
                                     in self.nickname_set.all()]),
             'offersPerkins': self.offers_perkins,

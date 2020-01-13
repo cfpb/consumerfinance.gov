@@ -52,6 +52,7 @@ class Contact(models.Model):
         ('email', molecules.ContactEmail()),
         ('phone', molecules.ContactPhone()),
         ('address', molecules.ContactAddress()),
+        ('hyperlink', molecules.ContactHyperlink()),
     ], blank=True)
 
     panels = [

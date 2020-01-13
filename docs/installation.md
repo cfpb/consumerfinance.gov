@@ -265,7 +265,7 @@ browser, and see a database error.
 Open a bash shell inside your Python container.
 
 ```bash
-docker-compose exec python2 bash
+docker-compose exec python bash
 ```
 
 You can either [load initial data](#load-initial-data-into-database) per the
