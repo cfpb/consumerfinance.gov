@@ -1,7 +1,5 @@
 from urllib.parse import urlencode
 
-from django.utils.six import iterlists
-
 from jinja2.ext import Extension
 
 
@@ -13,7 +11,7 @@ def remove_url_parameter(request, discards):
          {param: [values]}
     """
     query = request.GET.copy()
-    params = dict(iterlists(query))
+    params = dict.lists(query)
     items = {}
     for key in params:
         if key in discards:

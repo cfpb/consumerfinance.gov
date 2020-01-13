@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.functional import cached_property
-from django.utils.six import string_types
 
 from wagtail.wagtailimages.image_operations import (
     DoNothingOperation, MinMaxOperation, WidthHeightOperation
@@ -41,7 +40,7 @@ class CFGOVImage(AbstractImage):
         <img> tag with appropriate size parameters, following logic from
         wagtail.wagtailimages.image_operations.
         """
-        if isinstance(rendition_filter, string_types):
+        if isinstance(rendition_filter, str):
             rendition_filter = Filter(spec=rendition_filter)
 
         width = self.width
