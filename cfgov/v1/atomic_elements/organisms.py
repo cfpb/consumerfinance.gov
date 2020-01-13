@@ -3,7 +3,7 @@ import json
 from collections import Counter
 from functools import partial
 from six import string_types as basestring
-from six.moves.urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from django import forms
 from django.apps import apps

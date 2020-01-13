@@ -1,8 +1,7 @@
 from __future__ import unicode_literals
 
 import json
-from six import text_type as unicode
-from six.moves.urllib.parse import urljoin
+from urllib.parse import urljoin
 
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
@@ -44,7 +43,7 @@ def annotate_links(answer_text):
         super_tag.string = str(index)
         parent.insert(link_location + 1, super_tag)
         index += 1
-    return (unicode(soup), footnotes)
+    return (str(soup), footnotes)
 
 
 def view_answer(request, slug, language, answer_id):

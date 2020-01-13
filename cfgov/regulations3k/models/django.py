@@ -8,7 +8,6 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 
@@ -42,7 +41,6 @@ def sortable_label(label, separator='-'):
     return tuple(segments)
 
 
-@python_2_unicode_compatible
 class Part(models.Model):
     cfr_title_number = models.CharField(max_length=255)
     chapter = models.CharField(max_length=255)
@@ -85,7 +83,6 @@ class Part(models.Model):
         return effective_version
 
 
-@python_2_unicode_compatible
 class EffectiveVersion(models.Model):
     authority = models.CharField(max_length=255, blank=True)
     source = models.CharField(max_length=255, blank=True)
@@ -148,7 +145,6 @@ class EffectiveVersion(models.Model):
         default_related_name = 'version'
 
 
-@python_2_unicode_compatible
 class Subpart(models.Model):
     label = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -195,7 +191,6 @@ class Subpart(models.Model):
         ordering = ['subpart_type', 'label']
 
 
-@python_2_unicode_compatible
 class Section(models.Model):
     label = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255, blank=True)
@@ -289,7 +284,6 @@ class Section(models.Model):
             return self.title
 
 
-@python_2_unicode_compatible
 class SectionParagraph(models.Model):
     """Provide storage for section paragraphs."""
 

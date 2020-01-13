@@ -1,6 +1,5 @@
 from django.core.validators import URLValidator
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.fields import RichTextField
@@ -26,7 +25,6 @@ class TaggableSnippetManager(models.Manager):
         return snippets
 
 
-@python_2_unicode_compatible
 class Resource(ClusterableModel):
     title = models.CharField(max_length=255)
     desc = RichTextField(verbose_name='Description', blank=True)
